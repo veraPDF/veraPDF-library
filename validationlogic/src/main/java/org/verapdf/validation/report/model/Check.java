@@ -11,10 +11,14 @@ public class Check {
     private String attr_status;
 
     private CheckLocation location;
+    private String error;
+    private boolean isHasError;
 
-    public Check(String attr_status, CheckLocation location) {
+    public Check(String attr_status, CheckLocation location, String error, boolean isHasError) {
         this.attr_status = attr_status;
         this.location = location;
+        this.error = error;
+        this.isHasError = isHasError;
     }
 
     /**
@@ -29,5 +33,20 @@ public class Check {
      */
     public CheckLocation getLocation() {
         return location;
+    }
+
+    /**
+     * @return an error/warning message
+     */
+    public String getError() {
+        return error;
+    }
+
+    /**
+     * Get what {@code error} (if {@code this} check has it) represents: an error or a warning.
+     * @return true if {@code error} represents an error, and false if {@code error} represents a warning (or null).
+     */
+    public boolean isHasError() {
+        return isHasError;
     }
 }
