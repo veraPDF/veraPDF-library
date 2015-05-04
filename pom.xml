@@ -12,6 +12,7 @@
 
     <modules>
         <module>validationprofileparser</module>
+        <module>validationlogic</module>
     </modules>
 
     <packaging>pom</packaging>
