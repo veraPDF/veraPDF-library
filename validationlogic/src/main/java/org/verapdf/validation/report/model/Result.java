@@ -13,9 +13,38 @@ public class Result {
     private Summary summary;
     private Details details;
 
-    public Result(boolean compliant, String statement, Summary summary, Details details) {
+    public Result(Details details) {
+        boolean compliant = true;
+        int passedRules = 0;
+        int failedRules = 0;
+        int passedChecks = 0;
+        int failedChecks = 0;
+        int completedMetadataFixes = 0;
+        int failedMetadataFixes = 0;
+        int warnings = details.getWarnings().size();
+
+        for(Rule rule : details.getRules()){
+            if (rule.getStatus().equals("passed")){
+                ++passedRules;
+            }
+            else {
+                compliant = false;
+                ++failedRules;
+            }
+            for(Check check : rule.getChecks()){
+                if (check.getAttr_status().equals("passed")){
+                    ++passedChecks;
+                }
+                else {
+                    ++failedChecks;
+                }
+            }
+        }
+
+        Summary summary = new Summary(passedRules, failedRules, passedChecks, failedChecks, completedMetadataFixes, failedMetadataFixes, warnings);
+
         this.compliant = compliant;
-        this.statement = statement;
+        this.statement = compliant ? "STR_ID_03" : "STR_ID_04";
         this.summary = summary;
         this.details = details;
     }

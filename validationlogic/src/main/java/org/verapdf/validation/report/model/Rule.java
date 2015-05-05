@@ -16,10 +16,20 @@ public class Rule {
 
     private List<Check> checks;
 
-    public Rule(String attr_id, String status, int attr_checks, List<Check> checks) {
+    public Rule(String attr_id, List<Check> checks) {
         this.attr_id = attr_id;
+
+        String status = "passed";
+
+        for (Check check : checks){
+            if (check.getAttr_status().equals("failed")){
+                status = "failed";
+            }
+        }
+
         this.status = status;
-        this.attr_checks = attr_checks;
+
+        this.attr_checks = checks.size();
         this.checks = checks;
     }
 
