@@ -1,8 +1,13 @@
 package org.verapdf.impl.pb;
 
 import org.apache.pdfbox.cos.COSBase;
+import org.verapdf.model.ModelHelper;
+import org.verapdf.model.baselayer.*;
+import org.verapdf.model.baselayer.Object;
 import org.verapdf.tools.IDGenerator;
 import org.verapdf.model.coslayer.CosObject;
+
+import java.util.List;
 
 /**
  * Created by Evgeniy Muravitskiy on 4/27/15.
@@ -20,13 +25,35 @@ public class PBCosObject implements CosObject{
         this.baseObject = baseObject;
     }
 
+    // TODO : wait ModelHelper realization
+    @Override
+    public List<Object> getLinkedObjects(String s) {
+        return null;
+    }
+
+    @Override
+    public List<String> getLinks() {
+        //return ModelHelper.getListOfLinks(get_type);
+        return null;
+    }
+
+    @Override
+    public List<String> getProperties() {
+        //return ModelHelper.getListOfProperties(get_type);
+        return null;
+    }
+
+    @Override
+    public List<String> getSuperTypes() {
+        //return ModelHelper.getListOfSuperNames(get_type);
+        return null;
+    }
+
     /** Get type of current object
      */
     @Override
     public String get_type() {
-        final String clas = this.getClass() + "";
-        int index = clas.lastIndexOf((int) '$');
-        return index < 1 ? clas : clas.substring(0, index - 1);
+        return this.getClass().getInterfaces()[0].getName();
     }
 
     /** Get personal id of current object
@@ -36,7 +63,6 @@ public class PBCosObject implements CosObject{
         return id;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (o instanceof COSBase)
             return baseObject.equals(o);

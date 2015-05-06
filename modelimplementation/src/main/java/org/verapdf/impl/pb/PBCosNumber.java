@@ -1,6 +1,5 @@
 package org.verapdf.impl.pb;
 
-import org.apache.pdfbox.cos.COSFloat;
 import org.apache.pdfbox.cos.COSNumber;
 import org.verapdf.model.coslayer.CosNumber;
 

@@ -4,6 +4,8 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSObject;
 import org.verapdf.factory.cos.PBFactory;
+import org.verapdf.model.baselayer.*;
+import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosIndirect;
 import org.verapdf.model.coslayer.CosObject;
 
@@ -19,6 +21,7 @@ import java.util.List;
  */
 public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
+    private final static String DIRECT_OBJECT = "directObject";
     private boolean isSpacingComplyPDFA;
 
     public PBCosIndirect(COSBase directObject,boolean isSpacingComplyPDFA) {
@@ -26,11 +29,24 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
         this.isSpacingComplyPDFA = isSpacingComplyPDFA;
     }
 
+    @Override
+    public List<org.verapdf.model.baselayer.Object> getLinkedObjects(String s) {
+        List<org.verapdf.model.baselayer.Object> list;
+        switch (s) {
+            case DIRECT_OBJECT:
+                list = getdirectObject();
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown link " + s + " for " + get_type());
+        }
+
+        return list;
+    }
+
     /** Get the direct contents of the indirect object
      */
-    @Override
-    public List<CosObject> getdirectObject() {
-        List<CosObject> list = new ArrayList<CosObject>();
+    protected List<org.verapdf.model.baselayer.Object> getdirectObject() {
+        List<Object> list = new ArrayList<>();
         COSBase base = baseObject instanceof COSObject ? ((COSObject) baseObject).getObject() : baseObject;
         list.add(PBFactory.generateCosObject(base));
         return list;
@@ -45,11 +61,15 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
     @Override
     public boolean equals(Object o) {
+        boolean isEquals;
+
         if (o instanceof COSObject && baseObject instanceof COSDictionary)
-            return ((COSObject) o).getObject().equals(baseObject);
+            isEquals = ((COSObject) o).getObject().equals(baseObject);
         else if (o instanceof COSDictionary && baseObject instanceof COSObject)
-            return o.equals(((COSObject) baseObject).getObject());
+            isEquals = o.equals(((COSObject) baseObject).getObject());
         else
-            return super.equals(o);
+            isEquals = super.equals(o);
+
+        return isEquals;
     }
 }

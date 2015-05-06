@@ -7,7 +7,9 @@ import java.io.IOException;
 
 /**
  * Created by Evgeniy Muravitskiy on 5/4/15.
- * PDF Stream type
+ * <p>
+ *     PDF Stream type
+ * </p>
  */
 public class PBCosStream extends PBCosDict implements CosStream {
 
@@ -45,13 +47,13 @@ public class PBCosStream extends PBCosDict implements CosStream {
         } else if (base instanceof COSArray) {
             for (COSBase filter : ((COSArray) base)) {
                 if (filter instanceof COSName)
-                    filters += ((COSName) filter).getName();
+                    filters += ((COSName) filter).getName() + " ";
                 else
                     throw new IllegalArgumentException("Can`t find filters for stream");
             }
         } else
             throw new IllegalArgumentException("Not the corresponding type for filters");
-        return filters;
+        return filters.substring(0, filters.length() - 2);
     }
 
     /**  true if the spacing around stream / endstream complies with the PDF/A requirements

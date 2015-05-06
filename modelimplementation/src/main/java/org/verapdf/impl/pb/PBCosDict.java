@@ -4,6 +4,8 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.verapdf.factory.cos.PBFactory;
+import org.verapdf.model.baselayer.*;
+import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.coslayer.CosName;
 import org.verapdf.model.coslayer.CosObject;
@@ -21,6 +23,10 @@ import java.util.List;
  */
 public class PBCosDict extends PBCosObject implements CosDict {
 
+    private final static String KEYS = "keys";
+    private final static String VALUES = "values";
+    private final static String METADATA = "metadata";
+
     public PBCosDict(COSDictionary dictionary) {
         super(dictionary);
     }
@@ -32,21 +38,39 @@ public class PBCosDict extends PBCosObject implements CosDict {
         return ((COSDictionary)baseObject).size();
     }
 
+    @Override
+    public List<org.verapdf.model.baselayer.Object> getLinkedObjects(String s) {
+        List<Object> list;
+        switch (s) {
+            case KEYS:
+                list = getkeys();
+                break;
+            case VALUES:
+                list = getvalues();
+                break;
+            case METADATA:
+                list = getmetadata();
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown link " + s + " for " + get_type());
+        }
+
+        return list;
+    }
+
     /** Get all keys of the dictonary
      */
-    @Override
-    public List<CosName> getkeys() {
-        List<CosName> list = new ArrayList<CosName>(getsize());
+    protected List<Object> getkeys() {
+        List<Object> list = new ArrayList<>(getsize());
         for (COSName key : ((COSDictionary)baseObject).keySet())
-            list.add((CosName) PBFactory.generateCosObject(key));
+            list.add(PBFactory.generateCosObject(key));
         return list;
     }
 
     /** Get all values of the dictonary
      */
-    @Override
-    public List<CosObject> getvalues() {
-        List<CosObject> list = new ArrayList<CosObject>(getsize());
+    protected List<Object> getvalues() {
+        List<Object> list = new ArrayList<>(getsize());
         for (COSBase value : ((COSDictionary)baseObject).getValues())
             list.add(PBFactory.generateCosObject(value));
         return list;
@@ -55,8 +79,7 @@ public class PBCosDict extends PBCosObject implements CosDict {
     /** Get XMP metadata if it is present
      */
     // TODO : metadata support
-    @Override
-    public List<PDMetadata> getmetadata() {
+    protected List<Object> getmetadata() {
         System.err.println("Current version not support metadata handler yet. Result is null.");
         return null;
     }
