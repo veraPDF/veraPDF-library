@@ -11,10 +11,10 @@ public class Check {
     private String attr_status;
 
     private CheckLocation location;
-    private String error;
+    private CheckError error;
     private boolean isHasError;
 
-    public Check(String attr_status, CheckLocation location, String error, boolean isHasError) {
+    public Check(String attr_status, CheckLocation location, CheckError error, boolean isHasError) {
         this.attr_status = attr_status;
         this.location = location;
         this.error = error;
@@ -38,7 +38,7 @@ public class Check {
     /**
      * @return an error/warning message
      */
-    public String getError() {
+    public CheckError getError() {
         return error;
     }
 

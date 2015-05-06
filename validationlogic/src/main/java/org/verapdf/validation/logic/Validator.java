@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.ScriptableObject;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.validation.profile.model.ValidationProfile;
+import org.verapdf.validation.profile.model.*;
 import org.verapdf.validation.profile.parser.ValidationProfileParser;
 import org.verapdf.validation.report.model.*;
+import org.verapdf.validation.report.model.Rule;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,8 +26,11 @@ public class Validator {
 
     private Queue<Object> objectsQueue;
     private Queue<List<String>> objectsContext;
+    private Set<String> contextSet;
     private Map<String, List<Check>> checkMap;
     private List<String> warnings;
+
+    private String rootType;
 
     private ValidationProfile profile;
 
@@ -35,8 +41,11 @@ public class Validator {
     private ValidationInfo validate(Object root){
         objectsQueue = new LinkedList<>();
         objectsContext = new LinkedList<>();
+        contextSet = new HashSet<>();
         checkMap = new HashMap<>();
         warnings = new ArrayList<>();
+
+        rootType = root.get_type();
 
         objectsQueue.add(root);
 
@@ -44,6 +53,8 @@ public class Validator {
         rootContext.add(root.get_id());
 
         objectsContext.add(rootContext);
+
+        contextSet.add(root.get_id());
 
         while(!objectsQueue.isEmpty()){
             checkNext();
@@ -58,9 +69,85 @@ public class Validator {
         return new ValidationInfo(new Profile(profile.getName(), profile.getHash()), new Result(new Details(rules,warnings)));
     }
 
-    private void checkNext(){
-        // This method should check next object in objectQueue (with deleting it from the queue and it's context from objectsContext,
-        // and added in them object's links) and write the result into checkMap or warnings.
+    private boolean checkNext(){
+        boolean res = true;
+        Object checkObject = objectsQueue.poll();
+        List<String> checkContext = objectsContext.poll();
+
+        for(org.verapdf.validation.profile.model.Rule rule : profile.getRoolsForObject(checkObject.get_type())){
+            res &= checkObjWithRule(checkObject, checkContext, rule, getScript(checkObject, rule));
+        }
+
+        for(String checkType : checkObject.getSuperTypes()){
+            for(org.verapdf.validation.profile.model.Rule rule : profile.getRoolsForObject(checkType)){
+                res &= checkObjWithRule(checkObject, checkContext, rule, getScript(checkObject, rule));
+            }
+        }
+
+        for(String link : checkObject.getLinks()){
+            for(Object obj : checkObject.getLinkedObjects(link)){
+                if(!contextSet.contains(obj.get_id())){
+                    objectsQueue.add(obj);
+                    List<String> objContext = new ArrayList<>(checkContext);
+                    objContext.add(obj.get_id());
+                    objectsContext.add(objContext);
+                    contextSet.add(obj.get_id());
+                }
+            }
+        }
+
+        return res;
+    }
+
+    private String getScript(Object obj, org.verapdf.validation.profile.model.Rule rule){
+        StringBuffer buffer = new StringBuffer();
+        for (String prop : obj.getProperties()){
+            buffer.append("var " + prop + " = obj." + prop + ";\n");
+        }
+
+        buffer.append("function test(){return ");
+        buffer.append(rule.getTest());
+        buffer.append(";}\ntest();");
+        return buffer.toString();
+    }
+
+
+    private boolean checkObjWithRule(Object obj, List<String> context, org.verapdf.validation.profile.model.Rule rule, String script){
+        Context cx = Context.enter();
+        ScriptableObject scope = cx.initStandardObjects();
+
+        scope.put("obj", scope, obj);
+
+        Boolean res = (Boolean) cx.evaluateString(scope, script, null, 0, null);
+
+        Context.exit();
+
+        CheckLocation loc = new CheckLocation(rootType, context);
+
+        Check check;
+
+        if(res) {
+            check = new Check("passed", loc, null, false);
+        }
+        else{
+            List<String> args = new ArrayList<>();
+
+            for(String arg : rule.getRuleError().getArgument()){
+                args.add(cx.evaluateString(scope, "obj."+arg, null, 0, null).toString());
+            }
+
+            CheckError error = new CheckError(rule.getRuleError().getMessage(), args);
+
+            check = new Check("passed", loc, error, rule.isHasError());
+        }
+
+        if(checkMap.get(rule.getAttr_id()) == null){
+            checkMap.put(rule.getAttr_id(), new ArrayList<Check>());
+        }
+
+        checkMap.get(rule.getAttr_id()).add(check);
+
+        return res;
     }
 
     /**
