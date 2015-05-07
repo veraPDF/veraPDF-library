@@ -2,7 +2,6 @@ package org.verapdf.impl.pb;
 
 import org.apache.pdfbox.cos.COSBase;
 import org.verapdf.model.ModelHelper;
-import org.verapdf.model.baselayer.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.tools.IDGenerator;
 import org.verapdf.model.coslayer.CosObject;
@@ -63,7 +62,7 @@ public class PBCosObject implements CosObject{
         return id;
     }
 
-    public boolean equals(Object o) {
+    public boolean compareTo(java.lang.Object o) {
         if (o instanceof COSBase)
             return baseObject.equals(o);
         else

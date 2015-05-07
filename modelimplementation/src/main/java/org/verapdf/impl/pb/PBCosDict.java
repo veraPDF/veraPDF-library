@@ -4,12 +4,8 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.verapdf.factory.cos.PBFactory;
-import org.verapdf.model.baselayer.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
-import org.verapdf.model.coslayer.CosName;
-import org.verapdf.model.coslayer.CosObject;
-import org.verapdf.model.pdlayer.PDMetadata;
 
 import java.util.ArrayList;
 import java.util.List;

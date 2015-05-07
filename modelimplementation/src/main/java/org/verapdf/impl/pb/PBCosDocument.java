@@ -3,19 +3,19 @@ package org.verapdf.impl.pb;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDocument;
 import org.verapdf.factory.cos.PBFactory;
-import org.verapdf.model.baselayer.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDocument;
 import org.verapdf.model.coslayer.CosIndirect;
 import org.verapdf.model.coslayer.CosTrailer;
-import org.verapdf.model.pdlayer.PDDocument;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Evgeniy Muravitskiy on 5/4/15.
- * Low-level PDF Document object
+ * <p>
+ *     Low-level PDF Document object
+ * </p>
  */
 public class PBCosDocument extends PBCosObject implements CosDocument {
 

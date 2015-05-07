@@ -1,13 +1,10 @@
 package org.verapdf.impl.pb;
 
-
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.verapdf.factory.cos.PBFactory;
-import org.verapdf.model.baselayer.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosArray;
-import org.verapdf.model.coslayer.CosObject;
 
 import java.util.ArrayList;
 import java.util.List;

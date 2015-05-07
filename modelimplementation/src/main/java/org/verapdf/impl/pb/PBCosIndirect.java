@@ -4,10 +4,8 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSObject;
 import org.verapdf.factory.cos.PBFactory;
-import org.verapdf.model.baselayer.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosIndirect;
-import org.verapdf.model.coslayer.CosObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +50,7 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
         return list;
     }
 
-    /**  true if the words 'obj' and 'endobj' are surrounded by the correct spacings accoring to PDF/A standard
+    /**  true if the words 'obj' and 'endobj' are surrounded by the correct spacings according to PDF/A standard
      */
     @Override
     public Boolean getspacingComplyPDFA() {
@@ -60,7 +58,7 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean compareTo(Object o) {
         boolean isEquals;
 
         if (o instanceof COSObject && baseObject instanceof COSDictionary)
@@ -68,7 +66,7 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
         else if (o instanceof COSDictionary && baseObject instanceof COSObject)
             isEquals = o.equals(((COSObject) baseObject).getObject());
         else
-            isEquals = super.equals(o);
+            isEquals = super.compareTo(o);
 
         return isEquals;
     }
