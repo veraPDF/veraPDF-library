@@ -22,6 +22,9 @@ public class PBCosNameFactory implements PBCosFactory<CosName, COSName> {
         return new PBCosName(pdfBoxObject);
     }
 
+    /** Method for transforming COSName to corresponding CosName. Not takes into account already
+     * exists objects.
+     */
     @Override
     public CosName generateCosObject(List<CosObject> parents, COSName pdfBoxObject) {
         return generateCosObject(pdfBoxObject);

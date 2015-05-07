@@ -2,6 +2,7 @@ package org.verapdf.factory.cos;
 
 import org.apache.pdfbox.cos.COSArray;
 import org.verapdf.impl.pb.PBCosArray;
+import org.verapdf.impl.pb.PBCosObject;
 import org.verapdf.model.coslayer.CosArray;
 import org.verapdf.model.coslayer.CosObject;
 
@@ -30,7 +31,7 @@ public class PBCosArrayFactory implements PBCosFactory<org.verapdf.model.coslaye
     @Override
     public CosArray generateCosObject(List<CosObject> parents, COSArray pdfBoxObject) {
         for (CosObject object : parents)
-            if (object.equals(pdfBoxObject))
+            if (((PBCosObject)object).compareTo(pdfBoxObject))
                 return (CosArray) object;
 
         CosArray array = generateCosObject(pdfBoxObject);

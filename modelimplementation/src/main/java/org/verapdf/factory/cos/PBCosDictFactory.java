@@ -1,6 +1,7 @@
 package org.verapdf.factory.cos;
 
 import org.apache.pdfbox.cos.COSDictionary;
+import org.verapdf.impl.pb.PBCosObject;
 import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.impl.pb.PBCosDict;
 import org.verapdf.model.coslayer.CosObject;
@@ -30,7 +31,7 @@ public class PBCosDictFactory implements PBCosFactory<CosDict, COSDictionary> {
     @Override
     public CosDict generateCosObject(List<CosObject> parents, COSDictionary pdfBoxObject) {
         for (CosObject object : parents)
-            if (object.equals(pdfBoxObject))
+            if (((PBCosObject)object).compareTo(pdfBoxObject))
                 return (CosDict) object;
 
         CosDict dictionary = generateCosObject(pdfBoxObject);

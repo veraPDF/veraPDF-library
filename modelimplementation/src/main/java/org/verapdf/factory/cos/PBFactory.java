@@ -27,6 +27,9 @@ public final class PBFactory {
         return generateCosObject(object, new ArrayList<CosObject>());
     }
 
+    /** This method transform some pdf box object to correspond object of abstract model
+     *  with taking into account the <code>parents</code>
+     */
     public static CosObject generateCosObject(COSBase object, List<CosObject> parents) {
         PBCosFactory factory = undefinedType.get(object.getClass());
         return generateCosObject(object, factory, parents);
@@ -38,17 +41,23 @@ public final class PBFactory {
         return generateCosObject(type, object, new ArrayList<CosObject>());
     }
 
+    /** This method transform some pdf box object to specific object of abstract model
+     *  with taking into account the <code>parents</code>
+     */
     public static CosObject generateCosObject(Class type, COSBase object, List<CosObject> parents) {
         PBCosFactory factory = definedType.get(type);
         return generateCosObject(object, factory, parents);
     }
 
+    /** This method transform given pdf box <code>object</code> to specific CosObject
+     * determine by <code>factory</code> and taking into account the <code>parents</code>
+     */
     private static CosObject generateCosObject(COSBase object, PBCosFactory factory, List<CosObject> parents) {
         if (factory == null)
             throw new IllegalArgumentException("Unknown type of object: " + object.getClass() + ". Maybe current type" +
                     " not supported yet.");
 
-        CosObject result = factory.generateCosObject(parents, object);
+        CosObject result = parents != null ? factory.generateCosObject(parents, object) : factory.generateCosObject(object);
         if (result != null)
             return result;
         throw new IllegalArgumentException("Can`t transform PDFBOX`s object: " + object.getClass());

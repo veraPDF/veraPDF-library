@@ -22,6 +22,9 @@ public class PBCosIntegerFactory implements PBCosFactory<CosInteger, COSInteger>
         return new PBCosInteger(pdfBoxObject);
     }
 
+    /** Method for transforming COSInteger to corresponding CosInteger. Not takes into account already
+     * exists objects.
+     */
     @Override
     public CosInteger generateCosObject(List<CosObject> parents, COSInteger pdfBoxObject) {
         return generateCosObject(pdfBoxObject);

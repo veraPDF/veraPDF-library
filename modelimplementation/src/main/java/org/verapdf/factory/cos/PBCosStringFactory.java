@@ -22,6 +22,9 @@ public class PBCosStringFactory implements PBCosFactory<CosString, COSString> {
         return new PBCosString(pdfBoxObject, pdfBoxObject.getForceHexForm());
     }
 
+    /** Method for transforming COSString to corresponding CosString. Not takes into account already
+     * exists objects.
+     */
     @Override
     public CosString generateCosObject(List<CosObject> parents, COSString pdfBoxObject) {
         return generateCosObject(pdfBoxObject);

@@ -22,11 +22,16 @@ class PBCosObjectFactory implements PBCosFactory<CosObject, COSBase> {
         return new PBCosObject(pdfBoxObject);
     }
 
+    /**
+     * Method for transforming COSBase to corresponding CosObject. Also takes into account already
+     * exists objects.
+     */
     @Override
     public CosObject generateCosObject(List<CosObject> parents, COSBase pdfBoxObject) {
         for (CosObject object : parents)
-            if (object.equals(pdfBoxObject))
+            if (((PBCosObject)object).compareTo(pdfBoxObject))
                 return object;
+
         CosObject object = generateCosObject(pdfBoxObject);
         parents.add(object);
         return object;

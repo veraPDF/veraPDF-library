@@ -11,11 +11,18 @@ import java.util.List;
  * Created by Evgeniy Muravitskiy on 5/4/15.
  */
 public class PBCosStreamFactory implements PBCosFactory<CosStream, COSStream> {
+
+    /** Method for transforming COSStream to corresponding CosStream
+     */
     @Override
     public CosStream generateCosObject(COSStream pdfBoxObject) {
         return new PBCosStream(pdfBoxObject);
     }
 
+    /**
+     * Method for transforming COSStream to corresponding CosStream. Also takes into account already
+     * exists objects.
+     */
     @Override
     public CosStream generateCosObject(List<CosObject> parents, COSStream pdfBoxObject) {
         for (CosObject object : parents)

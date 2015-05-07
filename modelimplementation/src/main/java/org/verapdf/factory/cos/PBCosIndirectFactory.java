@@ -1,6 +1,7 @@
 package org.verapdf.factory.cos;
 
 import org.apache.pdfbox.cos.COSBase;
+import org.verapdf.impl.pb.PBCosObject;
 import org.verapdf.model.coslayer.CosIndirect;
 import org.verapdf.impl.pb.PBCosIndirect;
 import org.verapdf.model.coslayer.CosObject;
@@ -28,7 +29,7 @@ public class PBCosIndirectFactory implements PBCosFactory<CosIndirect, COSBase> 
     @Override
     public CosIndirect generateCosObject(List<CosObject> parents, COSBase pdfBoxObject) {
         for (CosObject object : parents)
-            if (object.equals(pdfBoxObject))
+            if (((PBCosObject)object).compareTo(pdfBoxObject))
                 return (CosIndirect) object;
 
         CosIndirect indirect = generateCosObject(pdfBoxObject);

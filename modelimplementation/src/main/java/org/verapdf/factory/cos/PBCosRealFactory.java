@@ -22,6 +22,9 @@ public class PBCosRealFactory implements PBCosFactory<CosReal, COSFloat> {
         return new PBCosReal(pdfBoxObject);
     }
 
+    /** Method for transforming COSFloat to corresponding CosReal. Not takes into account already
+     * exists objects.
+     */
     @Override
     public CosReal generateCosObject(List<CosObject> parents, COSFloat pdfBoxObject) {
         return generateCosObject(pdfBoxObject);

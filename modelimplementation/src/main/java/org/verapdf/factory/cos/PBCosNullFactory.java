@@ -22,6 +22,9 @@ public class PBCosNullFactory implements PBCosFactory<CosNull, COSNull> {
         return PBCosNull.NULL;
     }
 
+    /** Method for transforming COSNull to corresponding CosNull. Not takes into account already
+     * exists objects.
+     */
     @Override
     public CosNull generateCosObject(List<CosObject> parents, COSNull pdfBoxObject) {
         return generateCosObject(pdfBoxObject);
