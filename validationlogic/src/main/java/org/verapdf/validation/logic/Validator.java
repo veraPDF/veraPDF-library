@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.*;
 
 import org.mozilla.javascript.Context;
+import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.ScriptableObject;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.validation.profile.model.*;
@@ -74,13 +75,17 @@ public class Validator {
         Object checkObject = objectsQueue.poll();
         List<String> checkContext = objectsContext.poll();
 
-        for(org.verapdf.validation.profile.model.Rule rule : profile.getRoolsForObject(checkObject.get_type())){
-            res &= checkObjWithRule(checkObject, checkContext, rule, getScript(checkObject, rule));
+        if (profile.getRoolsForObject(checkObject.get_type()) != null) {
+            for (org.verapdf.validation.profile.model.Rule rule : profile.getRoolsForObject(checkObject.get_type())) {
+                res &= checkObjWithRule(checkObject, checkContext, rule, getScript(checkObject, rule));
+            }
         }
 
         for(String checkType : checkObject.getSuperTypes()){
-            for(org.verapdf.validation.profile.model.Rule rule : profile.getRoolsForObject(checkType)){
-                res &= checkObjWithRule(checkObject, checkContext, rule, getScript(checkObject, rule));
+            if (profile.getRoolsForObject(checkType) != null) {
+                for (org.verapdf.validation.profile.model.Rule rule : profile.getRoolsForObject(checkType)) {
+                    res &= checkObjWithRule(checkObject, checkContext, rule, getScript(checkObject, rule));
+                }
             }
         }
 
@@ -102,7 +107,7 @@ public class Validator {
     private String getScript(Object obj, org.verapdf.validation.profile.model.Rule rule){
         StringBuffer buffer = new StringBuffer();
         for (String prop : obj.getProperties()){
-            buffer.append("var " + prop + " = obj." + prop + ";\n");
+            buffer.append("var " + prop + " = obj.get" + prop + "();\n");
         }
 
         buffer.append("function test(){return ");
@@ -120,8 +125,6 @@ public class Validator {
 
         Boolean res = (Boolean) cx.evaluateString(scope, script, null, 0, null);
 
-        Context.exit();
-
         CheckLocation loc = new CheckLocation(rootType, context);
 
         Check check;
@@ -133,12 +136,13 @@ public class Validator {
             List<String> args = new ArrayList<>();
 
             for(String arg : rule.getRuleError().getArgument()){
-                args.add(cx.evaluateString(scope, "obj."+arg, null, 0, null).toString());
+                NativeJavaObject resArg = (NativeJavaObject) cx.evaluateString(scope, "obj.get"+arg+"()", null, 0, null);
+                args.add(resArg.unwrap().toString());
             }
 
             CheckError error = new CheckError(rule.getRuleError().getMessage(), args);
 
-            check = new Check("passed", loc, error, rule.isHasError());
+            check = new Check("failed", loc, error, rule.isHasError());
         }
 
         if(checkMap.get(rule.getAttr_id()) == null){
@@ -146,6 +150,8 @@ public class Validator {
         }
 
         checkMap.get(rule.getAttr_id()).add(check);
+
+        Context.exit();
 
         return res;
     }

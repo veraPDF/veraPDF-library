@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile model="test model profile">
+    <name>Validation profile for testing</name>
+    <description>STR_ID_101</description>
+    <creator>Bezrukov</creator>
+    <created>2015-05-07</created>
+    <hash>Some hash</hash>
+    <rules>
+
+        <rule id="rule1" object="CosDict">
+            <description>STR_ID_401</description>
+            <test>size == 2</test>
+            <error>
+                <message>real size is %</message>
+                <argument>size</argument>
+            </error>
+            <reference>
+                <specification>ISO19005-1</specification>
+                <clause>6.1.2</clause>
+            </reference>
+        </rule>
+
+        <rule id="rule53" object="CosInteger">
+            <description>STR_ID_608</description>
+            <test>intValue == 41 &amp;&amp; stringValue == "41"</test>
+            <warning><message>STR_ID_609</message> </warning>
+            <reference>
+                <specification>ISO19005-1</specification>
+                <clause>6.7.3</clause>
+            </reference>
+            <fix id="fix1">
+                <description>STR_ID_893</description>
+                <info>
+                    <message>STR_ID_894</message>
+                </info>
+                <error>
+                    <message>STR_ID_895</message>
+                </error>
+            </fix>
+        </rule>
+
+        <rule id="rule1111" object="CosNumber">
+            <description>STR_ID_401</description>
+            <test>intValue != 41</test>
+            <error>
+                <message>real value is %</message>
+                <argument>intValue</argument>
+            </error>
+            <reference>
+                <specification>ISO19005-1</specification>
+                <clause>6.1.2</clause>
+            </reference>
+        </rule>
+
+        <rule id="rule13" object="PDAnnot">
+            <description>STR_ID_401</description>
+            <test>Subtype == "pdatest"</test>
+            <error>
+                <message>real subtype is %</message>
+                <argument>Subtype</argument>
+            </error>
+            <reference>
+                <specification>ISO19005-1</specification>
+                <clause>6.1.2</clause>
+            </reference>
+        </rule>
+
+    </rules>
+</profile>
