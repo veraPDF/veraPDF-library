@@ -8,6 +8,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.coslayer.CosInteger;
 import org.verapdf.model.pdlayer.PDAnnot;
+import org.verapdf.validation.report.XMLValidationReport;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import static org.junit.Assert.*;
@@ -59,6 +60,7 @@ public class ValidationLogicTest {
 
         assertEquals(info.getResult().getSummary().getAttr_passedChecks(), 3);
         assertEquals(info.getResult().getSummary().getAttr_failedChecks(), 3);
+
     }
 
 }

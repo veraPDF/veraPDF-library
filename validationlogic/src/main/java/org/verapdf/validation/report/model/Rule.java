@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Rule {
     private String attr_id;
-    private String status;
+    private String attr_status;
     private int attr_checks;
 
     private List<Check> checks;
@@ -27,7 +27,7 @@ public class Rule {
             }
         }
 
-        this.status = status;
+        this.attr_status = status;
 
         this.attr_checks = checks.size();
         this.checks = checks;
@@ -41,10 +41,10 @@ public class Rule {
     }
 
     /**
-     * @return status (passed/failed) of the rule
+     * @return actual status (passed/failed) of the rule
      */
-    public String getStatus() {
-        return status;
+    public String getAttr_status() {
+        return attr_status;
     }
 
     /**

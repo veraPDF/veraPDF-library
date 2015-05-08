@@ -1,0 +1,152 @@
+package org.verapdf.validation.report;
+
+import javax.xml.parsers.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
+
+import org.verapdf.validation.report.model.Check;
+import org.verapdf.validation.report.model.Rule;
+import org.verapdf.validation.report.model.Summary;
+import org.w3c.dom.*;
+
+import org.verapdf.validation.report.model.ValidationInfo;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+
+/**
+ * Generating XML structure of file for validation report
+ * Created by bezrukov on 5/8/15.
+ *
+ * @author Maksim Bezrukov
+ * @version 1.0
+ */
+public class XMLValidationReport {
+
+    /**
+     * Creates tree of xml tags for validation report
+     * @param info --- validation info model to be writed
+     * @param doc --- document used for writing xml in further
+     * @return root element of the xml structure
+     */
+    public static Element makeXMLTree(ValidationInfo info, Document doc){
+
+        Element validationInfo = doc.createElement("validationInfo");
+
+        Element profile = doc.createElement("profile");
+        validationInfo.appendChild(profile);
+
+        Element profileName = doc.createElement("name");
+        profileName.appendChild(doc.createTextNode(info.getProfile().getName()));
+        profile.appendChild(profileName);
+
+        Element profileHash = doc.createElement("hash");
+        profileHash.appendChild(doc.createTextNode(info.getProfile().getHash()));
+        profile.appendChild(profileHash);
+
+        Element result = doc.createElement("result");
+        validationInfo.appendChild(result);
+
+        Element compliant = doc.createElement("compliant");
+        compliant.appendChild(doc.createTextNode(Boolean.toString(info.getResult().isCompliant())));
+        result.appendChild(compliant);
+
+        Element statement = doc.createElement("statement");
+        statement.appendChild(doc.createTextNode(info.getResult().getStatement()));
+        result.appendChild(statement);
+
+        Element summary = doc.createElement("summary");
+        summary.setAttribute("passedRules", Integer.toString(info.getResult().getSummary().getAttr_passedRules()));
+        summary.setAttribute("failedRules", Integer.toString(info.getResult().getSummary().getAttr_failedRules()));
+        summary.setAttribute("passedChecks", Integer.toString(info.getResult().getSummary().getAttr_passedChecks()));
+        summary.setAttribute("failedChecks", Integer.toString(info.getResult().getSummary().getAttr_failedChecks()));
+        summary.setAttribute("completedMetadataFixes", Integer.toString(info.getResult().getSummary().getAttr_completedMetadataFixes()));
+        summary.setAttribute("failedMetadataFixes", Integer.toString(info.getResult().getSummary().getAttr_failedMetadataFixes()));
+        summary.setAttribute("warnings", Integer.toString(info.getResult().getSummary().getAttr_warnings()));
+        result.appendChild(summary);
+
+        Element details = doc.createElement("details");
+        result.appendChild(details);
+
+        Element rules = doc.createElement("rules");
+        details.appendChild(rules);
+
+        for(Rule rul : info.getResult().getDetails().getRules()){
+            Element rule = doc.createElement("rule");
+
+            rule.setAttribute("id", rul.getAttr_id());
+            rule.setAttribute("status", rul.getAttr_status());
+            rule.setAttribute("checks", Integer.toString(rul.getAttr_checks()));
+
+            for(Check che : rul.getChecks()){
+                Element check = doc.createElement("check");
+
+                check.setAttribute("status", che.getAttr_status());
+
+                Element location = doc.createElement("location");
+                location.setAttribute("level", che.getLocation().getAttr_level());
+                Element context = doc.createElement("context");
+
+                StringBuffer buffer = new StringBuffer(che.getLocation().getContext().get(0));
+                for (int i = 1; i < che.getLocation().getContext().size(); ++i){
+                    buffer.append(" - " + che.getLocation().getContext().get(i));
+                }
+
+                context.appendChild(doc.createTextNode(buffer.toString()));
+
+                location.appendChild(context);
+                check.appendChild(location);
+
+                if (che.getError() != null){
+                    String errorName = che.isHasError() ? "error" : "warning";
+                    Element error = doc.createElement(errorName);
+
+                    Element message = doc.createElement("message");
+                    message.appendChild(doc.createTextNode(che.getError().getMessage()));
+                    error.appendChild(message);
+
+                    for(String attr : che.getError().getArgument()){
+                        Element argument = doc.createElement("argument");
+                        argument.appendChild(doc.createTextNode(attr));
+                        error.appendChild(argument);
+                    }
+
+                    check.appendChild(error);
+                }
+
+                rule.appendChild(check);
+            }
+
+            rules.appendChild(rule);
+        }
+
+        Element warnings = doc.createElement("warnings");
+        details.appendChild(warnings);
+
+        for(String war : info.getResult().getDetails().getWarnings()){
+            Element warning = doc.createElement("warning");
+            warning.appendChild(doc.createTextNode(war));
+            warnings.appendChild(warning);
+        }
+
+        return validationInfo;
+    }
+
+    public static void writeXMLValidationReport(ValidationInfo info, String path) throws ParserConfigurationException, TransformerException, FileNotFoundException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        Document doc = builder.newDocument();
+
+        doc.appendChild(makeXMLTree(info, doc));
+
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.transform(new DOMSource(doc), new StreamResult(new FileOutputStream(path)));
+    }
+
+}

@@ -24,7 +24,7 @@ public class Result {
         int warnings = details.getWarnings().size();
 
         for(Rule rule : details.getRules()){
-            if (rule.getStatus().equals("passed")){
+            if (rule.getAttr_status().equals("passed")){
                 ++passedRules;
             }
             else {
@@ -44,7 +44,7 @@ public class Result {
         Summary summary = new Summary(passedRules, failedRules, passedChecks, failedChecks, completedMetadataFixes, failedMetadataFixes, warnings);
 
         this.compliant = compliant;
-        this.statement = compliant ? "STR_ID_03" : "STR_ID_04";
+        this.statement = compliant ? "Validation is successful! Everything is correct!" : "Validation failed. Something is wrong.";
         this.summary = summary;
         this.details = details;
     }
