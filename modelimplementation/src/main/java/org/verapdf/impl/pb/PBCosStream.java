@@ -15,21 +15,29 @@ public class PBCosStream extends PBCosDict implements CosStream {
 
     public PBCosStream(COSStream stream) {
         super(stream);
+        setType("CosStream");
     }
 
     /**  length of the stream
      */
+    // TODO : simplify this holy shit
     @Override
     public Integer getlength() {
         int length = 0;
-        if (((COSStream) baseObject).getItem(COSName.LENGTH) != null)
-            return ((COSInteger) ((COSStream) baseObject).getItem(COSName.LENGTH)).intValue();
+        COSStream stream = (COSStream) this.baseObject;
+
+        if (stream.getItem(COSName.LENGTH) != null)
+            return ((COSInteger) stream.getItem(COSName.LENGTH)).intValue();
+
         try {
-            if (((COSStream) baseObject).getUnfilteredStream() != null)
-                length = (((COSStream) baseObject).getUnfilteredStream()).available();
-            if (((COSStream) baseObject).getFilteredStream() != null)
-                length += ((COSStream) baseObject).getFilteredLength();
-        } catch (IOException ignore) {}
+            if (stream.getUnfilteredStream() != null)
+                length = (stream.getUnfilteredStream()).available();
+            if (stream.getFilteredStream() != null)
+                length += stream.getFilteredLength();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return length;
     }
 
@@ -43,16 +51,19 @@ public class PBCosStream extends PBCosDict implements CosStream {
             return null;
 
         if (base instanceof COSName) {
-            filters = ((COSName)base).getName();
+            return ((COSName)base).getName();
         } else if (base instanceof COSArray) {
             for (COSBase filter : ((COSArray) base)) {
-                if (filter instanceof COSName)
+                if (filter instanceof COSName) {
                     filters += ((COSName) filter).getName() + " ";
-                else
+                } else {
                     throw new IllegalArgumentException("Can`t find filters for stream");
+                }
             }
-        } else
+        } else {
             throw new IllegalArgumentException("Not the corresponding type for filters");
+        }
+        // need to discard last white space
         return filters.substring(0, filters.length() - 2);
     }
 

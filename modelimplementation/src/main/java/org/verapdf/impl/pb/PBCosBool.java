@@ -14,12 +14,13 @@ public class PBCosBool extends PBCosObject implements CosBool {
 
     public PBCosBool(COSBoolean bool) {
         super(bool);
+        setType("CosBool");
     }
 
     /**Get value of this object
      */
     @Override
     public Boolean getvalue() {
-        return ((COSBoolean)baseObject).getValue();
+        return ((COSBoolean) baseObject).getValueAsObject();
     }
 }

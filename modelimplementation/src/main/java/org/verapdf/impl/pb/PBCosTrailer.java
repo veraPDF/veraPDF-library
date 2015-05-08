@@ -13,5 +13,6 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
 
     public PBCosTrailer(COSDictionary pdfBoxObject) {
         super(pdfBoxObject);
+        setType("CosTrailer");
     }
 }

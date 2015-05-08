@@ -5,6 +5,7 @@ import org.apache.pdfbox.cos.COSBase;
 import org.verapdf.factory.cos.PBFactory;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosArray;
+import org.verapdf.model.coslayer.CosObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,11 @@ import java.util.List;
  */
 public class PBCosArray extends PBCosObject implements CosArray {
 
-    private final static String ELEMENTS = "elements";
+    public final static String ELEMENTS = "elements";
 
     public PBCosArray(COSArray array) {
         super(array);
+        setType("CosArray");
     }
 
     /**
@@ -30,23 +32,27 @@ public class PBCosArray extends PBCosObject implements CosArray {
      */
     @Override
     public Integer getsize() {
-        return ((COSArray)baseObject).size();
+        return ((COSArray) baseObject).size();
     }
 
     @Override
-    public List<org.verapdf.model.baselayer.Object> getLinkedObjects(String s) {
-        if (s.equals(ELEMENTS))
-            return getelements();
-        throw new IllegalArgumentException("Unknown link " + s + " for " + get_type());
+    public List<? extends Object> getLinkedObjects(String link) {
+        if (link.equals(ELEMENTS)) {
+            return this.getElements();
+        }
+        else {
+            return super.getLinkedObjects(link);
+        }
     }
     /**
      * Get all elements of array.
      * @return elements of array
      */
-    protected List<Object> getelements() {
-        List<Object> list = new ArrayList<>(getsize());
-        for (COSBase base : ((COSArray)baseObject))
+    private List<CosObject> getElements() {
+        List<CosObject> list = new ArrayList<>(this.getsize());
+        for (COSBase base : ((COSArray) baseObject)) {
             list.add(PBFactory.generateCosObject(base));
+        }
         return list;
     }
 }

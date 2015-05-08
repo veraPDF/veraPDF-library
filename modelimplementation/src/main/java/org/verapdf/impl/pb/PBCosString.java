@@ -13,18 +13,19 @@ import org.verapdf.model.coslayer.CosString;
  */
 public class PBCosString extends PBCosObject implements CosString{
 
-    private boolean isHex;
+    private Boolean isHex;
 
-    public PBCosString(COSString value, boolean isHex) {
+    public PBCosString(COSString value, Boolean isHex) {
         super(value);
         this.isHex = isHex;
+        setType("CosString");
     }
 
     /** Get Unicode string value stored in the PDF object
      */
     @Override
     public String getvalue() {
-        return ((COSString)baseObject).getString();
+        return ((COSString) baseObject).getString();
     }
 
     /** true if the string is stored in Hex format
@@ -41,6 +42,6 @@ public class PBCosString extends PBCosObject implements CosString{
     @Override
     public String getorigValue() {
         System.err.println("Original value of string is not correct. Need to update classes of pdfbox.");
-        return new String(((COSString)baseObject).getBytes());
+        return new String(((COSString) baseObject).getBytes());
     }
 }

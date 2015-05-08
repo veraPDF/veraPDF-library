@@ -16,5 +16,6 @@ public class PBCosReal extends PBCosNumber implements CosReal {
 
     public PBCosReal(COSFloat value) {
         super(value);
+        setType("CosReal");
     }
 }

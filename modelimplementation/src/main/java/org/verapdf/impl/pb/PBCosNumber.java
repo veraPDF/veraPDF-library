@@ -26,20 +26,20 @@ public abstract class PBCosNumber extends PBCosObject implements CosNumber {
      */
     @Override
     public String getstringValue() {
-        return ((COSNumber)baseObject).doubleValue() + "";
+        return String.valueOf(((COSNumber) baseObject).doubleValue());
     }
 
     /** Get truncated integer value
      */
     @Override
     public Integer getintValue() {
-        return ((COSNumber)baseObject).intValue();
+        return ((COSNumber) baseObject).intValue();
     }
 
     /** Get original decimal value
      */
     @Override
     public BigDecimal getrealValue() {
-        return new BigDecimal(((COSNumber)baseObject).doubleValue());
+        return new BigDecimal(((COSNumber) baseObject).doubleValue());
     }
 }

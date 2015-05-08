@@ -18,6 +18,7 @@ public final class PBCosNull extends PBCosObject implements CosNull {
 
     private PBCosNull(COSNull nil) {
         super(nil);
+        setType("CosNull");
     }
 
     @Override

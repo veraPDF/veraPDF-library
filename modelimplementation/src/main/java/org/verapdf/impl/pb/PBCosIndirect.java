@@ -4,8 +4,8 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSObject;
 import org.verapdf.factory.cos.PBFactory;
-import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosIndirect;
+import org.verapdf.model.coslayer.CosObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,22 +20,24 @@ import java.util.List;
 public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
     private final static String DIRECT_OBJECT = "directObject";
-    private boolean isSpacingComplyPDFA;
+    private Boolean isSpacingComplyPDFA;
 
-    public PBCosIndirect(COSBase directObject,boolean isSpacingComplyPDFA) {
+    public PBCosIndirect(COSBase directObject, Boolean isSpacingComplyPDFA) {
         super(directObject);
         this.isSpacingComplyPDFA = isSpacingComplyPDFA;
+        setType("CosIndirect");
     }
 
     @Override
-    public List<org.verapdf.model.baselayer.Object> getLinkedObjects(String s) {
-        List<org.verapdf.model.baselayer.Object> list;
-        switch (s) {
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
+        List<? extends org.verapdf.model.baselayer.Object> list;
+
+        switch (link) {
             case DIRECT_OBJECT:
                 list = getdirectObject();
                 break;
             default:
-                throw new IllegalArgumentException("Unknown link " + s + " for " + get_type());
+                throw new IllegalArgumentException("Unknown link " + link + " for " + get_type());
         }
 
         return list;
@@ -43,8 +45,8 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
     /** Get the direct contents of the indirect object
      */
-    protected List<org.verapdf.model.baselayer.Object> getdirectObject() {
-        List<Object> list = new ArrayList<>();
+    protected List<CosObject> getdirectObject() {
+        List<CosObject> list = new ArrayList<>();
         COSBase base = baseObject instanceof COSObject ? ((COSObject) baseObject).getObject() : baseObject;
         list.add(PBFactory.generateCosObject(base));
         return list;
@@ -58,15 +60,16 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
     }
 
     @Override
-    public boolean compareTo(java.lang.Object o) {
+    public boolean compareTo(java.lang.Object object) {
         boolean isEquals;
 
-        if (o instanceof COSObject && baseObject instanceof COSDictionary)
-            isEquals = ((COSObject) o).getObject().equals(baseObject);
-        else if (o instanceof COSDictionary && baseObject instanceof COSObject)
-            isEquals = o.equals(((COSObject) baseObject).getObject());
-        else
-            isEquals = super.compareTo(o);
+        if (object instanceof COSObject && !(baseObject instanceof COSObject)) {
+            isEquals = ((COSObject) object).getObject().equals(baseObject);
+        } else if (!(object instanceof COSObject) && baseObject instanceof COSObject) {
+            isEquals = object.equals(((COSObject) baseObject).getObject());
+        } else {
+            isEquals = super.compareTo(object);
+        }
 
         return isEquals;
     }

@@ -19,21 +19,22 @@ import java.util.List;
  */
 public class PBCosDocument extends PBCosObject implements CosDocument {
 
-    private final static String TRAILER = "trailer";
-    private final static String INDIRECT_OBJECTS = "indirectObjects";
-    private final static String DOCUMENT = "document";
+    public final static String TRAILER = "trailer";
+    public final static String INDIRECT_OBJECTS = "indirectObjects";
+    public final static String DOCUMENT = "document";
 
     private Integer sizeOfDocument;
 
     public PBCosDocument(COSDocument baseObject) {
         super(baseObject);
+        setType("CosDocument");
     }
 
     /**  Number of indirect objects in the document
      */
     @Override
     public Integer getnrIndirects() {
-        return ((COSDocument)baseObject).getObjects().size();
+        return ((COSDocument) baseObject).getObjects().size();
     }
 
     /**  Size of the byte sequence representing the document
@@ -44,20 +45,21 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     }
 
     @Override
-    public List<org.verapdf.model.baselayer.Object> getLinkedObjects(String s) {
-        List<org.verapdf.model.baselayer.Object> list;
-        switch (s) {
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
+        List<? extends org.verapdf.model.baselayer.Object> list;
+
+        switch (link) {
             case TRAILER:
-                list = gettrailer();
+                list = this.getTrailer();
                 break;
             case INDIRECT_OBJECTS:
-                list = getindirectObjects();
+                list = this.getIndirectObjects();
                 break;
             case DOCUMENT:
-                list = getdocument();
+                list = this.getDocument();
                 break;
             default:
-                throw new IllegalArgumentException("Unknown link " + s + " for " + get_type());
+                list = super.getLinkedObjects(link);
         }
 
         return list;
@@ -65,34 +67,36 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 
     /**  trailer dictionary
      */
-    protected List<Object> gettrailer() {
-        List<Object> trailer = new ArrayList<>();
-        trailer.add(PBFactory.generateCosObject(CosTrailer.class, ((COSDocument) baseObject).getTrailer()));
+    private List<CosTrailer> getTrailer() {
+        List<CosTrailer> trailer = new ArrayList<>();
+        trailer.add((CosTrailer) PBFactory.generateCosObject(CosTrailer.class, ((COSDocument) baseObject).getTrailer()));
         return trailer;
     }
 
     /**  all indirect objects referred from the xref table
      */
-    protected List<Object> getindirectObjects() {
-        List<Object> indirects = new ArrayList<>();
-        for (COSBase object : ((COSDocument)baseObject).getObjects())
-            indirects.add(PBFactory.generateCosObject(CosIndirect.class, object));
+    private List<CosIndirect> getIndirectObjects() {
+        List<CosIndirect> indirects = new ArrayList<>();
+        for (COSBase object : ((COSDocument) baseObject).getObjects()) {
+            indirects.add((CosIndirect) PBFactory.generateCosObject(CosIndirect.class, object));
+        }
         return indirects;
+    }
+
+    /**  link to the high-level PDF Document structure
+     */
+    // TODO : add support of this feature
+    private List<Object> getDocument() {
+        System.err.println("Trying get PDDocument from CosDocument.\r\n" +
+                "Current feature not supported yet. Method always return null.");
+        return null;
     }
 
     /**  true if the second line of the document is a comment with at least 4 symbols in the code range 128-255 as required by PDF/A standard
      */
     @Override
     public Boolean getbinaryHeaderComplyPDFA() {
-        ((COSDocument)baseObject).getVersion();
-        return null;
-    }
-
-    /**  link to the high-level PDF Document structure
-     */
-    protected List<Object> getdocument() {
-        System.err.println("Trying get PDDocument from CosDocument.\r\n" +
-                           "Current feature not supported yet. Method always return null.");
+        ((COSDocument) baseObject).getVersion();
         return null;
     }
 

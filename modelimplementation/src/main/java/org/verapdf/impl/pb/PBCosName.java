@@ -14,6 +14,7 @@ public class PBCosName extends PBCosObject implements CosName {
 
     public PBCosName(COSName value) {
         super(value);
+        setType("CosName");
     }
 
     /** Get Unicode string representation of the Name object after applying escape
@@ -21,7 +22,7 @@ public class PBCosName extends PBCosObject implements CosName {
      */
     @Override
     public String getvalue() {
-        return ((COSName)baseObject).getName();
+        return ((COSName) baseObject).getName();
     }
 
     /** Get original length of the name before applying any escape mechanisms and encodings
@@ -30,6 +31,6 @@ public class PBCosName extends PBCosObject implements CosName {
     @Override
     public Integer getorigLength() {
         System.err.println("Length of name is not correct. Need to update classes of pdfbox.");
-        return ((COSName)baseObject).getName().length();
+        return ((COSName) baseObject).getName().length();
     }
 }

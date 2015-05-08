@@ -16,5 +16,6 @@ public class PBCosInteger extends PBCosNumber implements CosInteger {
 
     public PBCosInteger(COSInteger value) {
         super(value);
+        setType("CosInteger");
     }
 }

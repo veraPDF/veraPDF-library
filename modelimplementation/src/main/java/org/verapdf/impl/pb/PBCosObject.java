@@ -18,54 +18,61 @@ import java.util.List;
 public class PBCosObject implements CosObject{
 
     protected COSBase baseObject;
-    private String id = IDGenerator.generateID();
+
+    private String type = "CosObject";
+    private Integer id = IDGenerator.generateID();
 
     public PBCosObject(COSBase baseObject) {
         this.baseObject = baseObject;
     }
 
-    // TODO : wait ModelHelper realization
     @Override
-    public List<Object> getLinkedObjects(String s) {
-        return null;
+    public List<? extends Object> getLinkedObjects(String link) {
+        throw new IllegalAccessError(this.get_type() + " has not access to this method or has not " + link + " link.");
     }
 
     @Override
     public List<String> getLinks() {
-        //return ModelHelper.getListOfLinks(get_type);
-        return null;
+        return ModelHelper.getListOfLinks(this.get_type());
     }
 
     @Override
     public List<String> getProperties() {
-        //return ModelHelper.getListOfProperties(get_type);
-        return null;
+        return ModelHelper.getListOfProperties(this.get_type());
     }
 
     @Override
     public List<String> getSuperTypes() {
-        //return ModelHelper.getListOfSuperNames(get_type);
-        return null;
+        return ModelHelper.getListOfSuperNames(this.get_type());
     }
 
     /** Get type of current object
      */
     @Override
     public String get_type() {
-        return this.getClass().getInterfaces()[0].getName();
+        return type;
+    }
+
+    protected void setType(String type) {
+        this.type = type;
     }
 
     /** Get personal id of current object
      */
     @Override
     public String get_id() {
-        return id;
+        return String.valueOf(id);
     }
 
-    public boolean compareTo(java.lang.Object o) {
-        if (o instanceof COSBase)
-            return baseObject.equals(o);
-        else
-            return o instanceof CosObject && o.equals(baseObject);
+    public boolean compareTo(java.lang.Object object) {
+        if (object instanceof COSBase) {
+            return baseObject.equals(object);
+        }
+        else if (object instanceof CosObject){
+            COSBase base = ((PBCosObject) object).baseObject;
+            return  this.baseObject.equals(base);
+        } else {
+            return false;
+        }
     }
 }

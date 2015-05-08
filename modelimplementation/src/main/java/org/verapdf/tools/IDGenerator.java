@@ -12,7 +12,7 @@ public final class IDGenerator {
 
     private IDGenerator(){}
 
-    public static String generateID() {
-        return "id" + id++;
+    public static Integer generateID() {
+        return id++;
     }
 }

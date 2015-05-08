@@ -6,6 +6,8 @@ import org.apache.pdfbox.cos.COSName;
 import org.verapdf.factory.cos.PBFactory;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
+import org.verapdf.model.coslayer.CosName;
+import org.verapdf.model.coslayer.CosObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,50 +27,54 @@ public class PBCosDict extends PBCosObject implements CosDict {
 
     public PBCosDict(COSDictionary dictionary) {
         super(dictionary);
+        setType("CosDict");
     }
 
     /**Get number of key/value pairs in the dictionary
      */
     @Override
     public Integer getsize() {
-        return ((COSDictionary)baseObject).size();
+        return ((COSDictionary) baseObject).size();
     }
 
     @Override
-    public List<org.verapdf.model.baselayer.Object> getLinkedObjects(String s) {
-        List<Object> list;
-        switch (s) {
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
+        List<? extends Object> list;
+
+        switch (link) {
             case KEYS:
-                list = getkeys();
+                list = this.getkeys();
                 break;
             case VALUES:
-                list = getvalues();
+                list = this.getvalues();
                 break;
             case METADATA:
-                list = getmetadata();
+                list = this.getmetadata();
                 break;
             default:
-                throw new IllegalArgumentException("Unknown link " + s + " for " + get_type());
+                list = super.getLinkedObjects(link);
         }
 
         return list;
     }
 
-    /** Get all keys of the dictonary
+    /** Get all keys of the dictionary
      */
-    protected List<Object> getkeys() {
-        List<Object> list = new ArrayList<>(getsize());
-        for (COSName key : ((COSDictionary)baseObject).keySet())
-            list.add(PBFactory.generateCosObject(key));
+    protected List<CosName> getkeys() {
+        List<CosName> list = new ArrayList<>(this.getsize());
+        for (COSName key : ((COSDictionary) baseObject).keySet()) {
+            list.add((CosName) PBFactory.generateCosObject(key));
+        }
         return list;
     }
 
     /** Get all values of the dictonary
      */
-    protected List<Object> getvalues() {
-        List<Object> list = new ArrayList<>(getsize());
-        for (COSBase value : ((COSDictionary)baseObject).getValues())
+    protected List<CosObject> getvalues() {
+        List<CosObject> list = new ArrayList<>(this.getsize());
+        for (COSBase value : ((COSDictionary) baseObject).getValues()) {
             list.add(PBFactory.generateCosObject(value));
+        }
         return list;
     }
 
