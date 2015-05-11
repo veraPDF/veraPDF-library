@@ -13,7 +13,7 @@ import java.util.List;
  *     Class for transforming COSName of pdfbox to CosName of abstract model.
  * </p>
  */
-class PBCosNameFactory implements PBCosFactory<CosName, COSName> {
+class PBCosNameFactory extends PBCosFactory<CosName, COSName> {
 
     /** Method for transforming COSName to corresponding CosName
      */
@@ -26,7 +26,7 @@ class PBCosNameFactory implements PBCosFactory<CosName, COSName> {
      * exists objects.
      */
     @Override
-    public CosName generateCosObject(List<CosObject> parents, COSName pdfBoxObject) {
+    public CosName generateCosObject(List<CosObject> convertedObjects, COSName pdfBoxObject) {
         return generateCosObject(pdfBoxObject);
     }
 }

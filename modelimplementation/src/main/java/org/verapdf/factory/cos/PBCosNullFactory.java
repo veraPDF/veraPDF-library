@@ -13,7 +13,7 @@ import java.util.List;
  *     Class for transforming COSNull of pdfbox to CosNull of abstract model.
  * </p>
  */
-class PBCosNullFactory implements PBCosFactory<CosNull, COSNull> {
+class PBCosNullFactory extends PBCosFactory<CosNull, COSNull> {
 
     /** Method for transforming COSNull to corresponding CosNull
      */
@@ -26,7 +26,7 @@ class PBCosNullFactory implements PBCosFactory<CosNull, COSNull> {
      * exists objects.
      */
     @Override
-    public CosNull generateCosObject(List<CosObject> parents, COSNull pdfBoxObject) {
+    public CosNull generateCosObject(List<CosObject> convertedObjects, COSNull pdfBoxObject) {
         return generateCosObject(pdfBoxObject);
     }
 }

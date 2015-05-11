@@ -14,7 +14,7 @@ import java.util.List;
  * Class for transforming COSDictionary of pdfbox to CosDict of abstract model.
  * </p>
  */
-class PBCosDictFactory implements PBCosFactory<CosDict, COSDictionary> {
+class PBCosDictFactory extends PBCosFactory<CosDict, COSDictionary> {
 
     /**
      * Method for transforming COSDictionary to corresponding CosDict
@@ -29,13 +29,13 @@ class PBCosDictFactory implements PBCosFactory<CosDict, COSDictionary> {
      * exists objects.
      */
     @Override
-    public CosDict generateCosObject(List<CosObject> parents, COSDictionary pdfBoxObject) {
-        for (CosObject object : parents)
-            if (((PBCosObject)object).compareTo(pdfBoxObject))
-                return (CosDict) object;
+    public CosDict generateCosObject(List<CosObject> convertedObjects, COSDictionary pdfBoxObject) {
+        CosDict dictionary = checkInConvertedObjects(convertedObjects, pdfBoxObject);
+        if (dictionary != null)
+            return dictionary;
 
-        CosDict dictionary = generateCosObject(pdfBoxObject);
-        parents.add(dictionary);
+        dictionary = generateCosObject(pdfBoxObject);
+        convertedObjects.add(dictionary);
         return dictionary;
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
  *     Class for transforming COSDocument of pdf box to CosDocument of abstract model.
  * </p>
  */
-class PBCosDocumentFactory implements PBCosFactory<CosDocument, COSDocument> {
+class PBCosDocumentFactory extends PBCosFactory<CosDocument, COSDocument> {
 
     /**
      * Method for transforming COSDocument to corresponding CosDocument
@@ -28,7 +28,7 @@ class PBCosDocumentFactory implements PBCosFactory<CosDocument, COSDocument> {
      * exists objects.
      */
     @Override
-    public CosDocument generateCosObject(List<CosObject> parents, COSDocument pdfBoxObject) {
+    public CosDocument generateCosObject(List<CosObject> convertedObjects, COSDocument pdfBoxObject) {
         return generateCosObject(pdfBoxObject);
     }
 }
