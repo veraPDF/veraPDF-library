@@ -21,7 +21,7 @@ public class ValidationLogicTest {
     @Test
     public void test() throws Exception {
 
-        TestPDAnnot pda1 = new TestPDAnnot("pdatestLOOOOOL","pda1");
+        TestPDAnnot pda1 = new TestPDAnnot("pdatestFailedVersion","pda1");
         TestPDAnnot pda2 = new TestPDAnnot("pdatest","pda2");
         List<PDAnnot> lspd = new ArrayList<>();
         lspd.add(pda1);
@@ -58,8 +58,8 @@ public class ValidationLogicTest {
         assertEquals(info.getResult().getSummary().getAttr_passedRules(), 1);
         assertEquals(info.getResult().getSummary().getAttr_failedRules(), 3);
 
-        assertEquals(info.getResult().getSummary().getAttr_passedChecks(), 3);
-        assertEquals(info.getResult().getSummary().getAttr_failedChecks(), 3);
+        assertEquals(info.getResult().getSummary().getAttr_passedChecks(), 4);
+        assertEquals(info.getResult().getSummary().getAttr_failedChecks(), 4);
 
     }
 

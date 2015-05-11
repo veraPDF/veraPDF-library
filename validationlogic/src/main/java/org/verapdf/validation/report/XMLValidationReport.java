@@ -7,7 +7,6 @@ import javax.xml.transform.stream.*;
 
 import org.verapdf.validation.report.model.Check;
 import org.verapdf.validation.report.model.Rule;
-import org.verapdf.validation.report.model.Summary;
 import org.w3c.dom.*;
 
 import org.verapdf.validation.report.model.ValidationInfo;
@@ -27,8 +26,8 @@ public class XMLValidationReport {
 
     /**
      * Creates tree of xml tags for validation report
-     * @param info --- validation info model to be writed
-     * @param doc --- document used for writing xml in further
+     * @param info - validation info model to be writed
+     * @param doc - document used for writing xml in further
      * @return root element of the xml structure
      */
     public static Element makeXMLTree(ValidationInfo info, Document doc){
@@ -89,12 +88,7 @@ public class XMLValidationReport {
                 location.setAttribute("level", che.getLocation().getAttr_level());
                 Element context = doc.createElement("context");
 
-                StringBuffer buffer = new StringBuffer(che.getLocation().getContext().get(0));
-                for (int i = 1; i < che.getLocation().getContext().size(); ++i){
-                    buffer.append(" - " + che.getLocation().getContext().get(i));
-                }
-
-                context.appendChild(doc.createTextNode(buffer.toString()));
+                context.appendChild(doc.createTextNode(che.getLocation().getContext()));
 
                 location.appendChild(context);
                 check.appendChild(location);
@@ -134,7 +128,16 @@ public class XMLValidationReport {
         return validationInfo;
     }
 
-    public static void writeXMLValidationReport(ValidationInfo info, String path) throws ParserConfigurationException, TransformerException, FileNotFoundException {
+    /**
+     * Write the given validation info into xml formatted report.
+     * @param info - validation info model to be writed
+     * @param path - the path for output the resulting document. Path have to ends with file name with extension.
+     * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
+     * @throws TransformerFactoryConfigurationError - thrown in case of service configuration error or if the implementation is not available or cannot be instantiated or when it is not possible to create a Transformer instance.
+     * @throws TransformerException - if an unrecoverable error occurs during the course of the transformation or
+     * @throws FileNotFoundException - if the file with path {@code path} exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
+     */
+    public static void writeXMLValidationReport(ValidationInfo info, String path) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
         DocumentBuilder builder = factory.newDocumentBuilder();
