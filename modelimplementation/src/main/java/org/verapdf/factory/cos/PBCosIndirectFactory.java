@@ -14,7 +14,7 @@ import java.util.List;
  *     Class for transforming COSIndirect of pdfbox to CosInteger of abstract model.
  * </p>
  */
-class PBCosIndirectFactory extends PBCosFactory<CosIndirect, COSBase> {
+class PBCosIndirectFactory extends PBLinkedCosFactory<CosIndirect, COSBase> {
     // TODO : check spacings
     /** Method for transforming COSObject to corresponding CosIndirect
      */

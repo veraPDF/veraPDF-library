@@ -13,7 +13,7 @@ import java.util.List;
  *     Class for transforming COSString of pdfbox to CosString of abstract model.
  * </p>
  */
-class PBCosStringFactory extends PBCosFactory<CosString, COSString> {
+class PBCosStringFactory implements PBCosFactory<CosString, COSString> {
 
     /** Method for transforming COSString to corresponding CosString
      */

@@ -15,7 +15,7 @@ import java.util.List;
  *     In pdf box trailer is representing by COSDictionary and gets with specified method of COSDocument
  * </p>
  */
-class PBCosTrailerFactory extends PBCosFactory<CosTrailer, COSDictionary> {
+class PBCosTrailerFactory extends PBLinkedCosFactory<CosTrailer, COSDictionary> {
 
     /** Method for transforming COSDictionary to corresponding CosTrailer
      */

@@ -13,7 +13,7 @@ import java.util.List;
  *     Class for transforming COSBoolean of pdfbox to CosBool of abstract model.
  * </p>
  */
-class PBCosBoolFactory extends PBCosFactory<CosBool, COSBoolean> {
+class PBCosBoolFactory implements PBCosFactory<CosBool, COSBoolean> {
 
     /** Method for transforming COSBoolean to corresponding CosBool
      */

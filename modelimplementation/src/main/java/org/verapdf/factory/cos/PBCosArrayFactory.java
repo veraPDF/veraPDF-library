@@ -2,7 +2,6 @@ package org.verapdf.factory.cos;
 
 import org.apache.pdfbox.cos.COSArray;
 import org.verapdf.impl.pb.PBCosArray;
-import org.verapdf.impl.pb.PBCosObject;
 import org.verapdf.model.coslayer.CosArray;
 import org.verapdf.model.coslayer.CosObject;
 
@@ -14,7 +13,7 @@ import java.util.List;
  * Class for transforming COSArray of pdfbox to CosArray of abstract model.
  * </p>
  */
-class PBCosArrayFactory extends PBCosFactory<org.verapdf.model.coslayer.CosArray, COSArray> {
+class PBCosArrayFactory extends PBLinkedCosFactory<CosArray, COSArray> {
 
     /**
      * Method for transforming COSArray to corresponding CosArray

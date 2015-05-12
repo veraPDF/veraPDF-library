@@ -13,7 +13,7 @@ import java.util.List;
  *     Class for transforming COSDocument of pdf box to CosDocument of abstract model.
  * </p>
  */
-class PBCosDocumentFactory extends PBCosFactory<CosDocument, COSDocument> {
+class PBCosDocumentFactory implements PBCosFactory<CosDocument, COSDocument> {
 
     /**
      * Method for transforming COSDocument to corresponding CosDocument

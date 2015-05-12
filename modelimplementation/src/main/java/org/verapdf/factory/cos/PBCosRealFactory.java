@@ -13,7 +13,7 @@ import java.util.List;
  *     Class for transforming COSFloat of pdfbox to CosReal of abstract model.
  * </p>
  */
-class PBCosRealFactory extends PBCosFactory<CosReal, COSFloat> {
+class PBCosRealFactory implements PBCosFactory<CosReal, COSFloat> {
 
     /** Method for transforming COSFloat to corresponding CosReal
      */

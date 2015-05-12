@@ -13,7 +13,7 @@ import java.util.List;
  *     This factory describe case when object of pdfbox model is empty.
  * </p>
  */
-class PBCosObjectFactory extends PBCosFactory<CosObject, COSBase> {
+class PBCosObjectFactory extends PBLinkedCosFactory<CosObject, COSBase> {
 
     /** Method for transforming COSBase to corresponding CosObject
      */

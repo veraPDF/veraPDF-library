@@ -14,7 +14,7 @@ import java.util.List;
  *     Class for transforming COSStream of pdfbox to CosStream of abstract model.
  * </p>
  */
-class PBCosStreamFactory extends PBCosFactory<CosStream, COSStream> {
+class PBCosStreamFactory extends PBLinkedCosFactory<CosStream, COSStream> {
 
     /** Method for transforming COSStream to corresponding CosStream
      */

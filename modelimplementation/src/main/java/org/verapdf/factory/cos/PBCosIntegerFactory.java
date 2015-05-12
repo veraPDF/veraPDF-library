@@ -13,7 +13,7 @@ import java.util.List;
  *     Class for transforming COSInteger of pdfbox to CosInteger of abstract model.
  * </p>
  */
-class PBCosIntegerFactory extends PBCosFactory<CosInteger, COSInteger> {
+class PBCosIntegerFactory implements PBCosFactory<CosInteger, COSInteger> {
 
     /** Method for transforming COSInteger to corresponding CosInteger
      */

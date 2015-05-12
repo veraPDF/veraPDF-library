@@ -14,7 +14,7 @@ import java.util.List;
  * Class for transforming COSDictionary of pdfbox to CosDict of abstract model.
  * </p>
  */
-class PBCosDictFactory extends PBCosFactory<CosDict, COSDictionary> {
+class PBCosDictFactory extends PBLinkedCosFactory<CosDict, COSDictionary> {
 
     /**
      * Method for transforming COSDictionary to corresponding CosDict
