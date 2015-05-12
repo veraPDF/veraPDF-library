@@ -13,7 +13,7 @@ import java.util.List;
  *     Class for transforming COSName of pdfbox to CosName of abstract model.
  * </p>
  */
-class PBCosNameFactory extends PBCosFactory<CosName, COSName> {
+class PBCosNameFactory implements PBCosFactory<CosName, COSName> {
 
     /** Method for transforming COSName to corresponding CosName
      */
