@@ -26,8 +26,8 @@ import javax.xml.parsers.ParserConfigurationException;
 public class Validator {
 
     private Queue<Object> objectsQueue;
-    private Queue<List<String>> objectsContext;
-    private Set<String> contextSet;
+    private Queue<String> objectsContext;
+    private Queue<Set<String>> contextSet;
     private Map<String, List<Check>> checkMap;
     private List<String> warnings;
 
@@ -42,7 +42,7 @@ public class Validator {
     private ValidationInfo validate(Object root){
         objectsQueue = new LinkedList<>();
         objectsContext = new LinkedList<>();
-        contextSet = new HashSet<>();
+        contextSet = new LinkedList<>();
         checkMap = new HashMap<>();
         warnings = new ArrayList<>();
 
@@ -50,12 +50,12 @@ public class Validator {
 
         objectsQueue.add(root);
 
-        List<String> rootContext = new ArrayList<>();
-        rootContext.add(root.get_id());
+        objectsContext.add("root");
 
-        objectsContext.add(rootContext);
+        Set<String> rootIDContext = new HashSet<>();
+        rootIDContext.add(root.get_id());
 
-        contextSet.add(root.get_id());
+        contextSet.add(rootIDContext);
 
         while(!objectsQueue.isEmpty()){
             checkNext();
@@ -73,7 +73,8 @@ public class Validator {
     private boolean checkNext(){
         boolean res = true;
         Object checkObject = objectsQueue.poll();
-        List<String> checkContext = objectsContext.poll();
+        String checkContext = objectsContext.poll();
+        Set<String> checkIDContext = contextSet.poll();
 
         if (profile.getRoolsForObject(checkObject.get_type()) != null) {
             for (org.verapdf.validation.profile.model.Rule rule : profile.getRoolsForObject(checkObject.get_type())) {
@@ -90,13 +91,15 @@ public class Validator {
         }
 
         for(String link : checkObject.getLinks()){
-            for(Object obj : checkObject.getLinkedObjects(link)){
-                if(!contextSet.contains(obj.get_id())){
+            List<? extends Object> objects = checkObject.getLinkedObjects(link);
+            for(int i = 0; i < objects.size(); ++i){
+                Object obj = objects.get(i);
+                if(!checkIDContext.contains(obj.get_id())){
                     objectsQueue.add(obj);
-                    List<String> objContext = new ArrayList<>(checkContext);
-                    objContext.add(obj.get_id());
-                    objectsContext.add(objContext);
-                    contextSet.add(obj.get_id());
+                    objectsContext.add(checkContext + "/" + link + "[" + i + "]");
+                    Set<String> newCheckIDContext = new HashSet<>(checkIDContext);
+                    newCheckIDContext.add(obj.get_id());
+                    contextSet.add(newCheckIDContext);
                 }
             }
         }
@@ -117,7 +120,7 @@ public class Validator {
     }
 
 
-    private boolean checkObjWithRule(Object obj, List<String> context, org.verapdf.validation.profile.model.Rule rule, String script){
+    private boolean checkObjWithRule(Object obj, String context, org.verapdf.validation.profile.model.Rule rule, String script){
         Context cx = Context.enter();
         ScriptableObject scope = cx.initStandardObjects();
 
@@ -164,9 +167,9 @@ public class Validator {
      * @param root --- the root object for validation
      * @param validationProfilePath --- validation profile's file path
      * @return validation info structure
-     * @throws IOException
-     * @throws SAXException
-     * @throws ParserConfigurationException
+     * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
+     * @throws IOException - If any IO errors occur.
+     * @throws SAXException - If any parse errors occur.
      */
     public static ValidationInfo validate(Object root, String validationProfilePath) throws IOException, SAXException, ParserConfigurationException {
         return validate(root, ValidationProfileParser.parseValidationProfile(validationProfilePath));
@@ -180,9 +183,9 @@ public class Validator {
      * @param root --- the root object for validation
      * @param validationProfile --- validation profile's file
      * @return validation info structure
-     * @throws IOException
-     * @throws SAXException
-     * @throws ParserConfigurationException
+     * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
+     * @throws IOException - If any IO errors occur.
+     * @throws SAXException - If any parse errors occur.
      */
     public static ValidationInfo validate(Object root, File validationProfile) throws ParserConfigurationException, SAXException, IOException {
         return validate(root, ValidationProfileParser.parseValidationProfile(validationProfile));
@@ -196,9 +199,9 @@ public class Validator {
      * @param root --- the root object for validation
      * @param validationProfile --- validation profile's structure
      * @return validation info structure
-     * @throws IOException
-     * @throws SAXException
-     * @throws ParserConfigurationException
+     * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
+     * @throws IOException - If any IO errors occur.
+     * @throws SAXException - If any parse errors occur.
      */
     public static ValidationInfo validate(Object root, ValidationProfile validationProfile){
         Validator validator = new Validator(validationProfile);

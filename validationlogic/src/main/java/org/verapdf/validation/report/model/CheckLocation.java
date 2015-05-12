@@ -11,9 +11,9 @@ import java.util.List;
  */
 public class CheckLocation {
     private String attr_level;
-    private List<String> context;
+    private String context;
 
-    public CheckLocation(String attr_level, List<String> context) {
+    public CheckLocation(String attr_level, String context) {
         this.attr_level = attr_level;
         this.context = context;
     }
@@ -28,7 +28,7 @@ public class CheckLocation {
     /**
      * @return list of edges' names which used for come to the checked object
      */
-    public List<String> getContext() {
+    public String getContext() {
         return context;
     }
 }

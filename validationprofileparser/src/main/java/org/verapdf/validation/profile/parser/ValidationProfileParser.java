@@ -302,9 +302,9 @@ public class ValidationProfileParser {
      * Parses validation profile xml.
      * @param resourcePath - Path to the file for parse.
      * @return Validation profile represent in Java classes.
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
+     * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
+     * @throws IOException - If any IO errors occur.
+     * @throws SAXException - If any parse errors occur.
      */
     public static ValidationProfile parseValidationProfile(String resourcePath) throws ParserConfigurationException, SAXException, IOException {
         return parseValidationProfile(new File(resourcePath));
@@ -314,11 +314,11 @@ public class ValidationProfileParser {
      *
      * @param resourceFile - File for parse.
      * @return Validation profile represent in Java classes.
-     * @throws IOException
-     * @throws SAXException
-     * @throws ParserConfigurationException
+     * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
+     * @throws IOException - If any IO errors occur.
+     * @throws SAXException - If any parse errors occur.
      */
-    public static ValidationProfile parseValidationProfile(File resourceFile) throws IOException, SAXException, ParserConfigurationException {
+    public static ValidationProfile parseValidationProfile(File resourceFile) throws ParserConfigurationException, SAXException, IOException {
         ValidationProfileParser parser = new ValidationProfileParser(resourceFile);
         return parser.profile;
     }
