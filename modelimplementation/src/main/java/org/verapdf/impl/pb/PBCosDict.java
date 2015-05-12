@@ -21,9 +21,9 @@ import java.util.List;
  */
 public class PBCosDict extends PBCosObject implements CosDict {
 
-    private final static String KEYS = "keys";
-    private final static String VALUES = "values";
-    private final static String METADATA = "metadata";
+    public final static String KEYS = "keys";
+    public final static String VALUES = "values";
+    public final static String METADATA = "metadata";
 
     public PBCosDict(COSDictionary dictionary) {
         super(dictionary);

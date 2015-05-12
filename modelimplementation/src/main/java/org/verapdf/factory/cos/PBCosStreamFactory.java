@@ -1,6 +1,7 @@
 package org.verapdf.factory.cos;
 
 import org.apache.pdfbox.cos.COSStream;
+import org.verapdf.impl.pb.PBCosObject;
 import org.verapdf.impl.pb.PBCosStream;
 import org.verapdf.model.coslayer.CosObject;
 import org.verapdf.model.coslayer.CosStream;
@@ -13,7 +14,7 @@ import java.util.List;
  *     Class for transforming COSStream of pdfbox to CosStream of abstract model.
  * </p>
  */
-class PBCosStreamFactory implements PBCosFactory<CosStream, COSStream> {
+class PBCosStreamFactory extends PBLinkedCosFactory<CosStream, COSStream> {
 
     /** Method for transforming COSStream to corresponding CosStream
      */
@@ -27,13 +28,13 @@ class PBCosStreamFactory implements PBCosFactory<CosStream, COSStream> {
      * exists objects.
      */
     @Override
-    public CosStream generateCosObject(List<CosObject> parents, COSStream pdfBoxObject) {
-        for (CosObject object : parents)
-            if (object.equals(pdfBoxObject))
-                return (CosStream) object;
+    public CosStream generateCosObject(List<CosObject> convertedObjects, COSStream pdfBoxObject) {
+        CosStream stream = checkInConvertedObjects(convertedObjects, pdfBoxObject);
+        if (stream != null)
+            return stream;
 
-        CosStream stream = generateCosObject(pdfBoxObject);
-        parents.add(stream);
+        stream = generateCosObject(pdfBoxObject);
+        convertedObjects.add(stream);
         return stream;
     }
 }

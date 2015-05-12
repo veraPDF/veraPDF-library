@@ -26,7 +26,7 @@ class PBCosStringFactory implements PBCosFactory<CosString, COSString> {
      * exists objects.
      */
     @Override
-    public CosString generateCosObject(List<CosObject> parents, COSString pdfBoxObject) {
+    public CosString generateCosObject(List<CosObject> convertedObjects, COSString pdfBoxObject) {
         return generateCosObject(pdfBoxObject);
     }
 }

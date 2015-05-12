@@ -28,7 +28,7 @@ class PBCosDocumentFactory implements PBCosFactory<CosDocument, COSDocument> {
      * exists objects.
      */
     @Override
-    public CosDocument generateCosObject(List<CosObject> parents, COSDocument pdfBoxObject) {
+    public CosDocument generateCosObject(List<CosObject> convertedObjects, COSDocument pdfBoxObject) {
         return generateCosObject(pdfBoxObject);
     }
 }
