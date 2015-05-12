@@ -26,7 +26,7 @@ class PBCosIntegerFactory implements PBCosFactory<CosInteger, COSInteger> {
      * exists objects.
      */
     @Override
-    public CosInteger generateCosObject(List<CosObject> parents, COSInteger pdfBoxObject) {
+    public CosInteger generateCosObject(List<CosObject> convertedObjects, COSInteger pdfBoxObject) {
         return generateCosObject(pdfBoxObject);
     }
 }

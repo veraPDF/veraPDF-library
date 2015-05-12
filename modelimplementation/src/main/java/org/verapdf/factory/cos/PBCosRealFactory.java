@@ -26,7 +26,7 @@ class PBCosRealFactory implements PBCosFactory<CosReal, COSFloat> {
      * exists objects.
      */
     @Override
-    public CosReal generateCosObject(List<CosObject> parents, COSFloat pdfBoxObject) {
+    public CosReal generateCosObject(List<CosObject> convertedObjects, COSFloat pdfBoxObject) {
         return generateCosObject(pdfBoxObject);
     }
 }

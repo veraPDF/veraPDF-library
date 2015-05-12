@@ -1,6 +1,7 @@
 package org.verapdf.factory.cos;
 
 import org.apache.pdfbox.cos.COSDictionary;
+import org.verapdf.impl.pb.PBCosObject;
 import org.verapdf.impl.pb.PBCosTrailer;
 import org.verapdf.model.coslayer.CosObject;
 import org.verapdf.model.coslayer.CosTrailer;
@@ -14,7 +15,7 @@ import java.util.List;
  *     In pdf box trailer is representing by COSDictionary and gets with specified method of COSDocument
  * </p>
  */
-class PBCosTrailerFactory implements PBCosFactory<CosTrailer, COSDictionary> {
+class PBCosTrailerFactory extends PBLinkedCosFactory<CosTrailer, COSDictionary> {
 
     /** Method for transforming COSDictionary to corresponding CosTrailer
      */
@@ -28,13 +29,13 @@ class PBCosTrailerFactory implements PBCosFactory<CosTrailer, COSDictionary> {
      * exists objects.
      */
     @Override
-    public CosTrailer generateCosObject(List<CosObject> parents, COSDictionary pdfBoxObject) {
-        for (CosObject object : parents)
-            if (object.equals(pdfBoxObject))
-                return (CosTrailer) object;
+    public CosTrailer generateCosObject(List<CosObject> convertedObjects, COSDictionary pdfBoxObject) {
+        CosTrailer trailer = checkInConvertedObjects(convertedObjects, pdfBoxObject);
+        if (trailer != null)
+            return trailer;
 
-        CosTrailer trailer = generateCosObject(pdfBoxObject);
-        parents.add(trailer);
+        trailer = generateCosObject(pdfBoxObject);
+        convertedObjects.add(trailer);
         return trailer;
     }
 }

@@ -26,7 +26,7 @@ class PBCosNullFactory implements PBCosFactory<CosNull, COSNull> {
      * exists objects.
      */
     @Override
-    public CosNull generateCosObject(List<CosObject> parents, COSNull pdfBoxObject) {
+    public CosNull generateCosObject(List<CosObject> convertedObjects, COSNull pdfBoxObject) {
         return generateCosObject(pdfBoxObject);
     }
 }

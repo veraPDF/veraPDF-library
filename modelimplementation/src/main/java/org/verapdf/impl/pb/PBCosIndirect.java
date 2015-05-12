@@ -1,7 +1,6 @@
 package org.verapdf.impl.pb;
 
 import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSObject;
 import org.verapdf.factory.cos.PBFactory;
 import org.verapdf.model.coslayer.CosIndirect;
@@ -19,7 +18,8 @@ import java.util.List;
  */
 public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
-    private final static String DIRECT_OBJECT = "directObject";
+    public final static String DIRECT_OBJECT = "directObject";
+
     private Boolean isSpacingComplyPDFA;
 
     public PBCosIndirect(COSBase directObject, Boolean isSpacingComplyPDFA) {

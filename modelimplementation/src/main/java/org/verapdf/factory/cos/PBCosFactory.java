@@ -18,7 +18,7 @@ interface PBCosFactory<T extends CosObject, S extends COSBase> {
      */
     T generateCosObject(S pdfBoxObject);
 
-    /** Interface of method for transforming specific S type to corresponding T type with parents check
+    /** Interface of method for transforming specific S type to corresponding T type with convertedObjects check
      */
-    T generateCosObject(List<CosObject> parents, S pdfBoxObject);
+    T generateCosObject(List<CosObject> convertedObjects, S pdfBoxObject);
 }

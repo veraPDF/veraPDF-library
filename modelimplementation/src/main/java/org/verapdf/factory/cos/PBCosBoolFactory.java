@@ -26,7 +26,7 @@ class PBCosBoolFactory implements PBCosFactory<CosBool, COSBoolean> {
      * exists objects.
      */
     @Override
-    public CosBool generateCosObject(List<CosObject> parents, COSBoolean pdfBoxObject) {
+    public CosBool generateCosObject(List<CosObject> convertedObjects, COSBoolean pdfBoxObject) {
         return generateCosObject(pdfBoxObject);
     }
 }
