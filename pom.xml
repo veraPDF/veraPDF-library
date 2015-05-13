@@ -14,6 +14,8 @@
         <module>validationprofileparser</module>
         <module>validationlogic</module>
         <module>modelimplementation</module>
+        <module>core</module>
+        <module>cli</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -21,6 +23,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.7</java.version>
+        <guava.version>18.0</guava.version>
     </properties>
 
     <build>
