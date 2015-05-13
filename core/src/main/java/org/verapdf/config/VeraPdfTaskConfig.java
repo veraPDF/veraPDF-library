@@ -1,19 +1,30 @@
 /**
- * 
+ *
  */
 package org.verapdf.config;
 
+/**
+ * Encapsulation of the VeraPDF processing configuration. This class deals only
+ * with the processing and doesn't concern itself with any "non-repeatable", or
+ * technical details.
+ * <p/>
+ * Specifically this means that it cares not about the processing environment
+ * (e.g. temp directory, how many threads, etc.). Nor does it care about the
+ * particular file or stream to be operated on. It helps to think of the class
+ * as capturing all aspects of an invocation that can be reused across all
+ * environments and on any file.
+ *
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ */
 public final class VeraPdfTaskConfig {
-
-	private static final VeraPdfTaskConfig DEFAULT_INSTANCE = new VeraPdfTaskConfig();
 
     private final boolean validate;
     private final Input input;
     private final String profile;
 
-	private VeraPdfTaskConfig() {
-		this(false, null, null);
-	}
+    private VeraPdfTaskConfig() {
+        this(false, null, null);
+    }
 
     public VeraPdfTaskConfig(boolean validate, Input input, String profile) {
         this.validate = validate;
@@ -21,12 +32,12 @@ public final class VeraPdfTaskConfig {
         this.profile = profile;
     }
 
-	/**
-	 * @return the validate
-	 */
-	public boolean isValidate() {
-		return this.validate;
-	}
+    /**
+     * @return the validate
+     */
+    public boolean isValidate() {
+        return this.validate;
+    }
 
     /**
      * @return the input
@@ -79,9 +90,3 @@ public final class VeraPdfTaskConfig {
     }
 
 }
-
-////Check that input path is defined
-//Preconditions.checkNotNull(inputPath);
-////Check that profile is defined
-//Preconditions.checkNotNull(profile, "Expected profile to be non-null");
-

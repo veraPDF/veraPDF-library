@@ -10,16 +10,16 @@ import com.beust.jcommander.Parameters;
 @Parameters(commandNames = "verapdf")
 public class CommandVeraPDF extends Command {
 
-    @Parameter(names = "-validate", required = true)
+    @Parameter(names = "--validate", required = true)
     private boolean validate;
 
-    @Parameter(names = "-input", required = true)
+    @Parameter(names = "--input", required = true)
     private String inputPath;
 
-    @Parameter(names = "-urlinput")
+    @Parameter(names = "--urlinput")
     private boolean inputPathURL;
 
-    @Parameter(names = "-profile")
+    @Parameter(names = "--profile")
     private String profile;
 
     /**
