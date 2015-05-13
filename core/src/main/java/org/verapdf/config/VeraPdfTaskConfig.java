@@ -21,15 +21,17 @@ public final class VeraPdfTaskConfig {
     private final boolean validate;
     private final Input input;
     private final String profile;
+    private final String output;
 
     private VeraPdfTaskConfig() {
-        this(false, null, null);
+        this(false, null, null, null);
     }
 
-    public VeraPdfTaskConfig(boolean validate, Input input, String profile) {
+    public VeraPdfTaskConfig(boolean validate, Input input, String profile, String output) {
         this.validate = validate;
         this.input = input;
         this.profile = profile;
+        this.output = output;
     }
 
     /**
@@ -53,11 +55,19 @@ public final class VeraPdfTaskConfig {
         return profile;
     }
 
+    /**
+     * @return the output
+     */
+    public String getOutput() {
+        return output;
+    }
+
     public static class Builder {
 
         private boolean validate;
         private Input input;
         private String profile;
+        private String output;
 
         public Builder() {
         }
@@ -66,6 +76,7 @@ public final class VeraPdfTaskConfig {
             this.validate = config.validate;
             this.input = config.input;
             this.profile = config.profile;
+            this.output = config.output;
         }
 
         public Builder validate(boolean validate) {
@@ -83,8 +94,13 @@ public final class VeraPdfTaskConfig {
             return this;
         }
 
+        public Builder output(String output) {
+            this.output = output;
+            return this;
+        }
+
         public VeraPdfTaskConfig build() {
-            return new VeraPdfTaskConfig(validate, input, profile);
+            return new VeraPdfTaskConfig(validate, input, profile, output);
         }
 
     }

@@ -8,6 +8,7 @@ import org.verapdf.cli.commands.CommandVeraPDF;
 import org.verapdf.config.Input;
 import org.verapdf.config.VeraPdfTaskConfig;
 import org.verapdf.runner.ValidationRunner;
+import org.verapdf.validation.report.XMLValidationReport;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 public class VeraPdfCli {
@@ -34,7 +35,7 @@ public class VeraPdfCli {
 
         ValidationInfo validationInfo = ValidationRunner.runValidation(taskConfig);
         if (validationInfo != null) {
-            System.out.println(validationInfo.getResult().isCompliant());
+            XMLValidationReport.writeXMLValidationReport(validationInfo, taskConfig.getOutput());
         } else {
             System.out.println("Internal error during validation");
         }
@@ -49,7 +50,8 @@ public class VeraPdfCli {
         VeraPdfTaskConfig.Builder configBuilder = new VeraPdfTaskConfig.Builder();
         configBuilder.input(new Input(commandVeraPDF.getInputPath(), commandVeraPDF.isInputPathURL()))
                      .profile(commandVeraPDF.getProfile())
-                     .validate(commandVeraPDF.isValidate());
+                     .validate(commandVeraPDF.isValidate())
+                     .output(commandVeraPDF.getOutput());
         return configBuilder.build();
     }
 
