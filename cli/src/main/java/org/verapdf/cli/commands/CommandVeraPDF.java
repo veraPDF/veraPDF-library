@@ -22,6 +22,9 @@ public class CommandVeraPDF extends Command {
     @Parameter(names = "--profile")
     private String profile;
 
+    @Parameter(names = "--output")
+    private String output;
+
     /**
      * @return the validate
      */
@@ -50,4 +53,10 @@ public class CommandVeraPDF extends Command {
         return profile;
     }
 
+    /**
+     * @return the output
+     */
+    public String getOutput() {
+        return output;
+    }
 }
