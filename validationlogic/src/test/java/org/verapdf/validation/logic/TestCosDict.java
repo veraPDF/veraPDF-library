@@ -38,7 +38,7 @@ public class TestCosDict implements CosDict {
     @Override
     public List<String> getLinks() {
         List<String> res = new ArrayList<>();
-        res.add("CosDict");
+        res.add("keys");
         res.add("CosInteger");
         res.add("Object");
         return res;
@@ -47,7 +47,7 @@ public class TestCosDict implements CosDict {
     @Override
     public List<? extends Object> getLinkedObjects(String s) {
         switch (s){
-            case "CosDict":
+            case "keys":
                 return cosDicts;
             case "CosInteger":
                 return cosIntegers;
