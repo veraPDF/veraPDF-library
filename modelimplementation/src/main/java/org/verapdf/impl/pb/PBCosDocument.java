@@ -23,7 +23,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     public final static String INDIRECT_OBJECTS = "indirectObjects";
     public final static String DOCUMENT = "document";
 
-    private Integer sizeOfDocument;
+    private Integer sizeOfDocument = -1;
 
     public PBCosDocument(COSDocument baseObject) {
         super(baseObject);
@@ -98,9 +98,5 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     public Boolean getbinaryHeaderComplyPDFA() {
         ((COSDocument) baseObject).getVersion();
         return null;
-    }
-
-    public void setSizeOfDocument(Integer sizeOfDocument) {
-        this.sizeOfDocument = sizeOfDocument;
     }
 }
