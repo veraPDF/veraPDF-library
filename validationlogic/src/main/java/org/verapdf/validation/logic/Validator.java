@@ -30,6 +30,7 @@ public class Validator {
     private Queue<Set<String>> contextSet;
     private Map<String, List<Check>> checkMap;
     private List<String> warnings;
+    private Set<String> idSet;
 
     private String rootType;
 
@@ -45,6 +46,7 @@ public class Validator {
         contextSet = new LinkedList<>();
         checkMap = new HashMap<>();
         warnings = new ArrayList<>();
+        idSet = new HashSet<>();
 
         rootType = root.get_type();
 
@@ -56,6 +58,8 @@ public class Validator {
         rootIDContext.add(root.get_id());
 
         contextSet.add(rootIDContext);
+
+        idSet.add(root.get_id());
 
         while(!objectsQueue.isEmpty()){
             checkNext();
@@ -94,12 +98,17 @@ public class Validator {
             List<? extends Object> objects = checkObject.getLinkedObjects(link);
             for(int i = 0; i < objects.size(); ++i){
                 Object obj = objects.get(i);
-                if(!checkIDContext.contains(obj.get_id())){
+
+
+                if(( (obj.contextDepended() == null || obj.contextDepended()) && !checkIDContext.contains(obj.get_id()))
+                        || ( (obj.contextDepended() != null && !obj.contextDepended()) && !idSet.contains(obj.get_id()))){
                     objectsQueue.add(obj);
+                    Boolean s = new Boolean(true);
                     objectsContext.add(checkContext + "/" + link + "[" + i + "]");
                     Set<String> newCheckIDContext = new HashSet<>(checkIDContext);
                     newCheckIDContext.add(obj.get_id());
                     contextSet.add(newCheckIDContext);
+                    idSet.add(obj.get_id());
                 }
             }
         }
