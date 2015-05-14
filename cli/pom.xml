@@ -10,6 +10,21 @@
     <artifactId>vera-cli</artifactId>
     <name>VeraPDF CLI</name>
     <description>Command line invocation of the Vera PDF validator.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.verapdf</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>1.47</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -43,17 +58,4 @@
         </plugins>
     </build>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.verapdf</groupId>
-            <artifactId>core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.beust</groupId>
-            <artifactId>jcommander</artifactId>
-            <version>1.47</version>
-        </dependency>
-    </dependencies>
 </project>
