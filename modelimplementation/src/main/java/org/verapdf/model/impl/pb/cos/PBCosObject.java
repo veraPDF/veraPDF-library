@@ -20,15 +20,17 @@ public class PBCosObject implements CosObject{
     protected COSBase baseObject;
 
     private String type = "CosObject";
-    private Integer id = IDGenerator.generateID();
+    private String id;
+    private Boolean contextDepended = false;
 
     public PBCosObject(COSBase baseObject) {
         this.baseObject = baseObject;
+        id = IDGenerator.generateID(this.baseObject);
     }
 
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
-        throw new IllegalAccessError(this.get_type() + " has not access to this method or has not " + link + " link.");
+        throw new IllegalAccessError(this.get_type() + " has not access to this method or has not " + link + " link`.");
     }
 
     @Override
@@ -39,6 +41,11 @@ public class PBCosObject implements CosObject{
     @Override
     public List<String> getProperties() {
         return ModelHelper.getListOfProperties(this.get_type());
+    }
+
+    @Override
+    public Boolean contextDepended() {
+        return contextDepended;
     }
 
     @Override

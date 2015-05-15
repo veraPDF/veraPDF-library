@@ -58,19 +58,4 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
     public Boolean getspacingComplyPDFA() {
         return isSpacingComplyPDFA;
     }
-
-    @Override
-    public boolean compareTo(java.lang.Object object) {
-        boolean isEquals;
-
-        if (object instanceof COSObject && !(baseObject instanceof COSObject)) {
-            isEquals = ((COSObject) object).getObject().equals(baseObject);
-        } else if (!(object instanceof COSObject) && baseObject instanceof COSObject) {
-            isEquals = object.equals(((COSObject) baseObject).getObject());
-        } else {
-            isEquals = super.compareTo(object);
-        }
-
-        return isEquals;
-    }
 }
