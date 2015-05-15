@@ -1,6 +1,5 @@
 package org.verapdf.model.factory.cos;
 
-import org.apache.pdfbox.cos.COSBase;
 import org.verapdf.model.coslayer.CosObject;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
  *     abstract model.
  * </p>
  */
-interface PBCosFactory<T extends CosObject, S extends COSBase> {
+interface PBCosFactory<T extends CosObject, S> {
 
     /** Interface of method for transforming specific S type to corresponding T type
      */
@@ -20,5 +19,5 @@ interface PBCosFactory<T extends CosObject, S extends COSBase> {
 
     /** Interface of method for transforming specific S type to corresponding T type with convertedObjects check
      */
-    T generateCosObject(List<CosObject> convertedObjects, S pdfBoxObject);
+    T generateCosObject(List<CosObject> convertedObjects, S convertibleObject);
 }
