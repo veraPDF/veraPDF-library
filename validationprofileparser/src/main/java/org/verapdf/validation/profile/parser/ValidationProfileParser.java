@@ -20,7 +20,7 @@ import java.util.*;
  * @author Maksim Bezrukov
  * @version 1.0
  */
-public class ValidationProfileParser {
+public final class ValidationProfileParser {
 
     private Set<String> profilesPaths;
     private ValidationProfile profile;
@@ -30,6 +30,9 @@ public class ValidationProfileParser {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
         builder = factory.newDocumentBuilder();
+
+        factory.setIgnoringElementContentWhitespace(true);
+
         Document doc = builder.parse(resourceFile);
 
         profilesPaths = new HashSet<String>();
@@ -46,7 +49,7 @@ public class ValidationProfileParser {
         String creator = null;
         String created = null;
         String hash = null;
-        Map<String, List<Rule>> rules = new HashMap<String, List<Rule>>();
+        Map<String, List<Rule>> rules = new HashMap<>();
 
         Node modelNode = root.getAttributes().getNamedItem("model");
 
@@ -61,19 +64,19 @@ public class ValidationProfileParser {
             String childName = child.getNodeName();
 
             if (childName.equals("name")) {
-                name = child.getTextContent();
+                name = child.getTextContent().trim();
 
             } else if (childName.equals("description")) {
-                description = child.getTextContent();
+                description = child.getTextContent().trim();
 
             } else if (childName.equals("creator")) {
-                creator = child.getTextContent();
+                creator = child.getTextContent().trim();
 
             } else if (childName.equals("created")) {
-                created = child.getTextContent();
+                created = child.getTextContent().trim();
 
             } else if (childName.equals("hash")) {
-                hash = child.getTextContent();
+                hash = child.getTextContent().trim();
 
             } else if (childName.equals("imports")) {
                 parseImports(child, rules);
@@ -94,20 +97,19 @@ public class ValidationProfileParser {
         for(int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
 
-            if (child.getNodeName().equals("#text"))
+            if (!child.getNodeName().equals("import")) {
                 continue;
+            }
 
-            String path = child.getTextContent();
+            String path = child.getTextContent().trim();
 
             if(profilesPaths.contains(path)){
                 continue;
             }
+
             profilesPaths.add(path);
 
-            File profile = new File(path);
-
-            Document doc = builder.parse(profile);
-
+            Document doc = builder.parse(new File(path));
 
             NodeList children2 = doc.getDocumentElement().getChildNodes();
 
@@ -131,16 +133,16 @@ public class ValidationProfileParser {
 
         for(int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
-            if (child.getNodeName().equals("#text"))
-                continue;
-            Rule rule = parseRule(child);
+            if (child.getNodeName().equals("rule")) {
+                Rule rule = parseRule(child);
 
-            if (rulesMap.get(rule.getAttr_object()) == null){
-                List<Rule> newRules = new ArrayList<Rule>();
-                rulesMap.put(rule.getAttr_object(), newRules);
+                if (rulesMap.get(rule.getAttrObject()) == null) {
+                    List<Rule> newRules = new ArrayList<Rule>();
+                    rulesMap.put(rule.getAttrObject(), newRules);
+                }
+
+                rulesMap.get(rule.getAttrObject()).add(rule);
             }
-
-            rulesMap.get(rule.getAttr_object()).add(rule);
         }
     }
 
@@ -152,7 +154,7 @@ public class ValidationProfileParser {
         RuleError ruleError = null;
         boolean isHasError = false;
         Reference reference = null;
-        List<Fix> fix = new ArrayList<Fix>();
+        List<Fix> fix = new ArrayList<>();
 
         Node idNode = rule.getAttributes().getNamedItem("id");
 
@@ -173,10 +175,10 @@ public class ValidationProfileParser {
             String childName = child.getNodeName();
 
             if (childName.equals("description")) {
-                description = child.getTextContent();
+                description = child.getTextContent().trim();
 
             } else if (childName.equals("test")) {
-                test = child.getTextContent();
+                test = child.getTextContent().trim();
 
             } else if (childName.equals("error")) {
                 ruleError = parseRuleError(child);
@@ -209,10 +211,10 @@ public class ValidationProfileParser {
             String childName = child.getNodeName();
 
             if (childName.equals("message")) {
-                message = child.getTextContent();
+                message = child.getTextContent().trim();
 
             } else if (childName.equals("argument")) {
-                argument.add(child.getTextContent());
+                argument.add(child.getTextContent().trim());
             }
         }
 
@@ -232,10 +234,10 @@ public class ValidationProfileParser {
             String childName = child.getNodeName();
 
             if (childName.equals("specification")) {
-                specification = child.getTextContent();
+                specification = child.getTextContent().trim();
 
             } else if (childName.equals("clause")) {
-                clause = child.getTextContent();
+                clause = child.getTextContent().trim();
 
             }
         }
@@ -264,31 +266,25 @@ public class ValidationProfileParser {
             String childName = child.getNodeName();
 
             if (childName.equals("description")) {
-                description = child.getTextContent();
+                description = child.getTextContent().trim();
 
             } else if (childName.equals("info")) {
                 NodeList nodelist = child.getChildNodes();
-                Node textNode = null;
                 for (int j = 0; j < nodelist.getLength(); ++j){
-                    if (!nodelist.item(j).getNodeName().equals("#text")){
-                        textNode = nodelist.item(j);
+                    if (nodelist.item(j).getNodeName().equals("message")){
+                        info = new FixInfo(nodelist.item(j).getTextContent().trim());
                         break;
                     }
                 }
-                info = new FixInfo(textNode.getTextContent());
 
             } else if (childName.equals("error")) {
                 NodeList nodelist = child.getChildNodes();
-                Node textNode = null;
-
                 for (int j = 0; j < nodelist.getLength(); ++j){
-                    if (!nodelist.item(j).getNodeName().equals("#text")){
-                        textNode = nodelist.item(j);
+                    if (nodelist.item(j).getNodeName().equals("message")){
+                        error = new FixError(nodelist.item(j).getTextContent().trim());
                         break;
                     }
                 }
-
-                error = new FixError(textNode.getTextContent());
 
             }
         }
@@ -319,7 +315,6 @@ public class ValidationProfileParser {
      * @throws SAXException - If any parse errors occur.
      */
     public static ValidationProfile parseValidationProfile(File resourceFile) throws ParserConfigurationException, SAXException, IOException {
-        ValidationProfileParser parser = new ValidationProfileParser(resourceFile);
-        return parser.profile;
+        return new ValidationProfileParser(resourceFile).profile;
     }
 }

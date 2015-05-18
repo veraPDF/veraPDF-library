@@ -9,14 +9,14 @@ package org.verapdf.validation.profile.model;
  * @see Rule
  */
 public class Fix {
-    private String attr_id;
+    private String attrID;
 
     private String description;
     private FixInfo info;
     private FixError error;
 
-    public Fix(String attr_id, String description, FixInfo info, FixError error) {
-        this.attr_id = attr_id;
+    public Fix(String attrID, String description, FixInfo info, FixError error) {
+        this.attrID = attrID;
         this.description = description;
         this.info = info;
         this.error = error;
@@ -25,8 +25,8 @@ public class Fix {
     /**
      * @return Text provided by attribute "id".
      */
-    public String getAttr_id() {
-        return attr_id;
+    public String getAttrID() {
+        return attrID;
     }
 
     /**

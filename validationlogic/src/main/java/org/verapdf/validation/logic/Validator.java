@@ -30,6 +30,7 @@ public class Validator {
     private Queue<Set<String>> contextSet;
     private Map<String, List<Check>> checkMap;
     private List<String> warnings;
+    private Set<String> idSet;
 
     private String rootType;
 
@@ -45,17 +46,24 @@ public class Validator {
         contextSet = new LinkedList<>();
         checkMap = new HashMap<>();
         warnings = new ArrayList<>();
+        idSet = new HashSet<>();
 
-        rootType = root.get_type();
+        rootType = root.getType();
 
         objectsQueue.add(root);
 
         objectsContext.add("root");
 
         Set<String> rootIDContext = new HashSet<>();
-        rootIDContext.add(root.get_id());
+        if (root.getID() != null) {
+            rootIDContext.add(root.getID());
+        }
 
         contextSet.add(rootIDContext);
+
+        if (root.getID() != null) {
+            idSet.add(root.getID());
+        }
 
         while(!objectsQueue.isEmpty()){
             checkNext();
@@ -63,8 +71,9 @@ public class Validator {
 
         List<Rule> rules = new ArrayList<>();
 
-        for(String id : checkMap.keySet()){
-            rules.add(new Rule(id, checkMap.get(id)));
+        for(Map.Entry<String, List<Check>> id : checkMap.entrySet()){
+
+            rules.add(new Rule(id.getKey(), id.getValue()));
         }
 
         return new ValidationInfo(new Profile(profile.getName(), profile.getHash()), new Result(new Details(rules,warnings)));
@@ -76,8 +85,8 @@ public class Validator {
         String checkContext = objectsContext.poll();
         Set<String> checkIDContext = contextSet.poll();
 
-        if (profile.getRoolsForObject(checkObject.get_type()) != null) {
-            for (org.verapdf.validation.profile.model.Rule rule : profile.getRoolsForObject(checkObject.get_type())) {
+        if (profile.getRoolsForObject(checkObject.getType()) != null) {
+            for (org.verapdf.validation.profile.model.Rule rule : profile.getRoolsForObject(checkObject.getType())) {
                 res &= checkObjWithRule(checkObject, checkContext, rule, getScript(checkObject, rule));
             }
         }
@@ -94,11 +103,19 @@ public class Validator {
             List<? extends Object> objects = checkObject.getLinkedObjects(link);
             for(int i = 0; i < objects.size(); ++i){
                 Object obj = objects.get(i);
-                if(!checkIDContext.contains(obj.get_id())){
+
+
+                if(obj.getID() == null
+                        || ( (obj.isContextDependent() == null || obj.isContextDependent()) && !checkIDContext.contains(obj.getID()))
+                        || ( (obj.isContextDependent() != null && !obj.isContextDependent()) && !idSet.contains(obj.getID()))){
+
                     objectsQueue.add(obj);
                     objectsContext.add(checkContext + "/" + link + "[" + i + "]");
                     Set<String> newCheckIDContext = new HashSet<>(checkIDContext);
-                    newCheckIDContext.add(obj.get_id());
+                    if (obj.getID() != null) {
+                        newCheckIDContext.add(obj.getID());
+                        idSet.add(obj.getID());
+                    }
                     contextSet.add(newCheckIDContext);
                 }
             }
@@ -148,11 +165,11 @@ public class Validator {
             check = new Check("failed", loc, error, rule.isHasError());
         }
 
-        if(checkMap.get(rule.getAttr_id()) == null){
-            checkMap.put(rule.getAttr_id(), new ArrayList<Check>());
+        if(checkMap.get(rule.getAttrID()) == null){
+            checkMap.put(rule.getAttrID(), new ArrayList<Check>());
         }
 
-        checkMap.get(rule.getAttr_id()).add(check);
+        checkMap.get(rule.getAttrID()).add(check);
 
         Context.exit();
 

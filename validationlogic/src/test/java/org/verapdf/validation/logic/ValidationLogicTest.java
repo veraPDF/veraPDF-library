@@ -1,5 +1,7 @@
 package org.verapdf.validation.logic;
 
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
@@ -8,7 +10,6 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.coslayer.CosInteger;
 import org.verapdf.model.pdlayer.PDAnnot;
-import org.verapdf.validation.report.XMLValidationReport;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import static org.junit.Assert.*;
@@ -27,7 +28,7 @@ public class ValidationLogicTest {
         lspd.add(pda1);
         lspd.add(pda2);
 
-        TestCosInteger in = new TestCosInteger(41, "cosint");
+        TestCosInteger in = new TestCosInteger(41, null);
         List<CosInteger> lsin = new ArrayList<>();
         lsin.add(in);
 
@@ -48,19 +49,23 @@ public class ValidationLogicTest {
         ((List<Object>) cd2.getLinkedObjects("Object")).add(obj);
 
 
-        ValidationInfo info = Validator.validate(obj, "src/test/resources/test.xml");
+        ValidationInfo info = Validator.validate(obj, getSystemIndependentPath("/test.xml"));
 
         assertEquals(info.getProfile().getName(), "Validation profile for testing");
         assertEquals(info.getProfile().getHash(), "Some hash");
 
         assertEquals(info.getResult().isCompliant(), false);
 
-        assertEquals(info.getResult().getSummary().getAttr_passedRules(), 1);
-        assertEquals(info.getResult().getSummary().getAttr_failedRules(), 3);
+        assertEquals(info.getResult().getSummary().getAttrPassedRules(), 1);
+        assertEquals(info.getResult().getSummary().getAttrFailedRules(), 3);
 
-        assertEquals(info.getResult().getSummary().getAttr_passedChecks(), 4);
-        assertEquals(info.getResult().getSummary().getAttr_failedChecks(), 4);
+        assertEquals(info.getResult().getSummary().getAttrPassedChecks(), 4);
+        assertEquals(info.getResult().getSummary().getAttrFailedChecks(), 4);
 
+    }
+
+    private String getSystemIndependentPath(String path) throws URISyntaxException {
+        return Paths.get(this.getClass().getResource(path).toURI()).toString();
     }
 
 }
