@@ -8,7 +8,6 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.coslayer.CosInteger;
 import org.verapdf.model.pdlayer.PDAnnot;
-import org.verapdf.validation.report.XMLValidationReport;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import static org.junit.Assert.*;
@@ -27,7 +26,7 @@ public class ValidationLogicTest {
         lspd.add(pda1);
         lspd.add(pda2);
 
-        TestCosInteger in = new TestCosInteger(41, "cosint");
+        TestCosInteger in = new TestCosInteger(41, null);
         List<CosInteger> lsin = new ArrayList<>();
         lsin.add(in);
 
@@ -55,11 +54,11 @@ public class ValidationLogicTest {
 
         assertEquals(info.getResult().isCompliant(), false);
 
-        assertEquals(info.getResult().getSummary().getAttr_passedRules(), 1);
-        assertEquals(info.getResult().getSummary().getAttr_failedRules(), 3);
+        assertEquals(info.getResult().getSummary().getAttrPassedRules(), 1);
+        assertEquals(info.getResult().getSummary().getAttrFailedRules(), 3);
 
-        assertEquals(info.getResult().getSummary().getAttr_passedChecks(), 4);
-        assertEquals(info.getResult().getSummary().getAttr_failedChecks(), 4);
+        assertEquals(info.getResult().getSummary().getAttrPassedChecks(), 4);
+        assertEquals(info.getResult().getSummary().getAttrFailedChecks(), 4);
 
     }
 

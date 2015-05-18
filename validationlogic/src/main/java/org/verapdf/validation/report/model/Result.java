@@ -14,7 +14,7 @@ public class Result {
     private Details details;
 
     public Result(Details details) {
-        boolean compliant = true;
+        boolean compliantCheck = true;
         int passedRules = 0;
         int failedRules = 0;
         int passedChecks = 0;
@@ -24,15 +24,15 @@ public class Result {
         int warnings = details.getWarnings().size();
 
         for(Rule rule : details.getRules()){
-            if (rule.getAttr_status().equals("passed")){
+            if (rule.getAttrStatus().equals("passed")){
                 ++passedRules;
             }
             else {
-                compliant = false;
+                compliantCheck = false;
                 ++failedRules;
             }
             for(Check check : rule.getChecks()){
-                if (check.getAttr_status().equals("passed")){
+                if (check.getAttrStatus().equals("passed")){
                     ++passedChecks;
                 }
                 else {
@@ -41,11 +41,11 @@ public class Result {
             }
         }
 
-        Summary summary = new Summary(passedRules, failedRules, passedChecks, failedChecks, completedMetadataFixes, failedMetadataFixes, warnings);
+        Summary newSummary = new Summary(passedRules, failedRules, passedChecks, failedChecks, completedMetadataFixes, failedMetadataFixes, warnings);
 
-        this.compliant = compliant;
-        this.statement = compliant ? "Validation is successful! Everything is correct!" : "Validation failed. Something is wrong.";
-        this.summary = summary;
+        this.compliant = compliantCheck;
+        this.statement = compliantCheck ? "Validation is successful! Everything is correct!" : "Validation failed. Something is wrong.";
+        this.summary = newSummary;
         this.details = details;
     }
 

@@ -14,7 +14,7 @@ public class ValidationProfileParserTest {
     public void test() throws Exception {
         ValidationProfile prof = ValidationProfileParser.parseValidationProfile("src/test/resources/test.xml");
 
-        assertEquals(prof.getAttr_Model(), "org.verapdf.model.PDFA1a");
+        assertEquals(prof.getAttrModel(), "org.verapdf.model.PDFA1a");
         assertEquals(prof.getName(), "PDF/A-1a validation profile");
         assertEquals(prof.getDescription(), "STR_ID_101");
         assertEquals(prof.getCreator(), "User1");
@@ -27,7 +27,7 @@ public class ValidationProfileParserTest {
 
         assertEquals(prof.getRoolsForObject("CosDocument").get(0), rule1);
 
-        assertEquals(rule1.getAttr_object(), "CosDocument");
+        assertEquals(rule1.getAttrObject(), "CosDocument");
         assertEquals(rule1.getFix().size(), 0);
         assertEquals(rule1.getDescription(), "STR_ID_401");
         assertEquals(rule1.getTest(), "fileHeaderOffset == 0");
@@ -40,7 +40,7 @@ public class ValidationProfileParserTest {
 
         Rule rule53 = prof.getRuleById("rule53");
 
-        assertEquals(rule53.getAttr_object(), "PDMetadata");
+        assertEquals(rule53.getAttrObject(), "PDMetadata");
         assertEquals(rule53.getDescription(), "STR_ID_608");
         assertEquals(rule53.getTest(), "isInfoDictConsistent");
         assertEquals(rule53.isHasError(), false);
@@ -55,7 +55,7 @@ public class ValidationProfileParserTest {
 
         Rule rule35 = prof.getRuleById("rule35");
 
-        assertEquals(rule35.getAttr_object(), "PDXObject");
+        assertEquals(rule35.getAttrObject(), "PDXObject");
         assertEquals(rule35.isHasError(), false);
         assertNull(rule35.getDescription());
         assertNull(rule35.getTest());
@@ -70,7 +70,7 @@ public class ValidationProfileParserTest {
     public void testCyrillic() throws Exception {
         ValidationProfile prof = ValidationProfileParser.parseValidationProfile("src/test/resources/testCyrillic.xml");
 
-        assertEquals(prof.getAttr_Model(), "org.verapdf.model.PDFA1a");
+        assertEquals(prof.getAttrModel(), "org.verapdf.model.PDFA1a");
         assertEquals(prof.getName(), "PDF/A-1a validation profile");
         assertEquals(prof.getDescription(), "STR_ID_101");
         assertEquals(prof.getCreator(), "Какой-то русский человек");
@@ -81,7 +81,7 @@ public class ValidationProfileParserTest {
 
         Rule rule1 = prof.getRuleById("правило1");
 
-        assertEquals(rule1.getAttr_object(), "CosDocument");
+        assertEquals(rule1.getAttrObject(), "CosDocument");
         assertEquals(rule1.getFix().size(), 0);
         assertEquals(rule1.getDescription(), "STR_ID_401");
         assertEquals(rule1.getTest(), "fileHeaderOffset == 0");
@@ -93,7 +93,7 @@ public class ValidationProfileParserTest {
 
         Rule rule53 = prof.getRuleById("rule53");
 
-        assertEquals(rule53.getAttr_object(), "PDMetadata");
+        assertEquals(rule53.getAttrObject(), "PDMetadata");
         assertEquals(rule53.getDescription(), "STR_ID_608");
         assertEquals(rule53.getTest(), "isInfoDictConsistent");
         assertEquals(rule53.getRuleError().getMessage(), "STR_ID_609");
