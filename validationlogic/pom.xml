@@ -10,9 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.verapdf</groupId>
     <artifactId>validationlogic</artifactId>
-    <version>1.0-SNAPSHOT</version>
 
     <repositories>
         <repository>

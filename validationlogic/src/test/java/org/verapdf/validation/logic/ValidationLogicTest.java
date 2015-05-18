@@ -1,5 +1,7 @@
 package org.verapdf.validation.logic;
 
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
@@ -47,7 +49,7 @@ public class ValidationLogicTest {
         ((List<Object>) cd2.getLinkedObjects("Object")).add(obj);
 
 
-        ValidationInfo info = Validator.validate(obj, "src/test/resources/test.xml");
+        ValidationInfo info = Validator.validate(obj, getSystemIndependentPath("/test.xml"));
 
         assertEquals(info.getProfile().getName(), "Validation profile for testing");
         assertEquals(info.getProfile().getHash(), "Some hash");
@@ -60,6 +62,10 @@ public class ValidationLogicTest {
         assertEquals(info.getResult().getSummary().getAttrPassedChecks(), 4);
         assertEquals(info.getResult().getSummary().getAttrFailedChecks(), 4);
 
+    }
+
+    private String getSystemIndependentPath(String path) throws URISyntaxException {
+        return Paths.get(this.getClass().getResource(path).toURI()).toString();
     }
 
 }
