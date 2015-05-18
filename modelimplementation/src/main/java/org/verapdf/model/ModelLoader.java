@@ -2,8 +2,8 @@ package org.verapdf.model;
 
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.verapdf.model.factory.cos.PBFactory;
 import org.verapdf.model.coslayer.CosDict;
+import org.verapdf.model.impl.pb.cos.PBCosDict;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,18 +25,16 @@ public final class ModelLoader {
      * @return root object representing by {@link org.verapdf.model.coslayer.CosDict}
      * @throws FileNotFoundException
      */
-    public static CosDict getCatalog(String path) throws FileNotFoundException {
+    public static CosDict getCatalog(String path) throws IOException {
         final File file = new File(path);
         if (!file.exists()) {
             throw new FileNotFoundException("Current file '" + path + "' not exists.");
         }
 
-        CosDict catalog = null;
+        CosDict catalog;
         try (PDDocument document = PDDocument.load(file)) {
             COSDictionary pdfBoxCatalog = (COSDictionary) document.getDocument().getCatalog().getObject();
-            catalog = (CosDict) PBFactory.generateCosObject(pdfBoxCatalog);
-        } catch (IOException e) {
-            e.printStackTrace();
+            catalog = new PBCosDict(pdfBoxCatalog);
         }
         return catalog;
     }
