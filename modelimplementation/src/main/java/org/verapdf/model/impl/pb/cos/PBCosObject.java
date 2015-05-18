@@ -1,7 +1,7 @@
 package org.verapdf.model.impl.pb.cos;
 
 import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.ICOSVisitor;
+import org.apache.pdfbox.cos.COSObject;
 import org.verapdf.model.impl.GenericModelObject;
 import org.verapdf.model.tools.IDGenerator;
 import org.verapdf.model.coslayer.CosObject;
@@ -48,8 +48,12 @@ public class PBCosObject extends GenericModelObject implements CosObject {
 
     public static CosObject getFromValue(COSBase base) {
         try {
-            ICOSVisitor visitor = new PBCosVisitor();
-            return (CosObject) base.accept(visitor);
+            PBCosVisitor visitor = new PBCosVisitor();
+            if (base instanceof COSObject) {
+                return (CosObject) visitor.visitFromObject((COSObject) base);
+            } else {
+                return (CosObject) base.accept(visitor);
+            }
         } catch (IOException ignore) {
             return null;
         }

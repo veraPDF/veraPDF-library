@@ -59,4 +59,8 @@ public final class PBCosVisitor implements ICOSVisitor {
     public Object visitFromString(COSString obj) throws IOException {
         return new PBCosString(obj, false);
     }
+
+    public Object visitFromObject(COSObject obj) throws IOException {
+        return new PBCosIndirect(obj, true);
+    }
 }
