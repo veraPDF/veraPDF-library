@@ -20,7 +20,6 @@ public class PBCosStream extends PBCosDict implements CosStream {
 
     /**  length of the stream
      */
-    // TODO : simplify this holy shit
     @Override
     public Integer getlength() {
         int length = 0;
@@ -45,17 +44,17 @@ public class PBCosStream extends PBCosDict implements CosStream {
      */
     @Override
     public String getfilters() {
-        String filters = "";
+        StringBuilder filters = new StringBuilder();
         COSBase base = ((COSStream) baseObject).getFilters();
         if (base == null)
-            return null;
+            return filters.toString();
 
         if (base instanceof COSName) {
-            return ((COSName)base).getName();
+            return ((COSName) base).getName();
         } else if (base instanceof COSArray) {
             for (COSBase filter : ((COSArray) base)) {
                 if (filter instanceof COSName) {
-                    filters += ((COSName) filter).getName() + " ";
+                    filters.append(((COSName) filter).getName()).append(" ");
                 } else {
                     throw new IllegalArgumentException("Can`t find filters for stream");
                 }

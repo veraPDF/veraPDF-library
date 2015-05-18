@@ -2,7 +2,6 @@ package org.verapdf.model.impl.pb.cos;
 
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSObject;
-import org.verapdf.model.factory.cos.PBFactory;
 import org.verapdf.model.coslayer.CosIndirect;
 import org.verapdf.model.coslayer.CosObject;
 
@@ -34,10 +33,10 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
         switch (link) {
             case DIRECT_OBJECT:
-                list = getdirectObject();
+                list = getDirectObject();
                 break;
             default:
-                throw new IllegalArgumentException("Unknown link " + link + " for " + get_type());
+                throw new IllegalArgumentException("Unknown link " + link + " for " + getType());
         }
 
         return list;
@@ -45,10 +44,10 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
     /** Get the direct contents of the indirect object
      */
-    protected List<CosObject> getdirectObject() {
+    protected List<CosObject> getDirectObject() {
         List<CosObject> list = new ArrayList<>();
         COSBase base = baseObject instanceof COSObject ? ((COSObject) baseObject).getObject() : baseObject;
-        list.add(PBFactory.generateCosObject(base));
+        list.add(getFromValue(base));
         return list;
     }
 
@@ -56,6 +55,7 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
      */
     @Override
     public Boolean getspacingComplyPDFA() {
+        System.err.println("Feature of CosIndirect about spacings comply PDFA not supported yet.");
         return isSpacingComplyPDFA;
     }
 }
