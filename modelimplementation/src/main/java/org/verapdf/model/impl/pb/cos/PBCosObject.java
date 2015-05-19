@@ -10,11 +10,10 @@ import org.verapdf.model.visitor.cos.pb.PBCosVisitor;
 import java.io.IOException;
 
 /**
- * Created by Evgeniy Muravitskiy on 4/27/15.
- * <p>
- *     Current class is representation of CosObject interface of abstract model.
- *     This class is analogue of COSBase in pdfbox.
- * </p>
+ * Current class is representation of CosObject interface of abstract model.
+ * This class is analogue of COSBase in pdfbox.
+ *
+ * @author Evgeniy Muravitskiy
  */
 public class PBCosObject extends GenericModelObject implements CosObject {
 
@@ -46,9 +45,15 @@ public class PBCosObject extends GenericModelObject implements CosObject {
         return id;
     }
 
+    /**
+     * Transform object of pdf box to corresponding object of abstract model implementation. For transforming
+     * using {@code PBCosVisitor}.
+     * @param base the base object that all objects in the PDF document will extend in pdf box
+     * @return object of abstract model implementation, transformed from {@code base}
+     */
     public static CosObject getFromValue(COSBase base) {
         try {
-            PBCosVisitor visitor = new PBCosVisitor();
+            PBCosVisitor visitor = PBCosVisitor.getInstance();
             if (base instanceof COSObject) {
                 return (CosObject) visitor.visitFromObject((COSObject) base);
             } else {
