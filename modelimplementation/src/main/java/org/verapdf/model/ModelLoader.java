@@ -10,10 +10,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * Created by Evgeniy Muravitskiy on 5/13/2015.
- * <p>
- *     Current class is entry point to model implementation. Implements Singleton pattern.
- * </p>
+ * Current class is entry point to model implementation. Implements Singleton pattern.
+ *
+ * @author Evgeniy Muravitskiy
  */
 public final class ModelLoader {
 
@@ -23,7 +22,8 @@ public final class ModelLoader {
      * Method return root object of model implementation from pdf box model together with the hierarchy.
      * @param path path to PDF file
      * @return root object representing by {@link org.verapdf.model.coslayer.CosDict}
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException when target file is not exist
+     * @throws IOException when target file is not pdf or pdf file is not contain root object
      */
     public static CosDict getCatalog(String path) throws IOException {
         final File file = new File(path);
