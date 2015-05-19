@@ -2,7 +2,6 @@ package org.verapdf.model.impl.pb.cos;
 
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
-import org.verapdf.model.factory.cos.PBFactory;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosArray;
 import org.verapdf.model.coslayer.CosObject;
@@ -51,7 +50,7 @@ public class PBCosArray extends PBCosObject implements CosArray {
     private List<CosObject> getElements() {
         List<CosObject> list = new ArrayList<>(this.getsize());
         for (COSBase base : ((COSArray) baseObject)) {
-            list.add(PBFactory.generateCosObject(base));
+            list.add(getFromValue(base));
         }
         return list;
     }

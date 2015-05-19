@@ -63,18 +63,20 @@ public class TestCosInteger implements CosInteger {
         res.add("stringValue");
         res.add("intValue");
         res.add("realValue");
-        res.add("_id");
-        res.add("_type");
         return res;
     }
 
+    public Boolean isContextDependent(){
+        return false;
+    }
+
     @Override
-    public String get_type() {
+    public String getType() {
         return type;
     }
 
     @Override
-    public String get_id() {
+    public String getID() {
         return id;
     }
 }

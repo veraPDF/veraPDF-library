@@ -11,8 +11,8 @@ import java.util.List;
  * @see ValidationProfile
  */
 public class Rule {
-    private String attr_id;
-    private String attr_object;
+    private String attrID;
+    private String attrObject;
 
     private String description;
     private String test;
@@ -21,9 +21,9 @@ public class Rule {
     private Reference reference;
     private List<Fix> fix;
 
-    public Rule(String attr_id, String attr_object, String description, RuleError ruleError, boolean isHasError, String test, Reference reference, List<Fix> fix) {
-        this.attr_id = attr_id;
-        this.attr_object = attr_object;
+    public Rule(String attrID, String attrObject, String description, RuleError ruleError, boolean isHasError, String test, Reference reference, List<Fix> fix) {
+        this.attrID = attrID;
+        this.attrObject = attrObject;
         this.description = description;
         this.ruleError = ruleError;
         this.isHasError = isHasError;
@@ -35,15 +35,15 @@ public class Rule {
     /**
      * @return Text provided by attribute "id".
      */
-    public String getAttr_id() {
-        return attr_id;
+    public String getAttrID() {
+        return attrID;
     }
 
     /**
      * @return Text provided by attribute "object".
      */
-    public String getAttr_object() {
-        return attr_object;
+    public String getAttrObject() {
+        return attrObject;
     }
 
     /**

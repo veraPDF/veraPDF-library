@@ -9,7 +9,7 @@ package org.verapdf.validation.profile.model;
  * @see Fix
  */
 public class FixError {
-    public String message;
+    private String message;
 
     public FixError(String message) {
         this.message = message;

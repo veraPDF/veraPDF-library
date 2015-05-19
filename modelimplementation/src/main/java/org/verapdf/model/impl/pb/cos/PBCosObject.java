@@ -1,12 +1,13 @@
 package org.verapdf.model.impl.pb.cos;
 
 import org.apache.pdfbox.cos.COSBase;
-import org.verapdf.model.ModelHelper;
-import org.verapdf.model.baselayer.Object;
+import org.apache.pdfbox.cos.COSObject;
+import org.verapdf.model.GenericModelObject;
 import org.verapdf.model.tools.IDGenerator;
 import org.verapdf.model.coslayer.CosObject;
+import org.verapdf.model.visitor.cos.pb.PBCosVisitor;
 
-import java.util.List;
+import java.io.IOException;
 
 /**
  * Created by Evgeniy Muravitskiy on 4/27/15.
@@ -15,41 +16,22 @@ import java.util.List;
  *     This class is analogue of COSBase in pdfbox.
  * </p>
  */
-public class PBCosObject implements CosObject{
+public class PBCosObject extends GenericModelObject implements CosObject {
 
     protected COSBase baseObject;
 
     private String type = "CosObject";
-    private Integer id = IDGenerator.generateID();
+    private String id;
 
     public PBCosObject(COSBase baseObject) {
         this.baseObject = baseObject;
-    }
-
-    @Override
-    public List<? extends Object> getLinkedObjects(String link) {
-        throw new IllegalAccessError(this.get_type() + " has not access to this method or has not " + link + " link.");
-    }
-
-    @Override
-    public List<String> getLinks() {
-        return ModelHelper.getListOfLinks(this.get_type());
-    }
-
-    @Override
-    public List<String> getProperties() {
-        return ModelHelper.getListOfProperties(this.get_type());
-    }
-
-    @Override
-    public List<String> getSuperTypes() {
-        return ModelHelper.getListOfSuperNames(this.get_type());
+        id = IDGenerator.generateID(this.baseObject);
     }
 
     /** Get type of current object
      */
     @Override
-    public String get_type() {
+    public String getType() {
         return type;
     }
 
@@ -60,19 +42,20 @@ public class PBCosObject implements CosObject{
     /** Get personal id of current object
      */
     @Override
-    public String get_id() {
-        return String.valueOf(id);
+    public String getID() {
+        return id;
     }
 
-    public boolean compareTo(java.lang.Object object) {
-        if (object instanceof COSBase) {
-            return baseObject.equals(object);
-        }
-        else if (object instanceof CosObject){
-            COSBase base = ((PBCosObject) object).baseObject;
-            return  this.baseObject.equals(base);
-        } else {
-            return false;
+    public static CosObject getFromValue(COSBase base) {
+        try {
+            PBCosVisitor visitor = new PBCosVisitor();
+            if (base instanceof COSObject) {
+                return (CosObject) visitor.visitFromObject((COSObject) base);
+            } else {
+                return (CosObject) base.accept(visitor);
+            }
+        } catch (IOException ignore) {
+            return null;
         }
     }
 }
