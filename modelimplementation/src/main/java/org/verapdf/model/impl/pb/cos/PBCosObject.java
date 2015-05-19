@@ -2,7 +2,7 @@ package org.verapdf.model.impl.pb.cos;
 
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSObject;
-import org.verapdf.model.impl.GenericModelObject;
+import org.verapdf.model.GenericModelObject;
 import org.verapdf.model.tools.IDGenerator;
 import org.verapdf.model.coslayer.CosObject;
 import org.verapdf.model.visitor.cos.pb.PBCosVisitor;
