@@ -2,7 +2,6 @@ package org.verapdf.model.impl.pb.cos;
 
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDocument;
-import org.verapdf.model.factory.cos.PBFactory;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDocument;
 import org.verapdf.model.coslayer.CosIndirect;
@@ -69,7 +68,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     private List<CosTrailer> getTrailer() {
         List<CosTrailer> trailer = new ArrayList<>();
-        trailer.add((CosTrailer) PBFactory.generateCosObject(CosTrailer.class, ((COSDocument) baseObject).getTrailer()));
+        trailer.add(new PBCosTrailer(((COSDocument) baseObject).getTrailer()));
         return trailer;
     }
 
@@ -78,7 +77,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     private List<CosIndirect> getIndirectObjects() {
         List<CosIndirect> indirects = new ArrayList<>();
         for (COSBase object : ((COSDocument) baseObject).getObjects()) {
-            indirects.add((CosIndirect) PBFactory.generateCosObject(CosIndirect.class, object));
+            indirects.add(new PBCosIndirect(object, true));
         }
         return indirects;
     }
@@ -96,6 +95,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     @Override
     public Boolean getbinaryHeaderComplyPDFA() {
+        System.err.println("Feature of CosDocument about binary header comply PDFA not supported yet.");
         ((COSDocument) baseObject).getVersion();
         return null;
     }

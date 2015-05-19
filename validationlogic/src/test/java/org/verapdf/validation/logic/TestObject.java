@@ -16,6 +16,10 @@ public class TestObject implements Object {
     private List<CosDict> cosDicts;
     private List<PDAnnot> pdAnnots;
 
+    public Boolean isContextDependent(){
+        return false;
+    }
+
     public TestObject(String id, List<CosDict> cosDicts, List<PDAnnot> pdAnnots) {
         this.type = "Object";
         this.id = id;
@@ -49,18 +53,16 @@ public class TestObject implements Object {
     @Override
     public List<String> getProperties() {
         List<String> res = new ArrayList<>();
-        res.add("_type");
-        res.add("_id");
         return res;
     }
 
     @Override
-    public String get_type() {
+    public String getType() {
         return type;
     }
 
     @Override
-    public String get_id() {
+    public String getID() {
         return id;
     }
 }

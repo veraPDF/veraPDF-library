@@ -24,6 +24,10 @@ import java.io.FileOutputStream;
  */
 public class XMLValidationReport {
 
+    private XMLValidationReport(){
+
+    }
+
     /**
      * Creates tree of xml tags for validation report
      * @param info - validation info model to be writed
@@ -57,13 +61,13 @@ public class XMLValidationReport {
         result.appendChild(statement);
 
         Element summary = doc.createElement("summary");
-        summary.setAttribute("passedRules", Integer.toString(info.getResult().getSummary().getAttr_passedRules()));
-        summary.setAttribute("failedRules", Integer.toString(info.getResult().getSummary().getAttr_failedRules()));
-        summary.setAttribute("passedChecks", Integer.toString(info.getResult().getSummary().getAttr_passedChecks()));
-        summary.setAttribute("failedChecks", Integer.toString(info.getResult().getSummary().getAttr_failedChecks()));
-        summary.setAttribute("completedMetadataFixes", Integer.toString(info.getResult().getSummary().getAttr_completedMetadataFixes()));
-        summary.setAttribute("failedMetadataFixes", Integer.toString(info.getResult().getSummary().getAttr_failedMetadataFixes()));
-        summary.setAttribute("warnings", Integer.toString(info.getResult().getSummary().getAttr_warnings()));
+        summary.setAttribute("passedRules", Integer.toString(info.getResult().getSummary().getAttrPassedRules()));
+        summary.setAttribute("failedRules", Integer.toString(info.getResult().getSummary().getAttrFailedRules()));
+        summary.setAttribute("passedChecks", Integer.toString(info.getResult().getSummary().getAttrPassedChecks()));
+        summary.setAttribute("failedChecks", Integer.toString(info.getResult().getSummary().getAttrFailedChecks()));
+        summary.setAttribute("completedMetadataFixes", Integer.toString(info.getResult().getSummary().getAttrCompletedMetadataFixes()));
+        summary.setAttribute("failedMetadataFixes", Integer.toString(info.getResult().getSummary().getAttrFailedMetadataFixes()));
+        summary.setAttribute("warnings", Integer.toString(info.getResult().getSummary().getAttrWarnings()));
         result.appendChild(summary);
 
         Element details = doc.createElement("details");
@@ -72,20 +76,35 @@ public class XMLValidationReport {
         Element rules = doc.createElement("rules");
         details.appendChild(rules);
 
+        makeRules(info, doc, rules);
+
+        Element warnings = doc.createElement("warnings");
+        details.appendChild(warnings);
+
+        for(String war : info.getResult().getDetails().getWarnings()){
+            Element warning = doc.createElement("warning");
+            warning.appendChild(doc.createTextNode(war));
+            warnings.appendChild(warning);
+        }
+
+        return validationInfo;
+    }
+
+    private static void makeRules(ValidationInfo info, Document doc, Element rules){
         for(Rule rul : info.getResult().getDetails().getRules()){
             Element rule = doc.createElement("rule");
 
-            rule.setAttribute("id", rul.getAttr_id());
-            rule.setAttribute("status", rul.getAttr_status());
-            rule.setAttribute("checks", Integer.toString(rul.getAttr_checks()));
+            rule.setAttribute("id", rul.getAttrID());
+            rule.setAttribute("status", rul.getAttrStatus());
+            rule.setAttribute("checks", Integer.toString(rul.getAttrChecks()));
 
             for(Check che : rul.getChecks()){
                 Element check = doc.createElement("check");
 
-                check.setAttribute("status", che.getAttr_status());
+                check.setAttribute("status", che.getAttrStatus());
 
                 Element location = doc.createElement("location");
-                location.setAttribute("level", che.getLocation().getAttr_level());
+                location.setAttribute("level", che.getLocation().getAttrLevel());
                 Element context = doc.createElement("context");
 
                 context.appendChild(doc.createTextNode(che.getLocation().getContext()));
@@ -115,17 +134,6 @@ public class XMLValidationReport {
 
             rules.appendChild(rule);
         }
-
-        Element warnings = doc.createElement("warnings");
-        details.appendChild(warnings);
-
-        for(String war : info.getResult().getDetails().getWarnings()){
-            Element warning = doc.createElement("warning");
-            warning.appendChild(doc.createTextNode(war));
-            warnings.appendChild(warning);
-        }
-
-        return validationInfo;
     }
 
     /**

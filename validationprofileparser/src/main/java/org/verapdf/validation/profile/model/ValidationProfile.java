@@ -11,7 +11,7 @@ import java.util.Map;
  * @version 1.0
  */
 public class ValidationProfile {
-    private String attr_Model;
+    private String attrModel;
 
     private String name;
     private String description;
@@ -21,8 +21,8 @@ public class ValidationProfile {
 
     private Map<String, List<Rule>> rules;
 
-    public ValidationProfile(String attr_Model, String name, String description, String creator, String created, String hash, Map<String, List<Rule>> rules) {
-        this.attr_Model = attr_Model;
+    public ValidationProfile(String attrModel, String name, String description, String creator, String created, String hash, Map<String, List<Rule>> rules) {
+        this.attrModel = attrModel;
         this.name = name;
         this.description = description;
         this.creator = creator;
@@ -34,8 +34,8 @@ public class ValidationProfile {
     /**
      * @return Text provided by attribute "model".
      */
-    public String getAttr_Model() {
-        return attr_Model;
+    public String getAttrModel() {
+        return attrModel;
     }
 
     /**
@@ -90,7 +90,7 @@ public class ValidationProfile {
     public Rule getRuleById(String id){
         for (List<Rule> ruleList : rules.values()){
             for(Rule rule : ruleList){
-                if (rule.getAttr_id().equals(id)){
+                if (rule.getAttrID().equals(id)){
                     return rule;
                 }
             }

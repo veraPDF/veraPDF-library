@@ -3,7 +3,6 @@ package org.verapdf.model.impl.pb.cos;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
-import org.verapdf.model.factory.cos.PBFactory;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.coslayer.CosName;
@@ -43,13 +42,13 @@ public class PBCosDict extends PBCosObject implements CosDict {
 
         switch (link) {
             case KEYS:
-                list = this.getkeys();
+                list = this.getKeys();
                 break;
             case VALUES:
-                list = this.getvalues();
+                list = this.getValues();
                 break;
             case METADATA:
-                list = this.getmetadata();
+                list = this.getMetadata();
                 break;
             default:
                 list = super.getLinkedObjects(link);
@@ -60,20 +59,20 @@ public class PBCosDict extends PBCosObject implements CosDict {
 
     /** Get all keys of the dictionary
      */
-    protected List<CosName> getkeys() {
+    private List<CosName> getKeys() {
         List<CosName> list = new ArrayList<>(this.getsize());
         for (COSName key : ((COSDictionary) baseObject).keySet()) {
-            list.add((CosName) PBFactory.generateCosObject(key));
+            list.add((CosName) getFromValue(key));
         }
         return list;
     }
 
     /** Get all values of the dictonary
      */
-    protected List<CosObject> getvalues() {
+    private List<CosObject> getValues() {
         List<CosObject> list = new ArrayList<>(this.getsize());
         for (COSBase value : ((COSDictionary) baseObject).getValues()) {
-            list.add(PBFactory.generateCosObject(value));
+            list.add(getFromValue(value));
         }
         return list;
     }
@@ -81,7 +80,7 @@ public class PBCosDict extends PBCosObject implements CosDict {
     /** Get XMP metadata if it is present
      */
     // TODO : metadata support
-    protected List<Object> getmetadata() {
+    private List<Object> getMetadata() {
         System.err.println("Current version not support metadata handler yet. Result is null.");
         return null;
     }
