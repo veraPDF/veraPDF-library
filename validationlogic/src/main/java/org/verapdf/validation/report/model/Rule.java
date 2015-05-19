@@ -10,48 +10,48 @@ import java.util.List;
  * @version 1.0
  */
 public class Rule {
-    private String attr_id;
-    private String attr_status;
-    private int attr_checks;
+    private String attrID;
+    private String attrStatus;
+    private int attrChecks;
 
     private List<Check> checks;
 
-    public Rule(String attr_id, List<Check> checks) {
-        this.attr_id = attr_id;
+    public Rule(String attrID, List<Check> checks) {
+        this.attrID = attrID;
 
         String status = "passed";
 
         for (Check check : checks){
-            if (check.getAttr_status().equals("failed")){
+            if (check.getAttrStatus().equals("failed")){
                 status = "failed";
             }
         }
 
-        this.attr_status = status;
+        this.attrStatus = status;
 
-        this.attr_checks = checks.size();
+        this.attrChecks = checks.size();
         this.checks = checks;
     }
 
     /**
      * @return id of the rule
      */
-    public String getAttr_id() {
-        return attr_id;
+    public String getAttrID() {
+        return attrID;
     }
 
     /**
      * @return actual status (passed/failed) of the rule
      */
-    public String getAttr_status() {
-        return attr_status;
+    public String getAttrStatus() {
+        return attrStatus;
     }
 
     /**
      * @return number of checks for this rule
      */
-    public int getAttr_checks() {
-        return attr_checks;
+    public int getAttrChecks() {
+        return attrChecks;
     }
 
     /**

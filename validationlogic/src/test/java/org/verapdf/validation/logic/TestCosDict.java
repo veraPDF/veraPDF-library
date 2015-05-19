@@ -69,19 +69,21 @@ public class TestCosDict implements CosDict {
     @Override
     public List<String> getProperties() {
         List<String> res = new ArrayList<>();
-        res.add("_type");
         res.add("size");
-        res.add("_id");
         return res;
     }
 
+    public Boolean isContextDependent(){
+        return false;
+    }
+
     @Override
-    public String get_type() {
+    public String getType() {
         return type;
     }
 
     @Override
-    public String get_id() {
+    public String getID() {
         return id;
     }
 }
