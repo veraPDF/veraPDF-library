@@ -8,14 +8,14 @@ package org.verapdf.validation.report.model;
  * @version 1.0
  */
 public class Check {
-    private String attr_status;
+    private String attrStatus;
 
     private CheckLocation location;
     private CheckError error;
     private boolean isHasError;
 
-    public Check(String attr_status, CheckLocation location, CheckError error, boolean isHasError) {
-        this.attr_status = attr_status;
+    public Check(String attrStatus, CheckLocation location, CheckError error, boolean isHasError) {
+        this.attrStatus = attrStatus;
         this.location = location;
         this.error = error;
         this.isHasError = isHasError;
@@ -24,8 +24,8 @@ public class Check {
     /**
      * @return status (passed/failed) of the check
      */
-    public String getAttr_status() {
-        return attr_status;
+    public String getAttrStatus() {
+        return attrStatus;
     }
 
     /**

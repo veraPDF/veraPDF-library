@@ -21,6 +21,10 @@ public class TestPDAnnot implements PDAnnot {
         this.id = id;
     }
 
+    public Boolean isContextDependent(){
+        return false;
+    }
+
     @Override
     public String getSubtype() {
         return Subtype;
@@ -48,18 +52,16 @@ public class TestPDAnnot implements PDAnnot {
     public List<String> getProperties() {
         List<String> res = new ArrayList<>();
         res.add("Subtype");
-        res.add("_id");
-        res.add("_type");
         return res;
     }
 
     @Override
-    public String get_type() {
+    public String getType() {
         return type;
     }
 
     @Override
-    public String get_id() {
+    public String getID() {
         return id;
     }
 }

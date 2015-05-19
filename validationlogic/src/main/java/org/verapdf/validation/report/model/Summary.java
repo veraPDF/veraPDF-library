@@ -8,70 +8,70 @@ package org.verapdf.validation.report.model;
  * @version 1.0
  */
 public class Summary {
-    private int attr_passedRules;
-    private int attr_failedRules;
-    private int attr_passedChecks;
-    private int attr_failedChecks;
-    private int attr_completedMetadataFixes;
-    private int attr_failedMetadataFixes;
-    private int attr_warnings;
+    private int attrPassedRules;
+    private int attrFailedRules;
+    private int attrPassedChecks;
+    private int attrFailedChecks;
+    private int attrCompletedMetadataFixes;
+    private int attrFailedMetadataFixes;
+    private int attrWarnings;
 
-    public Summary(int attr_passedRules, int attr_failedRules, int attr_passedChecks, int attr_failedChecks, int attr_completedMetadataFixes, int attr_failedMetadataFixes, int attr_warnings) {
-        this.attr_passedRules = attr_passedRules;
-        this.attr_failedRules = attr_failedRules;
-        this.attr_passedChecks = attr_passedChecks;
-        this.attr_failedChecks = attr_failedChecks;
-        this.attr_completedMetadataFixes = attr_completedMetadataFixes;
-        this.attr_failedMetadataFixes = attr_failedMetadataFixes;
-        this.attr_warnings = attr_warnings;
+    public Summary(int attrPassedRules, int attrFailedRules, int attrPassedChecks, int attrFailedChecks, int attrCompletedMetadataFixes, int attrFailedMetadataFixes, int attrWarnings) {
+        this.attrPassedRules = attrPassedRules;
+        this.attrFailedRules = attrFailedRules;
+        this.attrPassedChecks = attrPassedChecks;
+        this.attrFailedChecks = attrFailedChecks;
+        this.attrCompletedMetadataFixes = attrCompletedMetadataFixes;
+        this.attrFailedMetadataFixes = attrFailedMetadataFixes;
+        this.attrWarnings = attrWarnings;
     }
 
     /**
      * @return the number of passed rules.
      */
-    public int getAttr_passedRules() {
-        return attr_passedRules;
+    public int getAttrPassedRules() {
+        return attrPassedRules;
     }
 
     /**
      * @return the number of failed rules.
      */
-    public int getAttr_failedRules() {
-        return attr_failedRules;
+    public int getAttrFailedRules() {
+        return attrFailedRules;
     }
 
     /**
      * @return the number of passed checks.
      */
-    public int getAttr_passedChecks() {
-        return attr_passedChecks;
+    public int getAttrPassedChecks() {
+        return attrPassedChecks;
     }
 
     /**
      * @return the number of failed checks.
      */
-    public int getAttr_failedChecks() {
-        return attr_failedChecks;
+    public int getAttrFailedChecks() {
+        return attrFailedChecks;
     }
 
     /**
      * @return the number of completed metadata fixes.
      */
-    public int getAttr_completedMetadataFixes() {
-        return attr_completedMetadataFixes;
+    public int getAttrCompletedMetadataFixes() {
+        return attrCompletedMetadataFixes;
     }
 
     /**
      * @return the number of failed metadata fixes.
      */
-    public int getAttr_failedMetadataFixes() {
-        return attr_failedMetadataFixes;
+    public int getAttrFailedMetadataFixes() {
+        return attrFailedMetadataFixes;
     }
 
     /**
      * @return the number of warnings.
      */
-    public int getAttr_warnings() {
-        return attr_warnings;
+    public int getAttrWarnings() {
+        return attrWarnings;
     }
 }
