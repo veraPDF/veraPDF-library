@@ -22,7 +22,7 @@ import java.io.FileOutputStream;
  * @author Maksim Bezrukov
  * @version 1.0
  */
-public class XMLValidationReport {
+public final class XMLValidationReport {
 
     private XMLValidationReport(){
 

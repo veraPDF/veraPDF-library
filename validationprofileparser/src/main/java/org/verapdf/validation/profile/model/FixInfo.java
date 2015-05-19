@@ -11,6 +11,10 @@ package org.verapdf.validation.profile.model;
 public class FixInfo {
     private String message;
 
+    /**
+     * Creates model of fix info
+     * @param message - message of the fix info
+     */
     public FixInfo(String message) {
         this.message = message;
     }

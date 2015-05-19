@@ -14,6 +14,11 @@ public class RuleError {
     private String message;
     private List<String> argument;
 
+    /**
+     * Creates new  rule error model.
+     * @param message - error message
+     * @param argument - list of arguments for the message
+     */
     public RuleError(String message, List<String> argument) {
         this.message = message;
         this.argument = argument;

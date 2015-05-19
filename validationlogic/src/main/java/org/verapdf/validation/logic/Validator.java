@@ -36,6 +36,10 @@ public class Validator {
 
     private ValidationProfile profile;
 
+    /**
+     * Creates new Validator with given validation profile
+     * @param profile - validation profile model for validator
+     */
     protected Validator(ValidationProfile profile) {
         this.profile = profile;
     }
@@ -80,11 +84,62 @@ public class Validator {
     }
 
     private boolean checkNext(){
-        boolean res = true;
+        boolean res;
         Object checkObject = objectsQueue.poll();
         String checkContext = objectsContext.poll();
         Set<String> checkIDContext = contextSet.poll();
 
+        res = checkAllRules(checkObject, checkContext);
+
+        addAllLinkedObjects(checkObject, checkContext, checkIDContext);
+
+        return res;
+    }
+
+    private void addAllLinkedObjects(Object checkObject, String checkContext, Set<String> checkIDContext){
+        for(String link : checkObject.getLinks()){
+            List<? extends Object> objects = checkObject.getLinkedObjects(link);
+            for(int i = 0; i < objects.size(); ++i){
+                Object obj = objects.get(i);
+
+                if(checkRequired(obj, checkIDContext)){
+
+                    objectsQueue.add(obj);
+                    objectsContext.add(checkContext + "/" + link + "[" + i + "]");
+                    Set<String> newCheckIDContext = new HashSet<>(checkIDContext);
+                    if (obj.getID() != null) {
+                        newCheckIDContext.add(obj.getID());
+                        idSet.add(obj.getID());
+                    }
+                    contextSet.add(newCheckIDContext);
+                }
+            }
+        }
+    }
+
+    private boolean checkRequired(Object obj, Set<String> checkIDContext){
+
+        if (obj.getID() == null){
+            return true;
+        }
+        else if (obj.isContextDependent() == null || obj.isContextDependent()){
+            if (!checkIDContext.contains(obj.getID())){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else if (!idSet.contains(obj.getID())){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private boolean checkAllRules(Object checkObject, String checkContext){
+        boolean res = true;
         if (profile.getRoolsForObject(checkObject.getType()) != null) {
             for (org.verapdf.validation.profile.model.Rule rule : profile.getRoolsForObject(checkObject.getType())) {
                 res &= checkObjWithRule(checkObject, checkContext, rule, getScript(checkObject, rule));
@@ -95,28 +150,6 @@ public class Validator {
             if (profile.getRoolsForObject(checkType) != null) {
                 for (org.verapdf.validation.profile.model.Rule rule : profile.getRoolsForObject(checkType)) {
                     res &= checkObjWithRule(checkObject, checkContext, rule, getScript(checkObject, rule));
-                }
-            }
-        }
-
-        for(String link : checkObject.getLinks()){
-            List<? extends Object> objects = checkObject.getLinkedObjects(link);
-            for(int i = 0; i < objects.size(); ++i){
-                Object obj = objects.get(i);
-
-
-                if(obj.getID() == null
-                        || ( (obj.isContextDependent() == null || obj.isContextDependent()) && !checkIDContext.contains(obj.getID()))
-                        || ( (obj.isContextDependent() != null && !obj.isContextDependent()) && !idSet.contains(obj.getID()))){
-
-                    objectsQueue.add(obj);
-                    objectsContext.add(checkContext + "/" + link + "[" + i + "]");
-                    Set<String> newCheckIDContext = new HashSet<>(checkIDContext);
-                    if (obj.getID() != null) {
-                        newCheckIDContext.add(obj.getID());
-                        idSet.add(obj.getID());
-                    }
-                    contextSet.add(newCheckIDContext);
                 }
             }
         }

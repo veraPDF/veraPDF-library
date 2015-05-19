@@ -21,6 +21,16 @@ public class ValidationProfile {
 
     private Map<String, List<Rule>> rules;
 
+    /**
+     * Creates new Validation profile model with given description.
+     * @param attrModel - model of the validation profile
+     * @param name - name of the validation profile
+     * @param description - description of the validation profile
+     * @param creator - creator (author) of the validation profile
+     * @param created - date of creation of the validation profile
+     * @param hash - hash code of the validation profile
+     * @param rules - map of rules of the validation profile (key is the name of the object, value is the list of rules)
+     */
     public ValidationProfile(String attrModel, String name, String description, String creator, String created, String hash, Map<String, List<Rule>> rules) {
         this.attrModel = attrModel;
         this.name = name;

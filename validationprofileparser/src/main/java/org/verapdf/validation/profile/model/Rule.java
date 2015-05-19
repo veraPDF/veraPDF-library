@@ -21,6 +21,17 @@ public class Rule {
     private Reference reference;
     private List<Fix> fix;
 
+    /**
+     * Creates new rule model.
+     * @param attrID - id of the rule
+     * @param attrObject - name of the object to which this rule applied
+     * @param description - description of the rule
+     * @param ruleError - rule error
+     * @param isHasError - is the rule error of type error or warning
+     * @param test - test of the rule as JavaScript context
+     * @param reference - reference of the rule
+     * @param fix - list of fixes for this rule
+     */
     public Rule(String attrID, String attrObject, String description, RuleError ruleError, boolean isHasError, String test, Reference reference, List<Fix> fix) {
         this.attrID = attrID;
         this.attrObject = attrObject;
