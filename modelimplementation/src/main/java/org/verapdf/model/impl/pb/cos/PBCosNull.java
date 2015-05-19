@@ -20,9 +20,4 @@ public final class PBCosNull extends PBCosObject implements CosNull {
         super(nil);
         setType("CosNull");
     }
-
-    @Override
-    public boolean equals(Object o) {
-        return o instanceof CosNull;
-    }
 }
