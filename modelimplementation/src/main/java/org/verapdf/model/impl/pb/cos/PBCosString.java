@@ -4,20 +4,19 @@ import org.apache.pdfbox.cos.COSString;
 import org.verapdf.model.coslayer.CosString;
 
 /**
- * Created by Evgeniy Muravitskiy on 4/28/15.
- * <p>
- *     Current class is representation of CosString interface of abstract model.
- *     This class is analogue of COSString in pdfbox.
- * </p>
+ * Current class is representation of CosString interface of abstract model.
+ * This class is analogue of COSString in pdfbox.
+ *
+ * @author Evgeniy Muravitskiy
  */
 public class PBCosString extends PBCosObject implements CosString{
 
     private Boolean isHex;
 
-    public PBCosString(COSString value, Boolean isHex) {
+    public PBCosString(COSString value) {
         super(value);
-        this.isHex = isHex;
         setType("CosString");
+        this.isHex = value.isHex() != null;
     }
 
     /** Get Unicode string value stored in the PDF object
@@ -29,7 +28,6 @@ public class PBCosString extends PBCosObject implements CosString{
 
     /** true if the string is stored in Hex format
      */
-    //TODO : rewrite COSString for features below. now work not correctly
     @Override
     public Boolean getisHex() {
         return isHex;
@@ -40,7 +38,6 @@ public class PBCosString extends PBCosObject implements CosString{
      */
     @Override
     public String getorigValue() {
-        System.err.println("Original value of string is not correct. Need to update classes of pdfbox.");
-        return new String(((COSString) baseObject).getBytes());
+        return isHex ? ((COSString) baseObject).toHexString() : ((COSString) baseObject).getASCII();
     }
 }
