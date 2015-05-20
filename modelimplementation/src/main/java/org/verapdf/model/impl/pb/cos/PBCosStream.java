@@ -1,17 +1,19 @@
 package org.verapdf.model.impl.pb.cos;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.verapdf.model.coslayer.CosStream;
 
 import java.io.IOException;
 
 /**
- * Created by Evgeniy Muravitskiy on 5/4/15.
- * <p>
- *     PDF Stream type
- * </p>
+ * PDF stream type
+ *
+ * @author Evgeniy Muravitskiy
  */
 public class PBCosStream extends PBCosDict implements CosStream {
+
+    private final static Logger logger = Logger.getLogger(PBCosStream.class);
 
     public PBCosStream(COSStream stream) {
         super(stream);
@@ -70,7 +72,7 @@ public class PBCosStream extends PBCosDict implements CosStream {
      */
     @Override
     public Boolean getspacingComplyPDFA() {
-        System.err.println("Current feature not supported yet. Result is always true.");
+        logger.warn("Current feature not supported yet. Result is always true.");
         return true;
     }
 }
