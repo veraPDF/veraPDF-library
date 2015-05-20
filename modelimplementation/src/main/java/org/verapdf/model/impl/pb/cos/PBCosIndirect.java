@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.cos;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSObject;
 import org.verapdf.model.coslayer.CosIndirect;
@@ -9,13 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Evgeniy Muravitskiy on 4/28/15.
- * <p>
- *     Current class is representation of CosIndirect interface of abstract model.
- *     This class is analogue of COSObject in pdfbox.
- * </p>
+ * Current class is representation of CosIndirect interface of abstract model.
+ * This class is analogue of COSObject in pdfbox.
+ *
+ * @author Evgeniy Muravitskiy
  */
 public class PBCosIndirect extends PBCosObject implements CosIndirect {
+
+    private final static Logger logger = Logger.getLogger(PBCosIndirect.class);
 
     public final static String DIRECT_OBJECT = "directObject";
 
@@ -53,9 +55,10 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
     /**  true if the words 'obj' and 'endobj' are surrounded by the correct spacings according to PDF/A standard
      */
+    //TODO : support of this feature
     @Override
     public Boolean getspacingComplyPDFA() {
-        System.err.println("Feature of CosIndirect about spacings comply PDFA not supported yet.");
+        logger.warn("Feature of CosIndirect about spacings comply PDFA not supported yet.");
         return isSpacingComplyPDFA;
     }
 }

@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.cos;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
@@ -12,13 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Evgeniy Muravitskiy on 4/29/15.
- * <p>
- *     Current class is representation of CosDict interface of abstract model.
- *     This class is analogue of COSDictionary in pdfbox.
- * </p>
+ * Current class is representation of CosDict interface of abstract model.
+ * This class is analogue of COSDictionary in pdfbox.
+ *
+ * @author Evgeniy Muravitskiy
  */
 public class PBCosDict extends PBCosObject implements CosDict {
+
+    private final static Logger logger = Logger.getLogger(PBCosDict.class);
 
     public final static String KEYS = "keys";
     public final static String VALUES = "values";
@@ -81,7 +83,7 @@ public class PBCosDict extends PBCosObject implements CosDict {
      */
     // TODO : metadata support
     private List<Object> getMetadata() {
-        System.err.println("Current version not support metadata handler yet. Result is null.");
+        logger.warn("Current version not support metadata handler yet. Result is null.");
         return null;
     }
 }
