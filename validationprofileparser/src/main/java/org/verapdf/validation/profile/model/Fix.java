@@ -15,6 +15,13 @@ public class Fix {
     private FixInfo info;
     private FixError error;
 
+    /**
+     * Creates fix model
+     * @param attrID - id of the fix
+     * @param description - description of the fix
+     * @param info - info of the fix
+     * @param error - error of the fix
+     */
     public Fix(String attrID, String description, FixInfo info, FixError error) {
         this.attrID = attrID;
         this.description = description;

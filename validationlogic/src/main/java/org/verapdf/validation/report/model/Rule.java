@@ -16,6 +16,11 @@ public class Rule {
 
     private List<Check> checks;
 
+    /**
+     * Creates rule model for the validation report
+     * @param attrID - id of the rule
+     * @param checks - list of performed checks of this rule
+     */
     public Rule(String attrID, List<Check> checks) {
         this.attrID = attrID;
 

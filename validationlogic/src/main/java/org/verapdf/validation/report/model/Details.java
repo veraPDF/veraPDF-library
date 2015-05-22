@@ -13,6 +13,11 @@ public class Details {
     private List<Rule> rules;
     private List<String> warnings;
 
+    /**
+     * Creates Details model
+     * @param rules list of checked rules
+     * @param warnings - list of warnings
+     */
     public Details(List<Rule> rules, List<String> warnings) {
         this.rules = rules;
         this.warnings = warnings;

@@ -16,6 +16,16 @@ public class Summary {
     private int attrFailedMetadataFixes;
     private int attrWarnings;
 
+    /**
+     * Creates summary model for validation report
+     * @param attrPassedRules - number of passed rules
+     * @param attrFailedRules - number of failed rules
+     * @param attrPassedChecks - number of passed checks
+     * @param attrFailedChecks - number of failed checks
+     * @param attrCompletedMetadataFixes - number of completed metadata fixes
+     * @param attrFailedMetadataFixes - number of failed metadata fixes
+     * @param attrWarnings - number of warnngs
+     */
     public Summary(int attrPassedRules, int attrFailedRules, int attrPassedChecks, int attrFailedChecks, int attrCompletedMetadataFixes, int attrFailedMetadataFixes, int attrWarnings) {
         this.attrPassedRules = attrPassedRules;
         this.attrFailedRules = attrFailedRules;

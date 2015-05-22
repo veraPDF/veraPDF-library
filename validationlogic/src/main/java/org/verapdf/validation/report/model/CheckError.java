@@ -14,6 +14,11 @@ public class CheckError {
     private String message;
     private List<String> argument;
 
+    /**
+     * Creates check error model
+     * @param message - message of the error
+     * @param argument - list of arguments for the message
+     */
     public CheckError(String message, List<String> argument) {
         this.message = message;
         this.argument = argument;
