@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class TestCosInteger implements CosInteger {
 
-    private int value;
+    private long value;
     private String type;
     private String id;
 
@@ -29,13 +29,13 @@ public class TestCosInteger implements CosInteger {
     }
 
     @Override
-    public Integer getintValue() {
+    public Long getintValue() {
         return value;
     }
 
     @Override
-    public BigDecimal getrealValue() {
-        return new BigDecimal(value);
+    public Double getrealValue() {
+        return new Double(value);
     }
 
     @Override

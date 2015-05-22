@@ -32,8 +32,8 @@ public class PBCosDict extends PBCosObject implements CosDict {
     /**Get number of key/value pairs in the dictionary
      */
     @Override
-    public Integer getsize() {
-        return ((COSDictionary) baseObject).size();
+    public Long getsize() {
+        return (long) ((COSDictionary) baseObject).size();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class PBCosDict extends PBCosObject implements CosDict {
     /** Get all keys of the dictionary
      */
     private List<CosName> getKeys() {
-        List<CosName> list = new ArrayList<>(this.getsize());
+        List<CosName> list = new ArrayList<>(this.getsize().intValue());
         for (COSName key : ((COSDictionary) baseObject).keySet()) {
             list.add((CosName) getFromValue(key));
         }
@@ -70,7 +70,7 @@ public class PBCosDict extends PBCosObject implements CosDict {
     /** Get all values of the dictonary
      */
     private List<CosObject> getValues() {
-        List<CosObject> list = new ArrayList<>(this.getsize());
+        List<CosObject> list = new ArrayList<>(this.getsize().intValue());
         for (COSBase value : ((COSDictionary) baseObject).getValues()) {
             list.add(getFromValue(value));
         }
