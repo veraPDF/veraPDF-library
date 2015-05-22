@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.cos;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSName;
 import org.verapdf.model.coslayer.CosName;
 
@@ -11,6 +12,8 @@ import org.verapdf.model.coslayer.CosName;
  * </p>
  */
 public class PBCosName extends PBCosObject implements CosName {
+
+    private final static Logger logger = Logger.getLogger(PBCosName.class);
 
     public PBCosName(COSName value) {
         super(value);
@@ -30,7 +33,7 @@ public class PBCosName extends PBCosObject implements CosName {
     //TODO : update pdfbox (field in COSName and parser) for saving orig length of name
     @Override
     public Long getorigLength() {
-        System.err.println("Length of name is not correct. Need to update classes of pdfbox.");
+        logger.warn("Length of name is not correct. Need to update classes of pdfbox.");
         return (long) ((COSName) baseObject).getName().length();
     }
 }
