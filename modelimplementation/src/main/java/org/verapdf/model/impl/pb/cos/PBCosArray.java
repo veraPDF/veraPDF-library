@@ -30,8 +30,8 @@ public class PBCosArray extends PBCosObject implements CosArray {
      * @return size of array
      */
     @Override
-    public Integer getsize() {
-        return ((COSArray) baseObject).size();
+    public Long getsize() {
+        return (long) ((COSArray) baseObject).size();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class PBCosArray extends PBCosObject implements CosArray {
      * @return elements of array
      */
     private List<CosObject> getElements() {
-        List<CosObject> list = new ArrayList<>(this.getsize());
+        List<CosObject> list = new ArrayList<>(this.getsize().intValue());
         for (COSBase base : ((COSArray) baseObject)) {
             list.add(getFromValue(base));
         }
