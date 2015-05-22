@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class TestCosDict implements CosDict {
 
-    private int size;
+    private long size;
     private String type;
     private String id;
 
@@ -31,7 +31,7 @@ public class TestCosDict implements CosDict {
     }
 
     @Override
-    public Integer getsize() {
+    public Long getsize() {
         return size;
     }
 

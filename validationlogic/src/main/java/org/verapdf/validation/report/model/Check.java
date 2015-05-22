@@ -14,6 +14,13 @@ public class Check {
     private CheckError error;
     private boolean isHasError;
 
+    /**
+     * Creates Check model for validation report
+     * @param attrStatus - status of the check
+     * @param location - location of the check
+     * @param error - error of the check
+     * @param isHasError - is the error represents an error or a warning
+     */
     public Check(String attrStatus, CheckLocation location, CheckError error, boolean isHasError) {
         this.attrStatus = attrStatus;
         this.location = location;

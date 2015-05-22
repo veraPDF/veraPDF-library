@@ -32,14 +32,14 @@ public abstract class PBCosNumber extends PBCosObject implements CosNumber {
     /** Get truncated integer value
      */
     @Override
-    public Integer getintValue() {
-        return ((COSNumber) baseObject).intValue();
+    public Long getintValue() {
+        return ((COSNumber) baseObject).longValue();
     }
 
     /** Get original decimal value
      */
     @Override
-    public BigDecimal getrealValue() {
-        return new BigDecimal(((COSNumber) baseObject).doubleValue());
+    public Double getrealValue() {
+        return new Double(((COSNumber) baseObject).doubleValue());
     }
 }

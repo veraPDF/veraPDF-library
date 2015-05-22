@@ -11,6 +11,10 @@ package org.verapdf.validation.profile.model;
 public class FixError {
     private String message;
 
+    /**
+     * Creates fix error model.
+     * @param message - message of the fix error.
+     */
     public FixError(String message) {
         this.message = message;
     }

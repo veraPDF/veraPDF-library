@@ -29,8 +29,8 @@ public class PBCosName extends PBCosObject implements CosName {
      */
     //TODO : update pdfbox (field in COSName and parser) for saving orig length of name
     @Override
-    public Integer getorigLength() {
+    public Long getorigLength() {
         System.err.println("Length of name is not correct. Need to update classes of pdfbox.");
-        return ((COSName) baseObject).getName().length();
+        return (long) ((COSName) baseObject).getName().length();
     }
 }

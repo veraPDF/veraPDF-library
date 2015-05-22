@@ -21,16 +21,16 @@ public class PBCosStream extends PBCosDict implements CosStream {
     /**  length of the stream
      */
     @Override
-    public Integer getlength() {
-        int length = 0;
+    public Long getlength() {
+        Long length = 0L;
         COSStream stream = (COSStream) this.baseObject;
 
         if (stream.getItem(COSName.LENGTH) != null)
-            return ((COSInteger) stream.getItem(COSName.LENGTH)).intValue();
+            return (long) ((COSInteger) stream.getItem(COSName.LENGTH)).intValue();
 
         try {
             if (stream.getUnfilteredStream() != null)
-                length = (stream.getUnfilteredStream()).available();
+                length = (long) (stream.getUnfilteredStream()).available();
             if (stream.getFilteredStream() != null)
                 length += stream.getFilteredLength();
         } catch (IOException e) {

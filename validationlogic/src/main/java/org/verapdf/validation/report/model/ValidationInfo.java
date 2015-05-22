@@ -11,6 +11,11 @@ public class ValidationInfo {
     private Profile profile;
     private Result result;
 
+    /**
+     * Creates model of validation report
+     * @param profile - model of an information about used validation profile
+     * @param result - model of the result of the validation
+     */
     public ValidationInfo(Profile profile, Result result) {
         this.profile = profile;
         this.result = result;

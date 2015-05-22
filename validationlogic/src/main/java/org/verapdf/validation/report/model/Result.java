@@ -13,6 +13,10 @@ public class Result {
     private Summary summary;
     private Details details;
 
+    /**
+     * Creates result model by given details
+     * @param details - details model of the validation
+     */
     public Result(Details details) {
         boolean compliantCheck = true;
         int passedRules = 0;

@@ -11,6 +11,11 @@ public class CheckLocation {
     private String attrLevel;
     private String context;
 
+    /**
+     * Creates check location model
+     * @param attrLevel - level of the check
+     * @param context - context of the check
+     */
     public CheckLocation(String attrLevel, String context) {
         this.attrLevel = attrLevel;
         this.context = context;

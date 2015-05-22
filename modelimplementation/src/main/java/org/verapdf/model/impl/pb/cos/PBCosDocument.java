@@ -32,15 +32,15 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     /**  Number of indirect objects in the document
      */
     @Override
-    public Integer getnrIndirects() {
-        return ((COSDocument) baseObject).getObjects().size();
+    public Long getnrIndirects() {
+        return (long) ((COSDocument) baseObject).getObjects().size();
     }
 
     /**  Size of the byte sequence representing the document
      */
     @Override
-    public Integer getsize() {
-        return sizeOfDocument;
+    public Long getsize() {
+        return Long.valueOf(sizeOfDocument);
     }
 
     @Override

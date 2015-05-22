@@ -11,6 +11,11 @@ public class Profile {
     private String name;
     private String hash;
 
+    /**
+     * Creates model of an information about used profile
+     * @param name - name of the validation profile
+     * @param hash - hash code of the validation profile
+     */
     public Profile(String name, String hash) {
         this.name = name;
         this.hash = hash;

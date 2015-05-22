@@ -12,6 +12,11 @@ public class Reference {
     private String specification;
     private String clause;
 
+    /**
+     * Creates reference model of a rule.
+     * @param specification - specification of a rule
+     * @param clause - clause of a rule
+     */
     public Reference(String specification, String clause) {
         this.specification = specification;
         this.clause = clause;
