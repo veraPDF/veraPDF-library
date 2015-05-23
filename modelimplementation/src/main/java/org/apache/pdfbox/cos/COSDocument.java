@@ -65,7 +65,7 @@ public class COSDocument extends COSBase implements Closeable
     private boolean warnMissingClose = true;
 
     /**
-     * Signal that document is already decrypted. 
+     * Signal that document is already decrypted.
      */
     private boolean isDecrypted = false;
 
@@ -78,6 +78,53 @@ public class COSDocument extends COSBase implements Closeable
     private final File scratchDirectory;
 
     private final boolean useScratchFile;
+
+    /** Header start not from first byte, or not from '%', or something else*/
+    private Boolean nonValidHeader = false;
+    /** second line start not from '%' */
+    private Boolean nonValidCommentStart = false;
+    /** in second line after '%' less than 4 symbols */
+    private Boolean nonValidCommentLength = false;
+    /** in second line after '%' first four symbols has byte value less than 128 */
+    private Boolean nonValidCommentContent = false;
+
+    public Boolean getNonValidHeader() {
+        return nonValidHeader;
+    }
+
+    public void setNonValidHeader(Boolean nonValidHeader) {
+        this.nonValidHeader = nonValidHeader;
+    }
+
+    public Boolean getNonValidCommentStart() {
+        return nonValidCommentStart;
+    }
+
+    public void setNonValidCommentStart(Boolean nonValidCommentStart) {
+        this.nonValidCommentStart = nonValidCommentStart;
+    }
+
+    public Boolean getNonValidCommentLength() {
+        return nonValidCommentLength;
+    }
+
+    public void setNonValidCommentLength(Boolean nonValidCommentLength) {
+        this.nonValidCommentLength = nonValidCommentLength;
+    }
+
+    public Boolean getNonValidCommentContent() {
+        return nonValidCommentContent;
+    }
+
+    public void setNonValidCommentContent(Boolean nonValidCommentContent) {
+        this.nonValidCommentContent = nonValidCommentContent;
+    }
+
+    // TODO : discard it
+    public Boolean getHeaderStatus() {
+        return !(this.nonValidCommentContent || this.nonValidCommentLength
+                || this.nonValidCommentStart || this.nonValidHeader);
+    }
 
     /**
      * Constructor.
@@ -563,7 +610,7 @@ public class COSDocument extends COSBase implements Closeable
     }
 
     /**
-     * This method set the startxref value of the document. This will only 
+     * This method set the startxref value of the document. This will only
      * be needed for incremental updates.
      *
      * @param startXrefValue the value for startXref

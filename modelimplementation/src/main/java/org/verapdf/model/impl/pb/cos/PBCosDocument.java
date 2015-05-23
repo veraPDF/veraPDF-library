@@ -98,8 +98,6 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     @Override
     public Boolean getbinaryHeaderComplyPDFA() {
-        logger.warn("Feature of CosDocument about binary header comply PDFA not supported yet.");
-        ((COSDocument) baseObject).getVersion();
-        return null;
+        return ((COSDocument) baseObject).getHeaderStatus();
     }
 }
