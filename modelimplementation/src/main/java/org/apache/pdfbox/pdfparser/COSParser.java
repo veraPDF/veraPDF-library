@@ -1487,7 +1487,7 @@ public class COSParser extends BaseParser
         bfSearchForObjects();
         if (bfSearchCOSObjectKeyOffsets != null)
         {
-            xrefTrailerResolver.nextXrefObj( 0, XRefType.TABLE );
+            xrefTrailerResolver.nextXrefObj(0, XRefType.TABLE);
             for (COSObjectKey objectKey : bfSearchCOSObjectKeyOffsets.keySet())
             {
                 xrefTrailerResolver.setXRef(objectKey, bfSearchCOSObjectKeyOffsets.get(objectKey));
@@ -1679,6 +1679,7 @@ public class COSParser extends BaseParser
         return parseHeader(FDF_HEADER, FDF_DEFAULT_VERSION);
     }
 
+    // rewritten by Evgeniy Muravitskiy
     private boolean parseHeader(String headerMarker, String defaultVersion) throws IOException
     {
         // read first line
@@ -1686,8 +1687,11 @@ public class COSParser extends BaseParser
         // some pdf-documents are broken and the pdf-version is in one of the following lines
         if (!header.contains(headerMarker))
         {
+            if (header.contains(headerMarker.substring(1))) {
+                document.setNonValidHeader(true);
+            }
             header = readLine();
-            while (!header.contains(headerMarker))
+            while (!header.contains(headerMarker) && !header.contains(headerMarker.substring(1)))
             {
                 // if a line starts with a digit, it has to be the first one with data in it
                 if ((header.length() > 0) && (Character.isDigit(header.charAt(0))))
@@ -1696,6 +1700,8 @@ public class COSParser extends BaseParser
                 }
                 header = readLine();
             }
+        } else if (header.charAt(0) != '%') {
+            document.setNonValidHeader(true);
         }
 
         // nothing found
@@ -1750,9 +1756,31 @@ public class COSParser extends BaseParser
             throw new IOException( "Error getting header version: " + header);
         }
         document.setVersion(headerVersion);
+        parseComment();
         // rewind
         pdfSource.seek(0);
         return true;
+    }
+
+    private void parseComment() throws IOException {
+        String comment = readLine();
+
+        if (comment.charAt(0) != '%') {
+            document.setNonValidCommentStart(true);
+        }
+
+        Integer pos = comment.indexOf('%') > -1 ? comment.indexOf('%') + 1 : 0;
+        if (comment.substring(pos).trim().length() < 4) {
+            document.setNonValidCommentLength(true);
+        }
+
+        Integer repetition = Math.min(4, comment.substring(pos).length());
+        for (int i = 0; i < repetition; i++, pos++) {
+            if ((int)comment.charAt(pos) < 128) {
+                document.setNonValidCommentContent(true);
+                break;
+            }
+        }
     }
 
     /**

@@ -29,9 +29,7 @@ import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSBoolean;
 import org.apache.pdfbox.cos.COSDictionary;
-import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.cos.COSInteger;
-import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSNull;
 import org.apache.pdfbox.cos.COSNumber;
 import org.apache.pdfbox.cos.COSObject;
@@ -142,7 +140,7 @@ public abstract class BaseParser implements Closeable
     /**
      * This is the document that will be parsed.
      */
-    protected COSDocument document;
+    protected org.apache.pdfbox.cos.COSDocument document;
 
     /**
      * Default constructor.
@@ -166,7 +164,7 @@ public abstract class BaseParser implements Closeable
         }
         catch (SecurityException e)
         {
-            // PDFBOX-1946 getInteger calls System.getProperties,
+            // PDFBOX-1946 getInteger calls System.getProperties, 
             // which can get exception in an applet
             // ignore and use default
         }
@@ -314,7 +312,7 @@ public abstract class BaseParser implements Closeable
 
     private void parseCOSDictionaryNameValuePair(COSDictionary obj) throws IOException
     {
-        COSName key = parseCOSName();
+        org.apache.pdfbox.cos.COSName key = parseCOSName();
         COSBase value = parseCOSDictionaryValue();
         skipSpaces();
         if (((char) pdfSource.peek()) == 'd')
@@ -456,7 +454,7 @@ public abstract class BaseParser implements Closeable
                         // depending on current char read we may already have beginning of a new match:
                         // 'e': first char matched;
                         // 'n': if we are at match position idx 7 we already read 'e' thus 2 chars matched
-                        // for each other char we have to start matching first keyword char beginning with next
+                        // for each other char we have to start matching first keyword char beginning with next 
                         // read position
                         charMatchCount = ( ch == E ) ? 1 : ( ( ch == N ) && ( charMatchCount == 7 ) ) ? 2 : 0;
                         // search again for 'endstream'
@@ -873,14 +871,16 @@ public abstract class BaseParser implements Closeable
      *
      * @throws IOException If there is an error reading from the stream.
      */
-    protected COSName parseCOSName() throws IOException
+    protected org.apache.pdfbox.cos.COSName parseCOSName() throws IOException
     {
         readExpectedChar('/');
         // costruisce il nome
+        int nameLength = 0;
         StringBuilder buffer = new StringBuilder();
         int c = pdfSource.read();
         while( c != -1 )
         {
+            nameLength++;
             char ch = (char)c;
             if(ch == '#')
             {
@@ -900,6 +900,7 @@ public abstract class BaseParser implements Closeable
                     try
                     {
                         buffer.append( (char) Integer.parseInt(hex, 16));
+                        //nameLength += 1;
                     }
                     catch (NumberFormatException e)
                     {
@@ -928,7 +929,7 @@ public abstract class BaseParser implements Closeable
         {
             pdfSource.unread(c);
         }
-        return COSName.getPDFName( buffer.toString() );
+        return org.apache.pdfbox.cos.COSName.getPDFName(buffer.toString(), nameLength - 1);
     }
 
     /**
@@ -1272,7 +1273,7 @@ public abstract class BaseParser implements Closeable
             }
             buffer.append( (char)c );
         }
-        // CR+LF is also a valid EOL
+        // CR+LF is also a valid EOL 
         if (isCR(c) && isLF(pdfSource.peek()))
         {
             pdfSource.read();
