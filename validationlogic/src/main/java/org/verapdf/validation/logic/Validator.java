@@ -103,7 +103,6 @@ public class Validator {
                 Object obj = objects.get(i);
 
                 if(checkRequired(obj, checkIDContext)){
-
                     objectsQueue.add(obj);
                     objectsContext.add(checkContext + "/" + link + "[" + i + "]");
                     Set<String> newCheckIDContext = new HashSet<>(checkIDContext);
@@ -121,20 +120,10 @@ public class Validator {
 
         if (obj.getID() == null){
             return true;
-        }
-        else if (obj.isContextDependent() == null || obj.isContextDependent()){
-            if (!checkIDContext.contains(obj.getID())){
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else if (!idSet.contains(obj.getID())){
-            return true;
-        }
-        else {
-            return false;
+        } else if (obj.isContextDependent() == null || obj.isContextDependent()){
+            return !checkIDContext.contains(obj.getID());
+        } else {
+            return !idSet.contains(obj.getID());
         }
     }
 
@@ -184,8 +173,7 @@ public class Validator {
 
         if(res) {
             check = new Check("passed", loc, null, false);
-        }
-        else{
+        } else {
             List<String> args = new ArrayList<>();
 
             for(String arg : rule.getRuleError().getArgument()){
