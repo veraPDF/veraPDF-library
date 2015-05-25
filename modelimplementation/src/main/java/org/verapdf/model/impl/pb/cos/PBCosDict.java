@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.cos;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
@@ -19,6 +20,8 @@ import java.util.List;
  * </p>
  */
 public class PBCosDict extends PBCosObject implements CosDict {
+
+    private final static Logger logger = Logger.getLogger(PBCosDict.class);
 
     public final static String KEYS = "keys";
     public final static String VALUES = "values";
@@ -81,7 +84,7 @@ public class PBCosDict extends PBCosObject implements CosDict {
      */
     // TODO : metadata support
     private List<Object> getMetadata() {
-        System.err.println("Current version not support metadata handler yet. Result is null.");
+        logger.warn("Current version not support metadata handler yet. Result is null.");
         return null;
     }
 }

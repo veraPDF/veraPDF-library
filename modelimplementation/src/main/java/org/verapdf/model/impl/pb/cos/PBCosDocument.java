@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.cos;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDocument;
 import org.verapdf.model.baselayer.Object;
@@ -17,6 +18,8 @@ import java.util.List;
  * </p>
  */
 public class PBCosDocument extends PBCosObject implements CosDocument {
+
+    private final static Logger logger = Logger.getLogger(PBCosDocument.class);
 
     public final static String TRAILER = "trailer";
     public final static String INDIRECT_OBJECTS = "indirectObjects";
@@ -86,7 +89,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     // TODO : add support of this feature
     private List<Object> getDocument() {
-        System.err.println("Trying get PDDocument from CosDocument.\r\n" +
+        logger.warn("Trying get PDDocument from CosDocument.\r\n" +
                 "Current feature not supported yet. Method always return null.");
         return null;
     }
@@ -95,8 +98,6 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     @Override
     public Boolean getbinaryHeaderComplyPDFA() {
-        System.err.println("Feature of CosDocument about binary header comply PDFA not supported yet.");
-        ((COSDocument) baseObject).getVersion();
-        return null;
+        return ((COSDocument) baseObject).getHeaderStatus();
     }
 }

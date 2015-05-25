@@ -40,6 +40,6 @@ public abstract class PBCosNumber extends PBCosObject implements CosNumber {
      */
     @Override
     public Double getrealValue() {
-        return new Double(((COSNumber) baseObject).doubleValue());
+        return ((COSNumber) baseObject).doubleValue();
     }
 }
