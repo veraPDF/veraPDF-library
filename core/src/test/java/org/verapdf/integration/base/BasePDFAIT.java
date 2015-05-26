@@ -1,5 +1,8 @@
 package org.verapdf.integration.base;
 
+import org.custommonkey.xmlunit.Diff;
+import org.custommonkey.xmlunit.Difference;
+import org.custommonkey.xmlunit.DifferenceListener;
 import org.junit.After;
 import org.junit.Before;
 import org.verapdf.config.Input;
@@ -7,20 +10,13 @@ import org.verapdf.config.VeraPdfTaskConfig;
 import org.verapdf.runner.ValidationRunner;
 import org.verapdf.validation.report.XMLValidationReport;
 import org.verapdf.validation.report.model.ValidationInfo;
-import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.StringWriter;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 public abstract class BasePDFAIT {
 
@@ -43,7 +39,7 @@ public abstract class BasePDFAIT {
     protected Boolean testValidationSuccessful() throws Exception {
         String actualReport = runValidation();
         String expectedReport = getExpectedReport();
-        return  compareResults(expectedReport.trim(), actualReport.trim());
+        return compareResults(expectedReport, actualReport);
     }
 
     private String runValidation() throws Exception {
@@ -53,17 +49,25 @@ public abstract class BasePDFAIT {
     }
 
     private String getExpectedReport() throws Exception {
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        InputStream inputStream = new FileInputStream(new File(getExpectedReportFilePath()));
-        Document doc = documentBuilderFactory.newDocumentBuilder().parse(inputStream);
-        StringWriter expectedReport = new StringWriter();
-        Transformer serializer = TransformerFactory.newInstance().newTransformer();
-        serializer.transform(new DOMSource(doc), new StreamResult(expectedReport));
-        return expectedReport.toString();
+        return new Scanner(new File(getExpectedReportFilePath())).useDelimiter("\\Z").next();
     }
 
-    private Boolean compareResults(String expectedReport, String actualReport) {
-        return expectedReport.equals(actualReport);
+    private Boolean compareResults(String expectedReport, String actualReport) throws Exception {
+        Diff diff = new Diff(expectedReport, actualReport);
+        diff.overrideDifferenceListener(
+            new DifferenceListener() {
+                public int differenceFound(Difference difference) {
+                    String v = difference.getControlNodeDetail().getValue();
+                    if (v.startsWith("\n")) {
+                        return RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
+                    }
+                    return RETURN_ACCEPT_DIFFERENCE;
+                }
+
+                public void skippedComparison(Node control, Node test) {
+                }
+        });
+        return diff.identical();
     }
 
     @After
