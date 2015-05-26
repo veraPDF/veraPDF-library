@@ -1,8 +1,7 @@
 package org.verapdf.integration.base;
 
 import org.custommonkey.xmlunit.Diff;
-import org.custommonkey.xmlunit.Difference;
-import org.custommonkey.xmlunit.DifferenceListener;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.verapdf.config.Input;
@@ -10,7 +9,6 @@ import org.verapdf.config.VeraPdfTaskConfig;
 import org.verapdf.runner.ValidationRunner;
 import org.verapdf.validation.report.XMLValidationReport;
 import org.verapdf.validation.report.model.ValidationInfo;
-import org.w3c.dom.Node;
 
 import java.io.File;
 import java.net.URL;
@@ -53,20 +51,8 @@ public abstract class BasePDFAIT {
     }
 
     private Boolean compareResults(String expectedReport, String actualReport) throws Exception {
-        Diff diff = new Diff(expectedReport, actualReport);
-        diff.overrideDifferenceListener(
-            new DifferenceListener() {
-                public int differenceFound(Difference difference) {
-                    String v = difference.getControlNodeDetail().getValue();
-                    if (v.startsWith("\n")) {
-                        return RETURN_IGNORE_DIFFERENCE_NODES_IDENTICAL;
-                    }
-                    return RETURN_ACCEPT_DIFFERENCE;
-                }
-
-                public void skippedComparison(Node control, Node test) {
-                }
-        });
+        XMLUnit.setIgnoreWhitespace(true);
+        Diff diff = XMLUnit.compareXML(expectedReport, actualReport);
         return diff.identical();
     }
 
