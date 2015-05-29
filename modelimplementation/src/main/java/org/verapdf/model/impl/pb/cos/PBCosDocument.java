@@ -54,16 +54,17 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     @Override
     public Boolean getbinaryHeaderComplyPDFA() {
-        return !((COSDocument) baseObject).getNonValidHeader();
+
+        return !(((COSDocument) baseObject).getNonValidCommentContent() ||
+                ((COSDocument) baseObject).getNonValidCommentLength() ||
+                ((COSDocument) baseObject).getNonValidCommentStart());
     }
 
     /** true if first line of document complies PDF/A standard
      */
     @Override
     public Boolean getpdfHeaderCompliesPDFA() {
-        return !(((COSDocument) baseObject).getNonValidCommentContent() ||
-                 ((COSDocument) baseObject).getNonValidCommentLength() ||
-                 ((COSDocument) baseObject).getNonValidCommentStart());
+        return !((COSDocument) baseObject).getNonValidHeader();
     }
 
     /** true if catalog contain OCProperties key
