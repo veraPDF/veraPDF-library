@@ -29,10 +29,69 @@
         </dependency>
 
         <dependency>
+            <groupId>xmlunit</groupId>
+            <artifactId>xmlunit</artifactId>
+            <version>1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+        </dependency>
+        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe.version}</version>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>clone-test-resources</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>update-test-resources</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
