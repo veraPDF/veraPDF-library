@@ -32,6 +32,17 @@ public class PBCosString extends PBCosObject implements CosString {
         return ((COSString) baseObject).isHex() != null;
     }
 
+    /** true if all symbols below range 0-9,a-f,A-F
+     */
+    public Boolean getisHexSymbols() {
+        for (byte symbol : ((COSString) baseObject).getBytes()) {
+            if (Character.digit(symbol, 16) == -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /** Get original string value of the string before applying Hex decoding
      *  and any encodings (but after ignoring all white spaces)
      */
