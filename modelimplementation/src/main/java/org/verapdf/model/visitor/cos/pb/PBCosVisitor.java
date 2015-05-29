@@ -120,6 +120,6 @@ public final class PBCosVisitor implements ICOSVisitor {
      * @see COSObject#accept(ICOSVisitor)
      */
     public Object visitFromObject(COSObject obj) throws IOException {
-        return new PBCosIndirect(obj, true);
+        return new PBCosIndirect(obj);
     }
 }
