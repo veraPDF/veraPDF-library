@@ -18,6 +18,10 @@ import java.util.Scanner;
 
 public abstract class BasePDFAIT {
 
+    protected final static String TEST_FILES_REPO_NAME = "/test-resources/veraPDF-corpus-PDFA-1b/";
+    protected final static String VALIDATION_PROFILES_REPO_NAME = "/test-resources/veraPDF-validation-profiles/";
+
+
     protected VeraPdfTaskConfig taskConfig;
 
     @Before
