@@ -70,8 +70,8 @@ public class PBCosStream extends PBCosDict implements CosStream {
      */
     @Override
     public Boolean getspacingCompliesPDFA() {
-        logger.warn("Current feature not supported yet. Result is always true.");
-        return true;
+        return ((COSStream) baseObject).getEndStreamSpacingsComplyPDFA() == null &&
+                ((COSStream) baseObject).getStreamSpacingsComplyPDFA() == null;
     }
 
     /** true if the value of Length key matches the actual length of the stream
