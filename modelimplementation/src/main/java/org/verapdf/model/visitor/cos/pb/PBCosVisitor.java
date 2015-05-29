@@ -109,7 +109,7 @@ public final class PBCosVisitor implements ICOSVisitor {
      */
     @Override
     public Object visitFromString(COSString obj) throws IOException {
-        return new PBCosString(obj, false);
+        return new PBCosString(obj);
     }
 
     /** Notification of visiting in indirect object. Create a PBCosIndirect for corresponding
@@ -120,6 +120,6 @@ public final class PBCosVisitor implements ICOSVisitor {
      * @see COSObject#accept(ICOSVisitor)
      */
     public Object visitFromObject(COSObject obj) throws IOException {
-        return new PBCosIndirect(obj, true);
+        return new PBCosIndirect(obj);
     }
 }

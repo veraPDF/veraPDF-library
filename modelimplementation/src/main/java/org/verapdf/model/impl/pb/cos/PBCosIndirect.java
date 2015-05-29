@@ -19,11 +19,8 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
     public final static String DIRECT_OBJECT = "directObject";
 
-    private Boolean isSpacingComplyPDFA;
-
-    public PBCosIndirect(COSBase directObject, Boolean isSpacingComplyPDFA) {
+    public PBCosIndirect(COSBase directObject) {
         super(directObject);
-        this.isSpacingComplyPDFA = isSpacingComplyPDFA;
         setType("CosIndirect");
     }
 
@@ -54,8 +51,9 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
     /**  true if the words 'obj' and 'endobj' are surrounded by the correct spacings according to PDF/A standard
      */
     @Override
-    public Boolean getspacingComplyPDFA() {
-        System.err.println("Feature of CosIndirect about spacings comply PDFA not supported yet.");
-        return isSpacingComplyPDFA;
+    public Boolean getspacingCompliesPDFA() {
+        return ((COSObject) baseObject).isEndOfObjectComplyPDFA()
+                && ((COSObject) baseObject).isHeaderFormatComplyPDFA()
+                && ((COSObject) baseObject).isHeaderOfObjectComplyPDFA();
     }
 }

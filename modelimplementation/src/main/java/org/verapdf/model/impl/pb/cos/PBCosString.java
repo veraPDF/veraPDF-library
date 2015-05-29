@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.cos;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSString;
 import org.verapdf.model.coslayer.CosString;
 
@@ -10,13 +11,10 @@ import org.verapdf.model.coslayer.CosString;
  *     This class is analogue of COSString in pdfbox.
  * </p>
  */
-public class PBCosString extends PBCosObject implements CosString{
+public class PBCosString extends PBCosObject implements CosString {
 
-    private Boolean isHex;
-
-    public PBCosString(COSString value, Boolean isHex) {
+    public PBCosString(COSString value) {
         super(value);
-        this.isHex = isHex;
         setType("CosString");
     }
 
@@ -29,10 +27,9 @@ public class PBCosString extends PBCosObject implements CosString{
 
     /** true if the string is stored in Hex format
      */
-    //TODO : rewrite COSString for features below. now work not correctly
     @Override
     public Boolean getisHex() {
-        return isHex;
+        return ((COSString) baseObject).isHex() != null;
     }
 
     /** Get original string value of the string before applying Hex decoding
@@ -40,7 +37,6 @@ public class PBCosString extends PBCosObject implements CosString{
      */
     @Override
     public String getorigValue() {
-        System.err.println("Original value of string is not correct. Need to update classes of pdfbox.");
         return new String(((COSString) baseObject).getBytes());
     }
 }

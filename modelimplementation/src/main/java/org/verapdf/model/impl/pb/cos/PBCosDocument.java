@@ -1,12 +1,16 @@
 package org.verapdf.model.impl.pb.cos;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.cos.COSName;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDocument;
 import org.verapdf.model.coslayer.CosIndirect;
 import org.verapdf.model.coslayer.CosTrailer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +22,10 @@ import java.util.List;
  */
 public class PBCosDocument extends PBCosObject implements CosDocument {
 
+    private final static Logger logger = Logger.getLogger(PBCosDocument.class);
+
     public final static String TRAILER = "trailer";
+    public final static String XREF = "xref";
     public final static String INDIRECT_OBJECTS = "indirectObjects";
     public final static String DOCUMENT = "document";
 
@@ -43,6 +50,40 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         return Long.valueOf(sizeOfDocument);
     }
 
+    /**  true if the second line of the document is a comment with at least 4 symbols in the code range 128-255 as required by PDF/A standard
+     */
+    @Override
+    public Boolean getbinaryHeaderComplyPDFA() {
+        return !((COSDocument) baseObject).getNonValidHeader();
+    }
+
+    /** true if first line of document complies PDF/A standard
+     */
+    @Override
+    public Boolean getpdfHeaderCompliesPDFA() {
+        return !(((COSDocument) baseObject).getNonValidCommentContent() ||
+                 ((COSDocument) baseObject).getNonValidCommentLength() ||
+                 ((COSDocument) baseObject).getNonValidCommentStart());
+    }
+
+    /** true if catalog contain OCProperties key
+     */
+    @Override
+    public Boolean getisOptionalContentPresent() {
+        try {
+            COSDictionary root = (COSDictionary) ((COSDocument) baseObject).getCatalog().getObject();
+            return root.getItem(COSName.OCPROPERTIES) != null;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    /** EOF must complies PDF/A standard
+     */
+    public Boolean geteofCompliesPDFA() {
+        return ((COSDocument) baseObject).getEofComplyPDFA();
+    }
+
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
         List<? extends org.verapdf.model.baselayer.Object> list;
@@ -56,6 +97,9 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
                 break;
             case DOCUMENT:
                 list = this.getDocument();
+                break;
+            case XREF:
+                list = this.getXRef();
                 break;
             default:
                 list = super.getLinkedObjects(link);
@@ -77,7 +121,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     private List<CosIndirect> getIndirectObjects() {
         List<CosIndirect> indirects = new ArrayList<>();
         for (COSBase object : ((COSDocument) baseObject).getObjects()) {
-            indirects.add(new PBCosIndirect(object, true));
+            indirects.add(new PBCosIndirect(object));
         }
         return indirects;
     }
@@ -86,17 +130,16 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     // TODO : add support of this feature
     private List<Object> getDocument() {
-        System.err.println("Trying get PDDocument from CosDocument.\r\n" +
+        logger.warn("Trying get PDDocument from CosDocument.\r\n" +
                 "Current feature not supported yet. Method always return null.");
         return null;
     }
 
-    /**  true if the second line of the document is a comment with at least 4 symbols in the code range 128-255 as required by PDF/A standard
+    /** link to cross reference table properties
      */
-    @Override
-    public Boolean getbinaryHeaderComplyPDFA() {
-        System.err.println("Feature of CosDocument about binary header comply PDFA not supported yet.");
-        ((COSDocument) baseObject).getVersion();
+    // TODO : add support of this feature
+    private List<? extends Object> getXRef() {
+        logger.warn("Xref not supported yes. return null");
         return null;
     }
 }
