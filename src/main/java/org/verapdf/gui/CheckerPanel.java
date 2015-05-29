@@ -3,13 +3,16 @@ package org.verapdf.gui;
 import org.verapdf.validation.report.XMLValidationReport;
 import org.verapdf.validation.report.model.ValidationInfo;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.concurrent.ExecutionException;
 
@@ -22,19 +25,20 @@ import java.util.concurrent.ExecutionException;
  */
 public class CheckerPanel extends JPanel {
 
+    private final static String XML_LOGO_NAME = "xml-logo.png";
+    private final static String HTML_LOGO_NAME = "html-logo.png";
     private final static String CHOOSE_PDF_BUTTON_TEXT = "Choose PDF";
     private final static String PDF_NOT_CHOSEN_TEXT = "PDF file not chosen";
     private final static String CHOOSE_PROFILE_BUTTON_TEXT = "Choose Profile";
-    private final static String VALIDATION_PROFILE_NOT_CHOSEN = "Validation profile not chosen.";
+    private final static String VALIDATION_PROFILE_NOT_CHOSEN = "Validation profile not chosen";
     private final static String VALIDATE_BUTTON_TEXT = "Validate";
-    private final static String BEFORE_FIRST_VALIDATION = "Please specify input PDF, Validation Profile and press \"Validate\"";
-    private final static String AFTER_FIRST_VALIDATION = "Press \"Validate\"";
     private final static String VALIDATION_OK = "PDF file satisfies the validation profile.";
     private final static String VALIDATION_FALSE = "PDF file does not satisfy the validation profile.";
-    private final static String SAVE_REPORT_BUTTON_TEXT = "Save XML Report";
-    private final static String VIEW_REPORT_BUTTON_TEXT = "View XML Report";
-    private final static String SAVE_HTML_REPORT_BUTTON_TEXT = "Save HTML Report";
-    private final static String VIEW_HTML_REPORT_BUTTON_TEXT = "View HTML Report";
+    private final static String SAVE_REPORT_BUTTON_TEXT = "Save XML";
+    private final static String VIEW_REPORT_BUTTON_TEXT = "View XML";
+    private final static String SAVE_HTML_REPORT_BUTTON_TEXT = "Save HTML";
+    private final static String VIEW_HTML_REPORT_BUTTON_TEXT = "View HTML";
+    private final static String REPORT = "Report";
 
 
     private JFileChooser chooser;
@@ -55,14 +59,14 @@ public class CheckerPanel extends JPanel {
     private ValidateWorker validateWorker;
 
     private Color beforeValidationColor = Color.BLACK;
-    private Color validationSuccessColor = new Color(0,200,0);
-    private Color validationFailedColor = new Color(200,0,0);
+    private Color validationSuccessColor = new Color(0,180,0);
+    private Color validationFailedColor = new Color(180,0,0);
 
 
     /**
      * Creates the Panel.
      */
-    public CheckerPanel() {
+    public CheckerPanel() throws IOException {
 
         setPreferredSize(new Dimension(450, 200));
 
@@ -86,7 +90,7 @@ public class CheckerPanel extends JPanel {
         JButton choosePDF = new JButton(CHOOSE_PDF_BUTTON_TEXT);
         gbc.gridx = 3;
         gbc.gridy = 0;
-        gbc.weightx = 0.3;
+        gbc.weightx = 0;
         gbc.weighty = 1;
         gbc.gridwidth = 1;
         gbl.setConstraints(choosePDF, gbc);
@@ -105,21 +109,21 @@ public class CheckerPanel extends JPanel {
         JButton chooseProfile = new JButton(CHOOSE_PROFILE_BUTTON_TEXT);
         gbc.gridx = 3;
         gbc.gridy = 1;
-        gbc.weightx = 0.3;
+        gbc.weightx = 0;
         gbc.weighty = 1;
         gbc.gridwidth = 1;
         gbl.setConstraints(chooseProfile, gbc);
         this.add(chooseProfile);
 
-        result = new JLabel(BEFORE_FIRST_VALIDATION);
+        result = new JLabel();
         result.setForeground(beforeValidationColor);
         gbc.fill = GridBagConstraints.CENTER;
         result.setHorizontalTextPosition(JLabel.CENTER);
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.weightx = 4;
-        gbc.weighty = 4;
-        gbc.gridwidth = 4;
+        gbc.weightx = 3;
+        gbc.weighty = 2;
+        gbc.gridwidth = 3;
         gbl.setConstraints(result, gbc);
         this.add(result);
 
@@ -129,64 +133,56 @@ public class CheckerPanel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gbc.weightx = 4;
-        gbc.weighty = 4;
-        gbc.gridwidth = 4;
+        gbc.weightx = 3;
+        gbc.weighty = 2;
+        gbc.gridwidth = 3;
         gbl.setConstraints(progressBar, gbc);
         this.add(progressBar);
 
         final JButton validate = new JButton(VALIDATE_BUTTON_TEXT);
         validate.setEnabled(false);
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.weightx = 2;
+        gbc.gridx = 3;
+        gbc.gridy = 2;
+        gbc.weightx = 0;
         gbc.weighty = 1;
-        gbc.gridwidth = 2;
-        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.gridwidth = 1;
         gbl.setConstraints(validate, gbc);
         this.add(validate);
 
-        saveXML = new JButton(SAVE_REPORT_BUTTON_TEXT);
-        saveXML.setEnabled(false);
+        JPanel reports = new JPanel();
+        reports.setBorder(BorderFactory.createTitledBorder(REPORT));
+        reports.setLayout(new GridLayout(2, 3));
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.weightx = 1;
-        gbc.weighty = 1.5;
-        gbc.gridwidth = 1;
-        gbl.setConstraints(saveXML, gbc);
-        this.add(saveXML);
+        gbc.gridy = 3;
+        gbc.weightx = 4;
+        gbc.weighty = 3;
+        gbc.gridwidth = 4;
+        gbl.setConstraints(reports, gbc);
+        this.add(reports);
+
+        LogoPanel xmlLogo = new LogoPanel(XML_LOGO_NAME,reports.getBackground(),0);
+        reports.add(xmlLogo);
+
+        saveXML = new JButton(SAVE_REPORT_BUTTON_TEXT);
+        saveXML.setEnabled(false);
+        reports.add(saveXML);
 
         viewXML = new JButton(VIEW_REPORT_BUTTON_TEXT);
         viewXML.setEnabled(false);
-        gbc.gridx = 1;
-        gbc.gridy = 4;
-        gbc.weightx = 1;
-        gbc.weighty = 1.5;
-        gbc.gridwidth = 1;
-        gbl.setConstraints(viewXML, gbc);
-        this.add(viewXML);
+        reports.add(viewXML);
+
+        LogoPanel htmlLogo = new LogoPanel(HTML_LOGO_NAME,reports.getBackground(),0);
+        reports.add(htmlLogo);
 
         saveHTML = new JButton(SAVE_HTML_REPORT_BUTTON_TEXT);
         saveHTML.setEnabled(false);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 2;
-        gbc.gridy = 4;
-        gbc.weightx = 1;
-        gbc.weighty = 1.5;
-        gbc.gridwidth = 1;
-        gbl.setConstraints(saveHTML, gbc);
-        this.add(saveHTML);
+        reports.add(saveHTML);
 
         viewHTML = new JButton(VIEW_HTML_REPORT_BUTTON_TEXT);
         viewHTML.setEnabled(false);
-        gbc.gridx = 3;
-        gbc.gridy = 4;
-        gbc.weightx = 1;
-        gbc.weighty = 1.5;
-        gbc.gridwidth = 1;
-        gbl.setConstraints(viewHTML, gbc);
-        this.add(viewHTML);
+        reports.add(viewHTML);
 
         chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File("."));
@@ -204,7 +200,7 @@ public class CheckerPanel extends JPanel {
                     if (info != null) {
                         info = null;
                         result.setForeground(beforeValidationColor);
-                        result.setText(AFTER_FIRST_VALIDATION);
+                        result.setText("");
                     }
                     if (report != null) {
                         report = null;
@@ -230,7 +226,7 @@ public class CheckerPanel extends JPanel {
                     if (info != null) {
                         info = null;
                         result.setForeground(beforeValidationColor);
-                        result.setText(AFTER_FIRST_VALIDATION);
+                        result.setText("");
                     }
                     if (report != null) {
                         report = null;
