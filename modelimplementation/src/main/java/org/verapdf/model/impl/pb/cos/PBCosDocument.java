@@ -81,7 +81,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     /** EOF must complies PDF/A standard
      */
     public Boolean geteofCompliesPDFA() {
-        return true;
+        return ((COSDocument) baseObject).getEofComplyPDFA();
     }
 
     @Override
