@@ -6,7 +6,7 @@
     <created>2015-01-23T17:30:15Z</created>
     <hash>Some hash</hash>
     <imports>
-        <import>src/test/resources/test2.xml</import>
+        <import>test2.xml</import>
     </imports>
     <rules>
         <rule id="rule1" object="CosDocument">
