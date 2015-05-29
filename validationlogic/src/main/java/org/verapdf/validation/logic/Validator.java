@@ -152,6 +152,11 @@ public class Validator {
             buffer.append("var " + prop + " = obj.get" + prop + "();\n");
         }
 
+        for (String linkName : obj.getLinks()){
+            List<? extends Object> linkedObject = obj.getLinkedObjects(linkName);
+            buffer.append("var " + linkName + "_size = " + linkedObject.size() + ";\n");
+        }
+
         buffer.append("function test(){return ");
         buffer.append(rule.getTest());
         buffer.append(";}\ntest();");
