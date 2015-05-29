@@ -56,10 +56,10 @@ public class ValidationLogicTest {
 
         assertEquals(info.getResult().isCompliant(), false);
 
-        assertEquals(info.getResult().getSummary().getAttrPassedRules(), 1);
+        assertEquals(info.getResult().getSummary().getAttrPassedRules(), 2);
         assertEquals(info.getResult().getSummary().getAttrFailedRules(), 3);
 
-        assertEquals(info.getResult().getSummary().getAttrPassedChecks(), 4);
+        assertEquals(info.getResult().getSummary().getAttrPassedChecks(), 6);
         assertEquals(info.getResult().getSummary().getAttrFailedChecks(), 4);
 
     }
