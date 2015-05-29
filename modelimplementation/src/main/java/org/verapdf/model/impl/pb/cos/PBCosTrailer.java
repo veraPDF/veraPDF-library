@@ -37,12 +37,12 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
         return getPartOfID(1);
     }
 
-    private String getPartOfID(int i) {
+    private String getPartOfID(int index) {
         COSArray ids = (COSArray) ((COSDictionary) baseObject).getItem("ID");
 
-        if (ids != null && ids.size() > i) {
-            if (ids.get(i) instanceof COSString) {
-                return new String(((COSString) ids.get(i)).getBytes());
+        if (ids != null && ids.size() > index) {
+            if (ids.get(index) instanceof COSString) {
+                return new String(((COSString) ids.get(index)).getBytes());
             } else {
                 // TODO : discuss about this case
                 throw new IllegalArgumentException("ID not conforming defined type for ID.");
@@ -54,10 +54,7 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
 
     // TODO : need to support of this feature
     public Boolean getisLinearized() {
-        if (baseObject == firstTrailer || linearizedDictionary == null) {
-            return false;
-        }
-        return true;
+        return !(baseObject == firstTrailer || linearizedDictionary == null);
     }
 
     public Boolean getisEncrypted() {
