@@ -4,15 +4,14 @@ import org.apache.pdfbox.cos.COSNumber;
 import org.verapdf.model.coslayer.CosNumber;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
- * Created by Evgeniy Muravitskiy on 4/27/15.
- * <p>
- *     Current class is representation of CosNumber interface of abstract model.
- *     Methods of this class using in PBCosInteger and PBCosReal.
- *     This class is analogue of COSNumber in pdfbox.
- * </p>
+ * Current class is representation of CosNumber interface of abstract model.
+ * Methods of this class using in PBCosInteger and PBCosReal.
+ * This class is analogue of COSNumber in pdfbox.
  *
+ * @author Evgeniy Muravitskiy
  * @see PBCosInteger
  * @see PBCosReal
  */
@@ -40,6 +39,7 @@ public abstract class PBCosNumber extends PBCosObject implements CosNumber {
      */
     @Override
     public Double getrealValue() {
-        return ((COSNumber) baseObject).doubleValue();
+        String value = new DecimalFormat("#.#######").format(((COSNumber) baseObject).doubleValue());
+        return Double.valueOf(value);
     }
 }
