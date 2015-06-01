@@ -1,6 +1,7 @@
 package org.verapdf.model.impl.pb.cos;
 
 import org.apache.pdfbox.cos.COSArray;
+import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSString;
 import org.verapdf.model.baselayer.*;
@@ -24,7 +25,7 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
     private COSDictionary linearizedDictionary = null;
     /** if document is linearized first trailer is differ from last
      */
-    private CosTrailer firstTrailer = null;
+    private COSDictionary firstTrailer = null;
     /** length of the document
      */
     private Long length = null;
@@ -36,38 +37,32 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
 
     public PBCosTrailer(COSDictionary mainTrailer, COSDictionary firstTrailer, COSDictionary linearizedDictionary, Long length) {
         super(mainTrailer);
-        this.firstTrailer = new PBCosTrailer(firstTrailer);
+        this.firstTrailer = firstTrailer;
         this.linearizedDictionary = linearizedDictionary;
         this.length = length;
     }
 
     /**
-     * @return first part of ID if its present
+     * @return ID of first page trailer
      */
-    public String getid1() {
-        return getPartOfID(0);
+    public String getfirstPageID() {
+        return getTrailerID((COSArray) firstTrailer.getItem("ID"));
     }
 
     /**
-     * @return second part of ID if its present
+     * @return ID of last document trailer
      */
-    public String getid2() {
-        return getPartOfID(1);
+    public String lastID() {
+        return getTrailerID((COSArray) ((COSDictionary) baseObject).getItem("ID"));
     }
 
-    private String getPartOfID(int index) {
-        COSArray ids = (COSArray) ((COSDictionary) baseObject).getItem("ID");
-
-        if (ids != null && ids.size() > index) {
-            if (ids.get(index) instanceof COSString) {
-                return new String(((COSString) ids.get(index)).getBytes());
-            } else {
-                // TODO : discuss about this case
-                throw new IllegalArgumentException("ID not conforming defined type for ID.");
-            }
-        } else {
-            return null;
+    private String getTrailerID(COSArray ids) {
+        StringBuilder builder = new StringBuilder();
+        for (COSBase id : ids) {
+            builder.append(((COSString) id).getASCII()).append(' ');
         }
+        // need to discard last whitespace
+        return builder.toString().substring(0, builder.length() - 2);
     }
 
     /**
@@ -83,14 +78,6 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
      */
     public Boolean getisEncrypted() {
         return ((COSDictionary) baseObject).getItem("Encrypt") != null;
-    }
-
-    /**
-     * @return true if ID of first and last trailers are match
-     */
-    @Override
-    public Boolean getdoFirstLastTrailerIDsMatch() {
-        return getid1().equals(firstTrailer.getid1()) && getid2().equals(firstTrailer.getid2());
     }
 
     @Override
