@@ -59,7 +59,8 @@ public class PBCosStream extends PBCosDict implements CosStream {
      */
     @Override
     public String getF() {
-        return baseObject != null ? baseObject.toString() : null;
+        COSBase fileSpecification = ((COSStream) baseObject).getItem("F");
+        return fileSpecification != null ? fileSpecification.toString() : null;
     }
 
     /**
@@ -76,7 +77,8 @@ public class PBCosStream extends PBCosDict implements CosStream {
      */
     @Override
     public String getFDecodeParms() {
-        return baseObject != null ? baseObject.toString() : null;
+        COSBase fDecodeParms = ((COSStream) baseObject).getItem("FDecodeParms");
+        return fDecodeParms != null ? fDecodeParms.toString() : null;
     }
 
     /**  true if the spacing around stream / endstream complies with the PDF/A requirements
