@@ -65,5 +65,18 @@
             </reference>
         </rule>
 
+        <rule id="rule14" object="CosDict">
+            <description>STR_ID_401</description>
+            <test>CosInteger_size >= 1</test>
+            <error>
+                <message>real subtype is %</message>
+                <argument>Subtype</argument>
+            </error>
+            <reference>
+                <specification>ISO19005-1</specification>
+                <clause>6.1.2</clause>
+            </reference>
+        </rule>
+
     </rules>
 </profile>

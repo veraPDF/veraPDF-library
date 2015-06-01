@@ -25,18 +25,21 @@ public final class ValidationProfileParser {
     private Set<String> profilesPaths;
     private ValidationProfile profile;
     private DocumentBuilder builder;
+    private File resource;
 
     private ValidationProfileParser(File resourceFile) throws ParserConfigurationException, IOException, SAXException {
+        resource = resourceFile;
+
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
         builder = factory.newDocumentBuilder();
 
         factory.setIgnoringElementContentWhitespace(true);
 
-        Document doc = builder.parse(resourceFile);
+        Document doc = builder.parse(resource);
 
         profilesPaths = new HashSet<String>();
-        profilesPaths.add(resourceFile.getPath());
+        profilesPaths.add(resourceFile.getCanonicalPath());
         Node root = doc.getDocumentElement();
         root.normalize();
         parseRoot(root);
@@ -79,7 +82,7 @@ public final class ValidationProfileParser {
                 hash = child.getTextContent().trim();
 
             } else if (childName.equals("imports")) {
-                parseImports(child, rules);
+                parseImports(resource, child, rules);
 
             } else if (childName.equals("rules")) {
                 parseRules(child, rules);
@@ -91,7 +94,7 @@ public final class ValidationProfileParser {
         profile = new ValidationProfile(model, name, description, creator, created, hash, rules);
     }
 
-    private void parseImports(Node imports, Map<String, List<Rule>> rules) throws IOException, SAXException {
+    private void parseImports(File sourceFile, Node imports, Map<String, List<Rule>> rules) throws IOException, SAXException {
         NodeList children = imports.getChildNodes();
 
         for(int i = 0; i < children.getLength(); ++i) {
@@ -103,13 +106,15 @@ public final class ValidationProfileParser {
 
             String path = child.getTextContent().trim();
 
-            if(profilesPaths.contains(path)){
+            File newFile = new File(sourceFile.getParent(), path);
+
+            if(profilesPaths.contains(newFile.getCanonicalPath())){
                 continue;
             }
 
-            profilesPaths.add(path);
+            profilesPaths.add(newFile.getCanonicalPath());
 
-            Document doc = builder.parse(new File(path));
+            Document doc = builder.parse(newFile);
 
             NodeList children2 = doc.getDocumentElement().getChildNodes();
 
@@ -121,7 +126,7 @@ public final class ValidationProfileParser {
                     parseRules(child2, rules);
 
                 } else if (name.equals("imports")) {
-                    parseImports(child2, rules);
+                    parseImports(newFile, child2, rules);
 
                 }
             }

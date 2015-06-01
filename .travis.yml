@@ -2,3 +2,6 @@ language: java
 
 jdk:
   - oraclejdk7
+
+install:
+  - mvn clean install -P clone-test-resources
