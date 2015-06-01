@@ -15,10 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Evgeniy Muravitskiy on 5/4/15.
- * <p>
- *     Low-level PDF Document object
- * </p>
+ * Low-level PDF Document object
+ *
+ * @author Evgeniy Muravitskiy
  */
 public class PBCosDocument extends PBCosObject implements CosDocument {
 
@@ -85,6 +84,13 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         return ((COSDocument) baseObject).getEofComplyPDFA();
     }
 
+    /**
+     * @return true if XMP content matches Info dictionary content
+     */
+    // TODO : implement this
+    public Boolean getdoesInfoMatchXMP() {
+        return false;
+    }
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
         List<? extends org.verapdf.model.baselayer.Object> list;
