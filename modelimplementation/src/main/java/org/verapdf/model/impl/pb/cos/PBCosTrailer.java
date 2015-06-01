@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class PBCosTrailer extends PBCosDict implements CosTrailer {
 
-    private final String CATALOG = "Catalog";
+    public final static String CATALOG = "Catalog";
     /** if document is linearized its must have dictionary of linearization
      */
     private COSDictionary linearizedDictionary = null;
