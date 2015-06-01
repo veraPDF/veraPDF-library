@@ -1,11 +1,11 @@
-package org.verapdf.integration.pdfa_1.b_6_1_12_implementationlimits;
+package org.verapdf.integration.pdfa_1.b_6_1_12_implementation_limits;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.verapdf.integration.base.BasePDFAIT;
 
 /**
- * Implementation limits - min Integer value test
+ * Implementation limits - Integer value
  */
 public class VeraPDF_6_1_12_t01_fail_a_IT extends BasePDFAIT {
 
@@ -16,7 +16,7 @@ public class VeraPDF_6_1_12_t01_fail_a_IT extends BasePDFAIT {
 
     @Override
     protected String getExpectedReportFilePath() throws Exception {
-        return getSystemIndependentPath("/testfiles/pdfa_1/b_6_1_12_implementationlimits/1/6-1-12-t01-fail-a-report.xml");
+        return getSystemIndependentPath("/testfiles/reports/pdfa_1/b_6_1_12_implementation_limits/1/6-1-12-t01-fail-a-report.xml");
     }
 
     @Override
