@@ -122,7 +122,7 @@ public class CheckerPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.weightx = 3;
-        gbc.weighty = 2;
+        gbc.weighty = 1;
         gbc.gridwidth = 3;
         gbl.setConstraints(result, gbc);
         this.add(result);
@@ -134,7 +134,7 @@ public class CheckerPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.weightx = 3;
-        gbc.weighty = 2;
+        gbc.weighty = 1;
         gbc.gridwidth = 3;
         gbl.setConstraints(progressBar, gbc);
         this.add(progressBar);
@@ -152,7 +152,6 @@ public class CheckerPanel extends JPanel {
         JPanel reports = new JPanel();
         reports.setBorder(BorderFactory.createTitledBorder(REPORT));
         reports.setLayout(new GridLayout(2, 3));
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.weightx = 4;
