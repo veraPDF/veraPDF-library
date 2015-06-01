@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<validationInfo>
+    <profile>
+        <name>Header profile</name>
+        <hash>sha-1 hash code</hash>
+    </profile>
+    <result>
+        <compliant>true</compliant>
+        <statement>Validation is successful! Everything is correct!</statement>
+        <summary completedMetadataFixes="0" failedChecks="0" failedMetadataFixes="0" failedRules="0" passedChecks="0"
+                 passedRules="0" warnings="0"/>
+        <details>
+            <rules/>
+            <warnings/>
+        </details>
+    </result>
+</validationInfo>
