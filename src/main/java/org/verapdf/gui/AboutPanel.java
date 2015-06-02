@@ -95,15 +95,15 @@ class AboutPanel extends JPanel {
 
         if (dialog == null || dialog.getOwner() != owner) {
             dialog = new JDialog(owner, true);
+            dialog.setResizable(false);
             dialog.add(this);
             dialog.getRootPane().setDefaultButton(okButton);
             dialog.pack();
+            dialog.setTitle(title);
         }
 
-        dialog.setTitle(title);
         dialog.setLocation(150,150);
         dialog.setVisible(true);
-        dialog.setResizable(false);
     }
 
 }

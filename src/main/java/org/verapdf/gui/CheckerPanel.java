@@ -1,18 +1,16 @@
 package org.verapdf.gui;
 
 import org.verapdf.validation.report.XMLValidationReport;
+import org.verapdf.validation.report.HTMLValidationReport;
 import org.verapdf.validation.report.model.ValidationInfo;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.concurrent.ExecutionException;
 
@@ -32,8 +30,8 @@ public class CheckerPanel extends JPanel {
     private final static String CHOOSE_PROFILE_BUTTON_TEXT = "Choose Profile";
     private final static String VALIDATION_PROFILE_NOT_CHOSEN = "Validation profile not chosen";
     private final static String VALIDATE_BUTTON_TEXT = "Validate";
-    private final static String VALIDATION_OK = "PDF file satisfies the validation profile.";
-    private final static String VALIDATION_FALSE = "PDF file does not satisfy the validation profile.";
+    private final static String VALIDATION_OK = "PDF file is compliant with Validation Profile requirements";
+    private final static String VALIDATION_FALSE = "PDF file is not compliant with Validation Profile requirements";
     private final static String SAVE_REPORT_BUTTON_TEXT = "Save XML";
     private final static String VIEW_REPORT_BUTTON_TEXT = "View XML";
     private final static String SAVE_HTML_REPORT_BUTTON_TEXT = "Save HTML";
@@ -41,14 +39,18 @@ public class CheckerPanel extends JPanel {
     private final static String REPORT = "Report";
 
 
-    private JFileChooser chooser;
+    private JFileChooser pdfChooser;
+    private JFileChooser xmlChooser;
+    private JFileChooser htmlChooser;
     private File pdfFile;
     private File profile;
     private JTextField chosenPDF;
     private JTextField chosenProfile;
     private JLabel result;
     private ValidationInfo info;
-    private File report;
+    private File xmlReport;
+    private File htmlReport;
+    private File image = null;
 
     private JButton saveXML;
     private JButton viewXML;
@@ -160,7 +162,7 @@ public class CheckerPanel extends JPanel {
         gbl.setConstraints(reports, gbc);
         this.add(reports);
 
-        LogoPanel xmlLogo = new LogoPanel(XML_LOGO_NAME,reports.getBackground(),0);
+        LogoPanel xmlLogo = new LogoPanel(XML_LOGO_NAME,reports.getBackground(),4);
         reports.add(xmlLogo);
 
         saveXML = new JButton(SAVE_REPORT_BUTTON_TEXT);
@@ -171,7 +173,7 @@ public class CheckerPanel extends JPanel {
         viewXML.setEnabled(false);
         reports.add(viewXML);
 
-        LogoPanel htmlLogo = new LogoPanel(HTML_LOGO_NAME,reports.getBackground(),0);
+        LogoPanel htmlLogo = new LogoPanel(HTML_LOGO_NAME,reports.getBackground(),4);
         reports.add(htmlLogo);
 
         saveHTML = new JButton(SAVE_HTML_REPORT_BUTTON_TEXT);
@@ -183,33 +185,49 @@ public class CheckerPanel extends JPanel {
         viewHTML.setEnabled(false);
         reports.add(viewHTML);
 
-        chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new File("."));
-        chooser.setAcceptAllFileFilterUsed(false);
+        pdfChooser = new JFileChooser();
+        pdfChooser.setCurrentDirectory(new File("."));
+        pdfChooser.setAcceptAllFileFilterUsed(false);
+        pdfChooser.setFileFilter(new FileNameExtensionFilter("pdf", "pdf"));
+
+        xmlChooser = new JFileChooser();
+        xmlChooser.setCurrentDirectory(new File("."));
+        xmlChooser.setAcceptAllFileFilterUsed(false);
+        xmlChooser.setFileFilter(new FileNameExtensionFilter("xml", "xml"));
+
+        htmlChooser = new JFileChooser();
+        htmlChooser.setCurrentDirectory(new File("."));
+        htmlChooser.setAcceptAllFileFilterUsed(false);
+        htmlChooser.setFileFilter(new FileNameExtensionFilter("html", "html"));
 
 
 
         choosePDF.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                chooser.setFileFilter(new FileNameExtensionFilter("pdf", "pdf"));
-                int resultChoose = chooser.showOpenDialog(CheckerPanel.this);
+                int resultChoose = pdfChooser.showOpenDialog(CheckerPanel.this);
                 if (resultChoose == JFileChooser.APPROVE_OPTION) {
-                    pdfFile = chooser.getSelectedFile();
-                    chosenPDF.setText(pdfFile.getPath());
-                    if (info != null) {
-                        info = null;
-                        result.setForeground(beforeValidationColor);
-                        result.setText("");
-                    }
-                    if (report != null) {
-                        report = null;
-                        saveXML.setEnabled(false);
-                        viewXML.setEnabled(false);
-                        saveHTML.setEnabled(false);
-                        viewHTML.setEnabled(false);
-                    }
-                    if (profile != null) {
-                        validate.setEnabled(true);
+
+                    if (!pdfChooser.getSelectedFile().getName().endsWith(".pdf")) {
+                        JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file is not in PDF format.", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+
+                        pdfFile = pdfChooser.getSelectedFile();
+                        chosenPDF.setText(pdfFile.getAbsolutePath());
+                        if (info != null) {
+                            info = null;
+                            result.setForeground(beforeValidationColor);
+                            result.setText("");
+                        }
+                        if (xmlReport != null) {
+                            xmlReport = null;
+                            saveXML.setEnabled(false);
+                            viewXML.setEnabled(false);
+                            saveHTML.setEnabled(false);
+                            viewHTML.setEnabled(false);
+                        }
+                        if (profile != null) {
+                            validate.setEnabled(true);
+                        }
                     }
                 }
             }
@@ -217,25 +235,28 @@ public class CheckerPanel extends JPanel {
 
         chooseProfile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                chooser.setFileFilter(new FileNameExtensionFilter("xml", "xml"));
-                int resultChoose = chooser.showOpenDialog(CheckerPanel.this);
+                int resultChoose = xmlChooser.showOpenDialog(CheckerPanel.this);
                 if (resultChoose == JFileChooser.APPROVE_OPTION) {
-                    profile = chooser.getSelectedFile();
-                    chosenProfile.setText(profile.getPath());
-                    if (info != null) {
-                        info = null;
-                        result.setForeground(beforeValidationColor);
-                        result.setText("");
-                    }
-                    if (report != null) {
-                        report = null;
-                        saveXML.setEnabled(false);
-                        viewXML.setEnabled(false);
-                        saveHTML.setEnabled(false);
-                        viewHTML.setEnabled(false);
-                    }
-                    if (profile != null) {
-                        validate.setEnabled(true);
+                    if (!xmlChooser.getSelectedFile().getName().endsWith(".xml")) {
+                        JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file is not in XML format.", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        profile = xmlChooser.getSelectedFile();
+                        chosenProfile.setText(profile.getAbsolutePath());
+                        if (info != null) {
+                            info = null;
+                            result.setForeground(beforeValidationColor);
+                            result.setText("");
+                        }
+                        if (xmlReport != null) {
+                            xmlReport = null;
+                            saveXML.setEnabled(false);
+                            viewXML.setEnabled(false);
+                            saveHTML.setEnabled(false);
+                            viewHTML.setEnabled(false);
+                        }
+                        if (profile != null) {
+                            validate.setEnabled(true);
+                        }
                     }
                 }
             }
@@ -259,18 +280,18 @@ public class CheckerPanel extends JPanel {
                 if (info == null) {
                     JOptionPane.showMessageDialog(CheckerPanel.this, "Validation hasn't been run.", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    chooser.setSelectedFile(new File("report.xml"));
-                    int resultChoose = chooser.showSaveDialog(CheckerPanel.this);
+                    xmlChooser.setSelectedFile(new File("xmlReport.xml"));
+                    int resultChoose = xmlChooser.showSaveDialog(CheckerPanel.this);
                     if (resultChoose == JFileChooser.APPROVE_OPTION) {
-                        File temp = chooser.getSelectedFile();
+                        File temp = xmlChooser.getSelectedFile();
 
                         if (!(temp.getPath().endsWith(".xml")))
                             temp = new File(temp.getPath() + ".xml");
 
                         try {
-                            Files.copy(report.toPath(), temp.toPath());
+                            Files.copy(xmlReport.toPath(), temp.toPath());
                         } catch (IOException e1) {
-                            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the report.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the XML report.", "Error", JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 }
@@ -279,14 +300,58 @@ public class CheckerPanel extends JPanel {
 
         viewXML.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (report == null){
-                    JOptionPane.showMessageDialog(CheckerPanel.this, "Report hasn't been saved.", "Error", JOptionPane.ERROR_MESSAGE);
+                if (xmlReport == null){
+                    JOptionPane.showMessageDialog(CheckerPanel.this, "XML report hasn't been saved.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else {
                     try {
-                        Desktop.getDesktop().open(report);
+                        Desktop.getDesktop().open(xmlReport);
                     } catch (IOException e1) {
-                        JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in opening the report.", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in opening the XML report.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+
+        saveHTML.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (info == null) {
+                    JOptionPane.showMessageDialog(CheckerPanel.this, "Validation hasn't been run.", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    htmlChooser.setSelectedFile(new File("htmlReport.html"));
+                    int resultChoose = htmlChooser.showSaveDialog(CheckerPanel.this);
+                    if (resultChoose == JFileChooser.APPROVE_OPTION) {
+                        File temp = htmlChooser.getSelectedFile();
+
+                        if (!(temp.getPath().endsWith(".html")))
+                            temp = new File(temp.getPath() + ".html");
+
+                        try {
+                            Files.copy(htmlReport.toPath(), temp.toPath());
+                        } catch (IOException e1) {
+                            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the HTML report.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                        try {
+                            File newImage = new File(temp.getParentFile(), image.getName());
+                            Files.copy(image.toPath(), newImage.toPath());
+                        } catch (IOException e1) {
+                            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving logo image for HTML report.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            }
+        });
+
+        viewHTML.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (htmlReport == null){
+                    JOptionPane.showMessageDialog(CheckerPanel.this, "HTML report hasn't been saved.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    try {
+                        Desktop.getDesktop().open(htmlReport);
+                    } catch (IOException e1) {
+                        JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in opening the HTML report.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -308,9 +373,9 @@ public class CheckerPanel extends JPanel {
                 result.setText(VALIDATION_FALSE);
             }
         } catch (InterruptedException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, "Validation has interrupted.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(CheckerPanel.this, "Validation has interrupted.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (ExecutionException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, "Execution exception in validating.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(CheckerPanel.this, "Execution exception in validating.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         progressBar.setVisible(false);
@@ -319,14 +384,29 @@ public class CheckerPanel extends JPanel {
         try {
             File dir = new File("./temp/");
             dir.mkdir();
-            report = new File("./temp/tempReport.xml");
-            XMLValidationReport.writeXMLValidationReport(info, report.getPath());
+            xmlReport = new File("./temp/tempXMLReport.xml");
+            XMLValidationReport.writeXMLValidationReport(info, xmlReport.getPath());
 
             saveXML.setEnabled(true);
             viewXML.setEnabled(true);
 
         } catch (Exception e1) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the report.", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the XML report.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        try {
+            htmlReport = new File("./temp/tempHTMLReport.html");
+            HTMLValidationReport.wrightHTMLValidationReport(htmlReport.getPath(), xmlReport, profile);
+
+            if (image == null){
+                image = new File("./temp/"+ HTMLValidationReport.getLogoImageName());
+            }
+
+            saveHTML.setEnabled(true);
+            viewHTML.setEnabled(true);
+
+        } catch (Exception e1) {
+            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the HTML report.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }

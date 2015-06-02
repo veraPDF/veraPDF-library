@@ -23,7 +23,7 @@ import java.net.URISyntaxException;
  */
 public class PartnersPanel extends JPanel {
 
-    private final static String CONSORTIUM_TEXT = "the veraPDF consortium:";
+    private final static String CONSORTIUM_TEXT = "© 2015 veraPDF Consortium";
 
     private final BufferedImage partnersLogo;
     private final int BORDER_WIDTH = 5;
@@ -63,6 +63,7 @@ public class PartnersPanel extends JPanel {
         consortium = new JLabel(CONSORTIUM_TEXT);
 
         consortium.setHorizontalTextPosition(JLabel.CENTER);
+        consortium.setFont(new Font(consortium.getFont().getName(), consortium.getFont().getStyle(), (int) (consortium.getFont().getSize()*1.3)));
         Rectangle2D rec = new TextLayout(CONSORTIUM_TEXT, consortium.getFont(), new FontRenderContext(null, true, true)).getBounds();
         consortium.setSize((int) (rec.getWidth()) + 7, (int) (rec.getHeight() + 4));
 
