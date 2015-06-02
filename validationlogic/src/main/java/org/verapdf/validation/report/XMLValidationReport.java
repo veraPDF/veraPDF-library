@@ -8,11 +8,11 @@ import javax.xml.transform.stream.*;
 import org.verapdf.validation.report.model.Check;
 import org.verapdf.validation.report.model.Rule;
 import org.w3c.dom.*;
-
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.StringWriter;
 
 
@@ -158,7 +158,12 @@ public final class XMLValidationReport {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.transform(new DOMSource(doc), new StreamResult(new FileOutputStream(path)));
+        try (FileOutputStream fos = new FileOutputStream(path)) {
+            transformer.transform(new DOMSource(doc), new StreamResult(fos));
+        } catch (IOException excep) {
+        	// TODO: Review this exception handling
+			// Thrown on failure to close fos so do nothing
+		}
     }
 
     /**
