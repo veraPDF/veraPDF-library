@@ -16,7 +16,8 @@ public class TestObject implements Object {
     private List<CosDict> cosDicts;
     private List<PDAnnot> pdAnnots;
 
-    public Boolean isContextDependent(){
+    @Override
+	public Boolean isContextDependent(){
         return false;
     }
 

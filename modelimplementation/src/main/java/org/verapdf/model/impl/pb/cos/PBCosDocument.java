@@ -80,7 +80,8 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 
     /** EOF must complies PDF/A standard
      */
-    public Boolean geteofCompliesPDFA() {
+    @Override
+	public Boolean geteofCompliesPDFA() {
         return ((COSDocument) baseObject).getEofComplyPDFA();
     }
 
@@ -88,7 +89,8 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      * @return true if XMP content matches Info dictionary content
      */
     // TODO : implement this
-    public Boolean getdoesInfoMatchXMP() {
+    @Override
+	public Boolean getdoesInfoMatchXMP() {
         return Boolean.FALSE;
     }
     @Override

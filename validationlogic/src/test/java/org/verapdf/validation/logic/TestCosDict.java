@@ -73,7 +73,8 @@ public class TestCosDict implements CosDict {
         return res;
     }
 
-    public Boolean isContextDependent(){
+    @Override
+	public Boolean isContextDependent(){
         return false;
     }
 

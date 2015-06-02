@@ -45,14 +45,16 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
     /**
      * @return ID of first page trailer
      */
-    public String getfirstPageID() {
+    @Override
+	public String getfirstPageID() {
         return getTrailerID((COSArray) firstTrailer.getItem("ID"));
     }
 
     /**
      * @return ID of last document trailer
      */
-    public String getlastID() {
+    @Override
+	public String getlastID() {
         return getTrailerID((COSArray) ((COSDictionary) baseObject).getItem("ID"));
     }
 
@@ -69,14 +71,16 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
      * @return true if the current document is linearized
      */
     // TODO : need to support of this feature
-    public Boolean getisLinearized() {
+    @Override
+	public Boolean getisLinearized() {
         return !(baseObject == firstTrailer || linearizedDictionary == null);
     }
 
     /**
      * @return true if the current document is encrypted
      */
-    public Boolean getisEncrypted() {
+    @Override
+	public Boolean getisEncrypted() {
         return ((COSDictionary) baseObject).getItem("Encrypt") != null;
     }
 

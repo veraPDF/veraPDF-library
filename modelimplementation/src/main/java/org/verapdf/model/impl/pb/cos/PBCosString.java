@@ -34,7 +34,8 @@ public class PBCosString extends PBCosObject implements CosString {
 
     /** true if all symbols below range 0-9,a-f,A-F
      */
-    public Boolean getisHexSymbols() {
+    @Override
+	public Boolean getisHexSymbols() {
         for (byte symbol : ((COSString) baseObject).getBytes()) {
             if (Character.digit(symbol, 16) == -1) {
                 return false;

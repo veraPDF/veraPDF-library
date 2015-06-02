@@ -66,7 +66,8 @@ public class TestCosInteger implements CosInteger {
         return res;
     }
 
-    public Boolean isContextDependent(){
+    @Override
+	public Boolean isContextDependent(){
         return false;
     }
 
