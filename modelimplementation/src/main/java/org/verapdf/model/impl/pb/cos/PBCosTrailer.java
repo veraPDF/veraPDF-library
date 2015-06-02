@@ -52,7 +52,7 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
     /**
      * @return ID of last document trailer
      */
-    public String lastID() {
+    public String getlastID() {
         return getTrailerID((COSArray) ((COSDictionary) baseObject).getItem("ID"));
     }
 
