@@ -1,10 +1,7 @@
 package org.verapdf.model.impl.pb.cos;
 
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSDictionary;
-import org.apache.pdfbox.cos.COSDocument;
-import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDocument;
 import org.verapdf.model.coslayer.CosIndirect;
@@ -27,6 +24,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     public final static String XREF = "xref";
     public final static String INDIRECT_OBJECTS = "indirectObjects";
     public final static String DOCUMENT = "document";
+    public final static String EMBEDDED_FILES = "EmbeddedFiles";
 
     private Integer sizeOfDocument = -1;
 
@@ -108,11 +106,19 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
             case XREF:
                 list = this.getXRef();
                 break;
+            case EMBEDDED_FILES:
+                list = this.getEmbeddedFiles();
+                break;
             default:
                 list = super.getLinkedObjects(link);
         }
 
         return list;
+    }
+
+    // TODO : implement this
+    private List<CosFileSpecification> getEmbeddedFiles() {
+        return new ArrayList<>();
     }
 
     /**  trailer dictionary
