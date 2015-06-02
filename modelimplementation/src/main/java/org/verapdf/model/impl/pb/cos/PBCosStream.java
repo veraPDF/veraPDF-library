@@ -1,10 +1,7 @@
 package org.verapdf.model.impl.pb.cos;
 
-import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.verapdf.model.coslayer.CosStream;
-
-import java.io.IOException;
 
 /**
  * PDF Stream type
@@ -12,8 +9,6 @@ import java.io.IOException;
  * @author Evgeniy Mutavitskiy
  */
 public class PBCosStream extends PBCosDict implements CosStream {
-
-    private final static Logger logger = Logger.getLogger(PBCosStream.class);
 
     public PBCosStream(COSStream stream) {
         super(stream);
@@ -32,8 +27,13 @@ public class PBCosStream extends PBCosDict implements CosStream {
      */
     @Override
     public String getfilters() {
-        StringBuilder filters = new StringBuilder();
         COSBase base = ((COSStream) baseObject).getFilters();
+        return getFilters(base);
+    }
+
+    private String getFilters(COSBase base) {
+        StringBuilder filters = new StringBuilder();
+
         if (base == null)
             return filters.toString();
 
@@ -54,16 +54,31 @@ public class PBCosStream extends PBCosDict implements CosStream {
         return filters.substring(0, filters.length() - 2);
     }
 
+    /**
+     * @return string representation of file specification if its present
+     */
+    @Override
     public String getF() {
-        return null;
+        COSBase fileSpecification = ((COSStream) baseObject).getItem("F");
+        return fileSpecification != null ? fileSpecification.toString() : null;
     }
 
+    /**
+     * @return string representation of filters for external file
+     */
+    @Override
     public String getFFilter() {
-        return null;
+        COSBase base = ((COSStream) baseObject).getDictionaryObject(COSName.F_FILTER);
+        return getFilters(base);
     }
 
+    /**
+     * @return string representation of decode parameters for filters applied to external file
+     */
+    @Override
     public String getFDecodeParms() {
-        return null;
+        COSBase fDecodeParms = ((COSStream) baseObject).getItem("FDecodeParms");
+        return fDecodeParms != null ? fDecodeParms.toString() : null;
     }
 
     /**  true if the spacing around stream / endstream complies with the PDF/A requirements
