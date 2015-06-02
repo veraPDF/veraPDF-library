@@ -36,7 +36,7 @@ public class PBCosDict extends PBCosObject implements CosDict {
      */
     @Override
     public Long getsize() {
-        return (long) ((COSDictionary) baseObject).size();
+        return Long.valueOf(((COSDictionary) baseObject).size());
     }
 
     @Override

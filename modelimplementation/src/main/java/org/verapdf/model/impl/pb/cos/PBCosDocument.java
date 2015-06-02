@@ -28,7 +28,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     public final static String INDIRECT_OBJECTS = "indirectObjects";
     public final static String DOCUMENT = "document";
 
-    private Integer sizeOfDocument = -1;
+    private Long sizeOfDocument = new Long(-1);
 
     public PBCosDocument(COSDocument baseObject) {
         super(baseObject);
@@ -39,14 +39,14 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     @Override
     public Long getnrIndirects() {
-        return (long) ((COSDocument) baseObject).getObjects().size();
+        return Long.valueOf(((COSDocument) baseObject).getObjects().size());
     }
 
     /**  Size of the byte sequence representing the document
      */
     @Override
     public Long getsize() {
-        return Long.valueOf(sizeOfDocument);
+        return sizeOfDocument;
     }
 
     /**  true if the second line of the document is a comment with at least 4 symbols in the code range 128-255 as required by PDF/A standard
@@ -54,16 +54,16 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     @Override
     public Boolean getbinaryHeaderComplyPDFA() {
 
-        return !(((COSDocument) baseObject).getNonValidCommentContent() ||
-                ((COSDocument) baseObject).getNonValidCommentLength() ||
-                ((COSDocument) baseObject).getNonValidCommentStart());
+        return Boolean.valueOf(!(((COSDocument) baseObject).getNonValidCommentContent().booleanValue() ||
+                ((COSDocument) baseObject).getNonValidCommentLength().booleanValue() ||
+                ((COSDocument) baseObject).getNonValidCommentStart().booleanValue()));
     }
 
     /** true if first line of document complies PDF/A standard
      */
     @Override
     public Boolean getpdfHeaderCompliesPDFA() {
-        return !((COSDocument) baseObject).getNonValidHeader();
+        return Boolean.valueOf(!((COSDocument) baseObject).getNonValidHeader().booleanValue());
     }
 
     /** true if catalog contain OCProperties key
@@ -72,9 +72,9 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     public Boolean getisOptionalContentPresent() {
         try {
             COSDictionary root = (COSDictionary) ((COSDocument) baseObject).getCatalog().getObject();
-            return root.getItem(COSName.OCPROPERTIES) != null;
+            return Boolean.valueOf(root.getItem(COSName.OCPROPERTIES) != null);
         } catch (IOException e) {
-            return false;
+            return Boolean.FALSE;
         }
     }
 
@@ -89,7 +89,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     // TODO : implement this
     public Boolean getdoesInfoMatchXMP() {
-        return false;
+        return Boolean.FALSE;
     }
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
