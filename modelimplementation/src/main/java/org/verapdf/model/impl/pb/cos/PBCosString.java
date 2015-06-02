@@ -1,6 +1,5 @@
 package org.verapdf.model.impl.pb.cos;
 
-import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSString;
 import org.verapdf.model.coslayer.CosString;
 
@@ -18,8 +17,9 @@ public class PBCosString extends PBCosObject implements CosString {
         setType("CosString");
     }
 
-    /** Get Unicode string value stored in the PDF object
-     */
+	/**
+	 * Get Unicode string value stored in the PDF object
+	 */
     @Override
     public String getvalue() {
         return ((COSString) baseObject).getString();
