@@ -51,7 +51,10 @@ public abstract class BasePDFAIT {
     }
 
     private String getExpectedReport() throws Exception {
-        return new Scanner(new File(getExpectedReportFilePath())).useDelimiter("\\Z").next();
+    	File expectedReport = new File(getExpectedReportFilePath());
+    	try (Scanner reportScanner = new Scanner(expectedReport)) {
+            return reportScanner.useDelimiter("\\Z").next();
+    	}
     }
 
     private Boolean compareResults(String expectedReport, String actualReport) throws Exception {
