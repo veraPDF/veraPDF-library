@@ -18,6 +18,7 @@
     <modules>
         <module>validationprofileparser</module>
         <module>validationlogic</module>
+        <module>validationreport</module>
         <module>modelimplementation</module>
         <module>core</module>
         <module>cli</module>

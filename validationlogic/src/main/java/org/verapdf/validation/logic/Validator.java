@@ -48,9 +48,13 @@ public class Validator {
         objectsQueue = new LinkedList<>();
         objectsContext = new LinkedList<>();
         contextSet = new LinkedList<>();
-        checkMap = new HashMap<>();
         warnings = new ArrayList<>();
         idSet = new HashSet<>();
+        checkMap = new HashMap<>();
+
+        for(String id: profile.getAllRulesId()){
+            checkMap.put(id, new ArrayList<Check>());
+        }
 
         rootType = root.getType();
 
@@ -189,10 +193,6 @@ public class Validator {
             CheckError error = new CheckError(rule.getRuleError().getMessage(), args);
 
             check = new Check("failed", loc, error, rule.isHasError());
-        }
-
-        if(checkMap.get(rule.getAttrID()) == null){
-            checkMap.put(rule.getAttrID(), new ArrayList<Check>());
         }
 
         checkMap.get(rule.getAttrID()).add(check);

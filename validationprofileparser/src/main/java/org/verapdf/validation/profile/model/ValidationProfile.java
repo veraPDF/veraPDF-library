@@ -1,5 +1,6 @@
 package org.verapdf.validation.profile.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -106,5 +107,20 @@ public class ValidationProfile {
             }
         }
         return null;
+    }
+
+    /**
+     * @return list of all id of rules
+     */
+    public List<String> getAllRulesId(){
+        List<String> result = new ArrayList<>();
+
+        for (List<Rule> ruleList : rules.values()){
+            for(Rule rule : ruleList){
+                result.add(rule.getAttrID());
+            }
+        }
+
+        return result;
     }
 }
