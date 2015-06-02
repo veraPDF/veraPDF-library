@@ -60,7 +60,7 @@ public abstract class BasePDFAIT {
     private Boolean compareResults(String expectedReport, String actualReport) throws Exception {
         XMLUnit.setIgnoreWhitespace(true);
         Diff diff = XMLUnit.compareXML(expectedReport, actualReport);
-        return diff.identical();
+        return Boolean.valueOf(diff.identical());
     }
 
     @After
