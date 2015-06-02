@@ -5,5 +5,5 @@ package org.verapdf.cli.commands;
  * @author Timur Kamalov
  */
 public abstract class Command {
-
+	// empty class
 }
