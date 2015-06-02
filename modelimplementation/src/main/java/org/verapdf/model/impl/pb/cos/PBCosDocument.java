@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDocument;
+import org.verapdf.model.coslayer.CosFileSpecification;
 import org.verapdf.model.coslayer.CosIndirect;
 import org.verapdf.model.coslayer.CosTrailer;
 
