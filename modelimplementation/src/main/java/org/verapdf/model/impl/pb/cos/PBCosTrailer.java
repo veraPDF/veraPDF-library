@@ -73,7 +73,7 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
     // TODO : need to support of this feature
     @Override
 	public Boolean getisLinearized() {
-        return !(baseObject == firstTrailer || linearizedDictionary == null);
+        return Boolean.valueOf(!(baseObject == firstTrailer || linearizedDictionary == null));
     }
 
     /**
@@ -81,7 +81,7 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
      */
     @Override
 	public Boolean getisEncrypted() {
-        return ((COSDictionary) baseObject).getItem("Encrypt") != null;
+        return Boolean.valueOf(((COSDictionary) baseObject).getItem("Encrypt") != null);
     }
 
     @Override

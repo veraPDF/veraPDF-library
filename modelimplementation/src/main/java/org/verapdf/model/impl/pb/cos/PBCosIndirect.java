@@ -52,8 +52,8 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
      */
     @Override
     public Boolean getspacingCompliesPDFA() {
-        return ((COSObject) baseObject).isEndOfObjectComplyPDFA()
-                && ((COSObject) baseObject).isHeaderFormatComplyPDFA()
-                && ((COSObject) baseObject).isHeaderOfObjectComplyPDFA();
+        return Boolean.valueOf(((COSObject) baseObject).isEndOfObjectComplyPDFA().booleanValue()
+                && ((COSObject) baseObject).isHeaderFormatComplyPDFA().booleanValue()
+                && ((COSObject) baseObject).isHeaderOfObjectComplyPDFA().booleanValue());
     }
 }

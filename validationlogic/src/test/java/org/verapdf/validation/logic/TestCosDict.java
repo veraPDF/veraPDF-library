@@ -32,7 +32,7 @@ public class TestCosDict implements CosDict {
 
     @Override
     public Long getsize() {
-        return size;
+        return Long.valueOf(size);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class TestCosDict implements CosDict {
 
     @Override
 	public Boolean isContextDependent(){
-        return false;
+        return Boolean.FALSE;
     }
 
     @Override

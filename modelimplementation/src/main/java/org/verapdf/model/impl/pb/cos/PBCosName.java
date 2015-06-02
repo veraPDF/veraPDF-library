@@ -30,6 +30,6 @@ public class PBCosName extends PBCosObject implements CosName {
      */
     @Override
     public Long getorigLength() {
-        return (long) ((COSName) baseObject).getOriginalLength();
+        return Long.valueOf(((COSName) baseObject).getOriginalLength().intValue());
     }
 }

@@ -29,7 +29,7 @@ public class PBCosString extends PBCosObject implements CosString {
      */
     @Override
     public Boolean getisHex() {
-        return ((COSString) baseObject).isHex() != null;
+        return Boolean.valueOf(((COSString) baseObject).isHex() != null);
     }
 
     /** true if all symbols below range 0-9,a-f,A-F
@@ -38,10 +38,10 @@ public class PBCosString extends PBCosObject implements CosString {
 	public Boolean getisHexSymbols() {
         for (byte symbol : ((COSString) baseObject).getBytes()) {
             if (Character.digit(symbol, 16) == -1) {
-                return false;
+                return Boolean.FALSE;
             }
         }
-        return true;
+        return Boolean.TRUE;
     }
 
     /** Get original string value of the string before applying Hex decoding

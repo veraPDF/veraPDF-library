@@ -18,7 +18,7 @@ public class TestObject implements Object {
 
     @Override
 	public Boolean isContextDependent(){
-        return false;
+        return Boolean.FALSE;
     }
 
     public TestObject(String id, List<CosDict> cosDicts, List<PDAnnot> pdAnnots) {

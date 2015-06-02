@@ -23,7 +23,7 @@ public class TestPDAnnot implements PDAnnot {
 
     @Override
 	public Boolean isContextDependent(){
-        return false;
+        return Boolean.FALSE;
     }
 
     @Override

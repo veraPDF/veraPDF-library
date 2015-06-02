@@ -120,7 +120,7 @@ public class Validator {
 
         if (obj.getID() == null){
             return true;
-        } else if (obj.isContextDependent() == null || obj.isContextDependent()){
+        } else if (obj.isContextDependent() == null || obj.isContextDependent().booleanValue()){
             return !checkIDContext.contains(obj.getID());
         } else {
             return !idSet.contains(obj.getID());
@@ -176,7 +176,7 @@ public class Validator {
 
         Check check;
 
-        if(res) {
+        if(res.booleanValue()) {
             check = new Check("passed", loc, null, false);
         } else {
             List<String> args = new ArrayList<>();
@@ -199,7 +199,7 @@ public class Validator {
 
         Context.exit();
 
-        return res;
+        return res.booleanValue();
     }
 
     /**

@@ -30,7 +30,7 @@ public class TestCosInteger implements CosInteger {
 
     @Override
     public Long getintValue() {
-        return value;
+        return Long.valueOf(value);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class TestCosInteger implements CosInteger {
 
     @Override
 	public Boolean isContextDependent(){
-        return false;
+        return Boolean.FALSE;
     }
 
     @Override

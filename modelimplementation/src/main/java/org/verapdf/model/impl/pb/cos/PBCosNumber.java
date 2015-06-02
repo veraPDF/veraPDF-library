@@ -32,7 +32,7 @@ public abstract class PBCosNumber extends PBCosObject implements CosNumber {
      */
     @Override
     public Long getintValue() {
-        return ((COSNumber) baseObject).longValue();
+        return Long.valueOf(((COSNumber) baseObject).longValue());
     }
 
     /** Get original decimal value
