@@ -43,7 +43,7 @@ public class TestObject implements Object {
         else if (s.equals("PDAnnot"))
             return pdAnnots;
         else
-            return new ArrayList<Object>();
+            return new ArrayList<>();
     }
 
     @Override
