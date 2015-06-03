@@ -1,12 +1,10 @@
 package org.verapdf.model.impl.pb.cos;
 
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSDictionary;
-import org.apache.pdfbox.cos.COSDocument;
-import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDocument;
+import org.verapdf.model.coslayer.CosFileSpecification;
 import org.verapdf.model.coslayer.CosIndirect;
 import org.verapdf.model.coslayer.CosTrailer;
 
@@ -27,8 +25,9 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     public final static String XREF = "xref";
     public final static String INDIRECT_OBJECTS = "indirectObjects";
     public final static String DOCUMENT = "document";
+    public final static String EMBEDDED_FILES = "EmbeddedFiles";
 
-    private Integer sizeOfDocument = -1;
+    private Long sizeOfDocument = new Long(-1);
 
     public PBCosDocument(COSDocument baseObject) {
         super(baseObject);
@@ -39,14 +38,14 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     @Override
     public Long getnrIndirects() {
-        return (long) ((COSDocument) baseObject).getObjects().size();
+        return Long.valueOf(((COSDocument) baseObject).getObjects().size());
     }
 
     /**  Size of the byte sequence representing the document
      */
     @Override
     public Long getsize() {
-        return Long.valueOf(sizeOfDocument);
+        return sizeOfDocument;
     }
 
     /**  true if the second line of the document is a comment with at least 4 symbols in the code range 128-255 as required by PDF/A standard
@@ -54,16 +53,16 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     @Override
     public Boolean getbinaryHeaderComplyPDFA() {
 
-        return !(((COSDocument) baseObject).getNonValidCommentContent() ||
-                ((COSDocument) baseObject).getNonValidCommentLength() ||
-                ((COSDocument) baseObject).getNonValidCommentStart());
+        return Boolean.valueOf(!(((COSDocument) baseObject).getNonValidCommentContent().booleanValue() ||
+                ((COSDocument) baseObject).getNonValidCommentLength().booleanValue() ||
+                ((COSDocument) baseObject).getNonValidCommentStart().booleanValue()));
     }
 
     /** true if first line of document complies PDF/A standard
      */
     @Override
     public Boolean getpdfHeaderCompliesPDFA() {
-        return !((COSDocument) baseObject).getNonValidHeader();
+        return Boolean.valueOf(!((COSDocument) baseObject).getNonValidHeader().booleanValue());
     }
 
     /** true if catalog contain OCProperties key
@@ -72,15 +71,16 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     public Boolean getisOptionalContentPresent() {
         try {
             COSDictionary root = (COSDictionary) ((COSDocument) baseObject).getCatalog().getObject();
-            return root.getItem(COSName.OCPROPERTIES) != null;
+            return Boolean.valueOf(root.getItem(COSName.OCPROPERTIES) != null);
         } catch (IOException e) {
-            return false;
+            return Boolean.FALSE;
         }
     }
 
     /** EOF must complies PDF/A standard
      */
-    public Boolean geteofCompliesPDFA() {
+    @Override
+	public Boolean geteofCompliesPDFA() {
         return ((COSDocument) baseObject).getEofComplyPDFA();
     }
 
@@ -88,8 +88,9 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      * @return true if XMP content matches Info dictionary content
      */
     // TODO : implement this
-    public Boolean getdoesInfoMatchXMP() {
-        return false;
+    @Override
+	public Boolean getdoesInfoMatchXMP() {
+        return Boolean.FALSE;
     }
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
@@ -108,11 +109,19 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
             case XREF:
                 list = this.getXRef();
                 break;
+            case EMBEDDED_FILES:
+                list = this.getEmbeddedFiles();
+                break;
             default:
                 list = super.getLinkedObjects(link);
         }
 
         return list;
+    }
+
+    // TODO : implement this
+    private List<CosFileSpecification> getEmbeddedFiles() {
+        return new ArrayList<>();
     }
 
     /**  trailer dictionary

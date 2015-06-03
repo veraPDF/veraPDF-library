@@ -43,15 +43,15 @@ public class VeraPdfCli {
 
     /**
      * Creates instance of VeraPdfTaskConfig from parsed cli options
-     * @param commandVeraPDF options used by VeraPDF software
+     * @param cmdVeraPDF options used by VeraPDF software
      * @return an immutable VeraPdfTaskConfig object populated from the parsed options
      */
-    private static VeraPdfTaskConfig createConfigFromCliOptions(final CommandVeraPDF commandVeraPDF) {
+    private static VeraPdfTaskConfig createConfigFromCliOptions(final CommandVeraPDF cmdVeraPDF) {
         VeraPdfTaskConfig.Builder configBuilder = new VeraPdfTaskConfig.Builder();
-        configBuilder.input(new Input(commandVeraPDF.getInputPath(), commandVeraPDF.isInputPathURL()))
-                     .profile(commandVeraPDF.getProfile())
-                     .validate(commandVeraPDF.isValidate())
-                     .output(commandVeraPDF.getOutput());
+        configBuilder.input(new Input(cmdVeraPDF.getInputPath(), cmdVeraPDF.isInputPathURL()))
+                     .profile(cmdVeraPDF.getProfile())
+                     .validate(cmdVeraPDF.isValidate())
+                     .output(cmdVeraPDF.getOutput());
         return configBuilder.build();
     }
 

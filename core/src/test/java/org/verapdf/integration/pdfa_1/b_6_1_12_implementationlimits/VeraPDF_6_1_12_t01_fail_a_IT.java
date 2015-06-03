@@ -11,7 +11,7 @@ public class VeraPDF_6_1_12_t01_fail_a_IT extends BasePDFAIT {
 
     @Test
     public void testValidation() throws Exception {
-        Assert.assertTrue(testValidationSuccessful());
+        Assert.assertTrue(testValidationSuccessful().booleanValue());
     }
 
     @Override

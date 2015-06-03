@@ -31,7 +31,7 @@ public class ValidationProfileParserTest {
         assertEquals(rule1.getFix().size(), 0);
         assertEquals(rule1.getDescription(), "STR_ID_401");
         assertEquals(rule1.getTest(), "fileHeaderOffset == 0");
-        assertEquals(rule1.isHasError(), true);
+        assertTrue(rule1.isHasError());
         assertEquals(rule1.getRuleError().getMessage(), "STR_ID_402");
         assertEquals(rule1.getRuleError().getArgument().size(), 1);
         assertEquals(rule1.getRuleError().getArgument().get(0), "fileHeaderOffset");
@@ -43,7 +43,7 @@ public class ValidationProfileParserTest {
         assertEquals(rule53.getAttrObject(), "PDMetadata");
         assertEquals(rule53.getDescription(), "STR_ID_608");
         assertEquals(rule53.getTest(), "isInfoDictConsistent");
-        assertEquals(rule53.isHasError(), false);
+        assertFalse(rule53.isHasError());
         assertEquals(rule53.getRuleError().getMessage(), "STR_ID_609");
         assertEquals(rule53.getRuleError().getArgument().size(), 0);
         assertEquals(rule53.getReference().getSpecification(), "ISO19005-1");
@@ -56,7 +56,7 @@ public class ValidationProfileParserTest {
         Rule rule35 = prof.getRuleById("rule35");
 
         assertEquals(rule35.getAttrObject(), "PDXObject");
-        assertEquals(rule35.isHasError(), false);
+        assertFalse(rule35.isHasError());
         assertNull(rule35.getDescription());
         assertNull(rule35.getTest());
         assertNull(rule35.getRuleError());
