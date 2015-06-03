@@ -61,7 +61,7 @@ public final class VeraPdfTaskConfig {
     public String getOutput() {
         return output;
     }
-
+    @SuppressWarnings("hiding")
     public static class Builder {
 
         private boolean validate;

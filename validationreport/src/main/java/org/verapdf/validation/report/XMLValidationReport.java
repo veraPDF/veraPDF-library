@@ -8,12 +8,13 @@ import javax.xml.transform.stream.*;
 import org.verapdf.validation.report.model.Check;
 import org.verapdf.validation.report.model.Rule;
 import org.w3c.dom.*;
-
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.util.List;
 
 
 /**
@@ -118,14 +119,15 @@ public final class XMLValidationReport {
                     Element error = doc.createElement(errorName);
 
                     Element message = doc.createElement("message");
-                    message.appendChild(doc.createTextNode(che.getError().getMessage()));
+//                    message.appendChild(doc.createTextNode(che.getError().getMessage()));
+                    message.appendChild(doc.createTextNode(getFormattedMessage(che.getError().getMessage(), che.getError().getArgument())));
                     error.appendChild(message);
 
-                    for(String attr : che.getError().getArgument()){
-                        Element argument = doc.createElement("argument");
-                        argument.appendChild(doc.createTextNode(attr));
-                        error.appendChild(argument);
-                    }
+//                    for(String attr : che.getError().getArgument()){
+//                        Element argument = doc.createElement("argument");
+//                        argument.appendChild(doc.createTextNode(attr));
+//                        error.appendChild(argument);
+//                    }
 
                     check.appendChild(error);
                 }
@@ -135,6 +137,25 @@ public final class XMLValidationReport {
 
             rules.appendChild(rule);
         }
+    }
+
+    private static String getFormattedMessage(String message, List<String> arguments){
+        StringBuffer buffer = new StringBuffer(message);
+
+        for (int i = 0; i < buffer.length(); ++i){
+            if (buffer.charAt(i) == '%'){
+                if (Character.isDigit(buffer.charAt(++i)) && buffer.charAt(i) != '0'){
+                    if (!Character.isDigit(buffer.charAt(i+1))){
+                        int argumentNumber = Character.getNumericValue(buffer.charAt(i)) - 1;
+                        String argumentValue = arguments.get(argumentNumber);
+                        buffer.replace(i-1,i+1, argumentValue);
+                        i += argumentValue.length() - 2;
+                    }
+                }
+            }
+        }
+
+        return buffer.toString();
     }
 
     /**
@@ -158,7 +179,12 @@ public final class XMLValidationReport {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.transform(new DOMSource(doc), new StreamResult(new FileOutputStream(path)));
+        try (FileOutputStream fos = new FileOutputStream(path)) {
+            transformer.transform(new DOMSource(doc), new StreamResult(fos));
+        } catch (IOException excep) {
+        	// TODO: Review this exception handling
+			// Thrown on failure to close fos so do nothing
+		}
     }
 
     /**

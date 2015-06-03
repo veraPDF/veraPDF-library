@@ -16,8 +16,9 @@ public class TestObject implements Object {
     private List<CosDict> cosDicts;
     private List<PDAnnot> pdAnnots;
 
-    public Boolean isContextDependent(){
-        return false;
+    @Override
+	public Boolean isContextDependent(){
+        return Boolean.FALSE;
     }
 
     public TestObject(String id, List<CosDict> cosDicts, List<PDAnnot> pdAnnots) {
@@ -42,7 +43,7 @@ public class TestObject implements Object {
         else if (s.equals("PDAnnot"))
             return pdAnnots;
         else
-            return new ArrayList<Object>();
+            return new ArrayList<>();
     }
 
     @Override

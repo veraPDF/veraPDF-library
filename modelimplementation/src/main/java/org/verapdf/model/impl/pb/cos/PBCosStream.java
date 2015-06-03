@@ -20,7 +20,7 @@ public class PBCosStream extends PBCosDict implements CosStream {
     @Override
     public Long getLength() {
         COSNumber number = (COSNumber) ((COSStream) this.baseObject).getItem(COSName.LENGTH);
-        return number != null ? number.longValue() : null;
+        return number != null ? Long.valueOf(number.longValue()) : null;
     }
 
     /**  concatenated (white space separated) names of all filters
@@ -85,8 +85,8 @@ public class PBCosStream extends PBCosDict implements CosStream {
      */
     @Override
     public Boolean getspacingCompliesPDFA() {
-        return ((COSStream) baseObject).getEndStreamSpacingsComplyPDFA() == null &&
-                ((COSStream) baseObject).getStreamSpacingsComplyPDFA() == null;
+        return Boolean.valueOf(((COSStream) baseObject).getEndStreamSpacingsComplyPDFA() == null &&
+                ((COSStream) baseObject).getStreamSpacingsComplyPDFA() == null);
     }
 
     /** true if the value of Length key matches the actual length of the stream
@@ -95,6 +95,6 @@ public class PBCosStream extends PBCosDict implements CosStream {
     public Boolean getisLengthCorrect() {
         Long keyValue = getLength();
         Long realValue = ((COSStream) baseObject).getOriginLength();
-        return keyValue != null && keyValue.equals(realValue);
+        return Boolean.valueOf(keyValue != null && keyValue.equals(realValue));
     }
 }

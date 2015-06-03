@@ -48,9 +48,13 @@ public class Validator {
         objectsQueue = new LinkedList<>();
         objectsContext = new LinkedList<>();
         contextSet = new LinkedList<>();
-        checkMap = new HashMap<>();
         warnings = new ArrayList<>();
         idSet = new HashSet<>();
+        checkMap = new HashMap<>();
+
+        for(String id: profile.getAllRulesId()){
+            checkMap.put(id, new ArrayList<Check>());
+        }
 
         rootType = root.getType();
 
@@ -120,7 +124,7 @@ public class Validator {
 
         if (obj.getID() == null){
             return true;
-        } else if (obj.isContextDependent() == null || obj.isContextDependent()){
+        } else if (obj.isContextDependent() == null || obj.isContextDependent().booleanValue()){
             return !checkIDContext.contains(obj.getID());
         } else {
             return !idSet.contains(obj.getID());
@@ -176,7 +180,7 @@ public class Validator {
 
         Check check;
 
-        if(res) {
+        if(res.booleanValue()) {
             check = new Check("passed", loc, null, false);
         } else {
             List<String> args = new ArrayList<>();
@@ -191,15 +195,11 @@ public class Validator {
             check = new Check("failed", loc, error, rule.isHasError());
         }
 
-        if(checkMap.get(rule.getAttrID()) == null){
-            checkMap.put(rule.getAttrID(), new ArrayList<Check>());
-        }
-
         checkMap.get(rule.getAttrID()).add(check);
 
         Context.exit();
 
-        return res;
+        return res.booleanValue();
     }
 
     /**

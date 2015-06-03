@@ -13,3 +13,8 @@ hs_err_pid*
 **/target/**
 /.idea/**
 *.iml
+
+# Eclipse artefacts
+**/.project
+**/.settings
+**/.classpath

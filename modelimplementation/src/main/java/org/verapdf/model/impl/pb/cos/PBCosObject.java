@@ -56,9 +56,8 @@ public class PBCosObject extends GenericModelObject implements CosObject {
             PBCosVisitor visitor = PBCosVisitor.getInstance();
             if (base instanceof COSObject) {
                 return (CosObject) visitor.visitFromObject((COSObject) base);
-            } else {
-                return (CosObject) base.accept(visitor);
             }
+			return (CosObject) base.accept(visitor);
         } catch (IOException ignore) {
             return null;
         }

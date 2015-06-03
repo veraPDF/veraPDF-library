@@ -1,6 +1,5 @@
 package org.verapdf.model.impl.pb.cos;
 
-import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSString;
 import org.verapdf.model.coslayer.CosString;
 
@@ -18,8 +17,9 @@ public class PBCosString extends PBCosObject implements CosString {
         setType("CosString");
     }
 
-    /** Get Unicode string value stored in the PDF object
-     */
+	/**
+	 * Get Unicode string value stored in the PDF object
+	 */
     @Override
     public String getvalue() {
         return ((COSString) baseObject).getString();
@@ -29,18 +29,19 @@ public class PBCosString extends PBCosObject implements CosString {
      */
     @Override
     public Boolean getisHex() {
-        return ((COSString) baseObject).isHex() != null;
+        return Boolean.valueOf(((COSString) baseObject).isHex() != null);
     }
 
     /** true if all symbols below range 0-9,a-f,A-F
      */
-    public Boolean getisHexSymbols() {
+    @Override
+	public Boolean getisHexSymbols() {
         for (byte symbol : ((COSString) baseObject).getBytes()) {
             if (Character.digit(symbol, 16) == -1) {
-                return false;
+                return Boolean.FALSE;
             }
         }
-        return true;
+        return Boolean.TRUE;
     }
 
     /** Get original string value of the string before applying Hex decoding

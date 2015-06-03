@@ -38,7 +38,7 @@ public final class ValidationProfileParser {
 
         Document doc = builder.parse(resource);
 
-        profilesPaths = new HashSet<String>();
+        profilesPaths = new HashSet<>();
         profilesPaths.add(resourceFile.getCanonicalPath());
         Node root = doc.getDocumentElement();
         root.normalize();
@@ -142,7 +142,7 @@ public final class ValidationProfileParser {
                 Rule rule = parseRule(child);
 
                 if (rulesMap.get(rule.getAttrObject()) == null) {
-                    List<Rule> newRules = new ArrayList<Rule>();
+                    List<Rule> newRules = new ArrayList<>();
                     rulesMap.put(rule.getAttrObject(), newRules);
                 }
 
@@ -207,7 +207,7 @@ public final class ValidationProfileParser {
 
     private RuleError parseRuleError(Node err){
         String message = null;
-        List<String> argument = new ArrayList<String>();
+        List<String> argument = new ArrayList<>();
 
         NodeList children = err.getChildNodes();
 

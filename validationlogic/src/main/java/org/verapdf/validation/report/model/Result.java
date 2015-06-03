@@ -48,7 +48,7 @@ public class Result {
         Summary newSummary = new Summary(passedRules, failedRules, passedChecks, failedChecks, completedMetadataFixes, failedMetadataFixes, warnings);
 
         this.compliant = compliantCheck;
-        this.statement = compliantCheck ? "Validation is successful! Everything is correct!" : "Validation failed. Something is wrong.";
+        this.statement = compliantCheck ? "PDF file is compliant with Validation Profile requirements" : "PDF file is not compliant with Validation Profile requirements";
         this.summary = newSummary;
         this.details = details;
     }
