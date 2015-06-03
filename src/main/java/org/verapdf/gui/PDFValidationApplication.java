@@ -1,21 +1,11 @@
 package org.verapdf.gui;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  * Main frame of the PDFA Conformance Checker
@@ -26,9 +16,8 @@ import java.net.URISyntaxException;
  */
 public class PDFValidationApplication extends JFrame {
 
-    private final String TITLE = "PDFA Conformance Checker";
+    private final String TITLE = "PDF/A Conformance Checker";
     private final static String LOGO_NAME = "veraPDF-logo-600.png";
-    private final static Color LOGO_BACKGROUND = Color.LIGHT_GRAY;
     private final static String LOGO_LINK_TEXT = "www.verapdf.org";
     private final static String LOGO_LINK_URL = "http://www.verapdf.org";
 
@@ -62,7 +51,7 @@ public class PDFValidationApplication extends JFrame {
     /**
      * Creates the frame.
      */
-    public PDFValidationApplication() {
+    public PDFValidationApplication(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 550, 350);
         setResizable(false);
@@ -83,7 +72,7 @@ public class PDFValidationApplication extends JFrame {
         about.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (aboutPanel != null) {
-                    aboutPanel.showDialog(PDFValidationApplication.this, "About");
+                    aboutPanel.showDialog(PDFValidationApplication.this, "About veraPDF");
                 }
             }
         });
@@ -97,14 +86,19 @@ public class PDFValidationApplication extends JFrame {
 
         MiniLogoPanel logoPanel = null;
         try {
-            logoPanel = new MiniLogoPanel(LOGO_NAME, LOGO_LINK_URL, LOGO_LINK_TEXT);
+            logoPanel = new MiniLogoPanel(LOGO_NAME);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(PDFValidationApplication.this, "Error in creating mini logo.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         contentPane.add(logoPanel);
 
-        CheckerPanel checkerPanel = new CheckerPanel();
+        CheckerPanel checkerPanel = null;
+        try {
+            checkerPanel = new CheckerPanel();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(PDFValidationApplication.this, "Error in loading xml and html images.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         contentPane.add(checkerPanel);
     }
 
