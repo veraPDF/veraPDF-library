@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<validationInfo>
+    <profile>
+        <name>Filter profile</name>
+        <hash>sha-1 hash code</hash>
+    </profile>
+    <result>
+        <compliant>false</compliant>
+        <statement>Validation failed. Something is wrong.</statement>
+        <summary completedMetadataFixes="0" failedChecks="1" failedMetadataFixes="0" failedRules="1" passedChecks="4"
+                 passedRules="0" warnings="0"/>
+        <details>
+            <rules>
+                <rule checks="5" id="6-1-10-t01" status="failed">
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[7]/directObject[0]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[2]/elements[0]/directObject[0]/values[5]/directObject[0]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[4]/elements[0]/directObject[0]/values[5]/directObject[0]</context>
+                        </location>
+                    </check>
+                    <check status="failed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/elements[0]/directObject[0]/values[4]/values[0]/values[0]/directObject[0]
+                            </context>
+                        </location>
+                        <error>
+                            <message>LZW compression is used</message>
+                            <argument>LZWDecode</argument>
+                        </error>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/elements[0]/directObject[0]/values[4]/values[0]/values[0]/directObject[0]/values[5]/elements[3]/directObject[0]
+                            </context>
+                        </location>
+                    </check>
+                </rule>
+            </rules>
+            <warnings/>
+        </details>
+    </result>
+</validationInfo>
