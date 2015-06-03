@@ -207,7 +207,9 @@ public class CheckerPanel extends JPanel {
                 int resultChoose = pdfChooser.showOpenDialog(CheckerPanel.this);
                 if (resultChoose == JFileChooser.APPROVE_OPTION) {
 
-                    if (!pdfChooser.getSelectedFile().getName().endsWith(".pdf")) {
+                    if (!pdfChooser.getSelectedFile().exists()) {
+                        JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file doesn't exist.", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else if (!pdfChooser.getSelectedFile().getName().endsWith(".pdf")) {
                         JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file is not in PDF format.", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
 
@@ -237,7 +239,9 @@ public class CheckerPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int resultChoose = xmlChooser.showOpenDialog(CheckerPanel.this);
                 if (resultChoose == JFileChooser.APPROVE_OPTION) {
-                    if (!xmlChooser.getSelectedFile().getName().endsWith(".xml")) {
+                    if (!xmlChooser.getSelectedFile().exists()){
+                        JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file doesn't exist.", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else if (!xmlChooser.getSelectedFile().getName().endsWith(".xml")) {
                         JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file is not in XML format.", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         profile = xmlChooser.getSelectedFile();
@@ -409,6 +413,11 @@ public class CheckerPanel extends JPanel {
             JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the HTML report.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+
+    public void errorInValidatingOccur(){
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        progressBar.setVisible(false);
     }
 
 }

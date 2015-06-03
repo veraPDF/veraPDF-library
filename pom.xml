@@ -92,10 +92,6 @@
         </resources>
     </build>
 
-    <properties>
-        <version>0.0.0</version>
-    </properties>
-
     <dependencies>
 
         <dependency>

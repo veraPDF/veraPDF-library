@@ -33,12 +33,14 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer>{
             cosDict = ModelLoader.getCatalog(pdf.getPath());
         } catch (Exception e1) {
             JOptionPane.showMessageDialog(parent, "Some error in parsing pdf.", "Error", JOptionPane.ERROR_MESSAGE);
+            parent.errorInValidatingOccur();
         }
 
         try {
             result = Validator.validate(cosDict, profile);
         } catch (Exception e1) {
             JOptionPane.showMessageDialog(parent, "Some error in validating.", "Error", JOptionPane.ERROR_MESSAGE);
+            parent.errorInValidatingOccur();
         }
 
         return result;
