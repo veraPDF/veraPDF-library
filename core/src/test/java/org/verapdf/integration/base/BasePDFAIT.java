@@ -19,8 +19,10 @@ import java.util.Scanner;
 public abstract class BasePDFAIT {
 
     protected final static String VERA_PDF_TEST_FILES_REPO_NAME = "/test-resources/veraPDF-corpus-PDFA-1b/";
+    protected final static String ISARTOR_TEST_FILES_REPO_NAME = "/test-resources/Isartor testsuite/";
+    protected final static String VERAPDF_EXPECTED_REPORTS_REPO_NAME = "/testfiles/reports/verapdf/";
+    protected final static String ISARTOR_EXPECTED_REPORTS_REPO_NAME = "/testfiles/reports/isartor/";
     protected final static String VALIDATION_PROFILES_REPO_NAME = "/test-resources/veraPDF-validation-profiles/";
-
 
     protected VeraPdfTaskConfig taskConfig;
 
