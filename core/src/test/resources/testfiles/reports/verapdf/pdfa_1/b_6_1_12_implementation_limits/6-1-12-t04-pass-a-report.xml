@@ -6,7 +6,7 @@
     </profile>
     <result>
         <compliant>true</compliant>
-        <statement>Validation is successful! Everything is correct!</statement>
+        <statement>PDF file is compliant with Validation Profile requirements</statement>
         <summary completedMetadataFixes="0" failedChecks="0" failedMetadataFixes="0" failedRules="0" passedChecks="102"
                  passedRules="1" warnings="0"/>
         <details>

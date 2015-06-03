@@ -6,7 +6,7 @@
     </profile>
     <result>
         <compliant>false</compliant>
-        <statement>Validation failed. Something is wrong.</statement>
+        <statement>PDF file is not compliant with Validation Profile requirements</statement>
         <summary completedMetadataFixes="0" failedChecks="1" failedMetadataFixes="0" failedRules="1" passedChecks="5"
                  passedRules="0" warnings="0"/>
         <details>
@@ -30,7 +30,6 @@
                         </location>
                         <error>
                             <message>LZW compression is used</message>
-                            <argument>LZWDecode</argument>
                         </error>
                     </check>
                     <check status="passed">
