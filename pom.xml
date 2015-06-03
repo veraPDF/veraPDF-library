@@ -44,12 +44,14 @@
         <system>OPF Jenkins</system>
         <url>http://jenkins.opf-labs.org</url>
     </ciManagement>
-    
+
     <developers>
         <developer>
             <email>carl@openpreservation.org</email>
             <name>Carl Wilson</name>
             <url>https://github.com/carlwilson</url>
+            <organization>Open Preservation Foundation</organization>
+            <organizationUrl>http://openpreservation.org</organizationUrl>
             <id>carlwilson</id>
         </developer>
     </developers>
@@ -114,8 +116,37 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.4</version>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+    <reporting>
+        <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.8</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>dependencies</report>
+              <report>project-team</report>
+              <report>mailing-list</report>
+              <report>cim</report>
+              <report>issue-tracking</report>
+              <report>license</report>
+              <report>scm</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+        </plugins>
+    </reporting>
 
     <profiles>
         <profile>
@@ -131,6 +162,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -237,6 +269,16 @@
                     </plugins>
                 </pluginManagement>
             </build>
+        </profile>
+        <profile>
+            <id>opf-jenkins-site</id>
+            <distributionManagement>
+                <site>
+                    <id>opf.jenkins.site</id>
+                    <name>OPF Labs Maven Local Website</name>
+                    <url>file:///var/www/projects.verapdf.org/${project.id}</url>
+                </site>
+            </distributionManagement>
         </profile>
     </profiles>
 
