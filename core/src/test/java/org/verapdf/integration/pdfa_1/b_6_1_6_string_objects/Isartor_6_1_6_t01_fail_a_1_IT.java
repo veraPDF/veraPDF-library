@@ -7,7 +7,7 @@ import org.verapdf.integration.base.BasePDFAIT;
 /**
  * String objects - invalid hex string
  */
-public class Isartor_6_1_6_t01_fail_a_IT extends BasePDFAIT {
+public class Isartor_6_1_6_t01_fail_a_1_IT extends BasePDFAIT {
 
     @Test
     public void testValidation() throws Exception {
@@ -16,7 +16,7 @@ public class Isartor_6_1_6_t01_fail_a_IT extends BasePDFAIT {
 
     @Override
     protected String getExpectedReportFilePath() throws Exception {
-        return getSystemIndependentPath(ISARTOR_EXPECTED_REPORTS_REPO_NAME + "pdfa_1/b_6_1_6_string_objects/6-1-6-t01-fail-a-report.xml");
+        return getSystemIndependentPath(ISARTOR_EXPECTED_REPORTS_REPO_NAME + "pdfa_1/b_6_1_6_string_objects/6-1-6-t01-fail-a-1-report.xml");
     }
 
     @Override
