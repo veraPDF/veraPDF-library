@@ -26,6 +26,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     public final static String INDIRECT_OBJECTS = "indirectObjects";
     public final static String DOCUMENT = "document";
     public final static String EMBEDDED_FILES = "EmbeddedFiles";
+    private final static String ID = "ID";
 
     private Long sizeOfDocument = new Long(-1);
 
@@ -82,6 +83,42 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     @Override
 	public Boolean geteofCompliesPDFA() {
         return ((COSDocument) baseObject).getEofComplyPDFA();
+    }
+
+    /**
+     * @return ID of first page trailer
+     */
+    public String getfirstPageID() {
+        return getTrailerID((COSArray) ((COSDocument) baseObject).getTrailer().getItem(ID));
+    }
+
+    /**
+     * @return ID of last document trailer
+     */
+    public String getlastID() {
+        return getTrailerID((COSArray) ((COSDocument) baseObject).getLastTrailer()
+                .getItem(ID));
+    }
+
+    private String getTrailerID(COSArray ids) {
+        StringBuilder builder = new StringBuilder();
+        for (COSBase id : ids) {
+            builder.append(((COSString) id).getASCII()).append(' ');
+        }
+        // need to discard last whitespace
+        return builder.toString().substring(0, builder.length() - 2);
+    }
+
+    /**
+     * @return true if the current document is linearized
+     */
+    // TODO : need to support of this feature
+    public Boolean getisLinearized() {
+        if (((COSDocument) baseObject).getTrailer() == ((COSDocument) baseObject).getLastTrailer()) {
+            return false;
+        }
+        
+        return Boolean.FALSE;
     }
 
     /**
