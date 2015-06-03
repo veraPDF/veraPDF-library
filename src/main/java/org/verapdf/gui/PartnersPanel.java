@@ -3,16 +3,13 @@ package org.verapdf.gui;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.Properties;
 
 /**
  * Panel with partners logo
@@ -24,12 +21,15 @@ import java.net.URISyntaxException;
 public class PartnersPanel extends JPanel {
 
     private final static String CONSORTIUM_TEXT = "© 2015 veraPDF Consortium";
+    private final static String PROPERTIES_NAME = "config.properties";
+    private String versionText;
 
     private final BufferedImage partnersLogo;
     private final int BORDER_WIDTH = 5;
     private Color background;
     private double SCALE = 0.5;
     private JLabel consortium;
+    private JLabel version;
 
     @Override
     public void paint(Graphics g) {
@@ -46,6 +46,7 @@ public class PartnersPanel extends JPanel {
 
         g.drawImage(partnersLogo, imageStartX, imageStartY, imageStartX + imageWidth, imageStartY + imageHeight, 0, 0, partnersLogo.getWidth(), partnersLogo.getHeight(), this);
 
+        version.setLocation((getWidth() - version.getWidth()) / 2, getHeight() - version.getHeight() - 3);
     }
 
     /**
@@ -63,15 +64,30 @@ public class PartnersPanel extends JPanel {
         consortium = new JLabel(CONSORTIUM_TEXT);
 
         consortium.setHorizontalTextPosition(JLabel.CENTER);
-        consortium.setFont(new Font(consortium.getFont().getName(), consortium.getFont().getStyle(), (int) (consortium.getFont().getSize()*1.3)));
+        consortium.setFont(new Font(consortium.getFont().getName(), consortium.getFont().getStyle(), (int) (consortium.getFont().getSize() * 1.3)));
         Rectangle2D rec = new TextLayout(CONSORTIUM_TEXT, consortium.getFont(), new FontRenderContext(null, true, true)).getBounds();
         consortium.setSize((int) (rec.getWidth()) + 7, (int) (rec.getHeight() + 4));
 
         add(consortium);
 
+        Properties properties = new Properties();
+        properties.load(getClass().getClassLoader().getResourceAsStream(PROPERTIES_NAME));
+
+        versionText = "Version: " + properties.getProperty("application.version");
+
+        version = new JLabel(versionText);
+
+        version.setHorizontalTextPosition(JLabel.CENTER);
+        //version.setFont(new Font(version.getFont().getName(), version.getFont().getStyle(), (int) (version.getFont().getSize()*1.3)));
+        Rectangle2D recVer = new TextLayout(versionText, version.getFont(), new FontRenderContext(null, true, true)).getBounds();
+        version.setSize((int) (recVer.getWidth()) + 7, (int) (recVer.getHeight() + 4));
+
+        add(version);
+
+
         setBackground(backgroundColor);
 
-        int height = (int) (partnersLogo.getHeight()*SCALE + consortium.getHeight()*2);
+        int height = (int) (partnersLogo.getHeight()*SCALE + consortium.getHeight()*2 + version.getHeight()*2);
         setPreferredSize(new Dimension(450, height + BORDER_WIDTH*2));
     }
 
