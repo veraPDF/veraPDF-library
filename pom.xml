@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>oss-parent</artifactId>
         <groupId>org.sonatype.oss</groupId>
@@ -13,27 +12,47 @@
     <artifactId>verapdf-library</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>VeraPDF Library</name>
+    <name>veraPDF PDF/A Validation Library</name>
+    <description>veraPDF PDF/A Validation API and library.</description>
+    <url>https://github.com/veraPDF/veraPDF-library/</url>
 
-    <modules>
-        <module>validationprofileparser</module>
-        <module>validationlogic</module>
-        <module>validationreport</module>
-        <module>modelimplementation</module>
-        <module>core</module>
-        <module>cli</module>
-    </modules>
+    <licenses>
+        <license>
+            <name>GNU General Public License, version 3 (GPL-3.0)</name>
+            <url>http://opensource.org/licenses/GPL-3.0</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>Mozilla Public License 2.0 (MPL-2.0)</name>
+            <url>http://opensource.org/licenses/MPL-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-    <packaging>pom</packaging>
+    <scm>
+        <url>https://github.com/veraPDF/veraPDF-library/</url>
+        <connection>scm:git:https://github.com/veraPDF/veraPDF-library.git</connection>
+        <developerConnection>scm:git:git@github.com:veraPDF/veraPDF-library.git</developerConnection>
+    </scm>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.7</java.version>
-        <guava.version>18.0</guava.version>
-        <maven.failsafe.version>2.18.1</maven.failsafe.version>
-        <maven.surefire.version>2.18.1</maven.surefire.version>
-        <maven.exec.version>1.4.0</maven.exec.version>
-    </properties>
+    <issueManagement>
+        <url>https://github.com/veraPDF/veraPDF-library/issues/</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+
+    <ciManagement>
+        <system>OPF Jenkins</system>
+        <url>http://jenkins.opf-labs.org</url>
+    </ciManagement>
+    
+    <developers>
+        <developer>
+            <email>carl@openpreservation.org</email>
+            <name>Carl Wilson</name>
+            <url>https://github.com/carlwilson</url>
+            <id>carlwilson</id>
+        </developer>
+    </developers>
 
     <distributionManagement>
         <snapshotRepository>
@@ -46,9 +65,24 @@
         </repository>
     </distributionManagement>
 
-    <scm>
-        <connection>scm:git:https://github.com/veraPDF/veraPDF-library.git</connection>
-    </scm>
+    <packaging>pom</packaging>
+    <modules>
+        <module>validationprofileparser</module>
+        <module>validationlogic</module>
+        <module>validationreport</module>
+        <module>modelimplementation</module>
+        <module>core</module>
+        <module>cli</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.7</java.version>
+        <guava.version>18.0</guava.version>
+        <maven.failsafe.version>2.18.1</maven.failsafe.version>
+        <maven.surefire.version>2.18.1</maven.surefire.version>
+        <maven.exec.version>1.4.0</maven.exec.version>
+    </properties>
 
     <build>
         <plugins>
