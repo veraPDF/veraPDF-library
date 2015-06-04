@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <validationInfo>
     <profile>
-        <name>Filter profile</name>
+        <name>ISO 19005-1:2005 - 6.1.10 Filters - LZW</name>
         <hash>sha-1 hash code</hash>
     </profile>
     <result>

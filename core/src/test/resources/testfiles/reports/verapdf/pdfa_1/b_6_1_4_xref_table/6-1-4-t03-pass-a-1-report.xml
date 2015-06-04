@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <validationInfo>
     <profile>
-        <name>ISO 19005-1:2005 - 6.1.2 File header - Binary comment</name>
+        <name>ISO 19005-1:2005 - 6.1.4 Cross reference table - Spacings of subsection headers</name>
         <hash>sha-1 hash code</hash>
     </profile>
     <result>
@@ -11,7 +11,7 @@
                  passedRules="1" warnings="0"/>
         <details>
             <rules>
-                <rule checks="0" id="6-1-2-t02" status="passed"/>
+                <rule checks="0" id="6-1-4-t01" status="passed"/>
             </rules>
             <warnings/>
         </details>

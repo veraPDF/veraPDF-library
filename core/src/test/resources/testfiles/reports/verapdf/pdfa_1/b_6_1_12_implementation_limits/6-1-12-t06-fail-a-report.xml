@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <validationInfo>
     <profile>
-        <name>Implementation limits profile</name>
+        <name>ISO 19005-1:2005 - 6.1.12 Implementation limits - Dictionary</name>
         <hash>sha-1 hash code</hash>
     </profile>
     <result>
@@ -114,7 +114,7 @@
                             </context>
                         </location>
                         <error>
-                            <message>Dictionary contains more than 4095 elements</message>
+                            <message>Maximum capacity of a dictionary (4095) exceeded</message>
                         </error>
                     </check>
                     <check status="passed">

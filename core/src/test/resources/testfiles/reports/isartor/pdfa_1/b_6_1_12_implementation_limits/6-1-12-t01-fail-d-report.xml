@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <validationInfo>
     <profile>
-        <name>Implementation limits profile</name>
+        <name>ISO 19005-1:2005 - 6.1.12 Implementation limits - Integer</name>
         <hash>sha-1 hash code</hash>
     </profile>
     <result>
@@ -11,7 +11,7 @@
                  passedRules="0" warnings="0"/>
         <details>
             <rules>
-                <rule checks="15" id="6-1-12-t01-a" status="failed">
+                <rule checks="15" id="6-1-12-t01" status="failed">
                     <check status="passed">
                         <location level="CosDict">
                             <context>root/values[1]/directObject[0]/values[1]</context>

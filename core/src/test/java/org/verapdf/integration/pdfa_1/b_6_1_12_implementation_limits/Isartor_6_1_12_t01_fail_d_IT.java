@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.verapdf.integration.base.BasePDFAIT;
 
 /**
- * Implementation limits - Name length
+ * Implementation limits - Integer value
  */
 public class Isartor_6_1_12_t01_fail_d_IT extends BasePDFAIT {
 
@@ -21,7 +21,7 @@ public class Isartor_6_1_12_t01_fail_d_IT extends BasePDFAIT {
 
     @Override
     protected String getValidationProfileFilePath() throws Exception {
-        return getSystemIndependentPath(VALIDATION_PROFILES_REPO_NAME + "PDF_A/1b/6.1 File structure/6.1.12 Implementation limits/verapdf-profile-6-1-12-t01-a.xml");
+        return getSystemIndependentPath(VALIDATION_PROFILES_REPO_NAME + "PDF_A/1b/6.1 File structure/6.1.12 Implementation limits/verapdf-profile-6-1-12-t01.xml");
     }
 
     @Override
