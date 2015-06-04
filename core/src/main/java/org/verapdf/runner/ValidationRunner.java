@@ -2,7 +2,9 @@ package org.verapdf.runner;
 
 import org.verapdf.config.VeraPdfTaskConfig;
 import org.verapdf.model.ModelLoader;
+import org.verapdf.model.baselayer.*;
 import org.verapdf.model.coslayer.CosDict;
+import org.verapdf.model.coslayer.CosDocument;
 import org.verapdf.validation.logic.Validator;
 import org.verapdf.validation.report.model.ValidationInfo;
 import org.xml.sax.SAXException;
@@ -20,8 +22,8 @@ public class ValidationRunner {
      */
     public static ValidationInfo runValidation(VeraPdfTaskConfig config) {
         try {
-            CosDict cosDict = ModelLoader.getCatalog(config.getInput().getPath());
-            return Validator.validate(cosDict, config.getProfile());
+            org.verapdf.model.baselayer.Object root = ModelLoader.getRoot(config.getInput().getPath());
+            return Validator.validate(root, config.getProfile());
             //TODO: think what to do with errors
         } catch (FileNotFoundException e) {
             //wrong path to pdf file
