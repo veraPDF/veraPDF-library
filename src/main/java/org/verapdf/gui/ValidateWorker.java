@@ -1,6 +1,7 @@
 package org.verapdf.gui;
 
 import org.verapdf.model.ModelLoader;
+import org.verapdf.model.baselayer.*;
 import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.validation.logic.Validator;
 import org.verapdf.validation.report.model.ValidationInfo;
@@ -27,17 +28,17 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer>{
     @Override
     protected ValidationInfo doInBackground() throws Exception {
         ValidationInfo result = null;
-        CosDict cosDict = null;
+        org.verapdf.model.baselayer.Object root = null;
 
         try {
-            cosDict = ModelLoader.getCatalog(pdf.getPath());
+            root = ModelLoader.getRoot(pdf.getPath());
         } catch (Exception e1) {
             JOptionPane.showMessageDialog(parent, "Some error in parsing pdf.", "Error", JOptionPane.ERROR_MESSAGE);
             parent.errorInValidatingOccur();
         }
 
         try {
-            result = Validator.validate(cosDict, profile);
+            result = Validator.validate(root, profile);
         } catch (Exception e1) {
             JOptionPane.showMessageDialog(parent, "Some error in validating.", "Error", JOptionPane.ERROR_MESSAGE);
             parent.errorInValidatingOccur();
