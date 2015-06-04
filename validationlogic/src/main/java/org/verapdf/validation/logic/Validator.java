@@ -152,6 +152,18 @@ public class Validator {
 
     private String getScript(Object obj, org.verapdf.validation.profile.model.Rule rule){
         StringBuffer buffer = new StringBuffer();
+
+        buffer.append(getScriptPrefix(obj));
+        buffer.append("(");
+        buffer.append(rule.getTest());
+        buffer.append(")==true");
+        buffer.append(getScriptSuffix());
+        return buffer.toString();
+    }
+
+    private String getScriptPrefix(Object obj){
+        StringBuffer buffer = new StringBuffer();
+
         for (String prop : obj.getProperties()){
             buffer.append("var " + prop + " = obj.get" + prop + "();\n");
         }
@@ -162,9 +174,12 @@ public class Validator {
         }
 
         buffer.append("function test(){return ");
-        buffer.append(rule.getTest());
-        buffer.append(";}\ntest();");
+
         return buffer.toString();
+    }
+
+    private String getScriptSuffix(){
+        return ";}\ntest();";
     }
 
 
@@ -186,8 +201,18 @@ public class Validator {
             List<String> args = new ArrayList<>();
 
             for(String arg : rule.getRuleError().getArgument()){
-                NativeJavaObject resArg = (NativeJavaObject) cx.evaluateString(scope, "obj.get"+arg+"()", null, 0, null);
-                args.add(resArg.unwrap().toString());
+                String argScript = getScriptPrefix(obj) + arg + getScriptSuffix();
+                java.lang.Object resArg = cx.evaluateString(scope, argScript, null, 0, null);
+
+                String resStringArg;
+
+                if (resArg instanceof NativeJavaObject){
+                    resStringArg = ((NativeJavaObject) resArg).unwrap().toString();
+                } else {
+                    resStringArg = resArg.toString();
+                }
+
+                args.add(resStringArg);
             }
 
             CheckError error = new CheckError(rule.getRuleError().getMessage(), args);
