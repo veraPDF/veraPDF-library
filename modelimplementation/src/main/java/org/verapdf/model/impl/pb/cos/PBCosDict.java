@@ -85,6 +85,6 @@ public class PBCosDict extends PBCosObject implements CosDict {
     // TODO : metadata support
     private List<Object> getMetadata() {
         logger.warn("Current version not support metadata handler yet. Result is null.");
-        return null;
+        return new ArrayList<>();
     }
 }

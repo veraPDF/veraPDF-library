@@ -3,10 +3,7 @@ package org.verapdf.model.impl.pb.cos;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.pdfbox.cos.COSArray;
-import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSDictionary;
-import org.apache.pdfbox.cos.COSString;
+import org.apache.pdfbox.cos.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosIndirect;
 import org.verapdf.model.coslayer.CosTrailer;
@@ -31,7 +28,7 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
 	@Override
 	public Boolean getisEncrypted() {
 		return Boolean
-				.valueOf(((COSDictionary) baseObject).getItem("Encrypt") != null);
+				.valueOf(((COSDictionary) baseObject).getItem(COSName.ENCRYPT) != null);
 	}
 
 	@Override
@@ -50,7 +47,8 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
 
 	private List<CosIndirect> getCatalog() {
 		List<CosIndirect> catalog = new ArrayList<>(1);
-		catalog.add((CosIndirect) ((COSDictionary) baseObject).getItem(CATALOG));
+		COSBase base = ((COSDictionary) baseObject).getItem(COSName.ROOT);
+		catalog.add(new PBCosIndirect(base));
 		return catalog;
 	}
 }

@@ -185,7 +185,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     private List<Object> getDocument() {
         logger.warn("Trying get PDDocument from CosDocument.\r\n" +
                 "Current feature not supported yet. Method always return null.");
-        return null;
+        return new ArrayList<>();
     }
 
     /** link to cross reference table properties
@@ -193,6 +193,6 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     // TODO : add support of this feature
     private List<? extends Object> getXRef() {
         logger.warn("Xref not supported yes. return null");
-        return null;
+        return new ArrayList<>();
     }
 }
