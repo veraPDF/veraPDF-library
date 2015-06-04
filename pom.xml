@@ -84,6 +84,8 @@
         <maven.failsafe.version>2.18.1</maven.failsafe.version>
         <maven.surefire.version>2.18.1</maven.surefire.version>
         <maven.exec.version>1.4.0</maven.exec.version>
+        <verapdf.pdfbox.version>2.0.0-SNAPSHOT</verapdf.pdfbox.version>
+        <verapdf.model.version>0.0.1-SNAPSHOT</verapdf.model.version>
     </properties>
 
     <build>
