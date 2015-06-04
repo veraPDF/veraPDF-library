@@ -50,7 +50,9 @@
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
-                        <goals><goal>single</goal></goals>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
                         <configuration>
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -69,11 +71,15 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>zip-app</id>
+                        <id>${project.name}-zip</id>
                         <phase>package</phase>
-                        <goals><goal>single</goal></goals>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
                         <!-- bind to the packaging phase -->
                         <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <finalName>veraPDF-library-prototype-${project.version}</finalName>
                             <descriptors>
                                 <descriptor>assembly/app-assembly.xml</descriptor>
                             </descriptors>
@@ -88,7 +94,9 @@
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
-                        <goals><goal>assemble</goal></goals>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
                         <configuration>
                             <programs>
                                 <program>
