@@ -79,7 +79,7 @@
                         <!-- bind to the packaging phase -->
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
-                            <finalName>veraPDF-library-prototype-${project.version}</finalName>
+                            <finalName>veraPDF-library-GUI-prototype-${project.version}</finalName>
                             <descriptors>
                                 <descriptor>assembly/app-assembly.xml</descriptor>
                             </descriptors>
@@ -91,20 +91,20 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>appassembler-maven-plugin</artifactId>
                 <version>1.10</version>
+                <configuration>
+                    <programs>
+                        <program>
+                            <mainClass>org.verapdf.gui.PDFValidationApplication</mainClass>
+                            <name>VeraPDF validation GUI</name>
+                        </program>
+                    </programs>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>assemble</goal>
                         </goals>
-                        <configuration>
-                            <programs>
-                                <program>
-                                    <mainClass>org.verapdf.gui.PDFValidationApplication</mainClass>
-                                    <name>VeraPDF validation GUI</name>
-                                </program>
-                            </programs>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
