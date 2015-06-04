@@ -7,7 +7,7 @@ import org.verapdf.model.coslayer.CosFileSpecification;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class PBCosFileSpecification extends PBCosObject implements CosFileSpecification {
+public class PBCosFileSpecification extends PBCosDict implements CosFileSpecification {
 
     public PBCosFileSpecification(COSDictionary pdfBoxObject) {
         super(pdfBoxObject);
@@ -20,10 +20,4 @@ public class PBCosFileSpecification extends PBCosObject implements CosFileSpecif
         final COSBase ef = ((COSDictionary) baseObject).getItem("EF");
         return ef != null ? ef.toString() : null;
     }
-
-	@Override
-	public Long getsize() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
