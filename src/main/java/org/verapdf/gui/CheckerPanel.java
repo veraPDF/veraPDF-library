@@ -367,6 +367,9 @@ public class CheckerPanel extends JPanel {
      * Method to notify panel that validation was done.
      */
     public void validationEnded(){
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        progressBar.setVisible(false);
+
         try {
             info = validateWorker.get();
             if (info.getResult().isCompliant()) {
@@ -376,14 +379,15 @@ public class CheckerPanel extends JPanel {
                 result.setForeground(validationFailedColor);
                 result.setText(VALIDATION_FALSE);
             }
+
+            result.setVisible(true);
         } catch (InterruptedException e) {
             JOptionPane.showMessageDialog(CheckerPanel.this, "Validation has interrupted.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         } catch (ExecutionException e) {
             JOptionPane.showMessageDialog(CheckerPanel.this, "Execution exception in validating.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-        progressBar.setVisible(false);
-        result.setVisible(true);
 
         try {
             File dir = new File("./temp/");
@@ -396,6 +400,7 @@ public class CheckerPanel extends JPanel {
 
         } catch (Exception e1) {
             JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the XML report.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
         try {
@@ -411,6 +416,7 @@ public class CheckerPanel extends JPanel {
 
         } catch (Exception e1) {
             JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the HTML report.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
     }
