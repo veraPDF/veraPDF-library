@@ -108,7 +108,14 @@ public class Validator {
 
                 if(checkRequired(obj, checkIDContext)){
                     objectsQueue.add(obj);
-                    objectsContext.add(checkContext + "/" + link + "[" + i + "]");
+
+                    String path = checkContext + "/" + link + "[" + i + "]";
+
+                    if (obj.getID() != null){
+                        path += "(" + obj.getID() + ")";
+                    }
+
+                    objectsContext.add(path);
                     Set<String> newCheckIDContext = new HashSet<>(checkIDContext);
                     if (obj.getID() != null) {
                         newCheckIDContext.add(obj.getID());
