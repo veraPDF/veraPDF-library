@@ -78,7 +78,7 @@
                             <url>http://jenkins.opf-labs.org/userContent/MVP-resources.zip</url>
                             <unpack>true</unpack>
                             <outputDirectory>${project.build.directory}/appassembler</outputDirectory>
-                            <md5>f2fc732eae689f712c1a3480be7eb9ca</md5>
+                            <md5>aafc7ed84d0e70c3cd96eb431e0a86a5</md5>
                         </configuration>
                     </execution>
                 </executions>
