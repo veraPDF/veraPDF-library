@@ -69,6 +69,7 @@
 
     <packaging>pom</packaging>
     <modules>
+        <module>verapdfexceptions</module>
         <module>validationprofileparser</module>
         <module>validationlogic</module>
         <module>validationreport</module>

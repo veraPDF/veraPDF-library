@@ -34,7 +34,7 @@ public class Rule {
 
         this.attrStatus = status;
 
-        this.attrChecks = checks.size();
+        this.attrChecks = checks == null ? 0 : checks.size();
         this.checks = checks;
     }
 

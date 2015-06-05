@@ -27,20 +27,20 @@ public class Result {
         int failedMetadataFixes = 0;
         int warnings = details.getWarnings().size();
 
-        for(Rule rule : details.getRules()){
-            if (rule.getAttrStatus().equals("passed")){
-                ++passedRules;
-            }
-            else {
-                compliantCheck = false;
-                ++failedRules;
-            }
-            for(Check check : rule.getChecks()){
-                if (check.getAttrStatus().equals("passed")){
-                    ++passedChecks;
+        if (details != null) {
+            for (Rule rule : details.getRules()) {
+                if (rule.getAttrStatus().equals("passed")) {
+                    ++passedRules;
+                } else {
+                    compliantCheck = false;
+                    ++failedRules;
                 }
-                else {
-                    ++failedChecks;
+                for (Check check : rule.getChecks()) {
+                    if (check.getAttrStatus().equals("passed")) {
+                        ++passedChecks;
+                    } else {
+                        ++failedChecks;
+                    }
                 }
             }
         }

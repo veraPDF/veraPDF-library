@@ -1,6 +1,11 @@
 package org.verapdf.runner;
 
 import org.verapdf.config.VeraPdfTaskConfig;
+import org.verapdf.exceptions.validationlogic.JavaScriptEvaluatingException;
+import org.verapdf.exceptions.validationlogic.NullLinkException;
+import org.verapdf.exceptions.validationlogic.NullLinkNameException;
+import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
+import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.model.baselayer.*;
 import org.verapdf.model.coslayer.CosDict;
@@ -30,6 +35,16 @@ public class ValidationRunner {
             e.printStackTrace();
         } catch (IOException | SAXException | ParserConfigurationException e) {
             //error while parsing validation profile
+            e.printStackTrace();
+        } catch (NullLinkNameException e) {
+            e.printStackTrace();
+        } catch (IncorrectImportPathException e) {
+            e.printStackTrace();
+        } catch (NullLinkException e) {
+            e.printStackTrace();
+        } catch (JavaScriptEvaluatingException e) {
+            e.printStackTrace();
+        } catch (NullLinkedObjectException e) {
             e.printStackTrace();
         }
         return null;

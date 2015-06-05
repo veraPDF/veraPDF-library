@@ -29,7 +29,7 @@ public class HTMLValidationReport {
      * @param htmlReportPath - path with name of the resulting html report
      * @param xmlReport - xml validation report file
      * @param validationProfile - validation profile file
-     * @throws TransformerException - transformer exceptions
+     * @throws TransformerException - if an unrecoverable error occurs during the course of the transformation or
      * @throws IOException - file system exceptions
      */
     public static void wrightHTMLValidationReport(String htmlReportPath, File xmlReport, File validationProfile) throws TransformerException, IOException {
