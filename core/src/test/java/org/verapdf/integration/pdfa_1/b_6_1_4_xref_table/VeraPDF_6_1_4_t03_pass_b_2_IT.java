@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.verapdf.integration.base.BasePDFAIT;
 
 /**
- * File trailer - missing ID
+ * Xref table
  */
 public class VeraPDF_6_1_4_t03_pass_b_2_IT extends BasePDFAIT {
 

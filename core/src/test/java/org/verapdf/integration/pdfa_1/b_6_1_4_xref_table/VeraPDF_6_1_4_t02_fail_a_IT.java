@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.verapdf.integration.base.BasePDFAIT;
 
 /**
- * File trailer - missing ID
+ * Xref table - subsection spacings
  */
 public class VeraPDF_6_1_4_t02_fail_a_IT extends BasePDFAIT {
 

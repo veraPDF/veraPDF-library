@@ -7,11 +7,16 @@
     <result>
         <compliant>true</compliant>
         <statement>PDF file is compliant with Validation Profile requirements</statement>
-        <summary completedMetadataFixes="0" failedChecks="0" failedMetadataFixes="0" failedRules="0" passedChecks="0"
-                 passedRules="1" warnings="0"/>
+        <summary completedMetadataFixes="0" failedChecks="0" failedMetadataFixes="0" failedRules="0" passedChecks="1" passedRules="1" warnings="0"/>
         <details>
             <rules>
-                <rule checks="0" id="6-1-3-t01" status="passed"/>
+                <rule checks="1" id="6-1-3-t01" status="passed">
+                    <check status="passed">
+                        <location level="CosDocument">
+                            <context>root</context>
+                        </location>
+                    </check>
+                </rule>
             </rules>
             <warnings/>
         </details>
