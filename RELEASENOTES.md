@@ -1,4 +1,4 @@
-# Version 0.1.0
+# Version 0.1
 
 This is a inimal viable product release of the veraPDF Conformance Checker
 
