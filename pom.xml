@@ -78,7 +78,7 @@
                             <url>http://jenkins.opf-labs.org/userContent/MVP-resources.zip</url>
                             <unpack>true</unpack>
                             <outputDirectory>${project.build.directory}/appassembler</outputDirectory>
-                            <md5>e3aa0b78dc4ecc870eb5daf65f6cf59f</md5>
+                            <md5>f2fc732eae689f712c1a3480be7eb9ca</md5>
                         </configuration>
                     </execution>
                 </executions>
@@ -97,7 +97,7 @@
                         <!-- bind to the packaging phase -->
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
-                            <finalName>veraPDF-library-GUI-prototype-${project.version}</finalName>
+                            <finalName>veraPDF-library-GUI-${project.version}</finalName>
                             <descriptors>
                                 <descriptor>assembly/app-assembly.xml</descriptor>
                             </descriptors>
