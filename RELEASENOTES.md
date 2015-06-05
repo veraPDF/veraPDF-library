@@ -7,7 +7,7 @@ This is a inimal viable product release of the veraPDF Conformance Checker
 - Implementation of the generic validation model
 - Parser for validation profiles
 - Initial version of machine-readable reports
-- Proof of concept for human-readbale reports in HTML format
+- Proof of concept for human-readable reports in HTML format
 - Initial version of the CLI interface for the Conformance Checker
 - Initial version of the GUI application 
 - Partial implementation of the COS layer for the PDF/A validation model
