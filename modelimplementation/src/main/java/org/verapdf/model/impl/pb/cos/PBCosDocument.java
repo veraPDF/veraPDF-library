@@ -101,12 +101,16 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     }
 
     private String getTrailerID(COSArray ids) {
-        StringBuilder builder = new StringBuilder();
-        for (COSBase id : ids) {
-            builder.append(((COSString) id).getASCII()).append(' ');
+        if (ids != null) {
+            StringBuilder builder = new StringBuilder();
+            for (COSBase id : ids) {
+                builder.append(((COSString) id).getASCII()).append(' ');
+            }
+            // need to discard last whitespace
+            return builder.toString().substring(0, builder.length() - 2);
+        } else {
+            return null;
         }
-        // need to discard last whitespace
-        return builder.toString().substring(0, builder.length() - 2);
     }
 
     /**

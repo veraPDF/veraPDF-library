@@ -36,19 +36,14 @@ public class PBCosString extends PBCosObject implements CosString {
      */
     @Override
 	public Boolean getisHexSymbols() {
-        for (byte symbol : ((COSString) baseObject).getBytes()) {
-            if (Character.digit(symbol, 16) == -1) {
-                return Boolean.FALSE;
-            }
-        }
-        return Boolean.TRUE;
+        return Boolean.valueOf(((COSString) baseObject).getIsHexSymbols());
     }
 
-    /** Get original string value of the string before applying Hex decoding
-     *  and any encodings (but after ignoring all white spaces)
+    /**
+     * contains original hexa string length
      */
     @Override
-    public String getorigValue() {
-        return new String(((COSString) baseObject).getBytes());
+    public Long gethexCount() {
+        return ((COSString) baseObject).getHexCount();
     }
 }
