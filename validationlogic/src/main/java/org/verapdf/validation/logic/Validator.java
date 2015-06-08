@@ -132,9 +132,14 @@ public class Validator {
                     for (int i = 0; i < objects.size(); ++i) {
                         Object obj = objects.get(i);
 
-                        String path = checkContext + "/" + link + "[" + i + "]";
+                        StringBuilder path = new StringBuilder(checkContext);
+                        path.append("/");
+                        path.append(link);
+                        path.append("[");
+                        path.append(i);
+                        path.append("]");
 
-                        if (obj == null) {
+                        if (obj != null) {
 
                             if (checkRequired(obj, checkIDContext)) {
                                 objectsQueue.add(obj);
@@ -142,12 +147,15 @@ public class Validator {
                                 Set<String> newCheckIDContext = new HashSet<>(checkIDContext);
 
                                 if (obj.getID() != null) {
-                                    path += "(" + obj.getID() + ")";
+                                    path.append("(");
+                                    path.append(obj.getID());
+                                    path.append(")");
+
                                     newCheckIDContext.add(obj.getID());
                                     idSet.add(obj.getID());
                                 }
 
-                                objectsContext.add(path);
+                                objectsContext.add(path.toString());
                                 contextSet.add(newCheckIDContext);
                             }
                         } else {
@@ -237,7 +245,7 @@ public class Validator {
         try {
             res = (Boolean) cx.evaluateString(scope, script, null, 0, null);
         } catch (Exception e) {
-            throw new JavaScriptEvaluatingException("Problem with evaluating test: " + rule.getTest() + "for object with context: " + context);
+            throw new JavaScriptEvaluatingException("Problem with evaluating test: \"" + rule.getTest() + "\" for object with context: " + context);
         }
 
         CheckLocation loc = new CheckLocation(rootType, context);
