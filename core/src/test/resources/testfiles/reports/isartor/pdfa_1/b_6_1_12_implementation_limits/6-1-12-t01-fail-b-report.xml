@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<validationInfo>
+    <profile>
+        <name>ISO 19005-1:2005 - 6.1.12 Implementation limits - Name</name>
+        <hash>sha-1 hash code</hash>
+    </profile>
+    <result>
+        <compliant>false</compliant>
+        <statement>PDF file is not compliant with Validation Profile requirements</statement>
+        <summary completedMetadataFixes="0" failedChecks="1" failedMetadataFixes="0" failedRules="1" passedChecks="82"
+                 passedRules="0" warnings="0"/>
+        <details>
+            <rules>
+                <rule checks="83" id="6-1-12-t04" status="failed">
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/keys[0]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/keys[1]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/keys[2]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/keys[3]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/keys[4]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/keys[5]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/keys[6]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[0]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[2]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[3]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[1]/directObject[0]/keys[0]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[1]/directObject[0]/keys[1]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[1]/directObject[0]/keys[2]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[1]/directObject[0]/values[0]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[4]/directObject[0]/keys[0]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[4]/directObject[0]/keys[1]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[4]/directObject[0]/keys[2]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[5]/directObject[0]/keys[0]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[5]/directObject[0]/keys[1]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[5]/directObject[0]/keys[2]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[5]/directObject[0]/values[0]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[5]/directObject[0]/values[1]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[6]/directObject[0]/keys[0]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[6]/directObject[0]/keys[1]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[6]/directObject[0]/keys[2]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[6]/directObject[0]/values[0]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[6]/directObject[0]/values[1]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[5]/directObject[0]/values[2]/elements[1]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[4]/directObject[0]/values[1]/directObject[0]/keys[0]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[4]/directObject[0]/values[1]/directObject[0]/keys[1]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[4]/directObject[0]/values[1]/directObject[0]/keys[2]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[4]/directObject[0]/values[1]/directObject[0]/keys[3]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[4]/directObject[0]/values[1]/directObject[0]/keys[4]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[4]/directObject[0]/values[1]/directObject[0]/keys[5]</context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/keys[0]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/keys[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/keys[2]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/keys[3]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/keys[4]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[0]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>root/values[4]/directObject[0]/values[1]/directObject[0]/values[1]/elements[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/keys[0]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/keys[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/keys[2]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/keys[3]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[4]/directObject[0]/keys[0]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[4]/directObject[0]/keys[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[4]/directObject[0]/keys[2]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[4]/directObject[0]/keys[3]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[2]/directObject[0]/keys[0]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[2]/directObject[0]/keys[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[2]/directObject[0]/values[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[3]/directObject[0]/keys[0]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[3]/directObject[0]/keys[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/values[1]/elements[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[4]/directObject[0]/values[1]/elements[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="failed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[3]/directObject[0]/values[1]/keys[0]
+                            </context>
+                        </location>
+                        <error>
+                            <message>Maximum length of a Name (127) exceeded</message>
+                        </error>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/values[3]/directObject[0]/keys[0]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/values[3]/directObject[0]/keys[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/values[3]/directObject[0]/keys[2]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/values[3]/directObject[0]/keys[3]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/values[3]/directObject[0]/keys[4]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[4]/directObject[0]/values[3]/directObject[0]/keys[0]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[4]/directObject[0]/values[3]/directObject[0]/keys[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[4]/directObject[0]/values[3]/directObject[0]/keys[2]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[4]/directObject[0]/values[3]/directObject[0]/keys[3]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[4]/directObject[0]/values[3]/directObject[0]/keys[4]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[3]/directObject[0]/values[0]/directObject[0]/elements[0]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[3]/directObject[0]/values[0]/directObject[0]/elements[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[3]/directObject[0]/values[0]/directObject[0]/elements[2]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[3]/directObject[0]/values[0]/directObject[0]/elements[3]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[3]/directObject[0]/values[0]/directObject[0]/elements[4]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/values[3]/directObject[0]/values[1]/elements[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[4]/directObject[0]/values[3]/directObject[0]/values[1]/elements[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[3]/directObject[0]/values[1]/values[0]/directObject[0]/elements[0]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/values[3]/directObject[0]/values[4]/directObject[0]/keys[0]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/values[3]/directObject[0]/values[4]/directObject[0]/keys[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/values[3]/directObject[0]/values[4]/directObject[0]/keys[2]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/values[3]/directObject[0]/values[4]/directObject[0]/keys[3]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/values[3]/directObject[0]/values[4]/directObject[0]/keys[4]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[3]/directObject[0]/values[1]/values[0]/directObject[0]/elements[1]/keys[0]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[1]/directObject[0]/values[2]/elements[0]/directObject[0]/values[3]/directObject[0]/values[1]/values[0]/directObject[0]/elements[1]/keys[1]
+                            </context>
+                        </location>
+                    </check>
+                    <check status="passed">
+                        <location level="CosDict">
+                            <context>
+                                root/values[4]/directObject[0]/values[1]/directObject[0]/values[3]/directObject[0]/values[3]/directObject[0]/values[4]/directObject[0]/values[1]/elements[1]
+                            </context>
+                        </location>
+                    </check>
+                </rule>
+            </rules>
+            <warnings/>
+        </details>
+    </result>
+</validationInfo>
