@@ -119,10 +119,10 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     // TODO : need to support of this feature
     public Boolean getisLinearized() {
         if (((COSDocument) baseObject).getTrailer() == ((COSDocument) baseObject).getLastTrailer()) {
-            return false;
+            return Boolean.FALSE;
+        } else {
+            return ((COSDocument) baseObject).isLinearized();
         }
-        
-        return Boolean.FALSE;
     }
 
     /**
