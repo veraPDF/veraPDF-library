@@ -85,8 +85,8 @@ public class PBCosStream extends PBCosDict implements CosStream {
      */
     @Override
     public Boolean getspacingCompliesPDFA() {
-        return Boolean.valueOf(((COSStream) baseObject).getEndStreamSpacingsComplyPDFA() == null &&
-                ((COSStream) baseObject).getStreamSpacingsComplyPDFA() == null);
+        return ((COSStream) baseObject).getStreamSpacingsComplyPDFA() &&
+                ((COSStream) baseObject).getEndStreamSpacingsComplyPDFA();
     }
 
     /** true if the value of Length key matches the actual length of the stream
