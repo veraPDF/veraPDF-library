@@ -90,7 +90,7 @@ public class ValidationProfile {
      * @return List of rules for the given object.
      */
     public List<Rule> getRoolsForObject(String objName){
-        return rules.get(objName);
+        return rules != null ? rules.get(objName) : new ArrayList<Rule>();
     }
 
     /**
@@ -99,13 +99,20 @@ public class ValidationProfile {
      * @return rule by it's id or null, if there is no rule with such id.
      */
     public Rule getRuleById(String id){
-        for (List<Rule> ruleList : rules.values()){
-            for(Rule rule : ruleList){
-                if (rule.getAttrID().equals(id)){
-                    return rule;
+        if (id == null) {
+            return null;
+        } else if (rules != null) {
+            for (List<Rule> ruleList : rules.values()) {
+                if (ruleList != null) {
+                    for (Rule rule : ruleList) {
+                        if (rule != null && id.equals(rule.getAttrID())) {
+                            return rule;
+                        }
+                    }
                 }
             }
         }
+
         return null;
     }
 
@@ -115,9 +122,15 @@ public class ValidationProfile {
     public List<String> getAllRulesId(){
         List<String> result = new ArrayList<>();
 
-        for (List<Rule> ruleList : rules.values()){
-            for(Rule rule : ruleList){
-                result.add(rule.getAttrID());
+        if (rules != null) {
+            for (List<Rule> ruleList : rules.values()) {
+                if (ruleList != null) {
+                    for (Rule rule : ruleList) {
+                        if (rule != null) {
+                            result.add(rule.getAttrID());
+                        }
+                    }
+                }
             }
         }
 

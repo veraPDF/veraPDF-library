@@ -1,17 +1,11 @@
 package org.verapdf.validation.report;
 
-import com.google.common.io.Files;
-
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Generating HTML validation report
@@ -22,14 +16,17 @@ import java.nio.file.Paths;
  */
 public class HTMLValidationReport {
 
-    private final static String LOGO_NAME = "veraPDF-logo-200.png";
+    private static final String LOGO_NAME = "veraPDF-logo-200.png";
+
+    private HTMLValidationReport() {
+    }
 
     /**
      * Creates html validation report
      * @param htmlReportPath - path with name of the resulting html report
      * @param xmlReport - xml validation report file
      * @param validationProfile - validation profile file
-     * @throws TransformerException - transformer exceptions
+     * @throws TransformerException - if an unrecoverable error occurs during the course of the transformation or
      * @throws IOException - file system exceptions
      */
     public static void wrightHTMLValidationReport(String htmlReportPath, File xmlReport, File validationProfile) throws TransformerException, IOException {
@@ -49,12 +46,13 @@ public class HTMLValidationReport {
         OutputStream outStream = new FileOutputStream(image);
 
         int read;
-        byte[] bytes = new byte[1024];
+        byte[] bytes = new byte[imageResource.available()];
 
         while ((read = imageResource.read(bytes)) != -1) {
             outStream.write(bytes, 0, read);
         }
 
+        outStream.close();
     }
 
     /**

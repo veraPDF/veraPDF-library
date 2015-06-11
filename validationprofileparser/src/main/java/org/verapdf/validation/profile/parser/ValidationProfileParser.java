@@ -1,5 +1,6 @@
 package org.verapdf.validation.profile.parser;
 
+import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
 import org.verapdf.validation.profile.model.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -27,7 +28,7 @@ public final class ValidationProfileParser {
     private DocumentBuilder builder;
     private File resource;
 
-    private ValidationProfileParser(File resourceFile) throws ParserConfigurationException, IOException, SAXException {
+    private ValidationProfileParser(File resourceFile) throws ParserConfigurationException, IOException, SAXException, IncorrectImportPathException {
         resource = resourceFile;
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -45,7 +46,7 @@ public final class ValidationProfileParser {
         parseRoot(root);
     }
 
-    private void parseRoot(Node root) throws IOException, SAXException {
+    private void parseRoot(Node root) throws IOException, SAXException, IncorrectImportPathException {
         String model = null;
         String name = null;
         String description = null;
@@ -94,7 +95,7 @@ public final class ValidationProfileParser {
         profile = new ValidationProfile(model, name, description, creator, created, hash, rules);
     }
 
-    private void parseImports(File sourceFile, Node imports, Map<String, List<Rule>> rules) throws IOException, SAXException {
+    private void parseImports(File sourceFile, Node imports, Map<String, List<Rule>> rules) throws SAXException, IncorrectImportPathException, IOException {
         NodeList children = imports.getChildNodes();
 
         for(int i = 0; i < children.getLength(); ++i) {
@@ -107,6 +108,10 @@ public final class ValidationProfileParser {
             String path = child.getTextContent().trim();
 
             File newFile = new File(sourceFile.getParent(), path);
+
+            if (newFile == null || !newFile.exists()){
+                throw new IncorrectImportPathException("Can not find import with path \"" + path + "\" directly to the given profile.");
+            }
 
             if(profilesPaths.contains(newFile.getCanonicalPath())){
                 continue;
@@ -307,7 +312,7 @@ public final class ValidationProfileParser {
      * @throws IOException - If any IO errors occur.
      * @throws SAXException - If any parse errors occur.
      */
-    public static ValidationProfile parseValidationProfile(String resourcePath) throws ParserConfigurationException, SAXException, IOException {
+    public static ValidationProfile parseValidationProfile(String resourcePath) throws ParserConfigurationException, SAXException, IOException, IncorrectImportPathException {
         return parseValidationProfile(new File(resourcePath));
     }
 
@@ -319,7 +324,7 @@ public final class ValidationProfileParser {
      * @throws IOException - If any IO errors occur.
      * @throws SAXException - If any parse errors occur.
      */
-    public static ValidationProfile parseValidationProfile(File resourceFile) throws ParserConfigurationException, SAXException, IOException {
+    public static ValidationProfile parseValidationProfile(File resourceFile) throws ParserConfigurationException, SAXException, IOException, IncorrectImportPathException {
         return new ValidationProfileParser(resourceFile).profile;
     }
 }

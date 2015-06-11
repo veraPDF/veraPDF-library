@@ -26,15 +26,17 @@ public class Rule {
 
         String status = "passed";
 
-        for (Check check : checks){
-            if (check.getAttrStatus().equals("failed")){
-                status = "failed";
+        if (checks != null) {
+            for (Check check : checks) {
+                if (check != null && check.getAttrStatus().equals("failed")) {
+                    status = "failed";
+                }
             }
         }
 
         this.attrStatus = status;
 
-        this.attrChecks = checks.size();
+        this.attrChecks = checks == null ? 0 : checks.size();
         this.checks = checks;
     }
 

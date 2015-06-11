@@ -25,22 +25,27 @@ public class Result {
         int failedChecks = 0;
         int completedMetadataFixes = 0;
         int failedMetadataFixes = 0;
-        int warnings = details.getWarnings().size();
+        int warnings = (details == null || details.getWarnings() == null) ? 0 : details.getWarnings().size();
 
-        for(Rule rule : details.getRules()){
-            if (rule.getAttrStatus().equals("passed")){
-                ++passedRules;
-            }
-            else {
-                compliantCheck = false;
-                ++failedRules;
-            }
-            for(Check check : rule.getChecks()){
-                if (check.getAttrStatus().equals("passed")){
-                    ++passedChecks;
-                }
-                else {
-                    ++failedChecks;
+        if (details != null) {
+            for (Rule rule : details.getRules()) {
+                if (rule != null) {
+                    if (rule.getAttrStatus().equals("passed")) {
+                        ++passedRules;
+                    } else {
+                        compliantCheck = false;
+                        ++failedRules;
+                    }
+
+                    for (Check check : rule.getChecks()) {
+                        if (check != null) {
+                            if (check.getAttrStatus().equals("passed")) {
+                                ++passedChecks;
+                            } else {
+                                ++failedChecks;
+                            }
+                        }
+                    }
                 }
             }
         }

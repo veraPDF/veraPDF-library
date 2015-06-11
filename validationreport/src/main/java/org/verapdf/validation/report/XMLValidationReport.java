@@ -142,15 +142,14 @@ public final class XMLValidationReport {
     private static String getFormattedMessage(String message, List<String> arguments){
         StringBuffer buffer = new StringBuffer(message);
 
-        for (int i = 0; i < buffer.length(); ++i){
-            if (buffer.charAt(i) == '%'){
-                if (Character.isDigit(buffer.charAt(++i)) && buffer.charAt(i) != '0'){
-                    if (!Character.isDigit(buffer.charAt(i+1))){
-                        int argumentNumber = Character.getNumericValue(buffer.charAt(i)) - 1;
-                        String argumentValue = arguments.get(argumentNumber);
-                        buffer.replace(i-1,i+1, argumentValue);
-                        i += argumentValue.length() - 2;
-                    }
+        for (int i = 0; i < buffer.length(); ++i) {
+            if (buffer.charAt(i) == '%') {
+                if (buffer.charAt(++i) != '0' && Character.isDigit(buffer.charAt(i)) && !Character.isDigit(buffer.charAt(i + 1))) {
+                    int argumentNumber = Character.getNumericValue(buffer.charAt(i)) - 1;
+                    String argumentValue = arguments.get(argumentNumber);
+                    buffer.replace(i - 1, i + 1, argumentValue);
+                    i += argumentValue.length() - 2;
+
                 }
             }
         }
