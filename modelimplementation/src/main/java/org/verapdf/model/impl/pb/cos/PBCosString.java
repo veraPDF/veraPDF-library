@@ -22,21 +22,21 @@ public class PBCosString extends PBCosObject implements CosString {
 	 */
     @Override
     public String getvalue() {
-        return ((COSString) baseObject).getString();
+        return ((COSString) baseObject).getASCII();
     }
 
     /** true if the string is stored in Hex format
      */
     @Override
     public Boolean getisHex() {
-        return Boolean.valueOf(((COSString) baseObject).isHex() != null);
+        return ((COSString) baseObject).isHex();
     }
 
     /** true if all symbols below range 0-9,a-f,A-F
      */
     @Override
 	public Boolean getisHexSymbols() {
-        return Boolean.valueOf(((COSString) baseObject).getIsHexSymbols());
+        return ((COSString) baseObject).getIsHexSymbols();
     }
 
     /**
