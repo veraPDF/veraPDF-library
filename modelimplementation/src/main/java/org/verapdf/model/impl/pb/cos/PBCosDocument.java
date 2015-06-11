@@ -3,10 +3,7 @@ package org.verapdf.model.impl.pb.cos;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.model.coslayer.CosDocument;
-import org.verapdf.model.coslayer.CosFileSpecification;
-import org.verapdf.model.coslayer.CosIndirect;
-import org.verapdf.model.coslayer.CosTrailer;
+import org.verapdf.model.coslayer.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -193,7 +190,9 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     // TODO : add support of this feature
     private List<? extends Object> getXRef() {
-        logger.warn("Xref not supported yes. return null");
-        return new ArrayList<>();
+        List<CosXRef> xref = new ArrayList<>();
+        final COSDocument document = (COSDocument) this.baseObject;
+        xref.add(new PBCosXRef(document.isXRefSpacingsCompliesPDFA(), document.isXRefEOLCompliesPDFA()));
+        return xref;
     }
 }
