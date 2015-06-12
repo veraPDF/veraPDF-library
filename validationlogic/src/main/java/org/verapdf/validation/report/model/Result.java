@@ -30,7 +30,7 @@ public class Result {
         if (details != null) {
             for (Rule rule : details.getRules()) {
                 if (rule != null) {
-                    if (rule.getAttrStatus().equals("passed")) {
+                    if ("passed".equals(rule.getAttrStatus())) {
                         ++passedRules;
                     } else {
                         compliantCheck = false;
@@ -39,7 +39,7 @@ public class Result {
 
                     for (Check check : rule.getChecks()) {
                         if (check != null) {
-                            if (check.getAttrStatus().equals("passed")) {
+                            if ("passed".equals(check.getAttrStatus())) {
                                 ++passedChecks;
                             } else {
                                 ++failedChecks;
