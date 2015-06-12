@@ -188,7 +188,6 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 
     /** link to cross reference table properties
      */
-    // TODO : add support of this feature
     private List<? extends Object> getXRef() {
         List<CosXRef> xref = new ArrayList<>();
         final COSDocument document = (COSDocument) this.baseObject;
