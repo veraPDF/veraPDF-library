@@ -12,16 +12,16 @@
             <rules>
                 <rule checks="2" id="6-1-7-t02" status="failed">
                     <check status="failed">
-                        <location level="CosDict">
-                            <context>root/values[6]/directObject[0]</context>
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[10](11 0)/directObject[0]</context>
                         </location>
                         <error>
                             <message>Spacings of keywords 'stream' and 'endstream' do not comply PDF/A specification</message>
                         </error>
                     </check>
                     <check status="failed">
-                        <location level="CosDict">
-                            <context>root/values[3]/elements[0]/directObject[0]/values[5]/directObject[0]</context>
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[11](13 0)/directObject[0]</context>
                         </location>
                         <error>
                             <message>Spacings of keywords 'stream' and 'endstream' do not comply PDF/A specification</message>
