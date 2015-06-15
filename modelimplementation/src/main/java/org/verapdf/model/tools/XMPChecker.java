@@ -14,6 +14,21 @@ import java.io.IOException;
 import java.util.*;
 
 /**
+ * Class for checking match of document information dictionary and xmp. Current class
+ * compare 8 predefined fields in info with document xmp:
+ * <ol>
+ *     <li>Title (-> Title)</li>
+ *     <li>Author (-> Creators)</li>
+ *     <li>Producer (-> Producer)</li>
+ *     <li>Creator (-> CreatorTool)</li>
+ *     <li>Keywords (-> Keywords)</li>
+ *     <li>Subject (-> Description)</li>
+ *     <li>Creation Date (-> Create Date)</li>
+ *     <li>Mod Date (-> Modify Date)</li>
+ * </ol>
+ * If document information dictionary not contain any of property, described above, than xmp
+ * not required to consist it.
+ *
  * @author Evgeniy Muravitskiy
  */
 public class XMPChecker {
@@ -38,6 +53,12 @@ public class XMPChecker {
         URLS.add("http://www.aiim.org/pdfa/ns/id/");
     }
 
+    /**
+     * Match fields of document information dictionary with fields of xmp. Check only
+     * predefined fields.
+     * @param document which will be tested
+     * @return true if fields of xmp matches with fields of info dictionary
+     */
     public static Boolean doesInfoMatchXMP(COSDocument document) {
         COSDictionary info = getInformationDictionary(document);
         if (info == null) {
@@ -132,7 +153,7 @@ public class XMPChecker {
         if (values != null) {
             StringBuilder builder = new StringBuilder();
             for (String value : values) {
-                if (value != null) {
+                if (value != null && !value.isEmpty()) {
                     builder.append(value).append(" ");
                 }
             }
