@@ -47,9 +47,6 @@ public class ValidationProfileSignatureChecker {
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader streamReader = factory.createXMLStreamReader(new FileInputStream(profile));
 
-        boolean check = true;
-        //<hash>А тут помещен хэш</hash>
-
         while (streamReader.hasNext()) {
             streamReader.next();
             if (streamReader.isStartElement() && streamReader.getName().toString().equals("hash")) {
@@ -58,7 +55,6 @@ public class ValidationProfileSignatureChecker {
                 currentHashAsString = streamReader.getElementText().trim();
             }
             if (streamReader.isEndElement() && streamReader.getName().toString().equals("hash")) {
-                check = false;
                 Location location = streamReader.getLocation();
                 endOfHash = location.getCharacterOffset();
                 if (endOfHash != startOfHash) {
