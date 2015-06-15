@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.*;
+import org.verapdf.model.tools.XMPChecker;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -122,11 +123,11 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     /**
      * @return true if XMP content matches Info dictionary content
      */
-    // TODO : implement this
     @Override
 	public Boolean getdoesInfoMatchXMP() {
-        return Boolean.FALSE;
+        return XMPChecker.doesInfoMatchXMP((COSDocument) baseObject);
     }
+
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
         List<? extends org.verapdf.model.baselayer.Object> list;
