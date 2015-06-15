@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Class for checking match of document information dictionary and xmp. Current class
- * compare 8 predefined fields in info with document xmp:
+ * This class matches document information dictionary and xmp metadata
+ * by comparing eight predefined fields:
  * <ol>
  *     <li>Title (-> Title)</li>
  *     <li>Author (-> Creators)</li>
@@ -26,8 +26,8 @@ import java.util.*;
  *     <li>Creation Date (-> Create Date)</li>
  *     <li>Mod Date (-> Modify Date)</li>
  * </ol>
- * If document information dictionary not contain any of property, described above, than xmp
- * not required to consist it.
+ * Property shouldn't be defined in xmp metadata if not present in
+ * document information dictionary.
  *
  * @author Evgeniy Muravitskiy
  */
@@ -54,8 +54,7 @@ public class XMPChecker {
     }
 
     /**
-     * Match fields of document information dictionary with fields of xmp. Check only
-     * predefined fields.
+     * Matches properties of document information dictionary and xmp metadata.
      * @param document which will be tested
      * @return true if fields of xmp matches with fields of info dictionary
      */
@@ -171,16 +170,18 @@ public class XMPChecker {
     }
 
     private static Boolean checkMatch(COSDictionary info, Map<String, Object> properties) {
-        if (!checkProperty(info, properties, TITLE)) return Boolean.FALSE;
-        if (!checkProperty(info, properties, SUBJECT)) return Boolean.FALSE;
-        if (!checkProperty(info, properties, AUTHOR)) return Boolean.FALSE;
-        if (!checkProperty(info, properties, KEYWORDS)) return Boolean.FALSE;
-        if (!checkProperty(info, properties, PRODUCER)) return Boolean.FALSE;
-        if (!checkProperty(info, properties, CREATOR)) return Boolean.FALSE;
-        if (!checkProperty(info, properties, CREATION_DATE)) return Boolean.FALSE;
-        if (!checkProperty(info, properties, MODIFICATION_DATE)) return Boolean.FALSE;
-
-        return Boolean.TRUE;
+        if ((checkProperty(info, properties, TITLE)) &&
+                (checkProperty(info, properties, SUBJECT)) &&
+                (checkProperty(info, properties, AUTHOR)) &&
+                (checkProperty(info, properties, KEYWORDS)) &&
+                (checkProperty(info, properties, PRODUCER)) &&
+                (checkProperty(info, properties, CREATOR)) &&
+                (checkProperty(info, properties, CREATION_DATE)) &&
+                (checkProperty(info, properties, MODIFICATION_DATE))) {
+            return Boolean.TRUE;
+        } else {
+            return Boolean.FALSE;
+        }
     }
 
     private static Boolean checkProperty(COSDictionary info, Map<String, Object> properties, String checksRule) {
@@ -215,7 +216,8 @@ public class XMPChecker {
                 return Boolean.valueOf(value.equals(string.getASCII()));
             } else if (value instanceof Calendar) {
                 //DateConverter can parse as pdf date format as simple date format
-                if (string.getASCII().matches("\\s*(D:)?(\\d\\d){2,7}([+-](\\d\\d['`]){0,2})")) {
+                final String regex = "(D:)?(\\d\\d){2,7}(([+-](\\d\\d[']))(\\d\\d['])?)?";
+                if (string.getASCII().matches(regex)) {
                     final Calendar valueDate = DateConverter.toCalendar(string);
                     return Boolean.valueOf(valueDate != null && valueDate.compareTo((Calendar) value) == 0);
                 }
