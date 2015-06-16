@@ -25,22 +25,16 @@ public class ValidationProfileSignatureChecker {
     private static final byte[] keyArray = {-48,-78,-48,-75,-47,-128,-48,-80,-48,-97,-48,-108,-48,-92};
 
     private File profile;
-    private int startOfHash;
-    private int endOfHash;
+    private int startOfHash = -1;
+    private int endOfHash = -1;
     private String contentWithoutHash;
     private String currentHashAsString;
     private String realHashAsString;
     private byte[] realHashAsBytes;
 
 
-    public ValidationProfileSignatureChecker(File file) throws IOException, XMLStreamException, MissedHashTagException {
+    private ValidationProfileSignatureChecker(File file) {
         this.profile = file;
-        this.startOfHash = -1;
-        this.endOfHash = -1;
-        parseProfile();
-        byte[] source = getBytesForHash();
-        this.realHashAsBytes = getSHA1(source);
-        realHashAsString = byteArrayToHex(this.realHashAsBytes);
     }
 
     private void parseProfile() throws FileNotFoundException, XMLStreamException {
@@ -99,7 +93,7 @@ public class ValidationProfileSignatureChecker {
         return formatter.toString();
     }
 
-    private byte[] getSHA1(byte[] source) throws IOException {
+    private byte[] getSHA1(byte[] source) {
         byte[] res = null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
@@ -111,7 +105,27 @@ public class ValidationProfileSignatureChecker {
         return res;
     }
 
-    private void setSHA1() throws IOException {
+    /**
+     * Generates hash code by using SHA-1 algorithm
+     * @return generated hash as hex String
+     */
+    public String getHashAsString() {
+        return this.realHashAsString;
+    }
+
+    /**
+     * Checks, if the given file's signature correct
+     * @return true if the file's signature is correct, and false if the file's signature is incorrect
+     */
+    public boolean isValidSignature() {
+        return this.realHashAsString.equals(this.currentHashAsString);
+    }
+
+    /**
+     * Generating the file's hash and signing the file
+     * @throws IOException - if an I/O error occurs reading from the file's path stream
+     */
+    public void signFile() throws IOException {
         String resultingContent = contentWithoutHash.substring(0,startOfHash) + "<hash>" +
                 realHashAsString + "</hash>" + contentWithoutHash.substring(startOfHash);
 
@@ -119,55 +133,19 @@ public class ValidationProfileSignatureChecker {
         out.write(resultingContent.getBytes("utf8"));
     }
 
-
-    /**
-     * Generates hash code by using SHA-1 algorithm
-     * @param file - file for which generates hash
-     * @return generated hash
-     * @throws IOException - if an I/O error occurs reading from the file's path stream
-     * @throws XMLStreamException - error in parsing profile
-     * @throws MissedHashTagException - occurs when there is no hash element in the given profile
-     */
-    public static byte[] getHash(File file) throws MissedHashTagException, XMLStreamException, IOException {
-        ValidationProfileSignatureChecker checker = new ValidationProfileSignatureChecker(file);
-        return checker.realHashAsBytes;
-    }
-
-    /**
-     * Generates hash code by using SHA-1 algorithm
-     * @param file - file for which generates hash
-     * @return generated hash as hex String
-     * @throws IOException - if an I/O error occurs reading from the file's path stream
-     * @throws XMLStreamException - error in parsing profile
-     * @throws MissedHashTagException - occurs when there is no hash element in the given profile
-     */
-    public static String getHashAsString(File file) throws IOException, XMLStreamException, MissedHashTagException {
-        ValidationProfileSignatureChecker checker = new ValidationProfileSignatureChecker(file);
-        return checker.realHashAsString;
-    }
-
-    /**
-     * Checks, if the given file's signature correct
-     * @param file - the file for validate
-     * @return true if the file's signature is correct, and false if the file's signature is incorrect
-     * @throws IOException - if an I/O error occurs reading from the file's path stream
-     * @throws XMLStreamException - error in parsing profile
-     * @throws MissedHashTagException - occurs when there is no hash element in the given profile
-     */
-    public static boolean isValidSignature(File file) throws IOException, XMLStreamException, MissedHashTagException {
-        ValidationProfileSignatureChecker checker = new ValidationProfileSignatureChecker(file);
-        return checker.realHashAsString.equals(checker.currentHashAsString);
-    }
-
     /**
      * Generating the file's hash and signing the file
-     * @param file - the file for sign
+     * @param profile - the file for sign
      * @throws IOException - if an I/O error occurs reading from the file's path stream
      * @throws XMLStreamException - error in parsing profile
      * @throws MissedHashTagException - occurs when there is no hash element in the given profile
      */
-    public static void signFile(File file) throws IOException, XMLStreamException, MissedHashTagException {
-        ValidationProfileSignatureChecker checker = new ValidationProfileSignatureChecker(file);
-        checker.setSHA1();
+    public static ValidationProfileSignatureChecker newInstance(File profile) throws MissedHashTagException, XMLStreamException, IOException {
+        ValidationProfileSignatureChecker checker = new ValidationProfileSignatureChecker(profile);
+        checker.parseProfile();
+        byte[] source = checker.getBytesForHash();
+        checker.realHashAsBytes = checker.getSHA1(source);
+        checker.realHashAsString = byteArrayToHex(checker.realHashAsBytes);
+        return checker;
     }
 }
