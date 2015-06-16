@@ -19,7 +19,7 @@ public class ValidationProfileParserTest {
         assertEquals(prof.getDescription(), "STR_ID_101");
         assertEquals(prof.getCreator(), "User1");
         assertEquals(prof.getCreated(), "2015-01-23T17:30:15Z");
-        assertEquals(prof.getHash(), "Some hash");
+        assertNull(prof.getHash());
 
         assertEquals(prof.getRoolsForObject("PDXObject").size(), 1);
 
@@ -75,7 +75,7 @@ public class ValidationProfileParserTest {
         assertEquals(prof.getDescription(), "STR_ID_101");
         assertEquals(prof.getCreator(), "Какой-то русский человек");
         assertEquals(prof.getCreated(), "2015-01-23T17:30:15Z");
-        assertEquals(prof.getHash(), "А тут помещен хэш");
+        assertNull(prof.getHash());
 
         assertNull(prof.getRoolsForObject("PDXObject"));
 
