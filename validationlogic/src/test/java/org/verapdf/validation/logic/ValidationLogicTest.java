@@ -54,7 +54,7 @@ public class ValidationLogicTest {
 
 		assertEquals(info.getProfile().getName(),
 				"Validation profile for testing");
-		assertEquals(info.getProfile().getHash(), "Some hash");
+		assertNull(info.getProfile().getHash());
 
 		assertFalse(info.getResult().isCompliant());
 
