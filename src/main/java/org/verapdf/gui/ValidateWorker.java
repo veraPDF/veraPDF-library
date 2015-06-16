@@ -38,7 +38,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer>{
         }
 
         try {
-            result = Validator.validate(root, profile);
+            result = Validator.validate(root, profile, false);
         } catch (Exception e1) {
             JOptionPane.showMessageDialog(parent, "Some error in validating.", "Error", JOptionPane.ERROR_MESSAGE);
             parent.errorInValidatingOccur();
