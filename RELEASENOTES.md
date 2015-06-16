@@ -19,5 +19,5 @@ This is a inimal viable product release of the veraPDF Conformance Checker
 
 ***
 
-<img src="http://www.verapdf.org/img/vera-logo.png" width="88" alt="veraPDF Consortium"/>
+<img src="http://verapdf.openpreservation.org/wp-content/uploads/sites/3/2015/06/veraPDF-logo-200.png" width="88" alt="veraPDF Consortium"/>
 © 2015 [veraPDF Consortium](http://www.verapdf.org)
