@@ -16,7 +16,7 @@ public class VeraPDF_6_1_10_t01_fail_b_IT extends BasePDFAIT {
 
     @Override
     protected String getExpectedReportFilePath() throws Exception {
-        return getSystemIndependentPath(VERAPDF_EXPECTED_REPORTS_REPO_NAME + "pdfa_1/b_6_1_10_filters/6-1-12-t01-fail-b-report.xml");
+        return getSystemIndependentPath(VERAPDF_EXPECTED_REPORTS_REPO_NAME + "pdfa_1/b_6_1_10_filters/6-1-10-t01-fail-b-report.xml");
     }
 
     @Override
