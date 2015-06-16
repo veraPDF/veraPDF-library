@@ -9,6 +9,8 @@ import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.ScriptableObject;
 import org.verapdf.exceptions.validationlogic.*;
 import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
+import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
+import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.validation.profile.model.*;
 import org.verapdf.validation.profile.parser.ValidationProfileParser;
@@ -17,6 +19,7 @@ import org.verapdf.validation.report.model.Rule;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
 
 /**
  * Validation logic
@@ -27,9 +30,9 @@ import javax.xml.parsers.ParserConfigurationException;
  */
 public class Validator {
 
-    private Queue<Object> objectsQueue;
-    private Queue<String> objectsContext;
-    private Queue<Set<String>> contextSet;
+    private Stack<Object> objectsStack;
+    private Stack<String> objectsContext;
+    private Stack<Set<String>> contextSet;
     private Map<String, List<Check>> checkMap;
     private List<String> warnings;
     private Set<String> idSet;
@@ -47,9 +50,9 @@ public class Validator {
     }
 
     private ValidationInfo validate(Object root) throws NullLinkNameException, JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, RullWithNullIDException {
-        objectsQueue = new LinkedList<>();
-        objectsContext = new LinkedList<>();
-        contextSet = new LinkedList<>();
+        objectsStack = new Stack<>();
+        objectsContext = new Stack<>();
+        contextSet = new Stack<>();
         warnings = new ArrayList<>();
         idSet = new HashSet<>();
         checkMap = new HashMap<>();
@@ -76,9 +79,9 @@ public class Validator {
 
                 rootType = root.getType();
 
-                objectsQueue.add(root);
+                objectsStack.push(root);
 
-                objectsContext.add("root");
+                objectsContext.push("root");
 
                 Set<String> rootIDContext = new HashSet<>();
 
@@ -87,9 +90,9 @@ public class Validator {
                     idSet.add(root.getID());
                 }
 
-                contextSet.add(rootIDContext);
+                contextSet.push(rootIDContext);
 
-                while (!objectsQueue.isEmpty()) {
+                while (!objectsStack.isEmpty()) {
                     checkNext();
                 }
 
@@ -108,9 +111,9 @@ public class Validator {
 
     private boolean checkNext() throws JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, NullLinkNameException, RullWithNullIDException {
 
-        Object checkObject = objectsQueue.poll();
-        String checkContext = objectsContext.poll();
-        Set<String> checkIDContext = contextSet.poll();
+        Object checkObject = objectsStack.pop();
+        String checkContext = objectsContext.pop();
+        Set<String> checkIDContext = contextSet.pop();
 
         boolean res = checkAllRules(checkObject, checkContext);
 
@@ -139,7 +142,7 @@ public class Validator {
                         if (obj != null) {
 
                             if (checkRequired(obj, checkIDContext)) {
-                                objectsQueue.add(obj);
+                                objectsStack.push(obj);
 
                                 Set<String> newCheckIDContext = new HashSet<>(checkIDContext);
 
@@ -152,8 +155,8 @@ public class Validator {
                                     idSet.add(obj.getID());
                                 }
 
-                                objectsContext.add(path.toString());
-                                contextSet.add(newCheckIDContext);
+                                objectsContext.push(path.toString());
+                                contextSet.push(newCheckIDContext);
                             }
                         } else {
                             throw new NullLinkedObjectException("There is a null link in an object. Context of the link: " + path);
@@ -325,9 +328,12 @@ public class Validator {
      * @throws NullLinkException - if there is a null link
      * @throws NullLinkedObjectException -  if there is a null object in links list
      * @throws RullWithNullIDException - if there is a rule with null id in the profile
+     * @throws MissedHashTagException - if validation profile must be signed, but it has no hash tag
+     * @throws XMLStreamException - if exception occurs in parsing a validation profile with xml stream (in checking signature of the validation profile)
+     * @throws WrongSignatureException - if validation profile must be signed, but it has wrong signature
      */
-    public static ValidationInfo validate(Object root, String validationProfilePath) throws IOException, SAXException, ParserConfigurationException, IncorrectImportPathException, NullLinkNameException, JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, RullWithNullIDException {
-        return validate(root, ValidationProfileParser.parseValidationProfile(validationProfilePath));
+    public static ValidationInfo validate(Object root, String validationProfilePath, boolean isSignCheckOn) throws IOException, SAXException, ParserConfigurationException, IncorrectImportPathException, NullLinkNameException, JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, RullWithNullIDException, MissedHashTagException, XMLStreamException, WrongSignatureException {
+        return validate(root, ValidationProfileParser.parseValidationProfile(validationProfilePath, isSignCheckOn));
     }
 
     /**
@@ -347,9 +353,12 @@ public class Validator {
      * @throws NullLinkException - if there is a null link
      * @throws NullLinkedObjectException -  if there is a null object in links list
      * @throws RullWithNullIDException - if there is a rule with null id in the profile
+     * @throws MissedHashTagException - if validation profile must be signed, but it has no hash tag
+     * @throws XMLStreamException - if exception occurs in parsing a validation profile with xml stream (in checking signature of the validation profile)
+     * @throws WrongSignatureException - if validation profile must be signed, but it has wrong signature
      */
-    public static ValidationInfo validate(Object root, File validationProfile) throws ParserConfigurationException, SAXException, IOException, IncorrectImportPathException, NullLinkNameException, JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, RullWithNullIDException {
-        return validate(root, ValidationProfileParser.parseValidationProfile(validationProfile));
+    public static ValidationInfo validate(Object root, File validationProfile, boolean isSignCheckOn) throws ParserConfigurationException, SAXException, IOException, IncorrectImportPathException, NullLinkNameException, JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, RullWithNullIDException, MissedHashTagException, XMLStreamException, WrongSignatureException {
+        return validate(root, ValidationProfileParser.parseValidationProfile(validationProfile, isSignCheckOn));
     }
 
     /**

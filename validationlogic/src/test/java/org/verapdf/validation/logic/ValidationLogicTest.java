@@ -50,7 +50,7 @@ public class ValidationLogicTest {
 		((List<Object>) cd2.getLinkedObjects("Object")).add(obj);
 
 		ValidationInfo info = Validator.validate(obj,
-				getSystemIndependentPath("/test.xml"));
+				getSystemIndependentPath("/test.xml"), false);
 
 		assertEquals(info.getProfile().getName(),
 				"Validation profile for testing");

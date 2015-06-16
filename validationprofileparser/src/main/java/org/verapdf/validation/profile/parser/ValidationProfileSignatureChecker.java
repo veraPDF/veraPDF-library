@@ -43,12 +43,12 @@ public class ValidationProfileSignatureChecker {
 
         while (streamReader.hasNext()) {
             streamReader.next();
-            if (streamReader.isStartElement() && streamReader.getName().toString().equals("hash")) {
+            if (streamReader.isStartElement() && streamReader.getLocalName().equals("hash")) {
                 Location location = streamReader.getLocation();
                 startOfHash = location.getCharacterOffset();
                 currentHashAsString = streamReader.getElementText().trim();
             }
-            if (streamReader.isEndElement() && streamReader.getName().toString().equals("hash")) {
+            if (streamReader.isEndElement() && streamReader.getLocalName().equals("hash")) {
                 Location location = streamReader.getLocation();
                 endOfHash = location.getCharacterOffset();
                 if (endOfHash != startOfHash) {
