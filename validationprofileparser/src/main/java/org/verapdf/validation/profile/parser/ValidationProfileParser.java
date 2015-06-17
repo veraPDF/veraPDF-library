@@ -1,6 +1,8 @@
 package org.verapdf.validation.profile.parser;
 
 import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
+import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
+import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.validation.profile.model.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -10,6 +12,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -28,8 +31,15 @@ public final class ValidationProfileParser {
     private DocumentBuilder builder;
     private File resource;
 
-    private ValidationProfileParser(File resourceFile) throws ParserConfigurationException, IOException, SAXException, IncorrectImportPathException {
+    private ValidationProfileParser(File resourceFile, boolean isSignCheckOn) throws ParserConfigurationException, IOException, SAXException, IncorrectImportPathException, XMLStreamException, MissedHashTagException, WrongSignatureException {
         resource = resourceFile;
+
+        if (isSignCheckOn) {
+            ValidationProfileSignatureChecker checker = ValidationProfileSignatureChecker.newInstance(resource);
+            if (!checker.isValidSignature()) {
+                throw new WrongSignatureException("Unsigned validation profile: " + resource.getCanonicalPath());
+            }
+        }
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -43,10 +53,10 @@ public final class ValidationProfileParser {
         profilesPaths.add(resourceFile.getCanonicalPath());
         Node root = doc.getDocumentElement();
         root.normalize();
-        parseRoot(root);
+        parseRoot(root, isSignCheckOn);
     }
 
-    private void parseRoot(Node root) throws IOException, SAXException, IncorrectImportPathException {
+    private void parseRoot(Node root, boolean isSignCheckOn) throws IOException, SAXException, IncorrectImportPathException {
         String model = null;
         String name = null;
         String description = null;
@@ -79,7 +89,7 @@ public final class ValidationProfileParser {
             } else if (childName.equals("created")) {
                 created = child.getTextContent().trim();
 
-            } else if (childName.equals("hash")) {
+            } else if (childName.equals("hash") && isSignCheckOn) {
                 hash = child.getTextContent().trim();
 
             } else if (childName.equals("imports")) {
@@ -309,11 +319,15 @@ public final class ValidationProfileParser {
      * @param resourcePath - Path to the file for parse.
      * @return Validation profile represent in Java classes.
      * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
-     * @throws IOException - If any IO errors occur.
-     * @throws SAXException - If any parse errors occur.
+     * @throws IOException - if any IO errors occur.
+     * @throws SAXException - if any parse errors occur.
+     * @throws IncorrectImportPathException - if validation profile contains incorrect input path
+     * @throws MissedHashTagException - if validation profile must be signed, but it has no hash tag
+     * @throws XMLStreamException - if exception occurs in parsing a validation profile with xml stream (in checking signature of the validation profile)
+     * @throws WrongSignatureException - if validation profile must be signed, but it has wrong signature
      */
-    public static ValidationProfile parseValidationProfile(String resourcePath) throws ParserConfigurationException, SAXException, IOException, IncorrectImportPathException {
-        return parseValidationProfile(new File(resourcePath));
+    public static ValidationProfile parseValidationProfile(String resourcePath, boolean isSignCheckOn) throws ParserConfigurationException, SAXException, IOException, IncorrectImportPathException, MissedHashTagException, XMLStreamException, WrongSignatureException {
+        return parseValidationProfile(new File(resourcePath), isSignCheckOn);
     }
 
     /**
@@ -321,10 +335,14 @@ public final class ValidationProfileParser {
      * @param resourceFile - File for parse.
      * @return Validation profile represent in Java classes.
      * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
-     * @throws IOException - If any IO errors occur.
-     * @throws SAXException - If any parse errors occur.
+     * @throws IOException - if any IO errors occur.
+     * @throws SAXException - if any parse errors occur.
+     * @throws IncorrectImportPathException - if validation profile contains incorrect input path
+     * @throws MissedHashTagException - if validation profile must be signed, but it has no hash tag
+     * @throws XMLStreamException - if exception occurs in parsing a validation profile with xml stream (in checking signature of the validation profile)
+     * @throws WrongSignatureException - if validation profile must be signed, but it has wrong signature
      */
-    public static ValidationProfile parseValidationProfile(File resourceFile) throws ParserConfigurationException, SAXException, IOException, IncorrectImportPathException {
-        return new ValidationProfileParser(resourceFile).profile;
+    public static ValidationProfile parseValidationProfile(File resourceFile, boolean isSignCheckOn) throws ParserConfigurationException, SAXException, IOException, IncorrectImportPathException, MissedHashTagException, XMLStreamException, WrongSignatureException {
+        return new ValidationProfileParser(resourceFile, isSignCheckOn).profile;
     }
 }

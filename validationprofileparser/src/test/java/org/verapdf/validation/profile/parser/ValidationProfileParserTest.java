@@ -12,14 +12,14 @@ public class ValidationProfileParserTest {
 
     @Test
     public void test() throws Exception {
-        ValidationProfile prof = ValidationProfileParser.parseValidationProfile("src/test/resources/test.xml");
+        ValidationProfile prof = ValidationProfileParser.parseValidationProfile("src/test/resources/test.xml", false);
 
         assertEquals(prof.getAttrModel(), "org.verapdf.model.PDFA1a");
         assertEquals(prof.getName(), "PDF/A-1a validation profile");
         assertEquals(prof.getDescription(), "STR_ID_101");
         assertEquals(prof.getCreator(), "User1");
         assertEquals(prof.getCreated(), "2015-01-23T17:30:15Z");
-        assertEquals(prof.getHash(), "Some hash");
+        assertNull(prof.getHash());
 
         assertEquals(prof.getRoolsForObject("PDXObject").size(), 1);
 
@@ -68,14 +68,14 @@ public class ValidationProfileParserTest {
 
     @Test
     public void testCyrillic() throws Exception {
-        ValidationProfile prof = ValidationProfileParser.parseValidationProfile("src/test/resources/testCyrillic.xml");
+        ValidationProfile prof = ValidationProfileParser.parseValidationProfile("src/test/resources/testCyrillic.xml", false);
 
         assertEquals(prof.getAttrModel(), "org.verapdf.model.PDFA1a");
         assertEquals(prof.getName(), "PDF/A-1a validation profile");
         assertEquals(prof.getDescription(), "STR_ID_101");
         assertEquals(prof.getCreator(), "Какой-то русский человек");
         assertEquals(prof.getCreated(), "2015-01-23T17:30:15Z");
-        assertEquals(prof.getHash(), "А тут помещен хэш");
+        assertNull(prof.getHash());
 
         assertNull(prof.getRoolsForObject("PDXObject"));
 

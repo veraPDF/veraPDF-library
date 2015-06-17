@@ -14,7 +14,7 @@ import java.io.*;
  * @author Maksim Bezrukov
  * @version 1.0
  */
-public class HTMLValidationReport {
+public final class HTMLValidationReport {
 
     private static final String LOGO_NAME = "veraPDF-logo-200.png";
 
@@ -43,16 +43,15 @@ public class HTMLValidationReport {
         InputStream imageResource = HTMLValidationReport.class.getClassLoader().getResourceAsStream(LOGO_NAME);
 
         File image = new File(dir, LOGO_NAME);
-        OutputStream outStream = new FileOutputStream(image);
 
-        int read;
-        byte[] bytes = new byte[imageResource.available()];
+        try (OutputStream outStream = new FileOutputStream(image)) {
+            byte[] bytes = new byte[imageResource.available()];
 
-        while ((read = imageResource.read(bytes)) != -1) {
-            outStream.write(bytes, 0, read);
+            int read;
+            while ((read = imageResource.read(bytes)) != -1) {
+                outStream.write(bytes, 0, read);
+            }
         }
-
-        outStream.close();
     }
 
     /**

@@ -30,7 +30,7 @@ public class Result {
         if (details != null) {
             for (Rule rule : details.getRules()) {
                 if (rule != null) {
-                    if (rule.getAttrStatus().equals("passed")) {
+                    if ("passed".equals(rule.getAttrStatus())) {
                         ++passedRules;
                     } else {
                         compliantCheck = false;
@@ -39,7 +39,7 @@ public class Result {
 
                     for (Check check : rule.getChecks()) {
                         if (check != null) {
-                            if (check.getAttrStatus().equals("passed")) {
+                            if ("passed".equals(check.getAttrStatus())) {
                                 ++passedChecks;
                             } else {
                                 ++failedChecks;
@@ -50,11 +50,9 @@ public class Result {
             }
         }
 
-        Summary newSummary = new Summary(passedRules, failedRules, passedChecks, failedChecks, completedMetadataFixes, failedMetadataFixes, warnings);
-
         this.compliant = compliantCheck;
         this.statement = compliantCheck ? "PDF file is compliant with Validation Profile requirements" : "PDF file is not compliant with Validation Profile requirements";
-        this.summary = newSummary;
+        this.summary = new Summary(passedRules, failedRules, passedChecks, failedChecks, completedMetadataFixes, failedMetadataFixes, warnings);
         this.details = details;
     }
 
