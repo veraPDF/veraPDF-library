@@ -2,12 +2,18 @@ package org.verapdf.model.impl.pb.cos;
 
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDEmbeddedFilesNameTreeNode;
+import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.*;
+import org.verapdf.model.tools.XMPChecker;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Low-level PDF Document object
@@ -23,13 +29,22 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     public final static String INDIRECT_OBJECTS = "indirectObjects";
     public final static String DOCUMENT = "document";
     public final static String EMBEDDED_FILES = "EmbeddedFiles";
-    private final static String ID = "ID";
+    public final static String ID = "ID";
+
+    private PDDocument pdDocument;
 
     private Long sizeOfDocument = new Long(-1);
 
     public PBCosDocument(COSDocument baseObject) {
         super(baseObject);
         setType("CosDocument");
+    }
+
+    public PBCosDocument(PDDocument pdDocument, long length) {
+        super(pdDocument.getDocument());
+        setType("CosDocument");
+        this.pdDocument = pdDocument;
+        sizeOfDocument = Long.valueOf(length);
     }
 
     /**  Number of indirect objects in the document
@@ -86,7 +101,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      * @return ID of first page trailer
      */
     public String getfirstPageID() {
-        return getTrailerID((COSArray) ((COSDocument) baseObject).getTrailer().getItem(ID));
+        return getTrailerID((COSArray) ((COSDocument) baseObject).getFirstTrailer().getItem(ID));
     }
 
     /**
@@ -122,11 +137,11 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     /**
      * @return true if XMP content matches Info dictionary content
      */
-    // TODO : implement this
     @Override
 	public Boolean getdoesInfoMatchXMP() {
-        return Boolean.FALSE;
+        return XMPChecker.doesInfoMatchXMP((COSDocument) baseObject);
     }
+
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
         List<? extends org.verapdf.model.baselayer.Object> list;
@@ -154,9 +169,45 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         return list;
     }
 
-    // TODO : implement this
-    private List<CosFileSpecification> getEmbeddedFiles() {
-        return new ArrayList<>();
+    /**
+     * @return list of embedded files
+     */
+    private List<Object> getEmbeddedFiles() {
+        List<Object> files = new ArrayList<>();
+        try {
+            COSDictionary buffer = (COSDictionary) pdDocument.getDocument().getCatalog().getObject();
+            buffer = getCosDictionary(buffer.getItem(COSName.NAMES));
+            if (buffer != null) {
+                buffer = getCosDictionary(buffer.getItem(COSName.EMBEDDED_FILES));
+            }
+            getNamesEmbeddedFiles(files, buffer);
+        } catch (IOException e) {
+            logger.error("Something wrong with getting embedded files - return empty list. " + e.getMessage());
+        }
+        return files;
+    }
+
+    private void getNamesEmbeddedFiles(List<Object> files, COSDictionary buffer) throws IOException {
+        PDEmbeddedFilesNameTreeNode root = null;
+        if (buffer != null) {
+            root = new PDEmbeddedFilesNameTreeNode(buffer);
+        }
+        if (root != null) {
+            final Set<Map.Entry<String, PDComplexFileSpecification>> entries = root.getNames().entrySet();
+            for (Map.Entry<String, PDComplexFileSpecification> entry : entries) {
+                files.add(new PBCosFileSpecification(entry.getValue().getCOSObject()));
+            }
+        }
+    }
+
+    private COSDictionary getCosDictionary(COSBase item) throws IOException {
+        COSDictionary buffer = null;
+        if (item instanceof COSDictionary) {
+            buffer = (COSDictionary) item;
+        } else if (item instanceof COSObject) {
+            buffer = (COSDictionary) ((COSObject) item).getObject();
+        }
+        return buffer;
     }
 
     /**  trailer dictionary
