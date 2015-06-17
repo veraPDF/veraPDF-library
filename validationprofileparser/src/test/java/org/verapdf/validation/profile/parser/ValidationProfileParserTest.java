@@ -5,6 +5,7 @@ package org.verapdf.validation.profile.parser; /**
 import org.verapdf.validation.profile.model.Rule;
 import org.verapdf.validation.profile.model.ValidationProfile;
 import org.junit.Test;
+import org.verapdf.validation.profile.model.Variable;
 
 import static org.junit.Assert.*;
 
@@ -68,7 +69,7 @@ public class ValidationProfileParserTest {
 
     @Test
     public void testCyrillic() throws Exception {
-        ValidationProfile prof = ValidationProfileParser.parseValidationProfile("src/test/resources/testCyrillic.xml", false);
+        ValidationProfile prof = ValidationProfileParser.parseValidationProfile("validationprofileparser/src/test/resources/testCyrillic.xml", false);
 
         assertEquals(prof.getAttrModel(), "org.verapdf.model.PDFA1a");
         assertEquals(prof.getName(), "PDF/A-1a validation profile");
@@ -104,5 +105,13 @@ public class ValidationProfileParserTest {
         assertEquals(rule53.getFix().get(0).getDescription(), "STR_ID_893");
         assertEquals(rule53.getFix().get(0).getInfo().getMessage(), "STR_ID_894");
         assertEquals(rule53.getFix().get(0).getError().getMessage(), "STR_ID_895");
+
+        Variable var1 = prof.getVariablesForObject("Object").get(0);
+
+        assertEquals(var1.getAttrObject(), "Object");
+        assertEquals(var1.getAttrName(), "varName1");
+        assertEquals(var1.getDefaultValue(), "null");
+        assertEquals(var1.getValue(), "5");
+
     }
 }

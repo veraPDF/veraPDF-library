@@ -1,6 +1,8 @@
 package org.verapdf.validation.profile.parser;
 
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
+import org.verapdf.exceptions.validationprofileparser.NullProfileException;
+import org.verapdf.exceptions.validationprofileparser.WrongProfileEncodingException;
 
 import javax.xml.stream.Location;
 import javax.xml.stream.XMLInputFactory;
@@ -37,24 +39,30 @@ public class ValidationProfileSignatureChecker {
         this.profile = file;
     }
 
-    private void parseProfile() throws FileNotFoundException, XMLStreamException {
+    private void parseProfile() throws IOException, XMLStreamException, WrongProfileEncodingException {
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader streamReader = factory.createXMLStreamReader(new FileInputStream(profile));
 
-        while (streamReader.hasNext()) {
-            streamReader.next();
-            if (streamReader.isStartElement() && streamReader.getLocalName().equals("hash")) {
-                Location location = streamReader.getLocation();
-                startOfHash = location.getCharacterOffset();
-                currentHashAsString = streamReader.getElementText().trim();
-            }
-            if (streamReader.isEndElement() && streamReader.getLocalName().equals("hash")) {
-                Location location = streamReader.getLocation();
-                endOfHash = location.getCharacterOffset();
-                if (endOfHash != startOfHash) {
-                    startOfHash -= "<hash>".length();
-                } else {
-                    startOfHash -= "<hash/>".length();
+        if (!"utf-8".equals(streamReader.getEncoding().toLowerCase())){
+            streamReader.close();
+            throw new WrongProfileEncodingException("The given profile has not utf-8 encoding: " + profile.getCanonicalPath());
+        } else {
+
+            while (streamReader.hasNext()) {
+                streamReader.next();
+                if (streamReader.isStartElement() && streamReader.getLocalName().equals("hash")) {
+                    Location location = streamReader.getLocation();
+                    startOfHash = location.getCharacterOffset();
+                    currentHashAsString = streamReader.getElementText().trim();
+                }
+                if (streamReader.isEndElement() && streamReader.getLocalName().equals("hash")) {
+                    Location location = streamReader.getLocation();
+                    endOfHash = location.getCharacterOffset();
+                    if (endOfHash != startOfHash) {
+                        startOfHash -= "<hash>".length();
+                    } else {
+                        startOfHash -= "<hash/>".length();
+                    }
                 }
             }
         }
@@ -139,13 +147,20 @@ public class ValidationProfileSignatureChecker {
      * @throws IOException - if an I/O error occurs reading from the file's path stream
      * @throws XMLStreamException - error in parsing profile
      * @throws MissedHashTagException - occurs when there is no hash element in the given profile
+     * @throws WrongProfileEncodingException - occurs when the given profile has not utf8 encoding
+     * @throws NullProfileException - occurs when trying to create signature checker on null profile
      */
-    public static ValidationProfileSignatureChecker newInstance(File profile) throws MissedHashTagException, XMLStreamException, IOException {
-        ValidationProfileSignatureChecker checker = new ValidationProfileSignatureChecker(profile);
-        checker.parseProfile();
-        byte[] source = checker.getBytesForHash();
-        checker.realHashAsBytes = checker.getSHA1(source);
-        checker.realHashAsString = byteArrayToHex(checker.realHashAsBytes);
-        return checker;
+    public static ValidationProfileSignatureChecker newInstance(File profile) throws MissedHashTagException, XMLStreamException, IOException, WrongProfileEncodingException, NullProfileException {
+        if (profile == null) {
+            throw new NullProfileException("Null pointer to the profile is used for creating signature checker.");
+        } else {
+
+            ValidationProfileSignatureChecker checker = new ValidationProfileSignatureChecker(profile);
+            checker.parseProfile();
+            byte[] source = checker.getBytesForHash();
+            checker.realHashAsBytes = checker.getSHA1(source);
+            checker.realHashAsString = byteArrayToHex(checker.realHashAsBytes);
+            return checker;
+        }
     }
 }
