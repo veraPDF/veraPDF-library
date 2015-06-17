@@ -189,7 +189,7 @@ public final class XMLValidationReport {
     }
 
     private static String getFormattedMessage(String message, List<String> arguments){
-        if (arguments == null) {
+        if (arguments == null || arguments.isEmpty()) {
             return message;
         } else {
 
