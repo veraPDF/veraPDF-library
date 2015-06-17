@@ -89,7 +89,7 @@ public final class ValidationProfileParser {
             } else if (childName.equals("created")) {
                 created = child.getTextContent().trim();
 
-            } else if (childName.equals("hash")) {
+            } else if (childName.equals("hash") && isSignCheckOn) {
                 hash = child.getTextContent().trim();
 
             } else if (childName.equals("imports")) {
