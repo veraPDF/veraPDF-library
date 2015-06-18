@@ -1,7 +1,7 @@
 package org.verapdf.gui;
 
-import org.verapdf.validation.report.XMLValidationReport;
-import org.verapdf.validation.report.HTMLValidationReport;
+import org.verapdf.report.HTMLReport;
+import org.verapdf.report.XMLReport;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import javax.swing.*;
@@ -51,6 +51,9 @@ public class CheckerPanel extends JPanel {
     private File xmlReport;
     private File htmlReport;
     private File image = null;
+
+    private long startTimeOfValidation;
+    private long endTimeOfValidation;
 
     private JButton saveXML;
     private JButton viewXML;
@@ -275,6 +278,9 @@ public class CheckerPanel extends JPanel {
                 validate.setEnabled(false);
 
                 validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, profile);
+
+                startTimeOfValidation = System.currentTimeMillis();
+
                 validateWorker.execute();
             }
         });
@@ -367,6 +373,8 @@ public class CheckerPanel extends JPanel {
      * Method to notify panel that validation was done.
      */
     public void validationEnded(){
+        endTimeOfValidation = System.currentTimeMillis();
+
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         progressBar.setVisible(false);
 
@@ -393,7 +401,7 @@ public class CheckerPanel extends JPanel {
             File dir = new File("./temp/");
             dir.mkdir();
             xmlReport = new File("./temp/tempXMLReport.xml");
-            XMLValidationReport.writeXMLValidationReport(info, xmlReport.getPath());
+            XMLReport.writeXMLReport(info, xmlReport.getPath(), endTimeOfValidation - startTimeOfValidation);
 
             saveXML.setEnabled(true);
             viewXML.setEnabled(true);
@@ -405,10 +413,10 @@ public class CheckerPanel extends JPanel {
 
         try {
             htmlReport = new File("./temp/tempHTMLReport.html");
-            HTMLValidationReport.wrightHTMLValidationReport(htmlReport.getPath(), xmlReport, profile);
+            HTMLReport.wrightHTMLReport(htmlReport.getPath(), xmlReport, profile);
 
             if (image == null){
-                image = new File("./temp/"+ HTMLValidationReport.getLogoImageName());
+                image = new File("./temp/"+ HTMLReport.getLogoImageName());
             }
 
             saveHTML.setEnabled(true);
