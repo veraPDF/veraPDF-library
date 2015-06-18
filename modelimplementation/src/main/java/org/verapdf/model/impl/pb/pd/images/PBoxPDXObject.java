@@ -29,10 +29,15 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
     }
 
     private String getSubtypeString(COSBase item) {
-        if (item instanceof COSString) return ((COSString) item).getString();
-        else if (item instanceof COSName) return ((COSName) item).getName();
-        else if (item instanceof COSObject) return getSubtypeString(((COSObject) item).getObject());
-        else return null;
+        if (item instanceof COSString) {
+            return ((COSString) item).getString();
+        } else if (item instanceof COSName) {
+            return ((COSName) item).getName();
+        } else if (item instanceof COSObject) {
+            return getSubtypeString(((COSObject) item).getObject());
+        } else {
+            return null;
+        }
     }
 
     @Override
