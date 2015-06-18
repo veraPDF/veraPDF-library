@@ -69,7 +69,7 @@ public class ValidationProfileParserTest {
 
     @Test
     public void testCyrillic() throws Exception {
-        ValidationProfile prof = ValidationProfileParser.parseValidationProfile("validationprofileparser/src/test/resources/testCyrillic.xml", false);
+        ValidationProfile prof = ValidationProfileParser.parseValidationProfile("src/test/resources/testCyrillic.xml", false);
 
         assertEquals(prof.getAttrModel(), "org.verapdf.model.PDFA1a");
         assertEquals(prof.getName(), "PDF/A-1a validation profile");
