@@ -29,7 +29,7 @@
     </xsl:template>
 
     <!-- Validation Report header -->
-    <xsl:template match="validationInfo">
+    <xsl:template match="report">
 
         <!-- Header image and overall title -->
         <p><img border="0" src="veraPDF-logo-200.png"/></p>
@@ -39,49 +39,49 @@
         <table border="0" id="table1">
             <tr>
                 <td width="200"><b>Validation Profile:</b></td>
-                <td><xsl:value-of select="/validationInfo/profile/name"/></td>
+                <td><xsl:value-of select="/report/validationInfo/profile/name"/></td>
             </tr>
             <tr>
                 <td width="200"><b>Validation Profile checksum:</b></td>
-                <td><xsl:value-of select="/validationInfo/profile/hash"/></td>
+                <td><xsl:value-of select="/report/validationInfo/profile/hash"/></td>
             </tr>
             <tr>
                 <td width="200">
-                    <xsl:if test="/validationInfo/result/compliant = 'true'">
+                    <xsl:if test="/report/validationInfo/result/compliant = 'true'">
                         <font color="green"><b>PDF is compliant:</b></font>
                     </xsl:if>
-                    <xsl:if test="/validationInfo/result/compliant = 'false'">
+                    <xsl:if test="/report/validationInfo/result/compliant = 'false'">
                         <font color="red"><b>PDF is compliant:</b></font>
                     </xsl:if>
                 </td>
                 <td>
-                    <xsl:if test="/validationInfo/result/compliant = 'true'">
+                    <xsl:if test="/report/validationInfo/result/compliant = 'true'">
                         <font color="green"><b>Yes</b></font>
                     </xsl:if>
-                    <xsl:if test="/validationInfo/result/compliant = 'false'">
+                    <xsl:if test="/report/validationInfo/result/compliant = 'false'">
                         <font color="red"><b>No</b></font>
                     </xsl:if>
                 </td>
             </tr>
             <tr>
                 <td width="200"><b>Statement:</b></td>
-                <td><xsl:value-of select="/validationInfo/result/statement"/></td>
+                <td><xsl:value-of select="/report/validationInfo/result/statement"/></td>
             </tr>
         </table>
 
-        <xsl:apply-templates select="/validationInfo/result/summary"/>
+        <xsl:apply-templates select="/report/validationInfo/result/summary"/>
 
         <h2>Detailed information</h2>
         <table border="0" id="table3">
 
-            <xsl:apply-templates select="/validationInfo/result/details/rules/rule"/>
+            <xsl:apply-templates select="/report/validationInfo/result/details/rules/rule"/>
 
         </table>
 
     </xsl:template>
 
     <!-- Summary information -->
-    <xsl:template match="/validationInfo/result/summary">
+    <xsl:template match="/report/validationInfo/result/summary">
         <h2>Summary</h2>
         <table border="0" id="table2">
             <tr>
@@ -104,7 +104,7 @@
     </xsl:template>
 
     <!-- Detailed Information -->
-    <xsl:template match="/validationInfo/result/details/rules/rule">
+    <xsl:template match="/report/validationInfo/result/details/rules/rule">
 
         <xsl:param name="id" select="@id"/>
 

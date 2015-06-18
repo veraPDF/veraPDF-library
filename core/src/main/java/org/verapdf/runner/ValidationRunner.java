@@ -3,9 +3,7 @@ package org.verapdf.runner;
 import org.apache.log4j.Logger;
 import org.verapdf.config.VeraPdfTaskConfig;
 import org.verapdf.exceptions.validationlogic.*;
-import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
-import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
-import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
+import org.verapdf.exceptions.validationprofileparser.*;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.model.baselayer.*;
 import org.verapdf.model.coslayer.CosDict;
@@ -56,6 +54,12 @@ public class ValidationRunner {
         } catch (WrongSignatureException e) {
             logger.error(e.getMessage());
         } catch (XMLStreamException e) {
+            logger.error(e.getMessage());
+        } catch (WrongProfileEncodingException e) {
+            logger.error(e.getMessage());
+        } catch (MultiplyGlobalVariableNameException e) {
+            logger.error(e.getMessage());
+        } catch (NullProfileException e) {
             logger.error(e.getMessage());
         }
         return null;
