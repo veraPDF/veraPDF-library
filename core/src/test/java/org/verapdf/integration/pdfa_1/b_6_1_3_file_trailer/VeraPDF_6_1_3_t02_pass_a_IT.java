@@ -21,7 +21,7 @@ public class VeraPDF_6_1_3_t02_pass_a_IT extends BasePDFAIT {
 
     @Override
     protected String getValidationProfileFilePath() throws Exception {
-        return getSystemIndependentPath(VALIDATION_PROFILES_REPO_NAME + "PDF_A/1b/6.1 File structure/6.1.3 File trailer/verapdf-profile-6-1-3-t04.xml");
+        return getSystemIndependentPath(VALIDATION_PROFILES_REPO_NAME + "PDF_A/1b/6.1 File structure/6.1.3 File trailer/verapdf-profile-6-1-3-t01.xml");
     }
 
     @Override
