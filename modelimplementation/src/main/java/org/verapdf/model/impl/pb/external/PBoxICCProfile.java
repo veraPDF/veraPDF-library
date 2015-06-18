@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.external;
 
+import org.apache.log4j.Logger;
 import org.verapdf.model.external.ICCProfile;
 
 /**
@@ -9,6 +10,8 @@ import org.verapdf.model.external.ICCProfile;
  */
 public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
 
+    public static final Logger logger = Logger.getLogger(PBoxICCProfile.class);
+
     protected byte[] profile;
 
     protected PBoxICCProfile(byte[] profile) {
@@ -17,27 +20,42 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
         System.arraycopy(profile, 0, this.profile, 0, profile.length);
     }
 
-    //TODO : implement this
     @Override
     public String getdeviceClass() {
-        return null;
+        return getSubArray(12, 4);
     }
 
-    //TODO : implement this
     @Override
     public String getcolorSpace() {
-        return null;
+        return getSubArray(16, 4);
     }
 
-    //TODO : implement this
+    private String getSubArray(Integer start, Integer length) {
+        if (start + length <= profile.length) {
+            byte[] buffer = new byte[4];
+            System.arraycopy(profile, start, buffer, 0, length);
+            return new String(buffer).trim();
+        } else {
+            logger.error("Length of icc profile less than " + (start + length));
+            return null;
+        }
+    }
+
     @Override
     public Double getversion() {
-        return null;
+        if (profile.length > 9) {
+            StringBuilder version = new StringBuilder(3);
+            version.append(profile[8]).append('.');
+            version.append(profile[9] >>> 4);
+            return Double.valueOf(version.toString());
+        } else {
+            logger.error("ICC profile contain less than 10 bytes of data.");
+            return Double.valueOf(-1);
+        }
     }
 
-    //TODO ; implement this
+    // Custom implementation for another users
     public Boolean getisValid() {
-        return null;
+        return Boolean.TRUE;
     }
-
 }
