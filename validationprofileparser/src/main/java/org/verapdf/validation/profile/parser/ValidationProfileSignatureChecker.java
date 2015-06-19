@@ -25,6 +25,7 @@ import java.util.Formatter;
 public class ValidationProfileSignatureChecker {
 
     private static final byte[] keyArray = {-48,-78,-48,-75,-47,-128,-48,-80,-48,-97,-48,-108,-48,-92};
+    private static final String UTF8 = "utf-8";
 
     private File profile;
     private int startOfHash = -1;
@@ -43,7 +44,7 @@ public class ValidationProfileSignatureChecker {
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader streamReader = factory.createXMLStreamReader(new FileInputStream(profile));
 
-        if (!"utf-8".equals(streamReader.getEncoding().toLowerCase())){
+        if (!UTF8.equals(streamReader.getEncoding().toLowerCase())){
             streamReader.close();
             throw new WrongProfileEncodingException("The given profile has not utf-8 encoding: " + profile.getCanonicalPath());
         } else {
