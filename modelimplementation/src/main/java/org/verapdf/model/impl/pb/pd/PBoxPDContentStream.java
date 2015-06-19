@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.pd;
 
+import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.operator.Operator;
 import org.verapdf.model.pdlayer.PDContentStream;
@@ -14,7 +15,7 @@ public class PBoxPDContentStream extends PBoxPDObject implements PDContentStream
 
     public static final String OPERATORS = "operators";
 
-    public PBoxPDContentStream(org.apache.pdfbox.contentstream.PDContentStream contentStream) {
+    public PBoxPDContentStream(PDStream contentStream) {
         super(contentStream);
         setType("PDContentStream");
     }

@@ -1,12 +1,15 @@
 package org.verapdf.model.impl.pb.pd;
 
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.cos.COSNull;
 import org.apache.pdfbox.pdmodel.common.COSObjectable;
+import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.interactive.action.PDPageAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.PDAction;
 import org.verapdf.model.pdlayer.PDAnnot;
+import org.verapdf.model.pdlayer.PDContentStream;
 import org.verapdf.model.pdlayer.PDPage;
 
 import java.io.IOException;
@@ -50,7 +53,16 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
     }
 
     //TODO : implement this
-    private List<? extends Object> getContentStream() {
+    private List<PDContentStream> getContentStream() {
+        List<PDContentStream> contentStreams = new ArrayList<>();
+        try {
+            final PDStream stream = ((org.apache.pdfbox.pdmodel.PDPage) simplePDObject).getStream();
+            if (stream != null && stream.getCOSObject() != null && !(stream.getCOSObject() instanceof COSNull)) {
+                contentStreams.add(new PBoxPDContentStream(stream));
+            }
+        } catch (IOException e) {
+            logger.error("Can not get content stream of page. " + e.getMessage());
+        }
         return new ArrayList<>();
     }
 
