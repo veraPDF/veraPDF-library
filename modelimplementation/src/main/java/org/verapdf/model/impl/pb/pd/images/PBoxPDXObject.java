@@ -81,4 +81,14 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
             return null;
         }
     }
+
+    protected COSStream getStream(COSBase item) {
+        if (item instanceof COSStream) {
+            return (COSStream) item;
+        } else if (item instanceof COSObject) {
+            return getStream(((COSObject) item).getObject());
+        } else {
+            return null;
+        }
+    }
 }

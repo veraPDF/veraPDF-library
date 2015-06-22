@@ -72,17 +72,6 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
         return postScript;
     }
 
-    private COSStream getStream(COSBase item) {
-        if (item instanceof COSStream) {
-            return (COSStream) item;
-        } else if (item instanceof COSObject) {
-            return getStream(((COSObject) item).getObject());
-        } else {
-            logger.warn("Form XObject contain incorrect type of object in PS key (must be Stream).");
-            return null;
-        }
-    }
-
     private List<CosDict> getREF() {
         return getLinkToDictionary("Ref");
     }
