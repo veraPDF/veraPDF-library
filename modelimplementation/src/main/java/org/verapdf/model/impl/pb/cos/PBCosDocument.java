@@ -101,7 +101,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      * @return ID of first page trailer
      */
     public String getfirstPageID() {
-        return getTrailerID((COSArray) ((COSDocument) baseObject).getFirstTrailer().getItem(ID));
+        return getTrailerID((COSArray) ((COSDocument) baseObject).getFirstPageTrailer().getItem(ID));
     }
 
     /**
