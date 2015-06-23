@@ -50,19 +50,19 @@ public class ValidationLogicTest {
 		((List<Object>) cd2.getLinkedObjects("Object")).add(obj);
 
 		ValidationInfo info = Validator.validate(obj,
-				getSystemIndependentPath("/test.xml"));
+				getSystemIndependentPath("/test.xml"), false);
 
 		assertEquals(info.getProfile().getName(),
 				"Validation profile for testing");
-		assertEquals(info.getProfile().getHash(), "Some hash");
+		assertNull(info.getProfile().getHash());
 
 		assertFalse(info.getResult().isCompliant());
 
-		assertEquals(info.getResult().getSummary().getAttrPassedRules(), 2);
-		assertEquals(info.getResult().getSummary().getAttrFailedRules(), 3);
+		assertEquals(info.getResult().getSummary().getAttrPassedRules(), 3);
+		assertEquals(info.getResult().getSummary().getAttrFailedRules(), 4);
 
-		assertEquals(info.getResult().getSummary().getAttrPassedChecks(), 6);
-		assertEquals(info.getResult().getSummary().getAttrFailedChecks(), 4);
+		assertEquals(info.getResult().getSummary().getAttrPassedChecks(), 9);
+		assertEquals(info.getResult().getSummary().getAttrFailedChecks(), 5);
 
 	}
 

@@ -21,6 +21,7 @@ public class ValidationProfile {
     private String hash;
 
     private Map<String, List<Rule>> rules;
+    private Map<String, List<Variable>> variables;
 
     /**
      * Creates new Validation profile model with given description.
@@ -31,8 +32,9 @@ public class ValidationProfile {
      * @param created - date of creation of the validation profile
      * @param hash - hash code of the validation profile
      * @param rules - map of rules of the validation profile (key is the name of the object, value is the list of rules)
+     * @param variables - map of variables of the validation profile (key is the name of the object, value is the list of variables)
      */
-    public ValidationProfile(String attrModel, String name, String description, String creator, String created, String hash, Map<String, List<Rule>> rules) {
+    public ValidationProfile(String attrModel, String name, String description, String creator, String created, String hash, Map<String, List<Rule>> rules, Map<String, List<Variable>> variables) {
         this.attrModel = attrModel;
         this.name = name;
         this.description = description;
@@ -40,6 +42,7 @@ public class ValidationProfile {
         this.created = created;
         this.hash = hash;
         this.rules = rules;
+        this.variables = variables;
     }
 
     /**
@@ -90,7 +93,7 @@ public class ValidationProfile {
      * @return List of rules for the given object.
      */
     public List<Rule> getRoolsForObject(String objName){
-        return rules.get(objName);
+        return rules != null ? rules.get(objName) : new ArrayList<Rule>();
     }
 
     /**
@@ -99,13 +102,20 @@ public class ValidationProfile {
      * @return rule by it's id or null, if there is no rule with such id.
      */
     public Rule getRuleById(String id){
-        for (List<Rule> ruleList : rules.values()){
-            for(Rule rule : ruleList){
-                if (rule.getAttrID().equals(id)){
-                    return rule;
+        if (id == null) {
+            return null;
+        } else if (rules != null) {
+            for (List<Rule> ruleList : rules.values()) {
+                if (ruleList != null) {
+                    for (Rule rule : ruleList) {
+                        if (rule != null && id.equals(rule.getAttrID())) {
+                            return rule;
+                        }
+                    }
                 }
             }
         }
+
         return null;
     }
 
@@ -115,9 +125,41 @@ public class ValidationProfile {
     public List<String> getAllRulesId(){
         List<String> result = new ArrayList<>();
 
-        for (List<Rule> ruleList : rules.values()){
-            for(Rule rule : ruleList){
-                result.add(rule.getAttrID());
+        if (rules != null) {
+            for (List<Rule> ruleList : rules.values()) {
+                if (ruleList != null) {
+                    for (Rule rule : ruleList) {
+                        if (rule != null) {
+                            result.add(rule.getAttrID());
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Get all variables for the given object.
+     * @param objName --- name of the object
+     * @return List of variables for the given object.
+     */
+    public List<Variable> getVariablesForObject(String objName){
+        return variables != null ? variables.get(objName) : new ArrayList<Variable>();
+    }
+
+    /**
+     * @return list of all variables
+     */
+    public List<Variable> getAllVariables(){
+        List<Variable> result = new ArrayList<>();
+
+        if (variables != null) {
+            for (List<Variable> variablesList : variables.values()) {
+                if (variablesList != null) {
+                    result.addAll(variablesList);
+                }
             }
         }
 

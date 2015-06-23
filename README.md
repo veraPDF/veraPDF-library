@@ -10,7 +10,7 @@ git clone https://github.com/veraPDF/veraPDF-library
 2) Build the project
 ```
 cd {project directory}
-mvn clean install
+mvn clean install -DskipTests
 ```
 3) Run validation
 ```

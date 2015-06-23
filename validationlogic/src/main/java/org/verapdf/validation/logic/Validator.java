@@ -7,6 +7,8 @@ import java.util.*;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.ScriptableObject;
+import org.verapdf.exceptions.validationlogic.*;
+import org.verapdf.exceptions.validationprofileparser.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.validation.profile.model.*;
 import org.verapdf.validation.profile.parser.ValidationProfileParser;
@@ -15,6 +17,7 @@ import org.verapdf.validation.report.model.Rule;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
 
 /**
  * Validation logic
@@ -25,10 +28,11 @@ import javax.xml.parsers.ParserConfigurationException;
  */
 public class Validator {
 
-    private Queue<Object> objectsQueue;
-    private Queue<String> objectsContext;
-    private Queue<Set<String>> contextSet;
+    private Stack<Object> objectsStack;
+    private Stack<String> objectsContext;
+    private Stack<Set<String>> contextSet;
     private Map<String, List<Check>> checkMap;
+    private Map<String, java.lang.Object> variablesMap;
     private List<String> warnings;
     private Set<String> idSet;
 
@@ -44,85 +48,190 @@ public class Validator {
         this.profile = profile;
     }
 
-    private ValidationInfo validate(Object root){
-        objectsQueue = new LinkedList<>();
-        objectsContext = new LinkedList<>();
-        contextSet = new LinkedList<>();
+    private ValidationInfo validate(Object root) throws NullLinkNameException, JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, RullWithNullIDException, MultiplyGlobalVariableNameException {
+        objectsStack = new Stack<>();
+        objectsContext = new Stack<>();
+        contextSet = new Stack<>();
         warnings = new ArrayList<>();
         idSet = new HashSet<>();
         checkMap = new HashMap<>();
+        variablesMap = new HashMap<>();
 
-        for(String id: profile.getAllRulesId()){
-            checkMap.put(id, new ArrayList<Check>());
+        if (profile == null){
+            return new ValidationInfo(new Profile("", ""), new Result(new Details(new ArrayList<Rule>(),new ArrayList<String>())));
+        } else {
+
+            for (String id : profile.getAllRulesId()) {
+                checkMap.put(id, new ArrayList<Check>());
+            }
+
+            if (root == null) {
+                List<Rule> rules = new ArrayList<>();
+
+                for (Map.Entry<String, List<Check>> id : checkMap.entrySet()) {
+
+                    rules.add(new Rule(id.getKey(), id.getValue()));
+                }
+
+                return new ValidationInfo(new Profile(profile.getName(), profile.getHash()), new Result(new Details(rules, warnings)));
+
+            } else {
+
+                initializeAllVariables();
+
+                rootType = root.getType();
+
+                objectsStack.push(root);
+
+                objectsContext.push("root");
+
+                Set<String> rootIDContext = new HashSet<>();
+
+                if (root.getID() != null) {
+                    rootIDContext.add(root.getID());
+                    idSet.add(root.getID());
+                }
+
+                contextSet.push(rootIDContext);
+
+                while (!objectsStack.isEmpty()) {
+                    checkNext();
+                }
+
+                List<Rule> rules = new ArrayList<>();
+
+                for (Map.Entry<String, List<Check>> id : checkMap.entrySet()) {
+
+                    rules.add(new Rule(id.getKey(), id.getValue()));
+                }
+
+                return new ValidationInfo(new Profile(profile.getName(), profile.getHash()), new Result(new Details(rules, warnings)));
+
+            }
         }
-
-        rootType = root.getType();
-
-        objectsQueue.add(root);
-
-        objectsContext.add("root");
-
-        Set<String> rootIDContext = new HashSet<>();
-        if (root.getID() != null) {
-            rootIDContext.add(root.getID());
-        }
-
-        contextSet.add(rootIDContext);
-
-        if (root.getID() != null) {
-            idSet.add(root.getID());
-        }
-
-        while(!objectsQueue.isEmpty()){
-            checkNext();
-        }
-
-        List<Rule> rules = new ArrayList<>();
-
-        for(Map.Entry<String, List<Check>> id : checkMap.entrySet()){
-
-            rules.add(new Rule(id.getKey(), id.getValue()));
-        }
-
-        return new ValidationInfo(new Profile(profile.getName(), profile.getHash()), new Result(new Details(rules,warnings)));
     }
 
-    private boolean checkNext(){
-        boolean res;
-        Object checkObject = objectsQueue.poll();
-        String checkContext = objectsContext.poll();
-        Set<String> checkIDContext = contextSet.poll();
+    private void initializeAllVariables() throws JavaScriptEvaluatingException, MultiplyGlobalVariableNameException {
+        if (profile.getAllVariables() != null) {
+            for (Variable var : profile.getAllVariables()) {
+                if (var != null) {
 
-        res = checkAllRules(checkObject, checkContext);
+                    if (variablesMap.containsKey(var.getAttrName())) {
+                        throw new MultiplyGlobalVariableNameException("Founded multiply variable with name: " + var.getAttrName());
+                    }
+                    Context cx = Context.enter();
+                    ScriptableObject scope = cx.initStandardObjects();
+
+                    java.lang.Object res;
+                    try {
+                        res = cx.evaluateString(scope, var.getDefaultValue(), null, 0, null);
+                    } catch (Exception e) {
+                        throw new JavaScriptEvaluatingException("Problem with evaluating default value of the variable: \"" + var.getAttrName());
+                    }
+                    if (res instanceof NativeJavaObject) {
+                        res = ((NativeJavaObject) res).unwrap();
+                    }
+
+                    variablesMap.put(var.getAttrName(), res);
+
+                    Context.exit();
+                }
+            }
+        }
+    }
+
+    private boolean checkNext() throws JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, NullLinkNameException, RullWithNullIDException {
+
+        Object checkObject = objectsStack.pop();
+        String checkContext = objectsContext.pop();
+        Set<String> checkIDContext = contextSet.pop();
+
+        boolean res = checkAllRules(checkObject, checkContext);
+
+        updateVariables(checkObject, checkContext);
 
         addAllLinkedObjects(checkObject, checkContext, checkIDContext);
 
         return res;
     }
 
-    private void addAllLinkedObjects(Object checkObject, String checkContext, Set<String> checkIDContext){
-        for(String link : checkObject.getLinks()){
-            List<? extends Object> objects = checkObject.getLinkedObjects(link);
-            for(int i = 0; i < objects.size(); ++i){
-                Object obj = objects.get(i);
+    private void updateVariables(Object object, String context) throws JavaScriptEvaluatingException {
+        if (profile.getVariablesForObject(object.getType()) != null) {
+            for (Variable var : profile.getVariablesForObject(object.getType())) {
+                if (var != null) {
 
-                if(checkRequired(obj, checkIDContext)){
-                    objectsQueue.add(obj);
-
-                    String path = checkContext + "/" + link + "[" + i + "]";
-
-                    if (obj.getID() != null){
-                        path += "(" + obj.getID() + ")";
+                    Context cx = Context.enter();
+                    ScriptableObject scope = cx.initStandardObjects();
+                    scope.put("obj", scope, object);
+                    for (Map.Entry<String, java.lang.Object> entry : variablesMap.entrySet()) {
+                        scope.put(entry.getKey(), scope, entry.getValue());
                     }
 
-                    objectsContext.add(path);
-                    Set<String> newCheckIDContext = new HashSet<>(checkIDContext);
-                    if (obj.getID() != null) {
-                        newCheckIDContext.add(obj.getID());
-                        idSet.add(obj.getID());
+                    java.lang.Object res;
+                    String valScript = getScriptPrefix(object) + var.getValue() + getScriptSuffix();
+                    try {
+                        res = cx.evaluateString(scope, valScript, null, 0, null);
+                    } catch (Exception e) {
+                        throw new JavaScriptEvaluatingException("Problem with evaluating value of the variable: \"" + var.getAttrName() + " for object: " + object.getType() + " with context: " + context);
                     }
-                    contextSet.add(newCheckIDContext);
+
+                    if (res instanceof NativeJavaObject) {
+                        res = ((NativeJavaObject) res).unwrap();
+                    }
+                    variablesMap.put(var.getAttrName(), res);
+
+                    Context.exit();
                 }
+            }
+        }
+    }
+
+    private void addAllLinkedObjects(Object checkObject, String checkContext, Set<String> checkIDContext) throws NullLinkNameException, NullLinkException, NullLinkedObjectException {
+        for(int j = checkObject.getLinks().size() - 1; j >= 0; --j){
+            String link = checkObject.getLinks().get(j);
+
+            if (link != null) {
+                List<? extends Object> objects = checkObject.getLinkedObjects(link);
+
+                if (objects != null) {
+                    for (int i = 0; i < objects.size(); ++i) {
+                        Object obj = objects.get(i);
+
+                        StringBuilder path = new StringBuilder(checkContext);
+                        path.append("/");
+                        path.append(link);
+                        path.append("[");
+                        path.append(i);
+                        path.append("]");
+
+                        if (obj != null) {
+
+                            if (checkRequired(obj, checkIDContext)) {
+                                objectsStack.push(obj);
+
+                                Set<String> newCheckIDContext = new HashSet<>(checkIDContext);
+
+                                if (obj.getID() != null) {
+                                    path.append("(");
+                                    path.append(obj.getID());
+                                    path.append(")");
+
+                                    newCheckIDContext.add(obj.getID());
+                                    idSet.add(obj.getID());
+                                }
+
+                                objectsContext.push(path.toString());
+                                contextSet.push(newCheckIDContext);
+                            }
+                        } else {
+                            throw new NullLinkedObjectException("There is a null link in an object. Context of the link: " + path);
+                        }
+                    }
+                } else {
+                    throw new NullLinkException("There is a null link in an object. Context: " + checkContext);
+                }
+            } else {
+                throw new NullLinkNameException("There is a null link name in an object. Context: " + checkContext);
             }
         }
     }
@@ -138,18 +247,22 @@ public class Validator {
         }
     }
 
-    private boolean checkAllRules(Object checkObject, String checkContext){
+    private boolean checkAllRules(Object checkObject, String checkContext) throws JavaScriptEvaluatingException, RullWithNullIDException {
         boolean res = true;
         if (profile.getRoolsForObject(checkObject.getType()) != null) {
             for (org.verapdf.validation.profile.model.Rule rule : profile.getRoolsForObject(checkObject.getType())) {
-                res &= checkObjWithRule(checkObject, checkContext, rule, getScript(checkObject, rule));
+                if (rule != null) {
+                    res &= checkObjWithRule(checkObject, checkContext, rule, getScript(checkObject, rule));
+                }
             }
         }
 
         for(String checkType : checkObject.getSuperTypes()){
             if (profile.getRoolsForObject(checkType) != null) {
                 for (org.verapdf.validation.profile.model.Rule rule : profile.getRoolsForObject(checkType)) {
-                    res &= checkObjWithRule(checkObject, checkContext, rule, getScript(checkObject, rule));
+                    if (rule != null) {
+                        res &= checkObjWithRule(checkObject, checkContext, rule, getScript(checkObject, rule));
+                    }
                 }
             }
         }
@@ -190,13 +303,22 @@ public class Validator {
     }
 
 
-    private boolean checkObjWithRule(Object obj, String context, org.verapdf.validation.profile.model.Rule rule, String script){
+    private boolean checkObjWithRule(Object obj, String context, org.verapdf.validation.profile.model.Rule rule, String script) throws JavaScriptEvaluatingException, RullWithNullIDException {
         Context cx = Context.enter();
         ScriptableObject scope = cx.initStandardObjects();
 
         scope.put("obj", scope, obj);
+        for (Map.Entry<String, java.lang.Object> entry : variablesMap.entrySet()) {
+            scope.put(entry.getKey(), scope, entry.getValue());
+        }
 
-        Boolean res = (Boolean) cx.evaluateString(scope, script, null, 0, null);
+        Boolean res;
+
+        try {
+            res = (Boolean) cx.evaluateString(scope, script, null, 0, null);
+        } catch (Exception e) {
+            throw new JavaScriptEvaluatingException("Problem with evaluating test: \"" + rule.getTest() + "\" for object with context: " + context);
+        }
 
         CheckLocation loc = new CheckLocation(rootType, context);
 
@@ -207,27 +329,50 @@ public class Validator {
         } else {
             List<String> args = new ArrayList<>();
 
-            for(String arg : rule.getRuleError().getArgument()){
-                String argScript = getScriptPrefix(obj) + arg + getScriptSuffix();
-                java.lang.Object resArg = cx.evaluateString(scope, argScript, null, 0, null);
+            String errorMessage;
 
-                String resStringArg;
+            if (rule.getRuleError() != null) {
+                errorMessage = rule.getRuleError().getMessage();
 
-                if (resArg instanceof NativeJavaObject){
-                    resStringArg = ((NativeJavaObject) resArg).unwrap().toString();
-                } else {
-                    resStringArg = resArg.toString();
+                if (rule.getRuleError().getArgument() != null) {
+                    for (String arg : rule.getRuleError().getArgument()) {
+                        if (arg != null) {
+                            String argScript = getScriptPrefix(obj) + arg + getScriptSuffix();
+
+                            java.lang.Object resArg;
+
+                            try {
+                                resArg = cx.evaluateString(scope, argScript, null, 0, null);
+                            } catch (Exception e) {
+                                throw new JavaScriptEvaluatingException("Problem with evaluating argument: " + arg + "for object with context: " + context);
+                            }
+
+                            String resStringArg;
+
+                            if (resArg instanceof NativeJavaObject) {
+                                resStringArg = ((NativeJavaObject) resArg).unwrap().toString();
+                            } else {
+                                resStringArg = resArg.toString();
+                            }
+
+                            args.add(resStringArg);
+                        }
+                    }
                 }
-
-                args.add(resStringArg);
+            } else {
+                errorMessage = null;
             }
 
-            CheckError error = new CheckError(rule.getRuleError().getMessage(), args);
+            CheckError error = new CheckError(errorMessage, args);
 
             check = new Check("failed", loc, error, rule.isHasError());
         }
 
-        checkMap.get(rule.getAttrID()).add(check);
+        if (rule.getAttrID() == null) {
+            throw new RullWithNullIDException("There is a rule with null id in the profile. Profile name: " + profile.getName());
+        } else {
+            checkMap.get(rule.getAttrID()).add(check);
+        }
 
         Context.exit();
 
@@ -243,11 +388,23 @@ public class Validator {
      * @param validationProfilePath --- validation profile's file path
      * @return validation info structure
      * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
-     * @throws IOException - If any IO errors occur.
-     * @throws SAXException - If any parse errors occur.
+     * @throws IOException - if any IO errors occur.
+     * @throws SAXException - if any parse errors occur.
+     * @throws IncorrectImportPathException - if validation profile contains incorrect import path
+     * @throws NullLinkNameException - if there is a null link name in some object
+     * @throws JavaScriptEvaluatingException - if there is some problems with evaluating javascript
+     * @throws NullLinkException - if there is a null link
+     * @throws NullLinkedObjectException -  if there is a null object in links list
+     * @throws RullWithNullIDException - if there is a rule with null id in the profile
+     * @throws MissedHashTagException - if validation profile must be signed, but it has no hash tag
+     * @throws XMLStreamException - if exception occurs in parsing a validation profile with xml stream (in checking signature of the validation profile)
+     * @throws WrongSignatureException - if validation profile must be signed, but it has wrong signature
+     * @throws WrongProfileEncodingException - if validation profile has not utf8 encoding
+     * @throws NullProfileException - if resource profile pointer is null
+     * @throws MultiplyGlobalVariableNameException - if there is more than one identical global variable names in the profile model
      */
-    public static ValidationInfo validate(Object root, String validationProfilePath) throws IOException, SAXException, ParserConfigurationException {
-        return validate(root, ValidationProfileParser.parseValidationProfile(validationProfilePath));
+    public static ValidationInfo validate(Object root, String validationProfilePath, boolean isSignCheckOn) throws IOException, SAXException, ParserConfigurationException, IncorrectImportPathException, NullLinkNameException, JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, RullWithNullIDException, MissedHashTagException, XMLStreamException, WrongSignatureException, WrongProfileEncodingException, NullProfileException, MultiplyGlobalVariableNameException {
+        return validate(root, ValidationProfileParser.parseValidationProfile(validationProfilePath, isSignCheckOn));
     }
 
     /**
@@ -261,9 +418,21 @@ public class Validator {
      * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
      * @throws IOException - If any IO errors occur.
      * @throws SAXException - If any parse errors occur.
+     * @throws IncorrectImportPathException - if validation profile contains incorrect import path
+     * @throws NullLinkNameException - if there is a null link name in some object
+     * @throws JavaScriptEvaluatingException - if there is some problems with evaluating javascript
+     * @throws NullLinkException - if there is a null link
+     * @throws NullLinkedObjectException -  if there is a null object in links list
+     * @throws RullWithNullIDException - if there is a rule with null id in the profile
+     * @throws MissedHashTagException - if validation profile must be signed, but it has no hash tag
+     * @throws XMLStreamException - if exception occurs in parsing a validation profile with xml stream (in checking signature of the validation profile)
+     * @throws WrongSignatureException - if validation profile must be signed, but it has wrong signature
+     * @throws WrongProfileEncodingException - if validation profile has not utf8 encoding
+     * @throws NullProfileException - if resource profile pointer is null
+     * @throws MultiplyGlobalVariableNameException - if there is more than one identical global variable names in the profile model
      */
-    public static ValidationInfo validate(Object root, File validationProfile) throws ParserConfigurationException, SAXException, IOException {
-        return validate(root, ValidationProfileParser.parseValidationProfile(validationProfile));
+    public static ValidationInfo validate(Object root, File validationProfile, boolean isSignCheckOn) throws ParserConfigurationException, SAXException, IOException, IncorrectImportPathException, NullLinkNameException, JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, RullWithNullIDException, MissedHashTagException, XMLStreamException, WrongSignatureException, WrongProfileEncodingException, NullProfileException, MultiplyGlobalVariableNameException {
+        return validate(root, ValidationProfileParser.parseValidationProfile(validationProfile, isSignCheckOn));
     }
 
     /**
@@ -274,11 +443,14 @@ public class Validator {
      * @param root --- the root object for validation
      * @param validationProfile --- validation profile's structure
      * @return validation info structure
-     * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
-     * @throws IOException - If any IO errors occur.
-     * @throws SAXException - If any parse errors occur.
+     * @throws NullLinkNameException - if there is a null link name in some object
+     * @throws JavaScriptEvaluatingException - if there is some problems with evaluating javascript
+     * @throws NullLinkException - if there is a null link
+     * @throws NullLinkedObjectException -  if there is a null object in links list
+     * @throws RullWithNullIDException - if there is a rule with null id in the profile
+     * @throws MultiplyGlobalVariableNameException - if there is more than one identical global variable names in the profile model
      */
-    public static ValidationInfo validate(Object root, ValidationProfile validationProfile){
+    public static ValidationInfo validate(Object root, ValidationProfile validationProfile) throws NullLinkNameException, JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, RullWithNullIDException, MultiplyGlobalVariableNameException {
         Validator validator = new Validator(validationProfile);
         return validator.validate(root);
     }

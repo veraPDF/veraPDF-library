@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<validationInfo>
+    <profile>
+        <name>ISO 19005-1:2005 - 6.1.4 Cross reference table - Spacings of subsection headers</name>
+        <hash>sha-1 hash code</hash>
+    </profile>
+    <result>
+        <compliant>false</compliant>
+        <statement>PDF file is not compliant with Validation Profile requirements</statement>
+        <summary completedMetadataFixes="0" failedChecks="1" failedMetadataFixes="0" failedRules="1" passedChecks="0" passedRules="0" warnings="0"/>
+        <details>
+            <rules>
+                <rule checks="1" id="6-1-4-t01" status="failed">
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root/xref[0]</context>
+                        </location>
+                        <error>
+                            <message>Spacings of subsection headers in the cross reference table do not comply PDF/A specification</message>
+                        </error>
+                    </check>
+                </rule>
+            </rules>
+            <warnings/>
+        </details>
+    </result>
+</validationInfo>

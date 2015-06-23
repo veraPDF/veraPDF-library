@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<validationInfo>
+    <profile>
+        <name>ISO 19005-1:2005 - 6.1.2 File header - PDF header</name>
+    </profile>
+    <result>
+        <compliant>false</compliant>
+        <statement>PDF file is not compliant with Validation Profile requirements</statement>
+        <summary completedMetadataFixes="0" failedChecks="1" failedMetadataFixes="0" failedRules="1" passedChecks="0" passedRules="0" warnings="0"/>
+        <details>
+            <rules>
+                <rule checks="1" id="6-1-2-t01" status="failed">
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root</context>
+                        </location>
+                        <error>
+                            <message>File header does not start at byte offset 0 or does not correctly identify the version of the PDF document</message>
+                        </error>
+                    </check>
+                </rule>
+            </rules>
+            <warnings/>
+        </details>
+    </result>
+</validationInfo>

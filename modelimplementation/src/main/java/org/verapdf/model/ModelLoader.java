@@ -1,12 +1,8 @@
 package org.verapdf.model;
 
 import org.apache.pdfbox.cos.COSDictionary;
-import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.verapdf.model.baselayer.*;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.model.coslayer.CosDict;
-import org.verapdf.model.impl.pb.cos.PBCosDict;
 import org.verapdf.model.impl.pb.cos.PBCosDocument;
 
 import java.io.File;
@@ -37,8 +33,7 @@ public final class ModelLoader {
 
         Object root;
         try (PDDocument document = PDDocument.load(file)) {
-            COSDocument pdfBoxDocument = document.getDocument();
-            root = new PBCosDocument(pdfBoxDocument);
+            root = new PBCosDocument(document, file.length());
         }
         return root;
     }

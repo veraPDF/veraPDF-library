@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<validationInfo>
+    <profile>
+        <name>ISO 19005-1:2005 - 6.1.8 Indirect objects - Spacings</name>
+        <hash>sha-1 hash code</hash>
+    </profile>
+    <result>
+        <compliant>false</compliant>
+        <statement>PDF file is not compliant with Validation Profile requirements</statement>
+        <summary completedMetadataFixes="0" failedChecks="12" failedMetadataFixes="0" failedRules="1" passedChecks="0" passedRules="0" warnings="0"/>
+        <details>
+            <rules>
+                <rule checks="12" id="6-1-8-t01" status="failed">
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[0](1 0)</context>
+                        </location>
+                        <error>
+                            <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                        </error>
+                    </check>
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[1](2 0)</context>
+                        </location>
+                        <error>
+                            <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                        </error>
+                    </check>
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[2](3 0)</context>
+                        </location>
+                        <error>
+                            <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                        </error>
+                    </check>
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[3](4 0)</context>
+                        </location>
+                        <error>
+                            <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                        </error>
+                    </check>
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[4](5 0)</context>
+                        </location>
+                        <error>
+                            <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                        </error>
+                    </check>
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[5](6 0)</context>
+                        </location>
+                        <error>
+                            <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                        </error>
+                    </check>
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[6](7 0)</context>
+                        </location>
+                        <error>
+                            <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                        </error>
+                    </check>
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[7](8 0)</context>
+                        </location>
+                        <error>
+                            <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                        </error>
+                    </check>
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[8](9 0)</context>
+                        </location>
+                        <error>
+                            <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                        </error>
+                    </check>
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[9](10 0)</context>
+                        </location>
+                        <error>
+                            <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                        </error>
+                    </check>
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[10](11 0)</context>
+                        </location>
+                        <error>
+                            <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                        </error>
+                    </check>
+                    <check status="failed">
+                        <location level="CosDocument">
+                            <context>root/indirectObjects[11](13 0)</context>
+                        </location>
+                        <error>
+                            <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                        </error>
+                    </check>
+                </rule>
+            </rules>
+            <warnings/>
+        </details>
+    </result>
+</validationInfo>

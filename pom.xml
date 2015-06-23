@@ -69,6 +69,7 @@
 
     <packaging>pom</packaging>
     <modules>
+        <module>verapdfexceptions</module>
         <module>validationprofileparser</module>
         <module>validationlogic</module>
         <module>validationreport</module>
@@ -217,6 +218,26 @@
                                             <argument>clone</argument>
                                             <argument>https://github.com/veraPDF/veraPDF-validation-profiles</argument>
                                         </arguments>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>com.googlecode.maven-download-plugin</groupId>
+                            <artifactId>download-maven-plugin</artifactId>
+                            <version>1.2.1</version>
+                            <executions>
+                                <execution>
+                                    <id>download isartor test suite</id>
+                                    <phase>pre-integration-test</phase>
+                                    <goals>
+                                        <goal>wget</goal>
+                                    </goals>
+                                    <configuration>
+                                        <url>http://www.pdfa.org/wp-content/uploads/2011/08/isartor-pdfa-2008-08-13.zip</url>
+                                        <unpack>true</unpack>
+                                        <outputDirectory>target/test-classes/test-resources</outputDirectory>
+                                        <md5>9f129c834bc6f9f8dabad4491c4c10ec</md5>
                                     </configuration>
                                 </execution>
                             </executions>
