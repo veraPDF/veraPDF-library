@@ -2,7 +2,6 @@
 <validationInfo>
     <profile>
         <name>ISO 19005-1:2005 - 6.1.2 File header - PDF header</name>
-        <hash>sha-1 hash code</hash>
     </profile>
     <result>
         <compliant>false</compliant>

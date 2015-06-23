@@ -21,6 +21,7 @@ public class ValidationProfile {
     private String hash;
 
     private Map<String, List<Rule>> rules;
+    private Map<String, List<Variable>> variables;
 
     /**
      * Creates new Validation profile model with given description.
@@ -31,8 +32,9 @@ public class ValidationProfile {
      * @param created - date of creation of the validation profile
      * @param hash - hash code of the validation profile
      * @param rules - map of rules of the validation profile (key is the name of the object, value is the list of rules)
+     * @param variables - map of variables of the validation profile (key is the name of the object, value is the list of variables)
      */
-    public ValidationProfile(String attrModel, String name, String description, String creator, String created, String hash, Map<String, List<Rule>> rules) {
+    public ValidationProfile(String attrModel, String name, String description, String creator, String created, String hash, Map<String, List<Rule>> rules, Map<String, List<Variable>> variables) {
         this.attrModel = attrModel;
         this.name = name;
         this.description = description;
@@ -40,6 +42,7 @@ public class ValidationProfile {
         this.created = created;
         this.hash = hash;
         this.rules = rules;
+        this.variables = variables;
     }
 
     /**
@@ -130,6 +133,32 @@ public class ValidationProfile {
                             result.add(rule.getAttrID());
                         }
                     }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Get all variables for the given object.
+     * @param objName --- name of the object
+     * @return List of variables for the given object.
+     */
+    public List<Variable> getVariablesForObject(String objName){
+        return variables != null ? variables.get(objName) : new ArrayList<Variable>();
+    }
+
+    /**
+     * @return list of all variables
+     */
+    public List<Variable> getAllVariables(){
+        List<Variable> result = new ArrayList<>();
+
+        if (variables != null) {
+            for (List<Variable> variablesList : variables.values()) {
+                if (variablesList != null) {
+                    result.addAll(variablesList);
                 }
             }
         }

@@ -7,8 +7,8 @@ import com.beust.jcommander.JCommander;
 import org.verapdf.cli.commands.CommandVeraPDF;
 import org.verapdf.config.Input;
 import org.verapdf.config.VeraPdfTaskConfig;
+import org.verapdf.report.XMLReport;
 import org.verapdf.runner.ValidationRunner;
-import org.verapdf.validation.report.XMLValidationReport;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 public class VeraPdfCli {
@@ -32,10 +32,11 @@ public class VeraPdfCli {
         jCommander.parse(args);
 
         VeraPdfTaskConfig taskConfig = createConfigFromCliOptions(commandVeraPDF);
-
+        long startTime = System.currentTimeMillis();
         ValidationInfo validationInfo = ValidationRunner.runValidation(taskConfig);
+        long endTime = System.currentTimeMillis();
         if (validationInfo != null) {
-            XMLValidationReport.writeXMLValidationReport(validationInfo, taskConfig.getOutput());
+            XMLReport.writeXMLReport(validationInfo, taskConfig.getOutput(), endTime - startTime);
         } else {
             System.out.println("Internal error during validation");
         }

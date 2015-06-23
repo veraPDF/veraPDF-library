@@ -78,5 +78,36 @@
             </reference>
         </rule>
 
+        <rule id="rule15" object="CosInteger">
+            <description>STR_ID_11</description>
+            <test>gTestVariable == null</test>
+            <error>
+                <message>real subtype is %</message>
+            </error>
+            <reference>
+                <specification>ISO19005-1</specification>
+                <clause>6.1.2</clause>
+            </reference>
+        </rule>
+
+        <rule id="rule151" object="PDAnnot">
+            <description>STR_ID_11</description>
+            <test>gTestVariable == 41</test>
+            <error>
+                <message>real subtype is</message>
+            </error>
+            <reference>
+                <specification>ISO19005-1</specification>
+                <clause>6.1.2</clause>
+            </reference>
+        </rule>
+
     </rules>
+
+    <variables>
+        <variable name="gTestVariable" object="CosInteger">
+            <defaultValue>null</defaultValue>
+            <value>5+36</value>
+        </variable>
+    </variables>
 </profile>

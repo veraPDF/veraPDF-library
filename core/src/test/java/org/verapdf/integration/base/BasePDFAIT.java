@@ -6,8 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.verapdf.config.Input;
 import org.verapdf.config.VeraPdfTaskConfig;
+import org.verapdf.report.XMLReport;
 import org.verapdf.runner.ValidationRunner;
-import org.verapdf.validation.report.XMLValidationReport;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import java.io.File;
@@ -47,9 +47,11 @@ public abstract class BasePDFAIT {
     }
 
     private String runValidation() throws Exception {
+        long startTime = System.currentTimeMillis();
         ValidationInfo info = ValidationRunner.runValidation(taskConfig);
+        long endTime = System.currentTimeMillis();
 
-        return XMLValidationReport.getXMLValidationReportAsString(info);
+        return XMLReport.getXMLReportAsString(info, endTime - startTime);
     }
 
     private String getExpectedReport() throws Exception {

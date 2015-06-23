@@ -37,4 +37,10 @@
             </fix>
         </rule>
     </rules>
+    <variables>
+        <variable name="varName1" object="Object">
+            <defaultValue>null</defaultValue>
+            <value>5</value>
+        </variable>
+    </variables>
 </profile>
