@@ -75,6 +75,7 @@
         <module>modelimplementation</module>
         <module>core</module>
         <module>cli</module>
+        <module>gui</module>
     </modules>
 
     <properties>
