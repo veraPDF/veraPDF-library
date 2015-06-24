@@ -13,10 +13,8 @@ import java.util.Properties;
 
 /**
  * Panel with partners logo
- * Created by bezrukov on 5/28/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class PartnersPanel extends JPanel {
 
@@ -31,18 +29,23 @@ public class PartnersPanel extends JPanel {
     private JLabel consortium;
     private JLabel version;
 
+    /**
+     * Paints the component
+     *
+     * @param g - graphics for painting
+     */
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
-        int imageHeight = (int) (partnersLogo.getHeight()*SCALE);
-        int imageWidth = (int) (partnersLogo.getWidth()*SCALE);
+        int imageHeight = (int) (partnersLogo.getHeight() * SCALE);
+        int imageWidth = (int) (partnersLogo.getWidth() * SCALE);
         int imageStartY = BORDER_WIDTH + consortium.getHeight();
-        int imageStartX = (getWidth() - imageWidth)/2;
+        int imageStartX = (getWidth() - imageWidth) / 2;
 
         g.setColor(background);
 
-        consortium.setLocation((getWidth() - consortium.getWidth())/2, 3);
+        consortium.setLocation((getWidth() - consortium.getWidth()) / 2, 3);
 
         g.drawImage(partnersLogo, imageStartX, imageStartY, imageStartX + imageWidth, imageStartY + imageHeight, 0, 0, partnersLogo.getWidth(), partnersLogo.getHeight(), this);
 
@@ -51,7 +54,8 @@ public class PartnersPanel extends JPanel {
 
     /**
      * Creates logo panel
-     * @param logoName - name of the partners logo image
+     *
+     * @param logoName        - name of the partners logo image
      * @param backgroundColor - background color
      * @throws IOException - throws when there is a problem with reading image from the input stream
      */
@@ -87,8 +91,8 @@ public class PartnersPanel extends JPanel {
 
         setBackground(backgroundColor);
 
-        int height = (int) (partnersLogo.getHeight()*SCALE + consortium.getHeight()*2 + version.getHeight()*2);
-        setPreferredSize(new Dimension(450, height + BORDER_WIDTH*2));
+        int height = (int) (partnersLogo.getHeight() * SCALE + consortium.getHeight() * 2 + version.getHeight() * 2);
+        setPreferredSize(new Dimension(450, height + BORDER_WIDTH * 2));
     }
 
 }

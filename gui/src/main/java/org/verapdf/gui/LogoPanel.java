@@ -9,10 +9,8 @@ import java.io.InputStream;
 
 /**
  * Panel with veraPDF logo
- * Created by bezrukov on 5/28/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class LogoPanel extends JPanel {
 
@@ -20,14 +18,19 @@ public class LogoPanel extends JPanel {
     private int borderWidth;
     private Color background;
 
+    /**
+     * Paints the component
+     *
+     * @param g - graphics for painting
+     */
     @Override
     public void paint(Graphics g) {
         super.paint(g);
 
-        int imageHeight = getHeight() - borderWidth*2;
-        int imageWidth = logo.getWidth()*imageHeight/logo.getHeight();
+        int imageHeight = getHeight() - borderWidth * 2;
+        int imageWidth = logo.getWidth() * imageHeight / logo.getHeight();
         int imageStartY = borderWidth;
-        int imageStartX = (getWidth() - imageWidth)/2;
+        int imageStartX = (getWidth() - imageWidth) / 2;
 
         g.setColor(background);
 
@@ -37,7 +40,8 @@ public class LogoPanel extends JPanel {
 
     /**
      * Creates logo panel
-     * @param logoName - name of the logo image
+     *
+     * @param logoName        - name of the logo image
      * @param backgroundColor - background color
      * @throws IOException - throws when there is a problem with reading image from the input stream
      */

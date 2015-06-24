@@ -16,10 +16,8 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Panel with functionality for checker.
- * Created by bezrukov on 5/14/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class CheckerPanel extends JPanel {
 
@@ -64,8 +62,8 @@ public class CheckerPanel extends JPanel {
     private ValidateWorker validateWorker;
 
     private Color beforeValidationColor = Color.BLACK;
-    private Color validationSuccessColor = new Color(0,180,0);
-    private Color validationFailedColor = new Color(180,0,0);
+    private Color validationSuccessColor = new Color(0, 180, 0);
+    private Color validationFailedColor = new Color(180, 0, 0);
 
 
     /**
@@ -165,7 +163,7 @@ public class CheckerPanel extends JPanel {
         gbl.setConstraints(reports, gbc);
         this.add(reports);
 
-        LogoPanel xmlLogo = new LogoPanel(XML_LOGO_NAME,reports.getBackground(),4);
+        LogoPanel xmlLogo = new LogoPanel(XML_LOGO_NAME, reports.getBackground(), 4);
         reports.add(xmlLogo);
 
         saveXML = new JButton(SAVE_REPORT_BUTTON_TEXT);
@@ -176,7 +174,7 @@ public class CheckerPanel extends JPanel {
         viewXML.setEnabled(false);
         reports.add(viewXML);
 
-        LogoPanel htmlLogo = new LogoPanel(HTML_LOGO_NAME,reports.getBackground(),4);
+        LogoPanel htmlLogo = new LogoPanel(HTML_LOGO_NAME, reports.getBackground(), 4);
         reports.add(htmlLogo);
 
         saveHTML = new JButton(SAVE_HTML_REPORT_BUTTON_TEXT);
@@ -202,7 +200,6 @@ public class CheckerPanel extends JPanel {
         htmlChooser.setCurrentDirectory(new File("."));
         htmlChooser.setAcceptAllFileFilterUsed(false);
         htmlChooser.setFileFilter(new FileNameExtensionFilter("html", "html"));
-
 
 
         choosePDF.addActionListener(new ActionListener() {
@@ -242,7 +239,7 @@ public class CheckerPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int resultChoose = xmlChooser.showOpenDialog(CheckerPanel.this);
                 if (resultChoose == JFileChooser.APPROVE_OPTION) {
-                    if (!xmlChooser.getSelectedFile().exists()){
+                    if (!xmlChooser.getSelectedFile().exists()) {
                         JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file doesn't exist.", "Error", JOptionPane.ERROR_MESSAGE);
                     } else if (!xmlChooser.getSelectedFile().getName().endsWith(".xml")) {
                         JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file is not in XML format.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -310,10 +307,9 @@ public class CheckerPanel extends JPanel {
 
         viewXML.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (xmlReport == null){
+                if (xmlReport == null) {
                     JOptionPane.showMessageDialog(CheckerPanel.this, "XML report hasn't been saved.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                else {
+                } else {
                     try {
                         Desktop.getDesktop().open(xmlReport);
                     } catch (IOException e1) {
@@ -354,10 +350,9 @@ public class CheckerPanel extends JPanel {
 
         viewHTML.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (htmlReport == null){
+                if (htmlReport == null) {
                     JOptionPane.showMessageDialog(CheckerPanel.this, "HTML report hasn't been saved.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-                else {
+                } else {
                     try {
                         Desktop.getDesktop().open(htmlReport);
                     } catch (IOException e1) {
@@ -372,7 +367,7 @@ public class CheckerPanel extends JPanel {
     /**
      * Method to notify panel that validation was done.
      */
-    public void validationEnded(){
+    public void validationEnded() {
         endTimeOfValidation = System.currentTimeMillis();
 
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -415,8 +410,8 @@ public class CheckerPanel extends JPanel {
             htmlReport = new File("./temp/tempHTMLReport.html");
             HTMLReport.wrightHTMLReport(htmlReport.getPath(), xmlReport, profile);
 
-            if (image == null){
-                image = new File("./temp/"+ HTMLReport.getLogoImageName());
+            if (image == null) {
+                image = new File("./temp/" + HTMLReport.getLogoImageName());
             }
 
             saveHTML.setEnabled(true);
@@ -429,7 +424,10 @@ public class CheckerPanel extends JPanel {
 
     }
 
-    public void errorInValidatingOccur(){
+    /**
+     * Method to notify panel that some error occurs at validating
+     */
+    public void errorInValidatingOccur() {
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         progressBar.setVisible(false);
     }
