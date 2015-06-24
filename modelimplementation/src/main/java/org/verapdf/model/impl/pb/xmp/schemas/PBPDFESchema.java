@@ -5,19 +5,21 @@ import org.verapdf.model.xmplayer.PDFESchema;
 
 /**
  * Current class is representation of PDFESchema interface from abstract model based on xmpbox from pdfbox.
- * Created by bezrukov on 6/22/15.
  *
  * @author Maksim Bezrukov
  */
-public class PBPDFESchema extends PBXMPSchema implements PDFESchema {
+public class PBPDFESchema extends PBXMPPredefinedSchema implements PDFESchema {
+
+    private static final String PDFESCHEMA = "PDFESchema";
 
     /**
      * Constructs new object
+     *
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBPDFESchema(XMPSchema xmpSchema) {
         super(xmpSchema);
-        setType("PDFESchema");
+        setType(PDFESCHEMA);
     }
 
 }

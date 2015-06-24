@@ -1,25 +1,30 @@
 package org.verapdf.model.impl.pb.xmp.schemas;
 
 import org.apache.xmpbox.schema.PDFAIdentificationSchema;
+import org.apache.xmpbox.type.AbstractField;
+import org.apache.xmpbox.type.TextType;
 import org.verapdf.model.xmplayer.PDFAIdSchema;
+
 
 /**
  * Current class is representation of PDFAIdSchema interface from abstract model based on xmpbox from pdfbox.
- * Created by bezrukov on 6/19/15.
  *
  * @author Maksim Bezrukov
  */
-public class PBPDFAIdSchema extends PBXMPSchema implements PDFAIdSchema {
+public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchema {
 
-    private static final String CORR  ="corr";
+    private static final String PDFAIDSCHEMA = "PDFAIdSchema";
+
+    private static final String CORR = "corr";
 
     /**
      * Constructs new object
+     *
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBPDFAIdSchema(PDFAIdentificationSchema xmpSchema) {
         super(xmpSchema);
-        setType("PDFAIdSchema");
+        setType(PDFAIDSCHEMA);
     }
 
     /**
@@ -51,7 +56,13 @@ public class PBPDFAIdSchema extends PBXMPSchema implements PDFAIdSchema {
      */
     @Override
     public String getcorr() {
-        return xmpSchema.getProperty(CORR).toString();
+        AbstractField corr = xmpSchema.getProperty(CORR);
+
+        if (corr instanceof TextType) {
+            return ((TextType) corr).getStringValue();
+        } else {
+            return null;
+        }
     }
 
 }

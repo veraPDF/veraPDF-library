@@ -4,11 +4,12 @@ import org.apache.xmpbox.schema.PhotoshopSchema;
 
 /**
  * Current class is representation of PhotoshopSchema interface from abstract model based on xmpbox from pdfbox.
- * Created by bezrukov on 6/22/15.
  *
  * @author Maksim Bezrukov
  */
-public class PBPhotoshopSchema extends PBXMPSchema implements org.verapdf.model.xmplayer.PhotoshopSchema {
+public class PBPhotoshopSchema extends PBXMPPredefinedSchema implements org.verapdf.model.xmplayer.PhotoshopSchema {
+
+    private static final String PHOTOSHOPSCHEMA = "PhotoshopSchema";
 
     private static final String AUTHOR = "Author";
     private static final String COPYRIGHT = "Copyright";
@@ -16,11 +17,12 @@ public class PBPhotoshopSchema extends PBXMPSchema implements org.verapdf.model.
 
     /**
      * Constructs new object
+     *
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBPhotoshopSchema(PhotoshopSchema xmpSchema) {
         super(xmpSchema);
-        setType("PhotoshopSchema");
+        setType(PHOTOSHOPSCHEMA);
     }
 
     /**

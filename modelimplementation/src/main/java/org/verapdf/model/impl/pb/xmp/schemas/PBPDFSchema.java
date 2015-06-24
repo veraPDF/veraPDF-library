@@ -5,11 +5,12 @@ import org.verapdf.model.xmplayer.PDFSchema;
 
 /**
  * Current class is representation of PDFSchema interface from abstract model based on xmpbox from pdfbox.
- * Created by bezrukov on 6/22/15.
  *
  * @author Maksim Bezrukov
  */
-public class PBPDFSchema extends PBXMPSchema implements PDFSchema {
+public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
+
+    private static final String PDFSCHEMA = "PDFSchema";
 
     private static final String AUTHOR = "Author";
     private static final String BASE_URL = "BaseURL";
@@ -22,11 +23,12 @@ public class PBPDFSchema extends PBXMPSchema implements PDFSchema {
 
     /**
      * Constructs new object
+     *
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBPDFSchema(AdobePDFSchema xmpSchema) {
         super(xmpSchema);
-        setType("PDFSchema");
+        setType(PDFSCHEMA);
     }
 
     /**

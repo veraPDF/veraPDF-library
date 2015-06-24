@@ -5,19 +5,21 @@ import org.verapdf.model.xmplayer.XMPMainPackage;
 
 /**
  * Current class is representation of XMPPackage interface from abstract model based on xmpbox from pdfbox.
- * Created by bezrukov on 6/12/15.
  *
  * @author Maksim Bezrukov
  */
 public class PBXMPMainPackage extends PBXMPPackage implements XMPMainPackage {
 
+    private static final String XMPMAINPACKAGE = "XMPMainPackage";
+
     /**
      * Constructs new object
+     *
      * @param xmpMetadata - object from xmpbox represented this package
      */
     public PBXMPMainPackage(XMPMetadata xmpMetadata) {
         super(xmpMetadata);
-        setType("XMPMainPackage");
+        setType(XMPMAINPACKAGE);
     }
 
     /**

@@ -1,8 +1,6 @@
 package org.verapdf.model.impl.pb.xmp;
 
 import org.apache.xmpbox.XMPMetadata;
-import org.verapdf.model.GenericModelObject;
-import org.verapdf.model.xmplayer.XMPObject;
 import org.verapdf.model.xmplayer.XMPPackage;
 import org.verapdf.model.xmplayer.XMPSchema;
 
@@ -17,17 +15,29 @@ import java.util.List;
  */
 public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 
+    private static final String XMPPACKAGE = "XMPPackage";
+
     private static final String SCHEMA = "Schemas";
 
     protected XMPMetadata xmpMetadata;
 
     /**
      * Constructs new object
+     *
      * @param xmpMetadata - object from xmpbox represented this package
      */
     public PBXMPPackage(XMPMetadata xmpMetadata) {
-        this.setType("XMPPackage");
+        this.setType(XMPPACKAGE);
         this.xmpMetadata = xmpMetadata;
+    }
+
+    /**
+     * @return true if metadata is valid
+     */
+    @Override
+    public Boolean getisMetadataValid() {
+        // TODO: implement this
+        return Boolean.TRUE;
     }
 
     /**
@@ -65,7 +75,7 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
         return list;
     }
 
-    private List<XMPSchema> getSchemas(){
+    private List<XMPSchema> getSchemas() {
         List<XMPSchema> resultSchemas = new ArrayList<>();
 
         for (org.apache.xmpbox.schema.XMPSchema pbschema : xmpMetadata.getAllSchemas()) {

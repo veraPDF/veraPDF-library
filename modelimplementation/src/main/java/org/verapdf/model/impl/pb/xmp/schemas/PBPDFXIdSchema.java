@@ -5,19 +5,21 @@ import org.verapdf.model.xmplayer.PDFXIdSchema;
 
 /**
  * Current class is representation of PDFXIdSchema interface from abstract model based on xmpbox from pdfbox.
- * Created by bezrukov on 6/22/15.
  *
  * @author Maksim Bezrukov
  */
-public class PBPDFXIdSchema extends PBXMPSchema implements PDFXIdSchema {
+public class PBPDFXIdSchema extends PBXMPPredefinedSchema implements PDFXIdSchema {
+
+    private static final String PDFXIDSCHEMA = "PDFXIdSchema";
 
     /**
      * Constructs new object
+     *
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBPDFXIdSchema(XMPSchema xmpSchema) {
         super(xmpSchema);
-        setType("PDFXIdSchema");
+        setType(PDFXIDSCHEMA);
     }
 
 }

@@ -5,7 +5,6 @@ import java.util.Set;
 
 /**
  * Helper class for xmp package
- * Created by bezrukov on 6/15/15.
  *
  * @author Maksim Bezrukov
  */
@@ -93,7 +92,7 @@ public final class XMPHelper {
         predifinedSchemas.add(NSXAPS);
     }
 
-    public static boolean isPredifinedSchema(String schemaNS){
+    public static boolean isPredifinedSchema(String schemaNS) {
         return predifinedSchemas.contains(schemaNS);
     }
 

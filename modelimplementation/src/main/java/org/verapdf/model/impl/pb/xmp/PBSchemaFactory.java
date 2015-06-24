@@ -6,7 +6,6 @@ import org.verapdf.model.tools.XMPHelper;
 
 /**
  * Wraps xmpbox schema object into PBXMPSchema object based on it's NSURI
- * Created by bezrukov on 6/22/15.
  *
  * @author Maksim Bezrukov
  */
@@ -14,6 +13,7 @@ public class PBSchemaFactory {
 
     /**
      * Creates schema object based on it's NSURI
+     *
      * @param schema - xmpbox schema
      * @return PBXMPSchema wrapper of the xmpbox's schema
      */
@@ -26,18 +26,6 @@ public class PBSchemaFactory {
                 break;
             case XMPHelper.NSPDFAEXTENSION:
                 resultSchema = new PBPDFAExtensionSchema((PDFAExtensionSchema) schema);
-                break;
-            case XMPHelper.NSPDFAFIELD:
-                resultSchema = new PBPDFAFieldSchema(schema);
-                break;
-            case XMPHelper.NSPDFAPROPERTY:
-                resultSchema = new PBPDFAPropertySchema(schema);
-                break;
-            case XMPHelper.NSPDFASCHEMA:
-                resultSchema = new PBPDFASchemaSchema(schema);
-                break;
-            case XMPHelper.NSPDFATYPE:
-                resultSchema = new PBPDFATypeSchema(schema);
                 break;
             case XMPHelper.NSXMPBASIC:
                 resultSchema = new PBXMPBasicSchema((XMPBasicSchema) schema);
@@ -81,15 +69,9 @@ public class PBSchemaFactory {
             case XMPHelper.NSXAPS:
                 resultSchema = new PBXAPSSchema(schema);
                 break;
-            case XMPHelper.NSXAPG:
-                resultSchema = new PBXAPGSchema(schema);
-                break;
-            case XMPHelper.NSSTFNT:
-                resultSchema = new PBStFntSchema(schema);
-                break;
             default:
                 if (XMPHelper.isPredifinedSchema(schema.getNamespace())) {
-                    resultSchema = new PBXMPSchema(schema);
+                    resultSchema = new PBXMPPredefinedSchema(schema);
                 } else {
                     resultSchema = new PBXMPCustomSchema(schema);
                 }

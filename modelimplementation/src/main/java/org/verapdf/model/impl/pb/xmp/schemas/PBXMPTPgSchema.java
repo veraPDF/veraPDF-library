@@ -5,11 +5,12 @@ import org.verapdf.model.xmplayer.XMPTPgSchema;
 
 /**
  * Current class is representation of XMPTPgSchema interface from abstract model based on xmpbox from pdfbox.
- * Created by bezrukov on 6/22/15.
  *
  * @author Maksim Bezrukov
  */
-public class PBXMPTPgSchema extends PBXMPSchema implements XMPTPgSchema {
+public class PBXMPTPgSchema extends PBXMPPredefinedSchema implements XMPTPgSchema {
+
+    private static final String XMPTPGSCHEMA = "XMPTPgSchema";
 
     private static final String COLORANTS = "Colorants";
     private static final String FONTS = "Fonts";
@@ -17,11 +18,12 @@ public class PBXMPTPgSchema extends PBXMPSchema implements XMPTPgSchema {
 
     /**
      * Constructs new object
+     *
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBXMPTPgSchema(XMPageTextSchema xmpSchema) {
         super(xmpSchema);
-        setType("XMPTPgSchema");
+        setType(XMPTPGSCHEMA);
     }
 
     /**
