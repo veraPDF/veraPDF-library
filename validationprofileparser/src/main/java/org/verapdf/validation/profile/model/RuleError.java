@@ -4,11 +4,8 @@ import java.util.List;
 
 /**
  * Structure of the error/warning in a rule.
- * Created by bezrukov on 4/24/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
- * @see Rule
  */
 public class RuleError {
     private String message;
@@ -16,7 +13,8 @@ public class RuleError {
 
     /**
      * Creates new  rule error model.
-     * @param message - error message
+     *
+     * @param message  - error message
      * @param argument - list of arguments for the message
      */
     public RuleError(String message, List<String> argument) {

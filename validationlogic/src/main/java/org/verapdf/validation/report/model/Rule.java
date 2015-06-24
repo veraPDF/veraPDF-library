@@ -4,10 +4,8 @@ import java.util.List;
 
 /**
  * Structure of the rule check result.
- * Created by bezrukov on 5/4/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class Rule {
     private String attrID;
@@ -18,6 +16,7 @@ public class Rule {
 
     /**
      * Creates rule model for the validation report
+     *
      * @param attrID - id of the rule
      * @param checks - list of performed checks of this rule
      */

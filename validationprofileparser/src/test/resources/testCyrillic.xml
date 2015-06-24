@@ -21,7 +21,9 @@
         <rule id="rule53" object="PDMetadata">
             <description>STR_ID_608</description>
             <test>isInfoDictConsistent</test>
-            <error><message>STR_ID_609</message> </error>
+            <error>
+                <message>STR_ID_609</message>
+            </error>
             <reference>
                 <specification>ISO19005-1</specification>
                 <clause>6.7.3</clause>

@@ -4,11 +4,8 @@ import java.util.List;
 
 /**
  * Structure of the rule in a validation profile.
- * Created by bezrukov on 4/24/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
- * @see ValidationProfile
  */
 public class Rule {
     private String attrID;
@@ -23,14 +20,15 @@ public class Rule {
 
     /**
      * Creates new rule model.
-     * @param attrID - id of the rule
-     * @param attrObject - name of the object to which this rule applied
+     *
+     * @param attrID      - id of the rule
+     * @param attrObject  - name of the object to which this rule applied
      * @param description - description of the rule
-     * @param ruleError - rule error
-     * @param isHasError - is the rule error of type error or warning
-     * @param test - test of the rule as JavaScript context
-     * @param reference - reference of the rule
-     * @param fix - list of fixes for this rule
+     * @param ruleError   - rule error
+     * @param isHasError  - is the rule error of type error or warning
+     * @param test        - test of the rule as JavaScript context
+     * @param reference   - reference of the rule
+     * @param fix         - list of fixes for this rule
      */
     public Rule(String attrID, String attrObject, String description, RuleError ruleError, boolean isHasError, String test, Reference reference, List<Fix> fix) {
         this.attrID = attrID;
@@ -80,6 +78,7 @@ public class Rule {
 
     /**
      * Get what {@code ruleError} (if {@code this} rule has it) represents: an error or a warning.
+     *
      * @return true if {@code ruleError} represents an error, and false if {@code ruleError} represents a warning (or null).
      */
     public boolean isHasError() {

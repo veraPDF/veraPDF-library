@@ -2,11 +2,8 @@ package org.verapdf.validation.profile.model;
 
 /**
  * Structure of the reference in a rule.
- * Created by bezrukov on 4/24/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
- * @see Rule
  */
 public class Reference {
     private String specification;
@@ -14,8 +11,9 @@ public class Reference {
 
     /**
      * Creates reference model of a rule.
+     *
      * @param specification - specification of a rule
-     * @param clause - clause of a rule
+     * @param clause        - clause of a rule
      */
     public Reference(String specification, String clause) {
         this.specification = specification;

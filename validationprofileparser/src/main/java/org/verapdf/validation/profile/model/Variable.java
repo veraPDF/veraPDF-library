@@ -1,14 +1,9 @@
 package org.verapdf.validation.profile.model;
 
-import java.util.List;
-
 /**
  * Structure of the variable in a validation profile.
- * Created by bezrukov on 6/17/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
- * @see ValidationProfile
  */
 public class Variable {
     private String attrName;
@@ -19,6 +14,7 @@ public class Variable {
 
     /**
      * Creates variable model.
+     *
      * @param attrName
      * @param attrObject
      * @param defaultValue

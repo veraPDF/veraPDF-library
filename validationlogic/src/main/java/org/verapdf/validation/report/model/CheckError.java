@@ -4,11 +4,8 @@ import java.util.List;
 
 /**
  * Structure of the error/warning in a check.
- * Created by bezrukov on 5/6/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
- * @see Check
  */
 public class CheckError {
     private String message;
@@ -16,7 +13,8 @@ public class CheckError {
 
     /**
      * Creates check error model
-     * @param message - message of the error
+     *
+     * @param message  - message of the error
      * @param argument - list of arguments for the message
      */
     public CheckError(String message, List<String> argument) {

@@ -1,14 +1,12 @@
 package org.verapdf.gui;
 
 import org.verapdf.model.ModelLoader;
-import org.verapdf.model.baselayer.*;
-import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.validation.logic.Validator;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import javax.swing.*;
-import java.util.List;
 import java.io.File;
+import java.util.List;
 
 /** Validates PDF in a new threat.
  * Created by bezrukov on 5/29/15.

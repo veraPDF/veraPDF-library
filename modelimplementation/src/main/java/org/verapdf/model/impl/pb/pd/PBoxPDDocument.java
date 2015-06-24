@@ -1,11 +1,7 @@
 package org.verapdf.model.impl.pb.pd;
 
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.model.pdlayer.PDAcroForm;
-import org.verapdf.model.pdlayer.PDDocument;
-import org.verapdf.model.pdlayer.PDMetadata;
-import org.verapdf.model.pdlayer.PDOutputIntent;
-import org.verapdf.model.pdlayer.PDPage;
+import org.verapdf.model.pdlayer.*;
 
 import java.util.ArrayList;
 import java.util.List;

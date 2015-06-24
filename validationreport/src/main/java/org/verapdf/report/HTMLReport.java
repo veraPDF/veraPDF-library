@@ -9,10 +9,8 @@ import java.io.*;
 
 /**
  * Generating HTML validation report
- * Created by bezrukov on 6/2/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public final class HTMLReport {
 
@@ -23,11 +21,12 @@ public final class HTMLReport {
 
     /**
      * Creates html validation report
-     * @param htmlReportPath - path with name of the resulting html report
-     * @param xmlReport - xml validation report file
+     *
+     * @param htmlReportPath    - path with name of the resulting html report
+     * @param xmlReport         - xml validation report file
      * @param validationProfile - validation profile file
      * @throws TransformerException - if an unrecoverable error occurs during the course of the transformation or
-     * @throws IOException - file system exceptions
+     * @throws IOException          - file system exceptions
      */
     public static void wrightHTMLReport(String htmlReportPath, File xmlReport, File validationProfile) throws TransformerException, IOException {
 
@@ -57,7 +56,7 @@ public final class HTMLReport {
     /**
      * @return name of the generated image
      */
-    public static String getLogoImageName(){
+    public static String getLogoImageName() {
         return LOGO_NAME;
     }
 

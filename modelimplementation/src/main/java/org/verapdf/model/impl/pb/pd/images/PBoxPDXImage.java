@@ -1,7 +1,6 @@
 package org.verapdf.model.impl.pb.pd.images;
 
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import org.verapdf.model.baselayer.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.PDColorSpace;
 import org.verapdf.model.pdlayer.PDXImage;

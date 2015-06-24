@@ -1,31 +1,30 @@
 package org.verapdf.report;
 
+import org.verapdf.validation.report.model.ValidationInfo;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.parsers.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
-import javax.xml.transform.dom.*;
-import javax.xml.transform.stream.*;
-
-import org.w3c.dom.*;
-import org.verapdf.validation.report.model.ValidationInfo;
-
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.sql.Time;
 import java.util.Formatter;
 import java.util.GregorianCalendar;
 
 
 /**
  * Generating XML structure of file for general report
- * Created by bezrukov on 6/18/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public final class XMLReport {
 
@@ -33,11 +32,13 @@ public final class XMLReport {
     private static final long MS_IN_MIN = 60000;
     private static final long MS_IN_SEC = 1000;
 
-    private XMLReport(){
+    private XMLReport() {
 
     }
 
-    private static String getProcessingTimeAsString(long processingTime) {
+    private static String getProcessingTimeAsString(long processTime) {
+        long processingTime = processTime;
+
         StringBuffer buffer = new StringBuffer();
 
         long hours = processingTime / MS_IN_HOUR;
@@ -64,8 +65,9 @@ public final class XMLReport {
 
     /**
      * Creates tree of xml tags for general report
+     *
      * @param info - validation info model to be writed
-     * @param doc - document used for writing xml in further
+     * @param doc  - document used for writing xml in further
      * @return root element of the xml structure
      * @throws DatatypeConfigurationException - indicates a serious configurating error
      */
@@ -111,13 +113,14 @@ public final class XMLReport {
 
     /**
      * Write the resulting report into xml formatted report.
+     *
      * @param info - validation info model to be writed
      * @param path - the path for output the resulting document. Path have to ends with file name with extension.
-     * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
+     * @throws ParserConfigurationException         - if a DocumentBuilder cannot be created which satisfies the configuration requested.
      * @throws TransformerFactoryConfigurationError - thrown in case of service configuration error or if the implementation is not available or cannot be instantiated or when it is not possible to create a Transformer instance.
-     * @throws TransformerException - if an unrecoverable error occurs during the course of the transformation or
-     * @throws FileNotFoundException - if the file with path {@code path} exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
-     * @throws DatatypeConfigurationException - indicates a serious configurating error
+     * @throws TransformerException                 - if an unrecoverable error occurs during the course of the transformation or
+     * @throws FileNotFoundException                - if the file with path {@code path} exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
+     * @throws DatatypeConfigurationException       - indicates a serious configurating error
      */
     public static void writeXMLReport(ValidationInfo info, String path, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
 
@@ -133,13 +136,14 @@ public final class XMLReport {
 
     /**
      * Write the resulting report into xml formatted report.
+     *
      * @param info - validation info model to be writed
      * @return {@code String} representation of the resulting xml report
-     * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
+     * @throws ParserConfigurationException         - if a DocumentBuilder cannot be created which satisfies the configuration requested.
      * @throws TransformerFactoryConfigurationError - thrown in case of service configuration error or if the implementation is not available or cannot be instantiated or when it is not possible to create a Transformer instance.
-     * @throws TransformerException - if an unrecoverable error occurs during the course of the transformation or
-     * @throws FileNotFoundException - if the file with path {@code path} exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
-     * @throws DatatypeConfigurationException - indicates a serious configurating error
+     * @throws TransformerException                 - if an unrecoverable error occurs during the course of the transformation or
+     * @throws FileNotFoundException                - if the file with path {@code path} exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
+     * @throws DatatypeConfigurationException       - indicates a serious configurating error
      */
     public static String getXMLReportAsString(ValidationInfo info, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
 
