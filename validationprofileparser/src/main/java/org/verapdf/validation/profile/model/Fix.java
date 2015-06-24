@@ -2,11 +2,8 @@ package org.verapdf.validation.profile.model;
 
 /**
  * Structure of the fix in a rule.
- * Created by bezrukov on 4/24/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
- * @see Rule
  */
 public class Fix {
     private String attrID;
@@ -17,10 +14,11 @@ public class Fix {
 
     /**
      * Creates fix model
-     * @param attrID - id of the fix
+     *
+     * @param attrID      - id of the fix
      * @param description - description of the fix
-     * @param info - info of the fix
-     * @param error - error of the fix
+     * @param info        - info of the fix
+     * @param error       - error of the fix
      */
     public Fix(String attrID, String description, FixInfo info, FixError error) {
         this.attrID = attrID;

@@ -2,10 +2,8 @@ package org.verapdf.validation.report.model;
 
 /**
  * Structure of the summary of a result.
- * Created by bezrukov on 5/4/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class Summary {
     private int attrPassedRules;
@@ -18,13 +16,14 @@ public class Summary {
 
     /**
      * Creates summary model for validation report
-     * @param attrPassedRules - number of passed rules
-     * @param attrFailedRules - number of failed rules
-     * @param attrPassedChecks - number of passed checks
-     * @param attrFailedChecks - number of failed checks
+     *
+     * @param attrPassedRules            - number of passed rules
+     * @param attrFailedRules            - number of failed rules
+     * @param attrPassedChecks           - number of passed checks
+     * @param attrFailedChecks           - number of failed checks
      * @param attrCompletedMetadataFixes - number of completed metadata fixes
-     * @param attrFailedMetadataFixes - number of failed metadata fixes
-     * @param attrWarnings - number of warnngs
+     * @param attrFailedMetadataFixes    - number of failed metadata fixes
+     * @param attrWarnings               - number of warnngs
      */
     public Summary(int attrPassedRules, int attrFailedRules, int attrPassedChecks, int attrFailedChecks, int attrCompletedMetadataFixes, int attrFailedMetadataFixes, int attrWarnings) {
         this.attrPassedRules = attrPassedRules;

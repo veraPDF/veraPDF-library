@@ -2,7 +2,8 @@ package org.verapdf.exceptions.validationprofileparser;
 
 import org.verapdf.exceptions.VeraPDFException;
 
-/** Exception that occurs when there is no hash tag in a validation profile
+/**
+ * Exception that occurs when there is no hash tag in a validation profile
  * Created by bezrukov on 6/15/15.
  *
  * @author Maksim Bezrukov

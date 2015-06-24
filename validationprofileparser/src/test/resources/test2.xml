@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<profile  model="org.verapdf.model.PDFA1a 2nd">
+<profile model="org.verapdf.model.PDFA1a 2nd">
     <name>PDF/A-1a validation profile2</name>
     <description>STR_ID_122</description>
     <creator>User2</creator>
