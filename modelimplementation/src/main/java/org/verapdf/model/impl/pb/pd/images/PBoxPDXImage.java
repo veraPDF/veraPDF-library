@@ -69,7 +69,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     private List<PDXImage> getAlternates() {
         final List<PDXImage> alternates = new ArrayList<>();
         final COSStream imageStream = ((PDImageXObject) simplePDObject).getCOSStream();
-        COSBase buffer = imageStream.getItem(COSName.getPDFName("Alternates"));
+        COSBase buffer = imageStream.getItem(COSName.getPDFName(ALTERNATES));
         addAlternates(alternates, buffer);
         return alternates;
     }

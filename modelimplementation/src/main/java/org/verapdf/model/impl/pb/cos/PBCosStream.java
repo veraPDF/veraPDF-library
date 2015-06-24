@@ -34,8 +34,9 @@ public class PBCosStream extends PBCosDict implements CosStream {
     private String getFilters(COSBase base) {
         StringBuilder filters = new StringBuilder();
 
-        if (base == null)
+        if (base == null) {
             return filters.toString();
+        }
 
         if (base instanceof COSName) {
             return ((COSName) base).getName();

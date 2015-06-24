@@ -23,8 +23,8 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 
     public static final Logger logger = Logger.getLogger(PBoxPDPage.class);
 
-    public final static String ANNOTS = "annots";
-    public final static String ACTION = "action";
+    public static final String ANNOTS = "annots";
+    public static final String ACTION = "action";
     public static final String CONTENT_STREAM = "contentStream";
 
     public PBoxPDPage(org.apache.pdfbox.pdmodel.PDPage simplePDObject) {
@@ -63,7 +63,7 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
         } catch (IOException e) {
             logger.error("Can not get content stream of page. " + e.getMessage());
         }
-        return new ArrayList<>();
+        return contentStreams;
     }
 
     //TODO : implement this
