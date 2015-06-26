@@ -56,6 +56,7 @@ public class TestEntity {
     private File testFile;
     private File validationProfile;
     private ValidationInfo info;
+    private StrategyResource strategyResource;
 
     @JsonIgnore
     public File getTestFile() {
@@ -84,4 +85,12 @@ public class TestEntity {
         this.info = info;
     }
 
+    @JsonIgnore
+    public StrategyResource getStrategyResource() {
+        return strategyResource;
+    }
+
+    public void setStrategyResource(StrategyResource strategyResource) {
+        this.strategyResource = strategyResource;
+    }
 }

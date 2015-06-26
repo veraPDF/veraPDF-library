@@ -5,8 +5,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.verapdf.integration.model.TestEntity;
-import org.verapdf.integration.model.TestSet;
+import org.verapdf.integration.model.*;
 import org.verapdf.integration.tools.ResultComparator;
 import org.verapdf.integration.tools.TestEntityValidator;
 
@@ -21,10 +20,11 @@ import java.util.*;
 
 public class VeraPDFTestSuite {
 
-    private final static String VERA_PDF_TEST_SUITE_PROPERTIES_PATH = "/testfiles/test-config.properties";
+    private final static String VERA_PDF_TEST_SUITE_PROPERTIES_PATH = "test-config.properties";
     private final static String VERA_PDF_TEST_SUITE_FILE_PATH_PROPERTY = "test.set.path";
-    private final static String VERA_PDF_VALIDATION_PROFILES_DIRECTORY = "veraPDF-validation-profiles";
-    private final static String TEST_FILES_DIRECTORY_PREFIX = "/test-resources/";
+    private final static String VERA_PDF_VALIDATION_PROFILES_DIRECTORY = "veraPDF-validation-profiles/";
+    private final static String TEST_RESOURCES_DIRECTORY_PREFIX = "/test-resources/";
+    private final static String REPORTS_DIRECTORY_PREFIX = "/reports/";
 
     private final static ObjectMapper MAPPER = new ObjectMapper();
 
@@ -34,22 +34,22 @@ public class VeraPDFTestSuite {
     @BeforeClass
     public static void initializeTestSet() throws IOException, URISyntaxException {
         Properties prop = new Properties();
-        InputStream inputStream = ClassLoader.class.getResourceAsStream(VERA_PDF_TEST_SUITE_PROPERTIES_PATH);
+        InputStream inputStream = ClassLoader.class.getResourceAsStream(TEST_RESOURCES_DIRECTORY_PREFIX + VERA_PDF_TEST_SUITE_PROPERTIES_PATH);
         prop.load(inputStream);
         String testSetPath = prop.getProperty(VERA_PDF_TEST_SUITE_FILE_PATH_PROPERTY);
         TEST_SET = MAPPER.readValue(new File(getSystemIndependentPath(testSetPath)), TestSet.class);
-        validationProfilesMap = loadValidationProfiles();
+        validationProfilesMap = loadTestResources(TEST_RESOURCES_DIRECTORY_PREFIX + VERA_PDF_VALIDATION_PROFILES_DIRECTORY);
     }
 
     @Test
-    public void performValidation() throws URISyntaxException {
+    public void performValidation() throws URISyntaxException, IOException {
         for (String testCorpus : TEST_SET.getTestSet().keySet()) {
-            Map<String, File> testFiles = loadTestFiles(testCorpus);
+            Map<String, File> testFiles = loadTestResources(TEST_RESOURCES_DIRECTORY_PREFIX + testCorpus);
+            Map<String, File> expectedReports = loadTestResources(TEST_RESOURCES_DIRECTORY_PREFIX + REPORTS_DIRECTORY_PREFIX);
             List<TestEntity> corpusTestSet = TEST_SET.getTestSet().get(testCorpus);
             for (TestEntity testEntity : corpusTestSet) {
                 if (testFiles.containsKey(testEntity.getTestFileName()) && validationProfilesMap.containsKey(testEntity.getValidationProfileName())) {
-                    testEntity.setTestFile(testFiles.get(testEntity.getTestFileName()));
-                    testEntity.setValidationProfile(validationProfilesMap.get(testEntity.getValidationProfileName()));
+                    attachResources(testEntity, testFiles, expectedReports);
                     TestEntityValidator.validate(testEntity);
                     Assert.assertTrue(ResultComparator.compare(testEntity));
                 } else {
@@ -59,16 +59,28 @@ public class VeraPDFTestSuite {
         }
     }
 
-    private static Map<String, File> loadTestFiles(String directory) throws URISyntaxException {
-        Collection<File> testFilesCollection = FileUtils.listFiles(new File(getSystemIndependentPath(TEST_FILES_DIRECTORY_PREFIX + directory)), null, true);
+    private static Map<String, File> loadTestResources(String directory) throws URISyntaxException {
+        Collection<File> testFilesCollection = FileUtils.listFiles(new File(getSystemIndependentPath(directory)), null, true);
         return transformFileCollectionToMap(testFilesCollection);
     }
 
-    private static Map<String, File> loadValidationProfiles() throws URISyntaxException {
-        Collection<File> validationProfilesCollection = FileUtils.listFiles(new File(getSystemIndependentPath(TEST_FILES_DIRECTORY_PREFIX + VERA_PDF_VALIDATION_PROFILES_DIRECTORY)), null, true);
-        return transformFileCollectionToMap(validationProfilesCollection);
+    private static void attachResources(TestEntity testEntity, Map<String, File> testFiles, Map<String, File> expectedReports) throws IOException {
+        testEntity.setTestFile(testFiles.get(testEntity.getTestFileName()));
+        testEntity.setValidationProfile(validationProfilesMap.get(testEntity.getValidationProfileName()));
+        attachStrategyResource(testEntity, expectedReports);
     }
 
+    private static void attachStrategyResource(TestEntity testEntity, Map<String, File> expectedReports) throws IOException {
+        if (testEntity.getComparingStrategy().equals(ComparingStrategies.STATS)) {
+            if (expectedReports.containsKey(testEntity.getExpectedReportName())) {
+                testEntity.setStrategyResource(MAPPER.readValue(expectedReports.get(testEntity.getExpectedReportName()), StatsStrategyResource.class));
+            }
+        } else if (testEntity.getComparingStrategy().equals(ComparingStrategies.COMPARE)) {
+            if (expectedReports.containsKey(testEntity.getExpectedReportName())) {
+                testEntity.setStrategyResource(MAPPER.readValue(expectedReports.get(testEntity.getExpectedReportName()), CompareStrategyResource.class));
+            }
+        }
+    }
 
     private static Map<String, File> transformFileCollectionToMap(Collection<File> files) {
         Map<String, File> result = new HashMap<>();

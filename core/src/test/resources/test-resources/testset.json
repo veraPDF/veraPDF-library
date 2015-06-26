@@ -4,8 +4,8 @@
       {
         "testFileName": "veraPDF test suite 6-1-2-t01-fail-a.pdf",
         "validationProfileName": "verapdf-profile-6-1-2-t01.xml",
-        "comparingStrategy": "FAIL",
-        "expectedReportName": ""
+        "comparingStrategy": "STATS",
+        "expectedReportName": "6-1-2-t01.json"
       }
     ],
     "Isartor testsuite": [
