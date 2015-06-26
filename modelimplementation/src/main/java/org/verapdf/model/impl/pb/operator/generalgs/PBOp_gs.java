@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class PBOp_gs extends PBOpGeneralGS implements Op_gs {
 
-    public static final String OP_GS_TYPE = "OP_gs";
+    public static final String OP_GS_TYPE = "Op_gs";
 
     public PBOp_gs(List<COSBase> arguments) {
         super(arguments);

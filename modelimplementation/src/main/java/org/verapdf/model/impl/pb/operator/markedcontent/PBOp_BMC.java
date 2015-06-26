@@ -14,6 +14,7 @@ public class PBOp_BMC extends PBOpMarkedContent implements Op_BMC {
 
     public PBOp_BMC(List<COSBase> arguments) {
         super(arguments);
+        setType(OP_BMC_TYPE);
     }
 
 }

@@ -10,11 +10,11 @@ import java.util.List;
  */
 public class PBOp_j_line_join extends PBOpGeneralGS implements Op_j_line_join {
 
-    public static final String OP_W_J_TYPE = "Op_j_line_join";
+    public static final String OP_J_LINE_JOIN_TYPE = "Op_j_line_join";
 
     public PBOp_j_line_join(List<COSBase> arguments) {
         super(arguments);
-        setType(OP_W_J_TYPE);
+        setType(OP_J_LINE_JOIN_TYPE);
     }
 
 }
