@@ -1,9 +1,9 @@
 package org.verapdf.model.impl.pb.cos;
 
+import java.util.Locale;
+
 import org.apache.pdfbox.cos.COSNumber;
 import org.verapdf.model.coslayer.CosNumber;
-
-import java.text.DecimalFormat;
 
 /**
  * Current class is representation of CosNumber interface of abstract model.
@@ -38,7 +38,7 @@ public abstract class PBCosNumber extends PBCosObject implements CosNumber {
      */
     @Override
     public Double getrealValue() {
-        String value = new DecimalFormat("#.#######").format(((COSNumber) baseObject).doubleValue());
+        String value = String.format(Locale.US, "%.7f", ((COSNumber) baseObject).doubleValue());
         return Double.valueOf(value);
     }
 }

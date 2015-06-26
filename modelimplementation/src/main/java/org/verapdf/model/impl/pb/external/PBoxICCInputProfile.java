@@ -13,10 +13,4 @@ public class PBoxICCInputProfile extends PBoxICCProfile implements ICCInputProfi
         super(profile);
         setType("ICCInputProfile");
     }
-
-    // TODO : implement this
-    @Override
-    public String getcolorSpace() {
-        return null;
-    }
 }

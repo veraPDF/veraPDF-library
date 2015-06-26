@@ -41,7 +41,7 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 
     //TODO : implement this
     private List<PDContentStream> getAppearance() {
-        List<PDContentStream> appearance = new ArrayList<>();
-        return appearance;
+        List<PDContentStream> appearances = new ArrayList<>();
+        return appearances;
     }
 }

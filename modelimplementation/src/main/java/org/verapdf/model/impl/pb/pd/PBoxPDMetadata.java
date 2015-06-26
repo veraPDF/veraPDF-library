@@ -11,4 +11,23 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
         super(simplePDObject);
         setType("PDMetadata");
     }
+
+    @Override
+    public String getfilter() {
+        //TODO : implement this method
+        return null;
+    }
+
+    @Override
+    public String getsubType() {
+        //TODO : implement this method
+        return null;
+    }
+
+    @Override
+    public String gettypeValue() {
+        //TODO : implement this method
+        return null;
+    }
+
 }
