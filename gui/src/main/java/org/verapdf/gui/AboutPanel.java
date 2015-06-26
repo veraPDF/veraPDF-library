@@ -1,19 +1,20 @@
 package org.verapdf.gui;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
-import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import javax.swing.*;
-
+/**
+ * About Panel
+ *
+ * @author Maksim Bezrukov
+ */
 class AboutPanel extends JPanel {
 
     private final static String LOGO_NAME = "veraPDF-logo-600.png";
@@ -27,6 +28,11 @@ class AboutPanel extends JPanel {
     private JButton urlLabel;
     private JDialog dialog;
 
+    /**
+     * About panel
+     *
+     * @throws IOException - throws when there is a problem with reading image from the input stream
+     */
     public AboutPanel() throws IOException {
         setLayout(new BorderLayout());
 
@@ -84,6 +90,12 @@ class AboutPanel extends JPanel {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Shows about dialog
+     *
+     * @param parent - parent component of the dialog
+     * @param title  - title of the dialog
+     */
     public void showDialog(Component parent, String title) {
 
         Frame owner;
@@ -102,7 +114,7 @@ class AboutPanel extends JPanel {
             dialog.setTitle(title);
         }
 
-        dialog.setLocation(150,150);
+        dialog.setLocation(150, 150);
         dialog.setVisible(true);
     }
 

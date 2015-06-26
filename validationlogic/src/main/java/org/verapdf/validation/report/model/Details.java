@@ -4,10 +4,8 @@ import java.util.List;
 
 /**
  * Structure of the details about the performed checks.
- * Created by bezrukov on 5/4/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class Details {
     private List<Rule> rules;
@@ -15,7 +13,8 @@ public class Details {
 
     /**
      * Creates Details model
-     * @param rules list of checked rules
+     *
+     * @param rules    list of checked rules
      * @param warnings - list of warnings
      */
     public Details(List<Rule> rules, List<String> warnings) {

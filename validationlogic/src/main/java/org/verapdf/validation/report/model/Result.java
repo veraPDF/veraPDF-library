@@ -2,10 +2,8 @@ package org.verapdf.validation.report.model;
 
 /**
  * Structure of the result of the validation.
- * Created by bezrukov on 5/4/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class Result {
     private boolean compliant;
@@ -15,6 +13,7 @@ public class Result {
 
     /**
      * Creates result model by given details
+     *
      * @param details - details model of the validation
      */
     public Result(Details details) {

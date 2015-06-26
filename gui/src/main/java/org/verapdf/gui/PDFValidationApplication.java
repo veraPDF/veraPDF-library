@@ -9,10 +9,8 @@ import java.io.IOException;
 
 /**
  * Main frame of the PDFA Conformance Checker
- * Created by bezrukov on 5/14/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class PDFValidationApplication extends JFrame {
 
@@ -23,6 +21,11 @@ public class PDFValidationApplication extends JFrame {
 
     private AboutPanel aboutPanel;
 
+    /**
+     * Starting point of the gui
+     *
+     * @param args - command line arguments
+     */
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -51,7 +54,7 @@ public class PDFValidationApplication extends JFrame {
     /**
      * Creates the frame.
      */
-    public PDFValidationApplication(){
+    public PDFValidationApplication() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 550, 350);
         setResizable(false);

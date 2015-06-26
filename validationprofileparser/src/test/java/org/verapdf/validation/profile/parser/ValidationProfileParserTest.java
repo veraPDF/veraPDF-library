@@ -1,10 +1,12 @@
-package org.verapdf.validation.profile.parser; /**
- * Created by bezrukov on 4/28/15.
+package org.verapdf.validation.profile.parser;
+
+/**
+ * @author Maksim Bezrukov
  */
 
+import org.junit.Test;
 import org.verapdf.validation.profile.model.Rule;
 import org.verapdf.validation.profile.model.ValidationProfile;
-import org.junit.Test;
 import org.verapdf.validation.profile.model.Variable;
 
 import static org.junit.Assert.*;

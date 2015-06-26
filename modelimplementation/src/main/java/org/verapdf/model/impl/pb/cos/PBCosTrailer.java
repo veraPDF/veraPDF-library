@@ -1,12 +1,14 @@
 package org.verapdf.model.impl.pb.cos;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.pdfbox.cos.*;
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSName;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosIndirect;
 import org.verapdf.model.coslayer.CosTrailer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Trailer of the document.
