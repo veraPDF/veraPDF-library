@@ -1,10 +1,9 @@
 package org.verapdf.exceptions;
 
-/** General exception class for all expected exceptions in veraPDF library
- * Created by bezrukov on 6/5/15.
+/**
+ * General exception class for all expected exceptions in veraPDF library
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class VeraPDFException extends Exception {
 
@@ -15,5 +14,7 @@ public class VeraPDFException extends Exception {
         super(message);
     }
 
-
+    public VeraPDFException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

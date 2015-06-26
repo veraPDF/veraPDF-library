@@ -2,7 +2,8 @@ package org.verapdf.exceptions.validationprofileparser;
 
 import org.verapdf.exceptions.VeraPDFException;
 
-/** Exception that occurs when null pointer to the profile used
+/**
+ * Exception that occurs when null pointer to the profile used
  * Created by bezrukov on 6/17/15.
  *
  * @author Maksim Bezrukov

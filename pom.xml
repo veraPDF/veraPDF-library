@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>oss-parent</artifactId>
         <groupId>org.sonatype.oss</groupId>
@@ -131,24 +131,24 @@
     </build>
     <reporting>
         <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.8</version>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>dependencies</report>
-              <report>project-team</report>
-              <report>mailing-list</report>
-              <report>cim</report>
-              <report>issue-tracking</report>
-              <report>license</report>
-              <report>scm</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.8</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>dependencies</report>
+                            <report>project-team</report>
+                            <report>mailing-list</report>
+                            <report>cim</report>
+                            <report>issue-tracking</report>
+                            <report>license</report>
+                            <report>scm</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
         </plugins>
     </reporting>
 
@@ -234,7 +234,9 @@
                                         <goal>wget</goal>
                                     </goals>
                                     <configuration>
-                                        <url>http://www.pdfa.org/wp-content/uploads/2011/08/isartor-pdfa-2008-08-13.zip</url>
+                                        <url>
+                                            http://www.pdfa.org/wp-content/uploads/2011/08/isartor-pdfa-2008-08-13.zip
+                                        </url>
                                         <unpack>true</unpack>
                                         <outputDirectory>target/test-classes/test-resources</outputDirectory>
                                         <md5>9f129c834bc6f9f8dabad4491c4c10ec</md5>

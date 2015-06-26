@@ -23,7 +23,9 @@
         <rule id="rule53" object="CosInteger">
             <description>STR_ID_608</description>
             <test>intValue == 41 &amp;&amp; stringValue == "41"</test>
-            <warning><message>STR_ID_609</message> </warning>
+            <warning>
+                <message>STR_ID_609</message>
+            </warning>
             <reference>
                 <specification>ISO19005-1</specification>
                 <clause>6.7.3</clause>

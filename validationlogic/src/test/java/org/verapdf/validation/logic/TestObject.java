@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by bezrukov on 5/7/15.
+ * @author Maksim Bezrukov
  */
 public class TestObject implements Object {
     private String type;
@@ -17,7 +17,7 @@ public class TestObject implements Object {
     private List<PDAnnot> pdAnnots;
 
     @Override
-	public Boolean isContextDependent(){
+    public Boolean isContextDependent() {
         return Boolean.FALSE;
     }
 
