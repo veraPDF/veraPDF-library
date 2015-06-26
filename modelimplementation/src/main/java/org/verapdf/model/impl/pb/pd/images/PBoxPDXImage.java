@@ -6,7 +6,6 @@ import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.pdlayer.PDColorSpace;
 import org.verapdf.model.pdlayer.PDXImage;
 
@@ -54,16 +53,18 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     }
 
     private List<PDColorSpace> getImageCS() {
-        List<PDColorSpace> colorSpace = new ArrayList<>(1);
-        try {
-            PDColorSpace buffer = ColorSpaceFactory.getColorSpace(((PDImageXObject) simplePDObject).getColorSpace());
-            if (buffer != null) {
-                colorSpace.add(buffer);
-            }
-        } catch (IOException e) {
-            logger.error("Problems with color space obtaining from Image XObject. " + e.getMessage());
-        }
-        return colorSpace;
+        //fix this
+//        List<PDColorSpace> colorSpace = new ArrayList<>(1);
+//        try {
+//            PDColorSpace buffer = ColorSpaceFactory.getColorSpace(((PDImageXObject) simplePDObject).getColorSpace());
+//            if (buffer != null) {
+//                colorSpace.add(buffer);
+//            }
+//        } catch (IOException e) {
+//            logger.error("Problems with color space obtaining from Image XObject. " + e.getMessage());
+//        }
+//        return colorSpace;
+        return null;
     }
 
     private List<PDXImage> getAlternates() {
