@@ -33,9 +33,9 @@ import java.util.*;
  */
 public class XMPChecker {
 
-    private final static Logger logger = Logger.getLogger(XMPChecker.class);
+    private static final Logger logger = Logger.getLogger(XMPChecker.class);
 
-    private final static List<String> URLS = new ArrayList<>(4);
+    private static final List<String> URLS = new ArrayList<>(4);
 
     private static final String TITLE = "Title";
     private static final String SUBJECT = "Subject";
@@ -45,12 +45,17 @@ public class XMPChecker {
     private static final String CREATOR = "Creator";
     private static final String CREATION_DATE = "CreationDate";
     private static final String MODIFICATION_DATE = "ModDate";
+    private static final Integer MAX_REQUIRED_RECORDS = Integer.valueOf(8);
 
     static {
         URLS.add("http://purl.org/dc/elements/1.1/");
         URLS.add("http://ns.adobe.com/xap/1.0/");
         URLS.add("http://ns.adobe.com/pdf/1.3/");
         URLS.add("http://www.aiim.org/pdfa/ns/id/");
+    }
+
+    private XMPChecker() {
+
     }
 
     /**
@@ -70,7 +75,7 @@ public class XMPChecker {
                 DomXmpParser xmpParser = new DomXmpParser();
                 XMPMetadata metadata = xmpParser.parse(meta.getUnfilteredStream());
 
-                Map<String, Object> properties = new HashMap<>(8);
+                Map<String, Object> properties = new HashMap<>(MAX_REQUIRED_RECORDS);
 
                 getTitleAuthorSubject(metadata, properties);
 
@@ -192,7 +197,9 @@ public class XMPChecker {
             } else if (item instanceof COSObject) {
                 return deepPropertyCheck((COSObject) item, properties, checksRule);
             }
-        } else return Boolean.TRUE;
+        } else {
+            return Boolean.TRUE;
+        }
         return Boolean.FALSE;
     }
 
