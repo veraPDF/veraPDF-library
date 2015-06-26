@@ -25,14 +25,6 @@ public class PBXMPMMSchema extends PBXMPPredefinedSchema implements XMPMMSchema 
     }
 
     /**
-     * @return property InstanceID of the schema
-     */
-    @Override
-    public String getinstanceID() {
-        return ((XMPMediaManagementSchema) xmpSchema).getInstanceID();
-    }
-
-    /**
      * @return property Manifest of the schema
      */
     @Override
