@@ -12,7 +12,7 @@ public class Operators {
     public static final String B_STAR_EOFILL_STROKE = "B*";
     public static final String BX = "BX";
     public static final String C_CURVE_TO = "c";
-    public static final String C_CONCAT = "cm";
+    public static final String CM_CONCAT = "cm";
     public static final String D_SET_DASH = "d";
     public static final String DO = "Do";
     public static final String EMC = "EMC";
