@@ -14,7 +14,7 @@ import java.io.InputStream;
  */
 public class MiniLogoPanel extends JPanel {
 
-    private final static String LABEL_TEXT = "     Please specify input PDF, Validation Profile and press \"Validate\"";
+    private static final String LABEL_TEXT = "     Please specify input PDF, Validation Profile and press \"Validate\"";
 
     /**
      * Creates mini logo panel
@@ -30,7 +30,8 @@ public class MiniLogoPanel extends JPanel {
         InputStream is = getClass().getClassLoader().getResourceAsStream(logoPath);
         final BufferedImage image = ImageIO.read(is);
         Icon icon = new Icon() {
-            double scale = 0.15;
+
+            private static final double scale = 0.15;
 
             public void paintIcon(Component c, Graphics g, int x, int y) {
                 g.drawImage(image, 0, 0, getIconWidth(), getIconHeight(), 0, 0, image.getWidth(), image.getHeight(), null);

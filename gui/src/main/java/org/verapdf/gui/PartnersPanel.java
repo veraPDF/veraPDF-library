@@ -18,14 +18,13 @@ import java.util.Properties;
  */
 public class PartnersPanel extends JPanel {
 
-    private final static String CONSORTIUM_TEXT = "© 2015 veraPDF Consortium";
-    private final static String PROPERTIES_NAME = "config.properties";
-    private String versionText;
+    private static final String CONSORTIUM_TEXT = "© 2015 veraPDF Consortium";
+    private static final String PROPERTIES_NAME = "config.properties";
 
     private final BufferedImage partnersLogo;
-    private final int BORDER_WIDTH = 5;
+    private static final int BORDER_WIDTH = 5;
     private Color background;
-    private double SCALE = 0.5;
+    private static final double SCALE = 0.5;
     private JLabel consortium;
     private JLabel version;
 
@@ -77,12 +76,11 @@ public class PartnersPanel extends JPanel {
         Properties properties = new Properties();
         properties.load(getClass().getClassLoader().getResourceAsStream(PROPERTIES_NAME));
 
-        versionText = "Version: " + properties.getProperty("application.version");
+        String versionText = "Version: " + properties.getProperty("application.version");
 
         version = new JLabel(versionText);
 
         version.setHorizontalTextPosition(JLabel.CENTER);
-        //version.setFont(new Font(version.getFont().getName(), version.getFont().getStyle(), (int) (version.getFont().getSize()*1.3)));
         Rectangle2D recVer = new TextLayout(versionText, version.getFont(), new FontRenderContext(null, true, true)).getBounds();
         version.setSize((int) (recVer.getWidth()) + 7, (int) (recVer.getHeight() + 4));
 

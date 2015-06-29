@@ -1,9 +1,9 @@
 package org.verapdf.model.impl.pb.cos;
 
-import java.util.Locale;
-
 import org.apache.pdfbox.cos.COSNumber;
 import org.verapdf.model.coslayer.CosNumber;
+
+import java.util.Locale;
 
 /**
  * Current class is representation of CosNumber interface of abstract model.

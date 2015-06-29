@@ -10,9 +10,17 @@ import org.verapdf.exceptions.VeraPDFException;
 
 public class NullLinkedObjectException extends VeraPDFException {
 
+    /**
+     * Constructs new NullLinkedObjectException
+     */
     public NullLinkedObjectException() {
     }
 
+    /**
+     * Constructs new NullLinkedObjectException
+     *
+     * @param message - the message of the exception
+     */
     public NullLinkedObjectException(String message) {
         super(message);
     }

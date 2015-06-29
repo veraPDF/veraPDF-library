@@ -6,7 +6,6 @@ import org.verapdf.validation.report.model.ValidationInfo;
 
 import javax.swing.*;
 import java.io.File;
-import java.util.List;
 
 /**
  * Validates PDF in a new threat.
@@ -33,7 +32,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
     }
 
     @Override
-    protected ValidationInfo doInBackground() throws Exception {
+    protected ValidationInfo doInBackground() {
         ValidationInfo result = null;
         org.verapdf.model.baselayer.Object root = null;
 
@@ -59,8 +58,4 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
         parent.validationEnded();
     }
 
-    @Override
-    protected void process(List<Integer> chunks) {
-        super.process(chunks);
-    }
 }

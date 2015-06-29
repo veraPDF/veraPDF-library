@@ -14,10 +14,8 @@ import java.io.IOException;
  */
 public class PDFValidationApplication extends JFrame {
 
-    private final String TITLE = "PDF/A Conformance Checker";
-    private final static String LOGO_NAME = "veraPDF-logo-600.png";
-    private final static String LOGO_LINK_TEXT = "www.verapdf.org";
-    private final static String LOGO_LINK_URL = "http://www.verapdf.org";
+    private static final String TITLE = "PDF/A Conformance Checker";
+    private static final String LOGO_NAME = "veraPDF-logo-600.png";
 
     private AboutPanel aboutPanel;
 

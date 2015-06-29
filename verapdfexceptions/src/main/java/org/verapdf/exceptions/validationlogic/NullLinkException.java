@@ -9,9 +9,17 @@ import org.verapdf.exceptions.VeraPDFException;
  */
 public class NullLinkException extends VeraPDFException {
 
+    /**
+     * Constructs new NullLinkException
+     */
     public NullLinkException() {
     }
 
+    /**
+     * Constructs new NullLinkException
+     *
+     * @param message - the message of the exception
+     */
     public NullLinkException(String message) {
         super(message);
     }
