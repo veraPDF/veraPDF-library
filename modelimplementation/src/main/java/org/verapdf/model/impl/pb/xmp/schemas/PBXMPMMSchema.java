@@ -32,10 +32,4 @@ public class PBXMPMMSchema extends PBXMPPredefinedSchema implements XMPMMSchema 
         return xmpSchema.getProperty(MANIFEST) == null ? null : xmpSchema.getProperty(MANIFEST).toString();
     }
 
-    @Override
-    public String getinstanceID() {
-        //TODO : implement this method
-        return null;
-    }
-
 }

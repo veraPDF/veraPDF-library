@@ -42,12 +42,4 @@ public class PBXMPCustomSchema extends PBXMPPredefinedSchema implements XMPCusto
         return Boolean.TRUE;
     }
 
-    /**
-     * @return true if the definition of this custom schema contains at the main xmp package as this schema
-     */
-    @Override
-    public Boolean getisDefinedInMainPackage() {
-        // TODO: implement this method
-        return Boolean.FALSE;
-    }
 }
