@@ -2,10 +2,8 @@ package org.verapdf.validation.report.model;
 
 /**
  * Structure of the check of the rule.
- * Created by bezrukov on 5/4/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class Check {
     private String attrStatus;
@@ -16,9 +14,10 @@ public class Check {
 
     /**
      * Creates Check model for validation report
+     *
      * @param attrStatus - status of the check
-     * @param location - location of the check
-     * @param error - error of the check
+     * @param location   - location of the check
+     * @param error      - error of the check
      * @param isHasError - is the error represents an error or a warning
      */
     public Check(String attrStatus, CheckLocation location, CheckError error, boolean isHasError) {
@@ -51,6 +50,7 @@ public class Check {
 
     /**
      * Get what {@code error} (if {@code this} check has it) represents: an error or a warning.
+     *
      * @return true if {@code error} represents an error, and false if {@code error} represents a warning (or null).
      */
     public boolean isHasError() {

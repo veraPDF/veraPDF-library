@@ -2,10 +2,8 @@ package org.verapdf.validation.report.model;
 
 /**
  * Structure of the profile info in validation info.
- * Created by bezrukov on 5/4/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class Profile {
     private String name;
@@ -13,6 +11,7 @@ public class Profile {
 
     /**
      * Creates model of an information about used profile
+     *
      * @param name - name of the validation profile
      * @param hash - hash code of the validation profile
      */

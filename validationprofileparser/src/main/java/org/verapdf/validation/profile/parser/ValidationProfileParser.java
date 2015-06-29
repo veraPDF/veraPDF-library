@@ -17,10 +17,8 @@ import java.util.*;
 
 /**
  * This class is for parse the validation profile xml file into java classes.
- * Created by bezrukov on 4/24/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public final class ValidationProfileParser {
 
@@ -66,42 +64,46 @@ public final class ValidationProfileParser {
 
         Node modelNode = root.getAttributes().getNamedItem("model");
 
-        if (modelNode != null){
+        if (modelNode != null) {
             model = modelNode.getNodeValue();
         }
 
         NodeList children = root.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); ++i){
+        for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
             String childName = child.getNodeName();
 
-            if (childName.equals("name")) {
-                name = child.getTextContent().trim();
+            switch (childName) {
+                case "name":
+                    name = child.getTextContent().trim();
+                    break;
+                case "description":
+                    description = child.getTextContent().trim();
+                    break;
 
-            } else if (childName.equals("description")) {
-                description = child.getTextContent().trim();
-
-            } else if (childName.equals("creator")) {
-                creator = child.getTextContent().trim();
-
-            } else if (childName.equals("created")) {
-                created = child.getTextContent().trim();
-
-            } else if (childName.equals("hash") && isSignCheckOn) {
-                hash = child.getTextContent().trim();
-
-            } else if (childName.equals("imports")) {
-                parseImports(resource, child, rules);
-
-            } else if (childName.equals("rules")) {
-                parseRules(child, rules);
-
-            } else if (childName.equals("variables")) {
-                parseVariables(child, variables);
+                case "creator":
+                    creator = child.getTextContent().trim();
+                    break;
+                case "created":
+                    created = child.getTextContent().trim();
+                    break;
+                case "hash":
+                    if (isSignCheckOn) {
+                        hash = child.getTextContent().trim();
+                    }
+                    break;
+                case "imports":
+                    parseImports(resource, child, rules);
+                    break;
+                case "rules":
+                    parseRules(child, rules);
+                    break;
+                case "variables":
+                    parseVariables(child, variables);
+                    break;
             }
         }
-
 
         profile = new ValidationProfile(model, name, description, creator, created, hash, rules, variables);
     }
@@ -109,7 +111,7 @@ public final class ValidationProfileParser {
     private void parseImports(File sourceFile, Node imports, Map<String, List<Rule>> rules) throws SAXException, IncorrectImportPathException, IOException {
         NodeList children = imports.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); ++i) {
+        for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
 
             if (!child.getNodeName().equals("import")) {
@@ -120,11 +122,11 @@ public final class ValidationProfileParser {
 
             File newFile = new File(sourceFile.getParent(), path);
 
-            if (newFile == null || !newFile.exists()){
+            if (newFile == null || !newFile.exists()) {
                 throw new IncorrectImportPathException("Can not find import with path \"" + path + "\" directly to the given profile.");
             }
 
-            if(profilesPaths.contains(newFile.getCanonicalPath())){
+            if (profilesPaths.contains(newFile.getCanonicalPath())) {
                 continue;
             }
 
@@ -134,25 +136,27 @@ public final class ValidationProfileParser {
 
             NodeList children2 = doc.getDocumentElement().getChildNodes();
 
-            for(int j = 0; j < children2.getLength(); ++j){
+            for (int j = 0; j < children2.getLength(); ++j) {
                 Node child2 = children2.item(j);
                 String name = child2.getNodeName();
 
-                if (name.equals("rules")) {
-                    parseRules(child2, rules);
+                switch (name) {
+                    case "rules":
+                        parseRules(child2, rules);
+                        break;
 
-                } else if (name.equals("imports")) {
-                    parseImports(newFile, child2, rules);
-
+                    case "imports":
+                        parseImports(newFile, child2, rules);
+                        break;
                 }
             }
         }
     }
 
-    private void parseRules(Node rules, Map<String, List<Rule>> rulesMap){
+    private void parseRules(Node rules, Map<String, List<Rule>> rulesMap) {
         NodeList children = rules.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); ++i) {
+        for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
             if (child.getNodeName().equals("rule")) {
                 Rule rule = parseRule(child);
@@ -167,7 +171,7 @@ public final class ValidationProfileParser {
         }
     }
 
-    private Rule parseRule(Node rule){
+    private Rule parseRule(Node rule) {
         String id = null;
         String object = null;
         String description = null;
@@ -179,40 +183,42 @@ public final class ValidationProfileParser {
 
         Node idNode = rule.getAttributes().getNamedItem("id");
 
-        if (idNode != null){
+        if (idNode != null) {
             id = idNode.getNodeValue();
         }
 
         Node objectNode = rule.getAttributes().getNamedItem("object");
 
-        if (objectNode != null){
+        if (objectNode != null) {
             object = objectNode.getNodeValue();
         }
 
         NodeList children = rule.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); ++i){
+        for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
             String childName = child.getNodeName();
 
-            if (childName.equals("description")) {
-                description = child.getTextContent().trim();
-
-            } else if (childName.equals("test")) {
-                test = child.getTextContent().trim();
-
-            } else if (childName.equals("error")) {
-                ruleError = parseRuleError(child);
-                isHasError = true;
-
-            } else if (childName.equals("warning")) {
-                ruleError = parseRuleError(child);
-
-            } else if (childName.equals("reference")) {
-                reference = parseReference(child);
-
-            } else if (childName.equals("fix")) {
-                fix.add(parseFix(child));
+            switch (childName) {
+                case "description":
+                    description = child.getTextContent().trim();
+                    break;
+                case "test":
+                    test = child.getTextContent().trim();
+                    break;
+                case "error":
+                    ruleError = parseRuleError(child);
+                    isHasError = true;
+                    break;
+                case "warning":
+                    ruleError = parseRuleError(child);
+                    break;
+                case "reference":
+                    reference = parseReference(child);
+                    break;
+                case "fix":
+                    fix.add(parseFix(child));
+                    break;
             }
         }
 
@@ -221,10 +227,10 @@ public final class ValidationProfileParser {
 
     }
 
-    private void parseVariables(Node rules, Map<String, List<Variable>> variablesMap){
+    private void parseVariables(Node rules, Map<String, List<Variable>> variablesMap) {
         NodeList children = rules.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); ++i) {
+        for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
             if (child.getNodeName().equals("variable")) {
                 Variable variable = parseVariable(child);
@@ -239,7 +245,7 @@ public final class ValidationProfileParser {
         }
     }
 
-    private Variable parseVariable(Node rule){
+    private Variable parseVariable(Node rule) {
         String name = null;
         String object = null;
         String defaultValue = null;
@@ -247,27 +253,29 @@ public final class ValidationProfileParser {
 
         Node nameNode = rule.getAttributes().getNamedItem("name");
 
-        if (nameNode != null){
+        if (nameNode != null) {
             name = nameNode.getNodeValue();
         }
 
         Node objectNode = rule.getAttributes().getNamedItem("object");
 
-        if (objectNode != null){
+        if (objectNode != null) {
             object = objectNode.getNodeValue();
         }
 
         NodeList children = rule.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); ++i){
+        for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
             String childName = child.getNodeName();
 
-            if (childName.equals("defaultValue")) {
-                defaultValue = child.getTextContent().trim();
-
-            } else if (childName.equals("value")) {
-                value = child.getTextContent().trim();
+            switch (childName) {
+                case "defaultValue":
+                    defaultValue = child.getTextContent().trim();
+                    break;
+                case "value":
+                    value = child.getTextContent().trim();
+                    break;
 
             }
         }
@@ -277,21 +285,24 @@ public final class ValidationProfileParser {
 
     }
 
-    private RuleError parseRuleError(Node err){
+    private RuleError parseRuleError(Node err) {
         String message = null;
         List<String> argument = new ArrayList<>();
 
         NodeList children = err.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); ++i){
+        for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
             String childName = child.getNodeName();
 
-            if (childName.equals("message")) {
-                message = child.getTextContent().trim();
+            switch (childName) {
+                case "message":
+                    message = child.getTextContent().trim();
+                    break;
 
-            } else if (childName.equals("argument")) {
-                argument.add(child.getTextContent().trim());
+                case "argument":
+                    argument.add(child.getTextContent().trim());
+                    break;
             }
         }
 
@@ -300,21 +311,24 @@ public final class ValidationProfileParser {
 
     }
 
-    private Reference parseReference(Node ref){
+    private Reference parseReference(Node ref) {
         String specification = null;
         String clause = null;
 
         NodeList children = ref.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); ++i){
+        for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
             String childName = child.getNodeName();
 
-            if (childName.equals("specification")) {
-                specification = child.getTextContent().trim();
+            switch (childName) {
+                case "specification":
+                    specification = child.getTextContent().trim();
+                    break;
 
-            } else if (childName.equals("clause")) {
-                clause = child.getTextContent().trim();
+                case "clause":
+                    clause = child.getTextContent().trim();
+                    break;
 
             }
         }
@@ -324,7 +338,7 @@ public final class ValidationProfileParser {
 
     }
 
-    private Fix parseFix(Node fix){
+    private Fix parseFix(Node fix) {
         String id = null;
         String description = null;
         FixInfo info = null;
@@ -332,37 +346,41 @@ public final class ValidationProfileParser {
 
         Node idNode = fix.getAttributes().getNamedItem("id");
 
-        if (idNode != null){
+        if (idNode != null) {
             id = idNode.getNodeValue();
         }
 
         NodeList children = fix.getChildNodes();
 
-        for(int i = 0; i < children.getLength(); ++i){
+        for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
             String childName = child.getNodeName();
+            NodeList nodelist;
 
-            if (childName.equals("description")) {
-                description = child.getTextContent().trim();
+            switch (childName) {
+                case "description":
+                    description = child.getTextContent().trim();
+                    break;
 
-            } else if (childName.equals("info")) {
-                NodeList nodelist = child.getChildNodes();
-                for (int j = 0; j < nodelist.getLength(); ++j){
-                    if (nodelist.item(j).getNodeName().equals("message")){
-                        info = new FixInfo(nodelist.item(j).getTextContent().trim());
-                        break;
+                case "info":
+                    nodelist = child.getChildNodes();
+                    for (int j = 0; j < nodelist.getLength(); ++j) {
+                        if (nodelist.item(j).getNodeName().equals("message")) {
+                            info = new FixInfo(nodelist.item(j).getTextContent().trim());
+                            break;
+                        }
                     }
-                }
+                    break;
 
-            } else if (childName.equals("error")) {
-                NodeList nodelist = child.getChildNodes();
-                for (int j = 0; j < nodelist.getLength(); ++j){
-                    if (nodelist.item(j).getNodeName().equals("message")){
-                        error = new FixError(nodelist.item(j).getTextContent().trim());
-                        break;
+                case "error":
+                    nodelist = child.getChildNodes();
+                    for (int j = 0; j < nodelist.getLength(); ++j) {
+                        if (nodelist.item(j).getNodeName().equals("message")) {
+                            error = new FixError(nodelist.item(j).getTextContent().trim());
+                            break;
+                        }
                     }
-                }
-
+                    break;
             }
         }
 
@@ -373,35 +391,35 @@ public final class ValidationProfileParser {
 
     /**
      * Parses validation profile xml.
+     *
      * @param resourcePath - Path to the file for parse.
      * @return Validation profile represent in Java classes.
-     * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
-     * @throws IOException - if any IO errors occur.
-     * @throws SAXException - if any parse errors occur.
-     * @throws IncorrectImportPathException - if validation profile contains incorrect input path
-     * @throws MissedHashTagException - if validation profile must be signed, but it has no hash tag
-     * @throws XMLStreamException - if exception occurs in parsing a validation profile with xml stream (in checking signature of the validation profile)
-     * @throws WrongSignatureException - if validation profile must be signed, but it has wrong signature
+     * @throws ParserConfigurationException  - if a DocumentBuilder cannot be created which satisfies the configuration requested.
+     * @throws IOException                   - if any IO errors occur.
+     * @throws SAXException                  - if any parse errors occur.
+     * @throws IncorrectImportPathException  - if validation profile contains incorrect input path
+     * @throws MissedHashTagException        - if validation profile must be signed, but it has no hash tag
+     * @throws XMLStreamException            - if exception occurs in parsing a validation profile with xml stream (in checking signature of the validation profile)
+     * @throws WrongSignatureException       - if validation profile must be signed, but it has wrong signature
      * @throws WrongProfileEncodingException - if validation profile has not utf8 encoding
-     * @throws NullProfileException - if resource profile pointer is null
+     * @throws NullProfileException          - if resource profile pointer is null
      */
     public static ValidationProfile parseValidationProfile(String resourcePath, boolean isSignCheckOn) throws ParserConfigurationException, SAXException, IOException, IncorrectImportPathException, MissedHashTagException, XMLStreamException, WrongSignatureException, WrongProfileEncodingException, NullProfileException {
         return parseValidationProfile(new File(resourcePath), isSignCheckOn);
     }
 
     /**
-     *
      * @param resourceFile - File for parse.
      * @return Validation profile represent in Java classes.
-     * @throws ParserConfigurationException - if a DocumentBuilder cannot be created which satisfies the configuration requested.
-     * @throws IOException - if any IO errors occur.
-     * @throws SAXException - if any parse errors occur.
-     * @throws IncorrectImportPathException - if validation profile contains incorrect input path
-     * @throws MissedHashTagException - if validation profile must be signed, but it has no hash tag
-     * @throws XMLStreamException - if exception occurs in parsing a validation profile with xml stream (in checking signature of the validation profile)
-     * @throws WrongSignatureException - if validation profile must be signed, but it has wrong signature
+     * @throws ParserConfigurationException  - if a DocumentBuilder cannot be created which satisfies the configuration requested.
+     * @throws IOException                   - if any IO errors occur.
+     * @throws SAXException                  - if any parse errors occur.
+     * @throws IncorrectImportPathException  - if validation profile contains incorrect input path
+     * @throws MissedHashTagException        - if validation profile must be signed, but it has no hash tag
+     * @throws XMLStreamException            - if exception occurs in parsing a validation profile with xml stream (in checking signature of the validation profile)
+     * @throws WrongSignatureException       - if validation profile must be signed, but it has wrong signature
      * @throws WrongProfileEncodingException - if validation profile has not utf8 encoding
-     * @throws NullProfileException - if resource profile pointer is null
+     * @throws NullProfileException          - if resource profile pointer is null
      */
     public static ValidationProfile parseValidationProfile(File resourceFile, boolean isSignCheckOn) throws ParserConfigurationException, SAXException, IOException, IncorrectImportPathException, MissedHashTagException, XMLStreamException, WrongSignatureException, WrongProfileEncodingException, NullProfileException {
         return new ValidationProfileParser(resourceFile, isSignCheckOn).profile;

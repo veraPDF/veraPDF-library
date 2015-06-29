@@ -12,6 +12,10 @@ public final class IDGenerator {
 
     private IDGenerator(){}
 
+    public static String generateID() {
+        return null;
+    }
+
     /**
      * Generate ID for pdf box object. Current method generate a string of the form 'N M' for
      * {@link org.apache.pdfbox.cos.COSObject}, where 'N' and 'M' are numbers, and <code>null</code>

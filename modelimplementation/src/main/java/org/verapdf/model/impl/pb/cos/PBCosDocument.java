@@ -6,7 +6,10 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDEmbeddedFilesNameTreeNode;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.model.coslayer.*;
+import org.verapdf.model.coslayer.CosDocument;
+import org.verapdf.model.coslayer.CosIndirect;
+import org.verapdf.model.coslayer.CosTrailer;
+import org.verapdf.model.coslayer.CosXRef;
 import org.verapdf.model.tools.XMPChecker;
 
 import java.io.IOException;
@@ -101,7 +104,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      * @return ID of first page trailer
      */
     public String getfirstPageID() {
-        return getTrailerID((COSArray) ((COSDocument) baseObject).getFirstTrailer().getItem(ID));
+        return getTrailerID((COSArray) ((COSDocument) baseObject).getFirstPageTrailer().getItem(ID));
     }
 
     /**

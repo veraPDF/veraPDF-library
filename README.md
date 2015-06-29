@@ -26,12 +26,12 @@ Building and Running the veraPDF-library
 
 ### Building from source
 
- 1. Download the veraPDF-model repository, either cloning via Git
+ 1. Download the veraPDF-library repository, either cloning via Git
  `git clone https://github.com/veraPDF/veraPDF-library` or downloading the [latest zip archive from GitHub](https://github.com/veraPDF/veraPDF-library/archive/master.zip).
 
  2. Move to the downloaded project directory, e.g. `cd veraPDF-library`.
 
- 3. Build and install using Maven, `mvn clean install -DskipTests`. We know skipping tests is bad practise, but we're currently formalising our testing strategy.
+ 3. Build and install using Maven, `mvn clean install`.
 
 ### Running the command line validation application
 

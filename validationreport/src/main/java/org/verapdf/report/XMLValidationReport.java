@@ -1,62 +1,37 @@
 package org.verapdf.report;
 
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.*;
-import javax.xml.transform.stream.*;
+import org.verapdf.validation.report.model.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
-import org.verapdf.validation.report.model.Check;
-import org.verapdf.validation.report.model.Rule;
-import org.w3c.dom.*;
-import org.verapdf.validation.report.model.ValidationInfo;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
 import java.util.List;
 
 
 /**
  * Generating XML structure of file for validation report
- * Created by bezrukov on 5/8/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public final class XMLValidationReport {
 
-    private XMLValidationReport(){
+    private XMLValidationReport() {
 
     }
 
     /**
      * Creates tree of xml tags for validation report
+     *
      * @param info - validation info model to be writed
-     * @param doc - document used for writing xml in further
+     * @param doc  - document used for writing xml in further
      * @return root element of the xml structure
      */
-    public static Element makeXMLTree(ValidationInfo info, Document doc){
+    public static Element makeXMLTree(ValidationInfo info, Document doc) {
 
         Element validationInfo = doc.createElement("validationInfo");
 
         if (info != null) {
-            if (info.getProfile() != null) {
-                Element profile = doc.createElement("profile");
-                validationInfo.appendChild(profile);
 
-                if (info.getProfile().getName() != null) {
-                    Element profileName = doc.createElement("name");
-                    profileName.appendChild(doc.createTextNode(info.getProfile().getName()));
-                    profile.appendChild(profileName);
-                }
-
-                if (info.getProfile().getHash() != null) {
-                    Element profileHash = doc.createElement("hash");
-                    profileHash.appendChild(doc.createTextNode(info.getProfile().getHash()));
-                    profile.appendChild(profileHash);
-                }
-            }
+            makeProfileInformation(info.getProfile(), doc, validationInfo);
 
             if (info.getResult() != null) {
                 Element result = doc.createElement("result");
@@ -84,37 +59,60 @@ public final class XMLValidationReport {
                     result.appendChild(summary);
                 }
 
-                if (info.getResult().getDetails() != null) {
-                    Element details = doc.createElement("details");
-                    result.appendChild(details);
-
-                    if (info.getResult().getDetails().getRules() != null) {
-                        Element rules = doc.createElement("rules");
-                        details.appendChild(rules);
-
-                        makeRules(info, doc, rules);
-                    }
-
-                    if (info.getResult().getDetails().getWarnings() != null) {
-                        Element warnings = doc.createElement("warnings");
-                        details.appendChild(warnings);
-
-                        for (String war : info.getResult().getDetails().getWarnings()) {
-                            if (war != null) {
-                                Element warning = doc.createElement("warning");
-                                warning.appendChild(doc.createTextNode(war));
-                                warnings.appendChild(warning);
-                            }
-                        }
-                    }
-                }
+                makeDetails(info.getResult().getDetails(), doc, result);
             }
         }
         return validationInfo;
     }
 
-    private static void makeRules(ValidationInfo info, Document doc, Element rules){
-        for(Rule rul : info.getResult().getDetails().getRules()){
+    private static void makeProfileInformation(Profile profile, Document doc, Element validationInfo) {
+        if (profile != null) {
+            Element profileElement = doc.createElement("profile");
+            validationInfo.appendChild(profileElement);
+
+            if (profile.getName() != null) {
+                Element profileName = doc.createElement("name");
+                profileName.appendChild(doc.createTextNode(profile.getName()));
+                profileElement.appendChild(profileName);
+            }
+
+            if (profile.getHash() != null) {
+                Element profileHash = doc.createElement("hash");
+                profileHash.appendChild(doc.createTextNode(profile.getHash()));
+                profileElement.appendChild(profileHash);
+            }
+        }
+    }
+
+    private static void makeDetails(Details details, Document doc, Element result) {
+        if (details != null) {
+            Element detailsElement = doc.createElement("details");
+            result.appendChild(detailsElement);
+
+            if (details.getRules() != null) {
+                Element rules = doc.createElement("rules");
+                detailsElement.appendChild(rules);
+
+                makeRules(details.getRules(), doc, rules);
+            }
+
+            if (details.getWarnings() != null) {
+                Element warnings = doc.createElement("warnings");
+                detailsElement.appendChild(warnings);
+
+                for (String war : details.getWarnings()) {
+                    if (war != null) {
+                        Element warning = doc.createElement("warning");
+                        warning.appendChild(doc.createTextNode(war));
+                        warnings.appendChild(warning);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void makeRules(List<Rule> rulesList, Document doc, Element rules) {
+        for (Rule rul : rulesList) {
 
             if (rul != null) {
                 Element rule = doc.createElement("rule");
@@ -130,56 +128,7 @@ public final class XMLValidationReport {
 
                 if (rul.getChecks() != null) {
                     for (Check che : rul.getChecks()) {
-
-                        if (che != null) {
-                            Element check = doc.createElement("check");
-
-                            if (che.getAttrStatus() != null) {
-                                check.setAttribute("status", che.getAttrStatus());
-                            }
-
-                            if (che.getLocation() != null) {
-                                Element location = doc.createElement("location");
-
-                                if (che.getLocation().getAttrLevel() != null) {
-                                    location.setAttribute("level", che.getLocation().getAttrLevel());
-                                }
-
-                                if (che.getLocation().getContext() != null) {
-                                    Element context = doc.createElement("context");
-                                    context.appendChild(doc.createTextNode(che.getLocation().getContext()));
-                                    location.appendChild(context);
-                                }
-
-                                check.appendChild(location);
-                            }
-
-                            if (che.getError() != null) {
-                                String errorName = che.isHasError() ? "error" : "warning";
-                                Element error = doc.createElement(errorName);
-
-                                if (che.getError().getMessage() != null) {
-                                    Element message = doc.createElement("message");
-//                                    message.appendChild(doc.createTextNode(che.getError().getMessage()));
-                                    message.appendChild(doc.createTextNode(getFormattedMessage(che.getError().getMessage(), che.getError().getArgument())));
-                                    error.appendChild(message);
-                                }
-
-//                                if (che.getError().getArgument() != null) {
-//                                    for (String attr : che.getError().getArgument()) {
-//                                        if (attr != null) {
-//                                            Element argument = doc.createElement("argument");
-//                                            argument.appendChild(doc.createTextNode(attr));
-//                                            error.appendChild(argument);
-//                                        }
-//                                    }
-//                                }
-
-                                check.appendChild(error);
-                            }
-
-                            rule.appendChild(check);
-                        }
+                        makeChecks(che, doc, rule);
                     }
                 }
 
@@ -188,7 +137,63 @@ public final class XMLValidationReport {
         }
     }
 
-    private static String getFormattedMessage(String message, List<String> arguments){
+    private static void makeChecks(Check che, Document doc, Element rule) {
+        if (che != null) {
+            Element check = doc.createElement("check");
+
+            if (che.getAttrStatus() != null) {
+                check.setAttribute("status", che.getAttrStatus());
+            }
+
+            if (che.getLocation() != null) {
+                Element location = doc.createElement("location");
+
+                if (che.getLocation().getAttrLevel() != null) {
+                    location.setAttribute("level", che.getLocation().getAttrLevel());
+                }
+
+                if (che.getLocation().getContext() != null) {
+                    Element context = doc.createElement("context");
+                    context.appendChild(doc.createTextNode(che.getLocation().getContext()));
+                    location.appendChild(context);
+                }
+
+                check.appendChild(location);
+            }
+
+            makeCheckError(che, doc, check);
+
+            rule.appendChild(check);
+        }
+    }
+
+    private static void makeCheckError(Check check, Document doc, Element checkElement) {
+        if (check.getError() != null) {
+            String errorName = check.isHasError() ? "error" : "warning";
+            Element error = doc.createElement(errorName);
+
+            if (check.getError().getMessage() != null) {
+                Element message = doc.createElement("message");
+//                    message.appendChild(doc.createTextNode(che.getError().getMessage()));
+                message.appendChild(doc.createTextNode(getFormattedMessage(check.getError().getMessage(), check.getError().getArgument())));
+                error.appendChild(message);
+            }
+
+//                if (che.getError().getArgument() != null) {
+//                    for (String attr : che.getError().getArgument()) {
+//                        if (attr != null) {
+//                            Element argument = doc.createElement("argument");
+//                            argument.appendChild(doc.createTextNode(attr));
+//                            error.appendChild(argument);
+//                        }
+//                    }
+//                }
+
+            checkElement.appendChild(error);
+        }
+    }
+
+    private static String getFormattedMessage(String message, List<String> arguments) {
         if (arguments == null || arguments.isEmpty()) {
             return message;
         } else {
