@@ -1,4 +1,4 @@
-package org.verapdf.model.impl.pb.xmp;
+package org.verapdf.model.factory.xmp;
 
 import org.apache.xmpbox.schema.*;
 import org.verapdf.model.impl.pb.xmp.schemas.*;

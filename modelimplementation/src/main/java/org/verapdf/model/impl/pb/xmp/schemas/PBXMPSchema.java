@@ -12,7 +12,11 @@ public class PBXMPSchema extends PBXMPObject implements XMPSchema {
 
     private static final String XMPSCHEMA = "XMPSchema";
 
-    protected org.apache.xmpbox.schema.XMPSchema xmpSchema;
+    private org.apache.xmpbox.schema.XMPSchema xmpSchema;
+
+    protected org.apache.xmpbox.schema.XMPSchema getXmpSchema() {
+        return xmpSchema;
+    }
 
     /**
      * Constructs new object

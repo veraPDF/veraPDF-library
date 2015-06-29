@@ -36,7 +36,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
      */
     @Override
     public String getauthor() {
-        return xmpSchema.getProperty(AUTHOR) == null ? null : xmpSchema.getProperty(AUTHOR).toString();
+        return getXmpSchema().getProperty(AUTHOR) == null ? null : getXmpSchema().getProperty(AUTHOR).toString();
     }
 
     /**
@@ -44,7 +44,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
      */
     @Override
     public String getbaseURL() {
-        return xmpSchema.getProperty(BASE_URL) == null ? null : xmpSchema.getProperty(BASE_URL).toString();
+        return getXmpSchema().getProperty(BASE_URL) == null ? null : getXmpSchema().getProperty(BASE_URL).toString();
     }
 
     /**
@@ -52,7 +52,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
      */
     @Override
     public String getcreationDate() {
-        return xmpSchema.getProperty(CREATION_DATE) == null ? null : xmpSchema.getProperty(CREATION_DATE).toString();
+        return getXmpSchema().getProperty(CREATION_DATE) == null ? null : getXmpSchema().getProperty(CREATION_DATE).toString();
     }
 
     /**
@@ -60,7 +60,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
      */
     @Override
     public String getcreator() {
-        return xmpSchema.getProperty(CREATOR) == null ? null : xmpSchema.getProperty(CREATOR).toString();
+        return getXmpSchema().getProperty(CREATOR) == null ? null : getXmpSchema().getProperty(CREATOR).toString();
     }
 
     /**
@@ -68,7 +68,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
      */
     @Override
     public String getmodDate() {
-        return xmpSchema.getProperty(MOD_DATE) == null ? null : xmpSchema.getProperty(MOD_DATE).toString();
+        return getXmpSchema().getProperty(MOD_DATE) == null ? null : getXmpSchema().getProperty(MOD_DATE).toString();
     }
 
     /**
@@ -76,7 +76,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
      */
     @Override
     public String getsubject() {
-        return xmpSchema.getProperty(SUBJECT) == null ? null : xmpSchema.getProperty(SUBJECT).toString();
+        return getXmpSchema().getProperty(SUBJECT) == null ? null : getXmpSchema().getProperty(SUBJECT).toString();
     }
 
     /**
@@ -84,7 +84,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
      */
     @Override
     public String gettitle() {
-        return xmpSchema.getProperty(TITLE) == null ? null : xmpSchema.getProperty(TITLE).toString();
+        return getXmpSchema().getProperty(TITLE) == null ? null : getXmpSchema().getProperty(TITLE).toString();
     }
 
     /**
@@ -92,6 +92,6 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
      */
     @Override
     public String gettrapped() {
-        return xmpSchema.getProperty(TRAPPED) == null ? null : xmpSchema.getProperty(TRAPPED).toString();
+        return getXmpSchema().getProperty(TRAPPED) == null ? null : getXmpSchema().getProperty(TRAPPED).toString();
     }
 }
