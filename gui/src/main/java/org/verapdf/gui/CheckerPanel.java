@@ -6,6 +6,9 @@ import org.verapdf.validation.report.model.ValidationInfo;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,20 +24,23 @@ import java.util.concurrent.ExecutionException;
  */
 public class CheckerPanel extends JPanel {
 
-    private final static String XML_LOGO_NAME = "xml-logo.png";
-    private final static String HTML_LOGO_NAME = "html-logo.png";
-    private final static String CHOOSE_PDF_BUTTON_TEXT = "Choose PDF";
-    private final static String PDF_NOT_CHOSEN_TEXT = "PDF file not chosen";
-    private final static String CHOOSE_PROFILE_BUTTON_TEXT = "Choose Profile";
-    private final static String VALIDATION_PROFILE_NOT_CHOSEN = "Validation profile not chosen";
-    private final static String VALIDATE_BUTTON_TEXT = "Validate";
-    private final static String VALIDATION_OK = "PDF file is compliant with Validation Profile requirements";
-    private final static String VALIDATION_FALSE = "PDF file is not compliant with Validation Profile requirements";
-    private final static String SAVE_REPORT_BUTTON_TEXT = "Save XML";
-    private final static String VIEW_REPORT_BUTTON_TEXT = "View XML";
-    private final static String SAVE_HTML_REPORT_BUTTON_TEXT = "Save HTML";
-    private final static String VIEW_HTML_REPORT_BUTTON_TEXT = "View HTML";
-    private final static String REPORT = "Report";
+    private static final String XML_LOGO_NAME = "xml-logo.png";
+    private static final String HTML_LOGO_NAME = "html-logo.png";
+    private static final String CHOOSE_PDF_BUTTON_TEXT = "Choose PDF";
+    private static final String PDF_NOT_CHOSEN_TEXT = "PDF file not chosen";
+    private static final String CHOOSE_PROFILE_BUTTON_TEXT = "Choose Profile";
+    private static final String VALIDATION_PROFILE_NOT_CHOSEN = "Validation profile not chosen";
+    private static final String VALIDATE_BUTTON_TEXT = "Validate";
+    private static final String VALIDATION_OK = "PDF file is compliant with Validation Profile requirements";
+    private static final String VALIDATION_FALSE = "PDF file is not compliant with Validation Profile requirements";
+    private static final String SAVE_REPORT_BUTTON_TEXT = "Save XML";
+    private static final String VIEW_REPORT_BUTTON_TEXT = "View XML";
+    private static final String SAVE_HTML_REPORT_BUTTON_TEXT = "Save HTML";
+    private static final String VIEW_HTML_REPORT_BUTTON_TEXT = "View HTML";
+    private static final String REPORT = "Report";
+    private static final String ERROR = "Error";
+    private static final String ERROR_IN_SAVING_HTML_REPORT = "Some error in saving the HTML report.";
+    private static final String ERROR_IN_SAVING_XML_REPORT = "Some error in saving the XML report.";
 
 
     private JFileChooser pdfChooser;
@@ -208,9 +214,9 @@ public class CheckerPanel extends JPanel {
                 if (resultChoose == JFileChooser.APPROVE_OPTION) {
 
                     if (!pdfChooser.getSelectedFile().exists()) {
-                        JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file doesn't exist.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file doesn't exist.", ERROR, JOptionPane.ERROR_MESSAGE);
                     } else if (!pdfChooser.getSelectedFile().getName().endsWith(".pdf")) {
-                        JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file is not in PDF format.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file is not in PDF format.", ERROR, JOptionPane.ERROR_MESSAGE);
                     } else {
 
                         pdfFile = pdfChooser.getSelectedFile();
@@ -240,9 +246,9 @@ public class CheckerPanel extends JPanel {
                 int resultChoose = xmlChooser.showOpenDialog(CheckerPanel.this);
                 if (resultChoose == JFileChooser.APPROVE_OPTION) {
                     if (!xmlChooser.getSelectedFile().exists()) {
-                        JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file doesn't exist.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file doesn't exist.", ERROR, JOptionPane.ERROR_MESSAGE);
                     } else if (!xmlChooser.getSelectedFile().getName().endsWith(".xml")) {
-                        JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file is not in XML format.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(CheckerPanel.this, "Error. Selected file is not in XML format.", ERROR, JOptionPane.ERROR_MESSAGE);
                     } else {
                         profile = xmlChooser.getSelectedFile();
                         chosenProfile.setText(profile.getAbsolutePath());
@@ -258,7 +264,7 @@ public class CheckerPanel extends JPanel {
                             saveHTML.setEnabled(false);
                             viewHTML.setEnabled(false);
                         }
-                        if (profile != null) {
+                        if (pdfFile != null) {
                             validate.setEnabled(true);
                         }
                     }
@@ -285,20 +291,21 @@ public class CheckerPanel extends JPanel {
         saveXML.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (info == null) {
-                    JOptionPane.showMessageDialog(CheckerPanel.this, "Validation hasn't been run.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(CheckerPanel.this, "Validation hasn't been run.", ERROR, JOptionPane.ERROR_MESSAGE);
                 } else {
                     xmlChooser.setSelectedFile(new File("xmlReport.xml"));
                     int resultChoose = xmlChooser.showSaveDialog(CheckerPanel.this);
                     if (resultChoose == JFileChooser.APPROVE_OPTION) {
                         File temp = xmlChooser.getSelectedFile();
 
-                        if (!(temp.getPath().endsWith(".xml")))
+                        if (!(temp.getPath().endsWith(".xml"))) {
                             temp = new File(temp.getPath() + ".xml");
+                        }
 
                         try {
                             Files.copy(xmlReport.toPath(), temp.toPath());
                         } catch (IOException e1) {
-                            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the XML report.", "Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 }
@@ -308,12 +315,12 @@ public class CheckerPanel extends JPanel {
         viewXML.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (xmlReport == null) {
-                    JOptionPane.showMessageDialog(CheckerPanel.this, "XML report hasn't been saved.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(CheckerPanel.this, "XML report hasn't been saved.", ERROR, JOptionPane.ERROR_MESSAGE);
                 } else {
                     try {
                         Desktop.getDesktop().open(xmlReport);
                     } catch (IOException e1) {
-                        JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in opening the XML report.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in opening the XML report.", ERROR, JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -322,26 +329,27 @@ public class CheckerPanel extends JPanel {
         saveHTML.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (info == null) {
-                    JOptionPane.showMessageDialog(CheckerPanel.this, "Validation hasn't been run.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(CheckerPanel.this, "Validation hasn't been run.", ERROR, JOptionPane.ERROR_MESSAGE);
                 } else {
                     htmlChooser.setSelectedFile(new File("htmlReport.html"));
                     int resultChoose = htmlChooser.showSaveDialog(CheckerPanel.this);
                     if (resultChoose == JFileChooser.APPROVE_OPTION) {
                         File temp = htmlChooser.getSelectedFile();
 
-                        if (!(temp.getPath().endsWith(".html")))
+                        if (!(temp.getPath().endsWith(".html"))) {
                             temp = new File(temp.getPath() + ".html");
+                        }
 
                         try {
                             Files.copy(htmlReport.toPath(), temp.toPath());
                         } catch (IOException e1) {
-                            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the HTML report.", "Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_HTML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
                         }
                         try {
                             File newImage = new File(temp.getParentFile(), image.getName());
                             Files.copy(image.toPath(), newImage.toPath());
                         } catch (IOException e1) {
-                            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving logo image for HTML report.", "Error", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving logo image for HTML report.", ERROR, JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 }
@@ -351,12 +359,12 @@ public class CheckerPanel extends JPanel {
         viewHTML.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (htmlReport == null) {
-                    JOptionPane.showMessageDialog(CheckerPanel.this, "HTML report hasn't been saved.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(CheckerPanel.this, "HTML report hasn't been saved.", ERROR, JOptionPane.ERROR_MESSAGE);
                 } else {
                     try {
                         Desktop.getDesktop().open(htmlReport);
                     } catch (IOException e1) {
-                        JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in opening the HTML report.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in opening the HTML report.", ERROR, JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }
@@ -385,41 +393,49 @@ public class CheckerPanel extends JPanel {
 
             result.setVisible(true);
         } catch (InterruptedException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, "Validation has interrupted.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(CheckerPanel.this, "Validation has interrupted.", ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         } catch (ExecutionException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, "Execution exception in validating.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(CheckerPanel.this, "Execution exception in validating.", ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
             File dir = new File("./temp/");
-            dir.mkdir();
+            if (!dir.exists() && !dir.mkdir()) {
+                throw new IOException("Can not create temporary directory.");
+            }
             xmlReport = new File("./temp/tempXMLReport.xml");
             XMLReport.writeXMLReport(info, xmlReport.getPath(), endTimeOfValidation - startTimeOfValidation);
 
             saveXML.setEnabled(true);
             viewXML.setEnabled(true);
 
-        } catch (Exception e1) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the XML report.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+            try {
+                htmlReport = new File("./temp/tempHTMLReport.html");
+                HTMLReport.wrightHTMLReport(htmlReport.getPath(), xmlReport, profile);
 
-        try {
-            htmlReport = new File("./temp/tempHTMLReport.html");
-            HTMLReport.wrightHTMLReport(htmlReport.getPath(), xmlReport, profile);
+                if (image == null) {
+                    image = new File("./temp/" + HTMLReport.getLogoImageName());
+                }
 
-            if (image == null) {
-                image = new File("./temp/" + HTMLReport.getLogoImageName());
+                saveHTML.setEnabled(true);
+                viewHTML.setEnabled(true);
+
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_HTML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
+            } catch (TransformerException e) {
+                JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_HTML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
             }
 
-            saveHTML.setEnabled(true);
-            viewHTML.setEnabled(true);
-
-        } catch (Exception e1) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the HTML report.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+        } catch (DatatypeConfigurationException e) {
+            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
+        } catch (ParserConfigurationException e) {
+            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
+        } catch (TransformerException e) {
+            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
         }
 
     }
