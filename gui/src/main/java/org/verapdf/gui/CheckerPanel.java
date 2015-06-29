@@ -39,6 +39,8 @@ public class CheckerPanel extends JPanel {
     private static final String VIEW_HTML_REPORT_BUTTON_TEXT = "View HTML";
     private static final String REPORT = "Report";
     private static final String ERROR = "Error";
+    private static final String ERROR_IN_SAVING_HTML_REPORT = "Some error in saving the HTML report.";
+    private static final String ERROR_IN_SAVING_XML_REPORT = "Some error in saving the XML report.";
 
 
     private JFileChooser pdfChooser;
@@ -303,7 +305,7 @@ public class CheckerPanel extends JPanel {
                         try {
                             Files.copy(xmlReport.toPath(), temp.toPath());
                         } catch (IOException e1) {
-                            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the XML report.", ERROR, JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 }
@@ -341,7 +343,7 @@ public class CheckerPanel extends JPanel {
                         try {
                             Files.copy(htmlReport.toPath(), temp.toPath());
                         } catch (IOException e1) {
-                            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the HTML report.", ERROR, JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_HTML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
                         }
                         try {
                             File newImage = new File(temp.getParentFile(), image.getName());
@@ -421,19 +423,19 @@ public class CheckerPanel extends JPanel {
                 viewHTML.setEnabled(true);
 
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the HTML report.", ERROR, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_HTML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
             } catch (TransformerException e) {
-                JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the HTML report.", ERROR, JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_HTML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (DatatypeConfigurationException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the XML report.", ERROR, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
         } catch (ParserConfigurationException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the XML report.", ERROR, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
         } catch (TransformerException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the XML report.", ERROR, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving the XML report.", ERROR, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
         }
 
     }

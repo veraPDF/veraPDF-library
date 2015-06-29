@@ -14,6 +14,8 @@ import java.io.File;
  */
 public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
+    private static final String ERROR = "Error";
+
     private File pdf;
     private File profile;
     private CheckerPanel parent;
@@ -39,14 +41,14 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
         try {
             root = ModelLoader.getRoot(pdf.getPath());
         } catch (Exception e1) {
-            JOptionPane.showMessageDialog(parent, "Some error in parsing pdf.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(parent, "Some error in parsing pdf.", ERROR, JOptionPane.ERROR_MESSAGE);
             parent.errorInValidatingOccur();
         }
 
         try {
             result = Validator.validate(root, profile, false);
         } catch (Exception e1) {
-            JOptionPane.showMessageDialog(parent, "Some error in validating.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(parent, "Some error in validating.", ERROR, JOptionPane.ERROR_MESSAGE);
             parent.errorInValidatingOccur();
         }
 
