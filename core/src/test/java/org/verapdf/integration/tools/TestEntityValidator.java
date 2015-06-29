@@ -2,8 +2,8 @@ package org.verapdf.integration.tools;
 
 import org.verapdf.config.Input;
 import org.verapdf.config.VeraPdfTaskConfig;
-import org.verapdf.integration.model.ComparingStrategies;
 import org.verapdf.integration.model.TestEntity;
+import org.verapdf.integration.model.comparing.ComparingStrategies;
 import org.verapdf.runner.ValidationRunner;
 import org.verapdf.validation.report.model.ValidationInfo;
 
