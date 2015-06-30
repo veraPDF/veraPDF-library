@@ -51,18 +51,6 @@ public class PBSchemaFactory {
             case XMPHelper.NSAUX:
                 resultSchema = new PBAUXSchema(schema);
                 break;
-            case XMPHelper.NSIPTC4XMPCORE:
-                resultSchema = new PBIptc4xmpCoreSchema(schema);
-                break;
-            case XMPHelper.NSPDFE:
-                resultSchema = new PBPDFESchema(schema);
-                break;
-            case XMPHelper.NSPDFX:
-                resultSchema = new PBPDFXSchema(schema);
-                break;
-            case XMPHelper.NSPDFXID:
-                resultSchema = new PBPDFXIdSchema(schema);
-                break;
             case XMPHelper.NSXMPDM:
                 resultSchema = new PBXMPDMSchema(schema);
                 break;
