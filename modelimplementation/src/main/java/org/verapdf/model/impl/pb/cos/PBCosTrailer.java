@@ -37,12 +37,12 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
 	public List<? extends Object> getLinkedObjects(String link) {
 		List<? extends Object> list;
 		switch (link) {
-		case CATALOG:
-			list = getCatalog();
-			break;
-		default:
-			list = super.getLinkedObjects(link);
-			break;
+			case CATALOG:
+				list = getCatalog();
+				break;
+			default:
+				list = super.getLinkedObjects(link);
+				break;
 		}
 		return list;
 	}
