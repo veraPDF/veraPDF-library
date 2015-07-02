@@ -9,9 +9,17 @@ import org.verapdf.exceptions.VeraPDFException;
  */
 public class RullWithNullIDException extends VeraPDFException {
 
+    /**
+     * Constructs new RullWithNullIDException
+     */
     public RullWithNullIDException() {
     }
 
+    /**
+     * Constructs new RullWithNullIDException
+     *
+     * @param message - the message of the exception
+     */
     public RullWithNullIDException(String message) {
         super(message);
     }

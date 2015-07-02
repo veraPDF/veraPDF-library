@@ -4,16 +4,22 @@ import org.verapdf.exceptions.VeraPDFException;
 
 /**
  * Exception that occurs when there is an incorrect import path in a validation profile
- * Created by bezrukov on 6/5/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class IncorrectImportPathException extends VeraPDFException {
 
+    /**
+     * Constructs new IncorrectImportPathException
+     */
     public IncorrectImportPathException() {
     }
 
+    /**
+     * Constructs new IncorrectImportPathException
+     *
+     * @param message - the message of the exception
+     */
     public IncorrectImportPathException(String message) {
         super(message);
     }
