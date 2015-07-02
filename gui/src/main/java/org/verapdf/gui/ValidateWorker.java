@@ -6,7 +6,6 @@ import org.verapdf.validation.report.model.ValidationInfo;
 
 import javax.swing.*;
 import java.io.File;
-import java.util.List;
 
 /**
  * Validates PDF in a new threat.
@@ -14,6 +13,8 @@ import java.util.List;
  * @author Maksim Bezrukov
  */
 public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
+
+    private static final String ERROR = "Error";
 
     private File pdf;
     private File profile;
@@ -33,21 +34,21 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
     }
 
     @Override
-    protected ValidationInfo doInBackground() throws Exception {
+    protected ValidationInfo doInBackground() {
         ValidationInfo result = null;
         org.verapdf.model.baselayer.Object root = null;
 
         try {
             root = ModelLoader.getRoot(pdf.getPath());
         } catch (Exception e1) {
-            JOptionPane.showMessageDialog(parent, "Some error in parsing pdf.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(parent, "Some error in parsing pdf.", ERROR, JOptionPane.ERROR_MESSAGE);
             parent.errorInValidatingOccur();
         }
 
         try {
             result = Validator.validate(root, profile, false);
         } catch (Exception e1) {
-            JOptionPane.showMessageDialog(parent, "Some error in validating.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(parent, "Some error in validating.", ERROR, JOptionPane.ERROR_MESSAGE);
             parent.errorInValidatingOccur();
         }
 
@@ -59,8 +60,4 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
         parent.validationEnded();
     }
 
-    @Override
-    protected void process(List<Integer> chunks) {
-        super.process(chunks);
-    }
 }

@@ -4,16 +4,22 @@ import org.verapdf.exceptions.VeraPDFException;
 
 /**
  * Exception that occurs when a validation profile is unsigned or has wrong signature
- * Created by bezrukov on 6/16/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class WrongSignatureException extends VeraPDFException {
 
+    /**
+     * Constructs new WrongSignatureException
+     */
     public WrongSignatureException() {
     }
 
+    /**
+     * Constructs new WrongSignatureException
+     *
+     * @param message - the message of the exception
+     */
     public WrongSignatureException(String message) {
         super(message);
     }

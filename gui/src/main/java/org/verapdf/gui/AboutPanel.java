@@ -17,12 +17,14 @@ import java.net.URISyntaxException;
  */
 class AboutPanel extends JPanel {
 
-    private final static String LOGO_NAME = "veraPDF-logo-600.png";
-    private final static Color LOGO_BACKGROUND = Color.LIGHT_GRAY;
-    private final static String PARTNERS_NAME = "partners.png";
-    private final static Color PARTNERS_BACKGROUND = Color.WHITE;
-    private final static String LOGO_LINK_TEXT = "Visit veraPDF.org";
-    private final static String LOGO_LINK_URL = "http://www.verapdf.org";
+    private static final String LOGO_NAME = "veraPDF-logo-600.png";
+    private static final Color LOGO_BACKGROUND = Color.LIGHT_GRAY;
+    private static final String PARTNERS_NAME = "partners.png";
+    private static final Color PARTNERS_BACKGROUND = Color.WHITE;
+    private static final String LOGO_LINK_TEXT = "Visit veraPDF.org";
+    private static final String LOGO_LINK_URL = "http://www.verapdf.org";
+
+    private static final String ERROR = "Error";
 
     private JButton okButton;
     private JButton urlLabel;
@@ -66,9 +68,9 @@ class AboutPanel extends JPanel {
                 try {
                     Desktop.getDesktop().browse(new URI(LOGO_LINK_URL));
                 } catch (IOException e1) {
-                    JOptionPane.showMessageDialog(AboutPanel.this, "Error", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(AboutPanel.this, ERROR, ERROR, JOptionPane.ERROR_MESSAGE);
                 } catch (URISyntaxException e1) {
-                    JOptionPane.showMessageDialog(AboutPanel.this, "Error", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(AboutPanel.this, ERROR, ERROR, JOptionPane.ERROR_MESSAGE);
                 }
 
             }
@@ -99,11 +101,11 @@ class AboutPanel extends JPanel {
     public void showDialog(Component parent, String title) {
 
         Frame owner;
-        if (parent instanceof Frame)
+        if (parent instanceof Frame) {
             owner = (Frame) parent;
-        else
-            owner = (Frame) SwingUtilities.getAncestorOfClass(Frame.class,
-                    parent);
+        } else {
+            owner = (Frame) SwingUtilities.getAncestorOfClass(Frame.class, parent);
+        }
 
         if (dialog == null || dialog.getOwner() != owner) {
             dialog = new JDialog(owner, true);

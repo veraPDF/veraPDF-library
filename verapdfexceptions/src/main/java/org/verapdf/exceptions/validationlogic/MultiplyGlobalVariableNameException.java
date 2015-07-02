@@ -9,9 +9,17 @@ import org.verapdf.exceptions.VeraPDFException;
  */
 public class MultiplyGlobalVariableNameException extends VeraPDFException {
 
+    /**
+     * Constructs new MultiplyGlobalVariableNameException
+     */
     public MultiplyGlobalVariableNameException() {
     }
 
+    /**
+     * Constructs new MultiplyGlobalVariableNameException
+     *
+     * @param message - the message of the exception
+     */
     public MultiplyGlobalVariableNameException(String message) {
         super(message);
     }

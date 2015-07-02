@@ -4,16 +4,22 @@ import org.verapdf.exceptions.VeraPDFException;
 
 /**
  * Exception that occurs when null pointer to the profile used
- * Created by bezrukov on 6/17/15.
  *
  * @author Maksim Bezrukov
- * @version 1.0
  */
 public class NullProfileException extends VeraPDFException {
 
+    /**
+     * Constructs new NullProfileException
+     */
     public NullProfileException() {
     }
 
+    /**
+     * Constructs new NullProfileException
+     *
+     * @param message - the message of the exception
+     */
     public NullProfileException(String message) {
         super(message);
     }
