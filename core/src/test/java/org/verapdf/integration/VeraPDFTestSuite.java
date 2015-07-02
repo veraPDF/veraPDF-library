@@ -5,7 +5,12 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.verapdf.integration.model.*;
+import org.verapdf.integration.model.TestEntity;
+import org.verapdf.integration.model.TestSet;
+import org.verapdf.integration.model.comparing.CompareStrategyResource;
+import org.verapdf.integration.model.comparing.ComparingStrategies;
+import org.verapdf.integration.model.comparing.StatsStrategyResource;
+import org.verapdf.integration.model.reporting.TestSetReport;
 import org.verapdf.integration.tools.ResultComparator;
 import org.verapdf.integration.tools.TestEntityValidator;
 
@@ -28,7 +33,7 @@ public class VeraPDFTestSuite {
 
     private final static ObjectMapper MAPPER = new ObjectMapper();
 
-    private static Map<String, File> validationProfilesMap;
+    private static Map<String, File> validationProfiles;
     private static TestSet TEST_SET;
 
     @BeforeClass
@@ -38,7 +43,7 @@ public class VeraPDFTestSuite {
         prop.load(inputStream);
         String testSetPath = prop.getProperty(VERA_PDF_TEST_SUITE_FILE_PATH_PROPERTY);
         TEST_SET = MAPPER.readValue(new File(getSystemIndependentPath(testSetPath)), TestSet.class);
-        validationProfilesMap = loadTestResources(TEST_RESOURCES_DIRECTORY_PREFIX + VERA_PDF_VALIDATION_PROFILES_DIRECTORY);
+        validationProfiles = loadTestResources(TEST_RESOURCES_DIRECTORY_PREFIX + VERA_PDF_VALIDATION_PROFILES_DIRECTORY);
     }
 
     @Test
@@ -48,15 +53,25 @@ public class VeraPDFTestSuite {
             Map<String, File> expectedReports = loadTestResources(TEST_RESOURCES_DIRECTORY_PREFIX + REPORTS_DIRECTORY_PREFIX);
             List<TestEntity> corpusTestSet = TEST_SET.getTestSet().get(testCorpus);
             for (TestEntity testEntity : corpusTestSet) {
-                if (testFiles.containsKey(testEntity.getTestFileName()) && validationProfilesMap.containsKey(testEntity.getValidationProfileName())) {
-                    attachResources(testEntity, testFiles, expectedReports);
-                    TestEntityValidator.validate(testEntity);
-                    Assert.assertTrue(ResultComparator.compare(testEntity));
+                if (testEntity.getComparingStrategy().equals(ComparingStrategies.IGNORE)) {
+                    testEntity.setTestPassed(true);
                 } else {
-                    //TODO : throw some exception
+                    if (checkResources(testEntity, testFiles, expectedReports)) {
+                        attachResources(testEntity, testFiles, expectedReports);
+                        TestEntityValidator.validate(testEntity);
+                        boolean testPassed = ResultComparator.compare(testEntity);
+                        Assert.assertTrue(testPassed);
+                        testEntity.setTestPassed(testPassed);
+                    } else {
+                        Assert.fail();
+                        testEntity.setTestPassed(false);
+                    }
                 }
             }
         }
+
+        TestSetReport resultReport = TestSetReport.fromValue(TEST_SET);
+        //TODO : serialize test report
     }
 
     private static Map<String, File> loadTestResources(String directory) throws URISyntaxException {
@@ -64,9 +79,20 @@ public class VeraPDFTestSuite {
         return transformFileCollectionToMap(testFilesCollection);
     }
 
+    private static boolean checkResources(TestEntity testEntity, Map<String, File> testFiles, Map<String, File> expectedReports) {
+        if (!testFiles.containsKey(testEntity.getTestFileName()) || !validationProfiles.containsKey(testEntity.getValidationProfileName())) {
+            return false;
+        }
+        if ((testEntity.getComparingStrategy().equals(ComparingStrategies.STATS) || testEntity.getComparingStrategy().equals(ComparingStrategies.COMPARE))
+                && !expectedReports.containsKey(testEntity.getExpectedReportName())) {
+            return false;
+        }
+        return true;
+    }
+
     private static void attachResources(TestEntity testEntity, Map<String, File> testFiles, Map<String, File> expectedReports) throws IOException {
         testEntity.setTestFile(testFiles.get(testEntity.getTestFileName()));
-        testEntity.setValidationProfile(validationProfilesMap.get(testEntity.getValidationProfileName()));
+        testEntity.setValidationProfile(validationProfiles.get(testEntity.getValidationProfileName()));
         attachStrategyResource(testEntity, expectedReports);
     }
 

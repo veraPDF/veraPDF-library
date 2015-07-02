@@ -1,4 +1,4 @@
-package org.verapdf.integration.model;
+package org.verapdf.integration.model.comparing;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
