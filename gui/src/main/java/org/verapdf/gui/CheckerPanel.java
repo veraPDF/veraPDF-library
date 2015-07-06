@@ -1,5 +1,7 @@
 package org.verapdf.gui;
 
+import org.verapdf.exceptions.featurereport.FeatureValueException;
+import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.report.HTMLReport;
 import org.verapdf.report.XMLReport;
 import org.verapdf.validation.report.model.ValidationInfo;
@@ -375,7 +377,7 @@ public class CheckerPanel extends JPanel {
     /**
      * Method to notify panel that validation was done.
      */
-    public void validationEnded() {
+    public void validationEnded(FeaturesCollection collection) {
         endTimeOfValidation = System.currentTimeMillis();
 
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -406,7 +408,7 @@ public class CheckerPanel extends JPanel {
                 throw new IOException("Can not create temporary directory.");
             }
             xmlReport = new File("./temp/tempXMLReport.xml");
-            XMLReport.writeXMLReport(info, xmlReport.getPath(), endTimeOfValidation - startTimeOfValidation);
+            XMLReport.writeXMLReport(info, collection, xmlReport.getPath(), endTimeOfValidation - startTimeOfValidation);
 
             saveXML.setEnabled(true);
             viewXML.setEnabled(true);
@@ -435,6 +437,8 @@ public class CheckerPanel extends JPanel {
         } catch (TransformerException e) {
             JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
         } catch (IOException e) {
+            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
+        } catch (FeatureValueException e) {
             JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
         }
 

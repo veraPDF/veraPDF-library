@@ -115,7 +115,7 @@ public class Validator {
                 if (var != null) {
 
                     if (variablesMap.containsKey(var.getAttrName())) {
-                        throw new MultiplyGlobalVariableNameException("Founded multiply variable with name: " + var.getAttrName());
+                        throw new MultiplyGlobalVariableNameException("Founded multiply variable with name: " + var.getAttrName() + "\".");
                     }
                     Context cx = Context.enter();
                     ScriptableObject scope = cx.initStandardObjects();
@@ -124,7 +124,7 @@ public class Validator {
                     try {
                         res = cx.evaluateString(scope, var.getDefaultValue(), null, 0, null);
                     } catch (Exception e) {
-                        throw new JavaScriptEvaluatingException("Problem with evaluating default value of the variable: \"" + var.getAttrName(), e);
+                        throw new JavaScriptEvaluatingException("Problem with evaluating default value of the variable: \"" + var.getAttrName() + "\".", e);
                     }
                     if (res instanceof NativeJavaObject) {
                         res = ((NativeJavaObject) res).unwrap();
@@ -170,7 +170,7 @@ public class Validator {
                     try {
                         res = cx.evaluateString(scope, valScript, null, 0, null);
                     } catch (Exception e) {
-                        throw new JavaScriptEvaluatingException("Problem with evaluating value of the variable: \"" + var.getAttrName() + " for object: " + object.getType() + " with context: " + context, e);
+                        throw new JavaScriptEvaluatingException("Problem with evaluating value of the variable: \"" + var.getAttrName() + "\" for object: " + object.getType() + " with context: " + context, e);
                     }
 
                     if (res instanceof NativeJavaObject) {
