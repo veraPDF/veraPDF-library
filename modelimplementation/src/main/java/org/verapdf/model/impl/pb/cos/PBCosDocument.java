@@ -6,10 +6,8 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDEmbeddedFilesNameTreeNode;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.model.coslayer.CosDocument;
-import org.verapdf.model.coslayer.CosIndirect;
-import org.verapdf.model.coslayer.CosTrailer;
-import org.verapdf.model.coslayer.CosXRef;
+import org.verapdf.model.coslayer.*;
+import org.verapdf.model.impl.pb.pd.PBoxPDDocument;
 import org.verapdf.model.tools.XMPChecker;
 
 import java.io.IOException;
@@ -119,10 +117,13 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         if (ids != null) {
             StringBuilder builder = new StringBuilder();
             for (COSBase id : ids) {
-                builder.append(((COSString) id).getASCII()).append(' ');
+				for (Byte aByte : ((COSString) id).getBytes()) {
+					builder.append((char) (aByte & 0xFF));
+				}
+				builder.append(' ');
             }
             // need to discard last whitespace
-            return builder.toString().substring(0, builder.length() - 2);
+            return builder.toString().substring(0, builder.length() - 1);
         } else {
             return null;
         }
@@ -233,11 +234,10 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 
     /**  link to the high-level PDF Document structure
      */
-    // TODO : add support of this feature
-    private List<Object> getDocument() {
-        logger.warn("Trying get PDDocument from CosDocument.\r\n" +
-                "Current feature not supported yet. Method always return null.");
-        return new ArrayList<>();
+    private List<org.verapdf.model.pdlayer.PDDocument> getDocument() {
+        List<org.verapdf.model.pdlayer.PDDocument> document = new ArrayList<>(1);
+		document.add(new PBoxPDDocument(pdDocument));
+        return document;
     }
 
     /** link to cross reference table properties

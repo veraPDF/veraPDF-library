@@ -16,29 +16,32 @@ import java.util.Locale;
  */
 public abstract class PBCosNumber extends PBCosObject implements CosNumber {
 
-    protected PBCosNumber(COSNumber number) {
-        super(number);
-    }
+	protected PBCosNumber(COSNumber number) {
+		super(number);
+	}
 
-    /** Get the string representing this object
-     */
-    @Override
-    public String getstringValue() {
-        return String.valueOf(((COSNumber) baseObject).doubleValue());
-    }
+	/**
+	 * Get the string representing this object
+	 */
+	@Override
+	public String getstringValue() {
+		return String.valueOf(((COSNumber) baseObject).doubleValue());
+	}
 
-    /** Get truncated integer value
-     */
-    @Override
-    public Long getintValue() {
-        return Long.valueOf(((COSNumber) baseObject).longValue());
-    }
+	/**
+	 * Get truncated integer value
+	 */
+	@Override
+	public Long getintValue() {
+		return Long.valueOf(((COSNumber) baseObject).longValue());
+	}
 
-    /** Get original decimal value
-     */
-    @Override
-    public Double getrealValue() {
-        String value = String.format(Locale.US, "%.7f", ((COSNumber) baseObject).doubleValue());
-        return Double.valueOf(value);
-    }
+	/**
+	 * Get original decimal value
+	 */
+	@Override
+	public Double getrealValue() {
+		String value = String.format(Locale.US, "%.7f", ((COSNumber) baseObject).doubleValue());
+		return Double.valueOf(value);
+	}
 }
