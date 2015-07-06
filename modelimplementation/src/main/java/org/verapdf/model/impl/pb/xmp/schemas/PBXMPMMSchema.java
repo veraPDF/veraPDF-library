@@ -29,7 +29,7 @@ public class PBXMPMMSchema extends PBXMPPredefinedSchema implements XMPMMSchema 
      */
     @Override
     public String getmanifest() {
-        return xmpSchema.getProperty(MANIFEST) == null ? null : xmpSchema.getProperty(MANIFEST).toString();
+        return getXmpSchema().getProperty(MANIFEST) == null ? null : getXmpSchema().getProperty(MANIFEST).toString();
     }
 
 }

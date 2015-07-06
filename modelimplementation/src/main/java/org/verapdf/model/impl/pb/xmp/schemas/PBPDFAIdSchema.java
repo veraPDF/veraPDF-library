@@ -32,7 +32,7 @@ public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchem
      */
     @Override
     public Long getpart() {
-        return ((PDFAIdentificationSchema) xmpSchema).getPart() == null ? null : Long.valueOf(((PDFAIdentificationSchema) xmpSchema).getPart());
+        return ((PDFAIdentificationSchema) getXmpSchema()).getPart() == null ? null : Long.valueOf(((PDFAIdentificationSchema) getXmpSchema()).getPart());
     }
 
     /**
@@ -40,7 +40,7 @@ public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchem
      */
     @Override
     public String getconformance() {
-        return ((PDFAIdentificationSchema) xmpSchema).getConformance();
+        return ((PDFAIdentificationSchema) getXmpSchema()).getConformance();
     }
 
     /**
@@ -48,7 +48,7 @@ public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchem
      */
     @Override
     public String getamd() {
-        return ((PDFAIdentificationSchema) xmpSchema).getAmd();
+        return ((PDFAIdentificationSchema) getXmpSchema()).getAmd();
     }
 
     /**
@@ -56,7 +56,7 @@ public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchem
      */
     @Override
     public String getcorr() {
-        AbstractField corr = xmpSchema.getProperty(CORR);
+        AbstractField corr = getXmpSchema().getProperty(CORR);
 
         if (corr instanceof TextType) {
             return ((TextType) corr).getStringValue();

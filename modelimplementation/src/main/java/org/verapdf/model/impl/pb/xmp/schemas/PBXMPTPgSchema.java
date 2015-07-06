@@ -31,7 +31,7 @@ public class PBXMPTPgSchema extends PBXMPPredefinedSchema implements XMPTPgSchem
      */
     @Override
     public String getcolorants() {
-        return xmpSchema.getProperty(COLORANTS) == null ? null : xmpSchema.getProperty(COLORANTS).toString();
+        return getXmpSchema().getProperty(COLORANTS) == null ? null : getXmpSchema().getProperty(COLORANTS).toString();
     }
 
     /**
@@ -39,7 +39,7 @@ public class PBXMPTPgSchema extends PBXMPPredefinedSchema implements XMPTPgSchem
      */
     @Override
     public String getfonts() {
-        return xmpSchema.getProperty(FONTS) == null ? null : xmpSchema.getProperty(FONTS).toString();
+        return getXmpSchema().getProperty(FONTS) == null ? null : getXmpSchema().getProperty(FONTS).toString();
     }
 
     /**
@@ -47,6 +47,6 @@ public class PBXMPTPgSchema extends PBXMPPredefinedSchema implements XMPTPgSchem
      */
     @Override
     public String getplateNames() {
-        return xmpSchema.getProperty(PLATE_NAMES) == null ? null : xmpSchema.getProperty(PLATE_NAMES).toString();
+        return getXmpSchema().getProperty(PLATE_NAMES) == null ? null : getXmpSchema().getProperty(PLATE_NAMES).toString();
     }
 }

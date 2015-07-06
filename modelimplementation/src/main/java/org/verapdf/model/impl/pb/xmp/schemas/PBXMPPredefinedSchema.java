@@ -12,8 +12,6 @@ public class PBXMPPredefinedSchema extends PBXMPSchema implements XMPPredefinedS
 
     private static final String XMPPREDEFINEDSCHEMA = "XMPPredefinedSchema";
 
-    protected org.apache.xmpbox.schema.XMPSchema xmpSchema;
-
     /**
      * Constructs new object
      *

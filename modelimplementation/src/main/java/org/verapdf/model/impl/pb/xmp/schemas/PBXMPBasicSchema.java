@@ -30,7 +30,7 @@ public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verap
      */
     @Override
     public String getauthor() {
-        return xmpSchema.getProperty(AUTHOR) == null ? null : xmpSchema.getProperty(AUTHOR).toString();
+        return getXmpSchema().getProperty(AUTHOR) == null ? null : getXmpSchema().getProperty(AUTHOR).toString();
     }
 
     /**
@@ -38,7 +38,7 @@ public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verap
      */
     @Override
     public String getdescription() {
-        return xmpSchema.getProperty(DESCRIPTION) == null ? null : xmpSchema.getProperty(DESCRIPTION).toString();
+        return getXmpSchema().getProperty(DESCRIPTION) == null ? null : getXmpSchema().getProperty(DESCRIPTION).toString();
     }
 
     /**
@@ -46,7 +46,7 @@ public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verap
      */
     @Override
     public String getlabel() {
-        return ((XMPBasicSchema) xmpSchema).getLabel();
+        return ((XMPBasicSchema) getXmpSchema()).getLabel();
     }
 
     /**
@@ -54,7 +54,7 @@ public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verap
      */
     @Override
     public Long getrating() {
-        return ((XMPBasicSchema) xmpSchema).getRating() == null ? null : Long.valueOf(((XMPBasicSchema) xmpSchema).getRating());
+        return ((XMPBasicSchema) getXmpSchema()).getRating() == null ? null : Long.valueOf(((XMPBasicSchema) getXmpSchema()).getRating());
     }
 
     /**
@@ -62,6 +62,6 @@ public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verap
      */
     @Override
     public String gettitle() {
-        return xmpSchema.getProperty(TITLE) == null ? null : xmpSchema.getProperty(TITLE).toString();
+        return getXmpSchema().getProperty(TITLE) == null ? null : getXmpSchema().getProperty(TITLE).toString();
     }
 }
