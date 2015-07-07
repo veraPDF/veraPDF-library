@@ -1,10 +1,7 @@
 package org.verapdf.model.impl.pb.pd.images;
 
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSNull;
-import org.apache.pdfbox.cos.COSStream;
+import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.verapdf.model.baselayer.Object;
@@ -12,7 +9,9 @@ import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.coslayer.CosStream;
 import org.verapdf.model.impl.pb.cos.PBCosStream;
 import org.verapdf.model.impl.pb.pd.PBoxPDContentStream;
+import org.verapdf.model.impl.pb.pd.PBoxPDGroup;
 import org.verapdf.model.pdlayer.PDContentStream;
+import org.verapdf.model.pdlayer.PDGroup;
 import org.verapdf.model.pdlayer.PDXForm;
 
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
 
     public static final Logger logger = Logger.getLogger(PBoxPDXForm.class);
 
+	public static final String GROUP ="Group";
     public static final String PS = "PS";
     public static final String REF = "Ref";
     public static final String CONTENT_STREAM = "contentStream";
@@ -45,6 +45,9 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
         List<? extends Object> list;
 
         switch (link) {
+			case GROUP:
+				list = getGroup();
+				break;
             case PS:
                 list = getPS();
                 break;
@@ -62,28 +65,32 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
         return list;
     }
 
-    private List<CosStream> getPS() {
-        List<CosStream> postScript = new ArrayList<>(1);
-        final COSBase item = ((PDFormXObject) simplePDObject).getCOSStream().getItem(COSName.PS);
-        if (item != null) {
-            COSStream ps = getStream(item);
-            if (ps != null) {
-                postScript.add(new PBCosStream(ps));
-            }
-        }
-        return postScript;
-    }
+	private List<PDGroup> getGroup() {
+		List<PDGroup> groups = new ArrayList<>(1);
+		org.apache.pdfbox.pdmodel.graphics.form.PDGroup group = ((PDFormXObject) simplePDObject).getGroup();
+		if (group != null) {
+			groups.add(new PBoxPDGroup(group));
+		}
+		return groups;
+	}
+
+	private List<CosStream> getPS() {
+		List<CosStream> postScript = new ArrayList<>(1);
+		final COSStream cosStream = ((PDFormXObject) simplePDObject).getCOSStream();
+		COSStream ps = (COSStream) cosStream.getDictionaryObject(COSName.PS);
+		if (ps != null) {
+			postScript.add(new PBCosStream(ps));
+		}
+		return postScript;
+	}
 
     private List<CosDict> getREF() {
         return getLinkToDictionary(REF);
     }
 
-    private List<PDContentStream> getContentStream() {
-        List<PDContentStream> contentStreams = new ArrayList<>(1);
-        final PDStream pdStream = ((PDFormXObject) simplePDObject).getPDStream();
-        if (pdStream != null && pdStream.getCOSObject() != null && !(pdStream.getCOSObject() instanceof COSNull)) {
-            contentStreams.add(new PBoxPDContentStream(pdStream));
-        }
-        return contentStreams;
-    }
+	private List<PDContentStream> getContentStream() {
+		List<PDContentStream> contentStreams = new ArrayList<>(1);
+		contentStreams.add(new PBoxPDContentStream((PDFormXObject) simplePDObject));
+		return contentStreams;
+	}
 }
