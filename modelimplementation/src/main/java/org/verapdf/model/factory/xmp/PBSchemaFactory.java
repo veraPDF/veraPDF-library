@@ -9,7 +9,10 @@ import org.verapdf.model.tools.XMPHelper;
  *
  * @author Maksim Bezrukov
  */
-public class PBSchemaFactory {
+public final class PBSchemaFactory {
+
+    private PBSchemaFactory() {
+    }
 
     /**
      * Creates schema object based on it's NSURI
@@ -22,28 +25,60 @@ public class PBSchemaFactory {
 
         switch (schema.getNamespace()) {
             case XMPHelper.NSPDFAID:
-                resultSchema = new PBPDFAIdSchema((PDFAIdentificationSchema) schema);
+                if (schema instanceof PDFAIdentificationSchema) {
+                    resultSchema = new PBPDFAIdSchema((PDFAIdentificationSchema) schema);
+                } else {
+                    throw getSchemaException(schema, "PDFAIdentificationSchema");
+                }
                 break;
             case XMPHelper.NSPDFAEXTENSION:
-                resultSchema = new PBPDFAExtensionSchema((PDFAExtensionSchema) schema);
+                if (schema instanceof PDFAExtensionSchema) {
+                    resultSchema = new PBPDFAExtensionSchema((PDFAExtensionSchema) schema);
+                } else {
+                    throw getSchemaException(schema, "PDFAExtensionSchema");
+                }
                 break;
             case XMPHelper.NSXMPBASIC:
-                resultSchema = new PBXMPBasicSchema((XMPBasicSchema) schema);
+                if (schema instanceof XMPBasicSchema) {
+                    resultSchema = new PBXMPBasicSchema((XMPBasicSchema) schema);
+                } else {
+                    throw getSchemaException(schema, "XMPBasicSchema");
+                }
                 break;
             case XMPHelper.NSXMPRIGHTS:
-                resultSchema = new PBXMPRightsSchema((XMPRightsManagementSchema) schema);
+                if (schema instanceof XMPRightsManagementSchema) {
+                    resultSchema = new PBXMPRightsSchema((XMPRightsManagementSchema) schema);
+                } else {
+                    throw getSchemaException(schema, "XMPRightsManagementSchema");
+                }
                 break;
             case XMPHelper.NSXMPMM:
-                resultSchema = new PBXMPMMSchema((XMPMediaManagementSchema) schema);
+                if (schema instanceof XMPMediaManagementSchema) {
+                    resultSchema = new PBXMPMMSchema((XMPMediaManagementSchema) schema);
+                } else {
+                    throw getSchemaException(schema, "XMPMediaManagementSchema");
+                }
                 break;
             case XMPHelper.NSXMPTPG:
-                resultSchema = new PBXMPTPgSchema((XMPageTextSchema) schema);
+                if (schema instanceof XMPageTextSchema) {
+                    resultSchema = new PBXMPTPgSchema((XMPageTextSchema) schema);
+                } else {
+                    throw getSchemaException(schema, "XMPageTextSchema");
+                }
                 break;
             case XMPHelper.NSPDF:
-                resultSchema = new PBPDFSchema((AdobePDFSchema) schema);
+                if (schema instanceof  AdobePDFSchema) {
+                    resultSchema = new PBPDFSchema((AdobePDFSchema) schema);
+                } else {
+                    throw getSchemaException(schema, "AdobePDFSchema");
+                }
                 break;
             case XMPHelper.NSPHOTOSHOP:
-                resultSchema = new PBPhotoshopSchema((PhotoshopSchema) schema);
+                if (schema instanceof PhotoshopSchema) {
+                    resultSchema = new PBPhotoshopSchema((PhotoshopSchema) schema);
+                } else {
+                    throw getSchemaException(schema, "PhotoshopSchema");
+                }
                 break;
             case XMPHelper.NSCRS:
                 resultSchema = new PBCRSSchema(schema);
@@ -66,5 +101,9 @@ public class PBSchemaFactory {
         }
 
         return resultSchema;
+    }
+
+    private static ClassCastException getSchemaException(XMPSchema schema, String className) {
+        return new ClassCastException("Schema with namespace " + schema.getNamespace() + "must be " + className + "class. Real class: " + schema.getClass().getName() + ".");
     }
 }
