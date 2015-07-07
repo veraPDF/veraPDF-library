@@ -42,20 +42,32 @@ public class XMLFeaturesReport {
 
         if (collection != null) {
 
-            for (FeatureTreeNode infoDict : collection.getFeatureTreesForType(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY)) {
-                if (infoDict != null) {
-                    pdfFeatures.appendChild(makeNode(infoDict, doc));
+            if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY) != null) {
+                for (FeatureTreeNode infoDict : collection.getFeatureTreesForType(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY)) {
+                    if (infoDict != null) {
+                        pdfFeatures.appendChild(makeNode(infoDict, doc));
+                    }
                 }
             }
 
-            for (FeatureTreeNode metadataNode : collection.getFeatureTreesForType(FeaturesObjectTypesEnum.METADATA)) {
-                if (metadataNode != null) {
-                    pdfFeatures.appendChild(parseMetadata(metadataNode, collection, doc));
+            if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.METADATA) != null) {
+                for (FeatureTreeNode metadataNode : collection.getFeatureTreesForType(FeaturesObjectTypesEnum.METADATA)) {
+                    if (metadataNode != null) {
+                        pdfFeatures.appendChild(parseMetadata(metadataNode, collection, doc));
+                    }
                 }
             }
 
             if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT) != null) {
                 pdfFeatures.appendChild(makeList("outputIntents", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT), doc));
+            }
+
+            if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTLINES) != null) {
+                for (FeatureTreeNode outline : collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTLINES)) {
+                    if (outline != null) {
+                        pdfFeatures.appendChild(makeNode(outline, doc));
+                    }
+                }
             }
 
             if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE) != null) {

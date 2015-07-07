@@ -4,10 +4,8 @@ import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
-import org.verapdf.features.pb.objects.PBInfoDictFeaturesObject;
-import org.verapdf.features.pb.objects.PBMetadataFeaturesObject;
-import org.verapdf.features.pb.objects.PBOutputIntentsFeaturesObject;
-import org.verapdf.features.pb.objects.PBPageFeaturesObject;
+import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
+import org.verapdf.features.pb.objects.*;
 
 /**
  * Creates Feature Objects and report them to Features Reporter
@@ -44,6 +42,15 @@ public final class PBFeaturesObjectCreator {
      */
     public static PBOutputIntentsFeaturesObject createOutputIntentFeaturesObject(PDOutputIntent outInt) {
         return new PBOutputIntentsFeaturesObject(outInt);
+    }
+
+    /**
+     * Creates new PBOutlinesFeatureObject
+     * @param outlines - PDPage class from pdfbox, which represents a page for feature report
+     * @return created PBOutlinesFeaturesObject
+     */
+    public static PBOutlinesFeaturesObject createOutlinesFeaturesObject(PDDocumentOutline outlines) {
+        return new PBOutlinesFeaturesObject(outlines);
     }
 
     /**

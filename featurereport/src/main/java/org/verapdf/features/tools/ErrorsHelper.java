@@ -30,7 +30,10 @@ public final class ErrorsHelper {
     public static final String INFODICTCONFMODDATE_MESSAGE = "A serious configuration error while creating modDate field in information dictionary features.";
 
     public static final String OUTPUTINTENTSTYPE_ID = "outinterr1";
-    public static final String OUTPUTINTENTSTYPE_MESSAGE = "In OutputIntent dictionary value for key \"S\" must be of type COSName.";
+    public static final String OUTPUTINTENTSTYPE_MESSAGE = "In OutputIntent dictionary value for key \"S\" must be of type CosName.";
+
+    public static final String OUTLINESCOLOR_ID = "outlineserr1";
+    public static final String OUTLINESCOLOR_MESSAGE = "In Outputlines dictionary value for key \"C\" must be an array with three numbers.";
 
     public static void addErrorIntoCollection(FeaturesCollection collection, String errorID, String errorMessage) {
         try {
