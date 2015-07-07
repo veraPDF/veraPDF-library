@@ -35,7 +35,7 @@ public class PBCosRealTest extends BaseTest {
 
     @Test
     public void testGetDoubleMethod() {
-        Assert.assertEquals(expected.doubleValue(), ((CosReal) actual).getrealValue().doubleValue(), 0.000001);
+        Assert.assertEquals(expected.doubleValue(), ((CosReal) actual).getrealValue().doubleValue(), 0.00001);
     }
 
     @Test
