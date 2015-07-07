@@ -37,7 +37,7 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
         if (start + length <= profile.length) {
             byte[] buffer = new byte[length];
             System.arraycopy(profile, start, buffer, 0, length);
-            return new String(buffer).trim();
+            return new String(buffer);
         } else {
             logger.error("Length of icc profile less than " + (start + length));
             return null;
