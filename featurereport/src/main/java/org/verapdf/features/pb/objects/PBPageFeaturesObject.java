@@ -3,12 +3,11 @@ package org.verapdf.features.pb.objects;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSNumber;
-import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.verapdf.exceptions.featurereport.FeatureValueException;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
+import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -53,10 +52,9 @@ public class PBPageFeaturesObject implements IFeaturesObject {
      * @param collection - collection for feature report
      * @return FeatureTreeNode class which represents a root node of the constructed collection tree
      * @throws FeaturesTreeNodeException   - occurs when wrong features tree node constructs
-     * @throws FeatureValueException - occurs when wrong feature feature format found during features parser
      */
     @Override
-    public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException, FeatureValueException {
+    public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException{
 
         FeatureTreeNode root = FeatureTreeNode.newInstance(PAGE, null);
 
@@ -108,8 +106,15 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 
         COSBase base = page.getCOSObject().getDictionaryObject(COSName.getPDFName("PZ"));
         if (base != null) {
-            COSNumber number = getScalingNumber(base);
-            FeatureTreeNode scaling = FeatureTreeNode.newInstance("scaling", String.valueOf(number.doubleValue()), root);
+            FeatureTreeNode scaling = FeatureTreeNode.newInstance("scaling", root);
+            if (base instanceof COSNumber) {
+                COSNumber number = (COSNumber) base;
+                scaling.setValue(String.valueOf(number.doubleValue()));
+            } else {
+                scaling.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.PAGESCALLING_ID);
+
+                ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.PAGESCALLING_ID, ErrorsHelper.PAGESCALLING_MESSAGE);
+            }
         }
 
         FeatureTreeNode thumbnail = FeatureTreeNode.newInstance("thumbnail", Boolean.toString(page.getCOSObject().getDictionaryObject(COSName.getPDFName("Thumb")) != null), root);
@@ -121,11 +126,4 @@ public class PBPageFeaturesObject implements IFeaturesObject {
         return root;
     }
 
-    private static COSNumber getScalingNumber(COSBase base) throws FeatureValueException {
-        if (base instanceof COSNumber) {
-            return (COSNumber) base;
-        } else {
-            throw new FeatureValueException("Page dictionary must contain number value for key \"PZ\"");
-        }
-    }
 }

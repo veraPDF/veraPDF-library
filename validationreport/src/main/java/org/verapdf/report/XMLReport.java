@@ -1,6 +1,5 @@
 package org.verapdf.report;
 
-import org.verapdf.exceptions.featurereport.FeatureValueException;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.validation.report.model.ValidationInfo;
 import org.w3c.dom.Document;
@@ -74,9 +73,8 @@ public final class XMLReport {
      * @param processingTimeInMS - processing time of validation in ms
      * @return root element of the xml structure
      * @throws DatatypeConfigurationException - indicates a serious configurating error
-     * @throws FeatureValueException          - occurs when there is errors in parsing metadata
      */
-    public static Element makeXMLTree(ValidationInfo info, FeaturesCollection collection, Document doc, long processingTimeInMS) throws DatatypeConfigurationException, FeatureValueException {
+    public static Element makeXMLTree(ValidationInfo info, FeaturesCollection collection, Document doc, long processingTimeInMS) throws DatatypeConfigurationException {
 
         Element report = doc.createElement("report");
 
@@ -99,7 +97,7 @@ public final class XMLReport {
         return report;
     }
 
-    private static Document generateDOMDocument(ValidationInfo info, FeaturesCollection collection, long processingTimeInMS) throws ParserConfigurationException, DatatypeConfigurationException, FeatureValueException {
+    private static Document generateDOMDocument(ValidationInfo info, FeaturesCollection collection, long processingTimeInMS) throws ParserConfigurationException, DatatypeConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -132,9 +130,8 @@ public final class XMLReport {
      * @throws TransformerException                 - if an unrecoverable error occurs during the course of the transformation or
      * @throws FileNotFoundException                - if the file with path {@code path} exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
      * @throws DatatypeConfigurationException       - indicates a serious configurating error
-     * @throws FeatureValueException                - occurs when there is errors in parsing metadata
      */
-    public static void writeXMLReport(ValidationInfo info, String path, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException, FeatureValueException {
+    public static void writeXMLReport(ValidationInfo info, String path, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
 
         writeXMLReport(info, null, path, processingTimeInMS);
     }
@@ -151,9 +148,8 @@ public final class XMLReport {
      * @throws TransformerException                 - if an unrecoverable error occurs during the course of the transformation or
      * @throws FileNotFoundException                - if the file with path {@code path} exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
      * @throws DatatypeConfigurationException       - indicates a serious configurating error
-     * @throws FeatureValueException                - occurs when there is errors in parsing metadata
      */
-    public static void writeXMLReport(ValidationInfo info, FeaturesCollection collection, String path, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException, FeatureValueException {
+    public static void writeXMLReport(ValidationInfo info, FeaturesCollection collection, String path, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
 
         Document doc = generateDOMDocument(info, collection, processingTimeInMS);
 
@@ -176,9 +172,8 @@ public final class XMLReport {
      * @throws TransformerException                 - if an unrecoverable error occurs during the course of the transformation or
      * @throws FileNotFoundException                - if the file with path {@code path} exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
      * @throws DatatypeConfigurationException       - indicates a serious configurating error
-     * @throws FeatureValueException                - occurs when there is errors in parsing metadata
      */
-    public static String getXMLReportAsString(ValidationInfo info, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException, FeatureValueException {
+    public static String getXMLReportAsString(ValidationInfo info, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
 
         return getXMLReportAsString(info, null, processingTimeInMS);
     }
@@ -195,9 +190,8 @@ public final class XMLReport {
      * @throws TransformerException                 - if an unrecoverable error occurs during the course of the transformation or
      * @throws FileNotFoundException                - if the file with path {@code path} exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
      * @throws DatatypeConfigurationException       - indicates a serious configurating error
-     * @throws FeatureValueException                - occurs when there is errors in parsing metadata
      */
-    public static String getXMLReportAsString(ValidationInfo info, FeaturesCollection collection, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException, FeatureValueException {
+    public static String getXMLReportAsString(ValidationInfo info, FeaturesCollection collection, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
 
         Document doc = generateDOMDocument(info, collection, processingTimeInMS);
 

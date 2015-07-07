@@ -1,10 +1,10 @@
 package org.verapdf.features.pb.objects;
 
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
-import org.verapdf.exceptions.featurereport.FeatureValueException;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
+import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -42,21 +42,21 @@ public class PBMetadataFeaturesObject implements IFeaturesObject {
      * @param collection - collection for feature report
      * @return FeatureTreeNode class which represents a root node of the constructed collection tree
      * @throws FeaturesTreeNodeException   - occurs when wrong features tree node constructs
-     * @throws FeatureValueException - occurs when wrong feature feature format found during features parser
      */
     @Override
-    public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException, FeatureValueException {
+    public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException{
+
+        FeatureTreeNode root = FeatureTreeNode.newInstance("metadata", null);
 
         try {
             String metadataString = metadata.getInputStreamAsString();
-
-            FeatureTreeNode root = FeatureTreeNode.newInstance("metadata", metadataString, null);
-
-            collection.addNewFeatureTree(FeaturesObjectTypesEnum.METADATA, root);
-
-            return root;
+            root.setValue(metadataString);
         } catch (IOException e) {
-            throw new FeatureValueException("Error while converting metadata stream into a string value with use of ISO-8859-1 encoding.", e);
+            root.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATACONVERT_ID);
+            ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATACONVERT_ID, ErrorsHelper.METADATACONVERT_MESSAGE);
         }
+
+        collection.addNewFeatureTree(FeaturesObjectTypesEnum.METADATA, root);
+        return root;
     }
 }

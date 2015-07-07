@@ -1,7 +1,7 @@
 package org.verapdf.report;
 
-import org.verapdf.exceptions.featurereport.FeatureValueException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
+import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.w3c.dom.Document;
@@ -35,9 +35,8 @@ public class XMLFeaturesReport {
      * @param collection - features collection to be written
      * @param doc  - document used for writing xml in further
      * @return root element of the xml structure
-     * @throws FeatureValueException - occurs when there is errors in parsing metadata
      */
-    public static Element makeXMLTree(FeaturesCollection collection, Document doc) throws FeatureValueException {
+    public static Element makeXMLTree(FeaturesCollection collection, Document doc) {
 
         Element pdfFeatures = doc.createElement("pdfFeatures");
 
@@ -51,36 +50,49 @@ public class XMLFeaturesReport {
 
             for (FeatureTreeNode metadataNode : collection.getFeatureTreesForType(FeaturesObjectTypesEnum.METADATA)) {
                 if (metadataNode != null) {
-                    pdfFeatures.appendChild(parseMetadata(metadataNode, doc));
+                    pdfFeatures.appendChild(parseMetadata(metadataNode, collection, doc));
                 }
             }
 
-            pdfFeatures.appendChild(makeList("outputIntents", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT), doc));
+            if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT) != null) {
+                pdfFeatures.appendChild(makeList("outputIntents", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT), doc));
+            }
 
-            pdfFeatures.appendChild(makeList("pages", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE), doc));
+            if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE) != null) {
+                pdfFeatures.appendChild(makeList("pages", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE), doc));
+            }
+
+            if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR) != null) {
+                pdfFeatures.appendChild(makeList("errors", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR), doc));
+            }
         }
 
         return pdfFeatures;
     }
 
-    private static Element parseMetadata(FeatureTreeNode metadataNode, Document doc) throws FeatureValueException {
-        Element metadata = doc.createElement("metadata");
+    private static Element parseMetadata(FeatureTreeNode metadataNode, FeaturesCollection collection, Document doc) {
 
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document metadataDocument = builder.parse(new InputSource(new StringReader(metadataNode.getValue())));
-            Node pack = doc.importNode(metadataDocument.getDocumentElement(), true);
-            pack.normalize();
-            metadata.appendChild(pack);
-        } catch (ParserConfigurationException e) {
-            throw new FeatureValueException("A DocumentBuilder cannot be created for parse metadata which satisfies the configuration requested.", e);
-        } catch (SAXException e) {
-            throw new FeatureValueException("Error occurs in metadata parsing.", e);
-        } catch (IOException e) {
-            throw new FeatureValueException("IO error occurs in metadata parsing.", e);
+        if (metadataNode.getAttributes().get(ErrorsHelper.ERRORID) == null) {
+            Element metadata = doc.createElement("metadata");
+            try {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document metadataDocument = builder.parse(new InputSource(new StringReader(metadataNode.getValue())));
+                Node pack = doc.importNode(metadataDocument.getDocumentElement(), true);
+                pack.normalize();
+                metadata.appendChild(pack);
+            } catch (ParserConfigurationException | SAXException | IOException e) {
+                metadata.appendChild(doc.createTextNode(metadataNode.getValue()));
+                metadata.setAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATAPARSER_ID);
+
+                ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATAPARSER_ID, ErrorsHelper.METADATAPARSER_MESSAGE);
+            }
+
+            return metadata;
+        } else {
+            return makeNode(metadataNode, doc);
         }
-        return metadata;
+
     }
 
     private static Element makeList(String listName, List<FeatureTreeNode> list, Document doc) {

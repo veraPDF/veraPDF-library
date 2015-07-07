@@ -1,6 +1,5 @@
 package org.verapdf.gui;
 
-import org.verapdf.exceptions.featurereport.FeatureValueException;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.model.ModelLoader;
@@ -64,8 +63,6 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
         try {
             collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
-        } catch (FeatureValueException e) {
-            JOptionPane.showMessageDialog(parent, e.getMessage(), ERROR, JOptionPane.ERROR_MESSAGE);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(parent, "Some error in creating features collection.", ERROR, JOptionPane.ERROR_MESSAGE);
         }

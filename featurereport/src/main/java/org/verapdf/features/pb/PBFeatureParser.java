@@ -3,7 +3,6 @@ package org.verapdf.features.pb;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
-import org.verapdf.exceptions.featurereport.FeatureValueException;
 import org.verapdf.features.FeaturesReporter;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -22,9 +21,8 @@ public final class PBFeatureParser {
      *
      * @param document - the document for parsing
      * @return FeaturesCollection class with information about all featurereport
-     * @throws FeatureValueException - occurs when wrong feature feature format found during features parser
      */
-    public static FeaturesCollection getFeaturesCollection(PDDocument document) throws FeatureValueException {
+    public static FeaturesCollection getFeaturesCollection(PDDocument document) {
         return getFeaturesCollection(document, new FeaturesReporter());
     }
 
@@ -34,9 +32,8 @@ public final class PBFeatureParser {
      * @param document - the document for parsing
      * @param reporter - Features Reporter for report
      * @return FeaturesCollection class with information about all featurereport
-     * @throws FeatureValueException - occurs when wrong feature feature format found during features parser
      */
-    public static FeaturesCollection getFeaturesCollection(PDDocument document, FeaturesReporter reporter) throws FeatureValueException {
+    public static FeaturesCollection getFeaturesCollection(PDDocument document, FeaturesReporter reporter) {
 
         reporter.report(PBFeaturesObjectCreator.createInfoDictFeaturesObject(document.getDocumentInformation()));
         

@@ -1,10 +1,10 @@
 package org.verapdf.features.pb.objects;
 
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
-import org.verapdf.exceptions.featurereport.FeatureValueException;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
+import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -51,10 +51,9 @@ public class PBInfoDictFeaturesObject implements IFeaturesObject {
      * @param collection - collection for feature report
      * @return FeatureTreeNode class which represents a root node of the constructed collection tree
      * @throws FeaturesTreeNodeException   - occurs when wrong features tree node constructs
-     * @throws FeatureValueException - occurs when wrong feature feature format found during features parser
      */
     @Override
-    public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException, FeatureValueException {
+    public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException{
 
         FeatureTreeNode root = FeatureTreeNode.newInstance("informationDict", null);
 
@@ -89,28 +88,32 @@ public class PBInfoDictFeaturesObject implements IFeaturesObject {
         }
 
         if (info.getCreationDate() != null) {
+            FeatureTreeNode creationDate = FeatureTreeNode.newInstance(ENTRY, root);
+            creationDate.addAttribute(KEY, "CreationDate");
             try {
                 GregorianCalendar greg = new GregorianCalendar();
                 greg.setTime(info.getCreationDate().getTime());
                 greg.setTimeZone(info.getCreationDate().getTimeZone());
                 XMLGregorianCalendar creationCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(greg);
-                FeatureTreeNode creationDate = FeatureTreeNode.newInstance(ENTRY, creationCalendar.toXMLFormat(), root);
-                creationDate.addAttribute(KEY, "CreationDate");
+                creationDate.setValue(creationCalendar.toXMLFormat());
             } catch (DatatypeConfigurationException e) {
-                throw new FeatureValueException("A serious configuration error while creating creationDate field in information dictionary features.", e);
+                creationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.INFODICTCONFCREATIONDATE_ID);
+                ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.INFODICTCONFCREATIONDATE_ID, ErrorsHelper.INFODICTCONFCREATIONDATE_MESSAGE);
             }
         }
 
         if (info.getModificationDate() != null) {
+            FeatureTreeNode modificationDate = FeatureTreeNode.newInstance(ENTRY, root);
+            modificationDate.addAttribute(KEY, "ModDate");
             try {
                 GregorianCalendar greg = new GregorianCalendar();
                 greg.setTime(info.getModificationDate().getTime());
                 greg.setTimeZone(info.getModificationDate().getTimeZone());
                 XMLGregorianCalendar modCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(greg);
-                FeatureTreeNode modificationDate = FeatureTreeNode.newInstance(ENTRY, modCalendar.toXMLFormat(), root);
-                modificationDate.addAttribute(KEY, "ModDate");
+                modificationDate.setValue(modCalendar.toXMLFormat());
             } catch (DatatypeConfigurationException e) {
-                throw new FeatureValueException("A serious configuration error while creating creationDate field in information dictionary features.", e);
+                modificationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.INFODICTCONFMODDATE_ID);
+                ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.INFODICTCONFMODDATE_ID, ErrorsHelper.INFODICTCONFMODDATE_MESSAGE);
             }
         }
 

@@ -1,6 +1,5 @@
 package org.verapdf.features;
 
-import org.verapdf.exceptions.featurereport.FeatureValueException;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -23,9 +22,8 @@ public class FeaturesReporter {
     /**
      * Reports feature object for feature report
      * @param obj - object for reporting
-     * @throws FeatureValueException - occurs when wrong feature feature format found during features parser
      */
-    public void report(IFeaturesObject obj) throws FeatureValueException {
+    public void report(IFeaturesObject obj) {
         try {
             obj.reportFeatures(collection);
         } catch (FeaturesTreeNodeException ignore) {

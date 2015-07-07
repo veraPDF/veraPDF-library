@@ -9,5 +9,6 @@ public enum FeaturesObjectTypesEnum {
     INFORMATION_DICTIONARY,
     METADATA,
     OUTPUTINTENT,
-    PAGE
+    PAGE,
+    ERROR
 }

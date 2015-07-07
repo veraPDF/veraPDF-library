@@ -63,6 +63,7 @@ public final class FeatureTreeNode {
      * @param name   - name of the node
      * @param value  - value of the node
      * @param parent - parend of the node
+     * @throws FeaturesTreeNodeException - occurs when parent of the new node has String value
      */
     public static FeatureTreeNode newInstance(String name, String value, FeatureTreeNode parent) throws FeaturesTreeNodeException {
         return new FeatureTreeNode(name, value, parent);
