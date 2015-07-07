@@ -55,7 +55,9 @@ public class XMLFeaturesReport {
                 }
             }
 
-            pdfFeatures.appendChild(makePages(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE), doc));
+            pdfFeatures.appendChild(makeList("outputIntents", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT), doc));
+
+            pdfFeatures.appendChild(makeList("pages", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE), doc));
         }
 
         return pdfFeatures;
@@ -81,18 +83,18 @@ public class XMLFeaturesReport {
         return metadata;
     }
 
-    private static Element makePages(List<FeatureTreeNode> list, Document doc) {
-        Element pages = doc.createElement("pages");
+    private static Element makeList(String listName, List<FeatureTreeNode> list, Document doc) {
+        Element listElement = doc.createElement(listName);
 
         if (list != null) {
             for (FeatureTreeNode node : list) {
                 if (node != null) {
-                    pages.appendChild(makeNode(node, doc));
+                    listElement.appendChild(makeNode(node, doc));
                 }
             }
         }
 
-        return pages;
+        return listElement;
     }
 
     private static Element makeNode(FeatureTreeNode node, Document doc) {

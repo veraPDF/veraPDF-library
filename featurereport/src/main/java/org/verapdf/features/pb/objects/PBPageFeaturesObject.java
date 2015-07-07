@@ -124,8 +124,6 @@ public class PBPageFeaturesObject implements IFeaturesObject {
     private static COSNumber getScalingNumber(COSBase base) throws FeatureValueException {
         if (base instanceof COSNumber) {
             return (COSNumber) base;
-        } else if (base instanceof COSObject) {
-            return getScalingNumber(((COSObject) base).getObject());
         } else {
             throw new FeatureValueException("Page dictionary must contain number value for key \"PZ\"");
         }

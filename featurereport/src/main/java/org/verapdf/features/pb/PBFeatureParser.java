@@ -1,8 +1,8 @@
 package org.verapdf.features.pb;
 
-import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
 import org.verapdf.exceptions.featurereport.FeatureValueException;
 import org.verapdf.features.FeaturesReporter;
 import org.verapdf.features.tools.FeaturesCollection;
@@ -41,6 +41,10 @@ public final class PBFeatureParser {
         reporter.report(PBFeaturesObjectCreator.createInfoDictFeaturesObject(document.getDocumentInformation()));
         
         reporter.report(PBFeaturesObjectCreator.createMetadataFeaturesObject(document.getDocumentCatalog().getMetadata()));
+
+        for (PDOutputIntent outInt : document.getDocumentCatalog().getOutputIntents()) {
+            reporter.report(PBFeaturesObjectCreator.createOutputIntentFeaturesObject(outInt));
+        }
 
         for (PDPage page : document.getPages()) {
             reporter.report(PBFeaturesObjectCreator.createPageFeaturesObject(page, document.getPages().indexOf(page) + 1));
