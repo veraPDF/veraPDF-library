@@ -1,11 +1,14 @@
 package org.verapdf.gui;
 
+import org.verapdf.features.pb.PBFeatureParser;
+import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.validation.logic.Validator;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Validates PDF in a new threat.
@@ -19,6 +22,8 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
     private File pdf;
     private File profile;
     private CheckerPanel parent;
+    private ValidationInfo info;
+    private FeaturesCollection collection;
 
     /**
      * Creates new validate worker
@@ -35,29 +40,39 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
     @Override
     protected ValidationInfo doInBackground() {
-        ValidationInfo result = null;
+        info = null;
+        collection = null;
         org.verapdf.model.baselayer.Object root = null;
 
+        ModelLoader loader = new ModelLoader(pdf.getPath());
+
+
         try {
-            root = ModelLoader.getRoot(pdf.getPath());
+            root = loader.getRoot();
         } catch (Exception e1) {
             JOptionPane.showMessageDialog(parent, "Some error in parsing pdf.", ERROR, JOptionPane.ERROR_MESSAGE);
             parent.errorInValidatingOccur();
         }
 
         try {
-            result = Validator.validate(root, profile, false);
+            info = Validator.validate(root, profile, false);
         } catch (Exception e1) {
             JOptionPane.showMessageDialog(parent, "Some error in validating.", ERROR, JOptionPane.ERROR_MESSAGE);
             parent.errorInValidatingOccur();
         }
 
-        return result;
+        try {
+            collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(parent, "Some error in creating features collection.", ERROR, JOptionPane.ERROR_MESSAGE);
+        }
+
+        return info;
     }
 
     @Override
     protected void done() {
-        parent.validationEnded();
+        parent.validationEnded(collection);
     }
 
 }
