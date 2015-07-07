@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Evgeniy Muravitskiy on 4/27/15.
- * <p>
  * Current class is representation of CosArray interface of abstract model. This
  * class is analogue of COSArray in pdfbox.
- * </p>
+ *
+ * @author Evgeniy Muravitskiy
  */
 public class PBCosArray extends PBCosObject implements CosArray {
 
@@ -27,7 +26,7 @@ public class PBCosArray extends PBCosObject implements CosArray {
 
 	/**
 	 * Getter for array size.
-	 * 
+	 *
 	 * @return size of array
 	 */
 	@Override
@@ -45,13 +44,15 @@ public class PBCosArray extends PBCosObject implements CosArray {
 
 	/**
 	 * Get all elements of array.
-	 * 
+	 *
 	 * @return elements of array
 	 */
 	private List<CosObject> getElements() {
 		List<CosObject> list = new ArrayList<>(this.getsize().intValue());
 		for (COSBase base : ((COSArray) baseObject)) {
-			list.add(getFromValue(base));
+			if (base != null) {
+				list.add(getFromValue(base));
+			}
 		}
 		return list;
 	}

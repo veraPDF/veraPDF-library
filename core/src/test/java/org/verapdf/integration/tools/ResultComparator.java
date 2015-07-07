@@ -1,7 +1,7 @@
 package org.verapdf.integration.tools;
 
-import org.verapdf.integration.model.StatsStrategyResource;
 import org.verapdf.integration.model.TestEntity;
+import org.verapdf.integration.model.comparing.StatsStrategyResource;
 
 /**
  * @author Timur Kamalov

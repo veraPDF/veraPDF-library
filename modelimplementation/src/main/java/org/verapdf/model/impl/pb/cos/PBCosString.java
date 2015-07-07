@@ -4,46 +4,47 @@ import org.apache.pdfbox.cos.COSString;
 import org.verapdf.model.coslayer.CosString;
 
 /**
- * Created by Evgeniy Muravitskiy on 4/28/15.
- * <p>
- *     Current class is representation of CosString interface of abstract model.
- *     This class is analogue of COSString in pdfbox.
- * </p>
+ * Current class is representation of CosString interface of abstract model.
+ * This class is analogue of COSString in pdfbox.
+ *
+ * @author Evgeniy Muravitskiy
  */
 public class PBCosString extends PBCosObject implements CosString {
 
-    public PBCosString(COSString value) {
-        super(value);
-        setType("CosString");
-    }
+	public PBCosString(COSString value) {
+		super(value);
+		setType("CosString");
+	}
 
 	/**
 	 * Get Unicode string value stored in the PDF object
 	 */
-    @Override
-    public String getvalue() {
-        return ((COSString) baseObject).getASCII();
-    }
+	@Override
+	public String getvalue() {
+		return ((COSString) baseObject).getASCII();
+	}
 
-    /** true if the string is stored in Hex format
-     */
-    @Override
-    public Boolean getisHex() {
-        return ((COSString) baseObject).isHex();
-    }
+	/**
+	 * true if the string is stored in Hex format
+	 */
+	@Override
+	public Boolean getisHex() {
+		return ((COSString) baseObject).isHex();
+	}
 
-    /** true if all symbols below range 0-9,a-f,A-F
-     */
-    @Override
+	/**
+	 * true if all symbols below range 0-9,a-f,A-F
+	 */
+	@Override
 	public Boolean getisHexSymbols() {
-        return ((COSString) baseObject).getIsHexSymbols();
-    }
+		return ((COSString) baseObject).getIsHexSymbols();
+	}
 
-    /**
-     * contains original hexa string length
-     */
-    @Override
-    public Long gethexCount() {
-        return ((COSString) baseObject).getHexCount();
-    }
+	/**
+	 * contains original hexa string length
+	 */
+	@Override
+	public Long gethexCount() {
+		return ((COSString) baseObject).getHexCount();
+	}
 }

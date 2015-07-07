@@ -4,11 +4,10 @@ import org.apache.pdfbox.cos.COSName;
 import org.verapdf.model.coslayer.CosName;
 
 /**
- * Created by Evgeniy Muravitskiy on 4/27/15.
- * <p>
  * Current class is representation of CosName interface of abstract model. This
  * class is analogue of COSName in pdfbox.
- * </p>
+ *
+ * @author Evgeniy Muravitskiy
  */
 public class PBCosName extends PBCosObject implements CosName {
 

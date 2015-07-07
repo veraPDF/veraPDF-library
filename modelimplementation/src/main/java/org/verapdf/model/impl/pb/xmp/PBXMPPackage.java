@@ -1,6 +1,7 @@
 package org.verapdf.model.impl.pb.xmp;
 
 import org.apache.xmpbox.XMPMetadata;
+import org.verapdf.model.factory.xmp.PBSchemaFactory;
 import org.verapdf.model.xmplayer.XMPPackage;
 import org.verapdf.model.xmplayer.XMPSchema;
 
@@ -9,7 +10,6 @@ import java.util.List;
 
 /**
  * Current class is representation of XMPPackage interface from abstract model based on xmpbox from pdfbox.
- * Created by bezrukov on 6/12/15.
  *
  * @author Maksim Bezrukov
  */
@@ -19,7 +19,11 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 
     private static final String SCHEMA = "Schemas";
 
-    protected XMPMetadata xmpMetadata;
+    private XMPMetadata xmpMetadata;
+
+    protected XMPMetadata getXmpMetadata() {
+        return xmpMetadata;
+    }
 
     /**
      * Constructs new object

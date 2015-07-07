@@ -30,7 +30,7 @@ public class PBPhotoshopSchema extends PBXMPPredefinedSchema implements org.vera
      */
     @Override
     public String getauthor() {
-        return xmpSchema.getProperty(AUTHOR) == null ? null : xmpSchema.getProperty(AUTHOR).toString();
+        return getXmpSchema().getProperty(AUTHOR) == null ? null : getXmpSchema().getProperty(AUTHOR).toString();
     }
 
     /**
@@ -38,7 +38,7 @@ public class PBPhotoshopSchema extends PBXMPPredefinedSchema implements org.vera
      */
     @Override
     public String getcopyright() {
-        return xmpSchema.getProperty(COPYRIGHT) == null ? null : xmpSchema.getProperty(COPYRIGHT).toString();
+        return getXmpSchema().getProperty(COPYRIGHT) == null ? null : getXmpSchema().getProperty(COPYRIGHT).toString();
     }
 
     /**
@@ -46,7 +46,7 @@ public class PBPhotoshopSchema extends PBXMPPredefinedSchema implements org.vera
      */
     @Override
     public String gethistory() {
-        return ((PhotoshopSchema) xmpSchema).getHistory();
+        return ((PhotoshopSchema) getXmpSchema()).getHistory();
     }
 
     /**
@@ -54,6 +54,6 @@ public class PBPhotoshopSchema extends PBXMPPredefinedSchema implements org.vera
      */
     @Override
     public String gettitle() {
-        return xmpSchema.getProperty(TITLE) == null ? null : xmpSchema.getProperty(TITLE).toString();
+        return getXmpSchema().getProperty(TITLE) == null ? null : getXmpSchema().getProperty(TITLE).toString();
     }
 }

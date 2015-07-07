@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.cos;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSObject;
 import org.verapdf.model.GenericModelObject;
@@ -17,49 +18,58 @@ import java.io.IOException;
  */
 public class PBCosObject extends GenericModelObject implements CosObject {
 
-    protected COSBase baseObject;
+	private static Logger logger = Logger.getLogger(PBCosObject.class);
 
-    private String type = "CosObject";
-    private String id;
+	protected COSBase baseObject;
 
-    public PBCosObject(COSBase baseObject) {
-        this.baseObject = baseObject;
-        id = IDGenerator.generateID(this.baseObject);
-    }
+	private String type = "CosObject";
+	private String id;
 
-    /** Get type of current object
-     */
-    @Override
-    public String getType() {
-        return type;
-    }
+	public PBCosObject(COSBase baseObject) {
+		this.baseObject = baseObject;
+		id = IDGenerator.generateID(this.baseObject);
+	}
 
-    protected void setType(String type) {
-        this.type = type;
-    }
+	/**
+	 * Get type of current object
+	 */
+	@Override
+	public String getType() {
+		return type;
+	}
 
-    /** Get personal id of current object
-     */
-    @Override
-    public String getID() {
-        return id;
-    }
+	protected void setType(String type) {
+		this.type = type;
+	}
 
-    /**
-     * Transform object of pdf box to corresponding object of abstract model implementation. For transforming
-     * using {@code PBCosVisitor}.
-     * @param base the base object that all objects in the PDF document will extend in pdf box
-     * @return object of abstract model implementation, transformed from {@code base}
-     */
-    public static CosObject getFromValue(COSBase base) {
-        try {
-            PBCosVisitor visitor = PBCosVisitor.getInstance();
-            if (base instanceof COSObject) {
-                return (CosObject) visitor.visitFromObject((COSObject) base);
-            }
-			return (CosObject) base.accept(visitor);
-        } catch (IOException ignore) {
-            return null;
-        }
-    }
+	/**
+	 * Get personal id of current object
+	 */
+	@Override
+	public String getID() {
+		return id;
+	}
+
+	/**
+	 * Transform object of pdf box to corresponding object of abstract model implementation. For transforming
+	 * using {@code PBCosVisitor}.
+	 *
+	 * @param base the base object that all objects in the PDF document will extend in pdf box
+	 * @return object of abstract model implementation, transformed from {@code base}
+	 */
+	public static CosObject getFromValue(COSBase base) {
+		try {
+			if (base != null) {
+				PBCosVisitor visitor = PBCosVisitor.getInstance();
+				if (base instanceof COSObject) {
+					return (CosObject) visitor.visitFromObject((COSObject) base);
+				} else {
+					return (CosObject) base.accept(visitor);
+				}
+			}
+		} catch (IOException e) {
+			logger.error("Problems with wrapping pdfbox object \"" + base.toString() + "\". " + e.getMessage());
+		}
+		return null;
+	}
 }

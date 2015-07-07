@@ -9,51 +9,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Evgeniy Muravitskiy on 4/28/15.
- * <p>
- *     Current class is representation of CosIndirect interface of abstract model.
- *     This class is analogue of COSObject in pdfbox.
- * </p>
+ * Current class is representation of CosIndirect interface of abstract model.
+ * This class is analogue of COSObject in pdfbox.
+ *
+ * @author Evgeniy Muravitskiy
  */
 public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
-    public final static String DIRECT_OBJECT = "directObject";
+	public final static String DIRECT_OBJECT = "directObject";
 
-    public PBCosIndirect(COSBase directObject) {
-        super(directObject);
-        setType("CosIndirect");
-    }
+	public PBCosIndirect(COSBase directObject) {
+		super(directObject);
+		setType("CosIndirect");
+	}
 
-    @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-        List<? extends org.verapdf.model.baselayer.Object> list;
+	@Override
+	public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
+		List<? extends org.verapdf.model.baselayer.Object> list;
 
-        switch (link) {
-            case DIRECT_OBJECT:
-                list = getDirectObject();
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown link " + link + " for " + getType());
-        }
+		switch (link) {
+			case DIRECT_OBJECT:
+				list = getDirectObject();
+				break;
+			default:
+				list = super.getLinkedObjects(link);
+				break;
+		}
 
-        return list;
-    }
+		return list;
+	}
 
-    /** Get the direct contents of the indirect object
-     */
-    protected List<CosObject> getDirectObject() {
-        List<CosObject> list = new ArrayList<>();
-        COSBase base = baseObject instanceof COSObject ? ((COSObject) baseObject).getObject() : baseObject;
-        list.add(getFromValue(base));
-        return list;
-    }
+	/**
+	 * Get the direct contents of the indirect object
+	 */
+	protected List<CosObject> getDirectObject() {
+		List<CosObject> list = new ArrayList<>();
+		COSBase base = baseObject instanceof COSObject ? ((COSObject) baseObject).getObject() : baseObject;
+		if (base != null) {
+			list.add(getFromValue(base));
+		} else {
+			list.add(PBCosNull.NULL);
+		}
+		return list;
+	}
 
-    /**  true if the words 'obj' and 'endobj' are surrounded by the correct spacings according to PDF/A standard
-     */
-    @Override
-    public Boolean getspacingCompliesPDFA() {
-        return Boolean.valueOf(((COSObject) baseObject).isEndOfObjectComplyPDFA().booleanValue()
-                && ((COSObject) baseObject).isHeaderFormatComplyPDFA().booleanValue()
-                && ((COSObject) baseObject).isHeaderOfObjectComplyPDFA().booleanValue());
-    }
+	/**
+	 * true if the words 'obj' and 'endobj' are surrounded by the correct spacings according to PDF/A standard
+	 */
+	@Override
+	public Boolean getspacingCompliesPDFA() {
+		return Boolean.valueOf(((COSObject) baseObject).isEndOfObjectComplyPDFA().booleanValue()
+				&& ((COSObject) baseObject).isHeaderFormatComplyPDFA().booleanValue()
+				&& ((COSObject) baseObject).isHeaderOfObjectComplyPDFA().booleanValue());
+	}
 }

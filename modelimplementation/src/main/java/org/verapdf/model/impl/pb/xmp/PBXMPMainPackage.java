@@ -27,6 +27,6 @@ public class PBXMPMainPackage extends PBXMPPackage implements XMPMainPackage {
      */
     @Override
     public Boolean getispdfaidNSPresent() {
-        return xmpMetadata.getPDFIdentificationSchema() == null;
+        return getXmpMetadata().getPDFIdentificationSchema() == null;
     }
 }

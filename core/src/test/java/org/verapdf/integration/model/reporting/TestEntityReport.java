@@ -1,22 +1,19 @@
-package org.verapdf.integration.model;
+package org.verapdf.integration.model.reporting;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.verapdf.integration.model.TestEntity;
 import org.verapdf.integration.model.comparing.ComparingStrategies;
-import org.verapdf.integration.model.comparing.StrategyResource;
-import org.verapdf.validation.report.model.ValidationInfo;
-
-import java.io.File;
 
 /**
  * @author Timur Kamalov
  */
-public class TestEntity {
+public class TestEntityReport {
 
     private String testFileName;
     private String validationProfileName;
     private String expectedReportName;
     private ComparingStrategies comparingStrategy;
+    private boolean testPassed;
 
     @JsonProperty("testFileName")
     public String getTestFileName() {
@@ -54,50 +51,7 @@ public class TestEntity {
         this.comparingStrategy = comparingStrategy;
     }
 
-    //--------------------HELPER PROPERTIES---------------------//
-    private File testFile;
-    private File validationProfile;
-    private ValidationInfo info;
-    private StrategyResource strategyResource;
-    private boolean testPassed;
-
-    @JsonIgnore
-    public File getTestFile() {
-        return testFile;
-    }
-
-    public void setTestFile(File testFile) {
-        this.testFile = testFile;
-    }
-
-    @JsonIgnore
-    public File getValidationProfile() {
-        return validationProfile;
-    }
-
-    public void setValidationProfile(File validationProfile) {
-        this.validationProfile = validationProfile;
-    }
-
-    @JsonIgnore
-    public ValidationInfo getInfo() {
-        return info;
-    }
-
-    public void setInfo(ValidationInfo info) {
-        this.info = info;
-    }
-
-    @JsonIgnore
-    public StrategyResource getStrategyResource() {
-        return strategyResource;
-    }
-
-    public void setStrategyResource(StrategyResource strategyResource) {
-        this.strategyResource = strategyResource;
-    }
-
-    @JsonIgnore
+    @JsonProperty("testPassed")
     public boolean isTestPassed() {
         return testPassed;
     }
@@ -105,4 +59,15 @@ public class TestEntity {
     public void setTestPassed(boolean testPassed) {
         this.testPassed = testPassed;
     }
+
+    public static TestEntityReport fromValue(TestEntity testEntity) {
+        TestEntityReport testEntityReport = new TestEntityReport();
+        testEntityReport.setTestFileName(testEntity.getTestFileName());
+        testEntityReport.setValidationProfileName(testEntity.getValidationProfileName());
+        testEntityReport.setExpectedReportName(testEntity.getExpectedReportName());
+        testEntityReport.setComparingStrategy(testEntity.getComparingStrategy());
+        testEntityReport.setTestPassed(testEntity.isTestPassed());
+        return testEntityReport;
+    }
+
 }

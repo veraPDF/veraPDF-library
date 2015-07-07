@@ -39,10 +39,6 @@ public final class XMPHelper {
 
     public static final String NSCRS = "http://ns.adobe.com/camera-rawsettings/1.0/";
     public static final String NSAUX = "http://ns.adobe.com/exif/1.0/aux/";
-    public static final String NSIPTC4XMPCORE = "http://iptc.org/std/Iptc4xmpCore/1.0/xmlns/";
-    public static final String NSPDFE = "http://www.aiim.org/pdfe/ns/id/";
-    public static final String NSPDFX = "http://ns.adobe.com/pdfx/1.3/";
-    public static final String NSPDFXID = "http://www.npes.org/pdfx/ns/id/";
     public static final String NSXMPDM = "http://ns.adobe.com/xmp/1.0/DynamicMedia/";
     public static final String NSXAPS = "http://ns.adobe.com/xap/1.0/s/";
 
@@ -84,10 +80,6 @@ public final class XMPHelper {
 
         predifinedSchemas.add(NSCRS);
         predifinedSchemas.add(NSAUX);
-        predifinedSchemas.add(NSIPTC4XMPCORE);
-        predifinedSchemas.add(NSPDFE);
-        predifinedSchemas.add(NSPDFX);
-        predifinedSchemas.add(NSPDFXID);
         predifinedSchemas.add(NSXMPDM);
         predifinedSchemas.add(NSXAPS);
     }

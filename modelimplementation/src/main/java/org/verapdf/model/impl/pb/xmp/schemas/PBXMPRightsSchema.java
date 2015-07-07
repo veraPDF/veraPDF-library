@@ -29,6 +29,6 @@ public class PBXMPRightsSchema extends PBXMPPredefinedSchema implements XMPRight
      */
     @Override
     public String getcopyright() {
-        return xmpSchema.getProperty(COPYRIGHT) == null ? null : xmpSchema.getProperty(COPYRIGHT).toString();
+        return getXmpSchema().getProperty(COPYRIGHT) == null ? null : getXmpSchema().getProperty(COPYRIGHT).toString();
     }
 }
