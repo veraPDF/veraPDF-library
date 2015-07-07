@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.pd;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdfparser.PDFStreamParser;
 import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.verapdf.model.baselayer.Object;
@@ -16,9 +17,11 @@ import java.util.List;
  */
 public class PBoxPDContentStream extends PBoxPDObject implements PDContentStream {
 
+	public static final Logger logger = Logger.getLogger(PBoxPDContentStream.class);
+
     public static final String OPERATORS = "operators";
 
-    public PBoxPDContentStream(PDStream contentStream) {
+    public PBoxPDContentStream(org.apache.pdfbox.contentstream.PDContentStream contentStream) {
         super(contentStream);
         setType("PDContentStream");
     }
@@ -45,10 +48,10 @@ public class PBoxPDContentStream extends PBoxPDObject implements PDContentStream
         try {
             PDFStreamParser streamParser = new PDFStreamParser(contentStream.getContentStream());
             streamParser.parse();
-            OperatorFactory.parseOperators(streamParser.getTokens());
+            result = OperatorFactory.parseOperators(streamParser.getTokens());
             return result;
         } catch (IOException e) {
-
+			logger.error("Problems with obtaining of operators. " + e.getMessage());
         }
         return result;
     }

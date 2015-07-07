@@ -41,7 +41,8 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
     private List<ICCOutputProfile> getDestProfile() {
         List<ICCOutputProfile> profile = new ArrayList<>();
         try {
-            final COSStream dest = ((org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent) simplePDObject).getDestOutputIntent();
+            COSStream dest = ((org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent) simplePDObject)
+					.getDestOutputIntent();
             if (dest != null) {
                 final InputStream unfilteredStream = dest.getUnfilteredStream();
                 final int bound = unfilteredStream.available();
