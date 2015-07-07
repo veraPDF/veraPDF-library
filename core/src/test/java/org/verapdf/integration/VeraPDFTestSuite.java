@@ -12,6 +12,7 @@ import org.verapdf.integration.model.comparing.ComparingStrategies;
 import org.verapdf.integration.model.comparing.StatsStrategyResource;
 import org.verapdf.integration.model.reporting.TestSetReport;
 import org.verapdf.integration.tools.ResultComparator;
+import org.verapdf.integration.tools.ResultReporter;
 import org.verapdf.integration.tools.TestEntityValidator;
 
 import java.io.File;
@@ -25,10 +26,10 @@ import java.util.*;
 
 public class VeraPDFTestSuite {
 
-    private final static String VERA_PDF_TEST_SUITE_PROPERTIES_PATH = "test-config.properties";
+    public final static String TEST_RESOURCES_DIRECTORY_PREFIX = "/test-resources/";
+    public final static String VERA_PDF_TEST_SUITE_PROPERTIES_PATH = "test-config.properties";
     private final static String VERA_PDF_TEST_SUITE_FILE_PATH_PROPERTY = "test.set.path";
     private final static String VERA_PDF_VALIDATION_PROFILES_DIRECTORY = "veraPDF-validation-profiles/";
-    private final static String TEST_RESOURCES_DIRECTORY_PREFIX = "/test-resources/";
     private final static String REPORTS_DIRECTORY_PREFIX = "/reports/";
 
     private final static ObjectMapper MAPPER = new ObjectMapper();
@@ -71,7 +72,7 @@ public class VeraPDFTestSuite {
         }
 
         TestSetReport resultReport = TestSetReport.fromValue(TEST_SET);
-        //TODO : serialize test report
+        ResultReporter.reportTestSetResult(resultReport);
     }
 
     private static Map<String, File> loadTestResources(String directory) throws URISyntaxException {
