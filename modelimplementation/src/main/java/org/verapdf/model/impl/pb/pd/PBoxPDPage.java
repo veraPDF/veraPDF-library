@@ -1,15 +1,19 @@
 package org.verapdf.model.impl.pb.pd;
 
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSNull;
+import org.apache.pdfbox.pdmodel.*;
 import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.common.PDStream;
+import org.apache.pdfbox.pdmodel.graphics.form.*;
 import org.apache.pdfbox.pdmodel.interactive.action.PDPageAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.model.pdlayer.PDAction;
-import org.verapdf.model.pdlayer.PDAnnot;
-import org.verapdf.model.pdlayer.PDContentStream;
+import org.verapdf.model.pdlayer.*;
+import org.verapdf.model.pdlayer.PDGroup;
 import org.verapdf.model.pdlayer.PDPage;
 
 import java.io.IOException;
@@ -26,6 +30,7 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
     public static final String ANNOTS = "annots";
     public static final String ACTION = "action";
     public static final String CONTENT_STREAM = "contentStream";
+	public static final String GROUP = "Group";
 
     public PBoxPDPage(org.apache.pdfbox.pdmodel.PDPage simplePDObject) {
         super((COSObjectable) simplePDObject);
@@ -36,6 +41,9 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
         List<? extends Object> list;
 
         switch (link) {
+			case GROUP:
+				list = getGroup();
+				break;
             case ANNOTS:
                 list = getAnnotations();
                 break;
@@ -52,19 +60,23 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
         return list;
     }
 
-    //TODO : implement this
-    private List<PDContentStream> getContentStream() {
-        List<PDContentStream> contentStreams = new ArrayList<>();
-        try {
-            final PDStream stream = ((org.apache.pdfbox.pdmodel.PDPage) simplePDObject).getStream();
-            if (stream != null && stream.getCOSObject() != null && !(stream.getCOSObject() instanceof COSNull)) {
-                contentStreams.add(new PBoxPDContentStream(stream));
-            }
-        } catch (IOException e) {
-            logger.error("Can not get content stream of page. " + e.getMessage());
-        }
-        return contentStreams;
-    }
+	private List<PDGroup> getGroup() {
+		List<PDGroup> groups = new ArrayList<>(1);
+		COSDictionary dictionary = ((org.apache.pdfbox.pdmodel.PDPage) simplePDObject).getCOSObject();
+		COSBase groupDictionary = dictionary.getDictionaryObject(COSName.GROUP);
+		if (groupDictionary != null && groupDictionary instanceof COSDictionary) {
+			org.apache.pdfbox.pdmodel.graphics.form.PDGroup group =
+					new org.apache.pdfbox.pdmodel.graphics.form.PDGroup((COSDictionary) groupDictionary);
+			groups.add(new PBoxPDGroup(group));
+		}
+		return groups;
+	}
+
+	private List<PDContentStream> getContentStream() {
+		List<PDContentStream> contentStreams = new ArrayList<>();
+		contentStreams.add(new PBoxPDContentStream((org.apache.pdfbox.pdmodel.PDPage) simplePDObject));
+		return contentStreams;
+	}
 
     //TODO : implement this
     private List<PDAction> getActions() {

@@ -25,6 +25,7 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
         return ((PDAnnotation) simplePDObject).getSubtype();
     }
 
+	// TODO : implement this
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         List<? extends Object> list;
@@ -33,7 +34,7 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
                 list = getAppearance();
                 break;
             default:
-                list = super.getLinkedObjects(link);
+                list = new ArrayList<>();
                 break;
         }
         return list;
