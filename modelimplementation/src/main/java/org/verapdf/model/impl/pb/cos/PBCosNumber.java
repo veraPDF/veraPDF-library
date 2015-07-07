@@ -41,7 +41,7 @@ public abstract class PBCosNumber extends PBCosObject implements CosNumber {
 	 */
 	@Override
 	public Double getrealValue() {
-		String value = String.format(Locale.US, "%.7f", ((COSNumber) baseObject).doubleValue());
+		String value = String.format(Locale.US, "%.5f", ((COSNumber) baseObject).doubleValue());
 		return Double.valueOf(value);
 	}
 }
