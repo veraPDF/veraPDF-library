@@ -59,10 +59,13 @@ public class VeraPDFTestSuite {
                 } else {
                     if (checkResources(testEntity, testFiles, expectedReports)) {
                         attachResources(testEntity, testFiles, expectedReports);
-                        TestEntityValidator.validate(testEntity);
-                        boolean testPassed = ResultComparator.compare(testEntity);
-                        Assert.assertTrue(testPassed);
-                        testEntity.setTestPassed(testPassed);
+                        try {
+                            TestEntityValidator.validate(testEntity);
+                            boolean testPassed = ResultComparator.compare(testEntity);
+                            testEntity.setTestPassed(testPassed);
+                        } catch (Exception e) {
+                            testEntity.setTestPassed(false);
+                        }
                     } else {
                         Assert.fail();
                         testEntity.setTestPassed(false);

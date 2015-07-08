@@ -33,6 +33,8 @@ public class ResultReporter {
     }
 
     private static void reportToConsole(TestSetReport report) {
+        logger.info("Total tests run : " + report.getTotal());
+        logger.info("Failed tests : " + report.getFailed());
         for (Map.Entry<String, List<TestEntityReport>> entry : report.getTestSetReport().entrySet()) {
             logger.info("Test corpus : " + entry.getKey());
             for (TestEntityReport entityReport : entry.getValue()) {

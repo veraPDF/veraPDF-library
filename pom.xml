@@ -218,6 +218,8 @@
                                         <workingDirectory>target/test-classes/test-resources</workingDirectory>
                                         <arguments>
                                             <argument>clone</argument>
+                                            <argument>-b</argument>
+                                            <argument>integration</argument>
                                             <argument>https://github.com/veraPDF/veraPDF-validation-profiles</argument>
                                         </arguments>
                                     </configuration>
