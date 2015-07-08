@@ -73,7 +73,7 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
 		try {
 			COSStream stream = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject).getStream();
 			if (stream != null) {
-				DomXmpParser xmpParser = xmpParser = new DomXmpParser();
+				DomXmpParser xmpParser = new DomXmpParser();
 				XMPMetadata metadata = xmpParser.parse(stream.getUnfilteredStream());
 				xmp.add(isMainMetadata ? new PBXMPMainPackage(metadata) : new PBXMPPackage(metadata));
 			}

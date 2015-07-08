@@ -5,7 +5,6 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.PDAnnot;
 import org.verapdf.model.pdlayer.PDContentStream;
 
-import java.lang.Override;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
  */
 public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 
-    public final static String APPEARANCE = "appearance";
+    public static final String APPEARANCE = "appearance";
 
     public PBoxPDAnnot(PDAnnotation simplePDObject) {
         super(simplePDObject);

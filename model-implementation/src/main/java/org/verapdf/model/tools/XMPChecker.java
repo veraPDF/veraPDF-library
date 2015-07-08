@@ -31,7 +31,7 @@ import java.util.*;
  *
  * @author Evgeniy Muravitskiy
  */
-public class XMPChecker {
+public final class XMPChecker {
 
     private static final Logger logger = Logger.getLogger(XMPChecker.class);
 

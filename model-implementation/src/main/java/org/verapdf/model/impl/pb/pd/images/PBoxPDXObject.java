@@ -71,7 +71,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 		try {
 			COSStream cosStream = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject).getCOSStream();
 			COSBase smaskDictionary = cosStream.getDictionaryObject(COSName.SMASK);
-			if (smaskDictionary != null && smaskDictionary instanceof COSDictionary) {
+			if (smaskDictionary instanceof COSDictionary) {
 				PDXObject xObject = getXObject(smaskDictionary);
 				if (xObject != null) {
 					mask.add(xObject);
