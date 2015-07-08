@@ -1,7 +1,7 @@
 package org.verapdf.model.impl.pb.pd;
 
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.COSStream;
+import org.apache.pdfbox.cos.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.external.ICCOutputProfile;
 import org.verapdf.model.impl.pb.external.PBoxICCOutputProfile;
@@ -23,6 +23,19 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
         super(simplePDObject);
         setType("PDOutputIntent");
     }
+
+	public String getdestOutputProfileRef() {
+		COSDictionary dictionary = (COSDictionary) (simplePDObject).getCOSObject();
+		COSBase item = dictionary.getItem(COSName.DEST_OUTPUT_PROFILE);
+		if (item instanceof COSObject) {
+			StringBuilder buffer = new StringBuilder();
+			buffer.append(((COSObject) item).getObjectNumber()).append(' ');
+			buffer.append(((COSObject) item).getGenerationNumber());
+			return buffer.toString();
+		} else {
+			return null;
+		}
+	}
 
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
