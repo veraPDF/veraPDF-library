@@ -15,6 +15,8 @@ import java.util.Map;
 public class TestSetReport {
 
     private Map<String, List<TestEntityReport>> testSetReport;
+    private Long total;
+    private Long failed;
 
     @JsonProperty("testSetReport")
     public Map<String, List<TestEntityReport>> getTestSetReport() {
@@ -25,8 +27,28 @@ public class TestSetReport {
         this.testSetReport = testSetReport;
     }
 
+    @JsonProperty("total")
+    public Long getTotal() {
+        return total;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
+    }
+
+    @JsonProperty("failed")
+    public Long getFailed() {
+        return failed;
+    }
+
+    public void setFailed(Long failed) {
+        this.failed = failed;
+    }
+
     public static TestSetReport fromValue(TestSet testSet) {
         TestSetReport testSetReport = new TestSetReport();
+        Long total = 0L;
+        Long failed = 0L;
 
         Map<String, List<TestEntity>> testSetMap = testSet.getTestSet();
         Map<String, List<TestEntityReport>> testSetReportMap = new HashMap<>();
@@ -34,12 +56,17 @@ public class TestSetReport {
             List<TestEntity> testEntities = testSetMap.get(testCorpus);
             List<TestEntityReport> testEntityReports = new ArrayList<>();
             for (TestEntity testEntity : testEntities) {
+                total++;
                 testEntityReports.add(TestEntityReport.fromValue(testEntity));
+                if (!testEntity.isTestPassed()) {
+                    failed++;
+                }
             }
             testSetReportMap.put(testCorpus, testEntityReports);
         }
         testSetReport.setTestSetReport(testSetReportMap);
-
+        testSetReport.setTotal(total);
+        testSetReport.setFailed(failed);
         return testSetReport;
     }
 

@@ -76,9 +76,8 @@ public final class ModelLoader {
 		}
 
 		Object root;
-		try (PDDocument document = PDDocument.load(file, Boolean.FALSE, Boolean.TRUE)) {
-			root = new PBCosDocument(document, file.length());
-		}
+		PDDocument document = PDDocument.load(file, Boolean.FALSE, Boolean.TRUE);
+		root = new PBCosDocument(document, file.length());
 		return root;
 	}
 }
