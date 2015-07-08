@@ -5,6 +5,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.PDAnnot;
 import org.verapdf.model.pdlayer.PDContentStream;
 
+import java.lang.Override;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,5 +45,23 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
     private List<PDContentStream> getAppearance() {
         List<PDContentStream> appearances = new ArrayList<>();
         return appearances;
+    }
+
+    @Override
+    public String getAP() {
+        // TODO : implement me
+        return "";
+    }
+
+    @Override
+    public Long getF() {
+        // TODO : implement me
+        return Long.valueOf(0L);
+    }
+
+    @Override
+    public Double getCA() {
+        // TODO : impelemnt me
+        return Double.valueOf(0);
     }
 }

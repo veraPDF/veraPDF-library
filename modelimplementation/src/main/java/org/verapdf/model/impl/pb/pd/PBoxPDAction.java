@@ -2,6 +2,8 @@ package org.verapdf.model.impl.pb.pd;
 
 import org.verapdf.model.pdlayer.PDAction;
 
+import java.lang.Override;
+
 /**
  * PDF action object
  *
@@ -14,11 +16,10 @@ public class PBoxPDAction extends PBoxPDObject implements PDAction {
         setType("PDAction");
     }
 
-    /**
-     * @return
-     */
     @Override
-    public String getSubtype() {
-        return ((org.apache.pdfbox.pdmodel.interactive.action.PDAction) simplePDObject).getSubType();
+    public String getS() {
+        // TODO: Impelement me
+        return "";
     }
 }
+
