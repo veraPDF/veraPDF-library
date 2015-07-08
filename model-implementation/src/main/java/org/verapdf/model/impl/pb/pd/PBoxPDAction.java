@@ -18,8 +18,7 @@ public class PBoxPDAction extends PBoxPDObject implements PDAction {
 
     @Override
     public String getS() {
-        // TODO: Impelement me
-        return "";
+        return ((org.apache.pdfbox.pdmodel.interactive.action.PDAction) simplePDObject).getSubType();
     }
 }
 
