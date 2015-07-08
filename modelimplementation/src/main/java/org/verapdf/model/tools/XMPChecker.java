@@ -35,8 +35,6 @@ public class XMPChecker {
 
     private static final Logger logger = Logger.getLogger(XMPChecker.class);
 
-    private static final List<String> URLS = new ArrayList<>(4);
-
     private static final String TITLE = "Title";
     private static final String SUBJECT = "Subject";
     private static final String AUTHOR = "Author";
@@ -46,13 +44,6 @@ public class XMPChecker {
     private static final String CREATION_DATE = "CreationDate";
     private static final String MODIFICATION_DATE = "ModDate";
     private static final Integer MAX_REQUIRED_RECORDS = Integer.valueOf(8);
-
-    static {
-        URLS.add("http://purl.org/dc/elements/1.1/");
-        URLS.add("http://ns.adobe.com/xap/1.0/");
-        URLS.add("http://ns.adobe.com/pdf/1.3/");
-        URLS.add("http://www.aiim.org/pdfa/ns/id/");
-    }
 
     private XMPChecker() {
 
@@ -128,7 +119,7 @@ public class XMPChecker {
 
     private static void getTitleAuthorSubject(XMPMetadata metadata, Map<String, Object> properties) {
         DublinCoreSchema dc = metadata.getDublinCoreSchema();
-        if (dc != null && URLS.contains(dc.getNamespace())) {
+        if (dc != null) {
             final List<String> buffer = dc.getCreators();
             putProperty(properties, TITLE, dc.getTitle());
             putProperty(properties, SUBJECT, dc.getDescription());
@@ -138,7 +129,7 @@ public class XMPChecker {
 
     private static void getProducerKeywords(XMPMetadata metadata, Map<String, Object> properties) {
         AdobePDFSchema pdf = metadata.getAdobePDFSchema();
-        if (pdf != null && URLS.contains(pdf.getNamespace())) {
+        if (pdf != null) {
             putProperty(properties, KEYWORDS, pdf.getKeywords());
             putProperty(properties, PRODUCER, pdf.getProducer());
         }
@@ -146,7 +137,7 @@ public class XMPChecker {
 
     private static void getCreatorAndDates(XMPMetadata metadata, Map<String, Object> properties) {
         XMPBasicSchema basic = metadata.getXMPBasicSchema();
-        if (basic != null && URLS.contains(basic.getNamespace())) {
+        if (basic != null) {
             putProperty(properties, CREATOR, basic.getCreatorTool());
             putProperty(properties, CREATION_DATE, basic.getCreateDate());
             putProperty(properties, MODIFICATION_DATE, basic.getModifyDate());

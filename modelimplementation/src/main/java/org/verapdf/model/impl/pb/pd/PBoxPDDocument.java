@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.pd;
 
+import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.*;
 
@@ -15,6 +16,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
     public static final String METADATA = "metadata";
     public static final String OUTPUT_INTENTS = "outputIntents";
     public static final String ACRO_FORMS = "acroForms";
+	public static final String ACTIONS = "AA";
 
     public PBoxPDDocument(org.apache.pdfbox.pdmodel.PDDocument document) {
         super(document);
@@ -26,6 +28,9 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         List<? extends Object> list;
 
         switch (link) {
+			case ACTIONS:
+				list = getActions();
+				break;
             case PAGES:
                 list = getPages();
                 break;
@@ -46,9 +51,16 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         return list;
     }
 
-    private List<PDPage> getPages() {
-        List<PDPage> pages = new ArrayList<>();
-        for (org.apache.pdfbox.pdmodel.PDPage page : document.getPages()) {
+	// TODO : implement this
+	private List<PDAction> getActions() {
+		List<PDAction> actions = new ArrayList<>();
+		return actions;
+	}
+
+	private List<PDPage> getPages() {
+		PDPageTree pageTree = document.getPages();
+		List<PDPage> pages = new ArrayList<>(pageTree.getCount());
+		for (org.apache.pdfbox.pdmodel.PDPage page : pageTree) {
             if (page != null) {
                 pages.add(new PBoxPDPage(page));
             }
@@ -58,11 +70,11 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
     private List<PDMetadata> getMetadata() {
         List<PDMetadata> metadata = new ArrayList<>(1);
-        final org.apache.pdfbox.pdmodel.common.PDMetadata meta = document.getDocumentCatalog().getMetadata();
-        if (meta != null) {
-            metadata.add(new PBoxPDMetadata(meta));
+        org.apache.pdfbox.pdmodel.common.PDMetadata meta = document.getDocumentCatalog().getMetadata();
+        if (meta != null && meta.getCOSObject() != null) {
+            metadata.add(new PBoxPDMetadata(meta, Boolean.TRUE));
         }
-        return new ArrayList<>();
+        return metadata;
     }
 
     private List<PDOutputIntent> getOutputIntents() {
@@ -83,6 +95,6 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         if (form != null) {
             forms.add(new PBoxPDAcroForm(form));
         }
-        return new ArrayList<>();
+        return forms;
     }
 }

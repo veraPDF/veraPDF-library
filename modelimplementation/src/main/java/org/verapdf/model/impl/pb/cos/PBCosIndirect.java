@@ -45,11 +45,7 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
 	protected List<CosObject> getDirectObject() {
 		List<CosObject> list = new ArrayList<>();
 		COSBase base = baseObject instanceof COSObject ? ((COSObject) baseObject).getObject() : baseObject;
-		if (base != null) {
-			list.add(getFromValue(base));
-		} else {
-			list.add(PBCosNull.NULL);
-		}
+		list.add(base != null ? getFromValue(base) : PBCosNull.NULL);
 		return list;
 	}
 

@@ -93,12 +93,13 @@ public class PBCosDict extends PBCosObject implements CosDict {
 	 * Get XMP metadata if it is present
 	 */
 	private List<PDMetadata> getMetadata() {
-		final ArrayList<PDMetadata> pdMetadatas = new ArrayList<>();
-		final COSBase meta = ((COSDictionary) baseObject).getDictionaryObject(COSName.METADATA);
-		if (meta != null && meta instanceof COSStream) {
+		ArrayList<PDMetadata> pdMetadatas = new ArrayList<>(1);
+		COSBase meta = ((COSDictionary) baseObject).getDictionaryObject(COSName.METADATA);
+		COSName type = ((COSDictionary) baseObject).getCOSName(COSName.TYPE);
+		if (meta != null && meta instanceof COSStream && type != COSName.CATALOG) {
 			org.apache.pdfbox.pdmodel.common.PDMetadata metadata =
 					new org.apache.pdfbox.pdmodel.common.PDMetadata((COSStream) meta);
-			pdMetadatas.add(new PBoxPDMetadata(metadata));
+			pdMetadatas.add(new PBoxPDMetadata(metadata, Boolean.FALSE));
 		}
 		return pdMetadatas;
 	}
