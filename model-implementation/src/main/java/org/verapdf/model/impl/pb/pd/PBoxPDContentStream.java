@@ -2,7 +2,6 @@ package org.verapdf.model.impl.pb.pd;
 
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdfparser.PDFStreamParser;
-import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.operator.OperatorFactory;
 import org.verapdf.model.operator.Operator;

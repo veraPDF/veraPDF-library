@@ -58,6 +58,14 @@ public class XMLFeaturesReport {
                 }
             }
 
+            if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.LOW_LEVEL_INFO) != null) {
+                for (FeatureTreeNode lowLvlInfoNode : collection.getFeatureTreesForType(FeaturesObjectTypesEnum.LOW_LEVEL_INFO)) {
+                    if (lowLvlInfoNode != null) {
+                        pdfFeatures.appendChild(makeNode(lowLvlInfoNode, doc));
+                    }
+                }
+            }
+
             if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT) != null) {
                 pdfFeatures.appendChild(makeList("outputIntents", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT), doc));
             }
@@ -84,7 +92,7 @@ public class XMLFeaturesReport {
 
     private static Element parseMetadata(FeatureTreeNode metadataNode, FeaturesCollection collection, Document doc) {
 
-        if (metadataNode.getAttributes().get(ErrorsHelper.ERRORID) == null) {
+        if (metadataNode.getAttributes() == null || metadataNode.getAttributes().get(ErrorsHelper.ERRORID) == null) {
             Element metadata = doc.createElement("metadata");
             try {
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

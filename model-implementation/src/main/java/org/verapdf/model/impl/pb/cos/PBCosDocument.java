@@ -6,7 +6,10 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDEmbeddedFilesNameTreeNode;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.model.coslayer.*;
+import org.verapdf.model.coslayer.CosDocument;
+import org.verapdf.model.coslayer.CosIndirect;
+import org.verapdf.model.coslayer.CosTrailer;
+import org.verapdf.model.coslayer.CosXRef;
 import org.verapdf.model.impl.pb.pd.PBoxPDDocument;
 import org.verapdf.model.tools.XMPChecker;
 

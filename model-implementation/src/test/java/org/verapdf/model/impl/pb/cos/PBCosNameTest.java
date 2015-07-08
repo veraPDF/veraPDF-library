@@ -1,7 +1,10 @@
 package org.verapdf.model.impl.pb.cos;
 
 import org.apache.pdfbox.cos.COSName;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.verapdf.model.coslayer.CosName;
 import org.verapdf.model.impl.BaseTest;
 
