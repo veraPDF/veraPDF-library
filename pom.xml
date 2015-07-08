@@ -72,11 +72,11 @@
         <url>http://jenkins.opf-labs.org</url>
     </ciManagement>
     <distributionManagement>
-  		<repository>
-  			<id>OPF Artefactory</id>
-  			<name>OPF Artefactory-releases</name>
-  			<url>http://artifactory.opf-labs.org/artifactory/vera-dev-local</url>
-  		</repository>
+      <repository>
+       <id>OPF Artefactory</id>
+       <name>OPF Artefactory-releases</name>
+       <url>http://artifactory.opf-labs.org/artifactory/vera-dev-local</url>
+      </repository>
   	</distributionManagement>
 
     <repositories>
