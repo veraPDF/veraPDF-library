@@ -70,7 +70,7 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
 
 
             if (document.getObjects() != null) {
-                FeatureTreeNode inderectNumber = FeatureTreeNode.newInstance("indirectObjectsNumber", String.valueOf(document.getObjects().size()), root);
+                FeatureTreeNode.newInstance("indirectObjectsNumber", String.valueOf(document.getObjects().size()), root);
             }
 
             COSArray ids = document.getDocumentID();
