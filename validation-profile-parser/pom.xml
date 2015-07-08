@@ -12,8 +12,7 @@
 
     <artifactId>validation-profile-parser</artifactId>
     <name>veraPDF Validation Profile Parser</name>
-    <description>Parser for veraPDF Validation Profiles that encode PDF/A validation rules.<description>
-
+    <description>Parser for veraPDF Validation Profiles that encode PDF/A validation rules.</description>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -27,6 +26,4 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
-
-
 </project>
