@@ -1,6 +1,5 @@
 package org.verapdf.model.impl.pb.cos;
 
-import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
@@ -23,11 +22,9 @@ import java.util.List;
  */
 public class PBCosDict extends PBCosObject implements CosDict {
 
-	private final static Logger logger = Logger.getLogger(PBCosDict.class);
-
-	public final static String KEYS = "keys";
-	public final static String VALUES = "values";
-	public final static String METADATA = "metadata";
+	public static final String KEYS = "keys";
+	public static final String VALUES = "values";
+	public static final String METADATA = "metadata";
 
 	public PBCosDict(COSDictionary dictionary) {
 		super(dictionary);

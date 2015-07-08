@@ -15,9 +15,13 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
     public static final Integer COLOR_SPACE_OFFSET = Integer.valueOf(16);
     public static final Integer REQUIRED_LENGTH = Integer.valueOf(4);
 
-    protected byte[] profile;
+    private byte[] profile;
 
-    protected PBoxICCProfile(byte[] profile) {
+	public byte[] getProfile() {
+		return profile;
+	}
+
+	protected PBoxICCProfile(byte[] profile) {
         super();
         this.profile = new byte[profile.length];
         System.arraycopy(profile, 0, this.profile, 0, profile.length);

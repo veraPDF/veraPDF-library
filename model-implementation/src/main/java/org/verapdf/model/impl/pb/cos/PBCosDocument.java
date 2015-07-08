@@ -26,18 +26,18 @@ import java.util.Set;
  */
 public class PBCosDocument extends PBCosObject implements CosDocument {
 
-    private final static Logger logger = Logger.getLogger(PBCosDocument.class);
+    private static final Logger logger = Logger.getLogger(PBCosDocument.class);
 
-    public final static String TRAILER = "trailer";
-    public final static String XREF = "xref";
-    public final static String INDIRECT_OBJECTS = "indirectObjects";
-    public final static String DOCUMENT = "document";
-    public final static String EMBEDDED_FILES = "EmbeddedFiles";
-    public final static String ID = "ID";
+    public static final String TRAILER = "trailer";
+    public static final String XREF = "xref";
+    public static final String INDIRECT_OBJECTS = "indirectObjects";
+    public static final String DOCUMENT = "document";
+    public static final String EMBEDDED_FILES = "EmbeddedFiles";
+    public static final String ID = "ID";
 
     private PDDocument pdDocument;
 
-    private Long sizeOfDocument = new Long(-1);
+    private Long sizeOfDocument = Long.valueOf(-1);
 
     public PBCosDocument(COSDocument baseObject) {
         super(baseObject);

@@ -75,9 +75,10 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     }
 
     private void addAlternates(List<PDXImage> alternates, COSBase buffer) {
-        if (buffer != null && buffer instanceof COSArray) {
-            for (COSBase element : (COSArray) buffer)
-                addAlternate(alternates, element);
+        if (buffer instanceof COSArray) {
+            for (COSBase element : (COSArray) buffer) {
+				addAlternate(alternates, element);
+			}
         } else if (buffer instanceof COSObject) {
             addAlternates(alternates, ((COSObject) buffer).getObject());
         }
