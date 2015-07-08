@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <artifactId>oss-parent</artifactId>
         <groupId>org.sonatype.oss</groupId>
         <version>7</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.verapdf</groupId>
     <artifactId>verapdf-library</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <name>veraPDF PDF/A Validation Library</name>
     <description>veraPDF PDF/A Validation API and library.</description>
     <url>https://github.com/veraPDF/veraPDF-library/</url>
-
+    <inceptionYear>2015</inceptionYear>
+    <organization>
+        <name>The veraPDF Consortium</name>
+        <url>http://www.verapdf.org/</url>
+    </organization>
     <licenses>
         <license>
             <name>GNU General Public License, version 3 (GPL-3.0)</name>
@@ -29,22 +35,6 @@
         </license>
     </licenses>
 
-    <scm>
-        <url>https://github.com/veraPDF/veraPDF-library/</url>
-        <connection>scm:git:https://github.com/veraPDF/veraPDF-library.git</connection>
-        <developerConnection>scm:git:git@github.com:veraPDF/veraPDF-library.git</developerConnection>
-    </scm>
-
-    <issueManagement>
-        <url>https://github.com/veraPDF/veraPDF-library/issues/</url>
-        <system>GitHub Issues</system>
-    </issueManagement>
-
-    <ciManagement>
-        <system>OPF Jenkins</system>
-        <url>http://jenkins.opf-labs.org</url>
-    </ciManagement>
-
     <developers>
         <developer>
             <email>carl@openpreservation.org</email>
@@ -56,28 +46,59 @@
         </developer>
     </developers>
 
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
-    <packaging>pom</packaging>
     <modules>
-        <module>verapdfexceptions</module>
-        <module>validationprofileparser</module>
-        <module>validationlogic</module>
-        <module>validationreport</module>
-        <module>modelimplementation</module>
+        <module>verapdf-exceptions</module>
+        <module>validation-profile-parser</module>
+        <module>validation-logic</module>
+        <module>validation-report</module>
+        <module>model-implementation</module>
         <module>core</module>
         <module>cli</module>
         <module>gui</module>
+        <module>feature-report</module>
     </modules>
+
+    <scm>
+        <url>https://github.com/veraPDF/veraPDF-library/</url>
+        <connection>scm:git:https://github.com/veraPDF/veraPDF-library.git</connection>
+        <developerConnection>scm:git:git@github.com:veraPDF/veraPDF-library.git</developerConnection>
+    </scm>
+    <issueManagement>
+        <url>https://github.com/veraPDF/veraPDF-library/issues/</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+    <ciManagement>
+        <system>OPF Jenkins</system>
+        <url>http://jenkins.opf-labs.org</url>
+    </ciManagement>
+    <distributionManagement>
+      <repository>
+       <id>OPF Artefactory</id>
+       <name>OPF Artefactory-releases</name>
+       <url>http://artifactory.opf-labs.org/artifactory/vera-dev-local</url>
+      </repository>
+  	</distributionManagement>
+
+    <repositories>
+  		<repository>
+  			<snapshots>
+  				<enabled>false</enabled>
+  			</snapshots>
+  			<id>vera-dev</id>
+  			<name>Vera development</name>
+  			<url>http://artifactory.opf-labs.org/artifactory/vera-dev</url>
+  		</repository>
+  	</repositories>
+  	<pluginRepositories>
+  		<pluginRepository>
+  			<snapshots>
+  				<enabled>false</enabled>
+  			</snapshots>
+  			<id>vera-dev</id>
+  			<name>Vera development</name>
+  			<url>http://artifactory.opf-labs.org/artifactory/vera-dev</url>
+  		</pluginRepository>
+  	</pluginRepositories>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -87,8 +108,16 @@
         <maven.surefire.version>2.18.1</maven.surefire.version>
         <maven.exec.version>1.4.0</maven.exec.version>
         <verapdf.pdfbox.version>2.0.0-SNAPSHOT</verapdf.pdfbox.version>
-        <verapdf.model.version>0.0.1-SNAPSHOT</verapdf.model.version>
+        <verapdf.model.version>[0.1.0-SNAPSHOT,0.2.0)</verapdf.model.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>versions-maven-plugin</artifactId>
+            <version>2.2</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -153,33 +182,6 @@
     </reporting>
 
     <profiles>
-        <profile>
-            <id>release-sign-artifacts</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
         <profile>
             <id>clone-test-resources</id>
             <build>
@@ -295,16 +297,6 @@
                     </plugins>
                 </pluginManagement>
             </build>
-        </profile>
-        <profile>
-            <id>opf-jenkins-site</id>
-            <distributionManagement>
-                <site>
-                    <id>opf.jenkins.site</id>
-                    <name>OPF Labs Maven Local Website</name>
-                    <url>file:///var/www/projects.verapdf.org/${project.id}</url>
-                </site>
-            </distributionManagement>
         </profile>
     </profiles>
 

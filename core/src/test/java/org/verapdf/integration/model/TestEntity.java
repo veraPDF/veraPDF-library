@@ -2,6 +2,8 @@ package org.verapdf.integration.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.verapdf.integration.model.comparing.ComparingStrategies;
+import org.verapdf.integration.model.comparing.StrategyResource;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import java.io.File;
@@ -57,6 +59,7 @@ public class TestEntity {
     private File validationProfile;
     private ValidationInfo info;
     private StrategyResource strategyResource;
+    private boolean testPassed;
 
     @JsonIgnore
     public File getTestFile() {
@@ -92,5 +95,14 @@ public class TestEntity {
 
     public void setStrategyResource(StrategyResource strategyResource) {
         this.strategyResource = strategyResource;
+    }
+
+    @JsonIgnore
+    public boolean isTestPassed() {
+        return testPassed;
+    }
+
+    public void setTestPassed(boolean testPassed) {
+        this.testPassed = testPassed;
     }
 }
