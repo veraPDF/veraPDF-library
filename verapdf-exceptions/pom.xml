@@ -11,4 +11,6 @@
   </parent>
 
   <artifactId>verapdf-exceptions</artifactId>
+  <name>veraPDF Library Exceptions</name>
+  <description>veraPDF Library defined exceptions.</description>
 </project>
