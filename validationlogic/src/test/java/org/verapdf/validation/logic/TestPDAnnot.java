@@ -26,6 +26,21 @@ public class TestPDAnnot implements PDAnnot {
     }
 
     @Override
+    public String getAP() {
+      return "";
+    }
+
+    @Override
+    public Double getCA() {
+      return Double.valueOf(0.0);
+    }
+
+    @Override
+    public Long getF() {
+      return Long.valueOf(0L);
+    }
+
+    @Override
     public String getSubtype() {
         return Subtype;
     }
