@@ -15,7 +15,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
     public static final String PAGES = "pages";
     public static final String METADATA = "metadata";
     public static final String OUTPUT_INTENTS = "outputIntents";
-    public static final String ACRO_FORMS = "acroForms";
+    public static final String ACRO_FORMS = "AcroForm";
 	public static final String ACTIONS = "AA";
 
     public PBoxPDDocument(org.apache.pdfbox.pdmodel.PDDocument document) {

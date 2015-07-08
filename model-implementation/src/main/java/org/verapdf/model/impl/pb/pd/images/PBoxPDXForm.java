@@ -1,8 +1,8 @@
 package org.verapdf.model.impl.pb.pd.images;
 
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.*;
-import org.apache.pdfbox.pdmodel.common.PDStream;
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
