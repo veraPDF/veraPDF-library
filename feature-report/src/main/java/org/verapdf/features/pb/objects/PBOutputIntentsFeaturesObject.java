@@ -3,6 +3,7 @@ package org.verapdf.features.pb.objects;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
@@ -46,41 +47,55 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
      */
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
-        FeatureTreeNode root = FeatureTreeNode.newInstance("outputIntent", null);
+        if (outInt != null) {
+            FeatureTreeNode root = FeatureTreeNode.newInstance("outputIntent", null);
 
-        COSBase base = outInt.getCOSObject();
-        if (base != null && base instanceof COSDictionary) {
-            COSDictionary dict = (COSDictionary) base;
-            COSBase baseType = dict.getDictionaryObject(COSName.S);
-            if (baseType != null) {
-                FeatureTreeNode type = FeatureTreeNode.newInstance("subtype", root);
-                if (baseType instanceof COSName) {
-                    type.setValue(((COSName) baseType).getName());
-                } else {
-                    type.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.OUTPUTINTENTSTYPE_ID);
-                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.OUTPUTINTENTSTYPE_ID, ErrorsHelper.OUTPUTINTENTSTYPE_MESSAGE);
+            COSBase base = outInt.getCOSObject();
+
+            while (base instanceof COSObject) {
+                base = ((COSObject) base).getObject();
+            }
+
+            if (base instanceof COSDictionary) {
+                COSDictionary dict = (COSDictionary) base;
+                COSBase baseType = dict.getDictionaryObject(COSName.S);
+
+                while (baseType instanceof COSObject) {
+                    baseType = ((COSObject) baseType).getObject();
+                }
+
+                if (baseType != null) {
+                    FeatureTreeNode type = FeatureTreeNode.newInstance("subtype", root);
+                    if (baseType instanceof COSName) {
+                        type.setValue(((COSName) baseType).getName());
+                    } else {
+                        type.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.OUTPUTINTENTSTYPE_ID);
+                        ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.OUTPUTINTENTSTYPE_ID, ErrorsHelper.OUTPUTINTENTSTYPE_MESSAGE);
+                    }
                 }
             }
+
+            if (outInt.getOutputCondition() != null) {
+                FeatureTreeNode outputCondition = FeatureTreeNode.newInstance("outputCondition", outInt.getOutputCondition(), root);
+            }
+
+            if (outInt.getOutputConditionIdentifier() != null) {
+                FeatureTreeNode outputConditionIdentifier = FeatureTreeNode.newInstance("outputConditionIdentifier", outInt.getOutputConditionIdentifier(), root);
+            }
+
+            if (outInt.getRegistryName() != null) {
+                FeatureTreeNode registryName = FeatureTreeNode.newInstance("registryName", outInt.getRegistryName(), root);
+            }
+
+            if (outInt.getInfo() != null) {
+                FeatureTreeNode info = FeatureTreeNode.newInstance("info", outInt.getInfo(), root);
+            }
+
+            collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTPUTINTENT, root);
+
+            return root;
+        } else {
+            return null;
         }
-
-        if (outInt.getOutputCondition() != null) {
-            FeatureTreeNode outputCondition = FeatureTreeNode.newInstance("outputCondition", outInt.getOutputCondition(), root);
-        }
-
-        if (outInt.getOutputConditionIdentifier() != null) {
-            FeatureTreeNode outputConditionIdentifier = FeatureTreeNode.newInstance("outputConditionIdentifier", outInt.getOutputConditionIdentifier(), root);
-        }
-
-        if (outInt.getRegistryName() != null) {
-            FeatureTreeNode registryName = FeatureTreeNode.newInstance("registryName", outInt.getRegistryName(), root);
-        }
-
-        if (outInt.getInfo() != null) {
-            FeatureTreeNode info = FeatureTreeNode.newInstance("info", outInt.getInfo(), root);
-        }
-
-        collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTPUTINTENT, root);
-
-        return root;
     }
 }

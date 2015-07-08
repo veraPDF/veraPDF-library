@@ -13,7 +13,7 @@ public final class ErrorsHelper {
     private ErrorsHelper() {
     }
 
-    public static final String ERRORID = "errorID";
+    public static final String ERRORID = "errorId";
     public static final String ID = "id";
 
     public static final String METADATACONVERT_ID = "metaerr1";
@@ -33,7 +33,10 @@ public final class ErrorsHelper {
     public static final String OUTPUTINTENTSTYPE_MESSAGE = "In OutputIntent dictionary value for key \"S\" must be of type CosName.";
 
     public static final String OUTLINESCOLOR_ID = "outlineserr1";
-    public static final String OUTLINESCOLOR_MESSAGE = "In Outputlines dictionary value for key \"C\" must be an array with three numbers.";
+    public static final String OUTLINESCOLOR_MESSAGE = "In Outputlines dictionary value for key \"C\" must be an array of three numbers.";
+
+    public static final String LOWLVLINFODOCUMENTID_ID = "llierr1";
+    public static final String LOWLVLINFODOCUMENTID_MESSAGE = "In Trailer dictionary value for key \"ID\" must be an array of two Strings.";
 
     public static void addErrorIntoCollection(FeaturesCollection collection, String errorID, String errorMessage) {
         try {

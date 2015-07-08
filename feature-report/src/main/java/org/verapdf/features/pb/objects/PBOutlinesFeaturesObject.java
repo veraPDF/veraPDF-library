@@ -45,16 +45,20 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
      */
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
-        FeatureTreeNode root = FeatureTreeNode.newInstance("outlines", null);
+        if (outline != null) {
+            FeatureTreeNode root = FeatureTreeNode.newInstance("outlines", null);
 
-        if (outline.children() != null) {
-            for (PDOutlineItem item : outline.children()) {
-                createItem(item, root, collection);
+            if (outline.children() != null) {
+                for (PDOutlineItem item : outline.children()) {
+                    createItem(item, root, collection);
+                }
             }
-        }
 
-        collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTLINES, root);
-        return root;
+            collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTLINES, root);
+            return root;
+        } else {
+            return null;
+        }
     }
 
     private void createItem(PDOutlineItem item, FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
