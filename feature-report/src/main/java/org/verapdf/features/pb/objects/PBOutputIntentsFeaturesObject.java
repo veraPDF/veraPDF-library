@@ -76,19 +76,19 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
             }
 
             if (outInt.getOutputCondition() != null) {
-                FeatureTreeNode outputCondition = FeatureTreeNode.newInstance("outputCondition", outInt.getOutputCondition(), root);
+                FeatureTreeNode.newInstance("outputCondition", outInt.getOutputCondition(), root);
             }
 
             if (outInt.getOutputConditionIdentifier() != null) {
-                FeatureTreeNode outputConditionIdentifier = FeatureTreeNode.newInstance("outputConditionIdentifier", outInt.getOutputConditionIdentifier(), root);
+                FeatureTreeNode.newInstance("outputConditionIdentifier", outInt.getOutputConditionIdentifier(), root);
             }
 
             if (outInt.getRegistryName() != null) {
-                FeatureTreeNode registryName = FeatureTreeNode.newInstance("registryName", outInt.getRegistryName(), root);
+                FeatureTreeNode.newInstance("registryName", outInt.getRegistryName(), root);
             }
 
             if (outInt.getInfo() != null) {
-                FeatureTreeNode info = FeatureTreeNode.newInstance("info", outInt.getInfo(), root);
+                FeatureTreeNode.newInstance("info", outInt.getInfo(), root);
             }
 
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTPUTINTENT, root);

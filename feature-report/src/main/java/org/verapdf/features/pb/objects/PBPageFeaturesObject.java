@@ -103,7 +103,7 @@ public class PBPageFeaturesObject implements IFeaturesObject {
                 artBox.addAttribute(URY, String.valueOf(page.getArtBox().getUpperRightY()));
             }
 
-            FeatureTreeNode rotation = FeatureTreeNode.newInstance("rotation", Integer.toString(page.getRotation()), root);
+            FeatureTreeNode.newInstance("rotation", Integer.toString(page.getRotation()), root);
 
             COSBase base = page.getCOSObject().getDictionaryObject(COSName.getPDFName("PZ"));
             if (base != null) {
@@ -123,7 +123,7 @@ public class PBPageFeaturesObject implements IFeaturesObject {
                 }
             }
 
-            FeatureTreeNode thumbnail = FeatureTreeNode.newInstance("thumbnail", Boolean.toString(page.getCOSObject().getDictionaryObject(COSName.getPDFName("Thumb")) != null), root);
+            FeatureTreeNode.newInstance("thumbnail", Boolean.toString(page.getCOSObject().getDictionaryObject(COSName.getPDFName("Thumb")) != null), root);
 
             // TODO: add <resources> and <annotations>
 

@@ -66,7 +66,7 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
             FeatureTreeNode itemNode = FeatureTreeNode.newInstance("outline", root);
 
             if (item.getTitle() != null) {
-                FeatureTreeNode title = FeatureTreeNode.newInstance("title", item.getTitle(), itemNode);
+                FeatureTreeNode.newInstance("title", item.getTitle(), itemNode);
             }
 
             if (item.getTextColor() != null) {
@@ -75,17 +75,17 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
                 PDColor clr = item.getTextColor();
                 float[] rgb = clr.getComponents();
                 if (rgb.length == 3) {
-                    FeatureTreeNode red = FeatureTreeNode.newInstance("red", String.valueOf(rgb[0]), color);
-                    FeatureTreeNode green = FeatureTreeNode.newInstance("green", String.valueOf(rgb[1]), color);
-                    FeatureTreeNode blue = FeatureTreeNode.newInstance("blue", String.valueOf(rgb[2]), color);
+                    FeatureTreeNode.newInstance("red", String.valueOf(rgb[0]), color);
+                    FeatureTreeNode.newInstance("green", String.valueOf(rgb[1]), color);
+                    FeatureTreeNode.newInstance("blue", String.valueOf(rgb[2]), color);
                 } else {
                     color.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.OUTLINESCOLOR_ID);
                     ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.OUTLINESCOLOR_ID, ErrorsHelper.OUTLINESCOLOR_MESSAGE);
                 }
             }
 
-            FeatureTreeNode italic = FeatureTreeNode.newInstance("italic", String.valueOf(item.isItalic()), itemNode);
-            FeatureTreeNode bold = FeatureTreeNode.newInstance("bold", String.valueOf(item.isBold()), itemNode);
+            FeatureTreeNode.newInstance("italic", String.valueOf(item.isItalic()), itemNode);
+            FeatureTreeNode.newInstance("bold", String.valueOf(item.isBold()), itemNode);
 
             for (PDOutlineItem child : item.children()) {
                 createItem(child, itemNode, collection);
