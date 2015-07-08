@@ -137,7 +137,7 @@ public final class FeatureTreeNode {
      * @throws FeaturesTreeNodeException - occurs when value adds to the node with childrens
      */
     public void setValue(String value) throws FeaturesTreeNodeException {
-        if (children != null) {
+        if (children == null) {
             this.value = value;
         } else {
             throw new FeaturesTreeNodeException("You can not add value for nodes with childrens. Node name " + name + ".");

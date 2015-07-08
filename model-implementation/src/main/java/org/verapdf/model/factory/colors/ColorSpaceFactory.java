@@ -12,6 +12,10 @@ import org.verapdf.model.pdlayer.PDColorSpace;
  */
 public class ColorSpaceFactory {
 
+	private ColorSpaceFactory() {
+
+	}
+
     /**
      * Transform object of pdfbox to corresponding object of veraPDF-library
      * ({@link org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace} to

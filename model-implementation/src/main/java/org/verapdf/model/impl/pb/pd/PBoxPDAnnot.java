@@ -8,7 +8,6 @@ import org.verapdf.model.pdlayer.PDAction;
 import org.verapdf.model.pdlayer.PDAnnot;
 import org.verapdf.model.pdlayer.PDContentStream;
 
-import java.lang.Override;
 import java.util.ArrayList;
 import java.util.List;
 

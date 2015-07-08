@@ -2,8 +2,6 @@ package org.verapdf.model.impl.pb.pd;
 
 import org.verapdf.model.pdlayer.PDAction;
 
-import java.lang.Override;
-
 /**
  * PDF action object
  *

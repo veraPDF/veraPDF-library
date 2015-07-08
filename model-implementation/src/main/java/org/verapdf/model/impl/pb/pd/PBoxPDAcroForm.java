@@ -5,8 +5,6 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.PDAcroForm;
 import org.verapdf.model.pdlayer.PDFormField;
 
-import java.lang.Boolean;
-import java.lang.Override;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -7,7 +7,6 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.verapdf.model.baselayer.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.coslayer.CosInteger;

@@ -1,5 +1,6 @@
 package org.verapdf.features.pb;
 
+import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
@@ -36,6 +37,15 @@ public final class PBFeaturesObjectCreator {
     }
 
     /**
+     * Creates new PBLowLvlInfoFeaturesObject
+     * @param document - COSDocument class from pdfbox, which represents a document for feature report
+     * @return created PBLowLvlInfoFeaturesObject
+     */
+    public static PBLowLvlInfoFeaturesObject createLowLvlInfoFeaturesObject(COSDocument document) {
+        return new PBLowLvlInfoFeaturesObject(document);
+    }
+
+    /**
      * Creates new PBOutputIntentsFeaturesObject
      * @param outInt - PDOutputIntent class from pdfbox, which represents an outputIntent for feature report
      * @return created PBOutputIntentsFeaturesObject
@@ -45,7 +55,7 @@ public final class PBFeaturesObjectCreator {
     }
 
     /**
-     * Creates new PBOutlinesFeatureObject
+     * Creates new PBOutlinesFeaturesObject
      * @param outlines - PDPage class from pdfbox, which represents a page for feature report
      * @return created PBOutlinesFeaturesObject
      */
@@ -54,7 +64,7 @@ public final class PBFeaturesObjectCreator {
     }
 
     /**
-     * Creates new PBPageFeatureObject
+     * Creates new PBPageFeaturesObject
      * @param page - PDPage class from pdfbox, which represents a page for feature report
      * @return created PBPageFeaturesObject
      */

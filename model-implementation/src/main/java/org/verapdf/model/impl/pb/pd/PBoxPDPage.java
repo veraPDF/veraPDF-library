@@ -7,8 +7,6 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSNull;
 import org.apache.pdfbox.pdmodel.*;
 import org.apache.pdfbox.pdmodel.common.COSObjectable;
-import org.apache.pdfbox.pdmodel.common.PDStream;
-import org.apache.pdfbox.pdmodel.graphics.form.*;
 import org.apache.pdfbox.pdmodel.interactive.action.PDPageAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.verapdf.model.baselayer.Object;
@@ -64,7 +62,7 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 		List<PDGroup> groups = new ArrayList<>(1);
 		COSDictionary dictionary = ((org.apache.pdfbox.pdmodel.PDPage) simplePDObject).getCOSObject();
 		COSBase groupDictionary = dictionary.getDictionaryObject(COSName.GROUP);
-		if (groupDictionary != null && groupDictionary instanceof COSDictionary) {
+		if (groupDictionary instanceof COSDictionary) {
 			org.apache.pdfbox.pdmodel.graphics.form.PDGroup group =
 					new org.apache.pdfbox.pdmodel.graphics.form.PDGroup((COSDictionary) groupDictionary);
 			groups.add(new PBoxPDGroup(group));
@@ -81,7 +79,7 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
     //TODO : implement this
     private List<PDAction> getActions() {
         List<PDAction> action = new ArrayList<>(1);
-        final PDPageAdditionalActions actions = ((org.apache.pdfbox.pdmodel.PDPage) simplePDObject).getActions();
+        //final PDPageAdditionalActions actions = ((org.apache.pdfbox.pdmodel.PDPage) simplePDObject).getActions();
         return action;
     }
 
