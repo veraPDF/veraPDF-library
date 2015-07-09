@@ -8,7 +8,6 @@ import org.verapdf.validation.report.model.ValidationInfo;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Validates PDF in a new threat.
@@ -44,26 +43,27 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
     protected ValidationInfo doInBackground() {
         info = null;
         collection = null;
-        org.verapdf.model.baselayer.Object root = null;
+        org.verapdf.model.baselayer.Object root;
 
         ModelLoader loader = new ModelLoader(pdf.getPath());
 
 
         try {
             root = loader.getRoot();
-        } catch (Exception e1) {
+
+            try {
+                info = Validator.validate(root, profile, false);
+            } catch (Exception e) {
+                parent.errorInValidatingOccur(ERROR_IN_VALIDATING);
+            }
+
+        } catch (Exception e) {
             parent.errorInValidatingOccur(ERROR_IN_PARSING);
         }
 
         try {
-            info = Validator.validate(root, profile, false);
-        } catch (Exception e1) {
-            parent.errorInValidatingOccur(ERROR_IN_VALIDATING);
-        }
-
-        try {
             collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
-        } catch (IOException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(parent, "Some error in creating features collection.", ERROR, JOptionPane.ERROR_MESSAGE);
         }
 

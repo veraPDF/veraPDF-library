@@ -60,6 +60,7 @@ public class CheckerPanel extends JPanel {
     private File image = null;
 
     private long startTimeOfValidation;
+    private boolean isValidationErrorOccured;
 
     private JButton saveXML;
     private JButton viewXML;
@@ -279,13 +280,12 @@ public class CheckerPanel extends JPanel {
                 progressBar.setVisible(true);
                 result.setVisible(false);
                 setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
                 validate.setEnabled(false);
-
-                validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, profile);
-
+                info = null;
+                isValidationErrorOccured = false;
                 startTimeOfValidation = System.currentTimeMillis();
 
+                validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, profile);
                 validateWorker.execute();
             }
         });
@@ -308,11 +308,11 @@ public class CheckerPanel extends JPanel {
                             try {
                                 Files.copy(xmlReport.toPath(), temp.toPath());
                             } catch (FileAlreadyExistsException e1) {
-                                int result = JOptionPane.showConfirmDialog(CheckerPanel.this,
+                                int resultOption = JOptionPane.showConfirmDialog(CheckerPanel.this,
                                         "XML file with the same name already exists. Do you want to overwrite it?",
                                         "",
                                         JOptionPane.YES_NO_OPTION);
-                                if (result == JOptionPane.YES_OPTION) {
+                                if (resultOption == JOptionPane.YES_OPTION) {
                                     Files.copy(xmlReport.toPath(), temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
                                 }
                             }
@@ -358,11 +358,11 @@ public class CheckerPanel extends JPanel {
                                 File newImage = new File(temp.getParentFile(), image.getName());
                                 Files.copy(image.toPath(), newImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
                             } catch (FileAlreadyExistsException e1) {
-                                int result = JOptionPane.showConfirmDialog(CheckerPanel.this,
+                                int resultOption = JOptionPane.showConfirmDialog(CheckerPanel.this,
                                         "HTML file with the same name already exists. Do you want to overwrite it?",
                                         "",
                                         JOptionPane.YES_NO_OPTION);
-                                if (result == JOptionPane.YES_OPTION) {
+                                if (resultOption == JOptionPane.YES_OPTION) {
                                     Files.copy(htmlReport.toPath(), temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
                                     File newImage = new File(temp.getParentFile(), image.getName());
                                     Files.copy(image.toPath(), newImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -401,23 +401,23 @@ public class CheckerPanel extends JPanel {
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         progressBar.setVisible(false);
 
-        try {
-            info = validateWorker.get();
-            if (info.getResult().isCompliant()) {
-                result.setForeground(validationSuccessColor);
-                result.setText(VALIDATION_OK);
-            } else {
-                result.setForeground(validationFailedColor);
-                result.setText(VALIDATION_FALSE);
-            }
+        if (!isValidationErrorOccured) {
+            try {
+                info = validateWorker.get();
+                if (info.getResult().isCompliant()) {
+                    result.setForeground(validationSuccessColor);
+                    result.setText(VALIDATION_OK);
+                } else {
+                    result.setForeground(validationFailedColor);
+                    result.setText(VALIDATION_FALSE);
+                }
 
-            result.setVisible(true);
-        } catch (InterruptedException e) {
-            errorInValidatingOccur("Validation has interrupted.");
-            return;
-        } catch (ExecutionException e) {
-            errorInValidatingOccur("Execution exception in validating.");
-            return;
+                result.setVisible(true);
+            } catch (InterruptedException e) {
+                errorInValidatingOccur("Validation has interrupted.");
+            } catch (ExecutionException e) {
+                errorInValidatingOccur("Execution exception in validating.");
+            }
         }
 
         try {
@@ -431,19 +431,21 @@ public class CheckerPanel extends JPanel {
             saveXML.setEnabled(true);
             viewXML.setEnabled(true);
 
-            try {
-                htmlReport = new File("./temp/tempHTMLReport.html");
-                HTMLReport.wrightHTMLReport(htmlReport.getPath(), xmlReport, profile);
+            if (info != null) {
+                try {
+                    htmlReport = new File("./temp/tempHTMLReport.html");
+                    HTMLReport.writeHTMLReport(htmlReport.getPath(), xmlReport, profile);
 
-                if (image == null) {
-                    image = new File("./temp/" + HTMLReport.getLogoImageName());
+                    if (image == null) {
+                        image = new File("./temp/" + HTMLReport.getLogoImageName());
+                    }
+
+                    saveHTML.setEnabled(true);
+                    viewHTML.setEnabled(true);
+
+                } catch (IOException | TransformerException e) {
+                    JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_HTML_REPORT + e.getMessage(), ERROR, JOptionPane.ERROR_MESSAGE);
                 }
-
-                saveHTML.setEnabled(true);
-                viewHTML.setEnabled(true);
-
-            } catch (IOException | TransformerException e) {
-                JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_HTML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (DatatypeConfigurationException | ParserConfigurationException | IOException | TransformerException e) {
@@ -458,6 +460,7 @@ public class CheckerPanel extends JPanel {
     public void errorInValidatingOccur(String message) {
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         progressBar.setVisible(false);
+        isValidationErrorOccured = true;
         JOptionPane.showMessageDialog(CheckerPanel.this, message, ERROR, JOptionPane.ERROR_MESSAGE);
         result.setForeground(validationFailedColor);
         result.setText(message);

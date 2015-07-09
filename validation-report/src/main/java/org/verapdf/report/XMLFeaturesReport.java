@@ -94,7 +94,7 @@ public final class XMLFeaturesReport {
                 pack.normalize();
                 metadata.appendChild(pack);
             } catch (ParserConfigurationException | SAXException | IOException e) {
-                metadata.appendChild(doc.createTextNode(metadataNode.getValue()));
+                metadata.appendChild(doc.createTextNode(removeZeros(metadataNode.getValue())));
                 metadata.setAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATAPARSER_ID);
 
                 ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATAPARSER_ID, ErrorsHelper.METADATAPARSER_MESSAGE);
@@ -125,11 +125,11 @@ public final class XMLFeaturesReport {
         Element root = doc.createElement(node.getName());
 
         for (Map.Entry<String, String> attr : node.getAttributes().entrySet()) {
-            root.setAttribute(attr.getKey(), attr.getValue());
+            root.setAttribute(attr.getKey(), removeZeros(attr.getValue()));
         }
 
         if (node.isLeaf() && node.getValue() != null) {
-            root.appendChild(doc.createTextNode(node.getValue()));
+            root.appendChild(doc.createTextNode(removeZeros(node.getValue())));
         } else if (node.getChildren() != null) {
             for (FeatureTreeNode child : node.getChildren()) {
                 root.appendChild(makeNode(child, doc));
@@ -137,5 +137,9 @@ public final class XMLFeaturesReport {
         }
 
         return root;
+    }
+
+    private static String removeZeros(String str) {
+        return str.replaceAll(String.valueOf((char) 0), "");
     }
 }

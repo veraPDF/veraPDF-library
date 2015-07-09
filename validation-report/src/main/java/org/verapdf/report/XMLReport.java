@@ -40,7 +40,7 @@ public final class XMLReport {
     private static String getProcessingTimeAsString(long processTime) {
         long processingTime = processTime;
 
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         long hours = processingTime / MS_IN_HOUR;
         processingTime %= MS_IN_HOUR;
@@ -88,7 +88,9 @@ public final class XMLReport {
         report.appendChild(doc.createElement("documentInfo"));
         report.appendChild(doc.createElement("processingInfo"));
 
-        report.appendChild(XMLValidationReport.makeXMLTree(info, doc));
+        if (info != null) {
+            report.appendChild(XMLValidationReport.makeXMLTree(info, doc));
+        }
 
         if (collection != null) {
             report.appendChild(XMLFeaturesReport.makeXMLTree(collection, doc));
