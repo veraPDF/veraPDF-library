@@ -413,10 +413,10 @@ public class CheckerPanel extends JPanel {
 
             result.setVisible(true);
         } catch (InterruptedException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, "Validation has interrupted.", ERROR, JOptionPane.ERROR_MESSAGE);
+            errorInValidatingOccur("Validation has interrupted.");
             return;
         } catch (ExecutionException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, "Execution exception in validating.", ERROR, JOptionPane.ERROR_MESSAGE);
+            errorInValidatingOccur("Execution exception in validating.");
             return;
         }
 
@@ -455,9 +455,14 @@ public class CheckerPanel extends JPanel {
     /**
      * Method to notify panel that some error occurs at validating
      */
-    public void errorInValidatingOccur() {
+    public void errorInValidatingOccur(String message) {
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         progressBar.setVisible(false);
+        JOptionPane.showMessageDialog(CheckerPanel.this, message, ERROR, JOptionPane.ERROR_MESSAGE);
+        result.setForeground(validationFailedColor);
+        result.setText(message);
+        result.setVisible(true);
     }
+
 
 }

@@ -18,6 +18,8 @@ import java.io.IOException;
 public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
     private static final String ERROR = "Error";
+    private static final String ERROR_IN_PARSING = "Some error in parsing pdf.";
+    private static final String ERROR_IN_VALIDATING = "Some error in validating.";
 
     private File pdf;
     private File profile;
@@ -50,15 +52,13 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
         try {
             root = loader.getRoot();
         } catch (Exception e1) {
-            JOptionPane.showMessageDialog(parent, "Some error in parsing pdf.", ERROR, JOptionPane.ERROR_MESSAGE);
-            parent.errorInValidatingOccur();
+            parent.errorInValidatingOccur(ERROR_IN_PARSING);
         }
 
         try {
             info = Validator.validate(root, profile, false);
         } catch (Exception e1) {
-            JOptionPane.showMessageDialog(parent, "Some error in validating.", ERROR, JOptionPane.ERROR_MESSAGE);
-            parent.errorInValidatingOccur();
+            parent.errorInValidatingOccur(ERROR_IN_VALIDATING);
         }
 
         try {
