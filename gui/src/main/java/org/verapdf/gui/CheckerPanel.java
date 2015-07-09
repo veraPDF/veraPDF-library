@@ -60,7 +60,6 @@ public class CheckerPanel extends JPanel {
     private File image = null;
 
     private long startTimeOfValidation;
-    private long endTimeOfValidation;
 
     private JButton saveXML;
     private JButton viewXML;
@@ -397,7 +396,7 @@ public class CheckerPanel extends JPanel {
      * Method to notify panel that validation was done.
      */
     public void validationEnded(FeaturesCollection collection) {
-        endTimeOfValidation = System.currentTimeMillis();
+        long endTimeOfValidation = System.currentTimeMillis();
 
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         progressBar.setVisible(false);
