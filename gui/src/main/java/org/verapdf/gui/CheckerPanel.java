@@ -15,7 +15,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -304,7 +306,17 @@ public class CheckerPanel extends JPanel {
                         }
 
                         try {
-                            Files.copy(xmlReport.toPath(), temp.toPath());
+                            try {
+                                Files.copy(xmlReport.toPath(), temp.toPath());
+                            } catch (FileAlreadyExistsException e1) {
+                                int result = JOptionPane.showConfirmDialog(CheckerPanel.this,
+                                        "XML file with the same name already exists. Do you want to overwrite it?",
+                                        "",
+                                        JOptionPane.YES_NO_OPTION);
+                                if (result == JOptionPane.YES_OPTION) {
+                                    Files.copy(xmlReport.toPath(), temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                                }
+                            }
                         } catch (IOException e1) {
                             JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
                         }
@@ -342,15 +354,23 @@ public class CheckerPanel extends JPanel {
                         }
 
                         try {
-                            Files.copy(htmlReport.toPath(), temp.toPath());
+                            try {
+                                Files.copy(htmlReport.toPath(), temp.toPath());
+                                File newImage = new File(temp.getParentFile(), image.getName());
+                                Files.copy(image.toPath(), newImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                            } catch (FileAlreadyExistsException e1) {
+                                int result = JOptionPane.showConfirmDialog(CheckerPanel.this,
+                                        "HTML file with the same name already exists. Do you want to overwrite it?",
+                                        "",
+                                        JOptionPane.YES_NO_OPTION);
+                                if (result == JOptionPane.YES_OPTION) {
+                                    Files.copy(htmlReport.toPath(), temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                                    File newImage = new File(temp.getParentFile(), image.getName());
+                                    Files.copy(image.toPath(), newImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                                }
+                            }
                         } catch (IOException e1) {
                             JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_HTML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
-                        }
-                        try {
-                            File newImage = new File(temp.getParentFile(), image.getName());
-                            Files.copy(image.toPath(), newImage.toPath());
-                        } catch (IOException e1) {
-                            JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in saving logo image for HTML report.", ERROR, JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 }
@@ -423,19 +443,11 @@ public class CheckerPanel extends JPanel {
                 saveHTML.setEnabled(true);
                 viewHTML.setEnabled(true);
 
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_HTML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
-            } catch (TransformerException e) {
+            } catch (IOException | TransformerException e) {
                 JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_HTML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
             }
 
-        } catch (DatatypeConfigurationException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
-        } catch (ParserConfigurationException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
-        } catch (TransformerException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
-        } catch (IOException e) {
+        } catch (DatatypeConfigurationException | ParserConfigurationException | IOException | TransformerException e) {
             JOptionPane.showMessageDialog(CheckerPanel.this, ERROR_IN_SAVING_XML_REPORT, ERROR, JOptionPane.ERROR_MESSAGE);
         }
 
