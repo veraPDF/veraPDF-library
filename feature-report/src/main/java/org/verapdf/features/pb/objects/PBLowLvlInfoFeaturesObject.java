@@ -73,29 +73,9 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
                 FeatureTreeNode.newInstance("indirectObjectsNumber", String.valueOf(document.getObjects().size()), root);
             }
 
-            COSArray ids = document.getDocumentID();
-            if (ids != null) {
-                String creationId = getStringFromBase(ids.get(0));
-                String modificationId = getStringFromBase(ids.get(1));
+            addDocumentId(root, collection);
 
-                FeatureTreeNode documentId = FeatureTreeNode.newInstance("documentId", root);
-
-                if (creationId != null || modificationId != null) {
-                    if (creationId != null) {
-                        documentId.addAttribute("creationId", creationId);
-                    }
-                    if (modificationId != null) {
-                        documentId.addAttribute("modificationId", modificationId);
-                    }
-                }
-
-                if (ids.size() != 2 || creationId == null || modificationId == null) {
-                    documentId.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.LOWLVLINFODOCUMENTID_ID);
-                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.LOWLVLINFODOCUMENTID_ID, ErrorsHelper.LOWLVLINFODOCUMENTID_MESSAGE);
-                }
-            }
-
-            Set<String> filters = getAllFilters(document);
+            Set<String> filters = getAllFilters();
 
             if (filters.size() != 0) {
                 FeatureTreeNode filtersNode = FeatureTreeNode.newInstance("filters", root);
@@ -116,7 +96,7 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
         }
     }
 
-    private static Set<String> getAllFilters(COSDocument document) {
+    private Set<String> getAllFilters() {
         Set<String> res = new HashSet<>();
 
         for (COSBase base : document.getObjects()) {
@@ -163,6 +143,30 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
         }
 
         return res;
+    }
+
+    private void addDocumentId(FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
+        COSArray ids = document.getDocumentID();
+        if (ids != null) {
+            String creationId = getStringFromBase(ids.get(0));
+            String modificationId = getStringFromBase(ids.get(1));
+
+            FeatureTreeNode documentId = FeatureTreeNode.newInstance("documentId", root);
+
+            if (creationId != null || modificationId != null) {
+                if (creationId != null) {
+                    documentId.addAttribute("creationId", creationId);
+                }
+                if (modificationId != null) {
+                    documentId.addAttribute("modificationId", modificationId);
+                }
+            }
+
+            if (ids.size() != 2 || creationId == null || modificationId == null) {
+                documentId.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.LOWLVLINFODOCUMENTID_ID);
+                ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.LOWLVLINFODOCUMENTID_ID, ErrorsHelper.LOWLVLINFODOCUMENTID_MESSAGE);
+            }
+        }
     }
 
     private static void addFiltersFromBase(Set<String> res, COSBase base) {

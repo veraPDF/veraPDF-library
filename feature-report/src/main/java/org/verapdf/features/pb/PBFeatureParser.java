@@ -1,7 +1,9 @@
 package org.verapdf.features.pb;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
 import org.verapdf.features.FeaturesReporter;
 import org.verapdf.features.tools.FeaturesCollection;
@@ -35,20 +37,30 @@ public final class PBFeatureParser {
      */
     public static FeaturesCollection getFeaturesCollection(PDDocument document, FeaturesReporter reporter) {
 
-        reporter.report(PBFeaturesObjectCreator.createInfoDictFeaturesObject(document.getDocumentInformation()));
-        
-        reporter.report(PBFeaturesObjectCreator.createMetadataFeaturesObject(document.getDocumentCatalog().getMetadata()));
+        if (document != null) {
+            reporter.report(PBFeaturesObjectCreator.createInfoDictFeaturesObject(document.getDocumentInformation()));
 
-        reporter.report(PBFeaturesObjectCreator.createLowLvlInfoFeaturesObject(document.getDocument()));
+            PDDocumentCatalog catalog = document.getDocumentCatalog();
+            if (catalog != null) {
+                reporter.report(PBFeaturesObjectCreator.createMetadataFeaturesObject(catalog.getMetadata()));
+                reporter.report(PBFeaturesObjectCreator.createOutlinesFeaturesObject(catalog.getDocumentOutline()));
 
-        for (PDOutputIntent outInt : document.getDocumentCatalog().getOutputIntents()) {
-            reporter.report(PBFeaturesObjectCreator.createOutputIntentFeaturesObject(outInt));
-        }
+                if (catalog.getOutputIntents() != null) {
+                    for (PDOutputIntent outInt : document.getDocumentCatalog().getOutputIntents()) {
+                        reporter.report(PBFeaturesObjectCreator.createOutputIntentFeaturesObject(outInt));
+                    }
+                }
 
-        reporter.report(PBFeaturesObjectCreator.createOutlinesFeaturesObject(document.getDocumentCatalog().getDocumentOutline()));
+                PDPageTree pageTree = catalog.getPages();
+                if (pageTree != null) {
+                    for (PDPage page : pageTree) {
+                        reporter.report(PBFeaturesObjectCreator.createPageFeaturesObject(page, pageTree.indexOf(page) + 1));
+                    }
+                }
+            }
 
-        for (PDPage page : document.getPages()) {
-            reporter.report(PBFeaturesObjectCreator.createPageFeaturesObject(page, document.getPages().indexOf(page) + 1));
+            reporter.report(PBFeaturesObjectCreator.createLowLvlInfoFeaturesObject(document.getDocument()));
+
         }
 
         return reporter.getCollection();

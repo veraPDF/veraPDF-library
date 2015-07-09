@@ -11,10 +11,7 @@ import org.verapdf.features.tools.FeaturesCollection;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.Arrays;
-import java.util.GregorianCalendar;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Feature object for information dictionary
@@ -60,45 +57,18 @@ public class PBInfoDictFeaturesObject implements IFeaturesObject {
         if (info != null) {
             FeatureTreeNode root = FeatureTreeNode.newInstance("informationDict", null);
 
-            if (info.getTitle() != null) {
-                FeatureTreeNode title = FeatureTreeNode.newInstance(ENTRY, info.getTitle(), root);
-                title.addAttribute(KEY, "Title");
-            }
-
-            if (info.getAuthor() != null) {
-                FeatureTreeNode author = FeatureTreeNode.newInstance(ENTRY, info.getAuthor(), root);
-                author.addAttribute(KEY, "Author");
-            }
-
-            if (info.getSubject() != null) {
-                FeatureTreeNode subject = FeatureTreeNode.newInstance(ENTRY, info.getSubject(), root);
-                subject.addAttribute(KEY, "Subject");
-            }
-
-            if (info.getKeywords() != null) {
-                FeatureTreeNode keywords = FeatureTreeNode.newInstance(ENTRY, info.getKeywords(), root);
-                keywords.addAttribute(KEY, "Keywords");
-            }
-
-            if (info.getCreator() != null) {
-                FeatureTreeNode creator = FeatureTreeNode.newInstance(ENTRY, info.getCreator(), root);
-                creator.addAttribute(KEY, "Creator");
-            }
-
-            if (info.getProducer() != null) {
-                FeatureTreeNode producer = FeatureTreeNode.newInstance(ENTRY, info.getProducer(), root);
-                producer.addAttribute(KEY, "Producer");
-            }
+            addEntry("Title", info.getTitle(), root);
+            addEntry("Author", info.getAuthor(), root);
+            addEntry("Subject", info.getSubject(), root);
+            addEntry("Keywords", info.getKeywords(), root);
+            addEntry("Creator", info.getCreator(), root);
+            addEntry("Producer", info.getProducer(), root);
 
             if (info.getCreationDate() != null) {
                 FeatureTreeNode creationDate = FeatureTreeNode.newInstance(ENTRY, root);
                 creationDate.addAttribute(KEY, "CreationDate");
                 try {
-                    GregorianCalendar greg = new GregorianCalendar();
-                    greg.setTime(info.getCreationDate().getTime());
-                    greg.setTimeZone(info.getCreationDate().getTimeZone());
-                    XMLGregorianCalendar creationCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(greg);
-                    creationDate.setValue(creationCalendar.toXMLFormat());
+                    creationDate.setValue(getXMLFormat(info.getCreationDate()));
                 } catch (DatatypeConfigurationException e) {
                     creationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.INFODICTCONFCREATIONDATE_ID);
                     ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.INFODICTCONFCREATIONDATE_ID, ErrorsHelper.INFODICTCONFCREATIONDATE_MESSAGE);
@@ -109,29 +79,20 @@ public class PBInfoDictFeaturesObject implements IFeaturesObject {
                 FeatureTreeNode modificationDate = FeatureTreeNode.newInstance(ENTRY, root);
                 modificationDate.addAttribute(KEY, "ModDate");
                 try {
-                    GregorianCalendar greg = new GregorianCalendar();
-                    greg.setTime(info.getModificationDate().getTime());
-                    greg.setTimeZone(info.getModificationDate().getTimeZone());
-                    XMLGregorianCalendar modCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(greg);
-                    modificationDate.setValue(modCalendar.toXMLFormat());
+                    modificationDate.setValue(getXMLFormat(info.getModificationDate()));
                 } catch (DatatypeConfigurationException e) {
                     modificationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.INFODICTCONFMODDATE_ID);
                     ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.INFODICTCONFMODDATE_ID, ErrorsHelper.INFODICTCONFMODDATE_MESSAGE);
                 }
             }
 
-            if (info.getTrapped() != null) {
-                FeatureTreeNode trapped = FeatureTreeNode.newInstance(ENTRY, info.getTrapped(), root);
-                trapped.addAttribute(KEY, "Trapped");
-            }
+            addEntry("Trapped", info.getTrapped(), root);
 
-            Set<String> keys = new TreeSet<>(info.getMetadataKeys());
-            keys.removeAll(Arrays.asList(predefinedKeys));
-
-            for (String key : keys) {
-                if (info.getCustomMetadataValue(key) != null) {
-                    FeatureTreeNode customValue = FeatureTreeNode.newInstance(ENTRY, info.getCustomMetadataValue(key), root);
-                    customValue.addAttribute(KEY, key);
+            if (info.getMetadataKeys() != null) {
+                Set<String> keys = new TreeSet<>(info.getMetadataKeys());
+                keys.removeAll(Arrays.asList(predefinedKeys));
+                for (String key : keys) {
+                    addEntry(key, info.getCustomMetadataValue(key), root);
                 }
             }
 
@@ -141,5 +102,20 @@ public class PBInfoDictFeaturesObject implements IFeaturesObject {
         } else {
             return null;
         }
+    }
+
+    private void addEntry(String name, String value, FeatureTreeNode root) throws FeaturesTreeNodeException {
+        if (name != null && value != null) {
+            FeatureTreeNode entry = FeatureTreeNode.newInstance(ENTRY, value, root);
+            entry.addAttribute(KEY, name);
+        }
+    }
+
+    private String getXMLFormat(Calendar calendar) throws DatatypeConfigurationException {
+        GregorianCalendar greg = new GregorianCalendar();
+        greg.setTime(calendar.getTime());
+        greg.setTimeZone(calendar.getTimeZone());
+        XMLGregorianCalendar xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(greg);
+        return xmlCalendar.toXMLFormat();
     }
 }

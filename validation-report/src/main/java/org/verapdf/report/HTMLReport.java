@@ -28,7 +28,7 @@ public final class HTMLReport {
      * @throws TransformerException - if an unrecoverable error occurs during the course of the transformation or
      * @throws IOException          - file system exceptions
      */
-    public static void wrightHTMLReport(String htmlReportPath, File xmlReport, File validationProfile) throws TransformerException, IOException {
+    public static void writeHTMLReport(String htmlReportPath, File xmlReport, File validationProfile) throws TransformerException, IOException {
 
         TransformerFactory factory = TransformerFactory.newInstance();
 
