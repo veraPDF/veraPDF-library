@@ -14,13 +14,12 @@ public class PBOp_bstar_closepath_eofill_stroke extends PBOpPathPaint implements
 
     public static final String OP_BSTAR_CLOSEPATH_EOFILL_STROKE_TYPE = "Op_bstar_closepath_eofill_stroke";
 
-    public static final String FILL_CS = "fillCS";
-    public static final String STROKE_CS = "strokeCS";
-
-    public PBOp_bstar_closepath_eofill_stroke(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_BSTAR_CLOSEPATH_EOFILL_STROKE_TYPE);
-    }
+	public PBOp_bstar_closepath_eofill_stroke(List<COSBase> arguments,
+											  org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace strokeColorSpace,
+											  org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace fillColorSpace) {
+		super(arguments, strokeColorSpace, fillColorSpace);
+		setType(OP_BSTAR_CLOSEPATH_EOFILL_STROKE_TYPE);
+	}
 
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
