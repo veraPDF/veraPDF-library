@@ -102,6 +102,9 @@ public final class ValidationProfileParser {
                 case "variables":
                     parseVariables(child, variables);
                     break;
+                default:
+                    // White space node or some another node, which doesn't a part of a validation profile
+                    // by specification. So do nothing.
             }
         }
 
@@ -122,7 +125,7 @@ public final class ValidationProfileParser {
 
             File newFile = new File(sourceFile.getParent(), path);
 
-            if (newFile == null || !newFile.exists()) {
+            if (!newFile.exists()) {
                 throw new IncorrectImportPathException("Can not find import with path \"" + path + "\" directly to the given profile.");
             }
 
@@ -148,6 +151,10 @@ public final class ValidationProfileParser {
                     case "imports":
                         parseImports(newFile, child2, rules);
                         break;
+
+                    default:
+                        // White space node or some another node, which doesn't a part of a validation profile
+                        // by specification. So do nothing.
                 }
             }
         }
@@ -219,6 +226,9 @@ public final class ValidationProfileParser {
                 case "fix":
                     fix.add(parseFix(child));
                     break;
+                default:
+                    // White space node or some another node, which doesn't a part of a validation profile
+                    // by specification. So do nothing.
             }
         }
 
@@ -276,6 +286,9 @@ public final class ValidationProfileParser {
                 case "value":
                     value = child.getTextContent().trim();
                     break;
+                default:
+                    // White space node or some another node, which doesn't a part of a validation profile
+                    // by specification. So do nothing.
 
             }
         }
@@ -303,6 +316,10 @@ public final class ValidationProfileParser {
                 case "argument":
                     argument.add(child.getTextContent().trim());
                     break;
+
+                default:
+                    // White space node or some another node, which doesn't a part of a validation profile
+                    // by specification. So do nothing.
             }
         }
 
@@ -314,6 +331,7 @@ public final class ValidationProfileParser {
     private Reference parseReference(Node ref) {
         String specification = null;
         String clause = null;
+        List<Reference> references = new ArrayList<>();
 
         NodeList children = ref.getChildNodes();
 
@@ -330,11 +348,19 @@ public final class ValidationProfileParser {
                     clause = child.getTextContent().trim();
                     break;
 
+                case "reference":
+                    references.add(parseReference(child));
+                    break;
+
+                default:
+                    // White space node or some another node, which doesn't a part of a validation profile
+                    // by specification. So do nothing.
+
             }
         }
 
 
-        return new Reference(specification, clause);
+        return new Reference(specification, clause, references);
 
     }
 

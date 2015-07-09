@@ -27,7 +27,6 @@ class AboutPanel extends JPanel {
     private static final String ERROR = "Error";
 
     private JButton okButton;
-    private JButton urlLabel;
     private JDialog dialog;
 
     /**
@@ -60,16 +59,14 @@ class AboutPanel extends JPanel {
         });
 
 
-        urlLabel = new JButton(LOGO_LINK_TEXT);
+        JButton urlLabel = new JButton(LOGO_LINK_TEXT);
         urlLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
 
                 try {
                     Desktop.getDesktop().browse(new URI(LOGO_LINK_URL));
-                } catch (IOException e1) {
-                    JOptionPane.showMessageDialog(AboutPanel.this, ERROR, ERROR, JOptionPane.ERROR_MESSAGE);
-                } catch (URISyntaxException e1) {
+                } catch (IOException | URISyntaxException e1) {
                     JOptionPane.showMessageDialog(AboutPanel.this, ERROR, ERROR, JOptionPane.ERROR_MESSAGE);
                 }
 

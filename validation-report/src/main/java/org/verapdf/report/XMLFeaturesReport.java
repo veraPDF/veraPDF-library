@@ -23,7 +23,7 @@ import java.util.Map;
  *
  * @author Maksim Bezrukov
  */
-public class XMLFeaturesReport {
+public final class XMLFeaturesReport {
 
     private XMLFeaturesReport() {
 
@@ -42,13 +42,7 @@ public class XMLFeaturesReport {
 
         if (collection != null) {
 
-            if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY) != null) {
-                for (FeatureTreeNode infoDict : collection.getFeatureTreesForType(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY)) {
-                    if (infoDict != null) {
-                        pdfFeatures.appendChild(makeNode(infoDict, doc));
-                    }
-                }
-            }
+            parseElements(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY, collection, pdfFeatures, doc);
 
             if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.METADATA) != null) {
                 for (FeatureTreeNode metadataNode : collection.getFeatureTreesForType(FeaturesObjectTypesEnum.METADATA)) {
@@ -58,25 +52,13 @@ public class XMLFeaturesReport {
                 }
             }
 
-            if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.LOW_LEVEL_INFO) != null) {
-                for (FeatureTreeNode lowLvlInfoNode : collection.getFeatureTreesForType(FeaturesObjectTypesEnum.LOW_LEVEL_INFO)) {
-                    if (lowLvlInfoNode != null) {
-                        pdfFeatures.appendChild(makeNode(lowLvlInfoNode, doc));
-                    }
-                }
-            }
+            parseElements(FeaturesObjectTypesEnum.LOW_LEVEL_INFO, collection, pdfFeatures, doc);
 
             if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT) != null) {
                 pdfFeatures.appendChild(makeList("outputIntents", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT), doc));
             }
 
-            if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTLINES) != null) {
-                for (FeatureTreeNode outline : collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTLINES)) {
-                    if (outline != null) {
-                        pdfFeatures.appendChild(makeNode(outline, doc));
-                    }
-                }
-            }
+            parseElements(FeaturesObjectTypesEnum.OUTLINES, collection, pdfFeatures, doc);
 
             if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE) != null) {
                 pdfFeatures.appendChild(makeList("pages", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE), doc));
@@ -88,6 +70,16 @@ public class XMLFeaturesReport {
         }
 
         return pdfFeatures;
+    }
+
+    private static void parseElements(FeaturesObjectTypesEnum type, FeaturesCollection collection, Element root, Document doc) {
+        if (collection.getFeatureTreesForType(type) != null) {
+            for (FeatureTreeNode rootNode : collection.getFeatureTreesForType(type)) {
+                if (rootNode != null) {
+                    root.appendChild(makeNode(rootNode, doc));
+                }
+            }
+        }
     }
 
     private static Element parseMetadata(FeatureTreeNode metadataNode, FeaturesCollection collection, Document doc) {
