@@ -198,17 +198,14 @@ public final class XMLValidationReport {
             return message;
         } else {
 
-            StringBuffer buffer = new StringBuffer(message);
+            StringBuilder buffer = new StringBuilder(message);
 
             for (int i = 0; i < buffer.length(); ++i) {
-                if (buffer.charAt(i) == '%') {
-                    if (buffer.charAt(++i) != '0' && Character.isDigit(buffer.charAt(i)) && !Character.isDigit(buffer.charAt(i + 1))) {
-                        int argumentNumber = Character.getNumericValue(buffer.charAt(i)) - 1;
-                        String argumentValue = arguments.get(argumentNumber);
-                        buffer.replace(i - 1, i + 1, argumentValue);
-                        i += argumentValue.length() - 2;
-
-                    }
+                if (buffer.charAt(i++) == '%' && buffer.charAt(i) != '0' && Character.isDigit(buffer.charAt(i)) && !Character.isDigit(buffer.charAt(i + 1))) {
+                    int argumentNumber = Character.getNumericValue(buffer.charAt(i)) - 1;
+                    String argumentValue = arguments.get(argumentNumber);
+                    buffer.replace(i - 1, i + 1, argumentValue);
+                    i += argumentValue.length() - 2;
                 }
             }
 
