@@ -187,7 +187,9 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
         }
     }
 
-    private static String getStringFromBase(COSBase base) {
+    private static String getStringFromBase(COSBase baseParam) {
+
+        COSBase base = baseParam;
 
         while (base instanceof COSObject) {
             base = ((COSObject) base).getObject();

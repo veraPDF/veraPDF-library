@@ -308,11 +308,11 @@ public class CheckerPanel extends JPanel {
                             try {
                                 Files.copy(xmlReport.toPath(), temp.toPath());
                             } catch (FileAlreadyExistsException e1) {
-                                int result = JOptionPane.showConfirmDialog(CheckerPanel.this,
+                                int resultOption = JOptionPane.showConfirmDialog(CheckerPanel.this,
                                         "XML file with the same name already exists. Do you want to overwrite it?",
                                         "",
                                         JOptionPane.YES_NO_OPTION);
-                                if (result == JOptionPane.YES_OPTION) {
+                                if (resultOption == JOptionPane.YES_OPTION) {
                                     Files.copy(xmlReport.toPath(), temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
                                 }
                             }
@@ -358,11 +358,11 @@ public class CheckerPanel extends JPanel {
                                 File newImage = new File(temp.getParentFile(), image.getName());
                                 Files.copy(image.toPath(), newImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
                             } catch (FileAlreadyExistsException e1) {
-                                int result = JOptionPane.showConfirmDialog(CheckerPanel.this,
+                                int resultOption = JOptionPane.showConfirmDialog(CheckerPanel.this,
                                         "HTML file with the same name already exists. Do you want to overwrite it?",
                                         "",
                                         JOptionPane.YES_NO_OPTION);
-                                if (result == JOptionPane.YES_OPTION) {
+                                if (resultOption == JOptionPane.YES_OPTION) {
                                     Files.copy(htmlReport.toPath(), temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
                                     File newImage = new File(temp.getParentFile(), image.getName());
                                     Files.copy(image.toPath(), newImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
