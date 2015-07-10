@@ -15,7 +15,6 @@ import java.util.List;
 public class PBOp_ri extends PBOpGeneralGS implements Op_ri {
 
     public static final String OP_RI_TYPE = "Op_ri";
-
     public static final String RENDERING_INTENT = "renderingIntent";
 
     public PBOp_ri(List<COSBase> arguments) {
@@ -31,16 +30,19 @@ public class PBOp_ri extends PBOpGeneralGS implements Op_ri {
             case RENDERING_INTENT:
                 list = this.getRenderingIntent();
                 break;
-            default: list = super.getLinkedObjects(link);
+            default:
+				list = super.getLinkedObjects(link);
+				break;
         }
 
         return list;
     }
 
     private List<CosRenderingIntent> getRenderingIntent() {
-        List<CosRenderingIntent> list = new ArrayList<>();
-        if (!this.arguments.isEmpty() && this.arguments.get(0) instanceof COSName) {
-            list.add(new PBCosRenderingIntent((COSName) this.arguments.get(0)));
+        List<CosRenderingIntent> list = new ArrayList<>(OPERANDS_COUNT);
+		COSBase base = !this.arguments.isEmpty() ? this.arguments.get(this.arguments.size() - 1) : null;
+		if (base instanceof COSName) {
+            list.add(new PBCosRenderingIntent((COSName) base));
         }
         return list;
     }
