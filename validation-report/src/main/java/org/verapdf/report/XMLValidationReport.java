@@ -174,20 +174,9 @@ public final class XMLValidationReport {
 
             if (check.getError().getMessage() != null) {
                 Element message = doc.createElement("message");
-//                    message.appendChild(doc.createTextNode(che.getError().getMessage()));
                 message.appendChild(doc.createTextNode(getFormattedMessage(check.getError().getMessage(), check.getError().getArgument())));
                 error.appendChild(message);
             }
-
-//                if (che.getError().getArgument() != null) {
-//                    for (String attr : che.getError().getArgument()) {
-//                        if (attr != null) {
-//                            Element argument = doc.createElement("argument");
-//                            argument.appendChild(doc.createTextNode(attr));
-//                            error.appendChild(argument);
-//                        }
-//                    }
-//                }
 
             checkElement.appendChild(error);
         }

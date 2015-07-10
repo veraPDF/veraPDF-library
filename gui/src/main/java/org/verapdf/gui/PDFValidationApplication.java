@@ -1,11 +1,15 @@
 package org.verapdf.gui;
 
+import org.verapdf.gui.tools.GUIConstants;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Main frame of the PDFA Conformance Checker
@@ -14,8 +18,7 @@ import java.io.IOException;
  */
 public class PDFValidationApplication extends JFrame {
 
-    private static final String TITLE = "PDF/A Conformance Checker";
-    private static final String LOGO_NAME = "veraPDF-logo-600.png";
+    private static Logger logger = Logger.getLogger(PDFValidationApplication.class.getName());
 
     private AboutPanel aboutPanel;
 
@@ -31,13 +34,13 @@ public class PDFValidationApplication extends JFrame {
                     UIManager.setLookAndFeel(
                             UIManager.getSystemLookAndFeelClassName());
                 } catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException e) {
-                    e.printStackTrace();
+                    logger.log(Level.SEVERE, "Exception in configuring UI manager: ", e);
                 }
                 try {
                     PDFValidationApplication frame = new PDFValidationApplication();
                     frame.setVisible(true);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.log(Level.SEVERE, "Exception: ", e);
                 }
             }
         });
@@ -48,10 +51,10 @@ public class PDFValidationApplication extends JFrame {
      */
     public PDFValidationApplication() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setBounds(100, 100, 550, 350);
+        setBounds(GUIConstants.FRAME_COORD_X, GUIConstants.FRAME_COORD_Y, GUIConstants.FRAME_WIDTH, GUIConstants.FRAME_HEIGHT);
         setResizable(false);
 
-        setTitle(TITLE);
+        setTitle(GUIConstants.TITLE);
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -60,7 +63,8 @@ public class PDFValidationApplication extends JFrame {
         try {
             aboutPanel = new AboutPanel();
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error in reading logo image.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error in reading logo image.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+            logger.log(Level.SEVERE, "Exception in reading logo image: ", e);
         }
 
         JMenuItem about = new JMenuItem("About");
@@ -75,15 +79,16 @@ public class PDFValidationApplication extends JFrame {
         menuBar.add(about);
 
         JPanel contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPane.setBorder(new EmptyBorder(GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS));
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         setContentPane(contentPane);
 
         MiniLogoPanel logoPanel = null;
         try {
-            logoPanel = new MiniLogoPanel(LOGO_NAME);
+            logoPanel = new MiniLogoPanel(GUIConstants.LOGO_NAME);
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(PDFValidationApplication.this, "Error in creating mini logo.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(PDFValidationApplication.this, "Error in creating mini logo.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+            logger.log(Level.SEVERE, "Exception in creating mini logo: ", e);
         }
 
         contentPane.add(logoPanel);
@@ -92,7 +97,8 @@ public class PDFValidationApplication extends JFrame {
         try {
             checkerPanel = new CheckerPanel();
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(PDFValidationApplication.this, "Error in loading xml and html images.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(PDFValidationApplication.this, "Error in loading xml or html image.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+            logger.log(Level.SEVERE, "Exception in loading xml or html image: ", e);
         }
         contentPane.add(checkerPanel);
     }

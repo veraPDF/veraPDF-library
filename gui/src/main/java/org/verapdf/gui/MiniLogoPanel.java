@@ -1,5 +1,7 @@
 package org.verapdf.gui;
 
+import org.verapdf.gui.tools.GUIConstants;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +16,6 @@ import java.io.InputStream;
  */
 public class MiniLogoPanel extends JPanel {
 
-    private static final String LABEL_TEXT = "     Please specify input PDF, Validation Profile and press \"Validate\"";
-
     /**
      * Creates mini logo panel
      *
@@ -26,7 +26,7 @@ public class MiniLogoPanel extends JPanel {
 
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        JLabel label = new JLabel(LABEL_TEXT);
+        JLabel label = new JLabel(GUIConstants.LABEL_TEXT);
         InputStream is = getClass().getClassLoader().getResourceAsStream(logoPath);
         final BufferedImage image = ImageIO.read(is);
         Icon icon = new Icon() {
