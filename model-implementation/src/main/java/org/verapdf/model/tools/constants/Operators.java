@@ -42,5 +42,17 @@ public class Operators {
     public static final String W_LINE_WIDTH = "W";
     public static final String W_STAR_EOCLIP = "W*";
     public static final String Y = "y";
+	public static final String CS_STROKE = "CS";
+	public static final String CS_FILL = "cs";
+	public static final String SCN_STROKE = "SCN";
+	public static final String SCN_FILL = "scn";
+	public static final String SC_STROKE = "SC";
+	public static final String SC_FILL = "sc";
+	public static final String G_STROKE = "G";
+	public static final String G_FILL = "g";
+	public static final String RG_STROKE = "RG";
+	public static final String RG_FILL = "rg";
+	public static final String K_STROKE = "K";
+	public static final String K_FILL = "k";
 
 }
