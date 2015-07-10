@@ -1,6 +1,6 @@
 package org.verapdf.model.impl.pb.cos;
 
-import org.apache.pdfbox.cos.COSFloat;
+import org.apache.pdfbox.cos.COSNumber;
 import org.verapdf.model.coslayer.CosReal;
 
 /**
@@ -12,7 +12,7 @@ import org.verapdf.model.coslayer.CosReal;
  */
 public class PBCosReal extends PBCosNumber implements CosReal {
 
-	public PBCosReal(COSFloat value) {
+	public PBCosReal(COSNumber value) {
 		super(value);
 		setType("CosReal");
 	}
