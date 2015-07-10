@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author Timur Kamalov
  */
-public class PBOp_B_fill_stroke extends PBOpPathPaint implements Op_B_fill_stroke {
+public class PBOp_B_fill_stroke extends PBOpFillAndStroke implements Op_B_fill_stroke {
 
     private static final String OP_B_FILL_STROKE_TYPE = "Op_B_fill_stroke";
 

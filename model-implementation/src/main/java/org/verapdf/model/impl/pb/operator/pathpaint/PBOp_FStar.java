@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Timur Kamalov
  */
-public class PBOp_FStar extends PBOpPathPaint implements Op_FStar {
+public class PBOp_FStar extends PBOpFillPaint implements Op_FStar {
 
     private static final String OP_FSTAR_TYPE = "Op_FStar";
 

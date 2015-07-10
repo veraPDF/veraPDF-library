@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Timur Kamalov
  */
-public class PBOp_F_fill_obsolete extends PBOpPathPaint implements Op_F_fill_obsolete {
+public class PBOp_F_fill_obsolete extends PBOpFillPaint implements Op_F_fill_obsolete {
 
     public static final String OP_F_FILL_OBSOLETE_TYPE = "Op_F_fill_obsolete";
 

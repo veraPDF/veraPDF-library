@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Timur Kamalov
  */
-public class PBOp_f_fill extends PBOpPathPaint implements Op_f_fill {
+public class PBOp_f_fill extends PBOpFillPaint implements Op_f_fill {
 
     private static final String OP_F_FILL_TYPE = "Op_f_fill";
 

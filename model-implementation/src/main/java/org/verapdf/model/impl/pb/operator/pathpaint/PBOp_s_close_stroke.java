@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author Timur Kamalov
  */
-public class PBOp_s_close_stroke extends PBOpPathPaint implements Op_s_close_stroke {
+public class PBOp_s_close_stroke extends PBOpStrokePaint implements Op_s_close_stroke {
 
     public static final String OP_S_CLOSE_STROKE_TYPE = "Op_s_close_stroke";
 
