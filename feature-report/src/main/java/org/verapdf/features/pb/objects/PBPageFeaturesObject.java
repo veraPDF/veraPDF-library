@@ -5,6 +5,7 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSNumber;
 import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -62,46 +63,11 @@ public class PBPageFeaturesObject implements IFeaturesObject {
             root.addAttribute("id", PAGE + index);
             root.addAttribute("orderNumber", Integer.toString(index));
 
-            if (page.getMediaBox() != null) {
-                FeatureTreeNode mediaBox = FeatureTreeNode.newInstance("mediaBox", root);
-                mediaBox.addAttribute(LLX, String.valueOf(page.getMediaBox().getLowerLeftX()));
-                mediaBox.addAttribute(LLY, String.valueOf(page.getMediaBox().getLowerLeftY()));
-                mediaBox.addAttribute(URX, String.valueOf(page.getMediaBox().getUpperRightX()));
-                mediaBox.addAttribute(URY, String.valueOf(page.getMediaBox().getUpperRightY()));
-            }
-
-            if (page.getCropBox() != null) {
-                FeatureTreeNode cropBox = FeatureTreeNode.newInstance("cropBox", root);
-                cropBox.addAttribute(LLX, String.valueOf(page.getCropBox().getLowerLeftX()));
-                cropBox.addAttribute(LLY, String.valueOf(page.getCropBox().getLowerLeftY()));
-                cropBox.addAttribute(URX, String.valueOf(page.getCropBox().getUpperRightX()));
-                cropBox.addAttribute(URY, String.valueOf(page.getCropBox().getUpperRightY()));
-
-            }
-
-            if (page.getTrimBox() != null) {
-                FeatureTreeNode trimBox = FeatureTreeNode.newInstance("trimBox", root);
-                trimBox.addAttribute(LLX, String.valueOf(page.getTrimBox().getLowerLeftX()));
-                trimBox.addAttribute(LLY, String.valueOf(page.getTrimBox().getLowerLeftY()));
-                trimBox.addAttribute(URX, String.valueOf(page.getTrimBox().getUpperRightX()));
-                trimBox.addAttribute(URY, String.valueOf(page.getTrimBox().getUpperRightY()));
-            }
-
-            if (page.getBleedBox() != null) {
-                FeatureTreeNode bleedBox = FeatureTreeNode.newInstance("bleedBox", root);
-                bleedBox.addAttribute(LLX, String.valueOf(page.getBleedBox().getLowerLeftX()));
-                bleedBox.addAttribute(LLY, String.valueOf(page.getBleedBox().getLowerLeftY()));
-                bleedBox.addAttribute(URX, String.valueOf(page.getBleedBox().getUpperRightX()));
-                bleedBox.addAttribute(URY, String.valueOf(page.getBleedBox().getUpperRightY()));
-            }
-
-            if (page.getArtBox() != null) {
-                FeatureTreeNode artBox = FeatureTreeNode.newInstance("artBox", root);
-                artBox.addAttribute(LLX, String.valueOf(page.getArtBox().getLowerLeftX()));
-                artBox.addAttribute(LLY, String.valueOf(page.getArtBox().getLowerLeftY()));
-                artBox.addAttribute(URX, String.valueOf(page.getArtBox().getUpperRightX()));
-                artBox.addAttribute(URY, String.valueOf(page.getArtBox().getUpperRightY()));
-            }
+            addBoxFeature("mediaBox", page.getMediaBox(), root);
+            addBoxFeature("cropBox", page.getCropBox(), root);
+            addBoxFeature("trimBox", page.getTrimBox(), root);
+            addBoxFeature("bleedBox", page.getBleedBox(), root);
+            addBoxFeature("artBox", page.getArtBox(), root);
 
             FeatureTreeNode.newInstance("rotation", Integer.toString(page.getRotation()), root);
 
@@ -133,6 +99,16 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 
         } else {
             return null;
+        }
+    }
+
+    private void addBoxFeature(String name, PDRectangle box, FeatureTreeNode root) throws FeaturesTreeNodeException {
+        if (box != null) {
+            FeatureTreeNode boxNode = FeatureTreeNode.newInstance(name, root);
+            boxNode.addAttribute(LLX, String.valueOf(box.getLowerLeftX()));
+            boxNode.addAttribute(LLY, String.valueOf(box.getLowerLeftY()));
+            boxNode.addAttribute(URX, String.valueOf(box.getUpperRightX()));
+            boxNode.addAttribute(URY, String.valueOf(box.getUpperRightY()));
         }
     }
 

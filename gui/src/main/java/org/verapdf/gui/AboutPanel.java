@@ -1,5 +1,7 @@
 package org.verapdf.gui;
 
+import org.verapdf.gui.tools.GUIConstants;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,6 +11,8 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * About Panel
@@ -17,14 +21,7 @@ import java.net.URISyntaxException;
  */
 class AboutPanel extends JPanel {
 
-    private static final String LOGO_NAME = "veraPDF-logo-600.png";
-    private static final Color LOGO_BACKGROUND = Color.LIGHT_GRAY;
-    private static final String PARTNERS_NAME = "partners.png";
-    private static final Color PARTNERS_BACKGROUND = Color.WHITE;
-    private static final String LOGO_LINK_TEXT = "Visit veraPDF.org";
-    private static final String LOGO_LINK_URL = "http://www.verapdf.org";
-
-    private static final String ERROR = "Error";
+    private static Logger logger = Logger.getLogger(AboutPanel.class.getName());
 
     private JButton okButton;
     private JDialog dialog;
@@ -43,11 +40,11 @@ class AboutPanel extends JPanel {
 
         add(mainPanel, BorderLayout.CENTER);
 
-        LogoPanel logo = new LogoPanel(LOGO_NAME, LOGO_BACKGROUND, 10);
+        LogoPanel logo = new LogoPanel(GUIConstants.LOGO_NAME, GUIConstants.LOGO_BACKGROUND, 10);
 
         mainPanel.add(logo);
 
-        PartnersPanel partners = new PartnersPanel(PARTNERS_NAME, PARTNERS_BACKGROUND);
+        PartnersPanel partners = new PartnersPanel(GUIConstants.PARTNERS_NAME, GUIConstants.PARTNERS_BACKGROUND);
 
         mainPanel.add(partners);
 
@@ -59,15 +56,16 @@ class AboutPanel extends JPanel {
         });
 
 
-        JButton urlLabel = new JButton(LOGO_LINK_TEXT);
+        JButton urlLabel = new JButton(GUIConstants.LOGO_LINK_TEXT);
         urlLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
 
                 try {
-                    Desktop.getDesktop().browse(new URI(LOGO_LINK_URL));
+                    Desktop.getDesktop().browse(new URI(GUIConstants.LOGO_LINK_URL));
                 } catch (IOException | URISyntaxException e1) {
-                    JOptionPane.showMessageDialog(AboutPanel.this, ERROR, ERROR, JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(AboutPanel.this, GUIConstants.ERROR, GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+                    logger.log(Level.SEVERE, "Exception in opening " + GUIConstants.LOGO_LINK_URL + " link: ", e);
                 }
 
             }

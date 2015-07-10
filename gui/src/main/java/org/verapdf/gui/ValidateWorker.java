@@ -2,12 +2,15 @@ package org.verapdf.gui;
 
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
+import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.validation.logic.Validator;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Validates PDF in a new threat.
@@ -16,14 +19,11 @@ import java.io.File;
  */
 public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
-    private static final String ERROR = "Error";
-    private static final String ERROR_IN_PARSING = "Some error in parsing pdf.";
-    private static final String ERROR_IN_VALIDATING = "Some error in validating.";
+    private static Logger logger = Logger.getLogger(ValidateWorker.class.getName());
 
     private File pdf;
     private File profile;
     private CheckerPanel parent;
-    private ValidationInfo info;
     private FeaturesCollection collection;
 
     /**
@@ -41,7 +41,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
     @Override
     protected ValidationInfo doInBackground() {
-        info = null;
+        ValidationInfo info = null;
         collection = null;
         org.verapdf.model.baselayer.Object root;
 
@@ -54,17 +54,18 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
             try {
                 info = Validator.validate(root, profile, false);
             } catch (Exception e) {
-                parent.errorInValidatingOccur(ERROR_IN_VALIDATING);
+                parent.errorInValidatingOccur(GUIConstants.ERROR_IN_VALIDATING, e);
             }
 
         } catch (Exception e) {
-            parent.errorInValidatingOccur(ERROR_IN_PARSING);
+            parent.errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
         }
 
         try {
             collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(parent, "Some error in creating features collection.", ERROR, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(parent, "Some error in creating features collection.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+            logger.log(Level.SEVERE, "Exception in creating features collection: ", e);
         }
 
         return info;
