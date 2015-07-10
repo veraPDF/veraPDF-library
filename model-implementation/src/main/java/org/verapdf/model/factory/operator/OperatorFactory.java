@@ -13,6 +13,7 @@ import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
+import org.apache.pdfbox.pdmodel.graphics.state.RenderingIntent;
 import org.verapdf.model.impl.pb.operator.generalgs.*;
 import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_BMC;
 import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_EMC;
@@ -158,6 +159,9 @@ public final class OperatorFactory {
 				} else if (Operators.Q_GRESTORE.equals(operatorName)) {
 					return result;
 				}
+			} else if (pdfBoxToken instanceof RenderingIntent){
+				String value = ((RenderingIntent) pdfBoxToken).stringValue();
+				arguments.add(COSName.getPDFName(value));
 			} else {
 				logger.error("Unexpected type of object in tokens: " + pdfBoxToken.getClass().getName());
 			}
