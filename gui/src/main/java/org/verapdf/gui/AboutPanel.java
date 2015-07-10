@@ -40,7 +40,7 @@ class AboutPanel extends JPanel {
 
         add(mainPanel, BorderLayout.CENTER);
 
-        LogoPanel logo = new LogoPanel(GUIConstants.LOGO_NAME, GUIConstants.LOGO_BACKGROUND, 10);
+        LogoPanel logo = new LogoPanel(GUIConstants.LOGO_NAME, GUIConstants.LOGO_BACKGROUND, GUIConstants.LOGOPANEL_BORDER_WIDTH);
 
         mainPanel.add(logo);
 
@@ -111,7 +111,7 @@ class AboutPanel extends JPanel {
             dialog.setTitle(title);
         }
 
-        dialog.setLocation(150, 150);
+        dialog.setLocation(GUIConstants.ABOUTDIALOG_COORD_X, GUIConstants.ABOUTDIALOG_COORD_Y);
         dialog.setVisible(true);
     }
 

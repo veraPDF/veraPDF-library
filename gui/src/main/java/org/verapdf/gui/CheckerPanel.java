@@ -142,7 +142,7 @@ public class CheckerPanel extends JPanel {
         gbl.setConstraints(reports, gbc);
         this.add(reports);
 
-        LogoPanel xmlLogo = new LogoPanel(GUIConstants.XML_LOGO_NAME, reports.getBackground(), 4);
+        LogoPanel xmlLogo = new LogoPanel(GUIConstants.XML_LOGO_NAME, reports.getBackground(), GUIConstants.XMLLOGO_BORDER_WIDTH);
         reports.add(xmlLogo);
 
         saveXML = new JButton(GUIConstants.SAVE_REPORT_BUTTON_TEXT);
@@ -153,7 +153,7 @@ public class CheckerPanel extends JPanel {
         viewXML.setEnabled(false);
         reports.add(viewXML);
 
-        LogoPanel htmlLogo = new LogoPanel(GUIConstants.HTML_LOGO_NAME, reports.getBackground(), 4);
+        LogoPanel htmlLogo = new LogoPanel(GUIConstants.HTML_LOGO_NAME, reports.getBackground(), GUIConstants.HTMLLOGO_BORDER_WIDTH);
         reports.add(htmlLogo);
 
         saveHTML = new JButton(GUIConstants.SAVE_HTML_REPORT_BUTTON_TEXT);

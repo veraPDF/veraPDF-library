@@ -1,5 +1,7 @@
 package org.verapdf.gui;
 
+import org.verapdf.gui.tools.GUIConstants;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -54,7 +56,7 @@ public class LogoPanel extends JPanel {
 
         setBackground(backgroundColor);
 
-        setPreferredSize(new Dimension(450, 200));
+        setPreferredSize(new Dimension(GUIConstants.LOGOPANEL_PREFERRED_SIZE_WIDTH, GUIConstants.LOGOPANEL_PREFERRED_SIZE_HEIGHT));
     }
 
 }

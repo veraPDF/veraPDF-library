@@ -30,7 +30,6 @@ public class Validator {
     private Stack<Set<String>> contextSet;
     private Map<String, List<Check>> checkMap;
     private Map<String, java.lang.Object> variablesMap;
-    private List<String> warnings;
     private Set<String> idSet;
 
     private String rootType;
@@ -50,7 +49,7 @@ public class Validator {
         objectsStack = new Stack<>();
         objectsContext = new Stack<>();
         contextSet = new Stack<>();
-        warnings = new ArrayList<>();
+        List<String> warnings = new ArrayList<>();
         idSet = new HashSet<>();
         checkMap = new HashMap<>();
         variablesMap = new HashMap<>();
@@ -269,31 +268,31 @@ public class Validator {
     }
 
     private String getScript(Object obj, org.verapdf.validation.profile.model.Rule rule) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
 
-        buffer.append(getScriptPrefix(obj));
-        buffer.append("(");
-        buffer.append(rule.getTest());
-        buffer.append(")==true");
-        buffer.append(getScriptSuffix());
-        return buffer.toString();
+        builder.append(getScriptPrefix(obj));
+        builder.append("(");
+        builder.append(rule.getTest());
+        builder.append(")==true");
+        builder.append(getScriptSuffix());
+        return builder.toString();
     }
 
     private String getScriptPrefix(Object obj) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
 
         for (String prop : obj.getProperties()) {
-            buffer.append("var " + prop + " = obj.get" + prop + "();\n");
+            builder.append("var " + prop + " = obj.get" + prop + "();\n");
         }
 
         for (String linkName : obj.getLinks()) {
             List<? extends Object> linkedObject = obj.getLinkedObjects(linkName);
-            buffer.append("var " + linkName + "_size = " + linkedObject.size() + ";\n");
+            builder.append("var " + linkName + "_size = " + linkedObject.size() + ";\n");
         }
 
-        buffer.append("function test(){return ");
+        builder.append("function test(){return ");
 
-        return buffer.toString();
+        return builder.toString();
     }
 
     private String getScriptSuffix() {

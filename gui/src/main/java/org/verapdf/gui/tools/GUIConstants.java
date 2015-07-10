@@ -53,9 +53,16 @@ public final class GUIConstants {
     public static final int FRAME_HEIGHT = 350;
 
     public static final int BORDER_WIDTH = 3;
+    public static final int LOGOPANEL_BORDER_WIDTH = 10;
+    public static final int XMLLOGO_BORDER_WIDTH = 4;
+    public static final int HTMLLOGO_BORDER_WIDTH = 4;
+    public static final int ABOUTDIALOG_COORD_X = 150;
+    public static final int ABOUTDIALOG_COORD_Y = 150;
     public static final int PREFERRED_WIDTH = 450;
     public static final int PREFERRED_SIZE_WIDTH = 450;
     public static final int PREFERRED_SIZE_HEIGHT = 200;
+    public static final int LOGOPANEL_PREFERRED_SIZE_WIDTH = 450;
+    public static final int LOGOPANEL_PREFERRED_SIZE_HEIGHT = 200;
     public static final int VALIDATION_SUCCESS_COLOR_RGB_GREEN = 180;
     public static final int VALIDATION_FAILED_COLOR_RGB_RED = 180;
 
