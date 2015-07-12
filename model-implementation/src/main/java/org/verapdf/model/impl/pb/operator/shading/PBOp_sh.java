@@ -2,12 +2,10 @@ package org.verapdf.model.impl.pb.operator.shading;
 
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern;
 import org.verapdf.model.impl.pb.pd.pattern.PBoxPDShading;
 import org.verapdf.model.operator.Op_sh;
 import org.verapdf.model.pdlayer.PDShading;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +20,11 @@ public class PBOp_sh extends PBOpShading implements Op_sh {
 
     public static final String SHADING = "shading";
 
-	private PDShadingPattern shadingPattern;
+	private org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading;
 
-    public PBOp_sh(List<COSBase> arguments, PDShadingPattern shadingPattern) {
+    public PBOp_sh(List<COSBase> arguments, org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading) {
         super(arguments);
-		this.shadingPattern = shadingPattern;
+		this.shading = shading;
         setType(OP_SH_TYPE);
     }
 
@@ -46,15 +44,8 @@ public class PBOp_sh extends PBOpShading implements Op_sh {
 
     private List<PDShading> getShading() {
         List<PDShading> list = new ArrayList<>();
-        if (this.shadingPattern != null) {
-			try {
-				org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading = this.shadingPattern.getShading();
-				if (shading != null) {
-					list.add(new PBoxPDShading(shading));
-				}
-			} catch (IOException e) {
-				logger.error("Problems with shading obtaining. " + e.getMessage());
-			}
+        if (this.shading != null) {
+			list.add(new PBoxPDShading(shading));
 		}
         return list;
     }

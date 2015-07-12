@@ -4,30 +4,35 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDResources;
-import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceCMYK;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceGray;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
-import org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern;
+import org.apache.pdfbox.pdmodel.graphics.shading.PDShading;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingIntent;
+import org.verapdf.model.impl.pb.operator.color.PBOpColor;
 import org.verapdf.model.impl.pb.operator.generalgs.*;
-import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_BMC;
-import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_EMC;
-import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_MP;
+import org.verapdf.model.impl.pb.operator.inlineimage.PBOpInlineImage;
+import org.verapdf.model.impl.pb.operator.markedcontent.*;
 import org.verapdf.model.impl.pb.operator.opclip.PBOp_WStar;
 import org.verapdf.model.impl.pb.operator.opclip.PBOp_W_clip;
 import org.verapdf.model.impl.pb.operator.opcompability.PBOp_BX;
 import org.verapdf.model.impl.pb.operator.opcompability.PBOp_EX;
+import org.verapdf.model.impl.pb.operator.opcompability.PBOp_Undefined;
 import org.verapdf.model.impl.pb.operator.pathconstruction.*;
 import org.verapdf.model.impl.pb.operator.pathpaint.*;
 import org.verapdf.model.impl.pb.operator.shading.PBOp_sh;
 import org.verapdf.model.impl.pb.operator.specialgs.PBOp_Q_grestore;
 import org.verapdf.model.impl.pb.operator.specialgs.PBOp_cm;
 import org.verapdf.model.impl.pb.operator.specialgs.PBOp_q_gsave;
+import org.verapdf.model.impl.pb.operator.textobject.PBOpTextObject;
+import org.verapdf.model.impl.pb.operator.textposition.PBOpTextPosition;
+import org.verapdf.model.impl.pb.operator.textshow.PBOpTextShow;
+import org.verapdf.model.impl.pb.operator.textstate.PBOpTextState;
+import org.verapdf.model.impl.pb.operator.type3font.PBOpType3Font;
 import org.verapdf.model.impl.pb.operator.xobject.PBOp_Do;
 import org.verapdf.model.operator.Operator;
 import org.verapdf.model.tools.constants.Operators;
@@ -42,15 +47,17 @@ public final class OperatorFactory {
 
 	public static final Logger logger = Logger.getLogger(OperatorFactory.class);
 
-	public static final Integer REQIURED_RESOURCES_COUNT = Integer.valueOf(5);
+	public static final Integer REQIURED_RESOURCES_COUNT = Integer.valueOf(6);
 	public static final Integer STROKE_COLOR_SPACE = Integer.valueOf(0);
 	public static final Integer FILL_COLOR_SPACE = Integer.valueOf(1);
 	public static final Integer EXT_G_STATE = Integer.valueOf(2);
 	public static final Integer PATTERN = Integer.valueOf(3);
 	public static final Integer XOBJECT = Integer.valueOf(4);
+	public static final Integer SHADING = Integer.valueOf(5);
+	public static final Integer NESTING_LEVEL = Integer.valueOf(6);
 
 	public static Operator parseOperator(org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
-										 List<COSBase> arguments, Map<Integer, COSObjectable> resources) {
+										 List<COSBase> arguments, Map<Integer, Object> resources) {
         String operatorName = pdfBoxOperator.getName();
         switch (operatorName) {
             // GENERAL GS
@@ -65,12 +72,62 @@ public final class OperatorFactory {
 
             // MARKED CONTENT
             case Operators.BMC : return new PBOp_BMC(arguments);
+            case Operators.BDC : return new PBOp_BDC(arguments);
             case Operators.EMC : return new PBOp_EMC(arguments);
             case Operators.MP : return new PBOp_MP(arguments);
+            case Operators.DP : return new PBOp_DP(arguments);
 
             // CLIP
             case Operators.W_CLIP : return new PBOp_W_clip(arguments);
             case Operators.W_STAR_EOCLIP : return new PBOp_WStar(arguments);
+
+			// COLOR
+			case Operators.CS_STROKE:
+			case Operators.CS_FILL:
+			case Operators.SCN_STROKE:
+			case Operators.SCN_FILL:
+			case Operators.SC_STROKE:
+			case Operators.SC_FILL:
+			case Operators.G_STROKE:
+			case Operators.G_FILL:
+			case Operators.RG_STROKE:
+			case Operators.RG_FILL:
+			case Operators.K_STROKE:
+			case Operators.K_FILL: return new PBOpColor(arguments);
+
+			// TEXT OBJECT
+			case Operators.ET:
+			case Operators.BT: return new PBOpTextObject(arguments);
+
+			// TEXT POSITION
+			case Operators.TD_MOVE:
+			case Operators.TD_MOVE_SET_LEADING:
+			case Operators.TM:
+			case Operators.T_STAR: return new PBOpTextPosition(arguments);
+
+			// TEXT SHOW
+			case Operators.TJ_SHOW:
+			case Operators.TJ_SHOW_POS:
+			case Operators.QUOTE:
+			case Operators.DOUBLE_QUOTE: return new PBOpTextShow(arguments);
+
+			// TEXT STATE
+			case Operators.TC:
+			case Operators.TW:
+			case Operators.TZ:
+			case Operators.TL:
+			case Operators.TF:
+			case Operators.TR:
+			case Operators.TS: return new PBOpTextState(arguments);
+
+			// TYPE 3 FONT
+			case Operators.D0:
+			case Operators.D1: return new PBOpType3Font(arguments);
+
+			// INLINE IMAGE
+			case Operators.BI:
+			case Operators.ID:
+			case Operators.EI: return new PBOpInlineImage(arguments);
 
             // COMPABILITY
             case Operators.BX : return new PBOp_BX(arguments);
@@ -111,35 +168,31 @@ public final class OperatorFactory {
 					(PDColorSpace) resources.get(STROKE_COLOR_SPACE));
 
             // SHADING
-            case Operators.SH : return new PBOp_sh(arguments, (PDShadingPattern) resources.get(PATTERN));
+            case Operators.SH : return new PBOp_sh(arguments, (PDShading) resources.get(SHADING));
 
             // SPECIAL GS
             case Operators.CM_CONCAT : return new PBOp_cm(arguments);
             case Operators.Q_GRESTORE : return new PBOp_Q_grestore(arguments);
-            case Operators.Q_GSAVE : return new PBOp_q_gsave(arguments);
+            case Operators.Q_GSAVE : return new PBOp_q_gsave(arguments, (Integer) resources.get(NESTING_LEVEL));
 
             // XOBJECT
             case Operators.DO : return new PBOp_Do(arguments, (PDXObject) resources.get(XOBJECT));
 
-            default: return null;
+            default: return new PBOp_Undefined(arguments);
         }
     }
 
     public static List<Operator> parseOperators(List<Object> pdfBoxTokens, PDResources resources) {
-		Map<Integer, COSObjectable> currentResources = new HashMap<>(REQIURED_RESOURCES_COUNT);
-		currentResources.put(STROKE_COLOR_SPACE, null);
-		currentResources.put(FILL_COLOR_SPACE, null);
-		currentResources.put(EXT_G_STATE, null);
-		currentResources.put(PATTERN, null);
-		currentResources.put(XOBJECT, null);
+		Map<Integer, Object> currentResources = new HashMap<>(REQIURED_RESOURCES_COUNT);
+		currentResources.put(NESTING_LEVEL, Integer.valueOf(0));
 		return getOperators(pdfBoxTokens.iterator(), resources, currentResources);
     }
 
 
 	private static List<Operator> getOperators(Iterator<Object> pdfBoxTokens, PDResources resources,
-											   Map<Integer, COSObjectable> defaultResources) {
+											   Map<Integer, Object> defaultResources) {
 		List<Operator> result = new ArrayList<>();
-		Map<Integer, COSObjectable> currentResources = new HashMap<>(defaultResources.size());
+		Map<Integer, Object> currentResources = new HashMap<>(defaultResources.size());
 		List<COSBase> arguments = new ArrayList<>();
 		currentResources.putAll(defaultResources);
 
@@ -155,8 +208,10 @@ public final class OperatorFactory {
 				arguments.clear();
 				String operatorName = ((org.apache.pdfbox.contentstream.operator.Operator) pdfBoxToken).getName();
 				if (Operators.Q_GSAVE.equals(operatorName)) {
+					changeNestingLevel(defaultResources, Boolean.TRUE);
 					result.addAll(getOperators(pdfBoxTokens, resources, currentResources));
 				} else if (Operators.Q_GRESTORE.equals(operatorName)) {
+					changeNestingLevel(defaultResources, Boolean.FALSE);
 					return result;
 				}
 			} else if (pdfBoxToken instanceof RenderingIntent){
@@ -172,7 +227,7 @@ public final class OperatorFactory {
 	private static void checkResourcesRelevance(org.apache.pdfbox.contentstream.operator.Operator pdfBoxToken,
 												List<COSBase> arguments,
 												PDResources resources,
-												Map<Integer, COSObjectable> currentResources) {
+												Map<Integer, Object> currentResources) {
 		COSBase lastElement = arguments.size() > 0 ? arguments.get(arguments.size() - 1) : null;
 		if (lastElement instanceof COSName) {
 			try {
@@ -185,10 +240,10 @@ public final class OperatorFactory {
 						break;
 					// TODO : do we need use color spaces for sc operators?
 					case Operators.SCN_STROKE:
-						setStrokeResource((COSName) lastElement, resources, currentResources, STROKE_COLOR_SPACE);
+						setResource((COSName) lastElement, resources, currentResources, STROKE_COLOR_SPACE);
 						break;
 					case Operators.SCN_FILL:
-						setStrokeResource((COSName) lastElement, resources, currentResources, FILL_COLOR_SPACE);
+						setResource((COSName) lastElement, resources, currentResources, FILL_COLOR_SPACE);
 						break;
 					case Operators.G_STROKE:
 						currentResources.put(STROKE_COLOR_SPACE, PDDeviceGray.INSTANCE);
@@ -212,9 +267,8 @@ public final class OperatorFactory {
 						currentResources.put(EXT_G_STATE, resources.getExtGState((COSName) lastElement));
 						break;
 					case Operators.SH:
-						PDAbstractPattern pattern = resources.getPattern((COSName) lastElement);
-						pattern = pattern instanceof PDShadingPattern ? pattern : null;
-						currentResources.put(PATTERN, pattern);
+						PDShading shading = resources.getShading((COSName) lastElement);
+						currentResources.put(SHADING, shading);
 						break;
 					case Operators.DO:
 						currentResources.put(XOBJECT, resources.getXObject((COSName) lastElement));
@@ -226,9 +280,9 @@ public final class OperatorFactory {
 		}
 	}
 
-	private static void setStrokeResource(COSName resourceName, PDResources resources,
-										  Map<Integer, COSObjectable> currentResources,
-										  Integer mode) throws IOException {
+	private static void setResource(COSName resourceName, PDResources resources,
+									Map<Integer, Object> currentResources,
+									Integer mode) throws IOException {
 		PDColorSpace colorSpace = resources.getColorSpace(resourceName);
 		PDAbstractPattern pattern = resources.getPattern(resourceName);
 		Boolean conflict = Boolean.valueOf(colorSpace != null && pattern != null);
@@ -245,6 +299,11 @@ public final class OperatorFactory {
 			// TODO : implement this. Now it`s not correct work. Need to find /Pattern cs(CS)
 			currentResources.put(mode, colorSpace);
 		}
+	}
+
+	public static void changeNestingLevel(Map<Integer, Object> currentResources, Boolean increment) {
+		Integer nestingLevel = (Integer) currentResources.get(NESTING_LEVEL);
+		currentResources.put(NESTING_LEVEL, increment ? ++nestingLevel : --nestingLevel);
 	}
 
 }

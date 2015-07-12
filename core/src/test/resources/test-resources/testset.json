@@ -455,7 +455,7 @@
       },
       {
         "testFileName": "isartor-6-1-12-t01-fail-c.pdf",
-        "validationProfileName": "verapdf-profile-6-1-12-t01.xml",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
         "comparingStrategy": "FAIL",
         "expectedReportName": ""
       },

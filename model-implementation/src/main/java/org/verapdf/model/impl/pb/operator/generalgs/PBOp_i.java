@@ -1,16 +1,9 @@
 package org.verapdf.model.impl.pb.operator.generalgs;
 
 import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSNumber;
-import org.verapdf.model.coslayer.CosNumber;
 import org.verapdf.model.coslayer.CosReal;
-import org.verapdf.model.coslayer.CosRenderingIntent;
-import org.verapdf.model.impl.pb.cos.PBCosReal;
-import org.verapdf.model.impl.pb.cos.PBCosRenderingIntent;
 import org.verapdf.model.operator.Op_i;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +25,7 @@ public class PBOp_i extends PBOpGeneralGS implements Op_i {
 
 		switch (link) {
 			case FLATNESS:
-				list = this.getLastReal();
+				list = this.getFlatness();
 				break;
 			default:
 				list = super.getLinkedObjects(link);
@@ -40,6 +33,10 @@ public class PBOp_i extends PBOpGeneralGS implements Op_i {
 		}
 
 		return list;
+	}
+
+	private List<CosReal> getFlatness() {
+		return this.getLastReal(OPERANDS_COUNT);
 	}
 
 }

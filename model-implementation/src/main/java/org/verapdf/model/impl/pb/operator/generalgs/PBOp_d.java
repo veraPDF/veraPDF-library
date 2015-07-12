@@ -2,10 +2,9 @@ package org.verapdf.model.impl.pb.operator.generalgs;
 
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSInteger;
-import org.apache.pdfbox.cos.COSNumber;
+import org.verapdf.model.coslayer.CosArray;
 import org.verapdf.model.coslayer.CosReal;
-import org.verapdf.model.impl.pb.cos.PBCosReal;
+import org.verapdf.model.impl.pb.cos.PBCosArray;
 import org.verapdf.model.operator.Op_d;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class PBOp_d extends PBOpGeneralGS implements Op_d {
                 list = this.getDashArray();
                 break;
             case DASH_PHASE:
-                list = this.getLastReal();
+                list = getDashPhase();
                 break;
             default: list = super.getLinkedObjects(link);
         }
@@ -43,17 +42,16 @@ public class PBOp_d extends PBOpGeneralGS implements Op_d {
         return list;
     }
 
-    private List<CosReal> getDashArray() {
-        List<CosReal> list = new ArrayList<>();
-        if (!this.arguments.isEmpty() && this.arguments.get(0) instanceof COSArray) {
-            for (COSBase arg : (COSArray) this.arguments.get(0)) {
-                if (arg instanceof COSInteger) {
-                    //TODO :
-                }
-
-            }
+	private List<CosArray> getDashArray() {
+        List<CosArray> list = new ArrayList<>(OPERANDS_COUNT);
+        if (!arguments.isEmpty() && arguments.get(0) instanceof COSArray) {
+            list.add(new PBCosArray((COSArray) arguments.get(0)));
         }
         return list;
     }
+
+	private List<CosReal> getDashPhase() {
+		return this.getLastReal(OPERANDS_COUNT);
+	}
 
 }

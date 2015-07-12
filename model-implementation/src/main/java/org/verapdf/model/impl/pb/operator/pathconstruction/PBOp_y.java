@@ -1,13 +1,9 @@
 package org.verapdf.model.impl.pb.operator.pathconstruction;
 
-import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSFloat;
 import org.verapdf.model.coslayer.CosReal;
-import org.verapdf.model.impl.pb.cos.PBCosReal;
 import org.verapdf.model.operator.Op_y;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,8 +12,6 @@ import java.util.List;
 public class PBOp_y extends PBOpPathConstruction implements Op_y {
 
     public static final String OP_Y_TYPE = "Op_y";
-
-    public static final String CONTROL_POINTS = "controlPoints";
 
     public PBOp_y(List<COSBase> arguments) {
         super(arguments);
@@ -39,16 +33,7 @@ public class PBOp_y extends PBOpPathConstruction implements Op_y {
     }
 
     private List<CosReal> getControlPoints() {
-        List<CosReal> list = new ArrayList<>();
-        if (!this.arguments.isEmpty() && this.arguments.get(0) instanceof COSArray) {
-            for (COSBase arg : (COSArray) this.arguments.get(0)) {
-                if (arg instanceof COSFloat) {
-                    list.add(new PBCosReal((COSFloat) arg));
-                }
-
-            }
-        }
-        return list;
+        return this.getListOfReals();
     }
 
 }

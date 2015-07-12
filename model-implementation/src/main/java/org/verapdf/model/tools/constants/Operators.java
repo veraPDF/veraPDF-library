@@ -8,6 +8,7 @@ public class Operators {
     public static final String B_CLOSEPATH_FILL_STROKE = "b";
     public static final String B_FILL_STROKE = "B";
     public static final String BMC = "BMC";
+    public static final String BDC = "BDC";
     public static final String B_STAR_CLOSEPATH_EOFILL_STROKE = "b*";
     public static final String B_STAR_EOFILL_STROKE = "B*";
     public static final String BX = "BX";
@@ -29,6 +30,7 @@ public class Operators {
     public static final String M_MITER_LIMIT = "M";
     public static final String M_MOVE_TO = "m";
     public static final String MP = "MP";
+    public static final String DP = "DP";
     public static final String N = "n";
     public static final String Q_GRESTORE = "Q";
     public static final String Q_GSAVE = "q";
@@ -54,5 +56,27 @@ public class Operators {
 	public static final String RG_FILL = "rg";
 	public static final String K_STROKE = "K";
 	public static final String K_FILL = "k";
+	public static final String BI = "BI";
+	public static final String ID = "ID";
+	public static final String EI = "EI";
+	public static final String ET = "ET";
+	public static final String BT = "BT";
+    public static final String TD_MOVE = "Td";
+    public static final String TD_MOVE_SET_LEADING = "TD";
+    public static final String TM = "Tm";
+    public static final String T_STAR = "T*";
+    public static final String TJ_SHOW = "Tj";
+    public static final String TJ_SHOW_POS = "TJ";
+    public static final String QUOTE = "\'";
+    public static final String DOUBLE_QUOTE = "\"";
+    public static final String TC = "Tc";
+    public static final String TW = "Tw";
+    public static final String TZ = "Tz";
+    public static final String TL = "TL";
+    public static final String TF = "Tf";
+    public static final String TR = "Tr";
+    public static final String TS = "Ts";
+    public static final String D0 = "d0";
+    public static final String D1 = "d1";
 
 }

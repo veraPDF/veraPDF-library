@@ -1,8 +1,6 @@
 package org.verapdf.model.impl.pb.operator.generalgs;
 
 import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.pb.pd.PBoxPDExtGState;
@@ -35,7 +33,7 @@ public class PBOp_gs extends PBOpGeneralGS implements Op_gs {
 
 		switch (link) {
 			case EXT_G_STATE:
-				list = getExtGState();
+				list = this.getExtGState();
 				break;
 			default:
 				list = super.getLinkedObjects(link);
