@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Class represent extended graphic state
+ *
  * @author Evgeniy Muravitskiy
  */
 public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
@@ -55,12 +57,14 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
 	@Override
 	public Double getca() {
-		return Double.valueOf(((PDExtendedGraphicsState) simplePDObject).getNonStrokingAlphaConstant());
+		Float nonStrokingAlphaConstant = ((PDExtendedGraphicsState) simplePDObject).getNonStrokingAlphaConstant();
+		return nonStrokingAlphaConstant != null ? Double.valueOf(nonStrokingAlphaConstant) : null;
 	}
 
 	@Override
 	public Double getCA() {
-		return Double.valueOf(((PDExtendedGraphicsState) simplePDObject).getStrokingAlphaConstant());
+		Float strokingAlphaConstant = ((PDExtendedGraphicsState) simplePDObject).getStrokingAlphaConstant();
+		return strokingAlphaConstant != null ? Double.valueOf(strokingAlphaConstant) : null;
 	}
 
 	private String getStringProperty(COSBase base) {
