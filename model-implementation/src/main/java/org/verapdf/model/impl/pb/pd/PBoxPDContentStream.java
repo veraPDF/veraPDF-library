@@ -16,8 +16,7 @@ import java.util.List;
  */
 public class PBoxPDContentStream extends PBoxPDObject implements PDContentStream {
 
-	public static final Logger logger = Logger.getLogger(PBoxPDContentStream.class);
-
+    public static final Logger logger = Logger.getLogger(PBoxPDContentStream.class);
     public static final String OPERATORS = "operators";
 
     public PBoxPDContentStream(org.apache.pdfbox.contentstream.PDContentStream contentStream) {
@@ -41,16 +40,14 @@ public class PBoxPDContentStream extends PBoxPDObject implements PDContentStream
         return list;
     }
 
-    // TODO : implement this
     private List<Operator> getOperators() {
         List<Operator> result = new ArrayList<>();
         try {
             PDFStreamParser streamParser = new PDFStreamParser(contentStream.getContentStream());
             streamParser.parse();
-            result = OperatorFactory.parseOperators(streamParser.getTokens());
-            return result;
+            result = OperatorFactory.parseOperators(streamParser.getTokens(), contentStream.getResources());
         } catch (IOException e) {
-			logger.error("Problems with obtaining of operators. " + e.getMessage());
+            logger.error("Error while parsing content stream." + e.getMessage());
         }
         return result;
     }

@@ -1,21 +1,21 @@
 package org.verapdf.model.impl.pb.operator.markedcontent;
 
 import org.apache.pdfbox.cos.COSBase;
-import org.verapdf.model.operator.Op_MP;
+import org.verapdf.model.operator.Op_BDC;
 
 import java.util.List;
 
 /**
  * @author Timur Kamalov
  */
-public class PBOp_MP extends PBOpMarkedContent implements Op_MP {
+public class PBOp_BDC extends PBOpMarkedContent implements Op_BDC {
 
-    public static final String OP_MP_TYPE = "Op_MP";
+	public static final String OP_BDC_TYPE = "Op_BDC";
 
-    public PBOp_MP(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_MP_TYPE);
-    }
+	public PBOp_BDC(List<COSBase> arguments) {
+		super(arguments);
+		setType(OP_BDC_TYPE);
+	}
 
 	@Override
 	public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
@@ -24,6 +24,9 @@ public class PBOp_MP extends PBOpMarkedContent implements Op_MP {
 		switch (link) {
 			case TAG:
 				list = this.getTag();
+				break;
+			case PROPERTIES:
+				list = this.getPropertiesDict();
 				break;
 			default: list = super.getLinkedObjects(link);
 		}

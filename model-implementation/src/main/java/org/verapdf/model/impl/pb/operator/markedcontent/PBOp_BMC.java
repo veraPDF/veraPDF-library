@@ -17,4 +17,21 @@ public class PBOp_BMC extends PBOpMarkedContent implements Op_BMC {
         setType(OP_BMC_TYPE);
     }
 
+    @Override
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
+        List<? extends org.verapdf.model.baselayer.Object> list;
+
+        switch (link) {
+            case TAG:
+                list = this.getTag();
+                break;
+            case PROPERTIES:
+                list = this.getPropertiesDict();
+                break;
+            default: list = super.getLinkedObjects(link);
+        }
+
+        return list;
+    }
+
 }

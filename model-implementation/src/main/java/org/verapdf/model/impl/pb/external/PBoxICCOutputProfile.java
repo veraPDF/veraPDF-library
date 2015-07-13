@@ -13,4 +13,9 @@ public class PBoxICCOutputProfile extends PBoxICCProfile implements ICCOutputPro
         super(profile);
         setType("ICCOutputProfile");
     }
+
+	@Override
+	public String getS() {
+		return null;
+	}
 }
