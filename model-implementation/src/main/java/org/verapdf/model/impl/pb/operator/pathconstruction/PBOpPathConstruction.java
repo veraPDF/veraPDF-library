@@ -24,16 +24,19 @@ public abstract class PBOpPathConstruction extends PBOperator implements OpPathC
 
     protected List<CosReal> getListOfReals() {
         List<CosReal> list = new ArrayList<>();
-		COSBase base = !this.arguments.isEmpty() ? this.arguments.get(0) : null;
-        if (base instanceof COSArray) {
-            for (COSBase arg : (COSArray) base) {
-                if (arg instanceof COSNumber) {
-                    list.add(new PBCosReal((COSNumber) arg));
+        if (!this.arguments.isEmpty()) {
+            for (COSBase base : this.arguments) {
+                if (base instanceof COSArray) {
+                    for (COSBase arg : (COSArray) base) {
+                        if (arg instanceof COSNumber) {
+                            list.add(new PBCosReal((COSNumber) arg));
+                        }
+                    }
+                } else if (base instanceof COSNumber) {
+                    list.add(new PBCosReal((COSNumber) base));
                 }
             }
-        } else if (base instanceof COSNumber) {
-			list.add(new PBCosReal((COSNumber) base));
-		}
+        }
         return list;
     }
 

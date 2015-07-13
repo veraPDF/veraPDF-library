@@ -60,6 +60,7 @@ public class TestEntity {
     private ValidationInfo info;
     private StrategyResource strategyResource;
     private boolean testPassed;
+    private boolean exception;
 
     @JsonIgnore
     public File getTestFile() {
@@ -105,4 +106,14 @@ public class TestEntity {
     public void setTestPassed(boolean testPassed) {
         this.testPassed = testPassed;
     }
+
+    @JsonIgnore
+    public boolean isException() {
+        return exception;
+    }
+
+    public void setException(boolean exception) {
+        this.exception = exception;
+    }
+
 }

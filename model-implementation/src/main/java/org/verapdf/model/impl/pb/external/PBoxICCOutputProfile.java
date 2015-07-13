@@ -9,13 +9,16 @@ import org.verapdf.model.external.ICCOutputProfile;
  */
 public class PBoxICCOutputProfile extends PBoxICCProfile implements ICCOutputProfile {
 
-    public PBoxICCOutputProfile(byte[] profile) {
+	private String subtype;
+
+    public PBoxICCOutputProfile(byte[] profile, String subtype) {
         super(profile);
         setType("ICCOutputProfile");
+		this.subtype = subtype;
     }
 
 	@Override
 	public String getS() {
-		return null;
+		return subtype;
 	}
 }

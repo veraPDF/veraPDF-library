@@ -19,13 +19,13 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
 
     public static final Integer DEFAULT_ARRAY_SIZE = Integer.valueOf(16);
 
-    protected List<COSBase> arguments;
+    protected List<COSBase> arguments = new ArrayList<>();
 
     private String id;
     private String type = "Operator";
 
     protected PBOperator(List<COSBase> arguments) {
-        this.arguments = arguments;
+        this.arguments.addAll(arguments);
         this.id = IDGenerator.generateID();
     }
 
@@ -42,11 +42,8 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
         this.type = type;
     }
 
-    protected List<CosReal> getLastReal(Integer operandsCount) {
-        if (operandsCount == null) {
-            operandsCount = Integer.valueOf(DEFAULT_ARRAY_SIZE);
-        }
-        List<CosReal> cosReals = new ArrayList<>(operandsCount);
+    protected List<CosReal> getLastReal() {
+        List<CosReal> cosReals = new ArrayList<>();
         COSBase base = !arguments.isEmpty() ? arguments.get(arguments.size() - 1) : null;
         if (base instanceof COSNumber) {
             cosReals.add(new PBCosReal((COSNumber) base));

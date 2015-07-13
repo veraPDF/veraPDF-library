@@ -36,7 +36,7 @@ public class PBOp_i extends PBOpGeneralGS implements Op_i {
 	}
 
 	private List<CosReal> getFlatness() {
-		return this.getLastReal(OPERANDS_COUNT);
+		return this.getLastReal();
 	}
 
 }

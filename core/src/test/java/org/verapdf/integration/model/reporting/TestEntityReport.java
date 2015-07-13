@@ -14,6 +14,7 @@ public class TestEntityReport {
     private String expectedReportName;
     private ComparingStrategies comparingStrategy;
     private boolean testPassed;
+    private boolean exception = false;
 
     @JsonProperty("testFileName")
     public String getTestFileName() {
@@ -60,6 +61,15 @@ public class TestEntityReport {
         this.testPassed = testPassed;
     }
 
+    @JsonProperty("exception")
+    public boolean isException() {
+        return exception;
+    }
+
+    public void setException(boolean exception) {
+        this.exception = exception;
+    }
+
     public static TestEntityReport fromValue(TestEntity testEntity) {
         TestEntityReport testEntityReport = new TestEntityReport();
         testEntityReport.setTestFileName(testEntity.getTestFileName());
@@ -67,6 +77,7 @@ public class TestEntityReport {
         testEntityReport.setExpectedReportName(testEntity.getExpectedReportName());
         testEntityReport.setComparingStrategy(testEntity.getComparingStrategy());
         testEntityReport.setTestPassed(testEntity.isTestPassed());
+        testEntityReport.setException(testEntity.isException());
         return testEntityReport;
     }
 

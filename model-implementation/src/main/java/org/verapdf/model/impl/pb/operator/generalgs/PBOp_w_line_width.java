@@ -37,7 +37,7 @@ public class PBOp_w_line_width extends PBOpGeneralGS implements Op_w_line_width 
 	}
 
 	private List<CosReal> getLineWidth() {
-		return this.getLastReal(OPERANDS_COUNT);
+		return this.getLastReal();
 	}
 
 }

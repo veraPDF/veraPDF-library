@@ -127,7 +127,10 @@ public final class OperatorFactory {
 			// INLINE IMAGE
 			case Operators.BI:
 			case Operators.ID:
-			case Operators.EI: return new PBOpInlineImage(arguments);
+			case Operators.EI: {
+				arguments.add(pdfBoxOperator.getImageParameters());
+				return new PBOpInlineImage(arguments);
+			}
 
             // COMPABILITY
             case Operators.BX : return new PBOp_BX(arguments);
@@ -228,7 +231,28 @@ public final class OperatorFactory {
 												List<COSBase> arguments,
 												PDResources resources,
 												Map<Integer, Object> currentResources) {
-		COSBase lastElement = arguments.size() > 0 ? arguments.get(arguments.size() - 1) : null;
+		COSBase lastElement = null;
+		switch (pdfBoxToken.getName()) {
+			case Operators.G_STROKE:
+				currentResources.put(STROKE_COLOR_SPACE, PDDeviceGray.INSTANCE);
+				break;
+			case Operators.G_FILL:
+				currentResources.put(FILL_COLOR_SPACE, PDDeviceGray.INSTANCE);
+				break;
+			case Operators.RG_STROKE:
+				currentResources.put(STROKE_COLOR_SPACE, PDDeviceRGB.INSTANCE);
+				break;
+			case Operators.RG_FILL:
+				currentResources.put(FILL_COLOR_SPACE, PDDeviceRGB.INSTANCE);
+				break;
+			case Operators.K_STROKE:
+				currentResources.put(STROKE_COLOR_SPACE, PDDeviceCMYK.INSTANCE);
+				break;
+			case Operators.K_FILL:
+				currentResources.put(FILL_COLOR_SPACE, PDDeviceCMYK.INSTANCE);
+				break;
+			default: lastElement = arguments.size() > 0 ? arguments.get(arguments.size() - 1) : null;
+		}
 		if (lastElement instanceof COSName) {
 			try {
 				switch (pdfBoxToken.getName()) {
@@ -244,24 +268,6 @@ public final class OperatorFactory {
 						break;
 					case Operators.SCN_FILL:
 						setResource((COSName) lastElement, resources, currentResources, FILL_COLOR_SPACE);
-						break;
-					case Operators.G_STROKE:
-						currentResources.put(STROKE_COLOR_SPACE, PDDeviceGray.INSTANCE);
-						break;
-					case Operators.G_FILL:
-						currentResources.put(FILL_COLOR_SPACE, PDDeviceGray.INSTANCE);
-						break;
-					case Operators.RG_STROKE:
-						currentResources.put(STROKE_COLOR_SPACE, PDDeviceRGB.INSTANCE);
-						break;
-					case Operators.RG_FILL:
-						currentResources.put(FILL_COLOR_SPACE, PDDeviceRGB.INSTANCE);
-						break;
-					case Operators.K_STROKE:
-						currentResources.put(STROKE_COLOR_SPACE, PDDeviceCMYK.INSTANCE);
-						break;
-					case Operators.K_FILL:
-						currentResources.put(FILL_COLOR_SPACE, PDDeviceCMYK.INSTANCE);
 						break;
 					case Operators.GS:
 						currentResources.put(EXT_G_STATE, resources.getExtGState((COSName) lastElement));
