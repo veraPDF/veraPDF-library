@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.pd.colors;
 
+import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
 import org.verapdf.model.impl.pb.pd.PBoxPDResources;
 import org.verapdf.model.pdlayer.PDColorSpace;
 
@@ -14,13 +15,22 @@ public class PBoxPDColorSpace extends PBoxPDResources implements PDColorSpace {
 		super(simplePDObject);
 	}
 
+	protected PBoxPDColorSpace(PDAbstractPattern simplePDObject) {
+		super(simplePDObject);
+	}
+
 	/**
 	 * @return number of colorants
 	 */
 	@Override
 	public Long getnrComponents() {
-		Integer numberOfComponents = ((org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace) simplePDObject)
-				.getNumberOfComponents();
-		return Long.valueOf(numberOfComponents);
+		if (simplePDObject instanceof org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace) {
+			Integer numberOfComponents = ((org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace) simplePDObject)
+					.getNumberOfComponents();
+			return Long.valueOf(numberOfComponents);
+		} else if (simplePDObject instanceof PDAbstractPattern) {
+			return Long.valueOf(-1);
+		} else return null;
 	}
+
 }
