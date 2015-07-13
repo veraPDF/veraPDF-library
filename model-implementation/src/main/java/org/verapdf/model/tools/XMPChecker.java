@@ -126,7 +126,9 @@ public final class XMPChecker {
             final List<String> buffer = dc.getCreators();
             putProperty(properties, TITLE, dc.getTitle());
             putProperty(properties, SUBJECT, dc.getDescription());
-            putProperty(properties, AUTHOR, buffer.toArray(new String[buffer.size()]));
+			if (buffer != null) {
+				putProperty(properties, AUTHOR, buffer.toArray(new String[buffer.size()]));
+			}
         }
     }
 

@@ -65,6 +65,7 @@ public class VeraPDFTestSuite {
                             testEntity.setTestPassed(testPassed);
                         } catch (Exception e) {
                             testEntity.setTestPassed(false);
+							testEntity.setException(true);
                         }
                     } else {
                         Assert.fail();
