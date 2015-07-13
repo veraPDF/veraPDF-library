@@ -51,7 +51,7 @@ public class PBOp_d extends PBOpGeneralGS implements Op_d {
     }
 
 	private List<CosReal> getDashPhase() {
-		return this.getLastReal(OPERANDS_COUNT);
+		return this.getLastReal();
 	}
 
 }

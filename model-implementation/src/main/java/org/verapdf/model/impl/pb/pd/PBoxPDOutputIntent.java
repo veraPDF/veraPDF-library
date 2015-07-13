@@ -53,6 +53,11 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
 
     private List<ICCOutputProfile> getDestProfile() {
         List<ICCOutputProfile> profile = new ArrayList<>();
+        COSBase dict = simplePDObject.getCOSObject();
+        String subtype = new String();
+        if (dict instanceof COSDictionary) {
+            subtype = ((COSDictionary) dict).getNameAsString(COSName.S);
+        }
         try {
             COSStream dest = ((org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent) simplePDObject)
 					.getDestOutputIntent();
@@ -61,7 +66,7 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
                 final int bound = unfilteredStream.available();
                 byte[] bytes = new byte[bound];
                 unfilteredStream.read(bytes);
-                profile.add(new PBoxICCOutputProfile(bytes));
+                profile.add(new PBoxICCOutputProfile(bytes, subtype));
                 unfilteredStream.close();
             }
         } catch (IOException e) {

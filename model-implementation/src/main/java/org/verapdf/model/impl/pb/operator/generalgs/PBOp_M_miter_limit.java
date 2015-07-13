@@ -37,7 +37,7 @@ public class PBOp_M_miter_limit extends PBOpGeneralGS implements Op_M_miter_limi
 	}
 
 	private List<CosReal> getMiterLimit() {
-		return this.getLastReal(OPERANDS_COUNT);
+		return this.getLastReal();
 	}
 
 }
