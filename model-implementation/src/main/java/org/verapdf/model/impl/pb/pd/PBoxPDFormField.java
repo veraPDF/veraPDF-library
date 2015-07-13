@@ -1,6 +1,5 @@
 package org.verapdf.model.impl.pb.pd;
 
-import org.apache.pdfbox.pdmodel.interactive.action.PDActionNamed;
 import org.apache.pdfbox.pdmodel.interactive.action.PDFormFieldAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import org.verapdf.model.baselayer.Object;
@@ -16,6 +15,8 @@ import java.util.List;
 public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
 
 	public static final String ADDITIONAL_ACTION = "AA";
+
+	public static final Integer MAX_NUMBER_OF_ACTIONS = Integer.valueOf(4);
 
 	public PBoxPDFormField(PDField simplePDObject) {
 		super(simplePDObject);
@@ -44,7 +45,7 @@ public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
 	}
 
 	private List<PDAction> getAdditionalAction() {
-		List<PDAction> actions = new ArrayList<>();
+		List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ACTIONS);
 		final PDFormFieldAdditionalActions pbActions = ((PDField) simplePDObject).getActions();
 		org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;
 
@@ -63,10 +64,4 @@ public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
 		return actions;
 	}
 
-	private void addAction(List<PDAction> actions, org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer) {
-		if (buffer != null) {
-			actions.add(buffer instanceof PDActionNamed ?
-					new PBoxPDNamedAction((PDActionNamed) buffer) : new PBoxPDAction(buffer));
-		}
-	}
 }
