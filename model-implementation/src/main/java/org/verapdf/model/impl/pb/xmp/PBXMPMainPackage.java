@@ -16,9 +16,10 @@ public class PBXMPMainPackage extends PBXMPPackage implements XMPMainPackage {
      * Constructs new object
      *
      * @param xmpMetadata - object from xmpbox represented this package
+     * @param isMetadataValid - true if metadata is valid
      */
-    public PBXMPMainPackage(XMPMetadata xmpMetadata) {
-        super(xmpMetadata);
+    public PBXMPMainPackage(XMPMetadata xmpMetadata, boolean isMetadataValid) {
+        super(xmpMetadata, isMetadataValid);
         setType(XMPMAINPACKAGE);
     }
 
@@ -27,6 +28,6 @@ public class PBXMPMainPackage extends PBXMPPackage implements XMPMainPackage {
      */
     @Override
     public Boolean getispdfaidNSPresent() {
-        return getXmpMetadata().getPDFIdentificationSchema() == null;
+        return getXmpMetadata() == null ? Boolean.FALSE : getXmpMetadata().getPDFIdentificationSchema() != null;
     }
 }
