@@ -17,6 +17,11 @@ import org.verapdf.features.tools.FeaturesCollection;
  */
 public class PBOutlinesFeaturesObject implements IFeaturesObject {
 
+    private static final int RGB_COLORS_NUMBER = 3;
+    private static final int RGB_RED_COLOR_NUMBER = 0;
+    private static final int RGB_GREEN_COLOR_NUMBER = 1;
+    private static final int RGB_BLUE_COLOR_NUMBER = 2;
+
     private PDDocumentOutline outline;
 
     /**
@@ -74,10 +79,10 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
 
                 PDColor clr = item.getTextColor();
                 float[] rgb = clr.getComponents();
-                if (rgb.length == 3) {
-                    FeatureTreeNode.newInstance("red", String.valueOf(rgb[0]), color);
-                    FeatureTreeNode.newInstance("green", String.valueOf(rgb[1]), color);
-                    FeatureTreeNode.newInstance("blue", String.valueOf(rgb[2]), color);
+                if (rgb.length == RGB_COLORS_NUMBER) {
+                    FeatureTreeNode.newInstance("red", String.valueOf(rgb[RGB_RED_COLOR_NUMBER]), color);
+                    FeatureTreeNode.newInstance("green", String.valueOf(rgb[RGB_GREEN_COLOR_NUMBER]), color);
+                    FeatureTreeNode.newInstance("blue", String.valueOf(rgb[RGB_BLUE_COLOR_NUMBER]), color);
                 } else {
                     color.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.OUTLINESCOLOR_ID);
                     ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.OUTLINESCOLOR_ID, ErrorsHelper.OUTLINESCOLOR_MESSAGE);

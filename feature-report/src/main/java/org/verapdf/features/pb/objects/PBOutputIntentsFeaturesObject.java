@@ -50,30 +50,7 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
         if (outInt != null) {
             FeatureTreeNode root = FeatureTreeNode.newInstance("outputIntent", null);
 
-            COSBase base = outInt.getCOSObject();
-
-            while (base instanceof COSObject) {
-                base = ((COSObject) base).getObject();
-            }
-
-            if (base instanceof COSDictionary) {
-                COSDictionary dict = (COSDictionary) base;
-                COSBase baseType = dict.getDictionaryObject(COSName.S);
-
-                while (baseType instanceof COSObject) {
-                    baseType = ((COSObject) baseType).getObject();
-                }
-
-                if (baseType != null) {
-                    FeatureTreeNode type = FeatureTreeNode.newInstance("subtype", root);
-                    if (baseType instanceof COSName) {
-                        type.setValue(((COSName) baseType).getName());
-                    } else {
-                        type.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.OUTPUTINTENTSTYPE_ID);
-                        ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.OUTPUTINTENTSTYPE_ID, ErrorsHelper.OUTPUTINTENTSTYPE_MESSAGE);
-                    }
-                }
-            }
+            addSubtype(collection, root);
 
             if (outInt.getOutputCondition() != null) {
                 FeatureTreeNode.newInstance("outputCondition", outInt.getOutputCondition(), root);
@@ -91,11 +68,35 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
                 FeatureTreeNode.newInstance("info", outInt.getInfo(), root);
             }
 
+            // TODO: Add iccProfiles support
+
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTPUTINTENT, root);
 
             return root;
         } else {
             return null;
+        }
+    }
+
+    private void addSubtype(FeaturesCollection collection, FeatureTreeNode root) throws FeaturesTreeNodeException {
+        COSBase base = outInt.getCOSObject();
+        if (base instanceof COSDictionary) {
+            COSDictionary dict = (COSDictionary) base;
+            COSBase baseType = dict.getDictionaryObject(COSName.S);
+
+            while (baseType instanceof COSObject) {
+                baseType = ((COSObject) baseType).getObject();
+            }
+
+            if (baseType != null) {
+                FeatureTreeNode type = FeatureTreeNode.newInstance("subtype", root);
+                if (baseType instanceof COSName) {
+                    type.setValue(((COSName) baseType).getName());
+                } else {
+                    type.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.OUTPUTINTENTSTYPE_ID);
+                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.OUTPUTINTENTSTYPE_ID, ErrorsHelper.OUTPUTINTENTSTYPE_MESSAGE);
+                }
+            }
         }
     }
 }

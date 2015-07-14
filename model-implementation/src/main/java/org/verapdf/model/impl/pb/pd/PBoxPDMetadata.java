@@ -75,12 +75,14 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
 			if (stream != null) {
 				DomXmpParser xmpParser = new DomXmpParser();
 				XMPMetadata metadata = xmpParser.parse(stream.getUnfilteredStream());
-				xmp.add(isMainMetadata ? new PBXMPMainPackage(metadata) : new PBXMPPackage(metadata));
+				xmp.add(isMainMetadata ? new PBXMPMainPackage(metadata, true) : new PBXMPPackage(metadata, true));
 			}
 		} catch (XmpParsingException e) {
 			logger.error("Problems with parsing metadata. " + e.getMessage());
+			xmp.add(new PBXMPPackage(null, false));
 		} catch (IOException e) {
 			logger.error("Metadata stream is closed. " + e.getMessage());
+			xmp.add(new PBXMPPackage(null, false));
 		}
 		return xmp;
 	}

@@ -20,6 +20,7 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
     private static final String SCHEMA = "Schemas";
 
     private XMPMetadata xmpMetadata;
+    private boolean isMetadataValid;
 
     protected XMPMetadata getXmpMetadata() {
         return xmpMetadata;
@@ -29,10 +30,12 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
      * Constructs new object
      *
      * @param xmpMetadata - object from xmpbox represented this package
+     * @param isMetadataValid - true if metadata is valid
      */
-    public PBXMPPackage(XMPMetadata xmpMetadata) {
+    public PBXMPPackage(XMPMetadata xmpMetadata, boolean isMetadataValid) {
         this.setType(XMPPACKAGE);
         this.xmpMetadata = xmpMetadata;
+        this.isMetadataValid = isMetadataValid;
     }
 
     /**
@@ -40,8 +43,7 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
      */
     @Override
     public Boolean getisMetadataValid() {
-        // TODO: implement this
-        return Boolean.TRUE;
+        return isMetadataValid;
     }
 
     /**
@@ -49,7 +51,7 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
      */
     @Override
     public String getbytes() {
-        return xmpMetadata.getXpacketBytes();
+        return xmpMetadata == null ? null : xmpMetadata.getXpacketBytes();
     }
 
     /**
@@ -57,7 +59,7 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
      */
     @Override
     public String getencoding() {
-        return xmpMetadata.getXpacketEncoding();
+        return xmpMetadata == null ? null : xmpMetadata.getXpacketEncoding();
     }
 
     /**
@@ -82,9 +84,13 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
     private List<XMPSchema> getSchemas() {
         List<XMPSchema> resultSchemas = new ArrayList<>();
 
-        for (org.apache.xmpbox.schema.XMPSchema pbschema : xmpMetadata.getAllSchemas()) {
-            XMPSchema schema = PBSchemaFactory.createSchema(pbschema);
-            resultSchemas.add(schema);
+        if (xmpMetadata != null && xmpMetadata.getAllSchemas() != null) {
+            for (org.apache.xmpbox.schema.XMPSchema pbschema : xmpMetadata.getAllSchemas()) {
+                if (pbschema != null) {
+                    XMPSchema schema = PBSchemaFactory.createSchema(pbschema);
+                    resultSchemas.add(schema);
+                }
+            }
         }
 
         return resultSchemas;
