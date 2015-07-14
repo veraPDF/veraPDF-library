@@ -5,6 +5,7 @@ import org.apache.pdfbox.cos.COSNumber;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
+import org.verapdf.model.operator.Op_DoubleQuote;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class PBOp_DoubleQuote extends PBOpStringTextShow {
+public class PBOp_DoubleQuote extends PBOpStringTextShow implements Op_DoubleQuote{
 
 	public static final String OP_DOUBLIE_QUOTE_TYPE = "Op_DoubleQuote";
 

@@ -29,8 +29,12 @@ import org.verapdf.model.impl.pb.operator.specialgs.PBOp_cm;
 import org.verapdf.model.impl.pb.operator.specialgs.PBOp_q_gsave;
 import org.verapdf.model.impl.pb.operator.textobject.PBOpTextObject;
 import org.verapdf.model.impl.pb.operator.textposition.PBOpTextPosition;
-import org.verapdf.model.impl.pb.operator.textshow.PBOpTextShow;
+import org.verapdf.model.impl.pb.operator.textshow.PBOp_DoubleQuote;
+import org.verapdf.model.impl.pb.operator.textshow.PBOp_Quote;
+import org.verapdf.model.impl.pb.operator.textshow.PBOp_TJ_Big;
+import org.verapdf.model.impl.pb.operator.textshow.PBOp_Tj;
 import org.verapdf.model.impl.pb.operator.textstate.PBOpTextState;
+import org.verapdf.model.impl.pb.operator.textstate.PBOp_Tz;
 import org.verapdf.model.impl.pb.operator.type3font.PBOpType3Font;
 import org.verapdf.model.impl.pb.operator.xobject.PBOp_Do;
 import org.verapdf.model.operator.Operator;
@@ -137,15 +141,19 @@ public final class OperatorFactory {
 
 			// TEXT SHOW
 			case Operators.TJ_SHOW:
+				return new PBOp_Tj(arguments);
 			case Operators.TJ_SHOW_POS:
+				return new PBOp_TJ_Big(arguments);
 			case Operators.QUOTE:
+				return new PBOp_Quote(arguments);
 			case Operators.DOUBLE_QUOTE:
-				return new PBOpTextShow(arguments);
+				return new PBOp_DoubleQuote(arguments);
 
 			// TEXT STATE
+			case Operators.TZ:
+				return new PBOp_Tz(arguments);
 			case Operators.TC:
 			case Operators.TW:
-			case Operators.TZ:
 			case Operators.TL:
 			case Operators.TF:
 			case Operators.TR:
