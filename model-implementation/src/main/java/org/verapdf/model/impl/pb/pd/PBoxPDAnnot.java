@@ -1,9 +1,14 @@
 package org.verapdf.model.impl.pb.pd;
 
+import org.apache.pdfbox.cos.*;
+import org.apache.pdfbox.pdmodel.interactive.action.PDActionFactory;
+import org.apache.pdfbox.pdmodel.interactive.action.PDAnnotationAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceDictionary;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceEntry;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosReal;
+import org.verapdf.model.impl.pb.cos.PBCosReal;
 import org.verapdf.model.pdlayer.PDAction;
 import org.verapdf.model.pdlayer.PDAnnot;
 import org.verapdf.model.pdlayer.PDContentStream;
@@ -22,7 +27,8 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	public static final String A = "A";
 	public static final String ADDITIONAL_ACTION = "AA";
 
-	private static final Integer MAXIMAL_COUNT_OF_ACTIONS = Integer.valueOf(1);
+	public static final Integer MAXIMAL_COUNT_OF_ELEMENTS = Integer.valueOf(1);
+	public static final Integer MAX_COUNT_OF_ACTIONS = Integer.valueOf(10);
 
 	public PBoxPDAnnot(PDAnnotation simplePDObject) {
         super(simplePDObject);
@@ -36,76 +42,135 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 
     @Override
     public String getAP() {
-		// TODO : implement me
-		return null;
+		COSBase ap = ((PDAnnotation) simplePDObject).getCOSObject().getDictionaryObject(COSName.AP);
+		return ap != null ? ap.toString() : null;
     }
 
     @Override
     public Long getF() {
-        // TODO : implement me
-        return Long.valueOf(0L);
+        return Long.valueOf(((PDAnnotation) simplePDObject).getAnnotationFlags());
     }
 
     @Override
     public Double getCA() {
-        // TODO : impelemnt me
-        return Double.valueOf(0);
+		COSBase ca = ((PDAnnotation) simplePDObject).getCOSObject().getDictionaryObject(COSName.CA);
+		return ca instanceof COSNumber ? Double.valueOf(((COSNumber) ca).doubleValue()) : null;
     }
 
-	// TODO : implement this
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
 		List<? extends Object> list;
 		switch (link) {
 			case ADDITIONAL_ACTION:
-				list = getAdditionalActions();
+				list = this.getAdditionalActions();
 				break;
 			case A:
-				list = getA();
+				list = this.getA();
 				break;
 			case IC:
-				list = getIC();
+				list = this.getIC();
 				break;
 			case C:
-				list = getC();
+				list = this.getC();
 				break;
 			case APPEARANCE:
-				list = getAppearance();
+				list = this.getAppearance();
 				break;
 			default:
-				list = new ArrayList<>();
+				list = super.getLinkedObjects(link);
 				break;
 		}
 		return list;
 	}
 
-	// TODO : implement this
 	private List<PDAction> getAdditionalActions() {
-		List<PDAction> actions = new ArrayList<>();
+		List<PDAction> actions = new ArrayList<>(MAX_COUNT_OF_ACTIONS);
+		COSBase actionDictionary = ((PDAnnotation) simplePDObject).getCOSObject().getDictionaryObject(COSName.AA);
+		if (actionDictionary instanceof COSDictionary) {
+			PDAnnotationAdditionalActions additionalActions =
+					new PDAnnotationAdditionalActions((COSDictionary) actionDictionary);
+			org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;
+
+			buffer = additionalActions.getBl();
+			addAction(actions, buffer);
+
+			buffer = additionalActions.getD();
+			addAction(actions, buffer);
+
+			buffer = additionalActions.getE();
+			addAction(actions, buffer);
+
+			buffer = additionalActions.getFo();
+			addAction(actions, buffer);
+
+			buffer = additionalActions.getPC();
+			addAction(actions, buffer);
+
+			buffer = additionalActions.getPI();
+			addAction(actions, buffer);
+
+			buffer = additionalActions.getPO();
+			addAction(actions, buffer);
+
+			buffer = additionalActions.getPV();
+			addAction(actions, buffer);
+
+			buffer = additionalActions.getU();
+			addAction(actions, buffer);
+
+			buffer = additionalActions.getX();
+			addAction(actions, buffer);
+
+		}
 		return actions;
 	}
 
-	// TODO : implement this
 	private List<PDAction> getA() {
-		List<PDAction> actions = new ArrayList<>(MAXIMAL_COUNT_OF_ACTIONS);
+		List<PDAction> actions = new ArrayList<>(MAXIMAL_COUNT_OF_ELEMENTS);
+		COSBase actionDictionary = ((PDAnnotation) simplePDObject).getCOSObject().getDictionaryObject(COSName.A);
+		if (actionDictionary instanceof COSDictionary) {
+			org.apache.pdfbox.pdmodel.interactive.action.PDAction action =
+					PDActionFactory.createAction((COSDictionary) actionDictionary);
+			if (action != null) {
+				actions.add(new PBoxPDAction(action));
+			}
+		}
 		return actions;
 	}
 
-	// TODO : implement this
 	private List<CosReal> getIC() {
-		List<CosReal> ic = new ArrayList<>();
-		return ic;
+		return getRealsFromArray(COSName.IC);
 	}
 
-	// TODO : implement this
 	private List<CosReal> getC() {
-		List<CosReal> c = new ArrayList<>();
-		return c;
+		return getRealsFromArray(COSName.C);
 	}
 
-	//TODO : implement this
+	private List<CosReal> getRealsFromArray(COSName arrayName) {
+		List<CosReal> color = new ArrayList<>();
+		COSBase colorArray = ((PDAnnotation) simplePDObject).getCOSObject().getDictionaryObject(arrayName);
+		if (colorArray instanceof COSArray) {
+			for (COSBase colorValue : (COSArray) colorArray) {
+				if (colorValue instanceof COSNumber) {
+					color.add(new PBCosReal((COSNumber) colorValue));
+				}
+			}
+		}
+		return color;
+	}
+
+	/**
+	 * @return normal appearance stream (N key in the appearance dictionary) of the annotation
+	 */
 	private List<PDContentStream> getAppearance() {
-		List<PDContentStream> appearances = new ArrayList<>();
+		List<PDContentStream> appearances = new ArrayList<>(MAXIMAL_COUNT_OF_ELEMENTS);
+		PDAppearanceDictionary appearanceDictionary = ((PDAnnotation) simplePDObject).getAppearance();
+		if (appearanceDictionary != null) {
+			PDAppearanceEntry normalAppearance = appearanceDictionary.getNormalAppearance();
+			if (normalAppearance != null && normalAppearance.isStream()) {
+				appearances.add(new PBoxPDContentStream(normalAppearance.getAppearanceStream()));
+			}
+		}
 		return appearances;
 	}
 }
