@@ -17,7 +17,7 @@ import java.util.List;
  */
 public abstract class PBOperator extends GenericModelObject implements Operator {
 
-    public static final Integer DEFAULT_ARRAY_SIZE = Integer.valueOf(16);
+    public static final Integer MAX_NUMBER_OF_ELEMENTS = Integer.valueOf(1);
 
     protected List<COSBase> arguments = new ArrayList<>();
 
@@ -43,7 +43,7 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
     }
 
     protected List<CosReal> getLastReal() {
-        List<CosReal> cosReals = new ArrayList<>();
+        List<CosReal> cosReals = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         COSBase base = !arguments.isEmpty() ? arguments.get(arguments.size() - 1) : null;
         if (base instanceof COSNumber) {
             cosReals.add(new PBCosReal((COSNumber) base));

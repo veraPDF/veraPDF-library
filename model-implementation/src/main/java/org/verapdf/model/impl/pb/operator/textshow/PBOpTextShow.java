@@ -9,14 +9,10 @@ import java.util.List;
 /**
  * @author Timur Kamalov
  */
-public class PBOpTextShow extends PBOperator implements OpTextShow {
+public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 
-	public static final String OP_TEXT_SHOW_TYPE = "OpTextShow";
-	public static final Integer MAX_NUMBER_OF_ELEMENTS = Integer.valueOf(1);
-
-	public PBOpTextShow(List<COSBase> arguments) {
+	protected PBOpTextShow(List<COSBase> arguments) {
 		super(arguments);
-		setType(OP_TEXT_SHOW_TYPE);
 	}
 
 }

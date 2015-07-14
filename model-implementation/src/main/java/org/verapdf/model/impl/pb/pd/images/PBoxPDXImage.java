@@ -6,7 +6,9 @@ import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.coslayer.CosRenderingIntent;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
+import org.verapdf.model.impl.pb.cos.PBCosRenderingIntent;
 import org.verapdf.model.pdlayer.PDColorSpace;
 import org.verapdf.model.pdlayer.PDXImage;
 
@@ -23,6 +25,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 
     public static final String IMAGE_CS = "imageCS";
     public static final String ALTERNATES = "Alternates";
+	public static final String INTENT = "Intent";
 
     public PBoxPDXImage(PDImageXObject simplePDObject) {
         super(simplePDObject);
@@ -39,6 +42,9 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
         List<? extends Object> list;
 
         switch (link) {
+			case INTENT:
+				list = getIntent();
+				break;
             case IMAGE_CS:
                 list = getImageCS();
                 break;
@@ -53,7 +59,17 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
         return list;
     }
 
-    private List<PDColorSpace> getImageCS() {
+	private List<CosRenderingIntent> getIntent() {
+		List<CosRenderingIntent> intents = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+		COSStream imageStream = ((PDImageXObject) simplePDObject).getCOSStream();
+		COSName intent = imageStream.getCOSName(COSName.getPDFName(INTENT));
+		if (intent != null) {
+			intents.add(new PBCosRenderingIntent(intent));
+		}
+		return intents;
+	}
+
+	private List<PDColorSpace> getImageCS() {
         List<PDColorSpace> colorSpaces = new ArrayList<>(1);
         try {
             PDColorSpace buffer = ColorSpaceFactory.getColorSpace(((PDImageXObject) simplePDObject).getColorSpace());

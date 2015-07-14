@@ -3,6 +3,7 @@ package org.verapdf.model.impl.pb.pd.images;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.graphics.PDPostScriptXObject;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.verapdf.model.baselayer.Object;
@@ -101,6 +102,8 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 			return new PBoxPDXForm((PDFormXObject) pbObject);
 		} else if (pbObject instanceof PDImageXObject) {
 			return new PBoxPDXImage((PDImageXObject) pbObject);
+		} else if (pbObject instanceof PDPostScriptXObject){
+			return new PBoxPDXObject(pbObject);
 		} else {
 			return null;
 		}
