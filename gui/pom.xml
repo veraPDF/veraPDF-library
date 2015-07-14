@@ -57,18 +57,42 @@
                 <artifactId>download-maven-plugin</artifactId>
                 <version>1.2.1</version>
                 <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>wget</goal>
-                        </goals>
-                        <configuration>
-                            <url>http://jenkins.opf-labs.org/userContent/MVP-resources.zip</url>
-                            <unpack>true</unpack>
-                            <outputDirectory>${project.build.directory}/appassembler</outputDirectory>
-                            <md5>aafc7ed84d0e70c3cd96eb431e0a86a5</md5>
-                        </configuration>
-                    </execution>
+                  <execution>
+                      <id>corpus-master</id>
+                      <phase>package</phase>
+                      <goals>
+                          <goal>wget</goal>
+                      </goals>
+                      <configuration>
+                          <url>https://github.com/veraPDF/veraPDF-corpus/archive/master.zip</url>
+                          <unpack>true</unpack>
+                          <outputDirectory>${project.build.directory}/appassembler/resources</outputDirectory>
+                      </configuration>
+                  </execution>
+                  <execution>
+                      <id>profiles-integration</id>
+                      <phase>package</phase>
+                      <goals>
+                          <goal>wget</goal>
+                      </goals>
+                      <configuration>
+                          <url>https://github.com/veraPDF/veraPDF-validation-profiles/archive/integration.zip</url>
+                          <unpack>true</unpack>
+                          <outputDirectory>${project.build.directory}/appassembler/resources</outputDirectory>
+                      </configuration>
+                  </execution>
+                  <execution>
+                      <id>model-integration</id>
+                      <phase>package</phase>
+                      <goals>
+                          <goal>wget</goal>
+                      </goals>
+                      <configuration>
+                          <url>https://github.com/veraPDF/veraPDF-model/archive/integration.zip</url>
+                          <unpack>true</unpack>
+                          <outputDirectory>${project.build.directory}/appassembler/resources</outputDirectory>
+                      </configuration>
+                  </execution>
                 </executions>
             </plugin>
             <plugin>
