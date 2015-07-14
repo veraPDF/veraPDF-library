@@ -1,10 +1,14 @@
 package org.verapdf.model.impl.pb.pd;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDPageTree;
-import org.apache.pdfbox.pdmodel.interactive.action.PDDocumentCatalogAdditionalActions;
+import org.apache.pdfbox.pdmodel.common.PDDestinationOrAction;
+import org.apache.pdfbox.pdmodel.interactive.action.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.*;
+import org.verapdf.model.pdlayer.PDAction;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +17,14 @@ import java.util.List;
  */
 public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
+    public static final Logger logger = Logger.getLogger(PBoxPDDocument.class);
+
     public static final String PAGES = "pages";
     public static final String METADATA = "metadata";
     public static final String OUTPUT_INTENTS = "outputIntents";
     public static final String ACRO_FORMS = "AcroForm";
 	public static final String ACTIONS = "AA";
+	public static final String OPEN_ACTION = "OpenAction";
 
 	public static final Integer MAX_NUMBER_OF_ACTIONS = Integer.valueOf(5);
 
@@ -31,20 +38,23 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         List<? extends Object> list;
 
         switch (link) {
+			case OPEN_ACTION:
+				list = this.getOpenAction();
+				break;
 			case ACTIONS:
-				list = getActions();
+				list = this.getActions();
 				break;
             case PAGES:
-                list = getPages();
+                list = this.getPages();
                 break;
             case METADATA:
-                list = getMetadata();
+                list = this.getMetadata();
                 break;
             case OUTPUT_INTENTS:
-                list = getOutputIntents();
+                list = this.getOutputIntents();
                 break;
             case ACRO_FORMS:
-                list = getAcroForms();
+                list = this.getAcroForms();
                 break;
             default:
                 list = super.getLinkedObjects(link);
@@ -53,6 +63,21 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
         return list;
     }
+
+	private List<PDAction> getOpenAction() {
+		List<PDAction> actions = new ArrayList<>(1);
+		try {
+			PDDestinationOrAction openAction = document.getDocumentCatalog().getOpenAction();
+			if (openAction instanceof PDActionNamed) {
+				actions.add(new PBoxPDNamedAction((PDActionNamed) openAction));
+			} else if (openAction instanceof org.apache.pdfbox.pdmodel.interactive.action.PDAction) {
+				actions.add(new PBoxPDAction((org.apache.pdfbox.pdmodel.interactive.action.PDAction) openAction));
+			}
+		} catch (IOException e) {
+			logger.error("Problems with open action obtaining. " + e.getMessage());
+		}
+		return actions;
+	}
 
 	private List<PDAction> getActions() {
 		List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ACTIONS);
