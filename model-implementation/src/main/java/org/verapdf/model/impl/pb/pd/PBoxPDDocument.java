@@ -1,6 +1,7 @@
 package org.verapdf.model.impl.pb.pd;
 
 import org.apache.pdfbox.pdmodel.PDPageTree;
+import org.apache.pdfbox.pdmodel.interactive.action.PDDocumentCatalogAdditionalActions;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.*;
 
@@ -17,6 +18,8 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
     public static final String OUTPUT_INTENTS = "outputIntents";
     public static final String ACRO_FORMS = "AcroForm";
 	public static final String ACTIONS = "AA";
+
+	public static final Integer MAX_NUMBER_OF_ACTIONS = Integer.valueOf(5);
 
     public PBoxPDDocument(org.apache.pdfbox.pdmodel.PDDocument document) {
         super(document);
@@ -51,9 +54,27 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         return list;
     }
 
-	// TODO : implement this
 	private List<PDAction> getActions() {
-		List<PDAction> actions = new ArrayList<>();
+		List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ACTIONS);
+		PDDocumentCatalogAdditionalActions pbActions = document.getDocumentCatalog().getActions();
+		if (pbActions != null) {
+			org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;
+
+			buffer = pbActions.getDP();
+			addAction(actions, buffer);
+
+			buffer = pbActions.getDS();
+			addAction(actions, buffer);
+
+			buffer = pbActions.getWP();
+			addAction(actions, buffer);
+
+			buffer = pbActions.getWS();
+			addAction(actions, buffer);
+
+			buffer = pbActions.getWC();
+			addAction(actions, buffer);
+		}
 		return actions;
 	}
 

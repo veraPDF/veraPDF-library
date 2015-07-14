@@ -30,7 +30,9 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
     public static final String CONTENT_STREAM = "contentStream";
 	public static final String GROUP = "Group";
 
-    public PBoxPDPage(org.apache.pdfbox.pdmodel.PDPage simplePDObject) {
+	public static final Integer MAX_NUMBER_OF_ACTIONS = Integer.valueOf(2);
+
+	public PBoxPDPage(org.apache.pdfbox.pdmodel.PDPage simplePDObject) {
         super((COSObjectable) simplePDObject);
         setType("PDPage");
     }
@@ -76,11 +78,19 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 		return contentStreams;
 	}
 
-    //TODO : implement this
     private List<PDAction> getActions() {
-        List<PDAction> action = new ArrayList<>(1);
-        //final PDPageAdditionalActions actions = ((org.apache.pdfbox.pdmodel.PDPage) simplePDObject).getActions();
-        return action;
+        List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ACTIONS);
+        PDPageAdditionalActions pbActions = ((org.apache.pdfbox.pdmodel.PDPage) simplePDObject).getActions();
+		if (pbActions != null) {
+			org.apache.pdfbox.pdmodel.interactive.action.PDAction action;
+
+			action = pbActions.getC();
+			addAction(actions, action);
+
+			action = pbActions.getO();
+			addAction(actions, action);
+		}
+        return actions;
     }
 
     private List<PDAnnot> getAnnotations() {
