@@ -45,20 +45,22 @@ public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
 
 	private List<PDAction> getAdditionalAction() {
 		List<PDAction> actions = new ArrayList<>();
-		final PDFormFieldAdditionalActions pbActions = ((PDField) simplePDObject).getActions();
-		org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;
+		PDFormFieldAdditionalActions pbActions = ((PDField) simplePDObject).getActions();
+		if (pbActions != null) {
+			org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;
 
-		buffer = pbActions.getC();
-		addAction(actions, buffer);
+			buffer = pbActions.getC();
+			addAction(actions, buffer);
 
-		buffer = pbActions.getF();
-		addAction(actions, buffer);
+			buffer = pbActions.getF();
+			addAction(actions, buffer);
 
-		buffer = pbActions.getK();
-		addAction(actions, buffer);
+			buffer = pbActions.getK();
+			addAction(actions, buffer);
 
-		buffer = pbActions.getV();
-		addAction(actions, buffer);
+			buffer = pbActions.getV();
+			addAction(actions, buffer);
+		}
 
 		return actions;
 	}
