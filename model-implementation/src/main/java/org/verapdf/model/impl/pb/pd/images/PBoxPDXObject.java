@@ -70,7 +70,6 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 	private List<PDXObject> getSMask() {
 		List<PDXObject> mask = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		try {
-			System.out.println("I was here.");
 			COSStream cosStream = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject).getCOSStream();
 			COSBase smaskDictionary = cosStream.getDictionaryObject(COSName.SMASK);
 			if (smaskDictionary instanceof COSDictionary) {
