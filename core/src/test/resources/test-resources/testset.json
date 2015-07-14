@@ -442,12 +442,6 @@
         "expectedReportName": ""
       },
       {
-        "testFileName": "isartor-6-1-10-t01-fail-b.pdf",
-        "validationProfileName": "verapdf-profile-6-1-10-t01.xml",
-        "comparingStrategy": "FAIL",
-        "expectedReportName": ""
-      },
-      {
         "testFileName": "isartor-6-1-10-t01-fail-c.pdf",
         "validationProfileName": "verapdf-profile-6-1-10-t01.xml",
         "comparingStrategy": "FAIL",
@@ -538,31 +532,7 @@
         "expectedReportName": ""
       },
       {
-        "testFileName": "isartor-6-2-3-3-t02-fail-e.pdf",
-        "validationProfileName": "verapdf-profile-6-2-3-t02.xml",
-        "comparingStrategy": "FAIL",
-        "expectedReportName": ""
-      },
-      {
-        "testFileName": "isartor-6-2-3-3-t02-fail-f.pdf",
-        "validationProfileName": "verapdf-profile-6-2-3-t02.xml",
-        "comparingStrategy": "FAIL",
-        "expectedReportName": ""
-      },
-      {
         "testFileName": "isartor-6-2-3-3-t02-fail-g.pdf",
-        "validationProfileName": "verapdf-profile-6-2-3-t02.xml",
-        "comparingStrategy": "FAIL",
-        "expectedReportName": ""
-      },
-      {
-        "testFileName": "isartor-6-2-3-3-t02-fail-h.pdf",
-        "validationProfileName": "verapdf-profile-6-2-3-t02.xml",
-        "comparingStrategy": "FAIL",
-        "expectedReportName": ""
-      },
-      {
-        "testFileName": "isartor-6-2-3-3-t02-fail-i.pdf",
         "validationProfileName": "verapdf-profile-6-2-3-t02.xml",
         "comparingStrategy": "FAIL",
         "expectedReportName": ""
@@ -598,19 +568,7 @@
         "expectedReportName": ""
       },
       {
-        "testFileName": "isartor-6-2-3-3-t03-fail-e.pdf",
-        "validationProfileName": "verapdf-profile-6-2-3-t03.xml",
-        "comparingStrategy": "FAIL",
-        "expectedReportName": ""
-      },
-      {
         "testFileName": "isartor-6-2-3-3-t05-fail-a.pdf",
-        "validationProfileName": "verapdf-profile-6-2-3-t02.xml",
-        "comparingStrategy": "FAIL",
-        "expectedReportName": ""
-      },
-      {
-        "testFileName": "isartor-6-2-3-3-t05-fail-b.pdf",
         "validationProfileName": "verapdf-profile-6-2-3-t02.xml",
         "comparingStrategy": "FAIL",
         "expectedReportName": ""
@@ -984,6 +942,18 @@
       {
         "testFileName": "isartor-6-9-t01-fail-a.pdf",
         "validationProfileName": "verapdf-profile-6-9-t01.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      }
+      {
+        "testFileName": "isartor-6-9-t02-fail-a.pdf",
+        "validationProfileName": "verapdf-profile-6-9-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      }
+      {
+        "testFileName": "isartor-6-9-t02-fail-b.pdf",
+        "validationProfileName": "verapdf-profile-6-9-t03.xml",
         "comparingStrategy": "FAIL",
         "expectedReportName": ""
       }

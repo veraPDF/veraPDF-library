@@ -25,6 +25,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
     public static final String ACRO_FORMS = "AcroForm";
 	public static final String ACTIONS = "AA";
 	public static final String OPEN_ACTION = "OpenAction";
+	public static final String OUTLINES = "Outlines";
 
 	public static final Integer MAX_NUMBER_OF_ACTIONS = Integer.valueOf(5);
 
@@ -38,6 +39,9 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         List<? extends Object> list;
 
         switch (link) {
+			case OUTLINES:
+				list = getOutlines();
+				break;
 			case OPEN_ACTION:
 				list = this.getOpenAction();
 				break;
@@ -63,6 +67,11 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
         return list;
     }
+
+	private List<Object> getOutlines() {
+		// TODO : implement me
+		return new ArrayList<>();
+	}
 
 	private List<PDAction> getOpenAction() {
 		List<PDAction> actions = new ArrayList<>(1);

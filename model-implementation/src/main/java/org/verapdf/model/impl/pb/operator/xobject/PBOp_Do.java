@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.verapdf.model.impl.pb.pd.images.PBoxPDXForm;
 import org.verapdf.model.impl.pb.pd.images.PBoxPDXImage;
+import org.verapdf.model.impl.pb.pd.images.PBoxPDXObject;
 import org.verapdf.model.operator.Op_Do;
 import org.verapdf.model.pdlayer.PDXObject;
 
@@ -50,6 +51,8 @@ public class PBOp_Do extends PBOpXObject implements Op_Do {
 				list.add(new PBoxPDXImage((PDImageXObject) pbXObject));
 			} else if (COSName.FORM.equals(xObjectType)) {
 				list.add(new PBoxPDXForm((PDFormXObject) pbXObject));
+			} else if (xObjectType != null) {
+				list.add(new PBoxPDXObject(pbXObject));
 			}
 		}
         return list;

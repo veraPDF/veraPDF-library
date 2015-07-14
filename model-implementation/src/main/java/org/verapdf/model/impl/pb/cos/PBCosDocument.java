@@ -58,6 +58,13 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         return Long.valueOf(((COSDocument) baseObject).getObjects().size());
     }
 
+	/**
+	 * @return version of pdf document
+	 */
+	public Double getversion() {
+		return Double.valueOf(((COSDocument) baseObject).getVersion());
+	}
+
     /**  Size of the byte sequence representing the document
      */
     @Override
