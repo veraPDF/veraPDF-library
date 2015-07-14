@@ -40,6 +40,8 @@
                             <name>VeraPDF validation GUI</name>
                         </program>
                     </programs>
+                    <repositoryLayout>flat</repositoryLayout>
+                    <useWildcardClassPath>true</useWildcardClassPath>
                 </configuration>
                 <executions>
                     <execution>
