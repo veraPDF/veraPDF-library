@@ -142,25 +142,25 @@
       {
         "testFileName": "veraPDF test suite 6-1-5-t02-pass-a.pdf",
         "validationProfileName": "verapdf-profile-6-7-3-t01.xml",
-        "comparingStrategy": "FAIL",
+        "comparingStrategy": "PASS",
         "expectedReportName": ""
       },
       {
         "testFileName": "veraPDF test suite 6-1-5-t02-pass-b.pdf",
         "validationProfileName": "verapdf-profile-6-7-3-t01.xml",
-        "comparingStrategy": "FAIL",
+        "comparingStrategy": "PASS",
         "expectedReportName": ""
       },
       {
         "testFileName": "veraPDF test suite 6-1-5-t02-pass-c.pdf",
         "validationProfileName": "verapdf-profile-6-7-3-t01.xml",
-        "comparingStrategy": "FAIL",
+        "comparingStrategy": "PASS",
         "expectedReportName": ""
       },
       {
         "testFileName": "veraPDF test suite 6-1-5-t02-pass-d.pdf",
         "validationProfileName": "verapdf-profile-6-7-3-t01.xml",
-        "comparingStrategy": "FAIL",
+        "comparingStrategy": "PASS",
         "expectedReportName": ""
       },
       {
