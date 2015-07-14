@@ -24,6 +24,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 
     public static final String OPI = "OPI";
 	public static final String S_MASK ="SMask";
+	public static final Integer MAX_NUMBER_OF_ELEMENTS = Integer.valueOf(1);
 
     public PBoxPDXObject(org.apache.pdfbox.pdmodel.graphics.PDXObject simplePDObject) {
         super(simplePDObject);
@@ -67,8 +68,9 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
     }
 
 	private List<PDXObject> getSMask() {
-		List<PDXObject> mask = new ArrayList<>(1);
+		List<PDXObject> mask = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		try {
+			System.out.println("I was here.");
 			COSStream cosStream = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject).getCOSStream();
 			COSBase smaskDictionary = cosStream.getDictionaryObject(COSName.SMASK);
 			if (smaskDictionary instanceof COSDictionary) {
@@ -85,12 +87,13 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 
 	private PDXObject getXObject(COSBase smaskDictionary) throws IOException {
 		COSName name = ((COSDictionary) smaskDictionary).getCOSName(COSName.NAME);
+		String nameAsString = name != null ? name.getName() : null;
 		PDResources resources = null;
 		if (simplePDObject instanceof PDFormXObject) {
 			resources = ((PDFormXObject) simplePDObject).getResources();
 		}
 		org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject = org.apache.pdfbox.
-				pdmodel.graphics.PDXObject.createXObject(smaskDictionary, name.getName(), resources);
+				pdmodel.graphics.PDXObject.createXObject(smaskDictionary, nameAsString, resources);
 		return getTypedPDXObject(pbObject);
 	}
 
@@ -109,7 +112,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
     }
 
     protected List<CosDict> getLinkToDictionary(String key) {
-        List<CosDict> list = new ArrayList<>(1);
+        List<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         COSDictionary object = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject).getCOSStream();
         COSBase item = object.getItem(COSName.getPDFName(key));
         if (item != null) {
