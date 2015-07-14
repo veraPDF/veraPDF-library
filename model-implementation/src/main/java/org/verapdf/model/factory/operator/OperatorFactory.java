@@ -29,6 +29,8 @@ import org.verapdf.model.impl.pb.operator.specialgs.PBOp_cm;
 import org.verapdf.model.impl.pb.operator.specialgs.PBOp_q_gsave;
 import org.verapdf.model.impl.pb.operator.textobject.PBOpTextObject;
 import org.verapdf.model.impl.pb.operator.textposition.PBOpTextPosition;
+import org.verapdf.model.impl.pb.operator.textposition.PBOp_TD_Big;
+import org.verapdf.model.impl.pb.operator.textposition.PBOp_Td;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_DoubleQuote;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_Quote;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_TJ_Big;
@@ -134,7 +136,9 @@ public final class OperatorFactory {
 
 			// TEXT POSITION
 			case Operators.TD_MOVE:
+				return new PBOp_Td(arguments);
 			case Operators.TD_MOVE_SET_LEADING:
+				return new PBOp_TD_Big(arguments);
 			case Operators.TM:
 			case Operators.T_STAR:
 				return new PBOpTextPosition(arguments);
