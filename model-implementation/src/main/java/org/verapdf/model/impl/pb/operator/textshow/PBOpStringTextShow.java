@@ -14,7 +14,7 @@ import java.util.List;
  */
 public abstract class PBOpStringTextShow extends PBOpTextShow {
 
-	public static final String TEXT_STRING = "textString";
+	public static final String SHOW_STRING = "showString";
 
 	protected PBOpStringTextShow(List<COSBase> arguments) {
 		super(arguments);
@@ -25,8 +25,8 @@ public abstract class PBOpStringTextShow extends PBOpTextShow {
 		List<? extends Object> list;
 
 		switch (link) {
-			case TEXT_STRING:
-				list = this.getTextString();
+			case SHOW_STRING:
+				list = this.getShowString();
 				break;
 			default:
 				list = super.getLinkedObjects(link);
@@ -36,7 +36,7 @@ public abstract class PBOpStringTextShow extends PBOpTextShow {
 		return list;
 	}
 
-	private List<CosString> getTextString() {
+	private List<CosString> getShowString() {
 		List<CosString> string = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		COSBase base = !this.arguments.isEmpty() ? this.arguments.get(this.arguments.size() - 1) : null;
 		if (base instanceof COSString) {
