@@ -107,8 +107,9 @@
         <maven.failsafe.version>2.18.1</maven.failsafe.version>
         <maven.surefire.version>2.18.1</maven.surefire.version>
         <maven.exec.version>1.4.0</maven.exec.version>
+        <mvn.gpg.plugin.version>1.6</mvn.gpg.plugin.version>
         <verapdf.pdfbox.version>2.0.0-SNAPSHOT</verapdf.pdfbox.version>
-        <verapdf.model.version>[0.1.0-SNAPSHOT,0.2.0)</verapdf.model.version>
+        <verapdf.model.version>[0.2.0,0.3.0)</verapdf.model.version>
     </properties>
 
     <dependencies>
@@ -300,6 +301,33 @@
                 </pluginManagement>
             </build>
         </profile>
+        <profile>
+    				<id>release-sign-artifacts</id>
+    				<activation>
+    						<property>
+    								<name>performRelease</name>
+    								<value>true</value>
+    						</property>
+    				</activation>
+    				<build>
+    						<plugins>
+    								<plugin>
+    										<groupId>org.apache.maven.plugins</groupId>
+    										<artifactId>maven-gpg-plugin</artifactId>
+    										<version>${mvn.gpg.plugin.version}</version>
+    										<executions>
+    												<execution>
+    														<id>sign-artifacts</id>
+    														<phase>verify</phase>
+    														<goals>
+    																<goal>sign</goal>
+    														</goals>
+    												</execution>
+    										</executions>
+    								</plugin>
+    						</plugins>
+    				</build>
+    		</profile>
     </profiles>
 
 </project>
