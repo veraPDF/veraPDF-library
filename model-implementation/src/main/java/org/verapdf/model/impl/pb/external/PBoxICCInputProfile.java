@@ -9,8 +9,8 @@ import org.verapdf.model.external.ICCInputProfile;
  */
 public class PBoxICCInputProfile extends PBoxICCProfile implements ICCInputProfile {
 
-    public PBoxICCInputProfile(byte[] profile) {
-        super(profile);
+    public PBoxICCInputProfile(byte[] profile, Long N) {
+        super(profile, N);
         setType("ICCInputProfile");
     }
 }
