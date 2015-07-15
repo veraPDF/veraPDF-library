@@ -20,8 +20,8 @@ public class PBCosStream extends PBCosDict implements CosStream {
 	 */
 	@Override
 	public Long getLength() {
-		COSNumber number = (COSNumber) ((COSStream) this.baseObject).getItem(COSName.LENGTH);
-		return number != null ? Long.valueOf(number.longValue()) : null;
+		COSBase number = ((COSStream) this.baseObject).getDictionaryObject(COSName.LENGTH);
+		return number instanceof COSNumber ? Long.valueOf(((COSNumber) number).longValue()) : null;
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class PBCosStream extends PBCosDict implements CosStream {
 		StringBuilder filters = new StringBuilder();
 
 		if (base == null) {
-			return filters.toString();
+			return null;
 		} else if (base instanceof COSName) {
 			return ((COSName) base).getName();
 		} else if (base instanceof COSArray) {
