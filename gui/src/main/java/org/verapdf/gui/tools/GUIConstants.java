@@ -52,7 +52,7 @@ public final class GUIConstants {
     public static final int FRAME_WIDTH = 550;
     public static final int FRAME_HEIGHT = 350;
 
-    public static final int BORDER_WIDTH = 3;
+    public static final int BORDER_WIDTH = 4;
     public static final int LOGOPANEL_BORDER_WIDTH = 10;
     public static final int XMLLOGO_BORDER_WIDTH = 4;
     public static final int HTMLLOGO_BORDER_WIDTH = 4;
