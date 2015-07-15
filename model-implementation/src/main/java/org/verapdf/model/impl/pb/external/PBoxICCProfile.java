@@ -16,21 +16,27 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
     public static final Integer REQUIRED_LENGTH = Integer.valueOf(4);
 
     private byte[] profile;
+	private Long N;
 
 	public byte[] getProfile() {
 		return profile;
 	}
 
-	protected PBoxICCProfile(byte[] profile) {
+	protected PBoxICCProfile(byte[] profile, Long N) {
         super();
         this.profile = new byte[profile.length];
         System.arraycopy(profile, 0, this.profile, 0, profile.length);
+		this.N = N;
     }
 
     @Override
     public String getdeviceClass() {
         return getSubArray(DEVICE_CLASS_OFFSET, REQUIRED_LENGTH);
     }
+
+	public Long getN() {
+		return N;
+	}
 
     @Override
     public String getcolorSpace() {

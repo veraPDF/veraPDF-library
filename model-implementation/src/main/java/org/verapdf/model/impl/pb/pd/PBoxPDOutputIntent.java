@@ -66,7 +66,8 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
                 final int bound = unfilteredStream.available();
                 byte[] bytes = new byte[bound];
                 unfilteredStream.read(bytes);
-                profile.add(new PBoxICCOutputProfile(bytes, subtype));
+				long N = dest.getLong(COSName.N);
+                profile.add(new PBoxICCOutputProfile(bytes, subtype, N != -1 ? Long.valueOf(N) : null));
                 unfilteredStream.close();
             }
         } catch (IOException e) {

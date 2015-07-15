@@ -1,6 +1,8 @@
 package org.verapdf.model.impl.pb.pd.colors;
 
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.external.ICCInputProfile;
 import org.verapdf.model.impl.pb.external.PBoxICCInputProfile;
@@ -45,10 +47,11 @@ public class PBoxPDICCBased extends PBoxPDColorSpace implements PDICCBased {
 	private List<ICCInputProfile> getICCProfile() {
 		List<ICCInputProfile> inputProfile = new ArrayList<>();
 		try {
-			byte[] profile = ((org.apache.pdfbox.pdmodel.graphics.color.PDICCBased) simplePDObject)
-					.getPDStream().getByteArray();
+			PDStream pdStream = ((org.apache.pdfbox.pdmodel.graphics.color.PDICCBased) simplePDObject).getPDStream();
+			byte[] profile = pdStream.getByteArray();
+			long N = pdStream.getStream().getLong(COSName.N);
 			if (profile != null && profile.length > 0) {
-				inputProfile.add(new PBoxICCInputProfile(profile));
+				inputProfile.add(new PBoxICCInputProfile(profile, N != -1 ? N : null));
 			}
 		} catch (IOException e) {
 			logger.error("Can not get input profile from ICCBased. " + e.getMessage());
