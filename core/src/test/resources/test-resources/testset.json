@@ -944,13 +944,13 @@
         "validationProfileName": "verapdf-profile-6-9-t01.xml",
         "comparingStrategy": "FAIL",
         "expectedReportName": ""
-      }
+      },
       {
         "testFileName": "isartor-6-9-t02-fail-a.pdf",
         "validationProfileName": "verapdf-profile-6-9-t02.xml",
         "comparingStrategy": "FAIL",
         "expectedReportName": ""
-      }
+      },
       {
         "testFileName": "isartor-6-9-t02-fail-b.pdf",
         "validationProfileName": "verapdf-profile-6-9-t03.xml",
