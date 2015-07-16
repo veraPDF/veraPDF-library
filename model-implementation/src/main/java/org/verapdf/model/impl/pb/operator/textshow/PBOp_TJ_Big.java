@@ -16,7 +16,7 @@ import java.util.List;
 public class PBOp_TJ_Big extends PBOpTextShow implements Op_TJ_Big{
 
 	public static final String SPECIAL_STRINGS = "specialStrings";
-	public static final String OP_TJ_BIG_TYPE = "Op_Tj_Big";
+	public static final String OP_TJ_BIG_TYPE = "Op_TJ_Big";
 
 	public PBOp_TJ_Big(List<COSBase> arguments) {
 		super(arguments);
