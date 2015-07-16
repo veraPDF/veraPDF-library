@@ -43,7 +43,7 @@ public class PBoxPDContentStream extends PBoxPDObject implements PDContentStream
     private List<Operator> getOperators() {
         List<Operator> result = new ArrayList<>();
         try {
-            PDFStreamParser streamParser = new PDFStreamParser(contentStream.getContentStream());
+            PDFStreamParser streamParser = new PDFStreamParser(contentStream.getContentStream(), true);
             streamParser.parse();
             result = OperatorFactory.parseOperators(streamParser.getTokens(), contentStream.getResources());
         } catch (IOException e) {

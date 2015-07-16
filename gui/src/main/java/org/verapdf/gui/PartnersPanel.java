@@ -79,8 +79,7 @@ public class PartnersPanel extends JPanel {
 
         version.setHorizontalTextPosition(JLabel.CENTER);
         Rectangle2D recVer = new TextLayout(versionText, version.getFont(), new FontRenderContext(null, true, true)).getBounds();
-        version.setSize((int) (recVer.getWidth()), (int) (recVer.getHeight() + GUIConstants.BORDER_WIDTH));
-
+        version.setSize((int) (recVer.getWidth() + GUIConstants.BORDER_WIDTH * 2), (int) (recVer.getHeight() + GUIConstants.BORDER_WIDTH));
         add(version);
 
 

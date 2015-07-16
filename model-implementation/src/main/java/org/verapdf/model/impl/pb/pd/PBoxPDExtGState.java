@@ -2,11 +2,15 @@ package org.verapdf.model.impl.pb.pd;
 
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSFloat;
 import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.pdmodel.graphics.PDFontSetting;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingIntent;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.coslayer.CosRenderingIntent;
+import org.verapdf.model.impl.pb.cos.PBCosReal;
 import org.verapdf.model.impl.pb.cos.PBCosRenderingIntent;
 import org.verapdf.model.pdlayer.PDExtGState;
 
@@ -21,6 +25,7 @@ import java.util.List;
 public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
 	private static final String RI = "RI";
+	private static final String FONT_SIZE = "fontSize";
 
 	public PBoxPDExtGState(PDExtendedGraphicsState simplePDObject) {
 		super(simplePDObject);
@@ -83,6 +88,9 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 			case RI:
 				list = getRI();
 				break;
+			case FONT_SIZE:
+				list = getFontSize();
+				break;
 			default:
 				list = super.getLinkedObjects(link);
 				break;
@@ -101,4 +109,15 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 		}
 		return renderingIntents;
 	}
+
+	private List<CosReal> getFontSize() {
+		List<CosReal> result = new ArrayList<>();
+		PDFontSetting fontSetting = ((PDExtendedGraphicsState) simplePDObject).getFontSetting();
+		if (fontSetting != null) {
+			result.add(new PBCosReal(new COSFloat(fontSetting.getFontSize())));
+		}
+
+		return result;
+	}
+
 }
