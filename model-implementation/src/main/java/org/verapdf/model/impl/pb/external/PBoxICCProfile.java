@@ -3,6 +3,9 @@ package org.verapdf.model.impl.pb.external;
 import org.apache.log4j.Logger;
 import org.verapdf.model.external.ICCProfile;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * Embedded ICC profile
  *
@@ -11,42 +14,65 @@ import org.verapdf.model.external.ICCProfile;
 public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
 
     public static final Logger logger = Logger.getLogger(PBoxICCProfile.class);
+
+	public static final Integer HEADER_LENGTH = Integer.valueOf(128);
     public static final Integer DEVICE_CLASS_OFFSET = Integer.valueOf(12);
     public static final Integer COLOR_SPACE_OFFSET = Integer.valueOf(16);
     public static final Integer REQUIRED_LENGTH = Integer.valueOf(4);
+	public static final Integer VERSION_LENGTH = Integer.valueOf(3);
+	public static final Integer VERSION_BYTE = Integer.valueOf(8);
+	public static final Integer SUBVERSION_BYTE = Integer.valueOf(9);
 
-    private byte[] profile;
-	private Long N;
+	private byte[] profileHeader;
+	private InputStream profileStream;
+	private Long dictionaryNumberOfColors;
 
-	public byte[] getProfile() {
-		return profile;
-	}
 
-	protected PBoxICCProfile(byte[] profile, Long N) {
+	protected PBoxICCProfile(InputStream profileStream, Long dictionaryNumberOfColors) throws IOException {
         super();
-        this.profile = new byte[profile.length];
-        System.arraycopy(profile, 0, this.profile, 0, profile.length);
-		this.N = N;
+		this.profileStream = profileStream;
+		this.dictionaryNumberOfColors = dictionaryNumberOfColors;
+
+		initializeProfileHeader();
     }
 
-    @Override
+	private void initializeProfileHeader() throws IOException {
+		Integer available = Integer.valueOf(this.profileStream.available());
+		Integer size = available > HEADER_LENGTH ? HEADER_LENGTH : available;
+
+		this.profileHeader = new byte[size];
+		this.profileStream.mark(size);
+		this.profileStream.read(this.profileHeader, 0, size);
+		this.profileStream.reset();
+	}
+
+	/**
+	 * @return string representation of device class or null, if profile length is too small
+	 */
+	@Override
     public String getdeviceClass() {
         return getSubArray(DEVICE_CLASS_OFFSET, REQUIRED_LENGTH);
     }
 
+	/**
+	 * @return number of colorants for ICC profile, described in profile dictionary
+	 */
 	public Long getN() {
-		return N;
+		return dictionaryNumberOfColors;
 	}
 
+	/**
+	 * @return string representation of color space or null, if profile length is too small
+	 */
     @Override
     public String getcolorSpace() {
         return getSubArray(COLOR_SPACE_OFFSET, REQUIRED_LENGTH);
     }
 
     private String getSubArray(Integer start, Integer length) {
-        if (start + length <= profile.length) {
+        if (start + length <= profileHeader.length) {
             byte[] buffer = new byte[length];
-            System.arraycopy(profile, start, buffer, 0, length);
+            System.arraycopy(profileHeader, start, buffer, 0, length);
             return new String(buffer);
         } else {
             logger.error("Length of icc profile less than " + (start + length));
@@ -54,21 +80,20 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
         }
     }
 
+	/**
+	 * @return version of ICC profile or null, if profile length is too small
+	 */
     @Override
     public Double getversion() {
-        final Integer subversionByte = Integer.valueOf(9);
-        if (profile.length > subversionByte) {
-            final Integer versionLength = Integer.valueOf(3);
-            final Integer vesrsionByte = Integer.valueOf(8);
-
-            StringBuilder version = new StringBuilder(versionLength);
-            version.append(profile[vesrsionByte]).append('.');
-            version.append(profile[subversionByte] >>> REQUIRED_LENGTH);
+        if (profileHeader.length > SUBVERSION_BYTE) {
+            StringBuilder version = new StringBuilder(VERSION_LENGTH);
+            version.append(profileHeader[VERSION_BYTE]).append('.');
+            version.append(profileHeader[SUBVERSION_BYTE] >>> REQUIRED_LENGTH);
 
             return Double.valueOf(version.toString());
         } else {
             logger.error("ICC profile contain less than 10 bytes of data.");
-            return Double.valueOf(-1);
+            return null;
         }
     }
 
