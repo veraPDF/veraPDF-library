@@ -19,8 +19,8 @@ public class PBCosIntegerTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        TYPE = "CosInteger";
-        ID = null;
+        expectedType = "CosInteger";
+        expectedID = null;
 
         Random random = new Random();
         expected = random.nextLong();
@@ -46,7 +46,7 @@ public class PBCosIntegerTest extends BaseTest {
 
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
+        expectedType = null;
         expected = null;
         actual = null;
     }

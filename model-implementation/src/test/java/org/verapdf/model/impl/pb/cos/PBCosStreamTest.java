@@ -23,8 +23,8 @@ public class PBCosStreamTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        TYPE = "CosStream";
-        ID = null;
+        expectedType = "CosStream";
+        expectedID = null;
 
         COSStream stream = getCosStream();
 
@@ -99,14 +99,9 @@ public class PBCosStreamTest extends BaseTest {
         Assert.assertEquals(parentLink.size(), 0);
     }
 
-    @Test(expected = IllegalAccessError.class)
-    public void testNonexistentParentLink() {
-        actual.getLinkedObjects("Wrong link.");
-    }
-
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
+        expectedType = null;
         actual = null;
         for (int i = 0; i < expectedFiltersArray.length; i++) {
             expectedFiltersArray[i] = null;

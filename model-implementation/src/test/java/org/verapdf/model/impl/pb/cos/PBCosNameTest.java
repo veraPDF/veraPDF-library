@@ -22,8 +22,8 @@ public class PBCosNameTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        TYPE = "CosName";
-        ID = null;
+        expectedType = "CosName";
+        expectedID = null;
 
         setUpCOSNames();
 
@@ -70,8 +70,8 @@ public class PBCosNameTest extends BaseTest {
     @Test
     public void testTypeAndID() {
         for (CosName name : actual) {
-            Assert.assertEquals(TYPE, name.getType());
-            Assert.assertEquals(ID, name.getID());
+            Assert.assertEquals(expectedType, name.getType());
+            Assert.assertEquals(expectedID, name.getID());
         }
     }
 
@@ -87,9 +87,20 @@ public class PBCosNameTest extends BaseTest {
 		}
 	}
 
+	@Test(expected = IllegalAccessError.class)
+	public void testNonexistentParentLink() {
+		for (CosName name : actual) {
+			try {
+				name.getLinkedObjects("Wrong link.");
+				Assert.fail();
+			} catch (IllegalArgumentException ignore){}
+		}
+		Assert.assertTrue(true);
+	}
+
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
+        expectedType = null;
         expected.clear();
         actual.clear();
         expected = null;

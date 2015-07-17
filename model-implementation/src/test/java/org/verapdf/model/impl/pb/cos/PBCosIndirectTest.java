@@ -28,8 +28,8 @@ public class PBCosIndirectTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        TYPE = "CosIndirect";
-        ID = String.valueOf(objectNumber) + " " + String.valueOf(generationNumber);
+        expectedType = "CosIndirect";
+        expectedID = String.valueOf(objectNumber) + " " + String.valueOf(generationNumber);
 
         actual = new PBCosIndirect(createObject(null, Boolean.TRUE));
         secondActual = new PBCosIndirect(createObject(new COSDictionary(), Boolean.FALSE));
@@ -64,15 +64,10 @@ public class PBCosIndirectTest extends BaseTest {
         return direct.get(0);
     }
 
-    @Test(expected = IllegalAccessError.class)
-    public void testGetParentLink() {
-        actual.getLinkedObjects("Wrong link.");
-    }
-
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
-        ID = null;
+        expectedType = null;
+        expectedID = null;
         actual = null;
         secondActual = null;
     }

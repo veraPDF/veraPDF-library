@@ -32,8 +32,8 @@ public class PBCosDocumentTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() throws URISyntaxException, IOException {
-        TYPE = "CosDocument";
-        ID = null;
+        expectedType = "CosDocument";
+        expectedID = null;
 
         String fileAbsolutePath = getSystemIndependentPath(FILE_RELATIVE_PATH);
         final File file = new File(fileAbsolutePath);
@@ -153,15 +153,10 @@ public class PBCosDocumentTest extends BaseTest {
         Assert.assertEquals(0, embeddedFiles.size());
     }
 
-    @Test(expected = IllegalAccessError.class)
-    public void testNonexistentParentLink() {
-        actual.getLinkedObjects("Wrong link.");
-    }
-
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
-        ID = null;
+        expectedType = null;
+        expectedID = null;
         actual = null;
     }
 }

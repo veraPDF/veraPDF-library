@@ -21,8 +21,8 @@ public class PBCosArrayTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        TYPE = "CosArray";
-        ID = null;
+        expectedType = "CosArray";
+        expectedID = null;
 
         setUpActual();
     }
@@ -56,15 +56,9 @@ public class PBCosArrayTest extends BaseTest {
         Assert.assertTrue(elements.get(2) instanceof CosIndirect);
     }
 
-    @Test(expected = IllegalAccessError.class)
-    public void testIncorrectLink() {
-        List<? extends org.verapdf.model.baselayer.Object> elements =
-                ((CosArray) actual).getLinkedObjects("Wrong link");
-    }
-
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
+        expectedType = null;
         actual = null;
     }
 
