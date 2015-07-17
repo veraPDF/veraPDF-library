@@ -54,7 +54,7 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
     private List<ICCOutputProfile> getDestProfile() {
         List<ICCOutputProfile> profile = new ArrayList<>();
         COSBase dict = simplePDObject.getCOSObject();
-        String subtype = new String();
+        String subtype = null;
         if (dict instanceof COSDictionary) {
             subtype = ((COSDictionary) dict).getNameAsString(COSName.S);
         }
@@ -63,11 +63,8 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
 					.getDestOutputIntent();
             if (dest != null) {
                 final InputStream unfilteredStream = dest.getUnfilteredStream();
-                final int bound = unfilteredStream.available();
-                byte[] bytes = new byte[bound];
-                unfilteredStream.read(bytes);
-				long N = dest.getLong(COSName.N);
-                profile.add(new PBoxICCOutputProfile(bytes, subtype, N != -1 ? Long.valueOf(N) : null));
+				Long N = Long.valueOf(dest.getLong(COSName.N));
+                profile.add(new PBoxICCOutputProfile(unfilteredStream, subtype, N != -1 ? Long.valueOf(N) : null));
                 unfilteredStream.close();
             }
         } catch (IOException e) {
