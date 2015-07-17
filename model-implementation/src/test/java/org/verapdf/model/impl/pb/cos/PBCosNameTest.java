@@ -5,6 +5,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.verapdf.model.ModelHelper;
 import org.verapdf.model.coslayer.CosName;
 import org.verapdf.model.impl.BaseTest;
 
@@ -65,6 +66,7 @@ public class PBCosNameTest extends BaseTest {
         }
     }
 
+    @Override
     @Test
     public void testTypeAndID() {
         for (CosName name : actual) {
@@ -73,7 +75,17 @@ public class PBCosNameTest extends BaseTest {
         }
     }
 
-    //TODO : when implement subtype test override this method
+	@Override
+	@Test
+	public void testLinksMethod() {
+		for (CosName name : actual) {
+			List<String> expectedLinks = ModelHelper.getListOfLinks(name.getType());
+			for (String link : expectedLinks) {
+				Assert.assertNotNull(name.getLinkedObjects(link));
+			}
+			expectedLinks.clear();
+		}
+	}
 
     @AfterClass
     public static void tearDown() {
