@@ -5,10 +5,10 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSNumber;
 import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
+import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
@@ -21,10 +21,6 @@ import org.verapdf.features.tools.FeaturesCollection;
 public class PBPageFeaturesObject implements IFeaturesObject {
 
     private static final String PAGE = "page";
-    private static final String LLX = "llx";
-    private static final String LLY = "lly";
-    private static final String URX = "urx";
-    private static final String URY = "ury";
 
     private PDPage page;
     private int index;
@@ -63,11 +59,11 @@ public class PBPageFeaturesObject implements IFeaturesObject {
             root.addAttribute("id", PAGE + index);
             root.addAttribute("orderNumber", Integer.toString(index));
 
-            addBoxFeature("mediaBox", page.getMediaBox(), root);
-            addBoxFeature("cropBox", page.getCropBox(), root);
-            addBoxFeature("trimBox", page.getTrimBox(), root);
-            addBoxFeature("bleedBox", page.getBleedBox(), root);
-            addBoxFeature("artBox", page.getArtBox(), root);
+            PBCreateNodeHelper.addBoxFeature("mediaBox", page.getMediaBox(), root);
+            PBCreateNodeHelper.addBoxFeature("cropBox", page.getCropBox(), root);
+            PBCreateNodeHelper.addBoxFeature("trimBox", page.getTrimBox(), root);
+            PBCreateNodeHelper.addBoxFeature("bleedBox", page.getBleedBox(), root);
+            PBCreateNodeHelper.addBoxFeature("artBox", page.getArtBox(), root);
 
             FeatureTreeNode.newInstance("rotation", Integer.toString(page.getRotation()), root);
 
@@ -101,15 +97,4 @@ public class PBPageFeaturesObject implements IFeaturesObject {
             return null;
         }
     }
-
-    private void addBoxFeature(String name, PDRectangle box, FeatureTreeNode root) throws FeaturesTreeNodeException {
-        if (box != null) {
-            FeatureTreeNode boxNode = FeatureTreeNode.newInstance(name, root);
-            boxNode.addAttribute(LLX, String.valueOf(box.getLowerLeftX()));
-            boxNode.addAttribute(LLY, String.valueOf(box.getLowerLeftY()));
-            boxNode.addAttribute(URX, String.valueOf(box.getUpperRightX()));
-            boxNode.addAttribute(URY, String.valueOf(box.getUpperRightY()));
-        }
-    }
-
 }

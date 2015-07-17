@@ -4,14 +4,13 @@ import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
-import org.verapdf.features.tools.ErrorsHelper;
+import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Feature object for information dictionary
@@ -64,26 +63,14 @@ public class PBInfoDictFeaturesObject implements IFeaturesObject {
             addEntry("Creator", info.getCreator(), root);
             addEntry("Producer", info.getProducer(), root);
 
-            if (info.getCreationDate() != null) {
-                FeatureTreeNode creationDate = FeatureTreeNode.newInstance(ENTRY, root);
+            FeatureTreeNode creationDate = PBCreateNodeHelper.createDateNode(ENTRY, root, info.getCreationDate(), collection);
+            if (creationDate != null) {
                 creationDate.addAttribute(KEY, "CreationDate");
-                try {
-                    creationDate.setValue(getXMLFormat(info.getCreationDate()));
-                } catch (DatatypeConfigurationException e) {
-                    creationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.INFODICTCONFCREATIONDATE_ID);
-                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.INFODICTCONFCREATIONDATE_ID, ErrorsHelper.INFODICTCONFCREATIONDATE_MESSAGE);
-                }
             }
 
-            if (info.getModificationDate() != null) {
-                FeatureTreeNode modificationDate = FeatureTreeNode.newInstance(ENTRY, root);
+            FeatureTreeNode modificationDate = PBCreateNodeHelper.createDateNode(ENTRY, root, info.getModificationDate(), collection);
+            if (modificationDate != null) {
                 modificationDate.addAttribute(KEY, "ModDate");
-                try {
-                    modificationDate.setValue(getXMLFormat(info.getModificationDate()));
-                } catch (DatatypeConfigurationException e) {
-                    modificationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.INFODICTCONFMODDATE_ID);
-                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.INFODICTCONFMODDATE_ID, ErrorsHelper.INFODICTCONFMODDATE_MESSAGE);
-                }
             }
 
             addEntry("Trapped", info.getTrapped(), root);
@@ -104,18 +91,10 @@ public class PBInfoDictFeaturesObject implements IFeaturesObject {
         }
     }
 
-    private void addEntry(String name, String value, FeatureTreeNode root) throws FeaturesTreeNodeException {
+    private static void addEntry(String name, String value, FeatureTreeNode root) throws FeaturesTreeNodeException {
         if (name != null && value != null) {
             FeatureTreeNode entry = FeatureTreeNode.newInstance(ENTRY, value, root);
             entry.addAttribute(KEY, name);
         }
-    }
-
-    private String getXMLFormat(Calendar calendar) throws DatatypeConfigurationException {
-        GregorianCalendar greg = new GregorianCalendar();
-        greg.setTime(calendar.getTime());
-        greg.setTimeZone(calendar.getTimeZone());
-        XMLGregorianCalendar xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(greg);
-        return xmlCalendar.toXMLFormat();
     }
 }
