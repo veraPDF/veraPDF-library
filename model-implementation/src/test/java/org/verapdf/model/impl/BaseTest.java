@@ -18,13 +18,13 @@ public abstract class BaseTest {
 
     protected static org.verapdf.model.baselayer.Object actual;
 
-    protected static String TYPE;
-    protected static String ID;
+    protected static String expectedType;
+    protected static String expectedID;
 
     @Test
     public void testTypeAndID() {
-        Assert.assertEquals(TYPE, actual.getType());
-        Assert.assertEquals(ID, actual.getID());
+        Assert.assertEquals(expectedType, actual.getType());
+        Assert.assertEquals(expectedID, actual.getID());
     }
 
 	@Test
@@ -34,6 +34,11 @@ public abstract class BaseTest {
 			Assert.assertNotNull(actual.getLinkedObjects(link));
 		}
 		expectedLinks.clear();
+	}
+
+	@Test(expected = IllegalAccessError.class)
+	public void testNonexistentParentLink() {
+		actual.getLinkedObjects("Wrong link.");
 	}
 
 	protected static String getSystemIndependentPath(String path) throws URISyntaxException {
