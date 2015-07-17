@@ -26,8 +26,8 @@ public class PBoxICCOutputProfileTest extends PBoxICCProfileTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
-		TYPE = "ICCOutputProfile";
-		ID = null;
+		expectedType = "ICCOutputProfile";
+		expectedID = null;
 
 		setUpActualObject();
 	}
@@ -50,8 +50,8 @@ public class PBoxICCOutputProfileTest extends PBoxICCProfileTest {
 
 	@AfterClass
 	public static void tearDown() throws IOException {
-		TYPE = null;
-		ID = null;
+		expectedType = null;
+		expectedID = null;
 		actual = null;
 
 		document.close();
