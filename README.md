@@ -15,9 +15,9 @@ CI Status
 
 - [![Build Status](https://travis-ci.org/veraPDF/veraPDF-library.svg?branch=integration)](https://travis-ci.org/veraPDF/veraPDF-library "veraPDF-library Travis-CI integration build") Travis-CI: `integration`
 
-- [![Build Status](http://jenkins.opf-labs.org/view/veraPDF-jobs/job/veraPDF-library-0.2/badge/icon)](http://jenkins.opf-labs.org/view/veraPDF-jobs/job/veraPDF-library-0.2/ "OPF Jenkins v0.2 release build") OPF Jenkins: `release-0.2`
+- [![Build Status](http://jenkins.opf-labs.org/buildStatus/icon?job=veraPDF-library-0.2)](http://jenkins.opf-labs.org/view/A-veraPDF/job/veraPDF-library-0.2/ "OPF Jenkins v0.2 release build") OPF Jenkins: `release-0.2`
 
-- [![Build Status](http://jenkins.opf-labs.org/view/veraPDF-jobs/job/veraPDF-library-0.3/badge/icon)](http://jenkins.opf-labs.org/view/veraPDF-jobs/job/veraPDF-library-0.3/ "OPF Jenkins v0.3 development build") OPF Jenkins: `integration`
+- [![Build Status](http://jenkins.opf-labs.org/buildStatus/icon?job=veraPDF-library-0.3-mvn)](http://jenkins.opf-labs.org/view/A-veraPDF/job/veraPDF-library-0.3-mvn/ "OPF Jenkins v0.3 development build") OPF Jenkins: `integration`
 
 Pre-requisites
 --------------
