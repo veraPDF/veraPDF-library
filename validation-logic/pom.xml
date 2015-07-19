@@ -1,52 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <artifactId>verapdf-library</artifactId>
-        <groupId>org.verapdf</groupId>
-        <version>0.2.0</version>
-    </parent>
+  <parent>
+    <artifactId>verapdf-library</artifactId>
+    <groupId>org.verapdf</groupId>
+    <version>0.2.0</version>
+  </parent>
 
-    <artifactId>validation-logic</artifactId>
-    <name>veraPDF Validation Logic</name>
-    <description>Algorithms and logic for veraPDF PDF/A Validation</description>
+  <artifactId>validation-logic</artifactId>
+  <name>veraPDF Validation Logic</name>
+  <description>Algorithms and logic for veraPDF PDF/A Validation</description>
 
-    <dependencies>
-      <!-- Mozilla Rhino JavaScript engine -->
-      <dependency>
-          <groupId>rhino</groupId>
-          <artifactId>js</artifactId>
-          <version>1.7R2</version>
-      </dependency>
+  <dependencies>
+    <!-- Mozilla Rhino JavaScript engine -->
+    <dependency>
+      <groupId>rhino</groupId>
+      <artifactId>js</artifactId>
+    </dependency>
 
-      <dependency>
-          <groupId>junit</groupId>
-          <artifactId>junit</artifactId>
-          <version>4.12</version>
-          <scope>test</scope>
-      </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
 
-      <dependency>
-          <groupId>org.verapdf</groupId>
-          <artifactId>pdf-model</artifactId>
-          <version>0.3.1</version>
-      </dependency>
+    <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>pdf-model</artifactId>
+    </dependency>
 
-      <dependency>
-          <groupId>org.verapdf</groupId>
-          <artifactId>verapdf-exceptions</artifactId>
-          <version>${project.version}</version>
-      </dependency>
+    <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>verapdf-exceptions</artifactId>
+    </dependency>
 
-      <dependency>
-          <groupId>org.verapdf</groupId>
-          <artifactId>validation-profile-parser</artifactId>
-          <version>${project.version}</version>
-      </dependency>
+    <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>validation-profile-parser</artifactId>
+    </dependency>
 
-    </dependencies>
+  </dependencies>
 
 </project>
