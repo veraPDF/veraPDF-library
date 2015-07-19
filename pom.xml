@@ -321,6 +321,7 @@
     </pluginManagement>
 
     <plugins>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -330,6 +331,7 @@
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
@@ -339,6 +341,7 @@
           <autoVersionSubmodules>true</autoVersionSubmodules>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -348,6 +351,7 @@
           </excludes>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
@@ -355,16 +359,19 @@
           <attach>true</attach>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.7.4.201502262128</version>
       </plugin>
+
     </plugins>
   </build>
 
   <reporting>
     <plugins>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -383,20 +390,24 @@
           </reportSet>
         </reportSets>
       </plugin>
+
     </plugins>
   </reporting>
 
   <profiles>
+
     <profile>
       <id>clone-test-resources</id>
       <build>
         <pluginManagement>
           <plugins>
+
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>exec-maven-plugin</artifactId>
               <version>${maven.exec.version}</version>
               <executions>
+
                 <execution>
                   <id>download test files</id>
                   <phase>pre-integration-test</phase>
@@ -412,6 +423,7 @@
                     </arguments>
                   </configuration>
                 </execution>
+
                 <execution>
                   <id>download validation profiles</id>
                   <phase>pre-integration-test</phase>
@@ -429,12 +441,15 @@
                     </arguments>
                   </configuration>
                 </execution>
+
               </executions>
             </plugin>
+
             <plugin>
               <groupId>com.googlecode.maven-download-plugin</groupId>
               <artifactId>download-maven-plugin</artifactId>
               <version>1.2.1</version>
+
               <executions>
                 <execution>
                   <id>download isartor test suite</id>
@@ -451,22 +466,26 @@
                     <md5>9f129c834bc6f9f8dabad4491c4c10ec</md5>
                   </configuration>
                 </execution>
+
               </executions>
             </plugin>
           </plugins>
         </pluginManagement>
       </build>
     </profile>
+
     <profile>
       <id>update-test-resources</id>
       <build>
         <pluginManagement>
           <plugins>
+
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>exec-maven-plugin</artifactId>
               <version>${maven.exec.version}</version>
               <executions>
+
                 <execution>
                   <id>update test files</id>
                   <phase>pre-integration-test</phase>
@@ -483,6 +502,7 @@
                     </arguments>
                   </configuration>
                 </execution>
+
                 <execution>
                   <id>update validation profiles</id>
                   <phase>pre-integration-test</phase>
@@ -505,37 +525,44 @@
         </pluginManagement>
       </build>
     </profile>
+
     <profile>
       <id>coverage-per-test</id>
       <build>
         <plugins>
+
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
+
               <properties>
                 <property>
                   <name>listener</name>
                   <value>org.sonar.java.jacoco.JUnitListener</value>
                 </property>
               </properties>
+
               <excludes>
                 <exclude>**/*IT.java</exclude>
               </excludes>
+
             </configuration>
           </plugin>
         </plugins>
       </build>
-
       <dependencies>
+
         <dependency>
           <groupId>org.codehaus.sonar-plugins.java</groupId>
           <artifactId>sonar-jacoco-listeners</artifactId>
           <version>1.2</version>
           <scope>test</scope>
         </dependency>
+
       </dependencies>
     </profile>
+
     <profile>
       <id>release-sign-artifacts</id>
       <activation>
@@ -544,8 +571,10 @@
           <value>true</value>
         </property>
       </activation>
+
       <build>
         <plugins>
+
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
@@ -559,8 +588,10 @@
               </execution>
             </executions>
           </plugin>
+
         </plugins>
       </build>
     </profile>
+
   </profiles>
 </project>
