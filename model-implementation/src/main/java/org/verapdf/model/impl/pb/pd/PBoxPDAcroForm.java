@@ -16,15 +16,16 @@ import java.util.List;
 public class PBoxPDAcroForm extends PBoxPDObject implements PDAcroForm{
 
 	public static final String FORM_FIELDS = "formFields";
+	public static final String ACRO_FORM_TYPE = "PDAcroForm";
 
-    public PBoxPDAcroForm(org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm simplePDObject) {
+	public PBoxPDAcroForm(org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm simplePDObject) {
         super(simplePDObject);
-        setType("PDAcroForm");
+        setType(ACRO_FORM_TYPE);
     }
 
 	@Override
 	public Boolean getNeedAppearances() {
-		boolean isNeedAppearances = ((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) simplePDObject)
+		Boolean isNeedAppearances = ((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) simplePDObject)
 				.getNeedAppearances();
 		return Boolean.valueOf(isNeedAppearances);
 	}
