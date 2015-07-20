@@ -33,7 +33,7 @@ public final class XMLFeaturesReport {
      * Creates tree of xml tags for features report
      *
      * @param collection - features collection to be written
-     * @param doc  - document used for writing xml in further
+     * @param doc        - document used for writing xml in further
      * @return root element of the xml structure
      */
     public static Element makeXMLTree(FeaturesCollection collection, Document doc) {
@@ -54,19 +54,15 @@ public final class XMLFeaturesReport {
 
             parseElements(FeaturesObjectTypesEnum.LOW_LEVEL_INFO, collection, pdfFeatures, doc);
 
-            if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT) != null) {
-                pdfFeatures.appendChild(makeList("outputIntents", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT), doc));
-            }
+            pdfFeatures.appendChild(makeList("embeddedFiles", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE), collection, doc));
+
+            pdfFeatures.appendChild(makeList("outputIntents", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT), collection, doc));
 
             parseElements(FeaturesObjectTypesEnum.OUTLINES, collection, pdfFeatures, doc);
 
-            if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE) != null) {
-                pdfFeatures.appendChild(makeList("pages", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE), doc));
-            }
+            pdfFeatures.appendChild(makeList("pages", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE), collection, doc));
 
-            if (collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR) != null) {
-                pdfFeatures.appendChild(makeList("errors", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR), doc));
-            }
+            pdfFeatures.appendChild(makeList("errors", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR), collection, doc));
         }
 
         return pdfFeatures;
@@ -76,7 +72,7 @@ public final class XMLFeaturesReport {
         if (collection.getFeatureTreesForType(type) != null) {
             for (FeatureTreeNode rootNode : collection.getFeatureTreesForType(type)) {
                 if (rootNode != null) {
-                    root.appendChild(makeNode(rootNode, doc));
+                    root.appendChild(makeNode(rootNode, collection, doc));
                 }
             }
         }
@@ -88,33 +84,37 @@ public final class XMLFeaturesReport {
             Element metadata = doc.createElement("metadata");
             try {
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-				factory.setNamespaceAware(true);
+                factory.setNamespaceAware(true);
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 Document metadataDocument = builder.parse(new InputSource(new StringReader(metadataNode.getValue())));
                 Node pack = doc.importNode(metadataDocument.getDocumentElement(), true);
                 pack.normalize();
                 metadata.appendChild(pack);
             } catch (ParserConfigurationException | SAXException | IOException e) {
-                metadata.appendChild(doc.createTextNode(removeZeros(metadataNode.getValue())));
-                metadata.setAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATAPARSER_ID);
 
-                ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATAPARSER_ID, ErrorsHelper.METADATAPARSER_MESSAGE);
+                if (isValidXMLString(metadataNode.getValue())) {
+                    metadata.appendChild(doc.createTextNode(metadataNode.getValue()));
+                    metadata.setAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATAPARSER_ID);
+                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATAPARSER_ID, ErrorsHelper.METADATAPARSER_MESSAGE);
+                } else {
+                    addInvalidCharactersError(metadata, collection);
+                }
             }
 
             return metadata;
         } else {
-            return makeNode(metadataNode, doc);
+            return makeNode(metadataNode, collection, doc);
         }
 
     }
 
-    private static Element makeList(String listName, List<FeatureTreeNode> list, Document doc) {
+    private static Element makeList(String listName, List<FeatureTreeNode> list, FeaturesCollection collection, Document doc) {
         Element listElement = doc.createElement(listName);
 
         if (list != null) {
             for (FeatureTreeNode node : list) {
                 if (node != null) {
-                    listElement.appendChild(makeNode(node, doc));
+                    listElement.appendChild(makeNode(node, collection, doc));
                 }
             }
         }
@@ -122,25 +122,48 @@ public final class XMLFeaturesReport {
         return listElement;
     }
 
-    private static Element makeNode(FeatureTreeNode node, Document doc) {
+    private static Element makeNode(FeatureTreeNode node, FeaturesCollection collection, Document doc) {
         Element root = doc.createElement(node.getName());
 
         for (Map.Entry<String, String> attr : node.getAttributes().entrySet()) {
-            root.setAttribute(attr.getKey(), removeZeros(attr.getValue()));
+            if (isValidXMLString(attr.getValue())) {
+                root.setAttribute(attr.getKey(), attr.getValue());
+            } else {
+                addInvalidCharactersError(root, collection);
+            }
         }
 
-        if (node.isLeaf() && node.getValue() != null) {
-            root.appendChild(doc.createTextNode(removeZeros(node.getValue())));
+        if (node.getValue() != null) {
+            if (isValidXMLString(node.getValue())) {
+                root.appendChild(doc.createTextNode(node.getValue()));
+            } else {
+                addInvalidCharactersError(root, collection);
+            }
         } else if (node.getChildren() != null) {
             for (FeatureTreeNode child : node.getChildren()) {
-                root.appendChild(makeNode(child, doc));
+                root.appendChild(makeNode(child, collection, doc));
             }
         }
 
         return root;
     }
 
-    private static String removeZeros(String str) {
-        return str.replaceAll(String.valueOf((char) 0), "");
+    private static boolean isValidXMLString(String str) {
+        boolean res = true;
+
+        for (char c : str.toCharArray()) {
+            if ((c == (char) 65534) || (c == (char) 65535) || ((c < (char) 32) && (c != (char) 9 || c != (char) 10 || c != (char) 13))) {
+                res = false;
+                break;
+            }
+        }
+
+        return res;
+    }
+
+    private static void addInvalidCharactersError(Element element, FeaturesCollection collection) {
+        element.setAttribute(ErrorsHelper.ERRORID, ErrorsHelper.XMLINVALIDCHARACTERS_ID);
+        ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.XMLINVALIDCHARACTERS_ID,
+                ErrorsHelper.XMLINVALIDCHARACTERS_MESSAGE);
     }
 }

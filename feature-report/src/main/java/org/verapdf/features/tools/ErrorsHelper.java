@@ -36,11 +36,19 @@ public final class ErrorsHelper {
     public static final String LOWLVLINFODOCUMENTID_ID = "llierr1";
     public static final String LOWLVLINFODOCUMENTID_MESSAGE = "In Trailer dictionary value for key \"ID\" must be an array of two Strings.";
 
+    public static final String PARSINGEMBEDDEDFILEERROR_ID = "embfierr1";
+    public static final String PARSINGEMBEDDEDFILEERROR_MESSAGE = "Error while parsing embedded files.";
+
+    public static final String XMLINVALIDCHARACTERS_ID = "xmlinvcharerr1";
+    public static final String XMLINVALIDCHARACTERS_MESSAGE = "Element's data contains invalid for XML characters.";
+
     public static void addErrorIntoCollection(FeaturesCollection collection, String errorID, String errorMessage) {
         try {
-            FeatureTreeNode metadataParsingError = FeatureTreeNode.newInstance("error", errorMessage, null);
-            metadataParsingError.addAttribute(ErrorsHelper.ID, errorID);
-            collection.addNewFeatureTree(FeaturesObjectTypesEnum.ERROR, metadataParsingError);
+            FeatureTreeNode error = FeatureTreeNode.newInstance("error", errorMessage, null);
+            error.addAttribute(ErrorsHelper.ID, errorID);
+            if (!collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR).contains(error)) {
+                collection.addNewFeatureTree(FeaturesObjectTypesEnum.ERROR, error);
+            }
         } catch (FeaturesTreeNodeException ignore) {
             // This exception occurs when wrong node creates for feature tree.
             // The logic of the method guarantees this doesn't occur.

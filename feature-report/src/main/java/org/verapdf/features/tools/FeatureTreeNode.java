@@ -160,4 +160,34 @@ public final class FeatureTreeNode {
     public void addAttribute(String name, String value) {
         attributes.put(name, value);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        FeatureTreeNode that = (FeatureTreeNode) o;
+
+        if (name != null ? !name.equals(that.name) : that.name != null) {
+            return false;
+        }
+        if (value != null ? !value.equals(that.value) : that.value != null) {
+            return false;
+        }
+        if (parent != null ? !parent.equals(that.parent) : that.parent != null) {
+            return false;
+        }
+        if (root != null ? !root.equals(that.root) : that.root != null) {
+            return false;
+        }
+        if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null) {
+            return false;
+        }
+        return !(children != null ? !children.equals(that.children) : that.children != null);
+
+    }
 }

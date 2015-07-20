@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlin
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
+import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
@@ -70,9 +71,7 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
         if (item != null) {
             FeatureTreeNode itemNode = FeatureTreeNode.newInstance("outline", root);
 
-            if (item.getTitle() != null) {
-                FeatureTreeNode.newInstance("title", item.getTitle(), itemNode);
-            }
+            PBCreateNodeHelper.addNotEmptyNode("title", item.getTitle(), itemNode);
 
             if (item.getTextColor() != null) {
                 FeatureTreeNode color = FeatureTreeNode.newInstance("color", itemNode);

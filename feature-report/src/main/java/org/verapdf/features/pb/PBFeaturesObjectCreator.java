@@ -4,6 +4,7 @@ import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
+import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
 import org.verapdf.features.pb.objects.*;
@@ -43,6 +44,17 @@ public final class PBFeaturesObjectCreator {
      */
     public static PBLowLvlInfoFeaturesObject createLowLvlInfoFeaturesObject(COSDocument document) {
         return new PBLowLvlInfoFeaturesObject(document);
+    }
+
+    /**
+     * Creates new PBEmbeddedFileFeaturesObject
+     *
+     * @param embFile - PDComplexFileSpecification class from pdfbox, which represents a file specification with embedded
+     *                file for feature report
+     * @return created PBEmbeddedFileFeaturesObject
+     */
+    public static PBEmbeddedFileFeaturesObject createEmbeddedFileFeaturesObject(PDComplexFileSpecification embFile, int index) {
+        return new PBEmbeddedFileFeaturesObject(embFile, index);
     }
 
     /**
