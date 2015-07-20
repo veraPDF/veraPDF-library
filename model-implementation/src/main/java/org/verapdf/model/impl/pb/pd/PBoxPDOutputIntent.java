@@ -18,10 +18,12 @@ import java.util.List;
 public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
 
     public static final Logger logger = Logger.getLogger(PBoxPDOutputIntent.class);
+	public static final String DEST_PROFILE = "destProfile";
+	public static final String OUTPUT_INTENT_TYPE = "PDOutputIntent";
 
-    public PBoxPDOutputIntent(org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent simplePDObject) {
+	public PBoxPDOutputIntent(org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent simplePDObject) {
         super(simplePDObject);
-        setType("PDOutputIntent");
+        setType(OUTPUT_INTENT_TYPE);
     }
 
 	public String getdestOutputProfileRef() {
@@ -41,7 +43,7 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
     public List<? extends Object> getLinkedObjects(String link) {
         List<?extends Object> list;
         switch (link) {
-            case "destProfile":
+            case DEST_PROFILE:
                 list = getDestProfile();
                 break;
             default:

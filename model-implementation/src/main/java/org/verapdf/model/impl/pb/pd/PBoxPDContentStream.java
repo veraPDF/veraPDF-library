@@ -18,10 +18,11 @@ public class PBoxPDContentStream extends PBoxPDObject implements PDContentStream
 
     public static final Logger logger = Logger.getLogger(PBoxPDContentStream.class);
     public static final String OPERATORS = "operators";
+	public static final String CONTENT_STREAM_TYPE = "PDContentStream";
 
-    public PBoxPDContentStream(org.apache.pdfbox.contentstream.PDContentStream contentStream) {
+	public PBoxPDContentStream(org.apache.pdfbox.contentstream.PDContentStream contentStream) {
         super(contentStream);
-        setType("PDContentStream");
+        setType(CONTENT_STREAM_TYPE);
     }
 
     @Override
@@ -43,11 +44,11 @@ public class PBoxPDContentStream extends PBoxPDObject implements PDContentStream
     private List<Operator> getOperators() {
         List<Operator> result = new ArrayList<>();
         try {
-            PDFStreamParser streamParser = new PDFStreamParser(contentStream.getContentStream(), true);
+            PDFStreamParser streamParser = new PDFStreamParser(contentStream.getContentStream(), Boolean.TRUE);
             streamParser.parse();
             result = OperatorFactory.parseOperators(streamParser.getTokens(), contentStream.getResources());
         } catch (IOException e) {
-            logger.error("Error while parsing content stream." + e.getMessage());
+            logger.error("Error while parsing content stream. " + e.getMessage());
         }
         return result;
     }
