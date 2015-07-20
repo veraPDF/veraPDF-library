@@ -9,6 +9,7 @@ public enum FeaturesObjectTypesEnum {
     INFORMATION_DICTIONARY,
     METADATA,
     LOW_LEVEL_INFO,
+    EMBEDDED_FILE,
     OUTPUTINTENT,
     OUTLINES,
     PAGE,

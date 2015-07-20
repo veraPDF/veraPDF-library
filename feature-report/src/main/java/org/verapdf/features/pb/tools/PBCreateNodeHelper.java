@@ -108,4 +108,21 @@ public final class PBCreateNodeHelper {
 
         return boxNode;
     }
+
+    /**
+     * Creates new node with given name and value if both of this parametrs are not null
+     *
+     * @param name   - name of the node
+     * @param value  - value of the node
+     * @param parent - parent of the node
+     * @return generated node
+     * @throws FeaturesTreeNodeException
+     */
+    public static FeatureTreeNode addNotEmptyNode(String name, String value, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+        if (name != null && value != null) {
+            return FeatureTreeNode.newInstance(name, value, parent);
+        } else {
+            return null;
+        }
+    }
 }
