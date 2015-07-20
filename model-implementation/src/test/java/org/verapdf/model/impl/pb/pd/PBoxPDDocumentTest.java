@@ -1,6 +1,5 @@
 package org.verapdf.model.impl.pb.pd;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -30,17 +29,21 @@ public class PBoxPDDocumentTest extends BaseTest{
 
 	@Test
 	public void testOutlinesLink() {
-		Assert.assertEquals(0, actual.getLinkedObjects(PBoxPDDocument.OUTLINES).size());
+		List<? extends Object> outlines = actual.getLinkedObjects(PBoxPDDocument.OUTLINES);
+		Assert.assertEquals(6, outlines.size());
+		for (Object object : outlines) {
+			Assert.assertEquals(PBoxPDOutline.OUTLINE_TYPE, object.getType());
+		}
 	}
 
 	@Test
 	public void testOpenActionLink() {
-		Assert.assertEquals(0, actual.getLinkedObjects(PBoxPDDocument.OPEN_ACTION).size());
+		isCorrectActions(PBoxPDDocument.OPEN_ACTION);
 	}
 
 	@Test
 	public void testActionsLink() {
-		Assert.assertEquals(0, actual.getLinkedObjects(PBoxPDDocument.ACTIONS).size());
+		isCorrectActions(PBoxPDDocument.ACTIONS);
 	}
 
 	@Test
@@ -82,5 +85,13 @@ public class PBoxPDDocumentTest extends BaseTest{
 		actual = null;
 
 		document.close();
+	}
+
+	private void isCorrectActions(String link) {
+		List<? extends Object> actions = actual.getLinkedObjects(link);
+		Assert.assertEquals(0, actions.size());
+		for (Object object : actions) {
+			Assert.assertTrue("PDAction".equals(object.getType()) || "PDNamedAction".equals(object.getType()));
+		}
 	}
 }
