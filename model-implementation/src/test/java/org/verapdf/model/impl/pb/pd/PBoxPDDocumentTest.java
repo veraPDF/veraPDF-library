@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.BaseTest;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -18,18 +17,14 @@ import java.util.List;
  */
 public class PBoxPDDocumentTest extends BaseTest{
 
-	public static final String FILE_RELATIVE_PATH = "/model/impl/pb/cos/veraPDF test suite 6-1-2-t02-fail-a.pdf";
-
-	private static PDDocument document;
+	public static final String FILE_RELATIVE_PATH = "cos/veraPDF test suite 6-1-2-t02-fail-a.pdf";
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
 		expectedType = "PDDocument";
 		expectedID = null;
 
-		String fileAbsolutePath = getSystemIndependentPath(FILE_RELATIVE_PATH);
-		File file = new File(fileAbsolutePath);
-		document = PDDocument.load(file, Boolean.FALSE, Boolean.TRUE);
+		setUp(FILE_RELATIVE_PATH);
 		actual = new PBoxPDDocument(document);
 	}
 
