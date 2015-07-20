@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdfparser.PDFStreamParser;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
+import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
@@ -148,8 +149,8 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
     private void addDocumentId(FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
         COSArray ids = document.getDocumentID();
         if (ids != null) {
-            String creationId = getStringFromBase(ids.get(0));
-            String modificationId = getStringFromBase(ids.get(1));
+            String creationId = PBCreateNodeHelper.getStringFromBase(ids.get(0));
+            String modificationId = PBCreateNodeHelper.getStringFromBase(ids.get(1));
 
             FeatureTreeNode documentId = FeatureTreeNode.newInstance("documentId", root);
 
@@ -188,22 +189,6 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
                     res.add(name);
                 }
             }
-        }
-    }
-
-    private static String getStringFromBase(COSBase baseParam) {
-
-        COSBase base = baseParam;
-
-        while (base instanceof COSObject) {
-            base = ((COSObject) base).getObject();
-        }
-
-        if (base instanceof COSString) {
-            COSString str = (COSString) base;
-            return str.isHex() ? str.toHexString() : str.getString();
-        } else {
-            return null;
         }
     }
 }

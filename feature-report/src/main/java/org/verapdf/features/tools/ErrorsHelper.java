@@ -24,10 +24,8 @@ public final class ErrorsHelper {
     public static final String PAGESCALLING_ID = "pageerr1";
     public static final String PAGESCALLING_MESSAGE = "Page dictionary must contain number value for key \"PZ\".";
 
-    public static final String INFODICTCONFCREATIONDATE_ID = "infodicterr1";
-    public static final String INFODICTCONFCREATIONDATE_MESSAGE = "A serious configuration error while creating creationDate field in information dictionary features.";
-    public static final String INFODICTCONFMODDATE_ID = "infodicterr2";
-    public static final String INFODICTCONFMODDATE_MESSAGE = "A serious configuration error while creating modDate field in information dictionary features.";
+    public static final String DATE_ID = "dateerr1";
+    public static final String DATE_MESSAGE = "A serious configuration error while creating xml formatted date field.";
 
     public static final String OUTPUTINTENTSTYPE_ID = "outinterr1";
     public static final String OUTPUTINTENTSTYPE_MESSAGE = "In OutputIntent dictionary value for key \"S\" must be of type CosName.";

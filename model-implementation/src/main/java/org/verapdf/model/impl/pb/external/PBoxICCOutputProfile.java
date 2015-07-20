@@ -11,8 +11,8 @@ public class PBoxICCOutputProfile extends PBoxICCProfile implements ICCOutputPro
 
 	private String subtype;
 
-    public PBoxICCOutputProfile(byte[] profile, String subtype) {
-        super(profile);
+    public PBoxICCOutputProfile(byte[] profile, String subtype, Long N) {
+        super(profile, N);
         setType("ICCOutputProfile");
 		this.subtype = subtype;
     }

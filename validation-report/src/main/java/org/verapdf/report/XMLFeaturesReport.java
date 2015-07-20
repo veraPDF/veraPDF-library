@@ -88,6 +88,7 @@ public final class XMLFeaturesReport {
             Element metadata = doc.createElement("metadata");
             try {
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+				factory.setNamespaceAware(true);
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 Document metadataDocument = builder.parse(new InputSource(new StringReader(metadataNode.getValue())));
                 Node pack = doc.importNode(metadataDocument.getDocumentElement(), true);
