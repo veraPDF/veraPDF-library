@@ -27,6 +27,9 @@ public final class ErrorsHelper {
     public static final String DATE_ID = "dateerr1";
     public static final String DATE_MESSAGE = "A serious configuration error while creating xml formatted date field.";
 
+    public static final String BYTETOSTRING_ID = "bytestrerr1";
+    public static final String BYTETOSTRING_MESSAGE = "Error in converting byte array to string.";
+
     public static final String OUTPUTINTENTSTYPE_ID = "outinterr1";
     public static final String OUTPUTINTENTSTYPE_MESSAGE = "In OutputIntent dictionary value for key \"S\" must be of type CosName.";
 

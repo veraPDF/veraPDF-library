@@ -25,6 +25,13 @@ import java.util.Map;
  */
 public final class XMLFeaturesReport {
 
+    private static final char FFFE = (char) 65534;
+    private static final char FFFF = (char) 65535;
+    private static final char SP = (char) 32;
+    private static final char HT = (char) 9;
+    private static final char LF = (char) 10;
+    private static final char CR = (char) 13;
+
     private XMLFeaturesReport() {
 
     }
@@ -51,6 +58,8 @@ public final class XMLFeaturesReport {
                     }
                 }
             }
+
+            parseElements(FeaturesObjectTypesEnum.DOCUMENT_SECURITY, collection, pdfFeatures, doc);
 
             parseElements(FeaturesObjectTypesEnum.LOW_LEVEL_INFO, collection, pdfFeatures, doc);
 
@@ -152,7 +161,7 @@ public final class XMLFeaturesReport {
         boolean res = true;
 
         for (char c : str.toCharArray()) {
-            if ((c == (char) 65534) || (c == (char) 65535) || ((c < (char) 32) && (c != (char) 9 || c != (char) 10 || c != (char) 13))) {
+            if ((c == FFFE) || (c == FFFF) || ((c < SP) && (c != HT && c != LF && c != CR))) {
                 res = false;
                 break;
             }
