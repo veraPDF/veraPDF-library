@@ -43,6 +43,7 @@ public final class PBFeatureParser {
 
         if (document != null) {
             reporter.report(PBFeaturesObjectCreator.createInfoDictFeaturesObject(document.getDocumentInformation()));
+            reporter.report(PBFeaturesObjectCreator.createDocSecurityFeaturesObject(document.getEncryption()));
 
             PDDocumentCatalog catalog = document.getDocumentCatalog();
             if (catalog != null) {

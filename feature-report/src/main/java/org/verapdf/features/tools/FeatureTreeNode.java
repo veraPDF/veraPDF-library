@@ -17,17 +17,13 @@ public final class FeatureTreeNode {
     private String name;
     private String value;
     private FeatureTreeNode parent;
-    private FeatureTreeNode root;
     private Map<String, String> attributes;
     private List<FeatureTreeNode> children;
 
     private FeatureTreeNode(String name, FeatureTreeNode parent) throws FeaturesTreeNodeException {
         this.name = name;
         this.parent = parent;
-        if (parent == null) {
-            this.root = this;
-        } else {
-            this.root = parent.getRoot();
+        if (parent != null) {
             parent.addChild(this);
         }
         attributes = new HashMap<>();
@@ -37,10 +33,7 @@ public final class FeatureTreeNode {
         this.name = name;
         this.value = value;
         this.parent = parent;
-        if (parent == null) {
-            this.root = this;
-        } else {
-            this.root = parent.getRoot();
+        if (parent != null) {
             parent.addChild(this);
         }
         attributes = new HashMap<>();
@@ -88,13 +81,6 @@ public final class FeatureTreeNode {
      */
     public FeatureTreeNode getParent() {
         return parent;
-    }
-
-    /**
-     * @return root node for a tree in which this node situated
-     */
-    public FeatureTreeNode getRoot() {
-        return root;
     }
 
     /**
@@ -161,6 +147,12 @@ public final class FeatureTreeNode {
         attributes.put(name, value);
     }
 
+    /**
+     * Compares current object with given object
+     *
+     * @param o - object for compare
+     * @return true if the given object equals to the current
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -179,9 +171,6 @@ public final class FeatureTreeNode {
             return false;
         }
         if (parent != null ? !parent.equals(that.parent) : that.parent != null) {
-            return false;
-        }
-        if (root != null ? !root.equals(that.root) : that.root != null) {
             return false;
         }
         if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null) {

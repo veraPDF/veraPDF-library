@@ -5,6 +5,7 @@ import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
+import org.apache.pdfbox.pdmodel.encryption.PDEncryption;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
 import org.verapdf.features.pb.objects.*;
@@ -35,6 +36,16 @@ public final class PBFeaturesObjectCreator {
      */
     public static PBMetadataFeaturesObject createMetadataFeaturesObject(PDMetadata metadata) {
         return new PBMetadataFeaturesObject(metadata);
+    }
+
+    /**
+     * Creates new PBDocSecurityFeaturesObject
+     *
+     * @param encryption - PDEncryption class from pdfbox, which represents an encryption for feature report
+     * @return created PBDocSecurityFeaturesObject
+     */
+    public static PBDocSecurityFeaturesObject createDocSecurityFeaturesObject(PDEncryption encryption) {
+        return new PBDocSecurityFeaturesObject(encryption);
     }
 
     /**
