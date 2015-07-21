@@ -26,10 +26,11 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     public static final String IMAGE_CS = "imageCS";
     public static final String ALTERNATES = "Alternates";
 	public static final String INTENT = "Intent";
+	public static final String X_IMAGE_TYPE = "PDXImage";
 
-    public PBoxPDXImage(PDImageXObject simplePDObject) {
+	public PBoxPDXImage(PDImageXObject simplePDObject) {
         super(simplePDObject);
-        setType("PDXImage");
+        setType(X_IMAGE_TYPE);
     }
 
     @Override
@@ -43,13 +44,13 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 
         switch (link) {
 			case INTENT:
-				list = getIntent();
+				list = this.getIntent();
 				break;
             case IMAGE_CS:
-                list = getImageCS();
+                list = this.getImageCS();
                 break;
             case ALTERNATES:
-                list = getAlternates();
+                list = this.getAlternates();
                 break;
             default:
                 list = super.getLinkedObjects(link);

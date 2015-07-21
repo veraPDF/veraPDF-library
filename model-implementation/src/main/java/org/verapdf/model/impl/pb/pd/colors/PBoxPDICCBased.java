@@ -23,10 +23,11 @@ public class PBoxPDICCBased extends PBoxPDColorSpace implements PDICCBased {
 	public static final Logger logger = Logger.getLogger(PBoxPDICCBased.class);
 
 	public static final String ICC_PROFILE = "iccProfile";
+	public static final String ICC_BASED_TYPE = "PDICCBased";
 
 	public PBoxPDICCBased(org.apache.pdfbox.pdmodel.graphics.color.PDICCBased simplePDObject) {
 		super(simplePDObject);
-		setType("PDICCBased");
+		setType(ICC_BASED_TYPE);
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class PBoxPDICCBased extends PBoxPDColorSpace implements PDICCBased {
 
 		switch (link) {
 			case ICC_PROFILE:
-				list = getICCProfile();
+				list = this.getICCProfile();
 				break;
 			default:
 				list = super.getLinkedObjects(link);

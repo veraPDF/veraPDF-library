@@ -18,11 +18,12 @@ public class PBoxPDGroup extends PBoxPDObject implements PDGroup {
 	public static final Logger logger = Logger.getLogger(PBoxPDGroup.class);
 
 	public static final String COLOR_SPACE = "colorSpace";
-	private final Integer MAX_COLOR_SPACES = Integer.valueOf(1);
+	public static final Integer MAX_COLOR_SPACES = Integer.valueOf(1);
+	public static final String GROUP_TYPE = "PDGroup";
 
 	public PBoxPDGroup(org.apache.pdfbox.pdmodel.graphics.form.PDGroup simplePDObject) {
 		super(simplePDObject);
-		setType("PDGroup");
+		setType(GROUP_TYPE);
 	}
 
 	@Override
@@ -36,7 +37,7 @@ public class PBoxPDGroup extends PBoxPDObject implements PDGroup {
 
 		switch (link) {
 			case COLOR_SPACE:
-				list = getColorSpace();
+				list = this.getColorSpace();
 				break;
 			default:
 				list = super.getLinkedObjects(link);
