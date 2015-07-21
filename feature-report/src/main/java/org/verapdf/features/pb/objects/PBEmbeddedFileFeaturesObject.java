@@ -55,40 +55,45 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
      */
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
-        FeatureTreeNode root = FeatureTreeNode.newInstance("embeddedFile", null);
-        root.addAttribute("id", "file" + index);
 
-        PBCreateNodeHelper.addNotEmptyNode("fileName", embFile.getFilename(), root);
-        PBCreateNodeHelper.addNotEmptyNode("description", embFile.getFileDescription(), root);
+        if (embFile != null) {
+            FeatureTreeNode root = FeatureTreeNode.newInstance("embeddedFile", null);
+            root.addAttribute("id", "file" + index);
 
-        PDEmbeddedFile ef = embFile.getEmbeddedFile();
-        if (ef != null) {
-            PBCreateNodeHelper.addNotEmptyNode("subtype", ef.getSubtype(), root);
+            PBCreateNodeHelper.addNotEmptyNode("fileName", embFile.getFilename(), root);
+            PBCreateNodeHelper.addNotEmptyNode("description", embFile.getFileDescription(), root);
 
-            PBCreateNodeHelper.addNotEmptyNode("filter", getFilters(ef.getFilters()), root);
+            PDEmbeddedFile ef = embFile.getEmbeddedFile();
+            if (ef != null) {
+                PBCreateNodeHelper.addNotEmptyNode("subtype", ef.getSubtype(), root);
 
-            try {
-                PBCreateNodeHelper.createDateNode(CREATION_DATE, root, ef.getCreationDate(), collection);
-            } catch (IOException e) {
-                FeatureTreeNode creationDate = FeatureTreeNode.newInstance(CREATION_DATE, root);
-                creationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
-                ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
+                PBCreateNodeHelper.addNotEmptyNode("filter", getFilters(ef.getFilters()), root);
+
+                try {
+                    PBCreateNodeHelper.createDateNode(CREATION_DATE, root, ef.getCreationDate(), collection);
+                } catch (IOException e) {
+                    FeatureTreeNode creationDate = FeatureTreeNode.newInstance(CREATION_DATE, root);
+                    creationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
+                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
+                }
+
+                try {
+                    PBCreateNodeHelper.createDateNode(MOD_DATE, root, ef.getModDate(), collection);
+                } catch (IOException e) {
+                    FeatureTreeNode modDate = FeatureTreeNode.newInstance(MOD_DATE, root);
+                    modDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
+                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
+                }
+
+                FeatureTreeNode node = PBCreateNodeHelper.addNotEmptyNode("checkSum", ef.getCheckSum(), root);
+                PBCreateNodeHelper.addNotEmptyNode("size", String.valueOf(ef.getSize()), root);
             }
 
-            try {
-                PBCreateNodeHelper.createDateNode(MOD_DATE, root, ef.getModDate(), collection);
-            } catch (IOException e) {
-                FeatureTreeNode modDate = FeatureTreeNode.newInstance(MOD_DATE, root);
-                modDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
-                ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
-            }
-
-            FeatureTreeNode node = PBCreateNodeHelper.addNotEmptyNode("checkSum", ef.getCheckSum(), root);
-            PBCreateNodeHelper.addNotEmptyNode("size", String.valueOf(ef.getSize()), root);
+            collection.addNewFeatureTree(FeaturesObjectTypesEnum.EMBEDDED_FILE, root);
+            return root;
+        } else {
+            return null;
         }
-
-        collection.addNewFeatureTree(FeaturesObjectTypesEnum.EMBEDDED_FILE, root);
-        return root;
     }
 
     private static String getFilters(List<COSName> list) {

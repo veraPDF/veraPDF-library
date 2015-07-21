@@ -13,6 +13,7 @@ public enum FeaturesObjectTypesEnum {
     EMBEDDED_FILE,
     OUTPUTINTENT,
     OUTLINES,
+    ANNOTATION,
     PAGE,
     ERROR
 }

@@ -45,6 +45,13 @@ public final class ErrorsHelper {
     public static final String XMLINVALIDCHARACTERS_ID = "xmlinvcharerr1";
     public static final String XMLINVALIDCHARACTERS_MESSAGE = "Element's data contains invalid for XML characters.";
 
+    public static final String COLOR_ID = "colorerr1";
+    public static final String COLOR_MESSAGE = "Devise color space contains wrong number of components.";
+
+    public static final String ANNOTATIONPARSER_ID = "annotparsrerr1";
+    public static final String ANNOTATIONPARSER_MESSAGE = "Unknown annotation type.";
+
+
     public static void addErrorIntoCollection(FeaturesCollection collection, String errorID, String errorMessage) {
         try {
             FeatureTreeNode error = FeatureTreeNode.newInstance("error", errorMessage, null);

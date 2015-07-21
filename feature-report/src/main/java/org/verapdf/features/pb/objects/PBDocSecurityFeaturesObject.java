@@ -48,9 +48,8 @@ public class PBDocSecurityFeaturesObject implements IFeaturesObject {
      */
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
-        FeatureTreeNode root = FeatureTreeNode.newInstance("documentSecurity", null);
-
         if (encryption != null) {
+            FeatureTreeNode root = FeatureTreeNode.newInstance("documentSecurity", null);
             PBCreateNodeHelper.addNotEmptyNode("filter", encryption.getFilter(), root);
             PBCreateNodeHelper.addNotEmptyNode("subFilter", encryption.getSubFilter(), root);
             PBCreateNodeHelper.addNotEmptyNode("version", String.valueOf(encryption.getVersion()), root);
@@ -92,9 +91,11 @@ public class PBDocSecurityFeaturesObject implements IFeaturesObject {
             } catch (IOException e) {
                 FeatureTreeNode.newInstance("securityHandler", "No security handler", root);
             }
-        }
 
-        collection.addNewFeatureTree(FeaturesObjectTypesEnum.DOCUMENT_SECURITY, root);
-        return root;
+            collection.addNewFeatureTree(FeaturesObjectTypesEnum.DOCUMENT_SECURITY, root);
+            return root;
+        } else {
+            return null;
+        }
     }
 }
