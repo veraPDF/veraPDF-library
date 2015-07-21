@@ -9,8 +9,17 @@ import org.verapdf.model.pdlayer.PDDeviceCMYK;
  */
 public class PBoxPDDeviceCMYK extends PBoxPDColorSpace implements PDDeviceCMYK {
 
-	public PBoxPDDeviceCMYK(org.apache.pdfbox.pdmodel.graphics.color.PDDeviceCMYK simplePDObject) {
+	private static final PDDeviceCMYK INSTANCE =
+			new PBoxPDDeviceCMYK(org.apache.pdfbox.pdmodel.graphics.color.PDDeviceCMYK.INSTANCE);
+
+	public static final String DEVICE_CMYK_TYPE = "PDDeviceCMYK";
+
+	private PBoxPDDeviceCMYK(org.apache.pdfbox.pdmodel.graphics.color.PDDeviceCMYK simplePDObject) {
 		super(simplePDObject);
-		setType("PDDeviceCMYK");
+		setType(DEVICE_CMYK_TYPE);
+	}
+
+	public static PDDeviceCMYK getInstance() {
+		return INSTANCE;
 	}
 }

@@ -12,6 +12,18 @@ import org.verapdf.model.pdlayer.PDColorSpace;
  */
 public class ColorSpaceFactory {
 
+
+	public static final String CAL_GRAY = "CalGray";
+	public static final String CAL_RGB = "CalRGB";
+	public static final String DEVICE_CMYK = "DeviceCMYK";
+	public static final String DEVICE_GRB = "DeviceRGB";
+	public static final String DEVICE_GRAY = "DeviceGray";
+	public static final String DEVICE_N = "DeviceN";
+	public static final String ICC_BASED = "ICCBased";
+	public static final String LAB = "Lab";
+	public static final String SEPARATION = "Separation";
+	public static final String INDEXED = "Indexed";
+
 	private ColorSpaceFactory() {
 
 	}
@@ -22,34 +34,35 @@ public class ColorSpaceFactory {
      * {@link PBoxPDColorSpace})
      *
      * @param colorSpace pdfbox color space object
-     * @return <? extends PBoxPDColorSpace> object or {@code null} if {@code colorSpace} argument
+     * @return {@code <? extends PBoxPDColorSpace>} object or {@code null} if {@code colorSpace} argument
      * {@code null} or unsupported type
      */
-    public static PDColorSpace getColorSpace(org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace) {
-        if (colorSpace == null) {
-            return null;
-        } else if (colorSpace instanceof PDCalGray) {
-            return new PBoxPDCalGray((PDCalGray) colorSpace);
-        } else if (colorSpace instanceof PDCalRGB) {
-            return new PBoxPDCalRGB((PDCalRGB) colorSpace);
-        } else if (colorSpace instanceof PDDeviceCMYK) {
-            return new PBoxPDDeviceCMYK((PDDeviceCMYK) colorSpace);
-        } else if (colorSpace instanceof PDDeviceGray) {
-            return new PBoxPDDeviceGray((PDDeviceGray) colorSpace);
-        } else if (colorSpace instanceof PDDeviceN) {
-            return new PBoxPDDeviceN((PDDeviceN) colorSpace);
-        } else if (colorSpace instanceof PDDeviceRGB) {
-            return new PBoxPDDeviceRGB((PDDeviceRGB) colorSpace);
-        } else if (colorSpace instanceof PDICCBased) {
-            return new PBoxPDICCBased((PDICCBased) colorSpace);
-        } else if (colorSpace instanceof PDLab) {
-            return new PBoxPDLab((PDLab) colorSpace);
-        } else if (colorSpace instanceof PDSeparation) {
-            return new PBoxPDSeparation((PDSeparation) colorSpace);
-        } else if (colorSpace instanceof PDIndexed) {
-			return new PBoxPDIndexed((PDIndexed) colorSpace);
-		} else {
-            return null;
-        }
-    }
+	public static PDColorSpace getColorSpace(org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace) {
+		if (colorSpace != null) {
+			switch (colorSpace.getName()) {
+				case CAL_GRAY:
+					return new PBoxPDCalGray((PDCalGray) colorSpace);
+				case CAL_RGB:
+					return new PBoxPDCalRGB((PDCalRGB) colorSpace);
+				case DEVICE_N:
+					return new PBoxPDDeviceN((PDDeviceN) colorSpace);
+				case DEVICE_CMYK:
+					return PBoxPDDeviceCMYK.getInstance();
+				case DEVICE_GRB:
+					return PBoxPDDeviceRGB.getInstance();
+				case DEVICE_GRAY:
+					return PBoxPDDeviceGray.getInstance();
+				case ICC_BASED:
+					return new PBoxPDICCBased((PDICCBased) colorSpace);
+				case LAB:
+					return new PBoxPDLab((PDLab) colorSpace);
+				case SEPARATION:
+					return new PBoxPDSeparation((PDSeparation) colorSpace);
+				case INDEXED:
+					return new PBoxPDIndexed((PDIndexed) colorSpace);
+			}
+		}
+		return null;
+	}
+
 }
