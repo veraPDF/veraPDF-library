@@ -119,6 +119,7 @@ public final class PBFeatureParser {
                 COSBase item = annotsArray.get(i);
                 if (item != null) {
                     String id = getId(item, "annot", annots.keySet().size());
+                    annotsId.add(id);
 
                     if (annotPages.get(id) == null) {
                         annotPages.put(id, new HashSet<String>());
@@ -127,19 +128,18 @@ public final class PBFeatureParser {
 
                     COSBase base = getBase(item);
 
-                    PDAnnotation annotation = null;
                     try {
-                        annotation = PDAnnotation.createAnnotation(base);
-
+                        PDAnnotation annotation = PDAnnotation.createAnnotation(base);
+                        annots.put(id, annotation);
                         COSBase pop = annotation.getCOSObject().getItem(COSName.getPDFName("Popup"));
 
                         if (pop != null) {
                             addPopup(pop, id, annots, annotChild, annotParent, collection);
                         }
                     } catch (IOException e) {
+                        annots.put(id, null);
                         generateUnknownAnnotation(collection, id);
                     }
-                    annots.put(id, annotation);
                 }
             }
 
@@ -157,13 +157,13 @@ public final class PBFeatureParser {
         return item;
     }
 
-    private static String getId(COSBase base, String prefix, int number) {
-        int numb = number;
+    private static String getId(COSBase base, String prefix, long number) {
+        long numb = number;
         COSBase item = base;
         String type = "Dir";
 
         while (item instanceof COSObject) {
-            numb = ((COSObject) item).getGenerationNumber();
+            numb = ((COSObject) item).getObjectNumber();
             type = "Indir";
             item = ((COSObject) item).getObject();
         }
