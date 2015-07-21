@@ -69,6 +69,8 @@ public final class XMLFeaturesReport {
 
             parseElements(FeaturesObjectTypesEnum.OUTLINES, collection, pdfFeatures, doc);
 
+            pdfFeatures.appendChild(makeList("annotations", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION), collection, doc));
+
             pdfFeatures.appendChild(makeList("pages", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE), collection, doc));
 
             pdfFeatures.appendChild(makeList("errors", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR), collection, doc));

@@ -7,8 +7,11 @@ import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.apache.pdfbox.pdmodel.encryption.PDEncryption;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
 import org.verapdf.features.pb.objects.*;
+
+import java.util.Set;
 
 /**
  * Creates Feature Objects and report them to Features Reporter
@@ -87,11 +90,29 @@ public final class PBFeaturesObjectCreator {
     }
 
     /**
+     * Creates new PBAnnotationFeaturesObject
+     * @param annot - PDAnnotation class from pdfbox, which represents an annotation for feature report
+     * @param id - page id
+     * @param pages - set of pages for this annotation
+     * @param parentId - parent annotation for this annotation
+     * @param popupId - id of the popup annotation for this annotation
+     * @param appearanceId - id of the appearance stream for this annotation
+     * @return created PBAnnotationFeaturesObject
+     */
+    public static PBAnnotationFeaturesObject createAnnotFeaturesObject(PDAnnotation annot, String id, Set<String> pages,
+                                                                       String parentId, String popupId, String appearanceId) {
+        return new PBAnnotationFeaturesObject(annot, id, pages, parentId, popupId, appearanceId);
+    }
+
+    /**
      * Creates new PBPageFeaturesObject
      * @param page - PDPage class from pdfbox, which represents a page for feature report
+     * @param annotsId - set of annotations id which contains in this page
+     * @param id - page id
+     * @param index - page index
      * @return created PBPageFeaturesObject
      */
-    public static PBPageFeaturesObject createPageFeaturesObject(PDPage page, int index) {
-        return new PBPageFeaturesObject(page, index);
+    public static PBPageFeaturesObject createPageFeaturesObject(PDPage page, Set<String> annotsId, String id, int index) {
+        return new PBPageFeaturesObject(page, annotsId, id, index);
     }
 }
