@@ -15,8 +15,8 @@ public class PBCosBoolTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        TYPE = "CosBool";
-        ID = null;
+        expectedType = "CosBool";
+        expectedID = null;
 
         COSBoolean bool = COSBoolean.getBoolean(Boolean.TRUE);
         actual = new PBCosBool(bool);
@@ -27,15 +27,9 @@ public class PBCosBoolTest extends BaseTest {
         Assert.assertTrue(((CosBool) actual).getvalue().equals(Boolean.TRUE));
     }
 
-    @Test
-    public void testTypeAndID() {
-        Assert.assertEquals(TYPE, actual.getType());
-        Assert.assertEquals(ID, actual.getID());
-    }
-
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
+        expectedType = null;
         actual = null;
     }
 }

@@ -24,6 +24,7 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
 
     public static final Logger logger = Logger.getLogger(PBoxPDXForm.class);
 
+	public static final String X_FORM_TYPE = "PDXForm";
 	public static final String GROUP ="Group";
     public static final String PS = "PS";
     public static final String REF = "Ref";
@@ -31,7 +32,7 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
 
     public PBoxPDXForm(PDFormXObject simplePDObject) {
         super(simplePDObject);
-        setType("PDXForm");
+        setType(X_FORM_TYPE);
     }
 
     @Override
@@ -46,16 +47,16 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
 
         switch (link) {
 			case GROUP:
-				list = getGroup();
+				list = this.getGroup();
 				break;
             case PS:
-                list = getPS();
+                list = this.getPS();
                 break;
             case REF:
-                list = getREF();
+                list = this.getREF();
                 break;
             case CONTENT_STREAM:
-                list = getContentStream();
+                list = this.getContentStream();
                 break;
             default:
                 list = super.getLinkedObjects(link);

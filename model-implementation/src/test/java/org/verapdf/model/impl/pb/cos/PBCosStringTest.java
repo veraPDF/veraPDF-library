@@ -24,8 +24,8 @@ public class PBCosStringTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        TYPE = "CosString";
-        ID = null;
+        expectedType = "CosString";
+        expectedID = null;
 
         setExpectedResult();
 
@@ -70,8 +70,8 @@ public class PBCosStringTest extends BaseTest {
 
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
-        ID = null;
+        expectedType = null;
+        expectedID = null;
 
         actual = null;
         secondActual = null;

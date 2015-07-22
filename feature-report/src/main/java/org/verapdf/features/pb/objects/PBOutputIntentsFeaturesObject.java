@@ -8,6 +8,7 @@ import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
+import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
@@ -52,21 +53,10 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
 
             addSubtype(collection, root);
 
-            if (outInt.getOutputCondition() != null) {
-                FeatureTreeNode.newInstance("outputCondition", outInt.getOutputCondition(), root);
-            }
-
-            if (outInt.getOutputConditionIdentifier() != null) {
-                FeatureTreeNode.newInstance("outputConditionIdentifier", outInt.getOutputConditionIdentifier(), root);
-            }
-
-            if (outInt.getRegistryName() != null) {
-                FeatureTreeNode.newInstance("registryName", outInt.getRegistryName(), root);
-            }
-
-            if (outInt.getInfo() != null) {
-                FeatureTreeNode.newInstance("info", outInt.getInfo(), root);
-            }
+            PBCreateNodeHelper.addNotEmptyNode("outputCondition", outInt.getOutputCondition(), root);
+            PBCreateNodeHelper.addNotEmptyNode("outputConditionIdentifier", outInt.getOutputConditionIdentifier(), root);
+            PBCreateNodeHelper.addNotEmptyNode("registryName", outInt.getRegistryName(), root);
+            PBCreateNodeHelper.addNotEmptyNode("info", outInt.getInfo(), root);
 
             // TODO: Add iccProfiles support
 

@@ -22,8 +22,8 @@ public class PBCosTrailerTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        TYPE = "CosTrailer";
-        ID = null;
+        expectedType = "CosTrailer";
+        expectedID = null;
 
         COSDictionary trailer = new COSDictionary();
         COSObject root = new COSObject(new COSDictionary());
@@ -52,14 +52,9 @@ public class PBCosTrailerTest extends BaseTest {
         Assert.assertEquals(parentLink.size(), 0);
     }
 
-    @Test(expected = IllegalAccessError.class)
-    public void testNonexistentParentLink() {
-        actual.getLinkedObjects("Wrong link.");
-    }
-
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
+        expectedType = null;
         actual = null;
     }
 }

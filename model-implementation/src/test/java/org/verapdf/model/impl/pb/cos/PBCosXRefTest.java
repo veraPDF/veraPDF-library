@@ -19,8 +19,8 @@ public class PBCosXRefTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        TYPE = "CosXRef";
-        ID = null;
+        expectedType = "CosXRef";
+        expectedID = null;
 
         Random random = new Random();
         expectedHeaderSpacings = Boolean.valueOf(random.nextBoolean());
@@ -41,7 +41,7 @@ public class PBCosXRefTest extends BaseTest {
 
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
+        expectedType = null;
         expectedEOLMarkers = null;
         expectedHeaderSpacings = null;
     }

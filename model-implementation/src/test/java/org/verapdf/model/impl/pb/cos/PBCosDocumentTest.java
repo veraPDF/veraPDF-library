@@ -14,9 +14,6 @@ import org.verapdf.model.impl.BaseTest;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -24,18 +21,19 @@ import java.util.List;
  */
 public class PBCosDocumentTest extends BaseTest {
 
-    private static final String FILE_RELATIVE_PATH = "/model/impl/pb/cos/veraPDF test suite 6-1-2-t02-fail-a.pdf";
+    public static final String FILE_RELATIVE_PATH = "/model/impl/pb/cos/veraPDF test suite 6-1-2-t02-fail-a.pdf";
 
     private static final Long expectedNumberOfIndirects = Long.valueOf(17);
     private static final Long expectedSizeOfDocument = Long.valueOf(9437);
+	private static final Double expectedDocumentVersion = Double.valueOf(1.4);
     private static final String[] expectedIDS = new String[]{"D6CF927DCF82444068EB69A5914F8070",
             "A2A7539F7C71DEBB6A4A6B418235962D"};
 
 
     @BeforeClass
     public static void setUp() throws URISyntaxException, IOException {
-        TYPE = "CosDocument";
-        ID = null;
+        expectedType = "CosDocument";
+        expectedID = null;
 
         String fileAbsolutePath = getSystemIndependentPath(FILE_RELATIVE_PATH);
         final File file = new File(fileAbsolutePath);
@@ -44,16 +42,15 @@ public class PBCosDocumentTest extends BaseTest {
         }
     }
 
-    private static String getSystemIndependentPath(String path) throws URISyntaxException {
-        URL resourceUrl = ClassLoader.class.getResource(path);
-        Path resourcePath = Paths.get(resourceUrl.toURI());
-        return resourcePath.toString();
-    }
-
     @Test
     public void testNumberOfIndirectsMethod() {
         Assert.assertEquals(expectedNumberOfIndirects, ((CosDocument) actual).getnrIndirects());
     }
+
+	@Test
+	public void testVersionMethod() {
+		Assert.assertEquals(expectedDocumentVersion, ((CosDocument) actual).getversion(), 0.01);
+	}
 
     @Test
     public void testSizeMethod() {
@@ -156,15 +153,10 @@ public class PBCosDocumentTest extends BaseTest {
         Assert.assertEquals(0, embeddedFiles.size());
     }
 
-    @Test(expected = IllegalAccessError.class)
-    public void testNonexistentParentLink() {
-        actual.getLinkedObjects("Wrong link.");
-    }
-
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
-        ID = null;
+        expectedType = null;
+        expectedID = null;
         actual = null;
     }
 }

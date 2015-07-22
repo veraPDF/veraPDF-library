@@ -19,8 +19,8 @@ public class PBCosRealTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        TYPE = "CosReal";
-        ID = null;
+        expectedType = "CosReal";
+        expectedID = null;
 
         Random random = new Random();
         expected = random.nextFloat();
@@ -47,7 +47,7 @@ public class PBCosRealTest extends BaseTest {
 
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
+        expectedType = null;
         expected = null;
         actual = null;
     }

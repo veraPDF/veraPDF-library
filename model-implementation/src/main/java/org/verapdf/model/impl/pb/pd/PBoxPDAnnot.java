@@ -21,18 +21,20 @@ import java.util.List;
  */
 public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 
+	public static final String ANNOTATION_TYPE = "PDAnnot";
+
     public final static String APPEARANCE = "appearance";
 	public static final String C = "C";
 	public static final String IC = "IC";
 	public static final String A = "A";
 	public static final String ADDITIONAL_ACTION = "AA";
 
-	public static final Integer MAXIMAL_COUNT_OF_ELEMENTS = Integer.valueOf(1);
+	public static final Integer MAX_COUNT_OF_ELEMENTS = Integer.valueOf(1);
 	public static final Integer MAX_COUNT_OF_ACTIONS = Integer.valueOf(10);
 
 	public PBoxPDAnnot(PDAnnotation simplePDObject) {
         super(simplePDObject);
-        setType("PDAnnot");
+        setType(ANNOTATION_TYPE);
     }
 
     @Override
@@ -126,7 +128,7 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	}
 
 	private List<PDAction> getA() {
-		List<PDAction> actions = new ArrayList<>(MAXIMAL_COUNT_OF_ELEMENTS);
+		List<PDAction> actions = new ArrayList<>(MAX_COUNT_OF_ELEMENTS);
 		COSBase actionDictionary = ((PDAnnotation) simplePDObject).getCOSObject().getDictionaryObject(COSName.A);
 		if (actionDictionary instanceof COSDictionary) {
 			org.apache.pdfbox.pdmodel.interactive.action.PDAction action =
@@ -163,7 +165,7 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	 * @return normal appearance stream (N key in the appearance dictionary) of the annotation
 	 */
 	private List<PDContentStream> getAppearance() {
-		List<PDContentStream> appearances = new ArrayList<>(MAXIMAL_COUNT_OF_ELEMENTS);
+		List<PDContentStream> appearances = new ArrayList<>(MAX_COUNT_OF_ELEMENTS);
 		PDAppearanceDictionary appearanceDictionary = ((PDAnnotation) simplePDObject).getAppearance();
 		if (appearanceDictionary != null) {
 			PDAppearanceEntry normalAppearance = appearanceDictionary.getNormalAppearance();
