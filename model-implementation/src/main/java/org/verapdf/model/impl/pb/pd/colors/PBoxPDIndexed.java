@@ -17,10 +17,11 @@ public class PBoxPDIndexed extends PBoxPDColorSpace implements PDIndexed {
 	public static final Logger logger = Logger.getLogger(PBoxPDIndexed.class);
 
 	public static final String BASE = "base";
+	public static final String INDEXED_TYPE = "PDIndexed";
 
 	public PBoxPDIndexed(org.apache.pdfbox.pdmodel.graphics.color.PDIndexed simplePDObject) {
 		super(simplePDObject);
-		setType("PDIndexed");
+		setType(INDEXED_TYPE);
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class PBoxPDIndexed extends PBoxPDColorSpace implements PDIndexed {
 
 		switch (link) {
 			case BASE:
-				list = getBase();
+				list = this.getBase();
 				break;
 			default:
 				list = super.getLinkedObjects(link);

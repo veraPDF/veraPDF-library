@@ -24,12 +24,13 @@ import java.util.List;
  */
 public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
-	private static final String RI = "RI";
-	private static final String FONT_SIZE = "fontSize";
+	public static final String RI = "RI";
+	public static final String FONT_SIZE = "fontSize";
+	public static final String EXT_G_STATE_TYPE = "PDExtGState";
 
 	public PBoxPDExtGState(PDExtendedGraphicsState simplePDObject) {
 		super(simplePDObject);
-		setType("PDExtGState");
+		setType(EXT_G_STATE_TYPE);
 	}
 
 	@Override
@@ -86,10 +87,10 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
 		switch (link) {
 			case RI:
-				list = getRI();
+				list = this.getRI();
 				break;
 			case FONT_SIZE:
-				list = getFontSize();
+				list = this.getFontSize();
 				break;
 			default:
 				list = super.getLinkedObjects(link);

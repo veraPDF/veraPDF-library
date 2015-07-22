@@ -23,13 +23,14 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 
 	public static final Logger logger = Logger.getLogger(PBoxPDXObject.class);
 
+	public static final String X_OBJECT_TYPE = "PDXObject";
     public static final String OPI = "OPI";
 	public static final String S_MASK ="SMask";
 	public static final Integer MAX_NUMBER_OF_ELEMENTS = Integer.valueOf(1);
 
     public PBoxPDXObject(org.apache.pdfbox.pdmodel.graphics.PDXObject simplePDObject) {
         super(simplePDObject);
-        setType("PDXObject");
+        setType(X_OBJECT_TYPE);
     }
 
     @Override
@@ -55,10 +56,10 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
         List<? extends Object> list;
         switch (link) {
 			case S_MASK:
-				list = getSMask();
+				list = this.getSMask();
 				break;
             case OPI:
-                list = getOPI();
+                list = this.getOPI();
                 break;
             default:
                 list = super.getLinkedObjects(link);

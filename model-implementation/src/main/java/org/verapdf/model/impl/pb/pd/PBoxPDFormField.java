@@ -17,10 +17,11 @@ public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
 	public static final String ADDITIONAL_ACTION = "AA";
 
 	public static final Integer MAX_NUMBER_OF_ACTIONS = Integer.valueOf(4);
+	public static final String FORM_FIELD_TYPE = "PDFormField";
 
 	public PBoxPDFormField(PDField simplePDObject) {
 		super(simplePDObject);
-		setType("PDFormField");
+		setType(FORM_FIELD_TYPE);
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
 
 		switch (link) {
 			case ADDITIONAL_ACTION:
-				list = getAdditionalAction();
+				list = this.getAdditionalAction();
 				break;
 			default:
 				list = super.getLinkedObjects(link);
@@ -45,7 +46,7 @@ public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
 	}
 
 	private List<PDAction> getAdditionalAction() {
-		List<PDAction> actions = new ArrayList<>();
+		List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ACTIONS);
 		PDFormFieldAdditionalActions pbActions = ((PDField) simplePDObject).getActions();
 		if (pbActions != null) {
 			org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;

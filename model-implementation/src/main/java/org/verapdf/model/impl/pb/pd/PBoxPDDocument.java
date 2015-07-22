@@ -4,15 +4,18 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.common.PDDestinationOrAction;
 import org.apache.pdfbox.pdmodel.interactive.action.*;
+import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
+import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.*;
 import org.verapdf.model.pdlayer.PDAction;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
+ * High-level representation of pdf document
+ *
  * @author Evgeniy Muravitskiy
  */
 public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
@@ -28,10 +31,11 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 	public static final String OUTLINES = "Outlines";
 
 	public static final Integer MAX_NUMBER_OF_ACTIONS = Integer.valueOf(5);
+	public static final String PD_DOCUMENT_TYPE = "PDDocument";
 
-    public PBoxPDDocument(org.apache.pdfbox.pdmodel.PDDocument document) {
+	public PBoxPDDocument(org.apache.pdfbox.pdmodel.PDDocument document) {
         super(document);
-        setType("PDDocument");
+        setType(PD_DOCUMENT_TYPE);
     }
 
     @Override
@@ -40,7 +44,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
         switch (link) {
 			case OUTLINES:
-				list = getOutlines();
+				list = this.getOutlines();
 				break;
 			case OPEN_ACTION:
 				list = this.getOpenAction();
@@ -68,19 +72,51 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         return list;
     }
 
-	private List<Object> getOutlines() {
-		// TODO : implement me
-		return new ArrayList<>();
+	private List<PDOutline> getOutlines() {
+		List<PDOutline> result = new ArrayList<>();
+		List<PDOutlineItem> outlines = this.getOutlinesList();
+		for (PDOutlineItem outlineItem : outlines) {
+			result.add(new PBoxPDOutline(outlineItem));
+		}
+		outlines.clear();
+		return result;
+	}
+
+	private List<PDOutlineItem> getOutlinesList() {
+		List<PDOutlineItem> result = new ArrayList<>();
+		PDDocumentOutline documentOutline = document.getDocumentCatalog().getDocumentOutline();
+
+		if (documentOutline != null) {
+			PDOutlineItem firstChild = documentOutline.getFirstChild();
+			Stack<PDOutlineItem> stack = new Stack<>();
+
+			if (firstChild != null) {
+				stack.push(firstChild);
+			}
+
+			while (!stack.isEmpty()) {
+				PDOutlineItem item = stack.pop();
+				PDOutlineItem nextSibling = item.getNextSibling();
+				firstChild = item.getFirstChild();
+				if (nextSibling != null && !result.contains(nextSibling)) {
+					stack.add(nextSibling);
+				}
+				if (firstChild != null && !result.contains(firstChild)) {
+					stack.add(firstChild);
+				}
+				result.add(item);
+			}
+		}
+
+		return result;
 	}
 
 	private List<PDAction> getOpenAction() {
 		List<PDAction> actions = new ArrayList<>(1);
 		try {
 			PDDestinationOrAction openAction = document.getDocumentCatalog().getOpenAction();
-			if (openAction instanceof PDActionNamed) {
-				actions.add(new PBoxPDNamedAction((PDActionNamed) openAction));
-			} else if (openAction instanceof org.apache.pdfbox.pdmodel.interactive.action.PDAction) {
-				actions.add(new PBoxPDAction((org.apache.pdfbox.pdmodel.interactive.action.PDAction) openAction));
+			if (openAction instanceof org.apache.pdfbox.pdmodel.interactive.action.PDAction) {
+				addAction(actions, (org.apache.pdfbox.pdmodel.interactive.action.PDAction) openAction);
 			}
 		} catch (IOException e) {
 			logger.error("Problems with open action obtaining. " + e.getMessage());
@@ -134,7 +170,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
     private List<PDOutputIntent> getOutputIntents() {
         List<PDOutputIntent> outputIntents = new ArrayList<>();
-        final List<org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent> pdfboxOutputIntents =
+        List<org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent> pdfboxOutputIntents =
                                                                 document.getDocumentCatalog().getOutputIntents();
         for (org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent intent : pdfboxOutputIntents) {
             if (intent != null) {

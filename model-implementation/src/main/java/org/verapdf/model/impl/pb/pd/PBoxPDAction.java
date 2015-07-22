@@ -15,10 +15,11 @@ import java.util.List;
 public class PBoxPDAction extends PBoxPDObject implements PDAction {
 
 	public static final String NEXT = "Next";
+	public static final String ACTION_TYPE = "PDAction";
 
-    public PBoxPDAction(org.apache.pdfbox.pdmodel.interactive.action.PDAction simplePDObject) {
+	public PBoxPDAction(org.apache.pdfbox.pdmodel.interactive.action.PDAction simplePDObject) {
         super(simplePDObject);
-        setType("PDAction");
+        setType(ACTION_TYPE);
     }
 
     @Override

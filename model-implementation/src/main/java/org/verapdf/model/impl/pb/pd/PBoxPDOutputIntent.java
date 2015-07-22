@@ -18,10 +18,12 @@ import java.util.List;
 public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
 
     public static final Logger logger = Logger.getLogger(PBoxPDOutputIntent.class);
+	public static final String DEST_PROFILE = "destProfile";
+	public static final String OUTPUT_INTENT_TYPE = "PDOutputIntent";
 
-    public PBoxPDOutputIntent(org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent simplePDObject) {
+	public PBoxPDOutputIntent(org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent simplePDObject) {
         super(simplePDObject);
-        setType("PDOutputIntent");
+        setType(OUTPUT_INTENT_TYPE);
     }
 
 	public String getdestOutputProfileRef() {
@@ -41,7 +43,7 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
     public List<? extends Object> getLinkedObjects(String link) {
         List<?extends Object> list;
         switch (link) {
-            case "destProfile":
+            case DEST_PROFILE:
                 list = getDestProfile();
                 break;
             default:
@@ -54,7 +56,7 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
     private List<ICCOutputProfile> getDestProfile() {
         List<ICCOutputProfile> profile = new ArrayList<>();
         COSBase dict = simplePDObject.getCOSObject();
-        String subtype = new String();
+        String subtype = null;
         if (dict instanceof COSDictionary) {
             subtype = ((COSDictionary) dict).getNameAsString(COSName.S);
         }
@@ -63,11 +65,8 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
 					.getDestOutputIntent();
             if (dest != null) {
                 final InputStream unfilteredStream = dest.getUnfilteredStream();
-                final int bound = unfilteredStream.available();
-                byte[] bytes = new byte[bound];
-                unfilteredStream.read(bytes);
-				long N = dest.getLong(COSName.N);
-                profile.add(new PBoxICCOutputProfile(bytes, subtype, N != -1 ? Long.valueOf(N) : null));
+				Long N = Long.valueOf(dest.getLong(COSName.N));
+                profile.add(new PBoxICCOutputProfile(unfilteredStream, subtype, N != -1 ? Long.valueOf(N) : null));
                 unfilteredStream.close();
             }
         } catch (IOException e) {

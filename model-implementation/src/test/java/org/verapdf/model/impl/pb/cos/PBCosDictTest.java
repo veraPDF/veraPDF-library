@@ -26,8 +26,8 @@ public class PBCosDictTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        TYPE = "CosDict";
-        ID = null;
+        expectedType = "CosDict";
+        expectedID = null;
 
         COSDictionary dictionary = new COSDictionary();
 
@@ -73,14 +73,9 @@ public class PBCosDictTest extends BaseTest {
         Assert.assertTrue(metadata.get(0) != null);
     }
 
-    @Test(expected = IllegalAccessError.class)
-    public void testParentLink() {
-        actual.getLinkedObjects("Wrong Link for current class.");
-    }
-
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
+        expectedType = null;
         actual = null;
         expectedLength = null;
     }

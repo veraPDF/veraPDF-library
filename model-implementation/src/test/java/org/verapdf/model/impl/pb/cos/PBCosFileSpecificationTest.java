@@ -19,8 +19,8 @@ public class PBCosFileSpecificationTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        TYPE = "CosFileSpecification";
-        ID = null;
+        expectedType = "CosFileSpecification";
+        expectedID = null;
 
         COSDictionary specification = new COSDictionary();
         specification.setString(COSName.EF, "some link");
@@ -39,14 +39,9 @@ public class PBCosFileSpecificationTest extends BaseTest {
         Assert.assertEquals(parentLink.size(), 0);
     }
 
-    @Test(expected = IllegalAccessError.class)
-    public void testNonexistentParentLink() {
-        actual.getLinkedObjects("Wrong link.");
-    }
-
     @AfterClass
     public static void tearDown() {
-        TYPE = null;
+        expectedType = null;
         actual = null;
     }
 }
