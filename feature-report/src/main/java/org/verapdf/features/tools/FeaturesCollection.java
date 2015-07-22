@@ -45,6 +45,8 @@ public class FeaturesCollection {
      * @return list of feature trees for the given type
      */
     public List<FeatureTreeNode> getFeatureTreesForType(FeaturesObjectTypesEnum type) {
-        return collection.get(type);
+        List<FeatureTreeNode> list = collection.get(type);
+
+        return list == null ? new ArrayList<FeatureTreeNode>() : list;
     }
 }

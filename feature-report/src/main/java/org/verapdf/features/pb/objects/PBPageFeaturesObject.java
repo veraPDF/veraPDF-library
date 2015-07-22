@@ -13,6 +13,8 @@ import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
+import java.util.Set;
+
 /**
  * Feature object for page
  *
@@ -20,19 +22,25 @@ import org.verapdf.features.tools.FeaturesCollection;
  */
 public class PBPageFeaturesObject implements IFeaturesObject {
 
-    private static final String PAGE = "page";
+    private static final String ID = "id";
 
     private PDPage page;
+    private Set<String> annotsId;
+    private String id;
     private int index;
 
     /**
      * Constructs new Page Feature Object
      *
      * @param page  - pdfbox class represents page object
+     * @param annotsId - set of annotations id which contains in this page
+     * @param id - page id
      * @param index - page index
      */
-    public PBPageFeaturesObject(PDPage page, int index) {
+    public PBPageFeaturesObject(PDPage page, Set<String> annotsId, String id, int index) {
         this.page = page;
+        this.annotsId = annotsId;
+        this.id = id;
         this.index = index;
     }
 
@@ -54,9 +62,9 @@ public class PBPageFeaturesObject implements IFeaturesObject {
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException{
         if (page != null) {
-            FeatureTreeNode root = FeatureTreeNode.newInstance(PAGE, null);
+            FeatureTreeNode root = FeatureTreeNode.newInstance("page", null);
 
-            root.addAttribute("id", PAGE + index);
+            root.addAttribute(ID, id);
             root.addAttribute("orderNumber", Integer.toString(index));
 
             PBCreateNodeHelper.addBoxFeature("mediaBox", page.getMediaBox(), root);
@@ -87,7 +95,17 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 
             FeatureTreeNode.newInstance("thumbnail", Boolean.toString(page.getCOSObject().getDictionaryObject(COSName.getPDFName("Thumb")) != null), root);
 
-            // TODO: add <resources> and <annotations>
+            if (annotsId != null) {
+                FeatureTreeNode annotations = FeatureTreeNode.newInstance("annotations", root);
+                for (String annot : annotsId) {
+                    if (annot != null) {
+                        FeatureTreeNode annotNode = FeatureTreeNode.newInstance("annotation", annotations);
+                        annotNode.addAttribute(ID, annot);
+                    }
+                }
+            }
+
+            // TODO: add <resources>
 
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.PAGE, root);
 

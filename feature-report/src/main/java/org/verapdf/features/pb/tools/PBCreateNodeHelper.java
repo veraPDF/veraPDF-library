@@ -4,6 +4,7 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
@@ -26,6 +27,19 @@ public final class PBCreateNodeHelper {
     private static final String LLY = "lly";
     private static final String URX = "urx";
     private static final String URY = "ury";
+
+    private static final int GRAY_COLOR_COMPONENTS_NUMBER = 1;
+    private static final int RGB_COLOR_COMPONENTS_NUMBER = 3;
+    private static final int CMYK_COLOR_COMPONENTS_NUMBER = 4;
+
+    private static final int GRAY_COMPONENT_NUMBER = 0;
+    private static final int RED_COMPONENT_NUMBER = 0;
+    private static final int GREEN_COMPONENT_NUMBER = 1;
+    private static final int BLUE_COMPONENT_NUMBER = 2;
+    private static final int CYAN_COMPONENT_NUMBER = 0;
+    private static final int MAGENTA_COMPONENT_NUMBER = 1;
+    private static final int YELLOW_COMPONENT_NUMBER = 2;
+    private static final int BLACK_COMPONENT_NUMBER = 3;
 
     private PBCreateNodeHelper() {
     }
@@ -107,5 +121,76 @@ public final class PBCreateNodeHelper {
         }
 
         return boxNode;
+    }
+
+    /**
+     * Creates new node with given name and value if both of this parametrs are not null
+     *
+     * @param name   - name of the node
+     * @param value  - value of the node
+     * @param parent - parent of the node
+     * @return generated node
+     * @throws FeaturesTreeNodeException
+     */
+    public static FeatureTreeNode addNotEmptyNode(String name, String value, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+        if (name != null && value != null) {
+            return FeatureTreeNode.newInstance(name, value, parent);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Creates new node for device color space
+     *
+     * @param name       - name for the created node
+     * @param color      - PDColor class represents device color space for creating node
+     * @param parent     - parent node for the creating node
+     * @param collection - features collection in which parent situated
+     * @return created node
+     * @throws FeaturesTreeNodeException
+     */
+    public static FeatureTreeNode addDeviceColorSpaceNode(String name, PDColor color, FeatureTreeNode parent, FeaturesCollection collection) throws FeaturesTreeNodeException {
+        if (name != null && color != null) {
+            FeatureTreeNode colorNode = FeatureTreeNode.newInstance(name, parent);
+
+            float[] numbers = color.getComponents();
+
+            switch (numbers.length) {
+                case GRAY_COLOR_COMPONENTS_NUMBER:
+                    createGray(color.getComponents(), colorNode);
+                    break;
+                case RGB_COLOR_COMPONENTS_NUMBER:
+                    createRGB(color.getComponents(), colorNode);
+                    break;
+                case CMYK_COLOR_COMPONENTS_NUMBER:
+                    createCMYK(color.getComponents(), colorNode);
+                    break;
+                default:
+                    colorNode.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.COLOR_ID);
+                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.COLOR_ID, ErrorsHelper.COLOR_MESSAGE);
+            }
+
+            return colorNode;
+        } else {
+            return null;
+        }
+    }
+
+    private static void createGray(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+        FeatureTreeNode.newInstance("gray", String.valueOf(components[GRAY_COMPONENT_NUMBER]), parent);
+    }
+
+    private static void createRGB(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+        FeatureTreeNode.newInstance("red", String.valueOf(components[RED_COMPONENT_NUMBER]), parent);
+        FeatureTreeNode.newInstance("green", String.valueOf(components[GREEN_COMPONENT_NUMBER]), parent);
+        FeatureTreeNode.newInstance("blue", String.valueOf(components[BLUE_COMPONENT_NUMBER]), parent);
+    }
+
+    private static void createCMYK(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+        FeatureTreeNode.newInstance("cyan", String.valueOf(components[CYAN_COMPONENT_NUMBER]), parent);
+        FeatureTreeNode.newInstance("magenta", String.valueOf(components[MAGENTA_COMPONENT_NUMBER]), parent);
+        FeatureTreeNode.newInstance("yellow", String.valueOf(components[YELLOW_COMPONENT_NUMBER]), parent);
+        FeatureTreeNode.newInstance("black", String.valueOf(components[BLACK_COMPONENT_NUMBER]), parent);
     }
 }

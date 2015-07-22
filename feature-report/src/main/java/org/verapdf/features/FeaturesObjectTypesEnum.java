@@ -8,9 +8,12 @@ package org.verapdf.features;
 public enum FeaturesObjectTypesEnum {
     INFORMATION_DICTIONARY,
     METADATA,
+    DOCUMENT_SECURITY,
     LOW_LEVEL_INFO,
+    EMBEDDED_FILE,
     OUTPUTINTENT,
     OUTLINES,
+    ANNOTATION,
     PAGE,
     ERROR
 }
