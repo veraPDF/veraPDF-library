@@ -593,5 +593,17 @@
       </build>
     </profile>
 
+    <profile>
+      <id>sonar</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <sonar.host.url>
+          http://sonar.opf-labs.org
+        </sonar.host.url>
+      </properties>
+    </profile>
+
   </profiles>
 </project>
