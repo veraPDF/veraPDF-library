@@ -1,10 +1,21 @@
 package org.verapdf.features.pb;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSObject;
-import org.apache.pdfbox.pdmodel.*;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
+import org.apache.pdfbox.pdmodel.PDEmbeddedFilesNameTreeNode;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.common.PDNameTreeNode;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
@@ -16,12 +27,6 @@ import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 /**
  * Parses PDFBox PDDocument to generate features collection
  *
@@ -29,9 +34,11 @@ import java.util.Set;
  */
 public final class PBFeatureParser {
 
+    private static final Logger logger = Logger.getLogger(PBFeatureParser.class);
     private static final String PAGE = "page";
 
     private PBFeatureParser() {
+        // Ensure no public default constructor
     }
 
     /**
@@ -112,39 +119,39 @@ public final class PBFeatureParser {
 
         if (annotsArray == null) {
             return null;
-        } else {
-            Set<String> annotsId = new HashSet<>();
+        }
+        Set<String> annotsId = new HashSet<>();
 
-            for (int i = 0; i < annotsArray.size(); ++i) {
-                COSBase item = annotsArray.get(i);
-                if (item != null) {
-                    String id = getId(item, "annot", annots.keySet().size());
-                    annotsId.add(id);
+        for (int i = 0; i < annotsArray.size(); ++i) {
+            COSBase item = annotsArray.get(i);
+            if (item != null) {
+                String id = getId(item, "annot", annots.keySet().size());
+                annotsId.add(id);
 
-                    if (annotPages.get(id) == null) {
-                        annotPages.put(id, new HashSet<String>());
+                if (annotPages.get(id) == null) {
+                    annotPages.put(id, new HashSet<String>());
+                }
+                annotPages.get(id).add(PAGE + pageIndex);
+
+                COSBase base = getBase(item);
+
+                try {
+                    PDAnnotation annotation = PDAnnotation.createAnnotation(base);
+                    annots.put(id, annotation);
+                    COSBase pop = annotation.getCOSObject().getItem(COSName.getPDFName("Popup"));
+
+                    if (pop != null) {
+                        addPopup(pop, id, annots, annotChild, annotParent, collection);
                     }
-                    annotPages.get(id).add(PAGE + pageIndex);
-
-                    COSBase base = getBase(item);
-
-                    try {
-                        PDAnnotation annotation = PDAnnotation.createAnnotation(base);
-                        annots.put(id, annotation);
-                        COSBase pop = annotation.getCOSObject().getItem(COSName.getPDFName("Popup"));
-
-                        if (pop != null) {
-                            addPopup(pop, id, annots, annotChild, annotParent, collection);
-                        }
-                    } catch (IOException e) {
-                        annots.put(id, null);
-                        generateUnknownAnnotation(collection, id);
-                    }
+                } catch (IOException e) {
+                    logger.debug("Unknown annotation type detected.", e);
+                    annots.put(id, null);
+                    generateUnknownAnnotation(collection, id);
                 }
             }
-
-            return annotsId;
         }
+
+        return annotsId;
     }
 
     private static COSBase getBase(COSBase base) {
@@ -183,6 +190,7 @@ public final class PBFeatureParser {
         try {
             annotation = PDAnnotation.createAnnotation(base);
         } catch (IOException e) {
+            logger.debug("Unknown annotation type detected.", e);
             generateUnknownAnnotation(collection, id);
         }
         annots.put(id, annotation);
@@ -198,6 +206,9 @@ public final class PBFeatureParser {
         } catch (FeaturesTreeNodeException e) {
             // This exception occurs when wrong node creates for feature tree.
             // The logic of the method guarantees this doesn't occur.
+            String message = "PBFeatureParser.generateUnknownAnnotation logic failure.";
+            logger.fatal(message, e);
+            throw new IllegalStateException(message, e);
         }
 
     }
@@ -223,6 +234,9 @@ public final class PBFeatureParser {
                 } catch (FeaturesTreeNodeException e1) {
                     // This exception occurs when wrong node creates for feature tree.
                     // The logic of the method guarantees this doesn't occur.
+                    String message = "PBFeatureParser.reportEmbeddedFiles logic failure.";
+                    logger.fatal(message, e);
+                    throw new IllegalStateException(message, e);
                 }
             }
 
@@ -248,6 +262,7 @@ public final class PBFeatureParser {
                 }
             }
         } catch (IOException e) {
+            logger.debug("Subtype creation exception caught", e);
             try {
                 FeatureTreeNode embeddedFileNode = FeatureTreeNode.newInstance("embeddedFile", null);
                 embeddedFileNode.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.PARSINGEMBEDDEDFILEERROR_ID);
@@ -256,6 +271,11 @@ public final class PBFeatureParser {
             } catch (FeaturesTreeNodeException e1) {
                 // This exception occurs when wrong node creates for feature tree.
                 // The logic of the method guarantees this doesn't occur.
+                // FIXME: In which case we throw an IllegalStateException as if this occurs
+                // we want to know there's something wrong with our logic
+                String message = "PBFeatureParser.reportEmbeddedFileNode logic failure.";
+                logger.fatal(message, e);
+                throw new IllegalStateException(message, e);
             }
         }
 
