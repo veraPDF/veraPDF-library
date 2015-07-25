@@ -299,8 +299,8 @@ public final class PBFeatureParser {
                 // tree.
                 // The logic of the method guarantees this doesn't occur.
                 String message = "PBFeatureParser.reportEmbeddedFiles logic failure.";
-                LOGGER.fatal(message, e);
-                throw new IllegalStateException(message, e);
+                LOGGER.fatal(message, e1);
+                throw new IllegalStateException(message, e1);
             }
         }
 
