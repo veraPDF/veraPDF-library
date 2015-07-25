@@ -1,9 +1,11 @@
 package org.verapdf.gui;
 
-import org.verapdf.gui.tools.GUIConstants;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -11,8 +13,16 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+import org.apache.log4j.Logger;
+import org.verapdf.gui.tools.GUIConstants;
 
 /**
  * About Panel
@@ -21,10 +31,16 @@ import java.util.logging.Logger;
  */
 class AboutPanel extends JPanel {
 
-    private static Logger logger = Logger.getLogger(AboutPanel.class.getName());
+    /**
+     * ID for serialisation
+     */
+    private static final long serialVersionUID = -4011118192914036216L;
+
+    static final Logger LOGGER = Logger
+            .getLogger(AboutPanel.class);
 
     private JButton okButton;
-    private JDialog dialog;
+    JDialog dialog;
 
     /**
      * About panel
@@ -50,6 +66,7 @@ class AboutPanel extends JPanel {
 
         okButton = new JButton("Ok");
         okButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 dialog.setVisible(false);
             }
@@ -59,13 +76,12 @@ class AboutPanel extends JPanel {
         JButton urlLabel = new JButton(GUIConstants.LOGO_LINK_TEXT);
         urlLabel.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-
+            public void mouseClicked(MouseEvent event) {
                 try {
                     Desktop.getDesktop().browse(new URI(GUIConstants.LOGO_LINK_URL));
-                } catch (IOException | URISyntaxException e1) {
+                } catch (IOException | URISyntaxException excep) {
                     JOptionPane.showMessageDialog(AboutPanel.this, GUIConstants.ERROR, GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-                    logger.log(Level.SEVERE, "Exception in opening " + GUIConstants.LOGO_LINK_URL + " link: ", e);
+                    LOGGER.error("Exception in opening link " + GUIConstants.LOGO_LINK_URL, excep);
                 }
 
             }

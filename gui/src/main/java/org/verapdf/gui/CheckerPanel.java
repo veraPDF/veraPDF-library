@@ -1,17 +1,11 @@
 package org.verapdf.gui;
 
-import org.verapdf.features.tools.FeaturesCollection;
-import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.report.HTMLReport;
-import org.verapdf.report.XMLReport;
-import org.verapdf.validation.report.model.ValidationInfo;
-
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import java.awt.*;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -20,8 +14,26 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.apache.log4j.Logger;
+import org.verapdf.features.tools.FeaturesCollection;
+import org.verapdf.gui.tools.GUIConstants;
+import org.verapdf.report.HTMLReport;
+import org.verapdf.report.XMLReport;
+import org.verapdf.validation.report.model.ValidationInfo;
 
 /**
  * Panel with functionality for checker.
@@ -30,36 +42,43 @@ import java.util.logging.Logger;
  */
 public class CheckerPanel extends JPanel {
 
-    private static Logger logger = Logger.getLogger(CheckerPanel.class.getName());
+    /**
+     * ID for serialisation
+     */
+    private static final long serialVersionUID = 1290058869994329766L;
 
-    private JFileChooser pdfChooser;
-    private JFileChooser xmlChooser;
-    private JFileChooser htmlChooser;
-    private File pdfFile;
-    private File profile;
+    static final Logger LOGGER = Logger
+            .getLogger(CheckerPanel.class);
+
+    JFileChooser pdfChooser;
+    JFileChooser xmlChooser;
+    JFileChooser htmlChooser;
+    File pdfFile;
+    File profile;
     private JTextField chosenPDF;
     private JTextField chosenProfile;
-    private JLabel result;
-    private ValidationInfo info;
-    private File xmlReport;
-    private File htmlReport;
+    JLabel result;
+    ValidationInfo info;
+    File xmlReport;
+    File htmlReport;
     private File image = null;
 
-    private long startTimeOfValidation;
+    long startTimeOfValidation;
     private long endTimeOfValidation;
-    private boolean isValidationErrorOccurred;
+    boolean isValidationErrorOccurred;
 
-    private JButton validate;
+    JButton validate;
     private JButton saveXML;
     private JButton viewXML;
     private JButton saveHTML;
     private JButton viewHTML;
 
-    private JProgressBar progressBar;
-    private ValidateWorker validateWorker;
+    JProgressBar progressBar;
+    ValidateWorker validateWorker;
 
     /**
      * Creates the Panel.
+     * @throws IOException when there's a problem reading an image from the input stream
      */
     public CheckerPanel() throws IOException {
 
@@ -171,18 +190,21 @@ public class CheckerPanel extends JPanel {
 
 
         choosePDF.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 CheckerPanel.this.chooseFile(pdfChooser, GUIConstants.PDF);
             }
         });
 
         chooseProfile.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 CheckerPanel.this.chooseFile(xmlChooser, GUIConstants.XML);
             }
         });
 
         validate.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 progressBar.setVisible(true);
                 result.setVisible(false);
@@ -198,18 +220,21 @@ public class CheckerPanel extends JPanel {
         });
 
         saveXML.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 saveReport(xmlChooser, GUIConstants.XML, xmlReport);
             }
         });
 
         saveHTML.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 saveReport(htmlChooser, GUIConstants.HTML, htmlReport);
             }
         });
 
         viewXML.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (xmlReport == null) {
                     JOptionPane.showMessageDialog(CheckerPanel.this, "XML report hasn't been saved.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
@@ -218,13 +243,14 @@ public class CheckerPanel extends JPanel {
                         Desktop.getDesktop().open(xmlReport);
                     } catch (IOException e1) {
                         JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in opening the XML report.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-                        logger.log(Level.SEVERE, "Exception in opening the XML report: ", e);
+                        LOGGER.error("Exception in opening the XML report", e1);
                     }
                 }
             }
         });
 
         viewHTML.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (htmlReport == null) {
                     JOptionPane.showMessageDialog(CheckerPanel.this, "HTML report hasn't been saved.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
@@ -233,7 +259,7 @@ public class CheckerPanel extends JPanel {
                         Desktop.getDesktop().open(htmlReport);
                     } catch (IOException e1) {
                         JOptionPane.showMessageDialog(CheckerPanel.this, "Some error in opening the HTML report.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-                        logger.log(Level.SEVERE, "Exception in opening the HTML report: ", e);
+                        LOGGER.error("Exception in opening the HTML report", e1);
                     }
                 }
             }
@@ -243,6 +269,7 @@ public class CheckerPanel extends JPanel {
 
     /**
      * Method to notify panel that validation was done.
+     * @param collection a {@link FeaturesCollection}
      */
     public void validationEnded(FeaturesCollection collection) {
         endTimeOfValidation = System.currentTimeMillis();
@@ -299,18 +326,23 @@ public class CheckerPanel extends JPanel {
 
                 } catch (IOException | TransformerException e) {
                     JOptionPane.showMessageDialog(CheckerPanel.this, GUIConstants.ERROR_IN_SAVING_HTML_REPORT, GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-                    logger.log(Level.SEVERE, "Exception in saving HTML report: ", e);
+                    LOGGER.error("Exception saving the HTML report", e);
                 }
             }
 
         } catch (DatatypeConfigurationException | ParserConfigurationException | IOException | TransformerException e) {
             JOptionPane.showMessageDialog(CheckerPanel.this, GUIConstants.ERROR_IN_SAVING_XML_REPORT, GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-            logger.log(Level.SEVERE, "Exception in saving XML report: ", e);
+            LOGGER.error("Exception saving the XML report", e);
         }
     }
 
     /**
      * Method to notify panel that some error occurs at validating
+     * 
+     * @param message
+     *            a message to be displayed
+     * @param e
+     *            the {@link Throwable} thrown during the validation process
      */
     public void errorInValidatingOccur(String message, Throwable e) {
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -318,14 +350,14 @@ public class CheckerPanel extends JPanel {
         isValidationErrorOccurred = true;
         JOptionPane.showMessageDialog(CheckerPanel.this, message, GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
 
-        logger.log(Level.SEVERE, "Exception in validating process: ", e);
+        LOGGER.error("Exception during the validation process", e);
 
         result.setForeground(GUIConstants.VALIDATION_FAILED_COLOR);
         result.setText(message);
         result.setVisible(true);
     }
 
-    private JFileChooser getChooser(String type) throws IOException {
+    private static JFileChooser getChooser(String type) throws IOException {
         JFileChooser res = new JFileChooser();
         File currentDir = new File(new File(GUIConstants.DOT).getCanonicalPath());
         res.setCurrentDirectory(currentDir);
@@ -344,7 +376,7 @@ public class CheckerPanel extends JPanel {
         gbc.fill = fill;
     }
 
-    private void chooseFile(JFileChooser chooser, String extension) {
+    void chooseFile(JFileChooser chooser, String extension) {
         int resultChoose = chooser.showOpenDialog(CheckerPanel.this);
         if (resultChoose == JFileChooser.APPROVE_OPTION) {
 
@@ -387,7 +419,7 @@ public class CheckerPanel extends JPanel {
         }
     }
 
-    private void saveReport(JFileChooser chooser, String extension, File report) {
+    void saveReport(JFileChooser chooser, String extension, File report) {
         if (info == null) {
             JOptionPane.showMessageDialog(CheckerPanel.this, "Validation hasn't been run.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
         } else {
@@ -422,7 +454,7 @@ public class CheckerPanel extends JPanel {
                     }
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(CheckerPanel.this, GUIConstants.ERROR_IN_SAVING_HTML_REPORT, GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-                    logger.log(Level.SEVERE, "Exception in saving " + extension.toUpperCase() + " report: ", e);
+                    LOGGER.error("Exception saving " + extension.toUpperCase() + " report", e);
                 }
             }
         }
