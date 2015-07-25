@@ -52,7 +52,7 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
         if (outline != null) {
-            FeatureTreeNode root = FeatureTreeNode.newInstance("outlines", null);
+            FeatureTreeNode root = FeatureTreeNode.newRootInstance("outlines");
 
             if (outline.children() != null) {
                 for (PDOutlineItem item : outline.children()) {
@@ -69,27 +69,27 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
 
     private void createItem(PDOutlineItem item, FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
         if (item != null) {
-            FeatureTreeNode itemNode = FeatureTreeNode.newInstance("outline", root);
+            FeatureTreeNode itemNode = FeatureTreeNode.newChildInstance("outline", root);
 
             PBCreateNodeHelper.addNotEmptyNode("title", item.getTitle(), itemNode);
 
             if (item.getTextColor() != null) {
-                FeatureTreeNode color = FeatureTreeNode.newInstance("color", itemNode);
+                FeatureTreeNode color = FeatureTreeNode.newChildInstance("color", itemNode);
 
                 PDColor clr = item.getTextColor();
                 float[] rgb = clr.getComponents();
                 if (rgb.length == RGB_COLORS_NUMBER) {
-                    FeatureTreeNode.newInstance("red", String.valueOf(rgb[RGB_RED_COLOR_NUMBER]), color);
-                    FeatureTreeNode.newInstance("green", String.valueOf(rgb[RGB_GREEN_COLOR_NUMBER]), color);
-                    FeatureTreeNode.newInstance("blue", String.valueOf(rgb[RGB_BLUE_COLOR_NUMBER]), color);
+                    FeatureTreeNode.newChildInstanceWithValue("red", String.valueOf(rgb[RGB_RED_COLOR_NUMBER]), color);
+                    FeatureTreeNode.newChildInstanceWithValue("green", String.valueOf(rgb[RGB_GREEN_COLOR_NUMBER]), color);
+                    FeatureTreeNode.newChildInstanceWithValue("blue", String.valueOf(rgb[RGB_BLUE_COLOR_NUMBER]), color);
                 } else {
                     color.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.OUTLINESCOLOR_ID);
                     ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.OUTLINESCOLOR_ID, ErrorsHelper.OUTLINESCOLOR_MESSAGE);
                 }
             }
 
-            FeatureTreeNode.newInstance("italic", String.valueOf(item.isItalic()), itemNode);
-            FeatureTreeNode.newInstance("bold", String.valueOf(item.isBold()), itemNode);
+            FeatureTreeNode.newChildInstanceWithValue("italic", String.valueOf(item.isItalic()), itemNode);
+            FeatureTreeNode.newChildInstanceWithValue("bold", String.valueOf(item.isBold()), itemNode);
 
             for (PDOutlineItem child : item.children()) {
                 createItem(child, itemNode, collection);

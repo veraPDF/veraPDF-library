@@ -57,7 +57,7 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
 
         if (embFile != null) {
-            FeatureTreeNode root = FeatureTreeNode.newInstance("embeddedFile", null);
+            FeatureTreeNode root = FeatureTreeNode.newRootInstance("embeddedFile");
             root.addAttribute("id", "file" + index);
 
             PBCreateNodeHelper.addNotEmptyNode("fileName", embFile.getFilename(), root);
@@ -72,7 +72,7 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
                 try {
                     PBCreateNodeHelper.createDateNode(CREATION_DATE, root, ef.getCreationDate(), collection);
                 } catch (IOException e) {
-                    FeatureTreeNode creationDate = FeatureTreeNode.newInstance(CREATION_DATE, root);
+                    FeatureTreeNode creationDate = FeatureTreeNode.newChildInstance(CREATION_DATE, root);
                     creationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
                     ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
                 }
@@ -80,7 +80,7 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
                 try {
                     PBCreateNodeHelper.createDateNode(MOD_DATE, root, ef.getModDate(), collection);
                 } catch (IOException e) {
-                    FeatureTreeNode modDate = FeatureTreeNode.newInstance(MOD_DATE, root);
+                    FeatureTreeNode modDate = FeatureTreeNode.newChildInstance(MOD_DATE, root);
                     modDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
                     ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
                 }

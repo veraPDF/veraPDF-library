@@ -67,11 +67,11 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
         if (document != null) {
-            FeatureTreeNode root = FeatureTreeNode.newInstance("lowLevelInfo", null);
+            FeatureTreeNode root = FeatureTreeNode.newRootInstance("lowLevelInfo");
 
 
             if (document.getObjects() != null) {
-                FeatureTreeNode.newInstance("indirectObjectsNumber", String.valueOf(document.getObjects().size()), root);
+                FeatureTreeNode.newChildInstanceWithValue("indirectObjectsNumber", String.valueOf(document.getObjects().size()), root);
             }
 
             addDocumentId(root, collection);
@@ -79,11 +79,11 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
             Set<String> filters = getAllFilters();
 
             if (filters.size() != 0) {
-                FeatureTreeNode filtersNode = FeatureTreeNode.newInstance("filters", root);
+                FeatureTreeNode filtersNode = FeatureTreeNode.newChildInstance("filters", root);
 
                 for (String filter : filters) {
                     if (filter != null) {
-                        FeatureTreeNode filterNode = FeatureTreeNode.newInstance("filter", filtersNode);
+                        FeatureTreeNode filterNode = FeatureTreeNode.newChildInstance("filter", filtersNode);
                         filterNode.addAttribute("name", filter);
                     }
                 }
@@ -152,7 +152,7 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
             String creationId = PBCreateNodeHelper.getStringFromBase(ids.get(0));
             String modificationId = PBCreateNodeHelper.getStringFromBase(ids.get(1));
 
-            FeatureTreeNode documentId = FeatureTreeNode.newInstance("documentId", root);
+            FeatureTreeNode documentId = FeatureTreeNode.newChildInstance("documentId", root);
 
             if (creationId != null || modificationId != null) {
                 if (creationId != null) {

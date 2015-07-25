@@ -46,7 +46,7 @@ public class PBMetadataFeaturesObject implements IFeaturesObject {
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException{
         if (metadata != null) {
-            FeatureTreeNode root = FeatureTreeNode.newInstance("metadata", null);
+            FeatureTreeNode root = FeatureTreeNode.newRootInstance("metadata");
 
             try {
                 String metadataString = metadata.getInputStreamAsString();
