@@ -58,7 +58,7 @@ public class CheckerPanel extends JPanel {
     private JTextField chosenPDF;
     private JTextField chosenProfile;
     JLabel result;
-    ValidationInfo info;
+    transient ValidationInfo info;
     File xmlReport;
     File htmlReport;
     private File image = null;
@@ -74,7 +74,7 @@ public class CheckerPanel extends JPanel {
     private JButton viewHTML;
 
     JProgressBar progressBar;
-    ValidateWorker validateWorker;
+    transient ValidateWorker validateWorker;
 
     /**
      * Creates the Panel.
@@ -440,6 +440,7 @@ public class CheckerPanel extends JPanel {
                             Files.copy(image.toPath(), newImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
                         }
                     } catch (FileAlreadyExistsException e1) {
+                        LOGGER.debug("File already exists, conform overwrite with user", e1);
                         int resultOption = JOptionPane.showConfirmDialog(CheckerPanel.this,
                                 extension.toUpperCase() + " file with the same name already exists. Do you want to overwrite it?",
                                 "",
