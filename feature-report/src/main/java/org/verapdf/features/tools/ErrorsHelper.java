@@ -54,7 +54,7 @@ public final class ErrorsHelper {
 
     public static void addErrorIntoCollection(FeaturesCollection collection, String errorID, String errorMessage) {
         try {
-            FeatureTreeNode error = FeatureTreeNode.newInstance("error", errorMessage, null);
+            FeatureTreeNode error = FeatureTreeNode.newRootInstanceWIthValue("error", errorMessage);
             error.addAttribute(ErrorsHelper.ID, errorID);
             if (!collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR).contains(error)) {
                 collection.addNewFeatureTree(FeaturesObjectTypesEnum.ERROR, error);
