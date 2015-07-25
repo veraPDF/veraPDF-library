@@ -1,5 +1,6 @@
 package org.verapdf.features.pb.objects;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.contentstream.operator.Operator;
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdfparser.PDFStreamParser;
@@ -12,6 +13,7 @@ import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -24,20 +26,23 @@ import java.util.Set;
  */
 public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
 
-    private static Map<String, String> filtersAbbreviations;
+    private static final Logger LOGGER = Logger
+            .getLogger(PBEmbeddedFileFeaturesObject.class);
 
     private COSDocument document;
+    private static final Map<String, String> filtersAbbreviations;
 
     static {
-        filtersAbbreviations = new HashMap<>();
+        Map<String, String> filtersAbbreviationsTemp = new HashMap<>();
 
-        filtersAbbreviations.put("AHx", "ASCIIHexDecode");
-        filtersAbbreviations.put("A85", "ASCII85Decode");
-        filtersAbbreviations.put("LZW", "LZWDecode");
-        filtersAbbreviations.put("Fl", "FlateDecode");
-        filtersAbbreviations.put("RL", "RunLengthDecode");
-        filtersAbbreviations.put("CCF", "CCITTFaxDecode");
-        filtersAbbreviations.put("DCT", "DCTDecode");
+        filtersAbbreviationsTemp.put("AHx", "ASCIIHexDecode");
+        filtersAbbreviationsTemp.put("A85", "ASCII85Decode");
+        filtersAbbreviationsTemp.put("LZW", "LZWDecode");
+        filtersAbbreviationsTemp.put("Fl", "FlateDecode");
+        filtersAbbreviationsTemp.put("RL", "RunLengthDecode");
+        filtersAbbreviationsTemp.put("CCF", "CCITTFaxDecode");
+        filtersAbbreviationsTemp.put("DCT", "DCTDecode");
+        filtersAbbreviations = Collections.unmodifiableMap(filtersAbbreviationsTemp);
     }
 
     /**
@@ -92,9 +97,8 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.LOW_LEVEL_INFO, root);
             return root;
 
-        } else {
-            return null;
         }
+        return null;
     }
 
     private Set<String> getAllFilters() {
@@ -138,6 +142,7 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
                 } catch (IOException ignore) {
                     // Some error with initialising or parsing a stream.
                     // In this case we can't get any filters from it.
+                    LOGGER.debug("Error initialising or parsing stream, no filters retrieved", ignore);
                 }
 
             }

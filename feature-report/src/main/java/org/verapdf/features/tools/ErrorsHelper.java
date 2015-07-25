@@ -1,5 +1,6 @@
 package org.verapdf.features.tools;
 
+import org.apache.log4j.Logger;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 
@@ -10,7 +11,12 @@ import org.verapdf.features.FeaturesObjectTypesEnum;
  */
 public final class ErrorsHelper {
 
+    private static final Logger LOGGER = Logger
+            .getLogger(ErrorsHelper.class);
+
+
     private ErrorsHelper() {
+        // Disable default public constructor
     }
 
     public static final String ERRORID = "errorId";
@@ -52,6 +58,16 @@ public final class ErrorsHelper {
     public static final String ANNOTATIONPARSER_MESSAGE = "Unknown annotation type.";
 
 
+    /**
+     * Adds an error to a {@link FeaturesCollection}
+     * 
+     * @param collection
+     *            the {@link FeaturesCollection} to add the error to
+     * @param errorID
+     *            the unique ID of the error
+     * @param errorMessage
+     *            the error message
+     */
     public static void addErrorIntoCollection(FeaturesCollection collection, String errorID, String errorMessage) {
         try {
             FeatureTreeNode error = FeatureTreeNode.newRootInstanceWIthValue("error", errorMessage);
@@ -62,6 +78,9 @@ public final class ErrorsHelper {
         } catch (FeaturesTreeNodeException ignore) {
             // This exception occurs when wrong node creates for feature tree.
             // The logic of the method guarantees this doesn't occur.
+            String message = "FeatureTreeNode root instance logic failure";
+            LOGGER.fatal(message, ignore);
+            throw new IllegalStateException(message, ignore);
         }
     }
 }

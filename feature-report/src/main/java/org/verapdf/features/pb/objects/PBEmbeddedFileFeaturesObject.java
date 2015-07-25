@@ -1,5 +1,6 @@
 package org.verapdf.features.pb.objects;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDEmbeddedFile;
@@ -20,6 +21,9 @@ import java.util.List;
  * @author Maksim Bezrukov
  */
 public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
+
+    private static final Logger LOGGER = Logger
+            .getLogger(PBEmbeddedFileFeaturesObject.class);
 
     private static final String CREATION_DATE = "creationDate";
     private static final String MOD_DATE = "modDate";
@@ -72,6 +76,7 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
                 try {
                     PBCreateNodeHelper.createDateNode(CREATION_DATE, root, ef.getCreationDate(), collection);
                 } catch (IOException e) {
+                    LOGGER.debug("PDFBox error obtaining creation date", e);
                     FeatureTreeNode creationDate = FeatureTreeNode.newChildInstance(CREATION_DATE, root);
                     creationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
                     ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
@@ -80,6 +85,7 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
                 try {
                     PBCreateNodeHelper.createDateNode(MOD_DATE, root, ef.getModDate(), collection);
                 } catch (IOException e) {
+                    LOGGER.debug("PDFBox error obtaining modification date", e);
                     FeatureTreeNode modDate = FeatureTreeNode.newChildInstance(MOD_DATE, root);
                     modDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
                     ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
