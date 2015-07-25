@@ -151,37 +151,36 @@
     <dependency>
       <groupId>org.verapdf</groupId>
       <artifactId>core</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.verapdf</groupId>
       <artifactId>validation-profile-parser</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.verapdf</groupId>
       <artifactId>validation-logic</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.verapdf</groupId>
       <artifactId>validation-report</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.verapdf</groupId>
       <artifactId>model-implementation</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcprov-jdk15on</artifactId>
-      <version>1.52</version>
+    </dependency>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
     </dependency>
 
   </dependencies>
