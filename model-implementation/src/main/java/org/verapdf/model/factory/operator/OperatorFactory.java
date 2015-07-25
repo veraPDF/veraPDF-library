@@ -53,8 +53,31 @@ import java.util.Stack;
  */
 public final class OperatorFactory {
 
-	public static final Logger logger = Logger.getLogger(OperatorFactory.class);
+	private static final Logger LOGGER = Logger.getLogger(OperatorFactory.class);
+	private static final String RESOURCE_MESSAGE = "Problems with resources obtaining for ";
 
+	private OperatorFactory() {
+	    // Disable default public constructor
+	}
+
+    /**
+     * @param pdfBoxOperator
+     *            {@link org.apache.pdfbox.contentstream.operator.Operator} to
+     *            be parsed
+     * @param resources
+     *            the {@link PDResources} object used to get state for some
+     *            operators
+     * @param arguments
+     *            a {@link List} of {@link COSBase} objects used as arguments
+     *            for operator instantiation
+     * @param graphicStateStack
+     *            a {@link Stack} of {@link GraphicState} objects used to
+     *            instantiate some operators
+     * @param graphicState
+     *            a single {@link GraphicState} object used in operator
+     *            instantiation
+     * @return a new {@link Operator} object instantiated from the arguments
+     */
 	public static Operator parseOperator(org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
 										 PDResources resources, List<COSBase> arguments,
 										 Stack<GraphicState> graphicStateStack, GraphicState graphicState) {
@@ -246,7 +269,7 @@ public final class OperatorFactory {
 				return new PBOp_Q_grestore(arguments);
 			case Operators.Q_GSAVE:
 				graphicStateStack.push(graphicState.clone());
-				return new PBOp_q_gsave(arguments, graphicStateStack.size());
+				return new PBOp_q_gsave(arguments, Integer.valueOf(graphicStateStack.size()));
 
 			// XOBJECT
 			case Operators.DO:
@@ -257,6 +280,15 @@ public final class OperatorFactory {
 		}
 	}
 
+    /**
+     * @param pdfBoxTokens
+     *            a {@link List} of {@link Object} instances that's iterated to
+     *            create the list of operators
+     * @param resources
+     *            the {@link PDResources} used to instantiate the operators
+     * @return a {@link List} of {@link Operator} instances created from parsing
+     *         the passed arguments
+     */
 	public static List<Operator> parseOperators(List<Object> pdfBoxTokens, PDResources resources) {
 		Stack<GraphicState> graphicStateStack = new Stack<>();
 		return parseOperators(pdfBoxTokens.iterator(), resources, graphicStateStack);
@@ -282,26 +314,25 @@ public final class OperatorFactory {
 				String value = ((RenderingIntent) pdfBoxToken).stringValue();
 				arguments.add(COSName.getPDFName(value));
 			} else {
-				logger.error("Unexpected type of object in tokens: " + pdfBoxToken.getClass().getName());
+				LOGGER.error("Unexpected type of object in tokens: " + pdfBoxToken.getClass().getName());
 			}
 		}
 		return result;
 	}
 
 	private static COSName getLastElement(List<COSBase> arguments) {
-		COSBase lastElement = arguments.size() > 0 ? arguments.get(arguments.size() - 1) : null;
+		COSBase lastElement = arguments.isEmpty() ? null : arguments.get(arguments.size() - 1);
 		if (lastElement instanceof COSName) {
 			return (COSName) lastElement;
-		} else {
-			return null;
 		}
+        return null;
 	}
 
 	private static PDColorSpace getColorSpaceFromResources(PDResources resources, COSName colorSpace) {
 		try {
 			return resources.getColorSpace(colorSpace);
 		} catch (IOException e) {
-			logger.error("Problems with resources obtaining for " + colorSpace + ". " + e.getMessage());
+		    LOGGER.error(RESOURCE_MESSAGE + colorSpace + ". " + e.getMessage(), e);
 			return null;
 		}
 	}
@@ -310,7 +341,7 @@ public final class OperatorFactory {
 		try {
 			return resources.getShading(shading);
 		} catch (IOException e) {
-			logger.error("Problems with resources obtaining for " + shading + ". " + e.getMessage());
+		    LOGGER.error(RESOURCE_MESSAGE + shading + ". " + e.getMessage(), e);
 			return null;
 		}
 	}
@@ -319,7 +350,7 @@ public final class OperatorFactory {
 		try {
 			return resources.getXObject(xobject);
 		} catch (IOException e) {
-			logger.error("Problems with resources obtaining for " + xobject + ". " + e.getMessage());
+		    LOGGER.error(RESOURCE_MESSAGE + xobject + ". " + e.getMessage(), e);
 			return null;
 		}
 	}

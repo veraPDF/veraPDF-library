@@ -1,17 +1,24 @@
 package org.verapdf.model.impl.pb.pd;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.common.PDDestinationOrAction;
-import org.apache.pdfbox.pdmodel.interactive.action.*;
+import org.apache.pdfbox.pdmodel.interactive.action.PDDocumentCatalogAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.model.pdlayer.*;
+import org.verapdf.model.pdlayer.PDAcroForm;
 import org.verapdf.model.pdlayer.PDAction;
-
-import java.io.IOException;
-import java.util.*;
+import org.verapdf.model.pdlayer.PDDocument;
+import org.verapdf.model.pdlayer.PDMetadata;
+import org.verapdf.model.pdlayer.PDOutline;
+import org.verapdf.model.pdlayer.PDOutputIntent;
+import org.verapdf.model.pdlayer.PDPage;
 
 /**
  * High-level representation of pdf document
@@ -20,19 +27,48 @@ import java.util.*;
  */
 public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
-    public static final Logger logger = Logger.getLogger(PBoxPDDocument.class);
+    private static final Logger LOGGER = Logger.getLogger(PBoxPDDocument.class);
 
+    /**
+     * String name for pages
+     */
     public static final String PAGES = "pages";
+    /**
+     * String name for metadata
+     */
     public static final String METADATA = "metadata";
+    /**
+     * String name for output intents
+     */
     public static final String OUTPUT_INTENTS = "outputIntents";
+    /**
+     * String name for Acrobat Forms
+     */
     public static final String ACRO_FORMS = "AcroForm";
+    /**
+     * String name for actions
+     */
 	public static final String ACTIONS = "AA";
+    /**
+     * String name for open actions
+     */
 	public static final String OPEN_ACTION = "OpenAction";
+    /**
+     * String name for outlines
+     */
 	public static final String OUTLINES = "Outlines";
+    /**
+     * String name for PD Document
+     */
+    public static final String PD_DOCUMENT_TYPE = "PDDocument";
 
-	public static final Integer MAX_NUMBER_OF_ACTIONS = Integer.valueOf(5);
-	public static final String PD_DOCUMENT_TYPE = "PDDocument";
+	private static final int MAX_NUMBER_OF_ACTIONS = 5;
 
+    /**
+     * @param document
+     *            the {@link org.apache.pdfbox.pdmodel.PDDocument} used to
+     *            create the instance
+     */
 	public PBoxPDDocument(org.apache.pdfbox.pdmodel.PDDocument document) {
         super(document);
         setType(PD_DOCUMENT_TYPE);
@@ -119,7 +155,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 				addAction(actions, (org.apache.pdfbox.pdmodel.interactive.action.PDAction) openAction);
 			}
 		} catch (IOException e) {
-			logger.error("Problems with open action obtaining. " + e.getMessage());
+			LOGGER.error("Problems with open action obtaining. " + e.getMessage(), e);
 		}
 		return actions;
 	}

@@ -14,10 +14,18 @@ import java.util.List;
  */
 public class PBoxPDShadingPattern extends PBoxPDPattern implements PDShadingPattern {
 
-	public static final Logger logger = Logger.getLogger(PBoxPDShadingPattern.class);
+	private static final Logger LOGGER = Logger.getLogger(PBoxPDShadingPattern.class);
 
+	/**
+	 * String name for shading
+	 */
 	public static final String SHADING = "shading";
 
+    /**
+     * @param simplePDObject
+     *            a {@link org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern} used to
+     *            populate the instance
+     */
 	public PBoxPDShadingPattern(org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern simplePDObject) {
 		super(simplePDObject);
 		setType("PDShadingPattern");
@@ -48,7 +56,7 @@ public class PBoxPDShadingPattern extends PBoxPDPattern implements PDShadingPatt
 				shadings.add(new PBoxPDShading(shading));
 			}
 		} catch (IOException e) {
-			logger.error("Can`t get shading pattern. " + e.getMessage());
+			LOGGER.error("Can`t get shading pattern. " + e.getMessage(), e);
 		}
 		return shadings;
 	}

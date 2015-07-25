@@ -21,13 +21,30 @@ import java.util.List;
  */
 public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 
-    public static final Logger logger = Logger.getLogger(PBoxPDXImage.class);
+    private static final Logger LOGGER = Logger.getLogger(PBoxPDXImage.class);
 
+    /**
+     * String name for Image colour space
+     */
     public static final String IMAGE_CS = "imageCS";
+    /**
+     * String name for alternates
+     */
     public static final String ALTERNATES = "Alternates";
+    /**
+     * String name for intents
+     */
 	public static final String INTENT = "Intent";
+    /**
+     * String name for X image type
+     */
 	public static final String X_IMAGE_TYPE = "PDXImage";
 
+	/**
+	 * @param simplePDObject
+     *            a {@link PDImageXObject} used to
+     *            populate the instance
+	 */
 	public PBoxPDXImage(PDImageXObject simplePDObject) {
         super(simplePDObject);
         setType(X_IMAGE_TYPE);
@@ -62,11 +79,14 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 
 	private List<CosRenderingIntent> getIntent() {
 		List<CosRenderingIntent> intents = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-		COSStream imageStream = ((PDImageXObject) simplePDObject).getCOSStream();
-		COSName intent = imageStream.getCOSName(COSName.getPDFName(INTENT));
-		if (intent != null) {
-			intents.add(new PBCosRenderingIntent(intent));
-		}
+		try (COSStream imageStream = ((PDImageXObject) simplePDObject).getCOSStream()) {
+		    COSName intent = imageStream.getCOSName(COSName.getPDFName(INTENT));
+    		if (intent != null) {
+    			intents.add(new PBCosRenderingIntent(intent));
+    		}
+        } catch (IOException excep) {
+            LOGGER.debug("Failed to close image stream, ignore and move on.", excep);
+        }
 		return intents;
 	}
 
@@ -78,16 +98,19 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
                 colorSpaces.add(buffer);
             }
         } catch (IOException e) {
-            logger.error("Problems with color space obtaining from Image XObject. " + e.getMessage());
+            LOGGER.error("Problems with color space obtaining from Image XObject. " + e.getMessage(), e);
         }
         return colorSpaces;
     }
 
     private List<PDXImage> getAlternates() {
         final List<PDXImage> alternates = new ArrayList<>();
-        final COSStream imageStream = ((PDImageXObject) simplePDObject).getCOSStream();
-        COSBase buffer = imageStream.getItem(COSName.getPDFName(ALTERNATES));
-        addAlternates(alternates, buffer);
+        try (final COSStream imageStream = ((PDImageXObject) simplePDObject).getCOSStream()) {
+            COSBase buffer = imageStream.getItem(COSName.getPDFName(ALTERNATES));
+            addAlternates(alternates, buffer);
+        } catch (IOException excep) {
+            LOGGER.debug("Error closing image stream, ignore and move on.", excep);
+        }
         return alternates;
     }
 
@@ -104,8 +127,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     private void addAlternate(List<PDXImage> alternates, COSBase buffer) {
         COSDictionary alternate = getDictionary(buffer);
         if (alternate != null) {
-            COSStream alternatesImages = (COSStream) alternate.getDictionaryObject(COSName.IMAGE);
-            try {
+            try (COSStream alternatesImages = (COSStream) alternate.getDictionaryObject(COSName.IMAGE)) {
                 if (alternatesImages != null) {
                     final PDStream stream = new PDStream(alternatesImages);
                     final PDResources res = ((PDImageXObject) simplePDObject).getResources();
@@ -113,7 +135,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
                     alternates.add(new PBoxPDXImage(imageXObject));
                 }
             } catch (IOException e) {
-                logger.error("Error in creating Alternate XObject. " + e.getMessage());
+                LOGGER.error("Error in creating Alternate XObject. " + e.getMessage(), e);
             }
         }
     }
