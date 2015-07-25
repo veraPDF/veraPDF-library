@@ -1,5 +1,13 @@
 package org.verapdf.features.pb.tools;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.cos.COSString;
@@ -10,18 +18,15 @@ import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 /**
  * Helps in creating similar nodes in different features objects
  *
  * @author Maksim Bezrukov
  */
 public final class PBCreateNodeHelper {
+
+    private static final Logger LOGGER = Logger
+            .getLogger(PBCreateNodeHelper.class);
 
     private static final String LLX = "llx";
     private static final String LLY = "lly";
@@ -70,6 +75,7 @@ public final class PBCreateNodeHelper {
             try {
                 modificationDate.setValue(getXMLFormat(date));
             } catch (DatatypeConfigurationException e) {
+                LOGGER.debug("DatatypeFactory implementation not available or can't be instantiated", e);
                 modificationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
                 ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
             }
