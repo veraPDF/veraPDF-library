@@ -14,20 +14,24 @@ import java.util.Map;
  */
 public final class FeatureTreeNode {
 
-    private String name;
+    private final String name;
     private String value;
-    private FeatureTreeNode parent;
-    private Map<String, String> attributes;
+    private final FeatureTreeNode parent;
+    private Map<String, String> attributes = new HashMap<>();
     private List<FeatureTreeNode> children;
+
+    private FeatureTreeNode(final String name) throws FeaturesTreeNodeException {
+        // This is still ugly (casting null to string type
+        this(name, (String)null);
+    }
+
+    private FeatureTreeNode(final String name, final String value) throws FeaturesTreeNodeException {
+        this(name, value, null);
+    }
 
     private FeatureTreeNode(String name, FeatureTreeNode parent)
             throws FeaturesTreeNodeException {
-        this.name = name;
-        this.parent = parent;
-        if (parent != null) {
-            parent.addChild(this);
-        }
-        attributes = new HashMap<>();
+        this(name, null, parent);
     }
 
     private FeatureTreeNode(String name, String value, FeatureTreeNode parent)
@@ -38,7 +42,31 @@ public final class FeatureTreeNode {
         if (parent != null) {
             parent.addChild(this);
         }
-        attributes = new HashMap<>();
+    }
+
+    /**
+     * @param name
+     *            the name of the node
+     * @return a new FeatureTreeNode with no parent
+     * @throws FeaturesTreeNodeException
+     *             when
+     */
+    public static FeatureTreeNode newRootInstance(String name)
+            throws FeaturesTreeNodeException {
+        return new FeatureTreeNode(name);
+    }
+
+    /**
+     * @param name
+     *            the name of the node
+     * @return a new FeatureTreeNode with no parent
+     * @throws FeaturesTreeNodeException
+     *             when
+     */
+    public static final FeatureTreeNode newRootInstanceWIthValue(
+            final String name, final String value)
+            throws FeaturesTreeNodeException {
+        return new FeatureTreeNode(name, value);
     }
 
     /**
@@ -51,7 +79,7 @@ public final class FeatureTreeNode {
      * @throws FeaturesTreeNodeException
      *             - occurs when parent of the new node has String value
      */
-    public static FeatureTreeNode newInstance(String name,
+    public static FeatureTreeNode newChildInstance(String name,
             FeatureTreeNode parent) throws FeaturesTreeNodeException {
         return new FeatureTreeNode(name, parent);
     }
@@ -65,11 +93,13 @@ public final class FeatureTreeNode {
      *            - value of the node
      * @param parent
      *            - parend of the node
+     * @return a new feature
      * @throws FeaturesTreeNodeException
      *             - occurs when parent of the new node has String value
      */
-    public static FeatureTreeNode newInstance(String name, String value,
-            FeatureTreeNode parent) throws FeaturesTreeNodeException {
+    public static FeatureTreeNode newChildInstanceWithValue(String name,
+            String value, FeatureTreeNode parent)
+            throws FeaturesTreeNodeException {
         return new FeatureTreeNode(name, value, parent);
     }
 
