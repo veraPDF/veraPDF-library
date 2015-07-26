@@ -1,7 +1,19 @@
 package org.verapdf.model.impl.pb.cos;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.*;
+import org.apache.pdfbox.cos.COSArray;
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSObject;
+import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDEmbeddedFilesNameTreeNode;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
@@ -13,12 +25,6 @@ import org.verapdf.model.coslayer.CosXRef;
 import org.verapdf.model.impl.pb.pd.PBoxPDDocument;
 import org.verapdf.model.tools.XMPChecker;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 /**
  * Low-level PDF Document object
  *
@@ -26,24 +32,56 @@ import java.util.Set;
  */
 public class PBCosDocument extends PBCosObject implements CosDocument {
 
-    private static final Logger logger = Logger.getLogger(PBCosDocument.class);
+    private static final Logger LOGGER = Logger.getLogger(PBCosDocument.class);
 
+    /**
+     * Constant name for trailer type
+     */
     public static final String TRAILER = "trailer";
+    /**
+     * Constant name for xref type
+     */
     public static final String XREF = "xref";
+    /**
+     * Constant name for indirect objects type
+     */
     public static final String INDIRECT_OBJECTS = "indirectObjects";
+    /**
+     * Constant name for document type
+     */
     public static final String DOCUMENT = "document";
+    /**
+     * Constant name for embedded files type
+     */
     public static final String EMBEDDED_FILES = "EmbeddedFiles";
+    /**
+     * Constant name for ID type
+     */
     public static final String ID = "ID";
 
     private PDDocument pdDocument;
 
     private Long sizeOfDocument = Long.valueOf(-1);
 
+    /**
+     * Construct from base object
+     *
+     * @param baseObject
+     *            the base {@link COSDocument} base object
+     */
     public PBCosDocument(COSDocument baseObject) {
         super(baseObject);
         setType("CosDocument");
     }
 
+    /**
+     * Construct from {@link PDDocument} and length of document
+     *
+     * @param pdDocument
+     *            the {@link PDDocument} to create the instance from
+     * @param length
+     *            the length of the document
+     */
     public PBCosDocument(PDDocument pdDocument, long length) {
         super(pdDocument.getDocument());
         setType("CosDocument");
@@ -51,7 +89,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         sizeOfDocument = Long.valueOf(length);
     }
 
-    /**  Number of indirect objects in the document
+    /** Number of indirect objects in the document
      */
     @Override
     public Long getnrIndirects() {
@@ -61,7 +99,8 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 	/**
 	 * @return version of pdf document
 	 */
-	public Double getversion() {
+	@Override
+    public Double getversion() {
 		return Double.valueOf(((COSDocument) baseObject).getVersion());
 	}
 
@@ -97,6 +136,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
             COSDictionary root = (COSDictionary) ((COSDocument) baseObject).getCatalog().getObject();
             return Boolean.valueOf(root.getItem(COSName.OCPROPERTIES) != null);
         } catch (IOException e) {
+            LOGGER.debug("No document catalog found", e);
             return Boolean.FALSE;
         }
     }
@@ -111,6 +151,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     /**
      * @return ID of first page trailer
      */
+    @Override
     public String getfirstPageID() {
         return getTrailerID((COSArray) ((COSDocument) baseObject).getFirstPageTrailer().getItem(ID));
     }
@@ -118,33 +159,34 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     /**
      * @return ID of last document trailer
      */
+    @Override
     public String getlastID() {
         return getTrailerID((COSArray) ((COSDocument) baseObject).getLastTrailer()
                 .getItem(ID));
     }
 
-    private String getTrailerID(COSArray ids) {
+    private static String getTrailerID(COSArray ids) {
         if (ids != null) {
             StringBuilder builder = new StringBuilder();
             for (COSBase id : ids) {
-				for (Byte aByte : ((COSString) id).getBytes()) {
+				for (byte aByte : ((COSString) id).getBytes()) {
 					builder.append((char) (aByte & 0xFF));
 				}
 				builder.append(' ');
             }
             // need to discard last whitespace
             return builder.toString().substring(0, builder.length() - 1);
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
      * @return true if the current document is linearized
      */
+    @Override
     public Boolean getisLinearized() {
         COSDocument document = (COSDocument) this.baseObject;
-        boolean res = document.getTrailer() != document.getLastTrailer() && document.isLinearized();
+        boolean res = document.getTrailer() != document.getLastTrailer() && document.isLinearized().booleanValue();
         return Boolean.valueOf(res);
     }
 
@@ -196,12 +238,12 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
             }
             getNamesEmbeddedFiles(files, buffer);
         } catch (IOException e) {
-            logger.error("Something wrong with getting embedded files - return empty list. " + e.getMessage());
+            LOGGER.error("Something wrong with getting embedded files - return empty list. " + e.getMessage(), e);
         }
         return files;
     }
 
-    private void getNamesEmbeddedFiles(List<Object> files, COSDictionary buffer) throws IOException {
+    private static void getNamesEmbeddedFiles(List<Object> files, COSDictionary buffer) throws IOException {
         PDEmbeddedFilesNameTreeNode root = null;
         if (buffer != null) {
             root = new PDEmbeddedFilesNameTreeNode(buffer);
@@ -214,7 +256,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         }
     }
 
-    private COSDictionary getCosDictionary(COSBase item) throws IOException {
+    private static COSDictionary getCosDictionary(COSBase item) {
         COSDictionary buffer = null;
         if (item instanceof COSDictionary) {
             buffer = (COSDictionary) item;

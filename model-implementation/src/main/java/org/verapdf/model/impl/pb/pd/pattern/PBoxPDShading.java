@@ -1,5 +1,9 @@
 package org.verapdf.model.impl.pb.pd.pattern;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
@@ -7,19 +11,23 @@ import org.verapdf.model.impl.pb.pd.PBoxPDResources;
 import org.verapdf.model.pdlayer.PDColorSpace;
 import org.verapdf.model.pdlayer.PDShading;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Evgeniy Muravitskiy
  */
 public class PBoxPDShading extends PBoxPDResources implements PDShading {
 
-	public static final Logger logger = Logger.getLogger(PBoxPDShading.class);
+	private static final Logger LOGGER = Logger.getLogger(PBoxPDShading.class);
 
+	/**
+	 * String name for colour space
+	 */
 	public static final String COLOR_SPACE = "colorSpace";
 
+    /**
+     * @param simplePDObject
+     *            a {@link org.apache.pdfbox.pdmodel.graphics.shading.PDShading} used to
+     *            populate the instance
+     */
 	public PBoxPDShading(org.apache.pdfbox.pdmodel.graphics.shading.PDShading simplePDObject) {
 		super(simplePDObject);
 		setType("PDShading");
@@ -50,7 +58,7 @@ public class PBoxPDShading extends PBoxPDResources implements PDShading {
 				colorSpaces.add(ColorSpaceFactory.getColorSpace(cs));
 			}
 		} catch (IOException e) {
-			logger.error("Problems with color space obtaining from shading. " + e.getMessage());
+			LOGGER.error("Problems with color space obtaining from shading. " + e.getMessage(), e);
 		}
 		return colorSpaces;
 	}

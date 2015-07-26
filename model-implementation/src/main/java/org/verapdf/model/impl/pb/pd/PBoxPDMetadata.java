@@ -1,5 +1,9 @@
 package org.verapdf.model.impl.pb.pd;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSStream;
@@ -14,28 +18,39 @@ import org.verapdf.model.impl.pb.xmp.PBXMPPackage;
 import org.verapdf.model.pdlayer.PDMetadata;
 import org.verapdf.model.xmplayer.XMPPackage;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Evgeniy Muravitskiy
  */
 public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
 
-	public static final Logger logger = Logger.getLogger(PBoxPDMetadata.class);
+	private static final Logger LOGGER = Logger.getLogger(PBoxPDMetadata.class);
 
+    /**
+     * String name for XMP Package
+     */
 	public static final String XMP_PACKAGE = "XMPPackage";
+    /**
+     * String name for stream
+     */
 	public static final String STREAM = "stream";
 
 	private Boolean isMainMetadata;
 
+    /**
+     * @param simplePDObject
+     *            a {@link org.apache.pdfbox.pdmodel.common.PDMetadata} used to
+     *            populate the instance
+     * @param isMainMetadata
+     *            a {@link Boolean} that should be true if this is the main
+     *            metadata block
+     */
     public PBoxPDMetadata(org.apache.pdfbox.pdmodel.common.PDMetadata simplePDObject, Boolean isMainMetadata) {
         super(simplePDObject);
 		this.isMainMetadata = isMainMetadata;
         setType("PDMetadata");
     }
 
+    @Override
     public String getFilter() {
 		List<COSName> filters = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject).getFilters();
 		if (filters != null && filters.size() > 0) {
@@ -44,9 +59,8 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
 				result.append(filter.getName()).append(' ');
 			}
 			return result.substring(0, result.length() - 1);
-		} else {
-			return null;
 		}
+        return null;
     }
 
 	@Override
@@ -71,17 +85,17 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
 	private List<XMPPackage> getXMPPackage() {
 		List<XMPPackage> xmp = new ArrayList<>(1);
 		try {
-			COSStream stream = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject).getStream();
-			if (stream != null) {
+		        COSStream stream = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject).getStream();
+		        if (stream != null) {
 				DomXmpParser xmpParser = new DomXmpParser();
 				XMPMetadata metadata = xmpParser.parse(stream.getUnfilteredStream());
-				xmp.add(isMainMetadata ? new PBXMPMainPackage(metadata, true) : new PBXMPPackage(metadata, true));
+				xmp.add(isMainMetadata.booleanValue() ? new PBXMPMainPackage(metadata, true) : new PBXMPPackage(metadata, true));
 			}
 		} catch (XmpParsingException e) {
-			logger.error("Problems with parsing metadata. " + e.getMessage());
+			LOGGER.error("Problems with parsing metadata. " + e.getMessage(), e);
 			xmp.add(new PBXMPPackage(null, false));
 		} catch (IOException e) {
-			logger.error("Metadata stream is closed. " + e.getMessage());
+			LOGGER.error("Metadata stream is closed. " + e.getMessage(), e);
 			xmp.add(new PBXMPPackage(null, false));
 		}
 		return xmp;

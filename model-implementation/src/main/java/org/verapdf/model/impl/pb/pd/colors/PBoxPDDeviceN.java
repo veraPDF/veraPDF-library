@@ -1,14 +1,14 @@
 package org.verapdf.model.impl.pb.pd.colors;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.pdlayer.PDColorSpace;
 import org.verapdf.model.pdlayer.PDDeviceN;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * DeviceN color space
@@ -17,11 +17,22 @@ import java.util.List;
  */
 public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
 
-	public static final Logger logger = Logger.getLogger(PBoxPDDeviceN.class);
+	private static final Logger LOGGER = Logger.getLogger(PBoxPDDeviceN.class);
 
+    /**
+     * String name for annotations
+     */
 	public static final String ALTERNATE = "alternate";
+    /**
+     * String name for device n type
+     */
 	public static final String DEVICE_N_TYPE = "PDDeviceN";
 
+	/**
+	 * @param simplePDObject
+     *            a {@link org.apache.pdfbox.pdmodel.graphics.color.PDDeviceN} used to
+     *            populate the instance
+	 */
 	public PBoxPDDeviceN(org.apache.pdfbox.pdmodel.graphics.color.PDDeviceN simplePDObject) {
 		super(simplePDObject);
 		setType(DEVICE_N_TYPE);
@@ -53,7 +64,7 @@ public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
 				colorSpace.add(space);
 			}
 		} catch (IOException e) {
-			logger.error("Can not get alternate color space from DeviceN. " + e.getMessage());
+			LOGGER.error("Can not get alternate color space from DeviceN. " + e.getMessage(), e);
 		}
 		return colorSpace;
 	}

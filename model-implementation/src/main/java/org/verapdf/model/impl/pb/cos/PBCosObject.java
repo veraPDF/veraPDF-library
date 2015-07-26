@@ -1,5 +1,7 @@
 package org.verapdf.model.impl.pb.cos;
 
+import java.io.IOException;
+
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSObject;
@@ -7,8 +9,6 @@ import org.verapdf.model.GenericModelObject;
 import org.verapdf.model.coslayer.CosObject;
 import org.verapdf.model.tools.IDGenerator;
 import org.verapdf.model.visitor.cos.pb.PBCosVisitor;
-
-import java.io.IOException;
 
 /**
  * Current class is representation of CosObject interface of abstract model.
@@ -25,6 +25,9 @@ public class PBCosObject extends GenericModelObject implements CosObject {
 	private String type = "CosObject";
 	private String id;
 
+	/**
+	 * @param baseObject the {@link COSBase} instance to construct from
+	 */
 	public PBCosObject(COSBase baseObject) {
 		this.baseObject = baseObject;
 		id = IDGenerator.generateID(this.baseObject);
@@ -63,12 +66,11 @@ public class PBCosObject extends GenericModelObject implements CosObject {
 				PBCosVisitor visitor = PBCosVisitor.getInstance();
 				if (base instanceof COSObject) {
 					return (CosObject) visitor.visitFromObject((COSObject) base);
-				} else {
-					return (CosObject) base.accept(visitor);
 				}
+                return (CosObject) base.accept(visitor);
 			}
 		} catch (IOException e) {
-			logger.error("Problems with wrapping pdfbox object \"" + base.toString() + "\". " + e.getMessage());
+			logger.error("Problems with wrapping pdfbox object \"" + base.toString() + "\". " + e.getMessage(), e);
 		}
 		return null;
 	}

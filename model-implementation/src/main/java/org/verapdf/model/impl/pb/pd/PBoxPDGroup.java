@@ -15,13 +15,25 @@ import java.util.List;
  */
 public class PBoxPDGroup extends PBoxPDObject implements PDGroup {
 
-	public static final Logger logger = Logger.getLogger(PBoxPDGroup.class);
+	private static final Logger LOGGER = Logger.getLogger(PBoxPDGroup.class);
 
-	public static final String COLOR_SPACE = "colorSpace";
-	public static final Integer MAX_COLOR_SPACES = Integer.valueOf(1);
+    /**
+     * String name for colour space
+     */
+    public static final String COLOR_SPACE = "colorSpace";
+    /**
+     * String name for a PDGroup type
+     */
 	public static final String GROUP_TYPE = "PDGroup";
 
-	public PBoxPDGroup(org.apache.pdfbox.pdmodel.graphics.form.PDGroup simplePDObject) {
+    private static final int MAX_COLOR_SPACES = 1;
+
+    /**
+     * @param simplePDObject
+     *            a {@link org.apache.pdfbox.pdmodel.graphics.form.PDGroup
+     *            simplePDObject} used to create this instance
+     */
+    public PBoxPDGroup(org.apache.pdfbox.pdmodel.graphics.form.PDGroup simplePDObject) {
 		super(simplePDObject);
 		setType(GROUP_TYPE);
 	}
@@ -57,7 +69,7 @@ public class PBoxPDGroup extends PBoxPDObject implements PDGroup {
 				colorSpaces.add(colorSpace);
 			}
 		} catch (IOException e) {
-			logger.error("Problems with color space obtaining on group. " + e.getMessage());
+			LOGGER.error("Problems with color space obtaining on group. " + e.getMessage(), e);
 		}
 		return colorSpaces;
 	}

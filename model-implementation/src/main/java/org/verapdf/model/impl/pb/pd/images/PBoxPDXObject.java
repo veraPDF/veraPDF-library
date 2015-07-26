@@ -1,7 +1,16 @@
 package org.verapdf.model.impl.pb.pd.images;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.*;
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSObject;
+import org.apache.pdfbox.cos.COSStream;
+import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.PDPostScriptXObject;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
@@ -12,22 +21,35 @@ import org.verapdf.model.impl.pb.cos.PBCosDict;
 import org.verapdf.model.impl.pb.pd.PBoxPDResources;
 import org.verapdf.model.pdlayer.PDXObject;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Evgeniy Muravitskiy
  */
 public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 
-	public static final Logger logger = Logger.getLogger(PBoxPDXObject.class);
+	private static final Logger LOGGER = Logger.getLogger(PBoxPDXObject.class);
 
+    /**
+     * String name for X Object type 
+     */
 	public static final String X_OBJECT_TYPE = "PDXObject";
+    /**
+     * String name for OPI 
+     */
     public static final String OPI = "OPI";
+    /**
+     * String name for S Mask 
+     */
 	public static final String S_MASK ="SMask";
-	public static final Integer MAX_NUMBER_OF_ELEMENTS = Integer.valueOf(1);
+    /**
+     * TODO: appropriate commnet, max number of elements for what?
+     */
+	public static final int MAX_NUMBER_OF_ELEMENTS = 1;
 
+    /**
+     * @param simplePDObject
+     *            a {@link org.apache.pdfbox.pdmodel.graphics.PDXObject} used to
+     *            populate the instance
+     */
     public PBoxPDXObject(org.apache.pdfbox.pdmodel.graphics.PDXObject simplePDObject) {
         super(simplePDObject);
         setType(X_OBJECT_TYPE);
@@ -35,8 +57,14 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 
     @Override
     public String getSubtype() {
-        COSDictionary dict = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject).getCOSStream();
-        return getSubtypeString(dict.getItem(COSName.SUBTYPE));
+        String retVal = "";
+        try (COSStream stream = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject).getCOSStream()) {
+            COSDictionary dict = stream;
+            retVal = getSubtypeString(dict.getItem(COSName.SUBTYPE));
+        } catch (IOException excep) {
+            LOGGER.debug("Problem closing COSStream, ignore and move on", excep);
+        }
+        return retVal;
     }
 
     protected String getSubtypeString(COSBase item) {
@@ -71,8 +99,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 
 	private List<PDXObject> getSMask() {
 		List<PDXObject> mask = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-		try {
-			COSStream cosStream = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject).getCOSStream();
+		try (COSStream cosStream = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject).getCOSStream()) {
 			COSBase smaskDictionary = cosStream.getDictionaryObject(COSName.SMASK);
 			if (smaskDictionary instanceof COSDictionary) {
 				PDXObject xObject = getXObject(smaskDictionary);
@@ -81,7 +108,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 				}
 			}
 		} catch (IOException e) {
-			logger.error("Problems with obtaining SMask. " + e.getMessage());
+			LOGGER.error("Problems with obtaining SMask. " + e.getMessage(), e);
 		}
 		return mask;
 	}
@@ -98,7 +125,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 		return getTypedPDXObject(pbObject);
 	}
 
-	private PDXObject getTypedPDXObject(org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject) {
+	private static PDXObject getTypedPDXObject(org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject) {
 		if (pbObject instanceof PDFormXObject) {
 			return new PBoxPDXForm((PDFormXObject) pbObject);
 		} else if (pbObject instanceof PDImageXObject) {
@@ -116,13 +143,17 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 
     protected List<CosDict> getLinkToDictionary(String key) {
         List<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-        COSDictionary object = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject).getCOSStream();
-        COSBase item = object.getItem(COSName.getPDFName(key));
-        if (item != null) {
-            final COSDictionary itemDictionary = getDictionary(item);
-            if (itemDictionary != null) {
-                list.add(new PBCosDict(itemDictionary));
+        try (COSStream stream = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject).getCOSStream()) {
+            COSDictionary object = stream;
+            COSBase item = object.getItem(COSName.getPDFName(key));
+            if (item != null) {
+                final COSDictionary itemDictionary = getDictionary(item);
+                if (itemDictionary != null) {
+                    list.add(new PBCosDict(itemDictionary));
+                }
             }
+        } catch (IOException excep) {
+            LOGGER.debug("Problem closing COSStream, ignore and move on", excep);
         }
         return list;
     }
