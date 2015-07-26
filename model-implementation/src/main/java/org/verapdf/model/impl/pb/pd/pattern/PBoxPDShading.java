@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class PBoxPDShading extends PBoxPDResources implements PDShading {
 
-	public static final Logger logger = Logger.getLogger(PBoxPDShading.class);
+	private static final Logger LOGGER = Logger.getLogger(PBoxPDShading.class);
 
 	public static final String COLOR_SPACE = "colorSpace";
 
@@ -50,7 +50,7 @@ public class PBoxPDShading extends PBoxPDResources implements PDShading {
 				colorSpaces.add(ColorSpaceFactory.getColorSpace(cs));
 			}
 		} catch (IOException e) {
-			logger.error("Problems with color space obtaining from shading. " + e.getMessage());
+		    LOGGER.error("Problems with color space obtaining from shading. " + e.getMessage(), e);
 		}
 		return colorSpaces;
 	}

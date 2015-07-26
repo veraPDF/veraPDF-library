@@ -1,42 +1,43 @@
 package org.verapdf.model.impl.pb.pd;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSNull;
-import org.apache.pdfbox.pdmodel.*;
 import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.interactive.action.PDPageAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.model.pdlayer.*;
+import org.verapdf.model.pdlayer.PDAction;
+import org.verapdf.model.pdlayer.PDAnnot;
+import org.verapdf.model.pdlayer.PDContentStream;
 import org.verapdf.model.pdlayer.PDGroup;
 import org.verapdf.model.pdlayer.PDPage;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Evgeniy Muravitskiy
  */
 public class PBoxPDPage extends PBoxPDObject implements PDPage {
 
-    public static final Logger logger = Logger.getLogger(PBoxPDPage.class);
+    private static final Logger LOGGER = Logger.getLogger(PBoxPDPage.class);
 
     public static final String ANNOTS = "annots";
     public static final String ACTION = "action";
     public static final String CONTENT_STREAM = "contentStream";
 	public static final String GROUP = "Group";
 
-	public static final Integer MAX_NUMBER_OF_ACTIONS = Integer.valueOf(2);
+	public static final int MAX_NUMBER_OF_ACTIONS = 2;
 
 	public PBoxPDPage(org.apache.pdfbox.pdmodel.PDPage simplePDObject) {
         super((COSObjectable) simplePDObject);
         setType("PDPage");
     }
 
+    @Override
     public List<? extends Object> getLinkedObjects(String link) {
         List<? extends Object> list;
 
@@ -105,7 +106,7 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
                 }
             }
         } catch (IOException e) {
-            logger.error("Problems in obtaining pdfbox PDAnnotations. " + e.getMessage());
+            LOGGER.error("Problems in obtaining pdfbox PDAnnotations. " + e.getMessage(), e);
         }
         return annotations;
     }

@@ -1,20 +1,17 @@
 package org.verapdf.model.impl.pb.pd.colors;
 
-import org.apache.log4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.pdlayer.PDColorSpace;
 import org.verapdf.model.pdlayer.PDIndexed;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Evgeniy Muravitskiy
  */
 public class PBoxPDIndexed extends PBoxPDColorSpace implements PDIndexed {
-
-	public static final Logger logger = Logger.getLogger(PBoxPDIndexed.class);
 
 	public static final String BASE = "base";
 	public static final String INDEXED_TYPE = "PDIndexed";

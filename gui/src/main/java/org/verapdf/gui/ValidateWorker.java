@@ -1,5 +1,6 @@
 package org.verapdf.gui;
 
+import org.apache.log4j.Logger;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.tools.GUIConstants;
@@ -8,9 +9,8 @@ import org.verapdf.validation.logic.Validator;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import javax.swing.*;
+
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Validates PDF in a new threat.
@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
-    private static Logger logger = Logger.getLogger(ValidateWorker.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ValidateWorker.class);
 
     private File pdf;
     private File profile;
@@ -65,7 +65,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
             collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(parent, "Some error in creating features collection.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-            logger.log(Level.SEVERE, "Exception in creating features collection: ", e);
+            LOGGER.error("Exception in creating features collection: ", e);
         }
 
         return info;

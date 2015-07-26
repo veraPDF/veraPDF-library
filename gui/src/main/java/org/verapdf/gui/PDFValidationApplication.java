@@ -1,15 +1,15 @@
 package org.verapdf.gui;
 
+import org.apache.log4j.Logger;
 import org.verapdf.gui.tools.GUIConstants;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Main frame of the PDFA Conformance Checker
@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class PDFValidationApplication extends JFrame {
 
-    private static Logger logger = Logger.getLogger(PDFValidationApplication.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PDFValidationApplication.class);
 
     private AboutPanel aboutPanel;
 
@@ -29,18 +29,19 @@ public class PDFValidationApplication extends JFrame {
      */
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     UIManager.setLookAndFeel(
                             UIManager.getSystemLookAndFeelClassName());
                 } catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException e) {
-                    logger.log(Level.SEVERE, "Exception in configuring UI manager: ", e);
+                    LOGGER.error("Exception in configuring UI manager: ", e);
                 }
                 try {
                     PDFValidationApplication frame = new PDFValidationApplication();
                     frame.setVisible(true);
                 } catch (Exception e) {
-                    logger.log(Level.SEVERE, "Exception: ", e);
+                    LOGGER.error("Exception: ", e);
                 }
             }
         });
@@ -64,11 +65,12 @@ public class PDFValidationApplication extends JFrame {
             aboutPanel = new AboutPanel();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Error in reading logo image.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-            logger.log(Level.SEVERE, "Exception in reading logo image: ", e);
+            LOGGER.error("Exception in reading logo image: ", e);
         }
 
         JMenuItem about = new JMenuItem("About");
         about.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (aboutPanel != null) {
                     aboutPanel.showDialog(PDFValidationApplication.this, "About veraPDF");
@@ -88,7 +90,7 @@ public class PDFValidationApplication extends JFrame {
             logoPanel = new MiniLogoPanel(GUIConstants.LOGO_NAME);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(PDFValidationApplication.this, "Error in creating mini logo.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-            logger.log(Level.SEVERE, "Exception in creating mini logo: ", e);
+            LOGGER.error("Exception in creating mini logo: ", e);
         }
 
         contentPane.add(logoPanel);
@@ -98,7 +100,7 @@ public class PDFValidationApplication extends JFrame {
             checkerPanel = new CheckerPanel();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(PDFValidationApplication.this, "Error in loading xml or html image.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-            logger.log(Level.SEVERE, "Exception in loading xml or html image: ", e);
+            LOGGER.error("Exception in loading xml or html image: ", e);
         }
         contentPane.add(checkerPanel);
     }

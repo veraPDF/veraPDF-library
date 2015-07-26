@@ -13,15 +13,15 @@ import java.io.InputStream;
  */
 public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
 
-    public static final Logger logger = Logger.getLogger(PBoxICCProfile.class);
+    private static final Logger LOGGER = Logger.getLogger(PBoxICCProfile.class);
 
-	public static final Integer HEADER_LENGTH = Integer.valueOf(128);
-    public static final Integer DEVICE_CLASS_OFFSET = Integer.valueOf(12);
-    public static final Integer COLOR_SPACE_OFFSET = Integer.valueOf(16);
-    public static final Integer REQUIRED_LENGTH = Integer.valueOf(4);
-	public static final Integer VERSION_LENGTH = Integer.valueOf(3);
-	public static final Integer VERSION_BYTE = Integer.valueOf(8);
-	public static final Integer SUBVERSION_BYTE = Integer.valueOf(9);
+	public static final int HEADER_LENGTH = 128;
+    public static final int DEVICE_CLASS_OFFSET = 12;
+    public static final int COLOR_SPACE_OFFSET = 16;
+    public static final int REQUIRED_LENGTH = 4;
+	public static final int VERSION_LENGTH = 3;
+	public static final int VERSION_BYTE = 8;
+	public static final int SUBVERSION_BYTE = 9;
 
 	private byte[] profileHeader;
 	private InputStream profileStream;
@@ -37,8 +37,8 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
     }
 
 	private void initializeProfileHeader() throws IOException {
-		Integer available = Integer.valueOf(this.profileStream.available());
-		Integer size = available > HEADER_LENGTH ? HEADER_LENGTH : available;
+		int available = this.profileStream.available();
+		int size = available > HEADER_LENGTH ? HEADER_LENGTH : available;
 
 		this.profileHeader = new byte[size];
 		this.profileStream.mark(size);
@@ -57,7 +57,8 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
 	/**
 	 * @return number of colorants for ICC profile, described in profile dictionary
 	 */
-	public Long getN() {
+	@Override
+    public Long getN() {
 		return dictionaryNumberOfColors;
 	}
 
@@ -69,15 +70,14 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
         return getSubArray(COLOR_SPACE_OFFSET, REQUIRED_LENGTH);
     }
 
-    private String getSubArray(Integer start, Integer length) {
+    private String getSubArray(int start, int length) {
         if (start + length <= profileHeader.length) {
             byte[] buffer = new byte[length];
             System.arraycopy(profileHeader, start, buffer, 0, length);
             return new String(buffer);
-        } else {
-            logger.error("Length of icc profile less than " + (start + length));
-            return null;
         }
+        LOGGER.error("Length of icc profile less than " + (start + length));
+        return null;
     }
 
 	/**
@@ -91,13 +91,13 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
             version.append(profileHeader[SUBVERSION_BYTE] >>> REQUIRED_LENGTH);
 
             return Double.valueOf(version.toString());
-        } else {
-            logger.error("ICC profile contain less than 10 bytes of data.");
-            return null;
         }
+        LOGGER.error("ICC profile contain less than 10 bytes of data.");
+        return null;
     }
 
     // Custom implementation for another users
+    @Override
     public Boolean getisValid() {
         return Boolean.TRUE;
     }

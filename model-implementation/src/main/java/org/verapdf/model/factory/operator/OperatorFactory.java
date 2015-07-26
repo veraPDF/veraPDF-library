@@ -1,5 +1,11 @@
 package org.verapdf.model.factory.operator;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Stack;
+
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSName;
@@ -13,16 +19,42 @@ import org.apache.pdfbox.pdmodel.graphics.shading.PDShading;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingIntent;
 import org.verapdf.model.impl.pb.operator.color.PBOpColor;
-import org.verapdf.model.impl.pb.operator.generalgs.*;
+import org.verapdf.model.impl.pb.operator.generalgs.PBOp_J_line_cap;
+import org.verapdf.model.impl.pb.operator.generalgs.PBOp_M_miter_limit;
+import org.verapdf.model.impl.pb.operator.generalgs.PBOp_d;
+import org.verapdf.model.impl.pb.operator.generalgs.PBOp_gs;
+import org.verapdf.model.impl.pb.operator.generalgs.PBOp_i;
+import org.verapdf.model.impl.pb.operator.generalgs.PBOp_j_line_join;
+import org.verapdf.model.impl.pb.operator.generalgs.PBOp_ri;
+import org.verapdf.model.impl.pb.operator.generalgs.PBOp_w_line_width;
 import org.verapdf.model.impl.pb.operator.inlineimage.PBOpInlineImage;
-import org.verapdf.model.impl.pb.operator.markedcontent.*;
+import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_BDC;
+import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_BMC;
+import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_DP;
+import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_EMC;
+import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_MP;
 import org.verapdf.model.impl.pb.operator.opclip.PBOp_WStar;
 import org.verapdf.model.impl.pb.operator.opclip.PBOp_W_clip;
 import org.verapdf.model.impl.pb.operator.opcompability.PBOp_BX;
 import org.verapdf.model.impl.pb.operator.opcompability.PBOp_EX;
 import org.verapdf.model.impl.pb.operator.opcompability.PBOp_Undefined;
-import org.verapdf.model.impl.pb.operator.pathconstruction.*;
-import org.verapdf.model.impl.pb.operator.pathpaint.*;
+import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_c;
+import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_h;
+import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_l;
+import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_m_moveto;
+import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_re;
+import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_v;
+import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_y;
+import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_BStar_eofill_stroke;
+import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_B_fill_stroke;
+import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_FStar;
+import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_F_fill_obsolete;
+import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_S_stroke;
+import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_b_closepath_fill_stroke;
+import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_bstar_closepath_eofill_stroke;
+import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_f_fill;
+import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_n;
+import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_s_close_stroke;
 import org.verapdf.model.impl.pb.operator.shading.PBOp_sh;
 import org.verapdf.model.impl.pb.operator.specialgs.PBOp_Q_grestore;
 import org.verapdf.model.impl.pb.operator.specialgs.PBOp_cm;
@@ -42,18 +74,12 @@ import org.verapdf.model.impl.pb.operator.xobject.PBOp_Do;
 import org.verapdf.model.operator.Operator;
 import org.verapdf.model.tools.constants.Operators;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
-
 /**
  * @author Timur Kamalov
  */
 public final class OperatorFactory {
 
-	public static final Logger logger = Logger.getLogger(OperatorFactory.class);
+	private static final Logger LOGGER = Logger.getLogger(OperatorFactory.class);
 
 	public static Operator parseOperator(org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
 										 PDResources resources, List<COSBase> arguments,
@@ -246,7 +272,7 @@ public final class OperatorFactory {
 				return new PBOp_Q_grestore(arguments);
 			case Operators.Q_GSAVE:
 				graphicStateStack.push(graphicState.clone());
-				return new PBOp_q_gsave(arguments, graphicStateStack.size());
+				return new PBOp_q_gsave(arguments, Integer.valueOf(graphicStateStack.size()));
 
 			// XOBJECT
 			case Operators.DO:
@@ -282,7 +308,7 @@ public final class OperatorFactory {
 				String value = ((RenderingIntent) pdfBoxToken).stringValue();
 				arguments.add(COSName.getPDFName(value));
 			} else {
-				logger.error("Unexpected type of object in tokens: " + pdfBoxToken.getClass().getName());
+				LOGGER.error("Unexpected type of object in tokens: " + pdfBoxToken.getClass().getName());
 			}
 		}
 		return result;
@@ -292,16 +318,15 @@ public final class OperatorFactory {
 		COSBase lastElement = arguments.size() > 0 ? arguments.get(arguments.size() - 1) : null;
 		if (lastElement instanceof COSName) {
 			return (COSName) lastElement;
-		} else {
-			return null;
 		}
+        return null;
 	}
 
 	private static PDColorSpace getColorSpaceFromResources(PDResources resources, COSName colorSpace) {
 		try {
 			return resources.getColorSpace(colorSpace);
 		} catch (IOException e) {
-			logger.error("Problems with resources obtaining for " + colorSpace + ". " + e.getMessage());
+			LOGGER.error("Problems with resources obtaining for " + colorSpace + ". " + e.getMessage(), e);
 			return null;
 		}
 	}
@@ -310,7 +335,7 @@ public final class OperatorFactory {
 		try {
 			return resources.getShading(shading);
 		} catch (IOException e) {
-			logger.error("Problems with resources obtaining for " + shading + ". " + e.getMessage());
+			LOGGER.error("Problems with resources obtaining for " + shading + ". " + e.getMessage(), e);
 			return null;
 		}
 	}
@@ -319,7 +344,7 @@ public final class OperatorFactory {
 		try {
 			return resources.getXObject(xobject);
 		} catch (IOException e) {
-			logger.error("Problems with resources obtaining for " + xobject + ". " + e.getMessage());
+			LOGGER.error("Problems with resources obtaining for " + xobject + ". " + e.getMessage(), e);
 			return null;
 		}
 	}

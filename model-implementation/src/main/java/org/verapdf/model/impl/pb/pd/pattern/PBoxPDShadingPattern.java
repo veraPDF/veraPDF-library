@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class PBoxPDShadingPattern extends PBoxPDPattern implements PDShadingPattern {
 
-	public static final Logger logger = Logger.getLogger(PBoxPDShadingPattern.class);
+	private static final Logger LOGGER = Logger.getLogger(PBoxPDShadingPattern.class);
 
 	public static final String SHADING = "shading";
 
@@ -25,18 +25,7 @@ public class PBoxPDShadingPattern extends PBoxPDPattern implements PDShadingPatt
 
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
-
-		switch (link) {
-			case SHADING:
-				list = getShading();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
-
-		return list;
+		return  SHADING.equals(link) ? getShading() : super.getLinkedObjects(link);
 	}
 
 	private List<PDShading> getShading() {
@@ -48,7 +37,7 @@ public class PBoxPDShadingPattern extends PBoxPDPattern implements PDShadingPatt
 				shadings.add(new PBoxPDShading(shading));
 			}
 		} catch (IOException e) {
-			logger.error("Can`t get shading pattern. " + e.getMessage());
+			LOGGER.error("Can`t get shading pattern. " + e.getMessage(), e);
 		}
 		return shadings;
 	}

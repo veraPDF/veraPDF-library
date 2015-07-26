@@ -48,26 +48,28 @@ public final class ValidationProfileSignatureChecker {
 
     private void parseProfile() throws IOException, XMLStreamException, WrongProfileEncodingException {
         XMLInputFactory factory = XMLInputFactory.newInstance();
-        XMLStreamReader streamReader = factory.createXMLStreamReader(new FileInputStream(profile));
-
-        if (!UTF8.equalsIgnoreCase(streamReader.getEncoding())) {
-            streamReader.close();
-            throw new WrongProfileEncodingException("The given profile has not utf-8 encoding: " + profile.getCanonicalPath());
-        }
-        while (streamReader.hasNext()) {
-            streamReader.next();
-            if (streamReader.isStartElement() && HASH_NAME.equals(streamReader.getLocalName())) {
-                Location location = streamReader.getLocation();
-                startOfHash = location.getCharacterOffset();
-                currentHashAsString = streamReader.getElementText().trim();
+        try (FileInputStream profileStream = new FileInputStream(profile)) {
+            XMLStreamReader streamReader = factory.createXMLStreamReader(profileStream);
+    
+            if (!UTF8.equalsIgnoreCase(streamReader.getEncoding())) {
+                streamReader.close();
+                throw new WrongProfileEncodingException("The given profile has not utf-8 encoding: " + profile.getCanonicalPath());
             }
-            if (streamReader.isEndElement() && HASH_NAME.equals(streamReader.getLocalName())) {
-                Location location = streamReader.getLocation();
-                endOfHash = location.getCharacterOffset();
-                if (endOfHash != startOfHash) {
-                    startOfHash -= HASH_OPEN_TAG.length();
-                } else {
-                    startOfHash -= HASH_EMPTY_TAG.length();
+            while (streamReader.hasNext()) {
+                streamReader.next();
+                if (streamReader.isStartElement() && HASH_NAME.equals(streamReader.getLocalName())) {
+                    Location location = streamReader.getLocation();
+                    startOfHash = location.getCharacterOffset();
+                    currentHashAsString = streamReader.getElementText().trim();
+                }
+                if (streamReader.isEndElement() && HASH_NAME.equals(streamReader.getLocalName())) {
+                    Location location = streamReader.getLocation();
+                    endOfHash = location.getCharacterOffset();
+                    if (endOfHash != startOfHash) {
+                        startOfHash -= HASH_OPEN_TAG.length();
+                    } else {
+                        startOfHash -= HASH_EMPTY_TAG.length();
+                    }
                 }
             }
         }
@@ -98,15 +100,15 @@ public final class ValidationProfileSignatureChecker {
     }
 
     private static String byteArrayToHex(byte[] hash) {
-        Formatter formatter = new Formatter();
-        for (byte b : hash) {
-            formatter.format("%02x", b);
+        try (Formatter formatter = new Formatter()) {
+            for (byte b : hash) {
+                formatter.format("%02x", Byte.valueOf(b));
+            }
+            return formatter.toString();
         }
-        formatter.close();
-        return formatter.toString();
     }
 
-    private byte[] getSHA1(byte[] source) {
+    private static byte[] getSHA1(byte[] source) {
         byte[] res = null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
@@ -115,11 +117,12 @@ public final class ValidationProfileSignatureChecker {
             // SHA-1 algorithm exists, so do nothing
             /**
              * cfw
-             * TODO: Conversely if it doesn't exist (which is the only way this block is hit)
+             * Conversely if it doesn't exist (which is the only way this block is hit)
              * something is badly amiss, I'd suggest wrapping and throwing a runtime
              * IllegalStateException if this is ever hit.
              * e.g. throw new IllegalStateException("No SHA1 algorithm detected", e);
              */
+            throw new IllegalStateException("Required JRE SHA-1 algorithm not found", e);
         }
 
         return res;
@@ -161,6 +164,7 @@ public final class ValidationProfileSignatureChecker {
      * Generating the file's hash and signing the file
      *
      * @param profile - the file for sign
+     * @return a new {@link ValidationProfileSignatureChecker} instance
      * @throws IOException                   - if an I/O error occurs reading from the file's path stream
      * @throws XMLStreamException            - error in parsing profile
      * @throws MissedHashTagException        - occurs when there is no hash element in the given profile
@@ -170,14 +174,12 @@ public final class ValidationProfileSignatureChecker {
     public static ValidationProfileSignatureChecker newInstance(File profile) throws MissedHashTagException, XMLStreamException, IOException, WrongProfileEncodingException, NullProfileException {
         if (profile == null) {
             throw new NullProfileException("Null pointer to the profile is used for creating signature checker.");
-        } else {
-
-            ValidationProfileSignatureChecker checker = new ValidationProfileSignatureChecker(profile);
-            checker.parseProfile();
-            byte[] source = checker.getBytesForHash();
-            checker.realHashAsBytes = checker.getSHA1(source);
-            checker.realHashAsString = byteArrayToHex(checker.realHashAsBytes);
-            return checker;
         }
+        ValidationProfileSignatureChecker checker = new ValidationProfileSignatureChecker(profile);
+        checker.parseProfile();
+        byte[] source = checker.getBytesForHash();
+        checker.realHashAsBytes = ValidationProfileSignatureChecker.getSHA1(source);
+        checker.realHashAsString = byteArrayToHex(checker.realHashAsBytes);
+        return checker;
     }
 }

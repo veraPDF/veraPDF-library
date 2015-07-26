@@ -1,5 +1,10 @@
 package org.verapdf.model.impl.pb.pd.colors;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.common.PDStream;
@@ -8,11 +13,6 @@ import org.verapdf.model.external.ICCInputProfile;
 import org.verapdf.model.impl.pb.external.PBoxICCInputProfile;
 import org.verapdf.model.pdlayer.PDICCBased;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * ICCBased color space
  *
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class PBoxPDICCBased extends PBoxPDColorSpace implements PDICCBased {
 
-	public static final Logger logger = Logger.getLogger(PBoxPDICCBased.class);
+	private static final Logger LOGGER = Logger.getLogger(PBoxPDICCBased.class);
 
 	public static final String ICC_PROFILE = "iccProfile";
 	public static final String ICC_BASED_TYPE = "PDICCBased";
@@ -53,10 +53,10 @@ public class PBoxPDICCBased extends PBoxPDColorSpace implements PDICCBased {
 			InputStream stream = pdStream.createInputStream();
 			long N = pdStream.getStream().getLong(COSName.N);
 			if (stream != null && stream.available() > 0) {
-				inputProfile.add(new PBoxICCInputProfile(stream, N != -1 ? N : null));
+				inputProfile.add(new PBoxICCInputProfile(stream, N != -1 ? Long.valueOf(N) : null));
 			}
 		} catch (IOException e) {
-			logger.error("Can not get input profile from ICCBased. " + e.getMessage());
+			LOGGER.error("Can not get input profile from ICCBased. " + e.getMessage(), e);
 		}
 		return inputProfile;
 	}

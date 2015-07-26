@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class PBoxPDContentStream extends PBoxPDObject implements PDContentStream {
 
-    public static final Logger logger = Logger.getLogger(PBoxPDContentStream.class);
+    private static final Logger LOGGER = Logger.getLogger(PBoxPDContentStream.class);
     public static final String OPERATORS = "operators";
 	public static final String CONTENT_STREAM_TYPE = "PDContentStream";
 
@@ -44,11 +44,11 @@ public class PBoxPDContentStream extends PBoxPDObject implements PDContentStream
     private List<Operator> getOperators() {
         List<Operator> result = new ArrayList<>();
         try {
-            PDFStreamParser streamParser = new PDFStreamParser(contentStream.getContentStream(), Boolean.TRUE);
+            PDFStreamParser streamParser = new PDFStreamParser(contentStream.getContentStream(), true);
             streamParser.parse();
             result = OperatorFactory.parseOperators(streamParser.getTokens(), contentStream.getResources());
         } catch (IOException e) {
-            logger.error("Error while parsing content stream. " + e.getMessage());
+            LOGGER.error("Error while parsing content stream. " + e.getMessage(), e);
         }
         return result;
     }
