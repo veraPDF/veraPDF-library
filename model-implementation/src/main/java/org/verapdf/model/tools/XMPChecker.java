@@ -36,7 +36,7 @@ import java.util.Map;
  */
 public final class XMPChecker {
 
-    private static final Logger logger = Logger.getLogger(XMPChecker.class);
+    private static final Logger LOGGER = Logger.getLogger(XMPChecker.class);
 
     private static final String TITLE = "Title";
     private static final String SUBJECT = "Subject";
@@ -46,7 +46,7 @@ public final class XMPChecker {
     private static final String CREATOR = "Creator";
     private static final String CREATION_DATE = "CreationDate";
     private static final String MODIFICATION_DATE = "ModDate";
-    private static final Integer MAX_REQUIRED_RECORDS = Integer.valueOf(8);
+    private static final int MAX_REQUIRED_RECORDS = 8;
 
     private XMPChecker() {
 
@@ -80,9 +80,9 @@ public final class XMPChecker {
                 return checkMatch(info, properties);
             }
         } catch (IOException e) {
-            logger.error("Problems with document parsing or structure. " + e.getMessage());
+            LOGGER.error("Problems with document parsing or structure. " + e.getMessage(), e);
         } catch (XmpParsingException e) {
-            logger.error("Problems with XMP parsing. " + e.getMessage());
+            LOGGER.error("Problems with XMP parsing. " + e.getMessage(), e);
         }
 
         return Boolean.FALSE;
@@ -93,9 +93,8 @@ public final class XMPChecker {
         final COSObject metaObj = (COSObject) catalog.getItem(COSName.METADATA);
         if (metaObj != null && metaObj.getObject() instanceof COSStream) {
             return (COSStream) metaObj.getObject();
-        } else {
-            return null;
         }
+        return null;
     }
 
     private static COSDictionary getInformationDictionary(COSDocument document) {
@@ -171,18 +170,17 @@ public final class XMPChecker {
     }
 
     private static Boolean checkMatch(COSDictionary info, Map<String, Object> properties) {
-        if ((checkProperty(info, properties, TITLE)) &&
-                (checkProperty(info, properties, SUBJECT)) &&
-                (checkProperty(info, properties, AUTHOR)) &&
-                (checkProperty(info, properties, KEYWORDS)) &&
-                (checkProperty(info, properties, PRODUCER)) &&
-                (checkProperty(info, properties, CREATOR)) &&
-                (checkProperty(info, properties, CREATION_DATE)) &&
-                (checkProperty(info, properties, MODIFICATION_DATE))) {
+        if ((checkProperty(info, properties, TITLE)).booleanValue() &&
+                (checkProperty(info, properties, SUBJECT)).booleanValue() &&
+                (checkProperty(info, properties, AUTHOR)).booleanValue() &&
+                (checkProperty(info, properties, KEYWORDS)).booleanValue() &&
+                (checkProperty(info, properties, PRODUCER)).booleanValue() &&
+                (checkProperty(info, properties, CREATOR)).booleanValue() &&
+                (checkProperty(info, properties, CREATION_DATE)).booleanValue() &&
+                (checkProperty(info, properties, MODIFICATION_DATE)).booleanValue()) {
             return Boolean.TRUE;
-        } else {
-            return Boolean.FALSE;
         }
+        return Boolean.FALSE;
     }
 
     private static Boolean checkProperty(COSDictionary info, Map<String, Object> properties, String checksRule) {

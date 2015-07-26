@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 
-    public static final Logger logger = Logger.getLogger(PBoxPDXImage.class);
+    private static final Logger LOGGER = Logger.getLogger(PBoxPDXImage.class);
 
     public static final String IMAGE_CS = "imageCS";
     public static final String ALTERNATES = "Alternates";
@@ -78,7 +78,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
                 colorSpaces.add(buffer);
             }
         } catch (IOException e) {
-            logger.error("Problems with color space obtaining from Image XObject. " + e.getMessage());
+            LOGGER.error("Problems with color space obtaining from Image XObject. " + e.getMessage(), e);
         }
         return colorSpaces;
     }
@@ -113,7 +113,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
                     alternates.add(new PBoxPDXImage(imageXObject));
                 }
             } catch (IOException e) {
-                logger.error("Error in creating Alternate XObject. " + e.getMessage());
+                LOGGER.error("Error in creating Alternate XObject. " + e.getMessage(), e);
             }
         }
     }

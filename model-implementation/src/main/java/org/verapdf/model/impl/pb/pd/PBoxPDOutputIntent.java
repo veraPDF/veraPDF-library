@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
 
-    public static final Logger logger = Logger.getLogger(PBoxPDOutputIntent.class);
+    private static final Logger LOGGER = Logger.getLogger(PBoxPDOutputIntent.class);
 	public static final String DEST_PROFILE = "destProfile";
 	public static final String OUTPUT_INTENT_TYPE = "PDOutputIntent";
 
@@ -26,7 +26,8 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
         setType(OUTPUT_INTENT_TYPE);
     }
 
-	public String getdestOutputProfileRef() {
+	@Override
+    public String getdestOutputProfileRef() {
 		COSDictionary dictionary = (COSDictionary) (simplePDObject).getCOSObject();
 		COSBase item = dictionary.getItem(COSName.DEST_OUTPUT_PROFILE);
 		if (item instanceof COSObject) {
@@ -34,9 +35,8 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
 			buffer.append(((COSObject) item).getObjectNumber()).append(' ');
 			buffer.append(((COSObject) item).getGenerationNumber());
 			return buffer.toString();
-		} else {
-			return null;
 		}
+        return null;
 	}
 
     @Override
@@ -70,7 +70,7 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
                 unfilteredStream.close();
             }
         } catch (IOException e) {
-            logger.error("Can not read dest output profile. " + e.getMessage());
+            LOGGER.error("Can not read dest output profile. " + e.getMessage(), e);
         }
         return profile;
     }

@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public final class ModelLoader {
 
-	private static final Logger logger = Logger.getLogger(ModelLoader.class);
+	private static final Logger LOGGER = Logger.getLogger(ModelLoader.class);
 
 	private File file;
 	private PDDocument document;
@@ -35,9 +35,9 @@ public final class ModelLoader {
 	public PDDocument getPDDocument() throws IOException {
 		if (document == null) {
 			if (!file.exists() || !file.isFile()) {
-				logger.error("Invalid path to document '" + file.getPath() + "'. File does not exist or not a file.");
+				LOGGER.error("Invalid path to document '" + file.getPath() + "'. File does not exist or not a file.");
 			} else {
-				document = PDDocument.load(file, Boolean.FALSE, Boolean.TRUE);
+				document = PDDocument.load(file, false, true);
 			}
 		}
 
@@ -56,9 +56,8 @@ public final class ModelLoader {
 		}
 		if (document == null) {
 			return null;
-		} else {
-			return new PBCosDocument(document, file.length());
 		}
+        return new PBCosDocument(document, file.length());
 	}
 
 	/**
@@ -76,7 +75,7 @@ public final class ModelLoader {
 		}
 
 		Object root;
-		PDDocument document = PDDocument.load(file, Boolean.FALSE, Boolean.TRUE);
+		PDDocument document = PDDocument.load(file, false, true);
 		root = new PBCosDocument(document, file.length());
 		return root;
 	}

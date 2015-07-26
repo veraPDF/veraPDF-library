@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
 
-	public static final Logger logger = Logger.getLogger(PBoxPDDeviceN.class);
+	private static final Logger LOGGER = Logger.getLogger(PBoxPDDeviceN.class);
 
 	public static final String ALTERNATE = "alternate";
 	public static final String DEVICE_N_TYPE = "PDDeviceN";
@@ -53,7 +53,7 @@ public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
 				colorSpace.add(space);
 			}
 		} catch (IOException e) {
-			logger.error("Can not get alternate color space from DeviceN. " + e.getMessage());
+			LOGGER.error("Can not get alternate color space from DeviceN. " + e.getMessage(), e);
 		}
 		return colorSpace;
 	}

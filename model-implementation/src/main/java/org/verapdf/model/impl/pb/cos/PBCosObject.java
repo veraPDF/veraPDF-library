@@ -18,7 +18,7 @@ import java.io.IOException;
  */
 public class PBCosObject extends GenericModelObject implements CosObject {
 
-	private static Logger logger = Logger.getLogger(PBCosObject.class);
+	private static final Logger LOGGER = Logger.getLogger(PBCosObject.class);
 
 	protected COSBase baseObject;
 
@@ -63,12 +63,11 @@ public class PBCosObject extends GenericModelObject implements CosObject {
 				PBCosVisitor visitor = PBCosVisitor.getInstance();
 				if (base instanceof COSObject) {
 					return (CosObject) visitor.visitFromObject((COSObject) base);
-				} else {
-					return (CosObject) base.accept(visitor);
 				}
+                return (CosObject) base.accept(visitor);
 			}
 		} catch (IOException e) {
-			logger.error("Problems with wrapping pdfbox object \"" + base.toString() + "\". " + e.getMessage());
+			LOGGER.error("Problems with wrapping pdfbox object \"" + base.toString() + "\". " + e.getMessage(), e);
 		}
 		return null;
 	}

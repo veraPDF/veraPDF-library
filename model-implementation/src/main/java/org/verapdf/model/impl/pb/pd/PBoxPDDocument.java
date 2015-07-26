@@ -20,7 +20,7 @@ import java.util.*;
  */
 public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
-    public static final Logger logger = Logger.getLogger(PBoxPDDocument.class);
+    private static final Logger LOGGER = Logger.getLogger(PBoxPDDocument.class);
 
     public static final String PAGES = "pages";
     public static final String METADATA = "metadata";
@@ -30,7 +30,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 	public static final String OPEN_ACTION = "OpenAction";
 	public static final String OUTLINES = "Outlines";
 
-	public static final Integer MAX_NUMBER_OF_ACTIONS = Integer.valueOf(5);
+	public static final int MAX_NUMBER_OF_ACTIONS = 5;
 	public static final String PD_DOCUMENT_TYPE = "PDDocument";
 
 	public PBoxPDDocument(org.apache.pdfbox.pdmodel.PDDocument document) {
@@ -119,7 +119,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 				addAction(actions, (org.apache.pdfbox.pdmodel.interactive.action.PDAction) openAction);
 			}
 		} catch (IOException e) {
-			logger.error("Problems with open action obtaining. " + e.getMessage());
+			LOGGER.error("Problems with open action obtaining. " + e.getMessage(), e);
 		}
 		return actions;
 	}

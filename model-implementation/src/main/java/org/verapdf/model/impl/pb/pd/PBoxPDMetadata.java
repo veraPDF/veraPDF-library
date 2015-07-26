@@ -23,12 +23,12 @@ import java.util.List;
  */
 public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
 
-	public static final Logger logger = Logger.getLogger(PBoxPDMetadata.class);
+	private static final Logger LOGGER = Logger.getLogger(PBoxPDMetadata.class);
 
 	public static final String XMP_PACKAGE = "XMPPackage";
 	public static final String STREAM = "stream";
 
-	private Boolean isMainMetadata;
+	private boolean isMainMetadata;
 
     public PBoxPDMetadata(org.apache.pdfbox.pdmodel.common.PDMetadata simplePDObject, Boolean isMainMetadata) {
         super(simplePDObject);
@@ -36,17 +36,17 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
         setType("PDMetadata");
     }
 
+    @Override
     public String getFilter() {
 		List<COSName> filters = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject).getFilters();
-		if (filters != null && filters.size() > 0) {
+		if (filters != null && !filters.isEmpty()) {
 			StringBuilder result = new StringBuilder();
 			for (COSName filter : filters) {
 				result.append(filter.getName()).append(' ');
 			}
 			return result.substring(0, result.length() - 1);
-		} else {
-			return null;
 		}
+        return null;
     }
 
 	@Override
@@ -78,10 +78,10 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
 				xmp.add(isMainMetadata ? new PBXMPMainPackage(metadata, true) : new PBXMPPackage(metadata, true));
 			}
 		} catch (XmpParsingException e) {
-			logger.error("Problems with parsing metadata. " + e.getMessage());
+			LOGGER.error("Problems with parsing metadata. " + e.getMessage(), e);
 			xmp.add(new PBXMPPackage(null, false));
 		} catch (IOException e) {
-			logger.error("Metadata stream is closed. " + e.getMessage());
+			LOGGER.error("Metadata stream is closed. " + e.getMessage(), e);
 			xmp.add(new PBXMPPackage(null, false));
 		}
 		return xmp;

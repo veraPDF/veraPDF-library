@@ -1,20 +1,17 @@
 package org.verapdf.model.impl.pb.operator.shading;
 
-import org.apache.log4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.pdfbox.cos.COSBase;
 import org.verapdf.model.impl.pb.pd.pattern.PBoxPDShading;
 import org.verapdf.model.operator.Op_sh;
 import org.verapdf.model.pdlayer.PDShading;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Timur Kamalov
  */
 public class PBOp_sh extends PBOpShading implements Op_sh {
-
-	public static final Logger logger = Logger.getLogger(PBOp_sh.class);
 
     public static final String OP_SH_TYPE = "Op_sh";
 

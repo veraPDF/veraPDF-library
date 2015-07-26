@@ -1,7 +1,16 @@
 package org.verapdf.model.impl.pb.pd.images;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.*;
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSObject;
+import org.apache.pdfbox.cos.COSStream;
+import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.PDPostScriptXObject;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
@@ -12,21 +21,17 @@ import org.verapdf.model.impl.pb.cos.PBCosDict;
 import org.verapdf.model.impl.pb.pd.PBoxPDResources;
 import org.verapdf.model.pdlayer.PDXObject;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Evgeniy Muravitskiy
  */
 public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 
-	public static final Logger logger = Logger.getLogger(PBoxPDXObject.class);
+	private static final Logger LOGGER = Logger.getLogger(PBoxPDXObject.class);
 
 	public static final String X_OBJECT_TYPE = "PDXObject";
     public static final String OPI = "OPI";
 	public static final String S_MASK ="SMask";
-	public static final Integer MAX_NUMBER_OF_ELEMENTS = Integer.valueOf(1);
+	public static final int MAX_NUMBER_OF_ELEMENTS = 1;
 
     public PBoxPDXObject(org.apache.pdfbox.pdmodel.graphics.PDXObject simplePDObject) {
         super(simplePDObject);
@@ -81,7 +86,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 				}
 			}
 		} catch (IOException e) {
-			logger.error("Problems with obtaining SMask. " + e.getMessage());
+			LOGGER.error("Problems with obtaining SMask. " + e.getMessage(), e);
 		}
 		return mask;
 	}
@@ -98,7 +103,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 		return getTypedPDXObject(pbObject);
 	}
 
-	private PDXObject getTypedPDXObject(org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject) {
+	private static PDXObject getTypedPDXObject(org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject) {
 		if (pbObject instanceof PDFormXObject) {
 			return new PBoxPDXForm((PDFormXObject) pbObject);
 		} else if (pbObject instanceof PDImageXObject) {
