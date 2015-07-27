@@ -1,10 +1,9 @@
 package org.verapdf.gui;
 
-import org.verapdf.gui.tools.GUIConstants;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
@@ -13,6 +12,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import javax.imageio.ImageIO;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import org.verapdf.gui.tools.GUIConstants;
+
 /**
  * Panel with partners logo
  *
@@ -20,7 +25,11 @@ import java.util.Properties;
  */
 public class PartnersPanel extends JPanel {
 
-    private final BufferedImage partnersLogo;
+    /**
+     * ID for serialisation
+     */
+    private static final long serialVersionUID = -5926089530817358566L;
+    private final transient BufferedImage partnersLogo;
     private Color background;
     private JLabel consortium;
     private JLabel version;
@@ -56,8 +65,9 @@ public class PartnersPanel extends JPanel {
      * @throws IOException - throws when there is a problem with reading image from the input stream
      */
     public PartnersPanel(String logoName, Color backgroundColor) throws IOException {
-        InputStream is = getClass().getClassLoader().getResourceAsStream(logoName);
-        partnersLogo = ImageIO.read(is);
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(logoName)) {
+            partnersLogo = ImageIO.read(is);
+        }
         this.background = backgroundColor;
         this.setLayout(null);
 

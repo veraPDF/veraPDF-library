@@ -1,5 +1,6 @@
 package org.verapdf.features.pb.objects;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
@@ -16,6 +17,9 @@ import java.io.IOException;
  * @author Maksim Bezrukov
  */
 public class PBMetadataFeaturesObject implements IFeaturesObject {
+
+    private static final Logger LOGGER = Logger
+            .getLogger(PBMetadataFeaturesObject.class);
 
     private PDMetadata metadata;
 
@@ -46,20 +50,20 @@ public class PBMetadataFeaturesObject implements IFeaturesObject {
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException{
         if (metadata != null) {
-            FeatureTreeNode root = FeatureTreeNode.newInstance("metadata", null);
+            FeatureTreeNode root = FeatureTreeNode.newRootInstance("metadata");
 
             try {
                 String metadataString = metadata.getInputStreamAsString();
                 root.setValue(metadataString);
             } catch (IOException e) {
+                LOGGER.debug("PDFBox error converting stream to string", e);
                 root.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATACONVERT_ID);
                 ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATACONVERT_ID, ErrorsHelper.METADATACONVERT_MESSAGE);
             }
 
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.METADATA, root);
             return root;
-        } else {
-            return null;
         }
+        return null;
     }
 }

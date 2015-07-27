@@ -1,6 +1,8 @@
 package org.verapdf.model.impl.pb.pd.images;
 
-import org.apache.log4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
@@ -14,15 +16,10 @@ import org.verapdf.model.pdlayer.PDContentStream;
 import org.verapdf.model.pdlayer.PDGroup;
 import org.verapdf.model.pdlayer.PDXForm;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Evgeniy Muravitskiy
  */
 public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
-
-    public static final Logger logger = Logger.getLogger(PBoxPDXForm.class);
 
 	public static final String X_FORM_TYPE = "PDXForm";
 	public static final String GROUP ="Group";

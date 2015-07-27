@@ -16,7 +16,12 @@ import java.io.InputStream;
  */
 public class LogoPanel extends JPanel {
 
-    private final BufferedImage logo;
+    /**
+     * ID for serialisation
+     */
+    private static final long serialVersionUID = -3623071197419943686L;
+
+    private final transient BufferedImage logo;
     private int borderWidth;
     private Color background;
 
@@ -43,14 +48,21 @@ public class LogoPanel extends JPanel {
     /**
      * Creates logo panel
      *
-     * @param logoName        - name of the logo image
-     * @param backgroundColor - background color
-     * @throws IOException - throws when there is a problem with reading image from the input stream
+     * @param logoName
+     *            name of the logo image
+     * @param backgroundColor
+     *            background colour
+     * @param borderWidth
+     *            width of the panel border
+     * @throws IOException
+     *             throws when there is a problem with reading image from the
+     *             input stream
      */
     public LogoPanel(String logoName, Color backgroundColor, int borderWidth) throws IOException {
         this.borderWidth = borderWidth;
-        InputStream is = getClass().getClassLoader().getResourceAsStream(logoName);
-        logo = ImageIO.read(is);
+        try (InputStream is = getClass().getClassLoader().getResourceAsStream(logoName)) {
+            logo = ImageIO.read(is);
+        }
         this.background = backgroundColor;
         this.setLayout(null);
 

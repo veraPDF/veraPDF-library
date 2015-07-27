@@ -1,5 +1,13 @@
 package org.verapdf.features.pb.tools;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.cos.COSString;
@@ -10,18 +18,15 @@ import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 /**
  * Helps in creating similar nodes in different features objects
  *
  * @author Maksim Bezrukov
  */
 public final class PBCreateNodeHelper {
+
+    private static final Logger LOGGER = Logger
+            .getLogger(PBCreateNodeHelper.class);
 
     private static final String LLX = "llx";
     private static final String LLY = "lly";
@@ -66,10 +71,11 @@ public final class PBCreateNodeHelper {
         FeatureTreeNode modificationDate = null;
 
         if (date != null) {
-            modificationDate = FeatureTreeNode.newInstance(nodeName, parent);
+            modificationDate = FeatureTreeNode.newChildInstance(nodeName, parent);
             try {
                 modificationDate.setValue(getXMLFormat(date));
             } catch (DatatypeConfigurationException e) {
+                LOGGER.debug("DatatypeFactory implementation not available or can't be instantiated", e);
                 modificationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
                 ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
             }
@@ -113,7 +119,7 @@ public final class PBCreateNodeHelper {
         FeatureTreeNode boxNode = null;
 
         if (box != null) {
-            boxNode = FeatureTreeNode.newInstance(name, parent);
+            boxNode = FeatureTreeNode.newChildInstance(name, parent);
             boxNode.addAttribute(LLX, String.valueOf(box.getLowerLeftX()));
             boxNode.addAttribute(LLY, String.valueOf(box.getLowerLeftY()));
             boxNode.addAttribute(URX, String.valueOf(box.getUpperRightX()));
@@ -134,7 +140,7 @@ public final class PBCreateNodeHelper {
      */
     public static FeatureTreeNode addNotEmptyNode(String name, String value, FeatureTreeNode parent) throws FeaturesTreeNodeException {
         if (name != null && value != null) {
-            return FeatureTreeNode.newInstance(name, value, parent);
+            return FeatureTreeNode.newChildInstanceWithValue(name, value, parent);
         } else {
             return null;
         }
@@ -152,7 +158,7 @@ public final class PBCreateNodeHelper {
      */
     public static FeatureTreeNode addDeviceColorSpaceNode(String name, PDColor color, FeatureTreeNode parent, FeaturesCollection collection) throws FeaturesTreeNodeException {
         if (name != null && color != null) {
-            FeatureTreeNode colorNode = FeatureTreeNode.newInstance(name, parent);
+            FeatureTreeNode colorNode = FeatureTreeNode.newChildInstance(name, parent);
 
             float[] numbers = color.getComponents();
 
@@ -178,19 +184,19 @@ public final class PBCreateNodeHelper {
     }
 
     private static void createGray(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {
-        FeatureTreeNode.newInstance("gray", String.valueOf(components[GRAY_COMPONENT_NUMBER]), parent);
+        FeatureTreeNode.newChildInstanceWithValue("gray", String.valueOf(components[GRAY_COMPONENT_NUMBER]), parent);
     }
 
     private static void createRGB(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {
-        FeatureTreeNode.newInstance("red", String.valueOf(components[RED_COMPONENT_NUMBER]), parent);
-        FeatureTreeNode.newInstance("green", String.valueOf(components[GREEN_COMPONENT_NUMBER]), parent);
-        FeatureTreeNode.newInstance("blue", String.valueOf(components[BLUE_COMPONENT_NUMBER]), parent);
+        FeatureTreeNode.newChildInstanceWithValue("red", String.valueOf(components[RED_COMPONENT_NUMBER]), parent);
+        FeatureTreeNode.newChildInstanceWithValue("green", String.valueOf(components[GREEN_COMPONENT_NUMBER]), parent);
+        FeatureTreeNode.newChildInstanceWithValue("blue", String.valueOf(components[BLUE_COMPONENT_NUMBER]), parent);
     }
 
     private static void createCMYK(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {
-        FeatureTreeNode.newInstance("cyan", String.valueOf(components[CYAN_COMPONENT_NUMBER]), parent);
-        FeatureTreeNode.newInstance("magenta", String.valueOf(components[MAGENTA_COMPONENT_NUMBER]), parent);
-        FeatureTreeNode.newInstance("yellow", String.valueOf(components[YELLOW_COMPONENT_NUMBER]), parent);
-        FeatureTreeNode.newInstance("black", String.valueOf(components[BLACK_COMPONENT_NUMBER]), parent);
+        FeatureTreeNode.newChildInstanceWithValue("cyan", String.valueOf(components[CYAN_COMPONENT_NUMBER]), parent);
+        FeatureTreeNode.newChildInstanceWithValue("magenta", String.valueOf(components[MAGENTA_COMPONENT_NUMBER]), parent);
+        FeatureTreeNode.newChildInstanceWithValue("yellow", String.valueOf(components[YELLOW_COMPONENT_NUMBER]), parent);
+        FeatureTreeNode.newChildInstanceWithValue("black", String.valueOf(components[BLACK_COMPONENT_NUMBER]), parent);
     }
 }

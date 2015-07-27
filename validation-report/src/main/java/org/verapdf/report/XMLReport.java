@@ -1,5 +1,6 @@
 package org.verapdf.report;
 
+import org.apache.log4j.Logger;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.validation.report.model.ValidationInfo;
 import org.w3c.dom.Document;
@@ -14,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,10 +30,13 @@ import java.util.GregorianCalendar;
  * @author Maksim Bezrukov
  */
 public final class XMLReport {
+    private static final Logger LOGGER = Logger.getLogger(XMLReport.class);
 
-    private static final long MS_IN_HOUR = 3600000;
-    private static final long MS_IN_MIN = 60000;
-    private static final long MS_IN_SEC = 1000;
+    private static final long MS_IN_SEC = 1000L;
+    private static final int SEC_IN_MIN = 60;
+    private static final long MS_IN_MIN = SEC_IN_MIN * MS_IN_SEC;
+    private static final int MIN_IN_HOUR = 60;
+    private static final long MS_IN_HOUR = MS_IN_MIN * MIN_IN_HOUR;
 
     private XMLReport() {
 
@@ -42,24 +47,23 @@ public final class XMLReport {
 
         StringBuilder buffer = new StringBuilder();
 
-        long hours = processingTime / MS_IN_HOUR;
+        Long hours = Long.valueOf(processingTime / MS_IN_HOUR);
         processingTime %= MS_IN_HOUR;
 
-        long mins = processingTime / MS_IN_MIN;
+        Long mins = Long.valueOf(processingTime / MS_IN_MIN);
         processingTime %= MS_IN_MIN;
 
-        long sec = processingTime / MS_IN_SEC;
+        Long sec = Long.valueOf(processingTime / MS_IN_SEC);
         processingTime %= MS_IN_SEC;
 
-        long ms = processingTime;
+        Long ms = Long.valueOf(processingTime);
 
-        buffer.append(new Formatter().format("%02d", hours));
-        buffer.append(":");
-        buffer.append(new Formatter().format("%02d", mins));
-        buffer.append(":");
-        buffer.append(new Formatter().format("%02d", sec));
-        buffer.append(".");
-        buffer.append(new Formatter().format("%03d", ms));
+        try (Formatter formatter = new Formatter()) {
+            buffer.append(formatter.format("%02d", hours)).append(":");
+            buffer.append(formatter.format("%02d", mins)).append(":");
+            buffer.append(formatter.format("%02d", sec)).append(".");
+            buffer.append(formatter.format("%03d", ms));
+        }
 
         return buffer.toString();
     }
@@ -67,12 +71,17 @@ public final class XMLReport {
     /**
      * Creates tree of xml tags for general report
      *
-     * @param info               - validation info model to be writed
-     * @param collection         - features collection to be writed
-     * @param doc                - document used for writing xml in further
-     * @param processingTimeInMS - processing time of validation in ms
+     * @param info
+     *            validation info model to be writed
+     * @param collection
+     *            features collection to be writed
+     * @param doc
+     *            document used for writing xml in further
+     * @param processingTimeInMS
+     *            processing time of validation in ms
      * @return root element of the xml structure
-     * @throws DatatypeConfigurationException - indicates a serious configurating error
+     * @throws DatatypeConfigurationException
+     *             indicates a serious configurating error
      */
     public static Element makeXMLTree(ValidationInfo info, FeaturesCollection collection, Document doc, long processingTimeInMS) throws DatatypeConfigurationException {
 
@@ -124,14 +133,29 @@ public final class XMLReport {
     /**
      * Write the resulting report without features into xml formatted report.
      *
-     * @param info               - validation info model to be writed
-     * @param path               - the path for output the resulting document. Path have to ends with file name with extension.
-     * @param processingTimeInMS - processing time of validation in ms
-     * @throws ParserConfigurationException         - if a DocumentBuilder cannot be created which satisfies the configuration requested.
-     * @throws TransformerFactoryConfigurationError - thrown in case of service configuration error or if the implementation is not available or cannot be instantiated or when it is not possible to create a Transformer instance.
-     * @throws TransformerException                 - if an unrecoverable error occurs during the course of the transformation or
-     * @throws FileNotFoundException                - if the file with path {@code path} exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
-     * @throws DatatypeConfigurationException       - indicates a serious configurating error
+     * @param info
+     *            validation info model to be writed
+     * @param path
+     *            the path for output the resulting document. Path have to ends
+     *            with file name with extension.
+     * @param processingTimeInMS
+     *            processing time of validation in ms
+     * @throws ParserConfigurationException
+     *             if a DocumentBuilder cannot be created which satisfies the
+     *             configuration requested.
+     * @throws TransformerFactoryConfigurationError
+     *             thrown in case of service configuration error or if the
+     *             implementation is not available or cannot be instantiated or
+     *             when it is not possible to create a Transformer instance.
+     * @throws TransformerException
+     *             if an unrecoverable error occurs during the course of the
+     *             transformation or
+     * @throws FileNotFoundException
+     *             if the file with path {@code path} exists but is a directory
+     *             rather than a regular file, does not exist but cannot be
+     *             created, or cannot be opened for any other reason
+     * @throws DatatypeConfigurationException
+     *             indicates a serious configurating error
      */
     public static void writeXMLReport(ValidationInfo info, String path, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
 
@@ -141,15 +165,31 @@ public final class XMLReport {
     /**
      * Write the resulting report into xml formatted report.
      *
-     * @param info               - validation info model to be writed
-     * @param collection         - features collection to be writed
-     * @param path               - the path for output the resulting document. Path have to ends with file name with extension.
-     * @param processingTimeInMS - processing time of validation in ms
-     * @throws ParserConfigurationException         - if a DocumentBuilder cannot be created which satisfies the configuration requested.
-     * @throws TransformerFactoryConfigurationError - thrown in case of service configuration error or if the implementation is not available or cannot be instantiated or when it is not possible to create a Transformer instance.
-     * @throws TransformerException                 - if an unrecoverable error occurs during the course of the transformation or
-     * @throws FileNotFoundException                - if the file with path {@code path} exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
-     * @throws DatatypeConfigurationException       - indicates a serious configurating error
+     * @param info
+     *            validation info model to be writed
+     * @param collection
+     *            features collection to be writed
+     * @param path
+     *            the path for output the resulting document. Path have to ends
+     *            with file name with extension.
+     * @param processingTimeInMS
+     *            processing time of validation in ms
+     * @throws ParserConfigurationException
+     *             if a DocumentBuilder cannot be created which satisfies the
+     *             configuration requested.
+     * @throws TransformerFactoryConfigurationError
+     *             thrown in case of service configuration error or if the
+     *             implementation is not available or cannot be instantiated or
+     *             when it is not possible to create a Transformer instance.
+     * @throws TransformerException
+     *             if an unrecoverable error occurs during the course of the
+     *             transformation or
+     * @throws FileNotFoundException
+     *             if the file with path {@code path} exists but is a directory
+     *             rather than a regular file, does not exist but cannot be
+     *             created, or cannot be opened for any other reason
+     * @throws DatatypeConfigurationException
+     *             indicates a serious configuration error
      */
     public static void writeXMLReport(ValidationInfo info, FeaturesCollection collection, String path, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
 
@@ -158,6 +198,7 @@ public final class XMLReport {
         try (FileOutputStream fos = new FileOutputStream(path)) {
             transform(doc, new StreamResult(fos));
         } catch (IOException excep) {
+            LOGGER.debug("Failed to close FileOutputStream fos.", excep);
             // TODO: Review this exception handling
             // Thrown on failure to close fos so do nothing
         }
@@ -166,14 +207,27 @@ public final class XMLReport {
     /**
      * Write the resulting report into xml formatted report.
      *
-     * @param info               - validation info model to be writed
-     * @param processingTimeInMS - processing time of validation in ms
+     * @param info
+     *            validation info model to be writed
+     * @param processingTimeInMS
+     *            processing time of validation in ms
      * @return {@code String} representation of the resulting xml report
-     * @throws ParserConfigurationException         - if a DocumentBuilder cannot be created which satisfies the configuration requested.
-     * @throws TransformerFactoryConfigurationError - thrown in case of service configuration error or if the implementation is not available or cannot be instantiated or when it is not possible to create a Transformer instance.
-     * @throws TransformerException                 - if an unrecoverable error occurs during the course of the transformation or
-     * @throws FileNotFoundException                - if the file with path {@code path} exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
-     * @throws DatatypeConfigurationException       - indicates a serious configurating error
+     * @throws ParserConfigurationException
+     *             if a DocumentBuilder cannot be created which satisfies the
+     *             configuration requested.
+     * @throws TransformerFactoryConfigurationError
+     *             thrown in case of service configuration error or if the
+     *             implementation is not available or cannot be instantiated or
+     *             when it is not possible to create a Transformer instance.
+     * @throws TransformerException
+     *             if an unrecoverable error occurs during the course of the
+     *             transformation or
+     * @throws FileNotFoundException
+     *             if the file with path {@code path} exists but is a directory
+     *             rather than a regular file, does not exist but cannot be
+     *             created, or cannot be opened for any other reason
+     * @throws DatatypeConfigurationException
+     *             indicates a serious configurating error
      */
     public static String getXMLReportAsString(ValidationInfo info, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
 
@@ -183,15 +237,29 @@ public final class XMLReport {
     /**
      * Write the resulting report into xml formatted report.
      *
-     * @param info               - validation info model to be writed
-     * @param collection         - features collection to be writed
-     * @param processingTimeInMS - processing time of validation in ms
+     * @param info
+     *            validation info model to be writed
+     * @param collection
+     *            features collection to be writed
+     * @param processingTimeInMS
+     *            processing time of validation in ms
      * @return {@code String} representation of the resulting xml report
-     * @throws ParserConfigurationException         - if a DocumentBuilder cannot be created which satisfies the configuration requested.
-     * @throws TransformerFactoryConfigurationError - thrown in case of service configuration error or if the implementation is not available or cannot be instantiated or when it is not possible to create a Transformer instance.
-     * @throws TransformerException                 - if an unrecoverable error occurs during the course of the transformation or
-     * @throws FileNotFoundException                - if the file with path {@code path} exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason
-     * @throws DatatypeConfigurationException       - indicates a serious configurating error
+     * @throws ParserConfigurationException
+     *             if a DocumentBuilder cannot be created which satisfies the
+     *             configuration requested.
+     * @throws TransformerFactoryConfigurationError
+     *             thrown in case of service configuration error or if the
+     *             implementation is not available or cannot be instantiated or
+     *             when it is not possible to create a Transformer instance.
+     * @throws TransformerException
+     *             if an unrecoverable error occurs during the course of the
+     *             transformation or
+     * @throws FileNotFoundException
+     *             if the file with path {@code path} exists but is a directory
+     *             rather than a regular file, does not exist but cannot be
+     *             created, or cannot be opened for any other reason
+     * @throws DatatypeConfigurationException
+     *             indicates a serious configurating error
      */
     public static String getXMLReportAsString(ValidationInfo info, FeaturesCollection collection, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
 

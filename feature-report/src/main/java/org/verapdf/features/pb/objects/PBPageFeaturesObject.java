@@ -62,7 +62,7 @@ public class PBPageFeaturesObject implements IFeaturesObject {
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException{
         if (page != null) {
-            FeatureTreeNode root = FeatureTreeNode.newInstance("page", null);
+            FeatureTreeNode root = FeatureTreeNode.newRootInstance("page");
 
             root.addAttribute(ID, id);
             root.addAttribute("orderNumber", Integer.toString(index));
@@ -73,11 +73,11 @@ public class PBPageFeaturesObject implements IFeaturesObject {
             PBCreateNodeHelper.addBoxFeature("bleedBox", page.getBleedBox(), root);
             PBCreateNodeHelper.addBoxFeature("artBox", page.getArtBox(), root);
 
-            FeatureTreeNode.newInstance("rotation", Integer.toString(page.getRotation()), root);
+            FeatureTreeNode.newChildInstanceWithValue("rotation", Integer.toString(page.getRotation()), root);
 
             COSBase base = page.getCOSObject().getDictionaryObject(COSName.getPDFName("PZ"));
             if (base != null) {
-                FeatureTreeNode scaling = FeatureTreeNode.newInstance("scaling", root);
+                FeatureTreeNode scaling = FeatureTreeNode.newChildInstance("scaling", root);
 
                 while (base instanceof COSObject) {
                     base = ((COSObject) base).getObject();
@@ -93,13 +93,13 @@ public class PBPageFeaturesObject implements IFeaturesObject {
                 }
             }
 
-            FeatureTreeNode.newInstance("thumbnail", Boolean.toString(page.getCOSObject().getDictionaryObject(COSName.getPDFName("Thumb")) != null), root);
+            FeatureTreeNode.newChildInstanceWithValue("thumbnail", Boolean.toString(page.getCOSObject().getDictionaryObject(COSName.getPDFName("Thumb")) != null), root);
 
             if (annotsId != null) {
-                FeatureTreeNode annotations = FeatureTreeNode.newInstance("annotations", root);
+                FeatureTreeNode annotations = FeatureTreeNode.newChildInstance("annotations", root);
                 for (String annot : annotsId) {
                     if (annot != null) {
-                        FeatureTreeNode annotNode = FeatureTreeNode.newInstance("annotation", annotations);
+                        FeatureTreeNode annotNode = FeatureTreeNode.newChildInstance("annotation", annotations);
                         annotNode.addAttribute(ID, annot);
                     }
                 }

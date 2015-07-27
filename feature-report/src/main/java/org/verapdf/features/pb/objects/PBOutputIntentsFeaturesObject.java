@@ -49,7 +49,7 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
         if (outInt != null) {
-            FeatureTreeNode root = FeatureTreeNode.newInstance("outputIntent", null);
+            FeatureTreeNode root = FeatureTreeNode.newRootInstance("outputIntent");
 
             addSubtype(collection, root);
 
@@ -79,7 +79,7 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
             }
 
             if (baseType != null) {
-                FeatureTreeNode type = FeatureTreeNode.newInstance("subtype", root);
+                FeatureTreeNode type = FeatureTreeNode.newChildInstance("subtype", root);
                 if (baseType instanceof COSName) {
                     type.setValue(((COSName) baseType).getName());
                 } else {

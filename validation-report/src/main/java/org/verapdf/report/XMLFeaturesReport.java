@@ -1,5 +1,15 @@
 package org.verapdf.report;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.log4j.Logger;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
@@ -10,20 +20,13 @@ import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Generating XML structure of file for features report
  *
  * @author Maksim Bezrukov
  */
 public final class XMLFeaturesReport {
+    private static final Logger LOGGER = Logger.getLogger(XMLFeaturesReport.class);
 
     private static final char FFFE = (char) 65534;
     private static final char FFFF = (char) 65535;
@@ -102,7 +105,7 @@ public final class XMLFeaturesReport {
                 pack.normalize();
                 metadata.appendChild(pack);
             } catch (ParserConfigurationException | SAXException | IOException e) {
-
+                LOGGER.debug("Caught exception and checking XML String.", e);
                 if (isValidXMLString(metadataNode.getValue())) {
                     metadata.appendChild(doc.createTextNode(metadataNode.getValue()));
                     metadata.setAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATAPARSER_ID);
@@ -113,9 +116,8 @@ public final class XMLFeaturesReport {
             }
 
             return metadata;
-        } else {
-            return makeNode(metadataNode, collection, doc);
         }
+        return makeNode(metadataNode, collection, doc);
 
     }
 
@@ -160,16 +162,13 @@ public final class XMLFeaturesReport {
     }
 
     private static boolean isValidXMLString(String str) {
-        boolean res = true;
-
         for (char c : str.toCharArray()) {
             if ((c == FFFE) || (c == FFFF) || ((c < SP) && (c != HT && c != LF && c != CR))) {
-                res = false;
-                break;
+                return false;
             }
         }
 
-        return res;
+        return true;
     }
 
     private static void addInvalidCharactersError(Element element, FeaturesCollection collection) {

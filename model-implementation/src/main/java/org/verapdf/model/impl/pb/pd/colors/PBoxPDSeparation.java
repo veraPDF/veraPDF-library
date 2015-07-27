@@ -1,13 +1,12 @@
 package org.verapdf.model.impl.pb.pd.colors;
 
-import org.apache.log4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.pdlayer.PDColorSpace;
 import org.verapdf.model.pdlayer.PDSeparation;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Separation color space
@@ -15,8 +14,6 @@ import java.util.List;
  * @author Evgeniy Muravitskiy
  */
 public class PBoxPDSeparation extends PBoxPDColorSpace implements PDSeparation {
-
-	public static final Logger logger = Logger.getLogger(PBoxPDSeparation.class);
 
 	public static final String ALTERNATE = "alternate";
 	public static final String SEPARATION_TYPE = "PDSeparation";
@@ -42,6 +39,9 @@ public class PBoxPDSeparation extends PBoxPDColorSpace implements PDSeparation {
 		return list;
 	}
 
+	/**
+	 * @return a {@link List} of alternate {@link PDColorSpace} objects
+	 */
 	public List<PDColorSpace> getAlternate() {
 		List<PDColorSpace> colorSpace = new ArrayList<>();
 		org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace space =

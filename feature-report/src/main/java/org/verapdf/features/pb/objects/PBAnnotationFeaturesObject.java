@@ -65,7 +65,7 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
         if (annot != null) {
-            FeatureTreeNode root = FeatureTreeNode.newInstance("annotation", null);
+            FeatureTreeNode root = FeatureTreeNode.newChildInstance("annotation", null);
             root.addAttribute(ID, id);
 
             addParents(root);
@@ -77,12 +77,12 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
             PBCreateNodeHelper.addNotEmptyNode("modifiedDate", annot.getModifiedDate(), root);
 
             if (appearanceId != null) {
-                FeatureTreeNode appStr = FeatureTreeNode.newInstance("appearanceStream", root);
+                FeatureTreeNode appStr = FeatureTreeNode.newChildInstance("appearanceStream", root);
                 appStr.addAttribute(ID, appearanceId);
             }
 
             if (popupId != null) {
-                FeatureTreeNode popup = FeatureTreeNode.newInstance("popup", root);
+                FeatureTreeNode popup = FeatureTreeNode.newChildInstance("popup", root);
                 popup.addAttribute(ID, popupId);
             }
 
@@ -110,19 +110,19 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
 
     private void addParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
         if ((pages != null && pages.size() != 0) || annotId != null) {
-            FeatureTreeNode parents = FeatureTreeNode.newInstance("parents", root);
+            FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
 
             if (pages != null) {
                 for (String page : pages) {
                     if (page != null) {
-                        FeatureTreeNode pageNode = FeatureTreeNode.newInstance("page", parents);
+                        FeatureTreeNode pageNode = FeatureTreeNode.newChildInstance("page", parents);
                         pageNode.addAttribute(ID, page);
                     }
                 }
             }
 
             if (annotId != null) {
-                FeatureTreeNode annotNode = FeatureTreeNode.newInstance("annotation", parents);
+                FeatureTreeNode annotNode = FeatureTreeNode.newChildInstance("annotation", parents);
                 annotNode.addAttribute(ID, annotId);
             }
         }

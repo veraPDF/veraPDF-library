@@ -54,7 +54,7 @@ public class PBInfoDictFeaturesObject implements IFeaturesObject {
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException{
 
         if (info != null) {
-            FeatureTreeNode root = FeatureTreeNode.newInstance("informationDict", null);
+            FeatureTreeNode root = FeatureTreeNode.newRootInstance("informationDict");
 
             addEntry("Title", info.getTitle(), root);
             addEntry("Author", info.getAuthor(), root);
@@ -93,7 +93,7 @@ public class PBInfoDictFeaturesObject implements IFeaturesObject {
 
     private static void addEntry(String name, String value, FeatureTreeNode root) throws FeaturesTreeNodeException {
         if (name != null && value != null) {
-            FeatureTreeNode entry = FeatureTreeNode.newInstance(ENTRY, value, root);
+            FeatureTreeNode entry = FeatureTreeNode.newChildInstanceWithValue(ENTRY, value, root);
             entry.addAttribute(KEY, name);
         }
     }
