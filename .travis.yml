@@ -5,5 +5,10 @@ jdk:
   - oraclejdk7
   - oraclejdk8
 
+branches:
+  except:
+    - ^d(\d+\.\d+\.\d+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$
+    - ^v(\d+\.\d+\.\d+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?$
+
 install:
-  - mvn clean install --fail-never -P clone-test-resources
+  - mvn clean install -P clone-test-resources
