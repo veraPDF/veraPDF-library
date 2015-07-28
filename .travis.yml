@@ -7,7 +7,7 @@ jdk:
 
 branches:
   except:
-    - \^v|d\d+\.\d+\.\d+$\
+    - /^v|d\d+\.\d+\.\d+$/
 
 install:
   - mvn clean install -P clone-test-resources
