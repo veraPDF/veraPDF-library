@@ -5,5 +5,9 @@ jdk:
   - oraclejdk7
   - oraclejdk8
 
+branches:
+  except:
+    - /^v|d\d+\.\d+\.\d+$/
+
 install:
-  - mvn clean install --fail-never -P clone-test-resources
+  - mvn clean install -P clone-test-resources
