@@ -11,9 +11,11 @@ import org.verapdf.model.coslayer.CosBool;
  */
 public class PBCosBool extends PBCosObject implements CosBool {
 
+	public static final String COS_BOOLEAN_TYPE = "CosBool";
+
 	public PBCosBool(COSBoolean bool) {
 		super(bool);
-		setType("CosBool");
+		setType(COS_BOOLEAN_TYPE);
 	}
 
 	/**

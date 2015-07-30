@@ -10,9 +10,11 @@ import org.verapdf.model.coslayer.CosStream;
  */
 public class PBCosStream extends PBCosDict implements CosStream {
 
+	public static final String COS_STREAM_TYPE = "CosStream";
+
 	public PBCosStream(COSStream stream) {
 		super(stream);
-		setType("CosStream");
+		setType(COS_STREAM_TYPE);
 	}
 
 	/**

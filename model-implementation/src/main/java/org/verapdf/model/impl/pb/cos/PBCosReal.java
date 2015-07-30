@@ -12,8 +12,10 @@ import org.verapdf.model.coslayer.CosReal;
  */
 public class PBCosReal extends PBCosNumber implements CosReal {
 
+	public static final String COS_REAL_TYPE = "CosReal";
+
 	public PBCosReal(COSNumber value) {
 		super(value);
-		setType("CosReal");
+		setType(COS_REAL_TYPE);
 	}
 }
