@@ -21,7 +21,7 @@ public class PBoxPDDeviceNTest extends PBoxPDColorSpaceTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
-		expectedType = PBoxPDDeviceN.DEVICE_N_TYPE;
+		expectedType = TYPES.contains(PBoxPDDeviceN.DEVICE_N_TYPE) ? PBoxPDDeviceN.DEVICE_N_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
