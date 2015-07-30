@@ -1,6 +1,7 @@
 package org.verapdf.model.impl.pb.operator.pathpaint;
 
 import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
 import org.verapdf.model.baselayer.*;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.pdlayer.PDColorSpace;
@@ -13,10 +14,10 @@ import java.util.List;
  */
 public abstract class PBOpFillAndStroke extends PBOpPathPaint {
 
-	public PBOpFillAndStroke(List<COSBase> arguments,
+	public PBOpFillAndStroke(List<COSBase> arguments, PDAbstractPattern pattern,
 							 org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace pbStrokeColorSpace,
 							 org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace pbFillColorSpace) {
-		super(arguments, pbStrokeColorSpace, pbFillColorSpace);
+		super(arguments, pattern, pbStrokeColorSpace, pbFillColorSpace);
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public abstract class PBOpFillAndStroke extends PBOpPathPaint {
 
 	private List<PDColorSpace> getFillCS() {
 		List<PDColorSpace> list = new ArrayList<>(MAX_NUMBER_OF_COLOR_SPACES);
-		PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(pbFillColorSpace);
+		PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(pbFillColorSpace, pattern);
 		if (colorSpace != null) {
 			list.add(colorSpace);
 		}
@@ -49,7 +50,7 @@ public abstract class PBOpFillAndStroke extends PBOpPathPaint {
 
 	private List<PDColorSpace> getStrokeCS() {
 		List<PDColorSpace> list = new ArrayList<>(MAX_NUMBER_OF_COLOR_SPACES);
-		PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(pbStrokeColorSpace);
+		PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(pbStrokeColorSpace, pattern);
 		if (colorSpace != null) {
 			list.add(colorSpace);
 		}

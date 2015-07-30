@@ -2,6 +2,7 @@ package org.verapdf.model.impl.pb.operator.pathpaint;
 
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
+import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
 
 import java.util.ArrayList;
@@ -12,8 +13,9 @@ import java.util.List;
  */
 public abstract class PBOpFillPaint extends PBOpPathPaint {
 
-	protected PBOpFillPaint(List<COSBase> arguments, PDColorSpace pbStrokeColorSpace, PDColorSpace pbFillColorSpace) {
-		super(arguments, pbStrokeColorSpace, pbFillColorSpace);
+	protected PBOpFillPaint(List<COSBase> arguments, PDAbstractPattern pattern,
+							PDColorSpace pbStrokeColorSpace, PDColorSpace pbFillColorSpace) {
+		super(arguments, pattern, pbStrokeColorSpace, pbFillColorSpace);
 	}
 
 	@Override

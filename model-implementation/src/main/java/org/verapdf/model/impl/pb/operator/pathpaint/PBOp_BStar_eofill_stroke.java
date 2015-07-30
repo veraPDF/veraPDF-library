@@ -1,10 +1,10 @@
 package org.verapdf.model.impl.pb.operator.pathpaint;
 
 import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
+import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
 import org.verapdf.model.operator.Op_BStar_eofill_stroke;
-import org.verapdf.model.pdlayer.PDColorSpace;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,10 +14,9 @@ public class PBOp_BStar_eofill_stroke extends PBOpFillAndStroke implements Op_BS
 
     private static final String OP_BSTAR_EOFILL_STROKE_TYPE = "Op_BStar_eofill_stroke";
 
-	public PBOp_BStar_eofill_stroke(List<COSBase> arguments,
-									org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace strokeColorSpace,
-									org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace fillColorSpace) {
-		super(arguments, strokeColorSpace, fillColorSpace);
+	public PBOp_BStar_eofill_stroke(List<COSBase> arguments, PDColorSpace strokeColorSpace,
+									PDColorSpace fillColorSpace, PDAbstractPattern pattern) {
+		super(arguments, pattern, strokeColorSpace, fillColorSpace);
 		setType(OP_BSTAR_EOFILL_STROKE_TYPE);
 	}
 
