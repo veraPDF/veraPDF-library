@@ -18,7 +18,7 @@ public class PBoxPDXObjectTest extends PBoxPDAbstractXObjectTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
-		expectedType = PBoxPDXObject.X_OBJECT_TYPE;
+		expectedType = TYPES.contains(PBoxPDXObject.X_OBJECT_TYPE) ? PBoxPDXObject.X_OBJECT_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
