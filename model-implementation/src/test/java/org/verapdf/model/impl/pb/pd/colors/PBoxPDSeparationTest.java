@@ -21,7 +21,7 @@ public class PBoxPDSeparationTest extends PBoxPDColorSpaceTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
-		expectedType = PBoxPDSeparation.SEPARATION_TYPE;
+		expectedType = TYPES.contains(PBoxPDSeparation.SEPARATION_TYPE) ? PBoxPDSeparation.SEPARATION_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

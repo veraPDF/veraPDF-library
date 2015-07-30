@@ -22,13 +22,15 @@ import java.util.List;
  */
 public class PBCosDict extends PBCosObject implements CosDict {
 
+	public static final String COS_DICTIONARY_TYPE = "CosDict";
+
 	public static final String KEYS = "keys";
 	public static final String VALUES = "values";
 	public static final String METADATA = "metadata";
 
 	public PBCosDict(COSDictionary dictionary) {
 		super(dictionary);
-		setType("CosDict");
+		setType(COS_DICTIONARY_TYPE);
 	}
 
 	/**

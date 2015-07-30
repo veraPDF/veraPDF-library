@@ -24,7 +24,7 @@ public class PBoxPDXFormTest extends PBoxPDAbstractXObjectTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
-		expectedType = PBoxPDXForm.X_FORM_TYPE;
+		expectedType = TYPES.contains(PBoxPDXForm.X_FORM_TYPE) ? PBoxPDXForm.X_FORM_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

@@ -1,19 +1,7 @@
 package org.verapdf.model.impl.pb.cos;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.COSArray;
-import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSDictionary;
-import org.apache.pdfbox.cos.COSDocument;
-import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSObject;
-import org.apache.pdfbox.cos.COSString;
+import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDEmbeddedFilesNameTreeNode;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
@@ -25,6 +13,12 @@ import org.verapdf.model.coslayer.CosXRef;
 import org.verapdf.model.impl.pb.pd.PBoxPDDocument;
 import org.verapdf.model.tools.XMPChecker;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Low-level PDF Document object
  *
@@ -34,6 +28,8 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 
     private static final Logger LOGGER = Logger.getLogger(PBCosDocument.class);
 
+	public static final String COS_DOCUMENT_TYPE = "CosDocument";
+
     public static final String TRAILER = "trailer";
     public static final String XREF = "xref";
     public static final String INDIRECT_OBJECTS = "indirectObjects";
@@ -41,13 +37,13 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     public static final String EMBEDDED_FILES = "EmbeddedFiles";
     public static final String ID = "ID";
 
-    private PDDocument pdDocument;
+	private PDDocument pdDocument;
 
     private Long sizeOfDocument = Long.valueOf(-1);
 
-    public PBCosDocument(COSDocument baseObject) {
+	public PBCosDocument(COSDocument baseObject) {
         super(baseObject);
-        setType("CosDocument");
+        setType(COS_DOCUMENT_TYPE);
     }
 
     public PBCosDocument(PDDocument pdDocument, long length) {

@@ -1,6 +1,5 @@
 package org.verapdf.model.impl.pb.pd;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,7 +19,7 @@ public class PBoxPDDocumentTest extends BaseTest{
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = "PDDocument";
+		expectedType = TYPES.contains(PBoxPDDocument.PD_DOCUMENT_TYPE) ? PBoxPDDocument.PD_DOCUMENT_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
@@ -76,15 +75,6 @@ public class PBoxPDDocumentTest extends BaseTest{
 	@Test
 	public void testAcroFormsLink() {
 		Assert.assertEquals(0, actual.getLinkedObjects(PBoxPDDocument.ACRO_FORMS).size());
-	}
-
-	@AfterClass
-	public static void tearDown() throws IOException {
-		expectedType = null;
-		expectedID = null;
-		actual = null;
-
-		document.close();
 	}
 
 	private void isCorrectActions(String link) {

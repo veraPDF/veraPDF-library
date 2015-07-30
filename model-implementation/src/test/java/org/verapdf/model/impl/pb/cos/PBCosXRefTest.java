@@ -19,7 +19,7 @@ public class PBCosXRefTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        expectedType = "CosXRef";
+        expectedType = TYPES.contains(PBCosXRef.COS_XREF_TYPE) ? PBCosXRef.COS_XREF_TYPE : null;
         expectedID = null;
 
         Random random = new Random();

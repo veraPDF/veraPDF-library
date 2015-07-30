@@ -24,7 +24,7 @@ public class PBCosStringTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        expectedType = "CosString";
+        expectedType = TYPES.contains(PBCosString.COS_STRING_TYPE) ? PBCosString.COS_STRING_TYPE : null;
         expectedID = null;
 
         setExpectedResult();

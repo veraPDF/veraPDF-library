@@ -11,9 +11,11 @@ import org.verapdf.model.coslayer.CosFileSpecification;
  */
 public class PBCosFileSpecification extends PBCosDict implements CosFileSpecification {
 
+	public static final String COS_FILE_SPECIFICATION_TYPE = "CosFileSpecification";
+
 	public PBCosFileSpecification(COSDictionary pdfBoxObject) {
 		super(pdfBoxObject);
-		setType("CosFileSpecification");
+		setType(COS_FILE_SPECIFICATION_TYPE);
 	}
 
 	/**

@@ -32,7 +32,7 @@ public class PBCosDocumentTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() throws URISyntaxException, IOException {
-        expectedType = "CosDocument";
+        expectedType = TYPES.contains(PBCosDocument.COS_DOCUMENT_TYPE) ? PBCosDocument.COS_DOCUMENT_TYPE : null;
         expectedID = null;
 
         String fileAbsolutePath = getSystemIndependentPath(FILE_RELATIVE_PATH);

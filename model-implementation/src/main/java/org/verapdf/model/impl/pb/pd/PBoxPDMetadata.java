@@ -25,15 +25,17 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
 
 	private static final Logger LOGGER = Logger.getLogger(PBoxPDMetadata.class);
 
+	public static final String METADATA_TYPE = "PDMetadata";
+
 	public static final String XMP_PACKAGE = "XMPPackage";
 	public static final String STREAM = "stream";
 
 	private boolean isMainMetadata;
 
-    public PBoxPDMetadata(org.apache.pdfbox.pdmodel.common.PDMetadata simplePDObject, Boolean isMainMetadata) {
+	public PBoxPDMetadata(org.apache.pdfbox.pdmodel.common.PDMetadata simplePDObject, Boolean isMainMetadata) {
         super(simplePDObject);
 		this.isMainMetadata = isMainMetadata;
-        setType("PDMetadata");
+        setType(METADATA_TYPE);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class PBCosRealTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        expectedType = "CosReal";
+        expectedType = TYPES.contains(PBCosReal.COS_REAL_TYPE) ? PBCosReal.COS_REAL_TYPE : null;
         expectedID = null;
 
         Random random = new Random();

@@ -1,6 +1,5 @@
 package org.verapdf.model.impl.pb.pd;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,7 +21,7 @@ public class PBoxPDFormFieldTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = PBoxPDFormField.FORM_FIELD_TYPE;
+		expectedType = TYPES.contains(PBoxPDFormField.FORM_FIELD_TYPE) ? PBoxPDFormField.FORM_FIELD_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
@@ -43,12 +42,4 @@ public class PBoxPDFormFieldTest extends BaseTest {
 		}
 	}
 
-	@AfterClass
-	public static void tearDown() throws IOException {
-		expectedType = null;
-		expectedID = null;
-		actual = null;
-
-		document.close();
-	}
 }

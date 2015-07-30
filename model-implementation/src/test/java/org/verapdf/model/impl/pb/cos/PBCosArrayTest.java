@@ -21,7 +21,7 @@ public class PBCosArrayTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        expectedType = "CosArray";
+        expectedType = TYPES.contains(PBCosArray.COS_ARRAY_TYPE) ? PBCosArray.COS_ARRAY_TYPE : null;
         expectedID = null;
 
         setUpActual();

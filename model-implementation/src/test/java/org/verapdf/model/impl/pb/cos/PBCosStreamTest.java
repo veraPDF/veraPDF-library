@@ -23,7 +23,7 @@ public class PBCosStreamTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        expectedType = "CosStream";
+        expectedType = TYPES.contains(PBCosStream.COS_STREAM_TYPE) ? PBCosStream.COS_STREAM_TYPE : null;
         expectedID = null;
 
         COSStream stream = getCosStream();

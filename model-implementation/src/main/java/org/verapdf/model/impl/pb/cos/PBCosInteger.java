@@ -12,8 +12,10 @@ import org.verapdf.model.coslayer.CosInteger;
  */
 public class PBCosInteger extends PBCosNumber implements CosInteger {
 
+	public static final String COS_INTEGER_TYPE = "CosInteger";
+
 	public PBCosInteger(COSInteger value) {
 		super(value);
-		setType("CosInteger");
+		setType(COS_INTEGER_TYPE);
 	}
 }

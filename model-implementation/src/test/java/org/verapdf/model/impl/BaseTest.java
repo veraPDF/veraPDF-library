@@ -1,6 +1,7 @@
 package org.verapdf.model.impl;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 import org.verapdf.model.ModelHelper;
@@ -12,6 +13,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -26,6 +28,8 @@ public abstract class BaseTest {
 
     protected static String expectedType;
     protected static String expectedID;
+
+	protected final static Set<String> TYPES = ModelHelper.getTypes();
 
     @Test
     public void testTypeAndID() {
@@ -45,6 +49,15 @@ public abstract class BaseTest {
 	@Test(expected = IllegalAccessError.class)
 	public void testNonexistentParentLink() {
 		actual.getLinkedObjects("Wrong link.");
+	}
+
+	@AfterClass
+	public static void tearDown() throws IOException {
+		expectedType = null;
+		expectedID = null;
+		actual = null;
+
+		document.close();
 	}
 
 	protected static void setUp(String path) throws URISyntaxException, IOException {
