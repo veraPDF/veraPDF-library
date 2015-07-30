@@ -16,6 +16,7 @@ import java.util.List;
 public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 
 	public static final String FONT = "font";
+	public static final String USED_GLYPHS = "usedGlyphs";
 
 	protected final org.apache.pdfbox.pdmodel.font.PDFont pdfBoxFont;
 
@@ -32,6 +33,9 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 			case FONT:
 				list = this.getFont();
 				break;
+			case USED_GLYPHS:
+				list = this.getUsedGlyphs();
+				break;
 			default:
 				list = super.getLinkedObjects(link);
 				break;
@@ -45,6 +49,11 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 		PDFont font = FontFactory.parseFont(pdfBoxFont);
 		result.add(font);
 		return result;
+	}
+
+	private List<? extends Object> getUsedGlyphs() {
+		List<? extends Object> list = new ArrayList<>();
+		return list;
 	}
 
 }
