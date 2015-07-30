@@ -2,7 +2,6 @@ package org.verapdf.model.impl.pb.pd;
 
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionNamed;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -41,12 +40,4 @@ public class PBoxPDNamedActionTest extends PBoxPDActionTest {
 		Assert.assertEquals("NextPage", ((PDNamedAction) actual).getN());
 	}
 
-	@AfterClass
-	public static void tearDown() throws IOException {
-		expectedType = null;
-		expectedID = null;
-		actual = null;
-
-		document.close();
-	}
 }

@@ -2,7 +2,6 @@ package org.verapdf.model.impl.pb.pd;
 
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDResources;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -77,12 +76,4 @@ public class PBoxPDExtGStateTest extends BaseTest {
 		Assert.assertEquals(0, fontSize.size());
 	}
 
-	@AfterClass
-	public static void tearDown() throws IOException {
-		expectedType = null;
-		expectedID = null;
-		actual = null;
-
-		document.close();
-	}
 }

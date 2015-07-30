@@ -4,7 +4,10 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.graphics.form.PDGroup;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.BaseTest;
 import org.verapdf.model.pdlayer.PDColorSpace;
@@ -45,12 +48,4 @@ public class PBoxPDGroupTest extends BaseTest {
 		}
 	}
 
-	@AfterClass
-	 public static void tearDown() throws IOException {
-		expectedType = null;
-		expectedID = null;
-		actual = null;
-
-		document.close();
-	}
 }

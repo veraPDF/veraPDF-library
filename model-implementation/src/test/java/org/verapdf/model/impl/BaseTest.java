@@ -1,6 +1,7 @@
 package org.verapdf.model.impl;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 import org.verapdf.model.ModelHelper;
@@ -45,6 +46,15 @@ public abstract class BaseTest {
 	@Test(expected = IllegalAccessError.class)
 	public void testNonexistentParentLink() {
 		actual.getLinkedObjects("Wrong link.");
+	}
+
+	@AfterClass
+	public static void tearDown() throws IOException {
+		expectedType = null;
+		expectedID = null;
+		actual = null;
+
+		document.close();
 	}
 
 	protected static void setUp(String path) throws URISyntaxException, IOException {
