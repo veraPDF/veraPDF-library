@@ -22,7 +22,7 @@ public class PBoxPDExtGStateTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = PBoxPDExtGState.EXT_G_STATE_TYPE;
+		expectedType = TYPES.contains(PBoxPDExtGState.EXT_G_STATE_TYPE) ? PBoxPDExtGState.EXT_G_STATE_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

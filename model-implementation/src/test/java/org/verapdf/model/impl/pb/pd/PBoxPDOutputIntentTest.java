@@ -21,7 +21,8 @@ public class PBoxPDOutputIntentTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = "PDOutputIntent";
+		expectedType = TYPES.contains(PBoxPDOutputIntent.OUTPUT_INTENT_TYPE) ?
+															PBoxPDOutputIntent.OUTPUT_INTENT_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

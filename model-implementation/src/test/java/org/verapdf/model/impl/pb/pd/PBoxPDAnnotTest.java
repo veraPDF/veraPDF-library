@@ -21,7 +21,7 @@ public class PBoxPDAnnotTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = PBoxPDAnnot.ANNOTATION_TYPE;
+		expectedType = TYPES.contains(PBoxPDAnnot.ANNOTATION_TYPE) ? PBoxPDAnnot.ANNOTATION_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

@@ -21,7 +21,7 @@ public class PBoxPDFormFieldTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = PBoxPDFormField.FORM_FIELD_TYPE;
+		expectedType = TYPES.contains(PBoxPDFormField.FORM_FIELD_TYPE) ? PBoxPDFormField.FORM_FIELD_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

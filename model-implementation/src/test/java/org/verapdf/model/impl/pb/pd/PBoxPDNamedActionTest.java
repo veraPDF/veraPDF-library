@@ -20,7 +20,7 @@ public class PBoxPDNamedActionTest extends PBoxPDActionTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = PBoxPDNamedAction.NAMED_ACTION_TYPE;
+		expectedType = TYPES.contains(PBoxPDNamedAction.NAMED_ACTION_TYPE) ? PBoxPDNamedAction.NAMED_ACTION_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

@@ -20,7 +20,8 @@ public class PBoxPDContentStreamTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = "PDContentStream";
+		expectedType = TYPES.contains(PBoxPDContentStream.CONTENT_STREAM_TYPE) ?
+																	PBoxPDContentStream.CONTENT_STREAM_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

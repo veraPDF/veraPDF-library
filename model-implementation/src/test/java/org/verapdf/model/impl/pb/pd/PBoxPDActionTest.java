@@ -21,7 +21,7 @@ public class PBoxPDActionTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = PBoxPDAction.ACTION_TYPE;
+		expectedType = TYPES.contains(PBoxPDAction.ACTION_TYPE) ? PBoxPDAction.ACTION_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

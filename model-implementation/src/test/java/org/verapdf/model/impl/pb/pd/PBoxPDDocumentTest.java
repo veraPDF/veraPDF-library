@@ -19,7 +19,7 @@ public class PBoxPDDocumentTest extends BaseTest{
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = "PDDocument";
+		expectedType = TYPES.contains(PBoxPDDocument.PD_DOCUMENT_TYPE) ? PBoxPDDocument.PD_DOCUMENT_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

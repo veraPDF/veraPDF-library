@@ -20,7 +20,7 @@ public class PBoxPDOutlineTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = PBoxPDOutline.OUTLINE_TYPE;
+		expectedType = TYPES.contains(PBoxPDOutline.OUTLINE_TYPE) ? PBoxPDOutline.OUTLINE_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

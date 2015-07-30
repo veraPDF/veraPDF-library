@@ -20,7 +20,7 @@ public class PBoxPDAcroFormTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = PBoxPDAcroForm.ACRO_FORM_TYPE;
+		expectedType = TYPES.contains(PBoxPDAcroForm.ACRO_FORM_TYPE) ? PBoxPDAcroForm.ACRO_FORM_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

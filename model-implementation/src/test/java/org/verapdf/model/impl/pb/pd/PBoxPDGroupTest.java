@@ -25,7 +25,7 @@ public class PBoxPDGroupTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = PBoxPDGroup.GROUP_TYPE;
+		expectedType = TYPES.contains(PBoxPDGroup.GROUP_TYPE) ? PBoxPDGroup.GROUP_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

@@ -20,7 +20,7 @@ public class PBoxPDMetadataTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = "PDMetadata";
+		expectedType = TYPES.contains(PBoxPDMetadata.METADATA_TYPE) ? PBoxPDMetadata.METADATA_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
