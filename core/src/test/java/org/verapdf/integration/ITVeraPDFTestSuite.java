@@ -24,7 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class VeraPDFTestSuite {
+public class ITVeraPDFTestSuite {
 
     public final static String TEST_RESOURCES_DIRECTORY_PREFIX = "/test-resources/";
     public final static String VERA_PDF_TEST_SUITE_PROPERTIES_PATH = "test-config.properties";
