@@ -35,7 +35,6 @@ public class PBoxPDGroupTest extends BaseTest {
 		Assert.assertEquals("Transparency", ((org.verapdf.model.pdlayer.PDGroup) actual).getS());
 	}
 
-	@Ignore
 	@Test
 	public void testColorSpaceLink() {
 		List<? extends Object> colorSpace = actual.getLinkedObjects(PBoxPDGroup.COLOR_SPACE);
