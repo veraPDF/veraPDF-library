@@ -30,14 +30,4 @@ public class PBoxFontProgram extends PBoxExternal implements FontProgram {
 		this.widthSize = widthSize;
 	}
 
-	@Override
-	public Boolean getareReferencedGlyphsPresent() {
-		return null;
-	}
-
-	@Override
-	public Boolean getareWidthsConsistent() {
-		return null;
-	}
-
 }
