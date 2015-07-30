@@ -21,7 +21,7 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 
     private static final Logger LOGGER = Logger.getLogger(PBoxPDPage.class);
 
-	public static String PAGE_TYPE = "PDPage";
+	public static final String PAGE_TYPE = "PDPage";
 
 	public static final String ANNOTS = "annots";
     public static final String ACTION = "action";

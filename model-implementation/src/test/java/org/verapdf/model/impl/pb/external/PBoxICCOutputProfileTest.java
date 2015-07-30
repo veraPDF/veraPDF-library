@@ -26,7 +26,8 @@ public class PBoxICCOutputProfileTest extends PBoxICCProfileTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
-		expectedType = "ICCOutputProfile";
+		expectedType = TYPES.contains(PBoxICCOutputProfile.ICC_OUTPUT_PROFILE_TYPE) ?
+																PBoxICCOutputProfile.ICC_OUTPUT_PROFILE_TYPE : null;
 		expectedID = null;
 
 		setUpActualObject();

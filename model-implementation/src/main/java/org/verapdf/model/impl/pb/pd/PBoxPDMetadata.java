@@ -25,7 +25,7 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
 
 	private static final Logger LOGGER = Logger.getLogger(PBoxPDMetadata.class);
 
-	public static String METADATA_TYPE = "PDMetadata";
+	public static final String METADATA_TYPE = "PDMetadata";
 
 	public static final String XMP_PACKAGE = "XMPPackage";
 	public static final String STREAM = "stream";
