@@ -365,7 +365,7 @@ public final class OperatorFactory {
 		try {
 			return resources.getFont(font);
 		} catch (IOException e) {
-			LOGGER.error("Problems with resources obtaining for " + font + ". " + e.getMessage());
+			LOGGER.error("Problems with resources obtaining for " + font + ". " + e.getMessage(), e);
 			return null;
 		}
 	}
