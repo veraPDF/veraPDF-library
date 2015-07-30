@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class PBOp_TD_Big extends PBOp_General_Td implements Op_TD_Big {
 
-	public static final String OP_TD_BIG_TYPE = "Op_Td_Big";
+	public static final String OP_TD_BIG_TYPE = "Op_TD_Big";
 
 	public PBOp_TD_Big(List<COSBase> arguments) {
 		super(arguments);
