@@ -1,7 +1,7 @@
 package org.verapdf.integration.tools;
 
 import org.apache.log4j.Logger;
-import org.verapdf.integration.VeraPDFTestSuite;
+import org.verapdf.integration.ITVeraPDFTestSuite;
 import org.verapdf.integration.model.reporting.TestEntityReport;
 import org.verapdf.integration.model.reporting.TestSetReport;
 
@@ -23,7 +23,7 @@ public class ResultReporter {
 
 	public static void reportTestSetResult(TestSetReport report) throws IOException {
 		Properties prop = new Properties();
-		try (InputStream inputStream = ClassLoader.class.getResourceAsStream(VeraPDFTestSuite.TEST_RESOURCES_DIRECTORY_PREFIX + VeraPDFTestSuite.VERA_PDF_TEST_SUITE_PROPERTIES_PATH)) {
+		try (InputStream inputStream = ClassLoader.class.getResourceAsStream(ITVeraPDFTestSuite.TEST_RESOURCES_DIRECTORY_PREFIX + ITVeraPDFTestSuite.VERA_PDF_TEST_SUITE_PROPERTIES_PATH)) {
 		    prop.load(inputStream);
 		}
 		if (CONSOLE_REPORTING_OPT.equals(prop.getProperty(REPORTING_METHOD_OPT_NAME))) {

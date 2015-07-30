@@ -2,6 +2,7 @@ package org.verapdf.model.impl.pb.operator.textshow;
 
 import org.apache.pdfbox.cos.COSBase;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.factory.font.FontFactory;
 import org.verapdf.model.impl.pb.operator.base.PBOperator;
 import org.verapdf.model.operator.OpTextShow;
 import org.verapdf.model.pdlayer.PDFont;
@@ -16,8 +17,11 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 
 	public static final String FONT = "font";
 
-	protected PBOpTextShow(List<COSBase> arguments) {
+	protected final org.apache.pdfbox.pdmodel.font.PDFont pdfBoxFont;
+
+	protected PBOpTextShow(List<COSBase> arguments, org.apache.pdfbox.pdmodel.font.PDFont font) {
 		super(arguments);
+		this.pdfBoxFont = font;
 	}
 
 	@Override
@@ -38,6 +42,8 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 
 	private List<PDFont> getFont() {
 		List<PDFont> result = new ArrayList<>();
+		PDFont font = FontFactory.parseFont(pdfBoxFont);
+		result.add(font);
 		return result;
 	}
 

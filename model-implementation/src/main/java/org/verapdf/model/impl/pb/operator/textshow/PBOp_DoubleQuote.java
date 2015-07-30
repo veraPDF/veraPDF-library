@@ -2,6 +2,7 @@ package org.verapdf.model.impl.pb.operator.textshow;
 
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSNumber;
+import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
@@ -21,8 +22,8 @@ public class PBOp_DoubleQuote extends PBOpStringTextShow implements Op_DoubleQuo
 	public static final String CHARACTER_SPACING = "characterSpacing";
 	public static final Integer COUNT_OF_OPERATOR_OPERANDS = Integer.valueOf(3);
 
-	public PBOp_DoubleQuote(List<COSBase> arguments) {
-		super(arguments);
+	public PBOp_DoubleQuote(List<COSBase> arguments, PDFont font) {
+		super(arguments, font);
 		setType(OP_DOUBLIE_QUOTE_TYPE);
 	}
 
