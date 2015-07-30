@@ -13,6 +13,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -27,6 +28,8 @@ public abstract class BaseTest {
 
     protected static String expectedType;
     protected static String expectedID;
+
+	protected final static Set<String> TYPES = ModelHelper.getTypes();
 
     @Test
     public void testTypeAndID() {
