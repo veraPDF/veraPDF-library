@@ -128,12 +128,12 @@ public final class OperatorFactory {
 				return new PBOpColor(arguments);
 			case Operators.SCN_STROKE:
 				if (graphicState.getStrokeColorSpace().getName().equals(ColorSpaceFactory.PATTERN)) {
-					graphicState.setPattern(getPatternFromResources(resources, getLastElement(arguments)));
+					graphicState.setPattern(getPatternFromResources(resources, getLastCOSName(arguments)));
 				}
 				return new PBOpColor(arguments);
 			case Operators.SCN_FILL:
 				if (graphicState.getFillColorSpace().getName().equals(ColorSpaceFactory.PATTERN)) {
-					graphicState.setPattern(getPatternFromResources(resources, getLastElement(arguments)));
+					graphicState.setPattern(getPatternFromResources(resources, getLastCOSName(arguments)));
 				}
 				return new PBOpColor(arguments);
 			case Operators.SC_STROKE:
