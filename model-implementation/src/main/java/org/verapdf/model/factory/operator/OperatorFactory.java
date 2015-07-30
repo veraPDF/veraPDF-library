@@ -1,15 +1,11 @@
 package org.verapdf.model.factory.operator;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
-
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSInteger;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceCMYK;
@@ -18,43 +14,18 @@ import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB;
 import org.apache.pdfbox.pdmodel.graphics.shading.PDShading;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingIntent;
+import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
 import org.verapdf.model.impl.pb.operator.color.PBOpColor;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_J_line_cap;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_M_miter_limit;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_d;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_gs;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_i;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_j_line_join;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_ri;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_w_line_width;
+import org.verapdf.model.impl.pb.operator.generalgs.*;
 import org.verapdf.model.impl.pb.operator.inlineimage.PBOpInlineImage;
-import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_BDC;
-import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_BMC;
-import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_DP;
-import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_EMC;
-import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_MP;
+import org.verapdf.model.impl.pb.operator.markedcontent.*;
 import org.verapdf.model.impl.pb.operator.opclip.PBOp_WStar;
 import org.verapdf.model.impl.pb.operator.opclip.PBOp_W_clip;
 import org.verapdf.model.impl.pb.operator.opcompability.PBOp_BX;
 import org.verapdf.model.impl.pb.operator.opcompability.PBOp_EX;
 import org.verapdf.model.impl.pb.operator.opcompability.PBOp_Undefined;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_c;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_h;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_l;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_m_moveto;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_re;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_v;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_y;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_BStar_eofill_stroke;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_B_fill_stroke;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_FStar;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_F_fill_obsolete;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_S_stroke;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_b_closepath_fill_stroke;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_bstar_closepath_eofill_stroke;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_f_fill;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_n;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_s_close_stroke;
+import org.verapdf.model.impl.pb.operator.pathconstruction.*;
+import org.verapdf.model.impl.pb.operator.pathpaint.*;
 import org.verapdf.model.impl.pb.operator.shading.PBOp_sh;
 import org.verapdf.model.impl.pb.operator.specialgs.PBOp_Q_grestore;
 import org.verapdf.model.impl.pb.operator.specialgs.PBOp_cm;
@@ -68,11 +39,18 @@ import org.verapdf.model.impl.pb.operator.textshow.PBOp_Quote;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_TJ_Big;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_Tj;
 import org.verapdf.model.impl.pb.operator.textstate.PBOpTextState;
+import org.verapdf.model.impl.pb.operator.textstate.PBOp_Tr;
 import org.verapdf.model.impl.pb.operator.textstate.PBOp_Tz;
 import org.verapdf.model.impl.pb.operator.type3font.PBOpType3Font;
 import org.verapdf.model.impl.pb.operator.xobject.PBOp_Do;
 import org.verapdf.model.operator.Operator;
 import org.verapdf.model.tools.constants.Operators;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * @author Timur Kamalov
@@ -90,7 +68,7 @@ public final class OperatorFactory {
 			case Operators.D_SET_DASH:
 				return new PBOp_d(arguments);
 			case Operators.GS:
-				return new PBOp_gs(arguments, getExtGStateFromResources(resources, getLastElement(arguments)));
+				return new PBOp_gs(arguments, getExtGStateFromResources(resources, getLastCOSName(arguments)));
 			case Operators.I_SETFLAT:
 				return new PBOp_i(arguments);
 			case Operators.J_LINE_CAP:
@@ -141,10 +119,10 @@ public final class OperatorFactory {
 				graphicState.setFillColorSpace(PDDeviceCMYK.INSTANCE);
 				return new PBOpColor(arguments);
 			case Operators.CS_STROKE:
-				graphicState.setStrokeColorSpace(getColorSpaceFromResources(resources, getLastElement(arguments)));
+				graphicState.setStrokeColorSpace(getColorSpaceFromResources(resources, getLastCOSName(arguments)));
 				return new PBOpColor(arguments);
 			case Operators.CS_FILL:
-				graphicState.setFillColorSpace(getColorSpaceFromResources(resources, getLastElement(arguments)));
+				graphicState.setFillColorSpace(getColorSpaceFromResources(resources, getLastCOSName(arguments)));
 				return new PBOpColor(arguments);
 			case Operators.SCN_STROKE:
 				return new PBOpColor(arguments);
@@ -171,22 +149,26 @@ public final class OperatorFactory {
 
 			// TEXT SHOW
 			case Operators.TJ_SHOW:
-				return new PBOp_Tj(arguments);
+				return new PBOp_Tj(arguments, graphicState.getFont());
 			case Operators.TJ_SHOW_POS:
-				return new PBOp_TJ_Big(arguments);
+				return new PBOp_TJ_Big(arguments, graphicState.getFont());
 			case Operators.QUOTE:
-				return new PBOp_Quote(arguments);
+				return new PBOp_Quote(arguments, graphicState.getFont());
 			case Operators.DOUBLE_QUOTE:
-				return new PBOp_DoubleQuote(arguments);
+				return new PBOp_DoubleQuote(arguments, graphicState.getFont());
 
 			// TEXT STATE
 			case Operators.TZ:
 				return new PBOp_Tz(arguments);
+			case Operators.TR:
+				graphicState.setRenderingMode(getRenderingMode(arguments));
+				return new PBOp_Tr(arguments);
+			case Operators.TF:
+				graphicState.setFont(getFontFromResources(resources, getFirstCOSName(arguments)));
+				return new PBOpTextState(arguments);
 			case Operators.TC:
 			case Operators.TW:
 			case Operators.TL:
-			case Operators.TF:
-			case Operators.TR:
 			case Operators.TS:
 				return new PBOpTextState(arguments);
 
@@ -262,7 +244,7 @@ public final class OperatorFactory {
 
 			// SHADING
 			case Operators.SH:
-				return new PBOp_sh(arguments, getShadingFromResources(resources, getLastElement(arguments)));
+				return new PBOp_sh(arguments, getShadingFromResources(resources, getLastCOSName(arguments)));
 
 			// SPECIAL GS
 			case Operators.CM_CONCAT:
@@ -276,7 +258,7 @@ public final class OperatorFactory {
 
 			// XOBJECT
 			case Operators.DO:
-				return new PBOp_Do(arguments, getXObjectFromResources(resources, getLastElement(arguments)));
+				return new PBOp_Do(arguments, getXObjectFromResources(resources, getLastCOSName(arguments)));
 
 			default:
 				return new PBOp_Undefined(arguments);
@@ -314,7 +296,16 @@ public final class OperatorFactory {
 		return result;
 	}
 
-	private static COSName getLastElement(List<COSBase> arguments) {
+	private static COSName getFirstCOSName(List<COSBase> arguments) {
+		COSBase lastElement = arguments.size() > 0 ? arguments.get(0) : null;
+		if (lastElement instanceof COSName) {
+			return (COSName) lastElement;
+		} else {
+			return null;
+		}
+	}
+
+	private static COSName getLastCOSName(List<COSBase> arguments) {
 		COSBase lastElement = arguments.size() > 0 ? arguments.get(arguments.size() - 1) : null;
 		if (lastElement instanceof COSName) {
 			return (COSName) lastElement;
@@ -351,6 +342,25 @@ public final class OperatorFactory {
 
 	private static PDExtendedGraphicsState getExtGStateFromResources(PDResources resources, COSName extGState) {
 		return resources.getExtGState(extGState);
+	}
+
+	private static PDFont getFontFromResources(PDResources resources, COSName font) {
+		try {
+			return resources.getFont(font);
+		} catch (IOException e) {
+			LOGGER.error("Problems with resources obtaining for " + font + ". " + e.getMessage());
+			return null;
+		}
+	}
+
+	private static RenderingMode getRenderingMode(List<COSBase> arguments) {
+		if (!arguments.isEmpty()) {
+			COSBase renderingMode = arguments.get(0);
+			if (renderingMode instanceof COSInteger) {
+				RenderingMode.fromInt((((COSInteger) renderingMode).intValue()));
+			}
+		}
+		return null;
 	}
 
 }
