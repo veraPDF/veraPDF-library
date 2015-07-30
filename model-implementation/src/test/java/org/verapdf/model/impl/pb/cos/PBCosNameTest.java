@@ -22,7 +22,7 @@ public class PBCosNameTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        expectedType = "CosName";
+        expectedType = TYPES.contains(PBCosName.COS_NAME_TYPE) ? PBCosName.COS_NAME_TYPE : null;
         expectedID = null;
 
         setUpCOSNames();

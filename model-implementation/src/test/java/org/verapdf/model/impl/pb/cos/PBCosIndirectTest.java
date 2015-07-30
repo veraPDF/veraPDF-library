@@ -28,7 +28,7 @@ public class PBCosIndirectTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        expectedType = "CosIndirect";
+        expectedType = TYPES.contains(PBCosIndirect.COS_INDIRECT_TYPE) ? PBCosIndirect.COS_INDIRECT_TYPE : null;
         expectedID = String.valueOf(objectNumber) + " " + String.valueOf(generationNumber);
 
         actual = new PBCosIndirect(createObject(null, Boolean.TRUE));

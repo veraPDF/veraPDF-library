@@ -19,7 +19,8 @@ public class PBCosFileSpecificationTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        expectedType = "CosFileSpecification";
+        expectedType = TYPES.contains(PBCosFileSpecification.COS_FILE_SPECIFICATION_TYPE) ?
+														PBCosFileSpecification.COS_FILE_SPECIFICATION_TYPE : null;
         expectedID = null;
 
         COSDictionary specification = new COSDictionary();

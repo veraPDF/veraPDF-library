@@ -13,7 +13,8 @@ public class PBCosRenderingIntentTest extends PBCosNameTest {
 
 	@BeforeClass
 	public static void setUp() {
-		expectedType = "CosRenderingIntent";
+		expectedType = TYPES.contains(PBCosRenderingIntent.COS_RENDERING_INTENT_TYPE) ?
+															PBCosRenderingIntent.COS_RENDERING_INTENT_TYPE : null;
 		expectedID = null;
 
 		expected = new ArrayList<>(1);

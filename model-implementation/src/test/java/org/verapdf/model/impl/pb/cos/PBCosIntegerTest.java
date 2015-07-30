@@ -19,7 +19,7 @@ public class PBCosIntegerTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        expectedType = "CosInteger";
+        expectedType = TYPES.contains(PBCosInteger.COS_INTEGER_TYPE) ? PBCosInteger.COS_INTEGER_TYPE : null;
         expectedID = null;
 
         Random random = new Random();
