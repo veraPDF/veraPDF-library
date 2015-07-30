@@ -1,7 +1,13 @@
 package org.verapdf.model.factory.colors;
 
 import org.apache.pdfbox.pdmodel.graphics.color.*;
+import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
+import org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern;
+import org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern;
 import org.verapdf.model.impl.pb.pd.colors.*;
+import org.verapdf.model.impl.pb.pd.pattern.PBoxPDShadingPattern;
+import org.verapdf.model.impl.pb.pd.pattern.PBoxPDTillingPattern;
+import org.verapdf.model.pdlayer.PDPattern;
 import org.verapdf.model.pdlayer.PDColorSpace;
 
 /**
@@ -11,7 +17,6 @@ import org.verapdf.model.pdlayer.PDColorSpace;
  * @author Evgeniy Muravitskiy
  */
 public class ColorSpaceFactory {
-
 
 	public static final String CAL_GRAY = "CalGray";
 	public static final String CAL_RGB = "CalRGB";
@@ -23,21 +28,39 @@ public class ColorSpaceFactory {
 	public static final String LAB = "Lab";
 	public static final String SEPARATION = "Separation";
 	public static final String INDEXED = "Indexed";
+	public static final String PATTERN = "Pattern";
 
 	private ColorSpaceFactory() {
 
 	}
 
+	/**
+	 * Transform object of pdfbox to corresponding object of veraPDF-library
+	 * ({@link org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace} to
+	 * {@link PBoxPDColorSpace}).
+	 *
+	 * @param colorSpace pdfbox color space object
+	 * @return {@code <? extends PBoxPDColorSpace>} object or {@code null} if {@code colorSpace} argument
+	 * {@code null} or unsupported type
+	 */
+	public static PDColorSpace getColorSpace(org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace) {
+		return getColorSpace(colorSpace, null);
+	}
+
     /**
      * Transform object of pdfbox to corresponding object of veraPDF-library
      * ({@link org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace} to
-     * {@link PBoxPDColorSpace})
+     * {@link PBoxPDColorSpace}). If color space is pattern color space, than
+	 * transform to Pattern object.
      *
      * @param colorSpace pdfbox color space object
-     * @return {@code <? extends PBoxPDColorSpace>} object or {@code null} if {@code colorSpace} argument
-     * {@code null} or unsupported type
+	 * @param pattern pattern of pattern color space
+     * @return {@code <? extends PBoxPDColorSpace>} object or {@code null} if
+	 * {@code colorSpace} argument is {@code null},{@code pattern} argument is
+	 * {@code null} or unsupported type of color space
      */
-	public static PDColorSpace getColorSpace(org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace) {
+	public static PDColorSpace getColorSpace(org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace,
+											 PDAbstractPattern pattern) {
 		if (colorSpace != null) {
 			switch (colorSpace.getName()) {
 				case CAL_GRAY:
@@ -60,9 +83,30 @@ public class ColorSpaceFactory {
 					return new PBoxPDSeparation((PDSeparation) colorSpace);
 				case INDEXED:
 					return new PBoxPDIndexed((PDIndexed) colorSpace);
+				case PATTERN:
+					return getPattern(pattern);
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Transform object of pdfbox to corresponding object of veraPDF-library
+	 * ({@link org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern} to
+	 * {@link org.verapdf.model.impl.pb.pd.pattern.PBoxPDPattern})
+	 *
+	 * @param pattern pdfbox pattern object
+	 * @return {@code <? extends PDPattern>} object or {@code null} if
+	 * {@code pattern} argument is {@code null}
+	 */
+	public static PDPattern getPattern(PDAbstractPattern pattern) {
+		if (pattern != null && pattern.getPatternType() == PDAbstractPattern.TYPE_SHADING_PATTERN) {
+			return new PBoxPDShadingPattern((PDShadingPattern) pattern);
+		} else if (pattern != null && pattern.getPatternType() == PDAbstractPattern.TYPE_TILING_PATTERN) {
+			return new PBoxPDTillingPattern((PDTilingPattern) pattern);
+		} else {
+			return null;
+		}
 	}
 
 }

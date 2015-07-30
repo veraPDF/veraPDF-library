@@ -11,9 +11,11 @@ import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceCMYK;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceGray;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB;
+import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
 import org.apache.pdfbox.pdmodel.graphics.shading.PDShading;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingIntent;
+import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
 import org.verapdf.model.impl.pb.operator.color.PBOpColor;
 import org.verapdf.model.impl.pb.operator.generalgs.*;
@@ -125,8 +127,14 @@ public final class OperatorFactory {
 				graphicState.setFillColorSpace(getColorSpaceFromResources(resources, getLastCOSName(arguments)));
 				return new PBOpColor(arguments);
 			case Operators.SCN_STROKE:
+				if (graphicState.getStrokeColorSpace().getName().equals(ColorSpaceFactory.PATTERN)) {
+					graphicState.setPattern(getPatternFromResources(resources, getLastCOSName(arguments)));
+				}
 				return new PBOpColor(arguments);
 			case Operators.SCN_FILL:
+				if (graphicState.getFillColorSpace().getName().equals(ColorSpaceFactory.PATTERN)) {
+					graphicState.setPattern(getPatternFromResources(resources, getLastCOSName(arguments)));
+				}
 				return new PBOpColor(arguments);
 			case Operators.SC_STROKE:
 				return new PBOpColor(arguments);
@@ -211,36 +219,45 @@ public final class OperatorFactory {
 			case Operators.B_CLOSEPATH_FILL_STROKE:
 				return new PBOp_b_closepath_fill_stroke(arguments,
 						graphicState.getStrokeColorSpace(),
-						graphicState.getFillColorSpace());
+						graphicState.getFillColorSpace(),
+						graphicState.getPattern());
 			case Operators.B_FILL_STROKE:
 				return new PBOp_B_fill_stroke(arguments,
 						graphicState.getStrokeColorSpace(),
-						graphicState.getFillColorSpace());
+						graphicState.getFillColorSpace(),
+						graphicState.getPattern());
 			case Operators.B_STAR_CLOSEPATH_EOFILL_STROKE:
 				return new PBOp_bstar_closepath_eofill_stroke(arguments,
 						graphicState.getStrokeColorSpace(),
-						graphicState.getFillColorSpace());
+						graphicState.getFillColorSpace(),
+						graphicState.getPattern());
 			case Operators.B_STAR_EOFILL_STROKE:
 				return new PBOp_BStar_eofill_stroke(arguments,
 						graphicState.getStrokeColorSpace(),
-						graphicState.getFillColorSpace());
+						graphicState.getFillColorSpace(),
+						graphicState.getPattern());
 			case Operators.F_FILL:
 				return new PBOp_f_fill(arguments,
-						graphicState.getFillColorSpace());
+						graphicState.getFillColorSpace(),
+						graphicState.getPattern());
 			case Operators.F_FILL_OBSOLETE:
 				return new PBOp_F_fill_obsolete(arguments,
-						graphicState.getFillColorSpace());
+						graphicState.getFillColorSpace(),
+						graphicState.getPattern());
 			case Operators.F_STAR_FILL:
 				return new PBOp_FStar(arguments,
-						graphicState.getFillColorSpace());
+						graphicState.getFillColorSpace(),
+						graphicState.getPattern());
 			case Operators.N:
 				return new PBOp_n(arguments);
 			case Operators.S_CLOSE_STROKE:
 				return new PBOp_s_close_stroke(arguments,
-						graphicState.getStrokeColorSpace());
+						graphicState.getStrokeColorSpace(),
+						graphicState.getPattern());
 			case Operators.S_STROKE:
 				return new PBOp_S_stroke(arguments,
-						graphicState.getStrokeColorSpace());
+						graphicState.getStrokeColorSpace(),
+						graphicState.getPattern());
 
 			// SHADING
 			case Operators.SH:
@@ -363,4 +380,12 @@ public final class OperatorFactory {
 		return null;
 	}
 
+	private static PDAbstractPattern getPatternFromResources(PDResources resources, COSName pattern) {
+		try {
+			return resources.getPattern(pattern);
+		} catch (IOException e) {
+			LOGGER.error("Problems with resources obtaining for " + pattern + ". " + e.getMessage(), e);
+			return null;
+		}
+	}
 }

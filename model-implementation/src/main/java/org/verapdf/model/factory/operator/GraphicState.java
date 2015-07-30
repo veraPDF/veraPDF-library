@@ -3,6 +3,7 @@ package org.verapdf.model.factory.operator;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceGray;
+import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
 
 /**
@@ -12,6 +13,7 @@ public class GraphicState implements Cloneable {
 
 	private PDColorSpace fillColorSpace = PDDeviceGray.INSTANCE;
 	private PDColorSpace strokeColorSpace = PDDeviceGray.INSTANCE;
+	private PDAbstractPattern pattern = null;
 	private RenderingMode renderingMode = RenderingMode.FILL;
 	private PDFont font;
 
@@ -29,6 +31,14 @@ public class GraphicState implements Cloneable {
 
 	public void setStrokeColorSpace(PDColorSpace strokeColorSpace) {
 		this.strokeColorSpace = strokeColorSpace;
+	}
+
+	public PDAbstractPattern getPattern() {
+		return pattern;
+	}
+
+	public void setPattern(PDAbstractPattern pattern) {
+		this.pattern = pattern;
 	}
 
 	public RenderingMode getRenderingMode() {
@@ -54,6 +64,7 @@ public class GraphicState implements Cloneable {
 	public void copyProperties(GraphicState graphicState) {
 		this.fillColorSpace = graphicState.getFillColorSpace();
 		this.strokeColorSpace = graphicState.getStrokeColorSpace();
+		this.pattern = graphicState.getPattern();
 		this.renderingMode = graphicState.getRenderingMode();
 		this.font = graphicState.getFont();
 	}
@@ -63,6 +74,7 @@ public class GraphicState implements Cloneable {
 		GraphicState graphicState = new GraphicState();
 		graphicState.setFillColorSpace(this.getFillColorSpace());
 		graphicState.setStrokeColorSpace(this.getStrokeColorSpace());
+		graphicState.setPattern(this.getPattern());
 		graphicState.setRenderingMode(this.getRenderingMode());
 		graphicState.setFont(this.getFont());
 		return graphicState;
