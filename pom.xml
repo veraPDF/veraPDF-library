@@ -333,12 +333,6 @@
           <version>2.2</version>
         </plugin>
 
-        <plugin>
-          <groupId>org.jacoco</groupId>
-          <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.7.4.201502262128</version>
-        </plugin>
-
       </plugins>
     </pluginManagement>
 
@@ -580,6 +574,9 @@
     </profile>
     <profile>
       <id>sonar-coverage</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <build>
         <pluginManagement>
           <plugins>
