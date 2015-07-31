@@ -36,7 +36,7 @@ public abstract class PBOpStrokePaint extends PBOpPathPaint{
 
 	private List<org.verapdf.model.pdlayer.PDColorSpace> getStrokeCS() {
 		List<org.verapdf.model.pdlayer.PDColorSpace> list = new ArrayList<>(MAX_NUMBER_OF_COLOR_SPACES);
-		org.verapdf.model.pdlayer.PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(pbStrokeColorSpace);
+		org.verapdf.model.pdlayer.PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(pbStrokeColorSpace, pattern);
 		if (colorSpace != null) {
 			list.add(colorSpace);
 		}
