@@ -13,44 +13,39 @@ import java.util.List;
  *
  * @author Evgeniy Muravitskiy
  */
-public class PBoxPDAcroForm extends PBoxPDObject implements PDAcroForm{
+public class PBoxPDAcroForm extends PBoxPDObject implements PDAcroForm {
 
-	public static final String FORM_FIELDS = "formFields";
-	public static final String ACRO_FORM_TYPE = "PDAcroForm";
+    public static final String FORM_FIELDS = "formFields";
+    public static final String ACRO_FORM_TYPE = "PDAcroForm";
 
-	public PBoxPDAcroForm(org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm simplePDObject) {
+    public PBoxPDAcroForm(
+            org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm simplePDObject) {
         super(simplePDObject);
         setType(ACRO_FORM_TYPE);
     }
 
-	@Override
-	public Boolean getNeedAppearances() {
-		return Boolean.valueOf(((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) simplePDObject)
-                .getNeedAppearances());
-	}
+    @Override
+    public Boolean getNeedAppearances() {
+        return Boolean
+                .valueOf(((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) simplePDObject)
+                        .getNeedAppearances());
+    }
 
-	@Override
-	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
+    @Override
+    public List<? extends Object> getLinkedObjects(String link) {
+        if (FORM_FIELDS.equals(link)) {
+            return getFormFields();
+        }
+        return super.getLinkedObjects(link);
+    }
 
-		switch (link) {
-			case FORM_FIELDS:
-				list = getFormFields();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
-
-		return list;
-	}
-
-	private List<PDFormField> getFormFields() {
-		List<PDFormField> formFields = new ArrayList<>();
-		List<PDField> fields = ((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) simplePDObject).getFields();
-		for (PDField field : fields) {
-			formFields.add(new PBoxPDFormField(field));
-		}
-		return formFields;
-	}
+    private List<PDFormField> getFormFields() {
+        List<PDFormField> formFields = new ArrayList<>();
+        List<PDField> fields = ((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) simplePDObject)
+                .getFields();
+        for (PDField field : fields) {
+            formFields.add(new PBoxPDFormField(field));
+        }
+        return formFields;
+    }
 }

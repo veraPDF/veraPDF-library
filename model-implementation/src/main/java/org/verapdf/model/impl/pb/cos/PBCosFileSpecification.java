@@ -1,7 +1,7 @@
 package org.verapdf.model.impl.pb.cos;
 
-import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSName;
 import org.verapdf.model.coslayer.CosFileSpecification;
 
 /**
@@ -9,21 +9,26 @@ import org.verapdf.model.coslayer.CosFileSpecification;
  *
  * @author Evgeniy Muravitskiy
  */
-public class PBCosFileSpecification extends PBCosDict implements CosFileSpecification {
+public class PBCosFileSpecification extends PBCosDict implements
+        CosFileSpecification {
 
     /** Type name for PBCosFileSpecification */
-	public static final String COS_FILE_SPECIFICATION_TYPE = "CosFileSpecification";
+    public static final String COS_FILE_SPECIFICATION_TYPE = "CosFileSpecification";
 
-	public PBCosFileSpecification(COSDictionary pdfBoxObject) {
-		super(pdfBoxObject, COS_FILE_SPECIFICATION_TYPE);
-	}
+    private final String ef;
 
-	/**
-	 * string representation of the EF dictionary, or null if EF key is not present in the file specification dictionary
-	 */
-	@Override
+    public PBCosFileSpecification(COSDictionary dictionary) {
+        super(dictionary, COS_FILE_SPECIFICATION_TYPE);
+        this.ef = dictionary.getItem(COSName.EF) == null ? null : dictionary
+                .getItem(COSName.EF).toString();
+    }
+
+    /**
+     * string representation of the EF dictionary, or null if EF key is not
+     * present in the file specification dictionary
+     */
+    @Override
     public String getEF() {
-		final COSBase ef = ((COSDictionary) baseObject).getItem("EF");
-		return ef != null ? ef.toString() : null;
-	}
+        return this.ef;
+    }
 }

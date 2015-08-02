@@ -15,42 +15,39 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
+public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent {
 
-    private static final Logger LOGGER = Logger.getLogger(PBoxPDOutputIntent.class);
-	public static final String DEST_PROFILE = "destProfile";
-	public static final String OUTPUT_INTENT_TYPE = "PDOutputIntent";
+    private static final Logger LOGGER = Logger
+            .getLogger(PBoxPDOutputIntent.class);
+    public static final String DEST_PROFILE = "destProfile";
+    public static final String OUTPUT_INTENT_TYPE = "PDOutputIntent";
 
-	public PBoxPDOutputIntent(org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent simplePDObject) {
+    public PBoxPDOutputIntent(
+            org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent simplePDObject) {
         super(simplePDObject);
         setType(OUTPUT_INTENT_TYPE);
     }
 
-	@Override
+    @Override
     public String getdestOutputProfileRef() {
-		COSDictionary dictionary = (COSDictionary) (simplePDObject).getCOSObject();
-		COSBase item = dictionary.getItem(COSName.DEST_OUTPUT_PROFILE);
-		if (item instanceof COSObject) {
-			StringBuilder buffer = new StringBuilder();
-			buffer.append(((COSObject) item).getObjectNumber()).append(' ');
-			buffer.append(((COSObject) item).getGenerationNumber());
-			return buffer.toString();
-		}
+        COSDictionary dictionary = (COSDictionary) (simplePDObject)
+                .getCOSObject();
+        COSBase item = dictionary.getItem(COSName.DEST_OUTPUT_PROFILE);
+        if (item instanceof COSObject) {
+            StringBuilder buffer = new StringBuilder();
+            buffer.append(((COSObject) item).getObjectNumber()).append(' ');
+            buffer.append(((COSObject) item).getGenerationNumber());
+            return buffer.toString();
+        }
         return null;
-	}
+    }
 
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
-        List<?extends Object> list;
-        switch (link) {
-            case DEST_PROFILE:
-                list = getDestProfile();
-                break;
-            default:
-                list = super.getLinkedObjects(link);
-                break;
+        if (DEST_PROFILE.equals(link)) {
+            return getDestProfile();
         }
-        return list;
+        return super.getLinkedObjects(link);
     }
 
     private List<ICCOutputProfile> getDestProfile() {
@@ -62,15 +59,17 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
         }
         try {
             COSStream dest = ((org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent) simplePDObject)
-					.getDestOutputIntent();
+                    .getDestOutputIntent();
             if (dest != null) {
                 final InputStream unfilteredStream = dest.getUnfilteredStream();
-				long N = dest.getLong(COSName.N);
-                profile.add(new PBoxICCOutputProfile(unfilteredStream, subtype, N != -1 ? Long.valueOf(N) : null));
+                long N = dest.getLong(COSName.N);
+                profile.add(new PBoxICCOutputProfile(unfilteredStream, subtype,
+                        N != -1 ? Long.valueOf(N) : null));
                 unfilteredStream.close();
             }
         } catch (IOException e) {
-            LOGGER.error("Can not read dest output profile. " + e.getMessage(), e);
+            LOGGER.error("Can not read dest output profile. " + e.getMessage(),
+                    e);
         }
         return profile;
     }

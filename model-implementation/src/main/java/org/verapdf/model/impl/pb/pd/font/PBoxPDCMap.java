@@ -14,39 +14,31 @@ import java.util.List;
  */
 public class PBoxPDCMap extends PBoxPDObject implements PDCMap {
 
-	public static final String CMAP_TYPE = "PDCMap";
-	public static final String EMBEDDED_FILE = "embeddedFile";
+    public static final String CMAP_TYPE = "PDCMap";
+    public static final String EMBEDDED_FILE = "embeddedFile";
 
-	public PBoxPDCMap(CMap cMap) {
-		super(cMap);
-		setType(CMAP_TYPE);
-	}
+    public PBoxPDCMap(CMap cMap) {
+        super(cMap);
+        setType(CMAP_TYPE);
+    }
 
-	@Override
-	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
+    @Override
+    public List<? extends Object> getLinkedObjects(String link) {
+        if (EMBEDDED_FILE.equals(link)) {
+            return getEmbeddedFile();
+        }
+        return super.getLinkedObjects(link);
+    }
 
-		switch (link) {
-			case EMBEDDED_FILE:
-				list = getEmbeddedFile();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
+    private static List<CMapFile> getEmbeddedFile() {
+        List<CMapFile> list = new ArrayList<>();
+        return list;
+    }
 
-		return list;
-	}
-
-	private static List<CMapFile> getEmbeddedFile() {
-		List<CMapFile> list = new ArrayList<>();
-		return list;
-	}
-
-	@Override
-	public String getCMapName() {
-		String cMapName = cMap.getName();
-		return cMapName;
-	}
+    @Override
+    public String getCMapName() {
+        String cMapName = cMap.getName();
+        return cMapName;
+    }
 
 }

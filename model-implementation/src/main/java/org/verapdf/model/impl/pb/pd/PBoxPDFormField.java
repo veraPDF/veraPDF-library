@@ -31,18 +31,10 @@ public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
 
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
-
-		switch (link) {
-			case ADDITIONAL_ACTION:
-				list = this.getAdditionalAction();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
+		if (ADDITIONAL_ACTION.equals(link)) {
+		    return  this.getAdditionalAction();
 		}
-
-		return list;
+		return super.getLinkedObjects(link);
 	}
 
 	private List<PDAction> getAdditionalAction() {

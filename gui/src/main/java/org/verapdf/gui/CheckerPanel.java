@@ -514,7 +514,8 @@ public class CheckerPanel extends JPanel {
                 try {
                     try {
                         Files.copy(report.toPath(), temp.toPath());
-                        if (GUIConstants.HTML.equalsIgnoreCase(extension.toLowerCase())) {
+                        if (GUIConstants.HTML.equalsIgnoreCase(extension
+                                .toLowerCase())) {
                             File newImage = new File(temp.getParentFile(),
                                     image.getName());
                             Files.copy(image.toPath(), newImage.toPath(),
@@ -533,8 +534,7 @@ public class CheckerPanel extends JPanel {
                         if (resultOption == JOptionPane.YES_OPTION) {
                             Files.copy(report.toPath(), temp.toPath(),
                                     StandardCopyOption.REPLACE_EXISTING);
-                            if (GUIConstants.HTML.equals(extension
-                                    .toLowerCase())) {
+                            if (GUIConstants.HTML.equalsIgnoreCase(extension)) {
                                 File newImage = new File(temp.getParentFile(),
                                         image.getName());
                                 Files.copy(image.toPath(), newImage.toPath(),

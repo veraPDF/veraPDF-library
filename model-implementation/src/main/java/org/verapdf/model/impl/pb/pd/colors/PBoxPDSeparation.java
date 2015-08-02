@@ -25,18 +25,10 @@ public class PBoxPDSeparation extends PBoxPDColorSpace implements PDSeparation {
 
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
-
-		switch (link) {
-			case ALTERNATE:
-				list = this.getAlternate();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
+		if (ALTERNATE.equals(link)) {
+		    return this.getAlternate();
 		}
-
-		return list;
+		return super.getLinkedObjects(link);
 	}
 
 	/**

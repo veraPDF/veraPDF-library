@@ -373,7 +373,7 @@ public final class OperatorFactory {
 		if (!arguments.isEmpty()) {
 			COSBase renderingMode = arguments.get(0);
 			if (renderingMode instanceof COSInteger) {
-				RenderingMode.fromInt((((COSInteger) renderingMode).intValue()));
+				RenderingMode.fromInt(((COSInteger) renderingMode).intValue());
 			}
 		}
 		return null;

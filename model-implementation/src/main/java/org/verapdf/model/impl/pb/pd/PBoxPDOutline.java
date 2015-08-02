@@ -15,36 +15,29 @@ import java.util.List;
  */
 public class PBoxPDOutline extends PBoxPDObject implements PDOutline {
 
-	public static final String ACTION = "A";
-	public static final String OUTLINE_TYPE = "PDOutline";
-	public static final int NUMBER_OF_ACTIONS = 1;
+    public static final String ACTION = "A";
+    public static final String OUTLINE_TYPE = "PDOutline";
+    public static final int NUMBER_OF_ACTIONS = 1;
 
-	public PBoxPDOutline(PDOutlineItem simplePDObject) {
-		super(simplePDObject);
-		setType(OUTLINE_TYPE);
-	}
+    public PBoxPDOutline(PDOutlineItem simplePDObject) {
+        super(simplePDObject);
+        setType(OUTLINE_TYPE);
+    }
 
-	@Override
-	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
+    @Override
+    public List<? extends Object> getLinkedObjects(String link) {
+        if (ACTION.equals(link)) {
+            return this.getAction();
+        }
+        return super.getLinkedObjects(link);
+    }
 
-		switch (link) {
-			case ACTION:
-				list = this.getAction();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
-
-		return list;
-	}
-
-	private List<PDAction> getAction() {
-		List<PDAction> actions = new ArrayList<>(NUMBER_OF_ACTIONS);
-		org.apache.pdfbox.pdmodel.interactive.action.PDAction action = ((PDOutlineItem) simplePDObject).getAction();
-		super.addAction(actions, action);
-		return actions;
-	}
+    private List<PDAction> getAction() {
+        List<PDAction> actions = new ArrayList<>(NUMBER_OF_ACTIONS);
+        org.apache.pdfbox.pdmodel.interactive.action.PDAction action = ((PDOutlineItem) simplePDObject)
+                .getAction();
+        super.addAction(actions, action);
+        return actions;
+    }
 
 }

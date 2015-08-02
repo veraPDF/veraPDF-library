@@ -17,8 +17,8 @@ import java.util.List;
  */
 public class PBCosNameTest extends BaseTest {
 
-    public static List<COSName> expected;
-    public static List<CosName> actual;
+    public static List<COSName> expectedNames;
+    public static List<CosName> actualNames;
 
     @BeforeClass
     public static void setUp() {
@@ -27,14 +27,14 @@ public class PBCosNameTest extends BaseTest {
 
         setUpCOSNames();
 
-        actual = new ArrayList<>(expected.size());
-        for (COSName name : expected) {
-            actual.add(new PBCosName(name));
+        actualNames = new ArrayList<>(expectedNames.size());
+        for (COSName name : expectedNames) {
+            actualNames.add(new PBCosName(name));
         }
     }
 
     private static void setUpCOSNames() {
-        expected = new ArrayList<>(6);
+        expectedNames = new ArrayList<>(6);
 
         addCOSName(COSName.INDEX);
         addCOSName(COSName.ACRO_FORM);
@@ -42,34 +42,34 @@ public class PBCosNameTest extends BaseTest {
         addCOSName(COSName.BITS_PER_COORDINATE);
         final String firstCustom = "FirstCustom";
         final String secondCustom = "SecondCustom";
-        expected.add(COSName.getPDFName(firstCustom, firstCustom.length()));
-        expected.add(COSName.getPDFName(secondCustom, secondCustom.length()));
+        expectedNames.add(COSName.getPDFName(firstCustom, firstCustom.length()));
+        expectedNames.add(COSName.getPDFName(secondCustom, secondCustom.length()));
     }
 
     private static void addCOSName(COSName cosName) {
         String name = cosName.getName();
-        expected.add(COSName.getPDFName(name, name.length()));
+        expectedNames.add(COSName.getPDFName(name, name.length()));
     }
 
     @Test
     public void testGetValueMethod() {
-        for (int i = 0; i < expected.size(); i++) {
-            Assert.assertEquals(expected.get(i).getName(), actual.get(i).getvalue());
+        for (int i = 0; i < expectedNames.size(); i++) {
+            Assert.assertEquals(expectedNames.get(i).getName(), actualNames.get(i).getvalue());
         }
     }
 
     @Test
     public void testGetOriginalLength() {
-        for (int i = 0; i < expected.size(); i++) {
-            final Long originalLength = Long.valueOf(expected.get(i).getOriginalLength().longValue());
-            Assert.assertEquals(originalLength, actual.get(i).getorigLength());
+        for (int i = 0; i < expectedNames.size(); i++) {
+            final Long originalLength = Long.valueOf(expectedNames.get(i).getOriginalLength().longValue());
+            Assert.assertEquals(originalLength, actualNames.get(i).getorigLength());
         }
     }
 
     @Override
     @Test
     public void testTypeAndID() {
-        for (CosName name : actual) {
+        for (CosName name : actualNames) {
             Assert.assertEquals(expectedType, name.getType());
             Assert.assertEquals(expectedID, name.getID());
         }
@@ -78,7 +78,7 @@ public class PBCosNameTest extends BaseTest {
 	@Override
 	@Test
 	public void testLinksMethod() {
-		for (CosName name : actual) {
+		for (CosName name : actualNames) {
 			List<String> expectedLinks = ModelHelper.getListOfLinks(name.getType());
 			for (String link : expectedLinks) {
 				Assert.assertNotNull(name.getLinkedObjects(link));
@@ -90,7 +90,7 @@ public class PBCosNameTest extends BaseTest {
 	@Override
     @Test(expected = IllegalAccessError.class)
 	public void testNonexistentParentLink() {
-		for (CosName name : actual) {
+		for (CosName name : actualNames) {
 			name.getLinkedObjects("Wrong link.");
 		}
 	}
@@ -98,9 +98,9 @@ public class PBCosNameTest extends BaseTest {
     @AfterClass
     public static void tearDown() {
         expectedType = null;
-        expected.clear();
-        actual.clear();
-        expected = null;
-        actual =null;
+        expectedNames.clear();
+        actualNames.clear();
+        expectedNames = null;
+        actualNames =null;
     }
 }

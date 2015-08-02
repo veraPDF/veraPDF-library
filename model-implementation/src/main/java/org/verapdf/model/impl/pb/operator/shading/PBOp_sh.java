@@ -17,33 +17,29 @@ public class PBOp_sh extends PBOpShading implements Op_sh {
 
     public static final String SHADING = "shading";
 
-	private org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading;
+    private org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading;
 
-    public PBOp_sh(List<COSBase> arguments, org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading) {
+    public PBOp_sh(List<COSBase> arguments,
+            org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading) {
         super(arguments);
-		this.shading = shading;
+        this.shading = shading;
         setType(OP_SH_TYPE);
     }
 
     @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-        List<? extends org.verapdf.model.baselayer.Object> list;
-
-        switch (link) {
-            case SHADING:
-                list = this.getShading();
-                break;
-            default: list = super.getLinkedObjects(link);
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+            String link) {
+        if (SHADING.equals(link)) {
+            return this.getShading();
         }
-
-        return list;
+        return super.getLinkedObjects(link);
     }
 
     private List<PDShading> getShading() {
         List<PDShading> list = new ArrayList<>();
         if (this.shading != null) {
-			list.add(new PBoxPDShading(shading));
-		}
+            list.add(new PBoxPDShading(shading));
+        }
         return list;
     }
 

@@ -29,18 +29,10 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
-
-		switch (link) {
-			case FONT_FILE:
-				list = getFontFile();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
+		if (FONT_FILE.equals(link)) {
+		    return getFontFile();
 		}
-
-		return list;
+		return super.getLinkedObjects(link);
 	}
 
 	private List<PBoxFontProgram> getFontFile() {

@@ -26,7 +26,8 @@ public class PBCosDictTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        expectedType = TYPES.contains(PBCosDict.TYPE) ? PBCosDict.TYPE : null;
+        expectedType = TYPES.contains(PBCosDict.COS_DICT_TYPE) ? PBCosDict.COS_DICT_TYPE
+                : null;
         expectedID = null;
 
         COSDictionary dictionary = new COSDictionary();
@@ -34,7 +35,8 @@ public class PBCosDictTest extends BaseTest {
         for (int index = 1; index < 6; index++) {
             dictionary.setInt(COSName.getPDFName(String.valueOf(index)), index);
         }
-        dictionary.setItem(COSName.METADATA, new COSStream(new COSDictionary()));
+        dictionary
+                .setItem(COSName.METADATA, new COSStream(new COSDictionary()));
 
         expectedLength = dictionary.size();
 
@@ -43,32 +45,39 @@ public class PBCosDictTest extends BaseTest {
 
     @Test
     public void testGetSizeMethod() {
-        Assert.assertEquals(expectedLength, ((CosDict) actual).getsize().longValue());
+        Assert.assertEquals(expectedLength, ((CosDict) actual).getsize()
+                .longValue());
     }
 
     @Test
     public void testGetKeysLink() {
-        List<CosName> keys = (List<CosName>) actual.getLinkedObjects(PBCosDict.KEYS);
+        List<CosName> keys = (List<CosName>) actual
+                .getLinkedObjects(PBCosDict.KEYS);
         for (int index = 1; index < expectedLength; index++) {
-            Assert.assertEquals(keys.get(index - 1).getvalue(), String.valueOf(index));
+            Assert.assertEquals(keys.get(index - 1).getvalue(),
+                    String.valueOf(index));
         }
-        Assert.assertEquals(keys.get(keys.size() - 1).getvalue(), COSName.METADATA.getName());
+        Assert.assertEquals(keys.get(keys.size() - 1).getvalue(),
+                COSName.METADATA.getName());
     }
 
     @Test
     public void testGetValuesLink() {
-        List<? extends org.verapdf.model.baselayer.Object> values = actual.getLinkedObjects(PBCosDict.VALUES);
+        List<? extends org.verapdf.model.baselayer.Object> values = actual
+                .getLinkedObjects(PBCosDict.VALUES);
         for (int index = 1; index < expectedLength; index++) {
             Object object = values.get(index - 1);
             Assert.assertTrue(object instanceof CosInteger);
-            Assert.assertEquals(((CosInteger) object).getintValue(), Long.valueOf(index));
+            Assert.assertEquals(((CosInteger) object).getintValue(),
+                    Long.valueOf(index));
         }
         Assert.assertTrue(values.get(values.size() - 1) instanceof CosStream);
     }
 
     @Test
     public void testGetMetadataLink() {
-        List<PDMetadata> metadata = (List<PDMetadata>) actual.getLinkedObjects(PBCosDict.METADATA);
+        List<PDMetadata> metadata = (List<PDMetadata>) actual
+                .getLinkedObjects(PBCosDict.METADATA);
         Assert.assertTrue(metadata.size() == 1);
         Assert.assertTrue(metadata.get(0) != null);
     }

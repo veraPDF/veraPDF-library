@@ -24,18 +24,11 @@ public class PBoxPDTilingPattern extends PBoxPDPattern implements PDTilingPatter
 
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
 
-		switch (link) {
-			case CONTENT_STREAM:
-				list = this.getContentStream();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
+		if (CONTENT_STREAM.equals(link)) {
+		    return this.getContentStream();
 		}
-
-		return list;
+		return super.getLinkedObjects(link);
 	}
 
 	private List<PDContentStream> getContentStream() {

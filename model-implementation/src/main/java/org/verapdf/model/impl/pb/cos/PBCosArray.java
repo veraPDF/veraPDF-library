@@ -7,6 +7,7 @@ import org.verapdf.model.coslayer.CosArray;
 import org.verapdf.model.coslayer.CosObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,44 +19,48 @@ import java.util.List;
 public class PBCosArray extends PBCosObject implements CosArray {
 
     /** Type name for PBCosArray */
-	public static final String COS_ARRAY_TYPE = "CosArray";
+    public static final String COS_ARRAY_TYPE = "CosArray";
 
-	public static final String ELEMENTS = "elements";
+    public static final String ELEMENTS = "elements";
+    private final int size;
+    private final List<CosObject> elements;
 
-	public PBCosArray(COSArray array) {
-		super(array, COS_ARRAY_TYPE);
-	}
+    public PBCosArray(COSArray array) {
+        super(array, COS_ARRAY_TYPE);
+        this.size = array.size();
+        this.elements = parseElements(array);
+    }
 
-	/**
-	 * Getter for array size.
-	 *
-	 * @return size of array
-	 */
-	@Override
-	public Long getsize() {
-		return Long.valueOf(((COSArray) baseObject).size());
-	}
+    /**
+     * Getter for array size.
+     *
+     * @return size of array
+     */
+    @Override
+    public Long getsize() {
+        return Long.valueOf(this.size);
+    }
 
-	@Override
-	public List<? extends Object> getLinkedObjects(String link) {
-		if (link.equals(ELEMENTS)) {
-			return this.getElements();
-		}
-		return super.getLinkedObjects(link);
-	}
+    @Override
+    public List<? extends Object> getLinkedObjects(String link) {
+        if (link.equals(ELEMENTS)) {
+            return this.elements;
+        }
+        return super.getLinkedObjects(link);
+    }
 
-	/**
-	 * Get all elements of array.
-	 *
-	 * @return elements of array
-	 */
-	private List<CosObject> getElements() {
-		List<CosObject> list = new ArrayList<>(this.getsize().intValue());
-		for (COSBase base : ((COSArray) baseObject)) {
-			if (base != null) {
-				list.add(getFromValue(base));
-			}
-		}
-		return list;
-	}
+    /**
+     * Get all elements of array.
+     *
+     * @return elements of array
+     */
+    private List<CosObject> parseElements(COSArray array) {
+        List<CosObject> list = new ArrayList<>(this.getsize().intValue());
+        for (COSBase base : array) {
+            if (base != null) {
+                list.add(getFromValue(base));
+            }
+        }
+        return Collections.unmodifiableList(list);
+    }
 }

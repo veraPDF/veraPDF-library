@@ -29,7 +29,7 @@ public class ColorSpaceFactoryTest {
 	public static void setUp() throws URISyntaxException, IOException {
 		String fileAbsolutePath = getSystemIndependentPath(FILE_RELATIVE_PATH);
 		File file = new File(fileAbsolutePath);
-		document = PDDocument.load(file, Boolean.FALSE, Boolean.TRUE);
+		document = PDDocument.load(file, false, true);
 		resources = document.getPage(0).getResources();
 	}
 
@@ -46,19 +46,19 @@ public class ColorSpaceFactoryTest {
 	}
 
 	@Test
-	public void testDeviceCMYKGenerating() throws IOException {
+	public void testDeviceCMYKGenerating() {
 		PDColorSpace colorSpace = org.apache.pdfbox.pdmodel.graphics.color.PDDeviceCMYK.INSTANCE;
 		Assert.assertTrue(ColorSpaceFactory.getColorSpace(colorSpace) instanceof PDDeviceCMYK);
 	}
 
 	@Test
-	public void testDeviceGrayGenerating() throws IOException {
+	public void testDeviceGrayGenerating() {
 		PDColorSpace colorSpace = org.apache.pdfbox.pdmodel.graphics.color.PDDeviceGray.INSTANCE;
 		Assert.assertTrue(ColorSpaceFactory.getColorSpace(colorSpace) instanceof PDDeviceGray);
 	}
 
 	@Test
-	public void testDeviceRGBGenerating() throws IOException {
+	public void testDeviceRGBGenerating() {
 		PDColorSpace colorSpace = org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB.INSTANCE;
 		Assert.assertTrue(ColorSpaceFactory.getColorSpace(colorSpace) instanceof PDDeviceRGB);
 	}

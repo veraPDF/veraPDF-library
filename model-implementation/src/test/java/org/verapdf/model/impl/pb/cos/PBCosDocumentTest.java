@@ -1,5 +1,10 @@
 package org.verapdf.model.impl.pb.cos;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.List;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -10,11 +15,6 @@ import org.verapdf.model.coslayer.CosDocument;
 import org.verapdf.model.coslayer.CosTrailer;
 import org.verapdf.model.coslayer.CosXRef;
 import org.verapdf.model.impl.BaseTest;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.List;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -37,8 +37,8 @@ public class PBCosDocumentTest extends BaseTest {
 
         String fileAbsolutePath = getSystemIndependentPath(FILE_RELATIVE_PATH);
         final File file = new File(fileAbsolutePath);
-        try (PDDocument document = PDDocument.load(file, false, true)) {
-            actual = new PBCosDocument(document, file.length());
+        try (PDDocument doc = PDDocument.load(file, false, true)) {
+            actual = new PBCosDocument(doc, file.length());
         }
     }
 
@@ -133,10 +133,10 @@ public class PBCosDocumentTest extends BaseTest {
 
     @Test
     public void testDocumentLink() {
-        List<? extends Object> document = actual.getLinkedObjects(PBCosDocument.DOCUMENT);
-        Assert.assertEquals(1, document.size());
-        Assert.assertTrue(document.get(0) != null);
-        Assert.assertTrue(document.get(0) instanceof org.verapdf.model.pdlayer.PDDocument);
+        List<? extends Object> doc = actual.getLinkedObjects(PBCosDocument.DOCUMENT);
+        Assert.assertEquals(1, doc.size());
+        Assert.assertTrue(doc.get(0) != null);
+        Assert.assertTrue(doc.get(0) instanceof org.verapdf.model.pdlayer.PDDocument);
     }
 
     @Test
