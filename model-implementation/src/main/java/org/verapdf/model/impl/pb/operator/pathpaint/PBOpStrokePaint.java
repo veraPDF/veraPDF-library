@@ -22,7 +22,6 @@ public abstract class PBOpStrokePaint extends PBOpPathPaint {
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
             String link) {
-        List<? extends org.verapdf.model.baselayer.Object> list;
 
         if (STROKE_CS.equals(link)) {
             return this.getStrokeCS();

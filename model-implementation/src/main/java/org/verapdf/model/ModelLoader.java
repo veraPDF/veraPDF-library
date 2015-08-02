@@ -54,10 +54,7 @@ public final class ModelLoader {
 		if (document == null) {
 			document = getPDDocument();
 		}
-		if (document == null) {
-			return null;
-		}
-        return new PBCosDocument(document, file.length());
+		return document != null ? new PBCosDocument(document, file.length()) : null;
 	}
 
 	/**

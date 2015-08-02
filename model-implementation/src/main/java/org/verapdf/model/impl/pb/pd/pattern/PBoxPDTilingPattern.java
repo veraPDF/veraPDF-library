@@ -11,29 +11,24 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class PBoxPDTillingPattern extends PBoxPDPattern implements PDTilingPattern {
+public class PBoxPDTilingPattern extends PBoxPDPattern implements PDTilingPattern {
+
+	public static final String TILING_PATTERN_TYPE = "PDTilingPattern";
 
 	public static final String CONTENT_STREAM = "contentStream";
 
-	public PBoxPDTillingPattern(org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern simplePDObject) {
+	public PBoxPDTilingPattern(org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern simplePDObject) {
 		super(simplePDObject);
-		setType("PDTilingPattern");
+		setType(TILING_PATTERN_TYPE);
 	}
 
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
 
-		switch (link) {
-			case CONTENT_STREAM:
-				list = getContentStream();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
+		if (CONTENT_STREAM.equals(link)) {
+		    return this.getContentStream();
 		}
-
-		return list;
+		return super.getLinkedObjects(link);
 	}
 
 	private List<PDContentStream> getContentStream() {

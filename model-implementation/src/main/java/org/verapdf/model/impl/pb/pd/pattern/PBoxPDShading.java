@@ -18,11 +18,13 @@ public class PBoxPDShading extends PBoxPDResources implements PDShading {
 
 	private static final Logger LOGGER = Logger.getLogger(PBoxPDShading.class);
 
+	public static final String SHADING_TYPE = "PDShading";
+
 	public static final String COLOR_SPACE = "colorSpace";
 
 	public PBoxPDShading(org.apache.pdfbox.pdmodel.graphics.shading.PDShading simplePDObject) {
 		super(simplePDObject);
-		setType("PDShading");
+		setType(SHADING_TYPE);
 	}
 
 	@Override

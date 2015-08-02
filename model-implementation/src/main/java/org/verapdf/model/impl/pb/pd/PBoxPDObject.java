@@ -1,5 +1,7 @@
 package org.verapdf.model.impl.pb.pd;
 
+import java.util.List;
+
 import org.apache.fontbox.cmap.CMap;
 import org.apache.pdfbox.contentstream.PDContentStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -9,8 +11,6 @@ import org.apache.pdfbox.pdmodel.interactive.action.PDActionNamed;
 import org.verapdf.model.GenericModelObject;
 import org.verapdf.model.pdlayer.PDAction;
 import org.verapdf.model.pdlayer.PDObject;
-
-import java.util.List;
 
 /**
  * @author Evgeniy Muravitskiy

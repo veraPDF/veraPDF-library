@@ -16,7 +16,7 @@ public final class PBCosVisitor implements ICOSVisitor {
 
     private final static PBCosVisitor visitor = new PBCosVisitor();
 
-    private PBCosVisitor(){
+    private PBCosVisitor() {
         // Disable default constructor
     }
 
