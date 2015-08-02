@@ -10,6 +10,11 @@ import org.verapdf.exceptions.VeraPDFException;
 public class NullProfileException extends VeraPDFException {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = 2747620168717623992L;
+
+    /**
      * Constructs new NullProfileException
      */
     public NullProfileException() {

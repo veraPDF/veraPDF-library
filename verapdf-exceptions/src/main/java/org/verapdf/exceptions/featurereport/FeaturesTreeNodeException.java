@@ -10,6 +10,11 @@ import org.verapdf.exceptions.VeraPDFException;
 public class FeaturesTreeNodeException extends VeraPDFException {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = -9004876231849554050L;
+
+    /**
      * Constructs new FeaturesTreeNodeException
      */
     public FeaturesTreeNodeException() {

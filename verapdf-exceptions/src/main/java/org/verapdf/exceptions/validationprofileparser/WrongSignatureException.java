@@ -10,6 +10,11 @@ import org.verapdf.exceptions.VeraPDFException;
 public class WrongSignatureException extends VeraPDFException {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = -8760056851741757944L;
+
+    /**
      * Constructs new WrongSignatureException
      */
     public WrongSignatureException() {

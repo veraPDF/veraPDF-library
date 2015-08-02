@@ -15,6 +15,7 @@ import java.util.Properties;
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import org.verapdf.gui.tools.GUIConstants;
 
@@ -73,7 +74,7 @@ public class PartnersPanel extends JPanel {
 
         consortium = new JLabel(GUIConstants.CONSORTIUM_TEXT);
 
-        consortium.setHorizontalTextPosition(JLabel.CENTER);
+        consortium.setHorizontalTextPosition(SwingConstants.CENTER);
         consortium.setFont(new Font(consortium.getFont().getName(), consortium.getFont().getStyle(), (int) (consortium.getFont().getSize() * GUIConstants.CONSORTIUM_FONT_SCALE)));
         Rectangle2D rec = new TextLayout(GUIConstants.CONSORTIUM_TEXT, consortium.getFont(), new FontRenderContext(null, true, true)).getBounds();
         consortium.setSize((int) (rec.getWidth()) + GUIConstants.BORDER_WIDTH * 2, (int) (rec.getHeight() + GUIConstants.BORDER_WIDTH));
@@ -87,7 +88,7 @@ public class PartnersPanel extends JPanel {
 
         version = new JLabel(versionText);
 
-        version.setHorizontalTextPosition(JLabel.CENTER);
+        version.setHorizontalTextPosition(SwingConstants.CENTER);
         Rectangle2D recVer = new TextLayout(versionText, version.getFont(), new FontRenderContext(null, true, true)).getBounds();
         version.setSize((int) (recVer.getWidth() + GUIConstants.BORDER_WIDTH * 2), (int) (recVer.getHeight() + GUIConstants.BORDER_WIDTH));
         add(version);

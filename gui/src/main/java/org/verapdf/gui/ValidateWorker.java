@@ -1,16 +1,32 @@
 package org.verapdf.gui;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
+
 import org.apache.log4j.Logger;
+import org.verapdf.exceptions.validationlogic.JavaScriptEvaluatingException;
+import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameException;
+import org.verapdf.exceptions.validationlogic.NullLinkException;
+import org.verapdf.exceptions.validationlogic.NullLinkNameException;
+import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
+import org.verapdf.exceptions.validationlogic.RullWithNullIDException;
+import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
+import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
+import org.verapdf.exceptions.validationprofileparser.NullProfileException;
+import org.verapdf.exceptions.validationprofileparser.WrongProfileEncodingException;
+import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.validation.logic.Validator;
 import org.verapdf.validation.report.model.ValidationInfo;
-
-import javax.swing.*;
-
-import java.io.File;
+import org.xml.sax.SAXException;
 
 /**
  * Validates PDF in a new threat.
@@ -43,23 +59,17 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
     protected ValidationInfo doInBackground() {
         ValidationInfo info = null;
         collection = null;
-        org.verapdf.model.baselayer.Object root;
 
         ModelLoader loader = new ModelLoader(pdf.getPath());
 
 
         try {
-            root = loader.getRoot();
-
-            try {
-                info = Validator.validate(root, profile, false);
-            } catch (Exception e) {
-                parent.errorInValidatingOccur(GUIConstants.ERROR_IN_VALIDATING, e);
-            }
-
-        } catch (Exception e) {
+            org.verapdf.model.baselayer.Object root = loader.getRoot();
+            info = runValidator(root);
+        } catch (IOException e) {
             parent.errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
         }
+
 
         try {
             collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
@@ -69,6 +79,15 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
         }
 
         return info;
+    }
+    
+    private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
+        try {
+            return Validator.validate(root, profile, false);
+        } catch (IOException | IncorrectImportPathException | NullLinkNameException | JavaScriptEvaluatingException | NullLinkException | NullLinkedObjectException | RullWithNullIDException | MissedHashTagException | WrongSignatureException | WrongProfileEncodingException | NullProfileException | MultiplyGlobalVariableNameException | ParserConfigurationException | SAXException | XMLStreamException e) {
+            parent.errorInValidatingOccur(GUIConstants.ERROR_IN_VALIDATING, e);
+        }
+        return null;
     }
 
     @Override

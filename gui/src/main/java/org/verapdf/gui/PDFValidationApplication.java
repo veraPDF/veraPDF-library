@@ -18,6 +18,11 @@ import java.io.IOException;
  */
 public class PDFValidationApplication extends JFrame {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5569669411392145783L;
+
     private static final Logger LOGGER = Logger.getLogger(PDFValidationApplication.class);
 
     private AboutPanel aboutPanel;

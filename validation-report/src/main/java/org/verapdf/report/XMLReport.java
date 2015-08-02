@@ -1,10 +1,10 @@
 package org.verapdf.report;
 
-import org.apache.log4j.Logger;
-import org.verapdf.features.tools.FeaturesCollection;
-import org.verapdf.validation.report.model.ValidationInfo;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Formatter;
+import java.util.GregorianCalendar;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -12,16 +12,19 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.Formatter;
-import java.util.GregorianCalendar;
+import org.apache.log4j.Logger;
+import org.verapdf.features.tools.FeaturesCollection;
+import org.verapdf.validation.report.model.ValidationInfo;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 
 /**
@@ -157,7 +160,7 @@ public final class XMLReport {
      * @throws DatatypeConfigurationException
      *             indicates a serious configurating error
      */
-    public static void writeXMLReport(ValidationInfo info, String path, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
+    public static void writeXMLReport(ValidationInfo info, String path, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, DatatypeConfigurationException {
 
         writeXMLReport(info, null, path, processingTimeInMS);
     }
@@ -191,7 +194,7 @@ public final class XMLReport {
      * @throws DatatypeConfigurationException
      *             indicates a serious configuration error
      */
-    public static void writeXMLReport(ValidationInfo info, FeaturesCollection collection, String path, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
+    public static void writeXMLReport(ValidationInfo info, FeaturesCollection collection, String path, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, DatatypeConfigurationException {
 
         Document doc = generateDOMDocument(info, collection, processingTimeInMS);
 
@@ -229,7 +232,7 @@ public final class XMLReport {
      * @throws DatatypeConfigurationException
      *             indicates a serious configurating error
      */
-    public static String getXMLReportAsString(ValidationInfo info, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
+    public static String getXMLReportAsString(ValidationInfo info, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, DatatypeConfigurationException {
 
         return getXMLReportAsString(info, null, processingTimeInMS);
     }
@@ -261,7 +264,7 @@ public final class XMLReport {
      * @throws DatatypeConfigurationException
      *             indicates a serious configurating error
      */
-    public static String getXMLReportAsString(ValidationInfo info, FeaturesCollection collection, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, FileNotFoundException, DatatypeConfigurationException {
+    public static String getXMLReportAsString(ValidationInfo info, FeaturesCollection collection, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, DatatypeConfigurationException {
 
         Document doc = generateDOMDocument(info, collection, processingTimeInMS);
 

@@ -11,9 +11,7 @@ import org.verapdf.features.FeaturesObjectTypesEnum;
  */
 public final class ErrorsHelper {
 
-    private static final Logger LOGGER = Logger
-            .getLogger(ErrorsHelper.class);
-
+    private static final Logger LOGGER = Logger.getLogger(ErrorsHelper.class);
 
     private ErrorsHelper() {
         // Disable default public constructor
@@ -57,7 +55,6 @@ public final class ErrorsHelper {
     public static final String ANNOTATIONPARSER_ID = "annotparsrerr1";
     public static final String ANNOTATIONPARSER_MESSAGE = "Unknown annotation type.";
 
-
     /**
      * Adds an error to a {@link FeaturesCollection}
      * 
@@ -68,12 +65,16 @@ public final class ErrorsHelper {
      * @param errorMessage
      *            the error message
      */
-    public static void addErrorIntoCollection(FeaturesCollection collection, String errorID, String errorMessage) {
+    public static void addErrorIntoCollection(FeaturesCollection collection,
+            String errorID, String errorMessage) {
         try {
-            FeatureTreeNode error = FeatureTreeNode.newRootInstanceWIthValue("error", errorMessage);
+            FeatureTreeNode error = FeatureTreeNode.newRootInstanceWIthValue(
+                    "error", errorMessage);
             error.addAttribute(ErrorsHelper.ID, errorID);
-            if (!collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR).contains(error)) {
-                collection.addNewFeatureTree(FeaturesObjectTypesEnum.ERROR, error);
+            if (!collection.getFeatureTreesForType(
+                    FeaturesObjectTypesEnum.ERROR).contains(error)) {
+                collection.addNewFeatureTree(FeaturesObjectTypesEnum.ERROR,
+                        error);
             }
         } catch (FeaturesTreeNodeException ignore) {
             // This exception occurs when wrong node creates for feature tree.

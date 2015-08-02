@@ -10,6 +10,11 @@ import org.verapdf.exceptions.VeraPDFException;
 public class MissedHashTagException extends VeraPDFException {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = 3393127317304315565L;
+
+    /**
      * Constructs new MissedHashTagException
      */
     public MissedHashTagException() {
