@@ -43,7 +43,7 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
      */
     @Override
     public Boolean getisMetadataValid() {
-        return isMetadataValid;
+        return Boolean.valueOf(isMetadataValid);
     }
 
     /**

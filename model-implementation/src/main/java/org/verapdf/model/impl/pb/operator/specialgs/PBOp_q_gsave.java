@@ -13,9 +13,9 @@ public class PBOp_q_gsave extends PBOpGeneralGS implements Op_q_gsave {
 
     public static final String OP_Q_GSAVE_TYPE = "Op_q_gsave";
 
-    public final Integer nestingLevel;
+    public final int nestingLevel;
 
-    public PBOp_q_gsave(List<COSBase> arguments, Integer nestingLevel) {
+    public PBOp_q_gsave(List<COSBase> arguments, int  nestingLevel) {
         super(arguments);
         setType(OP_Q_GSAVE_TYPE);
         this.nestingLevel = nestingLevel;

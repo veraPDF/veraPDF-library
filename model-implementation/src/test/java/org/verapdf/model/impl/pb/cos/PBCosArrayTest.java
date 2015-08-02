@@ -30,7 +30,7 @@ public class PBCosArrayTest extends BaseTest {
     private static void setUpActual() throws IOException {
         COSArray array = new COSArray();
         COSDictionary dictionary = new COSDictionary();
-        dictionary.setBoolean(COSName.N, Boolean.TRUE);
+        dictionary.setBoolean(COSName.N, true);
         COSObject object = new COSObject(dictionary);
 
         array.add(COSInteger.get(10));

@@ -24,7 +24,7 @@ public class PBoxPDMetadataTest extends BaseTest {
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
-		actual = new PBoxPDMetadata(document.getDocumentCatalog().getMetadata(), true);
+		actual = new PBoxPDMetadata(document.getDocumentCatalog().getMetadata(), Boolean.TRUE);
 	}
 
 	@Test

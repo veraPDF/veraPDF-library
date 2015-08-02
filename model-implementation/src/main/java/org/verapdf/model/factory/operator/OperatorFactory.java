@@ -271,7 +271,7 @@ public final class OperatorFactory {
 				return new PBOp_Q_grestore(arguments);
 			case Operators.Q_GSAVE:
 				graphicStateStack.push(graphicState.clone());
-				return new PBOp_q_gsave(arguments, Integer.valueOf(graphicStateStack.size()));
+				return new PBOp_q_gsave(arguments, graphicStateStack.size());
 
 			// XOBJECT
 			case Operators.DO:

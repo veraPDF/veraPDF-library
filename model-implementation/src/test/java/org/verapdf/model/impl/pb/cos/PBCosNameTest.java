@@ -61,7 +61,7 @@ public class PBCosNameTest extends BaseTest {
     @Test
     public void testGetOriginalLength() {
         for (int i = 0; i < expected.size(); i++) {
-            final Long originalLength = Long.valueOf(expected.get(i).getOriginalLength());
+            final Long originalLength = Long.valueOf(expected.get(i).getOriginalLength().longValue());
             Assert.assertEquals(originalLength, actual.get(i).getorigLength());
         }
     }

@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class PBCosStreamTest extends BaseTest {
 
-    private static final Long expectedOriginLength = Long.valueOf(10);
+    private static final int EXPECTED_ORIGINAL_LENGTH = 10;
     private static String[] expectedFiltersArray;
-    public static final String expectedFFilterName = COSName.ASCII85_DECODE.getName();
+    public static final String EXPECTED_FILTER_NAME = COSName.ASCII85_DECODE.getName();
 
     @BeforeClass
     public static void setUp() throws IOException {
@@ -42,12 +42,12 @@ public class PBCosStreamTest extends BaseTest {
         expectedFiltersArray[1] = COSName.FLATE_DECODE.getName();
 
         COSObject object = new COSObject(new COSDictionary());
-        object.setObjectNumber(Long.valueOf(10));
-        object.setGenerationNumber(Integer.valueOf(0));
+        object.setObjectNumber(10);
+        object.setGenerationNumber(0);
 
         COSStream stream = new COSStream(new COSDictionary());
-        stream.setOriginLength(expectedOriginLength);
-        stream.setInt(COSName.LENGTH, expectedOriginLength.intValue() - 1);
+        stream.setOriginLength(Long.valueOf(EXPECTED_ORIGINAL_LENGTH));
+        stream.setInt(COSName.LENGTH, EXPECTED_ORIGINAL_LENGTH - 1);
         stream.setItem(COSName.FILTER, array);
         stream.setItem(COSName.F_FILTER, COSName.ASCII85_DECODE);
         stream.setItem(COSName.F_DECODE_PARMS, object);
@@ -56,7 +56,7 @@ public class PBCosStreamTest extends BaseTest {
 
     @Test
     public void testGetLengthMethod() {
-        Assert.assertEquals(expectedOriginLength - 1, ((CosStream) actual).getLength().longValue());
+        Assert.assertEquals(EXPECTED_ORIGINAL_LENGTH - 1, ((CosStream) actual).getLength().longValue());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class PBCosStreamTest extends BaseTest {
 
     @Test
     public void testFFilterMethod() {
-        Assert.assertEquals(expectedFFilterName, ((CosStream) actual).getFFilter());
+        Assert.assertEquals(EXPECTED_FILTER_NAME, ((CosStream) actual).getFFilter());
     }
 
     @Test
@@ -85,12 +85,12 @@ public class PBCosStreamTest extends BaseTest {
 
     @Test
     public void testGetSpacingCompliesPDFAMethod() {
-        Assert.assertTrue(((CosStream) actual).getspacingCompliesPDFA());
+        Assert.assertTrue(((CosStream) actual).getspacingCompliesPDFA().booleanValue());
     }
 
     @Test
     public void testGetIsLengthCorrect() {
-        Assert.assertFalse(((CosStream) actual).getisLengthCorrect());
+        Assert.assertFalse(((CosStream) actual).getisLengthCorrect().booleanValue());
     }
 
     @Test

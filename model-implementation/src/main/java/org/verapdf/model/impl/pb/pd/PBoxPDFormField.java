@@ -16,7 +16,7 @@ public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
 
 	public static final String ADDITIONAL_ACTION = "AA";
 
-	public static final Integer MAX_NUMBER_OF_ACTIONS = Integer.valueOf(4);
+	public static final int MAX_NUMBER_OF_ACTIONS = 4;
 	public static final String FORM_FIELD_TYPE = "PDFormField";
 
 	public PBoxPDFormField(PDField simplePDObject) {

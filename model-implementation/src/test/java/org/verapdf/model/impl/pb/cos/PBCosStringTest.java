@@ -52,14 +52,14 @@ public class PBCosStringTest extends BaseTest {
 
     @Test
     public void testGetIsHexMethod() {
-        Assert.assertTrue(((CosString) actual).getisHex());
-        Assert.assertFalse(secondActual.getisHex());
+        Assert.assertTrue(((CosString) actual).getisHex().booleanValue());
+        Assert.assertFalse(secondActual.getisHex().booleanValue());
     }
 
     @Test
     public void testGetIsHexSymbolsMethod() {
-        Assert.assertFalse(((CosString) actual).getisHexSymbols());
-        Assert.assertTrue(secondActual.getisHexSymbols());
+        Assert.assertFalse(((CosString) actual).getisHexSymbols().booleanValue());
+        Assert.assertTrue(secondActual.getisHexSymbols().booleanValue());
     }
 
     @Test

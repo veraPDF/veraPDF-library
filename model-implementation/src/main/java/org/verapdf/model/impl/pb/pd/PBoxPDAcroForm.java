@@ -25,9 +25,8 @@ public class PBoxPDAcroForm extends PBoxPDObject implements PDAcroForm{
 
 	@Override
 	public Boolean getNeedAppearances() {
-		Boolean isNeedAppearances = ((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) simplePDObject)
-				.getNeedAppearances();
-		return Boolean.valueOf(isNeedAppearances);
+		return Boolean.valueOf(((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) simplePDObject)
+                .getNeedAppearances());
 	}
 
 	@Override

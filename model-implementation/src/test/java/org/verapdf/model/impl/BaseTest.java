@@ -63,7 +63,7 @@ public abstract class BaseTest {
 	protected static void setUp(String path) throws URISyntaxException, IOException {
 		String fileAbsolutePath = getSystemIndependentPath(BASE_FOLDER + path);
 		File file = new File(fileAbsolutePath);
-		document = PDDocument.load(file, Boolean.FALSE, Boolean.TRUE);
+		document = PDDocument.load(file, false, true);
 	}
 
 	protected static String getSystemIndependentPath(String path) throws URISyntaxException {

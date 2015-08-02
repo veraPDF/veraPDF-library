@@ -15,8 +15,8 @@ import java.util.Map;
 public class TestSetReport {
 
     private Map<String, List<TestEntityReport>> testSetReport;
-    private Long total;
-    private Long failed;
+    private long total;
+    private long failed;
 
     @JsonProperty("testSetReport")
     public Map<String, List<TestEntityReport>> getTestSetReport() {
@@ -28,27 +28,27 @@ public class TestSetReport {
     }
 
     @JsonProperty("total")
-    public Long getTotal() {
+    public long getTotal() {
         return total;
     }
 
-    public void setTotal(Long total) {
+    public void setTotal(long total) {
         this.total = total;
     }
 
     @JsonProperty("failed")
-    public Long getFailed() {
+    public long getFailed() {
         return failed;
     }
 
-    public void setFailed(Long failed) {
+    public void setFailed(long failed) {
         this.failed = failed;
     }
 
     public static TestSetReport fromValue(TestSet testSet) {
         TestSetReport testSetReport = new TestSetReport();
-        Long total = 0L;
-        Long failed = 0L;
+        long total = 0L;
+        long failed = 0L;
 
         Map<String, List<TestEntity>> testSetMap = testSet.getTestSet();
         Map<String, List<TestEntityReport>> testSetReportMap = new HashMap<>();

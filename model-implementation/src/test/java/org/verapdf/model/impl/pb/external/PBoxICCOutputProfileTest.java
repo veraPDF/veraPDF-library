@@ -37,7 +37,7 @@ public class PBoxICCOutputProfileTest extends PBoxICCProfileTest {
 		String fileAbsolutePath = getSystemIndependentPath(PBCosDocumentTest.FILE_RELATIVE_PATH);
 		File file = new File(fileAbsolutePath);
 
-		document = PDDocument.load(file, Boolean.FALSE, Boolean.TRUE);
+		document = PDDocument.load(file, false, true);
 		PDOutputIntent outputIntent = document.getDocumentCatalog().getOutputIntents().get(0);
 		InputStream unfilteredStream = outputIntent.getDestOutputIntent().getUnfilteredStream();
 		Long N = Long.valueOf(outputIntent.getDestOutputIntent().getLong(COSName.N));

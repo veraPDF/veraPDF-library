@@ -29,8 +29,8 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	public static final String A = "A";
 	public static final String ADDITIONAL_ACTION = "AA";
 
-	public static final Integer MAX_COUNT_OF_ELEMENTS = Integer.valueOf(1);
-	public static final Integer MAX_COUNT_OF_ACTIONS = Integer.valueOf(10);
+	public static final int MAX_COUNT_OF_ELEMENTS = 1;
+	public static final int MAX_COUNT_OF_ACTIONS = 10;
 
 	public PBoxPDAnnot(PDAnnotation simplePDObject) {
         super(simplePDObject);
