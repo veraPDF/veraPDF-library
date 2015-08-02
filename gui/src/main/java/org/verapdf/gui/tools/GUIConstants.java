@@ -9,9 +9,6 @@ import java.awt.*;
  */
 public final class GUIConstants {
 
-    private GUIConstants() {
-    }
-
     public static final String LOGO_NAME = "veraPDF-logo-600.png";
     public static final Color LOGO_BACKGROUND = Color.LIGHT_GRAY;
     public static final String PARTNERS_NAME = "partners.png";
@@ -134,4 +131,7 @@ public final class GUIConstants {
     public static final Color VALIDATION_FAILED_COLOR = new Color(
             VALIDATION_FAILED_COLOR_RGB_RED, 0, 0);
 
+    private GUIConstants() {
+        // Disable default constructor
+    }
 }
