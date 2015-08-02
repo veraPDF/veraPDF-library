@@ -36,7 +36,7 @@ public abstract class PBOpFillPaint extends PBOpPathPaint {
 
 	private List<org.verapdf.model.pdlayer.PDColorSpace> getFillCS() {
 		List<org.verapdf.model.pdlayer.PDColorSpace> list = new ArrayList<>(MAX_NUMBER_OF_COLOR_SPACES);
-		org.verapdf.model.pdlayer.PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(pbFillColorSpace);
+		org.verapdf.model.pdlayer.PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(pbFillColorSpace, pattern);
 		if (colorSpace != null) {
 			list.add(colorSpace);
 		}

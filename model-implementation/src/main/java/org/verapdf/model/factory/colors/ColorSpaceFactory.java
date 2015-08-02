@@ -6,7 +6,7 @@ import org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern;
 import org.verapdf.model.impl.pb.pd.colors.*;
 import org.verapdf.model.impl.pb.pd.pattern.PBoxPDShadingPattern;
-import org.verapdf.model.impl.pb.pd.pattern.PBoxPDTillingPattern;
+import org.verapdf.model.impl.pb.pd.pattern.PBoxPDTilingPattern;
 import org.verapdf.model.pdlayer.PDPattern;
 import org.verapdf.model.pdlayer.PDColorSpace;
 
@@ -103,7 +103,7 @@ public class ColorSpaceFactory {
 		if (pattern != null && pattern.getPatternType() == PDAbstractPattern.TYPE_SHADING_PATTERN) {
 			return new PBoxPDShadingPattern((PDShadingPattern) pattern);
 		} else if (pattern != null && pattern.getPatternType() == PDAbstractPattern.TYPE_TILING_PATTERN) {
-			return new PBoxPDTillingPattern((PDTilingPattern) pattern);
+			return new PBoxPDTilingPattern((PDTilingPattern) pattern);
 		} else {
 			return null;
 		}
