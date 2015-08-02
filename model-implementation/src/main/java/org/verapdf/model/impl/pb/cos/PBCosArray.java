@@ -17,13 +17,13 @@ import java.util.List;
  */
 public class PBCosArray extends PBCosObject implements CosArray {
 
+    /** Type name for PBCosArray */
 	public static final String COS_ARRAY_TYPE = "CosArray";
 
 	public static final String ELEMENTS = "elements";
 
 	public PBCosArray(COSArray array) {
-		super(array);
-		setType(COS_ARRAY_TYPE);
+		super(array, COS_ARRAY_TYPE);
 	}
 
 	/**

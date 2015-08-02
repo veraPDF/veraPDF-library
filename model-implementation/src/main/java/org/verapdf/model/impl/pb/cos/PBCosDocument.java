@@ -28,6 +28,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 
     private static final Logger LOGGER = Logger.getLogger(PBCosDocument.class);
 
+    /** Type name for PBCosDocument */
 	public static final String COS_DOCUMENT_TYPE = "CosDocument";
 
     public static final String TRAILER = "trailer";
@@ -42,13 +43,11 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     private Long sizeOfDocument = Long.valueOf(-1);
 
 	public PBCosDocument(COSDocument baseObject) {
-        super(baseObject);
-        setType(COS_DOCUMENT_TYPE);
+        super(baseObject, COS_DOCUMENT_TYPE);
     }
 
     public PBCosDocument(PDDocument pdDocument, long length) {
-        super(pdDocument.getDocument());
-        setType("CosDocument");
+        super(pdDocument.getDocument(), COS_DOCUMENT_TYPE);
         this.pdDocument = pdDocument;
         sizeOfDocument = Long.valueOf(length);
     }

@@ -11,13 +11,15 @@ import org.verapdf.model.coslayer.CosNull;
  */
 public final class PBCosNull extends PBCosObject implements CosNull {
 
-	/**
+    /** Type name for PBCosNull */
+    public static final String COS_NULL_TYPE = "CosNull";
+
+    /**
 	 * PDF null object
 	 */
 	public final static CosNull NULL = new PBCosNull(COSNull.NULL);
 
 	private PBCosNull(COSNull nil) {
-		super(nil);
-		setType("CosNull");
+		super(nil, COS_NULL_TYPE);
 	}
 }

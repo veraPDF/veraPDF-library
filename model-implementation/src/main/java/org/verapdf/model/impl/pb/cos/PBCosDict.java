@@ -22,18 +22,21 @@ import java.util.List;
  */
 public class PBCosDict extends PBCosObject implements CosDict {
 
-	public static final String COS_DICTIONARY_TYPE = "CosDict";
+	public static final String TYPE = "CosDict";
 
 	public static final String KEYS = "keys";
 	public static final String VALUES = "values";
 	public static final String METADATA = "metadata";
 
 	public PBCosDict(COSDictionary dictionary) {
-		super(dictionary);
-		setType(COS_DICTIONARY_TYPE);
+		this(dictionary, TYPE);
 	}
 
-	/**
+    public PBCosDict(COSDictionary dictionary, final String type) {
+        super(dictionary, type);
+    }
+
+    /**
 	 * Get number of key/value pairs in the dictionary
 	 */
 	@Override

@@ -58,7 +58,7 @@ public class PBCosIndirectTest extends BaseTest {
         Assert.assertTrue(secondDirect instanceof CosDict);
     }
 
-    private Object getDirectLink(CosIndirect indirect) {
+    private static Object getDirectLink(CosIndirect indirect) {
         List<? extends Object> direct = indirect.getLinkedObjects(PBCosIndirect.DIRECT_OBJECT);
         Assert.assertEquals(direct.size(), 1);
         return direct.get(0);

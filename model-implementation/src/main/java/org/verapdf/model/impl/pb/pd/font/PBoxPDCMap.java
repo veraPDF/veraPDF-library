@@ -38,7 +38,7 @@ public class PBoxPDCMap extends PBoxPDObject implements PDCMap {
 		return list;
 	}
 
-	private List<CMapFile> getEmbeddedFile() {
+	private static List<CMapFile> getEmbeddedFile() {
 		List<CMapFile> list = new ArrayList<>();
 		return list;
 	}

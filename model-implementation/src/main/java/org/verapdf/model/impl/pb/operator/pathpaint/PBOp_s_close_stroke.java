@@ -1,14 +1,10 @@
 package org.verapdf.model.impl.pb.operator.pathpaint;
 
+import java.util.List;
+
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
-import org.verapdf.model.baselayer.Object;
-import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.operator.Op_s_close_stroke;
-import org.verapdf.model.pdlayer.PDColorSpace;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Timur Kamalov

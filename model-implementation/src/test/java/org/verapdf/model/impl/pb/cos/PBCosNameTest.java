@@ -87,15 +87,12 @@ public class PBCosNameTest extends BaseTest {
 		}
 	}
 
-	@Test(expected = IllegalAccessError.class)
+	@Override
+    @Test(expected = IllegalAccessError.class)
 	public void testNonexistentParentLink() {
 		for (CosName name : actual) {
-			try {
-				name.getLinkedObjects("Wrong link.");
-				Assert.fail();
-			} catch (IllegalArgumentException ignore){}
+			name.getLinkedObjects("Wrong link.");
 		}
-		Assert.assertTrue(true);
 	}
 
     @AfterClass

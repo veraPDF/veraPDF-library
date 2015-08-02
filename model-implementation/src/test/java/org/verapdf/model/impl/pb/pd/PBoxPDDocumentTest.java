@@ -77,7 +77,7 @@ public class PBoxPDDocumentTest extends BaseTest{
 		Assert.assertEquals(0, actual.getLinkedObjects(PBoxPDDocument.ACRO_FORMS).size());
 	}
 
-	private void isCorrectActions(String link) {
+	private static void isCorrectActions(String link) {
 		List<? extends Object> actions = actual.getLinkedObjects(link);
 		Assert.assertEquals(0, actions.size());
 		for (Object object : actions) {

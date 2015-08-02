@@ -11,12 +11,16 @@ import org.verapdf.model.coslayer.CosName;
  */
 public class PBCosName extends PBCosObject implements CosName {
 
+    /** Type name for PBCosName */
 	public static final String COS_NAME_TYPE = "CosName";
 
-	public PBCosName(COSName value) {
-		super(value);
-		setType(COS_NAME_TYPE);
-	}
+    public PBCosName(COSName value) {
+        this(value, COS_NAME_TYPE);
+    }
+
+    public PBCosName(COSName value, final String type) {
+        super(value, type);
+    }
 
 	/**
 	 * Get Unicode string representation of the Name object after applying
