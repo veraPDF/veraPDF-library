@@ -97,9 +97,8 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
 
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.EMBEDDED_FILE, root);
             return root;
-        } else {
-            return null;
         }
+        return null;
     }
 
     private static String getFilters(List<COSName> list) {
@@ -114,8 +113,7 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
             }
 
             return builder.toString().trim();
-        } else {
-            return null;
         }
+        return null;
     }
 }

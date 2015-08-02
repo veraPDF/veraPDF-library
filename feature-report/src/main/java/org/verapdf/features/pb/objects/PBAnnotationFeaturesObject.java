@@ -103,9 +103,8 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
 
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.ANNOTATION, root);
             return root;
-        } else {
-            return null;
         }
+        return null;
     }
 
     private void addParents(FeatureTreeNode root) throws FeaturesTreeNodeException {

@@ -101,9 +101,8 @@ public final class PBCreateNodeHelper {
         if (base instanceof COSString) {
             COSString str = (COSString) base;
             return str.isHex().booleanValue() ? str.toHexString() : str.getString();
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -141,9 +140,8 @@ public final class PBCreateNodeHelper {
     public static FeatureTreeNode addNotEmptyNode(String name, String value, FeatureTreeNode parent) throws FeaturesTreeNodeException {
         if (name != null && value != null) {
             return FeatureTreeNode.newChildInstanceWithValue(name, value, parent);
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**
@@ -178,9 +176,8 @@ public final class PBCreateNodeHelper {
             }
 
             return colorNode;
-        } else {
-            return null;
         }
+        return null;
     }
 
     private static void createGray(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {

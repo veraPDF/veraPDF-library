@@ -41,7 +41,6 @@ public class PBCosIntegerTest extends BaseTest {
 
     @Test
     public void testGetRealMethod() {
-        System.out.println("Expected = " + expected + "vs " + ((CosInteger) actual).getrealValue());
         Assert.assertTrue(expected == ((CosInteger) actual).getrealValue().doubleValue());
     }
 

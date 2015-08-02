@@ -57,7 +57,7 @@ public class PBOp_DoubleQuote extends PBOpStringTextShow implements Op_DoubleQuo
 	private List<CosReal> getSpecialReal(int operandNumber) {
 		List<CosReal> characterSpacing = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		if (this.arguments.size() >= COUNT_OF_OPERATOR_OPERANDS) {
-			int index = (this.arguments.size() - COUNT_OF_OPERATOR_OPERANDS + operandNumber);
+			int index = this.arguments.size() - COUNT_OF_OPERATOR_OPERANDS + operandNumber;
 			COSBase base = this.arguments.get(index);
 			if (base instanceof COSNumber) {
 				characterSpacing.add(new PBCosReal((COSNumber) base));
