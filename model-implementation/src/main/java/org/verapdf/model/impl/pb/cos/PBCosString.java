@@ -11,11 +11,11 @@ import org.verapdf.model.coslayer.CosString;
  */
 public class PBCosString extends PBCosObject implements CosString {
 
+    /** Type name for PBCosString */
 	public static final String COS_STRING_TYPE = "CosString";
 
 	public PBCosString(COSString value) {
-		super(value);
-		setType(COS_STRING_TYPE);
+		super(value, COS_STRING_TYPE);
 	}
 
 	/**

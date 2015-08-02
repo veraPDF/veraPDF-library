@@ -18,17 +18,23 @@ import java.io.IOException;
  */
 public class PBCosObject extends GenericModelObject implements CosObject {
 
+    /** Type name for PBCosObject */
+    public final static String TYPE = "CosObject";
 	private static final Logger LOGGER = Logger.getLogger(PBCosObject.class);
 
 	protected COSBase baseObject;
+	private final String type;
+	private final String id;
 
-	private String type = "CosObject";
-	private String id;
+    PBCosObject(final COSBase baseObject) {
+        this(baseObject, TYPE);
+    }
 
-	public PBCosObject(COSBase baseObject) {
-		this.baseObject = baseObject;
-		id = IDGenerator.generateID(this.baseObject);
-	}
+    PBCosObject(final COSBase baseObject, final String type) {
+        this.baseObject = baseObject;
+        this.type = type;
+        id = IDGenerator.generateID(this.baseObject);
+    }
 
 	/**
 	 * Get type of current object
@@ -36,10 +42,6 @@ public class PBCosObject extends GenericModelObject implements CosObject {
 	@Override
 	public String getType() {
 		return type;
-	}
-
-	protected void setType(String type) {
-		this.type = type;
 	}
 
 	/**

@@ -1,14 +1,13 @@
 package org.verapdf.model.impl.pb.operator.textposition;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSNumber;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
-import org.verapdf.model.impl.pb.operator.textstate.PBOpTextState;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Evgeniy Muravitskiy

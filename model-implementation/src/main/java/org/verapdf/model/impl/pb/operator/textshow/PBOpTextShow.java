@@ -51,7 +51,7 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 		return result;
 	}
 
-	private List<? extends Object> getUsedGlyphs() {
+	private static List<? extends Object> getUsedGlyphs() {
 		List<? extends Object> list = new ArrayList<>();
 		return list;
 	}

@@ -45,22 +45,18 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 
 	private List<PBoxFontProgram> getFontFile() {
 		List<PBoxFontProgram> list = new ArrayList<>();
-		if (getSubtype().equals(FontFactory.TYPE_3)) {
-
-		} else {
-			if (pdFontLike.isEmbedded()) {
-				PDFontDescriptor fontDescriptor = pdFontLike.getFontDescriptor();
-				PDStream fontFile;
-				if (getSubtype().equals(FontFactory.TYPE_1)) {
-					fontFile = fontDescriptor.getFontFile();
-				} else if (getSubtype().equals(FontFactory.TRUE_TYPE)) {
-					fontFile = fontDescriptor.getFontFile2();
-				} else {
-					fontFile = fontDescriptor.getFontFile3();
-				}
-				if (fontFile != null) {
-					list.add(new PBoxFontProgram(fontFile));
-				}
+		if (!getSubtype().equals(FontFactory.TYPE_3) && (pdFontLike.isEmbedded())) {
+			PDFontDescriptor fontDescriptor = pdFontLike.getFontDescriptor();
+			PDStream fontFile;
+			if (getSubtype().equals(FontFactory.TYPE_1)) {
+				fontFile = fontDescriptor.getFontFile();
+			} else if (getSubtype().equals(FontFactory.TRUE_TYPE)) {
+				fontFile = fontDescriptor.getFontFile2();
+			} else {
+				fontFile = fontDescriptor.getFontFile3();
+			}
+			if (fontFile != null) {
+				list.add(new PBoxFontProgram(fontFile));
 			}
 		}
 		return list;

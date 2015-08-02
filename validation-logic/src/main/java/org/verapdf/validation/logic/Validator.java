@@ -262,7 +262,7 @@ public class Validator {
         return res;
     }
 
-    private String getScript(Object obj, org.verapdf.validation.profile.model.Rule rule) {
+    private static String getScript(Object obj, org.verapdf.validation.profile.model.Rule rule) {
         StringBuilder builder = new StringBuilder();
 
         builder.append(getScriptPrefix(obj));
@@ -273,7 +273,7 @@ public class Validator {
         return builder.toString();
     }
 
-    private String getScriptPrefix(Object obj) {
+    private static String getScriptPrefix(Object obj) {
         StringBuilder builder = new StringBuilder();
 
         for (String prop : obj.getProperties()) {
@@ -290,7 +290,7 @@ public class Validator {
         return builder.toString();
     }
 
-    private String getScriptSuffix() {
+    private static String getScriptSuffix() {
         return ";}\ntest();";
     }
 
@@ -332,7 +332,7 @@ public class Validator {
         return res.booleanValue();
     }
 
-    private Check createFailCkeck(Object obj, CheckLocation loc, org.verapdf.validation.profile.model.Rule rule, Context cx, ScriptableObject scope, String context) throws JavaScriptEvaluatingException {
+    private static Check createFailCkeck(Object obj, CheckLocation loc, org.verapdf.validation.profile.model.Rule rule, Context cx, ScriptableObject scope, String context) throws JavaScriptEvaluatingException {
         List<String> args = new ArrayList<>();
 
         String errorMessage;

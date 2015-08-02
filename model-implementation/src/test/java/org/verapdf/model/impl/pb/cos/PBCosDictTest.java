@@ -26,7 +26,7 @@ public class PBCosDictTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        expectedType = TYPES.contains(PBCosDict.COS_DICTIONARY_TYPE) ? PBCosDict.COS_DICTIONARY_TYPE : null;
+        expectedType = TYPES.contains(PBCosDict.TYPE) ? PBCosDict.TYPE : null;
         expectedID = null;
 
         COSDictionary dictionary = new COSDictionary();

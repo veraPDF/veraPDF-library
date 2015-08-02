@@ -91,7 +91,7 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
                     ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
                 }
 
-                FeatureTreeNode node = PBCreateNodeHelper.addNotEmptyNode("checkSum", ef.getCheckSum(), root);
+                PBCreateNodeHelper.addNotEmptyNode("checkSum", ef.getCheckSum(), root);
                 PBCreateNodeHelper.addNotEmptyNode("size", String.valueOf(ef.getSize()), root);
             }
 

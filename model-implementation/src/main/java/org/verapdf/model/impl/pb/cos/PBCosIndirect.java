@@ -17,11 +17,11 @@ import java.util.List;
 public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
 	public static final String DIRECT_OBJECT = "directObject";
+    /** Type name for PBCosBool */
 	public static final String COS_INDIRECT_TYPE = "CosIndirect";
 
 	public PBCosIndirect(COSBase directObject) {
-		super(directObject);
-		setType(COS_INDIRECT_TYPE);
+		super(directObject, COS_INDIRECT_TYPE);
 	}
 
 	@Override

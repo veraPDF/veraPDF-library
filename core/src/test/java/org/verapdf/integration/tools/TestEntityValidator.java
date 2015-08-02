@@ -7,14 +7,12 @@ import org.verapdf.integration.model.comparing.ComparingStrategies;
 import org.verapdf.runner.ValidationRunner;
 import org.verapdf.validation.report.model.ValidationInfo;
 
-import java.net.URISyntaxException;
-
 /**
  * @author Timur Kamalov
  */
 public class TestEntityValidator {
 
-    public static void validate(TestEntity testEntity) throws URISyntaxException {
+    public static void validate(TestEntity testEntity) {
         if (testEntity.getComparingStrategy() != ComparingStrategies.IGNORE) {
             VeraPdfTaskConfig taskConfig = createTaskConfig(testEntity);
             ValidationInfo info = runValidation(taskConfig);
@@ -22,7 +20,7 @@ public class TestEntityValidator {
         }
     }
 
-    private static VeraPdfTaskConfig createTaskConfig(TestEntity entity) throws URISyntaxException {
+    private static VeraPdfTaskConfig createTaskConfig(TestEntity entity) {
         VeraPdfTaskConfig.Builder taskConfigBuilder = new VeraPdfTaskConfig.Builder();
         taskConfigBuilder.input(new Input(entity.getTestFile().getAbsolutePath(), false))
                          .profile(entity.getValidationProfile().getAbsolutePath())

@@ -17,13 +17,13 @@ import java.util.List;
  */
 public class PBCosTrailer extends PBCosDict implements CosTrailer {
 
+    /** Type name for PBCosTrailer */
 	public static final String COS_TRAILER_TYPE = "CosTrailer";
 
 	public final static String CATALOG = "Catalog";
 
 	public PBCosTrailer(COSDictionary pdfBoxObject) {
-		super(pdfBoxObject);
-		setType(COS_TRAILER_TYPE);
+		super(pdfBoxObject, COS_TRAILER_TYPE);
 	}
 
 	/**

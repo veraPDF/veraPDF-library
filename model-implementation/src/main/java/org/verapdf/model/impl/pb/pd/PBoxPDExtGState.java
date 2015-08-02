@@ -73,7 +73,7 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 		return strokingAlphaConstant != null ? Double.valueOf(strokingAlphaConstant.doubleValue()) : null;
 	}
 
-	private String getStringProperty(COSBase base) {
+	private static String getStringProperty(COSBase base) {
 		if (base != null) {
 			return base instanceof COSName ? ((COSName) base).getName() : base.toString();
 		}

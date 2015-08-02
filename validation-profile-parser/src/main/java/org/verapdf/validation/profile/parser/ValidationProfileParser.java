@@ -237,7 +237,7 @@ public final class ValidationProfileParser {
 
     }
 
-    private void parseVariables(Node rules, Map<String, List<Variable>> variablesMap) {
+    private static void parseVariables(Node rules, Map<String, List<Variable>> variablesMap) {
         NodeList children = rules.getChildNodes();
 
         for (int i = 0; i < children.getLength(); ++i) {
@@ -255,7 +255,7 @@ public final class ValidationProfileParser {
         }
     }
 
-    private Variable parseVariable(Node rule) {
+    private static Variable parseVariable(Node rule) {
         String name = null;
         String object = null;
         String defaultValue = null;
@@ -298,7 +298,7 @@ public final class ValidationProfileParser {
 
     }
 
-    private RuleError parseRuleError(Node err) {
+    private static RuleError parseRuleError(Node err) {
         String message = null;
         List<String> argument = new ArrayList<>();
 
@@ -364,7 +364,7 @@ public final class ValidationProfileParser {
 
     }
 
-    private Fix parseFix(Node fix) {
+    private static Fix parseFix(Node fix) {
         String id = null;
         String description = null;
         FixInfo info = null;

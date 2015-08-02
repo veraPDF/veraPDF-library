@@ -96,7 +96,7 @@ public class PBCosDocumentTest extends BaseTest {
     }
 
     // problems with code symbols
-    private String getExpectedID(int index) {
+    private static String getExpectedID(int index) {
         StringBuilder builder = new StringBuilder(16);
         for (int i = 0; i < expectedIDS[index].length(); i += 2) {
             builder.append((char) Integer.parseInt(expectedIDS[index].substring(i, i + 2), 16));
