@@ -15,45 +15,40 @@ import java.util.List;
  */
 public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 
-	public static final String FONT = "font";
-	public static final String USED_GLYPHS = "usedGlyphs";
+    public static final String FONT = "font";
+    public static final String USED_GLYPHS = "usedGlyphs";
 
-	protected final org.apache.pdfbox.pdmodel.font.PDFont pdfBoxFont;
+    protected final org.apache.pdfbox.pdmodel.font.PDFont pdfBoxFont;
 
-	protected PBOpTextShow(List<COSBase> arguments, org.apache.pdfbox.pdmodel.font.PDFont font) {
-		super(arguments);
-		this.pdfBoxFont = font;
-	}
+    protected PBOpTextShow(List<COSBase> arguments,
+            org.apache.pdfbox.pdmodel.font.PDFont font) {
+        super(arguments);
+        this.pdfBoxFont = font;
+    }
 
-	@Override
-	public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
+    @Override
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+            String link) {
+        switch (link) {
+        case FONT:
+            return this.getFont();
+        case USED_GLYPHS:
+            return getUsedGlyphs();
+        default:
+            return super.getLinkedObjects(link);
+        }
+    }
 
-		switch (link) {
-			case FONT:
-				list = this.getFont();
-				break;
-			case USED_GLYPHS:
-				list = this.getUsedGlyphs();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
+    private List<PDFont> getFont() {
+        List<PDFont> result = new ArrayList<>();
+        PDFont font = FontFactory.parseFont(pdfBoxFont);
+        result.add(font);
+        return result;
+    }
 
-		return list;
-	}
-
-	private List<PDFont> getFont() {
-		List<PDFont> result = new ArrayList<>();
-		PDFont font = FontFactory.parseFont(pdfBoxFont);
-		result.add(font);
-		return result;
-	}
-
-	private static List<? extends Object> getUsedGlyphs() {
-		List<? extends Object> list = new ArrayList<>();
-		return list;
-	}
+    private static List<? extends Object> getUsedGlyphs() {
+        List<? extends Object> list = new ArrayList<>();
+        return list;
+    }
 
 }

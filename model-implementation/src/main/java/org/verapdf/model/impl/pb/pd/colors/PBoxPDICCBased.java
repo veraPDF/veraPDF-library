@@ -20,44 +20,41 @@ import org.verapdf.model.pdlayer.PDICCBased;
  */
 public class PBoxPDICCBased extends PBoxPDColorSpace implements PDICCBased {
 
-	private static final Logger LOGGER = Logger.getLogger(PBoxPDICCBased.class);
+    private static final Logger LOGGER = Logger.getLogger(PBoxPDICCBased.class);
 
-	public static final String ICC_PROFILE = "iccProfile";
-	public static final String ICC_BASED_TYPE = "PDICCBased";
+    public static final String ICC_PROFILE = "iccProfile";
+    public static final String ICC_BASED_TYPE = "PDICCBased";
 
-	public PBoxPDICCBased(org.apache.pdfbox.pdmodel.graphics.color.PDICCBased simplePDObject) {
-		super(simplePDObject);
-		setType(ICC_BASED_TYPE);
-	}
+    public PBoxPDICCBased(
+            org.apache.pdfbox.pdmodel.graphics.color.PDICCBased simplePDObject) {
+        super(simplePDObject);
+        setType(ICC_BASED_TYPE);
+    }
 
-	@Override
-	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
+    @Override
+    public List<? extends Object> getLinkedObjects(String link) {
+        if (ICC_PROFILE.equals(link)) {
+            return this.getICCProfile();
+        }
+        return super.getLinkedObjects(link);
+    }
 
-		switch (link) {
-			case ICC_PROFILE:
-				list = this.getICCProfile();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
-
-		return list;
-	}
-
-	private List<ICCInputProfile> getICCProfile() {
-		List<ICCInputProfile> inputProfile = new ArrayList<>();
-		try {
-			PDStream pdStream = ((org.apache.pdfbox.pdmodel.graphics.color.PDICCBased) simplePDObject).getPDStream();
-			InputStream stream = pdStream.createInputStream();
-			long N = pdStream.getStream().getLong(COSName.N);
-			if (stream != null && stream.available() > 0) {
-				inputProfile.add(new PBoxICCInputProfile(stream, N != -1 ? Long.valueOf(N) : null));
-			}
-		} catch (IOException e) {
-			LOGGER.error("Can not get input profile from ICCBased. " + e.getMessage(), e);
-		}
-		return inputProfile;
-	}
+    private List<ICCInputProfile> getICCProfile() {
+        List<ICCInputProfile> inputProfile = new ArrayList<>();
+        try {
+            PDStream pdStream = ((org.apache.pdfbox.pdmodel.graphics.color.PDICCBased) simplePDObject)
+                    .getPDStream();
+            InputStream stream = pdStream.createInputStream();
+            long N = pdStream.getStream().getLong(COSName.N);
+            if (stream != null && stream.available() > 0) {
+                inputProfile.add(new PBoxICCInputProfile(stream, N != -1 ? Long
+                        .valueOf(N) : null));
+            }
+        } catch (IOException e) {
+            LOGGER.error(
+                    "Can not get input profile from ICCBased. "
+                            + e.getMessage(), e);
+        }
+        return inputProfile;
+    }
 }

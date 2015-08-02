@@ -15,6 +15,10 @@ public final class FontFactory {
 	public static final String TYPE_1 = "Type1";
 	public static final String TYPE_3 = "Type3";
 	public static final String TRUE_TYPE = "TrueType";
+	
+	private FontFactory() {
+	    // Disable default constructor
+	}
 
 	public static final Logger logger = Logger.getLogger(FontFactory.class);
 

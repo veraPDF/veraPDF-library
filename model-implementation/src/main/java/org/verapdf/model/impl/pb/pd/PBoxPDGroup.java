@@ -15,50 +15,47 @@ import org.verapdf.model.pdlayer.PDGroup;
  */
 public class PBoxPDGroup extends PBoxPDObject implements PDGroup {
 
-	private static final Logger LOGGER = Logger.getLogger(PBoxPDGroup.class);
+    private static final Logger LOGGER = Logger.getLogger(PBoxPDGroup.class);
 
-	public static final String COLOR_SPACE = "colorSpace";
-	public static final int MAX_COLOR_SPACES = 1;
-	public static final String GROUP_TYPE = "PDGroup";
+    public static final String COLOR_SPACE = "colorSpace";
+    public static final int MAX_COLOR_SPACES = 1;
+    public static final String GROUP_TYPE = "PDGroup";
 
-	public PBoxPDGroup(org.apache.pdfbox.pdmodel.graphics.form.PDGroup simplePDObject) {
-		super(simplePDObject);
-		setType(GROUP_TYPE);
-	}
+    public PBoxPDGroup(
+            org.apache.pdfbox.pdmodel.graphics.form.PDGroup simplePDObject) {
+        super(simplePDObject);
+        setType(GROUP_TYPE);
+    }
 
-	@Override
-	public String getS() {
-		return ((org.apache.pdfbox.pdmodel.graphics.form.PDGroup) simplePDObject).getSubType().getName();
-	}
+    @Override
+    public String getS() {
+        return ((org.apache.pdfbox.pdmodel.graphics.form.PDGroup) simplePDObject)
+                .getSubType().getName();
+    }
 
-	@Override
-	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
+    @Override
+    public List<? extends Object> getLinkedObjects(String link) {
+        if (COLOR_SPACE.equals(link)) {
+            return this.getColorSpace();
+        }
+        return super.getLinkedObjects(link);
+    }
 
-		switch (link) {
-			case COLOR_SPACE:
-				list = this.getColorSpace();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
-
-		return list;
-	}
-
-	private List<PDColorSpace> getColorSpace() {
-		List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_COLOR_SPACES);
-		try {
-			org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace pbColorSpace =
-					((org.apache.pdfbox.pdmodel.graphics.form.PDGroup) simplePDObject).getColorSpace();
-			PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(pbColorSpace);
-			if (colorSpace != null) {
-				colorSpaces.add(colorSpace);
-			}
-		} catch (IOException e) {
-			LOGGER.error("Problems with color space obtaining on group. " + e.getMessage(), e);
-		}
-		return colorSpaces;
-	}
+    private List<PDColorSpace> getColorSpace() {
+        List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_COLOR_SPACES);
+        try {
+            org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace pbColorSpace = ((org.apache.pdfbox.pdmodel.graphics.form.PDGroup) simplePDObject)
+                    .getColorSpace();
+            PDColorSpace colorSpace = ColorSpaceFactory
+                    .getColorSpace(pbColorSpace);
+            if (colorSpace != null) {
+                colorSpaces.add(colorSpace);
+            }
+        } catch (IOException e) {
+            LOGGER.error(
+                    "Problems with color space obtaining on group. "
+                            + e.getMessage(), e);
+        }
+        return colorSpaces;
+    }
 }

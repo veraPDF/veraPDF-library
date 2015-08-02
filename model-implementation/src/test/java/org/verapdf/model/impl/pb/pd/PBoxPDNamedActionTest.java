@@ -16,14 +16,14 @@ import java.net.URISyntaxException;
  */
 public class PBoxPDNamedActionTest extends PBoxPDActionTest {
 
-	public static final String FILE_RELATIVE_PATH = "pd/InteractiveObjects.pdf";
+	public static final String IINTERACTIVE_OBJECTS_PATH = "pd/InteractiveObjects.pdf";
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
 		expectedType = TYPES.contains(PBoxPDNamedAction.NAMED_ACTION_TYPE) ? PBoxPDNamedAction.NAMED_ACTION_TYPE : null;
 		expectedID = null;
 
-		setUp(FILE_RELATIVE_PATH);
+		setUp(IINTERACTIVE_OBJECTS_PATH);
 		PDOutlineItem node = document.getDocumentCatalog().getDocumentOutline().getFirstChild().getFirstChild();
 		actual = new PBoxPDNamedAction((PDActionNamed) node.getAction());
 	}

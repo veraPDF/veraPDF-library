@@ -3,12 +3,10 @@ package org.verapdf.model.impl.pb.cos;
 import org.apache.pdfbox.cos.COSNumber;
 import org.verapdf.model.coslayer.CosNumber;
 
-import java.util.Locale;
-
 /**
  * Current class is representation of CosNumber interface of abstract model.
- * Methods of this class using in PBCosInteger and PBCosReal.
- * This class is analogue of COSNumber in pdfbox.
+ * Methods of this class using in PBCosInteger and PBCosReal. This class is
+ * analogue of COSNumber in pdfbox.
  *
  * @author Evgeniy Muravitskiy
  * @see PBCosInteger
@@ -18,6 +16,8 @@ public abstract class PBCosNumber extends PBCosObject implements CosNumber {
 
     /** Type name for PBCosNumber */
     public static final String COS_NUMBER_TYPE = "CosNumber";
+    private final long longVal;
+    private final double doubleVal;
 
     protected PBCosNumber(COSNumber number) {
         this(number, COS_NUMBER_TYPE);
@@ -25,30 +25,31 @@ public abstract class PBCosNumber extends PBCosObject implements CosNumber {
 
     protected PBCosNumber(COSNumber number, final String type) {
         super(number, type);
+        this.longVal = number.longValue();
+        this.doubleVal = number.doubleValue();
     }
 
-	/**
-	 * Get the string representing this object
-	 */
-	@Override
-	public String getstringValue() {
-		return String.valueOf(((COSNumber) baseObject).doubleValue());
-	}
+    /**
+     * Get the string representing this object
+     */
+    @Override
+    public String getstringValue() {
+        return String.valueOf(this.doubleVal);
+    }
 
-	/**
-	 * Get truncated integer value
-	 */
-	@Override
-	public Long getintValue() {
-		return Long.valueOf(((COSNumber) baseObject).longValue());
-	}
+    /**
+     * Get truncated integer value
+     */
+    @Override
+    public Long getintValue() {
+        return Long.valueOf(this.longVal);
+    }
 
-	/**
-	 * Get original decimal value
-	 */
-	@Override
-	public Double getrealValue() {
-		String value = String.format(Locale.US, "%.5f", Double.valueOf(((COSNumber) baseObject).doubleValue()));
-		return Double.valueOf(value);
-	}
+    /**
+     * Get original decimal value
+     */
+    @Override
+    public Double getrealValue() {
+        return Double.valueOf(this.doubleVal);
+    }
 }

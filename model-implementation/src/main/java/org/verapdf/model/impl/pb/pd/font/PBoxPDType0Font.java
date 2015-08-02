@@ -59,9 +59,9 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
 
 	private List<PDCMap> getEncoding() {
 		List<PDCMap> list = new ArrayList<>();
-		CMap cMap = ((org.apache.pdfbox.pdmodel.font.PDType0Font) pdFontLike).getCMap();
-		if (cMap != null) {
-			list.add(new PBoxPDCMap(cMap));
+		CMap charMap = ((org.apache.pdfbox.pdmodel.font.PDType0Font) pdFontLike).getCMap();
+		if (charMap != null) {
+			list.add(new PBoxPDCMap(charMap));
 		}
 		return list;
 	}

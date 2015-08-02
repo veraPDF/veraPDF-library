@@ -27,18 +27,10 @@ public class PBoxPDShading extends PBoxPDResources implements PDShading {
 
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
-
-		switch (link) {
-			case COLOR_SPACE:
-				list = getColorSpace();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
+		if (COLOR_SPACE.equals(link)) {
+		    return getColorSpace();
 		}
-
-		return list;
+		return super.getLinkedObjects(link);
 	}
 
 	private List<PDColorSpace> getColorSpace() {
