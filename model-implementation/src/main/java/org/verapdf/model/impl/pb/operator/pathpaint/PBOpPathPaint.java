@@ -15,7 +15,7 @@ public abstract class PBOpPathPaint extends PBOperator implements OpPathPaint {
 
 	public static final String STROKE_CS = "strokeCS";
 	public static final String FILL_CS = "fillCS";
-	public static final Integer MAX_NUMBER_OF_COLOR_SPACES = Integer.valueOf(1);
+	public static final int MAX_NUMBER_OF_COLOR_SPACES = 1;
 
 	protected org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace pbStrokeColorSpace;
 	protected org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace pbFillColorSpace;

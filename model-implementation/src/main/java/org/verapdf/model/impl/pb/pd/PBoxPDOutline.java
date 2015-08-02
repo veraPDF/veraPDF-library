@@ -17,7 +17,7 @@ public class PBoxPDOutline extends PBoxPDObject implements PDOutline {
 
 	public static final String ACTION = "A";
 	public static final String OUTLINE_TYPE = "PDOutline";
-	public static final Integer NUMBER_OF_ACTIONS = Integer.valueOf(1);
+	public static final int NUMBER_OF_ACTIONS = 1;
 
 	public PBoxPDOutline(PDOutlineItem simplePDObject) {
 		super(simplePDObject);

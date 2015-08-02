@@ -12,7 +12,7 @@ public abstract class PBoxICCProfileTest extends BaseTest {
 
 	public static final String expectedDeviceClass = "mntr";
 	public static final String expectedColorSpace = "RGB ";
-	public static final Double expectedVersion = Double.valueOf(2.1);
+	public static final double expectedVersion = 2.1;
 	public static final Long expectedColorantsCount = Long.valueOf(3);
 
 	@Test
@@ -27,7 +27,7 @@ public abstract class PBoxICCProfileTest extends BaseTest {
 
 	@Test
 	public void testVersionMethod() {
-		Assert.assertEquals(((ICCProfile) actual).getversion(), expectedVersion, 0.001);
+		Assert.assertEquals(((ICCProfile) actual).getversion().doubleValue(), expectedVersion, 0.001);
 	}
 
 	@Test
@@ -38,6 +38,6 @@ public abstract class PBoxICCProfileTest extends BaseTest {
 	@Test
 	public void testIsValidMethod() {
 		// TODO : discuss about this case
-		Assert.assertTrue(((ICCProfile) actual).getisValid());
+		Assert.assertTrue(((ICCProfile) actual).getisValid().booleanValue());
 	}
 }

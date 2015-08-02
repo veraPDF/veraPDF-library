@@ -29,7 +29,7 @@ public class PBoxPDAcroFormTest extends BaseTest {
 
 	@Test
 	public void testNeedAppearancesMethod() {
-		Assert.assertFalse(((PDAcroForm) actual).getNeedAppearances());
+		Assert.assertFalse(((PDAcroForm) actual).getNeedAppearances().booleanValue());
 	}
 
 	@Test

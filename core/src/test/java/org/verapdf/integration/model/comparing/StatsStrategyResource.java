@@ -7,24 +7,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class StatsStrategyResource extends StrategyResource {
 
-    private Long passedChecks;
-    private Long failedChecks;
+    private long passedChecks;
+    private long failedChecks;
 
     @JsonProperty("passedChecks")
-    public Long getPassedChecks() {
+    public long getPassedChecks() {
         return passedChecks;
     }
 
-    public void setPassedChecks(Long passedChecks) {
+    public void setPassedChecks(long passedChecks) {
         this.passedChecks = passedChecks;
     }
 
     @JsonProperty("failedChecks")
-    public Long getFailedChecks() {
+    public long getFailedChecks() {
         return failedChecks;
     }
 
-    public void setFailedChecks(Long failedChecks) {
+    public void setFailedChecks(long failedChecks) {
         this.failedChecks = failedChecks;
     }
 

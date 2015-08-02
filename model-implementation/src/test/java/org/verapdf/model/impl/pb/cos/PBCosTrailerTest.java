@@ -36,7 +36,7 @@ public class PBCosTrailerTest extends BaseTest {
 
     @Test
     public void testGetIsEncryptedMethod() {
-        Assert.assertTrue(((CosTrailer) actual).getisEncrypted());
+        Assert.assertTrue(((CosTrailer) actual).getisEncrypted().booleanValue());
     }
 
     @Test

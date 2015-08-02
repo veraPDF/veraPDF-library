@@ -64,13 +64,13 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 	@Override
 	public Double getca() {
 		Float nonStrokingAlphaConstant = ((PDExtendedGraphicsState) simplePDObject).getNonStrokingAlphaConstant();
-		return nonStrokingAlphaConstant != null ? Double.valueOf(nonStrokingAlphaConstant) : null;
+		return nonStrokingAlphaConstant != null ? Double.valueOf(nonStrokingAlphaConstant.doubleValue()) : null;
 	}
 
 	@Override
 	public Double getCA() {
 		Float strokingAlphaConstant = ((PDExtendedGraphicsState) simplePDObject).getStrokingAlphaConstant();
-		return strokingAlphaConstant != null ? Double.valueOf(strokingAlphaConstant) : null;
+		return strokingAlphaConstant != null ? Double.valueOf(strokingAlphaConstant.doubleValue()) : null;
 	}
 
 	private String getStringProperty(COSBase base) {

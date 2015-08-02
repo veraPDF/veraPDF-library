@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class PBCosDictTest extends BaseTest {
 
-    private static Long expectedLength;
+    private static long expectedLength;
 
     @BeforeClass
     public static void setUp() {
@@ -36,14 +36,14 @@ public class PBCosDictTest extends BaseTest {
         }
         dictionary.setItem(COSName.METADATA, new COSStream(new COSDictionary()));
 
-        expectedLength = Long.valueOf(dictionary.size());
+        expectedLength = dictionary.size();
 
         actual = new PBCosDict(dictionary);
     }
 
     @Test
     public void testGetSizeMethod() {
-        Assert.assertEquals(expectedLength, ((CosDict) actual).getsize());
+        Assert.assertEquals(expectedLength, ((CosDict) actual).getsize().longValue());
     }
 
     @Test
@@ -77,6 +77,5 @@ public class PBCosDictTest extends BaseTest {
     public static void tearDown() {
         expectedType = null;
         actual = null;
-        expectedLength = null;
     }
 }

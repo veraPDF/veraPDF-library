@@ -23,8 +23,8 @@ public class PBCosIndirectTest extends BaseTest {
 
     private static PBCosIndirect secondActual;
 
-    private static final Long objectNumber = Long.valueOf(10);
-    private static final Integer generationNumber = Integer.valueOf(0);
+    private static final long objectNumber = 10;
+    private static final int generationNumber = 0;
 
     @BeforeClass
     public static void setUp() throws IOException {
@@ -45,8 +45,8 @@ public class PBCosIndirectTest extends BaseTest {
 
     @Test
     public void testGetSpacingsMethod() {
-        Assert.assertTrue(((CosIndirect) actual).getspacingCompliesPDFA());
-        Assert.assertFalse((secondActual).getspacingCompliesPDFA());
+        Assert.assertTrue(((CosIndirect) actual).getspacingCompliesPDFA().booleanValue());
+        Assert.assertFalse((secondActual).getspacingCompliesPDFA().booleanValue());
     }
 
     @Test

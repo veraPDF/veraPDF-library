@@ -20,7 +20,7 @@ public class PBOp_DoubleQuote extends PBOpStringTextShow implements Op_DoubleQuo
 
 	public static final String WORD_SPACING = "wordSpacing";
 	public static final String CHARACTER_SPACING = "characterSpacing";
-	public static final Integer COUNT_OF_OPERATOR_OPERANDS = Integer.valueOf(3);
+	public static final int COUNT_OF_OPERATOR_OPERANDS = 3;
 
 	public PBOp_DoubleQuote(List<COSBase> arguments, PDFont font) {
 		super(arguments, font);
@@ -47,17 +47,17 @@ public class PBOp_DoubleQuote extends PBOpStringTextShow implements Op_DoubleQuo
 	}
 
 	private List<CosReal> getWordSpacing() {
-		return getSpecialReal(Integer.valueOf(0));
+		return getSpecialReal(0);
 	}
 
 	private List<CosReal> getCharacterSpacing() {
-		return getSpecialReal(Integer.valueOf(1));
+		return getSpecialReal(1);
 	}
 
-	private List<CosReal> getSpecialReal(Integer operandNumber) {
+	private List<CosReal> getSpecialReal(int operandNumber) {
 		List<CosReal> characterSpacing = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		if (this.arguments.size() >= COUNT_OF_OPERATOR_OPERANDS) {
-			Integer index = Integer.valueOf(this.arguments.size() - COUNT_OF_OPERATOR_OPERANDS + operandNumber);
+			int index = (this.arguments.size() - COUNT_OF_OPERATOR_OPERANDS + operandNumber);
 			COSBase base = this.arguments.get(index);
 			if (base instanceof COSNumber) {
 				characterSpacing.add(new PBCosReal((COSNumber) base));

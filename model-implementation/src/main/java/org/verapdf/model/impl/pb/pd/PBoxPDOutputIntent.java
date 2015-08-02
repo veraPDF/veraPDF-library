@@ -65,7 +65,7 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent{
 					.getDestOutputIntent();
             if (dest != null) {
                 final InputStream unfilteredStream = dest.getUnfilteredStream();
-				Long N = Long.valueOf(dest.getLong(COSName.N));
+				long N = dest.getLong(COSName.N);
                 profile.add(new PBoxICCOutputProfile(unfilteredStream, subtype, N != -1 ? Long.valueOf(N) : null));
                 unfilteredStream.close();
             }

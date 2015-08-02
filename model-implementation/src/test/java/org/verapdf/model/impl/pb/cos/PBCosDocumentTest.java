@@ -25,7 +25,7 @@ public class PBCosDocumentTest extends BaseTest {
 
     private static final Long expectedNumberOfIndirects = Long.valueOf(17);
     private static final Long expectedSizeOfDocument = Long.valueOf(9437);
-	private static final Double expectedDocumentVersion = Double.valueOf(1.4);
+	private static final double expectedDocumentVersion = 1.4;
     private static final String[] expectedIDS = new String[]{"D6CF927DCF82444068EB69A5914F8070",
             "A2A7539F7C71DEBB6A4A6B418235962D"};
 
@@ -37,7 +37,7 @@ public class PBCosDocumentTest extends BaseTest {
 
         String fileAbsolutePath = getSystemIndependentPath(FILE_RELATIVE_PATH);
         final File file = new File(fileAbsolutePath);
-        try (PDDocument document = PDDocument.load(file, Boolean.FALSE, Boolean.TRUE)) {
+        try (PDDocument document = PDDocument.load(file, false, true)) {
             actual = new PBCosDocument(document, file.length());
         }
     }
@@ -49,7 +49,7 @@ public class PBCosDocumentTest extends BaseTest {
 
 	@Test
 	public void testVersionMethod() {
-		Assert.assertEquals(expectedDocumentVersion, ((CosDocument) actual).getversion(), 0.01);
+		Assert.assertEquals(expectedDocumentVersion, ((CosDocument) actual).getversion().doubleValue(), 0.01);
 	}
 
     @Test
@@ -59,22 +59,22 @@ public class PBCosDocumentTest extends BaseTest {
 
     @Test
     public void testBinaryHeaderMethod() {
-        Assert.assertFalse(((CosDocument) actual).getbinaryHeaderComplyPDFA());
+        Assert.assertFalse(((CosDocument) actual).getbinaryHeaderComplyPDFA().booleanValue());
     }
 
     @Test
     public void testPDFHeaderMethod() {
-        Assert.assertTrue(((CosDocument) actual).getpdfHeaderCompliesPDFA());
+        Assert.assertTrue(((CosDocument) actual).getpdfHeaderCompliesPDFA().booleanValue());
     }
 
     @Test
     public void testOptionalContentMethod() {
-        Assert.assertFalse(((CosDocument) actual).getisOptionalContentPresent());
+        Assert.assertFalse(((CosDocument) actual).getisOptionalContentPresent().booleanValue());
     }
 
     @Test
     public void testEOFMethod() {
-        Assert.assertTrue(((CosDocument) actual).geteofCompliesPDFA());
+        Assert.assertTrue(((CosDocument) actual).geteofCompliesPDFA().booleanValue());
     }
 
     @Test
@@ -106,12 +106,12 @@ public class PBCosDocumentTest extends BaseTest {
 
     @Test
     public void testIsLinearized() {
-        Assert.assertFalse(((CosDocument) actual).getisLinearized());
+        Assert.assertFalse(((CosDocument) actual).getisLinearized().booleanValue());
     }
 
     @Test
     public void testInfoMatchXMP() {
-        Assert.assertTrue(((CosDocument) actual).getdoesInfoMatchXMP());
+        Assert.assertTrue(((CosDocument) actual).getdoesInfoMatchXMP().booleanValue());
     }
 
     @Test

@@ -100,7 +100,7 @@ public final class PBCreateNodeHelper {
 
         if (base instanceof COSString) {
             COSString str = (COSString) base;
-            return str.isHex() ? str.toHexString() : str.getString();
+            return str.isHex().booleanValue() ? str.toHexString() : str.getString();
         } else {
             return null;
         }

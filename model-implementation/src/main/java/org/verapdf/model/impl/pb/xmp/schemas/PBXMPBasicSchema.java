@@ -54,7 +54,7 @@ public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verap
      */
     @Override
     public Long getrating() {
-        return ((XMPBasicSchema) getXmpSchema()).getRating() == null ? null : Long.valueOf(((XMPBasicSchema) getXmpSchema()).getRating());
+        return ((XMPBasicSchema) getXmpSchema()).getRating() == null ? null : Long.valueOf(((XMPBasicSchema) getXmpSchema()).getRating().longValue());
     }
 
     /**

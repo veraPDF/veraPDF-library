@@ -17,7 +17,7 @@ import java.util.List;
  */
 public abstract class PBOperator extends GenericModelObject implements Operator {
 
-    public static final Integer MAX_NUMBER_OF_ELEMENTS = Integer.valueOf(1);
+    public static final int MAX_NUMBER_OF_ELEMENTS = 1;
 
     protected List<COSBase> arguments = new ArrayList<>();
 

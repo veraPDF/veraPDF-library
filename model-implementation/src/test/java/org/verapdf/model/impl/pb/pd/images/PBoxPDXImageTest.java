@@ -40,7 +40,7 @@ public class PBoxPDXImageTest extends PBoxPDAbstractXObjectTest {
 
 	@Test
 	public void testInterpolateMethod() {
-		Assert.assertFalse(((PDXImage) actual).getInterpolate());
+		Assert.assertFalse(((PDXImage) actual).getInterpolate().booleanValue());
 	}
 
 	@Test

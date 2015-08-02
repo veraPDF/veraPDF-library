@@ -15,7 +15,7 @@ import java.util.Random;
  */
 public class PBCosIntegerTest extends BaseTest {
 
-    private static Long expected;
+    private static long expected;
 
     @BeforeClass
     public static void setUp() {
@@ -31,23 +31,23 @@ public class PBCosIntegerTest extends BaseTest {
 
     @Test
     public void testGetIntegerMethod() {
-        Assert.assertTrue(((CosInteger) actual).getintValue().equals(expected));
+        Assert.assertTrue(((CosInteger) actual).getintValue().equals(Long.valueOf(expected)));
     }
 
     @Test
     public void testGetStringMethod() {
-        Assert.assertEquals(Double.valueOf(expected.toString()).toString(), ((CosInteger) actual).getstringValue());
+        Assert.assertEquals(Double.valueOf(expected).toString(), ((CosInteger) actual).getstringValue());
     }
 
     @Test
     public void testGetRealMethod() {
-        Assert.assertTrue(expected.longValue() == ((CosInteger) actual).getrealValue());
+        System.out.println("Expected = " + expected + "vs " + ((CosInteger) actual).getrealValue());
+        Assert.assertTrue(expected == ((CosInteger) actual).getrealValue().doubleValue());
     }
 
     @AfterClass
     public static void tearDown() {
         expectedType = null;
-        expected = null;
         actual = null;
     }
 }
