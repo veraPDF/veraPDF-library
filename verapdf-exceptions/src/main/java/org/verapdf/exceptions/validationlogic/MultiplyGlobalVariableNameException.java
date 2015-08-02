@@ -10,6 +10,11 @@ import org.verapdf.exceptions.VeraPDFException;
 public class MultiplyGlobalVariableNameException extends VeraPDFException {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = 6748425593911995758L;
+
+    /**
      * Constructs new MultiplyGlobalVariableNameException
      */
     public MultiplyGlobalVariableNameException() {

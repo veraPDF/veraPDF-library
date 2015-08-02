@@ -28,7 +28,8 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
     /**
      * Constructs new OutputIntent Feature Object
      *
-     * @param outline - pdfbox class represents outlines object
+     * @param outline
+     *            pdfbox class represents outlines object
      */
     public PBOutlinesFeaturesObject(PDDocumentOutline outline) {
         this.outline = outline;
@@ -45,12 +46,16 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
     /**
      * Reports featurereport into collection
      *
-     * @param collection - collection for feature report
-     * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-     * @throws FeaturesTreeNodeException - occurs when wrong features tree node constructs
+     * @param collection
+     *            collection for feature report
+     * @return FeatureTreeNode class which represents a root node of the
+     *         constructed collection tree
+     * @throws FeaturesTreeNodeException
+     *             occurs when wrong features tree node constructs
      */
     @Override
-    public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+    public FeatureTreeNode reportFeatures(FeaturesCollection collection)
+            throws FeaturesTreeNodeException {
         if (outline != null) {
             FeatureTreeNode root = FeatureTreeNode.newRootInstance("outlines");
 
@@ -60,35 +65,48 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
                 }
             }
 
-            collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTLINES, root);
+            collection
+                    .addNewFeatureTree(FeaturesObjectTypesEnum.OUTLINES, root);
             return root;
         }
         return null;
     }
 
-    private void createItem(PDOutlineItem item, FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
+    private static void createItem(PDOutlineItem item, FeatureTreeNode root,
+            FeaturesCollection collection) throws FeaturesTreeNodeException {
         if (item != null) {
-            FeatureTreeNode itemNode = FeatureTreeNode.newChildInstance("outline", root);
+            FeatureTreeNode itemNode = FeatureTreeNode.newChildInstance(
+                    "outline", root);
 
-            PBCreateNodeHelper.addNotEmptyNode("title", item.getTitle(), itemNode);
+            PBCreateNodeHelper.addNotEmptyNode("title", item.getTitle(),
+                    itemNode);
 
             if (item.getTextColor() != null) {
-                FeatureTreeNode color = FeatureTreeNode.newChildInstance("color", itemNode);
+                FeatureTreeNode color = FeatureTreeNode.newChildInstance(
+                        "color", itemNode);
 
                 PDColor clr = item.getTextColor();
                 float[] rgb = clr.getComponents();
                 if (rgb.length == RGB_COLORS_NUMBER) {
-                    FeatureTreeNode.newChildInstanceWithValue("red", String.valueOf(rgb[RGB_RED_COLOR_NUMBER]), color);
-                    FeatureTreeNode.newChildInstanceWithValue("green", String.valueOf(rgb[RGB_GREEN_COLOR_NUMBER]), color);
-                    FeatureTreeNode.newChildInstanceWithValue("blue", String.valueOf(rgb[RGB_BLUE_COLOR_NUMBER]), color);
+                    FeatureTreeNode.newChildInstanceWithValue("red",
+                            String.valueOf(rgb[RGB_RED_COLOR_NUMBER]), color);
+                    FeatureTreeNode.newChildInstanceWithValue("green",
+                            String.valueOf(rgb[RGB_GREEN_COLOR_NUMBER]), color);
+                    FeatureTreeNode.newChildInstanceWithValue("blue",
+                            String.valueOf(rgb[RGB_BLUE_COLOR_NUMBER]), color);
                 } else {
-                    color.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.OUTLINESCOLOR_ID);
-                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.OUTLINESCOLOR_ID, ErrorsHelper.OUTLINESCOLOR_MESSAGE);
+                    color.addAttribute(ErrorsHelper.ERRORID,
+                            ErrorsHelper.OUTLINESCOLOR_ID);
+                    ErrorsHelper.addErrorIntoCollection(collection,
+                            ErrorsHelper.OUTLINESCOLOR_ID,
+                            ErrorsHelper.OUTLINESCOLOR_MESSAGE);
                 }
             }
 
-            FeatureTreeNode.newChildInstanceWithValue("italic", String.valueOf(item.isItalic()), itemNode);
-            FeatureTreeNode.newChildInstanceWithValue("bold", String.valueOf(item.isBold()), itemNode);
+            FeatureTreeNode.newChildInstanceWithValue("italic",
+                    String.valueOf(item.isItalic()), itemNode);
+            FeatureTreeNode.newChildInstanceWithValue("bold",
+                    String.valueOf(item.isBold()), itemNode);
 
             for (PDOutlineItem child : item.children()) {
                 createItem(child, itemNode, collection);

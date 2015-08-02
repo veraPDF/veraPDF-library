@@ -8,6 +8,11 @@ package org.verapdf.exceptions;
 public class VeraPDFException extends Exception {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = -6566760719467943980L;
+
+    /**
      * Constructs new VeraPDFException
      */
     public VeraPDFException() {

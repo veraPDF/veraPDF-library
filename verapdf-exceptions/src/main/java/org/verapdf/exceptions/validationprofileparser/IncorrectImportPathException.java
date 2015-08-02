@@ -10,6 +10,11 @@ import org.verapdf.exceptions.VeraPDFException;
 public class IncorrectImportPathException extends VeraPDFException {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = -23463583610584494L;
+
+    /**
      * Constructs new IncorrectImportPathException
      */
     public IncorrectImportPathException() {

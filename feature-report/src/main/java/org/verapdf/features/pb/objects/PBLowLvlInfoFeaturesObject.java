@@ -185,7 +185,7 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
 
         } else if (base instanceof COSArray) {
 
-            for (COSBase baseElement : ((COSArray) base)) {
+            for (COSBase baseElement : (COSArray) base) {
                 if (baseElement instanceof COSName) {
                     String name = ((COSName) baseElement).getName();
                     if (filtersAbbreviations.keySet().contains(name)) {

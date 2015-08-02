@@ -129,7 +129,9 @@ public final class GUIConstants {
     public static final double CONSORTIUM_FONT_SCALE = 1.3;
 
     public static final Color BEFORE_VALIDATION_COLOR = Color.BLACK;
-    public static final Color VALIDATION_SUCCESS_COLOR = new Color(0, VALIDATION_SUCCESS_COLOR_RGB_GREEN, 0);
-    public static final Color VALIDATION_FAILED_COLOR = new Color(VALIDATION_FAILED_COLOR_RGB_RED, 0, 0);
+    public static final Color VALIDATION_SUCCESS_COLOR = new Color(0,
+            VALIDATION_SUCCESS_COLOR_RGB_GREEN, 0);
+    public static final Color VALIDATION_FAILED_COLOR = new Color(
+            VALIDATION_FAILED_COLOR_RGB_RED, 0, 0);
 
 }
