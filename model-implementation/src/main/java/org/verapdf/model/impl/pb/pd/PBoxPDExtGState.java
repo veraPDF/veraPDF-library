@@ -76,9 +76,8 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 	private String getStringProperty(COSBase base) {
 		if (base != null) {
 			return base instanceof COSName ? ((COSName) base).getName() : base.toString();
-		} else {
-			return null;
 		}
+        return null;
 	}
 
 	@Override

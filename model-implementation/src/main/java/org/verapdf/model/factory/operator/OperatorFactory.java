@@ -317,9 +317,8 @@ public final class OperatorFactory {
 		COSBase lastElement = arguments.size() > 0 ? arguments.get(0) : null;
 		if (lastElement instanceof COSName) {
 			return (COSName) lastElement;
-		} else {
-			return null;
 		}
+        return null;
 	}
 
 	private static COSName getLastCOSName(List<COSBase> arguments) {

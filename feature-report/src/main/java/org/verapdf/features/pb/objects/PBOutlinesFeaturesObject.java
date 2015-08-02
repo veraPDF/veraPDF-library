@@ -62,9 +62,8 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
 
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTLINES, root);
             return root;
-        } else {
-            return null;
         }
+        return null;
     }
 
     private void createItem(PDOutlineItem item, FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {

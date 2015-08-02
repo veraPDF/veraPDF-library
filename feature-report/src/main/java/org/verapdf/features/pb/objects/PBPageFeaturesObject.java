@@ -111,8 +111,7 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 
             return root;
 
-        } else {
-            return null;
         }
+        return null;
     }
 }

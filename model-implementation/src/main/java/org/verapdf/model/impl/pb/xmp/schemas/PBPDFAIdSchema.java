@@ -60,9 +60,8 @@ public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchem
 
         if (corr instanceof TextType) {
             return ((TextType) corr).getStringValue();
-        } else {
-            return null;
         }
+        return null;
     }
 
 }
