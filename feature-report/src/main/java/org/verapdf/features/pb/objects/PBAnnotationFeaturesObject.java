@@ -108,7 +108,7 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
     }
 
     private void addParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
-        if ((pages != null && pages.size() != 0) || annotId != null) {
+        if ((pages != null && !pages.isEmpty()) || annotId != null) {
             FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
 
             if (pages != null) {
