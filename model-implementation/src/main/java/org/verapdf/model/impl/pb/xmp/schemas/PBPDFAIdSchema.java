@@ -32,7 +32,7 @@ public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchem
      */
     @Override
     public Long getpart() {
-        return ((PDFAIdentificationSchema) getXmpSchema()).getPart() == null ? null : Long.valueOf(((PDFAIdentificationSchema) getXmpSchema()).getPart());
+        return ((PDFAIdentificationSchema) getXmpSchema()).getPart() == null ? null : Long.valueOf(((PDFAIdentificationSchema) getXmpSchema()).getPart().longValue());
     }
 
     /**
@@ -60,9 +60,8 @@ public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchem
 
         if (corr instanceof TextType) {
             return ((TextType) corr).getStringValue();
-        } else {
-            return null;
         }
+        return null;
     }
 
 }

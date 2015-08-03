@@ -26,26 +26,6 @@ public class LogoPanel extends JPanel {
     private Color background;
 
     /**
-     * Paints the component
-     *
-     * @param g - graphics for painting
-     */
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-
-        int imageHeight = getHeight() - borderWidth * 2;
-        int imageWidth = logo.getWidth() * imageHeight / logo.getHeight();
-        int imageStartY = borderWidth;
-        int imageStartX = (getWidth() - imageWidth) / 2;
-
-        g.setColor(background);
-
-        g.drawImage(logo, imageStartX, imageStartY, imageStartX + imageWidth, imageStartY + imageHeight, 0, 0, logo.getWidth(), logo.getHeight(), this);
-
-    }
-
-    /**
      * Creates logo panel
      *
      * @param logoName
@@ -69,6 +49,26 @@ public class LogoPanel extends JPanel {
         setBackground(backgroundColor);
 
         setPreferredSize(new Dimension(GUIConstants.LOGOPANEL_PREFERRED_SIZE_WIDTH, GUIConstants.LOGOPANEL_PREFERRED_SIZE_HEIGHT));
+    }
+
+    /**
+     * Paints the component
+     *
+     * @param g - graphics for painting
+     */
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+
+        int imageHeight = getHeight() - borderWidth * 2;
+        int imageWidth = logo.getWidth() * imageHeight / logo.getHeight();
+        int imageStartY = borderWidth;
+        int imageStartX = (getWidth() - imageWidth) / 2;
+
+        g.setColor(background);
+
+        g.drawImage(logo, imageStartX, imageStartY, imageStartX + imageWidth, imageStartY + imageHeight, 0, 0, logo.getWidth(), logo.getHeight(), this);
+
     }
 
 }

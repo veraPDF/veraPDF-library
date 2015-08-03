@@ -11,27 +11,37 @@ import org.verapdf.model.coslayer.CosName;
  */
 public class PBCosName extends PBCosObject implements CosName {
 
-	public PBCosName(COSName value) {
-		super(value);
-		setType("CosName");
-	}
+    /** Type name for PBCosName */
+    public static final String COS_NAME_TYPE = "CosName";
 
-	/**
-	 * Get Unicode string representation of the Name object after applying
-	 * escape mechanism and converting to Unicode using Utf8 encoding
-	 */
-	@Override
-	public String getvalue() {
-		return ((COSName) baseObject).getName();
-	}
+    private final String value;
+    private final long originalLength;
 
-	/**
-	 * Get original length of the name before applying any escape mechanisms and
-	 * encodings
-	 */
-	@Override
-	public Long getorigLength() {
-		return Long.valueOf(((COSName) baseObject).getOriginalLength()
-				.intValue());
-	}
+    public PBCosName(COSName cosName) {
+        this(cosName, COS_NAME_TYPE);
+    }
+
+    public PBCosName(COSName cosName, final String type) {
+        super(cosName, type);
+        this.value = cosName.getName();
+        this.originalLength = cosName.getOriginalLength().longValue();
+    }
+
+    /**
+     * Get Unicode string representation of the Name object after applying
+     * escape mechanism and converting to Unicode using Utf8 encoding
+     */
+    @Override
+    public String getvalue() {
+        return this.value;
+    }
+
+    /**
+     * Get original length of the name before applying any escape mechanisms and
+     * encodings
+     */
+    @Override
+    public Long getorigLength() {
+        return Long.valueOf(this.originalLength);
+    }
 }

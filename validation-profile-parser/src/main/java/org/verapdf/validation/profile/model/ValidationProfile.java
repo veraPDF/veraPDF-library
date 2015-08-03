@@ -1,6 +1,7 @@
 package org.verapdf.validation.profile.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -10,16 +11,15 @@ import java.util.Map;
  * @author Maksim Bezrukov
  */
 public class ValidationProfile {
-    private String attrModel;
+    private final String attrModel;
+    private final String name;
+    private final String description;
+    private final String creator;
+    private final String created;
+    private final String hash;
 
-    private String name;
-    private String description;
-    private String creator;
-    private String created;
-    private String hash;
-
-    private Map<String, List<Rule>> rules;
-    private Map<String, List<Variable>> variables;
+    private final Map<String, List<Rule>> rules;
+    private final Map<String, List<Variable>> variables;
 
     /**
      * Creates new Validation profile model with given description.
@@ -40,8 +40,8 @@ public class ValidationProfile {
         this.creator = creator;
         this.created = created;
         this.hash = hash;
-        this.rules = rules;
-        this.variables = variables;
+        this.rules = Collections.unmodifiableMap(rules);
+        this.variables = Collections.unmodifiableMap(variables);
     }
 
     /**

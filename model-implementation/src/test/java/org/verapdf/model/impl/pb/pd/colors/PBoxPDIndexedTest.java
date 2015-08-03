@@ -21,7 +21,7 @@ public class PBoxPDIndexedTest extends PBoxPDColorSpaceTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
-		expectedType = PBoxPDIndexed.INDEXED_TYPE;
+		expectedType = TYPES.contains(PBoxPDIndexed.INDEXED_TYPE) ? PBoxPDIndexed.INDEXED_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

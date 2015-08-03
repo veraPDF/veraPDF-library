@@ -10,11 +10,10 @@ import java.util.List;
  */
 public class PBOp_Undefined extends PBOpCompability implements Op_Undefined {
 
-	public static final String OP_UNDEFINED_TYPE = "Op_Undefined";
+    public static final String OP_UNDEFINED_TYPE = "Op_Undefined";
 
-	public PBOp_Undefined(List<COSBase> arguments) {
-		super(arguments);
-		setType(OP_UNDEFINED_TYPE);
-	}
+    public PBOp_Undefined(List<COSBase> arguments) {
+        super(arguments, OP_UNDEFINED_TYPE);
+    }
 
 }

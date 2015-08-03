@@ -13,8 +13,7 @@ public class PBOp_WStar extends PBOpClip implements Op_WStar {
     public static final String OP_WSTAR_TYPE = "Op_WStar";
 
     public PBOp_WStar(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_WSTAR_TYPE);
+        super(arguments, OP_WSTAR_TYPE);
     }
 
 }

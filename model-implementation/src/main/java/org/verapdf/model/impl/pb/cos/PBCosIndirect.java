@@ -6,6 +6,7 @@ import org.verapdf.model.coslayer.CosIndirect;
 import org.verapdf.model.coslayer.CosObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,46 +17,75 @@ import java.util.List;
  */
 public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
-	public final static String DIRECT_OBJECT = "directObject";
+    public static final String DIRECT_OBJECT = "directObject";
+    /** Type name for PBCosBool */
+    public static final String COS_INDIRECT_TYPE = "CosIndirect";
 
-	public PBCosIndirect(COSBase directObject) {
-		super(directObject);
-		setType("CosIndirect");
-	}
+    private final boolean isSpacingPDFACompliant;
 
-	@Override
-	public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-		List<? extends org.verapdf.model.baselayer.Object> list;
+    // private List<CosObject> directObjects;
 
-		switch (link) {
-			case DIRECT_OBJECT:
-				list = getDirectObject();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
+    public PBCosIndirect(COSBase directObject) {
+        super(directObject, COS_INDIRECT_TYPE);
+        this.isSpacingPDFACompliant = getspacingCompliesPDFA(directObject);
+        /**
+         * FIXME: Why do the COSDocment tests go dive into a stack overflow when
+         * I uncomment below?:
+         *
+         * this.directObjects = parseDirectObject(directObject instanceof
+         * COSObject ? ((COSObject) directObject).getObject() : directObject);
+         */
+    }
 
-		return list;
-	}
+    @Override
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+            String link) {
 
-	/**
-	 * Get the direct contents of the indirect object
-	 */
-	protected List<CosObject> getDirectObject() {
-		List<CosObject> list = new ArrayList<>();
-		COSBase base = baseObject instanceof COSObject ? ((COSObject) baseObject).getObject() : baseObject;
-		list.add(base != null ? getFromValue(base) : PBCosNull.NULL);
-		return list;
-	}
+        if (DIRECT_OBJECT.equals(link)) {
+            return parseDirectObject();
+        }
+        return super.getLinkedObjects(link);
 
-	/**
-	 * true if the words 'obj' and 'endobj' are surrounded by the correct spacings according to PDF/A standard
-	 */
-	@Override
-	public Boolean getspacingCompliesPDFA() {
-		return Boolean.valueOf(((COSObject) baseObject).isEndOfObjectComplyPDFA().booleanValue()
-				&& ((COSObject) baseObject).isHeaderFormatComplyPDFA().booleanValue()
-				&& ((COSObject) baseObject).isHeaderOfObjectComplyPDFA().booleanValue());
-	}
+    }
+
+    /**
+     * Get the direct contents of the indirect object
+     */
+    private List<CosObject> parseDirectObject() {
+        List<CosObject> list = new ArrayList<>();
+        COSBase base = baseObject instanceof COSObject ? ((COSObject) baseObject)
+                .getObject() : baseObject;
+        list.add(base != null ? getFromValue(base) : PBCosNull.NULL);
+        return Collections.unmodifiableList(list);
+    }
+
+    /**
+     * Get the direct contents of the indirect object
+     */
+    // private static List<CosObject> parseDirectObject(final COSBase cosBase) {
+    // List<CosObject> list = new ArrayList<>();
+    // COSBase base = cosBase instanceof COSObject ? ((COSObject) cosBase)
+    // .getObject() : cosBase;
+    // list.add(base != null ? getFromValue(cosBase) : PBCosNull.NULL);
+    // return Collections.unmodifiableList(list);
+    // }
+
+    /**
+     * true if the words 'obj' and 'endobj' are surrounded by the correct
+     * spacings according to PDF/A standard
+     */
+    @Override
+    public Boolean getspacingCompliesPDFA() {
+        return Boolean.valueOf(this.isSpacingPDFACompliant);
+    }
+
+    /**
+     * Get the direct contents of the indirect object
+     */
+    private static boolean getspacingCompliesPDFA(COSBase base) {
+        return ((COSObject) base).isEndOfObjectComplyPDFA().booleanValue()
+                && ((COSObject) base).isHeaderFormatComplyPDFA().booleanValue()
+                && ((COSObject) base).isHeaderOfObjectComplyPDFA()
+                        .booleanValue();
+    }
 }

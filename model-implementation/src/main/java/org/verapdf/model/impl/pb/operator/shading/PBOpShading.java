@@ -15,4 +15,8 @@ public abstract class PBOpShading extends PBOperator implements OpShading {
         super(arguments);
     }
 
+    public PBOpShading(List<COSBase> arguments, String opType) {
+        super(arguments, opType);
+    }
+
 }

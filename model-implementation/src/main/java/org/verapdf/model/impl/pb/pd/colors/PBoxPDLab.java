@@ -9,8 +9,9 @@ import org.verapdf.model.pdlayer.PDLab;
  */
 public class PBoxPDLab extends PBoxPDColorSpace implements PDLab {
 
-	public PBoxPDLab(org.apache.pdfbox.pdmodel.graphics.color.PDLab simplePDObject) {
-		super(simplePDObject);
-		setType("PDLab");
-	}
+    public PBoxPDLab(
+            org.apache.pdfbox.pdmodel.graphics.color.PDLab simplePDObject) {
+        super(simplePDObject);
+        setType("PDLab");
+    }
 }

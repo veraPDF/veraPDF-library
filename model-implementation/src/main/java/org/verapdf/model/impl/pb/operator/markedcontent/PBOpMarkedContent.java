@@ -16,13 +16,18 @@ import java.util.List;
 /**
  * @author Timur Kamalov
  */
-public abstract class PBOpMarkedContent extends PBOperator implements OpMarkedContent {
+public abstract class PBOpMarkedContent extends PBOperator implements
+        OpMarkedContent {
 
-	public static final String TAG = "tag";
-	public static final String PROPERTIES = "properties";
+    public static final String TAG = "tag";
+    public static final String PROPERTIES = "properties";
 
-	public PBOpMarkedContent(List<COSBase> arguments) {
+    public PBOpMarkedContent(List<COSBase> arguments) {
         super(arguments);
+    }
+
+    public PBOpMarkedContent(List<COSBase> arguments, final String opType) {
+        super(arguments, opType);
     }
 
     protected List<CosName> getTag() {

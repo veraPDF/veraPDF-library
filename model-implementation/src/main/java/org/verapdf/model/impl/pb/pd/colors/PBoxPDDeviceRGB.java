@@ -9,17 +9,18 @@ import org.verapdf.model.pdlayer.PDDeviceRGB;
  */
 public class PBoxPDDeviceRGB extends PBoxPDColorSpace implements PDDeviceRGB {
 
-	private static final PDDeviceRGB INSTANCE =
-			new PBoxPDDeviceRGB(org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB.INSTANCE);
+    private static final PDDeviceRGB INSTANCE = new PBoxPDDeviceRGB(
+            org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB.INSTANCE);
 
-	public static final String DEVICE_RGB_TYPE = "PDDeviceRGB";
+    public static final String DEVICE_RGB_TYPE = "PDDeviceRGB";
 
-	private PBoxPDDeviceRGB(org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB simplePDObject) {
-		super(simplePDObject);
-		setType(DEVICE_RGB_TYPE);
-	}
+    private PBoxPDDeviceRGB(
+            org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB simplePDObject) {
+        super(simplePDObject);
+        setType(DEVICE_RGB_TYPE);
+    }
 
-	public static PDDeviceRGB getInstance() {
-		return INSTANCE;
-	}
+    public static PDDeviceRGB getInstance() {
+        return INSTANCE;
+    }
 }

@@ -8,6 +8,7 @@ import org.verapdf.model.coslayer.CosIndirect;
 import org.verapdf.model.coslayer.CosTrailer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,40 +18,40 @@ import java.util.List;
  */
 public class PBCosTrailer extends PBCosDict implements CosTrailer {
 
-	public final static String CATALOG = "Catalog";
+    /** Type name for PBCosTrailer */
+    public static final String COS_TRAILER_TYPE = "CosTrailer";
 
-	public PBCosTrailer(COSDictionary pdfBoxObject) {
-		super(pdfBoxObject);
-		setType("CosTrailer");
-	}
+    public static final String CATALOG = "Catalog";
 
-	/**
-	 * @return true if the current document is encrypted
-	 */
-	@Override
-	public Boolean getisEncrypted() {
-		return Boolean
-				.valueOf(((COSDictionary) baseObject).getItem(COSName.ENCRYPT) != null);
-	}
+    private final boolean isEncrypted;
+    private final List<CosIndirect> catalog;
 
-	@Override
-	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
-		switch (link) {
-			case CATALOG:
-				list = getCatalog();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
-		return list;
-	}
+    public PBCosTrailer(COSDictionary dictionary) {
+        super(dictionary, COS_TRAILER_TYPE);
+        this.isEncrypted = dictionary.getItem(COSName.ENCRYPT) != null;
+        this.catalog = parseCatalog(dictionary);
+    }
 
-	private List<CosIndirect> getCatalog() {
-		List<CosIndirect> catalog = new ArrayList<>(1);
-		COSBase base = ((COSDictionary) baseObject).getItem(COSName.ROOT);
-		catalog.add(new PBCosIndirect(base));
-		return catalog;
-	}
+    /**
+     * @return true if the current document is encrypted
+     */
+    @Override
+    public Boolean getisEncrypted() {
+        return Boolean.valueOf(this.isEncrypted);
+    }
+
+    @Override
+    public List<? extends Object> getLinkedObjects(String link) {
+        if (CATALOG.equals(link)) {
+            return catalog;
+        }
+        return super.getLinkedObjects(link);
+    }
+
+    private static List<CosIndirect> parseCatalog(COSDictionary dictionary) {
+        List<CosIndirect> cat = new ArrayList<>(1);
+        COSBase base = dictionary.getItem(COSName.ROOT);
+        cat.add(new PBCosIndirect(base));
+        return Collections.unmodifiableList(cat);
+    }
 }

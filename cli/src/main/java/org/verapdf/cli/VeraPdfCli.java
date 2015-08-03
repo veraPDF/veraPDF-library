@@ -19,40 +19,51 @@ public class VeraPdfCli {
         commandVeraPDF = new CommandVeraPDF();
     }
 
-	/**
-	 * Main CLI entry point, process the command line arguments
-	 *
-	 * @param args
-	 *            Java.lang.String array of command line args, to be processed
-	 *            using Apache commons CLI.
-	 */
-	public static void main(String[] args) throws Exception {
+    private VeraPdfCli() {
+        // disable default constructor
+    }
+
+    /**
+     * Main CLI entry point, process the command line arguments
+     *
+     * @param args
+     *            Java.lang.String array of command line args, to be processed
+     *            using Apache commons CLI.
+     */
+    public static void main(String[] args) throws Exception {
         JCommander jCommander = new JCommander();
         jCommander.addCommand(commandVeraPDF);
         jCommander.parse(args);
 
         VeraPdfTaskConfig taskConfig = createConfigFromCliOptions(commandVeraPDF);
         long startTime = System.currentTimeMillis();
-        ValidationInfo validationInfo = ValidationRunner.runValidation(taskConfig);
+        ValidationInfo validationInfo = ValidationRunner
+                .runValidation(taskConfig);
         long endTime = System.currentTimeMillis();
         if (validationInfo != null) {
-            XMLReport.writeXMLReport(validationInfo, taskConfig.getOutput(), endTime - startTime);
+            XMLReport.writeXMLReport(validationInfo, taskConfig.getOutput(),
+                    endTime - startTime);
         } else {
-            System.out.println("Internal error during validation");
+            throw new IllegalStateException("Internal error during validation");
         }
     }
 
     /**
      * Creates instance of VeraPdfTaskConfig from parsed cli options
-     * @param cmdVeraPDF options used by VeraPDF software
-     * @return an immutable VeraPdfTaskConfig object populated from the parsed options
+     * 
+     * @param cmdVeraPDF
+     *            options used by VeraPDF software
+     * @return an immutable VeraPdfTaskConfig object populated from the parsed
+     *         options
      */
-    private static VeraPdfTaskConfig createConfigFromCliOptions(final CommandVeraPDF cmdVeraPDF) {
+    private static VeraPdfTaskConfig createConfigFromCliOptions(
+            final CommandVeraPDF cmdVeraPDF) {
         VeraPdfTaskConfig.Builder configBuilder = new VeraPdfTaskConfig.Builder();
-        configBuilder.input(new Input(cmdVeraPDF.getInputPath(), cmdVeraPDF.isInputPathURL()))
-                     .profile(cmdVeraPDF.getProfile())
-                     .validate(cmdVeraPDF.isValidate())
-                     .output(cmdVeraPDF.getOutput());
+        configBuilder
+                .input(new Input(cmdVeraPDF.getInputPath(), cmdVeraPDF
+                        .isInputPathURL())).profile(cmdVeraPDF.getProfile())
+                .validate(cmdVeraPDF.isValidate())
+                .output(cmdVeraPDF.getOutput());
         return configBuilder.build();
     }
 

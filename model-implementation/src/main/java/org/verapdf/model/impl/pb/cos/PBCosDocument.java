@@ -2,6 +2,7 @@ package org.verapdf.model.impl.pb.cos;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +35,9 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 
     private static final Logger LOGGER = Logger.getLogger(PBCosDocument.class);
 
+    /** Type name for PBCosDocument */
+    public static final String COS_DOCUMENT_TYPE = "CosDocument";
+
     public static final String TRAILER = "trailer";
     public static final String XREF = "xref";
     public static final String INDIRECT_OBJECTS = "indirectObjects";
@@ -41,79 +45,114 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     public static final String EMBEDDED_FILES = "EmbeddedFiles";
     public static final String ID = "ID";
 
+    // FIXME: What happens to this if the COSDocument constructors are used?
     private PDDocument pdDocument;
 
-    private Long sizeOfDocument = Long.valueOf(-1);
-
-    public PBCosDocument(COSDocument baseObject) {
-        super(baseObject);
-        setType("CosDocument");
-    }
+    private final long sizeOfDocument;
+    private final long indirectObjectCount;
+    private final float version;
+    private final boolean isBinaryHeaderPDFACompliant;
+    private final boolean isPDFHeaderPDFACompliant;
+    private final boolean isOptionalContentPresent;
+    private final boolean isLinearised;
+    private final Boolean isEofPDFACompliant;
+    private final Boolean doesInfoMatchXMP;
+    private final String firstPageID;
+    private final String lastID;
+    private final List<CosIndirect> indirects;
+    private final List<CosTrailer> trailers;
+    private final List<CosXRef> xRefs;
 
     public PBCosDocument(PDDocument pdDocument, long length) {
-        super(pdDocument.getDocument());
-        setType("CosDocument");
+        this(pdDocument.getDocument(), length);
         this.pdDocument = pdDocument;
-        sizeOfDocument = Long.valueOf(length);
     }
 
-    /**  Number of indirect objects in the document
+    public PBCosDocument(COSDocument cosDocument) {
+        this(cosDocument, -1);
+    }
+
+    public PBCosDocument(COSDocument cosDocument, long length) {
+        super(cosDocument, COS_DOCUMENT_TYPE);
+        sizeOfDocument = length;
+        this.indirectObjectCount = cosDocument.getObjects().size();
+        this.version = cosDocument.getVersion();
+        this.isBinaryHeaderPDFACompliant = !(cosDocument
+                .getNonValidCommentContent().booleanValue()
+                || cosDocument.getNonValidCommentLength().booleanValue() || cosDocument
+                .getNonValidCommentStart().booleanValue());
+        this.isPDFHeaderPDFACompliant = !cosDocument.getNonValidHeader()
+                .booleanValue();
+        this.isOptionalContentPresent = parseOptionalContentPresent(cosDocument);
+        this.isEofPDFACompliant = cosDocument.getEofComplyPDFA();
+        this.lastID = getTrailerID((COSArray) cosDocument.getLastTrailer()
+                .getItem(ID));
+        this.firstPageID = getTrailerID((COSArray) cosDocument
+                .getFirstPageTrailer().getItem(ID));
+        this.isLinearised = cosDocument.getTrailer() != cosDocument
+                .getLastTrailer() && cosDocument.isLinearized().booleanValue();
+        this.doesInfoMatchXMP = XMPChecker.doesInfoMatchXMP(cosDocument);
+        this.indirects = parseIndirectObjects(cosDocument);
+        this.trailers = parseTrailers(cosDocument);
+        this.xRefs = parseXRefs(cosDocument);
+    }
+
+    /**
+     * Number of indirect objects in the document
      */
     @Override
     public Long getnrIndirects() {
-        return Long.valueOf(((COSDocument) baseObject).getObjects().size());
+        return Long.valueOf(this.indirectObjectCount);
     }
 
-	/**
-	 * @return version of pdf document
-	 */
-	@Override
+    /**
+     * @return version of pdf document
+     */
+    @Override
     public Double getversion() {
-		return Double.valueOf(((COSDocument) baseObject).getVersion());
-	}
+        return Double.valueOf(this.version);
+    }
 
-    /**  Size of the byte sequence representing the document
+    /**
+     * Size of the byte sequence representing the document
      */
     @Override
     public Long getsize() {
-        return sizeOfDocument;
+        return Long.valueOf(sizeOfDocument);
     }
 
-    /**  true if the second line of the document is a comment with at least 4 symbols in the code range 128-255 as required by PDF/A standard
+    /**
+     * true if the second line of the document is a comment with at least 4
+     * symbols in the code range 128-255 as required by PDF/A standard
      */
     @Override
     public Boolean getbinaryHeaderComplyPDFA() {
 
-        return Boolean.valueOf(!(((COSDocument) baseObject).getNonValidCommentContent().booleanValue() ||
-                ((COSDocument) baseObject).getNonValidCommentLength().booleanValue() ||
-                ((COSDocument) baseObject).getNonValidCommentStart().booleanValue()));
+        return Boolean.valueOf(this.isBinaryHeaderPDFACompliant);
     }
 
-    /** true if first line of document complies PDF/A standard
+    /**
+     * true if first line of document complies PDF/A standard
      */
     @Override
     public Boolean getpdfHeaderCompliesPDFA() {
-        return Boolean.valueOf(!((COSDocument) baseObject).getNonValidHeader().booleanValue());
+        return Boolean.valueOf(this.isPDFHeaderPDFACompliant);
     }
 
-    /** true if catalog contain OCProperties key
+    /**
+     * true if catalog contain OCProperties key
      */
     @Override
     public Boolean getisOptionalContentPresent() {
-        try {
-            COSDictionary root = (COSDictionary) ((COSDocument) baseObject).getCatalog().getObject();
-            return Boolean.valueOf(root.getItem(COSName.OCPROPERTIES) != null);
-        } catch (IOException e) {
-            LOGGER.debug("No document catalog found", e);
-            return Boolean.FALSE;
-        }
+        return Boolean.valueOf(this.isOptionalContentPresent);
     }
 
-    /** EOF must complies PDF/A standard
+    /**
+     * EOF must complies PDF/A standard
      */
     @Override
-	public Boolean geteofCompliesPDFA() {
-        return ((COSDocument) baseObject).getEofComplyPDFA();
+    public Boolean geteofCompliesPDFA() {
+        return this.isEofPDFACompliant;
     }
 
     /**
@@ -121,7 +160,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     @Override
     public String getfirstPageID() {
-        return getTrailerID((COSArray) ((COSDocument) baseObject).getFirstPageTrailer().getItem(ID));
+        return this.firstPageID;
     }
 
     /**
@@ -129,18 +168,17 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     @Override
     public String getlastID() {
-        return getTrailerID((COSArray) ((COSDocument) baseObject).getLastTrailer()
-                .getItem(ID));
+        return this.lastID;
     }
 
     private static String getTrailerID(COSArray ids) {
         if (ids != null) {
             StringBuilder builder = new StringBuilder();
             for (COSBase id : ids) {
-				for (byte aByte : ((COSString) id).getBytes()) {
-					builder.append((char) (aByte & 0xFF));
-				}
-				builder.append(' ');
+                for (byte aByte : ((COSString) id).getBytes()) {
+                    builder.append((char) (aByte & 0xFF));
+                }
+                builder.append(' ');
             }
             // need to discard last whitespace
             return builder.toString().substring(0, builder.length() - 1);
@@ -153,44 +191,54 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     @Override
     public Boolean getisLinearized() {
-        COSDocument document = (COSDocument) this.baseObject;
-        boolean res = document.getTrailer() != document.getLastTrailer() && document.isLinearized().booleanValue();
-        return Boolean.valueOf(res);
+        return Boolean.valueOf(this.isLinearised);
     }
 
     /**
      * @return true if XMP content matches Info dictionary content
      */
     @Override
-	public Boolean getdoesInfoMatchXMP() {
-        return XMPChecker.doesInfoMatchXMP((COSDocument) baseObject);
+    public Boolean getdoesInfoMatchXMP() {
+        return this.doesInfoMatchXMP;
     }
 
     @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+            String link) {
         List<? extends org.verapdf.model.baselayer.Object> list;
 
         switch (link) {
-            case TRAILER:
-                list = this.getTrailer();
-                break;
-            case INDIRECT_OBJECTS:
-                list = this.getIndirectObjects();
-                break;
-            case DOCUMENT:
-                list = this.getDocument();
-                break;
-            case XREF:
-                list = this.getXRef();
-                break;
-            case EMBEDDED_FILES:
-                list = this.getEmbeddedFiles();
-                break;
-            default:
-                list = super.getLinkedObjects(link);
+        case TRAILER:
+            list = this.trailers;
+            break;
+        case INDIRECT_OBJECTS:
+            return this.indirects;
+        case DOCUMENT:
+            list = this.getDocument();
+            break;
+        case XREF:
+            list = this.xRefs;
+            break;
+        case EMBEDDED_FILES:
+            list = this.getEmbeddedFiles();
+            break;
+        default:
+            list = super.getLinkedObjects(link);
         }
 
         return list;
+    }
+
+    private static boolean parseOptionalContentPresent(
+            final COSDocument cosDocument) {
+        try {
+            COSDictionary root = (COSDictionary) (cosDocument).getCatalog()
+                    .getObject();
+            return root.getItem(COSName.OCPROPERTIES) != null;
+        } catch (IOException e) {
+            LOGGER.debug("No document catalog found", e);
+            return false;
+        }
     }
 
     /**
@@ -199,27 +247,34 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     private List<Object> getEmbeddedFiles() {
         List<Object> files = new ArrayList<>();
         try {
-            COSDictionary buffer = (COSDictionary) pdDocument.getDocument().getCatalog().getObject();
+            COSDictionary buffer = (COSDictionary) pdDocument.getDocument()
+                    .getCatalog().getObject();
             buffer = getCosDictionary(buffer.getItem(COSName.NAMES));
             if (buffer != null) {
-                buffer = getCosDictionary(buffer.getItem(COSName.EMBEDDED_FILES));
+                buffer = getCosDictionary(buffer
+                        .getItem(COSName.EMBEDDED_FILES));
             }
             getNamesEmbeddedFiles(files, buffer);
         } catch (IOException e) {
-            LOGGER.error("Something wrong with getting embedded files - return empty list. " + e.getMessage(), e);
+            LOGGER.error(
+                    "Something wrong with getting embedded files - return empty list. "
+                            + e.getMessage(), e);
         }
         return files;
     }
 
-    private static void getNamesEmbeddedFiles(List<Object> files, COSDictionary buffer) throws IOException {
+    private static void getNamesEmbeddedFiles(List<Object> files,
+            COSDictionary buffer) throws IOException {
         PDEmbeddedFilesNameTreeNode root = null;
         if (buffer != null) {
             root = new PDEmbeddedFilesNameTreeNode(buffer);
         }
         if (root != null) {
-            final Set<Map.Entry<String, PDComplexFileSpecification>> entries = root.getNames().entrySet();
+            final Set<Map.Entry<String, PDComplexFileSpecification>> entries = root
+                    .getNames().entrySet();
             for (Map.Entry<String, PDComplexFileSpecification> entry : entries) {
-                files.add(new PBCosFileSpecification(entry.getValue().getCOSObject()));
+                files.add(new PBCosFileSpecification(entry.getValue()
+                        .getCOSObject()));
             }
         }
     }
@@ -234,38 +289,43 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         return buffer;
     }
 
-    /**  trailer dictionary
+    /**
+     * trailer dictionary
      */
-    private List<CosTrailer> getTrailer() {
-        List<CosTrailer> trailer = new ArrayList<>();
-        trailer.add(new PBCosTrailer(((COSDocument) baseObject).getTrailer()));
-        return trailer;
+    private static List<CosTrailer> parseTrailers(final COSDocument cosDocument) {
+        List<CosTrailer> list = new ArrayList<>();
+        list.add(new PBCosTrailer(cosDocument.getTrailer()));
+        return Collections.unmodifiableList(list);
     }
 
-    /**  all indirect objects referred from the xref table
+    /**
+     * all indirect objects referred from the xref table
      */
-    private List<CosIndirect> getIndirectObjects() {
-        List<CosIndirect> indirects = new ArrayList<>();
-        for (COSBase object : ((COSDocument) baseObject).getObjects()) {
-            indirects.add(new PBCosIndirect(object));
+    private static List<CosIndirect> parseIndirectObjects(
+            final COSDocument cosDocument) {
+        List<CosIndirect> list = new ArrayList<>();
+        for (COSBase object : cosDocument.getObjects()) {
+            list.add(new PBCosIndirect(object));
         }
-        return indirects;
+        return Collections.unmodifiableList(list);
     }
 
-    /**  link to the high-level PDF Document structure
+    /**
+     * link to the high-level PDF Document structure
      */
     private List<org.verapdf.model.pdlayer.PDDocument> getDocument() {
         List<org.verapdf.model.pdlayer.PDDocument> document = new ArrayList<>(1);
-		document.add(new PBoxPDDocument(pdDocument));
+        document.add(new PBoxPDDocument(pdDocument));
         return document;
     }
 
-    /** link to cross reference table properties
+    /**
+     * link to cross reference table properties
      */
-    private List<? extends Object> getXRef() {
-        List<CosXRef> xref = new ArrayList<>();
-        final COSDocument document = (COSDocument) this.baseObject;
-        xref.add(new PBCosXRef(document.isXRefSpacingsCompliesPDFA(), document.isXRefEOLCompliesPDFA()));
-        return xref;
+    private static List<CosXRef> parseXRefs(final COSDocument cosDocument) {
+        List<CosXRef> list = new ArrayList<>();
+        list.add(new PBCosXRef(cosDocument.isXRefSpacingsCompliesPDFA(),
+                cosDocument.isXRefEOLCompliesPDFA()));
+        return Collections.unmodifiableList(list);
     }
 }

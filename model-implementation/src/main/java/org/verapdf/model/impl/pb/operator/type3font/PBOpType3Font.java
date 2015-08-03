@@ -11,11 +11,10 @@ import java.util.List;
  */
 public class PBOpType3Font extends PBOperator implements OpType3Font {
 
-	public static final String OP_TYPE_3_FONT_TYPE = "OpType3Font";
+    public static final String OP_TYPE_3_FONT_TYPE = "OpType3Font";
 
-	public PBOpType3Font(List<COSBase> arguments) {
-		super(arguments);
-		setType(OP_TYPE_3_FONT_TYPE);
-	}
+    public PBOpType3Font(List<COSBase> arguments) {
+        super(arguments, OP_TYPE_3_FONT_TYPE);
+    }
 
 }

@@ -23,12 +23,12 @@ public class PBCosIndirectTest extends BaseTest {
 
     private static PBCosIndirect secondActual;
 
-    private static final Long objectNumber = Long.valueOf(10);
-    private static final Integer generationNumber = Integer.valueOf(0);
+    private static final long objectNumber = 10;
+    private static final int generationNumber = 0;
 
     @BeforeClass
     public static void setUp() throws IOException {
-        expectedType = "CosIndirect";
+        expectedType = TYPES.contains(PBCosIndirect.COS_INDIRECT_TYPE) ? PBCosIndirect.COS_INDIRECT_TYPE : null;
         expectedID = String.valueOf(objectNumber) + " " + String.valueOf(generationNumber);
 
         actual = new PBCosIndirect(createObject(null, Boolean.TRUE));
@@ -45,8 +45,8 @@ public class PBCosIndirectTest extends BaseTest {
 
     @Test
     public void testGetSpacingsMethod() {
-        Assert.assertTrue(((CosIndirect) actual).getspacingCompliesPDFA());
-        Assert.assertFalse((secondActual).getspacingCompliesPDFA());
+        Assert.assertTrue(((CosIndirect) actual).getspacingCompliesPDFA().booleanValue());
+        Assert.assertFalse((secondActual).getspacingCompliesPDFA().booleanValue());
     }
 
     @Test
@@ -58,7 +58,7 @@ public class PBCosIndirectTest extends BaseTest {
         Assert.assertTrue(secondDirect instanceof CosDict);
     }
 
-    private Object getDirectLink(CosIndirect indirect) {
+    private static Object getDirectLink(CosIndirect indirect) {
         List<? extends Object> direct = indirect.getLinkedObjects(PBCosIndirect.DIRECT_OBJECT);
         Assert.assertEquals(direct.size(), 1);
         return direct.get(0);

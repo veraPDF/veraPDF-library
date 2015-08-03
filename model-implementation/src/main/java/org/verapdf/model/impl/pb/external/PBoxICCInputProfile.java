@@ -10,11 +10,13 @@ import java.io.InputStream;
  *
  * @author Evgeniy Muravitskiy
  */
-public class PBoxICCInputProfile extends PBoxICCProfile implements ICCInputProfile {
+public class PBoxICCInputProfile extends PBoxICCProfile implements
+        ICCInputProfile {
 
-	public static final String ICC_INPUT_PROFILE_TYPE = "ICCInputProfile";
+    public static final String ICC_INPUT_PROFILE_TYPE = "ICCInputProfile";
 
-	public PBoxICCInputProfile(InputStream profile, Long dictionaryNumberOfColors) throws IOException {
+    public PBoxICCInputProfile(InputStream profile,
+            Long dictionaryNumberOfColors) throws IOException {
         super(profile, dictionaryNumberOfColors);
         setType(ICC_INPUT_PROFILE_TYPE);
     }

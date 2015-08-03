@@ -6,8 +6,8 @@ package org.verapdf.validation.report.model;
  * @author Maksim Bezrukov
  */
 public class CheckLocation {
-    private String attrLevel;
-    private String context;
+    private final String attrLevel;
+    private final String context;
 
     /**
      * Creates check location model
@@ -15,7 +15,7 @@ public class CheckLocation {
      * @param attrLevel - level of the check
      * @param context   - context of the check
      */
-    public CheckLocation(String attrLevel, String context) {
+    public CheckLocation(final String attrLevel, final String context) {
         this.attrLevel = attrLevel;
         this.context = context;
     }

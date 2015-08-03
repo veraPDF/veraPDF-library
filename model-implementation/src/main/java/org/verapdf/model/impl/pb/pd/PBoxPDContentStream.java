@@ -14,41 +14,39 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class PBoxPDContentStream extends PBoxPDObject implements PDContentStream {
+public class PBoxPDContentStream extends PBoxPDObject implements
+        PDContentStream {
 
-    private static final Logger LOGGER = Logger.getLogger(PBoxPDContentStream.class);
+    private static final Logger LOGGER = Logger
+            .getLogger(PBoxPDContentStream.class);
     public static final String OPERATORS = "operators";
-	public static final String CONTENT_STREAM_TYPE = "PDContentStream";
+    public static final String CONTENT_STREAM_TYPE = "PDContentStream";
 
-	public PBoxPDContentStream(org.apache.pdfbox.contentstream.PDContentStream contentStream) {
+    public PBoxPDContentStream(
+            org.apache.pdfbox.contentstream.PDContentStream contentStream) {
         super(contentStream);
         setType(CONTENT_STREAM_TYPE);
     }
 
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
-        List<? extends Object> list;
-
-        switch (link) {
-            case OPERATORS:
-                list = getOperators();
-                break;
-            default:
-                list = super.getLinkedObjects(link);
-                break;
+        if (OPERATORS.equals(link)) {
+            return getOperators();
         }
-
-        return list;
+        return super.getLinkedObjects(link);
     }
 
     private List<Operator> getOperators() {
         List<Operator> result = new ArrayList<>();
         try {
-            PDFStreamParser streamParser = new PDFStreamParser(contentStream.getContentStream(), true);
+            PDFStreamParser streamParser = new PDFStreamParser(
+                    contentStream.getContentStream(), true);
             streamParser.parse();
-            result = OperatorFactory.parseOperators(streamParser.getTokens(), contentStream.getResources());
+            result = OperatorFactory.operatorsFromTokens(streamParser.getTokens(),
+                    contentStream.getResources());
         } catch (IOException e) {
-            LOGGER.error("Error while parsing content stream. " + e.getMessage(), e);
+            LOGGER.error(
+                    "Error while parsing content stream. " + e.getMessage(), e);
         }
         return result;
     }

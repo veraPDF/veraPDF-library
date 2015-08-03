@@ -13,8 +13,7 @@ public class PBOp_W_clip extends PBOpClip implements Op_W_clip {
     public static final String OP_W_CLIP_TYPE = "Op_W_clip";
 
     public PBOp_W_clip(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_W_CLIP_TYPE);
+        super(arguments, OP_W_CLIP_TYPE);
     }
 
 

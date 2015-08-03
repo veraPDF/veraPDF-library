@@ -5,15 +5,18 @@ import org.verapdf.model.coslayer.CosInteger;
 
 /**
  * Current class is representation of CosInteger interface of abstract model.
- * All methods described in CosNumber. This class is analogue of COSInteger in pdfbox.
+ * All methods described in CosNumber. This class is analogue of COSInteger in
+ * pdfbox.
  *
  * @author Evgeniy Muravitskiy
  * @see PBCosNumber
  */
 public class PBCosInteger extends PBCosNumber implements CosInteger {
 
-	public PBCosInteger(COSInteger value) {
-		super(value);
-		setType("CosInteger");
-	}
+    /** Type name for PBCosInteger */
+    public static final String COS_INTEGER_TYPE = "CosInteger";
+
+    public PBCosInteger(COSInteger value) {
+        super(value, COS_INTEGER_TYPE);
+    }
 }

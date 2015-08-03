@@ -15,4 +15,8 @@ public abstract class PBOpCompability extends PBOperator implements OpCompatibil
         super(arguments);
     }
 
+    public PBOpCompability(List<COSBase> arguments, final String opType) {
+        super(arguments, opType);
+    }
+
 }

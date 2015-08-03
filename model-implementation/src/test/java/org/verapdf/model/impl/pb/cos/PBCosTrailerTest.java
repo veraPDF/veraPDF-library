@@ -22,7 +22,7 @@ public class PBCosTrailerTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() throws IOException {
-        expectedType = "CosTrailer";
+        expectedType = TYPES.contains(PBCosTrailer.COS_TRAILER_TYPE) ? PBCosTrailer.COS_TRAILER_TYPE : null;
         expectedID = null;
 
         COSDictionary trailer = new COSDictionary();
@@ -36,7 +36,7 @@ public class PBCosTrailerTest extends BaseTest {
 
     @Test
     public void testGetIsEncryptedMethod() {
-        Assert.assertTrue(((CosTrailer) actual).getisEncrypted());
+        Assert.assertTrue(((CosTrailer) actual).getisEncrypted().booleanValue());
     }
 
     @Test

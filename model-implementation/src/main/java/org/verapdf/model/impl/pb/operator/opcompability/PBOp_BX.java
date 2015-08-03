@@ -13,8 +13,7 @@ public class PBOp_BX extends PBOpCompability implements Op_BX {
     public static final String OP_BX_TYPE = "Op_BX";
 
     public PBOp_BX(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_BX_TYPE);
+        super(arguments, OP_BX_TYPE);
     }
 
 }

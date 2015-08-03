@@ -56,56 +56,51 @@ public class Validator {
 
         if (profile == null) {
             return new ValidationInfo(new Profile("", ""), new Result(new Details(new ArrayList<Rule>(), new ArrayList<String>())));
-        } else {
-
-            for (String id : profile.getAllRulesId()) {
-                checkMap.put(id, new ArrayList<Check>());
-            }
-
-            if (root == null) {
-                List<Rule> rules = new ArrayList<>();
-
-                for (Map.Entry<String, List<Check>> id : checkMap.entrySet()) {
-
-                    rules.add(new Rule(id.getKey(), id.getValue()));
-                }
-
-                return new ValidationInfo(new Profile(profile.getName(), profile.getHash()), new Result(new Details(rules, warnings)));
-
-            } else {
-
-                initializeAllVariables();
-
-                rootType = root.getType();
-
-                objectsStack.push(root);
-
-                objectsContext.push("root");
-
-                Set<String> rootIDContext = new HashSet<>();
-
-                if (root.getID() != null) {
-                    rootIDContext.add(root.getID());
-                    idSet.add(root.getID());
-                }
-
-                contextSet.push(rootIDContext);
-
-                while (!objectsStack.isEmpty()) {
-                    checkNext();
-                }
-
-                List<Rule> rules = new ArrayList<>();
-
-                for (Map.Entry<String, List<Check>> id : checkMap.entrySet()) {
-
-                    rules.add(new Rule(id.getKey(), id.getValue()));
-                }
-
-                return new ValidationInfo(new Profile(profile.getName(), profile.getHash()), new Result(new Details(rules, warnings)));
-
-            }
         }
+        for (String id : profile.getAllRulesId()) {
+            checkMap.put(id, new ArrayList<Check>());
+        }
+
+        if (root == null) {
+            List<Rule> rules = new ArrayList<>();
+
+            for (Map.Entry<String, List<Check>> id : checkMap.entrySet()) {
+
+                rules.add(new Rule(id.getKey(), id.getValue()));
+            }
+
+            return new ValidationInfo(new Profile(profile.getName(), profile.getHash()), new Result(new Details(rules, warnings)));
+
+        }
+        initializeAllVariables();
+
+        rootType = root.getType();
+
+        objectsStack.push(root);
+
+        objectsContext.push("root");
+
+        Set<String> rootIDContext = new HashSet<>();
+
+        if (root.getID() != null) {
+            rootIDContext.add(root.getID());
+            idSet.add(root.getID());
+        }
+
+        contextSet.push(rootIDContext);
+
+        while (!objectsStack.isEmpty()) {
+            checkNext();
+        }
+
+        List<Rule> rules = new ArrayList<>();
+
+        for (Map.Entry<String, List<Check>> id : checkMap.entrySet()) {
+
+            rules.add(new Rule(id.getKey(), id.getValue()));
+        }
+
+        return new ValidationInfo(new Profile(profile.getName(), profile.getHash()), new Result(new Details(rules, warnings)));
     }
 
     private void initializeAllVariables() throws JavaScriptEvaluatingException, MultiplyGlobalVariableNameException {
@@ -267,7 +262,7 @@ public class Validator {
         return res;
     }
 
-    private String getScript(Object obj, org.verapdf.validation.profile.model.Rule rule) {
+    private static String getScript(Object obj, org.verapdf.validation.profile.model.Rule rule) {
         StringBuilder builder = new StringBuilder();
 
         builder.append(getScriptPrefix(obj));
@@ -278,7 +273,7 @@ public class Validator {
         return builder.toString();
     }
 
-    private String getScriptPrefix(Object obj) {
+    private static String getScriptPrefix(Object obj) {
         StringBuilder builder = new StringBuilder();
 
         for (String prop : obj.getProperties()) {
@@ -295,7 +290,7 @@ public class Validator {
         return builder.toString();
     }
 
-    private String getScriptSuffix() {
+    private static String getScriptSuffix() {
         return ";}\ntest();";
     }
 
@@ -329,16 +324,15 @@ public class Validator {
 
         if (rule.getAttrID() == null) {
             throw new RullWithNullIDException("There is a rule with null id in the profile. Profile name: " + profile.getName());
-        } else {
-            checkMap.get(rule.getAttrID()).add(check);
         }
+        checkMap.get(rule.getAttrID()).add(check);
 
         Context.exit();
 
         return res.booleanValue();
     }
 
-    private Check createFailCkeck(Object obj, CheckLocation loc, org.verapdf.validation.profile.model.Rule rule, Context cx, ScriptableObject scope, String context) throws JavaScriptEvaluatingException {
+    private static Check createFailCkeck(Object obj, CheckLocation loc, org.verapdf.validation.profile.model.Rule rule, Context cx, ScriptableObject scope, String context) throws JavaScriptEvaluatingException {
         List<String> args = new ArrayList<>();
 
         String errorMessage;

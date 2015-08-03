@@ -1,17 +1,19 @@
 package org.verapdf.model.impl.pb.pd;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.List;
+
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.graphics.form.PDGroup;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.BaseTest;
 import org.verapdf.model.pdlayer.PDColorSpace;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.List;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -22,7 +24,7 @@ public class PBoxPDGroupTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = PBoxPDGroup.GROUP_TYPE;
+		expectedType = TYPES.contains(PBoxPDGroup.GROUP_TYPE) ? PBoxPDGroup.GROUP_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
@@ -35,7 +37,6 @@ public class PBoxPDGroupTest extends BaseTest {
 		Assert.assertEquals("Transparency", ((org.verapdf.model.pdlayer.PDGroup) actual).getS());
 	}
 
-	@Ignore
 	@Test
 	public void testColorSpaceLink() {
 		List<? extends Object> colorSpace = actual.getLinkedObjects(PBoxPDGroup.COLOR_SPACE);
@@ -45,12 +46,4 @@ public class PBoxPDGroupTest extends BaseTest {
 		}
 	}
 
-	@AfterClass
-	 public static void tearDown() throws IOException {
-		expectedType = null;
-		expectedID = null;
-		actual = null;
-
-		document.close();
-	}
 }

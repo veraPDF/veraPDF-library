@@ -1,6 +1,5 @@
 package org.verapdf.model.impl.pb.pd;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,7 +21,8 @@ public class PBoxPDOutputIntentTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = "PDOutputIntent";
+		expectedType = TYPES.contains(PBoxPDOutputIntent.OUTPUT_INTENT_TYPE) ?
+															PBoxPDOutputIntent.OUTPUT_INTENT_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
@@ -43,12 +43,4 @@ public class PBoxPDOutputIntentTest extends BaseTest {
 		}
 	}
 
-	@AfterClass
-	public static void tearDown() throws IOException {
-		expectedType = null;
-		expectedID = null;
-		actual = null;
-
-		document.close();
-	}
 }

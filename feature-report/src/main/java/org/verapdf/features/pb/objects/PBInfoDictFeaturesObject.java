@@ -86,9 +86,8 @@ public class PBInfoDictFeaturesObject implements IFeaturesObject {
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY, root);
 
             return root;
-        } else {
-            return null;
         }
+        return null;
     }
 
     private static void addEntry(String name, String value, FeatureTreeNode root) throws FeaturesTreeNodeException {

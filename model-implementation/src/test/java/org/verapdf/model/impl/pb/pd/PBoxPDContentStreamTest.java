@@ -1,6 +1,5 @@
 package org.verapdf.model.impl.pb.pd;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,7 +20,8 @@ public class PBoxPDContentStreamTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = "PDContentStream";
+		expectedType = TYPES.contains(PBoxPDContentStream.CONTENT_STREAM_TYPE) ?
+																	PBoxPDContentStream.CONTENT_STREAM_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
@@ -37,12 +37,4 @@ public class PBoxPDContentStreamTest extends BaseTest {
 		}
 	}
 
-	@AfterClass
-	public static void tearDown() throws IOException {
-		expectedType = null;
-		expectedID = null;
-		actual = null;
-
-		document.close();
-	}
 }

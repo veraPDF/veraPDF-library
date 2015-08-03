@@ -11,40 +11,50 @@ import org.verapdf.model.coslayer.CosString;
  */
 public class PBCosString extends PBCosObject implements CosString {
 
-	public PBCosString(COSString value) {
-		super(value);
-		setType("CosString");
-	}
+    /** Type name for PBCosString */
+    public static final String COS_STRING_TYPE = "CosString";
+    private final String value;
+    private final Boolean isHex;
+    private final Boolean isHexSymbols;
+    private final Long hexCount;
 
-	/**
-	 * Get Unicode string value stored in the PDF object
-	 */
-	@Override
-	public String getvalue() {
-		return ((COSString) baseObject).getASCII();
-	}
+    public PBCosString(COSString cosString) {
+        super(cosString, COS_STRING_TYPE);
+        this.value = cosString.getASCII();
+        this.isHex = cosString.isHex();
+        this.isHexSymbols = cosString.getIsHexSymbols();
+        this.hexCount = cosString.getHexCount();
+    }
 
-	/**
-	 * true if the string is stored in Hex format
-	 */
-	@Override
-	public Boolean getisHex() {
-		return ((COSString) baseObject).isHex();
-	}
+    /**
+     * Get Unicode string value stored in the PDF object
+     */
+    @Override
+    public String getvalue() {
+        return this.value;
+    }
 
-	/**
-	 * true if all symbols below range 0-9,a-f,A-F
-	 */
-	@Override
-	public Boolean getisHexSymbols() {
-		return ((COSString) baseObject).getIsHexSymbols();
-	}
+    /**
+     * true if the string is stored in Hex format
+     */
+    @Override
+    public Boolean getisHex() {
+        return this.isHex;
+    }
 
-	/**
-	 * contains original hexa string length
-	 */
-	@Override
-	public Long gethexCount() {
-		return ((COSString) baseObject).getHexCount();
-	}
+    /**
+     * true if all symbols below range 0-9,a-f,A-F
+     */
+    @Override
+    public Boolean getisHexSymbols() {
+        return this.isHexSymbols;
+    }
+
+    /**
+     * contains original hexa string length
+     */
+    @Override
+    public Long gethexCount() {
+        return this.hexCount;
+    }
 }

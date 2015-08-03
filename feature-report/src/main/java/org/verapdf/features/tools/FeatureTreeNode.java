@@ -191,13 +191,13 @@ public final class FeatureTreeNode {
     /**
      * Added attribute for the node
      *
-     * @param name
-     *            - name of the attribute
-     * @param value
-     *            - value of the attribute
+     * @param attributeName
+     *            name of the attribute
+     * @param attributeValue
+     *            value of the attribute
      */
-    public void addAttribute(String name, String value) {
-        attributes.put(name, value);
+    public void addAttribute(String attributeName, String attributeValue) {
+        attributes.put(attributeName, attributeValue);
     }
 
     @Override

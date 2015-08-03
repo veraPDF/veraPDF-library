@@ -24,7 +24,7 @@ public class PBoxPDXImageTest extends PBoxPDAbstractXObjectTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
-		expectedType = PBoxPDXImage.X_IMAGE_TYPE;
+		expectedType = TYPES.contains(PBoxPDXImage.X_IMAGE_TYPE) ? PBoxPDXImage.X_IMAGE_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
@@ -40,7 +40,7 @@ public class PBoxPDXImageTest extends PBoxPDAbstractXObjectTest {
 
 	@Test
 	public void testInterpolateMethod() {
-		Assert.assertFalse(((PDXImage) actual).getInterpolate());
+		Assert.assertFalse(((PDXImage) actual).getInterpolate().booleanValue());
 	}
 
 	@Test

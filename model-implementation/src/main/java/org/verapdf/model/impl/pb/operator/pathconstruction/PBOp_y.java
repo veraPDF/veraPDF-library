@@ -14,22 +14,15 @@ public class PBOp_y extends PBOpPathConstruction implements Op_y {
     public static final String OP_Y_TYPE = "Op_y";
 
     public PBOp_y(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_Y_TYPE);
+        super(arguments, OP_Y_TYPE);
     }
 
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-        List<? extends org.verapdf.model.baselayer.Object> list;
-
-        switch (link) {
-            case CONTROL_POINTS:
-                list = this.getControlPoints();
-                break;
-            default: list = super.getLinkedObjects(link);
+        if (CONTROL_POINTS.equals(link)) {
+            return this.getControlPoints();
         }
-
-        return list;
+        return super.getLinkedObjects(link);
     }
 
     private List<CosReal> getControlPoints() {

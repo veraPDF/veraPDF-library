@@ -1,5 +1,6 @@
 package org.verapdf.validation.report.model;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,11 +9,11 @@ import java.util.List;
  * @author Maksim Bezrukov
  */
 public class Rule {
-    private String attrID;
-    private String attrStatus;
-    private int attrChecks;
-
-    private List<Check> checks;
+    private static final String PASSED = "passed";
+    private static final String FAILED = "failed";
+    private final String attrID;
+    private final String attrStatus;
+    private final List<Check> checks;
 
     /**
      * Creates rule model for the validation report
@@ -20,23 +21,26 @@ public class Rule {
      * @param attrID - id of the rule
      * @param checks - list of performed checks of this rule
      */
-    public Rule(String attrID, List<Check> checks) {
+    public Rule(final String attrID, final List<Check> checks) {
         this.attrID = attrID;
 
-        String status = "passed";
+        String status = PASSED;
 
         if (checks != null) {
             for (Check check : checks) {
-                if (check != null && check.getAttrStatus().equals("failed")) {
-                    status = "failed";
+                if (check != null && FAILED.equals(check.getAttrStatus())) {
+                    status = FAILED;
                 }
             }
         }
 
         this.attrStatus = status;
 
-        this.attrChecks = checks == null ? 0 : checks.size();
-        this.checks = checks;
+        if (checks == null) {
+            this.checks = Collections.emptyList();
+        } else {
+            this.checks =  Collections.unmodifiableList(checks);
+        }
     }
 
     /**
@@ -57,7 +61,7 @@ public class Rule {
      * @return number of checks for this rule
      */
     public int getAttrChecks() {
-        return attrChecks;
+        return this.checks.size();
     }
 
     /**

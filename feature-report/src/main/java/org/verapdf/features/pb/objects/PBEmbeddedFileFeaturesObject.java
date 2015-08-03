@@ -91,15 +91,14 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
                     ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
                 }
 
-                FeatureTreeNode node = PBCreateNodeHelper.addNotEmptyNode("checkSum", ef.getCheckSum(), root);
+                PBCreateNodeHelper.addNotEmptyNode("checkSum", ef.getCheckSum(), root);
                 PBCreateNodeHelper.addNotEmptyNode("size", String.valueOf(ef.getSize()), root);
             }
 
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.EMBEDDED_FILE, root);
             return root;
-        } else {
-            return null;
         }
+        return null;
     }
 
     private static String getFilters(List<COSName> list) {
@@ -114,8 +113,7 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
             }
 
             return builder.toString().trim();
-        } else {
-            return null;
         }
+        return null;
     }
 }

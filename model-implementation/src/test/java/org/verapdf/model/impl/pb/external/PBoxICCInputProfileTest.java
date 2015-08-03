@@ -1,14 +1,13 @@
 package org.verapdf.model.impl.pb.external;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.verapdf.model.external.ICCProfile;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -21,8 +20,9 @@ public class PBoxICCInputProfileTest extends PBoxICCProfileTest {
 	private static ByteArrayInputStream inputStream;
 
 	@BeforeClass
-	public static void setUp() throws IOException, URISyntaxException {
-		expectedType = "ICCInputProfile";
+	public static void setUp() throws IOException {
+		expectedType = TYPES.contains(PBoxICCInputProfile.ICC_INPUT_PROFILE_TYPE) ?
+																PBoxICCInputProfile.ICC_INPUT_PROFILE_TYPE : null;
 		expectedID = null;
 
 		setUpActualObject();

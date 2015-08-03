@@ -10,94 +10,119 @@ import org.verapdf.model.coslayer.CosStream;
  */
 public class PBCosStream extends PBCosDict implements CosStream {
 
-	public PBCosStream(COSStream stream) {
-		super(stream);
-		setType("CosStream");
-	}
+    /** Type name for PBCosStream */
+    public static final String COS_STREAM_TYPE = "CosStream";
 
-	/**
-	 * length of the stream
-	 */
-	@Override
-	public Long getLength() {
-		COSBase number = ((COSStream) this.baseObject).getDictionaryObject(COSName.LENGTH);
-		return number instanceof COSNumber ? Long.valueOf(((COSNumber) number).longValue()) : null;
-	}
+    private final Long length;
+    private final Long originalLength;
+    private final String filters;
+    private final String fileSpec;
+    private final String fFilter;
+    private final String fDecodeParams;
+    private final boolean isSpacingPDFACompliant;
 
-	/**
-	 * concatenated (white space separated) names of all filters
-	 */
-	@Override
-	public String getfilters() {
-		COSBase base = ((COSStream) baseObject).getFilters();
-		return getFilters(base);
-	}
+    public PBCosStream(COSStream stream) {
+        super(stream, COS_STREAM_TYPE);
+        this.length = parseLength(stream);
+        this.originalLength = stream.getOriginLength();
+        this.filters = parseFilters(stream.getFilters());
+        this.fileSpec = stream.getItem("F") != null ? stream.getItem("F")
+                .toString() : null;
+        this.fFilter = parseFilters(stream
+                .getDictionaryObject(COSName.F_FILTER));
+        this.fDecodeParams = stream.getItem("FDecodeParms") != null ? stream
+                .getItem("FDecodeParms").toString() : null;
+        this.isSpacingPDFACompliant = stream.getStreamSpacingsComplyPDFA()
+                .booleanValue()
+                && stream.getEndStreamSpacingsComplyPDFA().booleanValue();
+    }
 
-	private String getFilters(COSBase base) {
-		StringBuilder filters = new StringBuilder();
+    /**
+     * length of the stream
+     */
+    @Override
+    public Long getLength() {
+        return this.length;
+    }
 
-		if (base == null) {
-			return null;
-		} else if (base instanceof COSName) {
-			return ((COSName) base).getName();
-		} else if (base instanceof COSArray) {
-			for (COSBase filter : ((COSArray) base)) {
-				if (filter instanceof COSName) {
-					filters.append(((COSName) filter).getName()).append(" ");
-				} else {
-					throw new IllegalArgumentException("Can`t find filters for stream");
-				}
-			}
-		} else {
-			throw new IllegalArgumentException("Not the corresponding type for filters");
-		}
-		// need to discard last white space
-		return filters.substring(0, filters.length() - 1);
-	}
+    /**
+     * concatenated (white space separated) names of all filters
+     */
+    @Override
+    public String getfilters() {
+        return this.filters;
+    }
 
-	/**
-	 * @return string representation of file specification if its present
-	 */
-	@Override
-	public String getF() {
-		COSBase fileSpecification = ((COSStream) baseObject).getItem("F");
-		return fileSpecification != null ? fileSpecification.toString() : null;
-	}
+    /**
+     * @return string representation of file specification if its present
+     */
+    @Override
+    public String getF() {
+        return this.fileSpec;
+    }
 
-	/**
-	 * @return string representation of filters for external file
-	 */
-	@Override
-	public String getFFilter() {
-		COSBase base = ((COSStream) baseObject).getDictionaryObject(COSName.F_FILTER);
-		return getFilters(base);
-	}
+    /**
+     * @return string representation of filters for external file
+     */
+    @Override
+    public String getFFilter() {
+        return this.fFilter;
+    }
 
-	/**
-	 * @return string representation of decode parameters for filters applied to external file
-	 */
-	@Override
-	public String getFDecodeParms() {
-		COSBase fDecodeParms = ((COSStream) baseObject).getItem("FDecodeParms");
-		return fDecodeParms != null ? fDecodeParms.toString() : null;
-	}
+    /**
+     * @return string representation of decode parameters for filters applied to
+     *         external file
+     */
+    @Override
+    public String getFDecodeParms() {
+        return this.fDecodeParams;
+    }
 
-	/**
-	 * true if the spacing around stream / endstream complies with the PDF/A requirements
-	 */
-	@Override
-	public Boolean getspacingCompliesPDFA() {
-		return ((COSStream) baseObject).getStreamSpacingsComplyPDFA() &&
-				((COSStream) baseObject).getEndStreamSpacingsComplyPDFA();
-	}
+    /**
+     * true if the spacing around stream / endstream complies with the PDF/A
+     * requirements
+     */
+    @Override
+    public Boolean getspacingCompliesPDFA() {
+        return Boolean.valueOf(this.isSpacingPDFACompliant);
+    }
 
-	/**
-	 * true if the value of Length key matches the actual length of the stream
-	 */
-	@Override
-	public Boolean getisLengthCorrect() {
-		Long keyValue = getLength();
-		Long realValue = ((COSStream) baseObject).getOriginLength();
-		return Boolean.valueOf(keyValue != null && keyValue.equals(realValue));
-	}
+    /**
+     * true if the value of Length key matches the actual length of the stream
+     */
+    @Override
+    public Boolean getisLengthCorrect() {
+        return Boolean.valueOf(this.length != null
+                && this.length.equals(this.originalLength));
+    }
+
+    private static Long parseLength(final COSStream stream) {
+        COSBase number = stream.getDictionaryObject(COSName.LENGTH);
+        return number instanceof COSNumber ? Long.valueOf(((COSNumber) number)
+                .longValue()) : null;
+    }
+
+    private static String parseFilters(COSBase base) {
+        StringBuilder filters = new StringBuilder();
+
+        if (base == null) {
+            return null;
+        } else if (base instanceof COSName) {
+            return ((COSName) base).getName();
+        } else if (base instanceof COSArray) {
+            for (COSBase filter : (COSArray) base) {
+                if (filter instanceof COSName) {
+                    filters.append(((COSName) filter).getName()).append(" ");
+                } else {
+                    throw new IllegalArgumentException(
+                            "Can`t find filters for stream");
+                }
+            }
+        } else {
+            throw new IllegalArgumentException(
+                    "Not the corresponding type for filters");
+        }
+        // need to discard last white space
+        return filters.substring(0, filters.length() - 1);
+    }
 }

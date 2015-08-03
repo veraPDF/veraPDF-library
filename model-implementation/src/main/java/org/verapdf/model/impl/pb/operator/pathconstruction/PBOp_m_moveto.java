@@ -16,22 +16,15 @@ public class PBOp_m_moveto extends PBOpPathConstruction implements Op_m_moveto {
     public static final String POINT = "point";
 
     public PBOp_m_moveto(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_M_MOVETO_TYPE);
+        super(arguments, OP_M_MOVETO_TYPE);
     }
 
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-        List<? extends org.verapdf.model.baselayer.Object> list;
-
-        switch (link) {
-            case POINT:
-                list = this.getPoint();
-                break;
-            default: list = super.getLinkedObjects(link);
+        if (POINT.equals(link)) {
+            return this.getPoint();
         }
-
-        return list;
+        return super.getLinkedObjects(link);
     }
 
     private List<CosReal> getPoint() {

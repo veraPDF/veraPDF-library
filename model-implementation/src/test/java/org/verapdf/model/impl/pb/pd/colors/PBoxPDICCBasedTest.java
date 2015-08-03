@@ -22,7 +22,7 @@ public class PBoxPDICCBasedTest extends PBoxPDColorSpaceTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
-		expectedType = PBoxPDICCBased.ICC_BASED_TYPE;
+		expectedType = TYPES.contains(PBoxPDICCBased.ICC_BASED_TYPE) ? PBoxPDICCBased.ICC_BASED_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);

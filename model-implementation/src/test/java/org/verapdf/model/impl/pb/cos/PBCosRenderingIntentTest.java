@@ -13,15 +13,16 @@ public class PBCosRenderingIntentTest extends PBCosNameTest {
 
 	@BeforeClass
 	public static void setUp() {
-		expectedType = "CosRenderingIntent";
+		expectedType = TYPES.contains(PBCosRenderingIntent.COS_RENDERING_INTENT_TYPE) ?
+															PBCosRenderingIntent.COS_RENDERING_INTENT_TYPE : null;
 		expectedID = null;
 
-		expected = new ArrayList<>(1);
-		actual = new ArrayList<>(1);
+		expectedNames = new ArrayList<>(1);
+		actualNames = new ArrayList<>(1);
 
 		String string = RenderingIntent.PERCEPTUAL.stringValue();
 		COSName pdfName = COSName.getPDFName(string);
-		expected.add(pdfName);
-		actual.add(new PBCosRenderingIntent(pdfName));
+		expectedNames.add(pdfName);
+		actualNames.add(new PBCosRenderingIntent(pdfName));
 	}
 }

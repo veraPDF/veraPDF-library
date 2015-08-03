@@ -14,12 +14,17 @@ import java.util.List;
 /**
  * @author Timur Kamalov
  */
-public abstract class PBOpPathConstruction extends PBOperator implements OpPathConstruction {
+public abstract class PBOpPathConstruction extends PBOperator implements
+        OpPathConstruction {
 
-	public static final String CONTROL_POINTS = "controlPoints";
+    public static final String CONTROL_POINTS = "controlPoints";
 
-	public PBOpPathConstruction(List<COSBase> arguments) {
+    public PBOpPathConstruction(List<COSBase> arguments) {
         super(arguments);
+    }
+
+    public PBOpPathConstruction(List<COSBase> arguments, final String opType) {
+        super(arguments, opType);
     }
 
     protected List<CosReal> getListOfReals() {

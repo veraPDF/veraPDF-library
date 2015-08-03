@@ -1,7 +1,6 @@
 package org.verapdf.model.impl.pb.pd;
 
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,7 +21,7 @@ public class PBoxPDActionTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = PBoxPDAction.ACTION_TYPE;
+		expectedType = TYPES.contains(PBoxPDAction.ACTION_TYPE) ? PBoxPDAction.ACTION_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
@@ -45,12 +44,4 @@ public class PBoxPDActionTest extends BaseTest {
 		}
 	}
 
-	@AfterClass
-	public static void tearDown() throws IOException {
-		expectedType = null;
-		expectedID = null;
-		actual = null;
-
-		document.close();
-	}
 }

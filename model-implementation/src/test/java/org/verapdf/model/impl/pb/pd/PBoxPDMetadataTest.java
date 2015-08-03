@@ -1,6 +1,5 @@
 package org.verapdf.model.impl.pb.pd;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,11 +20,11 @@ public class PBoxPDMetadataTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = "PDMetadata";
+		expectedType = TYPES.contains(PBoxPDMetadata.METADATA_TYPE) ? PBoxPDMetadata.METADATA_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
-		actual = new PBoxPDMetadata(document.getDocumentCatalog().getMetadata(), true);
+		actual = new PBoxPDMetadata(document.getDocumentCatalog().getMetadata(), Boolean.TRUE);
 	}
 
 	@Test
@@ -53,12 +52,4 @@ public class PBoxPDMetadataTest extends BaseTest {
 		}
 	}
 
-	@AfterClass
-	public static void tearDown() throws IOException {
-		expectedType = null;
-		expectedID = null;
-		actual = null;
-
-		document.close();
-	}
 }

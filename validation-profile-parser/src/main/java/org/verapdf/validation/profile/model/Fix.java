@@ -6,11 +6,10 @@ package org.verapdf.validation.profile.model;
  * @author Maksim Bezrukov
  */
 public class Fix {
-    private String attrID;
-
-    private String description;
-    private FixInfo info;
-    private FixError error;
+    private final String attrID;
+    private final String description;
+    private final FixInfo info;
+    private final FixError error;
 
     /**
      * Creates fix model
@@ -20,7 +19,7 @@ public class Fix {
      * @param info        - info of the fix
      * @param error       - error of the fix
      */
-    public Fix(String attrID, String description, FixInfo info, FixError error) {
+    public Fix(final String attrID, final String description, final FixInfo info, final FixError error) {
         this.attrID = attrID;
         this.description = description;
         this.info = info;

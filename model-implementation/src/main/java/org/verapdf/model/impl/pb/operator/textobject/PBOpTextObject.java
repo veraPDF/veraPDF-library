@@ -9,13 +9,12 @@ import java.util.List;
 /**
  * @author Timur Kamalov
  */
-public class PBOpTextObject extends PBOperator implements OpTextObject{
+public class PBOpTextObject extends PBOperator implements OpTextObject {
 
-	public static final String OP_TEXT_OBJECT_TYPE = "OpTextObject";
+    public static final String OP_TEXT_OBJECT_TYPE = "OpTextObject";
 
-	public PBOpTextObject(List<COSBase> arguments) {
-		super(arguments);
-		setType(OP_TEXT_OBJECT_TYPE);
-	}
+    public PBOpTextObject(List<COSBase> arguments) {
+        super(arguments, OP_TEXT_OBJECT_TYPE);
+    }
 
 }

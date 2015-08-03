@@ -63,9 +63,8 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTPUTINTENT, root);
 
             return root;
-        } else {
-            return null;
         }
+        return null;
     }
 
     private void addSubtype(FeaturesCollection collection, FeatureTreeNode root) throws FeaturesTreeNodeException {

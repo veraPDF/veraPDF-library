@@ -6,8 +6,8 @@ package org.verapdf.validation.report.model;
  * @author Maksim Bezrukov
  */
 public class Profile {
-    private String name;
-    private String hash;
+    private final String name;
+    private final String hash;
 
     /**
      * Creates model of an information about used profile
@@ -15,7 +15,7 @@ public class Profile {
      * @param name - name of the validation profile
      * @param hash - hash code of the validation profile
      */
-    public Profile(String name, String hash) {
+    public Profile(final String name, final String hash) {
         this.name = name;
         this.hash = hash;
     }

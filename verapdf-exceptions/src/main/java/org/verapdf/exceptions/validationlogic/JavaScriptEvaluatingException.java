@@ -10,6 +10,11 @@ import org.verapdf.exceptions.VeraPDFException;
 public class JavaScriptEvaluatingException extends VeraPDFException {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = 5571156673319325176L;
+
+    /**
      * Constructs new JavaScriptEvaluatingException
      */
     public JavaScriptEvaluatingException() {

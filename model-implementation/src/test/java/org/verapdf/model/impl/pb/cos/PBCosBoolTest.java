@@ -15,7 +15,7 @@ public class PBCosBoolTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        expectedType = "CosBool";
+        expectedType = TYPES.contains(PBCosBool.COS_BOOLTYPE) ? PBCosBool.COS_BOOLTYPE : null;
         expectedID = null;
 
         COSBoolean bool = COSBoolean.getBoolean(Boolean.TRUE);

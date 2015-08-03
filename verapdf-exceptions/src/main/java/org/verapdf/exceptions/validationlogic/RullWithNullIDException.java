@@ -10,6 +10,11 @@ import org.verapdf.exceptions.VeraPDFException;
 public class RullWithNullIDException extends VeraPDFException {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = 4029891805328060539L;
+
+    /**
      * Constructs new RullWithNullIDException
      */
     public RullWithNullIDException() {

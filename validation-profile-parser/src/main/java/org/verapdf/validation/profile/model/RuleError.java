@@ -8,8 +8,8 @@ import java.util.List;
  * @author Maksim Bezrukov
  */
 public class RuleError {
-    private String message;
-    private List<String> argument;
+    private final String message;
+    private final List<String> argument;
 
     /**
      * Creates new  rule error model.
@@ -17,7 +17,7 @@ public class RuleError {
      * @param message  - error message
      * @param argument - list of arguments for the message
      */
-    public RuleError(String message, List<String> argument) {
+    public RuleError(final String message, final List<String> argument) {
         this.message = message;
         this.argument = argument;
     }

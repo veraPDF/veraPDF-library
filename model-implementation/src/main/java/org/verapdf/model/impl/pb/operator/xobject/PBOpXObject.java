@@ -15,4 +15,8 @@ public abstract class PBOpXObject extends PBOperator implements OpXObject {
         super(arguments);
     }
 
+    public PBOpXObject(List<COSBase> arguments, final String opType) {
+        super(arguments, opType);
+    }
+
 }

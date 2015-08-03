@@ -1,5 +1,10 @@
 package org.verapdf.model.impl.pb.cos;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.List;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -11,11 +16,6 @@ import org.verapdf.model.coslayer.CosTrailer;
 import org.verapdf.model.coslayer.CosXRef;
 import org.verapdf.model.impl.BaseTest;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.List;
-
 /**
  * @author Evgeniy Muravitskiy
  */
@@ -25,20 +25,20 @@ public class PBCosDocumentTest extends BaseTest {
 
     private static final Long expectedNumberOfIndirects = Long.valueOf(17);
     private static final Long expectedSizeOfDocument = Long.valueOf(9437);
-	private static final Double expectedDocumentVersion = Double.valueOf(1.4);
+	private static final double expectedDocumentVersion = 1.4;
     private static final String[] expectedIDS = new String[]{"D6CF927DCF82444068EB69A5914F8070",
             "A2A7539F7C71DEBB6A4A6B418235962D"};
 
 
     @BeforeClass
     public static void setUp() throws URISyntaxException, IOException {
-        expectedType = "CosDocument";
+        expectedType = TYPES.contains(PBCosDocument.COS_DOCUMENT_TYPE) ? PBCosDocument.COS_DOCUMENT_TYPE : null;
         expectedID = null;
 
         String fileAbsolutePath = getSystemIndependentPath(FILE_RELATIVE_PATH);
         final File file = new File(fileAbsolutePath);
-        try (PDDocument document = PDDocument.load(file, Boolean.FALSE, Boolean.TRUE)) {
-            actual = new PBCosDocument(document, file.length());
+        try (PDDocument doc = PDDocument.load(file, false, true)) {
+            actual = new PBCosDocument(doc, file.length());
         }
     }
 
@@ -49,7 +49,7 @@ public class PBCosDocumentTest extends BaseTest {
 
 	@Test
 	public void testVersionMethod() {
-		Assert.assertEquals(expectedDocumentVersion, ((CosDocument) actual).getversion(), 0.01);
+		Assert.assertEquals(expectedDocumentVersion, ((CosDocument) actual).getversion().doubleValue(), 0.01);
 	}
 
     @Test
@@ -59,22 +59,22 @@ public class PBCosDocumentTest extends BaseTest {
 
     @Test
     public void testBinaryHeaderMethod() {
-        Assert.assertFalse(((CosDocument) actual).getbinaryHeaderComplyPDFA());
+        Assert.assertFalse(((CosDocument) actual).getbinaryHeaderComplyPDFA().booleanValue());
     }
 
     @Test
     public void testPDFHeaderMethod() {
-        Assert.assertTrue(((CosDocument) actual).getpdfHeaderCompliesPDFA());
+        Assert.assertTrue(((CosDocument) actual).getpdfHeaderCompliesPDFA().booleanValue());
     }
 
     @Test
     public void testOptionalContentMethod() {
-        Assert.assertFalse(((CosDocument) actual).getisOptionalContentPresent());
+        Assert.assertFalse(((CosDocument) actual).getisOptionalContentPresent().booleanValue());
     }
 
     @Test
     public void testEOFMethod() {
-        Assert.assertTrue(((CosDocument) actual).geteofCompliesPDFA());
+        Assert.assertTrue(((CosDocument) actual).geteofCompliesPDFA().booleanValue());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class PBCosDocumentTest extends BaseTest {
     }
 
     // problems with code symbols
-    private String getExpectedID(int index) {
+    private static String getExpectedID(int index) {
         StringBuilder builder = new StringBuilder(16);
         for (int i = 0; i < expectedIDS[index].length(); i += 2) {
             builder.append((char) Integer.parseInt(expectedIDS[index].substring(i, i + 2), 16));
@@ -106,12 +106,12 @@ public class PBCosDocumentTest extends BaseTest {
 
     @Test
     public void testIsLinearized() {
-        Assert.assertFalse(((CosDocument) actual).getisLinearized());
+        Assert.assertFalse(((CosDocument) actual).getisLinearized().booleanValue());
     }
 
     @Test
     public void testInfoMatchXMP() {
-        Assert.assertTrue(((CosDocument) actual).getdoesInfoMatchXMP());
+        Assert.assertTrue(((CosDocument) actual).getdoesInfoMatchXMP().booleanValue());
     }
 
     @Test
@@ -133,10 +133,10 @@ public class PBCosDocumentTest extends BaseTest {
 
     @Test
     public void testDocumentLink() {
-        List<? extends Object> document = actual.getLinkedObjects(PBCosDocument.DOCUMENT);
-        Assert.assertEquals(1, document.size());
-        Assert.assertTrue(document.get(0) != null);
-        Assert.assertTrue(document.get(0) instanceof org.verapdf.model.pdlayer.PDDocument);
+        List<? extends Object> doc = actual.getLinkedObjects(PBCosDocument.DOCUMENT);
+        Assert.assertEquals(1, doc.size());
+        Assert.assertTrue(doc.get(0) != null);
+        Assert.assertTrue(doc.get(0) instanceof org.verapdf.model.pdlayer.PDDocument);
     }
 
     @Test

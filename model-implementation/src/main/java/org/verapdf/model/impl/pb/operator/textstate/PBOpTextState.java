@@ -11,12 +11,15 @@ import java.util.List;
  */
 public class PBOpTextState extends PBOperator implements OpTextState {
 
-	public static final String OP_TEXT_STATE_TYPE = "OpTextState";
+    public static final String OP_TEXT_STATE_TYPE = "OpTextState";
 
-	// TODO : implement all operators
-	public PBOpTextState(List<COSBase> arguments) {
-		super(arguments);
-		setType(OP_TEXT_STATE_TYPE);
-	}
+    // TODO : implement all operators
+    public PBOpTextState(List<COSBase> arguments) {
+        this(arguments, OP_TEXT_STATE_TYPE);
+    }
+
+    public PBOpTextState(List<COSBase> arguments, final String opType) {
+        super(arguments, opType);
+    }
 
 }

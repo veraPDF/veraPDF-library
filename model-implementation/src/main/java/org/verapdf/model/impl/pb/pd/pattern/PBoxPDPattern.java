@@ -9,8 +9,8 @@ import org.verapdf.model.pdlayer.PDPattern;
  */
 public class PBoxPDPattern extends PBoxPDColorSpace implements PDPattern {
 
-	protected PBoxPDPattern(PDAbstractPattern simplePDObject) {
-		super(simplePDObject);
-	}
+    protected PBoxPDPattern(PDAbstractPattern simplePDObject) {
+        super(simplePDObject);
+    }
 
 }

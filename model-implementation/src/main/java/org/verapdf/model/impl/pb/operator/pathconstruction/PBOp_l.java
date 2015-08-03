@@ -16,22 +16,15 @@ public class PBOp_l extends PBOpPathConstruction implements Op_l {
     public static final String POINT = "point";
 
     public PBOp_l(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_L_TYPE);
+        super(arguments, OP_L_TYPE);
     }
 
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-        List<? extends org.verapdf.model.baselayer.Object> list;
-
-        switch (link) {
-            case POINT:
-                list = this.getPoint();
-                break;
-            default: list = super.getLinkedObjects(link);
+        if (POINT.equals(link)) {
+            return this.getPoint();
         }
-
-        return list;
+        return super.getLinkedObjects(link);
     }
 
     private List<CosReal> getPoint() {

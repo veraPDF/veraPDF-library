@@ -16,38 +16,29 @@ import java.util.List;
 public class PBOp_gs extends PBOpGeneralGS implements Op_gs {
 
     public static final String OP_GS_TYPE = "Op_gs";
-	public static final String EXT_G_STATE = "extGState";
-	public static final Integer MAX_NUMBER_OF_STATES = Integer.valueOf(1);
+    public static final String EXT_G_STATE = "extGState";
+    public static final int MAX_NUMBER_OF_STATES = 1;
 
-	private PDExtendedGraphicsState extGState;
+    private PDExtendedGraphicsState extGState;
 
-	public PBOp_gs(List<COSBase> arguments, PDExtendedGraphicsState extGState) {
-        super(arguments);
-		this.extGState = extGState;
-        setType(OP_GS_TYPE);
+    public PBOp_gs(List<COSBase> arguments, PDExtendedGraphicsState extGState) {
+        super(arguments, OP_GS_TYPE);
+        this.extGState = extGState;
     }
 
-	@Override
-	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
+    @Override
+    public List<? extends Object> getLinkedObjects(String link) {
+        if (EXT_G_STATE.equals(link)) {
+            return this.getExtGState();
+        }
+        return super.getLinkedObjects(link);
+    }
 
-		switch (link) {
-			case EXT_G_STATE:
-				list = this.getExtGState();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
-
-		return list;
-	}
-
-	private List<PDExtGState> getExtGState() {
-		List<PDExtGState> extGStates = new ArrayList<>(MAX_NUMBER_OF_STATES);
-		if (extGState != null) {
-			extGStates.add(new PBoxPDExtGState(extGState));
-		}
-		return extGStates;
-	}
+    private List<PDExtGState> getExtGState() {
+        List<PDExtGState> extGStates = new ArrayList<>(MAX_NUMBER_OF_STATES);
+        if (extGState != null) {
+            extGStates.add(new PBoxPDExtGState(extGState));
+        }
+        return extGStates;
+    }
 }

@@ -84,10 +84,12 @@ public final class XMPHelper {
         predifinedSchemas.add(NSXAPS);
     }
 
+    private XMPHelper() {
+        // Disable default constructor
+    }
+
     public static boolean isPredifinedSchema(String schemaNS) {
         return predifinedSchemas.contains(schemaNS);
     }
 
-    private XMPHelper() {
-    }
 }

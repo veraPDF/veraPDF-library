@@ -14,9 +14,11 @@ import java.io.IOException;
  */
 public final class PBCosVisitor implements ICOSVisitor {
 
-    private final static PBCosVisitor visitor = new PBCosVisitor();
+    private static final PBCosVisitor visitor = new PBCosVisitor();
 
-    private PBCosVisitor(){}
+    private PBCosVisitor() {
+        // Disable default constructor
+    }
 
     public static PBCosVisitor getInstance() {
         return visitor;
@@ -119,7 +121,7 @@ public final class PBCosVisitor implements ICOSVisitor {
      * @see PBCosIndirect
      * @see COSObject#accept(ICOSVisitor)
      */
-    public Object visitFromObject(COSObject obj) throws IOException {
+    public static Object visitFromObject(COSObject obj) {
         return new PBCosIndirect(obj);
     }
 }

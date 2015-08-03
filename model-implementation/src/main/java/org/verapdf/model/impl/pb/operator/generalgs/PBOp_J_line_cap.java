@@ -18,30 +18,24 @@ public class PBOp_J_line_cap extends PBOpGeneralGS implements Op_J_line_cap {
     public static final String LINE_CAP = "lineCap";
 
     public PBOp_J_line_cap(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_J_LINE_CAP_TYPE);
+        super(arguments, OP_J_LINE_CAP_TYPE);
     }
 
     @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-        List<? extends org.verapdf.model.baselayer.Object> list;
-
-        switch (link) {
-            case LINE_CAP:
-                list = this.getLineCap();
-                break;
-            default:
-				list = super.getLinkedObjects(link);
-				break;
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+            String link) {
+        if (LINE_CAP.equals(link)) {
+            return this.getLineCap();
         }
-
-        return list;
+        return super.getLinkedObjects(link);
     }
 
     private List<CosInteger> getLineCap() {
         List<CosInteger> list = new ArrayList<>(OPERANDS_COUNT);
-        if (!this.arguments.isEmpty() && this.arguments.get(arguments.size() - 1) instanceof COSInteger) {
-            list.add(new PBCosInteger((COSInteger) this.arguments.get(arguments.size() - 1)));
+        if (!this.arguments.isEmpty()
+                && this.arguments.get(arguments.size() - 1) instanceof COSInteger) {
+            list.add(new PBCosInteger((COSInteger) this.arguments.get(arguments
+                    .size() - 1)));
         }
         return list;
     }

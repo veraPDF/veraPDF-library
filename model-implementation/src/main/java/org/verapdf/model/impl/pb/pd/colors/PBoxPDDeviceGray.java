@@ -7,17 +7,18 @@ import org.verapdf.model.pdlayer.PDDeviceGray;
  */
 public class PBoxPDDeviceGray extends PBoxPDColorSpace implements PDDeviceGray {
 
-	private static final PDDeviceGray INSTANCE =
-			new PBoxPDDeviceGray(org.apache.pdfbox.pdmodel.graphics.color.PDDeviceGray.INSTANCE);
+    private static final PDDeviceGray INSTANCE = new PBoxPDDeviceGray(
+            org.apache.pdfbox.pdmodel.graphics.color.PDDeviceGray.INSTANCE);
 
-	public static final String DEVICE_CMYK_TYPE = "PDDeviceGray";
+    public static final String DEVICE_CMYK_TYPE = "PDDeviceGray";
 
-	private PBoxPDDeviceGray(org.apache.pdfbox.pdmodel.graphics.color.PDDeviceGray simplePDObject) {
-		super(simplePDObject);
-		setType(DEVICE_CMYK_TYPE);
-	}
+    private PBoxPDDeviceGray(
+            org.apache.pdfbox.pdmodel.graphics.color.PDDeviceGray simplePDObject) {
+        super(simplePDObject);
+        setType(DEVICE_CMYK_TYPE);
+    }
 
-	public static PDDeviceGray getInstance() {
-		return INSTANCE;
-	}
+    public static PDDeviceGray getInstance() {
+        return INSTANCE;
+    }
 }

@@ -25,17 +25,18 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 
     public static final String IMAGE_CS = "imageCS";
     public static final String ALTERNATES = "Alternates";
-	public static final String INTENT = "Intent";
-	public static final String X_IMAGE_TYPE = "PDXImage";
+    public static final String INTENT = "Intent";
+    public static final String X_IMAGE_TYPE = "PDXImage";
 
-	public PBoxPDXImage(PDImageXObject simplePDObject) {
+    public PBoxPDXImage(PDImageXObject simplePDObject) {
         super(simplePDObject);
         setType(X_IMAGE_TYPE);
     }
 
     @Override
     public Boolean getInterpolate() {
-        return Boolean.valueOf(((PDImageXObject) simplePDObject).getInterpolate());
+        return Boolean.valueOf(((PDImageXObject) simplePDObject)
+                .getInterpolate());
     }
 
     @Override
@@ -43,49 +44,56 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
         List<? extends Object> list;
 
         switch (link) {
-			case INTENT:
-				list = this.getIntent();
-				break;
-            case IMAGE_CS:
-                list = this.getImageCS();
-                break;
-            case ALTERNATES:
-                list = this.getAlternates();
-                break;
-            default:
-                list = super.getLinkedObjects(link);
-                break;
+        case INTENT:
+            list = this.getIntent();
+            break;
+        case IMAGE_CS:
+            list = this.getImageCS();
+            break;
+        case ALTERNATES:
+            list = this.getAlternates();
+            break;
+        default:
+            list = super.getLinkedObjects(link);
+            break;
         }
 
         return list;
     }
 
-	private List<CosRenderingIntent> getIntent() {
-		List<CosRenderingIntent> intents = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-		COSStream imageStream = ((PDImageXObject) simplePDObject).getCOSStream();
-		COSName intent = imageStream.getCOSName(COSName.getPDFName(INTENT));
-		if (intent != null) {
-			intents.add(new PBCosRenderingIntent(intent));
-		}
-		return intents;
-	}
+    private List<CosRenderingIntent> getIntent() {
+        List<CosRenderingIntent> intents = new ArrayList<>(
+                MAX_NUMBER_OF_ELEMENTS);
+        COSStream imageStream = ((PDImageXObject) simplePDObject)
+                .getCOSStream();
+        COSName intent = imageStream.getCOSName(COSName.getPDFName(INTENT));
+        if (intent != null) {
+            intents.add(new PBCosRenderingIntent(intent));
+        }
+        return intents;
+    }
 
-	private List<PDColorSpace> getImageCS() {
+    private List<PDColorSpace> getImageCS() {
         List<PDColorSpace> colorSpaces = new ArrayList<>(1);
         try {
-            PDColorSpace buffer = ColorSpaceFactory.getColorSpace(((PDImageXObject) simplePDObject).getColorSpace());
+            PDColorSpace buffer = ColorSpaceFactory
+                    .getColorSpace(((PDImageXObject) simplePDObject)
+                            .getColorSpace());
             if (buffer != null) {
                 colorSpaces.add(buffer);
             }
         } catch (IOException e) {
-            LOGGER.error("Problems with color space obtaining from Image XObject. " + e.getMessage(), e);
+            LOGGER.error(
+                    "Problems with color space obtaining from Image XObject. "
+                            + e.getMessage(), e);
         }
         return colorSpaces;
     }
 
     private List<PDXImage> getAlternates() {
         final List<PDXImage> alternates = new ArrayList<>();
-        final COSStream imageStream = ((PDImageXObject) simplePDObject).getCOSStream();
+        final COSStream imageStream = ((PDImageXObject) simplePDObject)
+                .getCOSStream();
         COSBase buffer = imageStream.getItem(COSName.getPDFName(ALTERNATES));
         addAlternates(alternates, buffer);
         return alternates;
@@ -94,8 +102,8 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     private void addAlternates(List<PDXImage> alternates, COSBase buffer) {
         if (buffer instanceof COSArray) {
             for (COSBase element : (COSArray) buffer) {
-				addAlternate(alternates, element);
-			}
+                addAlternate(alternates, element);
+            }
         } else if (buffer instanceof COSObject) {
             addAlternates(alternates, ((COSObject) buffer).getObject());
         }
@@ -104,16 +112,21 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     private void addAlternate(List<PDXImage> alternates, COSBase buffer) {
         COSDictionary alternate = getDictionary(buffer);
         if (alternate != null) {
-            COSStream alternatesImages = (COSStream) alternate.getDictionaryObject(COSName.IMAGE);
+            COSStream alternatesImages = (COSStream) alternate
+                    .getDictionaryObject(COSName.IMAGE);
             try {
                 if (alternatesImages != null) {
                     final PDStream stream = new PDStream(alternatesImages);
-                    final PDResources res = ((PDImageXObject) simplePDObject).getResources();
-                    PDImageXObject imageXObject = new PDImageXObject(stream, res);
+                    final PDResources res = ((PDImageXObject) simplePDObject)
+                            .getResources();
+                    PDImageXObject imageXObject = new PDImageXObject(stream,
+                            res);
                     alternates.add(new PBoxPDXImage(imageXObject));
                 }
             } catch (IOException e) {
-                LOGGER.error("Error in creating Alternate XObject. " + e.getMessage(), e);
+                LOGGER.error(
+                        "Error in creating Alternate XObject. "
+                                + e.getMessage(), e);
             }
         }
     }

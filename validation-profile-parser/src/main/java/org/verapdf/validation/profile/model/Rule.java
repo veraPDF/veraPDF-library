@@ -1,5 +1,6 @@
 package org.verapdf.validation.profile.model;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,15 +9,14 @@ import java.util.List;
  * @author Maksim Bezrukov
  */
 public class Rule {
-    private String attrID;
-    private String attrObject;
-
-    private String description;
-    private String test;
-    private RuleError ruleError;
-    private boolean isHasError;
-    private Reference reference;
-    private List<Fix> fix;
+    private final String attrID;
+    private final String attrObject;
+    private final String description;
+    private final String test;
+    private final RuleError ruleError;
+    private final boolean isHasError;
+    private final Reference reference;
+    private final List<Fix> fixes;
 
     /**
      * Creates new rule model.
@@ -38,7 +38,7 @@ public class Rule {
         this.isHasError = isHasError;
         this.test = test;
         this.reference = reference;
-        this.fix = fix;
+        this.fixes = Collections.unmodifiableList(fix);
     }
 
     /**
@@ -95,7 +95,7 @@ public class Rule {
     /**
      * @return List of classes which represents fixes in this rule.
      */
-    public List<Fix> getFix() {
-        return fix;
+    public List<Fix> getFixes() {
+        return fixes;
     }
 }

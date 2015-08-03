@@ -13,8 +13,7 @@ public class PBOp_EMC extends PBOpMarkedContent implements Op_EMC {
     public static final String OP_EMC_TYPE = "Op_EMC";
 
     public PBOp_EMC(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_EMC_TYPE);
+        super(arguments, OP_EMC_TYPE);
     }
 
 }

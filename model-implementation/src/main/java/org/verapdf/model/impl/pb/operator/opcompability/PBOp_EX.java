@@ -13,8 +13,7 @@ public class PBOp_EX extends PBOpCompability implements Op_EX {
     public static final String OP_EX_TYPE = "Op_EX";
 
     public PBOp_EX(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_EX_TYPE);
+        super(arguments, OP_EX_TYPE);
     }
 
 }
