@@ -12,32 +12,23 @@ import java.util.List;
  */
 public class PBOp_w_line_width extends PBOpGeneralGS implements Op_w_line_width {
 
-	public static final String LINE_WIDTH = "lineWidth";
+    public static final String LINE_WIDTH = "lineWidth";
     public static final String OP_W_LINE_WIDTH_TYPE = "Op_w_line_width";
 
-	public PBOp_w_line_width(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_W_LINE_WIDTH_TYPE);
+    public PBOp_w_line_width(List<COSBase> arguments) {
+        super(arguments, OP_W_LINE_WIDTH_TYPE);
     }
 
-	@Override
-	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
+    @Override
+    public List<? extends Object> getLinkedObjects(String link) {
+        if (LINE_WIDTH.equals(link)) {
+            return this.getLineWidth();
+        }
+        return super.getLinkedObjects(link);
+    }
 
-		switch (link) {
-			case LINE_WIDTH:
-				list = this.getLineWidth();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
-
-		return list;
-	}
-
-	private List<CosReal> getLineWidth() {
-		return this.getLastReal();
-	}
+    private List<CosReal> getLineWidth() {
+        return this.getLastReal();
+    }
 
 }

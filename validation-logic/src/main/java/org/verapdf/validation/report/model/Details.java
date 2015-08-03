@@ -1,5 +1,6 @@
 package org.verapdf.validation.report.model;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,8 +9,8 @@ import java.util.List;
  * @author Maksim Bezrukov
  */
 public class Details {
-    private List<Rule> rules;
-    private List<String> warnings;
+    private final List<Rule> rules;
+    private final List<String> warnings;
 
     /**
      * Creates Details model
@@ -17,9 +18,9 @@ public class Details {
      * @param rules    list of checked rules
      * @param warnings - list of warnings
      */
-    public Details(List<Rule> rules, List<String> warnings) {
-        this.rules = rules;
-        this.warnings = warnings;
+    public Details(final List<Rule> rules, final List<String> warnings) {
+        this.rules = Collections.unmodifiableList(rules);
+        this.warnings = Collections.unmodifiableList(warnings);
     }
 
     /**

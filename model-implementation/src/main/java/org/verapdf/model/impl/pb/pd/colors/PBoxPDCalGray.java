@@ -9,8 +9,9 @@ import org.verapdf.model.pdlayer.PDCalGray;
  */
 public class PBoxPDCalGray extends PBoxPDColorSpace implements PDCalGray {
 
-	public PBoxPDCalGray(org.apache.pdfbox.pdmodel.graphics.color.PDCalGray simplePDObject) {
-		super(simplePDObject);
-		setType("PDCalGray");
-	}
+    public PBoxPDCalGray(
+            org.apache.pdfbox.pdmodel.graphics.color.PDCalGray simplePDObject) {
+        super(simplePDObject);
+        setType("PDCalGray");
+    }
 }

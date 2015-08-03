@@ -42,7 +42,7 @@ public class PBoxPDContentStream extends PBoxPDObject implements
             PDFStreamParser streamParser = new PDFStreamParser(
                     contentStream.getContentStream(), true);
             streamParser.parse();
-            result = OperatorFactory.parseOperators(streamParser.getTokens(),
+            result = OperatorFactory.operatorsFromTokens(streamParser.getTokens(),
                     contentStream.getResources());
         } catch (IOException e) {
             LOGGER.error(

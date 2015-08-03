@@ -41,7 +41,7 @@ public class MiniLogoPanel extends JPanel {
             final BufferedImage image = ImageIO.read(is);
             Icon icon = new Icon() {
 
-                private static final double scale = 0.15;
+                private static final double SCALE = 0.15;
 
                 @Override
                 public void paintIcon(Component c, Graphics g, int x, int y) {
@@ -50,12 +50,12 @@ public class MiniLogoPanel extends JPanel {
 
                 @Override
                 public int getIconWidth() {
-                    return (int) (image.getWidth() * scale);
+                    return (int) (image.getWidth() * SCALE);
                 }
 
                 @Override
                 public int getIconHeight() {
-                    return (int) (image.getHeight() * scale);
+                    return (int) (image.getHeight() * SCALE);
                 }
             };
             label.setIcon(icon);

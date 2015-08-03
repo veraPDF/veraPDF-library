@@ -26,6 +26,12 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
         this.pdfBoxFont = font;
     }
 
+    protected PBOpTextShow(List<COSBase> arguments,
+            org.apache.pdfbox.pdmodel.font.PDFont font, final String opType) {
+        super(arguments, opType);
+        this.pdfBoxFont = font;
+    }
+
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
             String link) {
@@ -47,8 +53,7 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     }
 
     private static List<? extends Object> getUsedGlyphs() {
-        List<? extends Object> list = new ArrayList<>();
-        return list;
+        return new ArrayList<>();
     }
 
 }

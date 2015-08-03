@@ -36,7 +36,7 @@ class AboutPanel extends JPanel {
      */
     private static final long serialVersionUID = -4011118192914036216L;
 
-    static final Logger LOGGER = Logger
+    private static final Logger LOGGER = Logger
             .getLogger(AboutPanel.class);
 
     private JButton okButton;

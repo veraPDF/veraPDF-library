@@ -13,10 +13,6 @@ public final class ErrorsHelper {
 
     private static final Logger LOGGER = Logger.getLogger(ErrorsHelper.class);
 
-    private ErrorsHelper() {
-        // Disable default public constructor
-    }
-
     public static final String ERRORID = "errorId";
     public static final String ID = "id";
 
@@ -54,6 +50,10 @@ public final class ErrorsHelper {
 
     public static final String ANNOTATIONPARSER_ID = "annotparsrerr1";
     public static final String ANNOTATIONPARSER_MESSAGE = "Unknown annotation type.";
+
+    private ErrorsHelper() {
+        // Disable default public constructor
+    }
 
     /**
      * Adds an error to a {@link FeaturesCollection}

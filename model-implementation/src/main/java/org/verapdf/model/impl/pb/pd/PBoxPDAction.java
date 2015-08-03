@@ -14,49 +14,42 @@ import java.util.List;
  */
 public class PBoxPDAction extends PBoxPDObject implements PDAction {
 
-	public static final String NEXT = "Next";
-	public static final String ACTION_TYPE = "PDAction";
+    public static final String NEXT = "Next";
+    public static final String ACTION_TYPE = "PDAction";
 
-	public PBoxPDAction(org.apache.pdfbox.pdmodel.interactive.action.PDAction simplePDObject) {
+    public PBoxPDAction(
+            org.apache.pdfbox.pdmodel.interactive.action.PDAction simplePDObject) {
         super(simplePDObject);
         setType(ACTION_TYPE);
     }
 
     @Override
     public String getS() {
-        return ((org.apache.pdfbox.pdmodel.interactive.action.PDAction) simplePDObject).getSubType();
+        return ((org.apache.pdfbox.pdmodel.interactive.action.PDAction) simplePDObject)
+                .getSubType();
     }
 
-	@Override
-	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
+    @Override
+    public List<? extends Object> getLinkedObjects(String link) {
+        if (NEXT.equals(link)) {
+            return getNext();
+        }
+        return super.getLinkedObjects(link);
+    }
 
-		switch (link) {
-			case NEXT:
-				list = getNext();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
-
-		return list;
-	}
-
-	private List<PDAction> getNext() {
-		List<PDAction> actions = new ArrayList<>();
-		List<org.apache.pdfbox.pdmodel.interactive.action.PDAction> next =
-				((org.apache.pdfbox.pdmodel.interactive.action.PDAction) simplePDObject).getNext();
-		if (next != null) {
-			for (org.apache.pdfbox.pdmodel.interactive.action.PDAction action : next) {
-				if (action instanceof PDActionNamed) {
-					actions.add(new PBoxPDNamedAction((PDActionNamed) action));
-				} else if (action != null) {
-					actions.add(new PBoxPDAction(action));
-				}
-			}
-		}
-		return actions;
-	}
+    private List<PDAction> getNext() {
+        List<PDAction> actions = new ArrayList<>();
+        List<org.apache.pdfbox.pdmodel.interactive.action.PDAction> next = ((org.apache.pdfbox.pdmodel.interactive.action.PDAction) simplePDObject)
+                .getNext();
+        if (next != null) {
+            for (org.apache.pdfbox.pdmodel.interactive.action.PDAction action : next) {
+                if (action instanceof PDActionNamed) {
+                    actions.add(new PBoxPDNamedAction((PDActionNamed) action));
+                } else if (action != null) {
+                    actions.add(new PBoxPDAction(action));
+                }
+            }
+        }
+        return actions;
+    }
 }
-

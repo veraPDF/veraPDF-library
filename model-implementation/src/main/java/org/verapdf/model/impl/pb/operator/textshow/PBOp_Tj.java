@@ -9,12 +9,11 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class PBOp_Tj extends PBOpStringTextShow implements Op_Tj{
+public class PBOp_Tj extends PBOpStringTextShow implements Op_Tj {
 
-	public static final String OP_TJ_TYPE = "Op_Tj";
+    public static final String OP_TJ_TYPE = "Op_Tj";
 
-	public PBOp_Tj(List<COSBase> arguments, PDFont font) {
-		super(arguments, font);
-		setType(OP_TJ_TYPE);
-	}
+    public PBOp_Tj(List<COSBase> arguments, PDFont font) {
+        super(arguments, font, OP_TJ_TYPE);
+    }
 }

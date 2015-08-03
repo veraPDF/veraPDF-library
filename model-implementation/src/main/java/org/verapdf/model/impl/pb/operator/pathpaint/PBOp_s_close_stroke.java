@@ -9,14 +9,15 @@ import org.verapdf.model.operator.Op_s_close_stroke;
 /**
  * @author Timur Kamalov
  */
-public class PBOp_s_close_stroke extends PBOpStrokePaint implements Op_s_close_stroke {
+public class PBOp_s_close_stroke extends PBOpStrokePaint implements
+        Op_s_close_stroke {
 
     public static final String OP_S_CLOSE_STROKE_TYPE = "Op_s_close_stroke";
 
-	public PBOp_s_close_stroke(List<COSBase> arguments, org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace pbColorSpace,
-							   PDAbstractPattern pattern) {
-        super(arguments, pattern, pbColorSpace, null);
-        setType(OP_S_CLOSE_STROKE_TYPE);
+    public PBOp_s_close_stroke(List<COSBase> arguments,
+            org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace pbColorSpace,
+            PDAbstractPattern pattern) {
+        super(arguments, pattern, pbColorSpace, null, OP_S_CLOSE_STROKE_TYPE);
     }
 
 }

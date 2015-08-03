@@ -22,9 +22,8 @@ public class PBOp_gs extends PBOpGeneralGS implements Op_gs {
     private PDExtendedGraphicsState extGState;
 
     public PBOp_gs(List<COSBase> arguments, PDExtendedGraphicsState extGState) {
-        super(arguments);
+        super(arguments, OP_GS_TYPE);
         this.extGState = extGState;
-        setType(OP_GS_TYPE);
     }
 
     @Override

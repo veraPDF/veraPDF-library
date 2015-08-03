@@ -28,31 +28,6 @@ public class PDFValidationApplication extends JFrame {
     private AboutPanel aboutPanel;
 
     /**
-     * Starting point of the gui
-     *
-     * @param args - command line arguments
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    UIManager.setLookAndFeel(
-                            UIManager.getSystemLookAndFeelClassName());
-                } catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException e) {
-                    LOGGER.error("Exception in configuring UI manager: ", e);
-                }
-                try {
-                    PDFValidationApplication frame = new PDFValidationApplication();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    LOGGER.error("Exception: ", e);
-                }
-            }
-        });
-    }
-
-    /**
      * Creates the frame.
      */
     public PDFValidationApplication() {
@@ -108,6 +83,31 @@ public class PDFValidationApplication extends JFrame {
             LOGGER.error("Exception in loading xml or html image: ", e);
         }
         contentPane.add(checkerPanel);
+    }
+
+    /**
+     * Starting point of the gui
+     *
+     * @param args - command line arguments
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    UIManager.setLookAndFeel(
+                            UIManager.getSystemLookAndFeelClassName());
+                } catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException e) {
+                    LOGGER.error("Exception in configuring UI manager: ", e);
+                }
+                try {
+                    PDFValidationApplication frame = new PDFValidationApplication();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    LOGGER.error("Exception: ", e);
+                }
+            }
+        });
     }
 
 }

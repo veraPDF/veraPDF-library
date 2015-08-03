@@ -15,8 +15,7 @@ public class PBOp_F_fill_obsolete extends PBOpFillPaint implements Op_F_fill_obs
     public static final String OP_F_FILL_OBSOLETE_TYPE = "Op_F_fill_obsolete";
 
     public PBOp_F_fill_obsolete(List<COSBase> arguments, PDColorSpace colorSpace, PDAbstractPattern pattern) {
-        super(arguments, pattern, null, colorSpace);
-        setType(OP_F_FILL_OBSOLETE_TYPE);
+        super(arguments, pattern, null, colorSpace, OP_F_FILL_OBSOLETE_TYPE);
     }
 
 }

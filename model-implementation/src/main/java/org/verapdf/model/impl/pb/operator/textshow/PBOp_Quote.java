@@ -9,12 +9,11 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class PBOp_Quote extends PBOpStringTextShow implements Op_Quote{
+public class PBOp_Quote extends PBOpStringTextShow implements Op_Quote {
 
-	public static final String OP_QUOTE_TYPE = "Op_Quote";
+    public static final String OP_QUOTE_TYPE = "Op_Quote";
 
-	public PBOp_Quote(List<COSBase> arguments, PDFont font) {
-		super(arguments, font);
-		setType(OP_QUOTE_TYPE);
-	}
+    public PBOp_Quote(List<COSBase> arguments, PDFont font) {
+        super(arguments, font, OP_QUOTE_TYPE);
+    }
 }

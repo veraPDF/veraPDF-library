@@ -22,7 +22,7 @@ public class PBoxICCOutputProfileTest extends PBoxICCProfileTest {
 
 	private static final String expectedS = "GTS_PDFA1";
 
-	private static PDDocument document;
+	private static PDDocument doc;
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
@@ -37,8 +37,8 @@ public class PBoxICCOutputProfileTest extends PBoxICCProfileTest {
 		String fileAbsolutePath = getSystemIndependentPath(PBCosDocumentTest.FILE_RELATIVE_PATH);
 		File file = new File(fileAbsolutePath);
 
-		document = PDDocument.load(file, false, true);
-		PDOutputIntent outputIntent = document.getDocumentCatalog().getOutputIntents().get(0);
+		doc = PDDocument.load(file, false, true);
+		PDOutputIntent outputIntent = doc.getDocumentCatalog().getOutputIntents().get(0);
 		InputStream unfilteredStream = outputIntent.getDestOutputIntent().getUnfilteredStream();
 		Long N = Long.valueOf(outputIntent.getDestOutputIntent().getLong(COSName.N));
 		actual = new PBoxICCOutputProfile(unfilteredStream, COSName.GTS_PDFA1.getName(), N);
@@ -55,6 +55,6 @@ public class PBoxICCOutputProfileTest extends PBoxICCProfileTest {
 		expectedID = null;
 		actual = null;
 
-		document.close();
+		doc.close();
 	}
 }

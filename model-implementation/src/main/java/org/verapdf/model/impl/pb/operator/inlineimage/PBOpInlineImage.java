@@ -15,36 +15,31 @@ import java.util.List;
  */
 public class PBOpInlineImage extends PBOperator implements OpInlineImage {
 
-	public static final String OP_INLINE_IMAGE = "OpInlineImage";
+    public static final String OP_INLINE_IMAGE = "OpInlineImage";
 
-	public static final String INLINE_IMAGE_DICTIONARY = "inlineImageDictionary";
+    public static final String INLINE_IMAGE_DICTIONARY = "inlineImageDictionary";
 
-	public PBOpInlineImage(List<COSBase> arguments) {
-		super(arguments);
-		setType(OP_INLINE_IMAGE);
-	}
+    public PBOpInlineImage(List<COSBase> arguments) {
+        super(arguments, OP_INLINE_IMAGE);
+    }
 
-	@Override
-	public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-		List<? extends org.verapdf.model.baselayer.Object> list;
+    @Override
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+            String link) {
+        if (INLINE_IMAGE_DICTIONARY.equals(link)) {
+            return this.getInlineImageDictionary();
+        }
+        return super.getLinkedObjects(link);
+    }
 
-		switch (link) {
-			case INLINE_IMAGE_DICTIONARY:
-				list = this.getInlineImageDictionary();
-				break;
-			default: list = super.getLinkedObjects(link);
-		}
+    private List<CosDict> getInlineImageDictionary() {
+        List<CosDict> list = new ArrayList<>();
+        if (!this.arguments.isEmpty()
+                && this.arguments.get(0) instanceof COSDictionary) {
+            list.add(new PBCosDict((COSDictionary) this.arguments.get(0)));
+        }
 
-		return list;
-	}
-
-	private List<CosDict> getInlineImageDictionary() {
-		List<CosDict> list = new ArrayList<>();
-		if (!this.arguments.isEmpty() && this.arguments.get(0) instanceof COSDictionary) {
-			list.add(new PBCosDict((COSDictionary) this.arguments.get(0)));
-		}
-
-		return list;
-	}
+        return list;
+    }
 
 }

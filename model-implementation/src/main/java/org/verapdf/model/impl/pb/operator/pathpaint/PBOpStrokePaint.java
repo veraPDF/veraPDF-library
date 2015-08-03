@@ -19,6 +19,12 @@ public abstract class PBOpStrokePaint extends PBOpPathPaint {
         super(arguments, pattern, pbStrokeColorSpace, pbFillColorSpace);
     }
 
+    protected PBOpStrokePaint(List<COSBase> arguments,
+            PDAbstractPattern pattern, PDColorSpace pbStrokeColorSpace,
+            PDColorSpace pbFillColorSpace, final String opType) {
+        super(arguments, pattern, pbStrokeColorSpace, pbFillColorSpace, opType);
+    }
+
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
             String link) {

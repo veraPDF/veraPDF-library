@@ -15,8 +15,7 @@ public class PBOp_f_fill extends PBOpFillPaint implements Op_f_fill {
     private static final String OP_F_FILL_TYPE = "Op_f_fill";
 
     public PBOp_f_fill(List<COSBase> arguments, PDColorSpace pbColorSpace, PDAbstractPattern pattern) {
-        super(arguments, pattern, null, pbColorSpace);
-        setType(OP_F_FILL_TYPE);
+        super(arguments, pattern, null, pbColorSpace, OP_F_FILL_TYPE);
     }
 
 }

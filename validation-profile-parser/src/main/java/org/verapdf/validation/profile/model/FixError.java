@@ -6,14 +6,14 @@ package org.verapdf.validation.profile.model;
  * @author Maksim Bezrukov
  */
 public class FixError {
-    private String message;
+    private final String message;
 
     /**
      * Creates fix error model.
      *
      * @param message - message of the fix error.
      */
-    public FixError(String message) {
+    public FixError(final String message) {
         this.message = message;
     }
 

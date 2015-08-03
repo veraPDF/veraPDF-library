@@ -6,10 +6,10 @@ package org.verapdf.validation.report.model;
  * @author Maksim Bezrukov
  */
 public class Result {
-    private boolean compliant;
-    private String statement;
-    private Summary summary;
-    private Details details;
+    private final boolean compliant;
+    private final String statement;
+    private final Summary summary;
+    private final Details details;
 
     /**
      * Creates result model by given details

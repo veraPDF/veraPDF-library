@@ -21,9 +21,8 @@ public class PBOp_sh extends PBOpShading implements Op_sh {
 
     public PBOp_sh(List<COSBase> arguments,
             org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading) {
-        super(arguments);
+        super(arguments, OP_SH_TYPE);
         this.shading = shading;
-        setType(OP_SH_TYPE);
     }
 
     @Override

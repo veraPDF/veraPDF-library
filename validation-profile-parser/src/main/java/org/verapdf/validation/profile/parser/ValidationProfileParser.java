@@ -21,6 +21,29 @@ import java.util.*;
  * @author Maksim Bezrukov
  */
 public final class ValidationProfileParser {
+    private static final String ARGUMENT = "argument";
+    private static final String CLAUSE = "clause";
+    private static final String CREATED = "created";
+    private static final String CREATOR = "creator";
+    private static final String DESCRIPTION = "description";
+    private static final String ERROR = "error";
+    private static final String FIX = "fix";
+    private static final String HASH = "hash";
+    private static final String ID = "id";
+    private static final String IMPORT = "import";
+    private static final String IMPORTS = "imports";
+    private static final String MESSAGE = "message";
+    private static final String MODEL = "model";
+    private static final String NAME = "name";
+    private static final String OBJECT = "object";
+    private static final String REFERENCE = "reference";
+    private static final String RULE = "rule";
+    private static final String RULES = "rules";
+    private static final String SPECIFICATION = "specification";
+    private static final String TEST = "test";
+    private static final String VARIABLES = "variables";
+    private static final String VARIABLE = "variable";
+    private static final String WARNING = "warning";
 
     private Set<String> profilesPaths;
     private ValidationProfile profile;
@@ -70,7 +93,7 @@ public final class ValidationProfileParser {
         Map<String, List<Rule>> rules = new HashMap<>();
         Map<String, List<Variable>> variables = new HashMap<>();
 
-        Node modelNode = root.getAttributes().getNamedItem("model");
+        Node modelNode = root.getAttributes().getNamedItem(MODEL);
 
         if (modelNode != null) {
             model = modelNode.getNodeValue();
@@ -83,31 +106,30 @@ public final class ValidationProfileParser {
             String childName = child.getNodeName();
 
             switch (childName) {
-            case "name":
+            case NAME:
                 name = child.getTextContent().trim();
                 break;
-            case "description":
+            case DESCRIPTION:
                 description = child.getTextContent().trim();
                 break;
-
-            case "creator":
+            case CREATOR:
                 creator = child.getTextContent().trim();
                 break;
-            case "created":
+            case CREATED:
                 created = child.getTextContent().trim();
                 break;
-            case "hash":
+            case HASH:
                 if (isSignCheckOn) {
                     hash = child.getTextContent().trim();
                 }
                 break;
-            case "imports":
+            case IMPORTS:
                 parseImports(resource, child, rules);
                 break;
-            case "rules":
+            case RULES:
                 parseRules(child, rules);
                 break;
-            case "variables":
+            case VARIABLES:
                 parseVariables(child, variables);
                 break;
             default:
@@ -129,7 +151,7 @@ public final class ValidationProfileParser {
         for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
 
-            if (!child.getNodeName().equals("import")) {
+            if (!child.getNodeName().equals(IMPORT)) {
                 continue;
             }
 
@@ -158,11 +180,11 @@ public final class ValidationProfileParser {
                 String name = child2.getNodeName();
 
                 switch (name) {
-                case "rules":
+                case RULES:
                     parseRules(child2, rules);
                     break;
 
-                case "imports":
+                case IMPORTS:
                     parseImports(newFile, child2, rules);
                     break;
 
@@ -180,7 +202,7 @@ public final class ValidationProfileParser {
 
         for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
-            if (child.getNodeName().equals("rule")) {
+            if (child.getNodeName().equals(RULE)) {
                 Rule rule = parseRule(child);
 
                 if (rulesMap.get(rule.getAttrObject()) == null) {
@@ -203,13 +225,13 @@ public final class ValidationProfileParser {
         Reference reference = null;
         List<Fix> fix = new ArrayList<>();
 
-        Node idNode = rule.getAttributes().getNamedItem("id");
+        Node idNode = rule.getAttributes().getNamedItem(ID);
 
         if (idNode != null) {
             id = idNode.getNodeValue();
         }
 
-        Node objectNode = rule.getAttributes().getNamedItem("object");
+        Node objectNode = rule.getAttributes().getNamedItem(OBJECT);
 
         if (objectNode != null) {
             object = objectNode.getNodeValue();
@@ -222,23 +244,23 @@ public final class ValidationProfileParser {
             String childName = child.getNodeName();
 
             switch (childName) {
-            case "description":
+            case DESCRIPTION:
                 description = child.getTextContent().trim();
                 break;
-            case "test":
+            case TEST:
                 test = child.getTextContent().trim();
                 break;
-            case "error":
+            case ERROR:
                 ruleError = parseRuleError(child);
                 isHasError = true;
                 break;
-            case "warning":
+            case WARNING:
                 ruleError = parseRuleError(child);
                 break;
-            case "reference":
+            case REFERENCE:
                 reference = parseReference(child);
                 break;
-            case "fix":
+            case FIX:
                 fix.add(parseFix(child));
                 break;
             default:
@@ -259,7 +281,7 @@ public final class ValidationProfileParser {
 
         for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
-            if (child.getNodeName().equals("variable")) {
+            if (child.getNodeName().equals(VARIABLE)) {
                 Variable variable = parseVariable(child);
 
                 if (variablesMap.get(variable.getAttrObject()) == null) {
@@ -326,11 +348,11 @@ public final class ValidationProfileParser {
             String childName = child.getNodeName();
 
             switch (childName) {
-            case "message":
+            case MESSAGE:
                 message = child.getTextContent().trim();
                 break;
 
-            case "argument":
+            case ARGUMENT:
                 argument.add(child.getTextContent().trim());
                 break;
 
@@ -357,15 +379,15 @@ public final class ValidationProfileParser {
             String childName = child.getNodeName();
 
             switch (childName) {
-            case "specification":
+            case SPECIFICATION:
                 specification = child.getTextContent().trim();
                 break;
 
-            case "clause":
+            case CLAUSE:
                 clause = child.getTextContent().trim();
                 break;
 
-            case "reference":
+            case REFERENCE:
                 references.add(parseReference(child));
                 break;
 

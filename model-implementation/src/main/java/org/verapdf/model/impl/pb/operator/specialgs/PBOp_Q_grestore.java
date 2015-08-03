@@ -13,8 +13,7 @@ public class PBOp_Q_grestore extends PBOpSpecialGS implements Op_Q_grestore {
     public static final String OP_Q_GRESTORE_TYPE = "Op_Q_grestore";
 
     public PBOp_Q_grestore(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_Q_GRESTORE_TYPE);
+        super(arguments, OP_Q_GRESTORE_TYPE);
     }
 
 }

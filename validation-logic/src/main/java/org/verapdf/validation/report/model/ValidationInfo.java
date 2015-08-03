@@ -6,8 +6,8 @@ package org.verapdf.validation.report.model;
  * @author Maksim Bezrukov
  */
 public class ValidationInfo {
-    private Profile profile;
-    private Result result;
+    private final Profile profile;
+    private final Result result;
 
     /**
      * Creates model of validation report
@@ -15,7 +15,7 @@ public class ValidationInfo {
      * @param profile - model of an information about used validation profile
      * @param result  - model of the result of the validation
      */
-    public ValidationInfo(Profile profile, Result result) {
+    public ValidationInfo(final Profile profile, final Result result) {
         this.profile = profile;
         this.result = result;
     }

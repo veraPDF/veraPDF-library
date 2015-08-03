@@ -11,73 +11,76 @@ import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
  */
 public class GraphicState implements Cloneable {
 
-	private PDColorSpace fillColorSpace = PDDeviceGray.INSTANCE;
-	private PDColorSpace strokeColorSpace = PDDeviceGray.INSTANCE;
-	private PDAbstractPattern pattern = null;
-	private RenderingMode renderingMode = RenderingMode.FILL;
-	private PDFont font;
+    private PDColorSpace fillColorSpace = PDDeviceGray.INSTANCE;
+    private PDColorSpace strokeColorSpace = PDDeviceGray.INSTANCE;
+    private PDAbstractPattern pattern = null;
+    private RenderingMode renderingMode = RenderingMode.FILL;
+    private PDFont font;
 
-	public PDColorSpace getFillColorSpace() {
-		return fillColorSpace;
-	}
+    public PDColorSpace getFillColorSpace() {
+        return fillColorSpace;
+    }
 
-	public void setFillColorSpace(PDColorSpace fillColorSpace) {
-		this.fillColorSpace = fillColorSpace;
-	}
+    public void setFillColorSpace(PDColorSpace fillColorSpace) {
+        this.fillColorSpace = fillColorSpace;
+    }
 
-	public PDColorSpace getStrokeColorSpace() {
-		return strokeColorSpace;
-	}
+    public PDColorSpace getStrokeColorSpace() {
+        return strokeColorSpace;
+    }
 
-	public void setStrokeColorSpace(PDColorSpace strokeColorSpace) {
-		this.strokeColorSpace = strokeColorSpace;
-	}
+    public void setStrokeColorSpace(PDColorSpace strokeColorSpace) {
+        this.strokeColorSpace = strokeColorSpace;
+    }
 
-	public PDAbstractPattern getPattern() {
-		return pattern;
-	}
+    public PDAbstractPattern getPattern() {
+        return pattern;
+    }
 
-	public void setPattern(PDAbstractPattern pattern) {
-		this.pattern = pattern;
-	}
+    public void setPattern(PDAbstractPattern pattern) {
+        this.pattern = pattern;
+    }
 
-	public RenderingMode getRenderingMode() {
-		return renderingMode;
-	}
+    public RenderingMode getRenderingMode() {
+        return renderingMode;
+    }
 
-	public void setRenderingMode(RenderingMode renderingMode) {
-		this.renderingMode = renderingMode;
-	}
+    public void setRenderingMode(RenderingMode renderingMode) {
+        this.renderingMode = renderingMode;
+    }
 
-	public PDFont getFont() {
-		return font;
-	}
+    public PDFont getFont() {
+        return font;
+    }
 
-	public void setFont(PDFont font) {
-		this.font = font;
-	}
+    public void setFont(PDFont font) {
+        this.font = font;
+    }
 
-	/**
-	 * This method will copy properties from passed graphic state to current object
-	 * @param graphicState graphic state to copy properties from
-	 */
-	public void copyProperties(GraphicState graphicState) {
-		this.fillColorSpace = graphicState.getFillColorSpace();
-		this.strokeColorSpace = graphicState.getStrokeColorSpace();
-		this.pattern = graphicState.getPattern();
-		this.renderingMode = graphicState.getRenderingMode();
-		this.font = graphicState.getFont();
-	}
+    /**
+     * This method will copy properties from passed graphic state to current
+     * object
+     * 
+     * @param graphicState
+     *            graphic state to copy properties from
+     */
+    public void copyProperties(GraphicState graphicState) {
+        this.fillColorSpace = graphicState.getFillColorSpace();
+        this.strokeColorSpace = graphicState.getStrokeColorSpace();
+        this.pattern = graphicState.getPattern();
+        this.renderingMode = graphicState.getRenderingMode();
+        this.font = graphicState.getFont();
+    }
 
-	@Override
-	public GraphicState clone() {
-		GraphicState graphicState = new GraphicState();
-		graphicState.setFillColorSpace(this.getFillColorSpace());
-		graphicState.setStrokeColorSpace(this.getStrokeColorSpace());
-		graphicState.setPattern(this.getPattern());
-		graphicState.setRenderingMode(this.getRenderingMode());
-		graphicState.setFont(this.getFont());
-		return graphicState;
-	}
+    @Override
+    public GraphicState clone() {
+        GraphicState graphicState = new GraphicState();
+        graphicState.setFillColorSpace(this.getFillColorSpace());
+        graphicState.setStrokeColorSpace(this.getStrokeColorSpace());
+        graphicState.setPattern(this.getPattern());
+        graphicState.setRenderingMode(this.getRenderingMode());
+        graphicState.setFont(this.getFont());
+        return graphicState;
+    }
 
 }

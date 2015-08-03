@@ -83,7 +83,7 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
 
             Set<String> filters = getAllFilters();
 
-            if (filters.size() != 0) {
+            if (!filters.isEmpty()) {
                 FeatureTreeNode filtersNode = FeatureTreeNode.newChildInstance("filters", root);
 
                 for (String filter : filters) {

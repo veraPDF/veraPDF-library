@@ -15,5 +15,9 @@ public abstract class PBOpSpecialGS extends PBOperator implements OpSpecialGS {
         super(arguments);
     }
 
+    public PBOpSpecialGS(List<COSBase> arguments, String opType) {
+        super(arguments, opType);
+    }
+
 }
 

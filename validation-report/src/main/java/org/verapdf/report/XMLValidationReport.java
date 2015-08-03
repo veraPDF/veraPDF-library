@@ -174,7 +174,7 @@ public final class XMLValidationReport {
 
             if (check.getError().getMessage() != null) {
                 Element message = doc.createElement("message");
-                message.appendChild(doc.createTextNode(getFormattedMessage(check.getError().getMessage(), check.getError().getArgument())));
+                message.appendChild(doc.createTextNode(getFormattedMessage(check.getError().getMessage(), check.getError().getArguments())));
                 error.appendChild(message);
             }
 

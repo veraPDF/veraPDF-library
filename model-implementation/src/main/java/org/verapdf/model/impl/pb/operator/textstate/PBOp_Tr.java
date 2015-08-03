@@ -11,21 +11,20 @@ import java.util.List;
  */
 public class PBOp_Tr extends PBOpTextState implements Op_Tr {
 
-	public static final String OP_TR_TYPE = "Op_Tr";
+    public static final String OP_TR_TYPE = "Op_Tr";
 
-	public PBOp_Tr(List<COSBase> arguments) {
-		super(arguments);
-		setType(OP_TR_TYPE);
-	}
+    public PBOp_Tr(List<COSBase> arguments) {
+        super(arguments, OP_TR_TYPE);
+    }
 
-	@Override
-	public Long getrenderingMode() {
-		if (!arguments.isEmpty()) {
-			COSBase renderingMode = arguments.get(0);
-			if (renderingMode instanceof COSInteger) {
-				return Long.valueOf(((COSInteger) renderingMode).longValue());
-			}
-		}
-		return null;
-	}
+    @Override
+    public Long getrenderingMode() {
+        if (!arguments.isEmpty()) {
+            COSBase renderingMode = arguments.get(0);
+            if (renderingMode instanceof COSInteger) {
+                return Long.valueOf(((COSInteger) renderingMode).longValue());
+            }
+        }
+        return null;
+    }
 }

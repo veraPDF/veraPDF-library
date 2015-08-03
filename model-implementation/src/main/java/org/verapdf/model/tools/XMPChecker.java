@@ -17,20 +17,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class matches document information dictionary and xmp metadata
- * by comparing eight predefined fields:
+ * This class matches document information dictionary and xmp metadata by
+ * comparing eight predefined fields:
  * <ol>
- *     <li>Title (-> Title)</li>
- *     <li>Author (-> Creators)</li>
- *     <li>Producer (-> Producer)</li>
- *     <li>Creator (-> CreatorTool)</li>
- *     <li>Keywords (-> Keywords)</li>
- *     <li>Subject (-> Description)</li>
- *     <li>Creation Date (-> Create Date)</li>
- *     <li>Mod Date (-> Modify Date)</li>
+ * <li>Title (-> Title)</li>
+ * <li>Author (-> Creators)</li>
+ * <li>Producer (-> Producer)</li>
+ * <li>Creator (-> CreatorTool)</li>
+ * <li>Keywords (-> Keywords)</li>
+ * <li>Subject (-> Description)</li>
+ * <li>Creation Date (-> Create Date)</li>
+ * <li>Mod Date (-> Modify Date)</li>
  * </ol>
- * Property shouldn't be defined in xmp metadata if not present in
- * document information dictionary.
+ * Property shouldn't be defined in xmp metadata if not present in document
+ * information dictionary.
  *
  * @author Evgeniy Muravitskiy
  */
@@ -54,7 +54,9 @@ public final class XMPChecker {
 
     /**
      * Matches properties of document information dictionary and xmp metadata.
-     * @param document which will be tested
+     * 
+     * @param document
+     *            which will be tested
      * @return true if fields of xmp matches with fields of info dictionary
      */
     public static Boolean doesInfoMatchXMP(COSDocument document) {
@@ -67,9 +69,11 @@ public final class XMPChecker {
             COSStream meta = getMetadataDictionary(document);
             if (meta != null) {
                 DomXmpParser xmpParser = new DomXmpParser();
-                XMPMetadata metadata = xmpParser.parse(meta.getUnfilteredStream());
+                XMPMetadata metadata = xmpParser.parse(meta
+                        .getUnfilteredStream());
 
-                Map<String, Object> properties = new HashMap<>(MAX_REQUIRED_RECORDS);
+                Map<String, Object> properties = new HashMap<>(
+                        MAX_REQUIRED_RECORDS);
 
                 getTitleAuthorSubject(metadata, properties);
 
@@ -80,7 +84,9 @@ public final class XMPChecker {
                 return checkMatch(info, properties);
             }
         } catch (IOException e) {
-            LOGGER.error("Problems with document parsing or structure. " + e.getMessage(), e);
+            LOGGER.error(
+                    "Problems with document parsing or structure. "
+                            + e.getMessage(), e);
         } catch (XmpParsingException e) {
             LOGGER.error("Problems with XMP parsing. " + e.getMessage(), e);
         }
@@ -88,8 +94,10 @@ public final class XMPChecker {
         return Boolean.FALSE;
     }
 
-    private static COSStream getMetadataDictionary(COSDocument document) throws IOException {
-        final COSDictionary catalog = (COSDictionary) document.getCatalog().getObject();
+    private static COSStream getMetadataDictionary(COSDocument document)
+            throws IOException {
+        final COSDictionary catalog = (COSDictionary) document.getCatalog()
+                .getObject();
         final COSObject metaObj = (COSObject) catalog.getItem(COSName.METADATA);
         if (metaObj != null && metaObj.getObject() instanceof COSStream) {
             return (COSStream) metaObj.getObject();
@@ -98,7 +106,8 @@ public final class XMPChecker {
     }
 
     private static COSDictionary getInformationDictionary(COSDocument document) {
-        final COSObject info = (COSObject) document.getTrailer().getItem(COSName.INFO);
+        final COSObject info = (COSObject) document.getTrailer().getItem(
+                COSName.INFO);
         if (info != null) {
             if (info.getObject() instanceof COSDictionary) {
                 return (COSDictionary) info.getObject();
@@ -119,19 +128,22 @@ public final class XMPChecker {
         }
     }
 
-    private static void getTitleAuthorSubject(XMPMetadata metadata, Map<String, Object> properties) {
+    private static void getTitleAuthorSubject(XMPMetadata metadata,
+            Map<String, Object> properties) {
         DublinCoreSchema dc = metadata.getDublinCoreSchema();
         if (dc != null) {
             final List<String> buffer = dc.getCreators();
             putProperty(properties, TITLE, dc.getTitle());
             putProperty(properties, SUBJECT, dc.getDescription());
-			if (buffer != null) {
-				putProperty(properties, AUTHOR, buffer.toArray(new String[buffer.size()]));
-			}
+            if (buffer != null) {
+                putProperty(properties, AUTHOR,
+                        buffer.toArray(new String[buffer.size()]));
+            }
         }
     }
 
-    private static void getProducerKeywords(XMPMetadata metadata, Map<String, Object> properties) {
+    private static void getProducerKeywords(XMPMetadata metadata,
+            Map<String, Object> properties) {
         AdobePDFSchema pdf = metadata.getAdobePDFSchema();
         if (pdf != null) {
             putProperty(properties, KEYWORDS, pdf.getKeywords());
@@ -139,7 +151,8 @@ public final class XMPChecker {
         }
     }
 
-    private static void getCreatorAndDates(XMPMetadata metadata, Map<String, Object> properties) {
+    private static void getCreatorAndDates(XMPMetadata metadata,
+            Map<String, Object> properties) {
         XMPBasicSchema basic = metadata.getXMPBasicSchema();
         if (basic != null) {
             putProperty(properties, CREATOR, basic.getCreatorTool());
@@ -148,7 +161,8 @@ public final class XMPChecker {
         }
     }
 
-    private static void putProperty(Map<String, Object> properties, String key, String... values) {
+    private static void putProperty(Map<String, Object> properties, String key,
+            String... values) {
         if (values != null) {
             StringBuilder builder = new StringBuilder();
             for (String value : values) {
@@ -157,39 +171,46 @@ public final class XMPChecker {
                 }
             }
             if (builder.length() > 1) {
-                //need to discard last space
+                // need to discard last space
                 properties.put(key, builder.substring(0, builder.length() - 1));
             }
         }
     }
 
-    private static void putProperty(Map<String, Object> properties, String key, Calendar date) {
+    private static void putProperty(Map<String, Object> properties, String key,
+            Calendar date) {
         if (date != null) {
             properties.put(key, date);
         }
     }
 
-    private static Boolean checkMatch(COSDictionary info, Map<String, Object> properties) {
-        if ((checkProperty(info, properties, TITLE)).booleanValue() &&
-                (checkProperty(info, properties, SUBJECT)).booleanValue() &&
-                (checkProperty(info, properties, AUTHOR)).booleanValue() &&
-                (checkProperty(info, properties, KEYWORDS)).booleanValue() &&
-                (checkProperty(info, properties, PRODUCER)).booleanValue() &&
-                (checkProperty(info, properties, CREATOR)).booleanValue() &&
-                (checkProperty(info, properties, CREATION_DATE)).booleanValue() &&
-                (checkProperty(info, properties, MODIFICATION_DATE)).booleanValue()) {
+    private static Boolean checkMatch(COSDictionary info,
+            Map<String, Object> properties) {
+        if ((checkProperty(info, properties, TITLE)).booleanValue()
+                && (checkProperty(info, properties, SUBJECT)).booleanValue()
+                && (checkProperty(info, properties, AUTHOR)).booleanValue()
+                && (checkProperty(info, properties, KEYWORDS)).booleanValue()
+                && (checkProperty(info, properties, PRODUCER)).booleanValue()
+                && (checkProperty(info, properties, CREATOR)).booleanValue()
+                && (checkProperty(info, properties, CREATION_DATE))
+                        .booleanValue()
+                && (checkProperty(info, properties, MODIFICATION_DATE))
+                        .booleanValue()) {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
     }
 
-    private static Boolean checkProperty(COSDictionary info, Map<String, Object> properties, String checksRule) {
+    private static Boolean checkProperty(COSDictionary info,
+            Map<String, Object> properties, String checksRule) {
         final COSBase item = info.getItem(checksRule);
         if (item != null) {
             if (item instanceof COSString) {
-                return checkCOSStringProperty((COSString) item, properties, checksRule);
+                return checkCOSStringProperty((COSString) item, properties,
+                        checksRule);
             } else if (item instanceof COSObject) {
-                return deepPropertyCheck((COSObject) item, properties, checksRule);
+                return deepPropertyCheck((COSObject) item, properties,
+                        checksRule);
             }
         } else {
             return Boolean.TRUE;
@@ -197,30 +218,36 @@ public final class XMPChecker {
         return Boolean.FALSE;
     }
 
-    private static Boolean deepPropertyCheck(COSObject item, Map<String, Object> properties, String checksRule) {
+    private static Boolean deepPropertyCheck(COSObject item,
+            Map<String, Object> properties, String checksRule) {
         final COSBase external = item.getObject();
         if (external == null || external instanceof COSNull) {
             return Boolean.TRUE;
         } else if (external instanceof COSString) {
-            return checkCOSStringProperty((COSString) external, properties, checksRule);
+            return checkCOSStringProperty((COSString) external, properties,
+                    checksRule);
         } else if (external instanceof COSObject) {
-            return deepPropertyCheck((COSObject) external, properties, checksRule);
+            return deepPropertyCheck((COSObject) external, properties,
+                    checksRule);
         } else {
             return Boolean.FALSE;
         }
     }
 
-    private static Boolean checkCOSStringProperty(COSString string, Map<String, Object> properties, String checksRule) {
+    private static Boolean checkCOSStringProperty(COSString string,
+            Map<String, Object> properties, String checksRule) {
         final Object value = properties.get(checksRule);
         if (value != null) {
             if (value instanceof String) {
                 return Boolean.valueOf(value.equals(string.getASCII()));
             } else if (value instanceof Calendar) {
-                //DateConverter can parse as pdf date format as simple date format
+                // DateConverter can parse as pdf date format as simple date
+                // format
                 final String regex = "(D:)?(\\d\\d){2,7}(([+-](\\d\\d[']))(\\d\\d['])?)?";
                 if (string.getASCII().matches(regex)) {
                     final Calendar valueDate = DateConverter.toCalendar(string);
-                    return Boolean.valueOf(valueDate != null && valueDate.compareTo((Calendar) value) == 0);
+                    return Boolean.valueOf(valueDate != null
+                            && valueDate.compareTo((Calendar) value) == 0);
                 }
             }
         }

@@ -10,14 +10,15 @@ import java.util.List;
 /**
  * @author Timur Kamalov
  */
-public class PBOp_bstar_closepath_eofill_stroke extends PBOpFillAndStroke implements Op_bstar_closepath_eofill_stroke {
+public class PBOp_bstar_closepath_eofill_stroke extends PBOpFillAndStroke
+        implements Op_bstar_closepath_eofill_stroke {
 
     public static final String OP_BSTAR_CLOSEPATH_EOFILL_STROKE_TYPE = "Op_bstar_closepath_eofill_stroke";
 
-	public PBOp_bstar_closepath_eofill_stroke(List<COSBase> arguments, PDColorSpace strokeColorSpace,
-											  PDColorSpace fillColorSpace, PDAbstractPattern pattern) {
-		super(arguments, pattern, strokeColorSpace, fillColorSpace);
-		setType(OP_BSTAR_CLOSEPATH_EOFILL_STROKE_TYPE);
-	}
-
+    public PBOp_bstar_closepath_eofill_stroke(List<COSBase> arguments,
+            PDColorSpace strokeColorSpace, PDColorSpace fillColorSpace,
+            PDAbstractPattern pattern) {
+        super(arguments, pattern, strokeColorSpace, fillColorSpace,
+                OP_BSTAR_CLOSEPATH_EOFILL_STROKE_TYPE);
+    }
 }

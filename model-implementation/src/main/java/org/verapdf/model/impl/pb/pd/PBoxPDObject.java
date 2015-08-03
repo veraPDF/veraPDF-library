@@ -26,15 +26,15 @@ public class PBoxPDObject extends GenericModelObject implements PDObject {
     private String type = "PDObject";
     private String id;
 
-    public PBoxPDObject (COSObjectable simplePDObject) {
+    public PBoxPDObject(COSObjectable simplePDObject) {
         this.simplePDObject = simplePDObject;
     }
 
-    public PBoxPDObject (PDDocument document) {
+    public PBoxPDObject(PDDocument document) {
         this.document = document;
     }
 
-    public PBoxPDObject (PDContentStream contentStream) {
+    public PBoxPDObject(PDContentStream contentStream) {
         this.contentStream = contentStream;
     }
 
@@ -60,10 +60,11 @@ public class PBoxPDObject extends GenericModelObject implements PDObject {
         return id;
     }
 
-	protected void addAction(List<PDAction> actions, org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer) {
-		if (buffer != null) {
-			actions.add(buffer instanceof PDActionNamed ?
-					new PBoxPDNamedAction((PDActionNamed) buffer) : new PBoxPDAction(buffer));
-		}
-	}
+    protected void addAction(List<PDAction> actions,
+            org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer) {
+        if (buffer != null) {
+            actions.add(buffer instanceof PDActionNamed ? new PBoxPDNamedAction(
+                    (PDActionNamed) buffer) : new PBoxPDAction(buffer));
+        }
+    }
 }

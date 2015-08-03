@@ -6,11 +6,10 @@ package org.verapdf.validation.profile.model;
  * @author Maksim Bezrukov
  */
 public class Variable {
-    private String attrName;
-    private String attrObject;
-
-    private String defaultValue;
-    private String value;
+    private final String attrName;
+    private final String attrObject;
+    private final String defaultValue;
+    private final String value;
 
     /**
      * Creates variable model.
@@ -20,7 +19,7 @@ public class Variable {
      * @param defaultValue
      * @param value
      */
-    public Variable(String attrName, String attrObject, String defaultValue, String value) {
+    public Variable(final String attrName, final String attrObject, final String defaultValue, final String value) {
         this.attrName = attrName;
         this.attrObject = attrObject;
         this.defaultValue = defaultValue;

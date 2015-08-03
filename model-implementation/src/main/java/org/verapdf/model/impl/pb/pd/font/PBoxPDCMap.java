@@ -31,14 +31,12 @@ public class PBoxPDCMap extends PBoxPDObject implements PDCMap {
     }
 
     private static List<CMapFile> getEmbeddedFile() {
-        List<CMapFile> list = new ArrayList<>();
-        return list;
+        return new ArrayList<>();
     }
 
     @Override
     public String getCMapName() {
-        String cMapName = cMap.getName();
-        return cMapName;
+        return cMap.getName();
     }
 
 }
