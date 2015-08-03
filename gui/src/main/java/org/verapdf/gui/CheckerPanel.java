@@ -48,7 +48,7 @@ public class CheckerPanel extends JPanel {
      */
     private static final long serialVersionUID = 1290058869994329766L;
 
-    static final Logger LOGGER = Logger.getLogger(CheckerPanel.class);
+    private static final Logger LOGGER = Logger.getLogger(CheckerPanel.class);
 
     JFileChooser pdfChooser;
     JFileChooser xmlChooser;

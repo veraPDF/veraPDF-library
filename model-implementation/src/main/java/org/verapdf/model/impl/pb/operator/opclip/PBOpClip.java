@@ -15,4 +15,8 @@ public abstract class PBOpClip extends PBOperator implements OpClip {
         super(arguments);
     }
 
+    protected PBOpClip(List<COSBase> arguments, final String opType) {
+        super(arguments, opType);
+    }
+
 }

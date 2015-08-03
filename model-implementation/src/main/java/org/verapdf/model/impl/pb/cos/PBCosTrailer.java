@@ -21,7 +21,7 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
     /** Type name for PBCosTrailer */
     public static final String COS_TRAILER_TYPE = "CosTrailer";
 
-    public final static String CATALOG = "Catalog";
+    public static final String CATALOG = "Catalog";
 
     private final boolean isEncrypted;
     private final List<CosIndirect> catalog;

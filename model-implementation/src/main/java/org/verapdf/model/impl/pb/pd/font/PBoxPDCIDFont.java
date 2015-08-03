@@ -12,25 +12,28 @@ import org.verapdf.model.pdlayer.PDCIDFont;
  */
 public class PBoxPDCIDFont extends PBoxPDFont implements PDCIDFont {
 
-	public static final String CID_FONT_TYPE = "PDCIDFont";
-	public static final String IDENTITY = "Identity";
-	public static final String CUSTOM = "Custom";
+    public static final String CID_FONT_TYPE = "PDCIDFont";
+    public static final String IDENTITY = "Identity";
+    public static final String CUSTOM = "Custom";
 
-	public PBoxPDCIDFont(PDFontLike font) {
-		super(font);
-		setType(CID_FONT_TYPE);
-	}
+    public PBoxPDCIDFont(PDFontLike font) {
+        super(font);
+        setType(CID_FONT_TYPE);
+    }
 
-	@Override
-	public String getCIDToGIDMap() {
-		if (pdFontLike instanceof PDCIDFontType2) {
-			COSBase map = ((PDCIDFontType2) pdFontLike).getCOSObject().getDictionaryObject(COSName.CID_TO_GID_MAP);
-			if (map instanceof COSStream) {
-				return CUSTOM;
-			} if (map instanceof COSName && ((COSName) map).getName().equals(IDENTITY)) {
-				return IDENTITY;
-			}
-		}
-		return null;
-	}
+    @Override
+    public String getCIDToGIDMap() {
+        if (pdFontLike instanceof PDCIDFontType2) {
+            COSBase map = ((PDCIDFontType2) pdFontLike).getCOSObject()
+                    .getDictionaryObject(COSName.CID_TO_GID_MAP);
+            if (map instanceof COSStream) {
+                return CUSTOM;
+            }
+            if (map instanceof COSName
+                    && ((COSName) map).getName().equals(IDENTITY)) {
+                return IDENTITY;
+            }
+        }
+        return null;
+    }
 }

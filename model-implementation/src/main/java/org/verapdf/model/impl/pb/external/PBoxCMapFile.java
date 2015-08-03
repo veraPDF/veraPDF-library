@@ -7,10 +7,10 @@ import org.verapdf.model.external.CMapFile;
  */
 public class PBoxCMapFile extends PBoxExternal implements CMapFile {
 
-	public static final String CMAP_FILE_TYPE = "CMapFile";
+    public static final String CMAP_FILE_TYPE = "CMapFile";
 
-	public PBoxCMapFile() {
-		setType(CMAP_FILE_TYPE);
-	}
+    public PBoxCMapFile() {
+        setType(CMAP_FILE_TYPE);
+    }
 
 }

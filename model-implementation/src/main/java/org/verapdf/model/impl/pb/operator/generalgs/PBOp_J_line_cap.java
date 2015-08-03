@@ -18,8 +18,7 @@ public class PBOp_J_line_cap extends PBOpGeneralGS implements Op_J_line_cap {
     public static final String LINE_CAP = "lineCap";
 
     public PBOp_J_line_cap(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_J_LINE_CAP_TYPE);
+        super(arguments, OP_J_LINE_CAP_TYPE);
     }
 
     @Override

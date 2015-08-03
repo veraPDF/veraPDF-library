@@ -16,7 +16,9 @@ public class ValidationProfileParserTest {
     @Test
     public void test() throws Exception {
         ValidationProfile prof = ValidationProfileParser.parseValidationProfile("src/test/resources/test.xml", false);
-
+        /**
+         * TODO: it's assertEquals(expected, actual), all of these tests need their params reversing
+         */
         assertEquals(prof.getAttrModel(), "org.verapdf.model.PDFA1a");
         assertEquals(prof.getName(), "PDF/A-1a validation profile");
         assertEquals(prof.getDescription(), "STR_ID_101");

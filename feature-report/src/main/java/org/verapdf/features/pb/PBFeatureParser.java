@@ -1,6 +1,7 @@
 package org.verapdf.features.pb;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -162,7 +163,7 @@ public final class PBFeatureParser {
                 .getDictionaryObject(COSName.ANNOTS);
 
         if (annotsArray == null) {
-            return null;
+            return Collections.emptySet();
         }
         Set<String> annotsId = new HashSet<>();
 

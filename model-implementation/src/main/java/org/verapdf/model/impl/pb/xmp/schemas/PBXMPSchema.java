@@ -14,10 +14,6 @@ public class PBXMPSchema extends PBXMPObject implements XMPSchema {
 
     private org.apache.xmpbox.schema.XMPSchema xmpSchema;
 
-    protected org.apache.xmpbox.schema.XMPSchema getXmpSchema() {
-        return xmpSchema;
-    }
-
     /**
      * Constructs new object
      *
@@ -42,6 +38,10 @@ public class PBXMPSchema extends PBXMPObject implements XMPSchema {
     @Override
     public String getprefix() {
         return xmpSchema.getPrefix();
+    }
+
+    protected org.apache.xmpbox.schema.XMPSchema getXmpSchema() {
+        return xmpSchema;
     }
 
 }

@@ -10,28 +10,23 @@ import java.util.List;
  */
 public class PBOp_BDC extends PBOpMarkedContent implements Op_BDC {
 
-	public static final String OP_BDC_TYPE = "Op_BDC";
+    public static final String OP_BDC_TYPE = "Op_BDC";
 
-	public PBOp_BDC(List<COSBase> arguments) {
-		super(arguments);
-		setType(OP_BDC_TYPE);
-	}
+    public PBOp_BDC(List<COSBase> arguments) {
+        super(arguments, OP_BDC_TYPE);
+    }
 
-	@Override
-	public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-		List<? extends org.verapdf.model.baselayer.Object> list;
-
-		switch (link) {
-			case TAG:
-				list = this.getTag();
-				break;
-			case PROPERTIES:
-				list = this.getPropertiesDict();
-				break;
-			default: list = super.getLinkedObjects(link);
-		}
-
-		return list;
-	}
+    @Override
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+            String link) {
+        switch (link) {
+        case TAG:
+            return this.getTag();
+        case PROPERTIES:
+            return this.getPropertiesDict();
+        default:
+            return super.getLinkedObjects(link);
+        }
+    }
 
 }

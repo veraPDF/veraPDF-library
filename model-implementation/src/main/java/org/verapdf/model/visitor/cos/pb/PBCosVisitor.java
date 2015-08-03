@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public final class PBCosVisitor implements ICOSVisitor {
 
-    private final static PBCosVisitor visitor = new PBCosVisitor();
+    private static final PBCosVisitor visitor = new PBCosVisitor();
 
     private PBCosVisitor() {
         // Disable default constructor

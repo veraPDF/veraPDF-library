@@ -21,40 +21,36 @@ public class PBOp_Do extends PBOpXObject implements Op_Do {
     public static final String OP_DO_TYPE = "Op_Do";
 
     public static final String X_OBJECT = "xObject";
-	private org.apache.pdfbox.pdmodel.graphics.PDXObject pbXObject;
+    private org.apache.pdfbox.pdmodel.graphics.PDXObject pbXObject;
 
-	public PBOp_Do(List<COSBase> arguments, org.apache.pdfbox.pdmodel.graphics.PDXObject pbXObject) {
-        super(arguments);
-		this.pbXObject = pbXObject;
-        setType(OP_DO_TYPE);
+    public PBOp_Do(List<COSBase> arguments,
+            org.apache.pdfbox.pdmodel.graphics.PDXObject pbXObject) {
+        super(arguments, OP_DO_TYPE);
+        this.pbXObject = pbXObject;
     }
 
     @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-        List<? extends org.verapdf.model.baselayer.Object> list;
-
-        switch (link) {
-            case X_OBJECT:
-                list = this.getXObject();
-                break;
-            default: list = super.getLinkedObjects(link);
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+            String link) {
+        if (X_OBJECT.equals(link)) {
+            return this.getXObject();
         }
-
-        return list;
+        return  super.getLinkedObjects(link);
     }
 
     private List<PDXObject> getXObject() {
         List<PDXObject> list = new ArrayList<>();
         if (pbXObject != null) {
-			COSName xObjectType = pbXObject.getCOSStream().getCOSName(COSName.SUBTYPE);
-			if (COSName.IMAGE.equals(xObjectType)) {
-				list.add(new PBoxPDXImage((PDImageXObject) pbXObject));
-			} else if (COSName.FORM.equals(xObjectType)) {
-				list.add(new PBoxPDXForm((PDFormXObject) pbXObject));
-			} else if (xObjectType != null) {
-				list.add(new PBoxPDXObject(pbXObject));
-			}
-		}
+            COSName xObjectType = pbXObject.getCOSStream().getCOSName(
+                    COSName.SUBTYPE);
+            if (COSName.IMAGE.equals(xObjectType)) {
+                list.add(new PBoxPDXImage((PDImageXObject) pbXObject));
+            } else if (COSName.FORM.equals(xObjectType)) {
+                list.add(new PBoxPDXForm((PDFormXObject) pbXObject));
+            } else if (xObjectType != null) {
+                list.add(new PBoxPDXObject(pbXObject));
+            }
+        }
         return list;
     }
 

@@ -10,14 +10,16 @@ import java.util.List;
 /**
  * @author Timur Kamalov
  */
-public class PBOp_b_closepath_fill_stroke extends PBOpFillAndStroke implements Op_b_closepath_fill_stroke {
+public class PBOp_b_closepath_fill_stroke extends PBOpFillAndStroke implements
+        Op_b_closepath_fill_stroke {
 
     private static final String OP_B_CLOSEPATH_FILL_STROKE_TYPE = "Op_b_closepath_fill_stroke";
 
-    public PBOp_b_closepath_fill_stroke(List<COSBase> arguments, PDColorSpace strokeColorSpace,
-										PDColorSpace fillColorSpace, PDAbstractPattern pattern) {
-        super(arguments, pattern, strokeColorSpace, fillColorSpace);
-        setType(OP_B_CLOSEPATH_FILL_STROKE_TYPE);
+    public PBOp_b_closepath_fill_stroke(List<COSBase> arguments,
+            PDColorSpace strokeColorSpace, PDColorSpace fillColorSpace,
+            PDAbstractPattern pattern) {
+        super(arguments, pattern, strokeColorSpace, fillColorSpace,
+                OP_B_CLOSEPATH_FILL_STROKE_TYPE);
     }
 
 }

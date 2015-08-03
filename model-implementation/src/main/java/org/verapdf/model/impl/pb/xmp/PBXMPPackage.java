@@ -23,10 +23,6 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
     private XMPMetadata xmpMetadata;
     private boolean isMetadataValid;
 
-    protected XMPMetadata getXmpMetadata() {
-        return xmpMetadata;
-    }
-
     /**
      * Constructs new object
      *
@@ -77,6 +73,10 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
             return this.getSchemas();
         }
         return super.getLinkedObjects(link);
+    }
+
+    protected XMPMetadata getXmpMetadata() {
+        return xmpMetadata;
     }
 
     private List<XMPSchema> getSchemas() {

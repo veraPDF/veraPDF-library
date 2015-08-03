@@ -18,30 +18,23 @@ public class PBOp_ri extends PBOpGeneralGS implements Op_ri {
     public static final String RENDERING_INTENT = "renderingIntent";
 
     public PBOp_ri(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_RI_TYPE);
+        super(arguments, OP_RI_TYPE);
     }
 
     @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-        List<? extends org.verapdf.model.baselayer.Object> list;
-
-        switch (link) {
-            case RENDERING_INTENT:
-                list = this.getRenderingIntent();
-                break;
-            default:
-				list = super.getLinkedObjects(link);
-				break;
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+            String link) {
+        if (RENDERING_INTENT.equals(link)) {
+            return this.getRenderingIntent();
         }
-
-        return list;
+        return super.getLinkedObjects(link);
     }
 
     private List<CosRenderingIntent> getRenderingIntent() {
         List<CosRenderingIntent> list = new ArrayList<>(OPERANDS_COUNT);
-		COSBase base = !this.arguments.isEmpty() ? this.arguments.get(this.arguments.size() - 1) : null;
-		if (base instanceof COSName) {
+        COSBase base = !this.arguments.isEmpty() ? this.arguments
+                .get(this.arguments.size() - 1) : null;
+        if (base instanceof COSName) {
             list.add(new PBCosRenderingIntent((COSName) base));
         }
         return list;

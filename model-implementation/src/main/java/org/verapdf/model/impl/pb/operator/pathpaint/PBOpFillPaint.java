@@ -13,33 +13,35 @@ import java.util.List;
  */
 public abstract class PBOpFillPaint extends PBOpPathPaint {
 
-	protected PBOpFillPaint(List<COSBase> arguments, PDAbstractPattern pattern,
-							PDColorSpace pbStrokeColorSpace, PDColorSpace pbFillColorSpace) {
-		super(arguments, pattern, pbStrokeColorSpace, pbFillColorSpace);
-	}
+    protected PBOpFillPaint(List<COSBase> arguments, PDAbstractPattern pattern,
+            PDColorSpace pbStrokeColorSpace, PDColorSpace pbFillColorSpace) {
+        super(arguments, pattern, pbStrokeColorSpace, pbFillColorSpace);
+    }
 
-	@Override
-	public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-		List<? extends org.verapdf.model.baselayer.Object> list;
+    protected PBOpFillPaint(List<COSBase> arguments, PDAbstractPattern pattern,
+            PDColorSpace pbStrokeColorSpace, PDColorSpace pbFillColorSpace,
+            final String opType) {
+        super(arguments, pattern, pbStrokeColorSpace, pbFillColorSpace, opType);
+    }
 
-		switch (link) {
-			case FILL_CS:
-				list = this.getFillCS();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
+    @Override
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+            String link) {
+        if (FILL_CS.equals(link)) {
+            return this.getFillCS();
+        }
 
-		return list;
-	}
+        return super.getLinkedObjects(link);
+    }
 
-	private List<org.verapdf.model.pdlayer.PDColorSpace> getFillCS() {
-		List<org.verapdf.model.pdlayer.PDColorSpace> list = new ArrayList<>(MAX_NUMBER_OF_COLOR_SPACES);
-		org.verapdf.model.pdlayer.PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(pbFillColorSpace, pattern);
-		if (colorSpace != null) {
-			list.add(colorSpace);
-		}
-		return list;
-	}
+    private List<org.verapdf.model.pdlayer.PDColorSpace> getFillCS() {
+        List<org.verapdf.model.pdlayer.PDColorSpace> list = new ArrayList<>(
+                MAX_NUMBER_OF_COLOR_SPACES);
+        org.verapdf.model.pdlayer.PDColorSpace colorSpace = ColorSpaceFactory
+                .getColorSpace(pbFillColorSpace, pattern);
+        if (colorSpace != null) {
+            list.add(colorSpace);
+        }
+        return list;
+    }
 }

@@ -21,28 +21,23 @@ public class PBOp_d extends PBOpGeneralGS implements Op_d {
     public static final String DASH_PHASE = "dashPhase";
 
     public PBOp_d(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_D_TYPE);
+        super(arguments, OP_D_TYPE);
     }
 
     @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(String link) {
-        List<? extends org.verapdf.model.baselayer.Object> list;
-
+    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+            String link) {
         switch (link) {
-            case DASH_ARRAY:
-                list = this.getDashArray();
-                break;
-            case DASH_PHASE:
-                list = getDashPhase();
-                break;
-            default: list = super.getLinkedObjects(link);
+        case DASH_ARRAY:
+            return this.getDashArray();
+        case DASH_PHASE:
+            return getDashPhase();
+        default:
+            return super.getLinkedObjects(link);
         }
-
-        return list;
     }
 
-	private List<CosArray> getDashArray() {
+    private List<CosArray> getDashArray() {
         List<CosArray> list = new ArrayList<>(OPERANDS_COUNT);
         if (!arguments.isEmpty() && arguments.get(0) instanceof COSArray) {
             list.add(new PBCosArray((COSArray) arguments.get(0)));
@@ -50,8 +45,8 @@ public class PBOp_d extends PBOpGeneralGS implements Op_d {
         return list;
     }
 
-	private List<CosReal> getDashPhase() {
-		return this.getLastReal();
-	}
+    private List<CosReal> getDashPhase() {
+        return this.getLastReal();
+    }
 
 }

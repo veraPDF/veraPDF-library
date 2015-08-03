@@ -39,7 +39,7 @@ public final class ValidationProfileParser {
     private static final String REFERENCE = "reference";
     private static final String RULE = "rule";
     private static final String RULES = "rules";
-    private static final String SPECIFICATION = "message";
+    private static final String SPECIFICATION = "specification";
     private static final String TEST = "test";
     private static final String VARIABLES = "variables";
     private static final String VARIABLE = "variable";

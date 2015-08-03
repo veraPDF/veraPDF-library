@@ -17,63 +17,80 @@ import java.io.IOException;
  */
 public final class ModelLoader {
 
-	private static final Logger LOGGER = Logger.getLogger(ModelLoader.class);
+    private static final Logger LOGGER = Logger.getLogger(ModelLoader.class);
 
-	private File file;
-	private PDDocument document;
+    private File file;
+    private PDDocument document;
 
-	public ModelLoader(String path) {
-		this.file = new File(path);
-	}
+    public ModelLoader(String path) {
+        this.file = new File(path);
+    }
 
-	/**
-	 * Get {@code PDDocument} object for current file.
-	 *
-	 * @return {@link org.apache.pdfbox.pdmodel.PDDocument} object of pdfbox library.
-	 * @throws IOException when target file is not pdf or pdf file is not contain root object
-	 */
-	public PDDocument getPDDocument() throws IOException {
-		if (document == null) {
-			if (!file.exists() || !file.isFile()) {
-				LOGGER.error("Invalid path to document '" + file.getPath() + "'. File does not exist or not a file.");
-			} else {
-				document = PDDocument.load(file, false, true);
-			}
-		}
+    /**
+     * Get {@code PDDocument} object for current file.
+     *
+     * @return {@link org.apache.pdfbox.pdmodel.PDDocument} object of pdfbox
+     *         library.
+     * @throws IOException
+     *             when target file is not pdf or pdf file is not contain root
+     *             object
+     */
+    public PDDocument getPDDocument() throws IOException {
+        if (document == null) {
+            if (!file.exists() || !file.isFile()) {
+                LOGGER.error("Invalid path to document '" + file.getPath()
+                        + "'. File does not exist or not a file.");
+            } else {
+                document = PDDocument.load(file, false, true);
+            }
+        }
 
-		return document;
-	}
+        return document;
+    }
 
-	/**
-	 * Method return root object of model implementation from pdf box model together with the hierarchy.
-	 *
-	 * @return root object representing by {@link org.verapdf.model.coslayer.CosDocument}
-	 * @throws IOException when target file is not pdf or pdf file is not contain root object
-	 */
-	public CosDocument getRoot() throws IOException {
-		if (document == null) {
-			document = getPDDocument();
-		}
-		return document != null ? new PBCosDocument(document, file.length()) : null;
-	}
+    /**
+     * Method return root object of model implementation from pdf box model
+     * together with the hierarchy.
+     *
+     * @return root object representing by
+     *         {@link org.verapdf.model.coslayer.CosDocument}
+     * @throws IOException
+     *             when target file is not pdf or pdf file is not contain root
+     *             object
+     */
+    public CosDocument getRoot() throws IOException {
+        if (document == null) {
+            document = getPDDocument();
+        }
+        return document != null ? new PBCosDocument(document, file.length())
+                : null;
+    }
 
-	/**
-	 * Method return root object of model implementation from pdf box model together with the hierarchy.
-	 *
-	 * @param path path to PDF file
-	 * @return root object representing by {@link org.verapdf.model.coslayer.CosDocument}
-	 * @throws FileNotFoundException when target file is not exist
-	 * @throws IOException           when target file is not pdf or pdf file is not contain root object
-	 */
-	public static org.verapdf.model.baselayer.Object getRoot(String path) throws IOException {
-		final File file = new File(path);
-		if (!file.exists()) {
-			throw new FileNotFoundException("Current file '" + path + "' not exists.");
-		}
+    /**
+     * Method return root object of model implementation from pdf box model
+     * together with the hierarchy.
+     *
+     * @param path
+     *            path to PDF file
+     * @return root object representing by
+     *         {@link org.verapdf.model.coslayer.CosDocument}
+     * @throws FileNotFoundException
+     *             when target file is not exist
+     * @throws IOException
+     *             when target file is not pdf or pdf file is not contain root
+     *             object
+     */
+    public static org.verapdf.model.baselayer.Object getRoot(String path)
+            throws IOException {
+        final File file = new File(path);
+        if (!file.exists()) {
+            throw new FileNotFoundException("Current file '" + path
+                    + "' not exists.");
+        }
 
-		Object root;
-		PDDocument document = PDDocument.load(file, false, true);
-		root = new PBCosDocument(document, file.length());
-		return root;
-	}
+        Object root;
+        PDDocument document = PDDocument.load(file, false, true);
+        root = new PBCosDocument(document, file.length());
+        return root;
+    }
 }

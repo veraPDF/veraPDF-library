@@ -23,76 +23,83 @@ import java.util.List;
  */
 public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
 
-	private static final Logger LOGGER = Logger.getLogger(PBoxPDMetadata.class);
+    private static final Logger LOGGER = Logger.getLogger(PBoxPDMetadata.class);
 
-	public static final String METADATA_TYPE = "PDMetadata";
+    public static final String METADATA_TYPE = "PDMetadata";
 
-	public static final String XMP_PACKAGE = "XMPPackage";
-	public static final String STREAM = "stream";
+    public static final String XMP_PACKAGE = "XMPPackage";
+    public static final String STREAM = "stream";
 
-	private boolean isMainMetadata;
+    private boolean isMainMetadata;
 
-	public PBoxPDMetadata(org.apache.pdfbox.pdmodel.common.PDMetadata simplePDObject, Boolean isMainMetadata) {
+    public PBoxPDMetadata(
+            org.apache.pdfbox.pdmodel.common.PDMetadata simplePDObject,
+            Boolean isMainMetadata) {
         super(simplePDObject);
-		this.isMainMetadata = isMainMetadata.booleanValue();
+        this.isMainMetadata = isMainMetadata.booleanValue();
         setType(METADATA_TYPE);
     }
 
     @Override
     public String getFilter() {
-		List<COSName> filters = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject).getFilters();
-		if (filters != null && !filters.isEmpty()) {
-			StringBuilder result = new StringBuilder();
-			for (COSName filter : filters) {
-				result.append(filter.getName()).append(' ');
-			}
-			return result.substring(0, result.length() - 1);
-		}
+        List<COSName> filters = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject)
+                .getFilters();
+        if (filters != null && !filters.isEmpty()) {
+            StringBuilder result = new StringBuilder();
+            for (COSName filter : filters) {
+                result.append(filter.getName()).append(' ');
+            }
+            return result.substring(0, result.length() - 1);
+        }
         return null;
     }
 
-	@Override
-	public List<? extends Object> getLinkedObjects(String link) {
-		List<? extends Object> list;
+    @Override
+    public List<? extends Object> getLinkedObjects(String link) {
+        List<? extends Object> list;
 
-		switch (link) {
-			case XMP_PACKAGE:
-				list = getXMPPackage();
-				break;
-			case STREAM:
-				list = getStream();
-				break;
-			default:
-				list = super.getLinkedObjects(link);
-				break;
-		}
+        switch (link) {
+        case XMP_PACKAGE:
+            list = getXMPPackage();
+            break;
+        case STREAM:
+            list = getStream();
+            break;
+        default:
+            list = super.getLinkedObjects(link);
+            break;
+        }
 
-		return list;
-	}
+        return list;
+    }
 
-	private List<XMPPackage> getXMPPackage() {
-		List<XMPPackage> xmp = new ArrayList<>(1);
-		try {
-			COSStream stream = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject).getStream();
-			if (stream != null) {
-				DomXmpParser xmpParser = new DomXmpParser();
-				XMPMetadata metadata = xmpParser.parse(stream.getUnfilteredStream());
-				xmp.add(isMainMetadata ? new PBXMPMainPackage(metadata, true) : new PBXMPPackage(metadata, true));
-			}
-		} catch (XmpParsingException e) {
-			LOGGER.error("Problems with parsing metadata. " + e.getMessage(), e);
-			xmp.add(new PBXMPPackage(null, false));
-		} catch (IOException e) {
-			LOGGER.error("Metadata stream is closed. " + e.getMessage(), e);
-			xmp.add(new PBXMPPackage(null, false));
-		}
-		return xmp;
-	}
+    private List<XMPPackage> getXMPPackage() {
+        List<XMPPackage> xmp = new ArrayList<>(1);
+        try {
+            COSStream stream = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject)
+                    .getStream();
+            if (stream != null) {
+                DomXmpParser xmpParser = new DomXmpParser();
+                XMPMetadata metadata = xmpParser.parse(stream
+                        .getUnfilteredStream());
+                xmp.add(isMainMetadata ? new PBXMPMainPackage(metadata, true)
+                        : new PBXMPPackage(metadata, true));
+            }
+        } catch (XmpParsingException e) {
+            LOGGER.error("Problems with parsing metadata. " + e.getMessage(), e);
+            xmp.add(new PBXMPPackage(null, false));
+        } catch (IOException e) {
+            LOGGER.error("Metadata stream is closed. " + e.getMessage(), e);
+            xmp.add(new PBXMPPackage(null, false));
+        }
+        return xmp;
+    }
 
-	private List<CosStream> getStream() {
-		List<CosStream> streams = new ArrayList<>(1);
-		COSStream stream = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject).getStream();
-		streams.add(new PBCosStream(stream));
-		return streams;
-	}
+    private List<CosStream> getStream() {
+        List<CosStream> streams = new ArrayList<>(1);
+        COSStream stream = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject)
+                .getStream();
+        streams.add(new PBCosStream(stream));
+        return streams;
+    }
 }

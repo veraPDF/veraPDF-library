@@ -13,8 +13,7 @@ public class PBOp_h extends PBOpPathConstruction implements Op_h {
     public static final String OP_H_TYPE = "Op_h";
 
     public PBOp_h(List<COSBase> arguments) {
-        super(arguments);
-        setType(OP_H_TYPE);
+        super(arguments, OP_H_TYPE);
     }
 
 }

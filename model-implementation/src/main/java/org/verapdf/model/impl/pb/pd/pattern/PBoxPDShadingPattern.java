@@ -12,33 +12,37 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class PBoxPDShadingPattern extends PBoxPDPattern implements PDShadingPattern {
+public class PBoxPDShadingPattern extends PBoxPDPattern implements
+        PDShadingPattern {
 
-	private static final Logger LOGGER = Logger.getLogger(PBoxPDShadingPattern.class);
+    private static final Logger LOGGER = Logger
+            .getLogger(PBoxPDShadingPattern.class);
 
-	public static final String SHADING = "shading";
+    public static final String SHADING = "shading";
 
-	public PBoxPDShadingPattern(org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern simplePDObject) {
-		super(simplePDObject);
-		setType("PDShadingPattern");
-	}
+    public PBoxPDShadingPattern(
+            org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern simplePDObject) {
+        super(simplePDObject);
+        setType("PDShadingPattern");
+    }
 
-	@Override
-	public List<? extends Object> getLinkedObjects(String link) {
-		return  SHADING.equals(link) ? getShading() : super.getLinkedObjects(link);
-	}
+    @Override
+    public List<? extends Object> getLinkedObjects(String link) {
+        return SHADING.equals(link) ? getShading() : super
+                .getLinkedObjects(link);
+    }
 
-	private List<PDShading> getShading() {
-		List<PDShading> shadings = new ArrayList<>();
-		try {
-			org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading =
-					((org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern) simplePDObject).getShading();
-			if (shading != null) {
-				shadings.add(new PBoxPDShading(shading));
-			}
-		} catch (IOException e) {
-			LOGGER.error("Can`t get shading pattern. " + e.getMessage(), e);
-		}
-		return shadings;
-	}
+    private List<PDShading> getShading() {
+        List<PDShading> shadings = new ArrayList<>();
+        try {
+            org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading = ((org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern) simplePDObject)
+                    .getShading();
+            if (shading != null) {
+                shadings.add(new PBoxPDShading(shading));
+            }
+        } catch (IOException e) {
+            LOGGER.error("Can`t get shading pattern. " + e.getMessage(), e);
+        }
+        return shadings;
+    }
 }

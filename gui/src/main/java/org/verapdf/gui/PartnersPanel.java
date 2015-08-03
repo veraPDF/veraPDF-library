@@ -36,29 +36,6 @@ public class PartnersPanel extends JPanel {
     private JLabel version;
 
     /**
-     * Paints the component
-     *
-     * @param g - graphics for painting
-     */
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-
-        int imageHeight = (int) (partnersLogo.getHeight() * GUIConstants.SCALE);
-        int imageWidth = (int) (partnersLogo.getWidth() * GUIConstants.SCALE);
-        int imageStartY = GUIConstants.BORDER_WIDTH * 2 + consortium.getHeight();
-        int imageStartX = (getWidth() - imageWidth) / 2;
-
-        g.setColor(background);
-
-        consortium.setLocation((getWidth() - consortium.getWidth()) / 2, GUIConstants.BORDER_WIDTH);
-
-        g.drawImage(partnersLogo, imageStartX, imageStartY, imageStartX + imageWidth, imageStartY + imageHeight, 0, 0, partnersLogo.getWidth(), partnersLogo.getHeight(), this);
-
-        version.setLocation((getWidth() - version.getWidth()) / 2, getHeight() - version.getHeight() - GUIConstants.BORDER_WIDTH);
-    }
-
-    /**
      * Creates logo panel
      *
      * @param logoName        - name of the partners logo image
@@ -98,6 +75,29 @@ public class PartnersPanel extends JPanel {
 
         int height = (int) (partnersLogo.getHeight() * GUIConstants.SCALE + consortium.getHeight() * 2 + version.getHeight() * 2);
         setPreferredSize(new Dimension(GUIConstants.PREFERRED_WIDTH, height + GUIConstants.BORDER_WIDTH * 2));
+    }
+
+    /**
+     * Paints the component
+     *
+     * @param g - graphics for painting
+     */
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+
+        int imageHeight = (int) (partnersLogo.getHeight() * GUIConstants.SCALE);
+        int imageWidth = (int) (partnersLogo.getWidth() * GUIConstants.SCALE);
+        int imageStartY = GUIConstants.BORDER_WIDTH * 2 + consortium.getHeight();
+        int imageStartX = (getWidth() - imageWidth) / 2;
+
+        g.setColor(background);
+
+        consortium.setLocation((getWidth() - consortium.getWidth()) / 2, GUIConstants.BORDER_WIDTH);
+
+        g.drawImage(partnersLogo, imageStartX, imageStartY, imageStartX + imageWidth, imageStartY + imageHeight, 0, 0, partnersLogo.getWidth(), partnersLogo.getHeight(), this);
+
+        version.setLocation((getWidth() - version.getWidth()) / 2, getHeight() - version.getHeight() - GUIConstants.BORDER_WIDTH);
     }
 
 }
