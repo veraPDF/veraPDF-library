@@ -6,11 +6,10 @@ package org.verapdf.validation.report.model;
  * @author Maksim Bezrukov
  */
 public class Check {
-    private String attrStatus;
-
-    private CheckLocation location;
-    private CheckError error;
-    private boolean isHasError;
+    private final String attrStatus;
+    private final CheckLocation location;
+    private final CheckError error;
+    private final boolean isHasError;
 
     /**
      * Creates Check model for validation report
@@ -20,7 +19,7 @@ public class Check {
      * @param error      - error of the check
      * @param isHasError - is the error represents an error or a warning
      */
-    public Check(String attrStatus, CheckLocation location, CheckError error, boolean isHasError) {
+    public Check(final String attrStatus, final CheckLocation location, final CheckError error, final boolean isHasError) {
         this.attrStatus = attrStatus;
         this.location = location;
         this.error = error;

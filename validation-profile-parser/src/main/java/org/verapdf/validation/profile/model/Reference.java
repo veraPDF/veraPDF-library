@@ -1,5 +1,6 @@
 package org.verapdf.validation.profile.model;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,9 +9,9 @@ import java.util.List;
  * @author Maksim Bezrukov
  */
 public class Reference {
-    private String specification;
-    private String clause;
-    private List<Reference> references;
+    private final String specification;
+    private final String clause;
+    private final List<Reference> references;
 
     /**
      * Creates reference model of a rule.
@@ -19,10 +20,10 @@ public class Reference {
      * @param clause        - clause of a rule
      * @param references    - references from this reference
      */
-    public Reference(String specification, String clause, List<Reference> references) {
+    public Reference(final String specification, final String clause, final List<Reference> references) {
         this.specification = specification;
         this.clause = clause;
-        this.references = references;
+        this.references = Collections.unmodifiableList(references);
     }
 
     /**

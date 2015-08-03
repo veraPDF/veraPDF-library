@@ -6,13 +6,13 @@ package org.verapdf.validation.report.model;
  * @author Maksim Bezrukov
  */
 public class Summary {
-    private int attrPassedRules;
-    private int attrFailedRules;
-    private int attrPassedChecks;
-    private int attrFailedChecks;
-    private int attrCompletedMetadataFixes;
-    private int attrFailedMetadataFixes;
-    private int attrWarnings;
+    private final int attrPassedRules;
+    private final int attrFailedRules;
+    private final int attrPassedChecks;
+    private final int attrFailedChecks;
+    private final int attrCompletedMetadataFixes;
+    private final int attrFailedMetadataFixes;
+    private final int attrWarnings;
 
     /**
      * Creates summary model for validation report

@@ -33,7 +33,7 @@ public class ValidationProfileParserTest {
         assertEquals(prof.getRoolsForObject("CosDocument").get(0), rule1);
 
         assertEquals(rule1.getAttrObject(), "CosDocument");
-        assertEquals(rule1.getFix().size(), 0);
+        assertEquals(rule1.getFixes().size(), 0);
         assertEquals(rule1.getDescription(), "STR_ID_401");
         assertEquals(rule1.getTest(), "fileHeaderOffset == 0");
         assertTrue(rule1.isHasError());
@@ -53,10 +53,10 @@ public class ValidationProfileParserTest {
         assertEquals(rule53.getRuleError().getArgument().size(), 0);
         assertEquals(rule53.getReference().getSpecification(), "ISO19005-1");
         assertEquals(rule53.getReference().getClause(), "6.7.3");
-        assertEquals(rule53.getFix().size(), 1);
-        assertEquals(rule53.getFix().get(0).getDescription(), "STR_ID_893");
-        assertEquals(rule53.getFix().get(0).getInfo().getMessage(), "STR_ID_894");
-        assertEquals(rule53.getFix().get(0).getError().getMessage(), "STR_ID_895");
+        assertEquals(rule53.getFixes().size(), 1);
+        assertEquals(rule53.getFixes().get(0).getDescription(), "STR_ID_893");
+        assertEquals(rule53.getFixes().get(0).getInfo().getMessage(), "STR_ID_894");
+        assertEquals(rule53.getFixes().get(0).getError().getMessage(), "STR_ID_895");
 
         Rule rule35 = prof.getRuleById("rule35");
 
@@ -66,7 +66,7 @@ public class ValidationProfileParserTest {
         assertNull(rule35.getTest());
         assertNull(rule35.getRuleError());
         assertNull(rule35.getReference());
-        assertEquals(rule35.getFix().size(), 0);
+        assertEquals(rule35.getFixes().size(), 0);
 
 
     }
@@ -87,7 +87,7 @@ public class ValidationProfileParserTest {
         Rule rule1 = prof.getRuleById("правило1");
 
         assertEquals(rule1.getAttrObject(), "CosDocument");
-        assertEquals(rule1.getFix().size(), 0);
+        assertEquals(rule1.getFixes().size(), 0);
         assertEquals(rule1.getDescription(), "STR_ID_401");
         assertEquals(rule1.getTest(), "fileHeaderOffset == 0");
         assertEquals(rule1.getRuleError().getMessage(), "STR_ID_402");
@@ -105,10 +105,10 @@ public class ValidationProfileParserTest {
         assertEquals(rule53.getRuleError().getArgument().size(), 0);
         assertEquals(rule53.getReference().getSpecification(), "ISO19005-1");
         assertEquals(rule53.getReference().getClause(), "6.7.3");
-        assertEquals(rule53.getFix().size(), 1);
-        assertEquals(rule53.getFix().get(0).getDescription(), "STR_ID_893");
-        assertEquals(rule53.getFix().get(0).getInfo().getMessage(), "STR_ID_894");
-        assertEquals(rule53.getFix().get(0).getError().getMessage(), "STR_ID_895");
+        assertEquals(rule53.getFixes().size(), 1);
+        assertEquals(rule53.getFixes().get(0).getDescription(), "STR_ID_893");
+        assertEquals(rule53.getFixes().get(0).getInfo().getMessage(), "STR_ID_894");
+        assertEquals(rule53.getFixes().get(0).getError().getMessage(), "STR_ID_895");
 
         Variable var1 = prof.getVariablesForObject("Object").get(0);
 

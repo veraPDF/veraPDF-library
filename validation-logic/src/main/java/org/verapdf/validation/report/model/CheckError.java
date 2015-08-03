@@ -1,5 +1,6 @@
 package org.verapdf.validation.report.model;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -8,8 +9,8 @@ import java.util.List;
  * @author Maksim Bezrukov
  */
 public class CheckError {
-    private String message;
-    private List<String> argument;
+    private final String message;
+    private final List<String> arguments;
 
     /**
      * Creates check error model
@@ -19,7 +20,7 @@ public class CheckError {
      */
     public CheckError(String message, List<String> argument) {
         this.message = message;
-        this.argument = argument;
+        this.arguments = Collections.unmodifiableList(argument);
     }
 
     /**
@@ -32,7 +33,7 @@ public class CheckError {
     /**
      * @return Error arguments.
      */
-    public List<String> getArgument() {
-        return argument;
+    public List<String> getArguments() {
+        return arguments;
     }
 }
