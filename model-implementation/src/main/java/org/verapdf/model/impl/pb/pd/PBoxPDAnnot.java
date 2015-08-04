@@ -2,6 +2,7 @@ package org.verapdf.model.impl.pb.pd;
 
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionFactory;
+import org.apache.pdfbox.pdmodel.interactive.action.PDActionNamed;
 import org.apache.pdfbox.pdmodel.interactive.action.PDAnnotationAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceDictionary;
@@ -31,8 +32,9 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 
     public static final int MAX_COUNT_OF_ELEMENTS = 1;
     public static final int MAX_COUNT_OF_ACTIONS = 10;
+	public static final String NAMED_KEYWORD = "Named";
 
-    public PBoxPDAnnot(PDAnnotation simplePDObject) {
+	public PBoxPDAnnot(PDAnnotation simplePDObject) {
         super(simplePDObject);
         setType(ANNOTATION_TYPE);
     }
@@ -132,19 +134,20 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
         return actions;
     }
 
-    private List<PDAction> getA() {
-        List<PDAction> actions = new ArrayList<>(MAX_COUNT_OF_ELEMENTS);
-        COSBase actionDictionary = ((PDAnnotation) simplePDObject)
-                .getCOSObject().getDictionaryObject(COSName.A);
-        if (actionDictionary instanceof COSDictionary) {
-            org.apache.pdfbox.pdmodel.interactive.action.PDAction action = PDActionFactory
-                    .createAction((COSDictionary) actionDictionary);
-            if (action != null) {
-                actions.add(new PBoxPDAction(action));
-            }
-        }
-        return actions;
-    }
+	private List<PDAction> getA() {
+		List<PDAction> actions = new ArrayList<>(MAX_COUNT_OF_ELEMENTS);
+		COSBase actionDictionary = ((PDAnnotation) simplePDObject)
+				.getCOSObject().getDictionaryObject(COSName.A);
+		if (actionDictionary instanceof COSDictionary) {
+			org.apache.pdfbox.pdmodel.interactive.action.PDAction action = PDActionFactory
+					.createAction((COSDictionary) actionDictionary);
+			if (action != null) {
+				boolean isNamedAction = NAMED_KEYWORD.equals(((COSDictionary) actionDictionary).getNameAsString("S"));
+				actions.add(isNamedAction ? new PBoxPDNamedAction((PDActionNamed) action) : new PBoxPDAction(action));
+			}
+		}
+		return actions;
+	}
 
     private List<CosReal> getIC() {
         return getRealsFromArray(COSName.IC);
