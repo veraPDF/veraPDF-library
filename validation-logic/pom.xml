@@ -34,11 +34,6 @@
 
     <dependency>
       <groupId>org.verapdf</groupId>
-      <artifactId>verapdf-exceptions</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.verapdf</groupId>
       <artifactId>validation-profile-parser</artifactId>
     </dependency>
 

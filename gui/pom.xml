@@ -150,21 +150,6 @@
 
     <dependency>
       <groupId>org.verapdf</groupId>
-      <artifactId>core</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.verapdf</groupId>
-      <artifactId>validation-profile-parser</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.verapdf</groupId>
-      <artifactId>validation-logic</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.verapdf</groupId>
       <artifactId>validation-report</artifactId>
     </dependency>
 
