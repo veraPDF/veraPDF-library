@@ -16,57 +16,55 @@ public class ValidationProfileParserTest {
     @Test
     public void test() throws Exception {
         ValidationProfile prof = ValidationProfileParser.parseValidationProfile("src/test/resources/test.xml", false);
-        /**
-         * TODO: it's assertEquals(expected, actual), all of these tests need their params reversing
-         */
-        assertEquals(prof.getAttrModel(), "org.verapdf.model.PDFA1a");
-        assertEquals(prof.getName(), "PDF/A-1a validation profile");
-        assertEquals(prof.getDescription(), "STR_ID_101");
-        assertEquals(prof.getCreator(), "User1");
-        assertEquals(prof.getCreated(), "2015-01-23T17:30:15Z");
+
+        assertEquals("org.verapdf.model.PDFA1a", prof.getAttrModel());
+        assertEquals("PDF/A-1a validation profile", prof.getName());
+        assertEquals("STR_ID_101", prof.getDescription());
+        assertEquals("User1", prof.getCreator());
+        assertEquals("2015-01-23T17:30:15Z", prof.getCreated());
         assertNull(prof.getHash());
 
-        assertEquals(prof.getRoolsForObject("PDXObject").size(), 1);
+        assertEquals(1, prof.getRoolsForObject("PDXObject").size());
 
         Rule rule1 = prof.getRuleById("rule1");
 
-        assertEquals(prof.getRoolsForObject("CosDocument").get(0), rule1);
+        assertEquals(rule1, prof.getRoolsForObject("CosDocument").get(0));
 
-        assertEquals(rule1.getAttrObject(), "CosDocument");
-        assertEquals(rule1.getFixes().size(), 0);
-        assertEquals(rule1.getDescription(), "STR_ID_401");
-        assertEquals(rule1.getTest(), "fileHeaderOffset == 0");
+        assertEquals("CosDocument", rule1.getAttrObject());
+        assertEquals(0, rule1.getFixes().size());
+        assertEquals("STR_ID_401", rule1.getDescription());
+        assertEquals("fileHeaderOffset == 0", rule1.getTest());
         assertTrue(rule1.isHasError());
-        assertEquals(rule1.getRuleError().getMessage(), "STR_ID_402");
-        assertEquals(rule1.getRuleError().getArgument().size(), 1);
-        assertEquals(rule1.getRuleError().getArgument().get(0), "fileHeaderOffset");
-        assertEquals(rule1.getReference().getSpecification(), "ISO19005-1");
-        assertEquals(rule1.getReference().getClause(), "6.1.2");
+        assertEquals("STR_ID_402", rule1.getRuleError().getMessage());
+        assertEquals(1, rule1.getRuleError().getArgument().size());
+        assertEquals("fileHeaderOffset", rule1.getRuleError().getArgument().get(0));
+        assertEquals("ISO19005-1", rule1.getReference().getSpecification());
+        assertEquals("6.1.2", rule1.getReference().getClause());
 
         Rule rule53 = prof.getRuleById("rule53");
 
-        assertEquals(rule53.getAttrObject(), "PDMetadata");
-        assertEquals(rule53.getDescription(), "STR_ID_608");
-        assertEquals(rule53.getTest(), "isInfoDictConsistent");
+        assertEquals("PDMetadata", rule53.getAttrObject());
+        assertEquals("STR_ID_608", rule53.getDescription());
+        assertEquals("isInfoDictConsistent", rule53.getTest());
         assertFalse(rule53.isHasError());
-        assertEquals(rule53.getRuleError().getMessage(), "STR_ID_609");
-        assertEquals(rule53.getRuleError().getArgument().size(), 0);
-        assertEquals(rule53.getReference().getSpecification(), "ISO19005-1");
-        assertEquals(rule53.getReference().getClause(), "6.7.3");
-        assertEquals(rule53.getFixes().size(), 1);
-        assertEquals(rule53.getFixes().get(0).getDescription(), "STR_ID_893");
-        assertEquals(rule53.getFixes().get(0).getInfo().getMessage(), "STR_ID_894");
-        assertEquals(rule53.getFixes().get(0).getError().getMessage(), "STR_ID_895");
+        assertEquals("STR_ID_609", rule53.getRuleError().getMessage());
+        assertEquals(0, rule53.getRuleError().getArgument().size());
+        assertEquals("ISO19005-1", rule53.getReference().getSpecification());
+        assertEquals("6.7.3", rule53.getReference().getClause());
+        assertEquals(1, rule53.getFixes().size());
+        assertEquals("STR_ID_893", rule53.getFixes().get(0).getDescription());
+        assertEquals("STR_ID_894", rule53.getFixes().get(0).getInfo().getMessage());
+        assertEquals("STR_ID_895", rule53.getFixes().get(0).getError().getMessage());
 
         Rule rule35 = prof.getRuleById("rule35");
 
-        assertEquals(rule35.getAttrObject(), "PDXObject");
+        assertEquals("PDXObject", rule35.getAttrObject());
         assertFalse(rule35.isHasError());
         assertNull(rule35.getDescription());
         assertNull(rule35.getTest());
         assertNull(rule35.getRuleError());
         assertNull(rule35.getReference());
-        assertEquals(rule35.getFixes().size(), 0);
+        assertEquals(0, rule35.getFixes().size());
 
 
     }
@@ -75,47 +73,47 @@ public class ValidationProfileParserTest {
     public void testCyrillic() throws Exception {
         ValidationProfile prof = ValidationProfileParser.parseValidationProfile("src/test/resources/testCyrillic.xml", false);
 
-        assertEquals(prof.getAttrModel(), "org.verapdf.model.PDFA1a");
-        assertEquals(prof.getName(), "PDF/A-1a validation profile");
-        assertEquals(prof.getDescription(), "STR_ID_101");
-        assertEquals(prof.getCreator(), "Какой-то русский человек");
-        assertEquals(prof.getCreated(), "2015-01-23T17:30:15Z");
+        assertEquals("org.verapdf.model.PDFA1a", prof.getAttrModel());
+        assertEquals("PDF/A-1a validation profile", prof.getName());
+        assertEquals("STR_ID_101", prof.getDescription());
+        assertEquals("Какой-то русский человек", prof.getCreator());
+        assertEquals("2015-01-23T17:30:15Z", prof.getCreated());
         assertNull(prof.getHash());
 
         assertNull(prof.getRoolsForObject("PDXObject"));
 
         Rule rule1 = prof.getRuleById("правило1");
 
-        assertEquals(rule1.getAttrObject(), "CosDocument");
-        assertEquals(rule1.getFixes().size(), 0);
-        assertEquals(rule1.getDescription(), "STR_ID_401");
-        assertEquals(rule1.getTest(), "fileHeaderOffset == 0");
-        assertEquals(rule1.getRuleError().getMessage(), "STR_ID_402");
-        assertEquals(rule1.getRuleError().getArgument().size(), 1);
-        assertEquals(rule1.getRuleError().getArgument().get(0), "fileHeaderOffset");
-        assertEquals(rule1.getReference().getSpecification(), "ISO19005-1");
-        assertEquals(rule1.getReference().getClause(), "6.1.2");
+        assertEquals("CosDocument", rule1.getAttrObject());
+        assertEquals(0, rule1.getFixes().size());
+        assertEquals("STR_ID_401", rule1.getDescription());
+        assertEquals("fileHeaderOffset == 0", rule1.getTest());
+        assertEquals("STR_ID_402", rule1.getRuleError().getMessage());
+        assertEquals(1, rule1.getRuleError().getArgument().size());
+        assertEquals("fileHeaderOffset", rule1.getRuleError().getArgument().get(0));
+        assertEquals("ISO19005-1", rule1.getReference().getSpecification());
+        assertEquals("6.1.2", rule1.getReference().getClause());
 
         Rule rule53 = prof.getRuleById("rule53");
 
-        assertEquals(rule53.getAttrObject(), "PDMetadata");
-        assertEquals(rule53.getDescription(), "STR_ID_608");
-        assertEquals(rule53.getTest(), "isInfoDictConsistent");
-        assertEquals(rule53.getRuleError().getMessage(), "STR_ID_609");
-        assertEquals(rule53.getRuleError().getArgument().size(), 0);
-        assertEquals(rule53.getReference().getSpecification(), "ISO19005-1");
-        assertEquals(rule53.getReference().getClause(), "6.7.3");
-        assertEquals(rule53.getFixes().size(), 1);
-        assertEquals(rule53.getFixes().get(0).getDescription(), "STR_ID_893");
-        assertEquals(rule53.getFixes().get(0).getInfo().getMessage(), "STR_ID_894");
-        assertEquals(rule53.getFixes().get(0).getError().getMessage(), "STR_ID_895");
+        assertEquals("PDMetadata", rule53.getAttrObject());
+        assertEquals("STR_ID_608", rule53.getDescription());
+        assertEquals("isInfoDictConsistent", rule53.getTest());
+        assertEquals("STR_ID_609", rule53.getRuleError().getMessage());
+        assertEquals(0, rule53.getRuleError().getArgument().size());
+        assertEquals("ISO19005-1", rule53.getReference().getSpecification());
+        assertEquals("6.7.3", rule53.getReference().getClause());
+        assertEquals(1, rule53.getFixes().size());
+        assertEquals("STR_ID_893", rule53.getFixes().get(0).getDescription());
+        assertEquals("STR_ID_894", rule53.getFixes().get(0).getInfo().getMessage());
+        assertEquals("STR_ID_895", rule53.getFixes().get(0).getError().getMessage());
 
         Variable var1 = prof.getVariablesForObject("Object").get(0);
 
-        assertEquals(var1.getAttrObject(), "Object");
-        assertEquals(var1.getAttrName(), "varName1");
-        assertEquals(var1.getDefaultValue(), "null");
-        assertEquals(var1.getValue(), "5");
+        assertEquals("Object", var1.getAttrObject());
+        assertEquals("varName1", var1.getAttrName());
+        assertEquals("null", var1.getDefaultValue());
+        assertEquals("5", var1.getValue());
 
     }
 }
