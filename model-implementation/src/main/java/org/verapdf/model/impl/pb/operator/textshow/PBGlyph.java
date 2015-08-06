@@ -10,17 +10,29 @@ public class PBGlyph extends GenericModelObject implements Glyph {
 
 	private final static String type = "Glyph";
 
-	public PBGlyph() {
+	private Boolean glyphPresent;
+	private Boolean widthsConsistent;
+
+	//used for id
+	private String fontName;
+	private int glyphCode;
+
+	public PBGlyph(Boolean glyphPresent, Boolean widthsConsistent, String fontName, int glyphCode) {
+		this.glyphPresent = glyphPresent;
+		this.widthsConsistent = widthsConsistent;
+
+		this.fontName = fontName;
+		this.glyphCode = glyphCode;
 	}
 
 	@Override
 	public Boolean getisGlyphPresent() {
-		return null;
+		return glyphPresent;
 	}
 
 	@Override
 	public Boolean getisWidthConsistent() {
-		return null;
+		return widthsConsistent;
 	}
 
 	@Override
@@ -30,7 +42,7 @@ public class PBGlyph extends GenericModelObject implements Glyph {
 
 	@Override
 	public String getID() {
-		return null;
+		return fontName + " " + glyphCode;
 	}
 
 }
