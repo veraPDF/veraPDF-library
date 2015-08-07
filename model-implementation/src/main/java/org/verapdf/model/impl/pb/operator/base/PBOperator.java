@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.operator.base;
 
+import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSNumber;
 import org.verapdf.model.GenericModelObject;
@@ -21,7 +22,7 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
 
     public static final int MAX_NUMBER_OF_ELEMENTS = 1;
     public static final String OP_TYPE_PB = "Operator";
-    protected final List<COSBase> arguments;
+    protected final List<COSBase> arguments = new ArrayList<>();
     private final String id;
     private final String type;
 
@@ -32,7 +33,7 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
     protected PBOperator(List<COSBase> arguments, final String opType) {
         this.id = IDGenerator.generateID();
         this.type = opType;
-        this.arguments = Collections.unmodifiableList(arguments);
+        this.arguments.addAll(arguments);
     }
 
     @Override
@@ -54,5 +55,23 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
         }
         return cosReals;
     }
+
+	protected List<CosReal> getListOfReals() {
+		List<CosReal> list = new ArrayList<>();
+		if (!this.arguments.isEmpty()) {
+			for (COSBase base : this.arguments) {
+				if (base instanceof COSArray) {
+					for (COSBase arg : (COSArray) base) {
+						if (arg instanceof COSNumber) {
+							list.add(new PBCosReal((COSNumber) arg));
+						}
+					}
+				} else if (base instanceof COSNumber) {
+					list.add(new PBCosReal((COSNumber) base));
+				}
+			}
+		}
+		return list;
+	}
 
 }
