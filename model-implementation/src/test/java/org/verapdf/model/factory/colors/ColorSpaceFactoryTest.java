@@ -4,16 +4,20 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
+import org.apache.pdfbox.pdmodel.graphics.color.PDJPXColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
 import org.junit.*;
 import org.verapdf.model.pdlayer.*;
 
+import java.awt.color.ColorSpace;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import static java.awt.color.ColorSpace.CS_GRAY;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -103,6 +107,12 @@ public class ColorSpaceFactoryTest {
 	@Test
 	public void testNullGenerating() {
 		Assert.assertNull(ColorSpaceFactory.getColorSpace(null, null));
+	}
+
+	@Test
+	public void testUnsupportedColorSpaceGenerating() {
+		PDColorSpace colorSpace = new PDJPXColorSpace(ColorSpace.getInstance(CS_GRAY));
+		Assert.assertNull(ColorSpaceFactory.getColorSpace(colorSpace));
 	}
 
 	protected static String getSystemIndependentPath(String path) throws URISyntaxException {
