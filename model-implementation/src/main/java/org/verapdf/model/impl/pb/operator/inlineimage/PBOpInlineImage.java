@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Operator, which represent inline image. Described by
+ * BI, ID and EI operators
+ *
  * @author Timur Kamalov
  */
 public class PBOpInlineImage extends PBOperator implements OpInlineImage {
@@ -34,11 +37,13 @@ public class PBOpInlineImage extends PBOperator implements OpInlineImage {
 
     private List<CosDict> getInlineImageDictionary() {
         List<CosDict> list = new ArrayList<>();
-        if (!this.arguments.isEmpty()
-                && this.arguments.get(0) instanceof COSDictionary) {
-            list.add(new PBCosDict((COSDictionary) this.arguments.get(0)));
+        if (!this.arguments.isEmpty()) {
+			COSBase dict = this.arguments
+					.get(this.arguments.size() - 1);
+			if (dict instanceof COSDictionary) {
+				list.add(new PBCosDict((COSDictionary) dict));
+			}
         }
-
         return list;
     }
 
