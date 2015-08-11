@@ -41,7 +41,7 @@ public class PBOp_d extends PBOpGeneralGS implements Op_d {
 
     private List<CosArray> getDashArray() {
         List<CosArray> list = new ArrayList<>(OPERANDS_COUNT);
-        if (this.arguments.size() > 2) {
+        if (this.arguments.size() > 1) {
 			COSBase array = this.arguments
 					.get(this.arguments.size() - 2);
 			if (array instanceof COSArray) {
