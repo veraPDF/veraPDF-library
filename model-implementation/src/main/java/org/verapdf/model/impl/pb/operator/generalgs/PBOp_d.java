@@ -31,7 +31,7 @@ public class PBOp_d extends PBOpGeneralGS implements Op_d {
         case DASH_ARRAY:
             return this.getDashArray();
         case DASH_PHASE:
-            return getDashPhase();
+            return this.getDashPhase();
         default:
             return super.getLinkedObjects(link);
         }
