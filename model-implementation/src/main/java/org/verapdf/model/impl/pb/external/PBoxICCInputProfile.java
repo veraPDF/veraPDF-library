@@ -17,7 +17,6 @@ public class PBoxICCInputProfile extends PBoxICCProfile implements
 
     public PBoxICCInputProfile(InputStream profile,
             Long dictionaryNumberOfColors) throws IOException {
-        super(profile, dictionaryNumberOfColors);
-        setType(ICC_INPUT_PROFILE_TYPE);
+        super(profile, dictionaryNumberOfColors, ICC_INPUT_PROFILE_TYPE);
     }
 }

@@ -19,8 +19,7 @@ public class PBoxICCOutputProfile extends PBoxICCProfile implements
 
     public PBoxICCOutputProfile(InputStream profile, String subtype, Long N)
             throws IOException {
-        super(profile, N);
-        setType(ICC_OUTPUT_PROFILE_TYPE);
+        super(profile, N, ICC_OUTPUT_PROFILE_TYPE);
         this.subtype = subtype;
     }
 
