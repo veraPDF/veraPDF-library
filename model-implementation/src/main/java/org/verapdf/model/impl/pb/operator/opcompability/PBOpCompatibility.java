@@ -7,15 +7,13 @@ import org.verapdf.model.operator.OpCompatibility;
 import java.util.List;
 
 /**
+ * Base class for compatibility operators
+ *
  * @author Timur Kamalov
  */
-public abstract class PBOpCompability extends PBOperator implements OpCompatibility {
+public abstract class PBOpCompatibility extends PBOperator implements OpCompatibility {
 
-    public PBOpCompability(List<COSBase> arguments) {
-        super(arguments);
-    }
-
-    public PBOpCompability(List<COSBase> arguments, final String opType) {
+    public PBOpCompatibility(List<COSBase> arguments, final String opType) {
         super(arguments, opType);
     }
 

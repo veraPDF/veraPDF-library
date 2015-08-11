@@ -6,9 +6,11 @@ import org.verapdf.model.operator.Op_BX;
 import java.util.List;
 
 /**
+ * Operator, which begin a compatibility section.
+ *
  * @author Timur Kamalov
  */
-public class PBOp_BX extends PBOpCompability implements Op_BX {
+public class PBOp_BX extends PBOpCompatibility implements Op_BX {
 
     public static final String OP_BX_TYPE = "Op_BX";
 

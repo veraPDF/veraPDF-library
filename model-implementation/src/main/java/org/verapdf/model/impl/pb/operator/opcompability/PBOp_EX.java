@@ -6,9 +6,11 @@ import org.verapdf.model.operator.Op_EX;
 import java.util.List;
 
 /**
+ * Operator, which end a compatibility section
+ *
  * @author Timur Kamalov
  */
-public class PBOp_EX extends PBOpCompability implements Op_EX {
+public class PBOp_EX extends PBOpCompatibility implements Op_EX {
 
     public static final String OP_EX_TYPE = "Op_EX";
 
