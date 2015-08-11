@@ -10,7 +10,6 @@ import org.verapdf.model.operator.Operator;
 import org.verapdf.model.tools.IDGenerator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -48,27 +47,26 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
 
     protected List<CosReal> getLastReal() {
         List<CosReal> cosReals = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-        COSBase base = !arguments.isEmpty() ? arguments
-                .get(arguments.size() - 1) : null;
-        if (base instanceof COSNumber) {
-            cosReals.add(new PBCosReal((COSNumber) base));
-        }
+		if (!this.arguments.isEmpty()) {
+			COSBase base = this.arguments.get(this.arguments.size() - 1);
+			if (base instanceof COSNumber) {
+				cosReals.add(new PBCosReal((COSNumber) base));
+			}
+		}
         return cosReals;
     }
 
 	protected List<CosReal> getListOfReals() {
 		List<CosReal> list = new ArrayList<>();
-		if (!this.arguments.isEmpty()) {
-			for (COSBase base : this.arguments) {
-				if (base instanceof COSArray) {
-					for (COSBase arg : (COSArray) base) {
-						if (arg instanceof COSNumber) {
-							list.add(new PBCosReal((COSNumber) arg));
-						}
+		for (COSBase base : this.arguments) {
+			if (base instanceof COSArray) {
+				for (COSBase arg : (COSArray) base) {
+					if (arg instanceof COSNumber) {
+						list.add(new PBCosReal((COSNumber) arg));
 					}
-				} else if (base instanceof COSNumber) {
-					list.add(new PBCosReal((COSNumber) base));
 				}
+			} else if (base instanceof COSNumber) {
+				list.add(new PBCosReal((COSNumber) base));
 			}
 		}
 		return list;
