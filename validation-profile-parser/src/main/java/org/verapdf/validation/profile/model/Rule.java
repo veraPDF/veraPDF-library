@@ -21,16 +21,31 @@ public class Rule {
     /**
      * Creates new rule model.
      *
-     * @param attrID      - id of the rule
-     * @param attrObject  - name of the object to which this rule applied
-     * @param description - description of the rule
-     * @param ruleError   - rule error
-     * @param isHasError  - is the rule error of type error or warning
-     * @param test        - test of the rule as JavaScript context
-     * @param reference   - reference of the rule
-     * @param fix         - list of fixes for this rule
+     * @param attrID
+     *            id of the rule, can NOT be null
+     * @param attrObject
+     *            name of the object to which this rule applied
+     * @param description
+     *            description of the rule
+     * @param ruleError
+     *            rule error
+     * @param isHasError
+     *            is the rule error of type error or warning
+     * @param test
+     *            test of the rule as JavaScript context
+     * @param reference
+     *            reference of the rule
+     * @param fix
+     *            list of fixes for this rule
+     * @throws IllegalArgumentException
+     *             if the supplied rule ID is null
      */
-    public Rule(String attrID, String attrObject, String description, RuleError ruleError, boolean isHasError, String test, Reference reference, List<Fix> fix) {
+    public Rule(String attrID, String attrObject, String description,
+            RuleError ruleError, boolean isHasError, String test,
+            Reference reference, List<Fix> fix) {
+        if (attrID == null)
+            throw new IllegalArgumentException(
+                    "Rule ID attrID can not be null.");
         this.attrID = attrID;
         this.attrObject = attrObject;
         this.description = description;
@@ -45,57 +60,59 @@ public class Rule {
      * @return Text provided by attribute "id".
      */
     public String getAttrID() {
-        return attrID;
+        return this.attrID;
     }
 
     /**
      * @return Text provided by attribute "object".
      */
     public String getAttrObject() {
-        return attrObject;
+        return this.attrObject;
     }
 
     /**
      * @return Text in tag "description".
      */
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     /**
      * @return Text in tag "test".
      */
     public String getTest() {
-        return test;
+        return this.test;
     }
 
     /**
      * @return Class which represents an error/warning in this rule.
      */
     public RuleError getRuleError() {
-        return ruleError;
+        return this.ruleError;
     }
 
     /**
-     * Get what {@code ruleError} (if {@code this} rule has it) represents: an error or a warning.
+     * Get what {@code ruleError} (if {@code this} rule has it) represents: an
+     * error or a warning.
      *
-     * @return true if {@code ruleError} represents an error, and false if {@code ruleError} represents a warning (or null).
+     * @return true if {@code ruleError} represents an error, and false if
+     *         {@code ruleError} represents a warning (or null).
      */
     public boolean isHasError() {
-        return isHasError;
+        return this.isHasError;
     }
 
     /**
      * @return Class which represents a reference in this rule.
      */
     public Reference getReference() {
-        return reference;
+        return this.reference;
     }
 
     /**
      * @return List of classes which represents fixes in this rule.
      */
     public List<Fix> getFixes() {
-        return fixes;
+        return this.fixes;
     }
 }
