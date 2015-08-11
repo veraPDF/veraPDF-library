@@ -6,6 +6,10 @@ import org.verapdf.model.operator.Op_h;
 import java.util.List;
 
 /**
+ * Operator, which Close the current subpath by appending
+ * a straight line segment from the current point to the
+ * starting point of the sub path
+ *
  * @author Timur Kamalov
  */
 public class PBOp_h extends PBOpPathConstruction implements Op_h {

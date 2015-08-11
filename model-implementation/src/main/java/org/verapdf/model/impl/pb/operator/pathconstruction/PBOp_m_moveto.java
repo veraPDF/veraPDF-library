@@ -7,6 +7,9 @@ import org.verapdf.model.operator.Op_m_moveto;
 import java.util.List;
 
 /**
+ * Operator, which Begin a new subpath by moving the current point
+ * to coordinates (x, y), omitting any connecting line segment
+ *
  * @author Timur Kamalov
  */
 public class PBOp_m_moveto extends PBOpPathConstruction implements Op_m_moveto {

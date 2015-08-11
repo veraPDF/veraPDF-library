@@ -7,6 +7,8 @@ import org.verapdf.model.operator.Op_c;
 import java.util.List;
 
 /**
+ * Operator, which append a cubic Bézier curve to the current path
+ *
  * @author Timur Kamalov
  */
 public class PBOp_c extends PBOpPathConstruction implements Op_c {

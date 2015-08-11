@@ -7,6 +7,10 @@ import org.verapdf.model.operator.Op_re;
 import java.util.List;
 
 /**
+ * Operator, which append a rectangle to the current path
+ * as a complete sub path, with lower-left corner (x, y)
+ * and dimensions width and height in user space
+ *
  * @author Timur Kamalov
  */
 public class PBOp_re extends PBOpPathConstruction implements Op_re {

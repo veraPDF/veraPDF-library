@@ -7,16 +7,14 @@ import org.verapdf.model.operator.OpPathConstruction;
 import java.util.List;
 
 /**
+ * Base class for path construction operators
+ *
  * @author Timur Kamalov
  */
 public abstract class PBOpPathConstruction extends PBOperator implements
         OpPathConstruction {
 
     public static final String CONTROL_POINTS = "controlPoints";
-
-    public PBOpPathConstruction(List<COSBase> arguments) {
-        super(arguments);
-    }
 
     public PBOpPathConstruction(List<COSBase> arguments, final String opType) {
         super(arguments, opType);

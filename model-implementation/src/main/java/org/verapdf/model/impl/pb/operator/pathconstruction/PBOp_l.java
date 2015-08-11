@@ -7,6 +7,9 @@ import org.verapdf.model.operator.Op_l;
 import java.util.List;
 
 /**
+ * Operator, which append a straight line segment
+ * from the current point to the to the point (x, y)
+ *
  * @author Timur Kamalov
  */
 public class PBOp_l extends PBOpPathConstruction implements Op_l {
