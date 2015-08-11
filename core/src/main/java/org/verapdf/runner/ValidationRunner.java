@@ -16,7 +16,6 @@ import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
 import org.verapdf.exceptions.validationlogic.RullWithNullIDException;
 import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
-import org.verapdf.exceptions.validationprofileparser.NullProfileException;
 import org.verapdf.exceptions.validationprofileparser.WrongProfileEncodingException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.model.ModelLoader;
@@ -71,8 +70,6 @@ public class ValidationRunner {
         } catch (WrongProfileEncodingException e) {
             LOGGER.error(e.getMessage(), e);
         } catch (MultiplyGlobalVariableNameException e) {
-            LOGGER.error(e.getMessage(), e);
-        } catch (NullProfileException e) {
             LOGGER.error(e.getMessage(), e);
         }
         return null;

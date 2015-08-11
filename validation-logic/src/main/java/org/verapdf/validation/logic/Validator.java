@@ -395,10 +395,9 @@ public class Validator {
      * @throws XMLStreamException                  - if exception occurs in parsing a validation profile with xml stream (in checking signature of the validation profile)
      * @throws WrongSignatureException             - if validation profile must be signed, but it has wrong signature
      * @throws WrongProfileEncodingException       - if validation profile has not utf8 encoding
-     * @throws NullProfileException                - if resource profile pointer is null
      * @throws MultiplyGlobalVariableNameException - if there is more than one identical global variable names in the profile model
      */
-    public static ValidationInfo validate(Object root, String validationProfilePath, boolean isSignCheckOn) throws IOException, SAXException, ParserConfigurationException, IncorrectImportPathException, NullLinkNameException, JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, RullWithNullIDException, MissedHashTagException, XMLStreamException, WrongSignatureException, WrongProfileEncodingException, NullProfileException, MultiplyGlobalVariableNameException {
+    public static ValidationInfo validate(Object root, String validationProfilePath, boolean isSignCheckOn) throws IOException, SAXException, ParserConfigurationException, IncorrectImportPathException, NullLinkNameException, JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, RullWithNullIDException, MissedHashTagException, XMLStreamException, WrongSignatureException, WrongProfileEncodingException, MultiplyGlobalVariableNameException {
         return validate(root, ValidationProfileParser.parseValidationProfile(validationProfilePath, isSignCheckOn));
     }
 
@@ -423,10 +422,9 @@ public class Validator {
      * @throws XMLStreamException                  - if exception occurs in parsing a validation profile with xml stream (in checking signature of the validation profile)
      * @throws WrongSignatureException             - if validation profile must be signed, but it has wrong signature
      * @throws WrongProfileEncodingException       - if validation profile has not utf8 encoding
-     * @throws NullProfileException                - if resource profile pointer is null
      * @throws MultiplyGlobalVariableNameException - if there is more than one identical global variable names in the profile model
      */
-    public static ValidationInfo validate(Object root, File validationProfile, boolean isSignCheckOn) throws ParserConfigurationException, SAXException, IOException, IncorrectImportPathException, NullLinkNameException, JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, RullWithNullIDException, MissedHashTagException, XMLStreamException, WrongSignatureException, WrongProfileEncodingException, NullProfileException, MultiplyGlobalVariableNameException {
+    public static ValidationInfo validate(Object root, File validationProfile, boolean isSignCheckOn) throws ParserConfigurationException, SAXException, IOException, IncorrectImportPathException, NullLinkNameException, JavaScriptEvaluatingException, NullLinkException, NullLinkedObjectException, RullWithNullIDException, MissedHashTagException, XMLStreamException, WrongSignatureException, WrongProfileEncodingException, MultiplyGlobalVariableNameException {
         return validate(root, ValidationProfileParser.parseValidationProfile(validationProfile, isSignCheckOn));
     }
 

@@ -25,6 +25,7 @@ public final class ValidationProfileParser {
     private static final String CLAUSE = "clause";
     private static final String CREATED = "created";
     private static final String CREATOR = "creator";
+    private static final String DEFAULT_VALUE = "defaultValue";
     private static final String DESCRIPTION = "description";
     private static final String ERROR = "error";
     private static final String FIX = "fix";
@@ -32,6 +33,7 @@ public final class ValidationProfileParser {
     private static final String ID = "id";
     private static final String IMPORT = "import";
     private static final String IMPORTS = "imports";
+    private static final String INFO = "info";
     private static final String MESSAGE = "message";
     private static final String MODEL = "model";
     private static final String NAME = "name";
@@ -41,6 +43,7 @@ public final class ValidationProfileParser {
     private static final String RULES = "rules";
     private static final String SPECIFICATION = "specification";
     private static final String TEST = "test";
+    private static final String VALUE = "value";
     private static final String VARIABLES = "variables";
     private static final String VARIABLE = "variable";
     private static final String WARNING = "warning";
@@ -54,29 +57,29 @@ public final class ValidationProfileParser {
             throws ParserConfigurationException, IOException, SAXException,
             IncorrectImportPathException, XMLStreamException,
             MissedHashTagException, WrongSignatureException,
-            WrongProfileEncodingException, NullProfileException {
-        resource = resourceFile;
+            WrongProfileEncodingException {
+        this.resource = resourceFile;
 
         if (isSignCheckOn) {
             ValidationProfileSignatureChecker checker = ValidationProfileSignatureChecker
-                    .newInstance(resource);
+                    .newInstance(this.resource);
             if (!checker.isValidSignature()) {
                 throw new WrongSignatureException(
                         "Unsigned validation profile: "
-                                + resource.getCanonicalPath());
+                                + this.resource.getCanonicalPath());
             }
         }
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-        builder = factory.newDocumentBuilder();
+        this.builder = factory.newDocumentBuilder();
 
         factory.setIgnoringElementContentWhitespace(true);
 
-        Document doc = builder.parse(resource);
+        Document doc = this.builder.parse(this.resource);
 
-        profilesPaths = new HashSet<>();
-        profilesPaths.add(resourceFile.getCanonicalPath());
+        this.profilesPaths = new HashSet<>();
+        this.profilesPaths.add(resourceFile.getCanonicalPath());
         Node root = doc.getDocumentElement();
         root.normalize();
         parseRoot(root, isSignCheckOn);
@@ -124,7 +127,7 @@ public final class ValidationProfileParser {
                 }
                 break;
             case IMPORTS:
-                parseImports(resource, child, rules);
+                parseImports(this.resource, child, rules);
                 break;
             case RULES:
                 parseRules(child, rules);
@@ -139,7 +142,7 @@ public final class ValidationProfileParser {
             }
         }
 
-        profile = new ValidationProfile(model, name, description, creator,
+        this.profile = new ValidationProfile(model, name, description, creator,
                 created, hash, rules, variables);
     }
 
@@ -165,13 +168,13 @@ public final class ValidationProfileParser {
                                 + "\" directly to the given profile.");
             }
 
-            if (profilesPaths.contains(newFile.getCanonicalPath())) {
+            if (this.profilesPaths.contains(newFile.getCanonicalPath())) {
                 continue;
             }
 
-            profilesPaths.add(newFile.getCanonicalPath());
+            this.profilesPaths.add(newFile.getCanonicalPath());
 
-            Document doc = builder.parse(newFile);
+            Document doc = this.builder.parse(newFile);
 
             NodeList children2 = doc.getDocumentElement().getChildNodes();
 
@@ -300,13 +303,13 @@ public final class ValidationProfileParser {
         String defaultValue = null;
         String value = null;
 
-        Node nameNode = rule.getAttributes().getNamedItem("name");
+        Node nameNode = rule.getAttributes().getNamedItem(NAME);
 
         if (nameNode != null) {
             name = nameNode.getNodeValue();
         }
 
-        Node objectNode = rule.getAttributes().getNamedItem("object");
+        Node objectNode = rule.getAttributes().getNamedItem(OBJECT);
 
         if (objectNode != null) {
             object = objectNode.getNodeValue();
@@ -319,10 +322,10 @@ public final class ValidationProfileParser {
             String childName = child.getNodeName();
 
             switch (childName) {
-            case "defaultValue":
+            case DEFAULT_VALUE:
                 defaultValue = child.getTextContent().trim();
                 break;
-            case "value":
+            case VALUE:
                 value = child.getTextContent().trim();
                 break;
             default:
@@ -420,32 +423,26 @@ public final class ValidationProfileParser {
         for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
             String childName = child.getNodeName();
-            NodeList nodelist;
+            NodeList descendants;
 
             switch (childName) {
-            case "description":
+            case DESCRIPTION:
                 description = child.getTextContent().trim();
                 break;
 
-            case "info":
-                nodelist = child.getChildNodes();
-                for (int j = 0; j < nodelist.getLength(); ++j) {
-                    if (nodelist.item(j).getNodeName().equals("message")) {
-                        info = new FixInfo(nodelist.item(j).getTextContent()
-                                .trim());
-                        break;
-                    }
+            case INFO:
+                descendants = child.getChildNodes();
+                String infoMessageContent = getFirstMessageNodeTextContent(descendants);
+                if (infoMessageContent != null) {
+                    info = new FixInfo(infoMessageContent);
                 }
                 break;
 
-            case "error":
-                nodelist = child.getChildNodes();
-                for (int j = 0; j < nodelist.getLength(); ++j) {
-                    if (nodelist.item(j).getNodeName().equals("message")) {
-                        error = new FixError(nodelist.item(j).getTextContent()
-                                .trim());
-                        break;
-                    }
+            case ERROR:
+                descendants = child.getChildNodes();
+                String errorMessageContent = getFirstMessageNodeTextContent(descendants);
+                if (errorMessageContent != null) {
+                        error = new FixError(errorMessageContent);
                 }
                 break;
             default:
@@ -454,7 +451,15 @@ public final class ValidationProfileParser {
         }
 
         return new Fix(id, description, info, error);
+    }
 
+    private static String getFirstMessageNodeTextContent(final NodeList nodeList) {
+        for (int j = 0; j < nodeList.getLength(); ++j) {
+            if (MESSAGE.equals(nodeList.item(j).getNodeName())) {
+                return nodeList.item(j).getTextContent().trim();
+            }
+        }
+        return null;
     }
 
     /**
@@ -462,6 +467,7 @@ public final class ValidationProfileParser {
      *
      * @param resourcePath
      *            - Path to the file for parse.
+     * @param isSignCheckOn
      * @return Validation profile represent in Java classes.
      * @throws ParserConfigurationException
      *             - if a DocumentBuilder cannot be created which satisfies the
@@ -483,21 +489,19 @@ public final class ValidationProfileParser {
      *             signature
      * @throws WrongProfileEncodingException
      *             - if validation profile has not utf8 encoding
-     * @throws NullProfileException
-     *             - if resource profile pointer is null
      */
     public static ValidationProfile parseValidationProfile(String resourcePath,
             boolean isSignCheckOn) throws ParserConfigurationException,
             SAXException, IOException, IncorrectImportPathException,
             MissedHashTagException, XMLStreamException,
-            WrongSignatureException, WrongProfileEncodingException,
-            NullProfileException {
+            WrongSignatureException, WrongProfileEncodingException {
         return parseValidationProfile(new File(resourcePath), isSignCheckOn);
     }
 
     /**
      * @param resourceFile
      *            - File for parse.
+     * @param isSignCheckOn
      * @return Validation profile represent in Java classes.
      * @throws ParserConfigurationException
      *             - if a DocumentBuilder cannot be created which satisfies the
@@ -519,15 +523,12 @@ public final class ValidationProfileParser {
      *             signature
      * @throws WrongProfileEncodingException
      *             - if validation profile has not utf8 encoding
-     * @throws NullProfileException
-     *             - if resource profile pointer is null
      */
     public static ValidationProfile parseValidationProfile(File resourceFile,
             boolean isSignCheckOn) throws ParserConfigurationException,
             SAXException, IOException, IncorrectImportPathException,
             MissedHashTagException, XMLStreamException,
-            WrongSignatureException, WrongProfileEncodingException,
-            NullProfileException {
+            WrongSignatureException, WrongProfileEncodingException {
         return new ValidationProfileParser(resourceFile, isSignCheckOn).profile;
     }
 }
