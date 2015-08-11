@@ -11,6 +11,7 @@ public enum FeaturesObjectTypesEnum {
     DOCUMENT_SECURITY,
     LOW_LEVEL_INFO,
     EMBEDDED_FILE,
+    ICCPROFILE,
     OUTPUTINTENT,
     OUTLINES,
     ANNOTATION,
