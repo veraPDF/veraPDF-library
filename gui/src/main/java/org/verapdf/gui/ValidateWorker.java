@@ -2,6 +2,7 @@ package org.verapdf.gui;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
@@ -17,7 +18,6 @@ import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
 import org.verapdf.exceptions.validationlogic.RullWithNullIDException;
 import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
-import org.verapdf.exceptions.validationprofileparser.WrongProfileEncodingException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
@@ -57,23 +57,23 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
     @Override
     protected ValidationInfo doInBackground() {
         ValidationInfo info = null;
-        collection = null;
+        this.collection = null;
 
-        ModelLoader loader = new ModelLoader(pdf.getPath());
+        ModelLoader loader = new ModelLoader(this.pdf.getPath());
 
 
         try {
             org.verapdf.model.baselayer.Object root = loader.getRoot();
             info = runValidator(root);
         } catch (IOException e) {
-            parent.errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
+            this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
         }
 
 
         try {
-            collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
+            this.collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(parent, "Some error in creating features collection.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this.parent, "Some error in creating features collection.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
             LOGGER.error("Exception in creating features collection: ", e);
         }
 
@@ -82,16 +82,16 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
     
     private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
         try {
-            return Validator.validate(root, profile, false);
-        } catch (IOException | IncorrectImportPathException | NullLinkNameException | JavaScriptEvaluatingException | NullLinkException | NullLinkedObjectException | RullWithNullIDException | MissedHashTagException | WrongSignatureException | WrongProfileEncodingException | MultiplyGlobalVariableNameException | ParserConfigurationException | SAXException | XMLStreamException e) {
-            parent.errorInValidatingOccur(GUIConstants.ERROR_IN_VALIDATING, e);
+            return Validator.validate(root, this.profile, false);
+        } catch (IOException | IncorrectImportPathException | NullLinkNameException | JavaScriptEvaluatingException | NullLinkException | NullLinkedObjectException | RullWithNullIDException | MissedHashTagException | WrongSignatureException | MultiplyGlobalVariableNameException | ParserConfigurationException | SAXException | XMLStreamException e) {
+            this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_VALIDATING, e);
         }
         return null;
     }
 
     @Override
     protected void done() {
-        parent.validationEnded(collection);
+        this.parent.validationEnded(this.collection);
     }
 
 }

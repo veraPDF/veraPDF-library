@@ -1,19 +1,35 @@
 package org.verapdf.validation.profile.parser;
 
-import org.verapdf.exceptions.validationprofileparser.*;
-import org.verapdf.validation.profile.model.*;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
+
+import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
+import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
+import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
+import org.verapdf.validation.profile.model.Fix;
+import org.verapdf.validation.profile.model.FixError;
+import org.verapdf.validation.profile.model.FixInfo;
+import org.verapdf.validation.profile.model.Reference;
+import org.verapdf.validation.profile.model.Rule;
+import org.verapdf.validation.profile.model.RuleError;
+import org.verapdf.validation.profile.model.ValidationProfile;
+import org.verapdf.validation.profile.model.Variable;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * This class is for parse the validation profile xml file into java classes.
@@ -56,8 +72,7 @@ public final class ValidationProfileParser {
     private ValidationProfileParser(File resourceFile, boolean isSignCheckOn)
             throws ParserConfigurationException, IOException, SAXException,
             IncorrectImportPathException, XMLStreamException,
-            MissedHashTagException, WrongSignatureException,
-            WrongProfileEncodingException {
+            MissedHashTagException, WrongSignatureException {
         this.resource = resourceFile;
 
         if (isSignCheckOn) {
@@ -442,7 +457,7 @@ public final class ValidationProfileParser {
                 descendants = child.getChildNodes();
                 String errorMessageContent = getFirstMessageNodeTextContent(descendants);
                 if (errorMessageContent != null) {
-                        error = new FixError(errorMessageContent);
+                    error = new FixError(errorMessageContent);
                 }
                 break;
             default:
@@ -470,65 +485,61 @@ public final class ValidationProfileParser {
      * @param isSignCheckOn
      * @return Validation profile represent in Java classes.
      * @throws ParserConfigurationException
-     *             - if a DocumentBuilder cannot be created which satisfies the
+     *             if a DocumentBuilder cannot be created which satisfies the
      *             configuration requested.
      * @throws IOException
-     *             - if any IO errors occur.
+     *             if any IO errors occur.
      * @throws SAXException
-     *             - if any parse errors occur.
+     *             if any parse errors occur.
      * @throws IncorrectImportPathException
-     *             - if validation profile contains incorrect input path
+     *             if validation profile contains incorrect input path
      * @throws MissedHashTagException
-     *             - if validation profile must be signed, but it has no hash
-     *             tag
+     *             if validation profile must be signed, but it has no hash tag
      * @throws XMLStreamException
-     *             - if exception occurs in parsing a validation profile with
-     *             xml stream (in checking signature of the validation profile)
+     *             if exception occurs in parsing a validation profile with xml
+     *             stream (in checking signature of the validation profile)
      * @throws WrongSignatureException
-     *             - if validation profile must be signed, but it has wrong
+     *             if validation profile must be signed, but it has wrong
      *             signature
-     * @throws WrongProfileEncodingException
-     *             - if validation profile has not utf8 encoding
+     * @throws UnsupportedEncodingException
+     *             if validation profile has not utf8 encoding
      */
     public static ValidationProfile parseValidationProfile(String resourcePath,
             boolean isSignCheckOn) throws ParserConfigurationException,
             SAXException, IOException, IncorrectImportPathException,
-            MissedHashTagException, XMLStreamException,
-            WrongSignatureException, WrongProfileEncodingException {
+            MissedHashTagException, XMLStreamException, WrongSignatureException {
         return parseValidationProfile(new File(resourcePath), isSignCheckOn);
     }
 
     /**
      * @param resourceFile
-     *            - File for parse.
+     *            File for parse.
      * @param isSignCheckOn
      * @return Validation profile represent in Java classes.
      * @throws ParserConfigurationException
-     *             - if a DocumentBuilder cannot be created which satisfies the
+     *             if a DocumentBuilder cannot be created which satisfies the
      *             configuration requested.
      * @throws IOException
-     *             - if any IO errors occur.
+     *             if any IO errors occur.
      * @throws SAXException
-     *             - if any parse errors occur.
+     *             if any parse errors occur.
      * @throws IncorrectImportPathException
-     *             - if validation profile contains incorrect input path
+     *             if validation profile contains incorrect input path
      * @throws MissedHashTagException
-     *             - if validation profile must be signed, but it has no hash
-     *             tag
+     *             if validation profile must be signed, but it has no hash tag
      * @throws XMLStreamException
-     *             - if exception occurs in parsing a validation profile with
-     *             xml stream (in checking signature of the validation profile)
+     *             if exception occurs in parsing a validation profile with xml
+     *             stream (in checking signature of the validation profile)
      * @throws WrongSignatureException
-     *             - if validation profile must be signed, but it has wrong
+     *             if validation profile must be signed, but it has wrong
      *             signature
-     * @throws WrongProfileEncodingException
-     *             - if validation profile has not utf8 encoding
+     * @throws UnsupportedEncodingException
+     *             if validation profile has not utf8 encoding
      */
     public static ValidationProfile parseValidationProfile(File resourceFile,
             boolean isSignCheckOn) throws ParserConfigurationException,
             SAXException, IOException, IncorrectImportPathException,
-            MissedHashTagException, XMLStreamException,
-            WrongSignatureException, WrongProfileEncodingException {
+            MissedHashTagException, XMLStreamException, WrongSignatureException {
         return new ValidationProfileParser(resourceFile, isSignCheckOn).profile;
     }
 }
