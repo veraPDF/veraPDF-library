@@ -162,7 +162,7 @@ public final class XMLFeaturesReport {
             for (int i = 0; i < source.length(); ++i) {
                 char curChar = source.charAt(i);
                 if ('#' == curChar) {
-                    builder.append("0x000023");
+                    builder.append("#x000023");
                 } else {
                     int codePoint = source.codePointAt(i);
                     if (Character.isHighSurrogate(curChar)) {
@@ -178,7 +178,7 @@ public final class XMLFeaturesReport {
                             builder.append(source.charAt(i));
                         }
                     } else {
-                        builder.append(formatter.format("#x%06X", String.valueOf(codePoint)));
+                        builder.append(formatter.format("#x%06X", codePoint));
                     }
                 }
             }
