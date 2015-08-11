@@ -6,6 +6,10 @@ import org.verapdf.model.operator.Op_WStar;
 import java.util.List;
 
 /**
+ * Operator, which modify the current clipping path by intersecting it
+ * with the current path, using the even-odd rule to determine which
+ * regions lie inside the clipping path
+ *
  * @author Timur Kamalov
  */
 public class PBOp_WStar extends PBOpClip implements Op_WStar {
