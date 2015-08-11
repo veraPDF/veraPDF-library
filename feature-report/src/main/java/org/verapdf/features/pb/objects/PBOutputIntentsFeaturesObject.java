@@ -21,14 +21,20 @@ import org.verapdf.features.tools.FeaturesCollection;
 public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
 
     private PDOutputIntent outInt;
+    private String id;
+    private String iccProfileID;
 
     /**
      * Constructs new OutputIntent Feature Object
      *
      * @param outInt - pdfbox class represents OutputIntent object
+     * @param id - id of the outputIntent
+     * @param iccProfileID - id of the icc profile which use in this outputIntent
      */
-    public PBOutputIntentsFeaturesObject(PDOutputIntent outInt) {
+    public PBOutputIntentsFeaturesObject(PDOutputIntent outInt, String id, String iccProfileID) {
         this.outInt = outInt;
+        this.id = id;
+        this.iccProfileID = iccProfileID;
     }
 
     /**
@@ -50,6 +56,7 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
         if (outInt != null) {
             FeatureTreeNode root = FeatureTreeNode.newRootInstance("outputIntent");
+            root.addAttribute("id", id);
 
             addSubtype(collection, root);
 
@@ -58,7 +65,8 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
             PBCreateNodeHelper.addNotEmptyNode("registryName", outInt.getRegistryName(), root);
             PBCreateNodeHelper.addNotEmptyNode("info", outInt.getInfo(), root);
 
-            // TODO: Add iccProfiles support
+            FeatureTreeNode destOutInt = FeatureTreeNode.newChildInstance("destOutputIntent", root);
+            destOutInt.addAttribute("id", iccProfileID);
 
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTPUTINTENT, root);
 

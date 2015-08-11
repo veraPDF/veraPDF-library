@@ -90,8 +90,8 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
     public Double getversion() {
         if (profileHeader.length > SUBVERSION_BYTE) {
             StringBuilder version = new StringBuilder(VERSION_LENGTH);
-            version.append(profileHeader[VERSION_BYTE]).append('.');
-            version.append(profileHeader[SUBVERSION_BYTE] >>> REQUIRED_LENGTH);
+            version.append(profileHeader[VERSION_BYTE] & 0xFF).append('.');
+            version.append((profileHeader[SUBVERSION_BYTE] >>> REQUIRED_LENGTH) & 0xFF);
 
             return Double.valueOf(version.toString());
         }

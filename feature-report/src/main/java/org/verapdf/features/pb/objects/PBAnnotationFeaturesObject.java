@@ -65,7 +65,7 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
         if (annot != null) {
-            FeatureTreeNode root = FeatureTreeNode.newChildInstance("annotation", null);
+            FeatureTreeNode root = FeatureTreeNode.newRootInstance("annotation");
             root.addAttribute(ID, id);
 
             addParents(root);

@@ -88,12 +88,16 @@ import org.verapdf.model.tools.constants.Operators;
  * @author carlwilson
  *
  */
-public class OperatorParser {
+class OperatorParser {
     private static final Logger LOGGER = Logger.getLogger(OperatorParser.class);
     private static final String MSG_PROBEM_OBTAINING_RESOURCE = "Problem encountered while obtaining resources for ";
 
     private final Stack<GraphicState> graphicStateStack = new Stack<>();
     private final GraphicState graphicState = new GraphicState();
+
+	OperatorParser() {
+		// limit the scope
+	}
 
     Operator parseOperator(
             org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
@@ -303,7 +307,9 @@ public class OperatorParser {
         case Operators.CM_CONCAT:
             return new PBOp_cm(arguments);
         case Operators.Q_GRESTORE:
-            graphicState.copyProperties(graphicStateStack.pop());
+			if (graphicStateStack.size() > 0) {
+				graphicState.copyProperties(graphicStateStack.pop());
+			}
             return new PBOp_Q_grestore(arguments);
         case Operators.Q_GSAVE:
             graphicStateStack.push(graphicState.clone());

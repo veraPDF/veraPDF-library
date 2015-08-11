@@ -17,10 +17,6 @@ public abstract class PBOp_General_Td extends PBOpTextPosition {
     public static final String HORIZONTAL_OFFSET = "horizontalOffset";
     public static final String VERTICAL_OFFSET = "verticalOffset";
 
-    protected PBOp_General_Td(List<COSBase> arguments) {
-        super(arguments);
-    }
-
     protected PBOp_General_Td(List<COSBase> arguments, final String opType) {
         super(arguments, opType);
     }
@@ -31,10 +27,10 @@ public abstract class PBOp_General_Td extends PBOpTextPosition {
 
         switch (link) {
         case VERTICAL_OFFSET:
-            list = getVerticalOffset();
+            list = this.getVerticalOffset();
             break;
         case HORIZONTAL_OFFSET:
-            list = getHorizontalOffset();
+            list = this.getHorizontalOffset();
             break;
         default:
             list = super.getLinkedObjects(link);
