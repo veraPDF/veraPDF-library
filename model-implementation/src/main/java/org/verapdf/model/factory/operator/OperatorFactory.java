@@ -19,6 +19,7 @@ public final class OperatorFactory {
     private static final Logger LOGGER = Logger
             .getLogger(OperatorFactory.class);
     private static final String MSG_UNEXPECTED_OBJECT_TYPE = "Unexpected type of object in tokens: ";
+    private static final String GS_CLONE_MALFUNCTION = "GraphicsState clone function threw CloneNotSupportedException.";
 
     private OperatorFactory() {
         // Disable default constructor
@@ -38,9 +39,14 @@ public final class OperatorFactory {
             if (pdfBoxToken instanceof COSBase) {
                 arguments.add((COSBase) pdfBoxToken);
             } else if (pdfBoxToken instanceof org.apache.pdfbox.contentstream.operator.Operator) {
-                result.add(parser.parseOperator(
-                        (org.apache.pdfbox.contentstream.operator.Operator) pdfBoxToken,
-                        resources, arguments));
+                try {
+                    result.add(parser.parseOperator(
+                            (org.apache.pdfbox.contentstream.operator.Operator) pdfBoxToken,
+                            resources, arguments));
+                } catch (CloneNotSupportedException e) {
+                    LOGGER.debug("GraphicsState clone issues for pdfBoxToken:" + pdfBoxToken);
+                    LOGGER.debug(GS_CLONE_MALFUNCTION, e);
+                }
                 arguments.clear();
             } else if (pdfBoxToken instanceof RenderingIntent) {
                 String value = ((RenderingIntent) pdfBoxToken).stringValue();

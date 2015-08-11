@@ -73,13 +73,13 @@ public class GraphicState implements Cloneable {
     }
 
     @Override
-    public GraphicState clone() {
-        GraphicState graphicState = new GraphicState();
-        graphicState.setFillColorSpace(this.getFillColorSpace());
-        graphicState.setStrokeColorSpace(this.getStrokeColorSpace());
-        graphicState.setPattern(this.getPattern());
-        graphicState.setRenderingMode(this.getRenderingMode());
-        graphicState.setFont(this.getFont());
+    public GraphicState clone() throws CloneNotSupportedException {
+        GraphicState graphicState = (GraphicState) super.clone();
+        graphicState.fillColorSpace = this.fillColorSpace;
+        graphicState.strokeColorSpace = this.strokeColorSpace;
+        graphicState.pattern = this.pattern;
+        graphicState.renderingMode = this.renderingMode;
+        graphicState.font = this.font;
         return graphicState;
     }
 
