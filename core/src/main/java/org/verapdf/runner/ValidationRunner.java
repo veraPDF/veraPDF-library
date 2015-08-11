@@ -13,7 +13,6 @@ import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameExceptio
 import org.verapdf.exceptions.validationlogic.NullLinkException;
 import org.verapdf.exceptions.validationlogic.NullLinkNameException;
 import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
-import org.verapdf.exceptions.validationlogic.RullWithNullIDException;
 import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
@@ -57,8 +56,6 @@ public class ValidationRunner {
         } catch (JavaScriptEvaluatingException e) {
             LOGGER.error(e.getMessage(), e);
         } catch (NullLinkedObjectException e) {
-            LOGGER.error(e.getMessage(), e);
-        } catch (RullWithNullIDException e) {
             LOGGER.error(e.getMessage(), e);
         } catch (MissedHashTagException e) {
             LOGGER.error(e.getMessage(), e);

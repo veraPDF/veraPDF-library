@@ -1,24 +1,43 @@
 package org.verapdf.validation.logic;
 
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.NativeJavaObject;
-import org.mozilla.javascript.ScriptableObject;
-import org.verapdf.exceptions.validationlogic.*;
-import org.verapdf.exceptions.validationprofileparser.*;
-import org.verapdf.model.baselayer.Object;
-import org.verapdf.validation.profile.model.ValidationProfile;
-import org.verapdf.validation.profile.model.Variable;
-import org.verapdf.validation.profile.parser.ValidationProfileParser;
-import org.verapdf.validation.report.model.*;
-import org.xml.sax.SAXException;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Stack;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.*;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.NativeJavaObject;
+import org.mozilla.javascript.ScriptableObject;
+import org.verapdf.exceptions.validationlogic.JavaScriptEvaluatingException;
+import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameException;
+import org.verapdf.exceptions.validationlogic.NullLinkException;
+import org.verapdf.exceptions.validationlogic.NullLinkNameException;
+import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
+import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
+import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
+import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
+import org.verapdf.model.baselayer.Object;
+import org.verapdf.validation.profile.model.ValidationProfile;
+import org.verapdf.validation.profile.model.Variable;
+import org.verapdf.validation.profile.parser.ValidationProfileParser;
+import org.verapdf.validation.report.model.Check;
+import org.verapdf.validation.report.model.CheckError;
+import org.verapdf.validation.report.model.CheckLocation;
+import org.verapdf.validation.report.model.Details;
+import org.verapdf.validation.report.model.Profile;
+import org.verapdf.validation.report.model.Result;
+import org.verapdf.validation.report.model.Rule;
+import org.verapdf.validation.report.model.ValidationInfo;
+import org.xml.sax.SAXException;
 
 /**
  * Validation logic
@@ -50,8 +69,7 @@ public class Validator {
 
     private ValidationInfo validate(Object root) throws NullLinkNameException,
             JavaScriptEvaluatingException, NullLinkException,
-            NullLinkedObjectException, RullWithNullIDException,
-            MultiplyGlobalVariableNameException {
+            NullLinkedObjectException, MultiplyGlobalVariableNameException {
         this.objectsStack = new Stack<>();
         this.objectsContext = new Stack<>();
         this.contextSet = new Stack<>();
@@ -78,8 +96,8 @@ public class Validator {
             }
 
             return new ValidationInfo(new Profile(this.profile.getName(),
-                    this.profile.getHash()),
-                    new Result(new Details(rules, warnings)));
+                    this.profile.getHash()), new Result(new Details(rules,
+                    warnings)));
 
         }
         initializeAllVariables();
@@ -111,7 +129,8 @@ public class Validator {
         }
 
         return new ValidationInfo(new Profile(this.profile.getName(),
-                this.profile.getHash()), new Result(new Details(rules, warnings)));
+                this.profile.getHash()), new Result(
+                new Details(rules, warnings)));
     }
 
     private void initializeAllVariables() throws JavaScriptEvaluatingException,
@@ -150,8 +169,7 @@ public class Validator {
     }
 
     private boolean checkNext() throws JavaScriptEvaluatingException,
-            NullLinkException, NullLinkedObjectException,
-            NullLinkNameException, RullWithNullIDException {
+            NullLinkException, NullLinkedObjectException, NullLinkNameException {
 
         Object checkObject = this.objectsStack.pop();
         String checkContext = this.objectsContext.pop();
@@ -169,7 +187,8 @@ public class Validator {
     private void updateVariables(Object object, String context)
             throws JavaScriptEvaluatingException {
         if (this.profile.getVariablesForObject(object.getType()) != null) {
-            for (Variable var : this.profile.getVariablesForObject(object.getType())) {
+            for (Variable var : this.profile.getVariablesForObject(object
+                    .getType())) {
                 if (var != null) {
 
                     Context cx = Context.enter();
@@ -277,7 +296,7 @@ public class Validator {
     }
 
     private boolean checkAllRules(Object checkObject, String checkContext)
-            throws JavaScriptEvaluatingException, RullWithNullIDException {
+            throws JavaScriptEvaluatingException {
         boolean res = true;
         if (this.profile.getRoolsForObject(checkObject.getType()) != null) {
             for (org.verapdf.validation.profile.model.Rule rule : this.profile
@@ -341,7 +360,7 @@ public class Validator {
 
     private boolean checkObjWithRule(Object obj, String context,
             org.verapdf.validation.profile.model.Rule rule, String script)
-            throws JavaScriptEvaluatingException, RullWithNullIDException {
+            throws JavaScriptEvaluatingException {
         Context cx = Context.enter();
         ScriptableObject scope = cx.initStandardObjects();
 
@@ -354,10 +373,9 @@ public class Validator {
         Boolean res;
 
         /**
-         * TODO:
-         * Carl wonders what undeclared exceptions we're catching here and why?
-         * I'd suggest getting rid of the exception type and the catch for now
-         * and see what sort of unchecked exceptions we throw in practise.
+         * TODO: Carl wonders what undeclared exceptions we're catching here and
+         * why? I'd suggest getting rid of the exception type and the catch for
+         * now and see what sort of unchecked exceptions we throw in practise.
          */
         try {
             res = (Boolean) cx.evaluateString(scope, script, null, 0, null);
@@ -377,11 +395,6 @@ public class Validator {
             check = createFailCkeck(obj, loc, rule, cx, scope, context);
         }
 
-        if (rule.getAttrID() == null) {
-            throw new RullWithNullIDException(
-                    "There is a rule with null id in the profile. Profile name: "
-                            + this.profile.getName());
-        }
         this.checkMap.get(rule.getAttrID()).add(check);
 
         Context.exit();
@@ -469,8 +482,6 @@ public class Validator {
      *             if there is a null link
      * @throws NullLinkedObjectException
      *             if there is a null object in links list
-     * @throws RullWithNullIDException
-     *             if there is a rule with null id in the profile
      * @throws MissedHashTagException
      *             if validation profile must be signed, but it has no hash tag
      * @throws XMLStreamException
@@ -490,9 +501,9 @@ public class Validator {
             throws IOException, SAXException, ParserConfigurationException,
             IncorrectImportPathException, NullLinkNameException,
             JavaScriptEvaluatingException, NullLinkException,
-            NullLinkedObjectException, RullWithNullIDException,
-            MissedHashTagException, XMLStreamException,
-            WrongSignatureException, MultiplyGlobalVariableNameException {
+            NullLinkedObjectException, MissedHashTagException,
+            XMLStreamException, WrongSignatureException,
+            MultiplyGlobalVariableNameException {
         return validate(root, ValidationProfileParser.parseValidationProfile(
                 validationProfilePath, isSignCheckOn));
     }
@@ -526,8 +537,6 @@ public class Validator {
      *             if there is a null link
      * @throws NullLinkedObjectException
      *             if there is a null object in links list
-     * @throws RullWithNullIDException
-     *             if there is a rule with null id in the profile
      * @throws MissedHashTagException
      *             if validation profile must be signed, but it has no hash tag
      * @throws XMLStreamException
@@ -547,9 +556,8 @@ public class Validator {
             SAXException, IOException, IncorrectImportPathException,
             NullLinkNameException, JavaScriptEvaluatingException,
             NullLinkException, NullLinkedObjectException,
-            RullWithNullIDException, MissedHashTagException,
-            XMLStreamException, WrongSignatureException,
-            MultiplyGlobalVariableNameException {
+            MissedHashTagException, XMLStreamException,
+            WrongSignatureException, MultiplyGlobalVariableNameException {
         return validate(root, ValidationProfileParser.parseValidationProfile(
                 validationProfile, isSignCheckOn));
     }
@@ -567,24 +575,21 @@ public class Validator {
      *            validation profile's structure
      * @return validation info structure
      * @throws NullLinkNameException
-     *            if there is a null link name in some object
+     *             if there is a null link name in some object
      * @throws JavaScriptEvaluatingException
-     *            if there is some problems with evaluating javascript
+     *             if there is some problems with evaluating javascript
      * @throws NullLinkException
-     *            if there is a null link
+     *             if there is a null link
      * @throws NullLinkedObjectException
-     *            if there is a null object in links list
-     * @throws RullWithNullIDException
-     *            if there is a rule with null id in the profile
+     *             if there is a null object in links list
      * @throws MultiplyGlobalVariableNameException
-     *            if there is more than one identical global variable names
-     *             in the profile model
+     *             if there is more than one identical global variable names in
+     *             the profile model
      */
     public static ValidationInfo validate(Object root,
             ValidationProfile validationProfile) throws NullLinkNameException,
             JavaScriptEvaluatingException, NullLinkException,
-            NullLinkedObjectException, RullWithNullIDException,
-            MultiplyGlobalVariableNameException {
+            NullLinkedObjectException, MultiplyGlobalVariableNameException {
         Validator validator = new Validator(validationProfile);
         return validator.validate(root);
     }

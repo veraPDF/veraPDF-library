@@ -2,7 +2,6 @@ package org.verapdf.gui;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
@@ -15,7 +14,6 @@ import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameExceptio
 import org.verapdf.exceptions.validationlogic.NullLinkException;
 import org.verapdf.exceptions.validationlogic.NullLinkNameException;
 import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
-import org.verapdf.exceptions.validationlogic.RullWithNullIDException;
 import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
@@ -83,7 +81,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
     private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
         try {
             return Validator.validate(root, this.profile, false);
-        } catch (IOException | IncorrectImportPathException | NullLinkNameException | JavaScriptEvaluatingException | NullLinkException | NullLinkedObjectException | RullWithNullIDException | MissedHashTagException | WrongSignatureException | MultiplyGlobalVariableNameException | ParserConfigurationException | SAXException | XMLStreamException e) {
+        } catch (IOException | IncorrectImportPathException | NullLinkNameException | JavaScriptEvaluatingException | NullLinkException | NullLinkedObjectException | MissedHashTagException | WrongSignatureException | MultiplyGlobalVariableNameException | ParserConfigurationException | SAXException | XMLStreamException e) {
             this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_VALIDATING, e);
         }
         return null;
