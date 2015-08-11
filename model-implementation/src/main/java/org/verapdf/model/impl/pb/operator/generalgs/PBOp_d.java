@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Operator, which set the line dash pattern in the graphics state
+ *
  * @author Timur Kamalov
  */
 public class PBOp_d extends PBOpGeneralGS implements Op_d {
@@ -39,8 +41,12 @@ public class PBOp_d extends PBOpGeneralGS implements Op_d {
 
     private List<CosArray> getDashArray() {
         List<CosArray> list = new ArrayList<>(OPERANDS_COUNT);
-        if (!arguments.isEmpty() && arguments.get(0) instanceof COSArray) {
-            list.add(new PBCosArray((COSArray) arguments.get(0)));
+        if (this.arguments.size() > 2) {
+			COSBase array = this.arguments
+					.get(this.arguments.size() - 2);
+			if (array instanceof COSArray) {
+				list.add(new PBCosArray((COSArray) array));
+			}
         }
         return list;
     }

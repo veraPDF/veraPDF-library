@@ -7,6 +7,8 @@ import org.verapdf.model.operator.Op_i;
 import java.util.List;
 
 /**
+ * Operator, which set the flatness tolerance in the graphics state
+ *
  * @author Timur Kamalov
  */
 public class PBOp_i extends PBOpGeneralGS implements Op_i {

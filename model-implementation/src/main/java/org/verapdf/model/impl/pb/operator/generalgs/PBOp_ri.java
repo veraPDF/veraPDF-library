@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Operator, which set the color rendering intent in the graphics state
+ *
  * @author Timur Kamalov
  */
 public class PBOp_ri extends PBOpGeneralGS implements Op_ri {
@@ -32,11 +34,12 @@ public class PBOp_ri extends PBOpGeneralGS implements Op_ri {
 
     private List<CosRenderingIntent> getRenderingIntent() {
         List<CosRenderingIntent> list = new ArrayList<>(OPERANDS_COUNT);
-        COSBase base = !this.arguments.isEmpty() ? this.arguments
-                .get(this.arguments.size() - 1) : null;
-        if (base instanceof COSName) {
-            list.add(new PBCosRenderingIntent((COSName) base));
-        }
+		if (!this.arguments.isEmpty()) {
+			COSBase base = this.arguments.get(this.arguments.size() - 1);
+			if (base instanceof COSName) {
+				list.add(new PBCosRenderingIntent((COSName) base));
+			}
+		}
         return list;
     }
 

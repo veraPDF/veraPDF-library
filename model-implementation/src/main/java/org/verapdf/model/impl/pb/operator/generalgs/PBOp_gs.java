@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Operator, which set the specified parameters in the graphics state.
+ * Parameters specified by dictName. dictName is the name of a graphics
+ * state parameter dictionary in the ExtGState sub dictionary of the
+ * current resource dictionary
+ *
  * @author Timur Kamalov
  */
 public class PBOp_gs extends PBOpGeneralGS implements Op_gs {

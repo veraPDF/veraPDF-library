@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Operator, which set the line cap style in the graphics state
+ *
  * @author Timur Kamalov
  */
 public class PBOp_J_line_cap extends PBOpGeneralGS implements Op_J_line_cap {
@@ -32,10 +34,11 @@ public class PBOp_J_line_cap extends PBOpGeneralGS implements Op_J_line_cap {
 
     private List<CosInteger> getLineCap() {
         List<CosInteger> list = new ArrayList<>(OPERANDS_COUNT);
-        if (!this.arguments.isEmpty()
-                && this.arguments.get(arguments.size() - 1) instanceof COSInteger) {
-            list.add(new PBCosInteger((COSInteger) this.arguments.get(arguments
-                    .size() - 1)));
+        if (!this.arguments.isEmpty()) {
+			COSBase number = this.arguments.get(arguments.size() - 1);
+			if (number instanceof COSInteger) {
+				list.add(new PBCosInteger((COSInteger) number));
+			}
         }
         return list;
     }

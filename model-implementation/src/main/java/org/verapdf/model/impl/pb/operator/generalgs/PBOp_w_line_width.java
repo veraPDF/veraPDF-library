@@ -8,6 +8,8 @@ import org.verapdf.model.operator.Op_w_line_width;
 import java.util.List;
 
 /**
+ * Operator, which set the line width in the graphics state
+ *
  * @author Timur Kamalov
  */
 public class PBOp_w_line_width extends PBOpGeneralGS implements Op_w_line_width {
