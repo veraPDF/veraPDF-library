@@ -6,6 +6,9 @@ import org.verapdf.model.operator.Op_BDC;
 import java.util.List;
 
 /**
+ * Operator, which begin a marked-content sequence
+ * with an associated property list
+ *
  * @author Timur Kamalov
  */
 public class PBOp_BDC extends PBOpMarkedContent implements Op_BDC {

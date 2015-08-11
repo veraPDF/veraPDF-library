@@ -6,6 +6,8 @@ import org.verapdf.model.operator.Op_EMC;
 import java.util.List;
 
 /**
+ * Operator, which end a marked-content sequence
+ *
  * @author Timur Kamalov
  */
 public class PBOp_EMC extends PBOpMarkedContent implements Op_EMC {

@@ -6,6 +6,9 @@ import org.verapdf.model.operator.Op_DP;
 import java.util.List;
 
 /**
+ * Operator, which Designate a marked-content point
+ * with an associated property list
+ *
  * @author Timur Kamalov
  */
 public class PBOp_DP extends PBOpMarkedContent implements Op_DP {
