@@ -42,6 +42,13 @@ public final class ErrorsHelper {
     public static final String PARSINGEMBEDDEDFILEERROR_ID = "embfierr1";
     public static final String PARSINGEMBEDDEDFILEERROR_MESSAGE = "Error while parsing embedded files.";
 
+    public static final String GETINGICCPROFILEERROR_ID = "iccprofileerr1";
+    public static final String GETINGICCPROFILEERROR_MESSAGE = "Error while getting icc profile. Probably stream has been closed.";
+    public static final String GETINGICCPROFILEHEADERERROR_ID = "iccprofileerr2";
+    public static final String GETINGICCPROFILEHEADERERROR_MESSAGE = "Error while getting icc profile bytes.";
+    public static final String GETINGICCPROFILEHEADERSIZEERROR_ID = "iccprofileerr3";
+    public static final String GETINGICCPROFILEHEADERSIZEERROR_MESSAGE = "ICC Profile's header has less than 128 bytes.";
+
     public static final String XMLINVALIDCHARACTERS_ID = "xmlinvcharerr1";
     public static final String XMLINVALIDCHARACTERS_MESSAGE = "Element's data contains invalid for XML characters.";
 

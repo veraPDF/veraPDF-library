@@ -52,17 +52,17 @@ public class ValidationLogicTest {
         ValidationInfo info = Validator.validate(obj,
                 getSystemIndependentPath("/test.xml"), false);
 
-        assertEquals(info.getProfile().getName(),
-                "Validation profile for testing");
+        assertEquals("Validation profile for testing",
+                info.getProfile().getName());
         assertNull(info.getProfile().getHash());
 
         assertFalse(info.getResult().isCompliant());
 
-        assertEquals(info.getResult().getSummary().getAttrPassedRules(), 3);
-        assertEquals(info.getResult().getSummary().getAttrFailedRules(), 4);
+        assertEquals(3, info.getResult().getSummary().getAttrPassedRules());
+        assertEquals(4, info.getResult().getSummary().getAttrFailedRules());
 
-        assertEquals(info.getResult().getSummary().getAttrPassedChecks(), 9);
-        assertEquals(info.getResult().getSummary().getAttrFailedChecks(), 5);
+        assertEquals(9, info.getResult().getSummary().getAttrPassedChecks());
+        assertEquals(5, info.getResult().getSummary().getAttrFailedChecks());
 
     }
 

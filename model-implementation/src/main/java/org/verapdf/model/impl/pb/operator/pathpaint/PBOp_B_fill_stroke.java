@@ -13,7 +13,7 @@ import java.util.List;
 public class PBOp_B_fill_stroke extends PBOpFillAndStroke implements
         Op_B_fill_stroke {
 
-    private static final String OP_B_FILL_STROKE_TYPE = "Op_B_fill_stroke";
+    public static final String OP_B_FILL_STROKE_TYPE = "Op_B_fill_stroke";
 
     public PBOp_B_fill_stroke(List<COSBase> arguments,
             PDColorSpace strokeColorSpace, PDColorSpace fillColorSpace,

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class PBOp_FStar extends PBOpFillPaint implements Op_FStar {
 
-    private static final String OP_FSTAR_TYPE = "Op_FStar";
+    public static final String OP_FSTAR_TYPE = "Op_FStar";
 
     public PBOp_FStar(List<COSBase> arguments, PDColorSpace colorSpace, PDAbstractPattern pattern) {
         super(arguments, pattern, null, colorSpace, OP_FSTAR_TYPE);

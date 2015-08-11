@@ -40,8 +40,8 @@ public class Operators {
     public static final String S_STROKE = "S";
     public static final String SH = "sh";
     public static final String V = "v";
-    public static final String W_CLIP = "w";
-    public static final String W_LINE_WIDTH = "W";
+    public static final String W_CLIP = "W";
+    public static final String W_LINE_WIDTH = "w";
     public static final String W_STAR_EOCLIP = "W*";
     public static final String Y = "y";
     public static final String CS_STROKE = "CS";
