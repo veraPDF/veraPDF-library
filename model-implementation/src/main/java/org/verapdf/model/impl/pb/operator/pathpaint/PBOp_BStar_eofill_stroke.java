@@ -13,7 +13,7 @@ import java.util.List;
 public class PBOp_BStar_eofill_stroke extends PBOpFillAndStroke implements
         Op_BStar_eofill_stroke {
 
-    private static final String OP_BSTAR_EOFILL_STROKE_TYPE = "Op_BStar_eofill_stroke";
+    public static final String OP_BSTAR_EOFILL_STROKE_TYPE = "Op_BStar_eofill_stroke";
 
     public PBOp_BStar_eofill_stroke(List<COSBase> arguments,
             PDColorSpace strokeColorSpace, PDColorSpace fillColorSpace,
