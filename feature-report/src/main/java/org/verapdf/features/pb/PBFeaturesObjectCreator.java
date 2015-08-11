@@ -11,6 +11,7 @@ import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
 import org.verapdf.features.pb.objects.*;
 
+import java.io.InputStream;
 import java.util.Set;
 
 /**
@@ -74,10 +75,12 @@ public final class PBFeaturesObjectCreator {
     /**
      * Creates new PBOutputIntentsFeaturesObject
      * @param outInt - PDOutputIntent class from pdfbox, which represents an outputIntent for feature report
+     * @param id - id of the outputIntent
+     * @param iccProfileID - id of the icc profile which use in this outputIntent
      * @return created PBOutputIntentsFeaturesObject
      */
-    public static PBOutputIntentsFeaturesObject createOutputIntentFeaturesObject(PDOutputIntent outInt) {
-        return new PBOutputIntentsFeaturesObject(outInt);
+    public static PBOutputIntentsFeaturesObject createOutputIntentFeaturesObject(PDOutputIntent outInt, String id, String iccProfileID) {
+        return new PBOutputIntentsFeaturesObject(outInt, id, iccProfileID);
     }
 
     /**
@@ -114,5 +117,19 @@ public final class PBFeaturesObjectCreator {
      */
     public static PBPageFeaturesObject createPageFeaturesObject(PDPage page, Set<String> annotsId, String id, int index) {
         return new PBPageFeaturesObject(page, annotsId, id, index);
+    }
+
+    /**
+     * Creates new PBICCProfileFeaturesObject
+     *
+     * @param profile   input stream which represents the icc profile for feature report
+     * @param id        - id of the profile
+     * @param outInts   - set of ids of all parent output intents for this icc profile
+     * @param iccBaseds - set of ids of all parent icc based color spaces for this icc profile
+     * @return created PBICCProfileFeaturesObject
+     */
+    public static PBICCProfileFeaturesObject createICCProfileFeaturesObject(InputStream profile, String id,
+                                                                            Set<String> outInts, Set<String> iccBaseds) {
+        return new PBICCProfileFeaturesObject(profile, id, outInts, iccBaseds);
     }
 }

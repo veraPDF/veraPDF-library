@@ -1,22 +1,8 @@
 package org.verapdf.features.pb;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.COSArray;
-import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSObject;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
-import org.apache.pdfbox.pdmodel.PDEmbeddedFilesNameTreeNode;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageTree;
+import org.apache.pdfbox.cos.*;
+import org.apache.pdfbox.pdmodel.*;
 import org.apache.pdfbox.pdmodel.common.PDNameTreeNode;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
@@ -27,6 +13,10 @@ import org.verapdf.features.FeaturesReporter;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
 
 /**
  * Parses PDFBox PDDocument to generate features collection
@@ -106,21 +96,38 @@ public final class PBFeatureParser {
             reportEmbeddedFiles(catalog, reporter);
         }
 
-        if (catalog.getOutputIntents() != null) {
-            for (PDOutputIntent outInt : catalog.getOutputIntents()) {
-                reporter.report(PBFeaturesObjectCreator
-                        .createOutputIntentFeaturesObject(outInt));
-            }
-        }
+        Map<String, InputStream> iccProfiles = new HashMap<>();
+        Map<String, Set<String>> iccProfileOutInts = new HashMap<>();
+        Map<String, Set<String>> iccProfileICCBased = new HashMap<>();
 
         Map<String, PDAnnotation> annots = new HashMap<>();
         Map<String, Set<String>> annotPages = new HashMap<>();
         Map<String, String> annotChild = new HashMap<>();
         Map<String, String> annotParent = new HashMap<>();
 
+        if (catalog.getOutputIntents() != null) {
+            int outIntNumber = 0;
+            for (PDOutputIntent outInt : catalog.getOutputIntents()) {
+                String outIntID = getId(outInt.getCOSObject(), "outInt", outIntNumber++);
+                String iccProfileID = addICCProfileFromOutputIntent(outInt, outIntID,
+                        iccProfiles, iccProfileOutInts, reporter);
+                reporter.report(PBFeaturesObjectCreator
+                        .createOutputIntentFeaturesObject(outInt, outIntID, iccProfileID));
+            }
+        }
+
         PDPageTree pageTree = catalog.getPages();
         if (pageTree != null) {
             getPageTreeFeatures(pageTree, annots, annotPages, annotChild, annotParent, reporter);
+        }
+
+        for (Map.Entry<String, InputStream> iccProfileEntry : iccProfiles.entrySet()) {
+            if (iccProfileEntry.getValue() != null) {
+                String id = iccProfileEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createICCProfileFeaturesObject(iccProfileEntry.getValue(), id,
+                                iccProfileOutInts.get(id), iccProfileICCBased.get(id)));
+            }
         }
 
         for (Map.Entry<String, PDAnnotation> annotEntry : annots.entrySet()) {
@@ -287,22 +294,7 @@ public final class PBFeatureParser {
             }
         } catch (IOException e) {
             LOGGER.debug("Error creating PDFBox SubType.", e);
-            try {
-                FeatureTreeNode embeddedFileNode = FeatureTreeNode
-                        .newRootInstance("embeddedFile");
-                embeddedFileNode.addAttribute(ErrorsHelper.ERRORID,
-                        ErrorsHelper.PARSINGEMBEDDEDFILEERROR_ID);
-                ErrorsHelper.addErrorIntoCollection(reporter.getCollection(),
-                        ErrorsHelper.PARSINGEMBEDDEDFILEERROR_ID,
-                        ErrorsHelper.PARSINGEMBEDDEDFILEERROR_MESSAGE);
-            } catch (FeaturesTreeNodeException e1) {
-                // This exception occurs when wrong node creates for feature
-                // tree.
-                // The logic of the method guarantees this doesn't occur.
-                String message = "PBFeatureParser.reportEmbeddedFiles logic failure.";
-                LOGGER.fatal(message, e1);
-                throw new IllegalStateException(message, e1);
-            }
+            handleSubtypeCreationProblem(reporter);
         }
 
         if (efTree.getKids() != null) {
@@ -344,16 +336,76 @@ public final class PBFeatureParser {
         return res;
     }
 
+    private static String addICCProfileFromOutputIntent(PDOutputIntent outInt,
+                                                        String outIntID,
+                                                        Map<String, InputStream> iccProfiles,
+                                                        Map<String, Set<String>> iccProfileOutInts, FeaturesReporter reporter) {
+        COSBase outIntBase = outInt.getCOSObject();
+
+        if (outIntBase instanceof COSDictionary) {
+            COSDictionary outIntDict = (COSDictionary) outIntBase;
+            String iccProfileID = getId(outIntDict.getItem(COSName.DEST_OUTPUT_PROFILE), "iccProfile", iccProfiles.size());
+
+            if (!iccProfiles.containsKey(iccProfileID)) {
+                try {
+                    iccProfiles.put(iccProfileID, outInt.getDestOutputIntent().getUnfilteredStream());
+                } catch (IOException e) {
+                    LOGGER.debug("ICC Profile getting from Output Intent exception caught", e);
+                    iccProfileCreationProblem(reporter, iccProfileID);
+                }
+            }
+
+            if (!iccProfileOutInts.containsKey(iccProfileID)) {
+                iccProfileOutInts.put(iccProfileID, new HashSet<String>());
+            }
+
+            iccProfileOutInts.get(iccProfileID).add(outIntID);
+
+            return iccProfileID;
+        }
+
+        return null;
+    }
+
     private static void handleSubtypeCreationProblem(
             final FeaturesReporter reporter) {
+        creationProblem(reporter,
+                "embeddedFile",
+                null,
+                ErrorsHelper.PARSINGEMBEDDEDFILEERROR_ID,
+                ErrorsHelper.PARSINGEMBEDDEDFILEERROR_MESSAGE,
+                FeaturesObjectTypesEnum.EMBEDDED_FILE,
+                "PBFeatureParser.reportEmbeddedFileNode logic failure.");
+    }
+
+    private static void iccProfileCreationProblem(
+            final FeaturesReporter reporter, final String nodeID) {
+        creationProblem(reporter,
+                "iccProfile",
+                nodeID,
+                ErrorsHelper.GETINGICCPROFILEERROR_ID,
+                ErrorsHelper.GETINGICCPROFILEERROR_MESSAGE,
+                FeaturesObjectTypesEnum.ICCPROFILE,
+                "PBFeatureParser.iccProfileCreationProblem logic failure.");
+    }
+
+    private static void creationProblem(
+            final FeaturesReporter reporter,
+            final String nodeName,
+            final String nodeID,
+            final String errorID,
+            final String errorMessage,
+            final FeaturesObjectTypesEnum type,
+            final String loggerMessage) {
         try {
-            FeatureTreeNode embeddedFileNode = FeatureTreeNode
-                    .newRootInstance("embeddedFile");
-            embeddedFileNode.addAttribute(ErrorsHelper.ERRORID,
-                    ErrorsHelper.PARSINGEMBEDDEDFILEERROR_ID);
+            FeatureTreeNode node = FeatureTreeNode.newRootInstance(nodeName);
+            node.addAttribute(ErrorsHelper.ERRORID, errorID);
+            if (nodeID != null) {
+                node.addAttribute("id", nodeID);
+            }
+            reporter.getCollection().addNewFeatureTree(type, node);
             ErrorsHelper.addErrorIntoCollection(reporter.getCollection(),
-                    ErrorsHelper.PARSINGEMBEDDEDFILEERROR_ID,
-                    ErrorsHelper.PARSINGEMBEDDEDFILEERROR_MESSAGE);
+                    errorID, errorMessage);
         } catch (FeaturesTreeNodeException e) {
             // This exception occurs when wrong node creates for feature
             // tree.
@@ -361,9 +413,8 @@ public final class PBFeatureParser {
             // In which case we throw an IllegalStateException as if this
             // occurs
             // we want to know there's something wrong with our logic
-            String message = "PBFeatureParser.reportEmbeddedFileNode logic failure.";
-            LOGGER.fatal(message, e);
-            throw new IllegalStateException(message, e);
+            LOGGER.fatal(loggerMessage, e);
+            throw new IllegalStateException(loggerMessage, e);
         }
     }
 }
