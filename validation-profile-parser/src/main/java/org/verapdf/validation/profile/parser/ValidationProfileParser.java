@@ -480,7 +480,7 @@ public final class ValidationProfileParser {
     /**
      * Parses validation profile xml.
      *
-     * @param resourcePath
+     * @param profileFilePath
      *            - Path to the file for parse.
      * @param isSignCheckOn
      * @return Validation profile represent in Java classes.
@@ -504,15 +504,17 @@ public final class ValidationProfileParser {
      * @throws UnsupportedEncodingException
      *             if validation profile has not utf8 encoding
      */
-    public static ValidationProfile parseValidationProfile(String resourcePath,
+    public static ValidationProfile parseFromFilePath(String profileFilePath,
             boolean isSignCheckOn) throws ParserConfigurationException,
             SAXException, IOException, IncorrectImportPathException,
             MissedHashTagException, XMLStreamException, WrongSignatureException {
-        return parseValidationProfile(new File(resourcePath), isSignCheckOn);
+        if (profileFilePath == null) throw new IllegalArgumentException("Parameter (String profileFilePath) can not be null");
+        if (profileFilePath.isEmpty()) throw new IllegalArgumentException("Parameter (String profileFilePath) can not be an empty String");
+        return parseFromFile(new File(profileFilePath), isSignCheckOn);
     }
 
     /**
-     * @param resourceFile
+     * @param profileFile
      *            File for parse.
      * @param isSignCheckOn
      * @return Validation profile represent in Java classes.
@@ -536,10 +538,12 @@ public final class ValidationProfileParser {
      * @throws UnsupportedEncodingException
      *             if validation profile has not utf8 encoding
      */
-    public static ValidationProfile parseValidationProfile(File resourceFile,
+    public static ValidationProfile parseFromFile(File profileFile,
             boolean isSignCheckOn) throws ParserConfigurationException,
             SAXException, IOException, IncorrectImportPathException,
             MissedHashTagException, XMLStreamException, WrongSignatureException {
-        return new ValidationProfileParser(resourceFile, isSignCheckOn).profile;
+        if (profileFile == null) throw new IllegalArgumentException("Parameter (File resourceFile) can not be null");
+        if (!profileFile.isFile()) throw new IllegalArgumentException("Parameter (File resourceFile) must be an existing file.");
+        return new ValidationProfileParser(profileFile, isSignCheckOn).profile;
     }
 }

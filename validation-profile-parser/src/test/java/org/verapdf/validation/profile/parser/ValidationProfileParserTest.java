@@ -15,7 +15,7 @@ public class ValidationProfileParserTest {
 
     @Test
     public void test() throws Exception {
-        ValidationProfile prof = ValidationProfileParser.parseValidationProfile("src/test/resources/test.xml", false);
+        ValidationProfile prof = ValidationProfileParser.parseFromFilePath("src/test/resources/test.xml", false);
 
         assertEquals("org.verapdf.model.PDFA1a", prof.getAttrModel());
         assertEquals("PDF/A-1a validation profile", prof.getName());
@@ -71,7 +71,7 @@ public class ValidationProfileParserTest {
 
     @Test
     public void testCyrillic() throws Exception {
-        ValidationProfile prof = ValidationProfileParser.parseValidationProfile("src/test/resources/testCyrillic.xml", false);
+        ValidationProfile prof = ValidationProfileParser.parseFromFilePath("src/test/resources/testCyrillic.xml", false);
 
         assertEquals("org.verapdf.model.PDFA1a", prof.getAttrModel());
         assertEquals("PDF/A-1a validation profile", prof.getName());

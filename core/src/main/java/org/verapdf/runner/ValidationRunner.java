@@ -8,7 +8,6 @@ import javax.xml.stream.XMLStreamException;
 
 import org.apache.log4j.Logger;
 import org.verapdf.config.VeraPdfTaskConfig;
-import org.verapdf.exceptions.validationlogic.JavaScriptEvaluatingException;
 import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameException;
 import org.verapdf.exceptions.validationlogic.NullLinkException;
 import org.verapdf.exceptions.validationlogic.NullLinkNameException;
@@ -52,8 +51,6 @@ public class ValidationRunner {
         } catch (IncorrectImportPathException e) {
             LOGGER.error(e.getMessage(), e);
         } catch (NullLinkException e) {
-            LOGGER.error(e.getMessage(), e);
-        } catch (JavaScriptEvaluatingException e) {
             LOGGER.error(e.getMessage(), e);
         } catch (NullLinkedObjectException e) {
             LOGGER.error(e.getMessage(), e);

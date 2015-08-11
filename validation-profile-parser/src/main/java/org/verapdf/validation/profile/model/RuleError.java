@@ -1,5 +1,6 @@
 package org.verapdf.validation.profile.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,20 +20,20 @@ public class RuleError {
      */
     public RuleError(final String message, final List<String> argument) {
         this.message = message;
-        this.argument = argument;
+        this.argument = (argument == null) ? new ArrayList<String>(): argument;
     }
 
     /**
      * @return Text provided by attribute "argument".
      */
     public List<String> getArgument() {
-        return argument;
+        return this.argument;
     }
 
     /**
      * @return Text provided by attribute "message".
      */
     public String getMessage() {
-        return message;
+        return this.message;
     }
 }
