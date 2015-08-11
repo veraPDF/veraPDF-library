@@ -1,7 +1,6 @@
 package org.verapdf.validation.profile.parser;
 
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
-import org.verapdf.exceptions.validationprofileparser.NullProfileException;
 import org.verapdf.exceptions.validationprofileparser.WrongProfileEncodingException;
 
 import javax.xml.stream.Location;
@@ -169,11 +168,10 @@ public final class ValidationProfileSignatureChecker {
      * @throws XMLStreamException            - error in parsing profile
      * @throws MissedHashTagException        - occurs when there is no hash element in the given profile
      * @throws WrongProfileEncodingException - occurs when the given profile has not utf8 encoding
-     * @throws NullProfileException          - occurs when trying to create signature checker on null profile
      */
-    public static ValidationProfileSignatureChecker newInstance(File profile) throws MissedHashTagException, XMLStreamException, IOException, WrongProfileEncodingException, NullProfileException {
+    public static ValidationProfileSignatureChecker newInstance(File profile) throws MissedHashTagException, XMLStreamException, IOException, WrongProfileEncodingException {
         if (profile == null) {
-            throw new NullProfileException("Null pointer to the profile is used for creating signature checker.");
+            throw new NullPointerException("Null pointer to the profile is used for creating signature checker.");
         }
         ValidationProfileSignatureChecker checker = new ValidationProfileSignatureChecker(profile);
         checker.parseProfile();
