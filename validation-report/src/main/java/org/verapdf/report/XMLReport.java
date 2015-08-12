@@ -1,5 +1,6 @@
 package org.verapdf.report;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -153,10 +154,6 @@ public final class XMLReport {
      * @throws TransformerException
      *             if an unrecoverable error occurs during the course of the
      *             transformation or
-     * @throws FileNotFoundException
-     *             if the file with path {@code path} exists but is a directory
-     *             rather than a regular file, does not exist but cannot be
-     *             created, or cannot be opened for any other reason
      * @throws DatatypeConfigurationException
      *             indicates a serious configurating error
      */
@@ -187,10 +184,6 @@ public final class XMLReport {
      * @throws TransformerException
      *             if an unrecoverable error occurs during the course of the
      *             transformation or
-     * @throws FileNotFoundException
-     *             if the file with path {@code path} exists but is a directory
-     *             rather than a regular file, does not exist but cannot be
-     *             created, or cannot be opened for any other reason
      * @throws DatatypeConfigurationException
      *             indicates a serious configuration error
      */
@@ -225,10 +218,6 @@ public final class XMLReport {
      * @throws TransformerException
      *             if an unrecoverable error occurs during the course of the
      *             transformation or
-     * @throws FileNotFoundException
-     *             if the file with path {@code path} exists but is a directory
-     *             rather than a regular file, does not exist but cannot be
-     *             created, or cannot be opened for any other reason
      * @throws DatatypeConfigurationException
      *             indicates a serious configurating error
      */
@@ -257,10 +246,6 @@ public final class XMLReport {
      * @throws TransformerException
      *             if an unrecoverable error occurs during the course of the
      *             transformation or
-     * @throws FileNotFoundException
-     *             if the file with path {@code path} exists but is a directory
-     *             rather than a regular file, does not exist but cannot be
-     *             created, or cannot be opened for any other reason
      * @throws DatatypeConfigurationException
      *             indicates a serious configurating error
      */
