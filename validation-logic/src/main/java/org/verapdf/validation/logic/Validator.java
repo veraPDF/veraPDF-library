@@ -338,7 +338,7 @@ public class Validator {
         Boolean res = (Boolean) cx.evaluateString(scope, script, null, 0, null);
 
         CheckLocation loc = new CheckLocation(this.rootType, context);
-        Check check = res.booleanValue() ? new Check(Status.PASSED, loc, null, false)
+        Check check = res.booleanValue() ? new Check(Status.PASSED, loc, null)
                 : createFailCkeck(obj, loc, rule, cx, scope);
 
         Context.exit();
@@ -354,8 +354,7 @@ public class Validator {
         List<String> args = new ArrayList<>();
 
         if (rule.getRuleError() == null) {
-            return new Check(Status.FAILED, loc, new CheckError(null, args),
-                    rule.isHasError());
+            return new Check(Status.FAILED, loc, new CheckError(null, args));
         }
         String errorMessage = rule.getRuleError().getMessage();
 
@@ -379,7 +378,7 @@ public class Validator {
 
         CheckError error = new CheckError(errorMessage, args);
 
-        return new Check(Status.FAILED, loc, error, rule.isHasError());
+        return new Check(Status.FAILED, loc, error);
     }
 
     /**
