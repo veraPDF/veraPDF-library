@@ -220,12 +220,11 @@ public final class ValidationProfileParser {
 
         for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
-            if (child.getNodeName().equals(RULE)) {
+            if (RULE.equals(child.getNodeName())) {
                 Rule rule = parseRule(child);
 
-                if (rulesMap.get(rule.getAttrObject()) == null) {
-                    List<Rule> newRules = new ArrayList<>();
-                    rulesMap.put(rule.getAttrObject(), newRules);
+                if (!rulesMap.containsKey(rule.getAttrObject())) {
+                    rulesMap.put(rule.getAttrObject(), new ArrayList<Rule>());
                 }
 
                 rulesMap.get(rule.getAttrObject()).add(rule);
@@ -259,9 +258,8 @@ public final class ValidationProfileParser {
 
         for (int i = 0; i < children.getLength(); ++i) {
             Node child = children.item(i);
-            String childName = child.getNodeName();
 
-            switch (childName) {
+            switch (child.getNodeName()) {
             case DESCRIPTION:
                 description = child.getTextContent().trim();
                 break;

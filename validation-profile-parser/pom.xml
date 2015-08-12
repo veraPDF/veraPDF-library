@@ -23,5 +23,11 @@
       <groupId>org.verapdf</groupId>
       <artifactId>verapdf-exceptions</artifactId>
     </dependency>
+    <dependency>
+      <groupId>nl.jqno.equalsverifier</groupId>
+      <artifactId>equalsverifier</artifactId>
+      <version>1.5.1</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>
