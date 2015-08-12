@@ -47,10 +47,7 @@ public final class ErrorsHelper {
     public static final String GETINGICCPROFILEHEADERERROR_ID = "iccprofileerr2";
     public static final String GETINGICCPROFILEHEADERERROR_MESSAGE = "Error while getting icc profile bytes.";
     public static final String GETINGICCPROFILEHEADERSIZEERROR_ID = "iccprofileerr3";
-    public static final String GETINGICCPROFILEHEADERSIZEERROR_MESSAGE = "ICC Profile's header has less than 128 bytes.";
-
-    public static final String XMLINVALIDCHARACTERS_ID = "xmlinvcharerr1";
-    public static final String XMLINVALIDCHARACTERS_MESSAGE = "Element's data contains invalid for XML characters.";
+    public static final String GETINGICCPROFILEHEADERSIZEERROR_MESSAGE = "ICC Profile has less than 128 bytes.";
 
     public static final String COLOR_ID = "colorerr1";
     public static final String COLOR_MESSAGE = "Devise color space contains wrong number of components.";
