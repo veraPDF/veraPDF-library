@@ -8,10 +8,14 @@ import org.verapdf.model.operator.Op_FStar;
 import java.util.List;
 
 /**
+ * Operator, which fill the path, using the even-odd rule
+ * to determine the region to fill
+ *
  * @author Timur Kamalov
  */
 public class PBOp_FStar extends PBOpFillPaint implements Op_FStar {
 
+	/** Type name for {@code PBOp_FStar} */
     public static final String OP_FSTAR_TYPE = "Op_FStar";
 
     public PBOp_FStar(List<COSBase> arguments, PDColorSpace colorSpace, PDAbstractPattern pattern) {

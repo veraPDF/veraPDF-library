@@ -3,20 +3,15 @@ package org.verapdf.model.impl.pb.operator.pathpaint;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
-import org.verapdf.model.factory.colors.ColorSpaceFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Base class for path paint operators, which only fill the path
+ *
  * @author Evgeniy Muravitskiy
  */
 public abstract class PBOpFillPaint extends PBOpPathPaint {
-
-    protected PBOpFillPaint(List<COSBase> arguments, PDAbstractPattern pattern,
-            PDColorSpace pbStrokeColorSpace, PDColorSpace pbFillColorSpace) {
-        super(arguments, pattern, pbStrokeColorSpace, pbFillColorSpace);
-    }
 
     protected PBOpFillPaint(List<COSBase> arguments, PDAbstractPattern pattern,
             PDColorSpace pbStrokeColorSpace, PDColorSpace pbFillColorSpace,
@@ -34,14 +29,4 @@ public abstract class PBOpFillPaint extends PBOpPathPaint {
         return super.getLinkedObjects(link);
     }
 
-    private List<org.verapdf.model.pdlayer.PDColorSpace> getFillCS() {
-        List<org.verapdf.model.pdlayer.PDColorSpace> list = new ArrayList<>(
-                MAX_NUMBER_OF_COLOR_SPACES);
-        org.verapdf.model.pdlayer.PDColorSpace colorSpace = ColorSpaceFactory
-                .getColorSpace(pbFillColorSpace, pattern);
-        if (colorSpace != null) {
-            list.add(colorSpace);
-        }
-        return list;
-    }
 }

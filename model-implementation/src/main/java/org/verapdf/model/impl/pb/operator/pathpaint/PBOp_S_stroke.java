@@ -7,6 +7,8 @@ import org.verapdf.model.operator.Op_S_stroke;
 import java.util.List;
 
 /**
+ *
+ *
  * @author Timur Kamalov
  */
 public class PBOp_S_stroke extends PBOpStrokePaint implements Op_S_stroke {
