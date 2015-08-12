@@ -74,7 +74,8 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
                     res.add(new PBGlyph(glyphPresent, widthsConsistent, pdfBoxFont.getName(), code));
                 }
             } catch (IOException e) {
-                LOGGER.error("Error processing text show operator's string argument : " + string + "\n" + e.getMessage());
+                LOGGER.error("Error processing text show operator's string argument : " + string);
+                LOGGER.info(e);
             }
         }
         return res;
