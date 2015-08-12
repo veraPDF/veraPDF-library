@@ -30,20 +30,20 @@ public class Reference {
      * @return Text in tag "specification".
      */
     public String getSpecification() {
-        return specification;
+        return this.specification;
     }
 
     /**
      * @return Text in tag "clause".
      */
     public String getClause() {
-        return clause;
+        return this.clause;
     }
 
     /**
      * @return List of references used in this reference
      */
     public List<Reference> getReferences() {
-        return references;
+        return this.references;
     }
 }

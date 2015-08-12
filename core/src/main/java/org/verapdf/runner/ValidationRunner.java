@@ -8,16 +8,11 @@ import javax.xml.stream.XMLStreamException;
 
 import org.apache.log4j.Logger;
 import org.verapdf.config.VeraPdfTaskConfig;
-import org.verapdf.exceptions.validationlogic.JavaScriptEvaluatingException;
 import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameException;
 import org.verapdf.exceptions.validationlogic.NullLinkException;
 import org.verapdf.exceptions.validationlogic.NullLinkNameException;
 import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
-import org.verapdf.exceptions.validationlogic.RullWithNullIDException;
-import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
-import org.verapdf.exceptions.validationprofileparser.NullProfileException;
-import org.verapdf.exceptions.validationprofileparser.WrongProfileEncodingException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.validation.logic.Validator;
@@ -52,15 +47,9 @@ public class ValidationRunner {
             LOGGER.error(e.getMessage(), e);
         } catch (NullLinkNameException e) {
             LOGGER.error(e.getMessage(), e);
-        } catch (IncorrectImportPathException e) {
-            LOGGER.error(e.getMessage(), e);
         } catch (NullLinkException e) {
             LOGGER.error(e.getMessage(), e);
-        } catch (JavaScriptEvaluatingException e) {
-            LOGGER.error(e.getMessage(), e);
         } catch (NullLinkedObjectException e) {
-            LOGGER.error(e.getMessage(), e);
-        } catch (RullWithNullIDException e) {
             LOGGER.error(e.getMessage(), e);
         } catch (MissedHashTagException e) {
             LOGGER.error(e.getMessage(), e);
@@ -68,11 +57,7 @@ public class ValidationRunner {
             LOGGER.error(e.getMessage(), e);
         } catch (XMLStreamException e) {
             LOGGER.error(e.getMessage(), e);
-        } catch (WrongProfileEncodingException e) {
-            LOGGER.error(e.getMessage(), e);
         } catch (MultiplyGlobalVariableNameException e) {
-            LOGGER.error(e.getMessage(), e);
-        } catch (NullProfileException e) {
             LOGGER.error(e.getMessage(), e);
         }
         return null;

@@ -21,6 +21,10 @@
     </dependency>
     <dependency>
       <groupId>org.verapdf.pdfbox</groupId>
+      <artifactId>preflight</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.verapdf.pdfbox</groupId>
       <artifactId>xmpbox</artifactId>
     </dependency>
     <dependency>

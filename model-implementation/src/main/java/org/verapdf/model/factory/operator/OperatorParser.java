@@ -75,7 +75,7 @@ class OperatorParser {
 
     Operator parseOperator(
             org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
-            PDResources resources, List<COSBase> arguments) {
+            PDResources resources, List<COSBase> arguments) throws CloneNotSupportedException {
         String operatorName = pdfBoxOperator.getName();
         switch (operatorName) {
         // GENERAL GS

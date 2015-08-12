@@ -16,6 +16,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Formatter;
 import java.util.List;
 import java.util.Map;
 
@@ -27,12 +28,15 @@ import java.util.Map;
 public final class XMLFeaturesReport {
     private static final Logger LOGGER = Logger.getLogger(XMLFeaturesReport.class);
 
-    private static final char FFFE = (char) 65534;
-    private static final char FFFF = (char) 65535;
-    private static final char SP = (char) 32;
-    private static final char HT = (char) 9;
-    private static final char LF = (char) 10;
-    private static final char CR = (char) 13;
+    private static final int XD7FF = 0xD7FF;
+    private static final int XE000 = 0xE000;
+    private static final int XFFFD = 0xFFFD;
+    private static final int X10000 = 0x10000;
+    private static final int X10FFFF = 0x10FFFF;
+    private static final int SP = 0x20;
+    private static final int HT = 0x9;
+    private static final int LF = 0xA;
+    private static final int CR = 0xD;
 
     private XMLFeaturesReport() {
 
@@ -107,13 +111,9 @@ public final class XMLFeaturesReport {
                 metadata.appendChild(pack);
             } catch (ParserConfigurationException | SAXException | IOException e) {
                 LOGGER.debug("Caught exception and checking XML String.", e);
-                if (isValidXMLString(metadataNode.getValue())) {
-                    metadata.appendChild(doc.createTextNode(metadataNode.getValue()));
-                    metadata.setAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATAPARSER_ID);
-                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATAPARSER_ID, ErrorsHelper.METADATAPARSER_MESSAGE);
-                } else {
-                    addInvalidCharactersError(metadata, collection);
-                }
+                metadata.appendChild(doc.createTextNode(replaceInvalidCharacters(metadataNode.getValue())));
+                metadata.setAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATAPARSER_ID);
+                ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATAPARSER_ID, ErrorsHelper.METADATAPARSER_MESSAGE);
             }
 
             return metadata;
@@ -140,19 +140,11 @@ public final class XMLFeaturesReport {
         Element root = doc.createElement(node.getName());
 
         for (Map.Entry<String, String> attr : node.getAttributes().entrySet()) {
-            if (isValidXMLString(attr.getValue())) {
-                root.setAttribute(attr.getKey(), attr.getValue());
-            } else {
-                addInvalidCharactersError(root, collection);
-            }
+            root.setAttribute(attr.getKey(), replaceInvalidCharacters(attr.getValue()));
         }
 
         if (node.getValue() != null) {
-            if (isValidXMLString(node.getValue())) {
-                root.appendChild(doc.createTextNode(node.getValue()));
-            } else {
-                addInvalidCharactersError(root, collection);
-            }
+            root.appendChild(doc.createTextNode(replaceInvalidCharacters(node.getValue())));
         } else if (node.getChildren() != null) {
             for (FeatureTreeNode child : node.getChildren()) {
                 root.appendChild(makeNode(child, collection, doc));
@@ -162,19 +154,36 @@ public final class XMLFeaturesReport {
         return root;
     }
 
-    private static boolean isValidXMLString(String str) {
-        for (char c : str.toCharArray()) {
-            if ((c == FFFE) || (c == FFFF) || ((c < SP) && (c != HT && c != LF && c != CR))) {
-                return false;
+    private static String replaceInvalidCharacters(String source) {
+        try (Formatter formatter = new Formatter()) {
+
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < source.length(); ++i) {
+                char curChar = source.charAt(i);
+                if ('#' == curChar) {
+                    builder.append("#x000023");
+                } else {
+                    int codePoint = source.codePointAt(i);
+                    if (Character.isHighSurrogate(curChar)) {
+                        ++i;
+                    }
+
+                    if (codePoint == HT || codePoint == LF || codePoint == CR ||
+                            (codePoint >= SP && codePoint <= XD7FF) ||
+                            (codePoint >= XE000 && codePoint <= XFFFD) ||
+                            (codePoint >= X10000 && codePoint <= X10FFFF)) {
+                        builder.append(curChar);
+                        if (Character.isHighSurrogate(curChar) && i < source.length()) {
+                            builder.append(source.charAt(i));
+                        }
+                    } else {
+                        builder.append(formatter.format("#x%06X", codePoint));
+                    }
+                }
             }
+
+            return builder.toString();
         }
-
-        return true;
-    }
-
-    private static void addInvalidCharactersError(Element element, FeaturesCollection collection) {
-        element.setAttribute(ErrorsHelper.ERRORID, ErrorsHelper.XMLINVALIDCHARACTERS_ID);
-        ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.XMLINVALIDCHARACTERS_ID,
-                ErrorsHelper.XMLINVALIDCHARACTERS_MESSAGE);
     }
 }
