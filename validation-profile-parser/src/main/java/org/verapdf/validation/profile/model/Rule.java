@@ -14,7 +14,6 @@ public final class Rule {
     private final String description;
     private final String test;
     private final RuleError ruleError;
-    private final boolean isHasError;
     private final Reference reference;
     private final List<Fix> fixes;
 
@@ -50,7 +49,6 @@ public final class Rule {
         this.attrObject = attrObject;
         this.description = description;
         this.ruleError = ruleError;
-        this.isHasError = isHasError;
         this.test = test;
         this.reference = reference;
         if (fixes == null) {
@@ -96,17 +94,6 @@ public final class Rule {
     }
 
     /**
-     * Get what {@code ruleError} (if {@code this} rule has it) represents: an
-     * error or a warning.
-     *
-     * @return true if {@code ruleError} represents an error, and false if
-     *         {@code ruleError} represents a warning (or null).
-     */
-    private boolean isHasError() {
-        return this.isHasError;
-    }
-
-    /**
      * @return Class which represents a reference in this rule.
      */
     public Reference getReference() {
@@ -125,10 +112,11 @@ public final class Rule {
      */
     @Override
     public String toString() {
-        return "Rule [attrID=" + this.attrID + ", attrObject=" + this.attrObject
-                + ", description=" + this.description + ", test=" + this.test
-                + ", ruleError=" + this.ruleError + ", isHasError=" + this.isHasError
-                + ", reference=" + this.reference + ", fixes=" + this.fixes + "]";
+        return "Rule [attrID=" + this.attrID + ", attrObject="
+                + this.attrObject + ", description=" + this.description
+                + ", test=" + this.test + ", ruleError=" + this.ruleError
+                + ", reference=" + this.reference + ", fixes=" + this.fixes
+                + "]";
     }
 
     /**
@@ -138,18 +126,21 @@ public final class Rule {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((this.attrID == null) ? 0 : this.attrID.hashCode());
+        result = prime * result
+                + ((this.attrID == null) ? 0 : this.attrID.hashCode());
         result = prime * result
                 + ((this.attrObject == null) ? 0 : this.attrObject.hashCode());
-        result = prime * result
+        result = prime
+                * result
                 + ((this.description == null) ? 0 : this.description.hashCode());
-        result = prime * result + ((this.fixes == null) ? 0 : this.fixes.hashCode());
-        result = prime * result + (this.isHasError ? 1231 : 1237);
+        result = prime * result
+                + ((this.fixes == null) ? 0 : this.fixes.hashCode());
         result = prime * result
                 + ((this.reference == null) ? 0 : this.reference.hashCode());
         result = prime * result
                 + ((this.ruleError == null) ? 0 : this.ruleError.hashCode());
-        result = prime * result + ((this.test == null) ? 0 : this.test.hashCode());
+        result = prime * result
+                + ((this.test == null) ? 0 : this.test.hashCode());
         return result;
     }
 
@@ -184,8 +175,6 @@ public final class Rule {
             if (other.fixes != null)
                 return false;
         } else if (!this.fixes.equals(other.fixes))
-            return false;
-        if (this.isHasError != other.isHasError)
             return false;
         if (this.reference == null) {
             if (other.reference != null)
