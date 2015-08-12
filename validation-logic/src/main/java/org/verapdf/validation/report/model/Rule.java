@@ -3,16 +3,16 @@ package org.verapdf.validation.report.model;
 import java.util.Collections;
 import java.util.List;
 
+import org.verapdf.validation.report.model.Check.Status;
+
 /**
  * Structure of the rule check result.
  *
  * @author Maksim Bezrukov
  */
 public class Rule {
-    private static final String PASSED = "passed";
-    private static final String FAILED = "failed";
-    private final String attrID;
-    private final String attrStatus;
+    private final String ID;
+    private final Status status;
     private final List<Check> checks;
 
     /**
@@ -22,19 +22,19 @@ public class Rule {
      * @param checks - list of performed checks of this rule
      */
     public Rule(final String attrID, final List<Check> checks) {
-        this.attrID = attrID;
+        this.ID = attrID;
 
-        String status = PASSED;
+        Status ruleStatus = Status.PASSED;
 
         if (checks != null) {
             for (Check check : checks) {
-                if (check != null && FAILED.equals(check.getAttrStatus())) {
-                    status = FAILED;
+                if (check != null && Status.FAILED == check.getStatus()) {
+                    ruleStatus = Status.FAILED;
                 }
             }
         }
 
-        this.attrStatus = status;
+        this.status = ruleStatus;
 
         if (checks == null) {
             this.checks = Collections.emptyList();
@@ -46,21 +46,21 @@ public class Rule {
     /**
      * @return id of the rule
      */
-    public String getAttrID() {
-        return attrID;
+    public String getID() {
+        return this.ID;
     }
 
     /**
      * @return actual status (passed/failed) of the rule
      */
-    public String getAttrStatus() {
-        return attrStatus;
+    public Status getStatus() {
+        return this.status;
     }
 
     /**
      * @return number of checks for this rule
      */
-    public int getAttrChecks() {
+    public int getCheckCount() {
         return this.checks.size();
     }
 
@@ -68,6 +68,6 @@ public class Rule {
      * @return list of checks structure
      */
     public List<Check> getChecks() {
-        return checks;
+        return this.checks;
     }
 }
