@@ -28,8 +28,6 @@ public final class Rule {
      *            description of the rule
      * @param ruleError
      *            rule error
-     * @param isHasError
-     *            is the rule error of type error or warning
      * @param test
      *            test of the rule as JavaScript context
      * @param reference
@@ -40,7 +38,7 @@ public final class Rule {
      *             if the supplied rule ID is null
      */
     public Rule(String attrID, String attrObject, String description,
-            RuleError ruleError, boolean isHasError, String test,
+            RuleError ruleError, String test,
             Reference reference, List<Fix> fixes) {
         if (attrID == null)
             throw new IllegalArgumentException(

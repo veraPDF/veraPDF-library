@@ -21,7 +21,7 @@ public class RuleTests {
     @SuppressWarnings("unused")
     @Test (expected=IllegalArgumentException.class)
     public final void testRuleWithNullId() {
-        new Rule(null, "", "", null, false, null, null, null);
+        new Rule(null, "", "", null, null, null, null);
     }
 
     /**
@@ -29,7 +29,7 @@ public class RuleTests {
      */
     @Test
     public final void testGetFixes() {
-        Rule instance = new Rule("", "", "", null, false, null, null, null);
+        Rule instance = new Rule("", "", "", null, null, null, null);
         assertTrue(instance.getFixes() != null);
     }
 
