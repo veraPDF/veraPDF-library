@@ -11,10 +11,6 @@ import java.util.List;
  */
 public abstract class PBOpSpecialGS extends PBOperator implements OpSpecialGS {
 
-    public PBOpSpecialGS(List<COSBase> arguments) {
-        super(arguments);
-    }
-
     public PBOpSpecialGS(List<COSBase> arguments, String opType) {
         super(arguments, opType);
     }
