@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author Maksim Bezrukov
  */
-public class Rule {
+public final class Rule {
     private final String attrID;
     private final String attrObject;
     private final String description;
@@ -35,14 +35,14 @@ public class Rule {
      *            test of the rule as JavaScript context
      * @param reference
      *            reference of the rule
-     * @param fix
+     * @param fixes
      *            list of fixes for this rule
      * @throws IllegalArgumentException
      *             if the supplied rule ID is null
      */
     public Rule(String attrID, String attrObject, String description,
             RuleError ruleError, boolean isHasError, String test,
-            Reference reference, List<Fix> fix) {
+            Reference reference, List<Fix> fixes) {
         if (attrID == null)
             throw new IllegalArgumentException(
                     "Rule ID attrID can not be null.");
@@ -53,7 +53,11 @@ public class Rule {
         this.isHasError = isHasError;
         this.test = test;
         this.reference = reference;
-        this.fixes = Collections.unmodifiableList(fix);
+        if (fixes == null) {
+            this.fixes = Collections.emptyList();
+        } else {
+            this.fixes = Collections.unmodifiableList(fixes);
+        }
     }
 
     /**
@@ -114,5 +118,90 @@ public class Rule {
      */
     public List<Fix> getFixes() {
         return this.fixes;
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public String toString() {
+        return "Rule [attrID=" + this.attrID + ", attrObject=" + this.attrObject
+                + ", description=" + this.description + ", test=" + this.test
+                + ", ruleError=" + this.ruleError + ", isHasError=" + this.isHasError
+                + ", reference=" + this.reference + ", fixes=" + this.fixes + "]";
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((this.attrID == null) ? 0 : this.attrID.hashCode());
+        result = prime * result
+                + ((this.attrObject == null) ? 0 : this.attrObject.hashCode());
+        result = prime * result
+                + ((this.description == null) ? 0 : this.description.hashCode());
+        result = prime * result + ((this.fixes == null) ? 0 : this.fixes.hashCode());
+        result = prime * result + (this.isHasError ? 1231 : 1237);
+        result = prime * result
+                + ((this.reference == null) ? 0 : this.reference.hashCode());
+        result = prime * result
+                + ((this.ruleError == null) ? 0 : this.ruleError.hashCode());
+        result = prime * result + ((this.test == null) ? 0 : this.test.hashCode());
+        return result;
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Rule other = (Rule) obj;
+        if (this.attrID == null) {
+            if (other.attrID != null)
+                return false;
+        } else if (!this.attrID.equals(other.attrID))
+            return false;
+        if (this.attrObject == null) {
+            if (other.attrObject != null)
+                return false;
+        } else if (!this.attrObject.equals(other.attrObject))
+            return false;
+        if (this.description == null) {
+            if (other.description != null)
+                return false;
+        } else if (!this.description.equals(other.description))
+            return false;
+        if (this.fixes == null) {
+            if (other.fixes != null)
+                return false;
+        } else if (!this.fixes.equals(other.fixes))
+            return false;
+        if (this.isHasError != other.isHasError)
+            return false;
+        if (this.reference == null) {
+            if (other.reference != null)
+                return false;
+        } else if (!this.reference.equals(other.reference))
+            return false;
+        if (this.ruleError == null) {
+            if (other.ruleError != null)
+                return false;
+        } else if (!this.ruleError.equals(other.ruleError))
+            return false;
+        if (this.test == null) {
+            if (other.test != null)
+                return false;
+        } else if (!this.test.equals(other.test))
+            return false;
+        return true;
     }
 }
