@@ -30,6 +30,7 @@ import org.verapdf.validation.profile.model.ValidationProfile;
 import org.verapdf.validation.profile.model.Variable;
 import org.verapdf.validation.profile.parser.ValidationProfileParser;
 import org.verapdf.validation.report.model.Check;
+import org.verapdf.validation.report.model.Check.Status;
 import org.verapdf.validation.report.model.CheckError;
 import org.verapdf.validation.report.model.CheckLocation;
 import org.verapdf.validation.report.model.Details;
@@ -334,24 +335,12 @@ public class Validator {
             scope.put(entry.getKey(), scope, entry.getValue());
         }
 
-        Boolean res;
-
-        /**
-         * TODO: Carl wonders what undeclared exceptions we're catching here and
-         * why? I'd suggest getting rid of the exception type and the catch for
-         * now and see what sort of unchecked exceptions we throw in practise.
-         */
-        res = (Boolean) cx.evaluateString(scope, script, null, 0, null);
+        Boolean res = (Boolean) cx.evaluateString(scope, script, null, 0, null);
 
         CheckLocation loc = new CheckLocation(this.rootType, context);
+        Check check = res.booleanValue() ? new Check(Status.PASSED, loc, null, false)
+                : createFailCkeck(obj, loc, rule, cx, scope);
 
-        Check check;
-
-        if (res.booleanValue()) {
-            check = new Check("passed", loc, null, false);
-        } else {
-            check = createFailCkeck(obj, loc, rule, cx, scope);
-        }
         Context.exit();
 
         this.checkMap.get(rule.getAttrID()).add(check);
@@ -365,7 +354,7 @@ public class Validator {
         List<String> args = new ArrayList<>();
 
         if (rule.getRuleError() == null) {
-            return new Check("failed", loc, new CheckError(null, args),
+            return new Check(Status.FAILED, loc, new CheckError(null, args),
                     rule.isHasError());
         }
         String errorMessage = rule.getRuleError().getMessage();
@@ -390,7 +379,7 @@ public class Validator {
 
         CheckError error = new CheckError(errorMessage, args);
 
-        return new Check("failed", loc, error, rule.isHasError());
+        return new Check(Status.FAILED, loc, error, rule.isHasError());
     }
 
     /**
@@ -459,9 +448,9 @@ public class Validator {
      * ones, which don't parse profile).
      *
      * @param root
-     *            --- the root object for validation
+     *            the root object for validation
      * @param validationProfile
-     *            --- validation profile's file
+     *            validation profile's file
      * @return validation info structure
      * @throws ParserConfigurationException
      *             if a DocumentBuilder cannot be created which satisfies the

@@ -1,5 +1,7 @@
 package org.verapdf.validation.report.model;
 
+import org.verapdf.validation.report.model.Check.Status;
+
 /**
  * Structure of the result of the validation.
  *
@@ -29,7 +31,7 @@ public class Result {
         if (details != null) {
             for (Rule rule : details.getRules()) {
                 if (rule != null) {
-                    if ("passed".equals(rule.getAttrStatus())) {
+                    if (Status.PASSED == rule.getStatus()) {
                         ++passedRules;
                     } else {
                         compliantCheck = false;
@@ -38,7 +40,7 @@ public class Result {
 
                     for (Check check : rule.getChecks()) {
                         if (check != null) {
-                            if ("passed".equals(check.getAttrStatus())) {
+                            if (Status.PASSED == check.getStatus()) {
                                 ++passedChecks;
                             } else {
                                 ++failedChecks;
