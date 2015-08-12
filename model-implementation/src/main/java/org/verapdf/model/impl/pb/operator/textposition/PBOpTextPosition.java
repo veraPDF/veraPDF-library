@@ -7,10 +7,16 @@ import org.verapdf.model.operator.OpTextPosition;
 import java.util.List;
 
 /**
+ * Base class for all text position operators
+ *
  * @author Timur Kamalov
  */
 public class PBOpTextPosition extends PBOperator implements OpTextPosition {
 
+	/**
+	 * Type name for {@code PBOpTextPosition}. Current type apply to
+	 * Tm and T* operators
+	 */
     public static final String OP_TEXT_POSITION_TYPE = "OpTextPosition";
 
     // TODO : implement all classes
