@@ -18,22 +18,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Base class for all text show operators
+ *
  * @author Timur Kamalov
  */
 public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 
     private static final Logger LOGGER = Logger.getLogger(PBOpTextShow.class);
 
+	/** Link name of used font for OpTextShow */
     public static final String FONT = "font";
+	/** Link name of used glyphs for OpTextShow */
     public static final String USED_GLYPHS = "usedGlyphs";
 
     protected final org.apache.pdfbox.pdmodel.font.PDFont pdfBoxFont;
-
-    protected PBOpTextShow(List<COSBase> arguments,
-            org.apache.pdfbox.pdmodel.font.PDFont font) {
-        super(arguments);
-        this.pdfBoxFont = font;
-    }
 
     protected PBOpTextShow(List<COSBase> arguments,
             org.apache.pdfbox.pdmodel.font.PDFont font, final String opType) {
@@ -41,18 +39,18 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
         this.pdfBoxFont = font;
     }
 
-    @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
-            String link) {
-        switch (link) {
-        case FONT:
-            return this.getFont();
-        case USED_GLYPHS:
-            return this.getUsedGlyphs();
-        default:
-            return super.getLinkedObjects(link);
-        }
-    }
+	@Override
+	public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+			String link) {
+		switch (link) {
+			case FONT:
+				return this.getFont();
+			case USED_GLYPHS:
+				return this.getUsedGlyphs();
+			default:
+				return super.getLinkedObjects(link);
+		}
+	}
 
     private List<PDFont> getFont() {
         List<PDFont> result = new ArrayList<>();
@@ -71,10 +69,12 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
                     int code = pdfBoxFont.readCode(inputStream);
                     Boolean glyphPresent = fontContainer.hasGlyph(code);
                     Boolean widthsConsistent = checkWidths(code);
-                    res.add(new PBGlyph(glyphPresent, widthsConsistent, pdfBoxFont.getName(), code));
+                    res.add(new PBGlyph(glyphPresent, widthsConsistent,
+										pdfBoxFont.getName(), code));
                 }
             } catch (IOException e) {
-                LOGGER.error("Error processing text show operator's string argument : " + string);
+                LOGGER.error("Error processing text show operator's string argument : "
+						+ new String(string));
                 LOGGER.info(e);
             }
         }
