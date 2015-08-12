@@ -1,6 +1,7 @@
 package org.verapdf.report;
 
 import org.verapdf.validation.report.model.*;
+import org.verapdf.validation.report.model.Check.Status;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -198,7 +199,7 @@ public final class XMLValidationReport {
     private static void makeCheckError(Check check, Document doc,
             Element checkElement) {
         if (check.getError() != null) {
-            String errorName = check.isHasError() ? "error" : "warning";
+            String errorName = check.getStatus() == Status.FAILED ? "error" : "warning";
             Element error = doc.createElement(errorName);
 
             if (check.getError().getMessage() != null) {

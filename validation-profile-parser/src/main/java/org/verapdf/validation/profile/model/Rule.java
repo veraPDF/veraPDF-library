@@ -102,7 +102,7 @@ public final class Rule {
      * @return true if {@code ruleError} represents an error, and false if
      *         {@code ruleError} represents a warning (or null).
      */
-    public boolean isHasError() {
+    private boolean isHasError() {
         return this.isHasError;
     }
 

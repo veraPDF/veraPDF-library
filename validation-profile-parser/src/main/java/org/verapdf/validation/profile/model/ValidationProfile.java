@@ -11,7 +11,7 @@ import java.util.Map;
  * @author Maksim Bezrukov
  */
 public class ValidationProfile {
-    private final String attrModel;
+    private final String model;
     private final String name;
     private final String description;
     private final String creator;
@@ -24,29 +24,29 @@ public class ValidationProfile {
     /**
      * Creates new Validation profile model with given description.
      *
-     * @param attrModel
-     *            - model of the validation profile
+     * @param model
+     *            model of the validation profile
      * @param name
-     *            - name of the validation profile
+     *            name of the validation profile
      * @param description
-     *            - description of the validation profile
+     *            description of the validation profile
      * @param creator
-     *            - creator (author) of the validation profile
+     *            creator (author) of the validation profile
      * @param created
-     *            - date of creation of the validation profile
+     *            date of creation of the validation profile
      * @param hash
-     *            - hash code of the validation profile
+     *            hash code of the validation profile
      * @param rules
-     *            - map of rules of the validation profile (key is the name of
-     *            the object, value is the list of rules)
+     *            map of rules of the validation profile (key is the name of the
+     *            object, value is the list of rules)
      * @param variables
-     *            - map of variables of the validation profile (key is the name
-     *            of the object, value is the list of variables)
+     *            map of variables of the validation profile (key is the name of
+     *            the object, value is the list of variables)
      */
-    public ValidationProfile(String attrModel, String name, String description,
+    public ValidationProfile(String model, String name, String description,
             String creator, String created, String hash,
             Map<String, List<Rule>> rules, Map<String, List<Variable>> variables) {
-        this.attrModel = attrModel;
+        this.model = model;
         this.name = name;
         this.description = description;
         this.creator = creator;
@@ -59,8 +59,8 @@ public class ValidationProfile {
     /**
      * @return Text provided by attribute "model".
      */
-    public String getAttrModel() {
-        return this.attrModel;
+    public String getModel() {
+        return this.model;
     }
 
     /**
@@ -114,7 +114,7 @@ public class ValidationProfile {
      * Get rule by it's id.
      *
      * @param id
-     *            --- rule id
+     *            rule id
      * @return rule by it's id or null, if there is no rule with such id.
      */
     public Rule getRuleById(String id) {
@@ -158,7 +158,7 @@ public class ValidationProfile {
      * Get all variables for the given object.
      *
      * @param objName
-     *            --- name of the object
+     *            name of the object
      * @return List of variables for the given object.
      */
     public List<Variable> getVariablesForObject(String objName) {

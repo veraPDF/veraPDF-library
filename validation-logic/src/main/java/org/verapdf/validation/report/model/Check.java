@@ -28,7 +28,6 @@ public class Check {
     private final Status status;
     private final CheckLocation location;
     private final CheckError error;
-    private final boolean isHasError;
 
     /**
      * Creates Check model for validation report
@@ -36,13 +35,11 @@ public class Check {
      * @param status - status of the check
      * @param location   - location of the check
      * @param error      - error of the check
-     * @param isHasError - is the error represents an error or a warning
      */
-    public Check(final Status status, final CheckLocation location, final CheckError error, final boolean isHasError) {
+    public Check(final Status status, final CheckLocation location, final CheckError error) {
         this.status = status;
         this.location = location;
         this.error = error;
-        this.isHasError = isHasError;
     }
 
     /**
@@ -64,14 +61,5 @@ public class Check {
      */
     public CheckError getError() {
         return this.error;
-    }
-
-    /**
-     * Get what {@code error} (if {@code this} check has it) represents: an error or a warning.
-     *
-     * @return true if {@code error} represents an error, and false if {@code error} represents a warning (or null).
-     */
-    public boolean isHasError() {
-        return this.isHasError;
     }
 }
