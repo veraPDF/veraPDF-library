@@ -53,8 +53,8 @@ public class ValidationProfileParserTest {
         assertEquals("6.7.3", rule53.getReference().getClause());
         assertEquals(1, rule53.getFixes().size());
         assertEquals("STR_ID_893", rule53.getFixes().get(0).getDescription());
-        assertEquals("STR_ID_894", rule53.getFixes().get(0).getInfo().getMessage());
-        assertEquals("STR_ID_895", rule53.getFixes().get(0).getError().getMessage());
+        assertEquals("STR_ID_894", rule53.getFixes().get(0).getInfo());
+        assertEquals("STR_ID_895", rule53.getFixes().get(0).getError());
 
         Rule rule35 = prof.getRuleById("rule35");
 
@@ -105,8 +105,8 @@ public class ValidationProfileParserTest {
         assertEquals("6.7.3", rule53.getReference().getClause());
         assertEquals(1, rule53.getFixes().size());
         assertEquals("STR_ID_893", rule53.getFixes().get(0).getDescription());
-        assertEquals("STR_ID_894", rule53.getFixes().get(0).getInfo().getMessage());
-        assertEquals("STR_ID_895", rule53.getFixes().get(0).getError().getMessage());
+        assertEquals("STR_ID_894", rule53.getFixes().get(0).getInfo());
+        assertEquals("STR_ID_895", rule53.getFixes().get(0).getError());
 
         Variable var1 = prof.getVariablesForObject("Object").get(0);
 
