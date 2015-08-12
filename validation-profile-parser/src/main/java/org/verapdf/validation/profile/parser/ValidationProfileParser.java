@@ -19,8 +19,6 @@ import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathExcepti
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.validation.profile.model.Fix;
-import org.verapdf.validation.profile.model.FixError;
-import org.verapdf.validation.profile.model.FixInfo;
 import org.verapdf.validation.profile.model.Reference;
 import org.verapdf.validation.profile.model.Rule;
 import org.verapdf.validation.profile.model.RuleError;
@@ -422,8 +420,8 @@ public final class ValidationProfileParser {
     private static Fix parseFix(Node fix) {
         String id = null;
         String description = null;
-        FixInfo info = null;
-        FixError error = null;
+        String info = null;
+        String error = null;
 
         Node idNode = fix.getAttributes().getNamedItem("id");
 
@@ -446,17 +444,13 @@ public final class ValidationProfileParser {
             case INFO:
                 descendants = child.getChildNodes();
                 String infoMessageContent = getFirstMessageNodeTextContent(descendants);
-                if (infoMessageContent != null) {
-                    info = new FixInfo(infoMessageContent);
-                }
+                info = infoMessageContent;
                 break;
 
             case ERROR:
                 descendants = child.getChildNodes();
                 String errorMessageContent = getFirstMessageNodeTextContent(descendants);
-                if (errorMessageContent != null) {
-                    error = new FixError(errorMessageContent);
-                }
+                error = errorMessageContent;
                 break;
             default:
                 break;
@@ -506,8 +500,12 @@ public final class ValidationProfileParser {
             boolean isSignCheckOn) throws ParserConfigurationException,
             SAXException, IOException, IncorrectImportPathException,
             MissedHashTagException, XMLStreamException, WrongSignatureException {
-        if (profileFilePath == null) throw new IllegalArgumentException("Parameter (String profileFilePath) can not be null");
-        if (profileFilePath.isEmpty()) throw new IllegalArgumentException("Parameter (String profileFilePath) can not be an empty String");
+        if (profileFilePath == null)
+            throw new IllegalArgumentException(
+                    "Parameter (String profileFilePath) can not be null");
+        if (profileFilePath.isEmpty())
+            throw new IllegalArgumentException(
+                    "Parameter (String profileFilePath) can not be an empty String");
         return parseFromFile(new File(profileFilePath), isSignCheckOn);
     }
 
@@ -540,8 +538,12 @@ public final class ValidationProfileParser {
             boolean isSignCheckOn) throws ParserConfigurationException,
             SAXException, IOException, IncorrectImportPathException,
             MissedHashTagException, XMLStreamException, WrongSignatureException {
-        if (profileFile == null) throw new IllegalArgumentException("Parameter (File resourceFile) can not be null");
-        if (!profileFile.isFile()) throw new IllegalArgumentException("Parameter (File resourceFile) must be an existing file.");
+        if (profileFile == null)
+            throw new IllegalArgumentException(
+                    "Parameter (File resourceFile) can not be null");
+        if (!profileFile.isFile())
+            throw new IllegalArgumentException(
+                    "Parameter (File resourceFile) must be an existing file.");
         return new ValidationProfileParser(profileFile, isSignCheckOn).profile;
     }
 }
