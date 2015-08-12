@@ -1,6 +1,7 @@
 package org.verapdf.validation.profile.parser;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -15,7 +16,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 
-import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.validation.profile.model.Fix;
@@ -69,8 +69,7 @@ public final class ValidationProfileParser {
 
     private ValidationProfileParser(File resourceFile, boolean isSignCheckOn)
             throws ParserConfigurationException, IOException, SAXException,
-            IncorrectImportPathException, XMLStreamException,
-            MissedHashTagException, WrongSignatureException {
+            XMLStreamException, MissedHashTagException, WrongSignatureException {
         this.resource = resourceFile;
 
         if (isSignCheckOn) {
@@ -99,7 +98,7 @@ public final class ValidationProfileParser {
     }
 
     private void parseRoot(Node root, boolean isSignCheckOn)
-            throws IOException, SAXException, IncorrectImportPathException {
+            throws IOException, SAXException {
         String model = null;
         String name = null;
         String description = null;
@@ -160,8 +159,7 @@ public final class ValidationProfileParser {
     }
 
     private void parseImports(File sourceFile, Node imports,
-            Map<String, List<Rule>> rules) throws SAXException,
-            IncorrectImportPathException, IOException {
+            Map<String, List<Rule>> rules) throws SAXException, IOException {
         NodeList children = imports.getChildNodes();
 
         for (int i = 0; i < children.getLength(); ++i) {
@@ -176,7 +174,7 @@ public final class ValidationProfileParser {
             File newFile = new File(sourceFile.getParent(), path);
 
             if (!newFile.exists()) {
-                throw new IncorrectImportPathException(
+                throw new FileNotFoundException(
                         "Can not find import with path \"" + path
                                 + "\" directly to the given profile.");
             }
@@ -481,10 +479,10 @@ public final class ValidationProfileParser {
      *             configuration requested.
      * @throws IOException
      *             if any IO errors occur.
+     * @throws FileNotFoundException
+     *             if the profileFile is not an existing file
      * @throws SAXException
      *             if any parse errors occur.
-     * @throws IncorrectImportPathException
-     *             if validation profile contains incorrect input path
      * @throws MissedHashTagException
      *             if validation profile must be signed, but it has no hash tag
      * @throws XMLStreamException
@@ -498,8 +496,8 @@ public final class ValidationProfileParser {
      */
     public static ValidationProfile parseFromFilePath(String profileFilePath,
             boolean isSignCheckOn) throws ParserConfigurationException,
-            SAXException, IOException, IncorrectImportPathException,
-            MissedHashTagException, XMLStreamException, WrongSignatureException {
+            SAXException, IOException, MissedHashTagException,
+            XMLStreamException, WrongSignatureException {
         if (profileFilePath == null)
             throw new IllegalArgumentException(
                     "Parameter (String profileFilePath) can not be null");
@@ -519,10 +517,10 @@ public final class ValidationProfileParser {
      *             configuration requested.
      * @throws IOException
      *             if any IO errors occur.
+     * @throws FileNotFoundException
+     *             if the profileFile is not an existing file
      * @throws SAXException
      *             if any parse errors occur.
-     * @throws IncorrectImportPathException
-     *             if validation profile contains incorrect input path
      * @throws MissedHashTagException
      *             if validation profile must be signed, but it has no hash tag
      * @throws XMLStreamException
@@ -536,8 +534,8 @@ public final class ValidationProfileParser {
      */
     public static ValidationProfile parseFromFile(File profileFile,
             boolean isSignCheckOn) throws ParserConfigurationException,
-            SAXException, IOException, IncorrectImportPathException,
-            MissedHashTagException, XMLStreamException, WrongSignatureException {
+            SAXException, IOException, MissedHashTagException,
+            XMLStreamException, WrongSignatureException {
         if (profileFile == null)
             throw new IllegalArgumentException(
                     "Parameter (File resourceFile) can not be null");

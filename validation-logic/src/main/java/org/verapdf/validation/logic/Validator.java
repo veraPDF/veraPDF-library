@@ -1,6 +1,7 @@
 package org.verapdf.validation.logic;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayDeque;
@@ -22,7 +23,6 @@ import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameExceptio
 import org.verapdf.exceptions.validationlogic.NullLinkException;
 import org.verapdf.exceptions.validationlogic.NullLinkNameException;
 import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
-import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.model.baselayer.Object;
@@ -398,10 +398,10 @@ public class Validator {
      *             configuration requested.
      * @throws IOException
      *             if any IO errors occur.
+     * @throws FileNotFoundException
+     *             if the profileFile is not an existing file
      * @throws SAXException
      *             if any parse errors occur.
-     * @throws IncorrectImportPathException
-     *             if validation profile contains incorrect import path
      * @throws NullLinkNameException
      *             if there is a null link name in some object
      * @throws NullLinkException
@@ -425,10 +425,10 @@ public class Validator {
     public static ValidationInfo validate(Object root,
             String validationProfilePath, boolean isSignCheckOn)
             throws IOException, SAXException, ParserConfigurationException,
-            IncorrectImportPathException, NullLinkNameException,
-            NullLinkException, NullLinkedObjectException,
-            MissedHashTagException, XMLStreamException,
-            WrongSignatureException, MultiplyGlobalVariableNameException {
+            NullLinkNameException, NullLinkException,
+            NullLinkedObjectException, MissedHashTagException,
+            XMLStreamException, WrongSignatureException,
+            MultiplyGlobalVariableNameException {
         if (root == null)
             throw new IllegalArgumentException(
                     "Parameter (Object root) cannot be null.");
@@ -456,10 +456,10 @@ public class Validator {
      *             configuration requested.
      * @throws IOException
      *             If any IO errors occur.
+     * @throws FileNotFoundException
+     *             if the profileFile is not an existing file
      * @throws SAXException
      *             If any parse errors occur.
-     * @throws IncorrectImportPathException
-     *             if validation profile contains incorrect import path
      * @throws NullLinkNameException
      *             if there is a null link name in some object
      * @throws NullLinkException
@@ -482,11 +482,10 @@ public class Validator {
      */
     public static ValidationInfo validate(Object root, File validationProfile,
             boolean isSignCheckOn) throws ParserConfigurationException,
-            SAXException, IOException, IncorrectImportPathException,
-            NullLinkNameException, NullLinkException,
-            NullLinkedObjectException, MissedHashTagException,
-            XMLStreamException, WrongSignatureException,
-            MultiplyGlobalVariableNameException {
+            SAXException, IOException, NullLinkNameException,
+            NullLinkException, NullLinkedObjectException,
+            MissedHashTagException, XMLStreamException,
+            WrongSignatureException, MultiplyGlobalVariableNameException {
         if (root == null)
             throw new IllegalArgumentException(
                     "Parameter (Object root) cannot be null.");

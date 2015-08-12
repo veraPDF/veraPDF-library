@@ -13,7 +13,6 @@ import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameExceptio
 import org.verapdf.exceptions.validationlogic.NullLinkException;
 import org.verapdf.exceptions.validationlogic.NullLinkNameException;
 import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
-import org.verapdf.exceptions.validationprofileparser.IncorrectImportPathException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.features.pb.PBFeatureParser;
@@ -80,7 +79,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
     private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
         try {
             return Validator.validate(root, this.profile, false);
-        } catch (IOException | IncorrectImportPathException | NullLinkNameException | NullLinkException | NullLinkedObjectException | MissedHashTagException | WrongSignatureException | MultiplyGlobalVariableNameException | ParserConfigurationException | SAXException | XMLStreamException e) {
+        } catch (IOException | NullLinkNameException | NullLinkException | NullLinkedObjectException | MissedHashTagException | WrongSignatureException | MultiplyGlobalVariableNameException | ParserConfigurationException | SAXException | XMLStreamException e) {
             this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_VALIDATING, e);
         }
         return null;
