@@ -4,9 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
-import org.apache.pdfbox.preflight.PreflightConstants;
 import org.apache.pdfbox.preflight.font.container.FontContainer;
-import org.apache.pdfbox.preflight.font.util.GlyphException;
 import org.verapdf.model.factory.font.FontFactory;
 import org.verapdf.model.impl.pb.operator.base.PBOperator;
 import org.verapdf.model.operator.OpTextShow;
@@ -76,7 +74,7 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
                     res.add(new PBGlyph(glyphPresent, widthsConsistent, pdfBoxFont.getName(), code));
                 }
             } catch (IOException e) {
-                LOGGER.error("Error processing text show operator's string argument : " + string);
+                LOGGER.error("Error processing text show operator's string argument : " + string + "\n" + e.getMessage());
             }
         }
         return res;
