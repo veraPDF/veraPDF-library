@@ -234,7 +234,6 @@ public final class ValidationProfileParser {
         String description = null;
         String test = null;
         RuleError ruleError = null;
-        boolean isHasError = false;
         Reference reference = null;
         List<Fix> fix = new ArrayList<>();
 
@@ -264,7 +263,6 @@ public final class ValidationProfileParser {
                 break;
             case ERROR:
                 ruleError = parseRuleError(child);
-                isHasError = true;
                 break;
             case WARNING:
                 ruleError = parseRuleError(child);
@@ -282,7 +280,7 @@ public final class ValidationProfileParser {
             }
         }
 
-        return new Rule(id, object, description, ruleError, isHasError, test,
+        return new Rule(id, object, description, ruleError, test,
                 reference, fix);
 
     }
