@@ -7,7 +7,7 @@ import org.verapdf.model.operator.Op_Tj;
 import java.util.List;
 
 /**
- * Operator, which show a text string
+ * Operator which shows a text string
  *
  * @author Evgeniy Muravitskiy
  */

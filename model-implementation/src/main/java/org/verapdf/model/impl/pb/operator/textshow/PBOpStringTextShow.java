@@ -11,16 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Base class for all operators that are used as operands
- * just one string
+ * Base class for all operators that uses one string as operand
  *
  * @author Evgeniy Muravitskiy
  */
 public abstract class PBOpStringTextShow extends PBOpTextShow {
 
-	/**
-	 *  Link name of showing strings for operators ", ', Tj
-	 */
+	/** Name of link to the showing strings for operators ", ', Tj */
     public static final String SHOW_STRING = "showString";
 
     protected PBOpStringTextShow(List<COSBase> arguments,
@@ -38,9 +35,11 @@ public abstract class PBOpStringTextShow extends PBOpTextShow {
     }
 
     private List<CosString> getShowString() {
-        List<CosString> string = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        List<CosString> string =
+				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		if (!this.arguments.isEmpty()) {
-			COSBase base = this.arguments.get(this.arguments.size() - 1);
+			COSBase base = this.arguments
+					.get(this.arguments.size() - 1);
 			if (base instanceof COSString) {
 				string.add(new PBCosString((COSString) base));
 			}

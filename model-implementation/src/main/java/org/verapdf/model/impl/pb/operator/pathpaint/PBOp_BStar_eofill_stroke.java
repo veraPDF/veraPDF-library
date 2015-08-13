@@ -8,7 +8,7 @@ import org.verapdf.model.operator.Op_BStar_eofill_stroke;
 import java.util.List;
 
 /**
- * Operator, which fill and then stroke the path, using the
+ * Operator which fills and then strokes the path. Uses the
  * even-odd rule to determine the region to fill
  *
  * @author Timur Kamalov

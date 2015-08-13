@@ -5,6 +5,7 @@ import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.preflight.font.container.FontContainer;
+import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.font.FontFactory;
 import org.verapdf.model.impl.pb.operator.base.PBOperator;
 import org.verapdf.model.operator.OpTextShow;
@@ -26,9 +27,9 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 
     private static final Logger LOGGER = Logger.getLogger(PBOpTextShow.class);
 
-	/** Link name of used font for OpTextShow */
+	/** Name of link to the used font */
     public static final String FONT = "font";
-	/** Link name of used glyphs for OpTextShow */
+	/** Name of link to the used glyphs */
     public static final String USED_GLYPHS = "usedGlyphs";
 
     protected final org.apache.pdfbox.pdmodel.font.PDFont pdfBoxFont;
@@ -40,7 +41,7 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     }
 
 	@Override
-	public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+	public List<? extends Object> getLinkedObjects(
 			String link) {
 		switch (link) {
 			case FONT:

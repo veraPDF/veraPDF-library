@@ -14,6 +14,7 @@ import java.util.List;
 public abstract class PBOpPathConstruction extends PBOperator implements
         OpPathConstruction {
 
+	/** Name of link to the control ponts */
     public static final String CONTROL_POINTS = "controlPoints";
 
     public PBOpPathConstruction(List<COSBase> arguments, final String opType) {

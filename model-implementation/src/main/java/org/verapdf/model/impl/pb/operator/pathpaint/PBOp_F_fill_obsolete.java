@@ -8,7 +8,7 @@ import org.verapdf.model.operator.Op_F_fill_obsolete;
 import java.util.List;
 
 /**
- * Operator, which equivalent to f
+ * Operator equivalent to f
  *
  * @author Timur Kamalov
  */

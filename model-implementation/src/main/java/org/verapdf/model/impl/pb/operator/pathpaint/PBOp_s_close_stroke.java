@@ -7,7 +7,7 @@ import org.verapdf.model.operator.Op_s_close_stroke;
 import java.util.List;
 
 /**
- * Operator, which close and stroke the path
+ * Operator which closes and strokes the path
  *
  * @author Timur Kamalov
  */

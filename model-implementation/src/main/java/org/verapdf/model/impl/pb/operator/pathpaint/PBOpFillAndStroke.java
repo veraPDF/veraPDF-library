@@ -3,11 +3,12 @@ package org.verapdf.model.impl.pb.operator.pathpaint;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
+import org.verapdf.model.baselayer.Object;
 
 import java.util.List;
 
 /**
- * Base class for path paint operators, which stroke and fill path
+ * Base class for path paint operators which strokes and fills path
  *
  * @author Evgeniy Muravitskiy
  */
@@ -20,7 +21,7 @@ public abstract class PBOpFillAndStroke extends PBOpPathPaint {
 	}
 
 	@Override
-	public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+	public List<? extends Object> getLinkedObjects(
 			String link) {
 		switch (link) {
 			case STROKE_CS:

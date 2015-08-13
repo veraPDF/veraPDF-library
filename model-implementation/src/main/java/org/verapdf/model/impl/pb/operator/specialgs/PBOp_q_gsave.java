@@ -7,7 +7,7 @@ import org.verapdf.model.operator.Op_q_gsave;
 import java.util.List;
 
 /**
- * Operator, which save the current graphics state on the
+ * Operator defining the current graphics state on the
  * graphics state stack
  *
  * @author Timur Kamalov

@@ -7,7 +7,7 @@ import org.verapdf.model.operator.Op_S_stroke;
 import java.util.List;
 
 /**
- *
+ * Operator which strokes the path
  *
  * @author Timur Kamalov
  */

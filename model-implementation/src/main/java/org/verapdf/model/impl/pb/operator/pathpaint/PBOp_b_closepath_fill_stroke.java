@@ -8,7 +8,7 @@ import org.verapdf.model.operator.Op_b_closepath_fill_stroke;
 import java.util.List;
 
 /**
- * Operator, which close, fill, and then stroke the path, using the
+ * Operator which closes, fills and then strokes the pat. Uses the
  * nonzero winding number rule to determine the region to fill
  *
  * @author Timur Kamalov

@@ -8,14 +8,18 @@ import org.verapdf.model.operator.Op_w_line_width;
 import java.util.List;
 
 /**
- * Operator, which set the line width in the graphics state
+ * Operator defining the line width in the graphics state
  *
  * @author Timur Kamalov
  */
-public class PBOp_w_line_width extends PBOpGeneralGS implements Op_w_line_width {
+public class PBOp_w_line_width extends PBOpGeneralGS
+		implements Op_w_line_width {
 
+	/** Type name for {@code PBOp_w_line_width} */
+	public static final String OP_W_LINE_WIDTH_TYPE = "Op_w_line_width";
+
+	/** Name of link to the width for */
     public static final String LINE_WIDTH = "lineWidth";
-    public static final String OP_W_LINE_WIDTH_TYPE = "Op_w_line_width";
 
     public PBOp_w_line_width(List<COSBase> arguments) {
         super(arguments, OP_W_LINE_WIDTH_TYPE);

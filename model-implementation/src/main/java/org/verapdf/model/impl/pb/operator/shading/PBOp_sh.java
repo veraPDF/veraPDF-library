@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Operator, which paint the shape and color shading described
+ * Operator which paints the shape and color shading described
  * by a shading dictionary, subject to the current clipping path
  *
  * @author Timur Kamalov
@@ -20,7 +20,7 @@ public class PBOp_sh extends PBOperator implements Op_sh {
 	/** Type name for {@code PBOp_sh} */
     public static final String OP_SH_TYPE = "Op_sh";
 
-	/** Shading link name for {@code Op_sh} operator */
+	/** Name of link to the shading */
     public static final String SHADING = "shading";
 
     private org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading;

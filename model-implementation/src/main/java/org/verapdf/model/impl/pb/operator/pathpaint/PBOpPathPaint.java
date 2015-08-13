@@ -11,13 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Base class for all path paint operators
+ *
  * @author Timur Kamalov
  */
 public abstract class PBOpPathPaint extends PBOperator implements OpPathPaint {
 
+	/** Name of link to the stroke color space */
     public static final String STROKE_CS = "strokeCS";
+	/** Name of link to the fill color space */
     public static final String FILL_CS = "fillCS";
-    public static final int MAX_NUMBER_OF_COLOR_SPACES = 1;
 
     protected PDColorSpace pbStrokeColorSpace;
     protected PDColorSpace pbFillColorSpace;
@@ -40,10 +43,10 @@ public abstract class PBOpPathPaint extends PBOperator implements OpPathPaint {
 		return this.getColorSpace(pbStrokeColorSpace);
 	}
 
-	protected List<org.verapdf.model.pdlayer.PDColorSpace> getColorSpace(
+	private List<org.verapdf.model.pdlayer.PDColorSpace> getColorSpace(
 			PDColorSpace colorSpace) {
 		List<org.verapdf.model.pdlayer.PDColorSpace> list =
-				new ArrayList<>(MAX_NUMBER_OF_COLOR_SPACES);
+				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		org.verapdf.model.pdlayer.PDColorSpace veraColorSpace =
 				ColorSpaceFactory.getColorSpace(colorSpace, pattern);
 		if (veraColorSpace != null) {

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Operator, which show one or more text strings,
+ * Operator which shows one or more text strings,
  * allowing individual glyph positioning
  *
  * @author Evgeniy Muravitskiy
@@ -22,7 +22,7 @@ public class PBOp_TJ_Big extends PBOpTextShow implements Op_TJ_Big {
 	/** Type name for {@code PBOp_TJ_Big} */
 	public static final String OP_TJ_BIG_TYPE = "Op_TJ_Big";
 
-	/** Link name of set of strings and numbers for Op_TJ_Big */
+	/** Name of link to the set of strings and numbers */
     public static final String SPECIAL_STRINGS = "specialStrings";
 
     public PBOp_TJ_Big(List<COSBase> arguments, PDFont font) {
@@ -39,7 +39,8 @@ public class PBOp_TJ_Big extends PBOpTextShow implements Op_TJ_Big {
     }
 
     private List<CosArray> getSpecialStrings() {
-        List<CosArray> array = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        List<CosArray> array =
+				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		if (!this.arguments.isEmpty()) {
 			COSBase base = this.arguments.get(
 					this.arguments.size() - 1);

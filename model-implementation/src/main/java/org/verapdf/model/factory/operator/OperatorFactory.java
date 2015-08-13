@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class for transforming operators of pdfbox library to
- * corresponding operators of veraPDF-library
+ * Class for converting pdfbox operators to the veraPDF-library operators
  *
  * @author Timur Kamalov
  */
@@ -26,9 +25,8 @@ public final class OperatorFactory {
     }
 
 	/**
-	 * Transform operators and arguments of stream of pdf document,
-	 * implemented by pdfbox library, to corresponding
-	 * {@link Operator} objects of veraPDF-library.
+	 * Converts pdfbox operators and arguments from content stream
+	 * to the corresponding {@link Operator} objects of veraPDF-library
 	 *
 	 * @param pdfBoxTokens list of {@link COSBase} or
 	 * 					   {@link org.apache.pdfbox.contentstream.operator.Operator}

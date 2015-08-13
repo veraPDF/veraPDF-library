@@ -8,7 +8,7 @@ import org.verapdf.model.operator.Op_f_fill;
 import java.util.List;
 
 /**
- * Operator, which fill the path, using the nonzero winding
+ * Operator which fills the path, using the nonzero winding
  * number rule to determine the region to fill
  *
  * @author Timur Kamalov

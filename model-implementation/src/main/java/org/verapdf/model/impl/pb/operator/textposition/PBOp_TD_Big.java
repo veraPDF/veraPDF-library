@@ -6,7 +6,7 @@ import org.verapdf.model.operator.Op_TD_Big;
 import java.util.List;
 
 /**
- * Operator, which move to the start of the next line, offset
+ * Operator which moves to the start of the next line, offset
  * from the start of the current line by (tx , ty ).
  * As a side effect, this operator sets the leading parameter
  * in the text state

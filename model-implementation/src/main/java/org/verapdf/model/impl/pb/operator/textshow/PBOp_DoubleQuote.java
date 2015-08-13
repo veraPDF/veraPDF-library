@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Operator, which move to the next line and show a text string,
+ * Operator which moves to the next line and shows a text string,
  * using the word spacing and the character spacing (setting
  * the corresponding parameters in the text state)
  *
@@ -24,9 +24,9 @@ public class PBOp_DoubleQuote extends PBOpStringTextShow implements
 	/** Type name for {@code PBOp_DoubleQuote} */
 	public static final String OP_DOUBLIE_QUOTE_TYPE = "Op_DoubleQuote";
 
-	/** Link name of word spacing for {@code Op_DoubleQuote} */
+	/** Name of link to the word spacing */
 	public static final String WORD_SPACING = "wordSpacing";
-	/** Link name of character spacing for {@code Op_DoubleQuote} */
+	/** Name of link to the character spacing */
 	public static final String CHARACTER_SPACING = "characterSpacing";
 
 	/** Position of word spacing property in operands */

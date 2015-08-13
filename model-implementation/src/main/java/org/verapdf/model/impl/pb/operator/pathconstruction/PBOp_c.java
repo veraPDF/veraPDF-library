@@ -1,18 +1,20 @@
 package org.verapdf.model.impl.pb.operator.pathconstruction;
 
 import org.apache.pdfbox.cos.COSBase;
+import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.operator.Op_c;
 
 import java.util.List;
 
 /**
- * Operator, which append a cubic Bézier curve to the current path
+ * Operator which appends a cubic Bézier curve to the current path
  *
  * @author Timur Kamalov
  */
 public class PBOp_c extends PBOpPathConstruction implements Op_c {
 
+	/** Type name for {@code PBOp_c} */
     public static final String OP_C_TYPE = "Op_c";
 
     public PBOp_c(List<COSBase> arguments) {
@@ -20,7 +22,7 @@ public class PBOp_c extends PBOpPathConstruction implements Op_c {
     }
 
     @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+    public List<? extends Object> getLinkedObjects(
             String link) {
         if (CONTROL_POINTS.equals(link)) {
             return this.getControlPoints();

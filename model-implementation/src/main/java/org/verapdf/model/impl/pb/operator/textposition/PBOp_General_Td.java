@@ -16,10 +16,10 @@ import java.util.List;
  */
 public abstract class PBOp_General_Td extends PBOpTextPosition {
 
-	/** Link name of horizontal offset for Td and TD operators */
+	/** Name of link to the horizontal offset for Td and TD operators */
     public static final String HORIZONTAL_OFFSET = "horizontalOffset";
 
-	/** Link name of vertical offset for Td and TD operators */
+	/** Name of link to the vertical offset for Td and TD operators */
 	public static final String VERTICAL_OFFSET = "verticalOffset";
 
     protected PBOp_General_Td(List<COSBase> arguments, final String opType) {
@@ -39,9 +39,11 @@ public abstract class PBOp_General_Td extends PBOpTextPosition {
 	}
 
     private List<CosReal> getHorizontalOffset() {
-        List<CosReal> offset = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        List<CosReal> offset =
+				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		if (this.arguments.size() > 1) {
-			COSBase number = this.arguments.get(this.arguments.size() - 2);
+			COSBase number = this.arguments
+					.get(this.arguments.size() - 2);
 			if (number instanceof COSNumber) {
 				offset.add(new PBCosReal((COSNumber) number));
 			}

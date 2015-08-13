@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class PBOpColor extends PBOperator implements OpColor {
 
+	/** Type name for {@code PBOpColor} */
     public static final String OP_COLOR_TYPE = "OpColor";
 
     public PBOpColor(List<COSBase> arguments) {

@@ -7,7 +7,7 @@ import org.verapdf.model.operator.Op_Quote;
 import java.util.List;
 
 /**
- * Operator, which move to the next line and show a text string
+ * Operator which moves to the next line and shows a text string
  *
  * @author Evgeniy Muravitskiy
  */

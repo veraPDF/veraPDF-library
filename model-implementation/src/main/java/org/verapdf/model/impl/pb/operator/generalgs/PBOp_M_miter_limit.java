@@ -7,14 +7,17 @@ import org.verapdf.model.operator.Op_M_miter_limit;
 import java.util.List;
 
 /**
- * Operator, which set the miter limit in the graphics state
+ * Operator defining the miter limit in the graphics state
  *
  * @author Timur Kamalov
  */
 public class PBOp_M_miter_limit extends PBOpGeneralGS implements
         Op_M_miter_limit {
 
+	/** Type name for {@code PBOp_M_miter_limit} */
     public static final String OP_M_MITER_LIMIT_TYPE = "Op_M_miter_limit";
+
+	/** Name of link to the miter limit */
     public static final String MITER_LIMIT = "miterLimit";
 
     public PBOp_M_miter_limit(List<COSBase> arguments) {

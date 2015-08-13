@@ -21,7 +21,9 @@ import java.util.List;
 public abstract class PBOpMarkedContent extends PBOperator implements
         OpMarkedContent {
 
+	/** Name of link to the tag name */
     public static final String TAG = "tag";
+	/** Name of link to the properties dictionary */
     public static final String PROPERTIES = "properties";
 
     public PBOpMarkedContent(List<COSBase> arguments, final String opType) {

@@ -6,7 +6,7 @@ import org.verapdf.model.operator.Op_n;
 import java.util.List;
 
 /**
- * Operator, which end the path object without filling or
+ * Operator which ends the path object without filling or
  * stroking it. This operator is a “path-painting no-op,”
  * used primarily for the side effect of changing the current
  * clipping path

@@ -13,8 +13,6 @@ import java.util.List;
  */
 public abstract class PBOpGeneralGS extends PBOperator implements OpGeneralGS {
 
-    public static final int OPERANDS_COUNT = 1;
-
     protected PBOpGeneralGS(List<COSBase> arguments, final String opType) {
         super(arguments, opType);
     }

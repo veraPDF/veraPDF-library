@@ -11,22 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Operator, which set the specified parameters in the graphics state.
- * Parameters specified by dictName. dictName is the name of a graphics
- * state parameter dictionary in the ExtGState sub dictionary of the
- * current resource dictionary
+ * Operator defining the specified parameters in the graphics state.
  *
  * @author Timur Kamalov
  */
 public class PBOp_gs extends PBOpGeneralGS implements Op_gs {
 
+	/** Type name for {@code PBOp_gs} */
     public static final String OP_GS_TYPE = "Op_gs";
+
+	/** Name of link to the extended graphic state */
     public static final String EXT_G_STATE = "extGState";
-    public static final int MAX_NUMBER_OF_STATES = 1;
 
     private PDExtendedGraphicsState extGState;
 
-    public PBOp_gs(List<COSBase> arguments, PDExtendedGraphicsState extGState) {
+    public PBOp_gs(List<COSBase> arguments,
+				   PDExtendedGraphicsState extGState) {
         super(arguments, OP_GS_TYPE);
         this.extGState = extGState;
     }
@@ -40,7 +40,7 @@ public class PBOp_gs extends PBOpGeneralGS implements Op_gs {
     }
 
     private List<PDExtGState> getExtGState() {
-        List<PDExtGState> extGStates = new ArrayList<>(MAX_NUMBER_OF_STATES);
+        List<PDExtGState> extGStates = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         if (extGState != null) {
             extGStates.add(new PBoxPDExtGState(extGState));
         }

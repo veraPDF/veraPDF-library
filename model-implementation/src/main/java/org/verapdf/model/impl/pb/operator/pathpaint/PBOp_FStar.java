@@ -8,7 +8,7 @@ import org.verapdf.model.operator.Op_FStar;
 import java.util.List;
 
 /**
- * Operator, which fill the path, using the even-odd rule
+ * Operator which fills the path, using the even-odd rule
  * to determine the region to fill
  *
  * @author Timur Kamalov

@@ -6,7 +6,7 @@ import org.verapdf.model.operator.Op_Q_grestore;
 import java.util.List;
 
 /**
- * Operator, which restore the graphics state by removing
+ * Operator which restores the graphics state by removing
  * the most recently saved state from the stack and making
  * it the current state
  *
