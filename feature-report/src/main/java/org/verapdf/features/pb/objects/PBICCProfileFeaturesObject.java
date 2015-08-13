@@ -9,10 +9,11 @@ import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Formatter;
 import java.util.GregorianCalendar;
 import java.util.Set;
 
@@ -31,6 +32,8 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
     private static final int FF_FLAG = 0xFF;
     private static final int F_FLAG = 0x0F;
     private static final int REQUIRED_LENGTH = 4;
+    private static final int TAGINFO_LENGTH = 12;
+    private static final int BITSINBYTE = 8;
     private static final int VERSION_BYTE = 8;
     private static final int SUBVERSION_BYTE = 9;
     private static final int CMMTYPE_BEGIN = 4;
@@ -135,23 +138,25 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 
     private void parseProfileHeader(FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
         try {
-            byte[] header = getHeader();
+            byte[] profileBytes = inputStreamToByteArray(profile);
 
-            if (header.length < HEADER_SIZE) {
+            if (profileBytes.length < HEADER_SIZE) {
                 root.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.GETINGICCPROFILEHEADERSIZEERROR_ID);
                 ErrorsHelper.addErrorIntoCollection(collection,
                         ErrorsHelper.GETINGICCPROFILEHEADERSIZEERROR_ID,
                         ErrorsHelper.GETINGICCPROFILEHEADERSIZEERROR_MESSAGE);
             } else {
-                PBCreateNodeHelper.addNotEmptyNode("version", getVersion(header), root);
-                PBCreateNodeHelper.addNotEmptyNode("cmmType", getHexNumber(header, CMMTYPE_BEGIN, CMMTYPE_END), root);
-                PBCreateNodeHelper.addNotEmptyNode("dataColorSpace", getDataColorSpace(header), root);
-                PBCreateNodeHelper.addNotEmptyNode("creatorSignature", getHexNumber(header, CREATOR_BEGIN, CREATOR_END), root);
-                PBCreateNodeHelper.createDateNode("creationDate", root, getCreationDate(header), collection);
-                PBCreateNodeHelper.addNotEmptyNode("defaultRenderingIntent", getHexNumber(header, RENDERINGINTENT_BEGIN, RENDERINGINTENT_END), root);
-                PBCreateNodeHelper.addNotEmptyNode("profileId", getHexNumber(header, PROFILEID_BEGIN, PROFILEID_END), root);
-                PBCreateNodeHelper.addNotEmptyNode("deviceModel", getHexNumber(header, DEVICEMODEL_BEGIN, DEVICEMODEL_END), root);
-                PBCreateNodeHelper.addNotEmptyNode("deviceManufacturer", getHexNumber(header, DEVICEMANUFACTURER_BEGIN, DEVICEMANUFACTURER_END), root);
+                PBCreateNodeHelper.addNotEmptyNode("version", getVersion(profileBytes), root);
+                PBCreateNodeHelper.addNotEmptyNode("cmmType", getStringFromHeader(profileBytes, CMMTYPE_BEGIN, CMMTYPE_END), root);
+                PBCreateNodeHelper.addNotEmptyNode("dataColorSpace", getStringFromHeader(profileBytes, DATACOLORSPACE_BEGIN, DATACOLORSPACE_END), root);
+                PBCreateNodeHelper.addNotEmptyNode("creator", getStringFromHeader(profileBytes, CREATOR_BEGIN, CREATOR_END), root);
+                PBCreateNodeHelper.createDateNode("creationDate", root, getCreationDate(profileBytes), collection);
+                PBCreateNodeHelper.addNotEmptyNode("defaultRenderingIntent", getStringFromHeader(profileBytes, RENDERINGINTENT_BEGIN, RENDERINGINTENT_END), root);
+                PBCreateNodeHelper.addNotEmptyNode("copyright", getStringTag(profileBytes, "cprt"), root);
+                PBCreateNodeHelper.addNotEmptyNode("description", getStringTag(profileBytes, "desc"), root);
+                PBCreateNodeHelper.addNotEmptyNode("profileId", getStringFromHeader(profileBytes, PROFILEID_BEGIN, PROFILEID_END), root);
+                PBCreateNodeHelper.addNotEmptyNode("deviceModel", getStringFromHeader(profileBytes, DEVICEMODEL_BEGIN, DEVICEMODEL_END), root);
+                PBCreateNodeHelper.addNotEmptyNode("deviceManufacturer", getStringFromHeader(profileBytes, DEVICEMANUFACTURER_BEGIN, DEVICEMANUFACTURER_END), root);
             }
 
         } catch (IOException e) {
@@ -163,16 +168,14 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
         }
     }
 
-    private byte[] getHeader() throws IOException {
-        int available = profile.available();
-        int size = available > HEADER_SIZE ? HEADER_SIZE : available;
-
-        byte[] res = new byte[size];
-        profile.mark(size);
-        profile.read(res, 0, size);
-        profile.reset();
-
-        return res;
+    private static byte[] inputStreamToByteArray(InputStream is) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        int reads = is.read();
+        while (reads != -1) {
+            baos.write(reads);
+            reads = is.read();
+        }
+        return baos.toByteArray();
     }
 
     private static String getVersion(byte[] header) {
@@ -187,22 +190,9 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
         return builder.toString();
     }
 
-    private static String getHexNumber(byte[] header, int begin, int end) {
-        try (Formatter formatter = new Formatter()) {
-            boolean isZero = true;
-            for (int i = begin; i < end; ++i) {
-                if (header[i] != 0) {
-                    isZero = false;
-                }
-                formatter.format("%02X", Byte.valueOf(header[i]));
-            }
-            return isZero ? null : formatter.toString() + "h";
-        }
-    }
-
-    private static String getDataColorSpace(byte[] header) {
+    private static String getStringFromHeader(byte[] header, int begin, int end) {
         StringBuilder builder = new StringBuilder();
-        for (int i = DATACOLORSPACE_BEGIN; i < DATACOLORSPACE_END; ++i) {
+        for (int i = begin; i < end; ++i) {
             builder.append((char) header[i]);
         }
         String res = builder.toString().trim();
@@ -220,16 +210,55 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
         int sec = getCreationPart(header, CREATION_SEC);
 
         if (year != 0 || month != 0 || day != 0 || hour != 0 || min != 0 || sec != 0) {
-            return new GregorianCalendar(year, month, day, hour, min, sec);
+            return new GregorianCalendar(year, month - 1, day, hour, min, sec);
         }
 
         return null;
     }
 
     private static int getCreationPart(byte[] header, int off) {
-        int part = header[off];
-        part <<= REQUIRED_LENGTH;
-        part += header[off + 1];
+        int part = header[off] & FF_FLAG;
+        part <<= BITSINBYTE;
+        part += header[off + 1] & FF_FLAG;
         return part;
+    }
+
+    private static String getStringTag(byte[] profileBytes, String tagName) {
+        if (profileBytes.length < HEADER_SIZE + REQUIRED_LENGTH) {
+            return null;
+        }
+
+        int tagsNumberRemained = byteArrayToInt(Arrays.copyOfRange(profileBytes, HEADER_SIZE, HEADER_SIZE + REQUIRED_LENGTH));
+
+        int curOffset = HEADER_SIZE + REQUIRED_LENGTH;
+
+        while (tagsNumberRemained > 0 && curOffset + TAGINFO_LENGTH <= profileBytes.length) {
+            String tag = new String(Arrays.copyOfRange(profileBytes, curOffset, curOffset + REQUIRED_LENGTH));
+            if (tag.equals(tagName)) {
+                curOffset += REQUIRED_LENGTH;
+                int offset = byteArrayToInt(Arrays.copyOfRange(profileBytes, curOffset,
+                        curOffset + REQUIRED_LENGTH));
+                curOffset += REQUIRED_LENGTH;
+                int length = byteArrayToInt(Arrays.copyOfRange(profileBytes, curOffset,
+                        curOffset + REQUIRED_LENGTH));
+                if (profileBytes.length < offset + length) {
+                    return null;
+                }
+
+                return new String(Arrays.copyOfRange(profileBytes, offset + REQUIRED_LENGTH, offset + length)).trim();
+            }
+            curOffset += TAGINFO_LENGTH;
+        }
+
+        return null;
+    }
+
+    private static int byteArrayToInt(byte[] b) {
+        int value = 0;
+        for (int i = 0; i < REQUIRED_LENGTH; i++) {
+            int shift = (REQUIRED_LENGTH - 1 - i) * BITSINBYTE;
+            value += (b[i] & FF_FLAG) << shift;
+        }
+        return value;
     }
 }
