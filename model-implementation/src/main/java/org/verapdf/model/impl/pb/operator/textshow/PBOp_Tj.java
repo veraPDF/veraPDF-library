@@ -7,10 +7,13 @@ import org.verapdf.model.operator.Op_Tj;
 import java.util.List;
 
 /**
+ * Operator which shows a text string
+ *
  * @author Evgeniy Muravitskiy
  */
 public class PBOp_Tj extends PBOpStringTextShow implements Op_Tj {
 
+	/** Type name for {@code PBOp_Tj} */
     public static final String OP_TJ_TYPE = "Op_Tj";
 
     public PBOp_Tj(List<COSBase> arguments, PDFont font) {

@@ -12,58 +12,64 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Operator which moves to the next line and shows a text string,
+ * using the word spacing and the character spacing (setting
+ * the corresponding parameters in the text state)
+ *
  * @author Evgeniy Muravitskiy
  */
 public class PBOp_DoubleQuote extends PBOpStringTextShow implements
-        Op_DoubleQuote {
+		Op_DoubleQuote {
 
-    public static final String OP_DOUBLIE_QUOTE_TYPE = "Op_DoubleQuote";
+	/** Type name for {@code PBOp_DoubleQuote} */
+	public static final String OP_DOUBLIE_QUOTE_TYPE = "Op_DoubleQuote";
 
-    public static final String WORD_SPACING = "wordSpacing";
-    public static final String CHARACTER_SPACING = "characterSpacing";
-    public static final int COUNT_OF_OPERATOR_OPERANDS = 3;
+	/** Name of link to the word spacing */
+	public static final String WORD_SPACING = "wordSpacing";
+	/** Name of link to the character spacing */
+	public static final String CHARACTER_SPACING = "characterSpacing";
 
-    public PBOp_DoubleQuote(List<COSBase> arguments, PDFont font) {
-        super(arguments, font, OP_DOUBLIE_QUOTE_TYPE);
-    }
+	/** Position of word spacing property in operands */
+	public static final int WORD_SPACING_POSITION = 0;
+	/** Position of character spacing property in operands */
+	public static final int CHARACTER_SPACING_POSITION = 1;
+	/** Number of operands */
+	public static final int COUNT_OF_OPERATOR_OPERANDS = 3;
 
-    @Override
-    public List<? extends Object> getLinkedObjects(String link) {
-        List<? extends Object> list;
+	public PBOp_DoubleQuote(List<COSBase> arguments, PDFont font) {
+		super(arguments, font, OP_DOUBLIE_QUOTE_TYPE);
+	}
 
-        switch (link) {
-        case WORD_SPACING:
-            list = getWordSpacing();
-            break;
-        case CHARACTER_SPACING:
-            list = getCharacterSpacing();
-            break;
-        default:
-            list = super.getLinkedObjects(link);
-            break;
-        }
+	@Override
+	public List<? extends Object> getLinkedObjects(String link) {
+		switch (link) {
+			case WORD_SPACING:
+				return this.getWordSpacing();
+			case CHARACTER_SPACING:
+				return this.getCharacterSpacing();
+			default:
+				return super.getLinkedObjects(link);
+		}
+	}
 
-        return list;
-    }
+	private List<CosReal> getWordSpacing() {
+		return getSpecialReal(WORD_SPACING_POSITION);
+	}
 
-    private List<CosReal> getWordSpacing() {
-        return getSpecialReal(0);
-    }
+	private List<CosReal> getCharacterSpacing() {
+		return getSpecialReal(CHARACTER_SPACING_POSITION);
+	}
 
-    private List<CosReal> getCharacterSpacing() {
-        return getSpecialReal(1);
-    }
-
-    private List<CosReal> getSpecialReal(int operandNumber) {
-        List<CosReal> characterSpacing = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-        if (this.arguments.size() >= COUNT_OF_OPERATOR_OPERANDS) {
-            int index = this.arguments.size() - COUNT_OF_OPERATOR_OPERANDS
-                    + operandNumber;
-            COSBase base = this.arguments.get(index);
-            if (base instanceof COSNumber) {
-                characterSpacing.add(new PBCosReal((COSNumber) base));
-            }
-        }
-        return characterSpacing;
-    }
+	private List<CosReal> getSpecialReal(int operandNumber) {
+		List<CosReal> real = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+		final int size = this.arguments.size();
+		if (size >= COUNT_OF_OPERATOR_OPERANDS) {
+			int index = size - COUNT_OF_OPERATOR_OPERANDS + operandNumber;
+			COSBase base = this.arguments.get(index);
+			if (base instanceof COSNumber) {
+				real.add(new PBCosReal((COSNumber) base));
+			}
+		}
+		return real;
+	}
 }

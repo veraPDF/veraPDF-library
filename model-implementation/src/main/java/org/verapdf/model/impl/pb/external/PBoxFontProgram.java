@@ -18,8 +18,7 @@ public class PBoxFontProgram extends PBoxExternal implements FontProgram {
     private Long widthSize;
 
     public PBoxFontProgram(PDStream fontProgram) {
-        super();
-        setType(FONT_PROGRAM_TYPE);
+        super(FONT_PROGRAM_TYPE);
         this.fontProgram = fontProgram;
     }
 

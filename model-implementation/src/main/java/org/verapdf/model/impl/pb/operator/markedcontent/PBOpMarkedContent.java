@@ -14,34 +14,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Base class for marked content operators
+ *
  * @author Timur Kamalov
  */
 public abstract class PBOpMarkedContent extends PBOperator implements
         OpMarkedContent {
 
+	/** Name of link to the tag name */
     public static final String TAG = "tag";
+	/** Name of link to the properties dictionary */
     public static final String PROPERTIES = "properties";
-
-    public PBOpMarkedContent(List<COSBase> arguments) {
-        super(arguments);
-    }
 
     public PBOpMarkedContent(List<COSBase> arguments, final String opType) {
         super(arguments, opType);
     }
 
     protected List<CosName> getTag() {
-        List<CosName> list = new ArrayList<>();
-        if (!arguments.isEmpty() && arguments.get(0) instanceof COSName) {
-            list.add(new PBCosName((COSName) arguments.get(0)));
+        List<CosName> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        if (this.arguments.size() > 1) {
+			COSBase name = this.arguments
+					.get(this.arguments.size() - 2);
+			if (name instanceof COSName) {
+				list.add(new PBCosName((COSName) name));
+			}
         }
         return list;
     }
 
     protected List<CosDict> getPropertiesDict() {
-        List<CosDict> list = new ArrayList<>();
-        if (arguments.size() > 1 && arguments.get(1) instanceof COSDictionary) {
-            list.add(new PBCosDict((COSDictionary) arguments.get(1)));
+        List<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        if (!this.arguments.isEmpty()) {
+			COSBase dict = this.arguments
+					.get(this.arguments.size() - 1);
+			if (dict instanceof COSDictionary) {
+				list.add(new PBCosDict((COSDictionary) dict));
+			}
         }
         return list;
     }

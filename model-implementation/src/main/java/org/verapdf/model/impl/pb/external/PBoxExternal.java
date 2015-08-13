@@ -14,9 +14,9 @@ public class PBoxExternal extends GenericModelObject implements
 
     private String id;
 
-    protected PBoxExternal() {
-
-    }
+	protected PBoxExternal(String type) {
+		this.type = type;
+	}
 
     /**
      * @return type of current object
