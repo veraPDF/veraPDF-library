@@ -49,6 +49,24 @@ public final class ErrorsHelper {
     public static final String GETINGICCPROFILEHEADERSIZEERROR_ID = "iccprofileerr3";
     public static final String GETINGICCPROFILEHEADERSIZEERROR_MESSAGE = "ICC Profile has less than 128 bytes.";
 
+    public static final String GETINGFONTERROR_ID = "fonterr1";
+    public static final String GETINGFONTERROR_MESSAGE = "Error while getting font.";
+
+    public static final String GETINGPATTERNERROR_ID = "ptrnerr1";
+    public static final String GETINGPATTERNERROR_MESSAGE = "Error while getting pattern.";
+
+    public static final String GETINGCOLORSPACEERROR_ID = "clrsperr1";
+    public static final String GETINGCOLORSPACEERROR_MESSAGE = "Error while getting colorSpace.";
+
+    public static final String GETINGSHADINGERROR_ID = "shaderr1";
+    public static final String GETINGSHADINGERROR_MESSAGE = "Error while getting shading.";
+
+    public static final String GETINGXOBJECTERROR_ID = "xobjerr1";
+    public static final String GETINGXOBJECTERROR_MESSAGE = "Error while getting xobject.";
+
+    public static final String GETINGPROCSETERROR_ID = "procseterr1";
+    public static final String GETINGPROCSETERROR_MESSAGE = "Error while getting ProcSet from the resource dictionary. The resulting value is not an array.";
+
     public static final String COLOR_ID = "colorerr1";
     public static final String COLOR_MESSAGE = "Devise color space contains wrong number of components.";
 

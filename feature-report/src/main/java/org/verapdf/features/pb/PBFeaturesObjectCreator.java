@@ -99,24 +99,45 @@ public final class PBFeaturesObjectCreator {
      * @param pages - set of pages for this annotation
      * @param parentId - parent annotation for this annotation
      * @param popupId - id of the popup annotation for this annotation
-     * @param appearanceId - id of the appearance stream for this annotation
+     * @param formXObjects - set of id of the form XObjects which used in appearance stream of this annotation
      * @return created PBAnnotationFeaturesObject
      */
     public static PBAnnotationFeaturesObject createAnnotFeaturesObject(PDAnnotation annot, String id, Set<String> pages,
-                                                                       String parentId, String popupId, String appearanceId) {
-        return new PBAnnotationFeaturesObject(annot, id, pages, parentId, popupId, appearanceId);
+                                                                       String parentId, String popupId, Set<String> formXObjects) {
+        return new PBAnnotationFeaturesObject(annot, id, pages, parentId, popupId, formXObjects);
     }
 
     /**
      * Creates new PBPageFeaturesObject
-     * @param page - PDPage class from pdfbox, which represents a page for feature report
+     * @param page  - pdfbox class represents page object
      * @param annotsId - set of annotations id which contains in this page
+     * @param extGStateChild - set of extGState id which contains in resource dictionary of this page
+     * @param colorSpaceChild - set of ColorSpace id which contains in resource dictionary of this page
+     * @param patternChild - set of pattern id which contains in resource dictionary of this page
+     * @param shadingChild - set of shading id which contains in resource dictionary of this page
+     * @param xobjectChild - set of XObject id which contains in resource dictionary of this page
+     * @param fontChild - set of font id which contains in resource dictionary of this page
+     * @param procSetChild - set of procedure set id which contains in resource dictionary of this page
+     * @param propertiesChild - set of properties id which contains in resource dictionary of this page
      * @param id - page id
      * @param index - page index
      * @return created PBPageFeaturesObject
      */
-    public static PBPageFeaturesObject createPageFeaturesObject(PDPage page, Set<String> annotsId, String id, int index) {
-        return new PBPageFeaturesObject(page, annotsId, id, index);
+    public static PBPageFeaturesObject createPageFeaturesObject(PDPage page,
+                                                                Set<String> annotsId,
+                                                                Set<String> extGStateChild,
+                                                                Set<String> colorSpaceChild,
+                                                                Set<String> patternChild,
+                                                                Set<String> shadingChild,
+                                                                Set<String> xobjectChild,
+                                                                Set<String> fontChild,
+                                                                Set<String> procSetChild,
+                                                                Set<String> propertiesChild,
+                                                                String id,
+                                                                int index) {
+        return new PBPageFeaturesObject(page, annotsId, extGStateChild,
+                colorSpaceChild, patternChild, shadingChild, xobjectChild,
+                fontChild, procSetChild, propertiesChild, id, index);
     }
 
     /**
