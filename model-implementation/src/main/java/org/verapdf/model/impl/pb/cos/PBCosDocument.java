@@ -1,20 +1,7 @@
 package org.verapdf.model.impl.pb.cos;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.COSArray;
-import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSDictionary;
-import org.apache.pdfbox.cos.COSDocument;
-import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSObject;
-import org.apache.pdfbox.cos.COSString;
+import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDEmbeddedFilesNameTreeNode;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
@@ -25,6 +12,9 @@ import org.verapdf.model.coslayer.CosTrailer;
 import org.verapdf.model.coslayer.CosXRef;
 import org.verapdf.model.impl.pb.pd.PBoxPDDocument;
 import org.verapdf.model.tools.XMPChecker;
+
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Low-level PDF Document object
@@ -315,7 +305,9 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     private List<org.verapdf.model.pdlayer.PDDocument> getDocument() {
         List<org.verapdf.model.pdlayer.PDDocument> document = new ArrayList<>(1);
-        document.add(new PBoxPDDocument(pdDocument));
+		if (pdDocument != null) {
+			document.add(new PBoxPDDocument(pdDocument));
+		}
         return document;
     }
 

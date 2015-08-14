@@ -1,32 +1,32 @@
 package org.verapdf.model.impl.pb.operator.textshow;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosString;
 import org.verapdf.model.impl.pb.cos.PBCosString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
+ * Base class for all operators that uses one string as operand
+ *
  * @author Evgeniy Muravitskiy
  */
 public abstract class PBOpStringTextShow extends PBOpTextShow {
 
+	/** Name of link to the showing strings for operators ", ', Tj */
     public static final String SHOW_STRING = "showString";
 
-    protected PBOpStringTextShow(List<COSBase> arguments, PDFont font) {
-        super(arguments, font);
-    }
-
-    protected PBOpStringTextShow(List<COSBase> arguments, PDFont font,
-            final String opType) {
+    protected PBOpStringTextShow(List<COSBase> arguments,
+			PDFont font, final String opType) {
         super(arguments, font, opType);
     }
 
     @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+    public List<? extends Object> getLinkedObjects(
             String link) {
         if (SHOW_STRING.equals(link)) {
             return this.getShowString();
@@ -35,12 +35,16 @@ public abstract class PBOpStringTextShow extends PBOpTextShow {
     }
 
     private List<CosString> getShowString() {
-        List<CosString> string = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-        COSBase base = !this.arguments.isEmpty() ? this.arguments
-                .get(this.arguments.size() - 1) : null;
-        if (base instanceof COSString) {
-            string.add(new PBCosString((COSString) base));
-        }
+        List<CosString> string =
+				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+		if (!this.arguments.isEmpty()) {
+			COSBase base = this.arguments
+					.get(this.arguments.size() - 1);
+			if (base instanceof COSString) {
+				string.add(new PBCosString((COSString) base));
+			}
+		}
         return string;
     }
+
 }

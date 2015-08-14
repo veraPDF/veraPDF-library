@@ -5,6 +5,7 @@ import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.preflight.font.container.FontContainer;
+import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.font.FontFactory;
 import org.verapdf.model.impl.pb.operator.base.PBOperator;
 import org.verapdf.model.operator.OpTextShow;
@@ -18,22 +19,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Base class for all text show operators
+ *
  * @author Timur Kamalov
  */
 public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 
     private static final Logger LOGGER = Logger.getLogger(PBOpTextShow.class);
 
+	/** Name of link to the used font */
     public static final String FONT = "font";
+	/** Name of link to the used glyphs */
     public static final String USED_GLYPHS = "usedGlyphs";
 
     protected final org.apache.pdfbox.pdmodel.font.PDFont pdfBoxFont;
-
-    protected PBOpTextShow(List<COSBase> arguments,
-            org.apache.pdfbox.pdmodel.font.PDFont font) {
-        super(arguments);
-        this.pdfBoxFont = font;
-    }
 
     protected PBOpTextShow(List<COSBase> arguments,
             org.apache.pdfbox.pdmodel.font.PDFont font, final String opType) {
@@ -41,18 +40,18 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
         this.pdfBoxFont = font;
     }
 
-    @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
-            String link) {
-        switch (link) {
-        case FONT:
-            return this.getFont();
-        case USED_GLYPHS:
-            return this.getUsedGlyphs();
-        default:
-            return super.getLinkedObjects(link);
-        }
-    }
+	@Override
+	public List<? extends Object> getLinkedObjects(
+			String link) {
+		switch (link) {
+			case FONT:
+				return this.getFont();
+			case USED_GLYPHS:
+				return this.getUsedGlyphs();
+			default:
+				return super.getLinkedObjects(link);
+		}
+	}
 
     private List<PDFont> getFont() {
         List<PDFont> result = new ArrayList<>();
@@ -71,10 +70,13 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
                     int code = pdfBoxFont.readCode(inputStream);
                     Boolean glyphPresent = fontContainer.hasGlyph(code);
                     Boolean widthsConsistent = checkWidths(code);
-                    res.add(new PBGlyph(glyphPresent, widthsConsistent, pdfBoxFont.getName(), code));
+                    res.add(new PBGlyph(glyphPresent, widthsConsistent,
+										pdfBoxFont.getName(), code));
                 }
             } catch (IOException e) {
-                LOGGER.error("Error processing text show operator's string argument : " + string + "\n" + e.getMessage());
+                LOGGER.error("Error processing text show operator's string argument : "
+						+ new String(string));
+                LOGGER.info(e);
             }
         }
         return res;

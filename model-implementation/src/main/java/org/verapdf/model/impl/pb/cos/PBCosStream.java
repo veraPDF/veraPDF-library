@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.cos;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.verapdf.model.coslayer.CosStream;
 
@@ -10,18 +11,21 @@ import org.verapdf.model.coslayer.CosStream;
  */
 public class PBCosStream extends PBCosDict implements CosStream {
 
-    /** Type name for PBCosStream */
-    public static final String COS_STREAM_TYPE = "CosStream";
+	private static final Logger logger = Logger.getLogger(PBCosStream.class);
 
-    private final Long length;
-    private final Long originalLength;
-    private final String filters;
-    private final String fileSpec;
-    private final String fFilter;
-    private final String fDecodeParams;
-    private final boolean isSpacingPDFACompliant;
+	/** Type name for PBCosStream */
+	public static final String COS_STREAM_TYPE = "CosStream";
+	public static final String F_DECODE_PARMS = "FDecodeParms";
 
-    public PBCosStream(COSStream stream) {
+	private final Long length;
+	private final Long originalLength;
+	private final String filters;
+	private final String fileSpec;
+	private final String fFilter;
+	private final String fDecodeParams;
+	private final boolean isSpacingPDFACompliant;
+
+	public PBCosStream(COSStream stream) {
         super(stream, COS_STREAM_TYPE);
         this.length = parseLength(stream);
         this.originalLength = stream.getOriginLength();
@@ -30,8 +34,8 @@ public class PBCosStream extends PBCosDict implements CosStream {
                 .toString() : null;
         this.fFilter = parseFilters(stream
                 .getDictionaryObject(COSName.F_FILTER));
-        this.fDecodeParams = stream.getItem("FDecodeParms") != null ? stream
-                .getItem("FDecodeParms").toString() : null;
+        this.fDecodeParams = stream.getItem(F_DECODE_PARMS) != null ? stream
+                .getItem(F_DECODE_PARMS).toString() : null;
         this.isSpacingPDFACompliant = stream.getStreamSpacingsComplyPDFA()
                 .booleanValue()
                 && stream.getEndStreamSpacingsComplyPDFA().booleanValue();
@@ -114,13 +118,16 @@ public class PBCosStream extends PBCosDict implements CosStream {
                 if (filter instanceof COSName) {
                     filters.append(((COSName) filter).getName()).append(" ");
                 } else {
-                    throw new IllegalArgumentException(
-                            "Can`t find filters for stream");
+					// TODO : how we should handle this case?
+                    logger.error("Incorrect type for stream filter " +
+							filter.getClass().getName());
                 }
             }
         } else {
-            throw new IllegalArgumentException(
-                    "Not the corresponding type for filters");
+			logger.error("Incorrect type for stream filter " +
+					base.getClass().getName());
+			// TODO : how we should handle this case?
+			return null;
         }
         // need to discard last white space
         return filters.substring(0, filters.length() - 1);

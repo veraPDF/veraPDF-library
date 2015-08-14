@@ -53,22 +53,10 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
      */
     private List<CosObject> parseDirectObject() {
         List<CosObject> list = new ArrayList<>();
-        COSBase base = baseObject instanceof COSObject ? ((COSObject) baseObject)
-                .getObject() : baseObject;
+        COSBase base = ((COSObject) baseObject).getObject();
         list.add(base != null ? getFromValue(base) : PBCosNull.NULL);
         return Collections.unmodifiableList(list);
     }
-
-    /**
-     * Get the direct contents of the indirect object
-     */
-    // private static List<CosObject> parseDirectObject(final COSBase cosBase) {
-    // List<CosObject> list = new ArrayList<>();
-    // COSBase base = cosBase instanceof COSObject ? ((COSObject) cosBase)
-    // .getObject() : cosBase;
-    // list.add(base != null ? getFromValue(cosBase) : PBCosNull.NULL);
-    // return Collections.unmodifiableList(list);
-    // }
 
     /**
      * true if the words 'obj' and 'endobj' are surrounded by the correct
