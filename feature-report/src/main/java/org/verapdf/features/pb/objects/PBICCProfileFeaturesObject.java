@@ -192,12 +192,15 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 
     private static String getStringFromHeader(byte[] header, int begin, int end) {
         StringBuilder builder = new StringBuilder();
+        boolean isEmpty = true;
         for (int i = begin; i < end; ++i) {
+            if (header[i] != 0) {
+                isEmpty = false;
+            }
             builder.append((char) header[i]);
         }
-        String res = builder.toString().trim();
 
-        return "".equals(res) ? null : res;
+        return isEmpty ? null : builder.toString();
     }
 
     private static Calendar getCreationDate(byte[] header) {

@@ -1,7 +1,5 @@
 package org.verapdf.features.pb.objects;
 
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
@@ -13,6 +11,8 @@ import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
+
+import java.io.IOException;
 
 /**
  * Features object for document security
@@ -58,7 +58,7 @@ public class PBDocSecurityFeaturesObject implements IFeaturesObject {
             PBCreateNodeHelper.addNotEmptyNode("length", String.valueOf(encryption.getLength()), root);
 
             try {
-                String ownerKey = new COSString(encryption.getOwnerKey()).toString();
+                String ownerKey = new COSString(encryption.getOwnerKey()).toHexString();
                 PBCreateNodeHelper.addNotEmptyNode("ownerKey", ownerKey, root);
             } catch (IOException e) {
                 LOGGER.debug("PDFBox error getting owner key data", e);
@@ -68,7 +68,7 @@ public class PBDocSecurityFeaturesObject implements IFeaturesObject {
             }
 
             try {
-                String userKey = new COSString(encryption.getUserKey()).toString();
+                String userKey = new COSString(encryption.getUserKey()).toHexString();
                 PBCreateNodeHelper.addNotEmptyNode("userKey", userKey, root);
             } catch (IOException e) {
                 LOGGER.debug("PDFBox error getting user key data", e);

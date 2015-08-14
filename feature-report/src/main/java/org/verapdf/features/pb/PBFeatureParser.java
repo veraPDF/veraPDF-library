@@ -598,19 +598,19 @@ public final class PBFeatureParser {
         PDAppearanceDictionary dic = annot.getAppearance();
 
         if (dic != null) {
-            PDAppearanceEntry normal = dic.getNormalAppearance();
-            if (normal != null) {
-                getAppearanceEntryDependencies(normal, dic.getCOSObject().getItem(COSName.N), annotationID);
+            COSBase baseNormal = dic.getCOSObject().getItem(COSName.N);
+            if (baseNormal != null) {
+                getAppearanceEntryDependencies(dic.getNormalAppearance(), baseNormal, annotationID);
             }
 
-            PDAppearanceEntry rollover = dic.getRolloverAppearance();
-            if (rollover != null) {
-                getAppearanceEntryDependencies(rollover, dic.getCOSObject().getItem(COSName.R), annotationID);
+            COSBase baseRollover = dic.getCOSObject().getItem(COSName.R);
+            if (baseRollover != null) {
+                getAppearanceEntryDependencies(dic.getRolloverAppearance(), baseRollover, annotationID);
             }
 
-            PDAppearanceEntry down = dic.getDownAppearance();
-            if (down != null) {
-                getAppearanceEntryDependencies(down, dic.getCOSObject().getItem(COSName.D), annotationID);
+            COSBase baseDown = dic.getCOSObject().getItem(COSName.D);
+            if (baseDown != null) {
+                getAppearanceEntryDependencies(dic.getDownAppearance(), baseDown, annotationID);
             }
         }
     }
@@ -854,6 +854,10 @@ public final class PBFeatureParser {
         }
 
         COSBase base = resources.getCOSObject().getItem(COSName.PROC_SET);
+
+        if (base == null) {
+            return;
+        }
 
         String id = getId(base, PROCSET_ID, procSets.size());
 
@@ -1128,7 +1132,7 @@ public final class PBFeatureParser {
 
             if (!iccProfiles.containsKey(id)) {
                 try {
-                    iccProfiles.put(id, iccBased.getPDStream().getStream().getFilteredStream());
+                    iccProfiles.put(id, iccBased.getPDStream().getStream().getUnfilteredStream());
                 } catch (IOException e) {
                     iccProfileCreationProblem(id);
                 }
