@@ -18,8 +18,7 @@ public enum FeaturesObjectTypesEnum {
     PAGE,
     EXT_G_STATE,
     COLORSPACE,
-    TILLING_PATTERN,
-    SHADING_PATTERN,
+    PATTERN,
     SHADING,
     IMAGE_XOBJECT,
     FORM_XOBJECT,
@@ -28,7 +27,5 @@ public enum FeaturesObjectTypesEnum {
     PROCSET,
     PROPERTIES,
     ERROR,
-    FAILED_PATTERN,
-    FAILED_COLORSPACE,
     FAILED_XOBJECT
 }

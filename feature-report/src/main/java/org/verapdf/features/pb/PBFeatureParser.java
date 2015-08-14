@@ -53,8 +53,8 @@ public final class PBFeatureParser {
     private static final String SHADING = "shading";
     private static final String PROCSET = "procSet";
     private static final String XOBJECT = "xobject";
-    private static final String FAILED_PATTERN = "failedPattern";
-    private static final String FAILED_COLORSPACE = "failedColorSpace";
+    private static final String PATTERN = "pattern";
+    private static final String COLORSPACE = "colorSpace";
     private static final String EXTGSTATE_ID = "exGSt";
     private static final String COLORSPACE_ID = "clrsp";
     private static final String PATTERN_ID = "ptrn";
@@ -119,6 +119,7 @@ public final class PBFeatureParser {
 
     private Map<String, PDShadingPattern> shadingPatterns = new HashMap<>();
     private Map<String, String> shadingPatternShadingChild = new HashMap<>();
+    private Map<String, String> shadingPatternExtGStateChild = new HashMap<>();
     private Map<String, Set<String>> shadingPatternPageParent = new HashMap<>();
     private Map<String, Set<String>> shadingPatternPatternParent = new HashMap<>();
     private Map<String, Set<String>> shadingPatternXObjectParent = new HashMap<>();
@@ -279,6 +280,20 @@ public final class PBFeatureParser {
                         .createAnnotFeaturesObject(annotEntry.getValue(), id,
                                 annotPagesParent.get(id), annotParent.get(id),
                                 annotChild.get(id), annotXObjectsChild.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, PDExtendedGraphicsState> exGStateEntry : exGStates.entrySet()) {
+            if (exGStateEntry.getValue() != null) {
+                String id = exGStateEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createExtGStateFeaturesObject(exGStateEntry.getValue(),
+                                id,
+                                exGStateFontChild.get(id),
+                                exGStatePageParent.get(id),
+                                exGStatePatternParent.get(id),
+                                exGStateXObjectParent.get(id),
+                                exGStateFontParent.get(id)));
             }
         }
     }
@@ -522,20 +537,20 @@ public final class PBFeatureParser {
     }
 
     private void patternCreationProblem(final String nodeID) {
-        creationProblem(FAILED_PATTERN,
+        creationProblem(PATTERN,
                 nodeID,
                 ErrorsHelper.GETINGPATTERNERROR_ID,
                 ErrorsHelper.GETINGPATTERNERROR_MESSAGE,
-                FeaturesObjectTypesEnum.FAILED_PATTERN,
+                FeaturesObjectTypesEnum.PATTERN,
                 "PBFeatureParser.patternCreationProblem logic failure.");
     }
 
     private void colorSpaceCreationProblem(final String nodeID) {
-        creationProblem(FAILED_COLORSPACE,
+        creationProblem(COLORSPACE,
                 nodeID,
                 ErrorsHelper.GETINGCOLORSPACEERROR_ID,
                 ErrorsHelper.GETINGCOLORSPACEERROR_MESSAGE,
-                FeaturesObjectTypesEnum.FAILED_COLORSPACE,
+                FeaturesObjectTypesEnum.COLORSPACE,
                 "PBFeatureParser.colorSpaceCreationProblem logic failure.");
     }
 
@@ -1007,11 +1022,11 @@ public final class PBFeatureParser {
                     }
                     shadingPatternParentMap.get(id).add(parentID);
 
-                    if (!shadingPatternParentMap.containsKey(id)) {
+                    if (!shadingPatterns.containsKey(id)) {
                         PDShadingPattern shadingPattern = (PDShadingPattern) pattern;
                         shadingPatterns.put(id, shadingPattern);
 
-                        COSBase baseShading = shadingPattern.getCOSObject().getDictionaryObject(COSName.SHADING);
+                        COSBase baseShading = shadingPattern.getCOSObject().getItem(COSName.SHADING);
                         String shadingID = getId(baseShading, SHADING_ID, shadings.size());
 
                         shadingPatternShadingChild.put(id, shadingID);
@@ -1024,6 +1039,42 @@ public final class PBFeatureParser {
                             shadings.put(shadingID, shadingPattern.getShading());
 
                             parseShading(shadingPattern.getShading(), shadingID);
+                        }
+
+                        COSBase baseExGState = shadingPattern.getCOSObject().getItem(COSName.EXT_G_STATE);
+                        String exGStateID = getId(baseExGState, EXTGSTATE_ID, exGStates.size());
+
+                        shadingPatternExtGStateChild.put(id, exGStateID);
+                        if (exGStatePatternParent.get(exGStateID) == null) {
+                            exGStatePatternParent.put(exGStateID, new HashSet<String>());
+                        }
+                        exGStatePatternParent.get(exGStateID).add(id);
+
+                        if (!exGStates.containsKey(exGStateID) && shadingPattern.getExtendedGraphicsState() != null) {
+                            exGStates.put(exGStateID, shadingPattern.getExtendedGraphicsState());
+
+                            if (shadingPattern.getExtendedGraphicsState().getFontSetting() == null ||
+                                    !(shadingPattern.getExtendedGraphicsState().getFontSetting().getCOSObject() instanceof COSArray)) {
+                                return;
+                            }
+
+                            String fontID = getId(((COSArray) shadingPattern.getExtendedGraphicsState().getFontSetting().getCOSObject()).get(0), FONT_ID, fonts.size());
+
+                            if (fontExtGStateParent.get(fontID) == null) {
+                                fontExtGStateParent.put(fontID, new HashSet<String>());
+                            }
+                            fontExtGStateParent.get(fontID).add(id);
+                            exGStateFontChild.put(id, fontID);
+
+                            if (!fonts.containsKey(fontID)) {
+                                try {
+                                    PDFont font = shadingPattern.getExtendedGraphicsState().getFontSetting().getFont();
+                                    fonts.put(fontID, font);
+                                    parseFont(font, fontID);
+                                } catch (IOException e) {
+                                    fontCreationProblem(fontID);
+                                }
+                            }
                         }
                     }
                 }

@@ -69,19 +69,39 @@ public final class XMLFeaturesReport {
 
             parseElements(FeaturesObjectTypesEnum.LOW_LEVEL_INFO, collection, pdfFeatures, doc);
 
-            pdfFeatures.appendChild(makeList("embeddedFiles", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE), collection, doc));
+            makeList("embeddedFiles", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE), pdfFeatures, collection, doc);
 
-            pdfFeatures.appendChild(makeList("iccProfiles", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE), collection, doc));
+            makeList("iccProfiles", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE), pdfFeatures, collection, doc);
 
-            pdfFeatures.appendChild(makeList("outputIntents", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT), collection, doc));
+            makeList("outputIntents", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT), pdfFeatures, collection, doc);
 
             parseElements(FeaturesObjectTypesEnum.OUTLINES, collection, pdfFeatures, doc);
 
-            pdfFeatures.appendChild(makeList("annotations", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION), collection, doc));
+            makeList("annotations", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION), pdfFeatures, collection, doc);
 
-            pdfFeatures.appendChild(makeList("pages", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE), collection, doc));
+            makeList("pages", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE), pdfFeatures, collection, doc);
 
-            pdfFeatures.appendChild(makeList("errors", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR), collection, doc));
+            Element resources = doc.createElement("resources");
+            makeList("graphicsStates", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE), resources, collection, doc);
+            makeList("colorSpaces", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.COLORSPACE), resources, collection, doc);
+            makeList("patterns", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN), resources, collection, doc);
+            makeList("shadings", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.SHADING), resources, collection, doc);
+            Element xobjects = doc.createElement("xobjects");
+            makeList("images", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.IMAGE_XOBJECT), xobjects, collection, doc);
+            makeList("forms", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FORM_XOBJECT), xobjects, collection, doc);
+            makeList("groups", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.GROUP_XOBJECT), xobjects, collection, doc);
+            if (xobjects.getChildNodes().getLength() > 0) {
+                resources.appendChild(xobjects);
+            }
+            makeList("fonts", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FONT), resources, collection, doc);
+            makeList("procSets", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROCSET), resources, collection, doc);
+            makeList("propertiesDicts", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROPERTIES), resources, collection, doc);
+
+            if (resources.getChildNodes().getLength() > 0) {
+                pdfFeatures.appendChild(resources);
+            }
+
+            makeList("errors", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR), pdfFeatures, collection, doc);
         }
 
         return pdfFeatures;
@@ -122,18 +142,17 @@ public final class XMLFeaturesReport {
 
     }
 
-    private static Element makeList(String listName, List<FeatureTreeNode> list, FeaturesCollection collection, Document doc) {
-        Element listElement = doc.createElement(listName);
+    private static void makeList(String listName, List<FeatureTreeNode> list, Element parent, FeaturesCollection collection, Document doc) {
 
-        if (list != null) {
+        if (list != null && !list.isEmpty()) {
+            Element listElement = doc.createElement(listName);
             for (FeatureTreeNode node : list) {
                 if (node != null) {
                     listElement.appendChild(makeNode(node, collection, doc));
                 }
             }
+            parent.appendChild(listElement);
         }
-
-        return listElement;
     }
 
     private static Element makeNode(FeatureTreeNode node, FeaturesCollection collection, Document doc) {
