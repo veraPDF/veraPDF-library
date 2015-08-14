@@ -82,8 +82,10 @@ class OperatorParser {
         case Operators.D_SET_DASH:
             return new PBOp_d(arguments);
         case Operators.GS:
-            return new PBOp_gs(arguments, getExtGStateFromResources(resources,
-                    getLastCOSName(arguments)));
+            PDExtendedGraphicsState extGState = getExtGStateFromResources(resources,
+                    getLastCOSName(arguments));
+            graphicState.copyPropertiesFromExtGState(extGState);
+            return new PBOp_gs(arguments, extGState);
         case Operators.I_SETFLAT:
             return new PBOp_i(arguments);
         case Operators.J_LINE_CAP:

@@ -4,7 +4,10 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceGray;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
+import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
+
+import java.io.IOException;
 
 /**
  * @author Timur Kamalov
@@ -70,6 +73,14 @@ public class GraphicState implements Cloneable {
         this.pattern = graphicState.getPattern();
         this.renderingMode = graphicState.getRenderingMode();
         this.font = graphicState.getFont();
+    }
+
+    public void copyPropertiesFromExtGState(PDExtendedGraphicsState extGState) {
+        try {
+            this.font = extGState.getFontSetting().getFont();
+        } catch (IOException e) {
+
+        }
     }
 
     @Override
