@@ -111,7 +111,7 @@ public final class XMLFeaturesReport {
         if (collection.getFeatureTreesForType(type) != null) {
             for (FeatureTreeNode rootNode : collection.getFeatureTreesForType(type)) {
                 if (rootNode != null) {
-                    root.appendChild(makeNode(rootNode, collection, doc));
+                    root.appendChild(makeNode(rootNode, doc));
                 }
             }
         }
@@ -138,7 +138,7 @@ public final class XMLFeaturesReport {
 
             return metadata;
         }
-        return makeNode(metadataNode, collection, doc);
+        return makeNode(metadataNode, doc);
 
     }
 
@@ -148,14 +148,14 @@ public final class XMLFeaturesReport {
             Element listElement = doc.createElement(listName);
             for (FeatureTreeNode node : list) {
                 if (node != null) {
-                    listElement.appendChild(makeNode(node, collection, doc));
+                    listElement.appendChild(makeNode(node, doc));
                 }
             }
             parent.appendChild(listElement);
         }
     }
 
-    private static Element makeNode(FeatureTreeNode node, FeaturesCollection collection, Document doc) {
+    private static Element makeNode(FeatureTreeNode node, Document doc) {
         Element root = doc.createElement(node.getName());
 
         for (Map.Entry<String, String> attr : node.getAttributes().entrySet()) {
@@ -166,7 +166,7 @@ public final class XMLFeaturesReport {
             root.appendChild(doc.createTextNode(replaceInvalidCharacters(node.getValue())));
         } else if (node.getChildren() != null) {
             for (FeatureTreeNode child : node.getChildren()) {
-                root.appendChild(makeNode(child, collection, doc));
+                root.appendChild(makeNode(child, doc));
             }
         }
 
@@ -176,12 +176,10 @@ public final class XMLFeaturesReport {
     private static String replaceInvalidCharacters(String source) {
         try (Formatter formatter = new Formatter()) {
 
-            StringBuilder builder = new StringBuilder();
-
             for (int i = 0; i < source.length(); ++i) {
                 char curChar = source.charAt(i);
                 if ('#' == curChar) {
-                    builder.append("#x000023");
+                    formatter.format("#x000023");
                 } else {
                     int codePoint = source.codePointAt(i);
                     if (Character.isHighSurrogate(curChar)) {
@@ -192,17 +190,17 @@ public final class XMLFeaturesReport {
                             (codePoint >= SP && codePoint <= XD7FF) ||
                             (codePoint >= XE000 && codePoint <= XFFFD) ||
                             (codePoint >= X10000 && codePoint <= X10FFFF)) {
-                        builder.append(curChar);
+                        formatter.format("%c", curChar);
                         if (Character.isHighSurrogate(curChar) && i < source.length()) {
-                            builder.append(source.charAt(i));
+                            formatter.format("%c", source.charAt(i));
                         }
                     } else {
-                        builder.append(formatter.format("#x%06X", codePoint));
+                        formatter.format("#x%06X", codePoint);
                     }
                 }
             }
 
-            return builder.toString();
+            return formatter.toString();
         }
     }
 }

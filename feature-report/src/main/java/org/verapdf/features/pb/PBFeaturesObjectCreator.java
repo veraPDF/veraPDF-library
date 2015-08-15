@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.apache.pdfbox.pdmodel.encryption.PDEncryption;
+import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
@@ -182,5 +183,24 @@ public final class PBFeaturesObjectCreator {
                                                                           Set<String> xobjectParentsID,
                                                                           Set<String> fontParentsID) {
         return new PBExtGStateFeaturesObject(exGState, id, fontChildID, pageParentsID, patternParentsID, xobjectParentsID, fontParentsID);
+    }
+
+    /**
+     * Constructs new PBColorSpaceFeaturesObject
+     *
+     * @param colorSpace        - PDColorSpace which represents colorspace for feature report
+     * @param id                - id of the object
+     * @param iccProfileChild   - id of the iccprofile child
+     * @param colorSpaceChild   - id of the colorspace child
+     * @param pageParents       - set of page ids which contains the given extended graphics state as its resources
+     * @param colorSpaceParents - set of colorspace ids which contains the given extended graphics state as its resources
+     * @param patternParents    - set of pattern ids which contains the given extended graphics state as its resources
+     * @param shadingParents    - set of shading ids which contains the given extended graphics state as its resources
+     * @param xobjectParents    - set of xobject ids which contains the given extended graphics state as its resources
+     * @param fontParents       - set of font ids which contains the given extended graphics state as its resources
+     * @return created PBColorSpaceFeaturesObject
+     */
+    public static PBColorSpaceFeaturesObject createColorSpaceFeaturesObject(PDColorSpace colorSpace, String id, String iccProfileChild, String colorSpaceChild, Set<String> pageParents, Set<String> colorSpaceParents, Set<String> patternParents, Set<String> shadingParents, Set<String> xobjectParents, Set<String> fontParents) {
+        return new PBColorSpaceFeaturesObject(colorSpace, id, iccProfileChild, colorSpaceChild, pageParents, colorSpaceParents, patternParents, shadingParents, xobjectParents, fontParents);
     }
 }

@@ -97,7 +97,9 @@ public final class PBFeatureParser {
 
     private Map<String, PDColorSpace> colorSpaces = new HashMap<>();
     private Map<String, String> colorSpaceIccProfileChild = new HashMap<>();
+    private Map<String, String> colorSpaceColorSpaceChild = new HashMap<>();
     private Map<String, Set<String>> colorSpacePageParent = new HashMap<>();
+    private Map<String, Set<String>> colorSpaceColorSpaceParent = new HashMap<>();
     private Map<String, Set<String>> colorSpacePatternParent = new HashMap<>();
     private Map<String, Set<String>> colorSpaceShadingParent = new HashMap<>();
     private Map<String, Set<String>> colorSpaceXObjectParent = new HashMap<>();
@@ -294,6 +296,23 @@ public final class PBFeatureParser {
                                 exGStatePatternParent.get(id),
                                 exGStateXObjectParent.get(id),
                                 exGStateFontParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, PDColorSpace> colorSpaceEntry : colorSpaces.entrySet()) {
+            if (colorSpaceEntry.getValue() != null) {
+                String id = colorSpaceEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createColorSpaceFeaturesObject(colorSpaceEntry.getValue(),
+                                id,
+                                colorSpaceIccProfileChild.get(id),
+                                colorSpaceColorSpaceChild.get(id),
+                                colorSpacePageParent.get(id),
+                                colorSpaceColorSpaceParent.get(id),
+                                colorSpacePatternParent.get(id),
+                                colorSpaceShadingParent.get(id),
+                                colorSpaceXObjectParent.get(id),
+                                colorSpaceFontParent.get(id)));
             }
         }
     }
@@ -1186,6 +1205,56 @@ public final class PBFeatureParser {
                     iccProfiles.put(id, iccBased.getPDStream().getStream().getUnfilteredStream());
                 } catch (IOException e) {
                     iccProfileCreationProblem(id);
+                }
+            }
+
+            COSBase baseAlt = iccBased.getPDStream().getStream().getItem(COSName.ALTERNATE);
+            String idAlt = getId(baseAlt, COLORSPACE, colorSpaces.size());
+
+            if (colorSpaceColorSpaceParent.get(idAlt) == null) {
+                colorSpaceColorSpaceParent.put(idAlt, new HashSet<String>());
+            }
+            colorSpaceColorSpaceParent.get(idAlt).add(parentID);
+            colorSpaceColorSpaceChild.put(parentID, idAlt);
+
+            if (!colorSpaces.containsKey(idAlt)) {
+                try {
+                    colorSpaces.put(idAlt, iccBased.getAlternateColorSpace());
+                    parseColorSpace(iccBased.getAlternateColorSpace(), idAlt);
+                } catch (IOException e) {
+                    colorSpaceCreationProblem(idAlt);
+                }
+            }
+        } else if (colorSpace instanceof PDIndexed ||
+                colorSpace instanceof PDSeparation ||
+                colorSpace instanceof PDDeviceN) {
+
+            int number;
+            if (colorSpace instanceof PDIndexed) {
+                number = 1;
+            } else {
+                number = 2;
+            }
+
+            COSArray array = (COSArray) colorSpace.getCOSObject();
+            COSBase base = array.get(number);
+            String id = getId(base, COLORSPACE, colorSpaces.size());
+
+            if (colorSpaceColorSpaceParent.get(id) == null) {
+                colorSpaceColorSpaceParent.put(id, new HashSet<String>());
+            }
+            colorSpaceColorSpaceParent.get(id).add(parentID);
+            colorSpaceColorSpaceChild.put(parentID, id);
+
+            if (!colorSpaces.containsKey(id)) {
+                try {
+                    PDColorSpace alt = colorSpace instanceof PDIndexed ? ((PDIndexed) colorSpace).getBaseColorSpace() :
+                            colorSpace instanceof PDSeparation ? ((PDSeparation) colorSpace).getAlternateColorSpace() :
+                                    ((PDDeviceN) colorSpace).getAlternateColorSpace();
+                    colorSpaces.put(id, alt);
+                    parseColorSpace(alt, id);
+                } catch (IOException e) {
+                    colorSpaceCreationProblem(id);
                 }
             }
         }
