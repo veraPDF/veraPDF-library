@@ -8,6 +8,9 @@ import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecifica
 import org.apache.pdfbox.pdmodel.encryption.PDEncryption;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
+import org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern;
+import org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern;
+import org.apache.pdfbox.pdmodel.graphics.shading.PDShading;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
@@ -200,7 +203,92 @@ public final class PBFeaturesObjectCreator {
      * @param fontParents       - set of font ids which contains the given extended graphics state as its resources
      * @return created PBColorSpaceFeaturesObject
      */
-    public static PBColorSpaceFeaturesObject createColorSpaceFeaturesObject(PDColorSpace colorSpace, String id, String iccProfileChild, String colorSpaceChild, Set<String> pageParents, Set<String> colorSpaceParents, Set<String> patternParents, Set<String> shadingParents, Set<String> xobjectParents, Set<String> fontParents) {
+    public static PBColorSpaceFeaturesObject createColorSpaceFeaturesObject(PDColorSpace colorSpace,
+                                                                            String id,
+                                                                            String iccProfileChild,
+                                                                            String colorSpaceChild,
+                                                                            Set<String> pageParents,
+                                                                            Set<String> colorSpaceParents,
+                                                                            Set<String> patternParents,
+                                                                            Set<String> shadingParents,
+                                                                            Set<String> xobjectParents,
+                                                                            Set<String> fontParents) {
         return new PBColorSpaceFeaturesObject(colorSpace, id, iccProfileChild, colorSpaceChild, pageParents, colorSpaceParents, patternParents, shadingParents, xobjectParents, fontParents);
+    }
+
+    /**
+     * Constructs new PBTillingPatternFeaturesObject
+     *
+     * @param tilingPattern   - PDTilingPattern which represents tilling pattern for feature report
+     * @param id              - id of the object
+     * @param extGStateChild  - set of external graphics state id which contains in resource dictionary of this page
+     * @param colorSpaceChild - set of ColorSpace id which contains in resource dictionary of this page
+     * @param patternChild    - set of pattern id which contains in resource dictionary of this page
+     * @param shadingChild    - set of shading id which contains in resource dictionary of this page
+     * @param xobjectChild    - set of XObject id which contains in resource dictionary of this page
+     * @param fontChild       - set of font id which contains in resource dictionary of this page
+     * @param procSetChild    - set of procedure set id which contains in resource dictionary of this page
+     * @param propertiesChild - set of properties id which contains in resource dictionary of this page
+     * @param pageParent      - set of page ids which contains the given extended graphics state as its resources
+     * @param patternParent   - set of pattern ids which contains the given extended graphics state as its resources
+     * @param xobjectParent   - set of xobject ids which contains the given extended graphics state as its resources
+     * @param fontParent      - set of font ids which contains the given extended graphics state as its resources
+     * @return created PBTillingPatternFeaturesObject
+     */
+    public static PBTillingPatternFeaturesObject createTilingPatternFeaturesObject(PDTilingPattern tilingPattern,
+                                                                                   String id,
+                                                                                   Set<String> extGStateChild,
+                                                                                   Set<String> colorSpaceChild,
+                                                                                   Set<String> patternChild,
+                                                                                   Set<String> shadingChild,
+                                                                                   Set<String> xobjectChild,
+                                                                                   Set<String> fontChild,
+                                                                                   Set<String> procSetChild,
+                                                                                   Set<String> propertiesChild,
+                                                                                   Set<String> pageParent,
+                                                                                   Set<String> patternParent,
+                                                                                   Set<String> xobjectParent,
+                                                                                   Set<String> fontParent) {
+        return new PBTillingPatternFeaturesObject(tilingPattern, id, extGStateChild, colorSpaceChild, patternChild, shadingChild, xobjectChild, fontChild, procSetChild, propertiesChild, pageParent, patternParent, xobjectParent, fontParent);
+    }
+
+    /**
+     * Constructs new PBShadingPatternFeaturesObject
+     *
+     * @param shadingPattern - PDTilingPattern which represents tilling pattern for feature report
+     * @param id             - id of the object
+     * @param extGStateChild - external graphics state id which contains in this shading pattern
+     * @param shadingChild   - shading id which contains in this shading pattern
+     * @param pageParent     - set of page ids which contains the given extended graphics state as its resources
+     * @param patternParent  - set of pattern ids which contains the given extended graphics state as its resources
+     * @param xobjectParent  - set of xobject ids which contains the given extended graphics state as its resources
+     * @param fontParent     - set of font ids which contains the given extended graphics state as its resources
+     * @return created PBShadingPatternFeaturesObject
+     */
+    public static PBShadingPatternFeaturesObject createShadingPatternFeaturesObject(PDShadingPattern shadingPattern,
+                                                                                    String id,
+                                                                                    String shadingChild,
+                                                                                    String extGStateChild,
+                                                                                    Set<String> pageParent,
+                                                                                    Set<String> patternParent,
+                                                                                    Set<String> xobjectParent,
+                                                                                    Set<String> fontParent) {
+        return new PBShadingPatternFeaturesObject(shadingPattern, id, shadingChild, extGStateChild, pageParent, patternParent, xobjectParent, fontParent);
+    }
+
+    /**
+     * Constructs new PBShadingFeaturesObject
+     *
+     * @param shading         - PDTilingPattern which represents tilling pattern for feature report
+     * @param id              - id of the object
+     * @param colorSpaceChild - colorSpace id which contains in this shading pattern
+     * @param pageParent      - set of page ids which contains the given extended graphics state as its resources
+     * @param patternParent   - set of pattern ids which contains the given extended graphics state as its resources
+     * @param xobjectParent   - set of xobject ids which contains the given extended graphics state as its resources
+     * @param fontParent      - set of font ids which contains the given extended graphics state as its resources
+     * @return created PBShadingFeaturesObject
+     */
+    public static PBShadingFeaturesObject createShadingFeaturesObject(PDShading shading, String id, String colorSpaceChild, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+        return new PBShadingFeaturesObject(shading, id, colorSpaceChild, pageParent, patternParent, xobjectParent, fontParent);
     }
 }

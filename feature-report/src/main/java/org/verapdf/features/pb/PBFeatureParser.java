@@ -285,6 +285,10 @@ public final class PBFeatureParser {
             }
         }
 
+        getResourcesFeatures();
+    }
+
+    private void getResourcesFeatures() {
         for (Map.Entry<String, PDExtendedGraphicsState> exGStateEntry : exGStates.entrySet()) {
             if (exGStateEntry.getValue() != null) {
                 String id = exGStateEntry.getKey();
@@ -313,6 +317,56 @@ public final class PBFeatureParser {
                                 colorSpaceShadingParent.get(id),
                                 colorSpaceXObjectParent.get(id),
                                 colorSpaceFontParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, PDTilingPattern> tilingPatternEntry : tilingPatterns.entrySet()) {
+            if (tilingPatternEntry.getValue() != null) {
+                String id = tilingPatternEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createTilingPatternFeaturesObject(tilingPatternEntry.getValue(),
+                                id,
+                                tilingPatternExtGStateChild.get(id),
+                                tilingPatternColorSpaceChild.get(id),
+                                tilingPatternPatternChild.get(id),
+                                tilingPatternShadingChild.get(id),
+                                tilingPatternXObjectChild.get(id),
+                                tilingPatternFontChild.get(id),
+                                tilingPatternProcSetChild.get(id),
+                                tilingPatternPropertiesChild.get(id),
+                                tilingPatternPageParent.get(id),
+                                tilingPatternPatternParent.get(id),
+                                tilingPatternXObjectParent.get(id),
+                                tilingPatternFontParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, PDShadingPattern> shadingPatternEntry : shadingPatterns.entrySet()) {
+            if (shadingPatternEntry.getValue() != null) {
+                String id = shadingPatternEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createShadingPatternFeaturesObject(shadingPatternEntry.getValue(),
+                                id,
+                                shadingPatternShadingChild.get(id),
+                                shadingPatternExtGStateChild.get(id),
+                                shadingPageParent.get(id),
+                                shadingPatternParent.get(id),
+                                shadingXObjectParent.get(id),
+                                shadingFontParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, PDShading> shadingEntry : shadings.entrySet()) {
+            if (shadingEntry.getValue() != null) {
+                String id = shadingEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createShadingFeaturesObject(shadingEntry.getValue(),
+                                id,
+                                shadingColorSpaceChild.get(id),
+                                shadingPageParent.get(id),
+                                shadingPatternParent.get(id),
+                                shadingXObjectParent.get(id),
+                                shadingFontParent.get(id)));
             }
         }
     }

@@ -84,7 +84,8 @@ public class PBExtGStateFeaturesObject implements IFeaturesObject {
 
             if (fontChildID != null) {
                 FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
-                FeatureTreeNode font = FeatureTreeNode.newChildInstance("font", resources);
+                FeatureTreeNode fonts = FeatureTreeNode.newChildInstance("fonts", resources);
+                FeatureTreeNode font = FeatureTreeNode.newChildInstance("font", fonts);
                 font.addAttribute(ID, fontChildID);
             }
 
