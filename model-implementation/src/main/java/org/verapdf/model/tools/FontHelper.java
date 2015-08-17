@@ -37,6 +37,7 @@ public class FontHelper {
 							new CIDType2Container((PDCIDFontType2) pdcidFont);
 					container.setDelegateFontContainer(type2Container);
 				}
+				return container;
 			}
 			default:
 				return null;
