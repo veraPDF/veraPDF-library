@@ -163,7 +163,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
                 try {
                     lookupData = (new PDStream((COSStream) lookupTable)).getByteArray();
                 } catch (IOException e) {
-                    LOGGER.debug("IOException while parsing lookupData. Stream has been closed.");
+                    LOGGER.info(e);
                     lookupData = new byte[0];
                     addError(root, collection);
                 }
