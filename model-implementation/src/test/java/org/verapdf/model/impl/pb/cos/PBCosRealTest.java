@@ -31,8 +31,8 @@ public class PBCosRealTest extends BaseTest {
 
     @Test
     // @carlwilson temporarily ignored as it's a "boxing box" issue
-    @Ignore public void testGetIntegerMethod() {
-        Assert.assertEquals(Long.valueOf(expected + ""), ((CosReal) actual).getintValue());
+    public void testGetIntegerMethod() {
+        Assert.assertEquals(Long.valueOf((long) expected), ((CosReal) actual).getintValue());
     }
 
     @Test

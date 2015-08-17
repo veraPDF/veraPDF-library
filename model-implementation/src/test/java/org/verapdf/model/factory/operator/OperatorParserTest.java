@@ -102,9 +102,9 @@ public class OperatorParserTest {
 		parameters.add(new Object[] {Operator.getOperator(Operators.D0), PBOpType3Font.OP_TYPE_3_FONT_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.D1), PBOpType3Font.OP_TYPE_3_FONT_TYPE});
 		// TODO : is it correct??
-		parameters.add(new Object[] {Operator.getOperator(Operators.BI), PBOpInlineImage.OP_INLINE_IMAGE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.ID), PBOpInlineImage.OP_INLINE_IMAGE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.EI), PBOpInlineImage.OP_INLINE_IMAGE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.BI), PBOpInlineImage.OP_INLINE_IMAGE_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.ID), PBOpInlineImage.OP_INLINE_IMAGE_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.EI), PBOpInlineImage.OP_INLINE_IMAGE_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.BX), PBOp_BX.OP_BX_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.EX), PBOp_EX.OP_EX_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.C_CURVE_TO), PBOp_c.OP_C_TYPE});

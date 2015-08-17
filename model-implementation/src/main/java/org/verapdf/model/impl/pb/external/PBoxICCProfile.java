@@ -28,8 +28,9 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
     private Long dictionaryNumberOfColors;
 
     protected PBoxICCProfile(InputStream profileStream,
-            Long dictionaryNumberOfColors) throws IOException {
-        super();
+            				 Long dictionaryNumberOfColors,
+							 String type) throws IOException {
+        super(type);
         this.profileStream = profileStream;
         this.dictionaryNumberOfColors = dictionaryNumberOfColors;
 

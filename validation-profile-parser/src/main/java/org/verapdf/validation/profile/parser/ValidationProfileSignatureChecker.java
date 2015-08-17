@@ -1,17 +1,17 @@
 package org.verapdf.validation.profile.parser;
 
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
-import org.verapdf.exceptions.validationprofileparser.NullProfileException;
-import org.verapdf.exceptions.validationprofileparser.WrongProfileEncodingException;
 
 import javax.xml.stream.Location;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,19 +19,20 @@ import java.util.Arrays;
 import java.util.Formatter;
 
 /**
- * Operations with validation profile's hash.
+ * Class for handling the hash checking of Validation Profiles.
  *
  * @author Maksim Bezrukov
  */
 public final class ValidationProfileSignatureChecker {
-    
+
     private static final String HASH_NAME = "hash";
     private static final String HASH_OPEN_TAG = "<hash>";
     private static final String HASH_CLOSE_TAG = "</hash>";
     private static final String HASH_EMPTY_TAG = "<hash/>";
     private static final String UTF8 = "utf-8";
 
-    private static final byte[] KEY_ARRAY = {-48, -78, -48, -75, -47, -128, -48, -80, -48, -97, -48, -108, -48, -92};
+    private static final byte[] KEY_ARRAY = { -48, -78, -48, -75, -47, -128,
+            -48, -80, -48, -97, -48, -108, -48, -92 };
 
     private File profile;
     private int startOfHash = -1;
@@ -41,34 +42,46 @@ public final class ValidationProfileSignatureChecker {
     private String realHashAsString;
     private byte[] realHashAsBytes;
 
-
     private ValidationProfileSignatureChecker(File file) {
         this.profile = file;
     }
 
-    private void parseProfile() throws IOException, XMLStreamException, WrongProfileEncodingException {
+    /**
+     * 
+     * @throws IOException
+     * @throws XMLStreamException
+     * @throws UnsupportedEncodingException
+     *             if the profile isn't UTF-8 encoded.
+     */
+    private void parseProfile() throws IOException, XMLStreamException {
         XMLInputFactory factory = XMLInputFactory.newInstance();
-        try (FileInputStream profileStream = new FileInputStream(profile)) {
-            XMLStreamReader streamReader = factory.createXMLStreamReader(profileStream);
-    
+        try (FileInputStream profileStream = new FileInputStream(this.profile)) {
+            XMLStreamReader streamReader = factory
+                    .createXMLStreamReader(profileStream);
+
             if (!UTF8.equalsIgnoreCase(streamReader.getEncoding())) {
                 streamReader.close();
-                throw new WrongProfileEncodingException("The given profile has not utf-8 encoding: " + profile.getCanonicalPath());
+                throw new UnsupportedEncodingException(
+                        "Only UTF-8 encoded profiles are parsable, please check : "
+                                + this.profile.getCanonicalPath());
             }
             while (streamReader.hasNext()) {
                 streamReader.next();
-                if (streamReader.isStartElement() && HASH_NAME.equals(streamReader.getLocalName())) {
+                if (streamReader.isStartElement()
+                        && HASH_NAME.equals(streamReader.getLocalName())) {
                     Location location = streamReader.getLocation();
-                    startOfHash = location.getCharacterOffset();
-                    currentHashAsString = streamReader.getElementText().trim();
+                    this.startOfHash = location.getCharacterOffset();
+                    this.currentHashAsString = streamReader.getElementText()
+                            .trim();
                 }
-                if (streamReader.isEndElement() && HASH_NAME.equals(streamReader.getLocalName())) {
+                if (streamReader.isEndElement()
+                        && HASH_NAME.equals(streamReader.getLocalName())) {
                     Location location = streamReader.getLocation();
-                    endOfHash = location.getCharacterOffset();
-                    if (endOfHash != startOfHash) {
-                        startOfHash -= HASH_OPEN_TAG.length();
+                    this.endOfHash = location.getCharacterOffset();
+                    if (this.endOfHash != this.startOfHash) {
+                        this.startOfHash -= HASH_OPEN_TAG.length();
                     } else {
-                        startOfHash -= HASH_EMPTY_TAG.length();
+                        this.startOfHash -= HASH_EMPTY_TAG.length();
                     }
                 }
             }
@@ -77,15 +90,20 @@ public final class ValidationProfileSignatureChecker {
 
     private byte[] getBytesForHash() throws IOException, MissedHashTagException {
 
-        if (startOfHash < 0 || endOfHash < 0 || startOfHash > endOfHash) {
-            throw new MissedHashTagException("Can not find well formed hash element in the validation profile at path: " + profile.getCanonicalPath());
+        if (this.startOfHash < 0 || this.endOfHash < 0
+                || this.startOfHash > this.endOfHash) {
+            throw new MissedHashTagException(
+                    "Can not find well formed hash element in the validation profile at path: "
+                            + this.profile.getCanonicalPath());
         }
-        byte[] bytesOfFile = Files.readAllBytes(profile.toPath());
+        byte[] bytesOfFile = Files.readAllBytes(this.profile.toPath());
 
         String fileString = new String(bytesOfFile, UTF8);
-        contentWithoutHash = fileString.substring(0, startOfHash) + fileString.substring(endOfHash);
+        this.contentWithoutHash = fileString.substring(0, this.startOfHash)
+                + fileString.substring(this.endOfHash);
 
-        return concatenateByteArrays(contentWithoutHash.getBytes(UTF8), KEY_ARRAY);
+        return concatenateByteArrays(this.contentWithoutHash.getBytes(UTF8),
+                KEY_ARRAY);
 
     }
 
@@ -116,13 +134,14 @@ public final class ValidationProfileSignatureChecker {
         } catch (NoSuchAlgorithmException e) {
             // SHA-1 algorithm exists, so do nothing
             /**
-             * cfw
-             * Conversely if it doesn't exist (which is the only way this block is hit)
-             * something is badly amiss, I'd suggest wrapping and throwing a runtime
-             * IllegalStateException if this is ever hit.
-             * e.g. throw new IllegalStateException("No SHA1 algorithm detected", e);
+             * cfw Conversely if it doesn't exist (which is the only way this
+             * block is hit) something is badly amiss, I'd suggest wrapping and
+             * throwing a runtime IllegalStateException if this is ever hit.
+             * e.g. throw new
+             * IllegalStateException("No SHA1 algorithm detected", e);
              */
-            throw new IllegalStateException("Required JRE SHA-1 algorithm not found", e);
+            throw new IllegalStateException(
+                    "Required JRE SHA-1 algorithm not found", e);
         }
 
         return res;
@@ -140,7 +159,8 @@ public final class ValidationProfileSignatureChecker {
     /**
      * Checks, if the given file's signature correct
      *
-     * @return true if the file's signature is correct, and false if the file's signature is incorrect
+     * @return true if the file's signature is correct, and false if the file's
+     *         signature is incorrect
      */
     public boolean isValidSignature() {
         return this.realHashAsString.equals(this.currentHashAsString);
@@ -149,13 +169,18 @@ public final class ValidationProfileSignatureChecker {
     /**
      * Generating the file's hash and signing the file
      *
-     * @throws IOException - if an I/O error occurs reading from the file's path stream
+     * @throws IOException
+     *             if an I/O error occurs reading from the file's path stream
      */
     public void signFile() throws IOException {
-        String resultingContent = contentWithoutHash.substring(0, startOfHash) + HASH_OPEN_TAG +
-                realHashAsString + HASH_CLOSE_TAG + contentWithoutHash.substring(startOfHash);
+        String resultingContent = this.contentWithoutHash.substring(0,
+                this.startOfHash)
+                + HASH_OPEN_TAG
+                + this.realHashAsString
+                + HASH_CLOSE_TAG
+                + this.contentWithoutHash.substring(this.startOfHash);
 
-        try (FileOutputStream out = new FileOutputStream(profile)) {
+        try (FileOutputStream out = new FileOutputStream(this.profile)) {
             out.write(resultingContent.getBytes(UTF8));
         }
     }
@@ -163,22 +188,30 @@ public final class ValidationProfileSignatureChecker {
     /**
      * Generating the file's hash and signing the file
      *
-     * @param profile - the file for sign
+     * @param profile
+     *            - the file for sign
      * @return a new {@link ValidationProfileSignatureChecker} instance
-     * @throws IOException                   - if an I/O error occurs reading from the file's path stream
-     * @throws XMLStreamException            - error in parsing profile
-     * @throws MissedHashTagException        - occurs when there is no hash element in the given profile
-     * @throws WrongProfileEncodingException - occurs when the given profile has not utf8 encoding
-     * @throws NullProfileException          - occurs when trying to create signature checker on null profile
+     * @throws IOException
+     *             if an I/O error occurs reading from the file's path stream
+     * @throws XMLStreamException
+     *             error in parsing profile
+     * @throws MissedHashTagException
+     *             occurs when there is no hash element in the given profile
+     * @throws UnsupportedEncodingException
+     *             occurs when the given profile has not utf8 encoding
      */
-    public static ValidationProfileSignatureChecker newInstance(File profile) throws MissedHashTagException, XMLStreamException, IOException, WrongProfileEncodingException, NullProfileException {
+    public static ValidationProfileSignatureChecker newInstance(File profile)
+            throws MissedHashTagException, XMLStreamException, IOException {
         if (profile == null) {
-            throw new NullProfileException("Null pointer to the profile is used for creating signature checker.");
+            throw new NullPointerException(
+                    "Null pointer to the profile is used for creating signature checker.");
         }
-        ValidationProfileSignatureChecker checker = new ValidationProfileSignatureChecker(profile);
+        ValidationProfileSignatureChecker checker = new ValidationProfileSignatureChecker(
+                profile);
         checker.parseProfile();
         byte[] source = checker.getBytesForHash();
-        checker.realHashAsBytes = ValidationProfileSignatureChecker.getSHA1(source);
+        checker.realHashAsBytes = ValidationProfileSignatureChecker
+                .getSHA1(source);
         checker.realHashAsString = byteArrayToHex(checker.realHashAsBytes);
         return checker;
     }

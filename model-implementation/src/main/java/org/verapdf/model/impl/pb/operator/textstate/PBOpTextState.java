@@ -7,6 +7,8 @@ import org.verapdf.model.operator.OpTextState;
 import java.util.List;
 
 /**
+ * Base class for all text state operators
+ *
  * @author Timur Kamalov
  */
 public class PBOpTextState extends PBOperator implements OpTextState {

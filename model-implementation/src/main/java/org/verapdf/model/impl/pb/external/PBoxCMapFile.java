@@ -10,7 +10,7 @@ public class PBoxCMapFile extends PBoxExternal implements CMapFile {
     public static final String CMAP_FILE_TYPE = "CMapFile";
 
     public PBoxCMapFile() {
-        setType(CMAP_FILE_TYPE);
+        super(CMAP_FILE_TYPE);
     }
 
 }

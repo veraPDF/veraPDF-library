@@ -3,10 +3,6 @@
  */
 package org.verapdf.model.factory.operator;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Stack;
-
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSInteger;
@@ -24,42 +20,16 @@ import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.impl.pb.operator.color.PBOpColor;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_J_line_cap;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_M_miter_limit;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_d;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_gs;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_i;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_j_line_join;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_ri;
-import org.verapdf.model.impl.pb.operator.generalgs.PBOp_w_line_width;
+import org.verapdf.model.impl.pb.operator.generalgs.*;
 import org.verapdf.model.impl.pb.operator.inlineimage.PBOpInlineImage;
-import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_BDC;
-import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_BMC;
-import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_DP;
-import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_EMC;
-import org.verapdf.model.impl.pb.operator.markedcontent.PBOp_MP;
+import org.verapdf.model.impl.pb.operator.markedcontent.*;
 import org.verapdf.model.impl.pb.operator.opclip.PBOp_WStar;
 import org.verapdf.model.impl.pb.operator.opclip.PBOp_W_clip;
 import org.verapdf.model.impl.pb.operator.opcompability.PBOp_BX;
 import org.verapdf.model.impl.pb.operator.opcompability.PBOp_EX;
 import org.verapdf.model.impl.pb.operator.opcompability.PBOp_Undefined;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_c;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_h;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_l;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_m_moveto;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_re;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_v;
-import org.verapdf.model.impl.pb.operator.pathconstruction.PBOp_y;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_BStar_eofill_stroke;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_B_fill_stroke;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_FStar;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_F_fill_obsolete;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_S_stroke;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_b_closepath_fill_stroke;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_bstar_closepath_eofill_stroke;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_f_fill;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_n;
-import org.verapdf.model.impl.pb.operator.pathpaint.PBOp_s_close_stroke;
+import org.verapdf.model.impl.pb.operator.pathconstruction.*;
+import org.verapdf.model.impl.pb.operator.pathpaint.*;
 import org.verapdf.model.impl.pb.operator.shading.PBOp_sh;
 import org.verapdf.model.impl.pb.operator.specialgs.PBOp_Q_grestore;
 import org.verapdf.model.impl.pb.operator.specialgs.PBOp_cm;
@@ -79,6 +49,10 @@ import org.verapdf.model.impl.pb.operator.type3font.PBOpType3Font;
 import org.verapdf.model.impl.pb.operator.xobject.PBOp_Do;
 import org.verapdf.model.operator.Operator;
 import org.verapdf.model.tools.constants.Operators;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * Stateful parser that create veraPDF Model operator instances from individual
@@ -101,7 +75,7 @@ class OperatorParser {
 
     Operator parseOperator(
             org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
-            PDResources resources, List<COSBase> arguments) {
+            PDResources resources, List<COSBase> arguments) throws CloneNotSupportedException {
         String operatorName = pdfBoxOperator.getName();
         switch (operatorName) {
         // GENERAL GS
@@ -168,15 +142,17 @@ class OperatorParser {
                     resources, getLastCOSName(arguments)));
             return new PBOpColor(arguments);
         case Operators.SCN_STROKE:
-            if (ColorSpaceFactory.PATTERN.equals(graphicState
-                    .getStrokeColorSpace().getName())) {
+			PDColorSpace strokeColorSpace = graphicState.getStrokeColorSpace();
+			if (strokeColorSpace != null &&
+					ColorSpaceFactory.PATTERN.equals(strokeColorSpace.getName())) {
                 graphicState.setPattern(getPatternFromResources(resources,
                         getLastCOSName(arguments)));
             }
             return new PBOpColor(arguments);
         case Operators.SCN_FILL:
-            if (ColorSpaceFactory.PATTERN.equals(graphicState
-                    .getFillColorSpace().getName())) {
+			PDColorSpace fillColorSpace = graphicState.getFillColorSpace();
+			if (fillColorSpace != null &&
+					ColorSpaceFactory.PATTERN.equals(fillColorSpace.getName())) {
                 graphicState.setPattern(getPatternFromResources(resources,
                         getLastCOSName(arguments)));
             }

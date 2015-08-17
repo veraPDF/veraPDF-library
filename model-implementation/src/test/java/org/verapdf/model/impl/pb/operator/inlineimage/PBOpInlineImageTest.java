@@ -15,7 +15,7 @@ public class PBOpInlineImageTest extends PBOperatorTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
-		setUpOperatorsList(PBOpInlineImage.OP_INLINE_IMAGE, null);
+		setUpOperatorsList(PBOpInlineImage.OP_INLINE_IMAGE_TYPE, null);
 	}
 
 	@Test
