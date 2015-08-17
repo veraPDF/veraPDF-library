@@ -21,7 +21,7 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
 
     public static final int MAX_NUMBER_OF_ELEMENTS = 1;
     public static final String OP_TYPE_PB = "Operator";
-    protected final List<COSBase> arguments = new ArrayList<>();
+    protected final List<COSBase> arguments;
     private final String id;
     private final String type;
 
@@ -32,7 +32,7 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
     protected PBOperator(List<COSBase> arguments, final String opType) {
         this.id = IDGenerator.generateID();
         this.type = opType;
-        this.arguments.addAll(arguments);
+        this.arguments = arguments;
     }
 
     @Override
