@@ -31,14 +31,14 @@ public class PBShadingPatternFeaturesObject implements IFeaturesObject {
     /**
      * Constructs new tilling pattern features object
      *
-     * @param shadingPattern - PDTilingPattern which represents tilling pattern for feature report
+     * @param shadingPattern - PDShadingPattern which represents shading pattern for feature report
      * @param id             - id of the object
      * @param extGStateChild - external graphics state id which contains in this shading pattern
      * @param shadingChild   - shading id which contains in this shading pattern
-     * @param pageParent     - set of page ids which contains the given extended graphics state as its resources
-     * @param patternParent  - set of pattern ids which contains the given extended graphics state as its resources
-     * @param xobjectParent  - set of xobject ids which contains the given extended graphics state as its resources
-     * @param fontParent     - set of font ids which contains the given extended graphics state as its resources
+     * @param pageParent     - set of page ids which contains the given pattern as its resources
+     * @param patternParent  - set of pattern ids which contains the given pattern as its resources
+     * @param xobjectParent  - set of xobject ids which contains the given pattern as its resources
+     * @param fontParent     - set of font ids which contains the given pattern as its resources
      */
     public PBShadingPatternFeaturesObject(PDShadingPattern shadingPattern, String id, String shadingChild, String extGStateChild, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
         this.shadingPattern = shadingPattern;

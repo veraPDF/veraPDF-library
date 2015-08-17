@@ -39,18 +39,18 @@ public class PBTillingPatternFeaturesObject implements IFeaturesObject {
      *
      * @param tilingPattern   - PDTilingPattern which represents tilling pattern for feature report
      * @param id              - id of the object
-     * @param extGStateChild  - set of external graphics state id which contains in resource dictionary of this page
-     * @param colorSpaceChild - set of ColorSpace id which contains in resource dictionary of this page
-     * @param patternChild    - set of pattern id which contains in resource dictionary of this page
-     * @param shadingChild    - set of shading id which contains in resource dictionary of this page
-     * @param xobjectChild    - set of XObject id which contains in resource dictionary of this page
-     * @param fontChild       - set of font id which contains in resource dictionary of this page
-     * @param procSetChild    - set of procedure set id which contains in resource dictionary of this page
-     * @param propertiesChild - set of properties id which contains in resource dictionary of this page
-     * @param pageParent      - set of page ids which contains the given extended graphics state as its resources
-     * @param patternParent   - set of pattern ids which contains the given extended graphics state as its resources
-     * @param xobjectParent   - set of xobject ids which contains the given extended graphics state as its resources
-     * @param fontParent      - set of font ids which contains the given extended graphics state as its resources
+     * @param extGStateChild  - set of external graphics state id which contains in resource dictionary of this pattern
+     * @param colorSpaceChild - set of ColorSpace id which contains in resource dictionary of this pattern
+     * @param patternChild    - set of pattern id which contains in resource dictionary of this pattern
+     * @param shadingChild    - set of shading id which contains in resource dictionary of this pattern
+     * @param xobjectChild    - set of XObject id which contains in resource dictionary of this pattern
+     * @param fontChild       - set of font id which contains in resource dictionary of this pattern
+     * @param procSetChild    - set of procedure set id which contains in resource dictionary of this pattern
+     * @param propertiesChild - set of properties id which contains in resource dictionary of this pattern
+     * @param pageParent      - set of page ids which contains the given pattern as its resources
+     * @param patternParent   - set of pattern ids which contains the given pattern as its resources
+     * @param xobjectParent   - set of xobject ids which contains the given pattern as its resources
+     * @param fontParent      - set of font ids which contains the given pattern as its resources
      */
     public PBTillingPatternFeaturesObject(PDTilingPattern tilingPattern, String id, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
         this.tilingPattern = tilingPattern;
