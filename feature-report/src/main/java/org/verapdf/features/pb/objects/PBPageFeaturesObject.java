@@ -130,10 +130,9 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 
             FeatureTreeNode.newChildInstanceWithValue("thumbnail", Boolean.toString(page.getCOSObject().getDictionaryObject(COSName.getPDFName("Thumb")) != null), root);
 
-            parseIDSet(annotsId, "annotation", "annotations", root);
+            PBCreateNodeHelper.parseIDSet(annotsId, "annotation", "annotations", root);
 
-            FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
-            parseResources(resources);
+            parseResources(root);
 
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.PAGE, root);
 
@@ -143,26 +142,25 @@ public class PBPageFeaturesObject implements IFeaturesObject {
         return null;
     }
 
-    private void parseResources(FeatureTreeNode resources) throws FeaturesTreeNodeException {
-        parseIDSet(extGStateChild, "graphicsState", "graphicsStates", resources);
-        parseIDSet(colorSpaceChild, "colorSpace", "colorSpaces", resources);
-        parseIDSet(patternChild, "pattern", "patterns", resources);
-        parseIDSet(shadingChild, "shading", "shadings", resources);
-        parseIDSet(xobjectChild, "xobject", "xobjects", resources);
-        parseIDSet(fontChild, "font", "fonts", resources);
-        parseIDSet(procSetChild, "procSet", "procSets", resources);
-        parseIDSet(propertiesChild, "propertiesDict", "propertiesDicts", resources);
-    }
+    private void parseResources(FeatureTreeNode root) throws FeaturesTreeNodeException {
+        if ((extGStateChild != null && !extGStateChild.isEmpty()) ||
+                (colorSpaceChild != null && !colorSpaceChild.isEmpty()) ||
+                (patternChild != null && !patternChild.isEmpty()) ||
+                (shadingChild != null && !shadingChild.isEmpty()) ||
+                (xobjectChild != null && !xobjectChild.isEmpty()) ||
+                (fontChild != null && !fontChild.isEmpty()) ||
+                (procSetChild != null && !procSetChild.isEmpty()) ||
+                (propertiesChild != null && !propertiesChild.isEmpty())) {
+            FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
 
-    private void parseIDSet(Set<String> set, String elementName, String setName, FeatureTreeNode root) throws FeaturesTreeNodeException {
-        if (set != null && !set.isEmpty()) {
-            FeatureTreeNode setNode = FeatureTreeNode.newChildInstance(setName, root);
-            for (String entry : set) {
-                if (entry != null) {
-                    FeatureTreeNode entryNode = FeatureTreeNode.newChildInstance(elementName, setNode);
-                    entryNode.addAttribute(ID, entry);
-                }
-            }
+            PBCreateNodeHelper.parseIDSet(extGStateChild, "graphicsState", "graphicsStates", resources);
+            PBCreateNodeHelper.parseIDSet(colorSpaceChild, "colorSpace", "colorSpaces", resources);
+            PBCreateNodeHelper.parseIDSet(patternChild, "pattern", "patterns", resources);
+            PBCreateNodeHelper.parseIDSet(shadingChild, "shading", "shadings", resources);
+            PBCreateNodeHelper.parseIDSet(xobjectChild, "xobject", "xobjects", resources);
+            PBCreateNodeHelper.parseIDSet(fontChild, "font", "fonts", resources);
+            PBCreateNodeHelper.parseIDSet(procSetChild, "procSet", "procSets", resources);
+            PBCreateNodeHelper.parseIDSet(propertiesChild, "propertiesDict", "propertiesDicts", resources);
         }
     }
 }

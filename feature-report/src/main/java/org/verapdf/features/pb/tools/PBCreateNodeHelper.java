@@ -1,12 +1,5 @@
 package org.verapdf.features.pb.tools;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSObject;
@@ -17,6 +10,13 @@ import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Set;
 
 /**
  * Helps in creating similar nodes in different features objects
@@ -178,6 +178,34 @@ public final class PBCreateNodeHelper {
             return colorNode;
         }
         return null;
+    }
+
+    /**
+     * Creates elements with name {@code elementName} and attribute id with values from {@code set} and attach them
+     * to the {@code root} element in case, when {@code setName} is null and to the element with {@code root} parent and
+     * name {@code elementName} in other case
+     *
+     * @param set         - set of elements id
+     * @param elementName - element names
+     * @param setName     - name of the parent element for created elements. If null, all created elements will be attached to the {@code root}
+     * @param root        - root element for the generated parent element for generated elements or direct paren for generated elements in case of {@code setName} equals to null
+     * @throws FeaturesTreeNodeException
+     */
+    public static void parseIDSet(Set<String> set, String elementName, String setName, FeatureTreeNode root) throws FeaturesTreeNodeException {
+        if (set != null && !set.isEmpty()) {
+            FeatureTreeNode setNode;
+            if (setName == null) {
+                setNode = root;
+            } else {
+                setNode = FeatureTreeNode.newChildInstance(setName, root);
+            }
+            for (String entry : set) {
+                if (entry != null) {
+                    FeatureTreeNode entryNode = FeatureTreeNode.newChildInstance(elementName, setNode);
+                    entryNode.addAttribute("id", entry);
+                }
+            }
+        }
     }
 
     private static void createGray(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {

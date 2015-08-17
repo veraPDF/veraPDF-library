@@ -4,6 +4,7 @@ import org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
+import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -111,30 +112,10 @@ public class PBShadingPatternFeaturesObject implements IFeaturesObject {
                 (fontParent != null && !fontParent.isEmpty())) {
             FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
 
-            if (pageParent != null) {
-                for (String id : pageParent) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("page", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (patternParent != null) {
-                for (String id : patternParent) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("pattern", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (xobjectParent != null) {
-                for (String id : xobjectParent) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("xobject", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (fontParent != null) {
-                for (String id : fontParent) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("font", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
+            PBCreateNodeHelper.parseIDSet(pageParent, "page", null, parents);
+            PBCreateNodeHelper.parseIDSet(patternParent, "pattern", null, parents);
+            PBCreateNodeHelper.parseIDSet(xobjectParent, "xobject", null, parents);
+            PBCreateNodeHelper.parseIDSet(fontParent, "font", null, parents);
         }
     }
 }

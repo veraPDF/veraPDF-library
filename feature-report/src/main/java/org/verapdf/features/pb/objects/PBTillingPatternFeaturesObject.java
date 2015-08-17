@@ -130,30 +130,10 @@ public class PBTillingPatternFeaturesObject implements IFeaturesObject {
                 (fontParent != null && !fontParent.isEmpty())) {
             FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
 
-            if (pageParent != null) {
-                for (String id : pageParent) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("page", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (patternParent != null) {
-                for (String id : patternParent) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("pattern", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (xobjectParent != null) {
-                for (String id : xobjectParent) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("xobject", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (fontParent != null) {
-                for (String id : fontParent) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("font", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
+            PBCreateNodeHelper.parseIDSet(pageParent, "page", null, parents);
+            PBCreateNodeHelper.parseIDSet(patternParent, "pattern", null, parents);
+            PBCreateNodeHelper.parseIDSet(xobjectParent, "xobject", null, parents);
+            PBCreateNodeHelper.parseIDSet(fontParent, "font", null, parents);
         }
     }
 
@@ -169,62 +149,14 @@ public class PBTillingPatternFeaturesObject implements IFeaturesObject {
                 (propertiesChild != null && !propertiesChild.isEmpty())) {
             FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
 
-            if (extGStateChild != null && !extGStateChild.isEmpty()) {
-                FeatureTreeNode graphicsStates = FeatureTreeNode.newChildInstance("graphicsStates", resources);
-                for (String id : extGStateChild) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("graphicsState", graphicsStates);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (colorSpaceChild != null && !colorSpaceChild.isEmpty()) {
-                FeatureTreeNode colorSpaces = FeatureTreeNode.newChildInstance("colorSpaces", resources);
-                for (String id : colorSpaceChild) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("colorSpace", colorSpaces);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (patternChild != null && !patternChild.isEmpty()) {
-                FeatureTreeNode patterns = FeatureTreeNode.newChildInstance("patterns", resources);
-                for (String id : patternChild) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("pattern", patterns);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (shadingChild != null && !shadingChild.isEmpty()) {
-                FeatureTreeNode shadings = FeatureTreeNode.newChildInstance("shadings", resources);
-                for (String id : shadingChild) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("shading", shadings);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (xobjectChild != null && !xobjectChild.isEmpty()) {
-                FeatureTreeNode xobjects = FeatureTreeNode.newChildInstance("xobjects", resources);
-                for (String id : xobjectChild) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("xobject", xobjects);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (fontChild != null && !fontChild.isEmpty()) {
-                FeatureTreeNode fonts = FeatureTreeNode.newChildInstance("fonts", resources);
-                for (String id : fontChild) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("font", fonts);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (procSetChild != null && !procSetChild.isEmpty()) {
-                FeatureTreeNode procSets = FeatureTreeNode.newChildInstance("procSets", resources);
-                for (String id : procSetChild) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("procSet", procSets);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (propertiesChild != null && !propertiesChild.isEmpty()) {
-                FeatureTreeNode properties = FeatureTreeNode.newChildInstance("propertiesDicts", resources);
-                for (String id : propertiesChild) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("propertiesDict", properties);
-                    node.addAttribute(ID, id);
-                }
-            }
+            PBCreateNodeHelper.parseIDSet(extGStateChild, "graphicsState", "graphicsStates", resources);
+            PBCreateNodeHelper.parseIDSet(colorSpaceChild, "colorSpace", "colorSpaces", resources);
+            PBCreateNodeHelper.parseIDSet(patternChild, "pattern", "patterns", resources);
+            PBCreateNodeHelper.parseIDSet(shadingChild, "shading", "shadings", resources);
+            PBCreateNodeHelper.parseIDSet(xobjectChild, "xobject", "xobjects", resources);
+            PBCreateNodeHelper.parseIDSet(fontChild, "font", "fonts", resources);
+            PBCreateNodeHelper.parseIDSet(procSetChild, "procSet", "procSets", resources);
+            PBCreateNodeHelper.parseIDSet(propertiesChild, "propertiesDict", "propertiesDicts", resources);
         }
     }
 }

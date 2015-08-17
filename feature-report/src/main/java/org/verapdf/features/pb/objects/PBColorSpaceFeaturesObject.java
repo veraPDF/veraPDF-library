@@ -1,5 +1,6 @@
 package org.verapdf.features.pb.objects;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.graphics.color.*;
@@ -23,7 +24,10 @@ import java.util.Set;
  */
 public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 
-    private final String ID = "id";
+    private static final String ID = "id";
+
+    private static final Logger LOGGER = Logger
+            .getLogger(PBColorSpaceFeaturesObject.class);
 
     private PDColorSpace colorSpace;
     private String id;
@@ -159,6 +163,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
                 try {
                     lookupData = (new PDStream((COSStream) lookupTable)).getByteArray();
                 } catch (IOException e) {
+                    LOGGER.debug("IOException while parsing lookupData. Stream has been closed.");
                     lookupData = new byte[0];
                     addError(root, collection);
                 }
@@ -245,36 +250,11 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
                 (fontParents != null && !fontParents.isEmpty())) {
             FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
 
-            if (pageParents != null) {
-                for (String id : pageParents) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("page", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (patternParents != null) {
-                for (String id : patternParents) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("pattern", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (shadingParents != null) {
-                for (String id : shadingParents) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("shading", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (xobjectParents != null) {
-                for (String id : xobjectParents) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("xobject", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (fontParents != null) {
-                for (String id : fontParents) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("font", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
+            PBCreateNodeHelper.parseIDSet(pageParents, "page", null, parents);
+            PBCreateNodeHelper.parseIDSet(patternParents, "pattern", null, parents);
+            PBCreateNodeHelper.parseIDSet(shadingParents, "shading", null, parents);
+            PBCreateNodeHelper.parseIDSet(xobjectParents, "xobject", null, parents);
+            PBCreateNodeHelper.parseIDSet(fontParents, "font", null, parents);
         }
     }
 }

@@ -42,6 +42,8 @@ public final class PBFeatureParser {
 
     private static final Logger LOGGER = Logger
             .getLogger(PBFeatureParser.class);
+    private static final String COLORSPACE_CREATION_PROBLEM = "ColorSpace creation problem.";
+    private static final String FONT_CREATION_PROBLEM = "Font creation problem.";
     private static final String PAGE = "page";
     private static final String ICCPROFILE = "iccProfile";
     private static final String ID = "id";
@@ -786,6 +788,7 @@ public final class PBFeatureParser {
                     parseColorSpace(colorSpace, id);
                 }
             } catch (IOException e) {
+                LOGGER.debug(COLORSPACE_CREATION_PROBLEM);
                 colorSpaceCreationProblem(id);
             }
         }
@@ -853,6 +856,7 @@ public final class PBFeatureParser {
                                 parseColorSpace(colorSpace, idColorSpace);
                             }
                         } catch (IOException e) {
+                            LOGGER.debug(COLORSPACE_CREATION_PROBLEM);
                             colorSpaceCreationProblem(idColorSpace);
                         }
 
@@ -897,6 +901,7 @@ public final class PBFeatureParser {
                                             parseColorSpace(colorSpace, idColorSpace);
                                         }
                                     } catch (IOException e) {
+                                        LOGGER.debug(COLORSPACE_CREATION_PROBLEM);
                                         colorSpaceCreationProblem(idColorSpace);
                                     }
                                 }
@@ -906,6 +911,7 @@ public final class PBFeatureParser {
                     }
                 }
             } catch (IOException e) {
+                LOGGER.debug("XObject creation problem.");
                 xobjectCreationProblem(id);
             }
         }
@@ -983,6 +989,7 @@ public final class PBFeatureParser {
                     fonts.put(id, font);
                     parseFont(font, id);
                 } catch (IOException e) {
+                    LOGGER.debug(FONT_CREATION_PROBLEM);
                     fontCreationProblem(id);
                 }
 
@@ -1027,6 +1034,7 @@ public final class PBFeatureParser {
                         fonts.put(fontID, font);
                         parseFont(font, fontID);
                     } catch (IOException e) {
+                        LOGGER.debug(FONT_CREATION_PROBLEM);
                         fontCreationProblem(fontID);
                     }
                 }
@@ -1145,6 +1153,7 @@ public final class PBFeatureParser {
                                     fonts.put(fontID, font);
                                     parseFont(font, fontID);
                                 } catch (IOException e) {
+                                    LOGGER.debug(FONT_CREATION_PROBLEM);
                                     fontCreationProblem(fontID);
                                 }
                             }
@@ -1152,6 +1161,7 @@ public final class PBFeatureParser {
                     }
                 }
             } catch (IOException e) {
+                LOGGER.debug("Pattern creation problem.");
                 patternCreationProblem(id);
             }
         }
@@ -1177,6 +1187,7 @@ public final class PBFeatureParser {
                     PDShading shading = resources.getShading(name);
                     parseShading(shading, id);
                 } catch (IOException e) {
+                    LOGGER.debug("Shading creation problem.");
                     shadingCreationProblem(id);
                 }
             }
@@ -1211,6 +1222,7 @@ public final class PBFeatureParser {
                 parseColorSpace(colorSpace, id);
             }
         } catch (IOException e) {
+            LOGGER.debug(COLORSPACE_CREATION_PROBLEM);
             colorSpaceCreationProblem(id);
         }
     }
@@ -1258,6 +1270,7 @@ public final class PBFeatureParser {
                 try {
                     iccProfiles.put(id, iccBased.getPDStream().getStream().getUnfilteredStream());
                 } catch (IOException e) {
+                    LOGGER.debug("ICCProfile creation problem.");
                     iccProfileCreationProblem(id);
                 }
             }
@@ -1276,6 +1289,7 @@ public final class PBFeatureParser {
                     colorSpaces.put(idAlt, iccBased.getAlternateColorSpace());
                     parseColorSpace(iccBased.getAlternateColorSpace(), idAlt);
                 } catch (IOException e) {
+                    LOGGER.debug(COLORSPACE_CREATION_PROBLEM);
                     colorSpaceCreationProblem(idAlt);
                 }
             }
@@ -1308,6 +1322,7 @@ public final class PBFeatureParser {
                     colorSpaces.put(id, alt);
                     parseColorSpace(alt, id);
                 } catch (IOException e) {
+                    LOGGER.debug(COLORSPACE_CREATION_PROBLEM);
                     colorSpaceCreationProblem(id);
                 }
             }
