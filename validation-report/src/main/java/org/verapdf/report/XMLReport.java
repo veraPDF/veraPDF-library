@@ -1,11 +1,10 @@
 package org.verapdf.report;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.Formatter;
-import java.util.GregorianCalendar;
+import org.apache.log4j.Logger;
+import org.verapdf.features.tools.FeaturesCollection;
+import org.verapdf.validation.report.model.ValidationInfo;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -13,19 +12,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.apache.log4j.Logger;
-import org.verapdf.features.tools.FeaturesCollection;
-import org.verapdf.validation.report.model.ValidationInfo;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Formatter;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -49,8 +43,6 @@ public final class XMLReport {
     private static String getProcessingTimeAsString(long processTime) {
         long processingTime = processTime;
 
-        StringBuilder buffer = new StringBuilder();
-
         Long hours = Long.valueOf(processingTime / MS_IN_HOUR);
         processingTime %= MS_IN_HOUR;
 
@@ -62,14 +54,17 @@ public final class XMLReport {
 
         Long ms = Long.valueOf(processingTime);
 
+        String res;
+
         try (Formatter formatter = new Formatter()) {
-            buffer.append(formatter.format("%02d", hours)).append(":");
-            buffer.append(formatter.format("%02d", mins)).append(":");
-            buffer.append(formatter.format("%02d", sec)).append(".");
-            buffer.append(formatter.format("%03d", ms));
+            formatter.format("%02d:", hours);
+            formatter.format("%02d:", mins);
+            formatter.format("%02d.", sec);
+            formatter.format("%03d", ms);
+            res = formatter.toString();
         }
 
-        return buffer.toString();
+        return res;
     }
 
     /**

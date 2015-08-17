@@ -26,6 +26,14 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 
     private PDPage page;
     private Set<String> annotsId;
+    private Set<String> extGStateChild;
+    private Set<String> colorSpaceChild;
+    private Set<String> patternChild;
+    private Set<String> shadingChild;
+    private Set<String> xobjectChild;
+    private Set<String> fontChild;
+    private Set<String> procSetChild;
+    private Set<String> propertiesChild;
     private String id;
     private int index;
 
@@ -34,12 +42,39 @@ public class PBPageFeaturesObject implements IFeaturesObject {
      *
      * @param page  - pdfbox class represents page object
      * @param annotsId - set of annotations id which contains in this page
+     * @param extGStateChild - set of external graphics state id which contains in resource dictionary of this page
+     * @param colorSpaceChild - set of ColorSpace id which contains in resource dictionary of this page
+     * @param patternChild - set of pattern id which contains in resource dictionary of this page
+     * @param shadingChild - set of shading id which contains in resource dictionary of this page
+     * @param xobjectChild - set of XObject id which contains in resource dictionary of this page
+     * @param fontChild - set of font id which contains in resource dictionary of this page
+     * @param procSetChild - set of procedure set id which contains in resource dictionary of this page
+     * @param propertiesChild - set of properties id which contains in resource dictionary of this page
      * @param id - page id
      * @param index - page index
      */
-    public PBPageFeaturesObject(PDPage page, Set<String> annotsId, String id, int index) {
+    public PBPageFeaturesObject(PDPage page,
+                                Set<String> annotsId,
+                                Set<String> extGStateChild,
+                                Set<String> colorSpaceChild,
+                                Set<String> patternChild,
+                                Set<String> shadingChild,
+                                Set<String> xobjectChild,
+                                Set<String> fontChild,
+                                Set<String> procSetChild,
+                                Set<String> propertiesChild,
+                                String id,
+                                int index) {
         this.page = page;
         this.annotsId = annotsId;
+        this.extGStateChild = extGStateChild;
+        this.colorSpaceChild = colorSpaceChild;
+        this.patternChild = patternChild;
+        this.shadingChild = shadingChild;
+        this.xobjectChild = xobjectChild;
+        this.fontChild = fontChild;
+        this.procSetChild = procSetChild;
+        this.propertiesChild = propertiesChild;
         this.id = id;
         this.index = index;
     }
@@ -95,17 +130,10 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 
             FeatureTreeNode.newChildInstanceWithValue("thumbnail", Boolean.toString(page.getCOSObject().getDictionaryObject(COSName.getPDFName("Thumb")) != null), root);
 
-            if (annotsId != null) {
-                FeatureTreeNode annotations = FeatureTreeNode.newChildInstance("annotations", root);
-                for (String annot : annotsId) {
-                    if (annot != null) {
-                        FeatureTreeNode annotNode = FeatureTreeNode.newChildInstance("annotation", annotations);
-                        annotNode.addAttribute(ID, annot);
-                    }
-                }
-            }
+            parseIDSet(annotsId, "annotation", "annotations", root);
 
-            // TODO: add <resources>
+            FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
+            parseResources(resources);
 
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.PAGE, root);
 
@@ -113,5 +141,28 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 
         }
         return null;
+    }
+
+    private void parseResources(FeatureTreeNode resources) throws FeaturesTreeNodeException {
+        parseIDSet(extGStateChild, "graphicsState", "graphicsStates", resources);
+        parseIDSet(colorSpaceChild, "colorSpace", "colorSpaces", resources);
+        parseIDSet(patternChild, "pattern", "patterns", resources);
+        parseIDSet(shadingChild, "shading", "shadings", resources);
+        parseIDSet(xobjectChild, "xobject", "xobjects", resources);
+        parseIDSet(fontChild, "font", "fonts", resources);
+        parseIDSet(procSetChild, "procSet", "procSets", resources);
+        parseIDSet(propertiesChild, "propertiesDict", "propertiesDicts", resources);
+    }
+
+    private void parseIDSet(Set<String> set, String elementName, String setName, FeatureTreeNode root) throws FeaturesTreeNodeException {
+        if (set != null && !set.isEmpty()) {
+            FeatureTreeNode setNode = FeatureTreeNode.newChildInstance(setName, root);
+            for (String entry : set) {
+                if (entry != null) {
+                    FeatureTreeNode entryNode = FeatureTreeNode.newChildInstance(elementName, setNode);
+                    entryNode.addAttribute(ID, entry);
+                }
+            }
+        }
     }
 }

@@ -16,5 +16,16 @@ public enum FeaturesObjectTypesEnum {
     OUTLINES,
     ANNOTATION,
     PAGE,
-    ERROR
+    EXT_G_STATE,
+    COLORSPACE,
+    PATTERN,
+    SHADING,
+    IMAGE_XOBJECT,
+    FORM_XOBJECT,
+    GROUP_XOBJECT,
+    FONT,
+    PROCSET,
+    PROPERTIES,
+    ERROR,
+    FAILED_XOBJECT
 }

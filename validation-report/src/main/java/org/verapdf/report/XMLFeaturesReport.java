@@ -69,19 +69,39 @@ public final class XMLFeaturesReport {
 
             parseElements(FeaturesObjectTypesEnum.LOW_LEVEL_INFO, collection, pdfFeatures, doc);
 
-            pdfFeatures.appendChild(makeList("embeddedFiles", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE), collection, doc));
+            makeList("embeddedFiles", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE), pdfFeatures, collection, doc);
 
-            pdfFeatures.appendChild(makeList("iccProfiles", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE), collection, doc));
+            makeList("iccProfiles", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE), pdfFeatures, collection, doc);
 
-            pdfFeatures.appendChild(makeList("outputIntents", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT), collection, doc));
+            makeList("outputIntents", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT), pdfFeatures, collection, doc);
 
             parseElements(FeaturesObjectTypesEnum.OUTLINES, collection, pdfFeatures, doc);
 
-            pdfFeatures.appendChild(makeList("annotations", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION), collection, doc));
+            makeList("annotations", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION), pdfFeatures, collection, doc);
 
-            pdfFeatures.appendChild(makeList("pages", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE), collection, doc));
+            makeList("pages", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE), pdfFeatures, collection, doc);
 
-            pdfFeatures.appendChild(makeList("errors", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR), collection, doc));
+            Element resources = doc.createElement("resources");
+            makeList("graphicsStates", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE), resources, collection, doc);
+            makeList("colorSpaces", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.COLORSPACE), resources, collection, doc);
+            makeList("patterns", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN), resources, collection, doc);
+            makeList("shadings", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.SHADING), resources, collection, doc);
+            Element xobjects = doc.createElement("xobjects");
+            makeList("images", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.IMAGE_XOBJECT), xobjects, collection, doc);
+            makeList("forms", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FORM_XOBJECT), xobjects, collection, doc);
+            makeList("groups", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.GROUP_XOBJECT), xobjects, collection, doc);
+            if (xobjects.getChildNodes().getLength() > 0) {
+                resources.appendChild(xobjects);
+            }
+            makeList("fonts", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FONT), resources, collection, doc);
+            makeList("procSets", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROCSET), resources, collection, doc);
+            makeList("propertiesDicts", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROPERTIES), resources, collection, doc);
+
+            if (resources.getChildNodes().getLength() > 0) {
+                pdfFeatures.appendChild(resources);
+            }
+
+            makeList("errors", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR), pdfFeatures, collection, doc);
         }
 
         return pdfFeatures;
@@ -91,7 +111,7 @@ public final class XMLFeaturesReport {
         if (collection.getFeatureTreesForType(type) != null) {
             for (FeatureTreeNode rootNode : collection.getFeatureTreesForType(type)) {
                 if (rootNode != null) {
-                    root.appendChild(makeNode(rootNode, collection, doc));
+                    root.appendChild(makeNode(rootNode, doc));
                 }
             }
         }
@@ -118,25 +138,24 @@ public final class XMLFeaturesReport {
 
             return metadata;
         }
-        return makeNode(metadataNode, collection, doc);
+        return makeNode(metadataNode, doc);
 
     }
 
-    private static Element makeList(String listName, List<FeatureTreeNode> list, FeaturesCollection collection, Document doc) {
-        Element listElement = doc.createElement(listName);
+    private static void makeList(String listName, List<FeatureTreeNode> list, Element parent, FeaturesCollection collection, Document doc) {
 
-        if (list != null) {
+        if (list != null && !list.isEmpty()) {
+            Element listElement = doc.createElement(listName);
             for (FeatureTreeNode node : list) {
                 if (node != null) {
-                    listElement.appendChild(makeNode(node, collection, doc));
+                    listElement.appendChild(makeNode(node, doc));
                 }
             }
+            parent.appendChild(listElement);
         }
-
-        return listElement;
     }
 
-    private static Element makeNode(FeatureTreeNode node, FeaturesCollection collection, Document doc) {
+    private static Element makeNode(FeatureTreeNode node, Document doc) {
         Element root = doc.createElement(node.getName());
 
         for (Map.Entry<String, String> attr : node.getAttributes().entrySet()) {
@@ -147,7 +166,7 @@ public final class XMLFeaturesReport {
             root.appendChild(doc.createTextNode(replaceInvalidCharacters(node.getValue())));
         } else if (node.getChildren() != null) {
             for (FeatureTreeNode child : node.getChildren()) {
-                root.appendChild(makeNode(child, collection, doc));
+                root.appendChild(makeNode(child, doc));
             }
         }
 
@@ -157,12 +176,10 @@ public final class XMLFeaturesReport {
     private static String replaceInvalidCharacters(String source) {
         try (Formatter formatter = new Formatter()) {
 
-            StringBuilder builder = new StringBuilder();
-
             for (int i = 0; i < source.length(); ++i) {
                 char curChar = source.charAt(i);
                 if ('#' == curChar) {
-                    builder.append("#x000023");
+                    formatter.format("#x000023");
                 } else {
                     int codePoint = source.codePointAt(i);
                     if (Character.isHighSurrogate(curChar)) {
@@ -173,17 +190,17 @@ public final class XMLFeaturesReport {
                             (codePoint >= SP && codePoint <= XD7FF) ||
                             (codePoint >= XE000 && codePoint <= XFFFD) ||
                             (codePoint >= X10000 && codePoint <= X10FFFF)) {
-                        builder.append(curChar);
+                        formatter.format("%c", curChar);
                         if (Character.isHighSurrogate(curChar) && i < source.length()) {
-                            builder.append(source.charAt(i));
+                            formatter.format("%c", source.charAt(i));
                         }
                     } else {
-                        builder.append(formatter.format("#x%06X", codePoint));
+                        formatter.format("#x%06X", codePoint);
                     }
                 }
             }
 
-            return builder.toString();
+            return formatter.toString();
         }
     }
 }
