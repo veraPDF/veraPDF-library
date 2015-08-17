@@ -4,6 +4,7 @@ import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
+import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -103,30 +104,10 @@ public class PBExtGStateFeaturesObject implements IFeaturesObject {
                 (fontParentsID != null && !fontParentsID.isEmpty())) {
             FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
 
-            if (pageParentsID != null) {
-                for (String id : pageParentsID) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("page", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (patternParentsID != null) {
-                for (String id : patternParentsID) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("pattern", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (xobjectParentsID != null) {
-                for (String id : xobjectParentsID) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("xobject", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
-            if (fontParentsID != null) {
-                for (String id : fontParentsID) {
-                    FeatureTreeNode node = FeatureTreeNode.newChildInstance("font", parents);
-                    node.addAttribute(ID, id);
-                }
-            }
+            PBCreateNodeHelper.parseIDSet(pageParentsID, "page", null, parents);
+            PBCreateNodeHelper.parseIDSet(patternParentsID, "pattern", null, parents);
+            PBCreateNodeHelper.parseIDSet(xobjectParentsID, "xobject", null, parents);
+            PBCreateNodeHelper.parseIDSet(fontParentsID, "font", null, parents);
         }
     }
 }

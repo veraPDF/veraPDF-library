@@ -179,7 +179,7 @@ public final class XMLFeaturesReport {
             for (int i = 0; i < source.length(); ++i) {
                 char curChar = source.charAt(i);
                 if ('#' == curChar) {
-                    formatter.format("#x000023");
+                    formatter.format("#x%06X", "#".codePointAt(0));
                 } else {
                     int codePoint = source.codePointAt(i);
                     if (Character.isHighSurrogate(curChar)) {

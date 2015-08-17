@@ -786,6 +786,7 @@ public final class PBFeatureParser {
                     parseColorSpace(colorSpace, id);
                 }
             } catch (IOException e) {
+                LOGGER.info(e);
                 colorSpaceCreationProblem(id);
             }
         }
@@ -853,6 +854,7 @@ public final class PBFeatureParser {
                                 parseColorSpace(colorSpace, idColorSpace);
                             }
                         } catch (IOException e) {
+                            LOGGER.info(e);
                             colorSpaceCreationProblem(idColorSpace);
                         }
 
@@ -897,6 +899,7 @@ public final class PBFeatureParser {
                                             parseColorSpace(colorSpace, idColorSpace);
                                         }
                                     } catch (IOException e) {
+                                        LOGGER.info(e);
                                         colorSpaceCreationProblem(idColorSpace);
                                     }
                                 }
@@ -906,6 +909,7 @@ public final class PBFeatureParser {
                     }
                 }
             } catch (IOException e) {
+                LOGGER.info(e);
                 xobjectCreationProblem(id);
             }
         }
@@ -983,6 +987,7 @@ public final class PBFeatureParser {
                     fonts.put(id, font);
                     parseFont(font, id);
                 } catch (IOException e) {
+                    LOGGER.info(e);
                     fontCreationProblem(id);
                 }
 
@@ -1027,6 +1032,7 @@ public final class PBFeatureParser {
                         fonts.put(fontID, font);
                         parseFont(font, fontID);
                     } catch (IOException e) {
+                        LOGGER.info(e);
                         fontCreationProblem(fontID);
                     }
                 }
@@ -1145,6 +1151,7 @@ public final class PBFeatureParser {
                                     fonts.put(fontID, font);
                                     parseFont(font, fontID);
                                 } catch (IOException e) {
+                                    LOGGER.info(e);
                                     fontCreationProblem(fontID);
                                 }
                             }
@@ -1152,6 +1159,7 @@ public final class PBFeatureParser {
                     }
                 }
             } catch (IOException e) {
+                LOGGER.info(e);
                 patternCreationProblem(id);
             }
         }
@@ -1177,6 +1185,7 @@ public final class PBFeatureParser {
                     PDShading shading = resources.getShading(name);
                     parseShading(shading, id);
                 } catch (IOException e) {
+                    LOGGER.info(e);
                     shadingCreationProblem(id);
                 }
             }
@@ -1211,6 +1220,7 @@ public final class PBFeatureParser {
                 parseColorSpace(colorSpace, id);
             }
         } catch (IOException e) {
+            LOGGER.info(e);
             colorSpaceCreationProblem(id);
         }
     }
@@ -1258,6 +1268,7 @@ public final class PBFeatureParser {
                 try {
                     iccProfiles.put(id, iccBased.getPDStream().getStream().getUnfilteredStream());
                 } catch (IOException e) {
+                    LOGGER.info(e);
                     iccProfileCreationProblem(id);
                 }
             }
@@ -1276,6 +1287,7 @@ public final class PBFeatureParser {
                     colorSpaces.put(idAlt, iccBased.getAlternateColorSpace());
                     parseColorSpace(iccBased.getAlternateColorSpace(), idAlt);
                 } catch (IOException e) {
+                    LOGGER.info(e);
                     colorSpaceCreationProblem(idAlt);
                 }
             }
@@ -1308,6 +1320,7 @@ public final class PBFeatureParser {
                     colorSpaces.put(id, alt);
                     parseColorSpace(alt, id);
                 } catch (IOException e) {
+                    LOGGER.info(e);
                     colorSpaceCreationProblem(id);
                 }
             }
