@@ -146,6 +146,7 @@ public final class PBFeatureParser {
     private Map<String, Set<String>> imageXObjectFontParent = new HashMap<>();
 
     private Map<String, PDFormXObject> formXObjects = new HashMap<>();
+    private Map<String, String> formXObjectGroupChild = new HashMap<>();
     private Map<String, Set<String>> formXObjectExtGStateChild = new HashMap<>();
     private Map<String, Set<String>> formXObjectColorSpaceChild = new HashMap<>();
     private Map<String, Set<String>> formXObjectPatternChild = new HashMap<>();
@@ -388,6 +389,40 @@ public final class PBFeatureParser {
                                 imageXObjectPatternParent.get(id),
                                 imageXObjectXObjectParent.get(id),
                                 imageXObjectFontParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, PDFormXObject> formXObjectEntry : formXObjects.entrySet()) {
+            if (formXObjectEntry.getValue() != null) {
+                String id = formXObjectEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createFormXObjectFeaturesObject(formXObjectEntry.getValue(),
+                                id,
+                                formXObjectGroupChild.get(id),
+                                formXObjectExtGStateChild.get(id),
+                                fontColorSpaceChild.get(id),
+                                formXObjectPatternChild.get(id),
+                                formXObjectShadingChild.get(id),
+                                formXObjectXObjectChild.get(id),
+                                formXObjectFontChild.get(id),
+                                formXObjectProcSetChild.get(id),
+                                formXObjectPropertiesChild.get(id),
+                                formXObjectPageParent.get(id),
+                                formXObjectAnnotationParent.get(id),
+                                formXObjectPatternParent.get(id),
+                                formXObjectXObjectParent.get(id),
+                                formXObjectFontParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, PDGroup> froupXObjectEntry : groupXObjects.entrySet()) {
+            if (froupXObjectEntry.getValue() != null) {
+                String id = froupXObjectEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createGroupXObjectFeaturesObject(froupXObjectEntry.getValue(),
+                                id,
+                                groupXObjectColorSpaceChild.get(id),
+                                groupXObjectXobjectParent.get(id)));
             }
         }
     }
@@ -967,7 +1002,11 @@ public final class PBFeatureParser {
                             COSBase baseGroup = xobj.getCOSStream().getItem(COSName.GROUP);
                             String groupID = getId(baseGroup, XOBJECT_ID, imageXObjects.size() + formXObjects.size() + groupXObjects.size());
 
-                            makePairDependence(groupID, parentID, groupXObjectXobjectParent, formXObjectXObjectChild);
+                            if (groupXObjectXobjectParent.get(groupID) == null) {
+                                groupXObjectXobjectParent.put(groupID, new HashSet<String>());
+                            }
+                            groupXObjectXobjectParent.get(groupID).add(id);
+                            formXObjectGroupChild.put(id, groupID);
 
                             if (!groupXObjects.containsKey(groupID)) {
                                 groupXObjects.put(groupID, group);
@@ -1003,6 +1042,27 @@ public final class PBFeatureParser {
                                 }
                             }
                         }
+
+                        getResourceDictionaryDependencies(((PDFormXObject) xobj).getResources(),
+                                id,
+                                fontExtGStateChild,
+                                formXObjectColorSpaceChild,
+                                formXObjectPatternChild,
+                                formXObjectShadingChild,
+                                formXObjectXObjectChild,
+                                formXObjectFontChild,
+                                formXObjectProcSetChild,
+                                formXObjectPropertiesChild,
+                                exGStateXObjectParent,
+                                colorSpaceXObjectParent,
+                                tilingPatternXObjectParent,
+                                shadingPatternXObjectParent,
+                                shadingXObjectParent,
+                                imageXObjectXObjectParent,
+                                formXObjectXObjectParent,
+                                fontXObjectParent,
+                                procSetXObjectParent,
+                                propertyXObjectParent);
 
                     }
                 }

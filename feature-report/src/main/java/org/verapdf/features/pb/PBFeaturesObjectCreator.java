@@ -8,6 +8,8 @@ import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecifica
 import org.apache.pdfbox.pdmodel.encryption.PDEncryption;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
+import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
+import org.apache.pdfbox.pdmodel.graphics.form.PDGroup;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern;
@@ -310,5 +312,43 @@ public final class PBFeaturesObjectCreator {
      */
     public static PBImageXObjectFeaturesObject createImageXObjectFeaturesObject(PDImageXObject imageXObject, String id, String colorSpaceChild, String maskChild, String sMaskChild, Set<String> alternatesChild, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
         return new PBImageXObjectFeaturesObject(imageXObject, id, colorSpaceChild, maskChild, sMaskChild, alternatesChild, pageParent, patternParent, xobjectParent, fontParent);
+    }
+
+    /**
+     * Constructs new PBFormXObjectFeaturesObject
+     *
+     * @param formXObject      - PDFormXObject which represents form xobject for feature report
+     * @param id               - id of the object
+     * @param groupChild       - id of the group xobject which contains in the given form xobject
+     * @param extGStateChild   - set of external graphics state id which contains in resource dictionary of this xobject
+     * @param colorSpaceChild  - set of ColorSpace id which contains in resource dictionary of this xobject
+     * @param patternChild     - set of pattern id which contains in resource dictionary of this xobject
+     * @param shadingChild     - set of shading id which contains in resource dictionary of this xobject
+     * @param xobjectChild     - set of XObject id which contains in resource dictionary of this xobject
+     * @param fontChild        - set of font id which contains in resource dictionary of this pattern
+     * @param procSetChild     - set of procedure set id which contains in resource dictionary of this xobject
+     * @param propertiesChild  - set of properties id which contains in resource dictionary of this xobject
+     * @param pageParent       - set of page ids which contains the given xobject as its resources
+     * @param annotationParent - set of annotation ids which contains the given xobject in its appearance dictionary
+     * @param patternParent    - set of pattern ids which contains the given xobject as its resources
+     * @param xobjectParent    - set of xobject ids which contains the given xobject as its resources
+     * @param fontParent       - set of font ids which contains the given xobject as its resources
+     * @return created PBFormXObjectFeaturesObject
+     */
+    public static PBFormXObjectFeaturesObject createFormXObjectFeaturesObject(PDFormXObject formXObject, String id, String groupChild, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> pageParent, Set<String> annotationParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+        return new PBFormXObjectFeaturesObject(formXObject, id, groupChild, extGStateChild, colorSpaceChild, patternChild, shadingChild, xobjectChild, fontChild, procSetChild, propertiesChild, pageParent, annotationParent, patternParent, xobjectParent, fontParent);
+    }
+
+    /**
+     * Constructs new PBGroupXObjectFeaturesObject
+     *
+     * @param groupXObject    - PBGroupXObjectFeaturesObject which represents group xobject for feature report
+     * @param id              - id of the object
+     * @param colorSpaceChild - ColorSpace id which contains in a dictionary of this xobject
+     * @param xobjectParent   - set of xobject ids which contains the given xobject as its resources
+     * @return created PBGroupXObjectFeaturesObject
+     */
+    public static PBGroupXObjectFeaturesObject createGroupXObjectFeaturesObject(PDGroup groupXObject, String id, String colorSpaceChild, Set<String> xobjectParent) {
+        return new PBGroupXObjectFeaturesObject(groupXObject, id, colorSpaceChild, xobjectParent);
     }
 }

@@ -1,5 +1,6 @@
 package org.verapdf.features.pb.objects;
 
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
@@ -8,6 +9,7 @@ import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
+import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -16,6 +18,9 @@ import java.util.Set;
  * @author Maksim Bezrukov
  */
 public class PBImageXObjectFeaturesObject implements IFeaturesObject {
+
+    private static final org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger
+            .getLogger(PBImageXObjectFeaturesObject.class);
 
     private static final String ID = "id";
 
@@ -104,7 +109,17 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
             }
             FeatureTreeNode.newChildInstanceWithValue("structParent", String.valueOf(imageXObject.getStructParent()), root);
 
-            collection.addNewFeatureTree(FeaturesObjectTypesEnum.SHADING, root);
+            try {
+                if (imageXObject.getStream().getFilters() != null && !imageXObject.getStream().getFilters().isEmpty()) {
+                    FeatureTreeNode filters = FeatureTreeNode.newChildInstance("filters", root);
+                    for (COSName name : imageXObject.getStream().getFilters()) {
+                        PBCreateNodeHelper.addNotEmptyNode("filter", name.getName(), filters);
+                    }
+                }
+            } catch (IOException e) {
+                LOGGER.info(e);
+            }
+            collection.addNewFeatureTree(FeaturesObjectTypesEnum.IMAGE_XOBJECT, root);
             return root;
         }
 

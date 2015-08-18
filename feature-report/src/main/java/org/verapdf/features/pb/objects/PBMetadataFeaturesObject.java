@@ -10,6 +10,7 @@ import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 /**
  * Feature object for metadata
@@ -53,7 +54,8 @@ public class PBMetadataFeaturesObject implements IFeaturesObject {
             FeatureTreeNode root = FeatureTreeNode.newRootInstance("metadata");
 
             try {
-                String metadataString = metadata.getInputStreamAsString();
+                byte[] bStream = metadata.getByteArray();
+                String metadataString = new String(bStream, Charset.forName("UTF-8"));
                 root.setValue(metadataString);
             } catch (IOException e) {
                 LOGGER.debug("PDFBox error converting stream to string", e);
