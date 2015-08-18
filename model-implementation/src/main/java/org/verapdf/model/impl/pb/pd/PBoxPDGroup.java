@@ -23,8 +23,7 @@ public class PBoxPDGroup extends PBoxPDObject implements PDGroup {
 
     public PBoxPDGroup(
             org.apache.pdfbox.pdmodel.graphics.form.PDGroup simplePDObject) {
-        super(simplePDObject);
-        setType(GROUP_TYPE);
+        super(simplePDObject, GROUP_TYPE);
     }
 
     @Override

@@ -34,8 +34,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
     public static final String PD_DOCUMENT_TYPE = "PDDocument";
 
     public PBoxPDDocument(org.apache.pdfbox.pdmodel.PDDocument document) {
-        super(document);
-        setType(PD_DOCUMENT_TYPE);
+        super(document, PD_DOCUMENT_TYPE);
     }
 
     @Override

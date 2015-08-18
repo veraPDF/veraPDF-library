@@ -35,9 +35,14 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 
     public PBoxPDXObject(
             org.apache.pdfbox.pdmodel.graphics.PDXObject simplePDObject) {
-        super(simplePDObject);
-        setType(X_OBJECT_TYPE);
+        super(simplePDObject, X_OBJECT_TYPE);
     }
+
+	public PBoxPDXObject(
+			org.apache.pdfbox.pdmodel.graphics.PDXObject simplePDObject,
+			final String type) {
+		super(simplePDObject, type);
+	}
 
     @Override
     public String getSubtype() {

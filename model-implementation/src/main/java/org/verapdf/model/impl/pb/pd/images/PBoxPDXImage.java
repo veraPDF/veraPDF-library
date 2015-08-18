@@ -23,14 +23,14 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 
     private static final Logger LOGGER = Logger.getLogger(PBoxPDXImage.class);
 
+	public static final String X_IMAGE_TYPE = "PDXImage";
+
     public static final String IMAGE_CS = "imageCS";
     public static final String ALTERNATES = "Alternates";
     public static final String INTENT = "Intent";
-    public static final String X_IMAGE_TYPE = "PDXImage";
 
     public PBoxPDXImage(PDImageXObject simplePDObject) {
-        super(simplePDObject);
-        setType(X_IMAGE_TYPE);
+        super(simplePDObject, X_IMAGE_TYPE);
     }
 
     @Override

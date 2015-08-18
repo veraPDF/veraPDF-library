@@ -13,9 +13,12 @@ public class PBoxPDSimpleFont extends PBoxPDFont implements PDSimpleFont {
     public static final String SIMPLE_FONT_TYPE = "PDSimpleFont";
 
     public PBoxPDSimpleFont(PDFontLike font) {
-        super(font);
-        setType(SIMPLE_FONT_TYPE);
+        super(font, SIMPLE_FONT_TYPE);
     }
+
+	public PBoxPDSimpleFont(PDFontLike font, final String type) {
+		super(font, type);
+	}
 
     @Override
     public Long getWidths_size() {

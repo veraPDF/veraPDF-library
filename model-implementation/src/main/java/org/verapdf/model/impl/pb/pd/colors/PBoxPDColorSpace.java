@@ -12,13 +12,15 @@ import org.verapdf.model.pdlayer.PDColorSpace;
 public class PBoxPDColorSpace extends PBoxPDResources implements PDColorSpace {
 
     protected PBoxPDColorSpace(
-            org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace simplePDObject) {
-        super(simplePDObject);
+            org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace simplePDObject,
+			final String type) {
+        super(simplePDObject, type);
     }
 
-    protected PBoxPDColorSpace(PDAbstractPattern simplePDObject) {
-        super(simplePDObject);
-    }
+	protected PBoxPDColorSpace(PDAbstractPattern simplePDObject,
+							   final String type) {
+		super(simplePDObject, type);
+	}
 
     /**
      * @return number of colorants

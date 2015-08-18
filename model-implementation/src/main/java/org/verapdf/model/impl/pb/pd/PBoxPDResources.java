@@ -9,12 +9,12 @@ import org.verapdf.model.pdlayer.PDResource;
  */
 public class PBoxPDResources extends PBoxPDObject implements PDResource {
 
-    protected PBoxPDResources(COSObjectable simplePDObject) {
-        super(simplePDObject);
-    }
+	protected PBoxPDResources(COSObjectable simplePDObject, final String type) {
+		super(simplePDObject, type);
+	}
 
-    protected PBoxPDResources(PDFontLike pdFontLike) {
-        super(pdFontLike);
-    }
+	protected PBoxPDResources(PDFontLike pdFontLike, final String type) {
+		super(pdFontLike, type);
+	}
 
 }
