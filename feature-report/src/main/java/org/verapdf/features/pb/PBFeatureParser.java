@@ -8,6 +8,8 @@ import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.apache.pdfbox.pdmodel.documentinterchange.markedcontent.PDPropertyList;
 import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDFontLike;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType3Font;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.color.*;
@@ -165,7 +167,7 @@ public final class PBFeatureParser {
     private Map<String, String> groupXObjectColorSpaceChild = new HashMap<>();
     private Map<String, Set<String>> groupXObjectXobjectParent = new HashMap<>();
 
-    private Map<String, PDFont> fonts = new HashMap<>();
+    private Map<String, PDFontLike> fonts = new HashMap<>();
     private Map<String, Set<String>> fontExtGStateChild = new HashMap<>();
     private Map<String, Set<String>> fontColorSpaceChild = new HashMap<>();
     private Map<String, Set<String>> fontPatternChild = new HashMap<>();
@@ -178,7 +180,7 @@ public final class PBFeatureParser {
     private Map<String, Set<String>> fontPageParent = new HashMap<>();
     private Map<String, Set<String>> fontPatternParent = new HashMap<>();
     private Map<String, Set<String>> fontXObjectParent = new HashMap<>();
-    private Map<String, Set<String>> fontParent = new HashMap<>();
+    private Map<String, Set<String>> fontFontParent = new HashMap<>();
 
     private Map<String, COSArray> procSets = new HashMap<>();
     private Map<String, Set<String>> procSetPageParent = new HashMap<>();
@@ -415,14 +417,62 @@ public final class PBFeatureParser {
             }
         }
 
-        for (Map.Entry<String, PDGroup> froupXObjectEntry : groupXObjects.entrySet()) {
-            if (froupXObjectEntry.getValue() != null) {
-                String id = froupXObjectEntry.getKey();
+        for (Map.Entry<String, PDGroup> groupXObjectEntry : groupXObjects.entrySet()) {
+            if (groupXObjectEntry.getValue() != null) {
+                String id = groupXObjectEntry.getKey();
                 reporter.report(PBFeaturesObjectCreator
-                        .createGroupXObjectFeaturesObject(froupXObjectEntry.getValue(),
+                        .createGroupXObjectFeaturesObject(groupXObjectEntry.getValue(),
                                 id,
                                 groupXObjectColorSpaceChild.get(id),
                                 groupXObjectXobjectParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, PDFontLike> fontEntry : fonts.entrySet()) {
+            if (fontEntry.getValue() != null) {
+                String id = fontEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createFontFeaturesObject(fontEntry.getValue(),
+                                id,
+                                fontExtGStateChild.get(id),
+                                fontColorSpaceChild.get(id),
+                                fontPatternChild.get(id),
+                                fontShadingChild.get(id),
+                                fontXObjectChild.get(id),
+                                fontFontChild.get(id),
+                                fontProcSetChild.get(id),
+                                fontPropertiesChild.get(id),
+                                fontExtGStateParent.get(id),
+                                fontPageParent.get(id),
+                                fontPatternParent.get(id),
+                                fontXObjectParent.get(id),
+                                fontFontParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, COSArray> procSetEntry : procSets.entrySet()) {
+            if (procSetEntry.getValue() != null) {
+                String id = procSetEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createProcSetFeaturesObject(procSetEntry.getValue(),
+                                id,
+                                procSetPageParent.get(id),
+                                procSetPatternParent.get(id),
+                                procSetXObjectParent.get(id),
+                                procSetFontParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, COSDictionary> propertiesEntry : properties.entrySet()) {
+            if (propertiesEntry.getValue() != null) {
+                String id = propertiesEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createPropertiesDictFeaturesObject(propertiesEntry.getValue(),
+                                id,
+                                propertyPageParent.get(id),
+                                propertyPatternParent.get(id),
+                                propertyXObjectParent.get(id),
+                                propertyFontParent.get(id)));
             }
         }
     }
@@ -1403,9 +1453,22 @@ public final class PBFeatureParser {
                     shadingFontParent,
                     imageXObjectFontParent,
                     formXObjectFontParent,
-                    fontParent,
+                    fontFontParent,
                     procSetFontParent,
                     propertyFontParent);
+        } else if (font instanceof PDType0Font) {
+            PDType0Font type0 = (PDType0Font) font;
+
+            COSBase descendantFontsBase = type0.getCOSObject().getDictionaryObject(COSName.DESCENDANT_FONTS);
+            if (descendantFontsBase instanceof COSArray) {
+                COSBase descendantFontDictionaryBase = ((COSArray) descendantFontsBase).getObject(0);
+                String id = getId(descendantFontDictionaryBase, FONT_ID, fonts.size());
+                makePairDependence(id, parentID, fontFontParent, fontFontChild);
+
+                if (!fonts.containsKey(id)) {
+                    fonts.put(id, type0.getDescendantFont());
+                }
+            }
         }
     }
 

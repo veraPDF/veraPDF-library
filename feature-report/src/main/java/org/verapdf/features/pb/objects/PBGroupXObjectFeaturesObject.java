@@ -57,7 +57,7 @@ public class PBGroupXObjectFeaturesObject implements IFeaturesObject {
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
         if (groupXObject != null) {
-            FeatureTreeNode root = FeatureTreeNode.newRootInstance("form");
+            FeatureTreeNode root = FeatureTreeNode.newRootInstance("group");
             root.addAttribute(ID, id);
 
             parseParents(root);
@@ -74,7 +74,7 @@ public class PBGroupXObjectFeaturesObject implements IFeaturesObject {
                 FeatureTreeNode.newChildInstanceWithValue("knockout", String.valueOf(groupXObject.isKnockout()), root);
             }
 
-            collection.addNewFeatureTree(FeaturesObjectTypesEnum.FORM_XOBJECT, root);
+            collection.addNewFeatureTree(FeaturesObjectTypesEnum.GROUP_XOBJECT, root);
             return root;
         }
 

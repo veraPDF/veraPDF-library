@@ -1,11 +1,14 @@
 package org.verapdf.features.pb;
 
+import org.apache.pdfbox.cos.COSArray;
+import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.apache.pdfbox.pdmodel.encryption.PDEncryption;
+import org.apache.pdfbox.pdmodel.font.PDFontLike;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
@@ -350,5 +353,59 @@ public final class PBFeaturesObjectCreator {
      */
     public static PBGroupXObjectFeaturesObject createGroupXObjectFeaturesObject(PDGroup groupXObject, String id, String colorSpaceChild, Set<String> xobjectParent) {
         return new PBGroupXObjectFeaturesObject(groupXObject, id, colorSpaceChild, xobjectParent);
+    }
+
+    /**
+     * Constructs new PBFontFeaturesObject
+     *
+     * @param fontLike        - PDFontLike which represents font for feature report
+     * @param id              - id of the object
+     * @param extGStateChild  - set of external graphics state id which contains in resource dictionary of this font
+     * @param colorSpaceChild - set of ColorSpace id which contains in resource dictionary of this font
+     * @param patternChild    - set of pattern id which contains in resource dictionary of this font
+     * @param shadingChild    - set of shading id which contains in resource dictionary of this font
+     * @param xobjectChild    - set of XObject id which contains in resource dictionary of this font
+     * @param fontChild       - set of font id which contains in resource dictionary of this font
+     * @param procSetChild    - set of procedure set id which contains in resource dictionary of this font
+     * @param propertiesChild - set of properties id which contains in resource dictionary of this font
+     * @param pageParent      - set of page ids which contains the given font as its resources
+     * @param extGStateParent - set of graphicsState ids which contains the given font as their resource
+     * @param patternParent   - set of pattern ids which contains the given font as its resources
+     * @param xobjectParent   - set of xobject ids which contains the given font as its resources
+     * @param fontParent      - set of font ids which contains the given font as its resources
+     * @return created PBFontFeaturesObject
+     */
+    public static PBFontFeaturesObject createFontFeaturesObject(PDFontLike fontLike, String id, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> extGStateParent, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+        return new PBFontFeaturesObject(fontLike, id, extGStateChild, colorSpaceChild, patternChild, shadingChild, xobjectChild, fontChild, procSetChild, propertiesChild, extGStateParent, pageParent, patternParent, xobjectParent, fontParent);
+    }
+
+    /**
+     * Constructs new PBProcSetFeaturesObject
+     *
+     * @param procSet       - COSArray which represents procSet for feature report
+     * @param id            - id of the object
+     * @param pageParent    - set of page ids which contains the given procSet as its resources
+     * @param patternParent - set of pattern ids which contains the given procSet as its resources
+     * @param xobjectParent - set of xobject ids which contains the given procSet as its resources
+     * @param fontParent    - set of font ids which contains the given procSet as its resources
+     * @return created PBProcSetFeaturesObject
+     */
+    public static PBProcSetFeaturesObject createProcSetFeaturesObject(COSArray procSet, String id, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+        return new PBProcSetFeaturesObject(procSet, id, pageParent, patternParent, xobjectParent, fontParent);
+    }
+
+    /**
+     * Constructs new PBPropertiesDictFeaturesObject
+     *
+     * @param properties    - COSDictionary which represents properties for feature report
+     * @param id            - id of the object
+     * @param pageParent    - set of page ids which contains the given properties as its resources
+     * @param patternParent - set of pattern ids which contains the given properties as its resources
+     * @param xobjectParent - set of xobject ids which contains the given properties as its resources
+     * @param fontParent    - set of font ids which contains the given properties as its resources
+     * @return created PBPropertiesDictFeaturesObject
+     */
+    public static PBPropertiesDictFeaturesObject createPropertiesDictFeaturesObject(COSDictionary properties, String id, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+        return new PBPropertiesDictFeaturesObject(properties, id, pageParent, patternParent, xobjectParent, fontParent);
     }
 }
