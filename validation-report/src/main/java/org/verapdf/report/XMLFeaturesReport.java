@@ -89,7 +89,6 @@ public final class XMLFeaturesReport {
             Element xobjects = doc.createElement("xobjects");
             makeList("images", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.IMAGE_XOBJECT), xobjects, collection, doc);
             makeList("forms", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FORM_XOBJECT), xobjects, collection, doc);
-            makeList("groups", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.GROUP_XOBJECT), xobjects, collection, doc);
             if (xobjects.getChildNodes().getLength() > 0) {
                 resources.appendChild(xobjects);
             }

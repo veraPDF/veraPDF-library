@@ -148,7 +148,7 @@ public final class PBFeatureParser {
     private Map<String, Set<String>> imageXObjectFontParent = new HashMap<>();
 
     private Map<String, PDFormXObject> formXObjects = new HashMap<>();
-    private Map<String, String> formXObjectGroupChild = new HashMap<>();
+    private Map<String, String> groupXObjectColorSpaceChild = new HashMap<>();
     private Map<String, Set<String>> formXObjectExtGStateChild = new HashMap<>();
     private Map<String, Set<String>> formXObjectColorSpaceChild = new HashMap<>();
     private Map<String, Set<String>> formXObjectPatternChild = new HashMap<>();
@@ -162,10 +162,6 @@ public final class PBFeatureParser {
     private Map<String, Set<String>> formXObjectPatternParent = new HashMap<>();
     private Map<String, Set<String>> formXObjectXObjectParent = new HashMap<>();
     private Map<String, Set<String>> formXObjectFontParent = new HashMap<>();
-
-    private Map<String, PDGroup> groupXObjects = new HashMap<>();
-    private Map<String, String> groupXObjectColorSpaceChild = new HashMap<>();
-    private Map<String, Set<String>> groupXObjectXobjectParent = new HashMap<>();
 
     private Map<String, PDFontLike> fonts = new HashMap<>();
     private Map<String, Set<String>> fontExtGStateChild = new HashMap<>();
@@ -400,7 +396,7 @@ public final class PBFeatureParser {
                 reporter.report(PBFeaturesObjectCreator
                         .createFormXObjectFeaturesObject(formXObjectEntry.getValue(),
                                 id,
-                                formXObjectGroupChild.get(id),
+                                groupXObjectColorSpaceChild.get(id),
                                 formXObjectExtGStateChild.get(id),
                                 fontColorSpaceChild.get(id),
                                 formXObjectPatternChild.get(id),
@@ -414,17 +410,6 @@ public final class PBFeatureParser {
                                 formXObjectPatternParent.get(id),
                                 formXObjectXObjectParent.get(id),
                                 formXObjectFontParent.get(id)));
-            }
-        }
-
-        for (Map.Entry<String, PDGroup> groupXObjectEntry : groupXObjects.entrySet()) {
-            if (groupXObjectEntry.getValue() != null) {
-                String id = groupXObjectEntry.getKey();
-                reporter.report(PBFeaturesObjectCreator
-                        .createGroupXObjectFeaturesObject(groupXObjectEntry.getValue(),
-                                id,
-                                groupXObjectColorSpaceChild.get(id),
-                                groupXObjectXobjectParent.get(id)));
             }
         }
 
@@ -1029,7 +1014,7 @@ public final class PBFeatureParser {
         for (COSName name : resources.getXObjectNames()) {
             COSDictionary dict = (COSDictionary) resources.getCOSObject().getDictionaryObject(COSName.XOBJECT);
             COSBase base = dict.getItem(name);
-            String id = getId(base, XOBJECT_ID, imageXObjects.size() + formXObjects.size() + groupXObjects.size());
+            String id = getId(base, XOBJECT_ID, imageXObjects.size() + formXObjects.size());
 
             try {
                 PDXObject xobj = resources.getXObject(name);
@@ -1048,48 +1033,32 @@ public final class PBFeatureParser {
                         formXObjects.put(id, (PDFormXObject) xobj);
 
                         PDGroup group = ((PDFormXObject) xobj).getGroup();
-                        if (group != null) {
-                            COSBase baseGroup = xobj.getCOSStream().getItem(COSName.GROUP);
-                            String groupID = getId(baseGroup, XOBJECT_ID, imageXObjects.size() + formXObjects.size() + groupXObjects.size());
+                        if (group != null && COSName.TRANSPARENCY.equals(group.getSubType())) {
+                            COSBase baseColorSpace = group.getCOSObject().getItem(COSName.CS);
+                            String idColorSpace = getId(baseColorSpace, COLORSPACE_ID, colorSpaces.size());
 
-                            if (groupXObjectXobjectParent.get(groupID) == null) {
-                                groupXObjectXobjectParent.put(groupID, new HashSet<String>());
-                            }
-                            groupXObjectXobjectParent.get(groupID).add(id);
-                            formXObjectGroupChild.put(id, groupID);
+                            try {
+                                PDColorSpace colorSpace = group.getColorSpace();
 
-                            if (!groupXObjects.containsKey(groupID)) {
-                                groupXObjects.put(groupID, group);
-
-                                if (COSName.TRANSPARENCY.equals(group.getSubType())) {
-                                    COSBase baseColorSpace = group.getCOSObject().getItem(COSName.CS);
-
-                                    String idColorSpace = getId(baseColorSpace, COLORSPACE_ID, colorSpaces.size());
-
-                                    try {
-                                        PDColorSpace colorSpace = group.getColorSpace();
-
-                                        if (colorSpace instanceof PDDeviceColorSpace) {
-                                            idColorSpace = colorSpace instanceof PDDeviceGray ? DEVICEGRAY_ID :
-                                                    colorSpace instanceof PDDeviceRGB ? DEVICERGB_ID :
-                                                            DEVICECMYK_ID;
-                                        }
-
-                                        if (colorSpaceXObjectParent.get(idColorSpace) == null) {
-                                            colorSpaceXObjectParent.put(idColorSpace, new HashSet<String>());
-                                        }
-                                        colorSpaceXObjectParent.get(idColorSpace).add(id);
-                                        groupXObjectColorSpaceChild.put(id, idColorSpace);
-
-                                        if (!colorSpaces.containsKey(idColorSpace)) {
-                                            colorSpaces.put(idColorSpace, colorSpace);
-                                            parseColorSpace(colorSpace, idColorSpace);
-                                        }
-                                    } catch (IOException e) {
-                                        LOGGER.info(e);
-                                        colorSpaceCreationProblem(idColorSpace);
-                                    }
+                                if (colorSpace instanceof PDDeviceColorSpace) {
+                                    idColorSpace = colorSpace instanceof PDDeviceGray ? DEVICEGRAY_ID :
+                                            colorSpace instanceof PDDeviceRGB ? DEVICERGB_ID :
+                                                    DEVICECMYK_ID;
                                 }
+
+                                if (colorSpaceXObjectParent.get(idColorSpace) == null) {
+                                    colorSpaceXObjectParent.put(idColorSpace, new HashSet<String>());
+                                }
+                                colorSpaceXObjectParent.get(idColorSpace).add(id);
+                                groupXObjectColorSpaceChild.put(id, idColorSpace);
+
+                                if (!colorSpaces.containsKey(idColorSpace)) {
+                                    colorSpaces.put(idColorSpace, colorSpace);
+                                    parseColorSpace(colorSpace, idColorSpace);
+                                }
+                            } catch (IOException e) {
+                                LOGGER.info(e);
+                                colorSpaceCreationProblem(idColorSpace);
                             }
                         }
 

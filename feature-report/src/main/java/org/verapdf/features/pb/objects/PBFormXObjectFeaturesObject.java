@@ -21,7 +21,7 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
 
     private PDFormXObject formXObject;
     private String id;
-    private String groupChild;
+    private String groupColorSpaceChild;
     private Set<String> extGStateChild;
     private Set<String> colorSpaceChild;
     private Set<String> patternChild;
@@ -39,27 +39,27 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
     /**
      * Constructs new form xobject features object
      *
-     * @param formXObject      - PDFormXObject which represents form xobject for feature report
-     * @param id               - id of the object
-     * @param groupChild       - id of the group xobject which contains in the given form xobject
-     * @param extGStateChild   - set of external graphics state id which contains in resource dictionary of this xobject
-     * @param colorSpaceChild  - set of ColorSpace id which contains in resource dictionary of this xobject
-     * @param patternChild     - set of pattern id which contains in resource dictionary of this xobject
-     * @param shadingChild     - set of shading id which contains in resource dictionary of this xobject
-     * @param xobjectChild     - set of XObject id which contains in resource dictionary of this xobject
-     * @param fontChild        - set of font id which contains in resource dictionary of this pattern
-     * @param procSetChild     - set of procedure set id which contains in resource dictionary of this xobject
-     * @param propertiesChild  - set of properties id which contains in resource dictionary of this xobject
-     * @param pageParent       - set of page ids which contains the given xobject as its resources
-     * @param annotationParent - set of annotation ids which contains the given xobject in its appearance dictionary
-     * @param patternParent    - set of pattern ids which contains the given xobject as its resources
-     * @param xobjectParent    - set of xobject ids which contains the given xobject as its resources
-     * @param fontParent       - set of font ids which contains the given xobject as its resources
+     * @param formXObject          - PDFormXObject which represents form xobject for feature report
+     * @param id                   - id of the object
+     * @param groupColorSpaceChild - id of the group xobject which contains in the given form xobject
+     * @param extGStateChild       - set of external graphics state id which contains in resource dictionary of this xobject
+     * @param colorSpaceChild      - set of ColorSpace id which contains in resource dictionary of this xobject
+     * @param patternChild         - set of pattern id which contains in resource dictionary of this xobject
+     * @param shadingChild         - set of shading id which contains in resource dictionary of this xobject
+     * @param xobjectChild         - set of XObject id which contains in resource dictionary of this xobject
+     * @param fontChild            - set of font id which contains in resource dictionary of this pattern
+     * @param procSetChild         - set of procedure set id awhich contains in resource dictionary of this xobject
+     * @param propertiesChild      - set of properties id which contains in resource dictionary of this xobject
+     * @param pageParent           - set of page ids which contains the given xobject as its resources
+     * @param annotationParent     - set of annotation ids which contains the given xobject in its appearance dictionary
+     * @param patternParent        - set of pattern ids which contains the given xobject as its resources
+     * @param xobjectParent        - set of xobject ids which contains the given xobject as its resources
+     * @param fontParent           - set of font ids which contains the given xobject as its resources
      */
-    public PBFormXObjectFeaturesObject(PDFormXObject formXObject, String id, String groupChild, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> pageParent, Set<String> annotationParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+    public PBFormXObjectFeaturesObject(PDFormXObject formXObject, String id, String groupColorSpaceChild, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> pageParent, Set<String> annotationParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
         this.formXObject = formXObject;
         this.id = id;
-        this.groupChild = groupChild;
+        this.groupColorSpaceChild = groupColorSpaceChild;
         this.extGStateChild = extGStateChild;
         this.colorSpaceChild = colorSpaceChild;
         this.patternChild = patternChild;
@@ -101,9 +101,21 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
             PBCreateNodeHelper.addBoxFeature("bbox", formXObject.getBBox(), root);
             parseFloatMatrix(formXObject.getMatrix().getValues(), FeatureTreeNode.newChildInstance("matrix", root));
 
-            if (groupChild != null) {
-                FeatureTreeNode group = FeatureTreeNode.newChildInstance("group", root);
-                group.addAttribute(ID, groupChild);
+            if (formXObject.getGroup() != null) {
+                FeatureTreeNode groupNode = FeatureTreeNode.newRootInstance("group");
+                if (formXObject.getGroup().getSubType() != null) {
+                    PBCreateNodeHelper.addNotEmptyNode("subtype", formXObject.getGroup().getSubType().getName(), root);
+                    if ("Transparency".equals(formXObject.getGroup().getSubType().getName())) {
+                        if (groupColorSpaceChild != null) {
+                            FeatureTreeNode clr = FeatureTreeNode.newChildInstance("colorSpace", root);
+                            clr.addAttribute(ID, groupColorSpaceChild);
+                        }
+
+                        FeatureTreeNode.newChildInstanceWithValue("isolated", String.valueOf(formXObject.getGroup().isIsolated()), root);
+                        FeatureTreeNode.newChildInstanceWithValue("knockout", String.valueOf(formXObject.getGroup().isKnockout()), root);
+                    }
+
+                }
             }
 
             FeatureTreeNode.newChildInstanceWithValue("structParents", String.valueOf(formXObject.getStructParents()), root);

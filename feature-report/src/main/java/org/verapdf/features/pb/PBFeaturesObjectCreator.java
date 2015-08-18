@@ -12,7 +12,6 @@ import org.apache.pdfbox.pdmodel.font.PDFontLike;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
-import org.apache.pdfbox.pdmodel.graphics.form.PDGroup;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern;
@@ -340,19 +339,6 @@ public final class PBFeaturesObjectCreator {
      */
     public static PBFormXObjectFeaturesObject createFormXObjectFeaturesObject(PDFormXObject formXObject, String id, String groupChild, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> pageParent, Set<String> annotationParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
         return new PBFormXObjectFeaturesObject(formXObject, id, groupChild, extGStateChild, colorSpaceChild, patternChild, shadingChild, xobjectChild, fontChild, procSetChild, propertiesChild, pageParent, annotationParent, patternParent, xobjectParent, fontParent);
-    }
-
-    /**
-     * Constructs new PBGroupXObjectFeaturesObject
-     *
-     * @param groupXObject    - PBGroupXObjectFeaturesObject which represents group xobject for feature report
-     * @param id              - id of the object
-     * @param colorSpaceChild - ColorSpace id which contains in a dictionary of this xobject
-     * @param xobjectParent   - set of xobject ids which contains the given xobject as its resources
-     * @return created PBGroupXObjectFeaturesObject
-     */
-    public static PBGroupXObjectFeaturesObject createGroupXObjectFeaturesObject(PDGroup groupXObject, String id, String colorSpaceChild, Set<String> xobjectParent) {
-        return new PBGroupXObjectFeaturesObject(groupXObject, id, colorSpaceChild, xobjectParent);
     }
 
     /**
