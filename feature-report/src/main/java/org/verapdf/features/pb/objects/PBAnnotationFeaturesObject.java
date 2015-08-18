@@ -25,7 +25,7 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
     private Set<String> pages;
     private String annotId;
     private String popupId;
-    private String appearanceId;
+    private Set<String> formXObjects;
 
 
     /**
@@ -36,15 +36,16 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
      * @param pages        - set of ids of all parent pages for this annotation
      * @param annotId      - ids of a parent annotation for this annotation
      * @param popupId      - id of the popup annotation
-     * @param appearanceId - id of the appearance stream object
+     * @param formXObjects - set of id of the form XObjects which used in appearance stream of this annotation
      */
-    public PBAnnotationFeaturesObject(PDAnnotation annot, String id, Set<String> pages, String annotId, String popupId, String appearanceId) {
+    public PBAnnotationFeaturesObject(PDAnnotation annot, String id, Set<String> pages,
+                                      String annotId, String popupId, Set<String> formXObjects) {
         this.annot = annot;
         this.id = id;
         this.pages = pages;
         this.annotId = annotId;
         this.popupId = popupId;
-        this.appearanceId = appearanceId;
+        this.formXObjects = formXObjects;
     }
 
     /**
@@ -76,9 +77,14 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
             PBCreateNodeHelper.addNotEmptyNode("annotationName", annot.getAnnotationName(), root);
             PBCreateNodeHelper.addNotEmptyNode("modifiedDate", annot.getModifiedDate(), root);
 
-            if (appearanceId != null) {
-                FeatureTreeNode appStr = FeatureTreeNode.newChildInstance("appearanceStream", root);
-                appStr.addAttribute(ID, appearanceId);
+            if (formXObjects != null && !formXObjects.isEmpty()) {
+                FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
+                for (String xObjID : formXObjects) {
+                    if (xObjID != null) {
+                        FeatureTreeNode xObjNode = FeatureTreeNode.newChildInstance("xObject", resources);
+                        xObjNode.addAttribute(ID, xObjID);
+                    }
+                }
             }
 
             if (popupId != null) {

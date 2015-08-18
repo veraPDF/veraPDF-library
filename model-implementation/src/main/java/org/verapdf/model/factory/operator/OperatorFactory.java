@@ -48,6 +48,7 @@ public final class OperatorFactory {
                     result.add(parser.parseOperator(
                             (org.apache.pdfbox.contentstream.operator.Operator) pdfBoxToken,
                             resources, arguments));
+					arguments = new ArrayList<>();
                 } catch (CloneNotSupportedException e) {
                     LOGGER.debug("GraphicsState clone issues for pdfBoxToken:" + pdfBoxToken);
                     LOGGER.debug(GS_CLONE_MALFUNCTION, e);
