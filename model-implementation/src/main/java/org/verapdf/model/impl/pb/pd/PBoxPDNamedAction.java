@@ -11,8 +11,7 @@ public class PBoxPDNamedAction extends PBoxPDAction implements PDNamedAction {
     public static final String NAMED_ACTION_TYPE = "PDNamedAction";
 
     public PBoxPDNamedAction(PDActionNamed simplePDObject) {
-        super(simplePDObject);
-        setType(NAMED_ACTION_TYPE);
+        super(simplePDObject, NAMED_ACTION_TYPE);
     }
 
     @Override

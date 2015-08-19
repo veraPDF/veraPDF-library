@@ -10,7 +10,7 @@ import org.verapdf.model.xmplayer.XMPRightsSchema;
  */
 public class PBXMPRightsSchema extends PBXMPPredefinedSchema implements XMPRightsSchema {
 
-    private static final String XMPRIGHTSSCHEMA = "XMPRightsSchema";
+    private static final String XMP_RIGHTS_SCHEMA = "XMPRightsSchema";
 
     private static final String COPYRIGHT = "Copyright";
 
@@ -20,8 +20,7 @@ public class PBXMPRightsSchema extends PBXMPPredefinedSchema implements XMPRight
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBXMPRightsSchema(XMPRightsManagementSchema xmpSchema) {
-        super(xmpSchema);
-        setType(XMPRIGHTSSCHEMA);
+        super(xmpSchema, XMP_RIGHTS_SCHEMA);
     }
 
     /**

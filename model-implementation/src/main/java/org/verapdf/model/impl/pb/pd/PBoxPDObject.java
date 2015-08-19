@@ -23,36 +23,37 @@ public class PBoxPDObject extends GenericModelObject implements PDObject {
     protected PDFontLike pdFontLike;
     protected CMap cMap;
 
-    private String type = "PDObject";
+    private final String type;
     private String id;
 
-    public PBoxPDObject(COSObjectable simplePDObject) {
-        this.simplePDObject = simplePDObject;
-    }
+	protected PBoxPDObject(COSObjectable simplePDObject, final String type) {
+		this.type = type;
+		this.simplePDObject = simplePDObject;
+	}
 
-    public PBoxPDObject(PDDocument document) {
-        this.document = document;
-    }
+	protected PBoxPDObject(PDDocument document, final String type) {
+		this.document = document;
+		this.type = type;
+	}
 
-    public PBoxPDObject(PDContentStream contentStream) {
-        this.contentStream = contentStream;
-    }
+	protected PBoxPDObject(PDContentStream contentStream, final String type) {
+		this.contentStream = contentStream;
+		this.type = type;
+	}
 
-    public PBoxPDObject(PDFontLike pdFontLike) {
-        this.pdFontLike = pdFontLike;
-    }
+	protected PBoxPDObject(PDFontLike pdFontLike, final String type) {
+		this.pdFontLike = pdFontLike;
+		this.type = type;
+	}
 
-    public PBoxPDObject(CMap cMap) {
-        this.cMap = cMap;
-    }
+	protected PBoxPDObject(CMap cMap, final String type) {
+		this.cMap = cMap;
+		this.type = type;
+	}
 
-    @Override
+	@Override
     public String getType() {
         return type;
-    }
-
-    protected void setType(String type) {
-        this.type = type;
     }
 
     @Override

@@ -18,8 +18,7 @@ public class PBoxPDCMap extends PBoxPDObject implements PDCMap {
     public static final String EMBEDDED_FILE = "embeddedFile";
 
     public PBoxPDCMap(CMap cMap) {
-        super(cMap);
-        setType(CMAP_TYPE);
+        super(cMap, CMAP_TYPE);
     }
 
     @Override

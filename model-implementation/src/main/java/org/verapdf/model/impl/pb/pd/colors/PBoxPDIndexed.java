@@ -13,13 +13,13 @@ import org.verapdf.model.pdlayer.PDIndexed;
  */
 public class PBoxPDIndexed extends PBoxPDColorSpace implements PDIndexed {
 
+	public static final String INDEXED_TYPE = "PDIndexed";
+
     public static final String BASE = "base";
-    public static final String INDEXED_TYPE = "PDIndexed";
 
     public PBoxPDIndexed(
             org.apache.pdfbox.pdmodel.graphics.color.PDIndexed simplePDObject) {
-        super(simplePDObject);
-        setType(INDEXED_TYPE);
+        super(simplePDObject, INDEXED_TYPE);
     }
 
     @Override

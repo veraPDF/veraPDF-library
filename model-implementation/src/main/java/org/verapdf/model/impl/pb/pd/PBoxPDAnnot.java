@@ -35,8 +35,7 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	public static final String NAMED_KEYWORD = "Named";
 
 	public PBoxPDAnnot(PDAnnotation simplePDObject) {
-        super(simplePDObject);
-        setType(ANNOTATION_TYPE);
+        super(simplePDObject, ANNOTATION_TYPE);
     }
 
     @Override

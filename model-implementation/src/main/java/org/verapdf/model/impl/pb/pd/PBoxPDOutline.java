@@ -20,8 +20,7 @@ public class PBoxPDOutline extends PBoxPDObject implements PDOutline {
     public static final int NUMBER_OF_ACTIONS = 1;
 
     public PBoxPDOutline(PDOutlineItem simplePDObject) {
-        super(simplePDObject);
-        setType(OUTLINE_TYPE);
+        super(simplePDObject, OUTLINE_TYPE);
     }
 
     @Override

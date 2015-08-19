@@ -10,19 +10,19 @@ import org.verapdf.model.xmplayer.XMPSchema;
  */
 public class PBXMPSchema extends PBXMPObject implements XMPSchema {
 
-    private static final String XMPSCHEMA = "XMPSchema";
-
     private org.apache.xmpbox.schema.XMPSchema xmpSchema;
 
-    /**
-     * Constructs new object
-     *
-     * @param xmpSchema - object from xmpbox represented this schema
-     */
-    public PBXMPSchema(org.apache.xmpbox.schema.XMPSchema xmpSchema) {
-        setType(XMPSCHEMA);
-        this.xmpSchema = xmpSchema;
-    }
+	/**
+	 * Constructs new object
+	 *
+	 * @param xmpSchema - object from xmpbox represented this schema
+	 * @param type - type of current object
+	 */
+	public PBXMPSchema(org.apache.xmpbox.schema.XMPSchema xmpSchema,
+					   final String type) {
+		super(type);
+		this.xmpSchema = xmpSchema;
+	}
 
     /**
      * @return uri of the namespace
