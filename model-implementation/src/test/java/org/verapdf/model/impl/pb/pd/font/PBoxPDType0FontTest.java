@@ -1,12 +1,19 @@
 package org.verapdf.model.impl.pb.pd.font;
 
+import org.junit.Test;
+
 /**
  * @author Timur Kamalov
  */
-public class PBoxPDType0FontTest extends PBoxPDFontTest {
+public abstract class PBoxPDType0FontTest extends PBoxPDFontTest {
 
-	@Override
-	public void testSubtypeMethod() {
+	@Test
+	public abstract void testAreRegistryOrderingCompatible();
 
-	}
+	@Test
+	public abstract void testEncoding();
+
+	@Test
+	public abstract void testDescendantFonts();
+
 }

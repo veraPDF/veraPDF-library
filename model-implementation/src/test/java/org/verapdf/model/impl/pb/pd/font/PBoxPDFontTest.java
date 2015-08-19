@@ -13,4 +13,7 @@ public abstract class PBoxPDFontTest extends BaseTest {
 	@Test
 	public abstract void testSubtypeMethod();
 
+	@Test
+	public abstract void testBaseFont();
+
 }
