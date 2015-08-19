@@ -33,7 +33,6 @@ import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -72,7 +71,7 @@ public final class PBFeatureParser {
 
     private FeaturesReporter reporter;
 
-    private Map<String, InputStream> iccProfiles = new HashMap<>();
+    private Map<String, COSStream> iccProfiles = new HashMap<>();
     private Map<String, Set<String>> iccProfileOutInts = new HashMap<>();
     private Map<String, Set<String>> iccProfileICCBased = new HashMap<>();
 
@@ -268,7 +267,7 @@ public final class PBFeatureParser {
             getPageTreeFeatures(pageTree);
         }
 
-        for (Map.Entry<String, InputStream> iccProfileEntry : iccProfiles.entrySet()) {
+        for (Map.Entry<String, COSStream> iccProfileEntry : iccProfiles.entrySet()) {
             if (iccProfileEntry.getValue() != null) {
                 String id = iccProfileEntry.getKey();
                 reporter.report(PBFeaturesObjectCreator
@@ -653,12 +652,8 @@ public final class PBFeatureParser {
             String iccProfileID = getId(outIntDict.getItem(COSName.DEST_OUTPUT_PROFILE), ICCPROFILE, iccProfiles.size());
 
             if (!iccProfiles.containsKey(iccProfileID)) {
-                try {
-                    iccProfiles.put(iccProfileID, outInt.getDestOutputIntent().getUnfilteredStream());
-                } catch (IOException e) {
-                    LOGGER.debug("ICC Profile getting from Output Intent exception caught", e);
-                    iccProfileCreationProblem(iccProfileID);
-                }
+
+                iccProfiles.put(iccProfileID, outInt.getDestOutputIntent());
             }
 
             if (!iccProfileOutInts.containsKey(iccProfileID)) {
@@ -1455,12 +1450,7 @@ public final class PBFeatureParser {
             colorSpaceIccProfileChild.put(parentID, id);
 
             if (!iccProfiles.containsKey(id)) {
-                try {
-                    iccProfiles.put(id, iccBased.getPDStream().getStream().getUnfilteredStream());
-                } catch (IOException e) {
-                    LOGGER.info(e);
-                    iccProfileCreationProblem(id);
-                }
+                iccProfiles.put(id, iccBased.getPDStream().getStream());
             }
 
             COSBase baseAlt = iccBased.getPDStream().getStream().getItem(COSName.ALTERNATE);

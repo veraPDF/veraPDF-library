@@ -119,6 +119,9 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
             } catch (IOException e) {
                 LOGGER.info(e);
             }
+
+            PBCreateNodeHelper.parseMetadata(imageXObject.getMetadata(), "metadata", root, collection);
+
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.IMAGE_XOBJECT, root);
             return root;
         }

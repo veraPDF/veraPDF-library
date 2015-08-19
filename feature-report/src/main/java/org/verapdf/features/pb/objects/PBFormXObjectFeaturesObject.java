@@ -1,5 +1,9 @@
 package org.verapdf.features.pb.objects;
 
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSStream;
+import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
@@ -119,6 +123,13 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
             }
 
             FeatureTreeNode.newChildInstanceWithValue("structParents", String.valueOf(formXObject.getStructParents()), root);
+
+
+            COSBase cosBase = formXObject.getCOSStream().getDictionaryObject(COSName.METADATA);
+            if (cosBase instanceof COSStream) {
+                PDMetadata meta = new PDMetadata((COSStream) cosBase);
+                PBCreateNodeHelper.parseMetadata(meta, "metadata", root, collection);
+            }
 
             parseResources(root);
 

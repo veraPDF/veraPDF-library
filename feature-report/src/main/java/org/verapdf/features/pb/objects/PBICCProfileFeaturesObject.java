@@ -1,6 +1,10 @@
 package org.verapdf.features.pb.objects;
 
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSStream;
+import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -57,7 +61,7 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
     private static final int CREATION_MIN = 32;
     private static final int CREATION_SEC = 34;
 
-    private InputStream profile;
+    private COSStream profile;
     private String id;
     private Set<String> outInts;
     private Set<String> iccBaseds;
@@ -65,12 +69,12 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
     /**
      * Constructs new icc profile feature object
      *
-     * @param profile   input stream which represents the icc profile for feature report
+     * @param profile   - COSStream which represents the icc profile for feature report
      * @param id        - id of the profile
      * @param outInts   - set of ids of all parent output intents for this icc profile
      * @param iccBaseds - set of ids of all parent icc based color spaces for this icc profile
      */
-    public PBICCProfileFeaturesObject(InputStream profile, String id, Set<String> outInts, Set<String> iccBaseds) {
+    public PBICCProfileFeaturesObject(COSStream profile, String id, Set<String> outInts, Set<String> iccBaseds) {
         this.profile = profile;
         this.id = id;
         this.outInts = outInts;
@@ -106,6 +110,12 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 
             parseProfileHeader(root, collection);
 
+            COSBase cosBase = profile.getDictionaryObject(COSName.METADATA);
+            if (cosBase instanceof COSStream) {
+                PDMetadata meta = new PDMetadata((COSStream) cosBase);
+                PBCreateNodeHelper.parseMetadata(meta, "metadata", root, collection);
+            }
+
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.ICCPROFILE, root);
             return root;
         }
@@ -138,7 +148,7 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 
     private void parseProfileHeader(FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
         try {
-            byte[] profileBytes = inputStreamToByteArray(profile);
+            byte[] profileBytes = inputStreamToByteArray(profile.getUnfilteredStream());
 
             if (profileBytes.length < HEADER_SIZE) {
                 root.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.GETINGICCPROFILEHEADERSIZEERROR_ID);

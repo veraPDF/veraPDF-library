@@ -3,6 +3,7 @@ package org.verapdf.features.pb;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
@@ -21,7 +22,6 @@ import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
 import org.verapdf.features.pb.objects.*;
 
-import java.io.InputStream;
 import java.util.Set;
 
 /**
@@ -160,13 +160,13 @@ public final class PBFeaturesObjectCreator {
     /**
      * Creates new PBICCProfileFeaturesObject
      *
-     * @param profile   input stream which represents the icc profile for feature report
+     * @param profile   - COSStream which represents the icc profile for feature report
      * @param id        - id of the profile
      * @param outInts   - set of ids of all parent output intents for this icc profile
      * @param iccBaseds - set of ids of all parent icc based color spaces for this icc profile
      * @return created PBICCProfileFeaturesObject
      */
-    public static PBICCProfileFeaturesObject createICCProfileFeaturesObject(InputStream profile, String id,
+    public static PBICCProfileFeaturesObject createICCProfileFeaturesObject(COSStream profile, String id,
                                                                             Set<String> outInts, Set<String> iccBaseds) {
         return new PBICCProfileFeaturesObject(profile, id, outInts, iccBaseds);
     }
