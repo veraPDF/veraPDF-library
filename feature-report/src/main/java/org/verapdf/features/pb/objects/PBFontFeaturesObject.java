@@ -199,7 +199,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
         return null;
     }
 
-    private void parseFloatMatrix(float[][] array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+    private static void parseFloatMatrix(float[][] array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
         for (int i = 0; i < array.length; ++i) {
             for (int j = 0; j < array.length - 1; ++j) {
                 FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
@@ -210,7 +210,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
         }
     }
 
-    private void parseIntList(List<Integer> array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+    private static void parseIntList(List<Integer> array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
         for (int i = 0; i < array.size(); ++i) {
             FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
             element.addAttribute("number", String.valueOf(i));

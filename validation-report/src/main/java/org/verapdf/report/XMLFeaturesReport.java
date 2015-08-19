@@ -158,7 +158,7 @@ public final class XMLFeaturesReport {
     }
 
     private static Element makeNode(FeatureTreeNode node, FeaturesCollection collection, Document doc) {
-        if ("metadata".equals(node.getName().toLowerCase())) {
+        if ("metadata".equalsIgnoreCase(node.getName())) {
             return parseMetadata(node, collection, doc);
         } else {
             Element root = doc.createElement(node.getName());
