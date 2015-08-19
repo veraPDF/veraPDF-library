@@ -1,6 +1,8 @@
 package org.verapdf.features.pb.objects;
 
-import org.apache.pdfbox.pdmodel.graphics.shading.PDShading;
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSName;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -11,37 +13,30 @@ import org.verapdf.features.tools.FeaturesCollection;
 import java.util.Set;
 
 /**
- * Features object for shading
- *
  * @author Maksim Bezrukov
  */
-public class PBShadingFeaturesObject implements IFeaturesObject {
+public class PBPropertiesDictFeaturesObject implements IFeaturesObject {
 
-    private static final String ID = "id";
-
-    private PDShading shading;
+    private COSDictionary properties;
     private String id;
-    private String colorSpaceChild;
     private Set<String> pageParent;
     private Set<String> patternParent;
     private Set<String> xobjectParent;
     private Set<String> fontParent;
 
     /**
-     * Constructs new shading features object
+     * Constructs new propertiesDict features object
      *
-     * @param shading         - PDShading which represents shading for feature report
-     * @param id              - id of the object
-     * @param colorSpaceChild - colorSpace id which contains in this shading
-     * @param pageParent      - set of page ids which contains the given shading as its resources
-     * @param patternParent   - set of pattern ids which contains the given shading as its resources
-     * @param xobjectParent   - set of xobject ids which contains the given shading as its resources
-     * @param fontParent      - set of font ids which contains the given shading as its resources
+     * @param properties    - COSDictionary which represents properties for feature report
+     * @param id            - id of the object
+     * @param pageParent    - set of page ids which contains the given properties as its resources
+     * @param patternParent - set of pattern ids which contains the given properties as its resources
+     * @param xobjectParent - set of xobject ids which contains the given properties as its resources
+     * @param fontParent    - set of font ids which contains the given properties as its resources
      */
-    public PBShadingFeaturesObject(PDShading shading, String id, String colorSpaceChild, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
-        this.shading = shading;
+    public PBPropertiesDictFeaturesObject(COSDictionary properties, String id, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+        this.properties = properties;
         this.id = id;
-        this.colorSpaceChild = colorSpaceChild;
         this.pageParent = pageParent;
         this.patternParent = patternParent;
         this.xobjectParent = xobjectParent;
@@ -49,11 +44,11 @@ public class PBShadingFeaturesObject implements IFeaturesObject {
     }
 
     /**
-     * @return SHADING instance of the FeaturesObjectTypesEnum enumeration
+     * @return PROPERTIES instance of the FeaturesObjectTypesEnum enumeration
      */
     @Override
     public FeaturesObjectTypesEnum getType() {
-        return FeaturesObjectTypesEnum.SHADING;
+        return FeaturesObjectTypesEnum.PROPERTIES;
     }
 
     /**
@@ -65,24 +60,18 @@ public class PBShadingFeaturesObject implements IFeaturesObject {
      */
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
-        if (shading != null) {
-            FeatureTreeNode root = FeatureTreeNode.newRootInstance("shading");
-            root.addAttribute(ID, id);
+        if (properties != null) {
+            FeatureTreeNode root = FeatureTreeNode.newRootInstance("propertiesDict");
+            root.addAttribute("id", id);
 
             parseParents(root);
 
-            FeatureTreeNode.newChildInstanceWithValue("shadingType", String.valueOf(shading.getShadingType()), root);
-
-            if (colorSpaceChild != null) {
-                FeatureTreeNode shading = FeatureTreeNode.newChildInstance("colorSpace", root);
-                shading.addAttribute(ID, colorSpaceChild);
+            COSBase type = properties.getDictionaryObject(COSName.TYPE);
+            if (type instanceof COSName) {
+                PBCreateNodeHelper.addNotEmptyNode("type", ((COSName) type).getName(), root);
             }
 
-            PBCreateNodeHelper.addBoxFeature("bbox", shading.getBBox(), root);
-
-            FeatureTreeNode.newChildInstanceWithValue("antiAlias", String.valueOf(shading.getAntiAlias()), root);
-
-            collection.addNewFeatureTree(FeaturesObjectTypesEnum.SHADING, root);
+            collection.addNewFeatureTree(FeaturesObjectTypesEnum.PROPERTIES, root);
             return root;
         }
 

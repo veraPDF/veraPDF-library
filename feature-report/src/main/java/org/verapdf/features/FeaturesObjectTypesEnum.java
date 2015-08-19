@@ -22,7 +22,6 @@ public enum FeaturesObjectTypesEnum {
     SHADING,
     IMAGE_XOBJECT,
     FORM_XOBJECT,
-    GROUP_XOBJECT,
     FONT,
     PROCSET,
     PROPERTIES,
