@@ -60,6 +60,12 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
     private static final int CREATION_HOUR = 30;
     private static final int CREATION_MIN = 32;
     private static final int CREATION_SEC = 34;
+    private static final int FIRST_RECORD_STRING_LENGTH_IN_MULTILOCALIZEDUNICODETYPE_BEGIN = 20;
+    private static final int FIRST_RECORD_STRING_LENGTH_IN_MULTILOCALIZEDUNICODETYPE_END = 24;
+    private static final int FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_BEGIN = 8;
+    private static final int FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_END = 12;
+    private static final int FIRST_RECORD_STRING_OFFSET_IN_MULTILOCALIZEDUNICODETYPE_BEGIN = 24;
+    private static final int FIRST_RECORD_STRING_OFFSET_IN_MULTILOCALIZEDUNICODETYPE_END = 28;
 
     private COSStream profile;
     private String id;
@@ -258,7 +264,21 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
                     return null;
                 }
 
-                return new String(Arrays.copyOfRange(profileBytes, offset + REQUIRED_LENGTH, offset + length)).trim();
+                String type = new String(Arrays.copyOfRange(profileBytes, offset, offset + REQUIRED_LENGTH));
+                if ("mluc".equals(type)) {
+                    length = byteArrayToInt(Arrays.copyOfRange(profileBytes, offset + FIRST_RECORD_STRING_LENGTH_IN_MULTILOCALIZEDUNICODETYPE_BEGIN,
+                            offset + FIRST_RECORD_STRING_LENGTH_IN_MULTILOCALIZEDUNICODETYPE_END));
+                    offset += byteArrayToInt(Arrays.copyOfRange(profileBytes, offset + FIRST_RECORD_STRING_OFFSET_IN_MULTILOCALIZEDUNICODETYPE_BEGIN,
+                            offset + FIRST_RECORD_STRING_OFFSET_IN_MULTILOCALIZEDUNICODETYPE_END));
+                } else if ("desc".equals(type)) {
+                    length = byteArrayToInt(Arrays.copyOfRange(profileBytes, offset + FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_BEGIN,
+                            offset + FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_END));
+                    offset += FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_END;
+                } else {
+                    offset += REQUIRED_LENGTH;
+                }
+
+                return new String(Arrays.copyOfRange(profileBytes, offset, offset + length)).trim();
             }
             curOffset += TAGINFO_LENGTH;
         }
