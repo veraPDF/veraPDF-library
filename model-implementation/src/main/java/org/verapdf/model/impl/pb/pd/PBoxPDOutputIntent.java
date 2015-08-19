@@ -24,8 +24,7 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent {
 
     public PBoxPDOutputIntent(
             org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent simplePDObject) {
-        super(simplePDObject);
-        setType(OUTPUT_INTENT_TYPE);
+        super(simplePDObject, OUTPUT_INTENT_TYPE);
     }
 
     @Override

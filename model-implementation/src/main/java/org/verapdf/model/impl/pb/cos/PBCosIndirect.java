@@ -25,15 +25,15 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
     // private List<CosObject> directObjects;
 
-    public PBCosIndirect(COSBase directObject) {
-        super(directObject, COS_INDIRECT_TYPE);
-        this.isSpacingPDFACompliant = getspacingCompliesPDFA(directObject);
+    public PBCosIndirect(COSBase indirectObject) {
+        super(indirectObject, COS_INDIRECT_TYPE);
+        this.isSpacingPDFACompliant = getspacingCompliesPDFA(indirectObject);
         /**
          * FIXME: Why do the COSDocment tests go dive into a stack overflow when
          * I uncomment below?:
          *
-         * this.directObjects = parseDirectObject(directObject instanceof
-         * COSObject ? ((COSObject) directObject).getObject() : directObject);
+         * this.directObjects = parseDirectObject(indirectObject instanceof
+         * COSObject ? ((COSObject) indirectObject).getObject() : indirectObject);
          */
     }
 

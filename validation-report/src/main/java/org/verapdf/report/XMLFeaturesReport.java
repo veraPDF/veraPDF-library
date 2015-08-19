@@ -89,7 +89,6 @@ public final class XMLFeaturesReport {
             Element xobjects = doc.createElement("xobjects");
             makeList("images", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.IMAGE_XOBJECT), xobjects, collection, doc);
             makeList("forms", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FORM_XOBJECT), xobjects, collection, doc);
-            makeList("groups", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.GROUP_XOBJECT), xobjects, collection, doc);
             if (xobjects.getChildNodes().getLength() > 0) {
                 resources.appendChild(xobjects);
             }
@@ -111,7 +110,7 @@ public final class XMLFeaturesReport {
         if (collection.getFeatureTreesForType(type) != null) {
             for (FeatureTreeNode rootNode : collection.getFeatureTreesForType(type)) {
                 if (rootNode != null) {
-                    root.appendChild(makeNode(rootNode, doc));
+                    root.appendChild(makeNode(rootNode, collection, doc));
                 }
             }
         }
@@ -119,8 +118,11 @@ public final class XMLFeaturesReport {
 
     private static Element parseMetadata(FeatureTreeNode metadataNode, FeaturesCollection collection, Document doc) {
 
-        if (metadataNode.getAttributes() == null || metadataNode.getAttributes().get(ErrorsHelper.ERRORID) == null) {
-            Element metadata = doc.createElement("metadata");
+        if (metadataNode.getAttributes().get(ErrorsHelper.ERRORID) == null) {
+            Element metadata = doc.createElement(metadataNode.getName());
+            for (Map.Entry<String, String> attr : metadataNode.getAttributes().entrySet()) {
+                metadata.setAttribute(attr.getKey(), replaceInvalidCharacters(attr.getValue()));
+            }
             try {
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
                 factory.setNamespaceAware(true);
@@ -138,7 +140,7 @@ public final class XMLFeaturesReport {
 
             return metadata;
         }
-        return makeNode(metadataNode, doc);
+        return makeNode(metadataNode, collection, doc);
 
     }
 
@@ -148,29 +150,31 @@ public final class XMLFeaturesReport {
             Element listElement = doc.createElement(listName);
             for (FeatureTreeNode node : list) {
                 if (node != null) {
-                    listElement.appendChild(makeNode(node, doc));
+                    listElement.appendChild(makeNode(node, collection, doc));
                 }
             }
             parent.appendChild(listElement);
         }
     }
 
-    private static Element makeNode(FeatureTreeNode node, Document doc) {
-        Element root = doc.createElement(node.getName());
-
-        for (Map.Entry<String, String> attr : node.getAttributes().entrySet()) {
-            root.setAttribute(attr.getKey(), replaceInvalidCharacters(attr.getValue()));
-        }
-
-        if (node.getValue() != null) {
-            root.appendChild(doc.createTextNode(replaceInvalidCharacters(node.getValue())));
-        } else if (node.getChildren() != null) {
-            for (FeatureTreeNode child : node.getChildren()) {
-                root.appendChild(makeNode(child, doc));
+    private static Element makeNode(FeatureTreeNode node, FeaturesCollection collection, Document doc) {
+        if ("metadata".equals(node.getName().toLowerCase())) {
+            return parseMetadata(node, collection, doc);
+        } else {
+            Element root = doc.createElement(node.getName());
+            for (Map.Entry<String, String> attr : node.getAttributes().entrySet()) {
+                root.setAttribute(attr.getKey(), replaceInvalidCharacters(attr.getValue()));
             }
-        }
 
-        return root;
+            if (node.getValue() != null) {
+                root.appendChild(doc.createTextNode(replaceInvalidCharacters(node.getValue())));
+            } else if (node.getChildren() != null) {
+                for (FeatureTreeNode child : node.getChildren()) {
+                    root.appendChild(makeNode(child, collection, doc));
+                }
+            }
+            return root;
+        }
     }
 
     private static String replaceInvalidCharacters(String source) {

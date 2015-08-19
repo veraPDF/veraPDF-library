@@ -22,14 +22,14 @@ import org.verapdf.model.pdlayer.PDXForm;
 public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
 
     public static final String X_FORM_TYPE = "PDXForm";
+
     public static final String GROUP = "Group";
     public static final String PS = "PS";
     public static final String REF = "Ref";
     public static final String CONTENT_STREAM = "contentStream";
 
     public PBoxPDXForm(PDFormXObject simplePDObject) {
-        super(simplePDObject);
-        setType(X_FORM_TYPE);
+        super(simplePDObject, X_FORM_TYPE);
     }
 
     @Override

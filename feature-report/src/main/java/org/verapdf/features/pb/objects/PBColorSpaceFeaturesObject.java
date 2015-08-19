@@ -47,12 +47,12 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
      * @param id                - id of the object
      * @param iccProfileChild   - id of the iccprofile child
      * @param colorSpaceChild   - id of the colorspace child
-     * @param pageParents       - set of page ids which contains the given extended graphics state as its resources
-     * @param colorSpaceParents - set of colorspace ids which contains the given extended graphics state as its resources
-     * @param patternParents    - set of pattern ids which contains the given extended graphics state as its resources
-     * @param shadingParents    - set of shading ids which contains the given extended graphics state as its resources
-     * @param xobjectParents    - set of xobject ids which contains the given extended graphics state as its resources
-     * @param fontParents       - set of font ids which contains the given extended graphics state as its resources
+     * @param pageParents       - set of page ids which contains the given colorspace as its resources
+     * @param colorSpaceParents - set of colorspace ids which contains the given colorspace as its resources
+     * @param patternParents    - set of pattern ids which contains the given colorspaceas its resources
+     * @param shadingParents    - set of shading ids which contains the given colorspaceas its resources
+     * @param xobjectParents    - set of xobject ids which contains the given colorspace as its resources
+     * @param fontParents       - set of font ids which contains the given colorspace as its resources
      */
     public PBColorSpaceFeaturesObject(PDColorSpace colorSpace, String id, String iccProfileChild, String colorSpaceChild, Set<String> pageParents, Set<String> colorSpaceParents, Set<String> patternParents, Set<String> shadingParents, Set<String> xobjectParents, Set<String> fontParents) {
         this.colorSpace = colorSpace;

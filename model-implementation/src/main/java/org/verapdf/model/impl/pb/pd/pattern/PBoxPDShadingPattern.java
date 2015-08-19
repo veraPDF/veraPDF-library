@@ -19,11 +19,11 @@ public class PBoxPDShadingPattern extends PBoxPDPattern implements
             .getLogger(PBoxPDShadingPattern.class);
 
     public static final String SHADING = "shading";
+	public static final String SHADING_PATTERN_TYPE = "PDShadingPattern";
 
-    public PBoxPDShadingPattern(
+	public PBoxPDShadingPattern(
             org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern simplePDObject) {
-        super(simplePDObject);
-        setType("PDShadingPattern");
+        super(simplePDObject, SHADING_PATTERN_TYPE);
     }
 
     @Override

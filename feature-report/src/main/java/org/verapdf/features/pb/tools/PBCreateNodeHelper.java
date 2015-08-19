@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.cos.COSString;
+import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
@@ -14,6 +15,8 @@ import org.verapdf.features.tools.FeaturesCollection;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Set;
@@ -206,6 +209,37 @@ public final class PBCreateNodeHelper {
                 }
             }
         }
+    }
+
+    /**
+     * Creates FeatureTreeNode with name {@code nodeName}, parent {@code parent}, and content which is a stream r
+     * epresentation of the {@code metadata} content. If there is an exception during getting metadata, then it
+     * will create node with errorID and error for this situation.
+     *
+     * @param metadata   - PDMetadata class from which metadata will be taken
+     * @param nodeName   - name for the created node
+     * @param collection - collection for the created node
+     * @return created node
+     * @throws FeaturesTreeNodeException - occurs when wrong features tree node constructs
+     */
+    public static FeatureTreeNode parseMetadata(PDMetadata metadata, String nodeName, FeatureTreeNode parent, FeaturesCollection collection) throws FeaturesTreeNodeException {
+        FeatureTreeNode node;
+        if (parent == null) {
+            node = FeatureTreeNode.newRootInstance(nodeName);
+        } else {
+            node = FeatureTreeNode.newChildInstance(nodeName, parent);
+        }
+        try {
+            byte[] bStream = metadata.getByteArray();
+            String metadataString = new String(bStream, Charset.forName("UTF-8"));
+            node.setValue(metadataString);
+        } catch (IOException e) {
+            LOGGER.debug("Error while converting stream to string", e);
+            node.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATACONVERT_ID);
+            ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATACONVERT_ID, ErrorsHelper.METADATACONVERT_MESSAGE);
+        }
+
+        return node;
     }
 
     private static void createGray(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {

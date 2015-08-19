@@ -21,8 +21,7 @@ public class PBoxPDType3Font extends PBoxPDSimpleFont implements PDType3Font {
     public static final String CHAR_STRINGS = "charStrings";
 
     public PBoxPDType3Font(PDFontLike font) {
-        super(font);
-        setType(TYPE3_FONT_TYPE);
+        super(font, TYPE3_FONT_TYPE);
     }
 
     @Override

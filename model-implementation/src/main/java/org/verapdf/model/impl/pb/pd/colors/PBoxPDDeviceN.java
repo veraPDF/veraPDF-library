@@ -19,13 +19,13 @@ public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
 
     private static final Logger LOGGER = Logger.getLogger(PBoxPDDeviceN.class);
 
+	public static final String DEVICE_N_TYPE = "PDDeviceN";
+
     public static final String ALTERNATE = "alternate";
-    public static final String DEVICE_N_TYPE = "PDDeviceN";
 
     public PBoxPDDeviceN(
             org.apache.pdfbox.pdmodel.graphics.color.PDDeviceN simplePDObject) {
-        super(simplePDObject);
-        setType(DEVICE_N_TYPE);
+        super(simplePDObject, DEVICE_N_TYPE);
     }
 
     @Override

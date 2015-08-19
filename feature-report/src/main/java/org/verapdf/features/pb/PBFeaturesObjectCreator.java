@@ -1,13 +1,19 @@
 package org.verapdf.features.pb;
 
+import org.apache.pdfbox.cos.COSArray;
+import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.apache.pdfbox.pdmodel.encryption.PDEncryption;
+import org.apache.pdfbox.pdmodel.font.PDFontLike;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
+import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern;
 import org.apache.pdfbox.pdmodel.graphics.shading.PDShading;
@@ -16,7 +22,6 @@ import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
 import org.verapdf.features.pb.objects.*;
 
-import java.io.InputStream;
 import java.util.Set;
 
 /**
@@ -155,13 +160,13 @@ public final class PBFeaturesObjectCreator {
     /**
      * Creates new PBICCProfileFeaturesObject
      *
-     * @param profile   input stream which represents the icc profile for feature report
+     * @param profile   - COSStream which represents the icc profile for feature report
      * @param id        - id of the profile
      * @param outInts   - set of ids of all parent output intents for this icc profile
      * @param iccBaseds - set of ids of all parent icc based color spaces for this icc profile
      * @return created PBICCProfileFeaturesObject
      */
-    public static PBICCProfileFeaturesObject createICCProfileFeaturesObject(InputStream profile, String id,
+    public static PBICCProfileFeaturesObject createICCProfileFeaturesObject(COSStream profile, String id,
                                                                             Set<String> outInts, Set<String> iccBaseds) {
         return new PBICCProfileFeaturesObject(profile, id, outInts, iccBaseds);
     }
@@ -195,12 +200,12 @@ public final class PBFeaturesObjectCreator {
      * @param id                - id of the object
      * @param iccProfileChild   - id of the iccprofile child
      * @param colorSpaceChild   - id of the colorspace child
-     * @param pageParents       - set of page ids which contains the given extended graphics state as its resources
-     * @param colorSpaceParents - set of colorspace ids which contains the given extended graphics state as its resources
-     * @param patternParents    - set of pattern ids which contains the given extended graphics state as its resources
-     * @param shadingParents    - set of shading ids which contains the given extended graphics state as its resources
-     * @param xobjectParents    - set of xobject ids which contains the given extended graphics state as its resources
-     * @param fontParents       - set of font ids which contains the given extended graphics state as its resources
+     * @param pageParents       - set of page ids which contains the given colorspace as its resources
+     * @param colorSpaceParents - set of colorspace ids which contains the given colorspace as its resources
+     * @param patternParents    - set of pattern ids which contains the given colorspace as its resources
+     * @param shadingParents    - set of shading ids which contains the given colorspace as its resources
+     * @param xobjectParents    - set of xobject ids which contains the given colorspace as its resources
+     * @param fontParents       - set of font ids which contains the given colorspace as its resources
      * @return created PBColorSpaceFeaturesObject
      */
     public static PBColorSpaceFeaturesObject createColorSpaceFeaturesObject(PDColorSpace colorSpace,
@@ -221,18 +226,18 @@ public final class PBFeaturesObjectCreator {
      *
      * @param tilingPattern   - PDTilingPattern which represents tilling pattern for feature report
      * @param id              - id of the object
-     * @param extGStateChild  - set of external graphics state id which contains in resource dictionary of this page
-     * @param colorSpaceChild - set of ColorSpace id which contains in resource dictionary of this page
-     * @param patternChild    - set of pattern id which contains in resource dictionary of this page
-     * @param shadingChild    - set of shading id which contains in resource dictionary of this page
-     * @param xobjectChild    - set of XObject id which contains in resource dictionary of this page
-     * @param fontChild       - set of font id which contains in resource dictionary of this page
-     * @param procSetChild    - set of procedure set id which contains in resource dictionary of this page
-     * @param propertiesChild - set of properties id which contains in resource dictionary of this page
-     * @param pageParent      - set of page ids which contains the given extended graphics state as its resources
-     * @param patternParent   - set of pattern ids which contains the given extended graphics state as its resources
-     * @param xobjectParent   - set of xobject ids which contains the given extended graphics state as its resources
-     * @param fontParent      - set of font ids which contains the given extended graphics state as its resources
+     * @param extGStateChild  - set of external graphics state id which contains in resource dictionary of this pattern
+     * @param colorSpaceChild - set of ColorSpace id which contains in resource dictionary of this pattern
+     * @param patternChild    - set of pattern id which contains in resource dictionary of this pattern
+     * @param shadingChild    - set of shading id which contains in resource dictionary of this pattern
+     * @param xobjectChild    - set of XObject id which contains in resource dictionary of this pattern
+     * @param fontChild       - set of font id which contains in resource dictionary of this pattern
+     * @param procSetChild    - set of procedure set id which contains in resource dictionary of this pattern
+     * @param propertiesChild - set of properties id which contains in resource dictionary of this pattern
+     * @param pageParent      - set of page ids which contains the given pattern as its resources
+     * @param patternParent   - set of pattern ids which contains the given pattern as its resources
+     * @param xobjectParent   - set of xobject ids which contains the given pattern as its resources
+     * @param fontParent      - set of font ids which contains the given pattern as its resources
      * @return created PBTillingPatternFeaturesObject
      */
     public static PBTillingPatternFeaturesObject createTilingPatternFeaturesObject(PDTilingPattern tilingPattern,
@@ -255,14 +260,14 @@ public final class PBFeaturesObjectCreator {
     /**
      * Constructs new PBShadingPatternFeaturesObject
      *
-     * @param shadingPattern - PDTilingPattern which represents tilling pattern for feature report
+     * @param shadingPattern - PDShadingPattern which represents shading pattern for feature report
      * @param id             - id of the object
      * @param extGStateChild - external graphics state id which contains in this shading pattern
      * @param shadingChild   - shading id which contains in this shading pattern
-     * @param pageParent     - set of page ids which contains the given extended graphics state as its resources
-     * @param patternParent  - set of pattern ids which contains the given extended graphics state as its resources
-     * @param xobjectParent  - set of xobject ids which contains the given extended graphics state as its resources
-     * @param fontParent     - set of font ids which contains the given extended graphics state as its resources
+     * @param pageParent     - set of page ids which contains the given pattern as its resources
+     * @param patternParent  - set of pattern ids which contains the given pattern as its resources
+     * @param xobjectParent  - set of xobject ids which contains the given pattern as its resources
+     * @param fontParent     - set of font ids which contains the given pattern as its resources
      * @return created PBShadingPatternFeaturesObject
      */
     public static PBShadingPatternFeaturesObject createShadingPatternFeaturesObject(PDShadingPattern shadingPattern,
@@ -279,16 +284,114 @@ public final class PBFeaturesObjectCreator {
     /**
      * Constructs new PBShadingFeaturesObject
      *
-     * @param shading         - PDTilingPattern which represents tilling pattern for feature report
+     * @param shading         - PDShading which represents shading for feature report
      * @param id              - id of the object
      * @param colorSpaceChild - colorSpace id which contains in this shading pattern
-     * @param pageParent      - set of page ids which contains the given extended graphics state as its resources
-     * @param patternParent   - set of pattern ids which contains the given extended graphics state as its resources
-     * @param xobjectParent   - set of xobject ids which contains the given extended graphics state as its resources
-     * @param fontParent      - set of font ids which contains the given extended graphics state as its resources
+     * @param pageParent      - set of page ids which contains the given shading as its resources
+     * @param patternParent   - set of pattern ids which contains the given shading as its resources
+     * @param xobjectParent   - set of xobject ids which contains the given shading as its resources
+     * @param fontParent      - set of font ids which contains the given shading as its resources
      * @return created PBShadingFeaturesObject
      */
     public static PBShadingFeaturesObject createShadingFeaturesObject(PDShading shading, String id, String colorSpaceChild, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
         return new PBShadingFeaturesObject(shading, id, colorSpaceChild, pageParent, patternParent, xobjectParent, fontParent);
+    }
+
+    /**
+     * Constructs new PBImageXObjectFeaturesObject
+     *
+     * @param imageXObject    - PDImageXObject which represents image xobject for feature report
+     * @param id              - id of the object
+     * @param colorSpaceChild - colorSpace id which contains in this image xobject
+     * @param maskChild       - image xobject id which contains in this image xobject as it's mask
+     * @param sMaskChild      - image xobject id which contains in this image xobject as it's smask
+     * @param alternatesChild - set of image xobject ids which contains in this image xobject as alternates
+     * @param pageParent      - set of page ids which contains the given image xobject as its resources
+     * @param patternParent   - set of pattern ids which contains the given image xobject state as its resources
+     * @param xobjectParent   - set of xobject ids which contains the given image xobject state as its resources
+     * @param fontParent      - set of font ids which contains the given image xobject state as its resources
+     * @return created PBImageXObjectFeaturesObject
+     */
+    public static PBImageXObjectFeaturesObject createImageXObjectFeaturesObject(PDImageXObject imageXObject, String id, String colorSpaceChild, String maskChild, String sMaskChild, Set<String> alternatesChild, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+        return new PBImageXObjectFeaturesObject(imageXObject, id, colorSpaceChild, maskChild, sMaskChild, alternatesChild, pageParent, patternParent, xobjectParent, fontParent);
+    }
+
+    /**
+     * Constructs new PBFormXObjectFeaturesObject
+     *
+     * @param formXObject      - PDFormXObject which represents form xobject for feature report
+     * @param id               - id of the object
+     * @param groupChild       - id of the group xobject which contains in the given form xobject
+     * @param extGStateChild   - set of external graphics state id which contains in resource dictionary of this xobject
+     * @param colorSpaceChild  - set of ColorSpace id which contains in resource dictionary of this xobject
+     * @param patternChild     - set of pattern id which contains in resource dictionary of this xobject
+     * @param shadingChild     - set of shading id which contains in resource dictionary of this xobject
+     * @param xobjectChild     - set of XObject id which contains in resource dictionary of this xobject
+     * @param fontChild        - set of font id which contains in resource dictionary of this pattern
+     * @param procSetChild     - set of procedure set id which contains in resource dictionary of this xobject
+     * @param propertiesChild  - set of properties id which contains in resource dictionary of this xobject
+     * @param pageParent       - set of page ids which contains the given xobject as its resources
+     * @param annotationParent - set of annotation ids which contains the given xobject in its appearance dictionary
+     * @param patternParent    - set of pattern ids which contains the given xobject as its resources
+     * @param xobjectParent    - set of xobject ids which contains the given xobject as its resources
+     * @param fontParent       - set of font ids which contains the given xobject as its resources
+     * @return created PBFormXObjectFeaturesObject
+     */
+    public static PBFormXObjectFeaturesObject createFormXObjectFeaturesObject(PDFormXObject formXObject, String id, String groupChild, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> pageParent, Set<String> annotationParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+        return new PBFormXObjectFeaturesObject(formXObject, id, groupChild, extGStateChild, colorSpaceChild, patternChild, shadingChild, xobjectChild, fontChild, procSetChild, propertiesChild, pageParent, annotationParent, patternParent, xobjectParent, fontParent);
+    }
+
+    /**
+     * Constructs new PBFontFeaturesObject
+     *
+     * @param fontLike        - PDFontLike which represents font for feature report
+     * @param id              - id of the object
+     * @param extGStateChild  - set of external graphics state id which contains in resource dictionary of this font
+     * @param colorSpaceChild - set of ColorSpace id which contains in resource dictionary of this font
+     * @param patternChild    - set of pattern id which contains in resource dictionary of this font
+     * @param shadingChild    - set of shading id which contains in resource dictionary of this font
+     * @param xobjectChild    - set of XObject id which contains in resource dictionary of this font
+     * @param fontChild       - set of font id which contains in resource dictionary of this font
+     * @param procSetChild    - set of procedure set id which contains in resource dictionary of this font
+     * @param propertiesChild - set of properties id which contains in resource dictionary of this font
+     * @param pageParent      - set of page ids which contains the given font as its resources
+     * @param extGStateParent - set of graphicsState ids which contains the given font as their resource
+     * @param patternParent   - set of pattern ids which contains the given font as its resources
+     * @param xobjectParent   - set of xobject ids which contains the given font as its resources
+     * @param fontParent      - set of font ids which contains the given font as its resources
+     * @return created PBFontFeaturesObject
+     */
+    public static PBFontFeaturesObject createFontFeaturesObject(PDFontLike fontLike, String id, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> extGStateParent, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+        return new PBFontFeaturesObject(fontLike, id, extGStateChild, colorSpaceChild, patternChild, shadingChild, xobjectChild, fontChild, procSetChild, propertiesChild, extGStateParent, pageParent, patternParent, xobjectParent, fontParent);
+    }
+
+    /**
+     * Constructs new PBProcSetFeaturesObject
+     *
+     * @param procSet       - COSArray which represents procSet for feature report
+     * @param id            - id of the object
+     * @param pageParent    - set of page ids which contains the given procSet as its resources
+     * @param patternParent - set of pattern ids which contains the given procSet as its resources
+     * @param xobjectParent - set of xobject ids which contains the given procSet as its resources
+     * @param fontParent    - set of font ids which contains the given procSet as its resources
+     * @return created PBProcSetFeaturesObject
+     */
+    public static PBProcSetFeaturesObject createProcSetFeaturesObject(COSArray procSet, String id, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+        return new PBProcSetFeaturesObject(procSet, id, pageParent, patternParent, xobjectParent, fontParent);
+    }
+
+    /**
+     * Constructs new PBPropertiesDictFeaturesObject
+     *
+     * @param properties    - COSDictionary which represents properties for feature report
+     * @param id            - id of the object
+     * @param pageParent    - set of page ids which contains the given properties as its resources
+     * @param patternParent - set of pattern ids which contains the given properties as its resources
+     * @param xobjectParent - set of xobject ids which contains the given properties as its resources
+     * @param fontParent    - set of font ids which contains the given properties as its resources
+     * @return created PBPropertiesDictFeaturesObject
+     */
+    public static PBPropertiesDictFeaturesObject createPropertiesDictFeaturesObject(COSDictionary properties, String id, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+        return new PBPropertiesDictFeaturesObject(properties, id, pageParent, patternParent, xobjectParent, fontParent);
     }
 }

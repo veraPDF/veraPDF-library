@@ -13,12 +13,12 @@ import org.verapdf.model.pdlayer.PDCIDFont;
 public class PBoxPDCIDFont extends PBoxPDFont implements PDCIDFont {
 
     public static final String CID_FONT_TYPE = "PDCIDFont";
+
     public static final String IDENTITY = "Identity";
     public static final String CUSTOM = "Custom";
 
     public PBoxPDCIDFont(PDFontLike font) {
-        super(font);
-        setType(CID_FONT_TYPE);
+        super(font, CID_FONT_TYPE);
     }
 
     @Override

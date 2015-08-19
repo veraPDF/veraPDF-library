@@ -10,7 +10,7 @@ import org.verapdf.model.xmplayer.XMPPredefinedSchema;
  */
 public class PBXMPPredefinedSchema extends PBXMPSchema implements XMPPredefinedSchema {
 
-    private static final String XMPPREDEFINEDSCHEMA = "XMPPredefinedSchema";
+    public static final String XMP_PREDEFINED_SCHEMA = "XMPPredefinedSchema";
 
     /**
      * Constructs new object
@@ -18,9 +18,18 @@ public class PBXMPPredefinedSchema extends PBXMPSchema implements XMPPredefinedS
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBXMPPredefinedSchema(XMPSchema xmpSchema) {
-        super(xmpSchema);
-        setType(XMPPREDEFINEDSCHEMA);
+        super(xmpSchema, XMP_PREDEFINED_SCHEMA);
     }
+
+	/**
+	 * Constructs new object
+	 *
+	 * @param xmpSchema - object from xmpbox represented this schema
+	 * @param type - type of current object
+	 */
+	public PBXMPPredefinedSchema(XMPSchema xmpSchema, final String type) {
+		super(xmpSchema, type);
+	}
 
     /**
      * @return String that contains all unknown properties for predefined schema (XMP 2005)

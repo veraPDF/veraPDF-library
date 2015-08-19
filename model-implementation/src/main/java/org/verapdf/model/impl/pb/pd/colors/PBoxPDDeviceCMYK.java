@@ -16,8 +16,7 @@ public class PBoxPDDeviceCMYK extends PBoxPDColorSpace implements PDDeviceCMYK {
 
     private PBoxPDDeviceCMYK(
             org.apache.pdfbox.pdmodel.graphics.color.PDDeviceCMYK simplePDObject) {
-        super(simplePDObject);
-        setType(DEVICE_CMYK_TYPE);
+        super(simplePDObject, DEVICE_CMYK_TYPE);
     }
 
     public static PDDeviceCMYK getInstance() {

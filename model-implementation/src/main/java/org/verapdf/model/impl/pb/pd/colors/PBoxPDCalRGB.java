@@ -9,9 +9,10 @@ import org.verapdf.model.pdlayer.PDCalRGB;
  */
 public class PBoxPDCalRGB extends PBoxPDColorSpace implements PDCalRGB {
 
-    public PBoxPDCalRGB(
-            org.apache.pdfbox.pdmodel.graphics.color.PDCalRGB simplePDObject) {
-        super(simplePDObject);
-        setType("PDCalRGB");
-    }
+	public static final String CAL_RGB_TYPE = "PDCalRGB";
+
+	public PBoxPDCalRGB(
+			org.apache.pdfbox.pdmodel.graphics.color.PDCalRGB simplePDObject) {
+		super(simplePDObject, CAL_RGB_TYPE);
+	}
 }

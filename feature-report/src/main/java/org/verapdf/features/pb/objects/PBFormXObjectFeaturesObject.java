@@ -1,6 +1,10 @@
 package org.verapdf.features.pb.objects;
 
-import org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern;
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSStream;
+import org.apache.pdfbox.pdmodel.common.PDMetadata;
+import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -11,16 +15,17 @@ import org.verapdf.features.tools.FeaturesCollection;
 import java.util.Set;
 
 /**
- * Feature object for tilling pattern
+ * Feature object for form xobjects
  *
  * @author Maksim Bezrukov
  */
-public class PBTillingPatternFeaturesObject implements IFeaturesObject {
+public class PBFormXObjectFeaturesObject implements IFeaturesObject {
 
     private static final String ID = "id";
 
-    private PDTilingPattern tilingPattern;
+    private PDFormXObject formXObject;
     private String id;
+    private String groupColorSpaceChild;
     private Set<String> extGStateChild;
     private Set<String> colorSpaceChild;
     private Set<String> patternChild;
@@ -30,31 +35,35 @@ public class PBTillingPatternFeaturesObject implements IFeaturesObject {
     private Set<String> procSetChild;
     private Set<String> propertiesChild;
     private Set<String> pageParent;
+    private Set<String> annotationParent;
     private Set<String> patternParent;
     private Set<String> xobjectParent;
     private Set<String> fontParent;
 
     /**
-     * Constructs new tilling pattern features object
+     * Constructs new form xobject features object
      *
-     * @param tilingPattern   - PDTilingPattern which represents tilling pattern for feature report
-     * @param id              - id of the object
-     * @param extGStateChild  - set of external graphics state id which contains in resource dictionary of this pattern
-     * @param colorSpaceChild - set of ColorSpace id which contains in resource dictionary of this pattern
-     * @param patternChild    - set of pattern id which contains in resource dictionary of this pattern
-     * @param shadingChild    - set of shading id which contains in resource dictionary of this pattern
-     * @param xobjectChild    - set of XObject id which contains in resource dictionary of this pattern
-     * @param fontChild       - set of font id which contains in resource dictionary of this pattern
-     * @param procSetChild    - set of procedure set id which contains in resource dictionary of this pattern
-     * @param propertiesChild - set of properties id which contains in resource dictionary of this pattern
-     * @param pageParent      - set of page ids which contains the given pattern as its resources
-     * @param patternParent   - set of pattern ids which contains the given pattern as its resources
-     * @param xobjectParent   - set of xobject ids which contains the given pattern as its resources
-     * @param fontParent      - set of font ids which contains the given pattern as its resources
+     * @param formXObject          - PDFormXObject which represents form xobject for feature report
+     * @param id                   - id of the object
+     * @param groupColorSpaceChild - id of the group xobject which contains in the given form xobject
+     * @param extGStateChild       - set of external graphics state id which contains in resource dictionary of this xobject
+     * @param colorSpaceChild      - set of ColorSpace id which contains in resource dictionary of this xobject
+     * @param patternChild         - set of pattern id which contains in resource dictionary of this xobject
+     * @param shadingChild         - set of shading id which contains in resource dictionary of this xobject
+     * @param xobjectChild         - set of XObject id which contains in resource dictionary of this xobject
+     * @param fontChild            - set of font id which contains in resource dictionary of this pattern
+     * @param procSetChild         - set of procedure set id awhich contains in resource dictionary of this xobject
+     * @param propertiesChild      - set of properties id which contains in resource dictionary of this xobject
+     * @param pageParent           - set of page ids which contains the given xobject as its resources
+     * @param annotationParent     - set of annotation ids which contains the given xobject in its appearance dictionary
+     * @param patternParent        - set of pattern ids which contains the given xobject as its resources
+     * @param xobjectParent        - set of xobject ids which contains the given xobject as its resources
+     * @param fontParent           - set of font ids which contains the given xobject as its resources
      */
-    public PBTillingPatternFeaturesObject(PDTilingPattern tilingPattern, String id, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
-        this.tilingPattern = tilingPattern;
+    public PBFormXObjectFeaturesObject(PDFormXObject formXObject, String id, String groupColorSpaceChild, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> pageParent, Set<String> annotationParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+        this.formXObject = formXObject;
         this.id = id;
+        this.groupColorSpaceChild = groupColorSpaceChild;
         this.extGStateChild = extGStateChild;
         this.colorSpaceChild = colorSpaceChild;
         this.patternChild = patternChild;
@@ -64,17 +73,18 @@ public class PBTillingPatternFeaturesObject implements IFeaturesObject {
         this.procSetChild = procSetChild;
         this.propertiesChild = propertiesChild;
         this.pageParent = pageParent;
+        this.annotationParent = annotationParent;
         this.patternParent = patternParent;
         this.xobjectParent = xobjectParent;
         this.fontParent = fontParent;
     }
 
     /**
-     * @return PATTERN instance of the FeaturesObjectTypesEnum enumeration
+     * @return FORM_XOBJECT instance of the FeaturesObjectTypesEnum enumeration
      */
     @Override
     public FeaturesObjectTypesEnum getType() {
-        return FeaturesObjectTypesEnum.PATTERN;
+        return FeaturesObjectTypesEnum.FORM_XOBJECT;
     }
 
     /**
@@ -86,26 +96,44 @@ public class PBTillingPatternFeaturesObject implements IFeaturesObject {
      */
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
-        if (tilingPattern != null) {
-            FeatureTreeNode root = FeatureTreeNode.newRootInstance("pattern");
+        if (formXObject != null) {
+            FeatureTreeNode root = FeatureTreeNode.newRootInstance("form");
             root.addAttribute(ID, id);
-            root.addAttribute("type", "tilling");
 
             parseParents(root);
 
-            FeatureTreeNode.newChildInstanceWithValue("paintType", String.valueOf(tilingPattern.getPaintType()), root);
-            FeatureTreeNode.newChildInstanceWithValue("tilingType", String.valueOf(tilingPattern.getTilingType()), root);
+            PBCreateNodeHelper.addBoxFeature("bbox", formXObject.getBBox(), root);
+            parseFloatMatrix(formXObject.getMatrix().getValues(), FeatureTreeNode.newChildInstance("matrix", root));
 
-            PBCreateNodeHelper.addBoxFeature("bbox", tilingPattern.getBBox(), root);
+            if (formXObject.getGroup() != null) {
+                FeatureTreeNode groupNode = FeatureTreeNode.newRootInstance("group");
+                if (formXObject.getGroup().getSubType() != null) {
+                    PBCreateNodeHelper.addNotEmptyNode("subtype", formXObject.getGroup().getSubType().getName(), root);
+                    if ("Transparency".equals(formXObject.getGroup().getSubType().getName())) {
+                        if (groupColorSpaceChild != null) {
+                            FeatureTreeNode clr = FeatureTreeNode.newChildInstance("colorSpace", root);
+                            clr.addAttribute(ID, groupColorSpaceChild);
+                        }
 
-            FeatureTreeNode.newChildInstanceWithValue("xStep", String.valueOf(tilingPattern.getXStep()), root);
-            FeatureTreeNode.newChildInstanceWithValue("yStep", String.valueOf(tilingPattern.getYStep()), root);
+                        FeatureTreeNode.newChildInstanceWithValue("isolated", String.valueOf(formXObject.getGroup().isIsolated()), root);
+                        FeatureTreeNode.newChildInstanceWithValue("knockout", String.valueOf(formXObject.getGroup().isKnockout()), root);
+                    }
 
-            parseFloatMatrix(tilingPattern.getMatrix().getValues(), FeatureTreeNode.newChildInstance("matrix", root));
+                }
+            }
+
+            FeatureTreeNode.newChildInstanceWithValue("structParents", String.valueOf(formXObject.getStructParents()), root);
+
+
+            COSBase cosBase = formXObject.getCOSStream().getDictionaryObject(COSName.METADATA);
+            if (cosBase instanceof COSStream) {
+                PDMetadata meta = new PDMetadata((COSStream) cosBase);
+                PBCreateNodeHelper.parseMetadata(meta, "metadata", root, collection);
+            }
 
             parseResources(root);
 
-            collection.addNewFeatureTree(FeaturesObjectTypesEnum.PATTERN, root);
+            collection.addNewFeatureTree(FeaturesObjectTypesEnum.FORM_XOBJECT, root);
             return root;
         }
 
@@ -125,12 +153,14 @@ public class PBTillingPatternFeaturesObject implements IFeaturesObject {
 
     private void parseParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
         if ((pageParent != null && !pageParent.isEmpty()) ||
+                (annotationParent != null && !annotationParent.isEmpty()) ||
                 (patternParent != null && !patternParent.isEmpty()) ||
                 (xobjectParent != null && !xobjectParent.isEmpty()) ||
                 (fontParent != null && !fontParent.isEmpty())) {
             FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
 
             PBCreateNodeHelper.parseIDSet(pageParent, "page", null, parents);
+            PBCreateNodeHelper.parseIDSet(annotationParent, "annotation", null, parents);
             PBCreateNodeHelper.parseIDSet(patternParent, "pattern", null, parents);
             PBCreateNodeHelper.parseIDSet(xobjectParent, "xobject", null, parents);
             PBCreateNodeHelper.parseIDSet(fontParent, "font", null, parents);

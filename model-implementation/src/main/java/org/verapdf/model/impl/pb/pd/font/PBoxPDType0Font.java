@@ -21,12 +21,12 @@ import java.util.List;
 public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
 
     public static final String TYPE_0_FONT_TYPE = "PDType0Font";
+
     public static final String DESCENDANT_FONTS = "DescendantFonts";
     public static final String ENCODING = "Encoding";
 
     public PBoxPDType0Font(PDFontLike font) {
-        super(font);
-        setType(TYPE_0_FONT_TYPE);
+        super(font, TYPE_0_FONT_TYPE);
     }
 
     @Override
