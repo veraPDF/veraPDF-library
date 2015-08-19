@@ -42,8 +42,6 @@ public final class ErrorsHelper {
     public static final String PARSINGEMBEDDEDFILEERROR_ID = "embfierr1";
     public static final String PARSINGEMBEDDEDFILEERROR_MESSAGE = "Error while parsing embedded files.";
 
-    public static final String GETINGICCPROFILEERROR_ID = "iccprofileerr1";
-    public static final String GETINGICCPROFILEERROR_MESSAGE = "Error while getting icc profile. Probably stream has been closed.";
     public static final String GETINGICCPROFILEHEADERERROR_ID = "iccprofileerr2";
     public static final String GETINGICCPROFILEHEADERERROR_MESSAGE = "Error while getting icc profile bytes.";
     public static final String GETINGICCPROFILEHEADERSIZEERROR_ID = "iccprofileerr3";

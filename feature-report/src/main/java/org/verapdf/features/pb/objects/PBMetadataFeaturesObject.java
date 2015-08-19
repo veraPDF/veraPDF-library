@@ -50,7 +50,9 @@ public class PBMetadataFeaturesObject implements IFeaturesObject {
         if (metadata != null) {
             FeatureTreeNode root = PBCreateNodeHelper.parseMetadata(metadata, "metadata", null, collection);
 
-            collection.addNewFeatureTree(FeaturesObjectTypesEnum.METADATA, root);
+            if (root != null) {
+                collection.addNewFeatureTree(FeaturesObjectTypesEnum.METADATA, root);
+            }
             return root;
         }
         return null;

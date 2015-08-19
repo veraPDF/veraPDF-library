@@ -17,6 +17,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Set;
@@ -35,6 +36,37 @@ public final class PBCreateNodeHelper {
     private static final String LLY = "lly";
     private static final String URX = "urx";
     private static final String URY = "ury";
+
+    private static final byte[] utf8MetadataPrefix = {0x3C, 0x3F, 0x78, 0x70, 0x61, 0x63, 0x6B,
+            0x65, 0x74, 0x20, 0x62, 0x65, 0x67, 0x69, 0x6E, 0x3D};
+    private static final byte[] utf16BEMetadataPrefix = {0x00, 0x3C, 0x00, 0x3F, 0x00, 0x78, 0x00, 0x70, 0x00, 0x61, 0x00,
+            0x63, 0x00, 0x6B, 0x00, 0x65, 0x00, 0x74, 0x00, 0x20, 0x00, 0x62, 0x00, 0x65, 0x00, 0x67, 0x00, 0x69, 0x00, 0x6E, 0x00, 0x3D};
+    private static final byte[] utf16LEMetadataPrefix = {0x3C, 0x00, 0x3F, 0x00, 0x78, 0x00, 0x70, 0x00, 0x61, 0x00,
+            0x63, 0x00, 0x6B, 0x00, 0x65, 0x00, 0x74, 0x00, 0x20, 0x00, 0x62, 0x00, 0x65, 0x00, 0x67, 0x00, 0x69, 0x00, 0x6E, 0x00, 0x3D, 0x00};
+    private static final byte[] utf32BEMetadataPrefix = {0x00, 0x00, 0x00, 0x3C, 0x00, 0x00, 0x00, 0x3F, 0x00, 0x00, 0x00, 0x78,
+            0x00, 0x00, 0x00, 0x70, 0x00, 0x00, 0x00, 0x61, 0x00, 0x00, 0x00, 0x63, 0x00, 0x00, 0x00, 0x6B,
+            0x00, 0x00, 0x00, 0x65, 0x00, 0x00, 0x00, 0x74, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x62,
+            0x00, 0x00, 0x00, 0x65, 0x00, 0x00, 0x00, 0x67, 0x00, 0x00, 0x00, 0x69, 0x00, 0x00, 0x00, 0x6E, 0x00, 0x00, 0x00, 0x3D};
+    private static final byte[] utf32LEMetadataPrefix = {0x3C, 0x00, 0x00, 0x00, 0x3F, 0x00, 0x00, 0x00, 0x78,
+            0x00, 0x00, 0x00, 0x70, 0x00, 0x00, 0x00, 0x61, 0x00, 0x00, 0x00, 0x63, 0x00, 0x00, 0x00, 0x6B,
+            0x00, 0x00, 0x00, 0x65, 0x00, 0x00, 0x00, 0x74, 0x00, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x62,
+            0x00, 0x00, 0x00, 0x65, 0x00, 0x00, 0x00, 0x67, 0x00, 0x00, 0x00, 0x69, 0x00, 0x00, 0x00, 0x6E, 0x00, 0x00, 0x00, 0x3D, 0x00, 0x00, 0x00};
+    private static final byte[] utf8SingleQuote = {0x27};
+    private static final byte[] utf8DoubleQuote = {0x22};
+    private static final byte[] utf16BESingleQuote = {0x00, 0x27};
+    private static final byte[] utf16BEDoubleQuote = {0x00, 0x22};
+    private static final byte[] utf16LESingleQuote = {0x27, 0x00};
+    private static final byte[] utf16LEDoubleQuote = {0x22, 0x00};
+    private static final byte[] utf32BESingleQuote = {0x00, 0x00, 0x00, 0x27};
+    private static final byte[] utf32BEDoubleQuote = {0x00, 0x00, 0x00, 0x22};
+    private static final byte[] utf32LESingleQuote = {0x27, 0x00, 0x00, 0x00};
+    private static final byte[] utf32LEDoubleQuote = {0x22, 0x00, 0x00, 0x00};
+
+    private static final byte[] utf8Begin = {-0x11, -0x45, -0x41};
+    private static final byte[] utf16BEBegin = {-0x02, -0x01};
+    private static final byte[] utf16LEBegin = {-0x01, -0x02};
+    private static final byte[] utf32BEBegin = {0x00, 0x00, -0x02, -0x01};
+    private static final byte[] utf32LEBegin = {-0x01, -0x02, 0x00, 0x00};
 
     private static final int GRAY_COLOR_COMPONENTS_NUMBER = 1;
     private static final int RGB_COLOR_COMPONENTS_NUMBER = 3;
@@ -223,6 +255,10 @@ public final class PBCreateNodeHelper {
      * @throws FeaturesTreeNodeException - occurs when wrong features tree node constructs
      */
     public static FeatureTreeNode parseMetadata(PDMetadata metadata, String nodeName, FeatureTreeNode parent, FeaturesCollection collection) throws FeaturesTreeNodeException {
+        if (metadata == null) {
+            return null;
+        }
+
         FeatureTreeNode node;
         if (parent == null) {
             node = FeatureTreeNode.newRootInstance(nodeName);
@@ -231,7 +267,8 @@ public final class PBCreateNodeHelper {
         }
         try {
             byte[] bStream = metadata.getByteArray();
-            String metadataString = new String(bStream, Charset.forName("UTF-8"));
+            String encoding = getEncoding(bStream);
+            String metadataString = new String(bStream, Charset.forName(encoding));
             node.setValue(metadataString);
         } catch (IOException e) {
             LOGGER.debug("Error while converting stream to string", e);
@@ -240,6 +277,73 @@ public final class PBCreateNodeHelper {
         }
 
         return node;
+    }
+
+    private static String getEncoding(byte[] bStream) {
+        int beginOffset = getBeginOffset(bStream);
+        if (beginOffset >= 0) {
+            byte[] suffix = Arrays.copyOfRange(bStream, beginOffset, bStream.length);
+            if (startsWith(suffix, utf32BEBegin)) {
+                return "UTF-32BE";
+            } else if (startsWith(suffix, utf32LEBegin)) {
+                return "UTF-32LE";
+            } else if (startsWith(suffix, utf8Begin)) {
+                return "UTF-8";
+            } else if (startsWith(suffix, utf16BEBegin)) {
+                return "UTF-16BE";
+            } else if (startsWith(suffix, utf16LEBegin)) {
+                return "UTF-16LE";
+            }
+        }
+        return "UTF-8";
+    }
+
+    private static int getBeginOffset(byte[] bStream) {
+        int beginOffset = -1;
+        if ((bStream.length >= utf32LEMetadataPrefix.length + utf32LEDoubleQuote.length + utf32LEBegin.length) &&
+                startsWith(bStream, utf32LEMetadataPrefix)) {
+            byte[] quote = Arrays.copyOfRange(bStream, utf32LEMetadataPrefix.length, utf32LEMetadataPrefix.length + utf32LEDoubleQuote.length);
+            if (startsWith(quote, utf32LESingleQuote) || startsWith(quote, utf32LEDoubleQuote)) {
+                beginOffset = utf32LEMetadataPrefix.length + utf32LEDoubleQuote.length;
+            }
+        } else if ((bStream.length >= utf32BEMetadataPrefix.length + utf32BEDoubleQuote.length + utf32BEBegin.length) &&
+                startsWith(bStream, utf32BEMetadataPrefix)) {
+            byte[] quote = Arrays.copyOfRange(bStream, utf32BEMetadataPrefix.length, utf32BEMetadataPrefix.length + utf32BEDoubleQuote.length);
+            if (startsWith(quote, utf32BESingleQuote) || startsWith(quote, utf32BEDoubleQuote)) {
+                beginOffset = utf32BEMetadataPrefix.length + utf32BEDoubleQuote.length;
+            }
+        } else if ((bStream.length >= utf16LEMetadataPrefix.length + utf16LEDoubleQuote.length + utf16LEBegin.length) &&
+                startsWith(bStream, utf16LEMetadataPrefix)) {
+            byte[] quote = Arrays.copyOfRange(bStream, utf16LEMetadataPrefix.length, utf16LEMetadataPrefix.length + utf16LEDoubleQuote.length);
+            if (startsWith(quote, utf16LESingleQuote) || startsWith(quote, utf16LEDoubleQuote)) {
+                beginOffset = utf16LEMetadataPrefix.length + utf16LEDoubleQuote.length;
+            }
+        } else if ((bStream.length >= utf16BEMetadataPrefix.length + utf16BEDoubleQuote.length + utf16BEBegin.length) &&
+                startsWith(bStream, utf16BEMetadataPrefix)) {
+            byte[] quote = Arrays.copyOfRange(bStream, utf16BEMetadataPrefix.length, utf16BEMetadataPrefix.length + utf16BEDoubleQuote.length);
+            if (startsWith(quote, utf16BESingleQuote) || startsWith(quote, utf16BEDoubleQuote)) {
+                beginOffset = utf16BEMetadataPrefix.length + utf16BEDoubleQuote.length;
+            }
+        } else if ((bStream.length >= utf8MetadataPrefix.length + utf8DoubleQuote.length + utf8Begin.length) &&
+                startsWith(bStream, utf8MetadataPrefix)) {
+            byte[] quote = Arrays.copyOfRange(bStream, utf8MetadataPrefix.length, utf8MetadataPrefix.length + utf8DoubleQuote.length);
+            if (startsWith(quote, utf8SingleQuote) || startsWith(quote, utf8DoubleQuote)) {
+                beginOffset = utf8MetadataPrefix.length + utf8DoubleQuote.length;
+            }
+        }
+        return beginOffset;
+    }
+
+    private static boolean startsWith(byte[] source, byte[] match) {
+        if (match.length > source.length) {
+            return false;
+        }
+        for (int i = 0; i < match.length; i++) {
+            if (source[i] != match[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static void createGray(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {
