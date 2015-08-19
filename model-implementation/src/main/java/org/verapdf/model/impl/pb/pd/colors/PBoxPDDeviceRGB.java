@@ -16,8 +16,7 @@ public class PBoxPDDeviceRGB extends PBoxPDColorSpace implements PDDeviceRGB {
 
     private PBoxPDDeviceRGB(
             org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB simplePDObject) {
-        super(simplePDObject);
-        setType(DEVICE_RGB_TYPE);
+        super(simplePDObject, DEVICE_RGB_TYPE);
     }
 
     public static PDDeviceRGB getInstance() {

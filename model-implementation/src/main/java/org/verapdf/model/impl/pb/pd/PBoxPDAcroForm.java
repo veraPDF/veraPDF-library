@@ -20,8 +20,7 @@ public class PBoxPDAcroForm extends PBoxPDObject implements PDAcroForm {
 
     public PBoxPDAcroForm(
             org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm simplePDObject) {
-        super(simplePDObject);
-        setType(ACRO_FORM_TYPE);
+        super(simplePDObject, ACRO_FORM_TYPE);
     }
 
     @Override

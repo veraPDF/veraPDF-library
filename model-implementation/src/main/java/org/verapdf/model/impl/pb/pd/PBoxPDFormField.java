@@ -20,8 +20,7 @@ public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
     public static final String FORM_FIELD_TYPE = "PDFormField";
 
     public PBoxPDFormField(PDField simplePDObject) {
-        super(simplePDObject);
-        setType(FORM_FIELD_TYPE);
+        super(simplePDObject, FORM_FIELD_TYPE);
     }
 
     @Override

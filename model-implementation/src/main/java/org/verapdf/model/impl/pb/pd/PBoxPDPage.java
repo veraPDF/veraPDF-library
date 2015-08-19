@@ -31,8 +31,7 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
     public static final int MAX_NUMBER_OF_ACTIONS = 2;
 
     public PBoxPDPage(org.apache.pdfbox.pdmodel.PDPage simplePDObject) {
-        super((COSObjectable) simplePDObject);
-        setType(PAGE_TYPE);
+        super((COSObjectable) simplePDObject, PAGE_TYPE);
     }
 
     @Override

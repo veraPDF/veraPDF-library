@@ -13,7 +13,7 @@ import org.verapdf.model.xmplayer.PDFAIdSchema;
  */
 public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchema {
 
-    private static final String PDFAIDSCHEMA = "PDFAIdSchema";
+    public static final String PDF_AID_SCHEMA = "PDFAIdSchema";
 
     private static final String CORR = "corr";
 
@@ -23,8 +23,7 @@ public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchem
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBPDFAIdSchema(PDFAIdentificationSchema xmpSchema) {
-        super(xmpSchema);
-        setType(PDFAIDSCHEMA);
+        super(xmpSchema, PDF_AID_SCHEMA);
     }
 
     /**

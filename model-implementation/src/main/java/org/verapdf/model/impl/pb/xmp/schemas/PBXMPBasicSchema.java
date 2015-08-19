@@ -9,7 +9,7 @@ import org.apache.xmpbox.schema.XMPBasicSchema;
  */
 public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verapdf.model.xmplayer.XMPBasicSchema {
 
-    private static final String XMPBASICSCHEMA = "XMPBasicSchema";
+    public static final String XMP_BASIC_SCHEMA = "XMPBasicSchema";
 
     private static final String AUTHOR = "Author";
     private static final String DESCRIPTION = "Description";
@@ -21,8 +21,7 @@ public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verap
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBXMPBasicSchema(org.apache.xmpbox.schema.XMPBasicSchema xmpSchema) {
-        super(xmpSchema);
-        setType(XMPBASICSCHEMA);
+        super(xmpSchema, XMP_BASIC_SCHEMA);
     }
 
     /**

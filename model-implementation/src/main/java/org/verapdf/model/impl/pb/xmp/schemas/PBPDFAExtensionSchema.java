@@ -11,7 +11,7 @@ import org.apache.xmpbox.schema.PDFAExtensionSchema;
  */
 public class PBPDFAExtensionSchema extends PBXMPPredefinedSchema implements org.verapdf.model.xmplayer.PDFAExtensionSchema {
 
-    private static final String PDFAEXTENSIONSCHEMA = "PDFAExtensionSchema";
+    public static final String PDF_A_EXTENSION_SCHEMA = "PDFAExtensionSchema";
 
     /**
      * Constructs new object
@@ -19,8 +19,7 @@ public class PBPDFAExtensionSchema extends PBXMPPredefinedSchema implements org.
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBPDFAExtensionSchema(PDFAExtensionSchema xmpSchema) {
-        super(xmpSchema);
-        setType(PDFAEXTENSIONSCHEMA);
+        super(xmpSchema, PDF_A_EXTENSION_SCHEMA);
     }
 
     /**

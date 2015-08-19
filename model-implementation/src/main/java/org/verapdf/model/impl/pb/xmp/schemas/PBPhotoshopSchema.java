@@ -9,7 +9,7 @@ import org.apache.xmpbox.schema.PhotoshopSchema;
  */
 public class PBPhotoshopSchema extends PBXMPPredefinedSchema implements org.verapdf.model.xmplayer.PhotoshopSchema {
 
-    private static final String PHOTOSHOPSCHEMA = "PhotoshopSchema";
+    public static final String PHOTOSHOP_SCHEMA = "PhotoshopSchema";
 
     private static final String AUTHOR = "Author";
     private static final String COPYRIGHT = "Copyright";
@@ -21,8 +21,7 @@ public class PBPhotoshopSchema extends PBXMPPredefinedSchema implements org.vera
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBPhotoshopSchema(PhotoshopSchema xmpSchema) {
-        super(xmpSchema);
-        setType(PHOTOSHOPSCHEMA);
+        super(xmpSchema, PHOTOSHOP_SCHEMA);
     }
 
     /**

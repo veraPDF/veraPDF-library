@@ -10,7 +10,7 @@ import org.verapdf.model.xmplayer.CRSSchema;
  */
 public class PBCRSSchema extends PBXMPPredefinedSchema implements CRSSchema {
 
-    private static final String CRSSCHEMA = "CRSSchema";
+    public static final String CRS_SCHEMA = "CRSSchema";
 
     /**
      * Constructs new object
@@ -18,8 +18,7 @@ public class PBCRSSchema extends PBXMPPredefinedSchema implements CRSSchema {
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBCRSSchema(XMPSchema xmpSchema) {
-        super(xmpSchema);
-        setType(CRSSCHEMA);
+        super(xmpSchema, CRS_SCHEMA);
     }
 
 }

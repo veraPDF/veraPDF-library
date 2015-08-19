@@ -10,7 +10,7 @@ import org.verapdf.model.xmplayer.PDFSchema;
  */
 public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
 
-    private static final String PDFSCHEMA = "PDFSchema";
+    public static final String PDF_SCHEMA = "PDFSchema";
 
     private static final String AUTHOR = "Author";
     private static final String BASE_URL = "BaseURL";
@@ -27,8 +27,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBPDFSchema(AdobePDFSchema xmpSchema) {
-        super(xmpSchema);
-        setType(PDFSCHEMA);
+        super(xmpSchema, PDF_SCHEMA);
     }
 
     /**
