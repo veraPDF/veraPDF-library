@@ -10,26 +10,8 @@ import org.verapdf.model.xmplayer.XMPObject;
  */
 public class PBXMPObject extends GenericModelObject implements XMPObject {
 
-    private final String type;
-
 	protected PBXMPObject(final String type) {
-		this.type = type;
+		super(type);
 	}
-
-    /**
-     * @return type of the object
-     */
-    @Override
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * @return id of the object
-     */
-    @Override
-    public String getID() {
-        return null;
-    }
 
 }

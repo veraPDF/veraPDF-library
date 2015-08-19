@@ -23,11 +23,8 @@ public class PBoxPDObject extends GenericModelObject implements PDObject {
     protected PDFontLike pdFontLike;
     protected CMap cMap;
 
-    private final String type;
-    private String id;
-
 	protected PBoxPDObject(COSObjectable simplePDObject, final String type) {
-		this.type = type;
+		super(type);
 		this.simplePDObject = simplePDObject;
 	}
 
@@ -50,16 +47,6 @@ public class PBoxPDObject extends GenericModelObject implements PDObject {
 		this.cMap = cMap;
 		this.type = type;
 	}
-
-	@Override
-    public String getType() {
-        return type;
-    }
-
-    @Override
-    public String getID() {
-        return id;
-    }
 
     protected void addAction(List<PDAction> actions,
             org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer) {

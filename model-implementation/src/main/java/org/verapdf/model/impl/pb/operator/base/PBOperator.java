@@ -21,22 +21,10 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
 
     public static final int MAX_NUMBER_OF_ELEMENTS = 1;
     protected final List<COSBase> arguments;
-    private final String id = null;
-    private final String type;
 
     protected PBOperator(List<COSBase> arguments, final String opType) {
-        this.type = opType;
+		super(opType);
         this.arguments = arguments;
-    }
-
-    @Override
-    public String getID() {
-        return id;
-    }
-
-    @Override
-    public String getType() {
-        return type;
     }
 
     protected List<CosReal> getLastReal() {
