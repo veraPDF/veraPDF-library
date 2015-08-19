@@ -38,7 +38,8 @@ public class PBoxPDFormFieldTest extends BaseTest {
 		List<? extends Object> additionalActions = actual.getLinkedObjects(PBoxPDFormField.ADDITIONAL_ACTION);
 		Assert.assertEquals(0, additionalActions.size());
 		for (Object object : additionalActions) {
-			Assert.assertTrue("PDAction".equals(object.getType()) || "PDNamedAction".equals(object.getType()));
+			Assert.assertTrue(PBoxPDAction.ACTION_TYPE.equals(object.getObjectType()) ||
+					PBoxPDNamedAction.NAMED_ACTION_TYPE.equals(object.getObjectType()));
 		}
 	}
 

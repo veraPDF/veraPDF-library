@@ -6,6 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.BaseTest;
+import org.verapdf.model.impl.pb.cos.PBCosReal;
 import org.verapdf.model.pdlayer.PDAnnot;
 
 import java.io.IOException;
@@ -54,7 +55,8 @@ public class PBoxPDAnnotTest extends BaseTest {
 		List<? extends Object> action = actual.getLinkedObjects(PBoxPDAnnot.ADDITIONAL_ACTION);
 		Assert.assertEquals(0, action.size());
 		for (Object object : action) {
-			Assert.assertTrue("PDAction".equals(object.getType()) || "PDNamedAction".equals(object.getType()));
+			Assert.assertTrue(PBoxPDAction.ACTION_TYPE.equals(object.getObjectType()) ||
+					PBoxPDNamedAction.NAMED_ACTION_TYPE.equals(object.getObjectType()));
 		}
 	}
 
@@ -63,7 +65,8 @@ public class PBoxPDAnnotTest extends BaseTest {
 		List<? extends Object> action = actual.getLinkedObjects(PBoxPDAnnot.A);
 		Assert.assertEquals(1, action.size());
 		for (Object object : action) {
-			Assert.assertTrue("PDAction".equals(object.getType()) || "PDNamedAction".equals(object.getType()));
+			Assert.assertTrue(PBoxPDAction.ACTION_TYPE.equals(object.getObjectType()) ||
+					PBoxPDNamedAction.NAMED_ACTION_TYPE.equals(object.getObjectType()));
 		}
 	}
 
@@ -72,7 +75,7 @@ public class PBoxPDAnnotTest extends BaseTest {
 		List<? extends Object> action = actual.getLinkedObjects(PBoxPDAnnot.IC);
 		Assert.assertEquals(0, action.size());
 		for (Object object : action) {
-			Assert.assertEquals("CosReal", object.getType());
+			Assert.assertEquals(PBCosReal.COS_REAL_TYPE, object.getObjectType());
 		}
 	}
 
@@ -81,7 +84,7 @@ public class PBoxPDAnnotTest extends BaseTest {
 		List<? extends Object> action = actual.getLinkedObjects(PBoxPDAnnot.C);
 		Assert.assertEquals(0, action.size());
 		for (Object object : action) {
-			Assert.assertEquals("CosReal", object.getType());
+			Assert.assertEquals(PBCosReal.COS_REAL_TYPE, object.getObjectType());
 		}
 	}
 
@@ -90,7 +93,7 @@ public class PBoxPDAnnotTest extends BaseTest {
 		List<? extends Object> action = actual.getLinkedObjects(PBoxPDAnnot.APPEARANCE);
 		Assert.assertEquals(1, action.size());
 		for (Object object : action) {
-			Assert.assertEquals("PDContentStream", object.getType());
+			Assert.assertEquals(PBoxPDContentStream.CONTENT_STREAM_TYPE, object.getObjectType());
 		}
 	}
 

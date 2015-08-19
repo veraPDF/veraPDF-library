@@ -48,7 +48,6 @@ import java.util.List;
 @RunWith(Parameterized.class)
 public class OperatorParserTest {
 
-	public static final List<COSBase> arguments = new ArrayList<>(0);
 	public static final PDResources RESOURCES = new PDResources(new COSDictionary());
 	private static final String UNDEFINED = "Undefined";
 
@@ -147,10 +146,11 @@ public class OperatorParserTest {
 
 	@Test
 	public void testParseOperatorMethod() {
-		//OperatorParser.parseOperator();
 		List<Object> operator = new ArrayList<>(1);
 		operator.add(this.operator);
-		Assert.assertEquals(expectedType, OperatorFactory.operatorsFromTokens(operator, RESOURCES).get(0).getType());
+		final org.verapdf.model.operator.Operator veraOperator =
+				OperatorFactory.operatorsFromTokens(operator, RESOURCES).get(0);
+		Assert.assertEquals(expectedType, veraOperator.getObjectType());
 	}
 
 }
