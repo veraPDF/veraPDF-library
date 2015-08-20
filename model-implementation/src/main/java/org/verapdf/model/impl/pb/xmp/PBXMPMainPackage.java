@@ -10,7 +10,7 @@ import org.verapdf.model.xmplayer.XMPMainPackage;
  */
 public class PBXMPMainPackage extends PBXMPPackage implements XMPMainPackage {
 
-    private static final String XMPMAINPACKAGE = "XMPMainPackage";
+    public static final String XMP_MAIN_PACKAGE = "XMPMainPackage";
 
     /**
      * Constructs new object
@@ -19,8 +19,7 @@ public class PBXMPMainPackage extends PBXMPPackage implements XMPMainPackage {
      * @param isMetadataValid - true if metadata is valid
      */
     public PBXMPMainPackage(XMPMetadata xmpMetadata, boolean isMetadataValid) {
-        super(xmpMetadata, isMetadataValid);
-        setType(XMPMAINPACKAGE);
+        super(xmpMetadata, isMetadataValid, XMP_MAIN_PACKAGE);
     }
 
     /**
@@ -28,6 +27,7 @@ public class PBXMPMainPackage extends PBXMPPackage implements XMPMainPackage {
      */
     @Override
     public Boolean getispdfaidNSPresent() {
-        return getXmpMetadata() == null ? Boolean.FALSE : Boolean.valueOf(getXmpMetadata().getPDFIdentificationSchema() != null);
+        return getXmpMetadata() == null ? Boolean.FALSE : Boolean
+				.valueOf(getXmpMetadata().getPDFIdentificationSchema() != null);
     }
 }

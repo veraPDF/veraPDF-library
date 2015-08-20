@@ -10,7 +10,7 @@ import org.verapdf.model.xmplayer.XAPSSchema;
  */
 public class PBXAPSSchema extends PBXMPPredefinedSchema implements XAPSSchema {
 
-    private static final String XAPSSCHEMA = "XAPSSchema";
+    public static final String XAPS_SCHEMA = "XAPSSchema";
 
     /**
      * Constructs new object
@@ -18,8 +18,7 @@ public class PBXAPSSchema extends PBXMPPredefinedSchema implements XAPSSchema {
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBXAPSSchema(XMPSchema xmpSchema) {
-        super(xmpSchema);
-        setType(XAPSSCHEMA);
+        super(xmpSchema, XAPS_SCHEMA);
     }
 
 }

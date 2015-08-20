@@ -10,7 +10,7 @@ import org.verapdf.model.xmplayer.XMPTPgSchema;
  */
 public class PBXMPTPgSchema extends PBXMPPredefinedSchema implements XMPTPgSchema {
 
-    private static final String XMPTPGSCHEMA = "XMPTPgSchema";
+    private static final String XMP_TPG_SCHEMA = "XMPTPgSchema";
 
     private static final String COLORANTS = "Colorants";
     private static final String FONTS = "Fonts";
@@ -22,8 +22,7 @@ public class PBXMPTPgSchema extends PBXMPPredefinedSchema implements XMPTPgSchem
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBXMPTPgSchema(XMPageTextSchema xmpSchema) {
-        super(xmpSchema);
-        setType(XMPTPGSCHEMA);
+        super(xmpSchema, XMP_TPG_SCHEMA);
     }
 
     /**

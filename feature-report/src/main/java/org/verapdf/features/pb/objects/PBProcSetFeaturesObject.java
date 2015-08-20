@@ -1,6 +1,7 @@
 package org.verapdf.features.pb.objects;
 
-import org.apache.pdfbox.pdmodel.graphics.shading.PDShading;
+import org.apache.pdfbox.cos.COSArray;
+import org.apache.pdfbox.cos.COSName;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -11,37 +12,32 @@ import org.verapdf.features.tools.FeaturesCollection;
 import java.util.Set;
 
 /**
- * Features object for shading
+ * Feature object for procSet
  *
  * @author Maksim Bezrukov
  */
-public class PBShadingFeaturesObject implements IFeaturesObject {
+public class PBProcSetFeaturesObject implements IFeaturesObject {
 
-    private static final String ID = "id";
-
-    private PDShading shading;
+    private COSArray procSet;
     private String id;
-    private String colorSpaceChild;
     private Set<String> pageParent;
     private Set<String> patternParent;
     private Set<String> xobjectParent;
     private Set<String> fontParent;
 
     /**
-     * Constructs new shading features object
+     * Constructs new procSet features object
      *
-     * @param shading         - PDShading which represents shading for feature report
-     * @param id              - id of the object
-     * @param colorSpaceChild - colorSpace id which contains in this shading
-     * @param pageParent      - set of page ids which contains the given shading as its resources
-     * @param patternParent   - set of pattern ids which contains the given shading as its resources
-     * @param xobjectParent   - set of xobject ids which contains the given shading as its resources
-     * @param fontParent      - set of font ids which contains the given shading as its resources
+     * @param procSet       - COSArray which represents procSet for feature report
+     * @param id            - id of the object
+     * @param pageParent    - set of page ids which contains the given procSet as its resources
+     * @param patternParent - set of pattern ids which contains the given procSet as its resources
+     * @param xobjectParent - set of xobject ids which contains the given procSet as its resources
+     * @param fontParent    - set of font ids which contains the given procSet as its resources
      */
-    public PBShadingFeaturesObject(PDShading shading, String id, String colorSpaceChild, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
-        this.shading = shading;
+    public PBProcSetFeaturesObject(COSArray procSet, String id, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+        this.procSet = procSet;
         this.id = id;
-        this.colorSpaceChild = colorSpaceChild;
         this.pageParent = pageParent;
         this.patternParent = patternParent;
         this.xobjectParent = xobjectParent;
@@ -49,11 +45,11 @@ public class PBShadingFeaturesObject implements IFeaturesObject {
     }
 
     /**
-     * @return SHADING instance of the FeaturesObjectTypesEnum enumeration
+     * @return PROCSET instance of the FeaturesObjectTypesEnum enumeration
      */
     @Override
     public FeaturesObjectTypesEnum getType() {
-        return FeaturesObjectTypesEnum.SHADING;
+        return FeaturesObjectTypesEnum.PROCSET;
     }
 
     /**
@@ -65,24 +61,20 @@ public class PBShadingFeaturesObject implements IFeaturesObject {
      */
     @Override
     public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
-        if (shading != null) {
-            FeatureTreeNode root = FeatureTreeNode.newRootInstance("shading");
-            root.addAttribute(ID, id);
+        if (procSet != null) {
+            FeatureTreeNode root = FeatureTreeNode.newRootInstance("procSet");
+            root.addAttribute("id", id);
 
             parseParents(root);
 
-            FeatureTreeNode.newChildInstanceWithValue("shadingType", String.valueOf(shading.getShadingType()), root);
-
-            if (colorSpaceChild != null) {
-                FeatureTreeNode shading = FeatureTreeNode.newChildInstance("colorSpace", root);
-                shading.addAttribute(ID, colorSpaceChild);
+            for (int i = 0; i < procSet.size(); ++i) {
+                if (procSet.get(i) instanceof COSName) {
+                    FeatureTreeNode entry = FeatureTreeNode.newChildInstanceWithValue("entry", ((COSName) procSet.get(i)).getName(), root);
+                    entry.addAttribute("number", String.valueOf(i));
+                }
             }
 
-            PBCreateNodeHelper.addBoxFeature("bbox", shading.getBBox(), root);
-
-            FeatureTreeNode.newChildInstanceWithValue("antiAlias", String.valueOf(shading.getAntiAlias()), root);
-
-            collection.addNewFeatureTree(FeaturesObjectTypesEnum.SHADING, root);
+            collection.addNewFeatureTree(FeaturesObjectTypesEnum.PROCSET, root);
             return root;
         }
 

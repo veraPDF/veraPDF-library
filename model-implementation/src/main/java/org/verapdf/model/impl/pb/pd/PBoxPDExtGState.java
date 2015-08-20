@@ -29,8 +29,7 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
     public static final String EXT_G_STATE_TYPE = "PDExtGState";
 
     public PBoxPDExtGState(PDExtendedGraphicsState simplePDObject) {
-        super(simplePDObject);
-        setType(EXT_G_STATE_TYPE);
+        super(simplePDObject, EXT_G_STATE_TYPE);
     }
 
     @Override

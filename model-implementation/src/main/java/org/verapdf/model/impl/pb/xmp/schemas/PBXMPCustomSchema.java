@@ -9,7 +9,7 @@ import org.verapdf.model.xmplayer.XMPCustomSchema;
  */
 public class PBXMPCustomSchema extends PBXMPSchema implements XMPCustomSchema {
 
-    private static final String XMPCUSTOMSCHEMA = "XMPCustomSchema";
+    private static final String XMP_CUSTOM_SCHEMA = "XMPCustomSchema";
 
     /**
      * Constructs new object
@@ -17,8 +17,7 @@ public class PBXMPCustomSchema extends PBXMPSchema implements XMPCustomSchema {
      * @param xmpSchema - object from xmpbox represented this schema
      */
     public PBXMPCustomSchema(org.apache.xmpbox.schema.XMPSchema xmpSchema) {
-        super(xmpSchema);
-        setType(XMPCUSTOMSCHEMA);
+        super(xmpSchema, XMP_CUSTOM_SCHEMA);
     }
 
     /**

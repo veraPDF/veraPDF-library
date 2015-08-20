@@ -19,16 +19,11 @@ import java.io.IOException;
 public class PBCosObject extends GenericModelObject implements CosObject {
 
     /** Type name for PBCosObject */
-    public static final String COS_OBJECT_TYPE = "CosObject";
     private static final Logger LOGGER = Logger.getLogger(PBCosObject.class);
 
     protected final COSBase baseObject;
     private final String type;
     private final String id;
-
-    PBCosObject(final COSBase baseObject) {
-        this(baseObject, COS_OBJECT_TYPE);
-    }
 
     PBCosObject(final COSBase baseObject, final String type) {
         this.baseObject = baseObject;

@@ -19,9 +19,14 @@ public class PBoxPDAction extends PBoxPDObject implements PDAction {
 
     public PBoxPDAction(
             org.apache.pdfbox.pdmodel.interactive.action.PDAction simplePDObject) {
-        super(simplePDObject);
-        setType(ACTION_TYPE);
+        super(simplePDObject, ACTION_TYPE);
     }
+
+	public PBoxPDAction(
+			org.apache.pdfbox.pdmodel.interactive.action.PDAction simplePDObject,
+			final String type) {
+		super(simplePDObject, type);
+	}
 
     @Override
     public String getS() {

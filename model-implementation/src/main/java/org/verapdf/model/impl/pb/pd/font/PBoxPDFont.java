@@ -19,13 +19,11 @@ import java.util.List;
  */
 public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 
-    public static final String FONT_TYPE = "PDFont";
     public static final String FONT_FILE = "fontFile";
 
-    public PBoxPDFont(PDFontLike font) {
-        super(font);
-        setType(FONT_TYPE);
-    }
+	protected PBoxPDFont(PDFontLike font, final String type) {
+		super(font, type);
+	}
 
     @Override
     public List<? extends Object> getLinkedObjects(String link) {

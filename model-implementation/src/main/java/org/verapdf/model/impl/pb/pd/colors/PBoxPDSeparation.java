@@ -15,13 +15,13 @@ import org.verapdf.model.pdlayer.PDSeparation;
  */
 public class PBoxPDSeparation extends PBoxPDColorSpace implements PDSeparation {
 
+	public static final String SEPARATION_TYPE = "PDSeparation";
+
     public static final String ALTERNATE = "alternate";
-    public static final String SEPARATION_TYPE = "PDSeparation";
 
     public PBoxPDSeparation(
             org.apache.pdfbox.pdmodel.graphics.color.PDSeparation simplePDObject) {
-        super(simplePDObject);
-        setType(SEPARATION_TYPE);
+        super(simplePDObject, SEPARATION_TYPE);
     }
 
     @Override

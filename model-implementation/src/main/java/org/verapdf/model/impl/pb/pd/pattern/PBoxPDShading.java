@@ -24,8 +24,7 @@ public class PBoxPDShading extends PBoxPDResources implements PDShading {
 
     public PBoxPDShading(
             org.apache.pdfbox.pdmodel.graphics.shading.PDShading simplePDObject) {
-        super(simplePDObject);
-        setType(SHADING_TYPE);
+        super(simplePDObject, SHADING_TYPE);
     }
 
     @Override

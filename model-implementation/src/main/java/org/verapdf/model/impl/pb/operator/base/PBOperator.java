@@ -20,17 +20,11 @@ import java.util.List;
 public abstract class PBOperator extends GenericModelObject implements Operator {
 
     public static final int MAX_NUMBER_OF_ELEMENTS = 1;
-    public static final String OP_TYPE_PB = "Operator";
     protected final List<COSBase> arguments;
-    private final String id;
+    private final String id = null;
     private final String type;
 
-    protected PBOperator(List<COSBase> arguments) {
-        this(arguments, OP_TYPE_PB);
-    }
-
     protected PBOperator(List<COSBase> arguments, final String opType) {
-        this.id = IDGenerator.generateID();
         this.type = opType;
         this.arguments = arguments;
     }

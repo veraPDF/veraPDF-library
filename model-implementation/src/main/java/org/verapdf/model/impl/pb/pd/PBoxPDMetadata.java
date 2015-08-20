@@ -35,9 +35,8 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
     public PBoxPDMetadata(
             org.apache.pdfbox.pdmodel.common.PDMetadata simplePDObject,
             Boolean isMainMetadata) {
-        super(simplePDObject);
+        super(simplePDObject, METADATA_TYPE);
         this.isMainMetadata = isMainMetadata.booleanValue();
-        setType(METADATA_TYPE);
     }
 
     @Override

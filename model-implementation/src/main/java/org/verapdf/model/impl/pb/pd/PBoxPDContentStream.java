@@ -24,8 +24,7 @@ public class PBoxPDContentStream extends PBoxPDObject implements
 
     public PBoxPDContentStream(
             org.apache.pdfbox.contentstream.PDContentStream contentStream) {
-        super(contentStream);
-        setType(CONTENT_STREAM_TYPE);
+        super(contentStream, CONTENT_STREAM_TYPE);
     }
 
     @Override

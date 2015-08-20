@@ -4,9 +4,12 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.*;
 import org.apache.pdfbox.pdmodel.common.PDNameTreeNode;
+import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.apache.pdfbox.pdmodel.documentinterchange.markedcontent.PDPropertyList;
 import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDFontLike;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType3Font;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.color.*;
@@ -30,7 +33,6 @@ import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -69,7 +71,7 @@ public final class PBFeatureParser {
 
     private FeaturesReporter reporter;
 
-    private Map<String, InputStream> iccProfiles = new HashMap<>();
+    private Map<String, COSStream> iccProfiles = new HashMap<>();
     private Map<String, Set<String>> iccProfileOutInts = new HashMap<>();
     private Map<String, Set<String>> iccProfileICCBased = new HashMap<>();
 
@@ -136,12 +138,16 @@ public final class PBFeatureParser {
 
     private Map<String, PDImageXObject> imageXObjects = new HashMap<>();
     private Map<String, String> imageXObjectColorSpaceChild = new HashMap<>();
+    private Map<String, String> imageXObjectMaskChild = new HashMap<>();
+    private Map<String, String> imageXObjectSMaskChild = new HashMap<>();
+    private Map<String, Set<String>> imageXObjectAlternatesChild = new HashMap<>();
     private Map<String, Set<String>> imageXObjectPageParent = new HashMap<>();
     private Map<String, Set<String>> imageXObjectPatternParent = new HashMap<>();
     private Map<String, Set<String>> imageXObjectXObjectParent = new HashMap<>();
     private Map<String, Set<String>> imageXObjectFontParent = new HashMap<>();
 
     private Map<String, PDFormXObject> formXObjects = new HashMap<>();
+    private Map<String, String> groupXObjectColorSpaceChild = new HashMap<>();
     private Map<String, Set<String>> formXObjectExtGStateChild = new HashMap<>();
     private Map<String, Set<String>> formXObjectColorSpaceChild = new HashMap<>();
     private Map<String, Set<String>> formXObjectPatternChild = new HashMap<>();
@@ -156,11 +162,7 @@ public final class PBFeatureParser {
     private Map<String, Set<String>> formXObjectXObjectParent = new HashMap<>();
     private Map<String, Set<String>> formXObjectFontParent = new HashMap<>();
 
-    private Map<String, PDGroup> groupXObjects = new HashMap<>();
-    private Map<String, String> groupXObjectColorSpaceChild = new HashMap<>();
-    private Map<String, Set<String>> groupXObjectXobjectParent = new HashMap<>();
-
-    private Map<String, PDFont> fonts = new HashMap<>();
+    private Map<String, PDFontLike> fonts = new HashMap<>();
     private Map<String, Set<String>> fontExtGStateChild = new HashMap<>();
     private Map<String, Set<String>> fontColorSpaceChild = new HashMap<>();
     private Map<String, Set<String>> fontPatternChild = new HashMap<>();
@@ -173,7 +175,7 @@ public final class PBFeatureParser {
     private Map<String, Set<String>> fontPageParent = new HashMap<>();
     private Map<String, Set<String>> fontPatternParent = new HashMap<>();
     private Map<String, Set<String>> fontXObjectParent = new HashMap<>();
-    private Map<String, Set<String>> fontParent = new HashMap<>();
+    private Map<String, Set<String>> fontFontParent = new HashMap<>();
 
     private Map<String, COSArray> procSets = new HashMap<>();
     private Map<String, Set<String>> procSetPageParent = new HashMap<>();
@@ -265,7 +267,7 @@ public final class PBFeatureParser {
             getPageTreeFeatures(pageTree);
         }
 
-        for (Map.Entry<String, InputStream> iccProfileEntry : iccProfiles.entrySet()) {
+        for (Map.Entry<String, COSStream> iccProfileEntry : iccProfiles.entrySet()) {
             if (iccProfileEntry.getValue() != null) {
                 String id = iccProfileEntry.getKey();
                 reporter.report(PBFeaturesObjectCreator
@@ -367,6 +369,94 @@ public final class PBFeatureParser {
                                 shadingPatternParent.get(id),
                                 shadingXObjectParent.get(id),
                                 shadingFontParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, PDImageXObject> imageXObjectEntry : imageXObjects.entrySet()) {
+            if (imageXObjectEntry.getValue() != null) {
+                String id = imageXObjectEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createImageXObjectFeaturesObject(imageXObjectEntry.getValue(),
+                                id,
+                                imageXObjectColorSpaceChild.get(id),
+                                imageXObjectMaskChild.get(id),
+                                imageXObjectSMaskChild.get(id),
+                                imageXObjectAlternatesChild.get(id),
+                                imageXObjectPageParent.get(id),
+                                imageXObjectPatternParent.get(id),
+                                imageXObjectXObjectParent.get(id),
+                                imageXObjectFontParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, PDFormXObject> formXObjectEntry : formXObjects.entrySet()) {
+            if (formXObjectEntry.getValue() != null) {
+                String id = formXObjectEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createFormXObjectFeaturesObject(formXObjectEntry.getValue(),
+                                id,
+                                groupXObjectColorSpaceChild.get(id),
+                                formXObjectExtGStateChild.get(id),
+                                fontColorSpaceChild.get(id),
+                                formXObjectPatternChild.get(id),
+                                formXObjectShadingChild.get(id),
+                                formXObjectXObjectChild.get(id),
+                                formXObjectFontChild.get(id),
+                                formXObjectProcSetChild.get(id),
+                                formXObjectPropertiesChild.get(id),
+                                formXObjectPageParent.get(id),
+                                formXObjectAnnotationParent.get(id),
+                                formXObjectPatternParent.get(id),
+                                formXObjectXObjectParent.get(id),
+                                formXObjectFontParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, PDFontLike> fontEntry : fonts.entrySet()) {
+            if (fontEntry.getValue() != null) {
+                String id = fontEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createFontFeaturesObject(fontEntry.getValue(),
+                                id,
+                                fontExtGStateChild.get(id),
+                                fontColorSpaceChild.get(id),
+                                fontPatternChild.get(id),
+                                fontShadingChild.get(id),
+                                fontXObjectChild.get(id),
+                                fontFontChild.get(id),
+                                fontProcSetChild.get(id),
+                                fontPropertiesChild.get(id),
+                                fontExtGStateParent.get(id),
+                                fontPageParent.get(id),
+                                fontPatternParent.get(id),
+                                fontXObjectParent.get(id),
+                                fontFontParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, COSArray> procSetEntry : procSets.entrySet()) {
+            if (procSetEntry.getValue() != null) {
+                String id = procSetEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createProcSetFeaturesObject(procSetEntry.getValue(),
+                                id,
+                                procSetPageParent.get(id),
+                                procSetPatternParent.get(id),
+                                procSetXObjectParent.get(id),
+                                procSetFontParent.get(id)));
+            }
+        }
+
+        for (Map.Entry<String, COSDictionary> propertiesEntry : properties.entrySet()) {
+            if (propertiesEntry.getValue() != null) {
+                String id = propertiesEntry.getKey();
+                reporter.report(PBFeaturesObjectCreator
+                        .createPropertiesDictFeaturesObject(propertiesEntry.getValue(),
+                                id,
+                                propertyPageParent.get(id),
+                                propertyPatternParent.get(id),
+                                propertyXObjectParent.get(id),
+                                propertyFontParent.get(id)));
             }
         }
     }
@@ -562,12 +652,8 @@ public final class PBFeatureParser {
             String iccProfileID = getId(outIntDict.getItem(COSName.DEST_OUTPUT_PROFILE), ICCPROFILE, iccProfiles.size());
 
             if (!iccProfiles.containsKey(iccProfileID)) {
-                try {
-                    iccProfiles.put(iccProfileID, outInt.getDestOutputIntent().getUnfilteredStream());
-                } catch (IOException e) {
-                    LOGGER.debug("ICC Profile getting from Output Intent exception caught", e);
-                    iccProfileCreationProblem(iccProfileID);
-                }
+
+                iccProfiles.put(iccProfileID, outInt.getDestOutputIntent());
             }
 
             if (!iccProfileOutInts.containsKey(iccProfileID)) {
@@ -804,6 +890,113 @@ public final class PBFeatureParser {
         parsePropertiesFromResources(resources, parentID, propertiesChildMap, propertiesParentMap);
     }
 
+    private void parseImageXObject(PDImageXObject xobj, String id) {
+        COSBase baseColorSpace = ((COSStream) xobj.getCOSObject()).getItem(COSName.CS);
+        if (baseColorSpace == null) {
+            baseColorSpace = ((COSStream) xobj.getCOSObject()).getItem(COSName.COLORSPACE);
+        }
+
+        String idColorSpace = getId(baseColorSpace, COLORSPACE_ID, colorSpaces.size());
+
+        try {
+            PDColorSpace colorSpace = xobj.getColorSpace();
+
+            if (colorSpace instanceof PDDeviceColorSpace) {
+                idColorSpace = colorSpace instanceof PDDeviceGray ? DEVICEGRAY_ID :
+                        colorSpace instanceof PDDeviceRGB ? DEVICERGB_ID :
+                                DEVICECMYK_ID;
+            }
+
+            if (colorSpaceXObjectParent.get(idColorSpace) == null) {
+                colorSpaceXObjectParent.put(idColorSpace, new HashSet<String>());
+            }
+            colorSpaceXObjectParent.get(idColorSpace).add(id);
+            imageXObjectColorSpaceChild.put(id, idColorSpace);
+
+            if (!colorSpaces.containsKey(idColorSpace)) {
+                colorSpaces.put(idColorSpace, colorSpace);
+                parseColorSpace(colorSpace, idColorSpace);
+            }
+        } catch (IOException e) {
+            LOGGER.info(e);
+            colorSpaceCreationProblem(idColorSpace);
+        }
+
+        COSBase mask = xobj.getCOSStream().getDictionaryObject(COSName.MASK);
+        if (mask instanceof COSStream) {
+            COSBase maskBase = ((COSStream) xobj.getCOSObject()).getItem(COSName.MASK);
+            String idMask = getId(maskBase, XOBJECT_ID, imageXObjects.size());
+
+            if (imageXObjectXObjectParent.get(idMask) == null) {
+                imageXObjectXObjectParent.put(idMask, new HashSet<String>());
+            }
+            imageXObjectXObjectParent.get(idMask).add(id);
+            imageXObjectMaskChild.put(id, idMask);
+
+            if (!imageXObjects.containsKey(idMask)) {
+                try {
+                    PDImageXObject imxobj = xobj.getMask();
+                    imageXObjects.put(id, imxobj);
+                    parseImageXObject(imxobj, idMask);
+                } catch (IOException e) {
+                    LOGGER.info(e);
+                    xobjectCreationProblem(idMask);
+                }
+            }
+        }
+
+        COSBase sMask = xobj.getCOSStream().getDictionaryObject(COSName.SMASK);
+        if (sMask instanceof COSStream) {
+            COSBase sMaskBase = ((COSStream) xobj.getCOSObject()).getItem(COSName.SMASK);
+            String idMask = getId(sMaskBase, XOBJECT_ID, imageXObjects.size());
+
+            if (imageXObjectXObjectParent.get(idMask) == null) {
+                imageXObjectXObjectParent.put(idMask, new HashSet<String>());
+            }
+            imageXObjectXObjectParent.get(idMask).add(id);
+            imageXObjectSMaskChild.put(id, idMask);
+
+            if (!imageXObjects.containsKey(idMask)) {
+                try {
+                    PDImageXObject imxobj = xobj.getSoftMask();
+                    imageXObjects.put(id, imxobj);
+                    parseImageXObject(imxobj, idMask);
+                } catch (IOException e) {
+                    LOGGER.info(e);
+                    xobjectCreationProblem(idMask);
+                }
+            }
+        }
+
+        COSBase alternates = xobj.getCOSStream().getDictionaryObject(COSName.getPDFName("Alternates"));
+        alternates = getBase(alternates);
+        if (alternates instanceof COSArray) {
+            COSArray alternatesArray = (COSArray) alternates;
+            for (COSBase entry : alternatesArray) {
+                COSBase base = getBase(entry);
+                if (base instanceof COSDictionary) {
+                    COSDictionary altDict = (COSDictionary) base;
+                    COSBase baseImage = altDict.getItem(COSName.IMAGE);
+                    String idImage = getId(baseImage, XOBJECT_ID, imageXObjects.size());
+                    baseImage = getBase(baseImage);
+                    if (baseImage instanceof COSStream) {
+                        makePairDependence(idImage, id, imageXObjectXObjectParent, imageXObjectAlternatesChild);
+                        if (!imageXObjects.containsKey(idImage)) {
+                            try {
+                                PDImageXObject im = new PDImageXObject(new PDStream((COSStream) baseImage), null);
+                                imageXObjects.put(idImage, im);
+                                parseImageXObject(im, idImage);
+                            } catch (IOException e) {
+                                LOGGER.info(e);
+                                xobjectCreationProblem(idImage);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private void parseXObjectFromResources(PDResources resources,
                                            String parentID,
                                            Map<String, Set<String>> xobjectChildMap,
@@ -816,7 +1009,7 @@ public final class PBFeatureParser {
         for (COSName name : resources.getXObjectNames()) {
             COSDictionary dict = (COSDictionary) resources.getCOSObject().getDictionaryObject(COSName.XOBJECT);
             COSBase base = dict.getItem(name);
-            String id = getId(base, XOBJECT_ID, imageXObjects.size() + formXObjects.size() + groupXObjects.size());
+            String id = getId(base, XOBJECT_ID, imageXObjects.size() + formXObjects.size());
 
             try {
                 PDXObject xobj = resources.getXObject(name);
@@ -826,37 +1019,7 @@ public final class PBFeatureParser {
                     if (!imageXObjects.containsKey(id)) {
                         imageXObjects.put(id, (PDImageXObject) xobj);
 
-
-                        COSBase baseColorSpace = ((COSStream) xobj.getCOSObject()).getItem(COSName.CS);
-                        if (baseColorSpace == null) {
-                            baseColorSpace = ((COSStream) xobj.getCOSObject()).getItem(COSName.COLORSPACE);
-                        }
-
-                        String idColorSpace = getId(baseColorSpace, COLORSPACE_ID, colorSpaces.size());
-
-                        try {
-                            PDColorSpace colorSpace = ((PDImageXObject) xobj).getColorSpace();
-
-                            if (colorSpace instanceof PDDeviceColorSpace) {
-                                idColorSpace = colorSpace instanceof PDDeviceGray ? DEVICEGRAY_ID :
-                                        colorSpace instanceof PDDeviceRGB ? DEVICERGB_ID :
-                                                DEVICECMYK_ID;
-                            }
-
-                            if (colorSpaceXObjectParent.get(idColorSpace) == null) {
-                                colorSpaceXObjectParent.put(idColorSpace, new HashSet<String>());
-                            }
-                            colorSpaceXObjectParent.get(idColorSpace).add(id);
-                            imageXObjectColorSpaceChild.put(id, idColorSpace);
-
-                            if (!colorSpaces.containsKey(idColorSpace)) {
-                                colorSpaces.put(idColorSpace, colorSpace);
-                                parseColorSpace(colorSpace, idColorSpace);
-                            }
-                        } catch (IOException e) {
-                            LOGGER.info(e);
-                            colorSpaceCreationProblem(idColorSpace);
-                        }
+                        parseImageXObject((PDImageXObject) xobj, id);
 
                     }
                 } else if (xobj instanceof PDFormXObject) {
@@ -865,46 +1028,55 @@ public final class PBFeatureParser {
                         formXObjects.put(id, (PDFormXObject) xobj);
 
                         PDGroup group = ((PDFormXObject) xobj).getGroup();
-                        if (group != null) {
-                            COSBase baseGroup = xobj.getCOSStream().getItem(COSName.GROUP);
-                            String groupID = getId(baseGroup, XOBJECT_ID, imageXObjects.size() + formXObjects.size() + groupXObjects.size());
+                        if (group != null && COSName.TRANSPARENCY.equals(group.getSubType())) {
+                            COSBase baseColorSpace = group.getCOSObject().getItem(COSName.CS);
+                            String idColorSpace = getId(baseColorSpace, COLORSPACE_ID, colorSpaces.size());
 
-                            makePairDependence(groupID, parentID, groupXObjectXobjectParent, formXObjectXObjectChild);
+                            try {
+                                PDColorSpace colorSpace = group.getColorSpace();
 
-                            if (!groupXObjects.containsKey(groupID)) {
-                                groupXObjects.put(groupID, group);
-
-                                if (COSName.TRANSPARENCY.equals(group.getSubType())) {
-                                    COSBase baseColorSpace = group.getCOSObject().getItem(COSName.CS);
-
-                                    String idColorSpace = getId(baseColorSpace, COLORSPACE_ID, colorSpaces.size());
-
-                                    try {
-                                        PDColorSpace colorSpace = group.getColorSpace();
-
-                                        if (colorSpace instanceof PDDeviceColorSpace) {
-                                            idColorSpace = colorSpace instanceof PDDeviceGray ? DEVICEGRAY_ID :
-                                                    colorSpace instanceof PDDeviceRGB ? DEVICERGB_ID :
-                                                            DEVICECMYK_ID;
-                                        }
-
-                                        if (colorSpaceXObjectParent.get(idColorSpace) == null) {
-                                            colorSpaceXObjectParent.put(idColorSpace, new HashSet<String>());
-                                        }
-                                        colorSpaceXObjectParent.get(idColorSpace).add(id);
-                                        groupXObjectColorSpaceChild.put(id, idColorSpace);
-
-                                        if (!colorSpaces.containsKey(idColorSpace)) {
-                                            colorSpaces.put(idColorSpace, colorSpace);
-                                            parseColorSpace(colorSpace, idColorSpace);
-                                        }
-                                    } catch (IOException e) {
-                                        LOGGER.info(e);
-                                        colorSpaceCreationProblem(idColorSpace);
-                                    }
+                                if (colorSpace instanceof PDDeviceColorSpace) {
+                                    idColorSpace = colorSpace instanceof PDDeviceGray ? DEVICEGRAY_ID :
+                                            colorSpace instanceof PDDeviceRGB ? DEVICERGB_ID :
+                                                    DEVICECMYK_ID;
                                 }
+
+                                if (colorSpaceXObjectParent.get(idColorSpace) == null) {
+                                    colorSpaceXObjectParent.put(idColorSpace, new HashSet<String>());
+                                }
+                                colorSpaceXObjectParent.get(idColorSpace).add(id);
+                                groupXObjectColorSpaceChild.put(id, idColorSpace);
+
+                                if (!colorSpaces.containsKey(idColorSpace)) {
+                                    colorSpaces.put(idColorSpace, colorSpace);
+                                    parseColorSpace(colorSpace, idColorSpace);
+                                }
+                            } catch (IOException e) {
+                                LOGGER.info(e);
+                                colorSpaceCreationProblem(idColorSpace);
                             }
                         }
+
+                        getResourceDictionaryDependencies(((PDFormXObject) xobj).getResources(),
+                                id,
+                                fontExtGStateChild,
+                                formXObjectColorSpaceChild,
+                                formXObjectPatternChild,
+                                formXObjectShadingChild,
+                                formXObjectXObjectChild,
+                                formXObjectFontChild,
+                                formXObjectProcSetChild,
+                                formXObjectPropertiesChild,
+                                exGStateXObjectParent,
+                                colorSpaceXObjectParent,
+                                tilingPatternXObjectParent,
+                                shadingPatternXObjectParent,
+                                shadingXObjectParent,
+                                imageXObjectXObjectParent,
+                                formXObjectXObjectParent,
+                                fontXObjectParent,
+                                procSetXObjectParent,
+                                propertyXObjectParent);
 
                     }
                 }
@@ -1245,9 +1417,22 @@ public final class PBFeatureParser {
                     shadingFontParent,
                     imageXObjectFontParent,
                     formXObjectFontParent,
-                    fontParent,
+                    fontFontParent,
                     procSetFontParent,
                     propertyFontParent);
+        } else if (font instanceof PDType0Font) {
+            PDType0Font type0 = (PDType0Font) font;
+
+            COSBase descendantFontsBase = type0.getCOSObject().getDictionaryObject(COSName.DESCENDANT_FONTS);
+            if (descendantFontsBase instanceof COSArray) {
+                COSBase descendantFontDictionaryBase = ((COSArray) descendantFontsBase).getObject(0);
+                String id = getId(descendantFontDictionaryBase, FONT_ID, fonts.size());
+                makePairDependence(id, parentID, fontFontParent, fontFontChild);
+
+                if (!fonts.containsKey(id)) {
+                    fonts.put(id, type0.getDescendantFont());
+                }
+            }
         }
     }
 
@@ -1265,12 +1450,7 @@ public final class PBFeatureParser {
             colorSpaceIccProfileChild.put(parentID, id);
 
             if (!iccProfiles.containsKey(id)) {
-                try {
-                    iccProfiles.put(id, iccBased.getPDStream().getStream().getUnfilteredStream());
-                } catch (IOException e) {
-                    LOGGER.info(e);
-                    iccProfileCreationProblem(id);
-                }
+                iccProfiles.put(id, iccBased.getPDStream().getStream());
             }
 
             COSBase baseAlt = iccBased.getPDStream().getStream().getItem(COSName.ALTERNATE);
