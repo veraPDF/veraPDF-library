@@ -66,6 +66,8 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
     private static final int FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_END = 12;
     private static final int FIRST_RECORD_STRING_OFFSET_IN_MULTILOCALIZEDUNICODETYPE_BEGIN = 24;
     private static final int FIRST_RECORD_STRING_OFFSET_IN_MULTILOCALIZEDUNICODETYPE_END = 28;
+    private static final int NUMBER_OF_RECORDS_IN_MULTILOCALIZEDUNICODETYPE_BEGIN = 8;
+    private static final int NUMBER_OF_RECORDS_IN_MULTILOCALIZEDUNICODETYPE_END = 12;
 
     private COSStream profile;
     private String id;
@@ -163,16 +165,16 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
                         ErrorsHelper.GETINGICCPROFILEHEADERSIZEERROR_MESSAGE);
             } else {
                 PBCreateNodeHelper.addNotEmptyNode("version", getVersion(profileBytes), root);
-                PBCreateNodeHelper.addNotEmptyNode("cmmType", getStringFromHeader(profileBytes, CMMTYPE_BEGIN, CMMTYPE_END), root);
-                PBCreateNodeHelper.addNotEmptyNode("dataColorSpace", getStringFromHeader(profileBytes, DATACOLORSPACE_BEGIN, DATACOLORSPACE_END), root);
-                PBCreateNodeHelper.addNotEmptyNode("creator", getStringFromHeader(profileBytes, CREATOR_BEGIN, CREATOR_END), root);
+                PBCreateNodeHelper.addNotEmptyNode("cmmType", getString(profileBytes, CMMTYPE_BEGIN, CMMTYPE_END), root);
+                PBCreateNodeHelper.addNotEmptyNode("dataColorSpace", getString(profileBytes, DATACOLORSPACE_BEGIN, DATACOLORSPACE_END), root);
+                PBCreateNodeHelper.addNotEmptyNode("creator", getString(profileBytes, CREATOR_BEGIN, CREATOR_END), root);
                 PBCreateNodeHelper.createDateNode("creationDate", root, getCreationDate(profileBytes), collection);
-                PBCreateNodeHelper.addNotEmptyNode("defaultRenderingIntent", getStringFromHeader(profileBytes, RENDERINGINTENT_BEGIN, RENDERINGINTENT_END), root);
+                PBCreateNodeHelper.addNotEmptyNode("defaultRenderingIntent", getString(profileBytes, RENDERINGINTENT_BEGIN, RENDERINGINTENT_END), root);
                 PBCreateNodeHelper.addNotEmptyNode("copyright", getStringTag(profileBytes, "cprt"), root);
                 PBCreateNodeHelper.addNotEmptyNode("description", getStringTag(profileBytes, "desc"), root);
-                PBCreateNodeHelper.addNotEmptyNode("profileId", getStringFromHeader(profileBytes, PROFILEID_BEGIN, PROFILEID_END), root);
-                PBCreateNodeHelper.addNotEmptyNode("deviceModel", getStringFromHeader(profileBytes, DEVICEMODEL_BEGIN, DEVICEMODEL_END), root);
-                PBCreateNodeHelper.addNotEmptyNode("deviceManufacturer", getStringFromHeader(profileBytes, DEVICEMANUFACTURER_BEGIN, DEVICEMANUFACTURER_END), root);
+                PBCreateNodeHelper.addNotEmptyNode("profileId", getString(profileBytes, PROFILEID_BEGIN, PROFILEID_END), root);
+                PBCreateNodeHelper.addNotEmptyNode("deviceModel", getString(profileBytes, DEVICEMODEL_BEGIN, DEVICEMODEL_END), root);
+                PBCreateNodeHelper.addNotEmptyNode("deviceManufacturer", getString(profileBytes, DEVICEMANUFACTURER_BEGIN, DEVICEMANUFACTURER_END), root);
             }
 
         } catch (IOException e) {
@@ -206,7 +208,7 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
         return builder.toString();
     }
 
-    private static String getStringFromHeader(byte[] header, int begin, int end) {
+    private static String getString(byte[] header, int begin, int end) {
         StringBuilder builder = new StringBuilder();
         boolean isEmpty = true;
         for (int i = begin; i < end; ++i) {
@@ -266,10 +268,24 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 
                 String type = new String(Arrays.copyOfRange(profileBytes, offset, offset + REQUIRED_LENGTH));
                 if ("mluc".equals(type)) {
+
+                    int number = byteArrayToInt(Arrays.copyOfRange(profileBytes, offset + NUMBER_OF_RECORDS_IN_MULTILOCALIZEDUNICODETYPE_BEGIN,
+                            offset + NUMBER_OF_RECORDS_IN_MULTILOCALIZEDUNICODETYPE_END));
+                    int recOffset = offset + NUMBER_OF_RECORDS_IN_MULTILOCALIZEDUNICODETYPE_END + REQUIRED_LENGTH;
                     length = byteArrayToInt(Arrays.copyOfRange(profileBytes, offset + FIRST_RECORD_STRING_LENGTH_IN_MULTILOCALIZEDUNICODETYPE_BEGIN,
                             offset + FIRST_RECORD_STRING_LENGTH_IN_MULTILOCALIZEDUNICODETYPE_END));
                     offset += byteArrayToInt(Arrays.copyOfRange(profileBytes, offset + FIRST_RECORD_STRING_OFFSET_IN_MULTILOCALIZEDUNICODETYPE_BEGIN,
                             offset + FIRST_RECORD_STRING_OFFSET_IN_MULTILOCALIZEDUNICODETYPE_END));
+                    for (int i = 0; i < number; ++i) {
+                        String local = getString(profileBytes, recOffset, recOffset + REQUIRED_LENGTH);
+                        if ("enUS".equals(local)) {
+                            length = byteArrayToInt(Arrays.copyOfRange(profileBytes, recOffset + REQUIRED_LENGTH,
+                                    recOffset + REQUIRED_LENGTH + REQUIRED_LENGTH));
+                            offset += byteArrayToInt(Arrays.copyOfRange(profileBytes, recOffset + REQUIRED_LENGTH * 2,
+                                    offset + REQUIRED_LENGTH * 2 + REQUIRED_LENGTH));
+                            break;
+                        }
+                    }
                 } else if ("desc".equals(type)) {
                     length = byteArrayToInt(Arrays.copyOfRange(profileBytes, offset + FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_BEGIN,
                             offset + FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_END));

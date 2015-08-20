@@ -13,7 +13,7 @@ public final class ErrorsHelper {
 
     private static final Logger LOGGER = Logger.getLogger(ErrorsHelper.class);
 
-    public static final String ERRORID = "errorId";
+    public static final String ERRORID = "errorID";
     public static final String ID = "id";
 
     public static final String METADATACONVERT_ID = "metaerr1";

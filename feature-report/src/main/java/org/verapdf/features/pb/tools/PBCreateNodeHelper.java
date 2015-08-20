@@ -267,8 +267,7 @@ public final class PBCreateNodeHelper {
         }
         try {
             byte[] bStream = metadata.getByteArray();
-            String encoding = getEncoding(bStream);
-            String metadataString = new String(bStream, Charset.forName(encoding));
+            String metadataString = getStringFromMeta(bStream);
             node.setValue(metadataString);
         } catch (IOException e) {
             LOGGER.debug("Error while converting stream to string", e);
@@ -279,8 +278,7 @@ public final class PBCreateNodeHelper {
         return node;
     }
 
-    private static String getEncoding(byte[] bStream) {
-        int beginOffset = getBeginOffset(bStream);
+    private static String getEncodingWithBegin(byte[] bStream, int beginOffset) {
         if (beginOffset >= 0) {
             byte[] suffix = Arrays.copyOfRange(bStream, beginOffset, bStream.length);
             if (startsWith(suffix, utf32BEBegin)) {
@@ -298,39 +296,57 @@ public final class PBCreateNodeHelper {
         return "UTF-8";
     }
 
-    private static int getBeginOffset(byte[] bStream) {
+    private static String getStringFromMeta(byte[] stream) {
         int beginOffset = -1;
-        if (bStream != null) {
-            if ((bStream.length >= utf32LEMetadataPrefix.length + utf32LEDoubleQuote.length + utf32LEBegin.length) &&
-                    startsWith(bStream, utf32LEMetadataPrefix)) {
-                byte[] quote = Arrays.copyOfRange(bStream, utf32LEMetadataPrefix.length, utf32LEMetadataPrefix.length + utf32LEDoubleQuote.length);
-                if (startsWith(quote, utf32LESingleQuote) || startsWith(quote, utf32LEDoubleQuote)) {
-                    beginOffset = utf32LEMetadataPrefix.length + utf32LEDoubleQuote.length;
+        int packageBeginOffset = 0;
+        if (stream != null) {
+            for (int i = 0; i < stream.length; ++i) {
+                if (stream[i] == 0x3C) {
+                    beginOffset = getBegOffsetFromCutted(Arrays.copyOfRange(stream, i, stream.length));
+                    if (beginOffset >= 0) {
+                        packageBeginOffset = i;
+                        beginOffset += i;
+                        break;
+                    }
                 }
-            } else if ((bStream.length >= utf32BEMetadataPrefix.length + utf32BEDoubleQuote.length + utf32BEBegin.length) &&
-                    startsWith(bStream, utf32BEMetadataPrefix)) {
-                byte[] quote = Arrays.copyOfRange(bStream, utf32BEMetadataPrefix.length, utf32BEMetadataPrefix.length + utf32BEDoubleQuote.length);
-                if (startsWith(quote, utf32BESingleQuote) || startsWith(quote, utf32BEDoubleQuote)) {
-                    beginOffset = utf32BEMetadataPrefix.length + utf32BEDoubleQuote.length;
-                }
-            } else if ((bStream.length >= utf16LEMetadataPrefix.length + utf16LEDoubleQuote.length + utf16LEBegin.length) &&
-                    startsWith(bStream, utf16LEMetadataPrefix)) {
-                byte[] quote = Arrays.copyOfRange(bStream, utf16LEMetadataPrefix.length, utf16LEMetadataPrefix.length + utf16LEDoubleQuote.length);
-                if (startsWith(quote, utf16LESingleQuote) || startsWith(quote, utf16LEDoubleQuote)) {
-                    beginOffset = utf16LEMetadataPrefix.length + utf16LEDoubleQuote.length;
-                }
-            } else if ((bStream.length >= utf16BEMetadataPrefix.length + utf16BEDoubleQuote.length + utf16BEBegin.length) &&
-                    startsWith(bStream, utf16BEMetadataPrefix)) {
-                byte[] quote = Arrays.copyOfRange(bStream, utf16BEMetadataPrefix.length, utf16BEMetadataPrefix.length + utf16BEDoubleQuote.length);
-                if (startsWith(quote, utf16BESingleQuote) || startsWith(quote, utf16BEDoubleQuote)) {
-                    beginOffset = utf16BEMetadataPrefix.length + utf16BEDoubleQuote.length;
-                }
-            } else if ((bStream.length >= utf8MetadataPrefix.length + utf8DoubleQuote.length + utf8Begin.length) &&
-                    startsWith(bStream, utf8MetadataPrefix)) {
-                byte[] quote = Arrays.copyOfRange(bStream, utf8MetadataPrefix.length, utf8MetadataPrefix.length + utf8DoubleQuote.length);
-                if (startsWith(quote, utf8SingleQuote) || startsWith(quote, utf8DoubleQuote)) {
-                    beginOffset = utf8MetadataPrefix.length + utf8DoubleQuote.length;
-                }
+            }
+            return new String(Arrays.copyOfRange(stream, packageBeginOffset, stream.length), Charset.forName(getEncodingWithBegin(stream, beginOffset)));
+        }
+
+        return null;
+    }
+
+    private static int getBegOffsetFromCutted(byte[] bStream) {
+        int beginOffset = -1;
+        if ((bStream.length >= utf32LEMetadataPrefix.length + utf32LEDoubleQuote.length + utf32LEBegin.length) &&
+                startsWith(bStream, utf32LEMetadataPrefix)) {
+            byte[] quote = Arrays.copyOfRange(bStream, utf32LEMetadataPrefix.length, utf32LEMetadataPrefix.length + utf32LEDoubleQuote.length);
+            if (startsWith(quote, utf32LESingleQuote) || startsWith(quote, utf32LEDoubleQuote)) {
+                beginOffset = utf32LEMetadataPrefix.length + utf32LEDoubleQuote.length;
+            }
+        } else if ((bStream.length >= utf32BEMetadataPrefix.length + utf32BEDoubleQuote.length + utf32BEBegin.length) &&
+                startsWith(bStream, utf32BEMetadataPrefix)) {
+            byte[] quote = Arrays.copyOfRange(bStream, utf32BEMetadataPrefix.length, utf32BEMetadataPrefix.length + utf32BEDoubleQuote.length);
+            if (startsWith(quote, utf32BESingleQuote) || startsWith(quote, utf32BEDoubleQuote)) {
+                beginOffset = utf32BEMetadataPrefix.length + utf32BEDoubleQuote.length;
+            }
+        } else if ((bStream.length >= utf16LEMetadataPrefix.length + utf16LEDoubleQuote.length + utf16LEBegin.length) &&
+                startsWith(bStream, utf16LEMetadataPrefix)) {
+            byte[] quote = Arrays.copyOfRange(bStream, utf16LEMetadataPrefix.length, utf16LEMetadataPrefix.length + utf16LEDoubleQuote.length);
+            if (startsWith(quote, utf16LESingleQuote) || startsWith(quote, utf16LEDoubleQuote)) {
+                beginOffset = utf16LEMetadataPrefix.length + utf16LEDoubleQuote.length;
+            }
+        } else if ((bStream.length >= utf16BEMetadataPrefix.length + utf16BEDoubleQuote.length + utf16BEBegin.length) &&
+                startsWith(bStream, utf16BEMetadataPrefix)) {
+            byte[] quote = Arrays.copyOfRange(bStream, utf16BEMetadataPrefix.length, utf16BEMetadataPrefix.length + utf16BEDoubleQuote.length);
+            if (startsWith(quote, utf16BESingleQuote) || startsWith(quote, utf16BEDoubleQuote)) {
+                beginOffset = utf16BEMetadataPrefix.length + utf16BEDoubleQuote.length;
+            }
+        } else if ((bStream.length >= utf8MetadataPrefix.length + utf8DoubleQuote.length + utf8Begin.length) &&
+                startsWith(bStream, utf8MetadataPrefix)) {
+            byte[] quote = Arrays.copyOfRange(bStream, utf8MetadataPrefix.length, utf8MetadataPrefix.length + utf8DoubleQuote.length);
+            if (startsWith(quote, utf8SingleQuote) || startsWith(quote, utf8DoubleQuote)) {
+                beginOffset = utf8MetadataPrefix.length + utf8DoubleQuote.length;
             }
         }
         return beginOffset;
