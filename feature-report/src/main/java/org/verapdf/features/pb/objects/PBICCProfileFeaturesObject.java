@@ -276,6 +276,7 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
                     offset += FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_END;
                 } else {
                     offset += REQUIRED_LENGTH;
+                    length -= REQUIRED_LENGTH;
                 }
 
                 return new String(Arrays.copyOfRange(profileBytes, offset, offset + length)).trim();
