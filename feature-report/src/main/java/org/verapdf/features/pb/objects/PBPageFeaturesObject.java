@@ -128,9 +128,9 @@ public class PBPageFeaturesObject implements IFeaturesObject {
                 }
             }
 
-            PBCreateNodeHelper.parseMetadata(page.getMetadata(), "metadata", root, collection);
-
             FeatureTreeNode.newChildInstanceWithValue("thumbnail", Boolean.toString(page.getCOSObject().getDictionaryObject(COSName.getPDFName("Thumb")) != null), root);
+
+            PBCreateNodeHelper.parseMetadata(page.getMetadata(), "metadata", root, collection);
 
             PBCreateNodeHelper.parseIDSet(annotsId, "annotation", "annotations", root);
 

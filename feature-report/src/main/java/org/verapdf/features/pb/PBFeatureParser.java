@@ -677,15 +677,6 @@ public final class PBFeatureParser {
                 "PBFeatureParser.reportEmbeddedFileNode logic failure.");
     }
 
-    private void iccProfileCreationProblem(final String nodeID) {
-        creationProblem(ICCPROFILE,
-                nodeID,
-                ErrorsHelper.GETINGICCPROFILEERROR_ID,
-                ErrorsHelper.GETINGICCPROFILEERROR_MESSAGE,
-                FeaturesObjectTypesEnum.ICCPROFILE,
-                "PBFeatureParser.iccProfileCreationProblem logic failure.");
-    }
-
     private void fontCreationProblem(final String nodeID) {
         creationProblem(FONT,
                 nodeID,
@@ -850,30 +841,36 @@ public final class PBFeatureParser {
                                                    Map<String, Set<String>> propertiesParentMap) {
         parseExGStateFromResource(resources, parentID, exGStateChildMap, exGStateParentMap);
 
-        for (COSName name : resources.getColorSpaceNames()) {
+        if (resources == null) {
+            return;
+        }
 
-            COSDictionary dict = (COSDictionary) resources.getCOSObject().getDictionaryObject(COSName.COLORSPACE);
-            COSBase base = dict.getItem(name);
-            String id = getId(base, COLORSPACE_ID, colorSpaces.size());
+        if (resources.getColorSpaceNames() != null) {
+            for (COSName name : resources.getColorSpaceNames()) {
 
-            try {
-                PDColorSpace colorSpace = resources.getColorSpace(name);
+                COSDictionary dict = (COSDictionary) resources.getCOSObject().getDictionaryObject(COSName.COLORSPACE);
+                COSBase base = dict.getItem(name);
+                String id = getId(base, COLORSPACE_ID, colorSpaces.size());
 
-                if (colorSpace instanceof PDDeviceColorSpace) {
-                    id = colorSpace instanceof PDDeviceGray ? DEVICEGRAY_ID :
-                            colorSpace instanceof PDDeviceRGB ? DEVICERGB_ID :
-                                    DEVICECMYK_ID;
+                try {
+                    PDColorSpace colorSpace = resources.getColorSpace(name);
+
+                    if (colorSpace instanceof PDDeviceColorSpace) {
+                        id = colorSpace instanceof PDDeviceGray ? DEVICEGRAY_ID :
+                                colorSpace instanceof PDDeviceRGB ? DEVICERGB_ID :
+                                        DEVICECMYK_ID;
+                    }
+
+                    makePairDependence(id, parentID, colorSpaceParentMap, colorSpaceChildMap);
+
+                    if (!colorSpaces.containsKey(id)) {
+                        colorSpaces.put(id, colorSpace);
+                        parseColorSpace(colorSpace, id);
+                    }
+                } catch (IOException e) {
+                    LOGGER.info(e);
+                    colorSpaceCreationProblem(id);
                 }
-
-                makePairDependence(id, parentID, colorSpaceParentMap, colorSpaceChildMap);
-
-                if (!colorSpaces.containsKey(id)) {
-                    colorSpaces.put(id, colorSpace);
-                    parseColorSpace(colorSpace, id);
-                }
-            } catch (IOException e) {
-                LOGGER.info(e);
-                colorSpaceCreationProblem(id);
             }
         }
 
@@ -1002,7 +999,7 @@ public final class PBFeatureParser {
                                            Map<String, Set<String>> xobjectChildMap,
                                            Map<String, Set<String>> imageXObjectParentMap,
                                            Map<String, Set<String>> formXObjectParentMap) {
-        if (resources == null) {
+        if (resources == null || resources.getXObjectNames() == null) {
             return;
         }
 
@@ -1091,7 +1088,7 @@ public final class PBFeatureParser {
                                               String parentID,
                                               Map<String, Set<String>> propertiesChildMap,
                                               Map<String, Set<String>> propertiesParentMap) {
-        if (resources == null) {
+        if (resources == null || resources.getPropertiesNames() == null) {
             return;
         }
 
@@ -1142,7 +1139,7 @@ public final class PBFeatureParser {
                                         String parentID,
                                         Map<String, Set<String>> fontChildMap,
                                         Map<String, Set<String>> fontParentMap) {
-        if (resources == null) {
+        if (resources == null || resources.getFontNames() == null) {
             return;
         }
 
@@ -1171,7 +1168,7 @@ public final class PBFeatureParser {
                                            String parentID,
                                            Map<String, Set<String>> exGStateChildMap,
                                            Map<String, Set<String>> exGStateParentMap) {
-        if (resources == null) {
+        if (resources == null || resources.getExtGStateNames() == null) {
             return;
         }
 
@@ -1217,7 +1214,7 @@ public final class PBFeatureParser {
                                           Map<String, Set<String>> patternChildMap,
                                           Map<String, Set<String>> tilingPatternParentMap,
                                           Map<String, Set<String>> shadingPatternParentMap) {
-        if (resources == null) {
+        if (resources == null || resources.getPatternNames() == null) {
             return;
         }
 
@@ -1342,7 +1339,7 @@ public final class PBFeatureParser {
                                           Map<String, Set<String>> shadingChildMap,
                                           Map<String, Set<String>> shadingParentMap) {
 
-        if (resources == null) {
+        if (resources == null || resources.getShadingNames() == null) {
             return;
         }
 

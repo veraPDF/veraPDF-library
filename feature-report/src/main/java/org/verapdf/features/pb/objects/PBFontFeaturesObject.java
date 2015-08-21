@@ -102,43 +102,12 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 
             if (fontLike instanceof PDFont) {
                 PDFont font = (PDFont) fontLike;
-                PBCreateNodeHelper.addNotEmptyNode("subtype", font.getSubType(), root);
+                PBCreateNodeHelper.addNotEmptyNode("type", font.getSubType(), root);
                 PBCreateNodeHelper.addNotEmptyNode("baseFont", font.getName(), root);
-                PDFontDescriptor descriptor = font.getFontDescriptor();
-                if (descriptor != null) {
-                    FeatureTreeNode descriptorNode = FeatureTreeNode.newChildInstance("fontDescriptor", root);
-
-                    PBCreateNodeHelper.addNotEmptyNode("fontName", descriptor.getFontName(), descriptorNode);
-                    PBCreateNodeHelper.addNotEmptyNode("fontFamily", descriptor.getFontFamily(), descriptorNode);
-                    PBCreateNodeHelper.addNotEmptyNode("fontStretch", descriptor.getFontStretch(), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("fontWeight", String.valueOf(descriptor.getFontWeight()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("fixedPitch", String.valueOf(descriptor.isFixedPitch()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("serif", String.valueOf(descriptor.isSerif()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("symbolic", String.valueOf(descriptor.isSymbolic()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("script", String.valueOf(descriptor.isScript()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("nonsymbolic", String.valueOf(descriptor.isNonSymbolic()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("italic", String.valueOf(descriptor.isItalic()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("allCap", String.valueOf(descriptor.isAllCap()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("smallCap", String.valueOf(descriptor.isScript()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("forceBold", String.valueOf(descriptor.isForceBold()), descriptorNode);
-                    PBCreateNodeHelper.addBoxFeature("fontBBox", descriptor.getFontBoundingBox(), descriptorNode);
-
-                    FeatureTreeNode.newChildInstanceWithValue("italicAngle", String.valueOf(descriptor.getItalicAngle()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("ascent", String.valueOf(descriptor.getAscent()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("descent", String.valueOf(descriptor.getDescent()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("leading", String.valueOf(descriptor.getLeading()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("capHeight", String.valueOf(descriptor.getCapHeight()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("xHeight", String.valueOf(descriptor.getXHeight()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("stemV", String.valueOf(descriptor.getStemV()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("stemH", String.valueOf(descriptor.getStemH()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("averageWidth", String.valueOf(descriptor.getAverageWidth()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("maxWidth", String.valueOf(descriptor.getMaxWidth()), descriptorNode);
-                    FeatureTreeNode.newChildInstanceWithValue("missingWidth", String.valueOf(descriptor.getMissingWidth()), descriptorNode);
-                    PBCreateNodeHelper.addNotEmptyNode("charSet", descriptor.getCharSet(), descriptorNode);
-                }
 
                 if (font instanceof PDType0Font) {
                     PBCreateNodeHelper.parseIDSet(fontChild, "descendedFont", null, FeatureTreeNode.newChildInstance("descendedFonts", root));
+                    parseFontDescriptior(fontLike.getFontDescriptor(), root);
                 } else if (font instanceof PDSimpleFont) {
                     PDSimpleFont sFont = (PDSimpleFont) font;
 
@@ -164,6 +133,9 @@ public class PBFontFeaturesObject implements IFeaturesObject {
                             PBCreateNodeHelper.addNotEmptyNode("encoding", ((COSName) name).getName(), root);
                         }
                     }
+
+                    parseFontDescriptior(fontLike.getFontDescriptor(), root);
+
                     if (sFont instanceof PDType3Font) {
                         PDType3Font type3 = (PDType3Font) sFont;
 
@@ -176,7 +148,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 
             } else if (fontLike instanceof PDCIDFont) {
                 PDCIDFont cid = (PDCIDFont) fontLike;
-                PBCreateNodeHelper.addNotEmptyNode("subtype", cid.getCOSObject().getNameAsString(COSName.SUBTYPE), root);
+                PBCreateNodeHelper.addNotEmptyNode("type", cid.getCOSObject().getNameAsString(COSName.SUBTYPE), root);
                 PBCreateNodeHelper.addNotEmptyNode("baseFont", cid.getBaseFont(), root);
                 COSBase dw = cid.getCOSObject().getDictionaryObject(COSName.DW);
                 if (dw instanceof COSNumber) {
@@ -190,6 +162,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
                     FeatureTreeNode.newChildInstanceWithValue("supplement", String.valueOf(cid.getCIDSystemInfo().getSupplement()), cidS);
 
                 }
+                parseFontDescriptior(fontLike.getFontDescriptor(), root);
             }
 
             collection.addNewFeatureTree(FeaturesObjectTypesEnum.FONT, root);
@@ -199,7 +172,41 @@ public class PBFontFeaturesObject implements IFeaturesObject {
         return null;
     }
 
-    private void parseFloatMatrix(float[][] array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+    private static void parseFontDescriptior(PDFontDescriptor descriptor, FeatureTreeNode root) throws FeaturesTreeNodeException {
+        if (descriptor != null) {
+            FeatureTreeNode descriptorNode = FeatureTreeNode.newChildInstance("fontDescriptor", root);
+
+            PBCreateNodeHelper.addNotEmptyNode("fontName", descriptor.getFontName(), descriptorNode);
+            PBCreateNodeHelper.addNotEmptyNode("fontFamily", descriptor.getFontFamily(), descriptorNode);
+            PBCreateNodeHelper.addNotEmptyNode("fontStretch", descriptor.getFontStretch(), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("fontWeight", String.valueOf(descriptor.getFontWeight()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("fixedPitch", String.valueOf(descriptor.isFixedPitch()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("serif", String.valueOf(descriptor.isSerif()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("symbolic", String.valueOf(descriptor.isSymbolic()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("script", String.valueOf(descriptor.isScript()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("nonsymbolic", String.valueOf(descriptor.isNonSymbolic()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("italic", String.valueOf(descriptor.isItalic()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("allCap", String.valueOf(descriptor.isAllCap()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("smallCap", String.valueOf(descriptor.isScript()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("forceBold", String.valueOf(descriptor.isForceBold()), descriptorNode);
+            PBCreateNodeHelper.addBoxFeature("fontBBox", descriptor.getFontBoundingBox(), descriptorNode);
+
+            FeatureTreeNode.newChildInstanceWithValue("italicAngle", String.valueOf(descriptor.getItalicAngle()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("ascent", String.valueOf(descriptor.getAscent()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("descent", String.valueOf(descriptor.getDescent()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("leading", String.valueOf(descriptor.getLeading()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("capHeight", String.valueOf(descriptor.getCapHeight()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("xHeight", String.valueOf(descriptor.getXHeight()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("stemV", String.valueOf(descriptor.getStemV()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("stemH", String.valueOf(descriptor.getStemH()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("averageWidth", String.valueOf(descriptor.getAverageWidth()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("maxWidth", String.valueOf(descriptor.getMaxWidth()), descriptorNode);
+            FeatureTreeNode.newChildInstanceWithValue("missingWidth", String.valueOf(descriptor.getMissingWidth()), descriptorNode);
+            PBCreateNodeHelper.addNotEmptyNode("charSet", descriptor.getCharSet(), descriptorNode);
+        }
+    }
+
+    private static void parseFloatMatrix(float[][] array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
         for (int i = 0; i < array.length; ++i) {
             for (int j = 0; j < array.length - 1; ++j) {
                 FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
@@ -210,7 +217,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
         }
     }
 
-    private void parseIntList(List<Integer> array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+    private static void parseIntList(List<Integer> array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
         for (int i = 0; i < array.size(); ++i) {
             FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
             element.addAttribute("number", String.valueOf(i));
