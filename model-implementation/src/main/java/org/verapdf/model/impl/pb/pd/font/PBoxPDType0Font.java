@@ -29,28 +29,28 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
         super(font, TYPE_0_FONT_TYPE);
     }
 
-    @Override
-    public List<? extends Object> getLinkedObjects(String link) {
-        List<? extends Object> list;
+	@Override
+	public Boolean getisSymbolic() {
+		// TODO : implement me
+		return null;
+	}
 
-        switch (link) {
-        case DESCENDANT_FONTS:
-            list = getDescendantFonts();
-            break;
-        case ENCODING:
-            list = getEncoding();
-            break;
-        default:
-            list = super.getLinkedObjects(link);
-            break;
-        }
-
-        return list;
-    }
+	@Override
+	public List<? extends Object> getLinkedObjects(String link) {
+		switch (link) {
+			case DESCENDANT_FONTS:
+				return this.getDescendantFonts();
+			case ENCODING:
+				return this.getEncoding();
+			default:
+				return super.getLinkedObjects(link);
+		}
+	}
 
     private List<PDCIDFont> getDescendantFonts() {
         List<PDCIDFont> list = new ArrayList<>();
-        org.apache.pdfbox.pdmodel.font.PDCIDFont pdcidFont = ((org.apache.pdfbox.pdmodel.font.PDType0Font) pdFontLike)
+        org.apache.pdfbox.pdmodel.font.PDCIDFont pdcidFont =
+				((org.apache.pdfbox.pdmodel.font.PDType0Font) pdFontLike)
                 .getDescendantFont();
         if (pdcidFont != null) {
             list.add(new PBoxPDCIDFont(pdcidFont));
@@ -104,4 +104,5 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
         }
         return Boolean.FALSE;
     }
+
 }
