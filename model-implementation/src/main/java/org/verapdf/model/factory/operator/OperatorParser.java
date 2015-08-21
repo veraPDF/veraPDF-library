@@ -21,7 +21,9 @@ import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.impl.pb.operator.color.PBOpColor;
 import org.verapdf.model.impl.pb.operator.generalgs.*;
-import org.verapdf.model.impl.pb.operator.inlineimage.PBOpInlineImage;
+import org.verapdf.model.impl.pb.operator.inlineimage.PBOp_BI;
+import org.verapdf.model.impl.pb.operator.inlineimage.PBOp_EI;
+import org.verapdf.model.impl.pb.operator.inlineimage.PBOp_ID;
 import org.verapdf.model.impl.pb.operator.markedcontent.*;
 import org.verapdf.model.impl.pb.operator.opclip.PBOp_WStar;
 import org.verapdf.model.impl.pb.operator.opclip.PBOp_W_clip;
@@ -51,6 +53,7 @@ import org.verapdf.model.operator.Operator;
 import org.verapdf.model.tools.constants.Operators;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -63,6 +66,7 @@ import java.util.Stack;
  *
  */
 class OperatorParser {
+
     private static final Logger LOGGER = Logger.getLogger(OperatorParser.class);
     private static final String MSG_PROBEM_OBTAINING_RESOURCE = "Problem encountered while obtaining resources for ";
 
@@ -73,235 +77,311 @@ class OperatorParser {
 		// limit the scope
 	}
 
-    Operator parseOperator(
-            org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
-            PDResources resources, List<COSBase> arguments) throws CloneNotSupportedException {
-        String operatorName = pdfBoxOperator.getName();
-        switch (operatorName) {
-        // GENERAL GS
-        case Operators.D_SET_DASH:
-            return new PBOp_d(arguments);
-        case Operators.GS:
-            return new PBOp_gs(arguments, getExtGStateFromResources(resources,
-                    getLastCOSName(arguments)));
-        case Operators.I_SETFLAT:
-            return new PBOp_i(arguments);
-        case Operators.J_LINE_CAP:
-            return new PBOp_J_line_cap(arguments);
-        case Operators.J_LINE_JOIN:
-            return new PBOp_j_line_join(arguments);
-        case Operators.M_MITER_LIMIT:
-            return new PBOp_M_miter_limit(arguments);
-        case Operators.RI:
-            return new PBOp_ri(arguments);
-        case Operators.W_LINE_WIDTH:
-            return new PBOp_w_line_width(arguments);
+	void parseOperator(List<Operator> operators,
+					   org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
+					   PDResources resources, List<COSBase> arguments) throws CloneNotSupportedException {
+		String operatorName = pdfBoxOperator.getName();
+		switch (operatorName) {
+			// GENERAL GS
+			case Operators.D_SET_DASH:
+				operators.add(new PBOp_d(arguments));
+				break;
+			case Operators.GS:
+				operators.add(new PBOp_gs(arguments, getExtGStateFromResources(resources,
+						getLastCOSName(arguments))));
+				break;
+			case Operators.I_SETFLAT:
+				operators.add(new PBOp_i(arguments));
+				break;
+			case Operators.J_LINE_CAP:
+				operators.add(new PBOp_J_line_cap(arguments));
+				break;
+			case Operators.J_LINE_JOIN:
+				operators.add(new PBOp_j_line_join(arguments));
+				break;
+			case Operators.M_MITER_LIMIT:
+				operators.add(new PBOp_M_miter_limit(arguments));
+				break;
+			case Operators.RI:
+				operators.add(new PBOp_ri(arguments));
+				break;
+			case Operators.W_LINE_WIDTH:
+				operators.add(new PBOp_w_line_width(arguments));
+				break;
 
-            // MARKED CONTENT
-        case Operators.BMC:
-            return new PBOp_BMC(arguments);
-        case Operators.BDC:
-            return new PBOp_BDC(arguments);
-        case Operators.EMC:
-            return new PBOp_EMC(arguments);
-        case Operators.MP:
-            return new PBOp_MP(arguments);
-        case Operators.DP:
-            return new PBOp_DP(arguments);
+				// MARKED CONTENT
+			case Operators.BMC:
+				operators.add(new PBOp_BMC(arguments));
+				break;
+			case Operators.BDC:
+				operators.add(new PBOp_BDC(arguments));
+				break;
+			case Operators.EMC:
+				operators.add(new PBOp_EMC(arguments));
+				break;
+			case Operators.MP:
+				operators.add(new PBOp_MP(arguments));
+				break;
+			case Operators.DP:
+				operators.add(new PBOp_DP(arguments));
+				break;
 
-            // CLIP
-        case Operators.W_CLIP:
-            return new PBOp_W_clip(arguments);
-        case Operators.W_STAR_EOCLIP:
-            return new PBOp_WStar(arguments);
+				// CLIP
+			case Operators.W_CLIP:
+				operators.add(new PBOp_W_clip(arguments));
+				break;
+			case Operators.W_STAR_EOCLIP:
+				operators.add(new PBOp_WStar(arguments));
+				break;
 
-            // COLOR
-        case Operators.G_STROKE:
-            graphicState.setStrokeColorSpace(PDDeviceGray.INSTANCE);
-            return new PBOpColor(arguments);
-        case Operators.G_FILL:
-            graphicState.setFillColorSpace(PDDeviceGray.INSTANCE);
-            return new PBOpColor(arguments);
-        case Operators.RG_STROKE:
-            graphicState.setStrokeColorSpace(PDDeviceRGB.INSTANCE);
-            return new PBOpColor(arguments);
-        case Operators.RG_FILL:
-            graphicState.setFillColorSpace(PDDeviceRGB.INSTANCE);
-            return new PBOpColor(arguments);
-        case Operators.K_STROKE:
-            return new PBOpColor(arguments);
-        case Operators.K_FILL:
-            graphicState.setFillColorSpace(PDDeviceCMYK.INSTANCE);
-            return new PBOpColor(arguments);
-        case Operators.CS_STROKE:
-            graphicState.setStrokeColorSpace(getColorSpaceFromResources(
-                    resources, getLastCOSName(arguments)));
-            return new PBOpColor(arguments);
-        case Operators.CS_FILL:
-            graphicState.setFillColorSpace(getColorSpaceFromResources(
-                    resources, getLastCOSName(arguments)));
-            return new PBOpColor(arguments);
-        case Operators.SCN_STROKE:
-			PDColorSpace strokeColorSpace = graphicState.getStrokeColorSpace();
-			if (strokeColorSpace != null &&
-					ColorSpaceFactory.PATTERN.equals(strokeColorSpace.getName())) {
-                graphicState.setPattern(getPatternFromResources(resources,
-                        getLastCOSName(arguments)));
-            }
-            return new PBOpColor(arguments);
-        case Operators.SCN_FILL:
-			PDColorSpace fillColorSpace = graphicState.getFillColorSpace();
-			if (fillColorSpace != null &&
-					ColorSpaceFactory.PATTERN.equals(fillColorSpace.getName())) {
-                graphicState.setPattern(getPatternFromResources(resources,
-                        getLastCOSName(arguments)));
-            }
-            return new PBOpColor(arguments);
-        case Operators.SC_STROKE:
-            return new PBOpColor(arguments);
-        case Operators.SC_FILL:
-            return new PBOpColor(arguments);
+				// COLOR
+			case Operators.G_STROKE:
+				graphicState.setStrokeColorSpace(PDDeviceGray.INSTANCE);
+				operators.add(new PBOpColor(arguments));
+				break;
+			case Operators.G_FILL:
+				graphicState.setFillColorSpace(PDDeviceGray.INSTANCE);
+				operators.add(new PBOpColor(arguments));
+				break;
+			case Operators.RG_STROKE:
+				graphicState.setStrokeColorSpace(PDDeviceRGB.INSTANCE);
+				operators.add(new PBOpColor(arguments));
+				break;
+			case Operators.RG_FILL:
+				graphicState.setFillColorSpace(PDDeviceRGB.INSTANCE);
+				operators.add(new PBOpColor(arguments));
+				break;
+			case Operators.K_STROKE:
+				operators.add(new PBOpColor(arguments));
+				break;
+			case Operators.K_FILL:
+				graphicState.setFillColorSpace(PDDeviceCMYK.INSTANCE);
+				operators.add(new PBOpColor(arguments));
+				break;
+			case Operators.CS_STROKE:
+				graphicState.setStrokeColorSpace(getColorSpaceFromResources(
+						resources, getLastCOSName(arguments)));
+				operators.add(new PBOpColor(arguments));
+				break;
+			case Operators.CS_FILL:
+				graphicState.setFillColorSpace(getColorSpaceFromResources(
+						resources, getLastCOSName(arguments)));
+				operators.add(new PBOpColor(arguments));
+				break;
+			case Operators.SCN_STROKE:
+				PDColorSpace strokeColorSpace = graphicState.getStrokeColorSpace();
+				if (strokeColorSpace != null &&
+						ColorSpaceFactory.PATTERN.equals(strokeColorSpace.getName())) {
+					graphicState.setPattern(getPatternFromResources(resources,
+							getLastCOSName(arguments)));
+				}
+				operators.add(new PBOpColor(arguments));
+				break;
+			case Operators.SCN_FILL:
+				PDColorSpace fillColorSpace = graphicState.getFillColorSpace();
+				if (fillColorSpace != null &&
+						ColorSpaceFactory.PATTERN.equals(fillColorSpace.getName())) {
+					graphicState.setPattern(getPatternFromResources(resources,
+							getLastCOSName(arguments)));
+				}
+				operators.add(new PBOpColor(arguments));
+				break;
+			case Operators.SC_STROKE:
+				operators.add(new PBOpColor(arguments));
+				break;
+			case Operators.SC_FILL:
+				operators.add(new PBOpColor(arguments));
+				break;
 
-            // TEXT OBJECT
-        case Operators.ET:
-        case Operators.BT:
-            return new PBOpTextObject(arguments);
+				// TEXT OBJECT
+			case Operators.ET:
+			case Operators.BT:
+				operators.add(new PBOpTextObject(arguments));
+				break;
 
-            // TEXT POSITION
-        case Operators.TD_MOVE:
-            return new PBOp_Td(arguments);
-        case Operators.TD_MOVE_SET_LEADING:
-            return new PBOp_TD_Big(arguments);
-        case Operators.TM:
-        case Operators.T_STAR:
-            return new PBOpTextPosition(arguments);
+				// TEXT POSITION
+			case Operators.TD_MOVE:
+				operators.add(new PBOp_Td(arguments));
+				break;
+			case Operators.TD_MOVE_SET_LEADING:
+				operators.add(new PBOp_TD_Big(arguments));
+				break;
+			case Operators.TM:
+			case Operators.T_STAR:
+				operators.add(new PBOpTextPosition(arguments));
+				break;
 
-            // TEXT SHOW
-        case Operators.TJ_SHOW:
-            return new PBOp_Tj(arguments, graphicState.getFont());
-        case Operators.TJ_SHOW_POS:
-            return new PBOp_TJ_Big(arguments, graphicState.getFont());
-        case Operators.QUOTE:
-            return new PBOp_Quote(arguments, graphicState.getFont());
-        case Operators.DOUBLE_QUOTE:
-            return new PBOp_DoubleQuote(arguments, graphicState.getFont());
+				// TEXT SHOW
+			case Operators.TJ_SHOW:
+				operators.add(new PBOp_Tj(arguments, graphicState.getFont()));
+				break;
+			case Operators.TJ_SHOW_POS:
+				operators.add(new PBOp_TJ_Big(arguments, graphicState.getFont()));
+				break;
+			case Operators.QUOTE:
+				operators.add(new PBOp_Quote(arguments, graphicState.getFont()));
+				break;
+			case Operators.DOUBLE_QUOTE:
+				operators.add(new PBOp_DoubleQuote(arguments, graphicState.getFont()));
+				break;
 
-            // TEXT STATE
-        case Operators.TZ:
-            return new PBOp_Tz(arguments);
-        case Operators.TR:
-            graphicState.setRenderingMode(getRenderingMode(arguments));
-            return new PBOp_Tr(arguments);
-        case Operators.TF:
-            graphicState.setFont(getFontFromResources(resources,
-                    getFirstCOSName(arguments)));
-            return new PBOpTextState(arguments);
-        case Operators.TC:
-        case Operators.TW:
-        case Operators.TL:
-        case Operators.TS:
-            return new PBOpTextState(arguments);
+				// TEXT STATE
+			case Operators.TZ:
+				operators.add(new PBOp_Tz(arguments));
+				break;
+			case Operators.TR:
+				graphicState.setRenderingMode(getRenderingMode(arguments));
+				operators.add(new PBOp_Tr(arguments));
+				break;
+			case Operators.TF:
+				graphicState.setFont(getFontFromResources(resources,
+						getFirstCOSName(arguments)));
+				operators.add(new PBOpTextState(arguments));
+				break;
+			case Operators.TC:
+			case Operators.TW:
+			case Operators.TL:
+			case Operators.TS:
+				operators.add(new PBOpTextState(arguments));
+				break;
 
-            // TYPE 3 FONT
-        case Operators.D0:
-        case Operators.D1:
-            return new PBOpType3Font(arguments);
+				// TYPE 3 FONT
+			case Operators.D0:
+			case Operators.D1:
+				operators.add(new PBOpType3Font(arguments));
+				break;
 
-            // INLINE IMAGE
-        case Operators.BI:
-        case Operators.ID:
-        case Operators.EI: {
-            arguments.add(pdfBoxOperator.getImageParameters());
-            return new PBOpInlineImage(arguments);
-        }
-
-        // COMPABILITY
-        case Operators.BX:
-            return new PBOp_BX(arguments);
-        case Operators.EX:
-            return new PBOp_EX(arguments);
-
-            // PATH CONSTRUCTION
-        case Operators.C_CURVE_TO:
-            return new PBOp_c(arguments);
-        case Operators.H_CLOSEPATH:
-            return new PBOp_h(arguments);
-        case Operators.L_LINE_TO:
-            return new PBOp_l(arguments);
-        case Operators.M_MOVE_TO:
-            return new PBOp_m_moveto(arguments);
-        case Operators.RE:
-            return new PBOp_re(arguments);
-        case Operators.V:
-            return new PBOp_v(arguments);
-        case Operators.Y:
-            return new PBOp_y(arguments);
-
-            // PATH PAINT
-        case Operators.B_CLOSEPATH_FILL_STROKE:
-            return new PBOp_b_closepath_fill_stroke(arguments,
-                    graphicState.getStrokeColorSpace(),
-                    graphicState.getFillColorSpace(), graphicState.getPattern());
-        case Operators.B_FILL_STROKE:
-            return new PBOp_B_fill_stroke(arguments,
-                    graphicState.getStrokeColorSpace(),
-                    graphicState.getFillColorSpace(), graphicState.getPattern());
-        case Operators.B_STAR_CLOSEPATH_EOFILL_STROKE:
-            return new PBOp_bstar_closepath_eofill_stroke(arguments,
-                    graphicState.getStrokeColorSpace(),
-                    graphicState.getFillColorSpace(), graphicState.getPattern());
-        case Operators.B_STAR_EOFILL_STROKE:
-            return new PBOp_BStar_eofill_stroke(arguments,
-                    graphicState.getStrokeColorSpace(),
-                    graphicState.getFillColorSpace(), graphicState.getPattern());
-        case Operators.F_FILL:
-            return new PBOp_f_fill(arguments, graphicState.getFillColorSpace(),
-                    graphicState.getPattern());
-        case Operators.F_FILL_OBSOLETE:
-            return new PBOp_F_fill_obsolete(arguments,
-                    graphicState.getFillColorSpace(), graphicState.getPattern());
-        case Operators.F_STAR_FILL:
-            return new PBOp_FStar(arguments, graphicState.getFillColorSpace(),
-                    graphicState.getPattern());
-        case Operators.N:
-            return new PBOp_n(arguments);
-        case Operators.S_CLOSE_STROKE:
-            return new PBOp_s_close_stroke(arguments,
-                    graphicState.getStrokeColorSpace(),
-                    graphicState.getPattern());
-        case Operators.S_STROKE:
-            return new PBOp_S_stroke(arguments,
-                    graphicState.getStrokeColorSpace(),
-                    graphicState.getPattern());
-
-            // SHADING
-        case Operators.SH:
-            return new PBOp_sh(arguments, getShadingFromResources(resources,
-                    getLastCOSName(arguments)));
-
-            // SPECIAL GS
-        case Operators.CM_CONCAT:
-            return new PBOp_cm(arguments);
-        case Operators.Q_GRESTORE:
-			if (graphicStateStack.size() > 0) {
-				graphicState.copyProperties(graphicStateStack.pop());
+				// INLINE IMAGE
+			case Operators.BI: {
+				addInlineImage(operators, pdfBoxOperator, resources, arguments);
 			}
-            return new PBOp_Q_grestore(arguments);
-        case Operators.Q_GSAVE:
-            graphicStateStack.push(graphicState.clone());
-            return new PBOp_q_gsave(arguments, graphicStateStack.size());
+				break;
 
-            // XOBJECT
-        case Operators.DO:
-            return new PBOp_Do(arguments, getXObjectFromResources(resources,
-                    getLastCOSName(arguments)));
+				// COMPABILITY
+			case Operators.BX:
+				operators.add(new PBOp_BX(arguments));
+				break;
+			case Operators.EX:
+				operators.add(new PBOp_EX(arguments));
+				break;
 
-        default:
-            return new PBOp_Undefined(arguments);
-        }
-    }
+				// PATH CONSTRUCTION
+			case Operators.C_CURVE_TO:
+				operators.add(new PBOp_c(arguments));
+				break;
+			case Operators.H_CLOSEPATH:
+				operators.add(new PBOp_h(arguments));
+				break;
+			case Operators.L_LINE_TO:
+				operators.add(new PBOp_l(arguments));
+				break;
+			case Operators.M_MOVE_TO:
+				operators.add(new PBOp_m_moveto(arguments));
+				break;
+			case Operators.RE:
+				operators.add(new PBOp_re(arguments));
+				break;
+			case Operators.V:
+				operators.add(new PBOp_v(arguments));
+				break;
+			case Operators.Y:
+				operators.add(new PBOp_y(arguments));
+				break;
 
-    private static COSName getFirstCOSName(List<COSBase> arguments) {
+				// PATH PAINT
+			case Operators.B_CLOSEPATH_FILL_STROKE:
+				operators.add(new PBOp_b_closepath_fill_stroke(arguments,
+						graphicState.getStrokeColorSpace(),
+						graphicState.getFillColorSpace(), graphicState.getPattern()));
+				break;
+			case Operators.B_FILL_STROKE:
+				operators.add(new PBOp_B_fill_stroke(arguments,
+						graphicState.getStrokeColorSpace(),
+						graphicState.getFillColorSpace(), graphicState.getPattern()));
+				break;
+			case Operators.B_STAR_CLOSEPATH_EOFILL_STROKE:
+				operators.add(new PBOp_bstar_closepath_eofill_stroke(arguments,
+						graphicState.getStrokeColorSpace(),
+						graphicState.getFillColorSpace(), graphicState.getPattern()));
+				break;
+			case Operators.B_STAR_EOFILL_STROKE:
+				operators.add(new PBOp_BStar_eofill_stroke(arguments,
+						graphicState.getStrokeColorSpace(),
+						graphicState.getFillColorSpace(), graphicState.getPattern()));
+				break;
+			case Operators.F_FILL:
+				operators.add(new PBOp_f_fill(arguments, graphicState.getFillColorSpace(),
+						graphicState.getPattern()));
+				break;
+			case Operators.F_FILL_OBSOLETE:
+				operators.add(new PBOp_F_fill_obsolete(arguments,
+						graphicState.getFillColorSpace(), graphicState.getPattern()));
+				break;
+			case Operators.F_STAR_FILL:
+				operators.add(new PBOp_FStar(arguments, graphicState.getFillColorSpace(),
+						graphicState.getPattern()));
+				break;
+			case Operators.N:
+				operators.add(new PBOp_n(arguments));
+				break;
+			case Operators.S_CLOSE_STROKE:
+				operators.add(new PBOp_s_close_stroke(arguments,
+						graphicState.getStrokeColorSpace(),
+						graphicState.getPattern()));
+				break;
+			case Operators.S_STROKE:
+				operators.add(new PBOp_S_stroke(arguments,
+						graphicState.getStrokeColorSpace(),
+						graphicState.getPattern()));
+				break;
+
+				// SHADING
+			case Operators.SH:
+				operators.add(new PBOp_sh(arguments, getShadingFromResources(resources,
+						getLastCOSName(arguments))));
+				break;
+
+				// SPECIAL GS
+			case Operators.CM_CONCAT:
+				operators.add(new PBOp_cm(arguments));
+				break;
+			case Operators.Q_GRESTORE:
+				if (graphicStateStack.size() > 0) {
+					graphicState.copyProperties(graphicStateStack.pop());
+				}
+				operators.add(new PBOp_Q_grestore(arguments));
+				break;
+			case Operators.Q_GSAVE:
+				graphicStateStack.push(graphicState.clone());
+				operators.add(new PBOp_q_gsave(arguments, graphicStateStack.size()));
+				break;
+
+				// XOBJECT
+			case Operators.DO:
+				operators.add(new PBOp_Do(arguments, getXObjectFromResources(resources,
+						getLastCOSName(arguments))));
+				break;
+			default:
+				operators.add(new PBOp_Undefined(arguments));
+				break;
+		}
+	}
+
+	private static void addInlineImage(List<Operator> operators,
+									   org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
+									   PDResources resources,
+									   List<COSBase> arguments) {
+		if (pdfBoxOperator.getImageParameters() != null &&
+				pdfBoxOperator.getImageData() != null) {
+			arguments.add(pdfBoxOperator.getImageParameters());
+			operators.add(new PBOp_BI(new ArrayList<COSBase>()));
+			operators.add(new PBOp_ID(arguments));
+			operators.add(new PBOp_EI(arguments,
+					pdfBoxOperator.getImageData(), resources));
+		}
+	}
+
+	private static COSName getFirstCOSName(List<COSBase> arguments) {
         COSBase lastElement = arguments.isEmpty() ? null : arguments.get(0);
         if (lastElement instanceof COSName) {
             return (COSName) lastElement;
