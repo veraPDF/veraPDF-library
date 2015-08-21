@@ -25,6 +25,36 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 		super(font, type);
 	}
 
+	public String getType() {
+		String subtype = null;
+		if (pdFontLike instanceof org.apache.pdfbox.pdmodel.font.PDFont) {
+			subtype = ((org.apache.pdfbox.pdmodel.font.PDFont) pdFontLike)
+					.getType();
+		} else if (pdFontLike instanceof PDCIDFont) {
+			subtype = ((PDCIDFont) pdFontLike).getCOSObject().getNameAsString(
+					COSName.TYPE);
+		}
+		return subtype;
+	}
+
+	@Override
+	public String getSubtype() {
+		String subtype = null;
+		if (pdFontLike instanceof org.apache.pdfbox.pdmodel.font.PDFont) {
+			subtype = ((org.apache.pdfbox.pdmodel.font.PDFont) pdFontLike)
+					.getSubType();
+		} else if (pdFontLike instanceof PDCIDFont) {
+			subtype = ((PDCIDFont) pdFontLike).getCOSObject().getNameAsString(
+					COSName.SUBTYPE);
+		}
+		return subtype;
+	}
+
+	@Override
+	public String getBaseFont() {
+		return pdFontLike.getName();
+	}
+
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         if (FONT_FILE.equals(link)) {
@@ -51,24 +81,6 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
             }
         }
         return list;
-    }
-
-    @Override
-    public String getSubtype() {
-        String subtype = null;
-        if (pdFontLike instanceof org.apache.pdfbox.pdmodel.font.PDFont) {
-            subtype = ((org.apache.pdfbox.pdmodel.font.PDFont) pdFontLike)
-                    .getSubType();
-        } else if (pdFontLike instanceof PDCIDFont) {
-            subtype = ((PDCIDFont) pdFontLike).getCOSObject().getNameAsString(
-                    COSName.SUBTYPE);
-        }
-        return subtype;
-    }
-
-    @Override
-    public String getBaseFont() {
-        return pdFontLike.getName();
     }
 
 }

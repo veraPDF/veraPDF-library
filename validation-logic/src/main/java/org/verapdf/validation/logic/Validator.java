@@ -85,7 +85,7 @@ public class Validator {
 
         initializeAllVariables();
 
-        this.rootType = root.getType();
+        this.rootType = root.getObjectType();
         this.objectsStack.push(root);
         this.objectsContext.push("root");
 
@@ -157,7 +157,7 @@ public class Validator {
 
     private void updateVariables(Object object) {
         for (Variable var : this.profile
-                .getVariablesForObject(object.getType())) {
+                .getVariablesForObject(object.getObjectType())) {
 
             if (var == null)
                 continue;
@@ -264,9 +264,9 @@ public class Validator {
 
     private boolean checkAllRules(Object checkObject, String checkContext) {
         boolean res = true;
-        if (this.profile.getRoolsForObject(checkObject.getType()) != null) {
+        if (this.profile.getRoolsForObject(checkObject.getObjectType()) != null) {
             for (org.verapdf.validation.profile.model.Rule rule : this.profile
-                    .getRoolsForObject(checkObject.getType())) {
+                    .getRoolsForObject(checkObject.getObjectType())) {
                 if (rule != null) {
                     res &= checkObjWithRule(checkObject, checkContext, rule,
                             getScript(checkObject, rule));

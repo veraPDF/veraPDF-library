@@ -70,7 +70,7 @@ public class TestCosInteger implements CosInteger {
     }
 
     @Override
-    public String getType() {
+    public String getObjectType() {
         return type;
     }
 

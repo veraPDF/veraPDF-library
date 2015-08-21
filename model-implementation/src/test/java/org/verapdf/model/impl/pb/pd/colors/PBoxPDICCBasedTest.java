@@ -1,6 +1,7 @@
 package org.verapdf.model.impl.pb.pd.colors;
 
 import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDICCBased;
 import org.junit.Assert;
@@ -19,6 +20,7 @@ import java.util.List;
 public class PBoxPDICCBasedTest extends PBoxPDColorSpaceTest {
 
 	private static final String COLOR_SPACE_NAME = "ICCBasedCS";
+	private static final int EXPECTED_COMPONENTS_NUMBER = 3;
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
@@ -26,13 +28,15 @@ public class PBoxPDICCBasedTest extends PBoxPDColorSpaceTest {
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
-		PDColorSpace iccBased = document.getPage(0).getResources().getColorSpace(COSName.getPDFName(COLOR_SPACE_NAME));
+		final PDResources resources = document.getPage(0).getResources();
+		final COSName pdfName = COSName.getPDFName(COLOR_SPACE_NAME);
+		PDColorSpace iccBased = resources.getColorSpace(pdfName);
 		actual = new PBoxPDICCBased((PDICCBased) iccBased);
 	}
 
 	@Test
 	public void testNumberOfComponentsMethod() {
-		super.testNumberOfComponentsMethod(3);
+		super.testNumberOfComponentsMethod(EXPECTED_COMPONENTS_NUMBER);
 	}
 
 	@Test
@@ -40,7 +44,7 @@ public class PBoxPDICCBasedTest extends PBoxPDColorSpaceTest {
 		List<? extends Object> profile = actual.getLinkedObjects(PBoxPDICCBased.ICC_PROFILE);
 		Assert.assertEquals(1, profile.size());
 		for (Object object : profile) {
-			Assert.assertEquals(PBoxICCInputProfile.ICC_INPUT_PROFILE_TYPE, object.getType());
+			Assert.assertEquals(PBoxICCInputProfile.ICC_INPUT_PROFILE_TYPE, object.getObjectType());
 		}
 	}
 

@@ -58,7 +58,7 @@ public class TestObject implements Object {
     }
 
     @Override
-    public String getType() {
+    public String getObjectType() {
         return type;
     }
 

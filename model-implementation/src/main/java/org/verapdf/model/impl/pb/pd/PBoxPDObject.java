@@ -23,43 +23,30 @@ public class PBoxPDObject extends GenericModelObject implements PDObject {
     protected PDFontLike pdFontLike;
     protected CMap cMap;
 
-    private final String type;
-    private String id;
-
 	protected PBoxPDObject(COSObjectable simplePDObject, final String type) {
-		this.type = type;
+		super(type);
 		this.simplePDObject = simplePDObject;
 	}
 
 	protected PBoxPDObject(PDDocument document, final String type) {
+		super(type);
 		this.document = document;
-		this.type = type;
 	}
 
 	protected PBoxPDObject(PDContentStream contentStream, final String type) {
+		super(type);
 		this.contentStream = contentStream;
-		this.type = type;
 	}
 
 	protected PBoxPDObject(PDFontLike pdFontLike, final String type) {
+		super(type);
 		this.pdFontLike = pdFontLike;
-		this.type = type;
 	}
 
 	protected PBoxPDObject(CMap cMap, final String type) {
+		super(type);
 		this.cMap = cMap;
-		this.type = type;
 	}
-
-	@Override
-    public String getType() {
-        return type;
-    }
-
-    @Override
-    public String getID() {
-        return id;
-    }
 
     protected void addAction(List<PDAction> actions,
             org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer) {

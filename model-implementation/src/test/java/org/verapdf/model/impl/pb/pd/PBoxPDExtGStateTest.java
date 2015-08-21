@@ -66,7 +66,7 @@ public class PBoxPDExtGStateTest extends BaseTest {
 		List<? extends Object> ri = actual.getLinkedObjects(PBoxPDExtGState.RI);
 		Assert.assertEquals(1, ri.size());
 		for (Object object : ri) {
-			Assert.assertEquals(PBCosRenderingIntent.COS_RENDERING_INTENT_TYPE, object.getType());
+			Assert.assertEquals(PBCosRenderingIntent.COS_RENDERING_INTENT_TYPE, object.getObjectType());
 		}
 	}
 

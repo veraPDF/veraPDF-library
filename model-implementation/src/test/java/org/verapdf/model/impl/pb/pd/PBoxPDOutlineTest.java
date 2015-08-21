@@ -33,7 +33,8 @@ public class PBoxPDOutlineTest extends BaseTest {
 		List<? extends org.verapdf.model.baselayer.Object> action = actual.getLinkedObjects(PBoxPDOutline.ACTION);
 		Assert.assertEquals(0, action.size());
 		for (Object object : action) {
-			Assert.assertTrue("PDAction".equals(object.getType()) || "PDNamedAction".equals(object.getType()));
+			Assert.assertTrue(PBoxPDAction.ACTION_TYPE.equals(object.getObjectType()) ||
+					PBoxPDNamedAction.NAMED_ACTION_TYPE.equals(object.getObjectType()));
 		}
 	}
 

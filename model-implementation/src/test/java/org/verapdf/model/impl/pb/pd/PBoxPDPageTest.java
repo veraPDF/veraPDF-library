@@ -29,37 +29,37 @@ public class PBoxPDPageTest extends BaseTest {
 
 	@Test
 	public void testGroupLink() {
-		List<? extends org.verapdf.model.baselayer.Object> groups = ((PDPage) actual).getLinkedObjects(PBoxPDPage.GROUP);
+		List<? extends Object> groups = ((PDPage) actual).getLinkedObjects(PBoxPDPage.GROUP);
 		Assert.assertEquals(0, groups.size());
 		for (Object object : groups) {
-			Assert.assertEquals("PDGroup", object.getType());
+			Assert.assertEquals(PBoxPDGroup.GROUP_TYPE, object.getObjectType());
 		}
 	}
 
 	@Test
 	public void testAnnotsLink() {
-		List<? extends org.verapdf.model.baselayer.Object> annots = ((PDPage) actual).getLinkedObjects(PBoxPDPage.ANNOTS);
+		List<? extends Object> annots = ((PDPage) actual).getLinkedObjects(PBoxPDPage.ANNOTS);
 		Assert.assertEquals(0, annots.size());
 		for (Object object : annots) {
-			Assert.assertEquals("PDAnnot", object.getType());
+			Assert.assertEquals(PBoxPDAnnot.ANNOTATION_TYPE, object.getObjectType());
 		}
 	}
 
 	@Test
 	public void testActionLink() {
-		List<? extends org.verapdf.model.baselayer.Object> actions = ((PDPage) actual).getLinkedObjects(PBoxPDPage.ACTION);
+		List<? extends Object> actions = ((PDPage) actual).getLinkedObjects(PBoxPDPage.ACTION);
 		Assert.assertEquals(0, actions.size());
 		for (Object object : actions) {
-			Assert.assertEquals("PDAction", object.getType());
+			Assert.assertEquals(PBoxPDAction.ACTION_TYPE, object.getObjectType());
 		}
 	}
 
 	@Test
 	public void testContentStreamLink() {
-		List<? extends org.verapdf.model.baselayer.Object> streams = ((PDPage) actual).getLinkedObjects(PBoxPDPage.CONTENT_STREAM);
+		List<? extends Object> streams = ((PDPage) actual).getLinkedObjects(PBoxPDPage.CONTENT_STREAM);
 		Assert.assertEquals(1, streams.size());
 		for (Object object : streams) {
-			Assert.assertEquals("PDContentStream", object.getType());
+			Assert.assertEquals(PBoxPDContentStream.CONTENT_STREAM_TYPE, object.getObjectType());
 		}
 	}
 
