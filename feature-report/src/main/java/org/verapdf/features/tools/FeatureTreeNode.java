@@ -15,7 +15,7 @@ import java.util.Map;
 public final class FeatureTreeNode {
 
     private final String name;
-    private String value;
+    private Object value;
     private final FeatureTreeNode parent;
     private Map<String, String> attributes = new HashMap<>();
     private List<FeatureTreeNode> children;
@@ -34,7 +34,7 @@ public final class FeatureTreeNode {
         this(name, null, parent);
     }
 
-    private FeatureTreeNode(String name, String value, FeatureTreeNode parent)
+    private FeatureTreeNode(String name, Object value, FeatureTreeNode parent)
             throws FeaturesTreeNodeException {
         this.name = name;
         this.value = value;
@@ -98,7 +98,7 @@ public final class FeatureTreeNode {
      *             - occurs when parent of the new node has String value
      */
     public static FeatureTreeNode newChildInstanceWithValue(String name,
-            String value, FeatureTreeNode parent)
+                                                            Object value, FeatureTreeNode parent)
             throws FeaturesTreeNodeException {
         return new FeatureTreeNode(name, value, parent);
     }
@@ -113,7 +113,7 @@ public final class FeatureTreeNode {
     /**
      * @return value of the node
      */
-    public String getValue() {
+    public Object getValue() {
         return value;
     }
 
@@ -157,7 +157,7 @@ public final class FeatureTreeNode {
             } else {
                 throw new FeaturesTreeNodeException(
                         "You can not add childrens for nodes with defined values. Node name "
-                                + name + ", value: " + value + ".");
+                                + name + ", value: " + value.toString() + ".");
             }
         }
     }
@@ -170,7 +170,7 @@ public final class FeatureTreeNode {
      * @throws FeaturesTreeNodeException
      *             - occurs when value adds to the node with childrens
      */
-    public void setValue(String value) throws FeaturesTreeNodeException {
+    public void setValue(Object value) throws FeaturesTreeNodeException {
         if (children == null) {
             this.value = value;
         } else {

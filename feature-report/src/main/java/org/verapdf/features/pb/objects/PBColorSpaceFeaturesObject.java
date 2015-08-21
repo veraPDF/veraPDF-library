@@ -100,7 +100,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
                     FeatureTreeNode alt = FeatureTreeNode.newChildInstance("alternate", root);
                     alt.addAttribute(ID, colorSpaceChild);
                 }
-                FeatureTreeNode.newChildInstanceWithValue("componentsNumber", String.valueOf(icc.getNumberOfComponents()), root);
+                FeatureTreeNode.newChildInstanceWithValue("components", String.valueOf(icc.getNumberOfComponents()), root);
                 if (iccProfileChild != null) {
                     FeatureTreeNode prof = FeatureTreeNode.newChildInstance("iccProfile", root);
                     prof.addAttribute(ID, iccProfileChild);

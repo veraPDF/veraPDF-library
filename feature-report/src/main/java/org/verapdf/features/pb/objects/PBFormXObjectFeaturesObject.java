@@ -144,8 +144,8 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
         for (int i = 0; i < array.length; ++i) {
             for (int j = 0; j < array.length - 1; ++j) {
                 FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
-                element.addAttribute("row", String.valueOf(i));
-                element.addAttribute("column", String.valueOf(j));
+                element.addAttribute("row", String.valueOf(i + 1));
+                element.addAttribute("column", String.valueOf(j + 1));
                 element.addAttribute("value", String.valueOf(array[i][j]));
             }
         }
