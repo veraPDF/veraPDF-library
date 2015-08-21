@@ -79,7 +79,7 @@ public class TestCosDict implements CosDict {
     }
 
     @Override
-    public String getType() {
+    public String getObjectType() {
         return type;
     }
 
