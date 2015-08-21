@@ -29,23 +29,23 @@ public class PBoxPDObject extends GenericModelObject implements PDObject {
 	}
 
 	protected PBoxPDObject(PDDocument document, final String type) {
+		super(type);
 		this.document = document;
-		this.type = type;
 	}
 
 	protected PBoxPDObject(PDContentStream contentStream, final String type) {
+		super(type);
 		this.contentStream = contentStream;
-		this.type = type;
 	}
 
 	protected PBoxPDObject(PDFontLike pdFontLike, final String type) {
+		super(type);
 		this.pdFontLike = pdFontLike;
-		this.type = type;
 	}
 
 	protected PBoxPDObject(CMap cMap, final String type) {
+		super(type);
 		this.cMap = cMap;
-		this.type = type;
 	}
 
     protected void addAction(List<PDAction> actions,

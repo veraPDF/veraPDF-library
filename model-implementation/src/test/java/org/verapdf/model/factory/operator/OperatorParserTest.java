@@ -166,9 +166,9 @@ public class OperatorParserTest {
 		operator.add(pdfBoxOperator);
 		List<org.verapdf.model.operator.Operator> operators =
 				OperatorFactory.operatorsFromTokens(operator, RESOURCES);
-		Assert.assertEquals(PBOp_BI.OP_BI_TYPE, operators.get(0).getType());
-		Assert.assertEquals(PBOp_ID.OP_ID_TYPE, operators.get(1).getType());
-		Assert.assertEquals(PBOp_EI.OP_EI_TYPE, operators.get(2).getType());
+		Assert.assertEquals(PBOp_BI.OP_BI_TYPE, operators.get(0).getObjectType());
+		Assert.assertEquals(PBOp_ID.OP_ID_TYPE, operators.get(1).getObjectType());
+		Assert.assertEquals(PBOp_EI.OP_EI_TYPE, operators.get(2).getObjectType());
 	}
 
 }
