@@ -12,6 +12,7 @@ import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.graphics.PDPostScriptXObject;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
@@ -38,9 +39,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
         super(simplePDObject, X_OBJECT_TYPE);
     }
 
-	public PBoxPDXObject(
-			org.apache.pdfbox.pdmodel.graphics.PDXObject simplePDObject,
-			final String type) {
+	protected PBoxPDXObject(COSObjectable simplePDObject, final String type) {
 		super(simplePDObject, type);
 	}
 
@@ -48,7 +47,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
     public String getSubtype() {
         COSDictionary dict = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject)
                 .getCOSStream();
-        return getSubtypeString(dict.getItem(COSName.SUBTYPE));
+        return getSubtypeString(dict.getDictionaryObject(COSName.SUBTYPE));
     }
 
     protected String getSubtypeString(COSBase item) {
@@ -56,32 +55,24 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
             return ((COSString) item).getString();
         } else if (item instanceof COSName) {
             return ((COSName) item).getName();
-        } else if (item instanceof COSObject) {
-            return getSubtypeString(((COSObject) item).getObject());
         } else {
             return null;
         }
     }
 
-    @Override
-    public List<? extends Object> getLinkedObjects(String link) {
-        List<? extends Object> list;
-        switch (link) {
-        case S_MASK:
-            list = this.getSMask();
-            break;
-        case OPI:
-            list = this.getOPI();
-            break;
-        default:
-            list = super.getLinkedObjects(link);
-            break;
-        }
+	@Override
+	public List<? extends Object> getLinkedObjects(String link) {
+		switch (link) {
+			case S_MASK:
+				return this.getSMask();
+			case OPI:
+				return this.getOPI();
+			default:
+				return super.getLinkedObjects(link);
+		}
+	}
 
-        return list;
-    }
-
-    private List<PDXObject> getSMask() {
+    protected List<PDXObject> getSMask() {
         List<PDXObject> mask = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
             COSStream cosStream = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject)
@@ -89,7 +80,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
             COSBase smaskDictionary = cosStream
                     .getDictionaryObject(COSName.SMASK);
             if (smaskDictionary instanceof COSDictionary) {
-                PDXObject xObject = getXObject(smaskDictionary);
+                PDXObject xObject = this.getXObject(smaskDictionary);
                 if (xObject != null) {
                     mask.add(xObject);
                 }
@@ -126,31 +117,19 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
         }
     }
 
-    private List<CosDict> getOPI() {
-        return getLinkToDictionary(OPI);
+    protected List<CosDict> getOPI() {
+        return this.getLinkToDictionary(OPI);
     }
 
     protected List<CosDict> getLinkToDictionary(String key) {
         List<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         COSDictionary object = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject)
                 .getCOSStream();
-        COSBase item = object.getItem(COSName.getPDFName(key));
-        if (item != null) {
-            final COSDictionary itemDictionary = getDictionary(item);
-            if (itemDictionary != null) {
-                list.add(new PBCosDict(itemDictionary));
-            }
+        COSBase item = object.getDictionaryObject(COSName.getPDFName(key));
+        if (item instanceof COSDictionary) {
+			list.add(new PBCosDict((COSDictionary) item));
         }
         return list;
     }
 
-    protected COSDictionary getDictionary(COSBase item) {
-        if (item instanceof COSDictionary) {
-            return (COSDictionary) item;
-        } else if (item instanceof COSObject) {
-            return getDictionary(((COSObject) item).getObject());
-        } else {
-            return null;
-        }
-    }
 }

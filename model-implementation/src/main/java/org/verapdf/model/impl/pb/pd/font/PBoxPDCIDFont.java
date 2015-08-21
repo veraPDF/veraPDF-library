@@ -36,4 +36,10 @@ public class PBoxPDCIDFont extends PBoxPDFont implements PDCIDFont {
         }
         return null;
     }
+
+	@Override
+	public Boolean getisSymbolic() {
+		// TODO : implement me
+		return null;
+	}
 }
