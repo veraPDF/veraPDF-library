@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.common.PDStream;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImage;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosRenderingIntent;
@@ -29,43 +30,39 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     public static final String ALTERNATES = "Alternates";
     public static final String INTENT = "Intent";
 
-    public PBoxPDXImage(PDImageXObject simplePDObject) {
+    public PBoxPDXImage(PDImage simplePDObject) {
         super(simplePDObject, X_IMAGE_TYPE);
     }
 
+	public PBoxPDXImage(PDImage simplePDObject, final String type) {
+		super(simplePDObject, type);
+	}
+
     @Override
     public Boolean getInterpolate() {
-        return Boolean.valueOf(((PDImageXObject) simplePDObject)
+        return Boolean.valueOf(((PDImage) simplePDObject)
                 .getInterpolate());
     }
 
-    @Override
-    public List<? extends Object> getLinkedObjects(String link) {
-        List<? extends Object> list;
-
-        switch (link) {
-        case INTENT:
-            list = this.getIntent();
-            break;
-        case IMAGE_CS:
-            list = this.getImageCS();
-            break;
-        case ALTERNATES:
-            list = this.getAlternates();
-            break;
-        default:
-            list = super.getLinkedObjects(link);
-            break;
-        }
-
-        return list;
-    }
+	@Override
+	public List<? extends Object> getLinkedObjects(String link) {
+		switch (link) {
+			case INTENT:
+				return this.getIntent();
+			case IMAGE_CS:
+				return this.getImageCS();
+			case ALTERNATES:
+				return this.getAlternates();
+			default:
+				return super.getLinkedObjects(link);
+		}
+	}
 
     private List<CosRenderingIntent> getIntent() {
         List<CosRenderingIntent> intents = new ArrayList<>(
                 MAX_NUMBER_OF_ELEMENTS);
-        COSStream imageStream = ((PDImageXObject) simplePDObject)
-                .getCOSStream();
+        COSDictionary imageStream = (COSDictionary) simplePDObject
+				.getCOSObject();
         COSName intent = imageStream.getCOSName(COSName.getPDFName(INTENT));
         if (intent != null) {
             intents.add(new PBCosRenderingIntent(intent));
@@ -74,10 +71,11 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     }
 
     private List<PDColorSpace> getImageCS() {
-        List<PDColorSpace> colorSpaces = new ArrayList<>(1);
+        List<PDColorSpace> colorSpaces = new ArrayList<>(
+				MAX_NUMBER_OF_ELEMENTS);
         try {
             PDColorSpace buffer = ColorSpaceFactory
-                    .getColorSpace(((PDImageXObject) simplePDObject)
+                    .getColorSpace(((PDImage) simplePDObject)
                             .getColorSpace());
             if (buffer != null) {
                 colorSpaces.add(buffer);
@@ -90,11 +88,12 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
         return colorSpaces;
     }
 
-    private List<PDXImage> getAlternates() {
+    protected List<PDXImage> getAlternates() {
         final List<PDXImage> alternates = new ArrayList<>();
         final COSStream imageStream = ((PDImageXObject) simplePDObject)
                 .getCOSStream();
-        COSBase buffer = imageStream.getItem(COSName.getPDFName(ALTERNATES));
+        final COSBase buffer = imageStream.getDictionaryObject(COSName
+				.getPDFName(ALTERNATES));
         addAlternates(alternates, buffer);
         return alternates;
     }
@@ -102,32 +101,33 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     private void addAlternates(List<PDXImage> alternates, COSBase buffer) {
         if (buffer instanceof COSArray) {
             for (COSBase element : (COSArray) buffer) {
-                addAlternate(alternates, element);
+				if (element instanceof COSDictionary) {
+					addAlternate(alternates, (COSDictionary) element);
+				} else if (element instanceof COSObject) {
+					addAlternate(alternates, (COSDictionary)
+							((COSObject) element).getObject());
+				}
             }
-        } else if (buffer instanceof COSObject) {
-            addAlternates(alternates, ((COSObject) buffer).getObject());
         }
     }
 
-    private void addAlternate(List<PDXImage> alternates, COSBase buffer) {
-        COSDictionary alternate = getDictionary(buffer);
-        if (alternate != null) {
-            COSStream alternatesImages = (COSStream) alternate
-                    .getDictionaryObject(COSName.IMAGE);
-            try {
-                if (alternatesImages != null) {
-                    final PDStream stream = new PDStream(alternatesImages);
-                    final PDResources res = ((PDImageXObject) simplePDObject)
-                            .getResources();
-                    PDImageXObject imageXObject = new PDImageXObject(stream,
-                            res);
-                    alternates.add(new PBoxPDXImage(imageXObject));
-                }
-            } catch (IOException e) {
-                LOGGER.error(
-                        "Error in creating Alternate XObject. "
-                                + e.getMessage(), e);
-            }
-        }
-    }
+	private void addAlternate(List<PDXImage> alternates, COSDictionary buffer) {
+		COSStream alternatesImages = (COSStream) buffer
+				.getDictionaryObject(COSName.IMAGE);
+		try {
+			if (alternatesImages != null) {
+				final PDStream stream = new PDStream(alternatesImages);
+				final PDResources res = ((PDImageXObject) simplePDObject)
+						.getResources();
+				PDImageXObject imageXObject = new PDImageXObject(stream,
+						res);
+				alternates.add(new PBoxPDXImage(imageXObject));
+			}
+		} catch (IOException e) {
+			LOGGER.error(
+					"Error in creating Alternate XObject. "
+							+ e.getMessage(), e);
+		}
+	}
+
 }
