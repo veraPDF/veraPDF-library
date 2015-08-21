@@ -11,6 +11,9 @@ import org.junit.runners.Parameterized;
 import org.verapdf.model.impl.pb.operator.color.PBOpColor;
 import org.verapdf.model.impl.pb.operator.generalgs.*;
 import org.verapdf.model.impl.pb.operator.inlineimage.PBOpInlineImage;
+import org.verapdf.model.impl.pb.operator.inlineimage.PBOp_BI;
+import org.verapdf.model.impl.pb.operator.inlineimage.PBOp_EI;
+import org.verapdf.model.impl.pb.operator.inlineimage.PBOp_ID;
 import org.verapdf.model.impl.pb.operator.markedcontent.*;
 import org.verapdf.model.impl.pb.operator.opclip.PBOp_WStar;
 import org.verapdf.model.impl.pb.operator.opclip.PBOp_W_clip;
@@ -51,7 +54,7 @@ public class OperatorParserTest {
 	public static final PDResources RESOURCES = new PDResources(new COSDictionary());
 	private static final String UNDEFINED = "Undefined";
 
-	@Parameterized.Parameters
+	@Parameterized.Parameters(name = "{index}: {0} -> {1}")
 	public static Collection<Object[]> data() {
 		List<Object[]> parameters = new ArrayList<>();
 		parameters.add(new Object[] {Operator.getOperator(Operators.D_SET_DASH), PBOp_d.OP_D_TYPE});
@@ -100,10 +103,7 @@ public class OperatorParserTest {
 		parameters.add(new Object[] {Operator.getOperator(Operators.TS), PBOpTextState.OP_TEXT_STATE_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.D0), PBOpType3Font.OP_TYPE_3_FONT_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.D1), PBOpType3Font.OP_TYPE_3_FONT_TYPE});
-		// TODO : is it correct??
-		parameters.add(new Object[] {Operator.getOperator(Operators.BI), PBOpInlineImage.OP_INLINE_IMAGE_TYPE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.ID), PBOpInlineImage.OP_INLINE_IMAGE_TYPE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.EI), PBOpInlineImage.OP_INLINE_IMAGE_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.BI), null});
 		parameters.add(new Object[] {Operator.getOperator(Operators.BX), PBOp_BX.OP_BX_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.EX), PBOp_EX.OP_EX_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.C_CURVE_TO), PBOp_c.OP_C_TYPE});
@@ -146,11 +146,29 @@ public class OperatorParserTest {
 
 	@Test
 	public void testParseOperatorMethod() {
-		List<Object> operator = new ArrayList<>(1);
-		operator.add(this.operator);
-		final org.verapdf.model.operator.Operator veraOperator =
-				OperatorFactory.operatorsFromTokens(operator, RESOURCES).get(0);
-		Assert.assertEquals(expectedType, veraOperator.getObjectType());
+		// TODO : simplify this ....
+		if (Operators.BI.equals(operator.getName())) {
+			testBIParse();
+		} else {
+			List<Object> operator = new ArrayList<>(1);
+			operator.add(this.operator);
+			final org.verapdf.model.operator.Operator veraOperator =
+					OperatorFactory.operatorsFromTokens(operator, RESOURCES).get(0);
+			Assert.assertEquals(expectedType, veraOperator.getObjectType());
+		}
+	}
+
+	public void testBIParse() {
+		List<Object> operator = new ArrayList<>(2);
+		Operator pdfBoxOperator = Operator.getOperator(Operators.BI);
+		pdfBoxOperator.setImageData(new byte[0]);
+		pdfBoxOperator.setImageParameters(new COSDictionary());
+		operator.add(pdfBoxOperator);
+		List<org.verapdf.model.operator.Operator> operators =
+				OperatorFactory.operatorsFromTokens(operator, RESOURCES);
+		Assert.assertEquals(PBOp_BI.OP_BI_TYPE, operators.get(0).getType());
+		Assert.assertEquals(PBOp_ID.OP_ID_TYPE, operators.get(1).getType());
+		Assert.assertEquals(PBOp_EI.OP_EI_TYPE, operators.get(2).getType());
 	}
 
 }

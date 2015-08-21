@@ -12,42 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Operator representing inline image. Described by
- * BI, ID and EI operators
+ * Base class for operators, such as BI, ID and EI
  *
  * @author Timur Kamalov
  */
 public class PBOpInlineImage extends PBOperator implements OpInlineImage {
 
-	/** Type name for {@code PBOpInlineImage} */
-    public static final String OP_INLINE_IMAGE_TYPE = "OpInlineImage";
-
-	/** Name of link to the inline image dictionary */
-    public static final String INLINE_IMAGE_DICTIONARY = "inlineImageDictionary";
-
-    public PBOpInlineImage(List<COSBase> arguments) {
-        super(arguments, OP_INLINE_IMAGE_TYPE);
-    }
-
-    @Override
-    public List<? extends Object> getLinkedObjects(
-            String link) {
-        if (INLINE_IMAGE_DICTIONARY.equals(link)) {
-            return this.getInlineImageDictionary();
-        }
-        return super.getLinkedObjects(link);
-    }
-
-    private List<CosDict> getInlineImageDictionary() {
-        List<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-        if (!this.arguments.isEmpty()) {
-			COSBase dict = this.arguments
-					.get(this.arguments.size() - 1);
-			if (dict instanceof COSDictionary) {
-				list.add(new PBCosDict((COSDictionary) dict));
-			}
-        }
-        return list;
+    protected PBOpInlineImage(List<COSBase> arguments, final String type) {
+        super(arguments, type);
     }
 
 }

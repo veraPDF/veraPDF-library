@@ -37,7 +37,7 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
         final COSStream subtype2 = ((PDFormXObject) simplePDObject)
                 .getCOSStream();
         return getSubtypeString(subtype2
-                .getItem(COSName.getPDFName("Subtype2")));
+                .getDictionaryObject(COSName.getPDFName("Subtype2")));
     }
 
     @Override
