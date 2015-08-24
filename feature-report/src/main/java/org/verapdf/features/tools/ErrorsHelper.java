@@ -13,7 +13,7 @@ public final class ErrorsHelper {
 
     private static final Logger LOGGER = Logger.getLogger(ErrorsHelper.class);
 
-    public static final String ERRORID = "errorId";
+    public static final String ERRORID = "errorID";
     public static final String ID = "id";
 
     public static final String METADATACONVERT_ID = "metaerr1";
@@ -42,8 +42,6 @@ public final class ErrorsHelper {
     public static final String PARSINGEMBEDDEDFILEERROR_ID = "embfierr1";
     public static final String PARSINGEMBEDDEDFILEERROR_MESSAGE = "Error while parsing embedded files.";
 
-    public static final String GETINGICCPROFILEERROR_ID = "iccprofileerr1";
-    public static final String GETINGICCPROFILEERROR_MESSAGE = "Error while getting icc profile. Probably stream has been closed.";
     public static final String GETINGICCPROFILEHEADERERROR_ID = "iccprofileerr2";
     public static final String GETINGICCPROFILEHEADERERROR_MESSAGE = "Error while getting icc profile bytes.";
     public static final String GETINGICCPROFILEHEADERSIZEERROR_ID = "iccprofileerr3";

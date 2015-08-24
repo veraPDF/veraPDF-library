@@ -83,14 +83,14 @@ public class PBDocSecurityFeaturesObject implements IFeaturesObject {
                 if (encryption.getSecurityHandler() != null) {
                     AccessPermission accessPermissions = new AccessPermission(encryption.getPermissions());
 
-                    PBCreateNodeHelper.addNotEmptyNode("assembleDocumentAllowed", String.valueOf(accessPermissions.canAssembleDocument()), root);
-                    PBCreateNodeHelper.addNotEmptyNode("extractContentAllowed", String.valueOf(accessPermissions.canExtractContent()), root);
-                    PBCreateNodeHelper.addNotEmptyNode("extractForAccessibilityAllowed", String.valueOf(accessPermissions.canExtractForAccessibility()), root);
-                    PBCreateNodeHelper.addNotEmptyNode("fillInFormAllowed", String.valueOf(accessPermissions.canFillInForm()), root);
-                    PBCreateNodeHelper.addNotEmptyNode("modifyAllowed", String.valueOf(accessPermissions.canModify()), root);
-                    PBCreateNodeHelper.addNotEmptyNode("modifyAnnotationsAllowed", String.valueOf(accessPermissions.canModifyAnnotations()), root);
                     PBCreateNodeHelper.addNotEmptyNode("printAllowed", String.valueOf(accessPermissions.canPrint()), root);
                     PBCreateNodeHelper.addNotEmptyNode("printDegradedAllowed", String.valueOf(accessPermissions.canPrintDegraded()), root);
+                    PBCreateNodeHelper.addNotEmptyNode("changesAllowed", String.valueOf(accessPermissions.canModify()), root);
+                    PBCreateNodeHelper.addNotEmptyNode("modifyAnnotationsAllowed", String.valueOf(accessPermissions.canModifyAnnotations()), root);
+                    PBCreateNodeHelper.addNotEmptyNode("fillingSigningAllowed", String.valueOf(accessPermissions.canFillInForm()), root);
+                    PBCreateNodeHelper.addNotEmptyNode("documentAssemblyAllowed", String.valueOf(accessPermissions.canAssembleDocument()), root);
+                    PBCreateNodeHelper.addNotEmptyNode("extractContentAllowed", String.valueOf(accessPermissions.canExtractContent()), root);
+                    PBCreateNodeHelper.addNotEmptyNode("extractAccessibilityAllowed", String.valueOf(accessPermissions.canExtractForAccessibility()), root);
                 }
             } catch (IOException e) {
                 LOGGER.debug("PDFBox reports no matching security handle.", e);

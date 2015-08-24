@@ -108,15 +108,15 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
             if (formXObject.getGroup() != null) {
                 FeatureTreeNode groupNode = FeatureTreeNode.newRootInstance("group");
                 if (formXObject.getGroup().getSubType() != null) {
-                    PBCreateNodeHelper.addNotEmptyNode("subtype", formXObject.getGroup().getSubType().getName(), root);
+                    PBCreateNodeHelper.addNotEmptyNode("subtype", formXObject.getGroup().getSubType().getName(), groupNode);
                     if ("Transparency".equals(formXObject.getGroup().getSubType().getName())) {
                         if (groupColorSpaceChild != null) {
                             FeatureTreeNode clr = FeatureTreeNode.newChildInstance("colorSpace", root);
                             clr.addAttribute(ID, groupColorSpaceChild);
                         }
 
-                        FeatureTreeNode.newChildInstanceWithValue("isolated", String.valueOf(formXObject.getGroup().isIsolated()), root);
-                        FeatureTreeNode.newChildInstanceWithValue("knockout", String.valueOf(formXObject.getGroup().isKnockout()), root);
+                        FeatureTreeNode.newChildInstanceWithValue("isolated", String.valueOf(formXObject.getGroup().isIsolated()), groupNode);
+                        FeatureTreeNode.newChildInstanceWithValue("knockout", String.valueOf(formXObject.getGroup().isKnockout()), groupNode);
                     }
 
                 }
@@ -140,12 +140,12 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
         return null;
     }
 
-    private void parseFloatMatrix(float[][] array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+    private static void parseFloatMatrix(float[][] array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
         for (int i = 0; i < array.length; ++i) {
             for (int j = 0; j < array.length - 1; ++j) {
                 FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
-                element.addAttribute("row", String.valueOf(i));
-                element.addAttribute("column", String.valueOf(j));
+                element.addAttribute("row", String.valueOf(i + 1));
+                element.addAttribute("column", String.valueOf(j + 1));
                 element.addAttribute("value", String.valueOf(array[i][j]));
             }
         }

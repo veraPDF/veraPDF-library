@@ -222,7 +222,7 @@ public final class PBFeaturesObjectCreator {
     }
 
     /**
-     * Constructs new PBTillingPatternFeaturesObject
+     * Constructs new PBTilingPatternFeaturesObject
      *
      * @param tilingPattern   - PDTilingPattern which represents tilling pattern for feature report
      * @param id              - id of the object
@@ -238,9 +238,9 @@ public final class PBFeaturesObjectCreator {
      * @param patternParent   - set of pattern ids which contains the given pattern as its resources
      * @param xobjectParent   - set of xobject ids which contains the given pattern as its resources
      * @param fontParent      - set of font ids which contains the given pattern as its resources
-     * @return created PBTillingPatternFeaturesObject
+     * @return created PBTilingPatternFeaturesObject
      */
-    public static PBTillingPatternFeaturesObject createTilingPatternFeaturesObject(PDTilingPattern tilingPattern,
+    public static PBTilingPatternFeaturesObject createTilingPatternFeaturesObject(PDTilingPattern tilingPattern,
                                                                                    String id,
                                                                                    Set<String> extGStateChild,
                                                                                    Set<String> colorSpaceChild,
@@ -254,7 +254,7 @@ public final class PBFeaturesObjectCreator {
                                                                                    Set<String> patternParent,
                                                                                    Set<String> xobjectParent,
                                                                                    Set<String> fontParent) {
-        return new PBTillingPatternFeaturesObject(tilingPattern, id, extGStateChild, colorSpaceChild, patternChild, shadingChild, xobjectChild, fontChild, procSetChild, propertiesChild, pageParent, patternParent, xobjectParent, fontParent);
+        return new PBTilingPatternFeaturesObject(tilingPattern, id, extGStateChild, colorSpaceChild, patternChild, shadingChild, xobjectChild, fontChild, procSetChild, propertiesChild, pageParent, patternParent, xobjectParent, fontParent);
     }
 
     /**

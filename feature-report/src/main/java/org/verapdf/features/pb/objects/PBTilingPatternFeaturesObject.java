@@ -15,7 +15,7 @@ import java.util.Set;
  *
  * @author Maksim Bezrukov
  */
-public class PBTillingPatternFeaturesObject implements IFeaturesObject {
+public class PBTilingPatternFeaturesObject implements IFeaturesObject {
 
     private static final String ID = "id";
 
@@ -52,7 +52,7 @@ public class PBTillingPatternFeaturesObject implements IFeaturesObject {
      * @param xobjectParent   - set of xobject ids which contains the given pattern as its resources
      * @param fontParent      - set of font ids which contains the given pattern as its resources
      */
-    public PBTillingPatternFeaturesObject(PDTilingPattern tilingPattern, String id, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+    public PBTilingPatternFeaturesObject(PDTilingPattern tilingPattern, String id, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
         this.tilingPattern = tilingPattern;
         this.id = id;
         this.extGStateChild = extGStateChild;
@@ -89,7 +89,7 @@ public class PBTillingPatternFeaturesObject implements IFeaturesObject {
         if (tilingPattern != null) {
             FeatureTreeNode root = FeatureTreeNode.newRootInstance("pattern");
             root.addAttribute(ID, id);
-            root.addAttribute("type", "tilling");
+            root.addAttribute("type", "tiling");
 
             parseParents(root);
 
@@ -116,8 +116,8 @@ public class PBTillingPatternFeaturesObject implements IFeaturesObject {
         for (int i = 0; i < array.length; ++i) {
             for (int j = 0; j < array.length - 1; ++j) {
                 FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
-                element.addAttribute("row", String.valueOf(i));
-                element.addAttribute("column", String.valueOf(j));
+                element.addAttribute("row", String.valueOf(i + 1));
+                element.addAttribute("column", String.valueOf(j + 1));
                 element.addAttribute("value", String.valueOf(array[i][j]));
             }
         }
