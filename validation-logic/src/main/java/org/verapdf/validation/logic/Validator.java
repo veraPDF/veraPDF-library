@@ -1,21 +1,5 @@
 package org.verapdf.validation.logic;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
-
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.ScriptableObject;
@@ -29,16 +13,17 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.validation.profile.model.ValidationProfile;
 import org.verapdf.validation.profile.model.Variable;
 import org.verapdf.validation.profile.parser.ValidationProfileParser;
-import org.verapdf.validation.report.model.Check;
+import org.verapdf.validation.report.model.*;
 import org.verapdf.validation.report.model.Check.Status;
-import org.verapdf.validation.report.model.CheckError;
-import org.verapdf.validation.report.model.CheckLocation;
-import org.verapdf.validation.report.model.Details;
-import org.verapdf.validation.report.model.Profile;
-import org.verapdf.validation.report.model.Result;
-import org.verapdf.validation.report.model.Rule;
-import org.verapdf.validation.report.model.ValidationInfo;
 import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
 
 /**
  * Validation logic
@@ -46,6 +31,9 @@ import org.xml.sax.SAXException;
  * @author Maksim Bezrukov
  */
 public class Validator {
+
+    private Context cx;
+    private ScriptableObject scope;
 
     private Deque<Object> objectsStack;
     private Deque<String> objectsContext;
@@ -71,6 +59,8 @@ public class Validator {
     private ValidationInfo validate(Object root) throws NullLinkNameException,
             NullLinkException, NullLinkedObjectException,
             MultiplyGlobalVariableNameException {
+        this.cx = Context.enter();
+        this.scope = cx.initStandardObjects();
         this.objectsStack = new ArrayDeque<>();
         this.objectsContext = new ArrayDeque<>();
         this.contextSet = new ArrayDeque<>();
@@ -98,9 +88,12 @@ public class Validator {
 
         this.contextSet.push(rootIDContext);
 
+        long i = 0;
         while (!this.objectsStack.isEmpty()) {
             checkNext();
         }
+
+        Context.exit();
 
         List<Rule> rules = new ArrayList<>();
 
@@ -124,8 +117,6 @@ public class Validator {
                         "Founded multiply variable with name: "
                                 + var.getAttrName() + "\".");
             }
-            Context cx = Context.enter();
-            ScriptableObject scope = cx.initStandardObjects();
 
             java.lang.Object res;
             res = cx.evaluateString(scope, var.getDefaultValue(), null, 0, null);
@@ -134,8 +125,6 @@ public class Validator {
             }
 
             this.variablesMap.put(var.getAttrName(), res);
-
-            Context.exit();
         }
     }
 
@@ -169,8 +158,6 @@ public class Validator {
     }
 
     private java.lang.Object evalVariableResult(Variable variable, Object object) {
-        Context cx = Context.enter();
-        ScriptableObject scope = cx.initStandardObjects();
         String source = variable.getDefaultValue();
 
         // If object's NOT null it's an update so sort the scope and source
@@ -180,13 +167,12 @@ public class Validator {
                     .entrySet()) {
                 scope.put(entry.getKey(), scope, entry.getValue());
             }
-            source = getScriptPrefix(object) + variable.getValue()
+            source = getScriptPrefix(object, variable.getValue()) + variable.getValue()
                     + getScriptSuffix();
         }
 
         java.lang.Object res;
         res = cx.evaluateString(scope, source, null, 0, null);
-        Context.exit();
 
         if (res instanceof NativeJavaObject) {
             res = ((NativeJavaObject) res).unwrap();
@@ -293,7 +279,7 @@ public class Validator {
             org.verapdf.validation.profile.model.Rule rule) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(getScriptPrefix(obj));
+        builder.append(getScriptPrefix(obj, rule.getTest()));
         builder.append("(");
         builder.append(rule.getTest());
         builder.append(")==true");
@@ -301,18 +287,29 @@ public class Validator {
         return builder.toString();
     }
 
-    private static String getScriptPrefix(Object obj) {
+    private static String getScriptPrefix(Object obj, String test) {
         StringBuilder builder = new StringBuilder();
 
         for (String prop : obj.getProperties()) {
-            builder.append("var " + prop + " = obj.get" + prop + "();\n");
+            if (test.contains(prop)) {
+                builder.append("var ");
+                builder.append(prop);
+                builder.append(" = obj.get");
+                builder.append(prop);
+                builder.append("();\n");
+            }
         }
 
         for (String linkName : obj.getLinks()) {
-            List<? extends Object> linkedObject = obj
-                    .getLinkedObjects(linkName);
-            builder.append("var " + linkName + "_size = " + linkedObject.size()
-                    + ";\n");
+            if (test.contains(linkName + "_size")) {
+                List<? extends Object> linkedObject = obj
+                        .getLinkedObjects(linkName);
+                builder.append("var ");
+                builder.append(linkName);
+                builder.append("_size = ");
+                builder.append(linkedObject.size());
+                builder.append(";\n");
+            }
         }
 
         builder.append("function test(){return ");
@@ -326,9 +323,6 @@ public class Validator {
 
     private boolean checkObjWithRule(Object obj, String context,
             org.verapdf.validation.profile.model.Rule rule, String script) {
-        Context cx = Context.enter();
-        ScriptableObject scope = cx.initStandardObjects();
-
         scope.put("obj", scope, obj);
         for (Map.Entry<String, java.lang.Object> entry : this.variablesMap
                 .entrySet()) {
@@ -339,18 +333,15 @@ public class Validator {
 
         CheckLocation loc = new CheckLocation(this.rootType, context);
         Check check = res.booleanValue() ? new Check(Status.PASSED, loc, null)
-                : createFailCkeck(obj, loc, rule, cx, scope);
-
-        Context.exit();
+                : createFailCkeck(obj, loc, rule);
 
         this.checkMap.get(rule.getAttrID()).add(check);
 
         return res.booleanValue();
     }
 
-    private static Check createFailCkeck(Object obj, CheckLocation loc,
-            org.verapdf.validation.profile.model.Rule rule, Context cx,
-            ScriptableObject scope) {
+    private Check createFailCkeck(Object obj, CheckLocation loc,
+                                  org.verapdf.validation.profile.model.Rule rule) {
         List<String> args = new ArrayList<>();
 
         if (rule.getRuleError() == null) {
@@ -359,7 +350,7 @@ public class Validator {
         String errorMessage = rule.getRuleError().getMessage();
 
         for (String arg : rule.getRuleError().getArgument()) {
-            String argScript = getScriptPrefix(obj) + arg + getScriptSuffix();
+            String argScript = getScriptPrefix(obj, arg) + arg + getScriptSuffix();
 
             java.lang.Object resArg;
 
