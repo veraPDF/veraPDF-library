@@ -87,8 +87,10 @@ class OperatorParser {
 				operators.add(new PBOp_d(arguments));
 				break;
 			case Operators.GS:
-				operators.add(new PBOp_gs(arguments, getExtGStateFromResources(resources,
-						getLastCOSName(arguments))));
+				PDExtendedGraphicsState extGState = getExtGStateFromResources(resources,
+						getLastCOSName(arguments));
+				graphicState.copyPropertiesFromExtGState(extGState);
+				operators.add(new PBOp_gs(arguments, extGState));
 				break;
 			case Operators.I_SETFLAT:
 				operators.add(new PBOp_i(arguments));
