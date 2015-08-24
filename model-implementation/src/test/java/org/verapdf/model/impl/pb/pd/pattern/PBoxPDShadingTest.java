@@ -33,7 +33,7 @@ public class PBoxPDShadingTest extends PBoxPDPatternTest {
 		List<? extends Object> colorSpace = actual.getLinkedObjects(PBoxPDShading.COLOR_SPACE);
 		Assert.assertEquals(1, colorSpace.size());
 		for (Object object : colorSpace) {
-			Assert.assertEquals(PBoxPDDeviceRGB.DEVICE_RGB_TYPE, object.getType());
+			Assert.assertEquals(PBoxPDDeviceRGB.DEVICE_RGB_TYPE, object.getObjectType());
 		}
 	}
 

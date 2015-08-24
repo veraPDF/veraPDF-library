@@ -40,7 +40,8 @@ public class PBoxPDActionTest extends BaseTest {
 		List<? extends Object> nextAction = actual.getLinkedObjects(PBoxPDAction.NEXT);
 		Assert.assertEquals(0, nextAction.size());
 		for (Object object : nextAction) {
-			Assert.assertTrue("PDAction".equals(object.getType()) || "PDNamedAction".equals(object.getType()));
+			Assert.assertTrue(PBoxPDAction.ACTION_TYPE.equals(object.getObjectType()) ||
+					PBoxPDNamedAction.NAMED_ACTION_TYPE.equals(object.getObjectType()));
 		}
 	}
 

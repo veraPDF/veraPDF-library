@@ -34,4 +34,20 @@ public final class IDGenerator {
         }
         return null;
     }
+
+	/**
+	 * Generate ID for font glyph. Curren method generate a string of the
+	 * form 'fontName glyphCode', where 'fontName' is String and
+	 * 'glyphCode' is number.
+	 *
+	 * @param fontName  name of font
+	 * @param glyphCode code of glyph
+	 * @return string representation of ID
+	 */
+	public static String generateID(String fontName, int glyphCode) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(fontName).append(' ').append(glyphCode);
+		return builder.toString();
+	}
+
 }

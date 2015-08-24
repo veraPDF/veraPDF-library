@@ -25,6 +25,6 @@ public class PBOp_gsTest extends PBOpGeneralGSTest {
 		List<? extends Object> extGState = actual.getLinkedObjects(PBOp_gs.EXT_G_STATE);
 
 		Assert.assertEquals(1, extGState.size());
-		Assert.assertEquals(PBoxPDExtGState.EXT_G_STATE_TYPE, extGState.get(0).getType());
+		Assert.assertEquals(PBoxPDExtGState.EXT_G_STATE_TYPE, extGState.get(0).getObjectType());
 	}
 }

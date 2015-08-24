@@ -45,7 +45,7 @@ public abstract class PBOperatorTest extends BaseTest {
 
 	private static Object getActual(List<Operator> operators, String type) {
 		for (Operator operator : operators) {
-			if (type.equals(operator.getType())) {
+			if (type.equals(operator.getObjectType())) {
 				return operator;
 			}
 		}
@@ -59,7 +59,7 @@ public abstract class PBOperatorTest extends BaseTest {
 		Assert.assertEquals(count, linkedObjects.size());
 
 		for (Object object : linkedObjects) {
-			Assert.assertEquals(type, object.getType());
+			Assert.assertEquals(type, object.getObjectType());
 		}
 
 	}
@@ -76,7 +76,7 @@ public abstract class PBOperatorTest extends BaseTest {
 
 		Object object = linkedObjects.get(0);
 
-		Assert.assertEquals(type, object.getType());
+		Assert.assertEquals(type, object.getObjectType());
 		return object;
 	}
 

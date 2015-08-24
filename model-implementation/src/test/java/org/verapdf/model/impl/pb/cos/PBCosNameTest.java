@@ -70,7 +70,7 @@ public class PBCosNameTest extends BaseTest {
     @Test
     public void testTypeAndID() {
         for (CosName name : actualNames) {
-            Assert.assertEquals(expectedType, name.getType());
+            Assert.assertEquals(expectedType, name.getObjectType());
             Assert.assertEquals(expectedID, name.getID());
         }
     }
@@ -79,7 +79,7 @@ public class PBCosNameTest extends BaseTest {
 	@Test
 	public void testLinksMethod() {
 		for (CosName name : actualNames) {
-			List<String> expectedLinks = ModelHelper.getListOfLinks(name.getType());
+			List<String> expectedLinks = ModelHelper.getListOfLinks(name.getObjectType());
 			for (String link : expectedLinks) {
 				Assert.assertNotNull(name.getLinkedObjects(link));
 			}

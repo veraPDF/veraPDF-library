@@ -31,7 +31,7 @@ public class PBoxPDDocumentTest extends BaseTest{
 		List<? extends Object> outlines = actual.getLinkedObjects(PBoxPDDocument.OUTLINES);
 		Assert.assertEquals(6, outlines.size());
 		for (Object object : outlines) {
-			Assert.assertEquals(PBoxPDOutline.OUTLINE_TYPE, object.getType());
+			Assert.assertEquals(PBoxPDOutline.OUTLINE_TYPE, object.getObjectType());
 		}
 	}
 
@@ -50,7 +50,7 @@ public class PBoxPDDocumentTest extends BaseTest{
 		List<? extends org.verapdf.model.baselayer.Object> pages = actual.getLinkedObjects(PBoxPDDocument.PAGES);
 		Assert.assertEquals(1, pages.size());
 		for (Object object : pages) {
-			Assert.assertEquals("PDPage", object.getType());
+			Assert.assertEquals(PBoxPDPage.PAGE_TYPE, object.getObjectType());
 		}
 	}
 
@@ -59,7 +59,7 @@ public class PBoxPDDocumentTest extends BaseTest{
 		List<? extends Object> metadata = actual.getLinkedObjects(PBoxPDDocument.METADATA);
 		Assert.assertEquals(1, metadata.size());
 		for (Object object : metadata) {
-			Assert.assertEquals("PDMetadata", object.getType());
+			Assert.assertEquals(PBoxPDMetadata.METADATA_TYPE, object.getObjectType());
 		}
 	}
 
@@ -68,7 +68,7 @@ public class PBoxPDDocumentTest extends BaseTest{
 		List<? extends Object> outputIntents = actual.getLinkedObjects(PBoxPDDocument.OUTPUT_INTENTS);
 		Assert.assertEquals(1, outputIntents.size());
 		for (Object object : outputIntents) {
-			Assert.assertEquals("PDOutputIntent", object.getType());
+			Assert.assertEquals(PBoxPDOutputIntent.OUTPUT_INTENT_TYPE, object.getObjectType());
 		}
 	}
 
@@ -81,7 +81,8 @@ public class PBoxPDDocumentTest extends BaseTest{
 		List<? extends Object> actions = actual.getLinkedObjects(link);
 		Assert.assertEquals(0, actions.size());
 		for (Object object : actions) {
-			Assert.assertTrue("PDAction".equals(object.getType()) || "PDNamedAction".equals(object.getType()));
+			Assert.assertTrue(PBoxPDAction.ACTION_TYPE.equals(object.getObjectType()) ||
+					PBoxPDNamedAction.NAMED_ACTION_TYPE.equals(object.getObjectType()));
 		}
 	}
 }

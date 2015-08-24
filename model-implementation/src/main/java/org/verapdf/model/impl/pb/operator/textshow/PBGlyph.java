@@ -2,6 +2,7 @@ package org.verapdf.model.impl.pb.operator.textshow;
 
 import org.verapdf.model.GenericModelObject;
 import org.verapdf.model.operator.Glyph;
+import org.verapdf.model.tools.IDGenerator;
 
 /**
  * @author Timur Kamalov
@@ -18,6 +19,7 @@ public class PBGlyph extends GenericModelObject implements Glyph {
 	private int glyphCode;
 
 	public PBGlyph(Boolean glyphPresent, Boolean widthsConsistent, String fontName, int glyphCode) {
+		super(type);
 		this.glyphPresent = glyphPresent;
 		this.widthsConsistent = widthsConsistent;
 
@@ -36,13 +38,8 @@ public class PBGlyph extends GenericModelObject implements Glyph {
 	}
 
 	@Override
-	public String getType() {
-		return type;
-	}
-
-	@Override
 	public String getID() {
-		return fontName + " " + glyphCode;
+		return IDGenerator.generateID(fontName, glyphCode);
 	}
 
 }

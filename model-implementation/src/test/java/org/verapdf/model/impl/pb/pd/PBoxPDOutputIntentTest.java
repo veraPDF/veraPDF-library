@@ -36,10 +36,10 @@ public class PBoxPDOutputIntentTest extends BaseTest {
 
 	@Test
 	public void testDestProfileLink() {
-		List<? extends org.verapdf.model.baselayer.Object> destProfile = actual.getLinkedObjects("destProfile");
+		List<? extends Object> destProfile = actual.getLinkedObjects(PBoxPDOutputIntent.DEST_PROFILE);
 		Assert.assertEquals(1, destProfile.size());
 		for (Object object : destProfile) {
-			Assert.assertEquals(PBoxICCOutputProfile.ICC_OUTPUT_PROFILE_TYPE, object.getType());
+			Assert.assertEquals(PBoxICCOutputProfile.ICC_OUTPUT_PROFILE_TYPE, object.getObjectType());
 		}
 	}
 

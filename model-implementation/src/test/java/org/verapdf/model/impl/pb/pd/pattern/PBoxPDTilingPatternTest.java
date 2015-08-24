@@ -35,7 +35,7 @@ public class PBoxPDTilingPatternTest extends PBoxPDPatternTest{
 		List<? extends Object> contentStream = actual.getLinkedObjects(PBoxPDTilingPattern.CONTENT_STREAM);
 		Assert.assertEquals(1, contentStream.size());
 		for (Object object : contentStream) {
-			Assert.assertEquals(PBoxPDContentStream.CONTENT_STREAM_TYPE, object.getType());
+			Assert.assertEquals(PBoxPDContentStream.CONTENT_STREAM_TYPE, object.getObjectType());
 		}
 	}
 }
