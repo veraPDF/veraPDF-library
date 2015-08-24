@@ -32,7 +32,7 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
 	@Override
 	public Boolean getisSymbolic() {
 		// TODO : implement me
-		return null;
+		return Boolean.FALSE;
 	}
 
 	@Override

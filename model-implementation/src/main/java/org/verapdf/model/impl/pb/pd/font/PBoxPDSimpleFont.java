@@ -60,7 +60,7 @@ public class PBoxPDSimpleFont extends PBoxPDFont implements PDSimpleFont {
 	@Override
 	public Boolean getisSymbolic() {
 		// TODO : implement me
-		return null;
+		return Boolean.FALSE;
 	}
 
 }
