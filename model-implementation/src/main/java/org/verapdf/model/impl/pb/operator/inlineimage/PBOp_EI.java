@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.operator.inlineimage;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.pdmodel.PDResources;
@@ -16,6 +17,8 @@ import java.util.List;
  * @author Evgeniy Muravitskiy
  */
 public class PBOp_EI extends PBOpInlineImage implements Op_EI {
+
+	private static final Logger LOGGER = Logger.getLogger(PBOp_EI.class);
 
 	public static final String OP_EI_TYPE = "Op_EI";
 
@@ -51,7 +54,7 @@ public class PBOp_EI extends PBOpInlineImage implements Op_EI {
 							this.resources);
 			inlineImages.add(new PBoxPDInlineImage(inlineImage));
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		return inlineImages;
 	}
