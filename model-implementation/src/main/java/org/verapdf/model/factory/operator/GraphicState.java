@@ -79,12 +79,14 @@ public class GraphicState implements Cloneable {
     }
 
     public void copyPropertiesFromExtGState(PDExtendedGraphicsState extGState) {
-        try {
-            if (extGState.getFontSetting() != null) {
-                this.font = extGState.getFontSetting().getFont();
+        if (extGState != null) {
+            try {
+                if (extGState.getFontSetting() != null) {
+                    this.font = extGState.getFontSetting().getFont();
+                }
+            } catch (IOException e) {
+                LOGGER.error(e);
             }
-        } catch (IOException e) {
-            LOGGER.error(e);
         }
     }
 
