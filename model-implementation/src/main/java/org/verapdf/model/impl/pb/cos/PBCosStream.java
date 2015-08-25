@@ -118,7 +118,6 @@ public class PBCosStream extends PBCosDict implements CosStream {
                 if (filter instanceof COSName) {
                     filters.append(((COSName) filter).getName()).append(" ");
                 } else {
-					// TODO : how we should handle this case?
                     logger.error("Incorrect type for stream filter " +
 							filter.getClass().getName());
                 }

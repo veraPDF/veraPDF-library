@@ -28,7 +28,6 @@ public class PBoxPDNamedActionTest extends PBoxPDActionTest {
 		actual = new PBoxPDNamedAction((PDActionNamed) node.getAction());
 	}
 
-	// TODO : try to simplify
 	@Override
 	@Test
 	public void testSMethod() {

@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 
-    private static final String XMP_PACKAGE_TYPE = "XMPPackage";
+    public static final String XMP_PACKAGE_TYPE = "XMPPackage";
 
-    private static final String SCHEMA = "Schemas";
+    public static final String SCHEMAS = "Schemas";
 
     private XMPMetadata xmpMetadata;
     private boolean isMetadataValid;
@@ -86,7 +86,7 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
     @Override
     public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
             String link) {
-        if (SCHEMA.equals(link)) {
+        if (SCHEMAS.equals(link)) {
             return this.getSchemas();
         }
         return super.getLinkedObjects(link);
