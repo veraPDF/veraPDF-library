@@ -291,13 +291,11 @@ public class Validator {
 
         for (String linkName : obj.getLinks()) {
             if (test.contains(linkName + "_size")) {
-                List<? extends Object> linkedObject = obj
-                        .getLinkedObjects(linkName);
                 builder.append("var ");
                 builder.append(linkName);
-                builder.append("_size = ");
-                builder.append(linkedObject.size());
-                builder.append(";\n");
+                builder.append("_size = obj.getLinkedObjects(\"");
+                builder.append(linkName);
+                builder.append("\").size();\n");
             }
         }
 
