@@ -1,6 +1,5 @@
 package org.verapdf.features.pb.objects;
 
-import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
@@ -15,9 +14,6 @@ import org.verapdf.features.tools.FeaturesCollection;
  * @author Maksim Bezrukov
  */
 public class PBMetadataFeaturesObject implements IFeaturesObject {
-
-    private static final Logger LOGGER = Logger
-            .getLogger(PBMetadataFeaturesObject.class);
 
     private PDMetadata metadata;
 
@@ -50,7 +46,9 @@ public class PBMetadataFeaturesObject implements IFeaturesObject {
         if (metadata != null) {
             FeatureTreeNode root = PBCreateNodeHelper.parseMetadata(metadata, "metadata", null, collection);
 
-            collection.addNewFeatureTree(FeaturesObjectTypesEnum.METADATA, root);
+            if (root != null) {
+                collection.addNewFeatureTree(FeaturesObjectTypesEnum.METADATA, root);
+            }
             return root;
         }
         return null;

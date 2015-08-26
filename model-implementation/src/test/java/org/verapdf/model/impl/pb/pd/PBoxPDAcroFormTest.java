@@ -37,7 +37,7 @@ public class PBoxPDAcroFormTest extends BaseTest {
 		List<? extends Object> formFields = actual.getLinkedObjects(PBoxPDAcroForm.FORM_FIELDS);
 		Assert.assertEquals(1, formFields.size());
 		for (Object object : formFields) {
-			Assert.assertEquals(PBoxPDFormField.FORM_FIELD_TYPE, object.getType());
+			Assert.assertEquals(PBoxPDFormField.FORM_FIELD_TYPE, object.getObjectType());
 		}
 	}
 

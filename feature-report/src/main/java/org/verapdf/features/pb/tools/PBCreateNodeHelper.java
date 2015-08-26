@@ -16,7 +16,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Set;
@@ -223,6 +222,10 @@ public final class PBCreateNodeHelper {
      * @throws FeaturesTreeNodeException - occurs when wrong features tree node constructs
      */
     public static FeatureTreeNode parseMetadata(PDMetadata metadata, String nodeName, FeatureTreeNode parent, FeaturesCollection collection) throws FeaturesTreeNodeException {
+        if (metadata == null) {
+            return null;
+        }
+
         FeatureTreeNode node;
         if (parent == null) {
             node = FeatureTreeNode.newRootInstance(nodeName);
@@ -231,8 +234,7 @@ public final class PBCreateNodeHelper {
         }
         try {
             byte[] bStream = metadata.getByteArray();
-            String metadataString = new String(bStream, Charset.forName("UTF-8"));
-            node.setValue(metadataString);
+            node.setValue(bStream);
         } catch (IOException e) {
             LOGGER.debug("Error while converting stream to string", e);
             node.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATACONVERT_ID);

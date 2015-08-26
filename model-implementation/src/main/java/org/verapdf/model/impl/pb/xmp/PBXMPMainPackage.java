@@ -10,7 +10,7 @@ import org.verapdf.model.xmplayer.XMPMainPackage;
  */
 public class PBXMPMainPackage extends PBXMPPackage implements XMPMainPackage {
 
-    public static final String XMP_MAIN_PACKAGE = "XMPMainPackage";
+    public static final String XMP_MAIN_PACKAGE_TYPE = "XMPMainPackage";
 
     /**
      * Constructs new object
@@ -19,7 +19,7 @@ public class PBXMPMainPackage extends PBXMPPackage implements XMPMainPackage {
      * @param isMetadataValid - true if metadata is valid
      */
     public PBXMPMainPackage(XMPMetadata xmpMetadata, boolean isMetadataValid) {
-        super(xmpMetadata, isMetadataValid, XMP_MAIN_PACKAGE);
+        super(xmpMetadata, isMetadataValid, XMP_MAIN_PACKAGE_TYPE);
     }
 
     /**

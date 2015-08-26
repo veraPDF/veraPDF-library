@@ -100,7 +100,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
                     FeatureTreeNode alt = FeatureTreeNode.newChildInstance("alternate", root);
                     alt.addAttribute(ID, colorSpaceChild);
                 }
-                FeatureTreeNode.newChildInstanceWithValue("componentsNumber", String.valueOf(icc.getNumberOfComponents()), root);
+                FeatureTreeNode.newChildInstanceWithValue("components", String.valueOf(icc.getNumberOfComponents()), root);
                 if (iccProfileChild != null) {
                     FeatureTreeNode prof = FeatureTreeNode.newChildInstance("iccProfile", root);
                     prof.addAttribute(ID, iccProfileChild);
@@ -244,6 +244,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 
     private void parseParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
         if ((pageParents != null && !pageParents.isEmpty()) ||
+                (colorSpaceParents != null && !colorSpaceParents.isEmpty()) ||
                 (patternParents != null && !patternParents.isEmpty()) ||
                 (xobjectParents != null && !xobjectParents.isEmpty()) ||
                 (shadingParents != null && !shadingParents.isEmpty()) ||
@@ -251,6 +252,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
             FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
 
             PBCreateNodeHelper.parseIDSet(pageParents, "page", null, parents);
+            PBCreateNodeHelper.parseIDSet(colorSpaceParents, "colorSpace", null, parents);
             PBCreateNodeHelper.parseIDSet(patternParents, "pattern", null, parents);
             PBCreateNodeHelper.parseIDSet(shadingParents, "shading", null, parents);
             PBCreateNodeHelper.parseIDSet(xobjectParents, "xobject", null, parents);

@@ -1,15 +1,21 @@
 package org.verapdf.model.factory.operator;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceGray;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
+import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
+
+import java.io.IOException;
 
 /**
  * @author Timur Kamalov
  */
 public class GraphicState implements Cloneable {
+
+    private static final Logger LOGGER = Logger.getLogger(GraphicState.class);
 
     private PDColorSpace fillColorSpace = PDDeviceGray.INSTANCE;
     private PDColorSpace strokeColorSpace = PDDeviceGray.INSTANCE;
@@ -70,6 +76,18 @@ public class GraphicState implements Cloneable {
         this.pattern = graphicState.getPattern();
         this.renderingMode = graphicState.getRenderingMode();
         this.font = graphicState.getFont();
+    }
+
+    public void copyPropertiesFromExtGState(PDExtendedGraphicsState extGState) {
+        if (extGState != null) {
+            try {
+                if (extGState.getFontSetting() != null) {
+                    this.font = extGState.getFontSetting().getFont();
+                }
+            } catch (IOException e) {
+                LOGGER.error(e);
+            }
+        }
     }
 
     @Override

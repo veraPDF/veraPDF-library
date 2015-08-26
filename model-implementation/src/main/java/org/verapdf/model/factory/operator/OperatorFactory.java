@@ -45,15 +45,14 @@ public final class OperatorFactory {
                 arguments.add((COSBase) pdfBoxToken);
             } else if (pdfBoxToken instanceof org.apache.pdfbox.contentstream.operator.Operator) {
                 try {
-                    result.add(parser.parseOperator(
+                    parser.parseOperator(result,
                             (org.apache.pdfbox.contentstream.operator.Operator) pdfBoxToken,
-                            resources, arguments));
+                            resources, arguments);
 					arguments = new ArrayList<>();
                 } catch (CloneNotSupportedException e) {
                     LOGGER.debug("GraphicsState clone issues for pdfBoxToken:" + pdfBoxToken);
                     LOGGER.debug(GS_CLONE_MALFUNCTION, e);
                 }
-                arguments.clear();
             } else {
                 LOGGER.error(MSG_UNEXPECTED_OBJECT_TYPE
                         + pdfBoxToken.getClass().getName());

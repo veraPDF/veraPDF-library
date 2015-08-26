@@ -1,9 +1,7 @@
 package org.verapdf.features.pb.objects;
 
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.contentstream.operator.Operator;
 import org.apache.pdfbox.cos.*;
-import org.apache.pdfbox.pdfparser.PDFStreamParser;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -12,12 +10,7 @@ import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Feature object for low level info part of the features report
@@ -118,33 +111,6 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
                 if (baseFilter != null) {
                     addFiltersFromBase(res, baseFilter);
                 }
-
-                try {
-                    PDFStreamParser streamParser = new PDFStreamParser(stream);
-                    streamParser.parse();
-
-                    for (Object token : streamParser.getTokens()) {
-                        if (token instanceof Operator) {
-                            COSDictionary dict = ((Operator) token).getImageParameters();
-
-                            if (dict != null) {
-                                COSBase baseOpItem = dict.getDictionaryObject(COSName.F);
-
-                                while (baseOpItem instanceof COSObject) {
-                                    baseOpItem = ((COSObject) baseOpItem).getObject();
-                                }
-
-                                addFiltersFromBase(res, baseOpItem);
-                            }
-                        }
-                    }
-
-                } catch (IOException ignore) {
-                    // Some error with initialising or parsing a stream.
-                    // In this case we can't get any filters from it.
-                    LOGGER.debug("Error initialising or parsing stream, no filters retrieved", ignore);
-                }
-
             }
         }
 

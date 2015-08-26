@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 
-    private static final String XMP_PACKAGE = "XMPPackage";
+    private static final String XMP_PACKAGE_TYPE = "XMPPackage";
 
     private static final String SCHEMA = "Schemas";
 
@@ -32,7 +32,7 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
      *            - true if metadata is valid
      */
     public PBXMPPackage(XMPMetadata xmpMetadata, boolean isMetadataValid) {
-		super(XMP_PACKAGE);
+		super(XMP_PACKAGE_TYPE);
         this.xmpMetadata = xmpMetadata;
         this.isMetadataValid = isMetadataValid;
     }

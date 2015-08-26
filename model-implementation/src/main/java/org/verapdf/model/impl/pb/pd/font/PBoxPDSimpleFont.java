@@ -27,7 +27,13 @@ public class PBoxPDSimpleFont extends PBoxPDFont implements PDSimpleFont {
                         .getWidths().size());
     }
 
-    @Override
+	@Override
+	public String getEncoding() {
+		// TODO : implement me
+		return null;
+	}
+
+	@Override
     public Long getLastChar() {
         return Long
                 .valueOf(((org.apache.pdfbox.pdmodel.font.PDSimpleFont) pdFontLike)
@@ -50,5 +56,11 @@ public class PBoxPDSimpleFont extends PBoxPDFont implements PDSimpleFont {
         }
         return Boolean.FALSE;
     }
+
+	@Override
+	public Boolean getisSymbolic() {
+		// TODO : implement me
+		return Boolean.FALSE;
+	}
 
 }

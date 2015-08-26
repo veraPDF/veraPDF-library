@@ -33,13 +33,13 @@ public abstract class BaseTest {
 
     @Test
     public void testTypeAndID() {
-        Assert.assertEquals(expectedType, actual.getType());
+        Assert.assertEquals(expectedType, actual.getObjectType());
         Assert.assertEquals(expectedID, actual.getID());
     }
 
 	@Test
 	public void testLinksMethod() {
-		List<String> expectedLinks = ModelHelper.getListOfLinks(actual.getType());
+		List<String> expectedLinks = ModelHelper.getListOfLinks(actual.getObjectType());
 		for (String link : expectedLinks) {
 			Assert.assertNotNull(actual.getLinkedObjects(link));
 		}

@@ -22,21 +22,12 @@ public class PBCosObject extends GenericModelObject implements CosObject {
     private static final Logger LOGGER = Logger.getLogger(PBCosObject.class);
 
     protected final COSBase baseObject;
-    private final String type;
     private final String id;
 
     PBCosObject(final COSBase baseObject, final String type) {
+		super(type);
         this.baseObject = baseObject;
-        this.type = type;
         id = IDGenerator.generateID(baseObject);
-    }
-
-    /**
-     * Get type of current object
-     */
-    @Override
-    public String getType() {
-        return type;
     }
 
     /**
