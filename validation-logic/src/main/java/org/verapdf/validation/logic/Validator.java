@@ -156,8 +156,7 @@ public class Validator {
     private java.lang.Object evalVariableResult(Variable variable, Object object) {
         Script script;
         if (!variableScripts.containsKey(variable.getAttrName())) {
-            String source = getScriptPrefix(object, variable.getValue()) + variable.getValue()
-                    + getScriptSuffix();
+            String source = getStringScript(object, variable.getValue());
             script = cx.compileString(source, null, 0, null);
         } else {
             script = variableScripts.get(variable.getAttrName());
@@ -269,12 +268,14 @@ public class Validator {
 
     private static String getScript(Object obj,
                                     org.verapdf.validation.profile.model.Rule rule) {
+        return getStringScript(obj, "(" + rule.getTest() + ")==true");
+    }
+
+    private static String getStringScript(Object obj, String arg) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(getScriptPrefix(obj, rule.getTest()));
-        builder.append("(");
-        builder.append(rule.getTest());
-        builder.append(")==true");
+        builder.append(getScriptPrefix(obj, arg));
+        builder.append(arg);
         builder.append(getScriptSuffix());
         return builder.toString();
     }
@@ -344,7 +345,7 @@ public class Validator {
         String errorMessage = rule.getRuleError().getMessage();
 
         for (String arg : rule.getRuleError().getArgument()) {
-            String argScript = getScriptPrefix(obj, arg) + arg + getScriptSuffix();
+            String argScript = getStringScript(obj, arg);
 
             java.lang.Object resArg;
 
