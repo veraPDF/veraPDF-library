@@ -42,6 +42,7 @@ public class Validator {
     private Map<String, List<Check>> checkMap;
 
     private Map<String, Script> ruleScripts = new HashMap<>();
+    private Map<String, Script> variableScripts = new HashMap<>();
 
     private Set<String> idSet;
 
@@ -52,8 +53,7 @@ public class Validator {
     /**
      * Creates new Validator with given validation profile
      *
-     * @param profile
-     *            - validation profile model for validator
+     * @param profile - validation profile model for validator
      */
     private Validator(ValidationProfile profile) {
         this.profile = profile;
@@ -140,29 +140,32 @@ public class Validator {
     }
 
     private void updateVariables(Object object) {
-        for (Variable var : this.profile
-                .getVariablesForObject(object.getObjectType())) {
+        if (object != null) {
+            for (Variable var : this.profile
+                    .getVariablesForObject(object.getObjectType())) {
 
-            if (var == null)
-                continue;
+                if (var == null)
+                    continue;
 
-            java.lang.Object variable = evalVariableResult(var, object);
-            scope.put(var.getAttrName(), scope, variable);
+                java.lang.Object variable = evalVariableResult(var, object);
+                scope.put(var.getAttrName(), scope, variable);
+            }
         }
     }
 
     private java.lang.Object evalVariableResult(Variable variable, Object object) {
-        String source = variable.getDefaultValue();
-
-        // If object's NOT null it's an update so sort the scope and source
-        if (object != null) {
-            scope.put("obj", scope, object);
-            source = getScriptPrefix(object, variable.getValue()) + variable.getValue()
+        Script script;
+        if (!variableScripts.containsKey(variable.getAttrName())) {
+            String source = getScriptPrefix(object, variable.getValue()) + variable.getValue()
                     + getScriptSuffix();
+            script = cx.compileString(source, null, 0, null);
+        } else {
+            script = variableScripts.get(variable.getAttrName());
         }
 
-        java.lang.Object res;
-        res = cx.evaluateString(scope, source, null, 0, null);
+        scope.put("obj", scope, object);
+
+        java.lang.Object res = script.exec(cx, scope);
 
         if (res instanceof NativeJavaObject) {
             res = ((NativeJavaObject) res).unwrap();
@@ -171,7 +174,7 @@ public class Validator {
     }
 
     private void addAllLinkedObjects(Object checkObject, String checkContext,
-            Set<String> checkIDContext) throws NullLinkNameException,
+                                     Set<String> checkIDContext) throws NullLinkNameException,
             NullLinkException, NullLinkedObjectException {
         for (int j = checkObject.getLinks().size() - 1; j >= 0; --j) {
             String link = checkObject.getLinks().get(j);
@@ -265,7 +268,7 @@ public class Validator {
     }
 
     private static String getScript(Object obj,
-            org.verapdf.validation.profile.model.Rule rule) {
+                                    org.verapdf.validation.profile.model.Rule rule) {
         StringBuilder builder = new StringBuilder();
 
         builder.append(getScriptPrefix(obj, rule.getTest()));
@@ -370,42 +373,28 @@ public class Validator {
      * This method needs to parse validation profile (it works slower than those
      * ones, which don't parse profile).
      *
-     * @param root
-     *            the root object for validation
-     * @param validationProfilePath
-     *            validation profile's file path
+     * @param root                  the root object for validation
+     * @param validationProfilePath validation profile's file path
      * @return validation info structure
-     * @throws ParserConfigurationException
-     *             if a DocumentBuilder cannot be created which satisfies the
-     *             configuration requested.
-     * @throws IOException
-     *             if any IO errors occur.
-     * @throws FileNotFoundException
-     *             if the profileFile is not an existing file
-     * @throws SAXException
-     *             if any parse errors occur.
-     * @throws NullLinkNameException
-     *             if there is a null link name in some object
-     * @throws NullLinkException
-     *             if there is a null link
-     * @throws NullLinkedObjectException
-     *             if there is a null object in links list
-     * @throws MissedHashTagException
-     *             if validation profile must be signed, but it has no hash tag
-     * @throws XMLStreamException
-     *             if exception occurs in parsing a validation profile with xml
-     *             stream (in checking signature of the validation profile)
-     * @throws WrongSignatureException
-     *             if validation profile must be signed, but it has wrong
-     *             signature
-     * @throws UnsupportedEncodingException
-     *             if validation profile has not utf8 encoding
-     * @throws MultiplyGlobalVariableNameException
-     *             if there is more than one identical global variable names in
-     *             the profile model
+     * @throws ParserConfigurationException        if a DocumentBuilder cannot be created which satisfies the
+     *                                             configuration requested.
+     * @throws IOException                         if any IO errors occur.
+     * @throws FileNotFoundException               if the profileFile is not an existing file
+     * @throws SAXException                        if any parse errors occur.
+     * @throws NullLinkNameException               if there is a null link name in some object
+     * @throws NullLinkException                   if there is a null link
+     * @throws NullLinkedObjectException           if there is a null object in links list
+     * @throws MissedHashTagException              if validation profile must be signed, but it has no hash tag
+     * @throws XMLStreamException                  if exception occurs in parsing a validation profile with xml
+     *                                             stream (in checking signature of the validation profile)
+     * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
+     *                                             signature
+     * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
+     * @throws MultiplyGlobalVariableNameException if there is more than one identical global variable names in
+     *                                             the profile model
      */
     public static ValidationInfo validate(Object root,
-            String validationProfilePath, boolean isSignCheckOn)
+                                          String validationProfilePath, boolean isSignCheckOn)
             throws IOException, SAXException, ParserConfigurationException,
             NullLinkNameException, NullLinkException,
             NullLinkedObjectException, MissedHashTagException,
@@ -427,42 +416,28 @@ public class Validator {
      * This method needs to parse validation profile (it works slower than those
      * ones, which don't parse profile).
      *
-     * @param root
-     *            the root object for validation
-     * @param validationProfile
-     *            validation profile's file
+     * @param root              the root object for validation
+     * @param validationProfile validation profile's file
      * @return validation info structure
-     * @throws ParserConfigurationException
-     *             if a DocumentBuilder cannot be created which satisfies the
-     *             configuration requested.
-     * @throws IOException
-     *             If any IO errors occur.
-     * @throws FileNotFoundException
-     *             if the profileFile is not an existing file
-     * @throws SAXException
-     *             If any parse errors occur.
-     * @throws NullLinkNameException
-     *             if there is a null link name in some object
-     * @throws NullLinkException
-     *             if there is a null link
-     * @throws NullLinkedObjectException
-     *             if there is a null object in links list
-     * @throws MissedHashTagException
-     *             if validation profile must be signed, but it has no hash tag
-     * @throws XMLStreamException
-     *             if exception occurs in parsing a validation profile with xml
-     *             stream (in checking signature of the validation profile)
-     * @throws WrongSignatureException
-     *             if validation profile must be signed, but it has wrong
-     *             signature
-     * @throws UnsupportedEncodingException
-     *             if validation profile has not utf8 encoding
-     * @throws MultiplyGlobalVariableNameException
-     *             if there is more than one identical global variable names in
-     *             the profile model
+     * @throws ParserConfigurationException        if a DocumentBuilder cannot be created which satisfies the
+     *                                             configuration requested.
+     * @throws IOException                         If any IO errors occur.
+     * @throws FileNotFoundException               if the profileFile is not an existing file
+     * @throws SAXException                        If any parse errors occur.
+     * @throws NullLinkNameException               if there is a null link name in some object
+     * @throws NullLinkException                   if there is a null link
+     * @throws NullLinkedObjectException           if there is a null object in links list
+     * @throws MissedHashTagException              if validation profile must be signed, but it has no hash tag
+     * @throws XMLStreamException                  if exception occurs in parsing a validation profile with xml
+     *                                             stream (in checking signature of the validation profile)
+     * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
+     *                                             signature
+     * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
+     * @throws MultiplyGlobalVariableNameException if there is more than one identical global variable names in
+     *                                             the profile model
      */
     public static ValidationInfo validate(Object root, File validationProfile,
-            boolean isSignCheckOn) throws ParserConfigurationException,
+                                          boolean isSignCheckOn) throws ParserConfigurationException,
             SAXException, IOException, NullLinkNameException,
             NullLinkException, NullLinkedObjectException,
             MissedHashTagException, XMLStreamException,
@@ -484,20 +459,15 @@ public class Validator {
      * This method doesn't need to parse validation profile (it works faster
      * than those ones, which parses profile).
      *
-     * @param root
-     *            the root object for validation
-     * @param validationProfile
-     *            validation profile's structure
+     * @param root              the root object for validation
+     * @param validationProfile validation profile's structure
      * @return validation info structure
-     * @throws NullLinkNameException
-     *             if there is a null link name in some object
-     * @throws NullLinkException
-     *             if there is a null link
-     * @throws NullLinkedObjectException
-     *             if there is a null object in links list
+     * @throws NullLinkNameException     if there is a null link name in some object
+     * @throws NullLinkException         if there is a null link
+     * @throws NullLinkedObjectException if there is a null object in links list
      */
     public static ValidationInfo validate(Object root,
-            ValidationProfile validationProfile) throws NullLinkNameException,
+                                          ValidationProfile validationProfile) throws NullLinkNameException,
             NullLinkException, NullLinkedObjectException {
         if (root == null)
             throw new IllegalArgumentException(

@@ -1,11 +1,18 @@
 package org.verapdf.gui;
 
-import java.awt.Cursor;
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import org.apache.log4j.Logger;
+import org.verapdf.features.tools.FeaturesCollection;
+import org.verapdf.gui.tools.GUIConstants;
+import org.verapdf.report.HTMLReport;
+import org.verapdf.report.XMLReport;
+import org.verapdf.validation.report.model.ValidationInfo;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -14,27 +21,6 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.ExecutionException;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.apache.log4j.Logger;
-import org.verapdf.features.tools.FeaturesCollection;
-import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.report.HTMLReport;
-import org.verapdf.report.XMLReport;
-import org.verapdf.validation.report.model.ValidationInfo;
 
 /**
  * Panel with functionality for checker.
@@ -249,7 +235,6 @@ public class CheckerPanel extends JPanel {
                 progressBar.setVisible(true);
                 result.setVisible(false);
                 setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                validate.setEnabled(false);
                 info = null;
                 isValidationErrorOccurred = false;
                 startTimeOfValidation = System.currentTimeMillis();
