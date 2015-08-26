@@ -1,11 +1,18 @@
 package org.verapdf.gui;
 
-import java.awt.Cursor;
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import org.apache.log4j.Logger;
+import org.verapdf.features.tools.FeaturesCollection;
+import org.verapdf.gui.tools.GUIConstants;
+import org.verapdf.report.HTMLReport;
+import org.verapdf.report.XMLReport;
+import org.verapdf.validation.report.model.ValidationInfo;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -14,27 +21,6 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.ExecutionException;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.apache.log4j.Logger;
-import org.verapdf.features.tools.FeaturesCollection;
-import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.report.HTMLReport;
-import org.verapdf.report.XMLReport;
-import org.verapdf.validation.report.model.ValidationInfo;
 
 /**
  * Panel with functionality for checker.
@@ -331,6 +317,7 @@ public class CheckerPanel extends JPanel {
 
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         progressBar.setVisible(false);
+        validate.setEnabled(true);
 
         if (!isValidationErrorOccurred) {
             try {
@@ -443,7 +430,7 @@ public class CheckerPanel extends JPanel {
         gbc.fill = fill;
     }
 
-    void chooseFile(JFileChooser chooser, String extension) {
+    private void chooseFile(JFileChooser chooser, String extension) {
         int resultChoose = chooser.showOpenDialog(CheckerPanel.this);
         if (resultChoose == JFileChooser.APPROVE_OPTION) {
 
@@ -493,7 +480,7 @@ public class CheckerPanel extends JPanel {
         }
     }
 
-    void saveReport(JFileChooser chooser, String extension, File report) {
+    private void saveReport(JFileChooser chooser, String extension, File report) {
         if (info == null) {
             JOptionPane.showMessageDialog(CheckerPanel.this,
                     "Validation hasn't been run.", GUIConstants.ERROR,

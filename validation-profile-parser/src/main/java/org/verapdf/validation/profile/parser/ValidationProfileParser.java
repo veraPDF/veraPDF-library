@@ -1,33 +1,23 @@
 package org.verapdf.validation.profile.parser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameException;
+import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
+import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
+import org.verapdf.validation.profile.model.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
-
-import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
-import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
-import org.verapdf.validation.profile.model.Fix;
-import org.verapdf.validation.profile.model.Reference;
-import org.verapdf.validation.profile.model.Rule;
-import org.verapdf.validation.profile.model.RuleError;
-import org.verapdf.validation.profile.model.ValidationProfile;
-import org.verapdf.validation.profile.model.Variable;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
 
 /**
  * This class is for parse the validation profile xml file into java classes.
@@ -62,14 +52,15 @@ public final class ValidationProfileParser {
     private static final String VARIABLE = "variable";
     private static final String WARNING = "warning";
 
-    private Set<String> profilesPaths;
+    private Set<String> profilesPaths = new HashSet<>();
+    private Set<String> variables = new HashSet<>();
     private ValidationProfile profile;
     private DocumentBuilder builder;
     private File resource;
 
     private ValidationProfileParser(File resourceFile, boolean isSignCheckOn)
             throws ParserConfigurationException, IOException, SAXException,
-            XMLStreamException, MissedHashTagException, WrongSignatureException {
+            XMLStreamException, MissedHashTagException, WrongSignatureException, MultiplyGlobalVariableNameException {
         this.resource = resourceFile;
 
         if (isSignCheckOn) {
@@ -90,7 +81,6 @@ public final class ValidationProfileParser {
 
         Document doc = this.builder.parse(this.resource);
 
-        this.profilesPaths = new HashSet<>();
         this.profilesPaths.add(resourceFile.getCanonicalPath());
         Node root = doc.getDocumentElement();
         root.normalize();
@@ -98,7 +88,7 @@ public final class ValidationProfileParser {
     }
 
     private void parseRoot(Node root, boolean isSignCheckOn)
-            throws IOException, SAXException {
+            throws IOException, SAXException, MultiplyGlobalVariableNameException {
         String model = null;
         String name = null;
         String description = null;
@@ -285,8 +275,8 @@ public final class ValidationProfileParser {
 
     }
 
-    private static void parseVariables(Node rules,
-            Map<String, List<Variable>> variablesMap) {
+    private void parseVariables(Node rules,
+                                Map<String, List<Variable>> variablesMap) throws MultiplyGlobalVariableNameException {
         NodeList children = rules.getChildNodes();
 
         for (int i = 0; i < children.getLength(); ++i) {
@@ -304,7 +294,7 @@ public final class ValidationProfileParser {
         }
     }
 
-    private static Variable parseVariable(Node rule) {
+    private Variable parseVariable(Node rule) throws MultiplyGlobalVariableNameException {
         String name = null;
         String object = null;
         String defaultValue = null;
@@ -314,6 +304,12 @@ public final class ValidationProfileParser {
 
         if (nameNode != null) {
             name = nameNode.getNodeValue();
+        }
+
+        if (this.variables.contains(name)) {
+            throw new MultiplyGlobalVariableNameException(
+                    "Founded multiply variable with name: "
+                            + name + "\".");
         }
 
         Node objectNode = rule.getAttributes().getNamedItem(OBJECT);
@@ -491,11 +487,14 @@ public final class ValidationProfileParser {
      *             signature
      * @throws UnsupportedEncodingException
      *             if validation profile has not utf8 encoding
+     * @throws MultiplyGlobalVariableNameException
+     *             if there is more than one identical global variable names in
+     *             the profile model
      */
     public static ValidationProfile parseFromFilePath(String profileFilePath,
             boolean isSignCheckOn) throws ParserConfigurationException,
             SAXException, IOException, MissedHashTagException,
-            XMLStreamException, WrongSignatureException {
+            XMLStreamException, WrongSignatureException, MultiplyGlobalVariableNameException {
         if (profileFilePath == null)
             throw new IllegalArgumentException(
                     "Parameter (String profileFilePath) can not be null");
@@ -529,11 +528,14 @@ public final class ValidationProfileParser {
      *             signature
      * @throws UnsupportedEncodingException
      *             if validation profile has not utf8 encoding
+     * @throws MultiplyGlobalVariableNameException
+     *             if there is more than one identical global variable names in
+     *             the profile model
      */
     public static ValidationProfile parseFromFile(File profileFile,
             boolean isSignCheckOn) throws ParserConfigurationException,
             SAXException, IOException, MissedHashTagException,
-            XMLStreamException, WrongSignatureException {
+            XMLStreamException, WrongSignatureException, MultiplyGlobalVariableNameException {
         if (profileFile == null)
             throw new IllegalArgumentException(
                     "Parameter (File resourceFile) can not be null");

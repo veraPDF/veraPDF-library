@@ -74,8 +74,8 @@ public class PBShadingFeaturesObject implements IFeaturesObject {
             FeatureTreeNode.newChildInstanceWithValue("shadingType", String.valueOf(shading.getShadingType()), root);
 
             if (colorSpaceChild != null) {
-                FeatureTreeNode shading = FeatureTreeNode.newChildInstance("colorSpace", root);
-                shading.addAttribute(ID, colorSpaceChild);
+                FeatureTreeNode shadingClr = FeatureTreeNode.newChildInstance("colorSpace", root);
+                shadingClr.addAttribute(ID, colorSpaceChild);
             }
 
             PBCreateNodeHelper.addBoxFeature("bbox", shading.getBBox(), root);

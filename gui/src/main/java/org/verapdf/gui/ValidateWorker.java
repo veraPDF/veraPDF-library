@@ -1,13 +1,5 @@
 package org.verapdf.gui;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.swing.JOptionPane;
-import javax.swing.SwingWorker;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
-
 import org.apache.log4j.Logger;
 import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameException;
 import org.verapdf.exceptions.validationlogic.NullLinkException;
@@ -22,6 +14,12 @@ import org.verapdf.model.ModelLoader;
 import org.verapdf.validation.logic.Validator;
 import org.verapdf.validation.report.model.ValidationInfo;
 import org.xml.sax.SAXException;
+
+import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Validates PDF in a new threat.
@@ -57,7 +55,6 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
         ModelLoader loader = new ModelLoader(this.pdf.getPath());
 
-
         try {
             org.verapdf.model.baselayer.Object root = loader.getRoot();
             info = runValidator(root);
@@ -65,12 +62,18 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
             this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
         }
 
-
         try {
             this.collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this.parent, "Some error in creating features collection.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
             LOGGER.error("Exception in creating features collection: ", e);
+        }
+
+        try {
+            loader.getPDDocument().close();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this.parent, "Some error in closing document.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+            LOGGER.error("Exception in closing document: ", e);
         }
 
         return info;
