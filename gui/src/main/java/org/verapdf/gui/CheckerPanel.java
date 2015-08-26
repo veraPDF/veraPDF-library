@@ -235,6 +235,7 @@ public class CheckerPanel extends JPanel {
                 progressBar.setVisible(true);
                 result.setVisible(false);
                 setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                validate.setEnabled(false);
                 info = null;
                 isValidationErrorOccurred = false;
                 startTimeOfValidation = System.currentTimeMillis();
@@ -316,6 +317,7 @@ public class CheckerPanel extends JPanel {
 
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         progressBar.setVisible(false);
+        validate.setEnabled(true);
 
         if (!isValidationErrorOccurred) {
             try {
@@ -428,7 +430,7 @@ public class CheckerPanel extends JPanel {
         gbc.fill = fill;
     }
 
-    void chooseFile(JFileChooser chooser, String extension) {
+    private void chooseFile(JFileChooser chooser, String extension) {
         int resultChoose = chooser.showOpenDialog(CheckerPanel.this);
         if (resultChoose == JFileChooser.APPROVE_OPTION) {
 
@@ -478,7 +480,7 @@ public class CheckerPanel extends JPanel {
         }
     }
 
-    void saveReport(JFileChooser chooser, String extension, File report) {
+    private void saveReport(JFileChooser chooser, String extension, File report) {
         if (info == null) {
             JOptionPane.showMessageDialog(CheckerPanel.this,
                     "Validation hasn't been run.", GUIConstants.ERROR,
