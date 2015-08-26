@@ -1,23 +1,8 @@
 package org.verapdf.validation.logic;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
-
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
+import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
 import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameException;
 import org.verapdf.exceptions.validationlogic.NullLinkException;
@@ -29,16 +14,17 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.validation.profile.model.ValidationProfile;
 import org.verapdf.validation.profile.model.Variable;
 import org.verapdf.validation.profile.parser.ValidationProfileParser;
-import org.verapdf.validation.report.model.Check;
+import org.verapdf.validation.report.model.*;
 import org.verapdf.validation.report.model.Check.Status;
-import org.verapdf.validation.report.model.CheckError;
-import org.verapdf.validation.report.model.CheckLocation;
-import org.verapdf.validation.report.model.Details;
-import org.verapdf.validation.report.model.Profile;
-import org.verapdf.validation.report.model.Result;
-import org.verapdf.validation.report.model.Rule;
-import org.verapdf.validation.report.model.ValidationInfo;
 import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
 
 /**
  * Validation logic
@@ -47,11 +33,16 @@ import org.xml.sax.SAXException;
  */
 public class Validator {
 
+    private Context cx;
+    private ScriptableObject scope;
+
     private Deque<Object> objectsStack;
     private Deque<String> objectsContext;
     private Deque<Set<String>> contextSet;
     private Map<String, List<Check>> checkMap;
-    private Map<String, java.lang.Object> variablesMap;
+
+    private Map<String, Script> ruleScripts = new HashMap<>();
+
     private Set<String> idSet;
 
     private String rootType;
@@ -69,15 +60,16 @@ public class Validator {
     }
 
     private ValidationInfo validate(Object root) throws NullLinkNameException,
-            NullLinkException, NullLinkedObjectException,
-            MultiplyGlobalVariableNameException {
+            NullLinkException, NullLinkedObjectException {
+        this.cx = Context.enter();
+        this.cx.setOptimizationLevel(9);
+        this.scope = cx.initStandardObjects();
         this.objectsStack = new ArrayDeque<>();
         this.objectsContext = new ArrayDeque<>();
         this.contextSet = new ArrayDeque<>();
         List<String> warnings = new ArrayList<>();
         this.idSet = new HashSet<>();
         this.checkMap = new HashMap<>();
-        this.variablesMap = new HashMap<>();
 
         for (String id : this.profile.getAllRulesId()) {
             this.checkMap.put(id, new ArrayList<Check>());
@@ -102,6 +94,8 @@ public class Validator {
             checkNext();
         }
 
+        Context.exit();
+
         List<Rule> rules = new ArrayList<>();
 
         for (Map.Entry<String, List<Check>> id : this.checkMap.entrySet()) {
@@ -114,18 +108,10 @@ public class Validator {
                 new Details(rules, warnings)));
     }
 
-    private void initializeAllVariables()
-            throws MultiplyGlobalVariableNameException {
+    private void initializeAllVariables() {
         for (Variable var : this.profile.getAllVariables()) {
             if (var == null)
                 continue;
-            if (this.variablesMap.containsKey(var.getAttrName())) {
-                throw new MultiplyGlobalVariableNameException(
-                        "Founded multiply variable with name: "
-                                + var.getAttrName() + "\".");
-            }
-            Context cx = Context.enter();
-            ScriptableObject scope = cx.initStandardObjects();
 
             java.lang.Object res;
             res = cx.evaluateString(scope, var.getDefaultValue(), null, 0, null);
@@ -133,9 +119,7 @@ public class Validator {
                 res = ((NativeJavaObject) res).unwrap();
             }
 
-            this.variablesMap.put(var.getAttrName(), res);
-
-            Context.exit();
+            scope.put(var.getAttrName(), scope, res);
         }
     }
 
@@ -162,31 +146,23 @@ public class Validator {
             if (var == null)
                 continue;
 
-            this.variablesMap.put(var.getAttrName(),
-                    evalVariableResult(var, object));
-
+            java.lang.Object variable = evalVariableResult(var, object);
+            scope.put(var.getAttrName(), scope, variable);
         }
     }
 
     private java.lang.Object evalVariableResult(Variable variable, Object object) {
-        Context cx = Context.enter();
-        ScriptableObject scope = cx.initStandardObjects();
         String source = variable.getDefaultValue();
 
         // If object's NOT null it's an update so sort the scope and source
         if (object != null) {
             scope.put("obj", scope, object);
-            for (Map.Entry<String, java.lang.Object> entry : this.variablesMap
-                    .entrySet()) {
-                scope.put(entry.getKey(), scope, entry.getValue());
-            }
-            source = getScriptPrefix(object) + variable.getValue()
+            source = getScriptPrefix(object, variable.getValue()) + variable.getValue()
                     + getScriptSuffix();
         }
 
         java.lang.Object res;
         res = cx.evaluateString(scope, source, null, 0, null);
-        Context.exit();
 
         if (res instanceof NativeJavaObject) {
             res = ((NativeJavaObject) res).unwrap();
@@ -268,8 +244,7 @@ public class Validator {
             for (org.verapdf.validation.profile.model.Rule rule : this.profile
                     .getRoolsForObject(checkObject.getObjectType())) {
                 if (rule != null) {
-                    res &= checkObjWithRule(checkObject, checkContext, rule,
-                            getScript(checkObject, rule));
+                    res &= checkObjWithRule(checkObject, checkContext, rule);
                 }
             }
         }
@@ -280,7 +255,7 @@ public class Validator {
                         .getRoolsForObject(checkType)) {
                     if (rule != null) {
                         res &= checkObjWithRule(checkObject, checkContext,
-                                rule, getScript(checkObject, rule));
+                                rule);
                     }
                 }
             }
@@ -293,7 +268,7 @@ public class Validator {
             org.verapdf.validation.profile.model.Rule rule) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(getScriptPrefix(obj));
+        builder.append(getScriptPrefix(obj, rule.getTest()));
         builder.append("(");
         builder.append(rule.getTest());
         builder.append(")==true");
@@ -301,18 +276,29 @@ public class Validator {
         return builder.toString();
     }
 
-    private static String getScriptPrefix(Object obj) {
+    private static String getScriptPrefix(Object obj, String test) {
         StringBuilder builder = new StringBuilder();
 
         for (String prop : obj.getProperties()) {
-            builder.append("var " + prop + " = obj.get" + prop + "();\n");
+            if (test.contains(prop)) {
+                builder.append("var ");
+                builder.append(prop);
+                builder.append(" = obj.get");
+                builder.append(prop);
+                builder.append("();\n");
+            }
         }
 
         for (String linkName : obj.getLinks()) {
-            List<? extends Object> linkedObject = obj
-                    .getLinkedObjects(linkName);
-            builder.append("var " + linkName + "_size = " + linkedObject.size()
-                    + ";\n");
+            if (test.contains(linkName + "_size")) {
+                List<? extends Object> linkedObject = obj
+                        .getLinkedObjects(linkName);
+                builder.append("var ");
+                builder.append(linkName);
+                builder.append("_size = ");
+                builder.append(linkedObject.size());
+                builder.append(";\n");
+            }
         }
 
         builder.append("function test(){return ");
@@ -325,32 +311,30 @@ public class Validator {
     }
 
     private boolean checkObjWithRule(Object obj, String context,
-            org.verapdf.validation.profile.model.Rule rule, String script) {
-        Context cx = Context.enter();
-        ScriptableObject scope = cx.initStandardObjects();
-
+                                     org.verapdf.validation.profile.model.Rule rule) {
         scope.put("obj", scope, obj);
-        for (Map.Entry<String, java.lang.Object> entry : this.variablesMap
-                .entrySet()) {
-            scope.put(entry.getKey(), scope, entry.getValue());
+
+        Script scr;
+        if (!ruleScripts.containsKey(rule.getAttrID())) {
+            scr = cx.compileString(getScript(obj, rule), null, 0, null);
+            ruleScripts.put(rule.getAttrID(), scr);
+        } else {
+            scr = ruleScripts.get(rule.getAttrID());
         }
 
-        Boolean res = (Boolean) cx.evaluateString(scope, script, null, 0, null);
+        Boolean res = (Boolean) scr.exec(cx, scope);
 
         CheckLocation loc = new CheckLocation(this.rootType, context);
         Check check = res.booleanValue() ? new Check(Status.PASSED, loc, null)
-                : createFailCkeck(obj, loc, rule, cx, scope);
-
-        Context.exit();
+                : createFailCheck(obj, loc, rule);
 
         this.checkMap.get(rule.getAttrID()).add(check);
 
         return res.booleanValue();
     }
 
-    private static Check createFailCkeck(Object obj, CheckLocation loc,
-            org.verapdf.validation.profile.model.Rule rule, Context cx,
-            ScriptableObject scope) {
+    private Check createFailCheck(Object obj, CheckLocation loc,
+                                  org.verapdf.validation.profile.model.Rule rule) {
         List<String> args = new ArrayList<>();
 
         if (rule.getRuleError() == null) {
@@ -359,7 +343,7 @@ public class Validator {
         String errorMessage = rule.getRuleError().getMessage();
 
         for (String arg : rule.getRuleError().getArgument()) {
-            String argScript = getScriptPrefix(obj) + arg + getScriptSuffix();
+            String argScript = getScriptPrefix(obj, arg) + arg + getScriptSuffix();
 
             java.lang.Object resArg;
 
@@ -427,8 +411,7 @@ public class Validator {
             throws IOException, SAXException, ParserConfigurationException,
             NullLinkNameException, NullLinkException,
             NullLinkedObjectException, MissedHashTagException,
-            XMLStreamException, WrongSignatureException,
-            MultiplyGlobalVariableNameException {
+            XMLStreamException, WrongSignatureException, MultiplyGlobalVariableNameException {
         if (root == null)
             throw new IllegalArgumentException(
                     "Parameter (Object root) cannot be null.");
@@ -514,14 +497,10 @@ public class Validator {
      *             if there is a null link
      * @throws NullLinkedObjectException
      *             if there is a null object in links list
-     * @throws MultiplyGlobalVariableNameException
-     *             if there is more than one identical global variable names in
-     *             the profile model
      */
     public static ValidationInfo validate(Object root,
             ValidationProfile validationProfile) throws NullLinkNameException,
-            NullLinkException, NullLinkedObjectException,
-            MultiplyGlobalVariableNameException {
+            NullLinkException, NullLinkedObjectException {
         if (root == null)
             throw new IllegalArgumentException(
                     "Parameter (Object root) cannot be null.");
