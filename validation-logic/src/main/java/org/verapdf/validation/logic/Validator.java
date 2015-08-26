@@ -42,6 +42,7 @@ public class Validator {
     private Map<String, List<Check>> checkMap;
 
     private Map<String, Script> ruleScripts = new HashMap<>();
+    private Map<String, List<Script>> ruleArgScripts = new HashMap<>();
     private Map<String, Script> variableScripts = new HashMap<>();
 
     private Set<String> idSet;
@@ -337,32 +338,43 @@ public class Validator {
 
     private Check createFailCheck(Object obj, CheckLocation loc,
                                   org.verapdf.validation.profile.model.Rule rule) {
-        List<String> args = new ArrayList<>();
-
+        List<String> argsRes = new ArrayList<>();
         if (rule.getRuleError() == null) {
-            return new Check(Status.FAILED, loc, new CheckError(null, args));
+            return new Check(Status.FAILED, loc, new CheckError(null, argsRes));
         }
         String errorMessage = rule.getRuleError().getMessage();
 
-        for (String arg : rule.getRuleError().getArgument()) {
-            String argScript = getStringScript(obj, arg);
+        List<String> arguments = rule.getRuleError().getArgument();
+        if (!arguments.isEmpty()) {
 
-            java.lang.Object resArg;
-
-            resArg = cx.evaluateString(scope, argScript, null, 0, null);
-
-            String resStringArg;
-
-            if (resArg instanceof NativeJavaObject) {
-                resStringArg = ((NativeJavaObject) resArg).unwrap().toString();
+            List<Script> argsList;
+            if (!ruleArgScripts.containsKey(rule.getAttrID())) {
+                argsList = new ArrayList<>(arguments.size());
+                for (String arg : arguments) {
+                    String argScript = getStringScript(obj, arg);
+                    Script script = cx.compileString(argScript, null, 0, null);
+                    argsList.add(script);
+                }
+                ruleArgScripts.put(rule.getAttrID(), argsList);
             } else {
-                resStringArg = resArg.toString();
+                argsList = ruleArgScripts.get(rule.getAttrID());
             }
 
-            args.add(resStringArg);
+            for (Script arg : argsList) {
+                java.lang.Object resArg = arg.exec(cx, scope);
+
+                String resStringArg;
+                if (resArg instanceof NativeJavaObject) {
+                    resStringArg = ((NativeJavaObject) resArg).unwrap().toString();
+                } else {
+                    resStringArg = resArg.toString();
+                }
+
+                argsRes.add(resStringArg);
+            }
         }
 
-        CheckError error = new CheckError(errorMessage, args);
+        CheckError error = new CheckError(errorMessage, argsRes);
 
         return new Check(Status.FAILED, loc, error);
     }
