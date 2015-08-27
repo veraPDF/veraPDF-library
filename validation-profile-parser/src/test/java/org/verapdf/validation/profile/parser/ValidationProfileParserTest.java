@@ -9,6 +9,8 @@ import org.verapdf.validation.profile.model.Rule;
 import org.verapdf.validation.profile.model.ValidationProfile;
 import org.verapdf.validation.profile.model.Variable;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class ValidationProfileParserTest {
@@ -39,6 +41,7 @@ public class ValidationProfileParserTest {
         assertEquals("fileHeaderOffset", rule1.getRuleError().getArgument().get(0));
         assertEquals("ISO19005-1", rule1.getReference().getSpecification());
         assertEquals("6.1.2", rule1.getReference().getClause());
+        assertEquals(0, rule1.getReference().getReferences().size());
 
         Rule rule53 = prof.getRuleById("rule53");
 
@@ -53,6 +56,7 @@ public class ValidationProfileParserTest {
         assertEquals("STR_ID_893", rule53.getFixes().get(0).getDescription());
         assertEquals("STR_ID_894", rule53.getFixes().get(0).getInfo());
         assertEquals("STR_ID_895", rule53.getFixes().get(0).getError());
+        assertEquals("fix1", rule53.getFixes().get(0).getID());
 
         Rule rule35 = prof.getRuleById("rule35");
 
@@ -62,6 +66,23 @@ public class ValidationProfileParserTest {
         assertNull(rule35.getRuleError());
         assertNull(rule35.getReference());
         assertEquals(0, rule35.getFixes().size());
+
+        assertNull(prof.getRuleById(null));
+
+        List<String> allRulesId = prof.getAllRulesId();
+
+        assertEquals(3, allRulesId.size());
+        assertTrue(allRulesId.contains("rule1"));
+        assertTrue(allRulesId.contains("rule53"));
+        assertTrue(allRulesId.contains("rule35"));
+
+        assertEquals(0, prof.getAllVariables().size());
+
+        assertEquals("Rule [attrID=rule1, attrObject=CosDocument, description=STR_ID_401, test=fileHeaderOffset == 0, ruleError=org.verapdf.validation.profile.model.RuleError@e7cdd92, reference=org.verapdf.validation.profile.model.Reference@27b6a3ac, fixes=[]]", rule1.toString());
+        assertEquals(951587806, rule1.hashCode());
+
+        Rule rule1Copy = new Rule(rule1.getAttrID(), rule1.getAttrObject(), rule1.getDescription(), rule1.getRuleError(), rule1.getTest(), rule1.getReference(), rule1.getFixes());
+        assertTrue(rule1.equals(rule1Copy));
     }
 
     @Test
