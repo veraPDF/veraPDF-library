@@ -1,7 +1,7 @@
 package org.verapdf.model.impl.pb.pd.font;
 
 import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.verapdf.model.pdlayer.PDSimpleFont;
@@ -24,12 +24,12 @@ public class PBoxPDTrueTypeFontTest extends PBoxPDSimpleFontTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
-		expectedType = TYPES.contains(PBoxPDSimpleFont.SIMPLE_FONT_TYPE) ? PBoxPDSimpleFont.SIMPLE_FONT_TYPE : null;
+		expectedType = TYPES.contains(PBoxPDTrueTypeFont.TRUETYPE_FONT_TYPE) ? PBoxPDTrueTypeFont.TRUETYPE_FONT_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
-		PDFont trueTypeFont = document.getPage(0).getResources().getFont(COSName.getPDFName(TRUETYPE_FONT_NAME));
-		actual = new PBoxPDSimpleFont(trueTypeFont);
+		PDTrueTypeFont trueTypeFont = (PDTrueTypeFont) document.getPage(0).getResources().getFont(COSName.getPDFName(TRUETYPE_FONT_NAME));
+		actual = new PBoxPDTrueTypeFont(trueTypeFont);
 	}
 
 	@Override

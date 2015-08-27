@@ -44,4 +44,9 @@ public class PBoxPDType3Font extends PBoxPDSimpleFont implements PDType3Font {
         return list;
     }
 
+    @Override
+    public Boolean getisStandard() {
+        return Boolean.FALSE;
+    }
+
 }
