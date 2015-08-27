@@ -8,8 +8,9 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.verapdf.model.pdlayer.PDSimpleFont;
+import org.verapdf.model.pdlayer.PDTrueTypeFont;
 import org.verapdf.model.pdlayer.PDType0Font;
+import org.verapdf.model.pdlayer.PDType1Font;
 import org.verapdf.model.pdlayer.PDType3Font;
 
 import java.io.File;
@@ -59,7 +60,7 @@ public class FontFactoryTest {
 	@Test
 	public void testType1Generating() throws IOException {
 		PDFont font = resources.getFont(COSName.getPDFName("T1_0"));
-		Assert.assertTrue(FontFactory.parseFont(font) instanceof PDSimpleFont);
+		Assert.assertTrue(FontFactory.parseFont(font) instanceof PDType1Font);
 	}
 
 	@Test
@@ -71,7 +72,7 @@ public class FontFactoryTest {
 	@Test
 	public void testTrueTypeGenerating() throws IOException {
 		PDFont font = resources.getFont(COSName.getPDFName("TT0"));
-		Assert.assertTrue(FontFactory.parseFont(font) instanceof PDSimpleFont);
+		Assert.assertTrue(FontFactory.parseFont(font) instanceof PDTrueTypeFont);
 	}
 
 	@AfterClass
