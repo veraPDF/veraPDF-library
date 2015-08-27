@@ -23,6 +23,6 @@ public class ValidationProfileSignatureCheckerTest {
         checker.signFile();
         assertTrue(checker.isValidSignature());
 
-        Files.deleteIfExists(new File("validation-profile-parser/src/test/resources/testCopy.xml").toPath());
+        Files.deleteIfExists(new File("src/test/resources/testCopy.xml").toPath());
     }
 }

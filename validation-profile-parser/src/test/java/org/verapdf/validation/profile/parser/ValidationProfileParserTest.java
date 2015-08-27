@@ -78,11 +78,11 @@ public class ValidationProfileParserTest {
 
         assertEquals(0, prof.getAllVariables().size());
 
-        assertEquals("Rule [attrID=rule1, attrObject=CosDocument, description=STR_ID_401, test=fileHeaderOffset == 0, ruleError=org.verapdf.validation.profile.model.RuleError@e7cdd92, reference=org.verapdf.validation.profile.model.Reference@27b6a3ac, fixes=[]]", rule1.toString());
-        assertEquals(951587806, rule1.hashCode());
+        assertTrue(rule1.toString().startsWith("Rule [attrID=rule1, attrObject=CosDocument, description=STR_ID_401, test=fileHeaderOffset == 0, ruleError=org.verapdf.validation.profile.model.RuleError"));
 
         Rule rule1Copy = new Rule(rule1.getAttrID(), rule1.getAttrObject(), rule1.getDescription(), rule1.getRuleError(), rule1.getTest(), rule1.getReference(), rule1.getFixes());
         assertTrue(rule1.equals(rule1Copy));
+        assertEquals(rule1Copy.hashCode(), rule1.hashCode());
     }
 
     @Test
