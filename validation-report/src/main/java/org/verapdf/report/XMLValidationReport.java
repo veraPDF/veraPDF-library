@@ -1,7 +1,6 @@
 package org.verapdf.report;
 
 import org.verapdf.validation.report.model.*;
-import org.verapdf.validation.report.model.Check.Status;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -199,8 +198,7 @@ public final class XMLValidationReport {
     private static void makeCheckError(Check check, Document doc,
             Element checkElement) {
         if (check.getError() != null) {
-            String errorName = check.getStatus() == Status.FAILED ? "error" : "warning";
-            Element error = doc.createElement(errorName);
+            Element error = doc.createElement("error");
 
             if (check.getError().getMessage() != null) {
                 Element message = doc.createElement("message");
@@ -221,10 +219,11 @@ public final class XMLValidationReport {
         }
         StringBuilder buffer = new StringBuilder(message);
 
-        for (int i = 0; i < buffer.length(); ++i) {
-            if (buffer.charAt(i++) == '%' && buffer.charAt(i) != '0'
+        for (int i = 0; i < buffer.length() - 1; ++i) {
+            if (buffer.charAt(i) == '%'
+                    && buffer.charAt(++i) != '0'
                     && Character.isDigit(buffer.charAt(i))
-                    && !Character.isDigit(buffer.charAt(i + 1))) {
+                    && (i + 1 == buffer.length() || !Character.isDigit(buffer.charAt(i + 1)))) {
                 int argumentNumber = Character
                         .getNumericValue(buffer.charAt(i)) - 1;
                 String argumentValue = arguments.get(argumentNumber);
