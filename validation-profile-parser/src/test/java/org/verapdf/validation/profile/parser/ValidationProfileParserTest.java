@@ -9,15 +9,25 @@ import org.verapdf.validation.profile.model.Rule;
 import org.verapdf.validation.profile.model.ValidationProfile;
 import org.verapdf.validation.profile.model.Variable;
 
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class ValidationProfileParserTest {
 
+    private static String getSystemIndependentPath(String path) throws URISyntaxException {
+        URL resourceUrl = ClassLoader.class.getResource(path);
+        Path resourcePath = Paths.get(resourceUrl.toURI());
+        return resourcePath.toString();
+    }
+
     @Test
     public void test() throws Exception {
-        ValidationProfile prof = ValidationProfileParser.parseFromFilePath("src/test/resources/test.xml", false);
+        ValidationProfile prof = ValidationProfileParser.parseFromFilePath(getSystemIndependentPath("/test.xml"), false);
 
         assertEquals("org.verapdf.model.PDFA1a", prof.getModel());
         assertEquals("PDF/A-1a validation profile", prof.getName());
@@ -87,7 +97,7 @@ public class ValidationProfileParserTest {
 
     @Test
     public void testCyrillic() throws Exception {
-        ValidationProfile prof = ValidationProfileParser.parseFromFilePath("src/test/resources/testCyrillic.xml", false);
+        ValidationProfile prof = ValidationProfileParser.parseFromFilePath(getSystemIndependentPath("/testCyrillic.xml"), false);
 
         assertEquals("org.verapdf.model.PDFA1a", prof.getModel());
         assertEquals("PDF/A-1a validation profile", prof.getName());
