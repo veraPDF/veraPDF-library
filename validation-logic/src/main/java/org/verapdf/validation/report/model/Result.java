@@ -8,6 +8,7 @@ import org.verapdf.validation.report.model.Check.Status;
  * @author Maksim Bezrukov
  */
 public class Result {
+
     private final boolean compliant;
     private final String statement;
     private final Summary summary;
@@ -47,7 +48,7 @@ public class Result {
                     }
                 }
             }
-			passedChecks = (int) (details.getRulesChecksCount() - failedChecks);
+			passedChecks = details.getRulesChecksCount() - failedChecks;
         }
 
         this.compliant = compliantCheck;

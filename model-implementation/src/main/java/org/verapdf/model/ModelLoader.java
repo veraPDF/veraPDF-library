@@ -5,7 +5,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.verapdf.model.coslayer.CosDocument;
 import org.verapdf.model.impl.pb.cos.PBCosDocument;
 
-import javax.xml.ws.WebServiceException;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +66,7 @@ public final class ModelLoader implements Closeable {
     }
 
 	@Override
-	public void close() throws WebServiceException {
+	public void close() {
 		try {
 			if (document != null) {
 				document.close();
