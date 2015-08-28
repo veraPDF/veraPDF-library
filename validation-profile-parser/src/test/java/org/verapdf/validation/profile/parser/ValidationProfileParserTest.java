@@ -9,13 +9,25 @@ import org.verapdf.validation.profile.model.Rule;
 import org.verapdf.validation.profile.model.ValidationProfile;
 import org.verapdf.validation.profile.model.Variable;
 
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class ValidationProfileParserTest {
 
+    private static String getSystemIndependentPath(String path) throws URISyntaxException {
+        URL resourceUrl = ClassLoader.class.getResource(path);
+        Path resourcePath = Paths.get(resourceUrl.toURI());
+        return resourcePath.toString();
+    }
+
     @Test
     public void test() throws Exception {
-        ValidationProfile prof = ValidationProfileParser.parseFromFilePath("src/test/resources/test.xml", false);
+        ValidationProfile prof = ValidationProfileParser.parseFromFilePath(getSystemIndependentPath("/test.xml"), false);
 
         assertEquals("org.verapdf.model.PDFA1a", prof.getModel());
         assertEquals("PDF/A-1a validation profile", prof.getName());
@@ -39,6 +51,7 @@ public class ValidationProfileParserTest {
         assertEquals("fileHeaderOffset", rule1.getRuleError().getArgument().get(0));
         assertEquals("ISO19005-1", rule1.getReference().getSpecification());
         assertEquals("6.1.2", rule1.getReference().getClause());
+        assertEquals(0, rule1.getReference().getReferences().size());
 
         Rule rule53 = prof.getRuleById("rule53");
 
@@ -53,6 +66,7 @@ public class ValidationProfileParserTest {
         assertEquals("STR_ID_893", rule53.getFixes().get(0).getDescription());
         assertEquals("STR_ID_894", rule53.getFixes().get(0).getInfo());
         assertEquals("STR_ID_895", rule53.getFixes().get(0).getError());
+        assertEquals("fix1", rule53.getFixes().get(0).getID());
 
         Rule rule35 = prof.getRuleById("rule35");
 
@@ -62,11 +76,28 @@ public class ValidationProfileParserTest {
         assertNull(rule35.getRuleError());
         assertNull(rule35.getReference());
         assertEquals(0, rule35.getFixes().size());
+
+        assertNull(prof.getRuleById(null));
+
+        List<String> allRulesId = prof.getAllRulesId();
+
+        assertEquals(3, allRulesId.size());
+        assertTrue(allRulesId.contains("rule1"));
+        assertTrue(allRulesId.contains("rule53"));
+        assertTrue(allRulesId.contains("rule35"));
+
+        assertEquals(0, prof.getAllVariables().size());
+
+        assertTrue(rule1.toString().startsWith("Rule [attrID=rule1, attrObject=CosDocument, description=STR_ID_401, test=fileHeaderOffset == 0, ruleError=org.verapdf.validation.profile.model.RuleError"));
+
+        Rule rule1Copy = new Rule(rule1.getAttrID(), rule1.getAttrObject(), rule1.getDescription(), rule1.getRuleError(), rule1.getTest(), rule1.getReference(), rule1.getFixes());
+        assertTrue(rule1.equals(rule1Copy));
+        assertEquals(rule1Copy.hashCode(), rule1.hashCode());
     }
 
     @Test
     public void testCyrillic() throws Exception {
-        ValidationProfile prof = ValidationProfileParser.parseFromFilePath("src/test/resources/testCyrillic.xml", false);
+        ValidationProfile prof = ValidationProfileParser.parseFromFilePath(getSystemIndependentPath("/testCyrillic.xml"), false);
 
         assertEquals("org.verapdf.model.PDFA1a", prof.getModel());
         assertEquals("PDF/A-1a validation profile", prof.getName());
