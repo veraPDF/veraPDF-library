@@ -51,18 +51,18 @@ public class Validator {
 
     private ValidationProfile profile;
 
-	private final boolean isLogPassedChecks;
+	private final boolean logPassedChecks;
 
-	private long rulesChecksCount = 0L;
+	private int rulesChecksCount = 0;
 
     /**
      * Creates new Validator with given validation profile
      *
      * @param profile - validation profile model for validator
      */
-    private Validator(ValidationProfile profile, boolean isLogPassedChecks) {
+    private Validator(ValidationProfile profile, boolean logPassedChecks) {
         this.profile = profile;
-		this.isLogPassedChecks = isLogPassedChecks;
+		this.logPassedChecks = logPassedChecks;
     }
 
     private ValidationInfo validate(Object root) throws NullLinkNameException,
@@ -336,7 +336,7 @@ public class Validator {
 		Check check = null;
 		if (!res) {
 			check = createFailCheck(obj, loc, rule);
-		} else if (isLogPassedChecks) {
+		} else if (logPassedChecks) {
 			check = new Check(Status.PASSED, loc, null);
 		}
 
