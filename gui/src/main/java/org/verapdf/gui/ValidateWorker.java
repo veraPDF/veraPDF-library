@@ -11,13 +11,17 @@ import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.model.ModelLoader;
+import org.verapdf.report.HTMLReport;
+import org.verapdf.report.XMLReport;
 import org.verapdf.validation.logic.Validator;
 import org.verapdf.validation.report.model.ValidationInfo;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
+import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,7 +37,12 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
     private File pdf;
     private File profile;
     private CheckerPanel parent;
-    private FeaturesCollection collection;
+    private File xmlReport = null;
+    private File htmlReport = null;
+    private File image = null;
+
+    private long startTimeOfValidation;
+    private long endTimeOfValidation;
 
     /**
      * Creates new validate worker
@@ -51,7 +60,9 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
     @Override
     protected ValidationInfo doInBackground() {
         ValidationInfo info = null;
-        this.collection = null;
+        FeaturesCollection collection = null;
+
+        startTimeOfValidation = System.currentTimeMillis();
 
         ModelLoader loader = new ModelLoader(this.pdf.getPath());
 
@@ -63,7 +74,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
         }
 
         try {
-            this.collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
+            collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this.parent, "Some error in creating features collection.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
             LOGGER.error("Exception in creating features collection: ", e);
@@ -75,6 +86,9 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
             JOptionPane.showMessageDialog(this.parent, "Some error in closing document.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
             LOGGER.error("Exception in closing document: ", e);
         }
+
+        endTimeOfValidation = System.currentTimeMillis();
+        writeReports(info, collection);
 
         return info;
     }
@@ -90,7 +104,41 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
     @Override
     protected void done() {
-        this.parent.validationEnded(this.collection);
+        this.parent.validationEnded(this.xmlReport, this.htmlReport);
     }
 
+    private void writeReports(ValidationInfo info, FeaturesCollection collection) {
+        if (info != null || collection != null) {
+            try {
+                File dir = new File("./temp/");
+                if (!dir.exists() && !dir.mkdir()) {
+                    throw new IOException("Can not create temporary directory.");
+                }
+                xmlReport = new File("./temp/tempXMLReport.xml");
+                XMLReport.writeXMLReport(info, collection, xmlReport.getPath(),
+                        endTimeOfValidation - startTimeOfValidation);
+
+                if (info != null) {
+                    try {
+                        htmlReport = new File("./temp/tempHTMLReport.html");
+                        HTMLReport.writeHTMLReport(htmlReport.getPath(), xmlReport,
+                                profile);
+
+                    } catch (IOException | TransformerException e) {
+                        JOptionPane.showMessageDialog(this.parent,
+                                GUIConstants.ERROR_IN_SAVING_HTML_REPORT,
+                                GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+                        LOGGER.error("Exception saving the HTML report", e);
+                    }
+                }
+
+            } catch (DatatypeConfigurationException | ParserConfigurationException
+                    | IOException | TransformerException e) {
+                JOptionPane.showMessageDialog(this.parent,
+                        GUIConstants.ERROR_IN_SAVING_XML_REPORT,
+                        GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+                LOGGER.error("Exception saving the XML report", e);
+            }
+        }
+    }
 }
