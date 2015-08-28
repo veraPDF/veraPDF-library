@@ -51,13 +51,18 @@ public class Validator {
 
     private ValidationProfile profile;
 
+	private final boolean isLogPassedChecks;
+
+	private long rulesChecksCount = 0L;
+
     /**
      * Creates new Validator with given validation profile
      *
      * @param profile - validation profile model for validator
      */
-    private Validator(ValidationProfile profile) {
+    private Validator(ValidationProfile profile, boolean isLogPassedChecks) {
         this.profile = profile;
+		this.isLogPassedChecks = isLogPassedChecks;
     }
 
     private ValidationInfo validate(Object root) throws NullLinkNameException,
@@ -106,7 +111,7 @@ public class Validator {
 
         return new ValidationInfo(new Profile(this.profile.getName(),
                 this.profile.getHash()), new Result(
-                new Details(rules, warnings)));
+                new Details(rules, warnings, rulesChecksCount)));
     }
 
     private void initializeAllVariables() {
@@ -328,12 +333,20 @@ public class Validator {
         Boolean res = (Boolean) scr.exec(cx, scope);
 
         CheckLocation loc = new CheckLocation(this.rootType, context);
-        Check check = res.booleanValue() ? new Check(Status.PASSED, loc, null)
-                : createFailCheck(obj, loc, rule);
+		Check check = null;
+		if (!res) {
+			check = createFailCheck(obj, loc, rule);
+		} else if (isLogPassedChecks) {
+			check = new Check(Status.PASSED, loc, null);
+		}
 
-        this.checkMap.get(rule.getAttrID()).add(check);
+		if (check != null) {
+			this.checkMap.get(rule.getAttrID()).add(check);
+		}
 
-        return res.booleanValue();
+		rulesChecksCount++;
+
+        return res;
     }
 
     private Check createFailCheck(Object obj, CheckLocation loc,
@@ -388,6 +401,7 @@ public class Validator {
      *
      * @param root                  the root object for validation
      * @param validationProfilePath validation profile's file path
+	 * @param isLogPassedChecks 		is need to log passed rules to report
      * @return validation info structure
      * @throws ParserConfigurationException        if a DocumentBuilder cannot be created which satisfies the
      *                                             configuration requested.
@@ -407,7 +421,9 @@ public class Validator {
      *                                             the profile model
      */
     public static ValidationInfo validate(Object root,
-                                          String validationProfilePath, boolean isSignCheckOn)
+                                          String validationProfilePath,
+										  boolean isSignCheckOn,
+										  boolean isLogPassedChecks)
             throws IOException, SAXException, ParserConfigurationException,
             NullLinkNameException, NullLinkException,
             NullLinkedObjectException, MissedHashTagException,
@@ -419,7 +435,7 @@ public class Validator {
             throw new IllegalArgumentException(
                     "Parameter (String validationProfilePath) cannot be null.");
         return validate(root, ValidationProfileParser.parseFromFilePath(
-                validationProfilePath, isSignCheckOn));
+                validationProfilePath, isSignCheckOn), isLogPassedChecks);
     }
 
     /**
@@ -431,6 +447,7 @@ public class Validator {
      *
      * @param root              the root object for validation
      * @param validationProfile validation profile's file
+	 * @param isLogPassedChecks is need to log passed rules to report
      * @return validation info structure
      * @throws ParserConfigurationException        if a DocumentBuilder cannot be created which satisfies the
      *                                             configuration requested.
@@ -450,7 +467,8 @@ public class Validator {
      *                                             the profile model
      */
     public static ValidationInfo validate(Object root, File validationProfile,
-                                          boolean isSignCheckOn) throws ParserConfigurationException,
+                                          boolean isSignCheckOn,
+										  boolean isLogPassedChecks) throws ParserConfigurationException,
             SAXException, IOException, NullLinkNameException,
             NullLinkException, NullLinkedObjectException,
             MissedHashTagException, XMLStreamException,
@@ -462,7 +480,7 @@ public class Validator {
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile validationProfile) cannot be null.");
         return validate(root, ValidationProfileParser.parseFromFile(
-                validationProfile, isSignCheckOn));
+                validationProfile, isSignCheckOn), isLogPassedChecks);
     }
 
     /**
@@ -474,13 +492,15 @@ public class Validator {
      *
      * @param root              the root object for validation
      * @param validationProfile validation profile's structure
+	 * @param isLogPassedChecks is need to log passed rules to report
      * @return validation info structure
      * @throws NullLinkNameException     if there is a null link name in some object
      * @throws NullLinkException         if there is a null link
      * @throws NullLinkedObjectException if there is a null object in links list
      */
     public static ValidationInfo validate(Object root,
-                                          ValidationProfile validationProfile) throws NullLinkNameException,
+                                          ValidationProfile validationProfile,
+										  boolean isLogPassedChecks) throws NullLinkNameException,
             NullLinkException, NullLinkedObjectException {
         if (root == null)
             throw new IllegalArgumentException(
@@ -488,7 +508,7 @@ public class Validator {
         if (validationProfile == null)
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile validationProfile) cannot be null.");
-        Validator validator = new Validator(validationProfile);
+        Validator validator = new Validator(validationProfile, isLogPassedChecks);
         return validator.validate(root);
     }
 

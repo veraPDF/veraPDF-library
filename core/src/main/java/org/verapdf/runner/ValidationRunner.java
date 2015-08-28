@@ -33,9 +33,12 @@ public class ValidationRunner {
      * @return the validation result
      */
     public static ValidationInfo runValidation(VeraPdfTaskConfig config) {
+		ModelLoader loader = null;
         try {
-            org.verapdf.model.baselayer.Object root = ModelLoader.getRoot(config.getInput().getPath());
-            return Validator.validate(root, config.getProfile(), false);
+			loader = new ModelLoader(config.getInput().getPath());
+            org.verapdf.model.baselayer.Object root = loader.getRoot();
+			ValidationInfo info = Validator.validate(root, config.getProfile(), false, config.isLogPassedChecks());
+			return info;
             // TODO: Better exception handling, we need a policy and this isn't it.
             // Carl to think a little harder and tidy up, it's not a new idea I'm after,
             // more a case of ensuring we use the best of 2 methods.
@@ -45,22 +48,16 @@ public class ValidationRunner {
         } catch (IOException | SAXException | ParserConfigurationException e) {
             //error while parsing validation profile
             LOGGER.error(e.getMessage(), e);
-        } catch (NullLinkNameException e) {
+        } catch (NullLinkNameException | NullLinkException | NullLinkedObjectException |
+				MissedHashTagException | WrongSignatureException | XMLStreamException |
+				MultiplyGlobalVariableNameException e) {
             LOGGER.error(e.getMessage(), e);
-        } catch (NullLinkException e) {
-            LOGGER.error(e.getMessage(), e);
-        } catch (NullLinkedObjectException e) {
-            LOGGER.error(e.getMessage(), e);
-        } catch (MissedHashTagException e) {
-            LOGGER.error(e.getMessage(), e);
-        } catch (WrongSignatureException e) {
-            LOGGER.error(e.getMessage(), e);
-        } catch (XMLStreamException e) {
-            LOGGER.error(e.getMessage(), e);
-        } catch (MultiplyGlobalVariableNameException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
-        return null;
+        } finally {
+			if (loader != null) {
+				loader.close();
+			}
+		}
+		return null;
     }
 
 }
