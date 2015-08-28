@@ -47,7 +47,7 @@ public class Result {
                     }
                 }
             }
-			passedChecks = (int) (details.getRulesChecksCount() - failedChecks);
+			passedChecks = details.getRulesChecksCount() - failedChecks;
         }
 
         this.compliant = compliantCheck;
