@@ -55,7 +55,13 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 		return pdFontLike.getName();
 	}
 
-    @Override
+	@Override
+	public Boolean getisSymbolic() {
+		PDFontDescriptor fontDescriptor = pdFontLike.getFontDescriptor();
+		return Boolean.valueOf(fontDescriptor.isSymbolic());
+	}
+
+	@Override
     public List<? extends Object> getLinkedObjects(String link) {
         if (FONT_FILE.equals(link)) {
             return getFontFile();

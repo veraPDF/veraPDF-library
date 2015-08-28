@@ -30,12 +30,6 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
     }
 
 	@Override
-	public Boolean getisSymbolic() {
-		// TODO : implement me
-		return Boolean.FALSE;
-	}
-
-	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
 		switch (link) {
 			case DESCENDANT_FONTS:

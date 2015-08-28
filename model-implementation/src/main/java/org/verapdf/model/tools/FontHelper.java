@@ -16,7 +16,6 @@ public class FontHelper {
 	public static FontContainer getFontContainer(PDFont font) {
 		switch (font.getSubType()) {
 			case FontFactory.TYPE_1:
-			case FontFactory.TYPE_1C:
 				return new Type1Container((PDSimpleFont) font);
 			case FontFactory.TRUE_TYPE:
 				return new TrueTypeContainer((PDTrueTypeFont) font);
