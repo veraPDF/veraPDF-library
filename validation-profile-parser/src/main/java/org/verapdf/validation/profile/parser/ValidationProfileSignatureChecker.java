@@ -6,12 +6,7 @@ import javax.xml.stream.Location;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -127,10 +122,10 @@ public final class ValidationProfileSignatureChecker {
     }
 
     private static byte[] getSHA1(byte[] source) {
-        byte[] res = null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
-            res = md.digest(source);
+            byte[] res = md.digest(source);
+            return res;
         } catch (NoSuchAlgorithmException e) {
             // SHA-1 algorithm exists, so do nothing
             /**
@@ -143,8 +138,6 @@ public final class ValidationProfileSignatureChecker {
             throw new IllegalStateException(
                     "Required JRE SHA-1 algorithm not found", e);
         }
-
-        return res;
     }
 
     /**
@@ -171,8 +164,10 @@ public final class ValidationProfileSignatureChecker {
      *
      * @throws IOException
      *             if an I/O error occurs reading from the file's path stream
+     * @throws XMLStreamException
+     *             error in parsing profile after signing it
      */
-    public void signFile() throws IOException {
+    public void signFile() throws IOException, XMLStreamException {
         String resultingContent = this.contentWithoutHash.substring(0,
                 this.startOfHash)
                 + HASH_OPEN_TAG
@@ -183,6 +178,7 @@ public final class ValidationProfileSignatureChecker {
         try (FileOutputStream out = new FileOutputStream(this.profile)) {
             out.write(resultingContent.getBytes(UTF8));
         }
+        this.parseProfile();
     }
 
     /**

@@ -11,6 +11,9 @@ import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Feature object for outlines
  *
@@ -60,8 +63,11 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
             FeatureTreeNode root = FeatureTreeNode.newRootInstance("outlines");
 
             if (outline.children() != null) {
+                Set<PDOutlineItem> items = new HashSet<>();
                 for (PDOutlineItem item : outline.children()) {
-                    createItem(item, root, collection);
+                    if (!items.contains(item)) {
+                        createItem(item, root, collection, items);
+                    }
                 }
             }
 
@@ -73,8 +79,9 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
     }
 
     private static void createItem(PDOutlineItem item, FeatureTreeNode root,
-            FeaturesCollection collection) throws FeaturesTreeNodeException {
+                                   FeaturesCollection collection, Set<PDOutlineItem> items) throws FeaturesTreeNodeException {
         if (item != null) {
+            items.add(item);
             FeatureTreeNode itemNode = FeatureTreeNode.newChildInstance(
                     "outline", root);
 
@@ -109,7 +116,9 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
                     String.valueOf(item.isBold()), itemNode);
 
             for (PDOutlineItem child : item.children()) {
-                createItem(child, itemNode, collection);
+                if (!items.contains(item)) {
+                    createItem(child, itemNode, collection, items);
+                }
             }
         }
     }
