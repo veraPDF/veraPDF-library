@@ -22,6 +22,9 @@ public class CommandVeraPDF extends Command {
     @Parameter(names = "--profile")
     private String profile;
 
+	@Parameter(names = "--log-passed-checks")
+	private boolean logPassedChecks = false;
+
     @Parameter(names = "--output")
     private String output;
 
@@ -53,7 +56,14 @@ public class CommandVeraPDF extends Command {
         return profile;
     }
 
-    /**
+	/**
+	 * @return the logPassedChecks
+	 */
+	public boolean isLogPassedChecks() {
+		return logPassedChecks;
+	}
+
+	/**
      * @return the output
      */
     public String getOutput() {

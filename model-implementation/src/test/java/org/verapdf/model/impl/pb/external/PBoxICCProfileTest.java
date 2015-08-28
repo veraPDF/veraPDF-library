@@ -37,7 +37,6 @@ public abstract class PBoxICCProfileTest extends BaseTest {
 
 	@Test
 	public void testIsValidMethod() {
-		// TODO : discuss about this case
 		Assert.assertTrue(((ICCProfile) actual).getisValid().booleanValue());
 	}
 }

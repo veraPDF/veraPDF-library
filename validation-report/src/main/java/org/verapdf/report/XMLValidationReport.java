@@ -21,12 +21,14 @@ public final class XMLValidationReport {
      * Creates tree of xml tags for validation report
      *
      * @param info
-     *            - validation info model to be writed
+     *            validation info model to be writed
      * @param doc
-     *            - document used for writing xml in further
+     *            document used for writing xml in further
+	 * @param isLogPassedChecks
+	 * 			  is log passed checks for result report
      * @return root element of the xml structure
      */
-    public static Element makeXMLTree(ValidationInfo info, Document doc) {
+    public static Element makeXMLTree(ValidationInfo info, Document doc, boolean isLogPassedChecks) {
 
         Element validationInfo = doc.createElement("validationInfo");
 
@@ -83,7 +85,7 @@ public final class XMLValidationReport {
                     result.appendChild(summary);
                 }
 
-                makeDetails(info.getResult().getDetails(), doc, result);
+                makeDetails(info.getResult().getDetails(), doc, result, isLogPassedChecks);
             }
         }
         return validationInfo;
@@ -110,7 +112,7 @@ public final class XMLValidationReport {
     }
 
     private static void makeDetails(Details details, Document doc,
-            Element result) {
+            Element result, boolean isLogPassedChecks) {
         if (details != null) {
             Element detailsElement = doc.createElement("details");
             result.appendChild(detailsElement);
@@ -119,7 +121,7 @@ public final class XMLValidationReport {
                 Element rules = doc.createElement("rules");
                 detailsElement.appendChild(rules);
 
-                makeRules(details.getRules(), doc, rules);
+                makeRules(details.getRules(), doc, rules, isLogPassedChecks);
             }
 
             if (details.getWarnings() != null) {
@@ -138,27 +140,29 @@ public final class XMLValidationReport {
     }
 
     private static void makeRules(List<Rule> rulesList, Document doc,
-            Element rules) {
+            Element rules, boolean isLogPassedChecks) {
         for (Rule rul : rulesList) {
 
             if (rul != null) {
-                Element rule = doc.createElement("rule");
+				if (isLogPassedChecks || rul.getCheckCount() > 0) {
+					Element rule = doc.createElement("rule");
 
-                if (rul.getID() != null) {
-                    rule.setAttribute("id", rul.getID());
-                }
-                rule.setAttribute("status", rul.getStatus().toString());
+					if (rul.getID() != null) {
+						rule.setAttribute("id", rul.getID());
+					}
+					rule.setAttribute("status", rul.getStatus().toString());
 
-                rule.setAttribute("checks",
-                        Integer.toString(rul.getCheckCount()));
+					rule.setAttribute("checks",
+							Integer.toString(rul.getCheckCount()));
 
-                if (rul.getChecks() != null) {
-                    for (Check che : rul.getChecks()) {
-                        makeChecks(che, doc, rule);
-                    }
-                }
+					if (rul.getChecks() != null) {
+						for (Check che : rul.getChecks()) {
+							makeChecks(che, doc, rule);
+						}
+					}
 
-                rules.appendChild(rule);
+					rules.appendChild(rule);
+				}
             }
         }
     }
