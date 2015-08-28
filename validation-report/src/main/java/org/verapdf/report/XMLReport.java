@@ -78,11 +78,17 @@ public final class XMLReport {
      *            document used for writing xml in further
      * @param processingTimeInMS
      *            processing time of validation in ms
+	 * @param isLogPassedChecks
+	 * 			  is log passed checks for result report
      * @return root element of the xml structure
      * @throws DatatypeConfigurationException
      *             indicates a serious configurating error
      */
-    public static Element makeXMLTree(ValidationInfo info, FeaturesCollection collection, Document doc, long processingTimeInMS) throws DatatypeConfigurationException {
+    public static Element makeXMLTree(ValidationInfo info,
+									  FeaturesCollection collection,
+									  Document doc,
+									  long processingTimeInMS,
+									  boolean isLogPassedChecks) throws DatatypeConfigurationException {
 
         Element report = doc.createElement("report");
 
@@ -97,7 +103,7 @@ public final class XMLReport {
         report.appendChild(doc.createElement("processingInfo"));
 
         if (info != null) {
-            report.appendChild(XMLValidationReport.makeXMLTree(info, doc));
+            report.appendChild(XMLValidationReport.makeXMLTree(info, doc, isLogPassedChecks));
         }
 
         if (collection != null) {
@@ -107,14 +113,19 @@ public final class XMLReport {
         return report;
     }
 
-    private static Document generateDOMDocument(ValidationInfo info, FeaturesCollection collection, long processingTimeInMS) throws ParserConfigurationException, DatatypeConfigurationException {
+    private static Document generateDOMDocument(ValidationInfo info,
+												FeaturesCollection collection,
+												long processingTimeInMS,
+												boolean isLogPassedChecks)
+			throws ParserConfigurationException, DatatypeConfigurationException {
+
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
         DocumentBuilder builder = factory.newDocumentBuilder();
 
         Document doc = builder.newDocument();
 
-        doc.appendChild(makeXMLTree(info, collection, doc, processingTimeInMS));
+        doc.appendChild(makeXMLTree(info, collection, doc, processingTimeInMS, isLogPassedChecks));
 
         return doc;
 
@@ -139,6 +150,8 @@ public final class XMLReport {
      *            with file name with extension.
      * @param processingTimeInMS
      *            processing time of validation in ms
+	 * @param isLogPassedChecks
+	 * 			  is need to log passed checks in result report
      * @throws ParserConfigurationException
      *             if a DocumentBuilder cannot be created which satisfies the
      *             configuration requested.
@@ -152,9 +165,13 @@ public final class XMLReport {
      * @throws DatatypeConfigurationException
      *             indicates a serious configurating error
      */
-    public static void writeXMLReport(ValidationInfo info, String path, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, DatatypeConfigurationException {
+    public static void writeXMLReport(ValidationInfo info,
+									  String path, long processingTimeInMS,
+									  boolean isLogPassedChecks)
+					throws ParserConfigurationException, TransformerFactoryConfigurationError,
+					TransformerException, DatatypeConfigurationException {
 
-        writeXMLReport(info, null, path, processingTimeInMS);
+        writeXMLReport(info, null, path, processingTimeInMS, isLogPassedChecks);
     }
 
     /**
@@ -169,6 +186,8 @@ public final class XMLReport {
      *            with file name with extension.
      * @param processingTimeInMS
      *            processing time of validation in ms
+	 * @param isLogPassedChecks
+	 * 			  is log passed checks to result report
      * @throws ParserConfigurationException
      *             if a DocumentBuilder cannot be created which satisfies the
      *             configuration requested.
@@ -182,9 +201,15 @@ public final class XMLReport {
      * @throws DatatypeConfigurationException
      *             indicates a serious configuration error
      */
-    public static void writeXMLReport(ValidationInfo info, FeaturesCollection collection, String path, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, DatatypeConfigurationException {
+    public static void writeXMLReport(ValidationInfo info,
+									  FeaturesCollection collection,
+									  String path,
+									  long processingTimeInMS,
+									  boolean isLogPassedChecks)
+			throws ParserConfigurationException, TransformerFactoryConfigurationError,
+			TransformerException, DatatypeConfigurationException {
 
-        Document doc = generateDOMDocument(info, collection, processingTimeInMS);
+        Document doc = generateDOMDocument(info, collection, processingTimeInMS, isLogPassedChecks);
 
         try (FileOutputStream fos = new FileOutputStream(path)) {
             transform(doc, new StreamResult(fos));
@@ -246,7 +271,7 @@ public final class XMLReport {
      */
     public static String getXMLReportAsString(ValidationInfo info, FeaturesCollection collection, long processingTimeInMS) throws ParserConfigurationException, TransformerFactoryConfigurationError, TransformerException, DatatypeConfigurationException {
 
-        Document doc = generateDOMDocument(info, collection, processingTimeInMS);
+        Document doc = generateDOMDocument(info, collection, processingTimeInMS, false);
 
         StringWriter writer = new StringWriter();
         transform(doc, new StreamResult(writer));

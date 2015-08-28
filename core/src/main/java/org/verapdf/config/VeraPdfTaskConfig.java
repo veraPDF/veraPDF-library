@@ -21,16 +21,19 @@ public final class VeraPdfTaskConfig {
     private final boolean validate;
     private final Input input;
     private final String profile;
+	private final boolean logPassedChecks;
     private final String output;
 
     private VeraPdfTaskConfig() {
-        this(false, null, null, null);
+        this(false, null, null, false, null);
     }
 
-    public VeraPdfTaskConfig(boolean validate, Input input, String profile, String output) {
+    public VeraPdfTaskConfig(boolean validate, Input input, String profile,
+							 boolean logPassedChecks, String output) {
         this.validate = validate;
         this.input = input;
         this.profile = profile;
+		this.logPassedChecks = logPassedChecks;
         this.output = output;
     }
 
@@ -55,7 +58,14 @@ public final class VeraPdfTaskConfig {
         return profile;
     }
 
-    /**
+	/**
+	 * @return is need to log passed checks
+	 */
+	public boolean isLogPassedChecks() {
+		return logPassedChecks;
+	}
+
+	/**
      * @return the output
      */
     public String getOutput() {
@@ -67,6 +77,7 @@ public final class VeraPdfTaskConfig {
         private boolean validate;
         private Input input;
         private String profile;
+		private boolean logPassedChecks;
         private String output;
 
         public Builder() {
@@ -94,13 +105,18 @@ public final class VeraPdfTaskConfig {
             return this;
         }
 
+		public Builder logPassedChecks(boolean logPassedChecks) {
+			this.logPassedChecks = logPassedChecks;
+			return this;
+		}
+
         public Builder output(String output) {
             this.output = output;
             return this;
         }
 
         public VeraPdfTaskConfig build() {
-            return new VeraPdfTaskConfig(validate, input, profile, output);
+            return new VeraPdfTaskConfig(validate, input, profile, logPassedChecks, output);
         }
 
     }

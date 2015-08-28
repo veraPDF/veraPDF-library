@@ -4,9 +4,15 @@ package org.verapdf.validation.profile.parser;
  * @author Maksim Bezrukov
  */
 
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 
+import javax.xml.stream.XMLStreamException;
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -17,25 +23,39 @@ import static org.junit.Assert.*;
 
 public class ValidationProfileSignatureCheckerTest {
 
-    private static String getSystemIndependentPath(String path) throws URISyntaxException {
-        URL resourceUrl = ClassLoader.class.getResource(path);
-        Path resourcePath = Paths.get(resourceUrl.toURI());
-        return resourcePath.toString();
-    }
+	private static File copy;
+	private static File xml;
 
-    @Test
-    public void test() throws Exception {
-        String path = getSystemIndependentPath("/test.xml");
-        File xml = new File(path);
-        File copy = new File(xml.getParent(), "copy");
-        Files.copy(xml.toPath(), copy.toPath());
-        ValidationProfileSignatureChecker checker = ValidationProfileSignatureChecker.newInstance(copy);
+	@BeforeClass
+	public static void setUp() throws URISyntaxException, IOException {
+		String path = getSystemIndependentPath("/test.xml");
+		xml = new File(path);
+		copy = new File(xml.getParent(), "copy");
+		Files.copy(xml.toPath(), copy.toPath());
+	}
 
-        assertFalse(checker.isValidSignature());
-        assertEquals("2b9bbbdf26757dad5f451c88c35cf5bdf2ee5315", checker.getHashAsString());
-        checker.signFile();
-        assertTrue(checker.isValidSignature());
+	@Test
+	public void test() throws IOException, XMLStreamException, MissedHashTagException {
+		ValidationProfileSignatureChecker expected = ValidationProfileSignatureChecker.newInstance(copy);
+		ValidationProfileSignatureChecker actual = ValidationProfileSignatureChecker.newInstance(xml);
 
-        Files.deleteIfExists(copy.toPath());
-    }
+		assertFalse(expected.isValidSignature());
+
+		expected.signFile();
+
+		assertTrue(expected.isValidSignature());
+		Assert.assertEquals(expected.getHashAsString(), actual.getHashAsString());
+	}
+
+	@AfterClass
+	public static void tearDown() throws IOException {
+		Files.deleteIfExists(copy.toPath());
+	}
+
+	private static String getSystemIndependentPath(String path) throws URISyntaxException {
+		URL resourceUrl = ClassLoader.class.getResource(path);
+		Path resourcePath = Paths.get(resourceUrl.toURI());
+		return resourcePath.toString();
+	}
+
 }

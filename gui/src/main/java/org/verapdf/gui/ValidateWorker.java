@@ -76,14 +76,17 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
         try {
             collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this.parent, "Some error in creating features collection.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this.parent,
+					"Some error in creating features collection.",
+					GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
             LOGGER.error("Exception in creating features collection: ", e);
         }
 
         try {
             loader.getPDDocument().close();
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this.parent, "Some error in closing document.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this.parent, "Some error in closing document.",
+					GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
             LOGGER.error("Exception in closing document: ", e);
         }
 
@@ -95,8 +98,13 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
     
     private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
         try {
-            return Validator.validate(root, this.profile, false);
-        } catch (IOException | NullLinkNameException | NullLinkException | NullLinkedObjectException | MissedHashTagException | WrongSignatureException | MultiplyGlobalVariableNameException | ParserConfigurationException | SAXException | XMLStreamException e) {
+			// TODO : make checkbox
+            return Validator.validate(root, this.profile, false, false);
+        } catch (IOException | NullLinkNameException | NullLinkException |
+				NullLinkedObjectException | MissedHashTagException |
+				WrongSignatureException | MultiplyGlobalVariableNameException |
+				ParserConfigurationException | SAXException | XMLStreamException e) {
+
             this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_VALIDATING, e);
         }
         return null;
@@ -115,8 +123,9 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
                     throw new IOException("Can not create temporary directory.");
                 }
                 xmlReport = new File("./temp/tempXMLReport.xml");
+				// TODO : make checkbox
                 XMLReport.writeXMLReport(info, collection, xmlReport.getPath(),
-                        endTimeOfValidation - startTimeOfValidation);
+                        endTimeOfValidation - startTimeOfValidation, false);
 
                 if (info != null) {
                     try {
