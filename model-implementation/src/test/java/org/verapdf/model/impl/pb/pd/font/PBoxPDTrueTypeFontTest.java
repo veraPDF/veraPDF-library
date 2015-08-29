@@ -61,4 +61,10 @@ public class PBoxPDTrueTypeFontTest extends PBoxPDSimpleFontTest {
 	public void testIsStandard() {
 		Assert.assertFalse(((PDSimpleFont) actual).getisStandard());
 	}
+
+	@Override
+	public void testEncoding() {
+		Assert.assertEquals(((org.verapdf.model.pdlayer.PDTrueTypeFont) actual).getEncoding(), "WinAnsiEncoding");
+	}
+
 }

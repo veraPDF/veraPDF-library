@@ -1,5 +1,7 @@
 package org.verapdf.model.impl.pb.pd.font;
 
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.font.PDFontLike;
 import org.verapdf.model.pdlayer.PDSimpleFont;
@@ -8,6 +10,8 @@ import org.verapdf.model.pdlayer.PDSimpleFont;
  * @author Timur Kamalov
  */
 public abstract class PBoxPDSimpleFont extends PBoxPDFont implements PDSimpleFont {
+
+    public static final String CUSTOM_ENCODING = "Custom";
 
 	public PBoxPDSimpleFont(PDFontLike font, final String type) {
 		super(font, type);
@@ -22,8 +26,22 @@ public abstract class PBoxPDSimpleFont extends PBoxPDFont implements PDSimpleFon
 
 	@Override
 	public String getEncoding() {
-		// TODO : implement me
-		return null;
+        COSDictionary fontDict = ((org.apache.pdfbox.pdmodel.font.PDSimpleFont) pdFontLike).getCOSObject();
+        COSBase encodingDict = fontDict.getDictionaryObject(COSName.ENCODING);
+        if (encodingDict == null) {
+            return null;
+        } else if (encodingDict instanceof COSName) {
+            return ((COSName) encodingDict).getName();
+        } else if (encodingDict instanceof COSDictionary) {
+            COSBase differencesDict = ((COSDictionary) encodingDict).getDictionaryObject(COSName.DIFFERENCES);
+            if (differencesDict == null) {
+                String baseEncoding = ((COSDictionary) differencesDict).getNameAsString(COSName.BASE_ENCODING);
+                return baseEncoding == null ? null : baseEncoding;
+            } else {
+                return CUSTOM_ENCODING;
+            }
+        }
+        return null;
 	}
 
 	@Override

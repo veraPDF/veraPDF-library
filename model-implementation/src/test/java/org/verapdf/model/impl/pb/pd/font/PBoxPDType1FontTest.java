@@ -5,6 +5,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1CFont;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.verapdf.model.pdlayer.PDSimpleFont;
+import org.verapdf.model.pdlayer.PDType1Font;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -61,4 +62,10 @@ public class PBoxPDType1FontTest extends PBoxPDSimpleFontTest {
 	public void testIsStandard() {
 		Assert.assertFalse(((PDSimpleFont) actual).getisStandard());
 	}
+
+	@Override
+	public void testEncoding() {
+		Assert.assertEquals(((PDType1Font) actual).getEncoding(), "WinAnsiEncoding");
+	}
+
 }
