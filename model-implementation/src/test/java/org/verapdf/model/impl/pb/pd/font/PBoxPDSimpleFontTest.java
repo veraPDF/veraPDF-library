@@ -19,4 +19,7 @@ public abstract class PBoxPDSimpleFontTest extends PBoxPDFontTest {
 	@Test
 	public abstract void testIsStandard();
 
+	@Test
+	public abstract void testEncoding();
+
 }

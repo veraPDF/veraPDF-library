@@ -73,4 +73,10 @@ public class PBoxPDType3FontTest extends PBoxPDSimpleFontTest {
 		Assert.assertTrue(contentStreams.get(0) instanceof PBoxPDContentStream);
 		Assert.assertTrue(contentStreams.get(1) instanceof PBoxPDContentStream);
 	}
+
+	@Override
+	public void testEncoding() {
+		Assert.assertEquals(((PDType3Font) actual).getEncoding(), "Custom");
+	}
+
 }
