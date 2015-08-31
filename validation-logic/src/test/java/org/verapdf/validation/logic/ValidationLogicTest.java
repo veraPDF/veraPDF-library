@@ -5,8 +5,9 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.coslayer.CosInteger;
 import org.verapdf.model.pdlayer.PDAnnot;
-import org.verapdf.validation.report.model.ValidationInfo;
+import org.verapdf.validation.report.model.*;
 
+import java.io.File;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class ValidationLogicTest {
         ((List<Object>) cd2.getLinkedObjects("Object")).add(obj);
 
         ValidationInfo info = Validator.validate(obj,
-                getSystemIndependentPath("/test.xml"), false);
+                getSystemIndependentPath("/test.xml"), false, true);
 
         assertEquals("Validation profile for testing",
                 info.getProfile().getName());
@@ -63,7 +64,46 @@ public class ValidationLogicTest {
 
         assertEquals(9, info.getResult().getSummary().getAttrPassedChecks());
         assertEquals(5, info.getResult().getSummary().getAttrFailedChecks());
+        assertEquals(0, info.getResult().getSummary().getAttrCompletedMetadataFixes());
+        assertEquals(0, info.getResult().getSummary().getAttrFailedMetadataFixes());
+        assertEquals(0, info.getResult().getSummary().getAttrWarnings());
+        assertEquals("PDF file is not compliant with Validation Profile requirements", info.getResult().getStatement());
 
+        Details details = info.getResult().getDetails();
+
+        assertEquals(0, details.getWarnings().size());
+        assertEquals(7, details.getRules().size());
+
+        Rule rule = null;
+        for (Rule ruleCheck : details.getRules()) {
+            if ("rule1".equals(ruleCheck.getID())) {
+                rule = ruleCheck;
+                break;
+            }
+        }
+
+        assertNotNull(rule);
+        assertEquals(2, rule.getCheckCount());
+
+        Check check = null;
+        for (Check che : rule.getChecks()) {
+            if ("failed".equals(che.getStatus().toString())) {
+                check = che;
+            }
+        }
+
+        assertNotNull(check);
+
+        CheckLocation checkLoc = check.getLocation();
+        assertNotNull(checkLoc);
+        assertEquals("Object", checkLoc.getAttrLevel());
+        assertEquals("root/CosDict[0](cd1)", checkLoc.getContext());
+
+        CheckError checkerr = check.getError();
+        assertNotNull(checkerr);
+        assertEquals("real size is %", checkerr.getMessage());
+        assertEquals(1, checkerr.getArguments().size());
+        assertEquals("3", checkerr.getArguments().get(0));
     }
 
     private String getSystemIndependentPath(String path)

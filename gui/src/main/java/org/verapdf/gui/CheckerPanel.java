@@ -1,17 +1,12 @@
 package org.verapdf.gui;
 
 import org.apache.log4j.Logger;
-import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.report.HTMLReport;
-import org.verapdf.report.XMLReport;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,24 +31,22 @@ public class CheckerPanel extends JPanel {
 
     private static final Logger LOGGER = Logger.getLogger(CheckerPanel.class);
 
-    JFileChooser pdfChooser;
-    JFileChooser xmlChooser;
-    JFileChooser htmlChooser;
-    File pdfFile;
-    File profile;
+    private JFileChooser pdfChooser;
+    private JFileChooser xmlChooser;
+    private JFileChooser htmlChooser;
+    private File pdfFile;
+    private File profile;
     private JTextField chosenPDF;
     private JTextField chosenProfile;
-    JLabel result;
+    private JLabel result;
     transient ValidationInfo info;
-    File xmlReport;
-    File htmlReport;
-    private File image = null;
+    private File xmlReport;
+    private File htmlReport;
+    private File image = new File("./temp/" + HTMLReport.getLogoImageName());
 
-    long startTimeOfValidation;
-    private long endTimeOfValidation;
-    boolean isValidationErrorOccurred;
+    private boolean isValidationErrorOccurred;
 
-    JButton validate;
+    private JButton validate;
     private JButton saveXML;
     private JButton viewXML;
     private JButton saveHTML;
@@ -238,7 +231,6 @@ public class CheckerPanel extends JPanel {
                 validate.setEnabled(false);
                 info = null;
                 isValidationErrorOccurred = false;
-                startTimeOfValidation = System.currentTimeMillis();
 
                 validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile,
                         profile);
@@ -308,12 +300,13 @@ public class CheckerPanel extends JPanel {
 
     /**
      * Method to notify panel that validation was done.
-     * 
-     * @param collection
-     *            a {@link FeaturesCollection}
+     *
+     * @param xmlReport
+     *            xml report file
+     * @param htmlReport
+     *            html report file
      */
-    public void validationEnded(FeaturesCollection collection) {
-        endTimeOfValidation = System.currentTimeMillis();
+    public void validationEnded(File xmlReport, File htmlReport) {
 
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
         progressBar.setVisible(false);
@@ -338,52 +331,19 @@ public class CheckerPanel extends JPanel {
             }
         }
 
-        writeReports(collection);
+        this.xmlReport = xmlReport;
+        this.htmlReport = htmlReport;
 
-    }
-
-    private void writeReports(FeaturesCollection collection) {
-        try {
-            File dir = new File("./temp/");
-            if (!dir.exists() && !dir.mkdir()) {
-                throw new IOException("Can not create temporary directory.");
-            }
-            xmlReport = new File("./temp/tempXMLReport.xml");
-            XMLReport.writeXMLReport(info, collection, xmlReport.getPath(),
-                    endTimeOfValidation - startTimeOfValidation);
-
+        if (xmlReport != null) {
             saveXML.setEnabled(true);
             viewXML.setEnabled(true);
-
-            if (info != null) {
-                try {
-                    htmlReport = new File("./temp/tempHTMLReport.html");
-                    HTMLReport.writeHTMLReport(htmlReport.getPath(), xmlReport,
-                            profile);
-
-                    if (image == null) {
-                        image = new File("./temp/"
-                                + HTMLReport.getLogoImageName());
-                    }
-
-                    saveHTML.setEnabled(true);
-                    viewHTML.setEnabled(true);
-
-                } catch (IOException | TransformerException e) {
-                    JOptionPane.showMessageDialog(CheckerPanel.this,
-                            GUIConstants.ERROR_IN_SAVING_HTML_REPORT,
-                            GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-                    LOGGER.error("Exception saving the HTML report", e);
-                }
-            }
-
-        } catch (DatatypeConfigurationException | ParserConfigurationException
-                | IOException | TransformerException e) {
-            JOptionPane.showMessageDialog(CheckerPanel.this,
-                    GUIConstants.ERROR_IN_SAVING_XML_REPORT,
-                    GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-            LOGGER.error("Exception saving the XML report", e);
         }
+
+        if (htmlReport != null) {
+            saveHTML.setEnabled(true);
+            viewHTML.setEnabled(true);
+        }
+
     }
 
     /**

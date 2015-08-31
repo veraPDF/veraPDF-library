@@ -351,10 +351,10 @@ public final class PBFeatureParser {
                                 id,
                                 shadingPatternShadingChild.get(id),
                                 shadingPatternExtGStateChild.get(id),
-                                shadingPageParent.get(id),
-                                shadingPatternParent.get(id),
-                                shadingXObjectParent.get(id),
-                                shadingFontParent.get(id)));
+                                shadingPatternPageParent.get(id),
+                                shadingPatternPatternParent.get(id),
+                                shadingPatternXObjectParent.get(id),
+                                shadingPatternFontParent.get(id)));
             }
         }
 

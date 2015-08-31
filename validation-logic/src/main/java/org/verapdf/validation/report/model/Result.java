@@ -40,15 +40,14 @@ public class Result {
 
                     for (Check check : rule.getChecks()) {
                         if (check != null) {
-                            if (Status.PASSED == check.getStatus()) {
-                                ++passedChecks;
-                            } else {
+                            if (Status.FAILED == check.getStatus()) {
                                 ++failedChecks;
                             }
                         }
                     }
                 }
             }
+			passedChecks = details.getRulesChecksCount() - failedChecks;
         }
 
         this.compliant = compliantCheck;

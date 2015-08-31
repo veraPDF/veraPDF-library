@@ -11,6 +11,7 @@ import org.verapdf.validation.report.model.Check.Status;
  * @author Maksim Bezrukov
  */
 public class Rule {
+
     private final String ID;
     private final Status status;
     private final List<Check> checks;
@@ -32,15 +33,13 @@ public class Rule {
                     ruleStatus = Status.FAILED;
                 }
             }
-        }
+			this.checks =  Collections.unmodifiableList(checks);
+        } else {
+			this.checks = Collections.emptyList();
+		}
 
         this.status = ruleStatus;
 
-        if (checks == null) {
-            this.checks = Collections.emptyList();
-        } else {
-            this.checks =  Collections.unmodifiableList(checks);
-        }
     }
 
     /**
@@ -70,4 +69,5 @@ public class Rule {
     public List<Check> getChecks() {
         return this.checks;
     }
+
 }

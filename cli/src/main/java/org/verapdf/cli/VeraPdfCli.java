@@ -42,7 +42,7 @@ public class VeraPdfCli {
         long endTime = System.currentTimeMillis();
         if (validationInfo != null) {
             XMLReport.writeXMLReport(validationInfo, taskConfig.getOutput(),
-                    endTime - startTime);
+                    endTime - startTime, taskConfig.isLogPassedChecks());
         } else {
             throw new IllegalStateException("Internal error during validation");
         }
@@ -63,7 +63,8 @@ public class VeraPdfCli {
                 .input(new Input(cmdVeraPDF.getInputPath(), cmdVeraPDF
                         .isInputPathURL())).profile(cmdVeraPDF.getProfile())
                 .validate(cmdVeraPDF.isValidate())
-                .output(cmdVeraPDF.getOutput());
+                .output(cmdVeraPDF.getOutput())
+				.logPassedChecks(cmdVeraPDF.isLogPassedChecks());
         return configBuilder.build();
     }
 
