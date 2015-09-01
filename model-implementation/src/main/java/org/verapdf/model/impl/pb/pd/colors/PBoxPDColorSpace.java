@@ -27,11 +27,11 @@ public class PBoxPDColorSpace extends PBoxPDResources implements PDColorSpace {
      */
     @Override
     public Long getnrComponents() {
-        if (simplePDObject instanceof org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace) {
-            int numberOfComponents = ((org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace) simplePDObject)
+        if (this.simplePDObject instanceof org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace) {
+            int numberOfComponents = ((org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace) this.simplePDObject)
                     .getNumberOfComponents();
             return Long.valueOf(numberOfComponents);
-        } else if (simplePDObject instanceof PDAbstractPattern) {
+        } else if (this.simplePDObject instanceof PDAbstractPattern) {
             return Long.valueOf(-1);
         } else
             return null;
