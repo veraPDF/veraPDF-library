@@ -14,12 +14,13 @@ import java.util.List;
  */
 public class PBoxPDAction extends PBoxPDObject implements PDAction {
 
-    public static final String NEXT = "Next";
-    public static final String ACTION_TYPE = "PDAction";
+	public static final String ACTION_TYPE = "PDAction";
+
+	public static final String NEXT = "Next";
 
     public PBoxPDAction(
             org.apache.pdfbox.pdmodel.interactive.action.PDAction simplePDObject) {
-        super(simplePDObject, ACTION_TYPE);
+        this(simplePDObject, ACTION_TYPE);
     }
 
 	public PBoxPDAction(
@@ -37,14 +38,15 @@ public class PBoxPDAction extends PBoxPDObject implements PDAction {
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         if (NEXT.equals(link)) {
-            return getNext();
+            return this.getNext();
         }
         return super.getLinkedObjects(link);
     }
 
     private List<PDAction> getNext() {
         List<PDAction> actions = new ArrayList<>();
-        List<org.apache.pdfbox.pdmodel.interactive.action.PDAction> next = ((org.apache.pdfbox.pdmodel.interactive.action.PDAction) simplePDObject)
+        List<org.apache.pdfbox.pdmodel.interactive.action.PDAction> next =
+				((org.apache.pdfbox.pdmodel.interactive.action.PDAction) this.simplePDObject)
                 .getNext();
         if (next != null) {
             for (org.apache.pdfbox.pdmodel.interactive.action.PDAction action : next) {

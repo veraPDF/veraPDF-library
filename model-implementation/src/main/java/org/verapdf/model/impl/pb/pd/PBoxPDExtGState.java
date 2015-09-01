@@ -24,9 +24,10 @@ import java.util.List;
  */
 public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
+	public static final String EXT_G_STATE_TYPE = "PDExtGState";
+
     public static final String RI = "RI";
     public static final String FONT_SIZE = "fontSize";
-    public static final String EXT_G_STATE_TYPE = "PDExtGState";
 
     public PBoxPDExtGState(PDExtendedGraphicsState simplePDObject) {
         super(simplePDObject, EXT_G_STATE_TYPE);
@@ -34,7 +35,7 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
     @Override
     public String getTR() {
-        COSDictionary dictionary = ((PDExtendedGraphicsState) simplePDObject)
+        COSDictionary dictionary = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getCOSObject();
         COSBase tr = dictionary.getDictionaryObject(COSName.TR);
         return getStringProperty(tr);
@@ -42,7 +43,7 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
     @Override
     public String getTR2() {
-        COSDictionary dictionary = ((PDExtendedGraphicsState) simplePDObject)
+        COSDictionary dictionary = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getCOSObject();
         COSBase tr2 = dictionary.getDictionaryObject(COSName.getPDFName("TR2"));
         return getStringProperty(tr2);
@@ -50,7 +51,7 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
     @Override
     public String getSMask() {
-        COSDictionary dictionary = ((PDExtendedGraphicsState) simplePDObject)
+        COSDictionary dictionary = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getCOSObject();
         COSBase sMask = dictionary.getDictionaryObject(COSName.SMASK);
         return getStringProperty(sMask);
@@ -58,7 +59,7 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
     @Override
     public String getBM() {
-        COSDictionary dictionary = ((PDExtendedGraphicsState) simplePDObject)
+        COSDictionary dictionary = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getCOSObject();
         COSBase sMask = dictionary.getDictionaryObject(COSName.BM);
         return getStringProperty(sMask);
@@ -66,7 +67,7 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
     @Override
     public Double getca() {
-        Float nonStrokingAlphaConstant = ((PDExtendedGraphicsState) simplePDObject)
+        Float nonStrokingAlphaConstant = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getNonStrokingAlphaConstant();
         return nonStrokingAlphaConstant != null ? Double
                 .valueOf(nonStrokingAlphaConstant.doubleValue()) : null;
@@ -74,7 +75,7 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
     @Override
     public Double getCA() {
-        Float strokingAlphaConstant = ((PDExtendedGraphicsState) simplePDObject)
+        Float strokingAlphaConstant = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getStrokingAlphaConstant();
         return strokingAlphaConstant != null ? Double
                 .valueOf(strokingAlphaConstant.doubleValue()) : null;
@@ -88,28 +89,21 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
         return null;
     }
 
-    @Override
-    public List<? extends Object> getLinkedObjects(String link) {
-        List<? extends Object> list;
-
-        switch (link) {
-        case RI:
-            list = this.getRI();
-            break;
-        case FONT_SIZE:
-            list = this.getFontSize();
-            break;
-        default:
-            list = super.getLinkedObjects(link);
-            break;
-        }
-
-        return list;
-    }
+	@Override
+	public List<? extends Object> getLinkedObjects(String link) {
+		switch (link) {
+			case RI:
+				return this.getRI();
+			case FONT_SIZE:
+				return this.getFontSize();
+			default:
+				return super.getLinkedObjects(link);
+		}
+	}
 
     private List<CosRenderingIntent> getRI() {
-        List<CosRenderingIntent> renderingIntents = new ArrayList<>(1);
-        RenderingIntent renderingIntent = ((PDExtendedGraphicsState) simplePDObject)
+        List<CosRenderingIntent> renderingIntents = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        RenderingIntent renderingIntent = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getRenderingIntent();
         if (renderingIntent != null) {
             COSName pdfName = COSName.getPDFName(renderingIntent.stringValue());
@@ -119,8 +113,8 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
     }
 
     private List<CosReal> getFontSize() {
-        List<CosReal> result = new ArrayList<>();
-        PDFontSetting fontSetting = ((PDExtendedGraphicsState) simplePDObject)
+        List<CosReal> result = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        PDFontSetting fontSetting = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getFontSetting();
         if (fontSetting != null) {
             result.add(new PBCosReal(new COSFloat(fontSetting.getFontSize())));

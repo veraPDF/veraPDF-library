@@ -41,7 +41,7 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
 
     @Override
     public String getFilter() {
-        List<COSName> filters = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject)
+        List<COSName> filters = ((org.apache.pdfbox.pdmodel.common.PDMetadata) this.simplePDObject)
                 .getFilters();
         if (filters != null && !filters.isEmpty()) {
             StringBuilder result = new StringBuilder();
@@ -53,35 +53,28 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
         return null;
     }
 
-    @Override
-    public List<? extends Object> getLinkedObjects(String link) {
-        List<? extends Object> list;
-
-        switch (link) {
-        case XMP_PACKAGE:
-            list = getXMPPackage();
-            break;
-        case STREAM:
-            list = getStream();
-            break;
-        default:
-            list = super.getLinkedObjects(link);
-            break;
-        }
-
-        return list;
-    }
+	@Override
+	public List<? extends Object> getLinkedObjects(String link) {
+		switch (link) {
+			case XMP_PACKAGE:
+				return this.getXMPPackage();
+			case STREAM:
+				return this.getStream();
+			default:
+				return super.getLinkedObjects(link);
+		}
+	}
 
     private List<XMPPackage> getXMPPackage() {
-        List<XMPPackage> xmp = new ArrayList<>(1);
+        List<XMPPackage> xmp = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
-            COSStream stream = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject)
+            COSStream stream = ((org.apache.pdfbox.pdmodel.common.PDMetadata) this.simplePDObject)
                     .getStream();
             if (stream != null) {
                 DomXmpParser xmpParser = new DomXmpParser();
                 XMPMetadata metadata = xmpParser.parse(stream
                         .getUnfilteredStream());
-                xmp.add(isMainMetadata ? new PBXMPMainPackage(metadata, true)
+                xmp.add(this.isMainMetadata ? new PBXMPMainPackage(metadata, true)
                         : new PBXMPPackage(metadata, true));
             }
         } catch (XmpParsingException e) {
@@ -95,8 +88,8 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
     }
 
     private List<CosStream> getStream() {
-        List<CosStream> streams = new ArrayList<>(1);
-        COSStream stream = ((org.apache.pdfbox.pdmodel.common.PDMetadata) simplePDObject)
+        List<CosStream> streams = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        COSStream stream = ((org.apache.pdfbox.pdmodel.common.PDMetadata) this.simplePDObject)
                 .getStream();
         streams.add(new PBCosStream(stream));
         return streams;

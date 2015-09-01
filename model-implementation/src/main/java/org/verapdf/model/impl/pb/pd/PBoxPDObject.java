@@ -17,6 +17,8 @@ import org.verapdf.model.pdlayer.PDObject;
  */
 public class PBoxPDObject extends GenericModelObject implements PDObject {
 
+	public static final int MAX_NUMBER_OF_ELEMENTS = 1;
+
     protected COSObjectable simplePDObject;
     protected PDDocument document;
     protected PDContentStream contentStream;
@@ -48,7 +50,7 @@ public class PBoxPDObject extends GenericModelObject implements PDObject {
 		this.cMap = cMap;
 	}
 
-    protected void addAction(List<PDAction> actions,
+    protected static void addAction(List<PDAction> actions,
             org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer) {
         if (buffer != null) {
             actions.add(buffer instanceof PDActionNamed ? new PBoxPDNamedAction(

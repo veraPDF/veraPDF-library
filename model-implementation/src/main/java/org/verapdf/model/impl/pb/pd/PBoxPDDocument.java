@@ -37,39 +37,27 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         super(document, PD_DOCUMENT_TYPE);
     }
 
-    @Override
-    public List<? extends Object> getLinkedObjects(String link) {
-        List<? extends Object> list;
-
-        switch (link) {
-        case OUTLINES:
-            list = this.getOutlines();
-            break;
-        case OPEN_ACTION:
-            list = this.getOpenAction();
-            break;
-        case ACTIONS:
-            list = this.getActions();
-            break;
-        case PAGES:
-            list = this.getPages();
-            break;
-        case METADATA:
-            list = this.getMetadata();
-            break;
-        case OUTPUT_INTENTS:
-            list = this.getOutputIntents();
-            break;
-        case ACRO_FORMS:
-            list = this.getAcroForms();
-            break;
-        default:
-            list = super.getLinkedObjects(link);
-            break;
-        }
-
-        return list;
-    }
+	@Override
+	public List<? extends Object> getLinkedObjects(String link) {
+		switch (link) {
+			case OUTLINES:
+				return this.getOutlines();
+			case OPEN_ACTION:
+				return this.getOpenAction();
+			case ACTIONS:
+				return this.getActions();
+			case PAGES:
+				return this.getPages();
+			case METADATA:
+				return this.getMetadata();
+			case OUTPUT_INTENTS:
+				return this.getOutputIntents();
+			case ACRO_FORMS:
+				return this.getAcroForms();
+			default:
+				return super.getLinkedObjects(link);
+		}
+	}
 
     private List<PDOutline> getOutlines() {
         List<PDOutline> result = new ArrayList<>();
@@ -83,12 +71,12 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
     private List<PDOutlineItem> getOutlinesList() {
         List<PDOutlineItem> result = new ArrayList<>();
-        PDDocumentOutline documentOutline = document.getDocumentCatalog()
-                .getDocumentOutline();
+        PDDocumentOutline documentOutline = this.document
+				.getDocumentCatalog().getDocumentOutline();
 
         if (documentOutline != null) {
             PDOutlineItem firstChild = documentOutline.getFirstChild();
-            Stack<PDOutlineItem> stack = new Stack<>();
+            Deque<PDOutlineItem> stack = new ArrayDeque<>();
 
             if (firstChild != null) {
                 stack.push(firstChild);
@@ -112,9 +100,9 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
     }
 
     private List<PDAction> getOpenAction() {
-        List<PDAction> actions = new ArrayList<>(1);
+        List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
-            PDDestinationOrAction openAction = document.getDocumentCatalog()
+            PDDestinationOrAction openAction = this.document.getDocumentCatalog()
                     .getOpenAction();
             if (openAction instanceof org.apache.pdfbox.pdmodel.interactive.action.PDAction) {
                 addAction(
@@ -130,7 +118,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
     private List<PDAction> getActions() {
         List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ACTIONS);
-        PDDocumentCatalogAdditionalActions pbActions = document
+        PDDocumentCatalogAdditionalActions pbActions = this.document
                 .getDocumentCatalog().getActions();
         if (pbActions != null) {
             org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;
@@ -154,7 +142,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
     }
 
     private List<PDPage> getPages() {
-        PDPageTree pageTree = document.getPages();
+        PDPageTree pageTree = this.document.getPages();
         List<PDPage> pages = new ArrayList<>(pageTree.getCount());
         for (org.apache.pdfbox.pdmodel.PDPage page : pageTree) {
             if (page != null) {
@@ -165,8 +153,8 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
     }
 
     private List<PDMetadata> getMetadata() {
-        List<PDMetadata> metadata = new ArrayList<>(1);
-        org.apache.pdfbox.pdmodel.common.PDMetadata meta = document
+        List<PDMetadata> metadata = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        org.apache.pdfbox.pdmodel.common.PDMetadata meta = this.document
                 .getDocumentCatalog().getMetadata();
         if (meta != null && meta.getCOSObject() != null) {
             metadata.add(new PBoxPDMetadata(meta, Boolean.TRUE));
@@ -176,8 +164,8 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
     private List<PDOutputIntent> getOutputIntents() {
         List<PDOutputIntent> outputIntents = new ArrayList<>();
-        List<org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent> pdfboxOutputIntents = document
-                .getDocumentCatalog().getOutputIntents();
+        List<org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent> pdfboxOutputIntents =
+				this.document.getDocumentCatalog().getOutputIntents();
         for (org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent intent : pdfboxOutputIntents) {
             if (intent != null) {
                 outputIntents.add(new PBoxPDOutputIntent(intent));
@@ -188,8 +176,8 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
     private List<PDAcroForm> getAcroForms() {
         List<PDAcroForm> forms = new ArrayList<>();
-        final org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm form = document
-                .getDocumentCatalog().getAcroForm();
+        org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm form =
+				this.document.getDocumentCatalog().getAcroForm();
         if (form != null) {
             forms.add(new PBoxPDAcroForm(form));
         }

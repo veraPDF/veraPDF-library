@@ -16,6 +16,6 @@ public class PBoxPDNamedAction extends PBoxPDAction implements PDNamedAction {
 
     @Override
     public String getN() {
-        return ((PDActionNamed) simplePDObject).getN();
+        return ((PDActionNamed) this.simplePDObject).getN();
     }
 }

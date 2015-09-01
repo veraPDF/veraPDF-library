@@ -19,8 +19,10 @@ public class PBoxPDContentStream extends PBoxPDObject implements
 
     private static final Logger LOGGER = Logger
             .getLogger(PBoxPDContentStream.class);
-    public static final String OPERATORS = "operators";
-    public static final String CONTENT_STREAM_TYPE = "PDContentStream";
+
+	public static final String CONTENT_STREAM_TYPE = "PDContentStream";
+
+	public static final String OPERATORS = "operators";
 
     public PBoxPDContentStream(
             org.apache.pdfbox.contentstream.PDContentStream contentStream) {
@@ -30,7 +32,7 @@ public class PBoxPDContentStream extends PBoxPDObject implements
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         if (OPERATORS.equals(link)) {
-            return getOperators();
+            return this.getOperators();
         }
         return super.getLinkedObjects(link);
     }
@@ -39,10 +41,10 @@ public class PBoxPDContentStream extends PBoxPDObject implements
         List<Operator> result = new ArrayList<>();
         try {
             PDFStreamParser streamParser = new PDFStreamParser(
-                    contentStream.getContentStream(), true);
+                    this.contentStream.getContentStream(), true);
             streamParser.parse();
             result = OperatorFactory.operatorsFromTokens(streamParser.getTokens(),
-                    contentStream.getResources());
+                    this.contentStream.getResources());
         } catch (IOException e) {
             LOGGER.error(
                     "Error while parsing content stream. " + e.getMessage(), e);
