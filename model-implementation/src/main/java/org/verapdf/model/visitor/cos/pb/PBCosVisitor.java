@@ -39,7 +39,7 @@ public final class PBCosVisitor implements ICOSVisitor {
      */
     @Override
     public Object visitFromBoolean(COSBoolean obj) throws IOException {
-        return new PBCosBool(obj);
+        return PBCosBool.valueOf(obj);
     }
 
     /** {@inheritDoc} Create a PBCosDict for corresponding COSDictionary.
@@ -93,7 +93,7 @@ public final class PBCosVisitor implements ICOSVisitor {
      */
     @Override
     public Object visitFromNull(COSNull obj) throws IOException {
-        return PBCosNull.NULL;
+        return PBCosNull.getInstance();
     }
 
     /** {@inheritDoc} Create a PBCosStream for corresponding COSStream.
