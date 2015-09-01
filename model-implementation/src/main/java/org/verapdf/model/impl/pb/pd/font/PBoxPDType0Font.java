@@ -42,9 +42,9 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
 	}
 
     private List<PDCIDFont> getDescendantFonts() {
-        List<PDCIDFont> list = new ArrayList<>();
+        List<PDCIDFont> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         org.apache.pdfbox.pdmodel.font.PDCIDFont pdcidFont =
-				((org.apache.pdfbox.pdmodel.font.PDType0Font) pdFontLike)
+				((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike)
                 .getDescendantFont();
         if (pdcidFont != null) {
             list.add(new PBoxPDCIDFont(pdcidFont));
@@ -53,8 +53,8 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
     }
 
     private List<PDCMap> getEncoding() {
-        List<PDCMap> list = new ArrayList<>();
-        CMap charMap = ((org.apache.pdfbox.pdmodel.font.PDType0Font) pdFontLike)
+        List<PDCMap> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        CMap charMap = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike)
                 .getCMap();
         if (charMap != null) {
             list.add(new PBoxPDCMap(charMap));
@@ -66,7 +66,7 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
     public Boolean getareRegistryOrderingCompatible() {
         String parentOrdering = null;
         String parentRegistry = null;
-        COSDictionary dictionary = ((org.apache.pdfbox.pdmodel.font.PDType0Font) pdFontLike)
+        COSDictionary dictionary = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike)
                 .getCOSObject();
         COSBase encoding = dictionary.getDictionaryObject(COSName.ENCODING);
         if (encoding instanceof COSStream) {
@@ -79,13 +79,13 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
                         .getString(COSName.REGISTRY);
             }
         }
-        if (cMap != null) {
-            parentOrdering = cMap.getOrdering();
-            parentRegistry = cMap.getRegistry();
+        if (this.cMap != null) {
+            parentOrdering = this.cMap.getOrdering();
+            parentRegistry = this.cMap.getRegistry();
         }
         String descOrdering = null;
         String descRegistry = null;
-        PDCIDSystemInfo info = ((org.apache.pdfbox.pdmodel.font.PDType0Font) pdFontLike)
+        PDCIDSystemInfo info = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike)
                 .getDescendantFont().getCIDSystemInfo();
         if (info != null) {
             descOrdering = info.getOrdering();

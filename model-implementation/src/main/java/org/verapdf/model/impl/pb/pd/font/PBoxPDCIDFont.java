@@ -23,8 +23,8 @@ public class PBoxPDCIDFont extends PBoxPDFont implements PDCIDFont {
 
     @Override
     public String getCIDToGIDMap() {
-        if (pdFontLike instanceof PDCIDFontType2) {
-            COSBase map = ((PDCIDFontType2) pdFontLike).getCOSObject()
+        if (this.pdFontLike instanceof PDCIDFontType2) {
+            COSBase map = ((PDCIDFontType2) this.pdFontLike).getCOSObject()
                     .getDictionaryObject(COSName.CID_TO_GID_MAP);
             if (map instanceof COSStream) {
                 return CUSTOM;

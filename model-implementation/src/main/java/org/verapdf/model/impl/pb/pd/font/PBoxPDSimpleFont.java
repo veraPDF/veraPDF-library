@@ -20,26 +20,24 @@ public abstract class PBoxPDSimpleFont extends PBoxPDFont implements PDSimpleFon
     @Override
     public Long getWidths_size() {
         return Long
-                .valueOf(((org.apache.pdfbox.pdmodel.font.PDSimpleFont) pdFontLike)
+                .valueOf(((org.apache.pdfbox.pdmodel.font.PDSimpleFont) this.pdFontLike)
                         .getWidths().size());
     }
 
 	@Override
 	public String getEncoding() {
-        COSDictionary fontDict = ((org.apache.pdfbox.pdmodel.font.PDSimpleFont) pdFontLike).getCOSObject();
+        COSDictionary fontDict = ((org.apache.pdfbox.pdmodel.font.PDSimpleFont) this.pdFontLike)
+				.getCOSObject();
         COSBase encodingDict = fontDict.getDictionaryObject(COSName.ENCODING);
         if (encodingDict == null) {
             return null;
         } else if (encodingDict instanceof COSName) {
             return ((COSName) encodingDict).getName();
         } else if (encodingDict instanceof COSDictionary) {
-            COSBase differencesDict = ((COSDictionary) encodingDict).getDictionaryObject(COSName.DIFFERENCES);
-            if (differencesDict == null) {
-                String baseEncoding = ((COSDictionary) differencesDict).getNameAsString(COSName.BASE_ENCODING);
-                return baseEncoding == null ? null : baseEncoding;
-            } else {
-                return CUSTOM_ENCODING;
-            }
+            COSBase differencesDict = ((COSDictionary) encodingDict)
+					.getDictionaryObject(COSName.DIFFERENCES);
+			return differencesDict == null ? CUSTOM_ENCODING :
+					((COSDictionary) encodingDict).getNameAsString(COSName.BASE_ENCODING);
         }
         return null;
 	}
@@ -47,14 +45,14 @@ public abstract class PBoxPDSimpleFont extends PBoxPDFont implements PDSimpleFon
 	@Override
     public Long getLastChar() {
         return Long
-                .valueOf(((org.apache.pdfbox.pdmodel.font.PDSimpleFont) pdFontLike)
+                .valueOf(((org.apache.pdfbox.pdmodel.font.PDSimpleFont) this.pdFontLike)
                         .getCOSObject().getInt(COSName.LAST_CHAR));
     }
 
     @Override
     public Long getFirstChar() {
         return Long
-                .valueOf(((org.apache.pdfbox.pdmodel.font.PDSimpleFont) pdFontLike)
+                .valueOf(((org.apache.pdfbox.pdmodel.font.PDSimpleFont) this.pdFontLike)
                         .getCOSObject().getInt(COSName.FIRST_CHAR));
     }
 
