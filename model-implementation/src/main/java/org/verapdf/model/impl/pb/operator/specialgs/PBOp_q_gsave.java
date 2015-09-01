@@ -29,7 +29,7 @@ public class PBOp_q_gsave extends PBOpGeneralGS implements Op_q_gsave {
 	 */
     @Override
     public Long getnestingLevel() {
-        return Long.valueOf(nestingLevel);
+        return Long.valueOf(this.nestingLevel);
     }
 
 }

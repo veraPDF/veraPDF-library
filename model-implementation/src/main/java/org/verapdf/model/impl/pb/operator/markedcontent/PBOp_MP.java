@@ -33,6 +33,7 @@ public class PBOp_MP extends PBOpMarkedContent implements Op_MP {
         return super.getLinkedObjects(link);
     }
 
+	@Override
 	protected List<CosName> getTag() {
 		List<CosName> list =
 				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);

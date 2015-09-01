@@ -37,28 +37,20 @@ public class PBOp_Do extends PBOperator implements Op_Do {
     }
 
     @Override
-    public List<? extends Object> getLinkedObjects(
-            String link) {
+    public List<? extends Object> getLinkedObjects(String link) {
         if (X_OBJECT.equals(link)) {
             return this.getXObject();
         }
         return super.getLinkedObjects(link);
     }
 
-    private List<PDXObject> getXObject() {
-        List<PDXObject> list = new ArrayList<>();
-        if (pbXObject != null) {
-            COSName xObjectType = pbXObject.getCOSStream().getCOSName(
-                    COSName.SUBTYPE);
-            if (COSName.IMAGE.equals(xObjectType)) {
-                list.add(new PBoxPDXImage((PDImageXObject) pbXObject));
-            } else if (COSName.FORM.equals(xObjectType)) {
-                list.add(new PBoxPDXForm((PDFormXObject) pbXObject));
-            } else if (xObjectType != null) {
-                list.add(new PBoxPDXObject(pbXObject));
-            }
-        }
-        return list;
-    }
+	private List<PDXObject> getXObject() {
+		List<PDXObject> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+		PDXObject typedPDXObject = PBoxPDXObject.getTypedPDXObject(this.pbXObject);
+		if (typedPDXObject != null) {
+			list.add(typedPDXObject);
+		}
+		return list;
+	}
 
 }

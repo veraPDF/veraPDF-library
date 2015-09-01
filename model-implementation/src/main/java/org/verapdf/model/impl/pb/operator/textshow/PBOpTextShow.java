@@ -64,23 +64,25 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 
     private List<PDFont> getFont() {
         List<PDFont> result = new ArrayList<>();
-        PDFont font = FontFactory.parseFont(pdfBoxFont);
-        result.add(font);
+        PDFont font = FontFactory.parseFont(this.pdfBoxFont);
+		if (font != null) {
+			result.add(font);
+		}
         return result;
     }
 
     private List<PBGlyph> getUsedGlyphs() {
         List<PBGlyph> res = new ArrayList<>();
-        FontContainer fontContainer = FontHelper.getFontContainer(pdfBoxFont);
-        List<byte[]> strings = getStrings();
+        FontContainer fontContainer = FontHelper.getFontContainer(this.pdfBoxFont);
+        List<byte[]> strings = getStrings(this.arguments);
         for (byte[] string : strings) {
             try (InputStream inputStream = new ByteArrayInputStream(string)) {
                 while (inputStream.available() > 0) {
-                    int code = pdfBoxFont.readCode(inputStream);
+                    int code = this.pdfBoxFont.readCode(inputStream);
                     Boolean glyphPresent = fontContainer.hasGlyph(code);
                     Boolean widthsConsistent = checkWidths(code);
                     res.add(new PBGlyph(glyphPresent, widthsConsistent,
-										pdfBoxFont.getName(), code));
+										this.pdfBoxFont.getName(), code));
                 }
             } catch (IOException e) {
                 LOGGER.error("Error processing text show operator's string argument : "
@@ -92,39 +94,43 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     }
 
     private List<PDColorSpace> getFillColorSpace() {
+		// TODO : implement me ??
         return new ArrayList<>();
     }
 
     private List<PDColorSpace> getStrokeColorSpace() {
+		// TODO : implement me ??
         return new ArrayList<>();
     }
 
     private Boolean checkWidths(int glyphCode) throws IOException {
-        float expectedWidth = pdfBoxFont.getWidth(glyphCode);
-        float foundWidth = pdfBoxFont.getWidthFromFont(glyphCode);
+        float expectedWidth = this.pdfBoxFont.getWidth(glyphCode);
+        float foundWidth = this.pdfBoxFont.getWidthFromFont(glyphCode);
         // consistent is defined to be a difference of no more than 1/1000 unit.
-        if (Math.abs(foundWidth - expectedWidth) > 1) {
-            return Boolean.FALSE;
-        } else {
-            return Boolean.TRUE;
-        }
+		return Math.abs(foundWidth - expectedWidth) > 1 ? Boolean.FALSE : Boolean.TRUE;
     }
 
-    private List<byte[]> getStrings() {
+    private static List<byte[]> getStrings(List<COSBase> arguments) {
         List<byte[]> res = new ArrayList<>();
-        COSBase arg = this.arguments.get(0);
-        if (arg instanceof COSArray) {
-            for (COSBase element : (COSArray) arg) {
-                if (element instanceof COSString) {
-                    res.add(((COSString) element).getBytes());
-                }
-            }
-        } else {
-            if (arg instanceof COSString) {
-                res.add(((COSString) arg).getBytes());
-            }
-        }
+		if (!arguments.isEmpty()) {
+			COSBase arg = arguments.get(0);
+			if (arg instanceof COSArray) {
+				addArrayElements(res, (COSArray) arg);
+			} else {
+				if (arg instanceof COSString) {
+					res.add(((COSString) arg).getBytes());
+				}
+			}
+		}
         return res;
     }
+
+	private static void addArrayElements(List<byte[]> res, COSArray arg) {
+		for (COSBase element : arg) {
+			if (element instanceof COSString) {
+				res.add(((COSString) element).getBytes());
+			}
+		}
+	}
 
 }

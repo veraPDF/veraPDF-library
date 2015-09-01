@@ -7,7 +7,6 @@ import org.verapdf.model.GenericModelObject;
 import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
 import org.verapdf.model.operator.Operator;
-import org.verapdf.model.tools.IDGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,16 +41,20 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
 		List<CosReal> list = new ArrayList<>();
 		for (COSBase base : this.arguments) {
 			if (base instanceof COSArray) {
-				for (COSBase arg : (COSArray) base) {
-					if (arg instanceof COSNumber) {
-						list.add(new PBCosReal((COSNumber) arg));
-					}
-				}
+				addArrayElements(list, (COSArray) base);
 			} else if (base instanceof COSNumber) {
 				list.add(new PBCosReal((COSNumber) base));
 			}
 		}
 		return list;
+	}
+
+	private static void addArrayElements(List<CosReal> list, COSArray base) {
+		for (COSBase arg : base) {
+			if (arg instanceof COSNumber) {
+				list.add(new PBCosReal((COSNumber) arg));
+			}
+		}
 	}
 
 }
