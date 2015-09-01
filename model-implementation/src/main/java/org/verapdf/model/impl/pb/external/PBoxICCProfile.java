@@ -75,9 +75,9 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
     }
 
     private String getSubArray(int start, int length) {
-        if (start + length <= profileHeader.length) {
+        if (start + length <= this.profileHeader.length) {
             byte[] buffer = new byte[length];
-            System.arraycopy(profileHeader, start, buffer, 0, length);
+            System.arraycopy(this.profileHeader, start, buffer, 0, length);
             return new String(buffer);
         }
         LOGGER.error("Length of icc profile less than " + (start + length));
@@ -89,10 +89,10 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
      */
     @Override
     public Double getversion() {
-        if (profileHeader.length > SUBVERSION_BYTE) {
+        if (this.profileHeader.length > SUBVERSION_BYTE) {
             StringBuilder version = new StringBuilder(VERSION_LENGTH);
-            version.append(profileHeader[VERSION_BYTE] & 0xFF).append('.');
-            version.append((profileHeader[SUBVERSION_BYTE] >>> REQUIRED_LENGTH) & 0xFF);
+            version.append(this.profileHeader[VERSION_BYTE] & 0xFF).append('.');
+            version.append((this.profileHeader[SUBVERSION_BYTE] >>> REQUIRED_LENGTH) & 0xFF);
 
             return Double.valueOf(version.toString());
         }
@@ -100,7 +100,7 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
         return null;
     }
 
-    // Custom implementation for another users
+    // Custom implementation of customers
     @Override
     public Boolean getisValid() {
         return Boolean.TRUE;
