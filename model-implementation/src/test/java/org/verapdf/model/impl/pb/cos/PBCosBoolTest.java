@@ -15,11 +15,11 @@ public class PBCosBoolTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        expectedType = TYPES.contains(PBCosBool.COS_BOOLTYPE) ? PBCosBool.COS_BOOLTYPE : null;
+        expectedType = TYPES.contains(PBCosBool.COS_BOOLEAN_TYPE) ? PBCosBool.COS_BOOLEAN_TYPE : null;
         expectedID = null;
 
         COSBoolean bool = COSBoolean.getBoolean(Boolean.TRUE);
-        actual = new PBCosBool(bool);
+        actual = PBCosBool.valueOf(bool);
     }
 
     @Test
