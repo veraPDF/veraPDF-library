@@ -92,11 +92,11 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     }
 
     private List<PDColorSpace> getFillColorSpace() {
-        return null;
+        return new ArrayList<>();
     }
 
     private List<PDColorSpace> getStrokeColorSpace() {
-        return null;
+        return new ArrayList<>();
     }
 
     private Boolean checkWidths(int glyphCode) throws IOException {
