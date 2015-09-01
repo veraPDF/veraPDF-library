@@ -31,7 +31,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     public static final String INTENT = "Intent";
 
     public PBoxPDXImage(PDImage simplePDObject) {
-        super(simplePDObject, X_IMAGE_TYPE);
+        this(simplePDObject, X_IMAGE_TYPE);
     }
 
 	public PBoxPDXImage(PDImage simplePDObject, final String type) {
@@ -40,7 +40,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 
     @Override
     public Boolean getInterpolate() {
-        return Boolean.valueOf(((PDImage) simplePDObject)
+        return Boolean.valueOf(((PDImage) this.simplePDObject)
                 .getInterpolate());
     }
 
@@ -61,7 +61,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     private List<CosRenderingIntent> getIntent() {
         List<CosRenderingIntent> intents = new ArrayList<>(
                 MAX_NUMBER_OF_ELEMENTS);
-        COSDictionary imageStream = (COSDictionary) simplePDObject
+        COSDictionary imageStream = (COSDictionary) this.simplePDObject
 				.getCOSObject();
         COSName intent = imageStream.getCOSName(COSName.getPDFName(INTENT));
         if (intent != null) {
@@ -75,7 +75,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 				MAX_NUMBER_OF_ELEMENTS);
         try {
             PDColorSpace buffer = ColorSpaceFactory
-                    .getColorSpace(((PDImage) simplePDObject)
+                    .getColorSpace(((PDImage) this.simplePDObject)
                             .getColorSpace());
             if (buffer != null) {
                 colorSpaces.add(buffer);
@@ -90,37 +90,39 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 
     protected List<PDXImage> getAlternates() {
         final List<PDXImage> alternates = new ArrayList<>();
-        final COSStream imageStream = ((PDImageXObject) simplePDObject)
+        final COSStream imageStream = ((PDImageXObject) this.simplePDObject)
                 .getCOSStream();
         final COSBase buffer = imageStream.getDictionaryObject(COSName
 				.getPDFName(ALTERNATES));
-        addAlternates(alternates, buffer);
+        addAlternates(alternates, buffer, ((PDImageXObject) this.simplePDObject)
+				.getResources());
         return alternates;
     }
 
-    private void addAlternates(List<PDXImage> alternates, COSBase buffer) {
+    private static void addAlternates(List<PDXImage> alternates, COSBase buffer,
+							   PDResources resources) {
         if (buffer instanceof COSArray) {
             for (COSBase element : (COSArray) buffer) {
+				if (element instanceof COSObject) {
+					element = ((COSObject) element).getObject();
+				}
 				if (element instanceof COSDictionary) {
-					addAlternate(alternates, (COSDictionary) element);
-				} else if (element instanceof COSObject) {
-					addAlternate(alternates, (COSDictionary)
-							((COSObject) element).getObject());
+					addAlternate(alternates, (COSDictionary) element,
+							resources);
 				}
             }
         }
     }
 
-	private void addAlternate(List<PDXImage> alternates, COSDictionary buffer) {
+	private static void addAlternate(List<PDXImage> alternates, COSDictionary buffer,
+							  PDResources resources) {
 		COSStream alternatesImages = (COSStream) buffer
 				.getDictionaryObject(COSName.IMAGE);
 		try {
 			if (alternatesImages != null) {
 				final PDStream stream = new PDStream(alternatesImages);
-				final PDResources res = ((PDImageXObject) simplePDObject)
-						.getResources();
 				PDImageXObject imageXObject = new PDImageXObject(stream,
-						res);
+						resources);
 				alternates.add(new PBoxPDXImage(imageXObject));
 			}
 		} catch (IOException e) {
