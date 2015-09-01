@@ -3,6 +3,7 @@ package org.verapdf.model.impl.pb.cos;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSObject;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosIndirect;
 import org.verapdf.model.coslayer.CosTrailer;
@@ -24,12 +25,10 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
     public static final String CATALOG = "Catalog";
 
     private final boolean isEncrypted;
-    private final List<CosIndirect> catalog;
 
     public PBCosTrailer(COSDictionary dictionary) {
         super(dictionary, COS_TRAILER_TYPE);
         this.isEncrypted = dictionary.getItem(COSName.ENCRYPT) != null;
-        this.catalog = parseCatalog(dictionary);
     }
 
     /**
@@ -43,15 +42,16 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         if (CATALOG.equals(link)) {
-            return catalog;
+            return this.getCatalog();
         }
         return super.getLinkedObjects(link);
     }
 
-    private static List<CosIndirect> parseCatalog(COSDictionary dictionary) {
-        List<CosIndirect> cat = new ArrayList<>(1);
-        COSBase base = dictionary.getItem(COSName.ROOT);
-        cat.add(new PBCosIndirect(base));
-        return Collections.unmodifiableList(cat);
+    private List<CosIndirect> getCatalog() {
+        List<CosIndirect> catalog = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        COSBase base = ((COSDictionary) this.baseObject)
+				.getItem(COSName.ROOT);
+        catalog.add(new PBCosIndirect((COSObject) base));
+        return Collections.unmodifiableList(catalog);
     }
 }
