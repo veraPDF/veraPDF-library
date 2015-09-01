@@ -11,13 +11,16 @@ import org.verapdf.model.coslayer.CosBool;
  */
 public class PBCosBool extends PBCosObject implements CosBool {
 
-    /** Type name for PBCosBool */
-    public static final String COS_BOOLTYPE = "CosBool";
-    private Boolean value;
+	public static final CosBool TRUE = new PBCosBool(COSBoolean.TRUE);
+	public static final CosBool FALSE = new PBCosBool(COSBoolean.FALSE);
 
-    public PBCosBool(COSBoolean cosBoolean) {
-        super(cosBoolean, COS_BOOLTYPE);
-        this.value = cosBoolean.getValueAsObject();
+    /** Type name for PBCosBool */
+    public static final String COS_BOOLEAN_TYPE = "CosBool";
+    private boolean value;
+
+    private PBCosBool(COSBoolean cosBoolean) {
+        super(cosBoolean, COS_BOOLEAN_TYPE);
+        this.value = cosBoolean.getValue();
     }
 
     /**
@@ -27,4 +30,8 @@ public class PBCosBool extends PBCosObject implements CosBool {
     public Boolean getvalue() {
         return this.value;
     }
+
+	public static CosBool valueOf(COSBoolean bool) {
+		return bool.getValue() ? TRUE : FALSE;
+	}
 }

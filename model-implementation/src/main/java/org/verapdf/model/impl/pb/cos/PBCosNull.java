@@ -17,9 +17,16 @@ public final class PBCosNull extends PBCosObject implements CosNull {
     /**
      * PDF null object
      */
-    public static final CosNull NULL = new PBCosNull(COSNull.NULL);
+    private static CosNull NULL;
 
     private PBCosNull(COSNull nil) {
         super(nil, COS_NULL_TYPE);
     }
+
+	public static CosNull getInstance() {
+		if (NULL == null) {
+			NULL = new PBCosNull(COSNull.NULL);
+		}
+		return NULL;
+	}
 }

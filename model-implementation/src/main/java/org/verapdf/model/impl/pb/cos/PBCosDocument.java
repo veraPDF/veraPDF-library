@@ -35,7 +35,6 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     public static final String EMBEDDED_FILES = "EmbeddedFiles";
     public static final String ID = "ID";
 
-    // FIXME: What happens to this if the COSDocument constructors are used?
     private PDDocument pdDocument;
 
     private final long sizeOfDocument;
@@ -49,11 +48,8 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     private final Boolean doesInfoMatchXMP;
     private final String firstPageID;
     private final String lastID;
-    private final List<CosIndirect> indirects;
-    private final List<CosTrailer> trailers;
-    private final List<CosXRef> xRefs;
 
-    public PBCosDocument(PDDocument pdDocument, long length) {
+	public PBCosDocument(PDDocument pdDocument, long length) {
         this(pdDocument.getDocument(), length);
         this.pdDocument = pdDocument;
     }
@@ -78,13 +74,10 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         this.lastID = getTrailerID((COSArray) cosDocument.getLastTrailer()
                 .getItem(ID));
         this.firstPageID = getTrailerID((COSArray) cosDocument
-                .getFirstPageTrailer().getItem(ID));
+                .getFirstPageTrailer().getDictionaryObject(ID));
         this.isLinearised = cosDocument.getTrailer() != cosDocument
                 .getLastTrailer() && cosDocument.isLinearized().booleanValue();
         this.doesInfoMatchXMP = XMPChecker.doesInfoMatchXMP(cosDocument);
-        this.indirects = parseIndirectObjects(cosDocument);
-        this.trailers = parseTrailers(cosDocument);
-        this.xRefs = parseXRefs(cosDocument);
     }
 
     /**
@@ -193,31 +186,22 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     }
 
     @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
-            String link) {
-        List<? extends org.verapdf.model.baselayer.Object> list;
-
-        switch (link) {
-        case TRAILER:
-            list = this.trailers;
-            break;
-        case INDIRECT_OBJECTS:
-            return this.indirects;
-        case DOCUMENT:
-            list = this.getDocument();
-            break;
-        case XREF:
-            list = this.xRefs;
-            break;
-        case EMBEDDED_FILES:
-            list = this.getEmbeddedFiles();
-            break;
-        default:
-            list = super.getLinkedObjects(link);
-        }
-
-        return list;
-    }
+	public List<? extends Object> getLinkedObjects(String link) {
+		switch (link) {
+			case TRAILER:
+				return this.getTrailer();
+			case INDIRECT_OBJECTS:
+				return this.getIndirectObjects();
+			case DOCUMENT:
+				return this.getDocument();
+			case XREF:
+				return this.getXRefs();
+			case EMBEDDED_FILES:
+				return this.getEmbeddedFiles();
+			default:
+				return super.getLinkedObjects(link);
+		}
+	}
 
     private static boolean parseOptionalContentPresent(
             final COSDocument cosDocument) {
@@ -239,10 +223,11 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         try {
             COSDictionary buffer = (COSDictionary) pdDocument.getDocument()
                     .getCatalog().getObject();
-            buffer = getCosDictionary(buffer.getItem(COSName.NAMES));
+            buffer = (COSDictionary) buffer.getDictionaryObject(
+					COSName.NAMES);
             if (buffer != null) {
-                buffer = getCosDictionary(buffer
-                        .getItem(COSName.EMBEDDED_FILES));
+                buffer = (COSDictionary) buffer
+                        .getDictionaryObject(COSName.EMBEDDED_FILES);
             }
             getNamesEmbeddedFiles(files, buffer);
         } catch (IOException e) {
@@ -269,21 +254,12 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         }
     }
 
-    private static COSDictionary getCosDictionary(COSBase item) {
-        COSDictionary buffer = null;
-        if (item instanceof COSDictionary) {
-            buffer = (COSDictionary) item;
-        } else if (item instanceof COSObject) {
-            buffer = (COSDictionary) ((COSObject) item).getObject();
-        }
-        return buffer;
-    }
-
     /**
      * trailer dictionary
      */
-    private static List<CosTrailer> parseTrailers(final COSDocument cosDocument) {
-        List<CosTrailer> list = new ArrayList<>();
+    private List<CosTrailer> getTrailer() {
+		COSDocument cosDocument = (COSDocument) this.baseObject;
+        List<CosTrailer> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         list.add(new PBCosTrailer(cosDocument.getTrailer()));
         return Collections.unmodifiableList(list);
     }
@@ -291,10 +267,11 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     /**
      * all indirect objects referred from the xref table
      */
-    private static List<CosIndirect> parseIndirectObjects(
-            final COSDocument cosDocument) {
-        List<CosIndirect> list = new ArrayList<>();
-        for (COSBase object : cosDocument.getObjects()) {
+    private List<CosIndirect> getIndirectObjects() {
+		List<COSObject> objects = ((COSDocument) this.baseObject)
+				.getObjects();
+		List<CosIndirect> list = new ArrayList<>(objects.size());
+		for (COSObject object : objects) {
             list.add(new PBCosIndirect(object));
         }
         return Collections.unmodifiableList(list);
@@ -314,8 +291,9 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     /**
      * link to cross reference table properties
      */
-    private static List<CosXRef> parseXRefs(final COSDocument cosDocument) {
-        List<CosXRef> list = new ArrayList<>();
+    private List<CosXRef> getXRefs() {
+		COSDocument cosDocument = (COSDocument) this.baseObject;
+        List<CosXRef> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         list.add(new PBCosXRef(cosDocument.isXRefSpacingsCompliesPDFA(),
                 cosDocument.isXRefEOLCompliesPDFA()));
         return Collections.unmodifiableList(list);
