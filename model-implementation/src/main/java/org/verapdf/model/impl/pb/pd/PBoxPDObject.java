@@ -50,7 +50,7 @@ public class PBoxPDObject extends GenericModelObject implements PDObject {
 		this.cMap = cMap;
 	}
 
-    protected static void addAction(List<PDAction> actions,
+    protected void addAction(List<PDAction> actions,
             org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer) {
         if (buffer != null) {
             actions.add(buffer instanceof PDActionNamed ? new PBoxPDNamedAction(

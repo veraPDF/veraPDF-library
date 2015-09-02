@@ -35,7 +35,7 @@ public class PBoxPDOutline extends PBoxPDObject implements PDOutline {
         List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         org.apache.pdfbox.pdmodel.interactive.action.PDAction action =
 				((PDOutlineItem) this.simplePDObject).getAction();
-        addAction(actions, action);
+        this.addAction(actions, action);
         return actions;
     }
 

@@ -14,12 +14,12 @@ import java.util.List;
  */
 public class PBoxPDCMap extends PBoxPDObject implements PDCMap {
 
-    public static final String C_MAP_TYPE = "PDCMap";
+    public static final String CMAP_TYPE = "PDCMap";
 
     public static final String EMBEDDED_FILE = "embeddedFile";
 
     public PBoxPDCMap(CMap cMap) {
-        super(cMap, C_MAP_TYPE);
+        super(cMap, CMAP_TYPE);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class PBoxPDCMap extends PBoxPDObject implements PDCMap {
     }
 
     private static List<CMapFile> getEmbeddedFile() {
-        // TODO : implement me ?
+        // TODO : implement me
 		return new ArrayList<>();
     }
 

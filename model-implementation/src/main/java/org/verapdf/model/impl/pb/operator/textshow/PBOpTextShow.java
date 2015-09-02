@@ -77,13 +77,13 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
         List<PBGlyph> res = new ArrayList<>();
 		org.apache.pdfbox.pdmodel.font.PDFont font = this.state.getFont();
 		FontContainer fontContainer = FontHelper.getFontContainer(font);
-        List<byte[]> strings = getStrings(this.arguments);
+        List<byte[]> strings = this.getStrings(this.arguments);
         for (byte[] string : strings) {
             try (InputStream inputStream = new ByteArrayInputStream(string)) {
                 while (inputStream.available() > 0) {
                     int code = font.readCode(inputStream);
                     Boolean glyphPresent = fontContainer.hasGlyph(code);
-                    Boolean widthsConsistent = checkWidths(code, font);
+                    Boolean widthsConsistent = this.checkWidths(code);
                     res.add(new PBGlyph(glyphPresent, widthsConsistent,
 										font.getName(), code));
                 }
@@ -116,20 +116,20 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 		return colorSpaces;
 	}
 
-    private static Boolean checkWidths(int glyphCode,
-								org.apache.pdfbox.pdmodel.font.PDFont font) throws IOException {
+    private Boolean checkWidths(int glyphCode) throws IOException {
+		org.apache.pdfbox.pdmodel.font.PDFont font = this.state.getFont();
 		float expectedWidth = font.getWidth(glyphCode);
         float foundWidth = font.getWidthFromFont(glyphCode);
         // consistent is defined to be a difference of no more than 1/1000 unit.
 		return Math.abs(foundWidth - expectedWidth) > 1 ? Boolean.FALSE : Boolean.TRUE;
     }
 
-    private static List<byte[]> getStrings(List<COSBase> arguments) {
+    private List<byte[]> getStrings(List<COSBase> arguments) {
         List<byte[]> res = new ArrayList<>();
 		if (!arguments.isEmpty()) {
 			COSBase arg = arguments.get(0);
 			if (arg instanceof COSArray) {
-				addArrayElements(res, (COSArray) arg);
+				this.addArrayElements(res, (COSArray) arg);
 			} else {
 				if (arg instanceof COSString) {
 					res.add(((COSString) arg).getBytes());
@@ -139,7 +139,7 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
         return res;
     }
 
-	private static void addArrayElements(List<byte[]> res, COSArray arg) {
+	private void addArrayElements(List<byte[]> res, COSArray arg) {
 		for (COSBase element : arg) {
 			if (element instanceof COSString) {
 				res.add(((COSString) element).getBytes());

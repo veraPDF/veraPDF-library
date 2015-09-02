@@ -105,7 +105,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
             PDDestinationOrAction openAction = this.document.getDocumentCatalog()
                     .getOpenAction();
             if (openAction instanceof org.apache.pdfbox.pdmodel.interactive.action.PDAction) {
-                addAction(
+                this.addAction(
                         actions,
                         (org.apache.pdfbox.pdmodel.interactive.action.PDAction) openAction);
             }
@@ -124,19 +124,19 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
             org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;
 
             buffer = pbActions.getDP();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = pbActions.getDS();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = pbActions.getWP();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = pbActions.getWS();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = pbActions.getWC();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
         }
         return actions;
     }

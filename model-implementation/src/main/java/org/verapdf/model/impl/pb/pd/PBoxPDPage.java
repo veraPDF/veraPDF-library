@@ -78,10 +78,10 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
             org.apache.pdfbox.pdmodel.interactive.action.PDAction action;
 
             action = pbActions.getC();
-            addAction(actions, action);
+            this.addAction(actions, action);
 
             action = pbActions.getO();
-            addAction(actions, action);
+            this.addAction(actions, action);
         }
         return actions;
     }
@@ -92,7 +92,7 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
             List<PDAnnotation> pdfboxAnnotations = ((org.apache.pdfbox.pdmodel.PDPage) this.simplePDObject)
                     .getAnnotations();
             if (pdfboxAnnotations != null) {
-				addAllAnnotations(annotations, pdfboxAnnotations);
+				this.addAllAnnotations(annotations, pdfboxAnnotations);
 			}
         } catch (IOException e) {
             LOGGER.error(
@@ -102,7 +102,7 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
         return annotations;
     }
 
-	private static void addAllAnnotations(List<PDAnnot> annotations,
+	private void addAllAnnotations(List<PDAnnot> annotations,
 								   List<PDAnnotation> pdfboxAnnotations) {
 		for (PDAnnotation annotation : pdfboxAnnotations) {
 			if (annotation != null) {

@@ -91,34 +91,34 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
             org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;
 
             buffer = additionalActions.getBl();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = additionalActions.getD();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = additionalActions.getE();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = additionalActions.getFo();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = additionalActions.getPC();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = additionalActions.getPI();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = additionalActions.getPO();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = additionalActions.getPV();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = additionalActions.getU();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = additionalActions.getX();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
         }
         return actions;
@@ -140,11 +140,11 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	}
 
     private List<CosReal> getIC() {
-        return getRealsFromArray(COSName.IC);
+        return this.getRealsFromArray(COSName.IC);
     }
 
     private List<CosReal> getC() {
-        return getRealsFromArray(COSName.C);
+        return this.getRealsFromArray(COSName.C);
     }
 
     private List<CosReal> getRealsFromArray(COSName arrayName) {
