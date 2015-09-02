@@ -204,16 +204,16 @@ class OperatorParser {
 
 				// TEXT SHOW
 			case Operators.TJ_SHOW:
-				operators.add(new PBOp_Tj(arguments, this.graphicState.getFont()));
+				operators.add(new PBOp_Tj(arguments, this.graphicState.clone()));
 				break;
 			case Operators.TJ_SHOW_POS:
-				operators.add(new PBOp_TJ_Big(arguments, this.graphicState.getFont()));
+				operators.add(new PBOp_TJ_Big(arguments, this.graphicState.clone()));
 				break;
 			case Operators.QUOTE:
-				operators.add(new PBOp_Quote(arguments, this.graphicState.getFont()));
+				operators.add(new PBOp_Quote(arguments, this.graphicState.clone()));
 				break;
 			case Operators.DOUBLE_QUOTE:
-				operators.add(new PBOp_DoubleQuote(arguments, this.graphicState.getFont()));
+				operators.add(new PBOp_DoubleQuote(arguments, this.graphicState.clone()));
 				break;
 
 				// TEXT STATE
