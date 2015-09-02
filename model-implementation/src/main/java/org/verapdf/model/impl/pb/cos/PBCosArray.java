@@ -23,12 +23,10 @@ public class PBCosArray extends PBCosObject implements CosArray {
 
     public static final String ELEMENTS = "elements";
     private final int size;
-    private final List<CosObject> elements;
 
     public PBCosArray(COSArray array) {
         super(array, COS_ARRAY_TYPE);
         this.size = array.size();
-        this.elements = parseElements(array);
     }
 
     /**
@@ -44,7 +42,7 @@ public class PBCosArray extends PBCosObject implements CosArray {
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         if (link.equals(ELEMENTS)) {
-            return this.elements;
+            return this.getElements();
         }
         return super.getLinkedObjects(link);
     }
@@ -54,9 +52,9 @@ public class PBCosArray extends PBCosObject implements CosArray {
      *
      * @return elements of array
      */
-    private List<CosObject> parseElements(COSArray array) {
+    private List<CosObject> getElements() {
         List<CosObject> list = new ArrayList<>(this.getsize().intValue());
-        for (COSBase base : array) {
+        for (COSBase base : (COSArray) this.baseObject) {
             if (base != null) {
                 list.add(getFromValue(base));
             }

@@ -31,7 +31,7 @@ public class ColorSpaceFactory {
     public static final String PATTERN = "Pattern";
 
     private ColorSpaceFactory() {
-
+		// disable default constructor
     }
 
     /**
@@ -63,39 +63,39 @@ public class ColorSpaceFactory {
      *         {@code colorSpace} argument is {@code null},{@code pattern}
      *         argument is {@code null} or unsupported type of color space
      */
-    public static PDColorSpace getColorSpace(
-            org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace,
-            PDAbstractPattern pattern) {
-        if (colorSpace == null) {
-            return null;
-        }
-        switch (colorSpace.getName()) {
-        case CAL_GRAY:
-            return new PBoxPDCalGray((PDCalGray) colorSpace);
-        case CAL_RGB:
-            return new PBoxPDCalRGB((PDCalRGB) colorSpace);
-        case DEVICE_N:
-            return new PBoxPDDeviceN((PDDeviceN) colorSpace);
-        case DEVICE_CMYK:
-            return PBoxPDDeviceCMYK.getInstance();
-        case DEVICE_GRB:
-            return PBoxPDDeviceRGB.getInstance();
-        case DEVICE_GRAY:
-            return PBoxPDDeviceGray.getInstance();
-        case ICC_BASED:
-            return new PBoxPDICCBased((PDICCBased) colorSpace);
-        case LAB:
-            return new PBoxPDLab((PDLab) colorSpace);
-        case SEPARATION:
-            return new PBoxPDSeparation((PDSeparation) colorSpace);
-        case INDEXED:
-            return new PBoxPDIndexed((PDIndexed) colorSpace);
-        case PATTERN:
-            return getPattern(pattern);
-        default:
-            return null;
-        }
-    }
+	public static PDColorSpace getColorSpace(
+			org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace,
+			PDAbstractPattern pattern) {
+		if (colorSpace == null) {
+			return null;
+		}
+		switch (colorSpace.getName()) {
+			case CAL_GRAY:
+				return new PBoxPDCalGray((PDCalGray) colorSpace);
+			case CAL_RGB:
+				return new PBoxPDCalRGB((PDCalRGB) colorSpace);
+			case DEVICE_N:
+				return new PBoxPDDeviceN((PDDeviceN) colorSpace);
+			case DEVICE_CMYK:
+				return PBoxPDDeviceCMYK.getInstance();
+			case DEVICE_GRB:
+				return PBoxPDDeviceRGB.getInstance();
+			case DEVICE_GRAY:
+				return PBoxPDDeviceGray.getInstance();
+			case ICC_BASED:
+				return new PBoxPDICCBased((PDICCBased) colorSpace);
+			case LAB:
+				return new PBoxPDLab((PDLab) colorSpace);
+			case SEPARATION:
+				return new PBoxPDSeparation((PDSeparation) colorSpace);
+			case INDEXED:
+				return new PBoxPDIndexed((PDIndexed) colorSpace);
+			case PATTERN:
+				return getPattern(pattern);
+			default:
+				return null;
+		}
+	}
 
     /**
      * Transform object of pdfbox to corresponding object of veraPDF-library (
