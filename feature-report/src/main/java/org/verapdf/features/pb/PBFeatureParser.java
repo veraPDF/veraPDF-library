@@ -869,6 +869,10 @@ public final class PBFeatureParser {
                     }
                 } catch (IOException e) {
                     LOGGER.info(e);
+                    if (!xobjectChildMap.containsKey(parentID)) {
+                        xobjectChildMap.put(parentID, new HashSet<String>());
+                    }
+                    xobjectChildMap.get(parentID).add(id);
                     colorSpaceCreationProblem(id);
                 }
             }
@@ -1079,6 +1083,7 @@ public final class PBFeatureParser {
                 }
             } catch (IOException e) {
                 LOGGER.info(e);
+
                 xobjectCreationProblem(id);
             }
         }
@@ -1312,7 +1317,7 @@ public final class PBFeatureParser {
                                 fontExtGStateParent.put(fontID, new HashSet<String>());
                             }
                             fontExtGStateParent.get(fontID).add(id);
-                            exGStateFontChild.put(id, fontID);
+                            exGStateFontChild.put(exGStateID, fontID);
 
                             if (!fonts.containsKey(fontID)) {
                                 try {
@@ -1453,20 +1458,28 @@ public final class PBFeatureParser {
             COSBase baseAlt = iccBased.getPDStream().getStream().getItem(COSName.ALTERNATE);
             String idAlt = getId(baseAlt, COLORSPACE, colorSpaces.size());
 
-            if (colorSpaceColorSpaceParent.get(idAlt) == null) {
-                colorSpaceColorSpaceParent.put(idAlt, new HashSet<String>());
-            }
-            colorSpaceColorSpaceParent.get(idAlt).add(parentID);
-            colorSpaceColorSpaceChild.put(parentID, idAlt);
+            try {
+                PDColorSpace altclr = iccBased.getAlternateColorSpace();
+                if (altclr instanceof PDDeviceColorSpace) {
+                    idAlt = altclr instanceof PDDeviceGray ? DEVICEGRAY_ID :
+                            altclr instanceof PDDeviceRGB ? DEVICERGB_ID :
+                                    DEVICECMYK_ID;
+                }
 
-            if (!colorSpaces.containsKey(idAlt)) {
-                try {
+                if (colorSpaceColorSpaceParent.get(idAlt) == null) {
+                    colorSpaceColorSpaceParent.put(idAlt, new HashSet<String>());
+                }
+                colorSpaceColorSpaceParent.get(idAlt).add(parentID);
+                colorSpaceColorSpaceChild.put(parentID, idAlt);
+
+                if (!colorSpaces.containsKey(idAlt)) {
                     colorSpaces.put(idAlt, iccBased.getAlternateColorSpace());
                     parseColorSpace(iccBased.getAlternateColorSpace(), idAlt);
-                } catch (IOException e) {
-                    LOGGER.info(e);
-                    colorSpaceCreationProblem(idAlt);
+
                 }
+            } catch (IOException e) {
+                LOGGER.info(e);
+                colorSpaceCreationProblem(idAlt);
             }
         } else if (colorSpace instanceof PDIndexed ||
                 colorSpace instanceof PDSeparation ||

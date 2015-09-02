@@ -16,6 +16,7 @@ import org.verapdf.features.tools.FeaturesCollection;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -283,7 +284,20 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
                                     recOffset + REQUIRED_LENGTH + REQUIRED_LENGTH));
                             offset += byteArrayToInt(Arrays.copyOfRange(profileBytes, recOffset + REQUIRED_LENGTH * 2,
                                     offset + REQUIRED_LENGTH * 2 + REQUIRED_LENGTH));
-                            break;
+                            try {
+                                return new String(Arrays.copyOfRange(profileBytes, offset, offset + length), "UTF-16BE").trim();
+                            } catch (UnsupportedEncodingException e) {
+                                // UTF-16BE Character set exists, so do nothing
+                                /**
+                                 * cfw Conversely if it doesn't exist (which is the only way this
+                                 * block is hit) something is badly amiss, I'd suggest wrapping and
+                                 * throwing a runtime IllegalStateException if this is ever hit.
+                                 * e.g. throw new
+                                 * IllegalStateException("No UTF-16BE encoding detected", e);
+                                 */
+                                throw new IllegalStateException(
+                                        "Required UTF-16BE encoding not found", e);
+                            }
                         }
                     }
                 } else if ("desc".equals(type)) {
