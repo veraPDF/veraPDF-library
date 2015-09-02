@@ -28,22 +28,17 @@ public class PBCosDict extends PBCosObject implements CosDict {
     public static final String KEYS = "keys";
     public static final String VALUES = "values";
     public static final String METADATA = "metadata";
+	public static final int MAX_NUMBER_OF_METADATA = 1;
 
     private final int size;
-    private final List<CosName> keys;
-    private final List<CosObject> values;
-    private final List<PDMetadata> metadata;
 
-    public PBCosDict(COSDictionary dictionary) {
+	public PBCosDict(COSDictionary dictionary) {
         this(dictionary, COS_DICT_TYPE);
     }
 
     public PBCosDict(COSDictionary dictionary, final String type) {
         super(dictionary, type);
         this.size = dictionary.size();
-        this.keys = parseKeys(dictionary);
-        this.values = parseValues(dictionary);
-        this.metadata = parseMetadata(dictionary);
     }
 
     /**
@@ -54,33 +49,27 @@ public class PBCosDict extends PBCosObject implements CosDict {
         return Long.valueOf(this.size);
     }
 
-    @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
-            String link) {
-        List<? extends Object> list;
-
-        switch (link) {
-        case KEYS:
-            list = this.keys;
-            break;
-        case VALUES:
-            list = this.values;
-            break;
-        case METADATA:
-            list = this.metadata;
-            break;
-        default:
-            list = super.getLinkedObjects(link);
-        }
-
-        return list;
-    }
+	@Override
+	public List<? extends Object> getLinkedObjects(
+			String link) {
+		switch (link) {
+			case KEYS:
+				return this.getKeys();
+			case VALUES:
+				return this.getValues();
+			case METADATA:
+				return this.getMetadata();
+			default:
+				return super.getLinkedObjects(link);
+		}
+	}
 
     /**
      * Get all keys of the dictionary
      */
-    private static List<CosName> parseKeys(final COSDictionary dictionary) {
-        List<CosName> list = new ArrayList<>(dictionary.size());
+    private List<CosName> getKeys() {
+		COSDictionary dictionary = (COSDictionary) this.baseObject;
+		List<CosName> list = new ArrayList<>(dictionary.size());
         for (COSName key : dictionary.keySet()) {
             if (key != null) {
                 list.add((CosName) getFromValue(key));
@@ -90,9 +79,10 @@ public class PBCosDict extends PBCosObject implements CosDict {
     }
 
     /**
-     * Get all values of the dictonary
+     * Get all values of the dictionary
      */
-    private static List<CosObject> parseValues(final COSDictionary dictionary) {
+    private List<CosObject> getValues() {
+		COSDictionary dictionary = (COSDictionary) this.baseObject;
         List<CosObject> list = new ArrayList<>(dictionary.size());
         for (COSBase value : dictionary.getValues()) {
             if (value != null) {
@@ -105,8 +95,9 @@ public class PBCosDict extends PBCosObject implements CosDict {
     /**
      * Get XMP metadata if it is present
      */
-    private static List<PDMetadata> parseMetadata(final COSDictionary dictionary) {
-        ArrayList<PDMetadata> pdMetadatas = new ArrayList<>(1);
+    private List<PDMetadata> getMetadata() {
+		COSDictionary dictionary = (COSDictionary) this.baseObject;
+        ArrayList<PDMetadata> pdMetadatas = new ArrayList<>(MAX_NUMBER_OF_METADATA);
         COSBase meta = dictionary.getDictionaryObject(COSName.METADATA);
         COSName type = dictionary.getCOSName(COSName.TYPE);
         if (meta != null && meta instanceof COSStream

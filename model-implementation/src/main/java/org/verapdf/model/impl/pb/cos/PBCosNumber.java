@@ -14,14 +14,8 @@ import org.verapdf.model.coslayer.CosNumber;
  */
 public abstract class PBCosNumber extends PBCosObject implements CosNumber {
 
-    /** Type name for PBCosNumber */
-    public static final String COS_NUMBER_TYPE = "CosNumber";
     private final long longVal;
     private final double doubleVal;
-
-    protected PBCosNumber(COSNumber number) {
-        this(number, COS_NUMBER_TYPE);
-    }
 
     protected PBCosNumber(COSNumber number, final String type) {
         super(number, type);

@@ -2,8 +2,10 @@ package org.verapdf.model.impl.pb.cos;
 
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSObject;
+import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosIndirect;
 import org.verapdf.model.coslayer.CosObject;
+import org.verapdf.model.tools.IDGenerator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,24 +25,22 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
     private final boolean isSpacingPDFACompliant;
 
-    // private List<CosObject> directObjects;
+    private final String id;
 
-    public PBCosIndirect(COSBase indirectObject) {
+    public PBCosIndirect(COSObject indirectObject) {
         super(indirectObject, COS_INDIRECT_TYPE);
         this.isSpacingPDFACompliant = getspacingCompliesPDFA(indirectObject);
-        /**
-         * FIXME: Why do the COSDocment tests go dive into a stack overflow when
-         * I uncomment below?:
-         *
-         * this.directObjects = parseDirectObject(indirectObject instanceof
-         * COSObject ? ((COSObject) indirectObject).getObject() : indirectObject);
-         */
+		this.id = IDGenerator.generateID(indirectObject);
     }
 
-    @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
-            String link) {
+	@Override
+	public String getID() {
+		return id;
+	}
 
+    @Override
+    public List<? extends Object> getLinkedObjects(
+			String link) {
         if (DIRECT_OBJECT.equals(link)) {
             return parseDirectObject();
         }
@@ -54,7 +54,7 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
     private List<CosObject> parseDirectObject() {
         List<CosObject> list = new ArrayList<>();
         COSBase base = ((COSObject) baseObject).getObject();
-        list.add(base != null ? getFromValue(base) : PBCosNull.NULL);
+        list.add(base != null ? getFromValue(base) : PBCosNull.getInstance());
         return Collections.unmodifiableList(list);
     }
 
