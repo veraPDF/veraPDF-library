@@ -19,12 +19,10 @@ public class PBOpTextPosition extends PBOperator implements OpTextPosition {
 	 */
     public static final String OP_TEXT_POSITION_TYPE = "OpTextPosition";
 
-    // TODO : implement all classes
     public PBOpTextPosition(List<COSBase> arguments) {
         this(arguments, OP_TEXT_POSITION_TYPE);
     }
 
-    // TODO : implement all classes
     public PBOpTextPosition(List<COSBase> arguments, final String opType) {
         super(arguments, opType);
     }

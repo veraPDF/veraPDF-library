@@ -37,9 +37,10 @@ public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
     }
 
     private List<PDColorSpace> getAlternate() {
-        List<PDColorSpace> colorSpace = new ArrayList<>();
+        List<PDColorSpace> colorSpace = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
-            org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace alternateColorSpace = ((org.apache.pdfbox.pdmodel.graphics.color.PDDeviceN) simplePDObject)
+            org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace alternateColorSpace =
+					((org.apache.pdfbox.pdmodel.graphics.color.PDDeviceN) this.simplePDObject)
                     .getAlternateColorSpace();
             PDColorSpace space = ColorSpaceFactory
                     .getColorSpace(alternateColorSpace);

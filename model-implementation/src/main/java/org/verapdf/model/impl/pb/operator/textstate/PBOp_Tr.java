@@ -25,8 +25,8 @@ public class PBOp_Tr extends PBOpTextState implements Op_Tr {
 	 */
     @Override
     public Long getrenderingMode() {
-        if (!arguments.isEmpty()) {
-            COSBase renderingMode = arguments.get(0);
+        if (!this.arguments.isEmpty()) {
+            COSBase renderingMode = this.arguments.get(0);
             if (renderingMode instanceof COSInteger) {
                 return Long.valueOf(((COSInteger) renderingMode).longValue());
             }

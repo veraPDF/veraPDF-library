@@ -18,8 +18,9 @@ public class PBoxPDShadingPattern extends PBoxPDPattern implements
     private static final Logger LOGGER = Logger
             .getLogger(PBoxPDShadingPattern.class);
 
-    public static final String SHADING = "shading";
 	public static final String SHADING_PATTERN_TYPE = "PDShadingPattern";
+
+    public static final String SHADING = "shading";
 
 	public PBoxPDShadingPattern(
             org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern simplePDObject) {
@@ -28,14 +29,17 @@ public class PBoxPDShadingPattern extends PBoxPDPattern implements
 
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
-        return SHADING.equals(link) ? getShading() : super
-                .getLinkedObjects(link);
+		if (SHADING.equals(link)) {
+			return this.getShading();
+		}
+		return super.getLinkedObjects(link);
     }
 
     private List<PDShading> getShading() {
-        List<PDShading> shadings = new ArrayList<>();
+        List<PDShading> shadings = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
-            org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading = ((org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern) simplePDObject)
+            org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading =
+					((org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern) this.simplePDObject)
                     .getShading();
             if (shading != null) {
                 shadings.add(new PBoxPDShading(shading));

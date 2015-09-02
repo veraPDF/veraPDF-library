@@ -17,6 +17,8 @@ import org.verapdf.model.pdlayer.PDObject;
  */
 public class PBoxPDObject extends GenericModelObject implements PDObject {
 
+	public static final int MAX_NUMBER_OF_ELEMENTS = 1;
+
     protected COSObjectable simplePDObject;
     protected PDDocument document;
     protected PDContentStream contentStream;

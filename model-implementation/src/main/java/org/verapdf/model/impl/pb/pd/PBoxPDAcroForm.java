@@ -15,8 +15,9 @@ import java.util.List;
  */
 public class PBoxPDAcroForm extends PBoxPDObject implements PDAcroForm {
 
+	public static final String ACRO_FORM_TYPE = "PDAcroForm";
+
     public static final String FORM_FIELDS = "formFields";
-    public static final String ACRO_FORM_TYPE = "PDAcroForm";
 
     public PBoxPDAcroForm(
             org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm simplePDObject) {
@@ -26,21 +27,21 @@ public class PBoxPDAcroForm extends PBoxPDObject implements PDAcroForm {
     @Override
     public Boolean getNeedAppearances() {
         return Boolean
-                .valueOf(((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) simplePDObject)
+                .valueOf(((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) this.simplePDObject)
                         .getNeedAppearances());
     }
 
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         if (FORM_FIELDS.equals(link)) {
-            return getFormFields();
+            return this.getFormFields();
         }
         return super.getLinkedObjects(link);
     }
 
     private List<PDFormField> getFormFields() {
         List<PDFormField> formFields = new ArrayList<>();
-        List<PDField> fields = ((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) simplePDObject)
+        List<PDField> fields = ((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) this.simplePDObject)
                 .getFields();
         for (PDField field : fields) {
             formFields.add(new PBoxPDFormField(field));

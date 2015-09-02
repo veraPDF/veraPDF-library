@@ -29,17 +29,17 @@ public class PBGlyph extends GenericModelObject implements Glyph {
 
 	@Override
 	public Boolean getisGlyphPresent() {
-		return glyphPresent;
+		return this.glyphPresent;
 	}
 
 	@Override
 	public Boolean getisWidthConsistent() {
-		return widthsConsistent;
+		return this.widthsConsistent;
 	}
 
 	@Override
 	public String getID() {
-		return IDGenerator.generateID(fontName, glyphCode);
+		return IDGenerator.generateID(this.fontName, this.glyphCode);
 	}
 
 }

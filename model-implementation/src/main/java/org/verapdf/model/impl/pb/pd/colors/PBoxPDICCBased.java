@@ -40,15 +40,15 @@ public class PBoxPDICCBased extends PBoxPDColorSpace implements PDICCBased {
     }
 
     private List<ICCInputProfile> getICCProfile() {
-        List<ICCInputProfile> inputProfile = new ArrayList<>();
+        List<ICCInputProfile> inputProfile = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
-            PDStream pdStream = ((org.apache.pdfbox.pdmodel.graphics.color.PDICCBased) simplePDObject)
+            PDStream pdStream = ((org.apache.pdfbox.pdmodel.graphics.color.PDICCBased) this.simplePDObject)
                     .getPDStream();
             InputStream stream = pdStream.createInputStream();
-            long N = pdStream.getStream().getLong(COSName.N);
+            Long N = pdStream.getStream().getLong(COSName.N);
             if (stream != null && stream.available() > 0) {
-                inputProfile.add(new PBoxICCInputProfile(stream, N != -1 ? Long
-                        .valueOf(N) : null));
+				N = N != -1 ? N : null;
+                inputProfile.add(new PBoxICCInputProfile(stream, N));
             }
         } catch (IOException e) {
             LOGGER.error(

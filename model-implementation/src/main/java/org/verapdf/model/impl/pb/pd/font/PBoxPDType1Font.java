@@ -19,7 +19,8 @@ public class PBoxPDType1Font extends PBoxPDSimpleFont implements PDType1Font {
 
 	@Override
 	public Boolean getisStandard() {
-		return Boolean.valueOf(((org.apache.pdfbox.pdmodel.font.PDSimpleFont) pdFontLike).isStandard14());
+		return Boolean.valueOf(((org.apache.pdfbox.pdmodel.font.PDSimpleFont) this.pdFontLike)
+				.isStandard14());
 	}
 
 }

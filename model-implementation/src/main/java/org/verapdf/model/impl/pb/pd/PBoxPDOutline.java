@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class PBoxPDOutline extends PBoxPDObject implements PDOutline {
 
+	public static final String OUTLINE_TYPE = "PDOutline";
+
     public static final String ACTION = "A";
-    public static final String OUTLINE_TYPE = "PDOutline";
-    public static final int NUMBER_OF_ACTIONS = 1;
 
     public PBoxPDOutline(PDOutlineItem simplePDObject) {
         super(simplePDObject, OUTLINE_TYPE);
@@ -32,10 +32,10 @@ public class PBoxPDOutline extends PBoxPDObject implements PDOutline {
     }
 
     private List<PDAction> getAction() {
-        List<PDAction> actions = new ArrayList<>(NUMBER_OF_ACTIONS);
-        org.apache.pdfbox.pdmodel.interactive.action.PDAction action = ((PDOutlineItem) simplePDObject)
-                .getAction();
-        super.addAction(actions, action);
+        List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        org.apache.pdfbox.pdmodel.interactive.action.PDAction action =
+				((PDOutlineItem) this.simplePDObject).getAction();
+        this.addAction(actions, action);
         return actions;
     }
 
