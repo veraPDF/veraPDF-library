@@ -23,4 +23,9 @@ public class PBoxPDType1Font extends PBoxPDSimpleFont implements PDType1Font {
 				.isStandard14());
 	}
 
+	@Override
+	public String getCharSet() {
+		return new String();
+	}
+
 }
