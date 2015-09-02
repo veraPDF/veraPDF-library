@@ -4,9 +4,12 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
+import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
 import org.apache.pdfbox.preflight.font.container.FontContainer;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.factory.font.FontFactory;
+import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.impl.pb.operator.base.PBOperator;
 import org.verapdf.model.operator.OpTextShow;
 import org.verapdf.model.pdlayer.PDColorSpace;
@@ -37,17 +40,16 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     /** Name of link to the stroke color space */
     public static final String STROKE_COLOR_SPACE = "strokeCS";
 
-    protected final org.apache.pdfbox.pdmodel.font.PDFont pdfBoxFont;
+    protected final GraphicState state;
 
     protected PBOpTextShow(List<COSBase> arguments,
-            org.apache.pdfbox.pdmodel.font.PDFont font, final String opType) {
+            GraphicState state, final String opType) {
         super(arguments, opType);
-        this.pdfBoxFont = font;
+        this.state = state;
     }
 
 	@Override
-	public List<? extends Object> getLinkedObjects(
-			String link) {
+	public List<? extends Object> getLinkedObjects(String link) {
 		switch (link) {
 			case FONT:
 				return this.getFont();
@@ -63,8 +65,8 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 	}
 
     private List<PDFont> getFont() {
-        List<PDFont> result = new ArrayList<>();
-        PDFont font = FontFactory.parseFont(this.pdfBoxFont);
+        List<PDFont> result = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        PDFont font = FontFactory.parseFont(this.state.getFont());
 		if (font != null) {
 			result.add(font);
 		}
@@ -73,16 +75,17 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 
     private List<PBGlyph> getUsedGlyphs() {
         List<PBGlyph> res = new ArrayList<>();
-        FontContainer fontContainer = FontHelper.getFontContainer(this.pdfBoxFont);
+		org.apache.pdfbox.pdmodel.font.PDFont font = this.state.getFont();
+		FontContainer fontContainer = FontHelper.getFontContainer(font);
         List<byte[]> strings = getStrings(this.arguments);
         for (byte[] string : strings) {
             try (InputStream inputStream = new ByteArrayInputStream(string)) {
                 while (inputStream.available() > 0) {
-                    int code = this.pdfBoxFont.readCode(inputStream);
+                    int code = font.readCode(inputStream);
                     Boolean glyphPresent = fontContainer.hasGlyph(code);
-                    Boolean widthsConsistent = checkWidths(code);
+                    Boolean widthsConsistent = checkWidths(code, font);
                     res.add(new PBGlyph(glyphPresent, widthsConsistent,
-										this.pdfBoxFont.getName(), code));
+										font.getName(), code));
                 }
             } catch (IOException e) {
                 LOGGER.error("Error processing text show operator's string argument : "
@@ -94,18 +97,29 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     }
 
     private List<PDColorSpace> getFillColorSpace() {
-		// TODO : implement me ??
-        return new ArrayList<>();
+		return getColorSpace(state.getFillColorSpace(), state.getPattern());
     }
 
-    private List<PDColorSpace> getStrokeColorSpace() {
-		// TODO : implement me ??
-        return new ArrayList<>();
+	private List<PDColorSpace> getStrokeColorSpace() {
+        return getColorSpace(state.getStrokeColorSpace(), state.getPattern());
     }
 
-    private Boolean checkWidths(int glyphCode) throws IOException {
-        float expectedWidth = this.pdfBoxFont.getWidth(glyphCode);
-        float foundWidth = this.pdfBoxFont.getWidthFromFont(glyphCode);
+	private static List<PDColorSpace> getColorSpace(
+			org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace fillColorSpace,
+			PDAbstractPattern pattern) {
+		List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+		PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(
+				fillColorSpace, pattern);
+		if (colorSpace != null) {
+			colorSpaces.add(colorSpace);
+		}
+		return colorSpaces;
+	}
+
+    private static Boolean checkWidths(int glyphCode,
+								org.apache.pdfbox.pdmodel.font.PDFont font) throws IOException {
+		float expectedWidth = font.getWidth(glyphCode);
+        float foundWidth = font.getWidthFromFont(glyphCode);
         // consistent is defined to be a difference of no more than 1/1000 unit.
 		return Math.abs(foundWidth - expectedWidth) > 1 ? Boolean.FALSE : Boolean.TRUE;
     }
