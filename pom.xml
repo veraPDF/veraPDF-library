@@ -483,8 +483,24 @@
                   </configuration>
                 </execution>
 
+                <execution>
+                  <id>download bavaria test suite</id>
+                  <phase>pre-integration-test</phase>
+                  <goals>
+                    <goal>wget</goal>
+                  </goals>
+                  <configuration>
+                    <url>
+                      http://www.pdflib.com/fileadmin/pdflib/Bavaria/2009-04-03-Bavaria-pdfa.zip
+                    </url>
+                    <unpack>true</unpack>
+                    <outputDirectory>target/test-classes/test-resources</outputDirectory>
+                    <md5>d8fccb2fea540ab49bef237f3579546b</md5>
+                  </configuration>
+                </execution>
               </executions>
             </plugin>
+
           </plugins>
         </pluginManagement>
       </build>
