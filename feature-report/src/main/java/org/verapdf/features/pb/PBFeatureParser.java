@@ -937,7 +937,7 @@ public final class PBFeatureParser {
             if (!imageXObjects.containsKey(idMask)) {
                 try {
                     PDImageXObject imxobj = xobj.getMask();
-                    imageXObjects.put(id, imxobj);
+                    imageXObjects.put(idMask, imxobj);
                     parseImageXObject(imxobj, idMask);
                 } catch (IOException e) {
                     LOGGER.info(e);
@@ -960,7 +960,7 @@ public final class PBFeatureParser {
             if (!imageXObjects.containsKey(idMask)) {
                 try {
                     PDImageXObject imxobj = xobj.getSoftMask();
-                    imageXObjects.put(id, imxobj);
+                    imageXObjects.put(idMask, imxobj);
                     parseImageXObject(imxobj, idMask);
                 } catch (IOException e) {
                     LOGGER.info(e);

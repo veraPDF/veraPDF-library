@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.pb.objects.*;
+import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -15,7 +16,9 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -82,9 +85,65 @@ public class PBFeatureParserTest {
                 "image/jpeg", "FlateDecode", "2015-08-22T14:01:19.000+03:00", "2014-09-08T12:01:07.000Z", "ËÓþVf\u0007ç`ºŁåk\u0015?A\r", "67142")));
 
         assertEquals(5, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).size());
-
+        Set<String> outInts19 = new HashSet<>();
+        outInts19.add("outIntDir0");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir19",
+                outInts19, null, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:52:24.000+03:00", null, "Copyright 2000 Adobe Systems Incorporated",
+                "Apple RGB", null, null, "none", getMetadataBytesFromFile("/iccprofile19_metadata_bytes"))));
+        Set<String> iccbsds81 = new HashSet<>();
+        iccbsds81.add("clrspDir10");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir81",
+                null, iccbsds81, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:54:18.000+03:00", null, "Copyright 2000 Adobe Systems Incorporated",
+                "PAL/SECAM", null, null, "none", null)));
+        Set<String> iccbsds84 = new HashSet<>();
+        iccbsds84.add("clrspDir27");
+        iccbsds84.add("clrspDir14");
+        iccbsds84.add("clrspDir26");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir84",
+                null, iccbsds84, "2.2.0", "appl", "RGB ", "appl", "2000-08-13T16:06:07.000+03:00", "\u0000\u0000\u0000\u0001", "Copyright 1998 - 2003 Apple Computer Inc., all rights reserved.",
+                "sRGB Profile", null, null, "appl", null)));
     }
 
+    private static FeatureTreeNode getICCProfile(String id, Set<String> outInts, Set<String> iccBaseds, String version,
+                                                 String cmmType, String dataColorSpace, String creator, String creationDate,
+                                                 String defaultRenderingIntent, String copyright, String description,
+                                                 String profileId, String deviceModel, String deviceManufacturer, byte[] metadata) throws FeaturesTreeNodeException {
+        FeatureTreeNode root = FeatureTreeNode.newRootInstance("iccProfile");
+        root.addAttribute(ID, id);
+
+        if ((outInts != null && !outInts.isEmpty()) || (iccBaseds != null && !iccBaseds.isEmpty())) {
+            FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+            if (outInts != null) {
+                for (String out : outInts) {
+                    FeatureTreeNode outNode = FeatureTreeNode.newChildInstance("outputIntent", parents);
+                    outNode.addAttribute(ID, out);
+                }
+            }
+            if (iccBaseds != null) {
+                for (String icc : iccBaseds) {
+                    FeatureTreeNode iccNode = FeatureTreeNode.newChildInstance("iccBased", parents);
+                    iccNode.addAttribute(ID, icc);
+                }
+            }
+        }
+
+        PBCreateNodeHelper.addNotEmptyNode("version", version, root);
+        PBCreateNodeHelper.addNotEmptyNode("cmmType", cmmType, root);
+        PBCreateNodeHelper.addNotEmptyNode("dataColorSpace", dataColorSpace, root);
+        PBCreateNodeHelper.addNotEmptyNode("creator", creator, root);
+        PBCreateNodeHelper.addNotEmptyNode("creationDate", creationDate, root);
+        PBCreateNodeHelper.addNotEmptyNode("defaultRenderingIntent", defaultRenderingIntent, root);
+        PBCreateNodeHelper.addNotEmptyNode("copyright", copyright, root);
+        PBCreateNodeHelper.addNotEmptyNode("description", description, root);
+        PBCreateNodeHelper.addNotEmptyNode("profileId", profileId, root);
+        PBCreateNodeHelper.addNotEmptyNode("deviceModel", deviceModel, root);
+        PBCreateNodeHelper.addNotEmptyNode("deviceManufacturer", deviceManufacturer, root);
+        if (metadata != null) {
+            FeatureTreeNode.newChildInstanceWithValue("metadata", metadata, root);
+        }
+
+        return root;
+    }
 
     private static FeatureTreeNode getEmbeddedFileNode(String id, String fileName, String description, String subtype,
                                                        String filter, String creationDate, String modDate, String checkSum,

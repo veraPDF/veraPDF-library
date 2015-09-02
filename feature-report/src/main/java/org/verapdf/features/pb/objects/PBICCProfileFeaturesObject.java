@@ -273,17 +273,13 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
                     int number = byteArrayToInt(Arrays.copyOfRange(profileBytes, offset + NUMBER_OF_RECORDS_IN_MULTILOCALIZEDUNICODETYPE_BEGIN,
                             offset + NUMBER_OF_RECORDS_IN_MULTILOCALIZEDUNICODETYPE_END));
                     int recOffset = offset + NUMBER_OF_RECORDS_IN_MULTILOCALIZEDUNICODETYPE_END + REQUIRED_LENGTH;
-                    length = byteArrayToInt(Arrays.copyOfRange(profileBytes, offset + FIRST_RECORD_STRING_LENGTH_IN_MULTILOCALIZEDUNICODETYPE_BEGIN,
-                            offset + FIRST_RECORD_STRING_LENGTH_IN_MULTILOCALIZEDUNICODETYPE_END));
-                    offset += byteArrayToInt(Arrays.copyOfRange(profileBytes, offset + FIRST_RECORD_STRING_OFFSET_IN_MULTILOCALIZEDUNICODETYPE_BEGIN,
-                            offset + FIRST_RECORD_STRING_OFFSET_IN_MULTILOCALIZEDUNICODETYPE_END));
                     for (int i = 0; i < number; ++i) {
                         String local = getString(profileBytes, recOffset, recOffset + REQUIRED_LENGTH);
                         if ("enUS".equals(local)) {
                             length = byteArrayToInt(Arrays.copyOfRange(profileBytes, recOffset + REQUIRED_LENGTH,
                                     recOffset + REQUIRED_LENGTH + REQUIRED_LENGTH));
                             offset += byteArrayToInt(Arrays.copyOfRange(profileBytes, recOffset + REQUIRED_LENGTH * 2,
-                                    offset + REQUIRED_LENGTH * 2 + REQUIRED_LENGTH));
+                                    recOffset + REQUIRED_LENGTH * 2 + REQUIRED_LENGTH));
                             try {
                                 return new String(Arrays.copyOfRange(profileBytes, offset, offset + length), "UTF-16BE").trim();
                             } catch (UnsupportedEncodingException e) {
