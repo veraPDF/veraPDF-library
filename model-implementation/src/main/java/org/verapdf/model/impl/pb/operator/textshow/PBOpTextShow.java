@@ -97,11 +97,11 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     }
 
     private List<PDColorSpace> getFillColorSpace() {
-		return getColorSpace(state.getFillColorSpace(), state.getPattern());
+		return getColorSpace(this.state.getFillColorSpace(), this.state.getPattern());
     }
 
 	private List<PDColorSpace> getStrokeColorSpace() {
-        return getColorSpace(state.getStrokeColorSpace(), state.getPattern());
+        return getColorSpace(this.state.getStrokeColorSpace(), this.state.getPattern());
     }
 
 	private static List<PDColorSpace> getColorSpace(
