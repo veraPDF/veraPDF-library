@@ -102,6 +102,184 @@ public class PBFeatureParserTest {
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir84",
                 null, iccbsds84, "2.2.0", "appl", "RGB ", "appl", "2000-08-13T16:06:07.000+03:00", "\u0000\u0000\u0000\u0001", "Copyright 1998 - 2003 Apple Computer Inc., all rights reserved.",
                 "sRGB Profile", null, null, "appl", null)));
+        Set<String> iccbsds85 = new HashSet<>();
+        iccbsds85.add("clrspDir15");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir85",
+                null, iccbsds85, "4.2.0", "ADBE", "RGB ", "ADBE", "2007-10-24T00:00:00.000+03:00", "\u0000\u0000\u0000\u0001", "Copyright 2007 Adobe Systems Incorporated",
+                "HDTV (Rec. 709)", "t\u001C$ﾦ\u0012\u0017ﾉHQﾃ\uFFEFￋ￨<\uFFE7,", null, null, null)));
+        Set<String> iccbsds77 = new HashSet<>();
+        iccbsds77.add("clrspDir3");
+        iccbsds77.add("clrspDir0");
+        iccbsds77.add("clrspDir2");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir77",
+                null, iccbsds77, "2.1.0", "ADBE", "GRAY", "ADBE", "1999-06-03T00:00:00.000+03:00", null, "Copyright 1999 Adobe Systems Incorporated",
+                "Dot Gain 20%", null, null, "none", null)));
+
+        assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT).size());
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT).contains(getOutputIntent()));
+
+        assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTLINES).size());
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTLINES).contains(getOutlines()));
+
+        assertEquals(7, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION).size());
+        Set<String> xobj37 = new HashSet<>();
+        xobj37.add("xobjIndir28");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION).contains(getAnnotation("annotIndir37",
+                "page1", null, "Text", "368.092", "423.522", "386.092", "441.522", "Annotation with pop-up window",
+                "d48d8e43-b22c-41ce-8cfa-28c1ca955d97", "D:20150822140440+03'00'", xobj37, "annotIndir38", "1.0", "1.0", "0.0", null,
+                "false", "false", "true", "true", "true", "false", "false", "false", "false", "false")));
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION).contains(getAnnotation("annotIndir38",
+                "page1", "annotIndir37", "Popup", "370.08", "265.547", "550.081", "385.984", null,
+                null, null, null, null, null, null, null, null,
+                "false", "false", "true", "true", "true", "false", "false", "false", "false", "false")));
+        Set<String> xobj13 = new HashSet<>();
+        xobj13.add("xobjIndir22");
+        xobj13.add("xobjIndir21");
+        xobj13.add("xobjIndir23");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION).contains(getAnnotation("annotIndir13",
+                "page1", null, "Widget", "112.562", "398.933", "161.251", "450.764", null,
+                null, null, xobj13, null, null, null, null, null,
+                "false", "false", "true", "false", "false", "false", "false", "false", "false", "false")));
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION).contains(getAnnotation("annotIndir42",
+                "page1", "annotIndir41", "Popup", "499.977", "350.004", "679.977", "470.004", null,
+                null, null, null, null, null, null, null, null,
+                "false", "false", "true", "true", "true", "false", "false", "false", "false", "false")));
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION).contains(getAnnotation("annotIndir40",
+                "page1", "annotIndir39", "Popup", "499.977", "322.78", "679.977", "442.78", null,
+                null, null, null, null, null, null, null, null,
+                "false", "false", "true", "true", "true", "false", "false", "false", "false", "false")));
+        Set<String> xobj41 = new HashSet<>();
+        xobj41.add("xobjIndir27");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION).contains(getAnnotation("annotIndir41",
+                "page1", null, "Text", "338.339", "452.004", "356.339", "470.004", "annotation with CMYK colorspace\r",
+                "a21bf4d8-e9fe-4e29-89a0-26e416fc8ca7", "D:20150831140530+03'00'", xobj41, "annotIndir42", "1.0", "0.0", "0.0", "0.0",
+                "false", "false", "true", "true", "true", "false", "false", "false", "false", "false")));
+        Set<String> xobj39 = new HashSet<>();
+        xobj39.add("xobjIndir27");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION).contains(getAnnotation("annotIndir39",
+                "page1", null, "Text", "307.974", "424.78", "325.974", "442.78", "annotation with gray colorspace\r",
+                "85f36ad6-ae92-479e-9b24-ba07c8702837", "D:20150831140515+03'00'", xobj39, "annotIndir40", "1.0", null, null, null,
+                "false", "false", "true", "true", "true", "false", "false", "false", "false", "false")));
+    }
+
+    private static FeatureTreeNode getAnnotation(String id, String parentPage, String parentAnnotation,
+                                                 String subtype, String llx, String lly, String urx, String ury,
+                                                 String contents, String annotationName, String modifiedDate, Set<String> xobj,
+                                                 String popup, String red, String green, String blue, String kayan,
+                                                 String invisible, String hidden, String print, String noZoom,
+                                                 String noRotate, String noView, String readOnly, String locked,
+                                                 String toggleNoView, String lockedContents) throws FeaturesTreeNodeException {
+        FeatureTreeNode root = FeatureTreeNode.newRootInstance("annotation");
+        root.addAttribute(ID, id);
+        if (parentPage != null || parentAnnotation != null) {
+            FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+            if (parentPage != null) {
+                FeatureTreeNode page = FeatureTreeNode.newChildInstance("page", parents);
+                page.addAttribute(ID, parentPage);
+            }
+            if (parentAnnotation != null) {
+                FeatureTreeNode annot = FeatureTreeNode.newChildInstance("annotation", parents);
+                annot.addAttribute(ID, parentAnnotation);
+            }
+        }
+        PBCreateNodeHelper.addNotEmptyNode("subType", subtype, root);
+        FeatureTreeNode rec = FeatureTreeNode.newChildInstance("rectangle", root);
+        rec.addAttribute("llx", llx);
+        rec.addAttribute("lly", lly);
+        rec.addAttribute("urx", urx);
+        rec.addAttribute("ury", ury);
+        PBCreateNodeHelper.addNotEmptyNode("contents", contents, root);
+        PBCreateNodeHelper.addNotEmptyNode("annotationName", annotationName, root);
+        PBCreateNodeHelper.addNotEmptyNode("modifiedDate", modifiedDate, root);
+
+        if (xobj != null && !xobj.isEmpty()) {
+            FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
+            for (String objID : xobj) {
+                FeatureTreeNode node = FeatureTreeNode.newChildInstance("xObject", resources);
+                node.addAttribute(ID, objID);
+            }
+        }
+        if (popup != null) {
+            FeatureTreeNode pop = FeatureTreeNode.newChildInstance("popup", root);
+            pop.addAttribute(ID, popup);
+        }
+
+        if (red != null && green != null && blue != null && kayan != null) {
+            FeatureTreeNode color = FeatureTreeNode.newChildInstance("color", root);
+            FeatureTreeNode.newChildInstanceWithValue("cyan", red, color);
+            FeatureTreeNode.newChildInstanceWithValue("magenta", green, color);
+            FeatureTreeNode.newChildInstanceWithValue("yellow", blue, color);
+            FeatureTreeNode.newChildInstanceWithValue("black", blue, color);
+        } else if (red != null && green != null && blue != null) {
+            FeatureTreeNode color = FeatureTreeNode.newChildInstance("color", root);
+            FeatureTreeNode.newChildInstanceWithValue("red", red, color);
+            FeatureTreeNode.newChildInstanceWithValue("green", green, color);
+            FeatureTreeNode.newChildInstanceWithValue("blue", blue, color);
+        } else if (red != null) {
+            FeatureTreeNode color = FeatureTreeNode.newChildInstance("color", root);
+            FeatureTreeNode.newChildInstanceWithValue("gray", red, color);
+        }
+
+        FeatureTreeNode.newChildInstanceWithValue("invisible", invisible, root);
+        FeatureTreeNode.newChildInstanceWithValue("hidden", hidden, root);
+        FeatureTreeNode.newChildInstanceWithValue("print", print, root);
+        FeatureTreeNode.newChildInstanceWithValue("noZoom", noZoom, root);
+        FeatureTreeNode.newChildInstanceWithValue("noRotate", noRotate, root);
+        FeatureTreeNode.newChildInstanceWithValue("noView", noView, root);
+        FeatureTreeNode.newChildInstanceWithValue("readOnly", readOnly, root);
+        FeatureTreeNode.newChildInstanceWithValue("locked", locked, root);
+        FeatureTreeNode.newChildInstanceWithValue("toggleNoView", toggleNoView, root);
+        FeatureTreeNode.newChildInstanceWithValue("lockedContents", lockedContents, root);
+
+        return root;
+    }
+
+    private static FeatureTreeNode getOutlines() throws FeaturesTreeNodeException {
+        FeatureTreeNode root = FeatureTreeNode.newRootInstance("outlines");
+        FeatureTreeNode out1 = FeatureTreeNode.newChildInstance("outline", root);
+        makeOutline("1 - COLOR", "1.0", "0.0", "0.0", "false", "false", out1);
+        FeatureTreeNode out1_1 = FeatureTreeNode.newChildInstance("outline", out1);
+        makeOutline("1.1", "0.0", "0.0", "1.0", "false", "false", out1_1);
+        FeatureTreeNode out2 = FeatureTreeNode.newChildInstance("outline", root);
+        makeOutline("2 - ITALIC", "0.0", "0.0", "0.0", "true", "false", out2);
+        FeatureTreeNode out2_2 = FeatureTreeNode.newChildInstance("outline", out2);
+        makeOutline("2.2", "0.0", "0.0", "0.0", "true", "false", out2_2);
+        FeatureTreeNode out2_2_1 = FeatureTreeNode.newChildInstance("outline", out2_2);
+        makeOutline("2.2.1", "0.0", "0.0", "0.0", "true", "false", out2_2_1);
+        FeatureTreeNode out2_2_2 = FeatureTreeNode.newChildInstance("outline", out2_2);
+        makeOutline("2.2.2", "0.0", "0.0", "0.0", "true", "false", out2_2_2);
+        FeatureTreeNode out2_2_2_1 = FeatureTreeNode.newChildInstance("outline", out2_2_2);
+        makeOutline("2.2.2.1", "0.0", "0.0", "0.0", "true", "false", out2_2_2_1);
+        FeatureTreeNode out2_1 = FeatureTreeNode.newChildInstance("outline", out2);
+        makeOutline("2.1", "0.0", "0.0", "0.0", "true", "false", out2_1);
+        FeatureTreeNode out3 = FeatureTreeNode.newChildInstance("outline", root);
+        makeOutline("3 - BOLD", "0.0", "0.0", "0.0", "false", "true", out3);
+        FeatureTreeNode out4 = FeatureTreeNode.newChildInstance("outline", root);
+        makeOutline("4", "0.0", "0.0", "0.0", "false", "false", out4);
+        return root;
+    }
+
+    private static void makeOutline(String title, String red, String green, String blue, String italic, String bold, FeatureTreeNode root) throws FeaturesTreeNodeException {
+        FeatureTreeNode.newChildInstanceWithValue("title", title, root);
+        FeatureTreeNode color = FeatureTreeNode.newChildInstance("color", root);
+        FeatureTreeNode.newChildInstanceWithValue("red", red, color);
+        FeatureTreeNode.newChildInstanceWithValue("green", green, color);
+        FeatureTreeNode.newChildInstanceWithValue("blue", blue, color);
+        FeatureTreeNode.newChildInstanceWithValue("italic", italic, root);
+        FeatureTreeNode.newChildInstanceWithValue("bold", bold, root);
+    }
+
+    private static FeatureTreeNode getOutputIntent() throws FeaturesTreeNodeException {
+        FeatureTreeNode root = FeatureTreeNode.newRootInstance("outputIntent");
+        root.addAttribute(ID, "outIntDir0");
+        FeatureTreeNode.newChildInstanceWithValue("subtype", "GTS_PDFA1", root);
+        FeatureTreeNode.newChildInstanceWithValue("outputCondition", "SomeOutputCondition", root);
+        FeatureTreeNode.newChildInstanceWithValue("outputConditionIdentifier", "Apple RGB", root);
+        FeatureTreeNode.newChildInstanceWithValue("registryName", "fxqn:/us/va/reston/cnri/ietf/24/asdf%*.fred", root);
+        FeatureTreeNode.newChildInstanceWithValue("info", "RGB", root);
+        FeatureTreeNode dest = FeatureTreeNode.newChildInstance("destOutputIntent", root);
+        dest.addAttribute(ID, "iccProfileIndir19");
+        return root;
     }
 
     private static FeatureTreeNode getICCProfile(String id, Set<String> outInts, Set<String> iccBaseds, String version,
