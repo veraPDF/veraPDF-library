@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
-import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
 import org.apache.pdfbox.preflight.font.container.FontContainer;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
@@ -97,19 +96,24 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     }
 
     private List<PDColorSpace> getFillColorSpace() {
-		return getColorSpace(this.state.getFillColorSpace(), this.state.getPattern());
+		if (this.state.getRenderingMode().isFill()) {
+			return getColorSpace(this.state.getFillColorSpace());
+		} else {
+			return new ArrayList<>();
+		}
     }
 
 	private List<PDColorSpace> getStrokeColorSpace() {
-        return getColorSpace(this.state.getStrokeColorSpace(), this.state.getPattern());
+		if (this.state.getRenderingMode().isStroke()) {
+			return getColorSpace(this.state.getStrokeColorSpace());
+		} else {
+			return new ArrayList<>();
+		}
     }
 
-	private static List<PDColorSpace> getColorSpace(
-			org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace fillColorSpace,
-			PDAbstractPattern pattern) {
+	private List<PDColorSpace> getColorSpace(org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace fillColorSpace) {
 		List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-		PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(
-				fillColorSpace, pattern);
+		PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(fillColorSpace, this.state.getPattern());
 		if (colorSpace != null) {
 			colorSpaces.add(colorSpace);
 		}

@@ -10,7 +10,6 @@ import org.verapdf.model.impl.pb.cos.PBCosReal;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.List;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -24,7 +23,7 @@ public class PBOp_dTest extends PBOpGeneralGSTest {
 
 	@Test
 	public void testDashArrayLink() {
-		Object object = getObject(PBOp_d.DASH_ARRAY, 1, PBCosArray.COS_ARRAY_TYPE);
+		Object object = testObject(PBOp_d.DASH_ARRAY, 1, PBCosArray.COS_ARRAY_TYPE);
 		Assert.assertEquals(Long.valueOf(2), ((CosArray) object).getsize());
 	}
 

@@ -20,6 +20,6 @@ public class PBOp_shTest extends PBOperatorTest {
 
 	@Test
 	public void testShadingLink() {
-		getObject(PBOp_sh.SHADING, 1, PBoxPDShading.SHADING_TYPE);
+		testObject(PBOp_sh.SHADING, 1, PBoxPDShading.SHADING_TYPE);
 	}
 }

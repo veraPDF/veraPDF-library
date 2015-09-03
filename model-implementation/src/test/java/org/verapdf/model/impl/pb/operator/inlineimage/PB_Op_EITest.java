@@ -20,6 +20,6 @@ public class PB_Op_EITest extends PBOperatorTest {
 
 	@Test
 	public void testInlineImageLink() {
-		getObject(PBOp_EI.INLINE_IMAGE, 1, PBoxPDInlineImage.INLINE_IMAGE_TYPE);
+		testObject(PBOp_EI.INLINE_IMAGE, 1, PBoxPDInlineImage.INLINE_IMAGE_TYPE);
 	}
 }

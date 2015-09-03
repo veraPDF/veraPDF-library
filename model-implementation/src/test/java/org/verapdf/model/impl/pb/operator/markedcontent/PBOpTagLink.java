@@ -11,6 +11,6 @@ public abstract class PBOpTagLink extends PBOperatorTest {
 
 	@Test
 	public void testTagLink() {
-		getObject(PBOpMarkedContent.TAG, 1, PBCosName.COS_NAME_TYPE);
+		testObject(PBOpMarkedContent.TAG, 1, PBCosName.COS_NAME_TYPE);
 	}
 }
