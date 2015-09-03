@@ -15,4 +15,15 @@ public class PBOp_QuoteTest extends PBOpStringTextShowTest {
 		setUpOperatorsList(PBOp_Quote.OP_QUOTE_TYPE, null);
 		value = "Hello";
 	}
+
+	@Override
+	public void testStrokeColorSpaceLink() {
+		super.testStrokeColorSpaceLink();
+	}
+
+	@Override
+	protected int getUsedGlyphsAmount() {
+		return 5;
+	}
+
 }

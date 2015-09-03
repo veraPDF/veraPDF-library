@@ -20,7 +20,7 @@ public class PBOp_DoTest extends PBOperatorTest {
 
 	@Test
 	public void testXObjectLink() {
-		getObject(PBOp_Do.X_OBJECT, 1, PBoxPDXForm.X_FORM_TYPE);
+		testObject(PBOp_Do.X_OBJECT, 1, PBoxPDXForm.X_FORM_TYPE);
 	}
 
 }

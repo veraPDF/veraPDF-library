@@ -4,6 +4,7 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.font.PDType1CFont;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.verapdf.model.pdlayer.PDSimpleFont;
 import org.verapdf.model.pdlayer.PDType1Font;
 
@@ -18,6 +19,9 @@ public class PBoxPDType1FontTest extends PBoxPDSimpleFontTest {
 	private static final String TYPE1_FONT_NAME = "T1_0";
 	private static final String TYPE1_BASE_FONT = "OLXYQW+MyriadPro-Regular";
 	private static final String TYPE1_SUBTYPE = "Type1";
+
+	private static final String CHAR_SET = "/space/one/E/T/b/d/e/f/m/n/o/p/t/y";
+	private static final String ENCODING = "WinAnsiEncoding";
 
 	private static final Long WIDTHS_SIZE = 90l;
 	private static final Long FIRST_CHAR = 32l;
@@ -65,7 +69,12 @@ public class PBoxPDType1FontTest extends PBoxPDSimpleFontTest {
 
 	@Override
 	public void testEncoding() {
-		Assert.assertEquals(((PDType1Font) actual).getEncoding(), "WinAnsiEncoding");
+		Assert.assertEquals(((PDType1Font) actual).getEncoding(), ENCODING);
+	}
+
+	@Test
+	public void testCharSet() {
+		Assert.assertEquals(((PDType1Font) actual).getCharSet(), CHAR_SET);
 	}
 
 }

@@ -469,10 +469,16 @@ class OperatorParser {
         if (!arguments.isEmpty()) {
             COSBase renderingMode = arguments.get(0);
             if (renderingMode instanceof COSInteger) {
-                RenderingMode.fromInt(((COSInteger) renderingMode).intValue());
-            }
+				try {
+					RenderingMode rMode = RenderingMode.fromInt(((COSInteger) renderingMode).intValue());
+					return rMode;
+				} catch (ArrayIndexOutOfBoundsException e) {
+					LOGGER.error("Rendering mode value is incorrect : " + renderingMode);
+					LOGGER.error(e);
+				}
+			}
         }
-        return null;
+        return RenderingMode.FILL;
     }
 
     private static PDAbstractPattern getPatternFromResources(

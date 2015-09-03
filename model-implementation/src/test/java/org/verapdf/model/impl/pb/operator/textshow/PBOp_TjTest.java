@@ -15,4 +15,10 @@ public class PBOp_TjTest extends PBOpStringTextShowTest {
 		setUpOperatorsList(PBOp_Tj.OP_TJ_TYPE, null);
 		value = "Hello World";
 	}
+
+	@Override
+	protected int getUsedGlyphsAmount() {
+		return 11;
+	}
+
 }
