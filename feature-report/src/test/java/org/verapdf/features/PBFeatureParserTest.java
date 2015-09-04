@@ -91,7 +91,7 @@ public class PBFeatureParserTest {
         outInts19.add("outIntDir0");
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir19",
                 outInts19, null, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:52:24.000+03:00", null, "Copyright 2000 Adobe Systems Incorporated",
-                "Apple RGB", null, null, "none", getMetadataBytesFromFile("/iccprofile19_metadata_bytes"))));
+                "Apple RGB", null, null, "none", getMetadataBytesFromFile("/iccprofile19_metadata_bytes.txt"))));
         Set<String> iccbsds81 = new HashSet<>();
         iccbsds81.add("clrspDir10");
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir81",
