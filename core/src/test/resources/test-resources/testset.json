@@ -1308,6 +1308,14 @@
         "comparingStrategy": "FAIL",
         "expectedReportName": ""
       }
+    ],
+    "Bavaria testsuite" : [
+      {
+        "testFileName": "apogee.pdf",
+        "validationProfileName": "verapdf-profile-6-3-5-t01.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      }
     ]
   }
 }

@@ -35,7 +35,7 @@ public class PBOp_re extends PBOpPathConstruction implements Op_re {
     }
 
     private List<CosReal> getRectBox() {
-        return getListOfReals();
+        return this.getListOfReals();
     }
 
 }

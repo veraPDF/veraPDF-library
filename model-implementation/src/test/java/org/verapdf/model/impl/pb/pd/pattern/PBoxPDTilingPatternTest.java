@@ -1,8 +1,5 @@
 package org.verapdf.model.impl.pb.pd.pattern;
 
-import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.pdmodel.PDResources;
-import org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,14 +17,7 @@ public class PBoxPDTilingPatternTest extends PBoxPDPatternTest{
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = TYPES.contains(PBoxPDTilingPattern.TILING_PATTERN_TYPE) ?
-															PBoxPDTilingPattern.TILING_PATTERN_TYPE : null;
-		expectedID = null;
-
-		setUp(FILE_RELATIVE_PATH);
-		PDResources resources = document.getPage(0).getResources();
-		COSName patternName = COSName.getPDFName("P0");
-		actual = new PBoxPDTilingPattern((PDTilingPattern) resources.getPattern(patternName));
+		setUp(PBoxPDTilingPattern.TILING_PATTERN_TYPE, "P0");
 	}
 
 	@Test

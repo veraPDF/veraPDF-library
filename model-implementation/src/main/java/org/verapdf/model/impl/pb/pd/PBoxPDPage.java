@@ -34,33 +34,25 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
         super((COSObjectable) simplePDObject, PAGE_TYPE);
     }
 
-    @Override
-    public List<? extends Object> getLinkedObjects(String link) {
-        List<? extends Object> list;
-
-        switch (link) {
-        case GROUP:
-            list = getGroup();
-            break;
-        case ANNOTS:
-            list = getAnnotations();
-            break;
-        case ACTION:
-            list = getActions();
-            break;
-        case CONTENT_STREAM:
-            list = getContentStream();
-            break;
-        default:
-            list = super.getLinkedObjects(link);
-        }
-
-        return list;
-    }
+	@Override
+	public List<? extends Object> getLinkedObjects(String link) {
+		switch (link) {
+			case GROUP:
+				return this.getGroup();
+			case ANNOTS:
+				return this.getAnnotations();
+			case ACTION:
+				return this.getActions();
+			case CONTENT_STREAM:
+				return this.getContentStream();
+			default:
+				return super.getLinkedObjects(link);
+		}
+	}
 
     private List<PDGroup> getGroup() {
-        List<PDGroup> groups = new ArrayList<>(1);
-        COSDictionary dictionary = ((org.apache.pdfbox.pdmodel.PDPage) simplePDObject)
+        List<PDGroup> groups = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        COSDictionary dictionary = ((org.apache.pdfbox.pdmodel.PDPage) this.simplePDObject)
                 .getCOSObject();
         COSBase groupDictionary = dictionary.getDictionaryObject(COSName.GROUP);
         if (groupDictionary instanceof COSDictionary) {
@@ -72,24 +64,24 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
     }
 
     private List<PDContentStream> getContentStream() {
-        List<PDContentStream> contentStreams = new ArrayList<>();
+        List<PDContentStream> contentStreams = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         contentStreams.add(new PBoxPDContentStream(
-                (org.apache.pdfbox.pdmodel.PDPage) simplePDObject));
+                (org.apache.pdfbox.pdmodel.PDPage) this.simplePDObject));
         return contentStreams;
     }
 
     private List<PDAction> getActions() {
         List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ACTIONS);
-        PDPageAdditionalActions pbActions = ((org.apache.pdfbox.pdmodel.PDPage) simplePDObject)
+        PDPageAdditionalActions pbActions = ((org.apache.pdfbox.pdmodel.PDPage) this.simplePDObject)
                 .getActions();
         if (pbActions != null) {
             org.apache.pdfbox.pdmodel.interactive.action.PDAction action;
 
             action = pbActions.getC();
-            addAction(actions, action);
+            this.addAction(actions, action);
 
             action = pbActions.getO();
-            addAction(actions, action);
+            this.addAction(actions, action);
         }
         return actions;
     }
@@ -97,15 +89,11 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
     private List<PDAnnot> getAnnotations() {
         List<PDAnnot> annotations = new ArrayList<>();
         try {
-            List<PDAnnotation> pdfboxAnnotations = ((org.apache.pdfbox.pdmodel.PDPage) simplePDObject)
+            List<PDAnnotation> pdfboxAnnotations = ((org.apache.pdfbox.pdmodel.PDPage) this.simplePDObject)
                     .getAnnotations();
             if (pdfboxAnnotations != null) {
-                for (PDAnnotation annotation : pdfboxAnnotations) {
-                    if (annotation != null) {
-                        annotations.add(new PBoxPDAnnot(annotation));
-                    }
-                }
-            }
+				this.addAllAnnotations(annotations, pdfboxAnnotations);
+			}
         } catch (IOException e) {
             LOGGER.error(
                     "Problems in obtaining pdfbox PDAnnotations. "
@@ -113,4 +101,13 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
         }
         return annotations;
     }
+
+	private void addAllAnnotations(List<PDAnnot> annotations,
+								   List<PDAnnotation> pdfboxAnnotations) {
+		for (PDAnnotation annotation : pdfboxAnnotations) {
+			if (annotation != null) {
+				annotations.add(new PBoxPDAnnot(annotation));
+			}
+		}
+	}
 }

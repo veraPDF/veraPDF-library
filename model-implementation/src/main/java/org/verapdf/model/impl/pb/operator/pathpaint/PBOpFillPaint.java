@@ -26,7 +26,6 @@ public abstract class PBOpFillPaint extends PBOpPathPaint {
         if (FILL_CS.equals(link)) {
             return this.getFillCS();
         }
-
         return super.getLinkedObjects(link);
     }
 

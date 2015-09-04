@@ -27,11 +27,11 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 
 	public String getType() {
 		String subtype = null;
-		if (pdFontLike instanceof org.apache.pdfbox.pdmodel.font.PDFont) {
-			subtype = ((org.apache.pdfbox.pdmodel.font.PDFont) pdFontLike)
+		if (this.pdFontLike instanceof org.apache.pdfbox.pdmodel.font.PDFont) {
+			subtype = ((org.apache.pdfbox.pdmodel.font.PDFont) this.pdFontLike)
 					.getType();
-		} else if (pdFontLike instanceof PDCIDFont) {
-			subtype = ((PDCIDFont) pdFontLike).getCOSObject().getNameAsString(
+		} else if (this.pdFontLike instanceof PDCIDFont) {
+			subtype = ((PDCIDFont) this.pdFontLike).getCOSObject().getNameAsString(
 					COSName.TYPE);
 		}
 		return subtype;
@@ -40,11 +40,11 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 	@Override
 	public String getSubtype() {
 		String subtype = null;
-		if (pdFontLike instanceof org.apache.pdfbox.pdmodel.font.PDFont) {
-			subtype = ((org.apache.pdfbox.pdmodel.font.PDFont) pdFontLike)
+		if (this.pdFontLike instanceof org.apache.pdfbox.pdmodel.font.PDFont) {
+			subtype = ((org.apache.pdfbox.pdmodel.font.PDFont) this.pdFontLike)
 					.getSubType();
-		} else if (pdFontLike instanceof PDCIDFont) {
-			subtype = ((PDCIDFont) pdFontLike).getCOSObject().getNameAsString(
+		} else if (this.pdFontLike instanceof PDCIDFont) {
+			subtype = ((PDCIDFont) this.pdFontLike).getCOSObject().getNameAsString(
 					COSName.SUBTYPE);
 		}
 		return subtype;
@@ -52,27 +52,27 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 
 	@Override
 	public String getBaseFont() {
-		return pdFontLike.getName();
+		return this.pdFontLike.getName();
 	}
 
 	@Override
 	public Boolean getisSymbolic() {
-		PDFontDescriptor fontDescriptor = pdFontLike.getFontDescriptor();
+		PDFontDescriptor fontDescriptor = this.pdFontLike.getFontDescriptor();
 		return Boolean.valueOf(fontDescriptor.isSymbolic());
 	}
 
 	@Override
     public List<? extends Object> getLinkedObjects(String link) {
         if (FONT_FILE.equals(link)) {
-            return getFontFile();
+            return this.getFontFile();
         }
         return super.getLinkedObjects(link);
     }
 
     private List<PBoxFontProgram> getFontFile() {
-        List<PBoxFontProgram> list = new ArrayList<>();
+        List<PBoxFontProgram> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         if (!getSubtype().equals(FontFactory.TYPE_3)
-                && (pdFontLike.isEmbedded())) {
+                && (this.pdFontLike.isEmbedded())) {
             PDFontDescriptor fontDescriptor = pdFontLike.getFontDescriptor();
             PDStream fontFile;
             if (getSubtype().equals(FontFactory.TYPE_1)) {

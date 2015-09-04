@@ -106,12 +106,12 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
             parseFloatMatrix(formXObject.getMatrix().getValues(), FeatureTreeNode.newChildInstance("matrix", root));
 
             if (formXObject.getGroup() != null) {
-                FeatureTreeNode groupNode = FeatureTreeNode.newRootInstance("group");
+                FeatureTreeNode groupNode = FeatureTreeNode.newChildInstance("group", root);
                 if (formXObject.getGroup().getSubType() != null) {
                     PBCreateNodeHelper.addNotEmptyNode("subtype", formXObject.getGroup().getSubType().getName(), groupNode);
                     if ("Transparency".equals(formXObject.getGroup().getSubType().getName())) {
                         if (groupColorSpaceChild != null) {
-                            FeatureTreeNode clr = FeatureTreeNode.newChildInstance("colorSpace", root);
+                            FeatureTreeNode clr = FeatureTreeNode.newChildInstance("colorSpace", groupNode);
                             clr.addAttribute(ID, groupColorSpaceChild);
                         }
 

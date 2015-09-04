@@ -9,7 +9,7 @@ import org.verapdf.model.tools.IDGenerator;
  */
 public class PBGlyph extends GenericModelObject implements Glyph {
 
-	private final static String type = "Glyph";
+	public final static String GLYPH_TYPE = "Glyph";
 
 	private Boolean glyphPresent;
 	private Boolean widthsConsistent;
@@ -19,7 +19,7 @@ public class PBGlyph extends GenericModelObject implements Glyph {
 	private int glyphCode;
 
 	public PBGlyph(Boolean glyphPresent, Boolean widthsConsistent, String fontName, int glyphCode) {
-		super(type);
+		super(GLYPH_TYPE);
 		this.glyphPresent = glyphPresent;
 		this.widthsConsistent = widthsConsistent;
 
@@ -29,17 +29,17 @@ public class PBGlyph extends GenericModelObject implements Glyph {
 
 	@Override
 	public Boolean getisGlyphPresent() {
-		return glyphPresent;
+		return this.glyphPresent;
 	}
 
 	@Override
 	public Boolean getisWidthConsistent() {
-		return widthsConsistent;
+		return this.widthsConsistent;
 	}
 
 	@Override
 	public String getID() {
-		return IDGenerator.generateID(fontName, glyphCode);
+		return IDGenerator.generateID(this.fontName, this.glyphCode);
 	}
 
 }

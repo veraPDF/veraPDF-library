@@ -14,10 +14,6 @@ public final class IDGenerator {
         // Disable default constructor
     }
 
-    public static String generateID() {
-        return null;
-    }
-
     /**
      * Generate ID for pdf box object. Current method generate a string of the
      * form 'N M' for {@link org.apache.pdfbox.cos.COSObject}, where 'N' and 'M'

@@ -53,9 +53,10 @@ import org.verapdf.model.operator.Operator;
 import org.verapdf.model.tools.constants.Operators;
 
 import java.io.IOException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 /**
  * Stateful parser that create veraPDF Model operator instances from individual
@@ -68,9 +69,9 @@ import java.util.Stack;
 class OperatorParser {
 
     private static final Logger LOGGER = Logger.getLogger(OperatorParser.class);
-    private static final String MSG_PROBEM_OBTAINING_RESOURCE = "Problem encountered while obtaining resources for ";
+    private static final String MSG_PROBLEM_OBTAINING_RESOURCE = "Problem encountered while obtaining resources for ";
 
-    private final Stack<GraphicState> graphicStateStack = new Stack<>();
+    private final Deque<GraphicState> graphicStateStack = new ArrayDeque<>();
     private final GraphicState graphicState = new GraphicState();
 
 	OperatorParser() {
@@ -87,10 +88,7 @@ class OperatorParser {
 				operators.add(new PBOp_d(arguments));
 				break;
 			case Operators.GS:
-				PDExtendedGraphicsState extGState = getExtGStateFromResources(resources,
-						getLastCOSName(arguments));
-				graphicState.copyPropertiesFromExtGState(extGState);
-				operators.add(new PBOp_gs(arguments, extGState));
+				this.addExtGState(operators, resources, arguments);
 				break;
 			case Operators.I_SETFLAT:
 				operators.add(new PBOp_i(arguments));
@@ -138,55 +136,46 @@ class OperatorParser {
 
 				// COLOR
 			case Operators.G_STROKE:
-				graphicState.setStrokeColorSpace(PDDeviceGray.INSTANCE);
+				this.graphicState.setStrokeColorSpace(PDDeviceGray.INSTANCE);
 				operators.add(new PBOpColor(arguments));
 				break;
 			case Operators.G_FILL:
-				graphicState.setFillColorSpace(PDDeviceGray.INSTANCE);
+				this.graphicState.setFillColorSpace(PDDeviceGray.INSTANCE);
 				operators.add(new PBOpColor(arguments));
 				break;
 			case Operators.RG_STROKE:
-				graphicState.setStrokeColorSpace(PDDeviceRGB.INSTANCE);
+				this.graphicState.setStrokeColorSpace(PDDeviceRGB.INSTANCE);
 				operators.add(new PBOpColor(arguments));
 				break;
 			case Operators.RG_FILL:
-				graphicState.setFillColorSpace(PDDeviceRGB.INSTANCE);
+				this.graphicState.setFillColorSpace(PDDeviceRGB.INSTANCE);
 				operators.add(new PBOpColor(arguments));
 				break;
 			case Operators.K_STROKE:
+				this.graphicState.setStrokeColorSpace(PDDeviceCMYK.INSTANCE);
 				operators.add(new PBOpColor(arguments));
 				break;
 			case Operators.K_FILL:
-				graphicState.setFillColorSpace(PDDeviceCMYK.INSTANCE);
+				this.graphicState.setFillColorSpace(PDDeviceCMYK.INSTANCE);
 				operators.add(new PBOpColor(arguments));
 				break;
 			case Operators.CS_STROKE:
-				graphicState.setStrokeColorSpace(getColorSpaceFromResources(
+				this.graphicState.setStrokeColorSpace(getColorSpaceFromResources(
 						resources, getLastCOSName(arguments)));
 				operators.add(new PBOpColor(arguments));
 				break;
 			case Operators.CS_FILL:
-				graphicState.setFillColorSpace(getColorSpaceFromResources(
+				this.graphicState.setFillColorSpace(getColorSpaceFromResources(
 						resources, getLastCOSName(arguments)));
 				operators.add(new PBOpColor(arguments));
 				break;
 			case Operators.SCN_STROKE:
-				PDColorSpace strokeColorSpace = graphicState.getStrokeColorSpace();
-				if (strokeColorSpace != null &&
-						ColorSpaceFactory.PATTERN.equals(strokeColorSpace.getName())) {
-					graphicState.setPattern(getPatternFromResources(resources,
-							getLastCOSName(arguments)));
-				}
-				operators.add(new PBOpColor(arguments));
+				this.setPatternColorSpace(operators, graphicState.getStrokeColorSpace(),
+						resources, arguments);
 				break;
 			case Operators.SCN_FILL:
-				PDColorSpace fillColorSpace = graphicState.getFillColorSpace();
-				if (fillColorSpace != null &&
-						ColorSpaceFactory.PATTERN.equals(fillColorSpace.getName())) {
-					graphicState.setPattern(getPatternFromResources(resources,
-							getLastCOSName(arguments)));
-				}
-				operators.add(new PBOpColor(arguments));
+				this.setPatternColorSpace(operators, graphicState.getFillColorSpace(),
+						resources, arguments);
 				break;
 			case Operators.SC_STROKE:
 				operators.add(new PBOpColor(arguments));
@@ -215,16 +204,16 @@ class OperatorParser {
 
 				// TEXT SHOW
 			case Operators.TJ_SHOW:
-				operators.add(new PBOp_Tj(arguments, graphicState.getFont()));
+				operators.add(new PBOp_Tj(arguments, this.graphicState.clone()));
 				break;
 			case Operators.TJ_SHOW_POS:
-				operators.add(new PBOp_TJ_Big(arguments, graphicState.getFont()));
+				operators.add(new PBOp_TJ_Big(arguments, this.graphicState.clone()));
 				break;
 			case Operators.QUOTE:
-				operators.add(new PBOp_Quote(arguments, graphicState.getFont()));
+				operators.add(new PBOp_Quote(arguments, this.graphicState.clone()));
 				break;
 			case Operators.DOUBLE_QUOTE:
-				operators.add(new PBOp_DoubleQuote(arguments, graphicState.getFont()));
+				operators.add(new PBOp_DoubleQuote(arguments, this.graphicState.clone()));
 				break;
 
 				// TEXT STATE
@@ -232,11 +221,11 @@ class OperatorParser {
 				operators.add(new PBOp_Tz(arguments));
 				break;
 			case Operators.TR:
-				graphicState.setRenderingMode(getRenderingMode(arguments));
+				this.graphicState.setRenderingMode(getRenderingMode(arguments));
 				operators.add(new PBOp_Tr(arguments));
 				break;
 			case Operators.TF:
-				graphicState.setFont(getFontFromResources(resources,
+				this.graphicState.setFont(getFontFromResources(resources,
 						getFirstCOSName(arguments)));
 				operators.add(new PBOpTextState(arguments));
 				break;
@@ -254,9 +243,8 @@ class OperatorParser {
 				break;
 
 				// INLINE IMAGE
-			case Operators.BI: {
+			case Operators.BI:
 				addInlineImage(operators, pdfBoxOperator, resources, arguments);
-			}
 				break;
 
 				// COMPABILITY
@@ -293,48 +281,55 @@ class OperatorParser {
 				// PATH PAINT
 			case Operators.B_CLOSEPATH_FILL_STROKE:
 				operators.add(new PBOp_b_closepath_fill_stroke(arguments,
-						graphicState.getStrokeColorSpace(),
-						graphicState.getFillColorSpace(), graphicState.getPattern()));
+						this.graphicState.getStrokeColorSpace(),
+						this.graphicState.getFillColorSpace(),
+						this.graphicState.getPattern()));
 				break;
 			case Operators.B_FILL_STROKE:
 				operators.add(new PBOp_B_fill_stroke(arguments,
-						graphicState.getStrokeColorSpace(),
-						graphicState.getFillColorSpace(), graphicState.getPattern()));
+						this.graphicState.getStrokeColorSpace(),
+						this.graphicState.getFillColorSpace(),
+						this.graphicState.getPattern()));
 				break;
 			case Operators.B_STAR_CLOSEPATH_EOFILL_STROKE:
 				operators.add(new PBOp_bstar_closepath_eofill_stroke(arguments,
-						graphicState.getStrokeColorSpace(),
-						graphicState.getFillColorSpace(), graphicState.getPattern()));
+						this.graphicState.getStrokeColorSpace(),
+						this.graphicState.getFillColorSpace(),
+						this.graphicState.getPattern()));
 				break;
 			case Operators.B_STAR_EOFILL_STROKE:
 				operators.add(new PBOp_BStar_eofill_stroke(arguments,
-						graphicState.getStrokeColorSpace(),
-						graphicState.getFillColorSpace(), graphicState.getPattern()));
+						this.graphicState.getStrokeColorSpace(),
+						this.graphicState.getFillColorSpace(),
+						this.graphicState.getPattern()));
 				break;
 			case Operators.F_FILL:
-				operators.add(new PBOp_f_fill(arguments, graphicState.getFillColorSpace(),
-						graphicState.getPattern()));
+				operators.add(new PBOp_f_fill(arguments,
+						this.graphicState.getFillColorSpace(),
+						this.graphicState.getPattern()));
 				break;
 			case Operators.F_FILL_OBSOLETE:
 				operators.add(new PBOp_F_fill_obsolete(arguments,
-						graphicState.getFillColorSpace(), graphicState.getPattern()));
+						this.graphicState.getFillColorSpace(),
+						this.graphicState.getPattern()));
 				break;
 			case Operators.F_STAR_FILL:
-				operators.add(new PBOp_FStar(arguments, graphicState.getFillColorSpace(),
-						graphicState.getPattern()));
+				operators.add(new PBOp_FStar(arguments,
+						this.graphicState.getFillColorSpace(),
+						this.graphicState.getPattern()));
 				break;
 			case Operators.N:
 				operators.add(new PBOp_n(arguments));
 				break;
 			case Operators.S_CLOSE_STROKE:
 				operators.add(new PBOp_s_close_stroke(arguments,
-						graphicState.getStrokeColorSpace(),
-						graphicState.getPattern()));
+						this.graphicState.getStrokeColorSpace(),
+						this.graphicState.getPattern()));
 				break;
 			case Operators.S_STROKE:
 				operators.add(new PBOp_S_stroke(arguments,
-						graphicState.getStrokeColorSpace(),
-						graphicState.getPattern()));
+						this.graphicState.getStrokeColorSpace(),
+						this.graphicState.getPattern()));
 				break;
 
 				// SHADING
@@ -348,14 +343,14 @@ class OperatorParser {
 				operators.add(new PBOp_cm(arguments));
 				break;
 			case Operators.Q_GRESTORE:
-				if (graphicStateStack.size() > 0) {
-					graphicState.copyProperties(graphicStateStack.pop());
+				if (!graphicStateStack.isEmpty()) {
+					this.graphicState.copyProperties(this.graphicStateStack.pop());
 				}
 				operators.add(new PBOp_Q_grestore(arguments));
 				break;
 			case Operators.Q_GSAVE:
-				graphicStateStack.push(graphicState.clone());
-				operators.add(new PBOp_q_gsave(arguments, graphicStateStack.size()));
+				this.graphicStateStack.push(this.graphicState.clone());
+				operators.add(new PBOp_q_gsave(arguments, this.graphicStateStack.size()));
 				break;
 
 				// XOBJECT
@@ -367,6 +362,23 @@ class OperatorParser {
 				operators.add(new PBOp_Undefined(arguments));
 				break;
 		}
+	}
+
+	private void setPatternColorSpace(List<Operator> operators, PDColorSpace colorSpace,
+									  PDResources resources, List<COSBase> arguments) {
+		if (colorSpace != null &&
+				ColorSpaceFactory.PATTERN.equals(colorSpace.getName())) {
+			graphicState.setPattern(getPatternFromResources(resources,
+					getLastCOSName(arguments)));
+		}
+		operators.add(new PBOpColor(arguments));
+	}
+
+	private void addExtGState(List<Operator> operators, PDResources resources, List<COSBase> arguments) {
+		PDExtendedGraphicsState extGState = getExtGStateFromResources(resources,
+				getLastCOSName(arguments));
+		graphicState.copyPropertiesFromExtGState(extGState);
+		operators.add(new PBOp_gs(arguments, extGState));
 	}
 
 	private static void addInlineImage(List<Operator> operators,
@@ -406,7 +418,7 @@ class OperatorParser {
             return resources.getXObject(xobject);
         } catch (IOException e) {
             LOGGER.error(
-                    MSG_PROBEM_OBTAINING_RESOURCE + xobject + ". "
+                    MSG_PROBLEM_OBTAINING_RESOURCE + xobject + ". "
                             + e.getMessage(), e);
             return null;
         }
@@ -418,7 +430,7 @@ class OperatorParser {
             return resources.getColorSpace(colorSpace);
         } catch (IOException e) {
             LOGGER.error(
-                    MSG_PROBEM_OBTAINING_RESOURCE + colorSpace + ". "
+                    MSG_PROBLEM_OBTAINING_RESOURCE + colorSpace + ". "
                             + e.getMessage(), e);
             return null;
         }
@@ -430,7 +442,7 @@ class OperatorParser {
             return resources.getShading(shading);
         } catch (IOException e) {
             LOGGER.error(
-                    MSG_PROBEM_OBTAINING_RESOURCE + shading + ". "
+                    MSG_PROBLEM_OBTAINING_RESOURCE + shading + ". "
                             + e.getMessage(), e);
             return null;
         }
@@ -447,7 +459,7 @@ class OperatorParser {
             return resources.getFont(font);
         } catch (IOException e) {
             LOGGER.error(
-                    MSG_PROBEM_OBTAINING_RESOURCE + font + ". "
+                    MSG_PROBLEM_OBTAINING_RESOURCE + font + ". "
                             + e.getMessage(), e);
             return null;
         }
@@ -457,10 +469,16 @@ class OperatorParser {
         if (!arguments.isEmpty()) {
             COSBase renderingMode = arguments.get(0);
             if (renderingMode instanceof COSInteger) {
-                RenderingMode.fromInt(((COSInteger) renderingMode).intValue());
-            }
+				try {
+					RenderingMode rMode = RenderingMode.fromInt(((COSInteger) renderingMode).intValue());
+					return rMode;
+				} catch (ArrayIndexOutOfBoundsException e) {
+					LOGGER.error("Rendering mode value is incorrect : " + renderingMode);
+					LOGGER.error(e);
+				}
+			}
         }
-        return null;
+        return RenderingMode.FILL;
     }
 
     private static PDAbstractPattern getPatternFromResources(
@@ -469,7 +487,7 @@ class OperatorParser {
             return resources.getPattern(pattern);
         } catch (IOException e) {
             LOGGER.error(
-                    MSG_PROBEM_OBTAINING_RESOURCE + pattern + ". "
+                    MSG_PROBLEM_OBTAINING_RESOURCE + pattern + ". "
                             + e.getMessage(), e);
             return null;
         }

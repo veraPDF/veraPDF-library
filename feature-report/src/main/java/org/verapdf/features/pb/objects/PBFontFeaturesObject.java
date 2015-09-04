@@ -111,18 +111,16 @@ public class PBFontFeaturesObject implements IFeaturesObject {
                 } else if (font instanceof PDSimpleFont) {
                     PDSimpleFont sFont = (PDSimpleFont) font;
 
-                    if (!(sFont instanceof PDTrueTypeFont)) {
-                        int fc = sFont.getCOSObject().getInt(COSName.FIRST_CHAR);
-                        if (fc != -1) {
-                            FeatureTreeNode.newChildInstanceWithValue("firstChar", String.valueOf(fc), root);
-                        }
-                        int lc = sFont.getCOSObject().getInt(COSName.LAST_CHAR);
-                        if (lc != -1) {
-                            FeatureTreeNode.newChildInstanceWithValue("lastChar", String.valueOf(lc), root);
-                        }
-
-                        parseIntList(sFont.getWidths(), FeatureTreeNode.newChildInstance("widths", root));
+                    int fc = sFont.getCOSObject().getInt(COSName.FIRST_CHAR);
+                    if (fc != -1) {
+                        FeatureTreeNode.newChildInstanceWithValue("firstChar", String.valueOf(fc), root);
                     }
+                    int lc = sFont.getCOSObject().getInt(COSName.LAST_CHAR);
+                    if (lc != -1) {
+                        FeatureTreeNode.newChildInstanceWithValue("lastChar", String.valueOf(lc), root);
+                    }
+
+                    parseIntList(sFont.getWidths(), FeatureTreeNode.newChildInstance("widths", root));
 
                     COSBase enc = sFont.getCOSObject().getDictionaryObject(COSName.ENCODING);
                     if (enc instanceof COSName) {

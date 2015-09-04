@@ -30,15 +30,16 @@ public class PBoxPDShading extends PBoxPDResources implements PDShading {
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         if (COLOR_SPACE.equals(link)) {
-            return getColorSpace();
+            return this.getColorSpace();
         }
         return super.getLinkedObjects(link);
     }
 
     private List<PDColorSpace> getColorSpace() {
-        List<PDColorSpace> colorSpaces = new ArrayList<>(1);
+        List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
-            org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace cs = ((org.apache.pdfbox.pdmodel.graphics.shading.PDShading) simplePDObject)
+            org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace cs =
+					((org.apache.pdfbox.pdmodel.graphics.shading.PDShading) this.simplePDObject)
                     .getColorSpace();
             if (cs != null) {
                 colorSpaces.add(ColorSpaceFactory.getColorSpace(cs));

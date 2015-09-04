@@ -23,14 +23,19 @@ public class PBOp_DoubleQuoteTest extends PBOpStringTextShowTest {
 
 	@Test
 	public void testWordSpacingLink() {
-		Object object = getObject(PBOp_DoubleQuote.WORD_SPACING, 1, PBCosReal.COS_REAL_TYPE);
+		Object object = testObject(PBOp_DoubleQuote.WORD_SPACING, 1, PBCosReal.COS_REAL_TYPE);
 		Assert.assertEquals(Long.valueOf(50), ((CosNumber) object).getintValue());
 	}
 
 	@Test
 	public void testCharacterSpacingLink() {
-		Object object = getObject(PBOp_DoubleQuote.CHARACTER_SPACING, 1, PBCosReal.COS_REAL_TYPE);
+		Object object = testObject(PBOp_DoubleQuote.CHARACTER_SPACING, 1, PBCosReal.COS_REAL_TYPE);
 		Assert.assertEquals(Long.valueOf(1), ((CosNumber) object).getintValue());
+	}
+
+	@Override
+	protected int getUsedGlyphsAmount() {
+		return 0;
 	}
 
 }

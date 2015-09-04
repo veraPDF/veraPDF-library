@@ -15,7 +15,8 @@ public abstract class PBOpStringTextShowTest extends PBOpTextShowTest {
 
 	@Test
 	public void testShowStringLink() {
-		Object object = getObject(PBOpStringTextShow.SHOW_STRING, 1, PBCosString.COS_STRING_TYPE);
+		Object object = testObject(PBOpStringTextShow.SHOW_STRING, 1, PBCosString.COS_STRING_TYPE);
 		Assert.assertEquals(value, ((CosString) object).getvalue());
 	}
+
 }
