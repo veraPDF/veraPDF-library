@@ -1496,24 +1496,32 @@ public final class PBFeatureParser {
             COSBase base = array.get(number);
             String id = getId(base, COLORSPACE, colorSpaces.size());
 
-            if (colorSpaceColorSpaceParent.get(id) == null) {
-                colorSpaceColorSpaceParent.put(id, new HashSet<String>());
-            }
-            colorSpaceColorSpaceParent.get(id).add(parentID);
-            colorSpaceColorSpaceChild.put(parentID, id);
+            try {
+                PDColorSpace alt = colorSpace instanceof PDIndexed ? ((PDIndexed) colorSpace).getBaseColorSpace() :
+                        colorSpace instanceof PDSeparation ? ((PDSeparation) colorSpace).getAlternateColorSpace() :
+                                ((PDDeviceN) colorSpace).getAlternateColorSpace();
 
-            if (!colorSpaces.containsKey(id)) {
-                try {
-                    PDColorSpace alt = colorSpace instanceof PDIndexed ? ((PDIndexed) colorSpace).getBaseColorSpace() :
-                            colorSpace instanceof PDSeparation ? ((PDSeparation) colorSpace).getAlternateColorSpace() :
-                                    ((PDDeviceN) colorSpace).getAlternateColorSpace();
+                if (alt instanceof PDDeviceColorSpace) {
+                    id = alt instanceof PDDeviceGray ? DEVICEGRAY_ID :
+                            alt instanceof PDDeviceRGB ? DEVICERGB_ID :
+                                    DEVICECMYK_ID;
+                }
+
+                if (colorSpaceColorSpaceParent.get(id) == null) {
+                    colorSpaceColorSpaceParent.put(id, new HashSet<String>());
+                }
+                colorSpaceColorSpaceParent.get(id).add(parentID);
+                colorSpaceColorSpaceChild.put(parentID, id);
+
+                if (!colorSpaces.containsKey(id)) {
                     colorSpaces.put(id, alt);
                     parseColorSpace(alt, id);
-                } catch (IOException e) {
-                    LOGGER.info(e);
-                    colorSpaceCreationProblem(id);
                 }
+            } catch (IOException e) {
+                LOGGER.info(e);
+                colorSpaceCreationProblem(id);
             }
+
         }
     }
 
