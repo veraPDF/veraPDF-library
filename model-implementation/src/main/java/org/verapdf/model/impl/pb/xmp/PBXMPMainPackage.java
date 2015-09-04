@@ -10,24 +10,24 @@ import org.verapdf.model.xmplayer.XMPMainPackage;
  */
 public class PBXMPMainPackage extends PBXMPPackage implements XMPMainPackage {
 
-    public static final String XMP_MAIN_PACKAGE_TYPE = "XMPMainPackage";
+	public static final String XMP_MAIN_PACKAGE_TYPE = "XMPMainPackage";
 
-    /**
-     * Constructs new object
-     *
-     * @param xmpMetadata - object from xmpbox represented this package
-     * @param isMetadataValid - true if metadata is valid
-     */
-    public PBXMPMainPackage(XMPMetadata xmpMetadata, boolean isMetadataValid) {
-        super(xmpMetadata, isMetadataValid, XMP_MAIN_PACKAGE_TYPE);
-    }
+	/**
+	 * Constructs new object
+	 *
+	 * @param xmpMetadata     object from xmpbox represented this package
+	 * @param isMetadataValid true if metadata is valid
+	 */
+	public PBXMPMainPackage(XMPMetadata xmpMetadata, boolean isMetadataValid) {
+		super(xmpMetadata, isMetadataValid, XMP_MAIN_PACKAGE_TYPE);
+	}
 
-    /**
-     * @return true if pdfaid schema is present
-     */
-    @Override
-    public Boolean getispdfaidNSPresent() {
-        return getXmpMetadata() == null ? Boolean.FALSE : Boolean
-				.valueOf(getXmpMetadata().getPDFIdentificationSchema() != null);
-    }
+	/**
+	 * @return true if pdfaid schema is present
+	 */
+	@Override
+	public Boolean getispdfaidNSPresent() {
+		return this.getXmpMetadata() == null ? Boolean.FALSE : Boolean
+				.valueOf(this.getXmpMetadata().getPDFIdentificationSchema() != null);
+	}
 }
