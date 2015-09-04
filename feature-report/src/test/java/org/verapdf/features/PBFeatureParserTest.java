@@ -495,6 +495,7 @@ public class PBFeatureParserTest {
     private static byte[] getMetadataBytesFromFile(String path) throws URISyntaxException, FileNotFoundException {
         Scanner scan = new Scanner(new File(getSystemIndependentPath(path)));
         int n = scan.nextInt();
+        System.out.println("DEBUG INFO " + n);
         byte[] res = new byte[n];
         for (int i = 0; scan.hasNextInt(); ++i) {
             res[i] = (byte) scan.nextInt();
