@@ -91,9 +91,13 @@ public class PBFeatureParserTest {
         assertEquals(5, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).size());
         Set<String> outInts19 = new HashSet<>();
         outInts19.add("outIntDir0");
+        System.out.println("collections " + collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE) != null);
+        System.out.println(getICCProfile("iccProfileIndir19",
+                outInts19, null, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:52:24.000+03:00", null, "Copyright 2000 Adobe Systems Incorporated",
+                "Apple RGB", null, null, "none", getMetadataBytesFromFile("/iccprofile19_metadata_bytes.txt")) != null);
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir19",
                 outInts19, null, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:52:24.000+03:00", null, "Copyright 2000 Adobe Systems Incorporated",
-                "Apple RGB", null, null, "none", getMetadataBytesFromFile("/iccprofile19_metadata_bytes"))));
+                "Apple RGB", null, null, "none", getMetadataBytesFromFile("/iccprofile19_metadata_bytes.txt"))));
         Set<String> iccbsds81 = new HashSet<>();
         iccbsds81.add("clrspDir10");
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir81",
@@ -496,10 +500,12 @@ public class PBFeatureParserTest {
     private static byte[] getMetadataBytesFromFile(String path) throws URISyntaxException, FileNotFoundException {
         Scanner scan = new Scanner(new File(getSystemIndependentPath(path)));
         int n = scan.nextInt();
+        System.out.println("DEBUG INFO " + n);
         byte[] res = new byte[n];
         for (int i = 0; scan.hasNextInt(); ++i) {
             res[i] = (byte) scan.nextInt();
         }
+        System.out.println("DEBUG INFO " + res);
         return res;
     }
 
