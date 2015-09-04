@@ -26,7 +26,6 @@ public abstract class PBOpStrokePaint extends PBOpPathPaint {
         if (STROKE_CS.equals(link)) {
             return this.getStrokeCS();
         }
-
         return super.getLinkedObjects(link);
     }
 

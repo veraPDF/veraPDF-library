@@ -41,8 +41,8 @@ public class PBOp_gs extends PBOpGeneralGS implements Op_gs {
 
     private List<PDExtGState> getExtGState() {
         List<PDExtGState> extGStates = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-        if (extGState != null) {
-            extGStates.add(new PBoxPDExtGState(extGState));
+        if (this.extGState != null) {
+            extGStates.add(new PBoxPDExtGState(this.extGState));
         }
         return extGStates;
     }

@@ -21,8 +21,13 @@ public class PBOp_TJ_BigTest extends PBOpTextShowTest {
 
 	@Test
 	public void testSpecialStringsLink() {
-		CosArray array = (CosArray) getObject(PBOp_TJ_Big.SPECIAL_STRINGS, 1, PBCosArray.COS_ARRAY_TYPE);
+		CosArray array = (CosArray) testObject(PBOp_TJ_Big.SPECIAL_STRINGS, 1, PBCosArray.COS_ARRAY_TYPE);
 		Assert.assertEquals(Long.valueOf(5), array.getsize());
+	}
+
+	@Override
+	protected int getUsedGlyphsAmount() {
+		return 10;
 	}
 
 }

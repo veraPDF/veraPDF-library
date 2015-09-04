@@ -36,11 +36,11 @@ public abstract class PBOpPathPaint extends PBOperator implements OpPathPaint {
     }
 
 	protected List<org.verapdf.model.pdlayer.PDColorSpace> getFillCS() {
-		return this.getColorSpace(pbFillColorSpace);
+		return this.getColorSpace(this.pbFillColorSpace);
 	}
 
 	protected List<org.verapdf.model.pdlayer.PDColorSpace> getStrokeCS() {
-		return this.getColorSpace(pbStrokeColorSpace);
+		return this.getColorSpace(this.pbStrokeColorSpace);
 	}
 
 	private List<org.verapdf.model.pdlayer.PDColorSpace> getColorSpace(
@@ -48,7 +48,7 @@ public abstract class PBOpPathPaint extends PBOperator implements OpPathPaint {
 		List<org.verapdf.model.pdlayer.PDColorSpace> list =
 				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		org.verapdf.model.pdlayer.PDColorSpace veraColorSpace =
-				ColorSpaceFactory.getColorSpace(colorSpace, pattern);
+				ColorSpaceFactory.getColorSpace(colorSpace, this.pattern);
 		if (veraColorSpace != null) {
 			list.add(veraColorSpace);
 		}

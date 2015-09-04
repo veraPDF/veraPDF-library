@@ -10,7 +10,7 @@ import org.verapdf.model.impl.pb.operator.base.PBOperatorTest;
 public abstract class PBOpGeneralGSTest extends PBOperatorTest {
 
 	protected static void testLinkToReal(String link, String type, Number expectedResult) {
-		org.verapdf.model.baselayer.Object object = getObject(link, 1, type);
+		org.verapdf.model.baselayer.Object object = testObject(link, 1, type);
 		Assert.assertEquals(expectedResult, ((CosNumber) object).getintValue());
 	}
 }

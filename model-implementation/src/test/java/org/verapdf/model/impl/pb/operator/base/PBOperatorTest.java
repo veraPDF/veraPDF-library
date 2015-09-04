@@ -65,19 +65,22 @@ public abstract class PBOperatorTest extends BaseTest {
 	}
 
 	protected static void testLinkToDictionary(String link, String type, Number expectedResult) {
-		Object object = getObject(link, 1, type);
+		Object object = testObject(link, 1, type);
 		Assert.assertEquals(expectedResult, ((CosDict) object).getsize());
 	}
 
-	protected static Object getObject(String link, int count, String type) {
+	protected static Object testObject(String link, int count, String type) {
 		List<? extends Object> linkedObjects = actual.getLinkedObjects(link);
 
 		Assert.assertEquals(count, linkedObjects.size());
 
-		Object object = linkedObjects.get(0);
+		if (count > 0) {
+			Object object = linkedObjects.get(0);
+			Assert.assertEquals(type, object.getObjectType());
+			return object;
+		}
 
-		Assert.assertEquals(type, object.getObjectType());
-		return object;
+		return null;
 	}
 
 }

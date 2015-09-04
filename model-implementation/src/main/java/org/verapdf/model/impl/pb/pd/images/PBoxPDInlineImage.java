@@ -21,7 +21,7 @@ public class PBoxPDInlineImage extends PBoxPDXImage implements PDInlineImage {
 
 	@Override
 	public String getF() {
-		List<String> filters = ((org.apache.pdfbox.pdmodel.graphics.image.PDInlineImage) simplePDObject)
+		List<String> filters = ((org.apache.pdfbox.pdmodel.graphics.image.PDInlineImage) this.simplePDObject)
 				.getFilters();
 		if (filters != null) {
 			StringBuilder builder = new StringBuilder();

@@ -43,7 +43,7 @@ public class PBOp_J_line_cap extends PBOpGeneralGS
 				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         if (!this.arguments.isEmpty()) {
 			COSBase number = this.arguments
-					.get(arguments.size() - 1);
+					.get(this.arguments.size() - 1);
 			if (number instanceof COSInteger) {
 				list.add(new PBCosInteger((COSInteger) number));
 			}

@@ -30,9 +30,9 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
     private static final Logger LOGGER = Logger.getLogger(PBoxPDXObject.class);
 
     public static final String X_OBJECT_TYPE = "PDXObject";
+
     public static final String OPI = "OPI";
     public static final String S_MASK = "SMask";
-    public static final int MAX_NUMBER_OF_ELEMENTS = 1;
 
     public PBoxPDXObject(
             org.apache.pdfbox.pdmodel.graphics.PDXObject simplePDObject) {
@@ -45,7 +45,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 
     @Override
     public String getSubtype() {
-        COSDictionary dict = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject)
+        COSDictionary dict = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) this.simplePDObject)
                 .getCOSStream();
         return getSubtypeString(dict.getDictionaryObject(COSName.SUBTYPE));
     }
@@ -75,7 +75,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
     protected List<PDXObject> getSMask() {
         List<PDXObject> mask = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
-            COSStream cosStream = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject)
+            COSStream cosStream = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) this.simplePDObject)
                     .getCOSStream();
             COSBase smaskDictionary = cosStream
                     .getDictionaryObject(COSName.SMASK);
@@ -96,15 +96,16 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
                 .getCOSName(COSName.NAME);
         String nameAsString = name != null ? name.getName() : null;
         PDResources resources = null;
-        if (simplePDObject instanceof PDFormXObject) {
-            resources = ((PDFormXObject) simplePDObject).getResources();
+        if (this.simplePDObject instanceof PDFormXObject) {
+            resources = ((PDFormXObject) this.simplePDObject).getResources();
         }
-        org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject = org.apache.pdfbox.pdmodel.graphics.PDXObject
-                .createXObject(smaskDictionary, nameAsString, resources);
+        org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject =
+				org.apache.pdfbox.pdmodel.graphics.PDXObject.createXObject(
+						smaskDictionary, nameAsString, resources);
         return getTypedPDXObject(pbObject);
     }
 
-    private static PDXObject getTypedPDXObject(
+    public static PDXObject getTypedPDXObject(
             org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject) {
         if (pbObject instanceof PDFormXObject) {
             return new PBoxPDXForm((PDFormXObject) pbObject);
@@ -123,7 +124,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 
     protected List<CosDict> getLinkToDictionary(String key) {
         List<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-        COSDictionary object = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) simplePDObject)
+        COSDictionary object = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) this.simplePDObject)
                 .getCOSStream();
         COSBase item = object.getDictionaryObject(COSName.getPDFName(key));
         if (item instanceof COSDictionary) {

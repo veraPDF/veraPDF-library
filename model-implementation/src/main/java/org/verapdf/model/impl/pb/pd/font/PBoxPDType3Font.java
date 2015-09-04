@@ -18,6 +18,7 @@ import java.util.List;
 public class PBoxPDType3Font extends PBoxPDSimpleFont implements PDType3Font {
 
     public static final String TYPE3_FONT_TYPE = "PDType3Font";
+
     public static final String CHAR_STRINGS = "charStrings";
 
     public PBoxPDType3Font(PDFontLike font) {
@@ -27,17 +28,17 @@ public class PBoxPDType3Font extends PBoxPDSimpleFont implements PDType3Font {
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         if (CHAR_STRINGS.equals(link)) {
-            return getCharStrings();
+            return this.getCharStrings();
         }
         return super.getLinkedObjects(link);
     }
 
     private List<PDContentStream> getCharStrings() {
         List<PDContentStream> list = new ArrayList<>();
-        COSDictionary charProcDict = ((org.apache.pdfbox.pdmodel.font.PDType3Font) pdFontLike)
+        COSDictionary charProcDict = ((org.apache.pdfbox.pdmodel.font.PDType3Font) this.pdFontLike)
                 .getCharProcs();
         for (COSName cosName : charProcDict.keySet()) {
-            PDType3CharProc charProc = ((org.apache.pdfbox.pdmodel.font.PDType3Font) pdFontLike)
+            PDType3CharProc charProc = ((org.apache.pdfbox.pdmodel.font.PDType3Font) this.pdFontLike)
                     .getCharProc(cosName);
             list.add(new PBoxPDContentStream(charProc));
         }

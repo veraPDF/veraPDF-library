@@ -3,8 +3,10 @@ package org.verapdf.model.impl.pb.operator.textshow;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSNumber;
 import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosReal;
+import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
 import org.verapdf.model.operator.Op_DoubleQuote;
 
@@ -36,8 +38,8 @@ public class PBOp_DoubleQuote extends PBOpStringTextShow implements
 	/** Number of operands */
 	public static final int COUNT_OF_OPERATOR_OPERANDS = 3;
 
-	public PBOp_DoubleQuote(List<COSBase> arguments, PDFont font) {
-		super(arguments, font, OP_DOUBLIE_QUOTE_TYPE);
+	public PBOp_DoubleQuote(List<COSBase> arguments, GraphicState state) {
+		super(arguments, state, OP_DOUBLIE_QUOTE_TYPE);
 	}
 
 	@Override

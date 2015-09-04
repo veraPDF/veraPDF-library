@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.pd.font;
 
+import org.apache.pdfbox.pdmodel.font.PDFontDescriptor;
 import org.verapdf.model.pdlayer.PDType1Font;
 
 /**
@@ -19,7 +20,18 @@ public class PBoxPDType1Font extends PBoxPDSimpleFont implements PDType1Font {
 
 	@Override
 	public Boolean getisStandard() {
-		return Boolean.valueOf(((org.apache.pdfbox.pdmodel.font.PDSimpleFont) pdFontLike).isStandard14());
+		return Boolean.valueOf(((org.apache.pdfbox.pdmodel.font.PDSimpleFont) this.pdFontLike)
+				.isStandard14());
+	}
+
+	@Override
+	public String getCharSet() {
+		PDFontDescriptor fontDescriptor = pdFontLike.getFontDescriptor();
+		if (fontDescriptor != null) {
+			return fontDescriptor.getCharSet();
+		} else {
+			return null;
+		}
 	}
 
 }

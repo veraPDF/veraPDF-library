@@ -3,8 +3,11 @@ package org.verapdf.model.impl.pb.operator.textshow;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
+import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosString;
+import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.impl.pb.cos.PBCosString;
 
 import java.util.ArrayList;
@@ -21,8 +24,8 @@ public abstract class PBOpStringTextShow extends PBOpTextShow {
     public static final String SHOW_STRING = "showString";
 
     protected PBOpStringTextShow(List<COSBase> arguments,
-			PDFont font, final String opType) {
-        super(arguments, font, opType);
+			GraphicState state, final String opType) {
+        super(arguments, state, opType);
     }
 
     @Override

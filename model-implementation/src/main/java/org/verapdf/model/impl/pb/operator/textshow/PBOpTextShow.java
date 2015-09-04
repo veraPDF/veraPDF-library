@@ -6,7 +6,9 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.preflight.font.container.FontContainer;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.factory.font.FontFactory;
+import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.impl.pb.operator.base.PBOperator;
 import org.verapdf.model.operator.OpTextShow;
 import org.verapdf.model.pdlayer.PDColorSpace;
@@ -37,17 +39,16 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     /** Name of link to the stroke color space */
     public static final String STROKE_COLOR_SPACE = "strokeCS";
 
-    protected final org.apache.pdfbox.pdmodel.font.PDFont pdfBoxFont;
+    protected final GraphicState state;
 
     protected PBOpTextShow(List<COSBase> arguments,
-            org.apache.pdfbox.pdmodel.font.PDFont font, final String opType) {
+            GraphicState state, final String opType) {
         super(arguments, opType);
-        this.pdfBoxFont = font;
+        this.state = state;
     }
 
 	@Override
-	public List<? extends Object> getLinkedObjects(
-			String link) {
+	public List<? extends Object> getLinkedObjects(String link) {
 		switch (link) {
 			case FONT:
 				return this.getFont();
@@ -63,24 +64,27 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 	}
 
     private List<PDFont> getFont() {
-        List<PDFont> result = new ArrayList<>();
-        PDFont font = FontFactory.parseFont(pdfBoxFont);
-        result.add(font);
+        List<PDFont> result = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        PDFont font = FontFactory.parseFont(this.state.getFont());
+		if (font != null) {
+			result.add(font);
+		}
         return result;
     }
 
     private List<PBGlyph> getUsedGlyphs() {
         List<PBGlyph> res = new ArrayList<>();
-        FontContainer fontContainer = FontHelper.getFontContainer(pdfBoxFont);
-        List<byte[]> strings = getStrings();
+		org.apache.pdfbox.pdmodel.font.PDFont font = this.state.getFont();
+		FontContainer fontContainer = FontHelper.getFontContainer(font);
+        List<byte[]> strings = this.getStrings(this.arguments);
         for (byte[] string : strings) {
             try (InputStream inputStream = new ByteArrayInputStream(string)) {
                 while (inputStream.available() > 0) {
-                    int code = pdfBoxFont.readCode(inputStream);
+                    int code = font.readCode(inputStream);
                     Boolean glyphPresent = fontContainer.hasGlyph(code);
-                    Boolean widthsConsistent = checkWidths(code);
+                    Boolean widthsConsistent = this.checkWidths(code);
                     res.add(new PBGlyph(glyphPresent, widthsConsistent,
-										pdfBoxFont.getName(), code));
+										font.getName(), code));
                 }
             } catch (IOException e) {
                 LOGGER.error("Error processing text show operator's string argument : "
@@ -92,39 +96,59 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     }
 
     private List<PDColorSpace> getFillColorSpace() {
-        return new ArrayList<>();
+		if (this.state.getRenderingMode().isFill()) {
+			return getColorSpace(this.state.getFillColorSpace());
+		} else {
+			return new ArrayList<>();
+		}
     }
 
-    private List<PDColorSpace> getStrokeColorSpace() {
-        return new ArrayList<>();
+	private List<PDColorSpace> getStrokeColorSpace() {
+		if (this.state.getRenderingMode().isStroke()) {
+			return getColorSpace(this.state.getStrokeColorSpace());
+		} else {
+			return new ArrayList<>();
+		}
     }
+
+	private List<PDColorSpace> getColorSpace(org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace fillColorSpace) {
+		List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+		PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(fillColorSpace, this.state.getPattern());
+		if (colorSpace != null) {
+			colorSpaces.add(colorSpace);
+		}
+		return colorSpaces;
+	}
 
     private Boolean checkWidths(int glyphCode) throws IOException {
-        float expectedWidth = pdfBoxFont.getWidth(glyphCode);
-        float foundWidth = pdfBoxFont.getWidthFromFont(glyphCode);
+		org.apache.pdfbox.pdmodel.font.PDFont font = this.state.getFont();
+		float expectedWidth = font.getWidth(glyphCode);
+        float foundWidth = font.getWidthFromFont(glyphCode);
         // consistent is defined to be a difference of no more than 1/1000 unit.
-        if (Math.abs(foundWidth - expectedWidth) > 1) {
-            return Boolean.FALSE;
-        } else {
-            return Boolean.TRUE;
-        }
+		return Math.abs(foundWidth - expectedWidth) > 1 ? Boolean.FALSE : Boolean.TRUE;
     }
 
-    private List<byte[]> getStrings() {
+    private List<byte[]> getStrings(List<COSBase> arguments) {
         List<byte[]> res = new ArrayList<>();
-        COSBase arg = this.arguments.get(0);
-        if (arg instanceof COSArray) {
-            for (COSBase element : (COSArray) arg) {
-                if (element instanceof COSString) {
-                    res.add(((COSString) element).getBytes());
-                }
-            }
-        } else {
-            if (arg instanceof COSString) {
-                res.add(((COSString) arg).getBytes());
-            }
-        }
+		if (!arguments.isEmpty()) {
+			COSBase arg = arguments.get(0);
+			if (arg instanceof COSArray) {
+				this.addArrayElements(res, (COSArray) arg);
+			} else {
+				if (arg instanceof COSString) {
+					res.add(((COSString) arg).getBytes());
+				}
+			}
+		}
         return res;
     }
+
+	private void addArrayElements(List<byte[]> res, COSArray arg) {
+		for (COSBase element : arg) {
+			if (element instanceof COSString) {
+				res.add(((COSString) element).getBytes());
+			}
+		}
+	}
 
 }

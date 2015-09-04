@@ -31,8 +31,9 @@ public class PBoxPDIndexed extends PBoxPDColorSpace implements PDIndexed {
     }
 
     private List<PDColorSpace> getBase() {
-        List<PDColorSpace> base = new ArrayList<>();
-        org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace baseColorSpace = ((org.apache.pdfbox.pdmodel.graphics.color.PDIndexed) simplePDObject)
+        List<PDColorSpace> base = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+        org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace baseColorSpace =
+				((org.apache.pdfbox.pdmodel.graphics.color.PDIndexed) this.simplePDObject)
                 .getBaseColorSpace();
         PDColorSpace colorSpace = ColorSpaceFactory
                 .getColorSpace(baseColorSpace);

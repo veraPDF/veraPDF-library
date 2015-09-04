@@ -4,6 +4,7 @@ import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.image.PDInlineImage;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -43,6 +44,13 @@ public class PBoxPDInlineImageTest extends PBoxPDXImageTest {
 	@Test
 	public void testFMethod() {
 		Assert.assertEquals("LZW", ((org.verapdf.model.pdlayer.PDInlineImage) actual).getF());
+	}
+
+	@AfterClass
+	public static void tearDown() throws IOException {
+		expectedType = null;
+		expectedID = null;
+		actual = null;
 	}
 
 }

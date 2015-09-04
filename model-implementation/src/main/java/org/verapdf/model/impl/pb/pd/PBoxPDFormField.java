@@ -14,10 +14,11 @@ import java.util.List;
  */
 public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
 
+	public static final String FORM_FIELD_TYPE = "PDFormField";
+
     public static final String ADDITIONAL_ACTION = "AA";
 
     public static final int MAX_NUMBER_OF_ACTIONS = 4;
-    public static final String FORM_FIELD_TYPE = "PDFormField";
 
     public PBoxPDFormField(PDField simplePDObject) {
         super(simplePDObject, FORM_FIELD_TYPE);
@@ -25,7 +26,7 @@ public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
 
     @Override
     public String getFT() {
-        return ((PDField) simplePDObject).getFieldType();
+        return ((PDField) this.simplePDObject).getFieldType();
     }
 
     @Override
@@ -38,22 +39,22 @@ public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
 
     private List<PDAction> getAdditionalAction() {
         List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ACTIONS);
-        PDFormFieldAdditionalActions pbActions = ((PDField) simplePDObject)
+        PDFormFieldAdditionalActions pbActions = ((PDField) this.simplePDObject)
                 .getActions();
         if (pbActions != null) {
             org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;
 
             buffer = pbActions.getC();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = pbActions.getF();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = pbActions.getK();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
 
             buffer = pbActions.getV();
-            addAction(actions, buffer);
+            this.addAction(actions, buffer);
         }
 
         return actions;

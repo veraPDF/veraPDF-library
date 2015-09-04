@@ -17,9 +17,9 @@ public class PBoxPDGroup extends PBoxPDObject implements PDGroup {
 
     private static final Logger LOGGER = Logger.getLogger(PBoxPDGroup.class);
 
-    public static final String COLOR_SPACE = "colorSpace";
-    public static final int MAX_COLOR_SPACES = 1;
-    public static final String GROUP_TYPE = "PDGroup";
+	public static final String GROUP_TYPE = "PDGroup";
+
+	public static final String COLOR_SPACE = "colorSpace";
 
     public PBoxPDGroup(
             org.apache.pdfbox.pdmodel.graphics.form.PDGroup simplePDObject) {
@@ -28,7 +28,7 @@ public class PBoxPDGroup extends PBoxPDObject implements PDGroup {
 
     @Override
     public String getS() {
-        return ((org.apache.pdfbox.pdmodel.graphics.form.PDGroup) simplePDObject)
+        return ((org.apache.pdfbox.pdmodel.graphics.form.PDGroup) this.simplePDObject)
                 .getSubType().getName();
     }
 
@@ -41,9 +41,10 @@ public class PBoxPDGroup extends PBoxPDObject implements PDGroup {
     }
 
     private List<PDColorSpace> getColorSpace() {
-        List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_COLOR_SPACES);
+        List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
-            org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace pbColorSpace = ((org.apache.pdfbox.pdmodel.graphics.form.PDGroup) simplePDObject)
+            org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace pbColorSpace =
+					((org.apache.pdfbox.pdmodel.graphics.form.PDGroup) this.simplePDObject)
                     .getColorSpace();
             PDColorSpace colorSpace = ColorSpaceFactory
                     .getColorSpace(pbColorSpace);
