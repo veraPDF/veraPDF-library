@@ -2,10 +2,7 @@ package org.verapdf.features.tools;
 
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Feature Tree Node for Feature Reporter
@@ -21,11 +18,10 @@ public final class FeatureTreeNode {
     private List<FeatureTreeNode> children;
 
     private FeatureTreeNode(final String name) throws FeaturesTreeNodeException {
-        // This is still ugly (casting null to string type
-        this(name, (String)null);
+        this(name, null);
     }
 
-    private FeatureTreeNode(final String name, final String value) throws FeaturesTreeNodeException {
+    private FeatureTreeNode(final String name, final Object value) throws FeaturesTreeNodeException {
         this(name, value, null);
     }
 
@@ -45,11 +41,9 @@ public final class FeatureTreeNode {
     }
 
     /**
-     * @param name
-     *            the name of the node
+     * @param name the name of the node
      * @return a new FeatureTreeNode with no parent
-     * @throws FeaturesTreeNodeException
-     *             when
+     * @throws FeaturesTreeNodeException when
      */
     public static FeatureTreeNode newRootInstance(String name)
             throws FeaturesTreeNodeException {
@@ -57,14 +51,12 @@ public final class FeatureTreeNode {
     }
 
     /**
-     * @param name
-     *            the name of the node
+     * @param name the name of the node
      * @return a new FeatureTreeNode with no parent
-     * @throws FeaturesTreeNodeException
-     *             when
+     * @throws FeaturesTreeNodeException when
      */
-    public static final FeatureTreeNode newRootInstanceWIthValue(
-            final String name, final String value)
+    public static FeatureTreeNode newRootInstanceWIthValue(
+            final String name, final Object value)
             throws FeaturesTreeNodeException {
         return new FeatureTreeNode(name, value);
     }
@@ -72,30 +64,23 @@ public final class FeatureTreeNode {
     /**
      * Creates new Feature Tree Node
      *
-     * @param name
-     *            - name of the node
-     * @param parent
-     *            - parent of the node
-     * @throws FeaturesTreeNodeException
-     *             - occurs when parent of the new node has String value
+     * @param name   - name of the node
+     * @param parent - parent of the node
+     * @throws FeaturesTreeNodeException - occurs when parent of the new node has String value
      */
     public static FeatureTreeNode newChildInstance(String name,
-            FeatureTreeNode parent) throws FeaturesTreeNodeException {
+                                                   FeatureTreeNode parent) throws FeaturesTreeNodeException {
         return new FeatureTreeNode(name, parent);
     }
 
     /**
      * Constructs node with string value
      *
-     * @param name
-     *            - name of the node
-     * @param value
-     *            - value of the node
-     * @param parent
-     *            - parend of the node
+     * @param name   - name of the node
+     * @param value  - value of the node
+     * @param parent - parend of the node
      * @return a new feature
-     * @throws FeaturesTreeNodeException
-     *             - occurs when parent of the new node has String value
+     * @throws FeaturesTreeNodeException - occurs when parent of the new node has String value
      */
     public static FeatureTreeNode newChildInstanceWithValue(String name,
                                                             Object value, FeatureTreeNode parent)
@@ -141,10 +126,8 @@ public final class FeatureTreeNode {
     /**
      * Add a child to the node
      *
-     * @param child
-     *            - new child node for the current node
-     * @throws FeaturesTreeNodeException
-     *             - occurs when child adds to node with value
+     * @param child - new child node for the current node
+     * @throws FeaturesTreeNodeException - occurs when child adds to node with value
      */
     public void addChild(FeatureTreeNode child)
             throws FeaturesTreeNodeException {
@@ -165,10 +148,8 @@ public final class FeatureTreeNode {
     /**
      * Add value to the node
      *
-     * @param value
-     *            - String value
-     * @throws FeaturesTreeNodeException
-     *             - occurs when value adds to the node with childrens
+     * @param value - String value
+     * @throws FeaturesTreeNodeException - occurs when value adds to the node with childrens
      */
     public void setValue(Object value) throws FeaturesTreeNodeException {
         if (children == null) {
@@ -182,7 +163,7 @@ public final class FeatureTreeNode {
 
     /**
      * @return Map object with keys equals to attributes names and values for
-     *         them equals to attributes values
+     * them equals to attributes values
      */
     public Map<String, String> getAttributes() {
         return attributes;
@@ -191,10 +172,8 @@ public final class FeatureTreeNode {
     /**
      * Added attribute for the node
      *
-     * @param attributeName
-     *            name of the attribute
-     * @param attributeValue
-     *            value of the attribute
+     * @param attributeName  name of the attribute
+     * @param attributeValue value of the attribute
      */
     public void addAttribute(String attributeName, String attributeValue) {
         attributes.put(attributeName, attributeValue);
@@ -210,8 +189,6 @@ public final class FeatureTreeNode {
                 + ((this.children == null) ? 0 : this.children.hashCode());
         result = prime * result
                 + ((this.name == null) ? 0 : this.name.hashCode());
-        result = prime * result
-                + ((this.parent == null) ? 0 : this.parent.hashCode());
         result = prime * result
                 + ((this.value == null) ? 0 : this.value.hashCode());
         return result;
@@ -241,16 +218,17 @@ public final class FeatureTreeNode {
                 return false;
         } else if (!this.name.equals(other.name))
             return false;
-        if (this.parent == null) {
-            if (other.parent != null)
-                return false;
-        } else if (!this.parent.equals(other.parent))
-            return false;
         if (this.value == null) {
             if (other.value != null)
                 return false;
-        } else if (!this.value.equals(other.value))
-            return false;
+        } else {
+            if (this.value instanceof byte[] && other.value instanceof byte[]) {
+                if (!Arrays.equals((byte[]) this.value, (byte[]) other.value)) {
+                    return false;
+                }
+            } else if (!this.value.equals(other.value))
+                return false;
+        }
         return true;
     }
 }

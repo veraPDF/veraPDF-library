@@ -116,7 +116,7 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
                     String.valueOf(item.isBold()), itemNode);
 
             for (PDOutlineItem child : item.children()) {
-                if (!items.contains(item)) {
+                if (!items.contains(child)) {
                     createItem(child, itemNode, collection, items);
                 }
             }

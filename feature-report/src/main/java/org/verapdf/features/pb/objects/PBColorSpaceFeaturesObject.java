@@ -207,7 +207,11 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
             FeatureTreeNode.newChildInstanceWithValue("gamma", String.valueOf(calGray.getGamma()), root);
         } else if (cie instanceof PDCalRGB) {
             PDCalRGB calRGB = (PDCalRGB) cie;
-            FeatureTreeNode.newChildInstanceWithValue("gamma", String.valueOf(calRGB.getGamma()), root);
+            FeatureTreeNode gamma = FeatureTreeNode.newChildInstance("gamma", root);
+            PDGamma pdGamma = calRGB.getGamma();
+            FeatureTreeNode.newChildInstanceWithValue("red", String.valueOf(pdGamma.getR()), gamma);
+            FeatureTreeNode.newChildInstanceWithValue("green", String.valueOf(pdGamma.getG()), gamma);
+            FeatureTreeNode.newChildInstanceWithValue("blue", String.valueOf(pdGamma.getB()), gamma);
             parseFloatArray(calRGB.getMatrix(), FeatureTreeNode.newChildInstance("matrix", root));
         } else if (cie instanceof PDLab) {
             PDLab lab = (PDLab) cie;
