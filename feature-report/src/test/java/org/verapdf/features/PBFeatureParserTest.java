@@ -16,9 +16,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -31,6 +29,10 @@ public class PBFeatureParserTest {
     private static final String ENTRY = "entry";
     private static final String ID = "id";
     private static final String METADATA = "metadata";
+    private static final String LLX = "llx";
+    private static final String LLY = "lly";
+    private static final String URX = "urx";
+    private static final String URY = "ury";
 
     @Test
     public void featuresObjectsTypeTest() {
@@ -160,6 +162,118 @@ public class PBFeatureParserTest {
                 "page1", null, "Text", "307.974", "424.78", "325.974", "442.78", "annotation with gray colorspace\r",
                 "85f36ad6-ae92-479e-9b24-ba07c8702837", "D:20150831140515+03'00'", xobj39, "annotIndir40", "1.0", null, null, null,
                 "false", "false", "true", "true", "true", "false", "false", "false", "false", "false")));
+
+        assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE).size());
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE).contains(getPage()));
+
+        assertEquals(5, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE).size());
+    }
+
+    private static FeatureTreeNode getPage() throws FeaturesTreeNodeException, URISyntaxException, FileNotFoundException {
+        FeatureTreeNode root = FeatureTreeNode.newRootInstance("page");
+        root.addAttribute(ID, "page1");
+        root.addAttribute("orderNumber", "1");
+
+        addBox("mediaBox", root);
+        addBox("cropBox", root);
+        addBox("trimBox", root);
+        addBox("bleedBox", root);
+        addBox("artBox", root);
+        FeatureTreeNode.newChildInstanceWithValue("rotation", "0", root);
+        FeatureTreeNode.newChildInstanceWithValue("scaling", "75.0", root);
+        FeatureTreeNode.newChildInstanceWithValue("thumbnail", "false", root);
+        FeatureTreeNode.newChildInstanceWithValue("metadata", getMetadataBytesFromFile("/page1_metadata_bytes"), root);
+
+        List<String> annotations = new ArrayList<>();
+        annotations.add("annotIndir13");
+        annotations.add("annotIndir42");
+        annotations.add("annotIndir37");
+        annotations.add("annotIndir38");
+        annotations.add("annotIndir39");
+        annotations.add("annotIndir41");
+        annotations.add("annotIndir40");
+        makeList("annotation", annotations, root);
+
+        FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
+
+        List<String> graphicsStates = new ArrayList<>();
+        graphicsStates.add("exGStIndir47");
+        makeList("graphicsState", graphicsStates, resources);
+
+        List<String> colorSpaces = new ArrayList<>();
+        colorSpaces.add("devrgb");
+        colorSpaces.add("clrspDir8");
+        colorSpaces.add("clrspDir19");
+        colorSpaces.add("clrspDir5");
+        colorSpaces.add("clrspDir3");
+        colorSpaces.add("clrspDir16");
+        colorSpaces.add("clrspDir4");
+        colorSpaces.add("clrspDir15");
+        colorSpaces.add("clrspDir14");
+        colorSpaces.add("clrspDir2");
+        colorSpaces.add("clrspDir13");
+        colorSpaces.add("clrspDir0");
+        colorSpaces.add("clrspDir20");
+        colorSpaces.add("clrspDir11");
+        colorSpaces.add("clrspDir10");
+        colorSpaces.add("devcmyk");
+        colorSpaces.add("devgray");
+        makeList("colorSpace", colorSpaces, resources);
+
+        List<String> patterns = new ArrayList<>();
+        patterns.add("ptrnIndir49");
+        patterns.add("ptrnIndir50");
+        makeList("pattern", patterns, resources);
+
+        List<String> shadings = new ArrayList<>();
+        shadings.add("shdngIndir52");
+        makeList("shading", shadings, resources);
+
+        List<String> xobject = new ArrayList<>();
+        xobject.add("xobjIndir60");
+        xobject.add("xobjIndir58");
+        xobject.add("xobjIndir59");
+        xobject.add("xobjIndir62");
+        xobject.add("xobjIndir56");
+        xobject.add("xobjIndir61");
+        xobject.add("xobjIndir57");
+        xobject.add("xobjIndir63");
+        xobject.add("xobjIndir55");
+        makeList("xobject", xobject, resources);
+
+        List<String> fonts = new ArrayList<>();
+        fonts.add("fntIndir90");
+        fonts.add("fntIndir91");
+        fonts.add("fntIndir92");
+        fonts.add("fntIndir88");
+        fonts.add("fntIndir89");
+        makeList("font", fonts, resources);
+
+        List<String> procSets = new ArrayList<>();
+        procSets.add("prsetDir0");
+        makeList("procSet", procSets, resources);
+
+        List<String> propertiesDicts = new ArrayList<>();
+        propertiesDicts.add("propDir0");
+        makeList("propertiesDict", propertiesDicts, resources);
+
+        return root;
+    }
+
+    private static void makeList(String name, List<String> values, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+        FeatureTreeNode head = FeatureTreeNode.newChildInstance(name + "s", parent);
+        for (String el : values) {
+            FeatureTreeNode element = FeatureTreeNode.newChildInstance(name, head);
+            element.addAttribute(ID, el);
+        }
+    }
+
+    private static void addBox(String name, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+        FeatureTreeNode box = FeatureTreeNode.newChildInstance(name, parent);
+        box.addAttribute(LLX, "0.0");
+        box.addAttribute(LLY, "0.0");
+        box.addAttribute(URX, "499.977");
+        box.addAttribute(URY, "499.977");
     }
 
     private static FeatureTreeNode getAnnotation(String id, String parentPage, String parentAnnotation,
@@ -184,10 +298,10 @@ public class PBFeatureParserTest {
         }
         PBCreateNodeHelper.addNotEmptyNode("subType", subtype, root);
         FeatureTreeNode rec = FeatureTreeNode.newChildInstance("rectangle", root);
-        rec.addAttribute("llx", llx);
-        rec.addAttribute("lly", lly);
-        rec.addAttribute("urx", urx);
-        rec.addAttribute("ury", ury);
+        rec.addAttribute(LLX, llx);
+        rec.addAttribute(LLY, lly);
+        rec.addAttribute(URX, urx);
+        rec.addAttribute(URY, ury);
         PBCreateNodeHelper.addNotEmptyNode("contents", contents, root);
         PBCreateNodeHelper.addNotEmptyNode("annotationName", annotationName, root);
         PBCreateNodeHelper.addNotEmptyNode("modifiedDate", modifiedDate, root);
