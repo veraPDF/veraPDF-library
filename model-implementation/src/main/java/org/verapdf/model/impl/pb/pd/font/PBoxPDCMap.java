@@ -6,7 +6,7 @@ import org.verapdf.model.external.CMapFile;
 import org.verapdf.model.impl.pb.pd.PBoxPDObject;
 import org.verapdf.model.pdlayer.PDCMap;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,7 +32,7 @@ public class PBoxPDCMap extends PBoxPDObject implements PDCMap {
 
     private static List<CMapFile> getEmbeddedFile() {
         // TODO : implement me
-		return new ArrayList<>();
+		return Collections.emptyList();
     }
 
     @Override

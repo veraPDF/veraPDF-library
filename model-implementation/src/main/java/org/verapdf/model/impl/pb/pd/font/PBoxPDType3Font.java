@@ -25,6 +25,11 @@ public class PBoxPDType3Font extends PBoxPDSimpleFont implements PDType3Font {
         super(font, TYPE3_FONT_TYPE);
     }
 
+	@Override
+	public Boolean getisStandard() {
+		return Boolean.FALSE;
+	}
+
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         if (CHAR_STRINGS.equals(link)) {
@@ -43,11 +48,6 @@ public class PBoxPDType3Font extends PBoxPDSimpleFont implements PDType3Font {
             list.add(new PBoxPDContentStream(charProc));
         }
         return list;
-    }
-
-    @Override
-    public Boolean getisStandard() {
-        return Boolean.FALSE;
     }
 
 }
