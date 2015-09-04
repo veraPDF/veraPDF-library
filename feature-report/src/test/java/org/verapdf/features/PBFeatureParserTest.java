@@ -500,6 +500,7 @@ public class PBFeatureParserTest {
         for (int i = 0; scan.hasNextInt(); ++i) {
             res[i] = (byte) scan.nextInt();
         }
+        System.out.println("DEBUG INFO " + res);
         return res;
     }
 
