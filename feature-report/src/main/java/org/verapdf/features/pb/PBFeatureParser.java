@@ -793,30 +793,31 @@ public final class PBFeatureParser {
 
     private void getAppearanceStreamDependencies(PDAppearanceStream stream, COSBase entryLink, String annotationID) {
         String id = getId(entryLink, XOBJECT_ID, formXObjects.size());
-        formXObjects.put(id, stream);
-
         makePairDependence(id, annotationID, formXObjectAnnotationParent, annotXObjectsChild);
 
-        getResourceDictionaryDependencies(stream.getResources(),
-                id,
-                formXObjectExtGStateChild,
-                formXObjectColorSpaceChild,
-                formXObjectPatternChild,
-                formXObjectShadingChild,
-                formXObjectXObjectChild,
-                formXObjectFontChild,
-                formXObjectProcSetChild,
-                formXObjectPropertiesChild,
-                exGStateXObjectParent,
-                colorSpaceXObjectParent,
-                tilingPatternXObjectParent,
-                shadingPatternXObjectParent,
-                shadingXObjectParent,
-                imageXObjectXObjectParent,
-                formXObjectXObjectParent,
-                fontXObjectParent,
-                procSetXObjectParent,
-                propertyXObjectParent);
+        if (!formXObjects.containsKey(id)) {
+            formXObjects.put(id, stream);
+            getResourceDictionaryDependencies(stream.getResources(),
+                    id,
+                    formXObjectExtGStateChild,
+                    formXObjectColorSpaceChild,
+                    formXObjectPatternChild,
+                    formXObjectShadingChild,
+                    formXObjectXObjectChild,
+                    formXObjectFontChild,
+                    formXObjectProcSetChild,
+                    formXObjectPropertiesChild,
+                    exGStateXObjectParent,
+                    colorSpaceXObjectParent,
+                    tilingPatternXObjectParent,
+                    shadingPatternXObjectParent,
+                    shadingXObjectParent,
+                    imageXObjectXObjectParent,
+                    formXObjectXObjectParent,
+                    fontXObjectParent,
+                    procSetXObjectParent,
+                    propertyXObjectParent);
+        }
     }
 
     private void getResourceDictionaryDependencies(PDResources resources,
@@ -1306,8 +1307,7 @@ public final class PBFeatureParser {
                         if (!exGStates.containsKey(exGStateID) && shadingPattern.getExtendedGraphicsState() != null) {
                             exGStates.put(exGStateID, shadingPattern.getExtendedGraphicsState());
 
-                            if (shadingPattern.getExtendedGraphicsState().getFontSetting() == null ||
-                                    !(shadingPattern.getExtendedGraphicsState().getFontSetting().getCOSObject() instanceof COSArray)) {
+                            if (shadingPattern.getExtendedGraphicsState().getFontSetting() == null) {
                                 return;
                             }
 
@@ -1316,7 +1316,7 @@ public final class PBFeatureParser {
                             if (fontExtGStateParent.get(fontID) == null) {
                                 fontExtGStateParent.put(fontID, new HashSet<String>());
                             }
-                            fontExtGStateParent.get(fontID).add(id);
+                            fontExtGStateParent.get(fontID).add(exGStateID);
                             exGStateFontChild.put(exGStateID, fontID);
 
                             if (!fonts.containsKey(fontID)) {
