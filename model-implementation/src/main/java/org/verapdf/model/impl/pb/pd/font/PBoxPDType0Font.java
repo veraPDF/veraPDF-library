@@ -25,9 +25,46 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
     public static final String DESCENDANT_FONTS = "DescendantFonts";
     public static final String ENCODING = "Encoding";
 
-    public PBoxPDType0Font(PDFontLike font) {
-        super(font, TYPE_0_FONT_TYPE);
-    }
+	public PBoxPDType0Font(PDFontLike font) {
+	    super(font, TYPE_0_FONT_TYPE);
+	}
+
+	@Override
+	public Boolean getareRegistryOrderingCompatible() {
+		String parentOrdering = null;
+		String parentRegistry = null;
+		COSDictionary dictionary = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike)
+				.getCOSObject();
+		COSBase encoding = dictionary.getDictionaryObject(COSName.ENCODING);
+		if (encoding instanceof COSStream) {
+			COSBase cidSystemInfo = ((COSStream) encoding)
+					.getDictionaryObject(COSName.CIDSYSTEMINFO);
+			if (cidSystemInfo instanceof COSDictionary) {
+				parentOrdering = ((COSDictionary) cidSystemInfo)
+						.getString(COSName.ORDERING);
+				parentRegistry = ((COSDictionary) cidSystemInfo)
+						.getString(COSName.REGISTRY);
+			}
+		}
+		if (this.cMap != null) {
+			parentOrdering = this.cMap.getOrdering();
+			parentRegistry = this.cMap.getRegistry();
+		}
+		String descOrdering = null;
+		String descRegistry = null;
+		PDCIDSystemInfo info = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike)
+				.getDescendantFont().getCIDSystemInfo();
+		if (info != null) {
+			descOrdering = info.getOrdering();
+			descRegistry = info.getRegistry();
+		}
+		if (parentOrdering != null && parentRegistry != null
+				&& parentOrdering.equals(descOrdering)
+				&& parentRegistry.equals(descRegistry)) {
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+	}
 
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
@@ -60,43 +97,6 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
             list.add(new PBoxPDCMap(charMap));
         }
         return list;
-    }
-
-    @Override
-    public Boolean getareRegistryOrderingCompatible() {
-        String parentOrdering = null;
-        String parentRegistry = null;
-        COSDictionary dictionary = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike)
-                .getCOSObject();
-        COSBase encoding = dictionary.getDictionaryObject(COSName.ENCODING);
-        if (encoding instanceof COSStream) {
-            COSBase cidSystemInfo = ((COSStream) encoding)
-                    .getDictionaryObject(COSName.CIDSYSTEMINFO);
-            if (cidSystemInfo instanceof COSDictionary) {
-                parentOrdering = ((COSDictionary) cidSystemInfo)
-                        .getString(COSName.ORDERING);
-                parentRegistry = ((COSDictionary) cidSystemInfo)
-                        .getString(COSName.REGISTRY);
-            }
-        }
-        if (this.cMap != null) {
-            parentOrdering = this.cMap.getOrdering();
-            parentRegistry = this.cMap.getRegistry();
-        }
-        String descOrdering = null;
-        String descRegistry = null;
-        PDCIDSystemInfo info = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike)
-                .getDescendantFont().getCIDSystemInfo();
-        if (info != null) {
-            descOrdering = info.getOrdering();
-            descRegistry = info.getRegistry();
-        }
-        if (parentOrdering != null && parentRegistry != null
-                && parentOrdering.equals(descOrdering)
-                && parentRegistry.equals(descRegistry)) {
-            return Boolean.TRUE;
-        }
-        return Boolean.FALSE;
     }
 
 }

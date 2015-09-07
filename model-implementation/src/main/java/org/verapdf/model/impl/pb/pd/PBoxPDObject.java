@@ -52,9 +52,9 @@ public class PBoxPDObject extends GenericModelObject implements PDObject {
 
     protected void addAction(List<PDAction> actions,
             org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer) {
-        if (buffer != null) {
-            actions.add(buffer instanceof PDActionNamed ? new PBoxPDNamedAction(
-                    (PDActionNamed) buffer) : new PBoxPDAction(buffer));
-        }
+        PDAction action = PBoxPDAction.getAction(buffer);
+		if (action != null) {
+			actions.add(action);
+		}
     }
 }

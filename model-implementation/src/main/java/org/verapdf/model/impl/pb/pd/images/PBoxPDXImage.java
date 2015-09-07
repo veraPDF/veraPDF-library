@@ -88,18 +88,18 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
         return colorSpaces;
     }
 
-    protected List<PDXImage> getAlternates() {
+    protected List getAlternates() {
         final List<PDXImage> alternates = new ArrayList<>();
         final COSStream imageStream = ((PDImageXObject) this.simplePDObject)
                 .getCOSStream();
         final COSBase buffer = imageStream.getDictionaryObject(COSName
 				.getPDFName(ALTERNATES));
-        addAlternates(alternates, buffer, ((PDImageXObject) this.simplePDObject)
+        this.addAlternates(alternates, buffer, ((PDImageXObject) this.simplePDObject)
 				.getResources());
         return alternates;
     }
 
-    private static void addAlternates(List<PDXImage> alternates, COSBase buffer,
+    private void addAlternates(List<PDXImage> alternates, COSBase buffer,
 							   PDResources resources) {
         if (buffer instanceof COSArray) {
             for (COSBase element : (COSArray) buffer) {
@@ -107,28 +107,27 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 					element = ((COSObject) element).getObject();
 				}
 				if (element instanceof COSDictionary) {
-					addAlternate(alternates, (COSDictionary) element,
+					this.addAlternate(alternates, (COSDictionary) element,
 							resources);
 				}
             }
         }
     }
 
-	private static void addAlternate(List<PDXImage> alternates, COSDictionary buffer,
+	private void addAlternate(List<PDXImage> alternates, COSDictionary buffer,
 							  PDResources resources) {
-		COSStream alternatesImages = (COSStream) buffer
-				.getDictionaryObject(COSName.IMAGE);
-		try {
-			if (alternatesImages != null) {
-				final PDStream stream = new PDStream(alternatesImages);
+		COSBase alternatesImages = buffer.getDictionaryObject(COSName.IMAGE);
+		if (alternatesImages instanceof COSStream) {
+			try {
+				final PDStream stream = new PDStream((COSStream) alternatesImages);
 				PDImageXObject imageXObject = new PDImageXObject(stream,
 						resources);
 				alternates.add(new PBoxPDXImage(imageXObject));
+			} catch (IOException e) {
+				LOGGER.error(
+						"Error in creating Alternate XObject. "
+								+ e.getMessage(), e);
 			}
-		} catch (IOException e) {
-			LOGGER.error(
-					"Error in creating Alternate XObject. "
-							+ e.getMessage(), e);
 		}
 	}
 

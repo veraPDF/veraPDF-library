@@ -5,7 +5,7 @@ import org.verapdf.model.pdlayer.PDInlineImage;
 import org.verapdf.model.pdlayer.PDXImage;
 import org.verapdf.model.pdlayer.PDXObject;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -41,16 +41,16 @@ public class PBoxPDInlineImage extends PBoxPDXImage implements PDInlineImage {
 
 	@Override
 	protected List<PDXImage> getAlternates() {
-		return new ArrayList<>(0);
+		return Collections.emptyList();
 	}
 
 	@Override
 	protected List<PDXObject> getSMask() {
-		return new ArrayList<>(0);
+		return Collections.emptyList();
 	}
 
 	@Override
 	protected List<CosDict> getOPI() {
-		return new ArrayList<>(0);
+		return Collections.emptyList();
 	}
 }
