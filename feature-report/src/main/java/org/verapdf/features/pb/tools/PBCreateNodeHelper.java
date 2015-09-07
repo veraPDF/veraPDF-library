@@ -18,6 +18,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -52,7 +53,7 @@ public final class PBCreateNodeHelper {
 	}
 
 	private static String getXMLFormat(Calendar calendar) throws DatatypeConfigurationException {
-		GregorianCalendar greg = new GregorianCalendar();
+		GregorianCalendar greg = new GregorianCalendar(Locale.US);
 		greg.setTime(calendar.getTime());
 		greg.setTimeZone(calendar.getTimeZone());
 		XMLGregorianCalendar xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(greg);

@@ -61,12 +61,8 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 	private static final int CREATION_HOUR = 30;
 	private static final int CREATION_MIN = 32;
 	private static final int CREATION_SEC = 34;
-	private static final int FIRST_RECORD_STRING_LENGTH_IN_MULTILOCALIZEDUNICODETYPE_BEGIN = 20;
-	private static final int FIRST_RECORD_STRING_LENGTH_IN_MULTILOCALIZEDUNICODETYPE_END = 24;
 	private static final int FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_BEGIN = 8;
 	private static final int FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_END = 12;
-	private static final int FIRST_RECORD_STRING_OFFSET_IN_MULTILOCALIZEDUNICODETYPE_BEGIN = 24;
-	private static final int FIRST_RECORD_STRING_OFFSET_IN_MULTILOCALIZEDUNICODETYPE_END = 28;
 	private static final int NUMBER_OF_RECORDS_IN_MULTILOCALIZEDUNICODETYPE_BEGIN = 8;
 	private static final int NUMBER_OF_RECORDS_IN_MULTILOCALIZEDUNICODETYPE_END = 12;
 
@@ -170,7 +166,8 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 				PBCreateNodeHelper.addNotEmptyNode("dataColorSpace", getString(profileBytes, DATACOLORSPACE_BEGIN, DATACOLORSPACE_END), root);
 				PBCreateNodeHelper.addNotEmptyNode("creator", getString(profileBytes, CREATOR_BEGIN, CREATOR_END), root);
 				PBCreateNodeHelper.createDateNode("creationDate", root, getCreationDate(profileBytes), collection);
-				PBCreateNodeHelper.addNotEmptyNode("defaultRenderingIntent", getString(profileBytes, RENDERINGINTENT_BEGIN, RENDERINGINTENT_END), root);
+				String intent = getIntent(getString(profileBytes, RENDERINGINTENT_BEGIN, RENDERINGINTENT_END));
+				PBCreateNodeHelper.addNotEmptyNode("defaultRenderingIntent", intent, root);
 				PBCreateNodeHelper.addNotEmptyNode("copyright", getStringTag(profileBytes, "cprt"), root);
 				PBCreateNodeHelper.addNotEmptyNode("description", getStringTag(profileBytes, "desc"), root);
 				PBCreateNodeHelper.addNotEmptyNode("profileId", getString(profileBytes, PROFILEID_BEGIN, PROFILEID_END), root);
@@ -195,6 +192,22 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 			reads = is.read();
 		}
 		return baos.toByteArray();
+	}
+
+	private static String getIntent(String str) {
+		if (str == null) {
+			return "Perceptual";
+		}
+		switch (str) {
+			case "\u0000\u0000\u0000\u0001":
+				return "Media-Relative Colorimetric";
+			case "\u0000\u0000\u0000\u0002":
+				return "Saturation";
+			case "\u0000\u0000\u0000\u0003":
+				return "ICC-Absolute Colorimetric";
+			default:
+				return str;
+		}
 	}
 
 	private static String getVersion(byte[] header) {

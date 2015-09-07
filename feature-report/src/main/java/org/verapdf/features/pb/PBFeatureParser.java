@@ -1049,7 +1049,7 @@ public final class PBFeatureParser {
 
 						getResourceDictionaryDependencies(((PDFormXObject) xobj).getResources(),
 								id,
-								fontExtGStateChild,
+								formXObjectExtGStateChild,
 								formXObjectColorSpaceChild,
 								formXObjectPatternChild,
 								formXObjectShadingChild,
