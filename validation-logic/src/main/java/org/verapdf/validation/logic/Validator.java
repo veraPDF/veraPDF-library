@@ -33,306 +33,306 @@ import java.util.*;
  */
 public class Validator {
 
-    private Context cx;
-    private ScriptableObject scope;
+	private Context cx;
+	private ScriptableObject scope;
 
-    private Deque<Object> objectsStack;
-    private Deque<String> objectsContext;
-    private Deque<Set<String>> contextSet;
-    private Map<String, List<Check>> checkMap;
+	private Deque<Object> objectsStack;
+	private Deque<String> objectsContext;
+	private Deque<Set<String>> contextSet;
+	private Map<String, List<Check>> checkMap;
 
-    private Map<String, Script> ruleScripts = new HashMap<>();
-    private Map<String, List<Script>> ruleArgScripts = new HashMap<>();
-    private Map<String, Script> variableScripts = new HashMap<>();
+	private Map<String, Script> ruleScripts = new HashMap<>();
+	private Map<String, List<Script>> ruleArgScripts = new HashMap<>();
+	private Map<String, Script> variableScripts = new HashMap<>();
 
-    private Set<String> idSet;
+	private Set<String> idSet;
 
-    private String rootType;
+	private String rootType;
 
-    private ValidationProfile profile;
+	private ValidationProfile profile;
 
 	private final boolean logPassedChecks;
 
 	private int rulesChecksCount = 0;
 
-    /**
-     * Creates new Validator with given validation profile
-     *
-     * @param profile - validation profile model for validator
-     */
-    private Validator(ValidationProfile profile, boolean logPassedChecks) {
-        this.profile = profile;
+	/**
+	 * Creates new Validator with given validation profile
+	 *
+	 * @param profile validation profile model for validator
+	 */
+	private Validator(ValidationProfile profile, boolean logPassedChecks) {
+		this.profile = profile;
 		this.logPassedChecks = logPassedChecks;
-    }
+	}
 
-    private ValidationInfo validate(Object root) throws NullLinkNameException,
-            NullLinkException, NullLinkedObjectException {
-        this.cx = Context.enter();
-        this.cx.setOptimizationLevel(9);
-        this.scope = cx.initStandardObjects();
-        this.objectsStack = new ArrayDeque<>();
-        this.objectsContext = new ArrayDeque<>();
-        this.contextSet = new ArrayDeque<>();
-        List<String> warnings = new ArrayList<>();
-        this.idSet = new HashSet<>();
-        this.checkMap = new HashMap<>();
+	private ValidationInfo validate(Object root) throws NullLinkNameException,
+			NullLinkException, NullLinkedObjectException {
+		this.cx = Context.enter();
+		this.cx.setOptimizationLevel(9);
+		this.scope = cx.initStandardObjects();
+		this.objectsStack = new ArrayDeque<>();
+		this.objectsContext = new ArrayDeque<>();
+		this.contextSet = new ArrayDeque<>();
+		List<String> warnings = new ArrayList<>();
+		this.idSet = new HashSet<>();
+		this.checkMap = new HashMap<>();
 
-        for (String id : this.profile.getAllRulesId()) {
-            this.checkMap.put(id, new ArrayList<Check>());
-        }
+		for (String id : this.profile.getAllRulesId()) {
+			this.checkMap.put(id, new ArrayList<Check>());
+		}
 
-        initializeAllVariables();
+		initializeAllVariables();
 
-        this.rootType = root.getObjectType();
-        this.objectsStack.push(root);
-        this.objectsContext.push("root");
+		this.rootType = root.getObjectType();
+		this.objectsStack.push(root);
+		this.objectsContext.push("root");
 
-        Set<String> rootIDContext = new HashSet<>();
+		Set<String> rootIDContext = new HashSet<>();
 
-        if (root.getID() != null) {
-            rootIDContext.add(root.getID());
-            this.idSet.add(root.getID());
-        }
+		if (root.getID() != null) {
+			rootIDContext.add(root.getID());
+			this.idSet.add(root.getID());
+		}
 
-        this.contextSet.push(rootIDContext);
+		this.contextSet.push(rootIDContext);
 
-        while (!this.objectsStack.isEmpty()) {
-            checkNext();
-        }
+		while (!this.objectsStack.isEmpty()) {
+			checkNext();
+		}
 
-        Context.exit();
+		Context.exit();
 
-        List<Rule> rules = new ArrayList<>();
+		List<Rule> rules = new ArrayList<>();
 
-        for (Map.Entry<String, List<Check>> id : this.checkMap.entrySet()) {
+		for (Map.Entry<String, List<Check>> id : this.checkMap.entrySet()) {
 
-            rules.add(new Rule(id.getKey(), id.getValue()));
-        }
+			rules.add(new Rule(id.getKey(), id.getValue()));
+		}
 
-        return new ValidationInfo(new Profile(this.profile.getName(),
-                this.profile.getHash()), new Result(
-                new Details(rules, warnings, rulesChecksCount)));
-    }
+		return new ValidationInfo(new Profile(this.profile.getName(),
+				this.profile.getHash()), new Result(
+				new Details(rules, warnings, rulesChecksCount)));
+	}
 
-    private void initializeAllVariables() {
-        for (Variable var : this.profile.getAllVariables()) {
-            if (var == null)
-                continue;
+	private void initializeAllVariables() {
+		for (Variable var : this.profile.getAllVariables()) {
+			if (var == null)
+				continue;
 
-            java.lang.Object res;
-            res = cx.evaluateString(scope, var.getDefaultValue(), null, 0, null);
-            if (res instanceof NativeJavaObject) {
-                res = ((NativeJavaObject) res).unwrap();
-            }
+			java.lang.Object res;
+			res = cx.evaluateString(scope, var.getDefaultValue(), null, 0, null);
+			if (res instanceof NativeJavaObject) {
+				res = ((NativeJavaObject) res).unwrap();
+			}
 
-            scope.put(var.getAttrName(), scope, res);
-        }
-    }
+			scope.put(var.getAttrName(), scope, res);
+		}
+	}
 
-    private boolean checkNext() throws NullLinkException,
-            NullLinkedObjectException, NullLinkNameException {
+	private boolean checkNext() throws NullLinkException,
+			NullLinkedObjectException, NullLinkNameException {
 
-        Object checkObject = this.objectsStack.pop();
-        String checkContext = this.objectsContext.pop();
-        Set<String> checkIDContext = this.contextSet.pop();
+		Object checkObject = this.objectsStack.pop();
+		String checkContext = this.objectsContext.pop();
+		Set<String> checkIDContext = this.contextSet.pop();
 
-        boolean res = checkAllRules(checkObject, checkContext);
+		boolean res = checkAllRules(checkObject, checkContext);
 
-        updateVariables(checkObject);
+		updateVariables(checkObject);
 
-        addAllLinkedObjects(checkObject, checkContext, checkIDContext);
+		addAllLinkedObjects(checkObject, checkContext, checkIDContext);
 
-        return res;
-    }
+		return res;
+	}
 
-    private void updateVariables(Object object) {
-        if (object != null) {
-            for (Variable var : this.profile
-                    .getVariablesForObject(object.getObjectType())) {
+	private void updateVariables(Object object) {
+		if (object != null) {
+			for (Variable var : this.profile
+					.getVariablesForObject(object.getObjectType())) {
 
-                if (var == null)
-                    continue;
+				if (var == null)
+					continue;
 
-                java.lang.Object variable = evalVariableResult(var, object);
-                scope.put(var.getAttrName(), scope, variable);
-            }
-        }
-    }
+				java.lang.Object variable = evalVariableResult(var, object);
+				scope.put(var.getAttrName(), scope, variable);
+			}
+		}
+	}
 
-    private java.lang.Object evalVariableResult(Variable variable, Object object) {
-        Script script;
-        if (!variableScripts.containsKey(variable.getAttrName())) {
-            String source = getStringScript(object, variable.getValue());
-            script = cx.compileString(source, null, 0, null);
-        } else {
-            script = variableScripts.get(variable.getAttrName());
-        }
+	private java.lang.Object evalVariableResult(Variable variable, Object object) {
+		Script script;
+		if (!variableScripts.containsKey(variable.getAttrName())) {
+			String source = getStringScript(object, variable.getValue());
+			script = cx.compileString(source, null, 0, null);
+		} else {
+			script = variableScripts.get(variable.getAttrName());
+		}
 
-        scope.put("obj", scope, object);
+		scope.put("obj", scope, object);
 
-        java.lang.Object res = script.exec(cx, scope);
+		java.lang.Object res = script.exec(cx, scope);
 
-        if (res instanceof NativeJavaObject) {
-            res = ((NativeJavaObject) res).unwrap();
-        }
-        return res;
-    }
+		if (res instanceof NativeJavaObject) {
+			res = ((NativeJavaObject) res).unwrap();
+		}
+		return res;
+	}
 
-    private void addAllLinkedObjects(Object checkObject, String checkContext,
-                                     Set<String> checkIDContext) throws NullLinkNameException,
-            NullLinkException, NullLinkedObjectException {
-        for (int j = checkObject.getLinks().size() - 1; j >= 0; --j) {
-            String link = checkObject.getLinks().get(j);
+	private void addAllLinkedObjects(Object checkObject, String checkContext,
+									 Set<String> checkIDContext) throws NullLinkNameException,
+			NullLinkException, NullLinkedObjectException {
+		for (int j = checkObject.getLinks().size() - 1; j >= 0; --j) {
+			String link = checkObject.getLinks().get(j);
 
-            if (link == null) {
-                throw new NullLinkNameException(
-                        "There is a null link name in an object. Context: "
-                                + checkContext);
-            }
-            List<? extends Object> objects = checkObject.getLinkedObjects(link);
-            if (objects == null) {
-                throw new NullLinkException(
-                        "There is a null link in an object. Context: "
-                                + checkContext);
-            }
+			if (link == null) {
+				throw new NullLinkNameException(
+						"There is a null link name in an object. Context: "
+								+ checkContext);
+			}
+			List<? extends Object> objects = checkObject.getLinkedObjects(link);
+			if (objects == null) {
+				throw new NullLinkException(
+						"There is a null link in an object. Context: "
+								+ checkContext);
+			}
 
-            for (int i = 0; i < objects.size(); ++i) {
-                Object obj = objects.get(i);
+			for (int i = 0; i < objects.size(); ++i) {
+				Object obj = objects.get(i);
 
-                StringBuilder path = new StringBuilder(checkContext);
-                path.append("/");
-                path.append(link);
-                path.append("[");
-                path.append(i);
-                path.append("]");
+				StringBuilder path = new StringBuilder(checkContext);
+				path.append("/");
+				path.append(link);
+				path.append("[");
+				path.append(i);
+				path.append("]");
 
-                if (obj == null) {
-                    throw new NullLinkedObjectException(
-                            "There is a null link in an object. Context of the link: "
-                                    + path);
-                }
+				if (obj == null) {
+					throw new NullLinkedObjectException(
+							"There is a null link in an object. Context of the link: "
+									+ path);
+				}
 
-                if (checkRequired(obj, checkIDContext)) {
-                    this.objectsStack.push(obj);
+				if (checkRequired(obj, checkIDContext)) {
+					this.objectsStack.push(obj);
 
-                    Set<String> newCheckIDContext = new HashSet<>(
-                            checkIDContext);
+					Set<String> newCheckIDContext = new HashSet<>(
+							checkIDContext);
 
-                    if (obj.getID() != null) {
-                        path.append("(");
-                        path.append(obj.getID());
-                        path.append(")");
+					if (obj.getID() != null) {
+						path.append("(");
+						path.append(obj.getID());
+						path.append(")");
 
-                        newCheckIDContext.add(obj.getID());
-                        this.idSet.add(obj.getID());
-                    }
+						newCheckIDContext.add(obj.getID());
+						this.idSet.add(obj.getID());
+					}
 
-                    this.objectsContext.push(path.toString());
-                    this.contextSet.push(newCheckIDContext);
-                }
-            }
-        }
-    }
+					this.objectsContext.push(path.toString());
+					this.contextSet.push(newCheckIDContext);
+				}
+			}
+		}
+	}
 
-    private boolean checkRequired(Object obj, Set<String> checkIDContext) {
+	private boolean checkRequired(Object obj, Set<String> checkIDContext) {
 
-        if (obj.getID() == null) {
-            return true;
-        } else if (obj.isContextDependent() == null
-                || obj.isContextDependent().booleanValue()) {
-            return !checkIDContext.contains(obj.getID());
-        } else {
-            return !this.idSet.contains(obj.getID());
-        }
-    }
+		if (obj.getID() == null) {
+			return true;
+		} else if (obj.isContextDependent() == null
+				|| obj.isContextDependent().booleanValue()) {
+			return !checkIDContext.contains(obj.getID());
+		} else {
+			return !this.idSet.contains(obj.getID());
+		}
+	}
 
-    private boolean checkAllRules(Object checkObject, String checkContext) {
-        boolean res = true;
-        if (this.profile.getRoolsForObject(checkObject.getObjectType()) != null) {
-            for (org.verapdf.validation.profile.model.Rule rule : this.profile
-                    .getRoolsForObject(checkObject.getObjectType())) {
-                if (rule != null) {
-                    res &= checkObjWithRule(checkObject, checkContext, rule);
-                }
-            }
-        }
+	private boolean checkAllRules(Object checkObject, String checkContext) {
+		boolean res = true;
+		if (this.profile.getRoolsForObject(checkObject.getObjectType()) != null) {
+			for (org.verapdf.validation.profile.model.Rule rule : this.profile
+					.getRoolsForObject(checkObject.getObjectType())) {
+				if (rule != null) {
+					res &= checkObjWithRule(checkObject, checkContext, rule);
+				}
+			}
+		}
 
-        for (String checkType : checkObject.getSuperTypes()) {
-            if (this.profile.getRoolsForObject(checkType) != null) {
-                for (org.verapdf.validation.profile.model.Rule rule : this.profile
-                        .getRoolsForObject(checkType)) {
-                    if (rule != null) {
-                        res &= checkObjWithRule(checkObject, checkContext,
-                                rule);
-                    }
-                }
-            }
-        }
+		for (String checkType : checkObject.getSuperTypes()) {
+			if (this.profile.getRoolsForObject(checkType) != null) {
+				for (org.verapdf.validation.profile.model.Rule rule : this.profile
+						.getRoolsForObject(checkType)) {
+					if (rule != null) {
+						res &= checkObjWithRule(checkObject, checkContext,
+								rule);
+					}
+				}
+			}
+		}
 
-        return res;
-    }
+		return res;
+	}
 
-    private static String getScript(Object obj,
-                                    org.verapdf.validation.profile.model.Rule rule) {
-        return getStringScript(obj, "(" + rule.getTest() + ")==true");
-    }
+	private static String getScript(Object obj,
+									org.verapdf.validation.profile.model.Rule rule) {
+		return getStringScript(obj, "(" + rule.getTest() + ")==true");
+	}
 
-    private static String getStringScript(Object obj, String arg) {
-        StringBuilder builder = new StringBuilder();
+	private static String getStringScript(Object obj, String arg) {
+		StringBuilder builder = new StringBuilder();
 
-        builder.append(getScriptPrefix(obj, arg));
-        builder.append(arg);
-        builder.append(getScriptSuffix());
-        return builder.toString();
-    }
+		builder.append(getScriptPrefix(obj, arg));
+		builder.append(arg);
+		builder.append(getScriptSuffix());
+		return builder.toString();
+	}
 
-    private static String getScriptPrefix(Object obj, String test) {
-        StringBuilder builder = new StringBuilder();
+	private static String getScriptPrefix(Object obj, String test) {
+		StringBuilder builder = new StringBuilder();
 
-        for (String prop : obj.getProperties()) {
-            if (test.contains(prop)) {
-                builder.append("var ");
-                builder.append(prop);
-                builder.append(" = obj.get");
-                builder.append(prop);
-                builder.append("();\n");
-            }
-        }
+		for (String prop : obj.getProperties()) {
+			if (test.contains(prop)) {
+				builder.append("var ");
+				builder.append(prop);
+				builder.append(" = obj.get");
+				builder.append(prop);
+				builder.append("();\n");
+			}
+		}
 
-        for (String linkName : obj.getLinks()) {
-            if (test.contains(linkName + "_size")) {
-                builder.append("var ");
-                builder.append(linkName);
-                builder.append("_size = obj.getLinkedObjects(\"");
-                builder.append(linkName);
-                builder.append("\").size();\n");
-            }
-        }
+		for (String linkName : obj.getLinks()) {
+			if (test.contains(linkName + "_size")) {
+				builder.append("var ");
+				builder.append(linkName);
+				builder.append("_size = obj.getLinkedObjects(\"");
+				builder.append(linkName);
+				builder.append("\").size();\n");
+			}
+		}
 
-        builder.append("function test(){return ");
+		builder.append("function test(){return ");
 
-        return builder.toString();
-    }
+		return builder.toString();
+	}
 
-    private static String getScriptSuffix() {
-        return ";}\ntest();";
-    }
+	private static String getScriptSuffix() {
+		return ";}\ntest();";
+	}
 
-    private boolean checkObjWithRule(Object obj, String context,
-                                     org.verapdf.validation.profile.model.Rule rule) {
-        scope.put("obj", scope, obj);
+	private boolean checkObjWithRule(Object obj, String context,
+									 org.verapdf.validation.profile.model.Rule rule) {
+		scope.put("obj", scope, obj);
 
-        Script scr;
-        if (!ruleScripts.containsKey(rule.getAttrID())) {
-            scr = cx.compileString(getScript(obj, rule), null, 0, null);
-            ruleScripts.put(rule.getAttrID(), scr);
-        } else {
-            scr = ruleScripts.get(rule.getAttrID());
-        }
+		Script scr;
+		if (!ruleScripts.containsKey(rule.getAttrID())) {
+			scr = cx.compileString(getScript(obj, rule), null, 0, null);
+			ruleScripts.put(rule.getAttrID(), scr);
+		} else {
+			scr = ruleScripts.get(rule.getAttrID());
+		}
 
-        Boolean res = (Boolean) scr.exec(cx, scope);
+		Boolean res = (Boolean) scr.exec(cx, scope);
 
-        CheckLocation loc = new CheckLocation(this.rootType, context);
+		CheckLocation loc = new CheckLocation(this.rootType, context);
 		Check check = null;
 		if (!res) {
 			check = createFailCheck(obj, loc, rule);
@@ -346,170 +346,170 @@ public class Validator {
 
 		rulesChecksCount++;
 
-        return res;
-    }
+		return res;
+	}
 
-    private Check createFailCheck(Object obj, CheckLocation loc,
-                                  org.verapdf.validation.profile.model.Rule rule) {
-        List<String> argsRes = new ArrayList<>();
-        if (rule.getRuleError() == null) {
-            return new Check(Status.FAILED, loc, new CheckError(null, argsRes));
-        }
-        String errorMessage = rule.getRuleError().getMessage();
+	private Check createFailCheck(Object obj, CheckLocation loc,
+								  org.verapdf.validation.profile.model.Rule rule) {
+		List<String> argsRes = new ArrayList<>();
+		if (rule.getRuleError() == null) {
+			return new Check(Status.FAILED, loc, new CheckError(null, argsRes));
+		}
+		String errorMessage = rule.getRuleError().getMessage();
 
-        List<String> arguments = rule.getRuleError().getArgument();
-        if (!arguments.isEmpty()) {
+		List<String> arguments = rule.getRuleError().getArgument();
+		if (!arguments.isEmpty()) {
 
-            List<Script> argsList;
-            if (!ruleArgScripts.containsKey(rule.getAttrID())) {
-                argsList = new ArrayList<>(arguments.size());
-                for (String arg : arguments) {
-                    String argScript = getStringScript(obj, arg);
-                    Script script = cx.compileString(argScript, null, 0, null);
-                    argsList.add(script);
-                }
-                ruleArgScripts.put(rule.getAttrID(), argsList);
-            } else {
-                argsList = ruleArgScripts.get(rule.getAttrID());
-            }
+			List<Script> argsList;
+			if (!ruleArgScripts.containsKey(rule.getAttrID())) {
+				argsList = new ArrayList<>(arguments.size());
+				for (String arg : arguments) {
+					String argScript = getStringScript(obj, arg);
+					Script script = cx.compileString(argScript, null, 0, null);
+					argsList.add(script);
+				}
+				ruleArgScripts.put(rule.getAttrID(), argsList);
+			} else {
+				argsList = ruleArgScripts.get(rule.getAttrID());
+			}
 
-            for (Script arg : argsList) {
-                java.lang.Object resArg = arg.exec(cx, scope);
+			for (Script arg : argsList) {
+				java.lang.Object resArg = arg.exec(cx, scope);
 
-                String resStringArg;
-                if (resArg instanceof NativeJavaObject) {
-                    resStringArg = ((NativeJavaObject) resArg).unwrap().toString();
-                } else {
-                    resStringArg = resArg.toString();
-                }
+				String resStringArg;
+				if (resArg instanceof NativeJavaObject) {
+					resStringArg = ((NativeJavaObject) resArg).unwrap().toString();
+				} else {
+					resStringArg = resArg.toString();
+				}
 
-                argsRes.add(resStringArg);
-            }
-        }
+				argsRes.add(resStringArg);
+			}
+		}
 
-        CheckError error = new CheckError(errorMessage, argsRes);
+		CheckError error = new CheckError(errorMessage, argsRes);
 
-        return new Check(Status.FAILED, loc, error);
-    }
+		return new Check(Status.FAILED, loc, error);
+	}
 
-    /**
-     * Generates validation info for objects with root {@code root} and
-     * validation profile path {@code validationProfilePath}
-     * <p/>
-     * This method needs to parse validation profile (it works slower than those
-     * ones, which don't parse profile).
-     *
-     * @param root                  the root object for validation
-     * @param validationProfilePath validation profile's file path
-	 * @param isLogPassedChecks 		is need to log passed rules to report
-     * @return validation info structure
-     * @throws ParserConfigurationException        if a DocumentBuilder cannot be created which satisfies the
-     *                                             configuration requested.
-     * @throws IOException                         if any IO errors occur.
-     * @throws FileNotFoundException               if the profileFile is not an existing file
-     * @throws SAXException                        if any parse errors occur.
-     * @throws NullLinkNameException               if there is a null link name in some object
-     * @throws NullLinkException                   if there is a null link
-     * @throws NullLinkedObjectException           if there is a null object in links list
-     * @throws MissedHashTagException              if validation profile must be signed, but it has no hash tag
-     * @throws XMLStreamException                  if exception occurs in parsing a validation profile with xml
-     *                                             stream (in checking signature of the validation profile)
-     * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
-     *                                             signature
-     * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
-     * @throws MultiplyGlobalVariableNameException if there is more than one identical global variable names in
-     *                                             the profile model
-     */
-    public static ValidationInfo validate(Object root,
-                                          String validationProfilePath,
+	/**
+	 * Generates validation info for objects with root {@code root} and
+	 * validation profile path {@code validationProfilePath}
+	 * <p/>
+	 * This method needs to parse validation profile (it works slower than those
+	 * ones, which don't parse profile).
+	 *
+	 * @param root                  the root object for validation
+	 * @param validationProfilePath validation profile's file path
+	 * @param isLogPassedChecks     is need to log passed rules to report
+	 * @return validation info structure
+	 * @throws ParserConfigurationException        if a DocumentBuilder cannot be created which satisfies the
+	 *                                             configuration requested.
+	 * @throws IOException                         if any IO errors occur.
+	 * @throws FileNotFoundException               if the profileFile is not an existing file
+	 * @throws SAXException                        if any parse errors occur.
+	 * @throws NullLinkNameException               if there is a null link name in some object
+	 * @throws NullLinkException                   if there is a null link
+	 * @throws NullLinkedObjectException           if there is a null object in links list
+	 * @throws MissedHashTagException              if validation profile must be signed, but it has no hash tag
+	 * @throws XMLStreamException                  if exception occurs in parsing a validation profile with xml
+	 *                                             stream (in checking signature of the validation profile)
+	 * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
+	 *                                             signature
+	 * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
+	 * @throws MultiplyGlobalVariableNameException if there is more than one identical global variable names in
+	 *                                             the profile model
+	 */
+	public static ValidationInfo validate(Object root,
+										  String validationProfilePath,
 										  boolean isSignCheckOn,
 										  boolean isLogPassedChecks)
-            throws IOException, SAXException, ParserConfigurationException,
-            NullLinkNameException, NullLinkException,
-            NullLinkedObjectException, MissedHashTagException,
-            XMLStreamException, WrongSignatureException, MultiplyGlobalVariableNameException {
-        if (root == null)
-            throw new IllegalArgumentException(
-                    "Parameter (Object root) cannot be null.");
-        if (validationProfilePath == null)
-            throw new IllegalArgumentException(
-                    "Parameter (String validationProfilePath) cannot be null.");
-        return validate(root, ValidationProfileParser.parseFromFilePath(
-                validationProfilePath, isSignCheckOn), isLogPassedChecks);
-    }
+			throws IOException, SAXException, ParserConfigurationException,
+			NullLinkNameException, NullLinkException,
+			NullLinkedObjectException, MissedHashTagException,
+			XMLStreamException, WrongSignatureException, MultiplyGlobalVariableNameException {
+		if (root == null)
+			throw new IllegalArgumentException(
+					"Parameter (Object root) cannot be null.");
+		if (validationProfilePath == null)
+			throw new IllegalArgumentException(
+					"Parameter (String validationProfilePath) cannot be null.");
+		return validate(root, ValidationProfileParser.parseFromFilePath(
+				validationProfilePath, isSignCheckOn), isLogPassedChecks);
+	}
 
-    /**
-     * Generates validation info for objects with root {@code root} and
-     * validation profile file {@code validationProfilePath}
-     * <p/>
-     * This method needs to parse validation profile (it works slower than those
-     * ones, which don't parse profile).
-     *
-     * @param root              the root object for validation
-     * @param validationProfile validation profile's file
+	/**
+	 * Generates validation info for objects with root {@code root} and
+	 * validation profile file {@code validationProfilePath}
+	 * <p/>
+	 * This method needs to parse validation profile (it works slower than those
+	 * ones, which don't parse profile).
+	 *
+	 * @param root              the root object for validation
+	 * @param validationProfile validation profile's file
 	 * @param isLogPassedChecks is need to log passed rules to report
-     * @return validation info structure
-     * @throws ParserConfigurationException        if a DocumentBuilder cannot be created which satisfies the
-     *                                             configuration requested.
-     * @throws IOException                         If any IO errors occur.
-     * @throws FileNotFoundException               if the profileFile is not an existing file
-     * @throws SAXException                        If any parse errors occur.
-     * @throws NullLinkNameException               if there is a null link name in some object
-     * @throws NullLinkException                   if there is a null link
-     * @throws NullLinkedObjectException           if there is a null object in links list
-     * @throws MissedHashTagException              if validation profile must be signed, but it has no hash tag
-     * @throws XMLStreamException                  if exception occurs in parsing a validation profile with xml
-     *                                             stream (in checking signature of the validation profile)
-     * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
-     *                                             signature
-     * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
-     * @throws MultiplyGlobalVariableNameException if there is more than one identical global variable names in
-     *                                             the profile model
-     */
-    public static ValidationInfo validate(Object root, File validationProfile,
-                                          boolean isSignCheckOn,
+	 * @return validation info structure
+	 * @throws ParserConfigurationException        if a DocumentBuilder cannot be created which satisfies the
+	 *                                             configuration requested.
+	 * @throws IOException                         If any IO errors occur.
+	 * @throws FileNotFoundException               if the profileFile is not an existing file
+	 * @throws SAXException                        If any parse errors occur.
+	 * @throws NullLinkNameException               if there is a null link name in some object
+	 * @throws NullLinkException                   if there is a null link
+	 * @throws NullLinkedObjectException           if there is a null object in links list
+	 * @throws MissedHashTagException              if validation profile must be signed, but it has no hash tag
+	 * @throws XMLStreamException                  if exception occurs in parsing a validation profile with xml
+	 *                                             stream (in checking signature of the validation profile)
+	 * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
+	 *                                             signature
+	 * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
+	 * @throws MultiplyGlobalVariableNameException if there is more than one identical global variable names in
+	 *                                             the profile model
+	 */
+	public static ValidationInfo validate(Object root, File validationProfile,
+										  boolean isSignCheckOn,
 										  boolean isLogPassedChecks) throws ParserConfigurationException,
-            SAXException, IOException, NullLinkNameException,
-            NullLinkException, NullLinkedObjectException,
-            MissedHashTagException, XMLStreamException,
-            WrongSignatureException, MultiplyGlobalVariableNameException {
-        if (root == null)
-            throw new IllegalArgumentException(
-                    "Parameter (Object root) cannot be null.");
-        if (validationProfile == null)
-            throw new IllegalArgumentException(
-                    "Parameter (ValidationProfile validationProfile) cannot be null.");
-        return validate(root, ValidationProfileParser.parseFromFile(
-                validationProfile, isSignCheckOn), isLogPassedChecks);
-    }
+			SAXException, IOException, NullLinkNameException,
+			NullLinkException, NullLinkedObjectException,
+			MissedHashTagException, XMLStreamException,
+			WrongSignatureException, MultiplyGlobalVariableNameException {
+		if (root == null)
+			throw new IllegalArgumentException(
+					"Parameter (Object root) cannot be null.");
+		if (validationProfile == null)
+			throw new IllegalArgumentException(
+					"Parameter (ValidationProfile validationProfile) cannot be null.");
+		return validate(root, ValidationProfileParser.parseFromFile(
+				validationProfile, isSignCheckOn), isLogPassedChecks);
+	}
 
-    /**
-     * Generates validation info for objects with root {@code root} and
-     * validation profile structure {@code validationProfile}
-     * <p/>
-     * This method doesn't need to parse validation profile (it works faster
-     * than those ones, which parses profile).
-     *
-     * @param root              the root object for validation
-     * @param validationProfile validation profile's structure
+	/**
+	 * Generates validation info for objects with root {@code root} and
+	 * validation profile structure {@code validationProfile}
+	 * <p/>
+	 * This method doesn't need to parse validation profile (it works faster
+	 * than those ones, which parses profile).
+	 *
+	 * @param root              the root object for validation
+	 * @param validationProfile validation profile's structure
 	 * @param isLogPassedChecks is need to log passed rules to report
-     * @return validation info structure
-     * @throws NullLinkNameException     if there is a null link name in some object
-     * @throws NullLinkException         if there is a null link
-     * @throws NullLinkedObjectException if there is a null object in links list
-     */
-    public static ValidationInfo validate(Object root,
-                                          ValidationProfile validationProfile,
+	 * @return validation info structure
+	 * @throws NullLinkNameException     if there is a null link name in some object
+	 * @throws NullLinkException         if there is a null link
+	 * @throws NullLinkedObjectException if there is a null object in links list
+	 */
+	public static ValidationInfo validate(Object root,
+										  ValidationProfile validationProfile,
 										  boolean isLogPassedChecks) throws NullLinkNameException,
-            NullLinkException, NullLinkedObjectException {
-        if (root == null)
-            throw new IllegalArgumentException(
-                    "Parameter (Object root) cannot be null.");
-        if (validationProfile == null)
-            throw new IllegalArgumentException(
-                    "Parameter (ValidationProfile validationProfile) cannot be null.");
-        Validator validator = new Validator(validationProfile, isLogPassedChecks);
-        return validator.validate(root);
-    }
+			NullLinkException, NullLinkedObjectException {
+		if (root == null)
+			throw new IllegalArgumentException(
+					"Parameter (Object root) cannot be null.");
+		if (validationProfile == null)
+			throw new IllegalArgumentException(
+					"Parameter (ValidationProfile validationProfile) cannot be null.");
+		Validator validator = new Validator(validationProfile, isLogPassedChecks);
+		return validator.validate(root);
+	}
 
 }

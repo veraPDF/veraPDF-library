@@ -11,19 +11,19 @@ import org.verapdf.features.tools.FeaturesCollection;
  */
 public interface IFeaturesObject {
 
-    /**
-     * @return enum type of the current feature object
-     */
-    FeaturesObjectTypesEnum getType();
+	/**
+	 * @return enum type of the current feature object
+	 */
+	FeaturesObjectTypesEnum getType();
 
-    /**
-     * Reports all features from the object into the collection
-     *
-     * @param collection - collection for feature report
-     * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-     * @throws FeaturesTreeNodeException   - occurs when wrong features tree node constructs
-     */
-    FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException;
+	/**
+	 * Reports all features from the object into the collection
+	 *
+	 * @param collection collection for feature report
+	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
+	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 */
+	FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException;
 
 
 }

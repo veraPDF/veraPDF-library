@@ -32,122 +32,122 @@ import java.io.IOException;
  */
 public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
-    private static final Logger LOGGER = Logger.getLogger(ValidateWorker.class);
+	private static final Logger LOGGER = Logger.getLogger(ValidateWorker.class);
 
-    private File pdf;
-    private File profile;
-    private CheckerPanel parent;
-    private File xmlReport = null;
-    private File htmlReport = null;
+	private File pdf;
+	private File profile;
+	private CheckerPanel parent;
+	private File xmlReport = null;
+	private File htmlReport = null;
 
-    private long startTimeOfValidation;
-    private long endTimeOfValidation;
+	private long startTimeOfValidation;
+	private long endTimeOfValidation;
 
-    /**
-     * Creates new validate worker
-     *
-     * @param parent  - parent component
-     * @param pdf     - pdf file for validating
-     * @param profile - validation profile for validating
-     */
-    public ValidateWorker(CheckerPanel parent, File pdf, File profile) {
-        this.parent = parent;
-        this.pdf = pdf;
-        this.profile = profile;
-    }
+	/**
+	 * Creates new validate worker
+	 *
+	 * @param parent  parent component
+	 * @param pdf     pdf file for validating
+	 * @param profile validation profile for validating
+	 */
+	public ValidateWorker(CheckerPanel parent, File pdf, File profile) {
+		this.parent = parent;
+		this.pdf = pdf;
+		this.profile = profile;
+	}
 
-    @Override
-    protected ValidationInfo doInBackground() {
-        ValidationInfo info = null;
-        FeaturesCollection collection = null;
+	@Override
+	protected ValidationInfo doInBackground() {
+		ValidationInfo info = null;
+		FeaturesCollection collection = null;
 
-        startTimeOfValidation = System.currentTimeMillis();
+		startTimeOfValidation = System.currentTimeMillis();
 
-        ModelLoader loader = new ModelLoader(this.pdf.getPath());
+		ModelLoader loader = new ModelLoader(this.pdf.getPath());
 
-        try {
-            org.verapdf.model.baselayer.Object root = loader.getRoot();
-            info = runValidator(root);
+		try {
+			org.verapdf.model.baselayer.Object root = loader.getRoot();
+			info = runValidator(root);
 
-            try {
-                collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this.parent,
-                        "Some error in creating features collection.",
-                        GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-                LOGGER.error("Exception in creating features collection: ", e);
-            }
+			try {
+				collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this.parent,
+						"Some error in creating features collection.",
+						GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+				LOGGER.error("Exception in creating features collection: ", e);
+			}
 
-            try {
-                loader.getPDDocument().close();
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this.parent, "Some error in closing document.",
-                        GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-                LOGGER.error("Exception in closing document: ", e);
-            }
+			try {
+				loader.getPDDocument().close();
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(this.parent, "Some error in closing document.",
+						GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+				LOGGER.error("Exception in closing document: ", e);
+			}
 
-            endTimeOfValidation = System.currentTimeMillis();
-            writeReports(info, collection);
+			endTimeOfValidation = System.currentTimeMillis();
+			writeReports(info, collection);
 
-        } catch (IOException e) {
-            this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
-        }
+		} catch (IOException e) {
+			this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
+		}
 
-        return info;
-    }
+		return info;
+	}
 
-    private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
-        try {
-            // TODO : make checkbox
-            return Validator.validate(root, this.profile, false, false);
-        } catch (IOException | NullLinkNameException | NullLinkException |
-                NullLinkedObjectException | MissedHashTagException |
-                WrongSignatureException | MultiplyGlobalVariableNameException |
-                ParserConfigurationException | SAXException | XMLStreamException e) {
+	private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
+		try {
+			// TODO : make checkbox
+			return Validator.validate(root, this.profile, false, false);
+		} catch (IOException | NullLinkNameException | NullLinkException |
+				NullLinkedObjectException | MissedHashTagException |
+				WrongSignatureException | MultiplyGlobalVariableNameException |
+				ParserConfigurationException | SAXException | XMLStreamException e) {
 
-            this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_VALIDATING, e);
-        }
-        return null;
-    }
+			this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_VALIDATING, e);
+		}
+		return null;
+	}
 
-    @Override
-    protected void done() {
-        this.parent.validationEnded(this.xmlReport, this.htmlReport);
-    }
+	@Override
+	protected void done() {
+		this.parent.validationEnded(this.xmlReport, this.htmlReport);
+	}
 
-    private void writeReports(ValidationInfo info, FeaturesCollection collection) {
-        if (info != null || collection != null) {
-            try {
-                File dir = new File("./temp/");
-                if (!dir.exists() && !dir.mkdir()) {
-                    throw new IOException("Can not create temporary directory.");
-                }
-                xmlReport = new File("./temp/tempXMLReport.xml");
-                // TODO : make checkbox
-                XMLReport.writeXMLReport(info, collection, xmlReport.getPath(),
-                        endTimeOfValidation - startTimeOfValidation, false);
+	private void writeReports(ValidationInfo info, FeaturesCollection collection) {
+		if (info != null || collection != null) {
+			try {
+				File dir = new File("./temp/");
+				if (!dir.exists() && !dir.mkdir()) {
+					throw new IOException("Can not create temporary directory.");
+				}
+				xmlReport = new File("./temp/tempXMLReport.xml");
+				// TODO : make checkbox
+				XMLReport.writeXMLReport(info, collection, xmlReport.getPath(),
+						endTimeOfValidation - startTimeOfValidation, false);
 
-                if (info != null) {
-                    try {
-                        htmlReport = new File("./temp/tempHTMLReport.html");
-                        HTMLReport.writeHTMLReport(htmlReport.getPath(), xmlReport,
-                                profile);
+				if (info != null) {
+					try {
+						htmlReport = new File("./temp/tempHTMLReport.html");
+						HTMLReport.writeHTMLReport(htmlReport.getPath(), xmlReport,
+								profile);
 
-                    } catch (IOException | TransformerException e) {
-                        JOptionPane.showMessageDialog(this.parent,
-                                GUIConstants.ERROR_IN_SAVING_HTML_REPORT,
-                                GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-                        LOGGER.error("Exception saving the HTML report", e);
-                    }
-                }
+					} catch (IOException | TransformerException e) {
+						JOptionPane.showMessageDialog(this.parent,
+								GUIConstants.ERROR_IN_SAVING_HTML_REPORT,
+								GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+						LOGGER.error("Exception saving the HTML report", e);
+					}
+				}
 
-            } catch (DatatypeConfigurationException | ParserConfigurationException
-                    | IOException | TransformerException e) {
-                JOptionPane.showMessageDialog(this.parent,
-                        GUIConstants.ERROR_IN_SAVING_XML_REPORT,
-                        GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-                LOGGER.error("Exception saving the XML report", e);
-            }
-        }
-    }
+			} catch (DatatypeConfigurationException | ParserConfigurationException
+					| IOException | TransformerException e) {
+				JOptionPane.showMessageDialog(this.parent,
+						GUIConstants.ERROR_IN_SAVING_XML_REPORT,
+						GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+				LOGGER.error("Exception saving the XML report", e);
+			}
+		}
+	}
 }

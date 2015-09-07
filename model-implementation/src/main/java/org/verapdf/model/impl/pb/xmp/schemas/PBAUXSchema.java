@@ -10,15 +10,15 @@ import org.verapdf.model.xmplayer.AUXSchema;
  */
 public class PBAUXSchema extends PBXMPPredefinedSchema implements AUXSchema {
 
-    public static final String AUX_SCHEMA = "AUXSchema";
+	public static final String AUX_SCHEMA = "AUXSchema";
 
-    /**
-     * Constructs new object
-     *
-     * @param xmpSchema - object from xmpbox represented this schema
-     */
-    public PBAUXSchema(XMPSchema xmpSchema) {
-        super(xmpSchema, AUX_SCHEMA);
-    }
+	/**
+	 * Constructs new object
+	 *
+	 * @param xmpSchema object from xmpbox represented this schema
+	 */
+	public PBAUXSchema(XMPSchema xmpSchema) {
+		super(xmpSchema, AUX_SCHEMA);
+	}
 
 }

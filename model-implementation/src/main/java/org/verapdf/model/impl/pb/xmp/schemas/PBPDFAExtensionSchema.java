@@ -11,50 +11,50 @@ import org.apache.xmpbox.schema.PDFAExtensionSchema;
  */
 public class PBPDFAExtensionSchema extends PBXMPPredefinedSchema implements org.verapdf.model.xmplayer.PDFAExtensionSchema {
 
-    public static final String PDF_A_EXTENSION_SCHEMA = "PDFAExtensionSchema";
+	public static final String PDF_A_EXTENSION_SCHEMA = "PDFAExtensionSchema";
 
-    /**
-     * Constructs new object
-     *
-     * @param xmpSchema - object from xmpbox represented this schema
-     */
-    public PBPDFAExtensionSchema(PDFAExtensionSchema xmpSchema) {
-        super(xmpSchema, PDF_A_EXTENSION_SCHEMA);
-    }
+	/**
+	 * Constructs new object
+	 *
+	 * @param xmpSchema object from xmpbox represented this schema
+	 */
+	public PBPDFAExtensionSchema(PDFAExtensionSchema xmpSchema) {
+		super(xmpSchema, PDF_A_EXTENSION_SCHEMA);
+	}
 
-    /**
-     * @return true if pdfaField prefix is correct at all properties
-     */
-    @Override
-    public Boolean getisPDFAFieldPrefixCorrect() {
-        // TODO: implement this
-        return Boolean.TRUE;
-    }
+	/**
+	 * @return true if pdfaField prefix is correct at all properties
+	 */
+	@Override
+	public Boolean getisPDFAFieldPrefixCorrect() {
+		// TODO: implement this
+		return Boolean.TRUE;
+	}
 
-    /**
-     * @return true if pdfaProperty prefix is correct at all properties
-     */
-    @Override
-    public Boolean getisPDFAPropertyPrefixCorrect() {
-        // TODO: implement this
-        return Boolean.TRUE;
-    }
+	/**
+	 * @return true if pdfaProperty prefix is correct at all properties
+	 */
+	@Override
+	public Boolean getisPDFAPropertyPrefixCorrect() {
+		// TODO: implement this
+		return Boolean.TRUE;
+	}
 
-    /**
-     * @return true if pdfaSchema prefix is correct at all properties
-     */
-    @Override
-    public Boolean getisPDFASchemaPrefixCorrect() {
-        // TODO: implement this
-        return Boolean.TRUE;
-    }
+	/**
+	 * @return true if pdfaSchema prefix is correct at all properties
+	 */
+	@Override
+	public Boolean getisPDFASchemaPrefixCorrect() {
+		// TODO: implement this
+		return Boolean.TRUE;
+	}
 
-    /**
-     * @return true if pdfaType prefix is correct at all properties
-     */
-    @Override
-    public Boolean getisPDFATypePrefixCorrect() {
-        // TODO: implement this
-        return Boolean.TRUE;
-    }
+	/**
+	 * @return true if pdfaType prefix is correct at all properties
+	 */
+	@Override
+	public Boolean getisPDFATypePrefixCorrect() {
+		// TODO: implement this
+		return Boolean.TRUE;
+	}
 }
