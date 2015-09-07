@@ -20,7 +20,7 @@ public class PBXMPTPgSchema extends PBXMPPredefinedSchema implements XMPTPgSchem
 	/**
 	 * Constructs new object
 	 *
-	 * @param xmpSchema - object from xmpbox represented this schema
+	 * @param xmpSchema object from xmpbox represented this schema
 	 */
 	public PBXMPTPgSchema(XMPageTextSchema xmpSchema) {
 		super(xmpSchema, XMP_TPG_SCHEMA_TYPE);

@@ -462,7 +462,7 @@ public final class ValidationProfileParser {
 	/**
 	 * Parses validation profile xml.
 	 *
-	 * @param profileFilePath - Path to the file for parse.
+	 * @param profileFilePath Path to the file for parse.
 	 * @param isSignCheckOn
 	 * @return Validation profile represent in Java classes.
 	 * @throws ParserConfigurationException        if a DocumentBuilder cannot be created which satisfies the

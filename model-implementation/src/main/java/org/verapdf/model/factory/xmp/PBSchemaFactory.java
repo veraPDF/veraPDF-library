@@ -22,7 +22,7 @@ public final class PBSchemaFactory {
 	/**
 	 * Creates schema object based on it's NSURI
 	 *
-	 * @param schema - xmpbox schema
+	 * @param schema xmpbox schema
 	 * @return PBXMPSchema wrapper of the xmpbox's schema
 	 */
 	public static PBXMPSchema createSchema(XMPSchema schema) {

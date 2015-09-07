@@ -15,8 +15,8 @@ public class CheckError {
 	/**
 	 * Creates check error model
 	 *
-	 * @param message  - message of the error
-	 * @param argument - list of arguments for the message
+	 * @param message  message of the error
+	 * @param argument list of arguments for the message
 	 */
 	public CheckError(String message, List<String> argument) {
 		this.message = message;

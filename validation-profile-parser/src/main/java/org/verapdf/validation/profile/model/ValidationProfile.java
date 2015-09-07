@@ -93,7 +93,7 @@ public class ValidationProfile {
 	/**
 	 * Get all rools for the given object.
 	 *
-	 * @param objName --- name of the object
+	 * @param objName name of the object
 	 * @return List of rules for the given object.
 	 */
 	public List<Rule> getRoolsForObject(String objName) {
