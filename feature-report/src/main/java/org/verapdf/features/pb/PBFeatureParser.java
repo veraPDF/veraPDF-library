@@ -856,11 +856,7 @@ public final class PBFeatureParser {
                 try {
                     PDColorSpace colorSpace = resources.getColorSpace(name);
 
-                    if (colorSpace instanceof PDDeviceColorSpace) {
-                        id = colorSpace instanceof PDDeviceGray ? DEVICEGRAY_ID :
-                                colorSpace instanceof PDDeviceRGB ? DEVICERGB_ID :
-                                        DEVICECMYK_ID;
-                    }
+                    id = checkColorSpaceID(id, colorSpace);
 
                     makePairDependence(id, parentID, colorSpaceParentMap, colorSpaceChildMap);
 
@@ -903,11 +899,7 @@ public final class PBFeatureParser {
         try {
             PDColorSpace colorSpace = xobj.getColorSpace();
 
-            if (colorSpace instanceof PDDeviceColorSpace) {
-                idColorSpace = colorSpace instanceof PDDeviceGray ? DEVICEGRAY_ID :
-                        colorSpace instanceof PDDeviceRGB ? DEVICERGB_ID :
-                                DEVICECMYK_ID;
-            }
+            idColorSpace = checkColorSpaceID(idColorSpace, colorSpace);
 
             if (colorSpaceXObjectParent.get(idColorSpace) == null) {
                 colorSpaceXObjectParent.put(idColorSpace, new HashSet<String>());
@@ -1037,11 +1029,7 @@ public final class PBFeatureParser {
                             try {
                                 PDColorSpace colorSpace = group.getColorSpace();
 
-                                if (colorSpace instanceof PDDeviceColorSpace) {
-                                    idColorSpace = colorSpace instanceof PDDeviceGray ? DEVICEGRAY_ID :
-                                            colorSpace instanceof PDDeviceRGB ? DEVICERGB_ID :
-                                                    DEVICECMYK_ID;
-                                }
+                                idColorSpace = checkColorSpaceID(idColorSpace, colorSpace);
 
                                 if (colorSpaceXObjectParent.get(idColorSpace) == null) {
                                     colorSpaceXObjectParent.put(idColorSpace, new HashSet<String>());
@@ -1377,11 +1365,7 @@ public final class PBFeatureParser {
         try {
             PDColorSpace colorSpace = shading.getColorSpace();
 
-            if (colorSpace instanceof PDDeviceColorSpace) {
-                id = colorSpace instanceof PDDeviceGray ? DEVICEGRAY_ID :
-                        colorSpace instanceof PDDeviceRGB ? DEVICERGB_ID :
-                                DEVICECMYK_ID;
-            }
+            id = checkColorSpaceID(id, colorSpace);
 
             if (colorSpaceShadingParent.get(id) == null) {
                 colorSpaceShadingParent.put(id, new HashSet<String>());
@@ -1460,11 +1444,7 @@ public final class PBFeatureParser {
 
             try {
                 PDColorSpace altclr = iccBased.getAlternateColorSpace();
-                if (altclr instanceof PDDeviceColorSpace) {
-                    idAlt = altclr instanceof PDDeviceGray ? DEVICEGRAY_ID :
-                            altclr instanceof PDDeviceRGB ? DEVICERGB_ID :
-                                    DEVICECMYK_ID;
-                }
+                idAlt = checkColorSpaceID(idAlt, altclr);
 
                 if (colorSpaceColorSpaceParent.get(idAlt) == null) {
                     colorSpaceColorSpaceParent.put(idAlt, new HashSet<String>());
@@ -1496,25 +1476,48 @@ public final class PBFeatureParser {
             COSBase base = array.get(number);
             String id = getId(base, COLORSPACE, colorSpaces.size());
 
-            if (colorSpaceColorSpaceParent.get(id) == null) {
-                colorSpaceColorSpaceParent.put(id, new HashSet<String>());
-            }
-            colorSpaceColorSpaceParent.get(id).add(parentID);
-            colorSpaceColorSpaceChild.put(parentID, id);
+            try {
+                PDColorSpace alt;
+                if (colorSpace instanceof PDIndexed) {
+                    alt = ((PDIndexed) colorSpace).getBaseColorSpace();
+                } else if (colorSpace instanceof PDSeparation) {
+                    alt = ((PDSeparation) colorSpace).getAlternateColorSpace();
+                } else {
+                    alt = ((PDDeviceN) colorSpace).getAlternateColorSpace();
+                }
 
-            if (!colorSpaces.containsKey(id)) {
-                try {
-                    PDColorSpace alt = colorSpace instanceof PDIndexed ? ((PDIndexed) colorSpace).getBaseColorSpace() :
-                            colorSpace instanceof PDSeparation ? ((PDSeparation) colorSpace).getAlternateColorSpace() :
-                                    ((PDDeviceN) colorSpace).getAlternateColorSpace();
+                id = checkColorSpaceID(id, alt);
+
+                if (colorSpaceColorSpaceParent.get(id) == null) {
+                    colorSpaceColorSpaceParent.put(id, new HashSet<String>());
+                }
+                colorSpaceColorSpaceParent.get(id).add(parentID);
+                colorSpaceColorSpaceChild.put(parentID, id);
+
+                if (!colorSpaces.containsKey(id)) {
                     colorSpaces.put(id, alt);
                     parseColorSpace(alt, id);
-                } catch (IOException e) {
-                    LOGGER.info(e);
-                    colorSpaceCreationProblem(id);
                 }
+            } catch (IOException e) {
+                LOGGER.info(e);
+                colorSpaceCreationProblem(id);
             }
+
         }
+    }
+
+    private static String checkColorSpaceID(String prevID, PDColorSpace colorSpace) {
+        String id;
+        if (colorSpace instanceof PDDeviceGray) {
+            id = DEVICEGRAY_ID;
+        } else if (colorSpace instanceof PDDeviceRGB) {
+            id = DEVICERGB_ID;
+        } else if (colorSpace instanceof PDDeviceCMYK) {
+            id = DEVICECMYK_ID;
+        } else {
+            id = prevID;
+        }
+        return id;
     }
 
     private static void makePairDependence(String childID,

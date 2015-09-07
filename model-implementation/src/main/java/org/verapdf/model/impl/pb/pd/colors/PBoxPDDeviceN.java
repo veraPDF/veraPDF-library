@@ -42,15 +42,12 @@ public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
             org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace alternateColorSpace =
 					((org.apache.pdfbox.pdmodel.graphics.color.PDDeviceN) this.simplePDObject)
                     .getAlternateColorSpace();
-            PDColorSpace space = ColorSpaceFactory
-                    .getColorSpace(alternateColorSpace);
+            PDColorSpace space = ColorSpaceFactory.getColorSpace(alternateColorSpace);
             if (space != null) {
                 colorSpace.add(space);
             }
         } catch (IOException e) {
-            LOGGER.error(
-                    "Can not get alternate color space from DeviceN. "
-                            + e.getMessage(), e);
+            LOGGER.error("Can not get alternate color space from DeviceN. ", e);
         }
         return colorSpace;
     }

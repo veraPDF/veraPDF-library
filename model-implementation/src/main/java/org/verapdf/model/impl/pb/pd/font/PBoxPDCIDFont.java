@@ -59,9 +59,8 @@ public class PBoxPDCIDFont extends PBoxPDFont implements PDCIDFont {
                     .getDictionaryObject(COSName.CID_TO_GID_MAP);
             if (map instanceof COSStream) {
                 return CUSTOM;
-            }
-            if (map instanceof COSName
-                    && ((COSName) map).getName().equals(IDENTITY)) {
+            } else if (map instanceof COSName
+                    && IDENTITY.equals(((COSName) map).getName())) {
                 return IDENTITY;
             }
         }

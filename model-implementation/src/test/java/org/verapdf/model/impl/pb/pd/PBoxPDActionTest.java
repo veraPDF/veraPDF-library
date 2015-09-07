@@ -3,6 +3,7 @@ package org.verapdf.model.impl.pb.pd;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.BaseTest;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
+@Ignore
 public class PBoxPDActionTest extends BaseTest {
 
 	public static final String FILE_RELATIVE_PATH = "pd/InteractiveObjects.pdf";

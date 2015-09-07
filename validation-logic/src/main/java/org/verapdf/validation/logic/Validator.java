@@ -33,7 +33,9 @@ import java.util.*;
  */
 public class Validator {
 
-    private Context cx;
+	private static final int OPTIMIZATION_LEVEL = 9;
+
+	private Context context;
     private ScriptableObject scope;
 
     private Deque<Object> objectsStack;
@@ -55,7 +57,7 @@ public class Validator {
 
 	private int rulesChecksCount = 0;
 
-    /**
+	/**
      * Creates new Validator with given validation profile
      *
      * @param profile - validation profile model for validator
@@ -67,9 +69,9 @@ public class Validator {
 
     private ValidationInfo validate(Object root) throws NullLinkNameException,
             NullLinkException, NullLinkedObjectException {
-        this.cx = Context.enter();
-        this.cx.setOptimizationLevel(9);
-        this.scope = cx.initStandardObjects();
+        this.context = Context.enter();
+        this.context.setOptimizationLevel(OPTIMIZATION_LEVEL);
+        this.scope = context.initStandardObjects();
         this.objectsStack = new ArrayDeque<>();
         this.objectsContext = new ArrayDeque<>();
         this.contextSet = new ArrayDeque<>();
@@ -109,9 +111,11 @@ public class Validator {
             rules.add(new Rule(id.getKey(), id.getValue()));
         }
 
-        return new ValidationInfo(new Profile(this.profile.getName(),
-                this.profile.getHash()), new Result(
-                new Details(rules, warnings, rulesChecksCount)));
+		Profile profile = new Profile(this.profile.getName(),
+				this.profile.getHash());
+		Result result = new Result(
+				new Details(rules, warnings, this.rulesChecksCount));
+		return new ValidationInfo(profile, result);
     }
 
     private void initializeAllVariables() {
@@ -120,12 +124,13 @@ public class Validator {
                 continue;
 
             java.lang.Object res;
-            res = cx.evaluateString(scope, var.getDefaultValue(), null, 0, null);
+            res = this.context.evaluateString(this.scope,
+					var.getDefaultValue(), null, 0, null);
             if (res instanceof NativeJavaObject) {
                 res = ((NativeJavaObject) res).unwrap();
             }
 
-            scope.put(var.getAttrName(), scope, res);
+            this.scope.put(var.getAttrName(), this.scope, res);
         }
     }
 
@@ -154,23 +159,23 @@ public class Validator {
                     continue;
 
                 java.lang.Object variable = evalVariableResult(var, object);
-                scope.put(var.getAttrName(), scope, variable);
+                this.scope.put(var.getAttrName(), this.scope, variable);
             }
         }
     }
 
     private java.lang.Object evalVariableResult(Variable variable, Object object) {
         Script script;
-        if (!variableScripts.containsKey(variable.getAttrName())) {
+        if (!this.variableScripts.containsKey(variable.getAttrName())) {
             String source = getStringScript(object, variable.getValue());
-            script = cx.compileString(source, null, 0, null);
+            script = this.context.compileString(source, null, 0, null);
         } else {
-            script = variableScripts.get(variable.getAttrName());
+            script = this.variableScripts.get(variable.getAttrName());
         }
 
-        scope.put("obj", scope, object);
+        this.scope.put("obj", this.scope, object);
 
-        java.lang.Object res = script.exec(cx, scope);
+        java.lang.Object res = script.exec(this.context, this.scope);
 
         if (res instanceof NativeJavaObject) {
             res = ((NativeJavaObject) res).unwrap();
@@ -320,23 +325,23 @@ public class Validator {
 
     private boolean checkObjWithRule(Object obj, String context,
                                      org.verapdf.validation.profile.model.Rule rule) {
-        scope.put("obj", scope, obj);
+        this.scope.put("obj", this.scope, obj);
 
         Script scr;
-        if (!ruleScripts.containsKey(rule.getAttrID())) {
-            scr = cx.compileString(getScript(obj, rule), null, 0, null);
-            ruleScripts.put(rule.getAttrID(), scr);
+        if (!this.ruleScripts.containsKey(rule.getAttrID())) {
+            scr = this.context.compileString(getScript(obj, rule), null, 0, null);
+            this.ruleScripts.put(rule.getAttrID(), scr);
         } else {
-            scr = ruleScripts.get(rule.getAttrID());
+            scr = this.ruleScripts.get(rule.getAttrID());
         }
 
-        Boolean res = (Boolean) scr.exec(cx, scope);
+        Boolean res = (Boolean) scr.exec(this.context, this.scope);
 
         CheckLocation loc = new CheckLocation(this.rootType, context);
 		Check check = null;
 		if (!res) {
 			check = createFailCheck(obj, loc, rule);
-		} else if (logPassedChecks) {
+		} else if (this.logPassedChecks) {
 			check = new Check(Status.PASSED, loc, null);
 		}
 
@@ -344,7 +349,7 @@ public class Validator {
 			this.checkMap.get(rule.getAttrID()).add(check);
 		}
 
-		rulesChecksCount++;
+		this.rulesChecksCount++;
 
         return res;
     }
@@ -361,20 +366,20 @@ public class Validator {
         if (!arguments.isEmpty()) {
 
             List<Script> argsList;
-            if (!ruleArgScripts.containsKey(rule.getAttrID())) {
+            if (!this.ruleArgScripts.containsKey(rule.getAttrID())) {
                 argsList = new ArrayList<>(arguments.size());
                 for (String arg : arguments) {
                     String argScript = getStringScript(obj, arg);
-                    Script script = cx.compileString(argScript, null, 0, null);
+                    Script script = this.context.compileString(argScript, null, 0, null);
                     argsList.add(script);
                 }
-                ruleArgScripts.put(rule.getAttrID(), argsList);
+                this.ruleArgScripts.put(rule.getAttrID(), argsList);
             } else {
-                argsList = ruleArgScripts.get(rule.getAttrID());
+                argsList = this.ruleArgScripts.get(rule.getAttrID());
             }
 
             for (Script arg : argsList) {
-                java.lang.Object resArg = arg.exec(cx, scope);
+                java.lang.Object resArg = arg.exec(this.context, this.scope);
 
                 String resStringArg;
                 if (resArg instanceof NativeJavaObject) {
