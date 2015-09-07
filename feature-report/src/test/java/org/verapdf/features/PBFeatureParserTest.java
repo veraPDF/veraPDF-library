@@ -1,6 +1,7 @@
 package org.verapdf.features;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
@@ -27,6 +28,8 @@ import static org.junit.Assert.assertTrue;
  */
 public class PBFeatureParserTest {
 
+    private static FeaturesCollection collection;
+
     private static final String ENTRY = "entry";
     private static final String ID = "id";
     private static final String METADATA = "metadata";
@@ -34,6 +37,13 @@ public class PBFeatureParserTest {
     private static final String LLY = "lly";
     private static final String URX = "urx";
     private static final String URY = "ury";
+
+    @BeforeClass
+    public static void before() throws URISyntaxException, IOException {
+        File pdf = new File(getSystemIndependentPath("/FR.pdf"));
+        PDDocument document = PDDocument.load(pdf, false, true);
+        collection = PBFeatureParser.getFeaturesCollection(document);
+    }
 
     @Test
     public void featuresObjectsTypeTest() {
@@ -60,24 +70,26 @@ public class PBFeatureParserTest {
     }
 
     @Test
-    @Ignore
-    public void test() throws URISyntaxException, IOException, FeaturesTreeNodeException {
-        File pdf = new File(getSystemIndependentPath("/FR.pdf"));
-        PDDocument document = PDDocument.load(pdf, false, true);
-        FeaturesCollection collection = PBFeatureParser.getFeaturesCollection(document);
-
+    public void testInfoDict() throws FeaturesTreeNodeException {
         assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY).size());
-        FeatureTreeNode infDict = getInfDictNode();
-        assertEquals(infDict, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY).get(0));
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY).contains(getInfDictNode()));
+    }
 
+    @Test
+    public void testMetadata() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
         assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.METADATA).size());
-        FeatureTreeNode metadata = getMetadataNode();
-        assertEquals(metadata, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.METADATA).get(0));
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.METADATA).contains(getMetadataNode()));
+    }
 
+    @Test
+    @Ignore
+    public void testLowLvlInfo() throws FeaturesTreeNodeException {
         assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.LOW_LEVEL_INFO).size());
-        FeatureTreeNode lli = getLowLvlInfo();
-        assertEquals(lli, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.LOW_LEVEL_INFO).get(0));
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.LOW_LEVEL_INFO).contains(getLowLvlInfo()));
+    }
 
+    @Test
+    public void testEmbeddedFiles() throws FeaturesTreeNodeException {
         assertEquals(4, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE).size());
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE).contains(getEmbeddedFileNode("file1", "1.txt", "",
                 "text/plain", "FlateDecode", "2015-08-31T13:33:43.000+03:00", "2015-08-31T13:20:39.000Z", "Ô˛„Ù‘\u0000²\u0004é•\tŸìøB~", "0")));
@@ -87,7 +99,11 @@ public class PBFeatureParserTest {
                 "text/xml", "FlateDecode", "2015-08-31T13:33:38.000+03:00", "2015-08-20T12:24:50.000Z", "\u0006\u0005¼ä\u0017Uw\r⁄©>ñ8\u000EnÔ", "876")));
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE).contains(getEmbeddedFileNode("file4", "fox_1.jpg", "Some Description for embedded file",
                 "image/jpeg", "FlateDecode", "2015-08-22T14:01:19.000+03:00", "2014-09-08T12:01:07.000Z", "ËÓþVf\u0007ç`ºŁåk\u0015?A\r", "67142")));
+    }
 
+    @Test
+    @Ignore
+    public void testICCProfiles() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
         assertEquals(5, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).size());
         Set<String> outInts19 = new HashSet<>();
         outInts19.add("outIntDir0");
@@ -95,36 +111,45 @@ public class PBFeatureParserTest {
                 outInts19, null, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:52:24.000+03:00", null, "Copyright 2000 Adobe Systems Incorporated",
                 "Apple RGB", null, null, "none", getMetadataBytesFromFile("/iccprofile19_metadata_bytes.txt"))));
         Set<String> iccbsds81 = new HashSet<>();
-        iccbsds81.add("clrspDir10");
+        iccbsds81.add("clrspDir9");
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir81",
                 null, iccbsds81, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:54:18.000+03:00", null, "Copyright 2000 Adobe Systems Incorporated",
                 "PAL/SECAM", null, null, "none", null)));
         Set<String> iccbsds84 = new HashSet<>();
-        iccbsds84.add("clrspDir27");
-        iccbsds84.add("clrspDir14");
-        iccbsds84.add("clrspDir26");
+        iccbsds84.add("clrspDir12");
+        iccbsds84.add("clrspDir22");
+        iccbsds84.add("clrspDir21");
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir84",
                 null, iccbsds84, "2.2.0", "appl", "RGB ", "appl", "2000-08-13T16:06:07.000+03:00", "\u0000\u0000\u0000\u0001", "Copyright 1998 - 2003 Apple Computer Inc., all rights reserved.",
                 "sRGB Profile", null, null, "appl", null)));
         Set<String> iccbsds85 = new HashSet<>();
-        iccbsds85.add("clrspDir15");
+        iccbsds85.add("clrspDir13");
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir85",
                 null, iccbsds85, "4.2.0", "ADBE", "RGB ", "ADBE", "2007-10-24T00:00:00.000+03:00", "\u0000\u0000\u0000\u0001", "Copyright 2007 Adobe Systems Incorporated",
                 "HDTV (Rec. 709)", "t\u001C$ﾦ\u0012\u0017ﾉHQﾃ\uFFEFￋ￨<\uFFE7,", null, null, null)));
         Set<String> iccbsds77 = new HashSet<>();
         iccbsds77.add("clrspDir3");
-        iccbsds77.add("clrspDir0");
         iccbsds77.add("clrspDir2");
+        iccbsds77.add("clrspDir0");
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir77",
                 null, iccbsds77, "2.1.0", "ADBE", "GRAY", "ADBE", "1999-06-03T00:00:00.000+03:00", null, "Copyright 1999 Adobe Systems Incorporated",
                 "Dot Gain 20%", null, null, "none", null)));
+    }
 
+    @Test
+    public void testOutputIntent() throws FeaturesTreeNodeException {
         assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT).size());
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT).contains(getOutputIntent()));
+    }
 
+    @Test
+    public void testOutlines() throws FeaturesTreeNodeException {
         assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTLINES).size());
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTLINES).contains(getOutlines()));
+    }
 
+    @Test
+    public void testAnnotations() throws FeaturesTreeNodeException {
         assertEquals(7, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION).size());
         Set<String> xobj37 = new HashSet<>();
         xobj37.add("xobjIndir28");
@@ -164,10 +189,68 @@ public class PBFeatureParserTest {
                 "page1", null, "Text", "307.974", "424.78", "325.974", "442.78", "annotation with gray colorspace\r",
                 "85f36ad6-ae92-479e-9b24-ba07c8702837", "D:20150831140515+03'00'", xobj39, "annotIndir40", "1.0", null, null, null,
                 "false", "false", "true", "true", "true", "false", "false", "false", "false", "false")));
+    }
 
+    @Test
+    @Ignore
+    public void testPage() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
         assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE).size());
         assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE).contains(getPage()));
+    }
 
+    @Test
+    public void testGraphicsState() throws FeaturesTreeNodeException {
+        assertEquals(4, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE).size());
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE).contains(getGraphicsState("exGStIndir93",
+                null, "ptrnIndir50", null, null, "true", "false", "false", "false", "fntIndir89")));
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE).contains(getGraphicsState("exGStDir2",
+                null, null, "xobjIndir28", null, "true", "false", "false", "false", null)));
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE).contains(getGraphicsState("exGStDir3",
+                null, null, "xobjIndir27", null, "true", "false", "false", "false", null)));
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE).contains(getGraphicsState("exGStIndir47",
+                "page1", null, null, "fntIndir91", "false", "false", "false", "true", "fntIndir88")));
+    }
+
+    @Test
+    public void testColorSpaces() {
+        assertEquals(32, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.COLORSPACE).size());
+    }
+
+    private static FeatureTreeNode getGraphicsState(String id, String page, String pattern, String xobject, String font, String transparency, String strokeAdjustment,
+                                                    String overprintForStroke, String overprintForFill, String fontChild) throws FeaturesTreeNodeException {
+        FeatureTreeNode root = FeatureTreeNode.newRootInstance("graphicsState");
+        root.addAttribute(ID, id);
+        FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+        if (page != null) {
+            FeatureTreeNode pageNode = FeatureTreeNode.newChildInstance("page", parents);
+            pageNode.addAttribute(ID, page);
+        }
+        if (pattern != null) {
+            FeatureTreeNode patternNode = FeatureTreeNode.newChildInstance("pattern", parents);
+            patternNode.addAttribute(ID, pattern);
+        }
+        if (xobject != null) {
+            FeatureTreeNode xobjectNode = FeatureTreeNode.newChildInstance("xobject", parents);
+            xobjectNode.addAttribute(ID, xobject);
+        }
+        if (font != null) {
+            FeatureTreeNode fontNode = FeatureTreeNode.newChildInstance("font", parents);
+            fontNode.addAttribute(ID, font);
+        }
+
+
+        FeatureTreeNode.newChildInstanceWithValue("transparency", transparency, root);
+        FeatureTreeNode.newChildInstanceWithValue("strokeAdjustment", strokeAdjustment, root);
+        FeatureTreeNode.newChildInstanceWithValue("overprintForStroke", overprintForStroke, root);
+        FeatureTreeNode.newChildInstanceWithValue("overprintForFill", overprintForFill, root);
+
+        if (fontChild != null) {
+            FeatureTreeNode res = FeatureTreeNode.newChildInstance("resources", root);
+            FeatureTreeNode fons = FeatureTreeNode.newChildInstance("fonts", res);
+            FeatureTreeNode fon = FeatureTreeNode.newChildInstance("font", fons);
+            fon.addAttribute(ID, fontChild);
+        }
+        return root;
     }
 
     private static FeatureTreeNode getPage() throws FeaturesTreeNodeException, URISyntaxException, FileNotFoundException {
@@ -203,18 +286,18 @@ public class PBFeatureParserTest {
 
         List<String> colorSpaces = new ArrayList<>();
         colorSpaces.add("devrgb");
+        colorSpaces.add("clrspDir9");
         colorSpaces.add("clrspDir8");
-        colorSpaces.add("clrspDir19");
         colorSpaces.add("clrspDir5");
+        colorSpaces.add("clrspDir17");
         colorSpaces.add("clrspDir3");
         colorSpaces.add("clrspDir16");
         colorSpaces.add("clrspDir4");
-        colorSpaces.add("clrspDir15");
         colorSpaces.add("clrspDir14");
         colorSpaces.add("clrspDir2");
         colorSpaces.add("clrspDir13");
+        colorSpaces.add("clrspDir12");
         colorSpaces.add("clrspDir0");
-        colorSpaces.add("clrspDir20");
         colorSpaces.add("clrspDir11");
         colorSpaces.add("clrspDir10");
         colorSpaces.add("devcmyk");
