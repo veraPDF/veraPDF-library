@@ -2,6 +2,7 @@ package org.verapdf.features;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.pb.PBFeatureParser;
@@ -81,6 +82,7 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
+	@Ignore
 	public void testLowLvlInfo() throws FeaturesTreeNodeException {
 		assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.LOW_LEVEL_INFO).size());
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.LOW_LEVEL_INFO).contains(getLowLvlInfo()));
@@ -100,6 +102,7 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
+	@Ignore
 	public void testICCProfiles() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
 		assertEquals(5, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).size());
 		Set<String> outInts19 = new HashSet<>();
@@ -189,6 +192,7 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
+	@Ignore
 	public void testPage() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
 		assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE).size());
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE).contains(getPage()));
@@ -233,6 +237,7 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
+	@Ignore
 	public void testPatterns() throws FeaturesTreeNodeException {
 		assertEquals(2, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN).size());
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN).contains(getShadingPattern()));
