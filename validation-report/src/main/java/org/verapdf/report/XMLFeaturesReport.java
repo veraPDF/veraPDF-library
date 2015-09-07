@@ -149,15 +149,13 @@ public final class XMLFeaturesReport {
         return pdfFeatures;
     }
 
-    private static void parseElements(FeaturesObjectTypesEnum type, FeaturesCollection collection, Element root, Document doc) {
-        if (collection.getFeatureTreesForType(type) != null) {
-            for (FeatureTreeNode rootNode : collection.getFeatureTreesForType(type)) {
-                if (rootNode != null) {
-                    root.appendChild(makeNode(rootNode, collection, doc));
-                }
-            }
-        }
-    }
+	private static void parseElements(FeaturesObjectTypesEnum type, FeaturesCollection collection, Element root, Document doc) {
+		for (FeatureTreeNode rootNode : collection.getFeatureTreesForType(type)) {
+			if (rootNode != null) {
+				root.appendChild(makeNode(rootNode, collection, doc));
+			}
+		}
+	}
 
     private static void makeList(String listName, List<FeatureTreeNode> list, Element parent, FeaturesCollection collection, Document doc) {
 

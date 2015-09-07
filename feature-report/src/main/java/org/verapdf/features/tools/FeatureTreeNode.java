@@ -211,7 +211,7 @@ public final class FeatureTreeNode {
         if (this.children == null) {
             if (other.children != null)
                 return false;
-        } else if (!this.children.equals(other.children))
+        } else if (!isChildrenMatch(this, other))
             return false;
         if (this.name == null) {
             if (other.name != null)
@@ -231,4 +231,15 @@ public final class FeatureTreeNode {
         }
         return true;
     }
+
+	private static boolean isChildrenMatch(FeatureTreeNode aThis, FeatureTreeNode other) {
+		if (aThis.children == other.children) {
+			return true;
+		} else if (aThis.children == null ^ other.children == null) {
+			return false;
+		}
+		return aThis.children.size() == other.children.size() &&
+				aThis.children.containsAll(other.children);
+	}
+
 }
