@@ -16,15 +16,20 @@ public final class PBSchemaFactory {
 			.getLogger(PBSchemaFactory.class);
 
 	private PBSchemaFactory() {
+		// disable default constructor
 	}
 
 	/**
 	 * Creates schema object based on it's NSURI
 	 *
-	 * @param schema xmpbox schema
+	 * @param schema - xmpbox schema
 	 * @return PBXMPSchema wrapper of the xmpbox's schema
 	 */
 	public static PBXMPSchema createSchema(XMPSchema schema) {
+		if (schema == null) {
+			return null;
+		}
+
 		PBXMPSchema resultSchema = null;
 
 		switch (schema.getNamespace()) {
@@ -110,4 +115,5 @@ public final class PBSchemaFactory {
 	private static void schemaExceptionMessage(String className, String namespace) {
 		LOGGER.fatal("Founded not " + className + "schema with namespace " + namespace);
 	}
+
 }

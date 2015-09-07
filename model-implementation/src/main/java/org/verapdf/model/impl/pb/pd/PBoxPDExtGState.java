@@ -38,7 +38,7 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
         COSDictionary dictionary = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getCOSObject();
         COSBase tr = dictionary.getDictionaryObject(COSName.TR);
-        return getStringProperty(tr);
+        return this.getStringProperty(tr);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
         COSDictionary dictionary = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getCOSObject();
         COSBase tr2 = dictionary.getDictionaryObject(COSName.getPDFName("TR2"));
-        return getStringProperty(tr2);
+        return this.getStringProperty(tr2);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
         COSDictionary dictionary = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getCOSObject();
         COSBase sMask = dictionary.getDictionaryObject(COSName.SMASK);
-        return getStringProperty(sMask);
+        return this.getStringProperty(sMask);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
         COSDictionary dictionary = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getCOSObject();
         COSBase sMask = dictionary.getDictionaryObject(COSName.BM);
-        return getStringProperty(sMask);
+        return this.getStringProperty(sMask);
     }
 
     @Override
@@ -81,12 +81,9 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
                 .valueOf(strokingAlphaConstant.doubleValue()) : null;
     }
 
-    private static String getStringProperty(COSBase base) {
-        if (base != null) {
-            return base instanceof COSName ? ((COSName) base).getName() : base
-                    .toString();
-        }
-        return null;
+    private String getStringProperty(COSBase base) {
+		return base == null ? null : base instanceof COSName ?
+				((COSName) base).getName() : base.toString();
     }
 
 	@Override

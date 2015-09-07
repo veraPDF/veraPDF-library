@@ -4,13 +4,14 @@ import org.apache.xmpbox.schema.XMPageTextSchema;
 import org.verapdf.model.xmplayer.XMPTPgSchema;
 
 /**
- * Current class is representation of XMPTPgSchema interface from abstract model based on xmpbox from pdfbox.
+ * Current class is representation of XMPTPgSchema interface from
+ * abstract model based on xmpbox from pdfbox.
  *
  * @author Maksim Bezrukov
  */
 public class PBXMPTPgSchema extends PBXMPPredefinedSchema implements XMPTPgSchema {
 
-	private static final String XMP_TPG_SCHEMA = "XMPTPgSchema";
+	public static final String XMP_TPG_SCHEMA_TYPE = "XMPTPgSchema";
 
 	private static final String COLORANTS = "Colorants";
 	private static final String FONTS = "Fonts";
@@ -19,10 +20,10 @@ public class PBXMPTPgSchema extends PBXMPPredefinedSchema implements XMPTPgSchem
 	/**
 	 * Constructs new object
 	 *
-	 * @param xmpSchema object from xmpbox represented this schema
+	 * @param xmpSchema - object from xmpbox represented this schema
 	 */
 	public PBXMPTPgSchema(XMPageTextSchema xmpSchema) {
-		super(xmpSchema, XMP_TPG_SCHEMA);
+		super(xmpSchema, XMP_TPG_SCHEMA_TYPE);
 	}
 
 	/**
@@ -30,7 +31,7 @@ public class PBXMPTPgSchema extends PBXMPPredefinedSchema implements XMPTPgSchem
 	 */
 	@Override
 	public String getcolorants() {
-		return getXmpSchema().getProperty(COLORANTS) == null ? null : getXmpSchema().getProperty(COLORANTS).toString();
+		return this.getProperty(COLORANTS);
 	}
 
 	/**
@@ -38,7 +39,7 @@ public class PBXMPTPgSchema extends PBXMPPredefinedSchema implements XMPTPgSchem
 	 */
 	@Override
 	public String getfonts() {
-		return getXmpSchema().getProperty(FONTS) == null ? null : getXmpSchema().getProperty(FONTS).toString();
+		return this.getProperty(FONTS);
 	}
 
 	/**
@@ -46,6 +47,7 @@ public class PBXMPTPgSchema extends PBXMPPredefinedSchema implements XMPTPgSchem
 	 */
 	@Override
 	public String getplateNames() {
-		return getXmpSchema().getProperty(PLATE_NAMES) == null ? null : getXmpSchema().getProperty(PLATE_NAMES).toString();
+		return this.getProperty(PLATE_NAMES);
 	}
+
 }

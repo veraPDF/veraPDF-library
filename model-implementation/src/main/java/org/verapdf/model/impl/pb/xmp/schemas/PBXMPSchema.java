@@ -4,7 +4,8 @@ import org.verapdf.model.impl.pb.xmp.PBXMPObject;
 import org.verapdf.model.xmplayer.XMPSchema;
 
 /**
- * Current class is representation of XMPSchema interface from abstract model based on xmpbox from pdfbox.
+ * Current class is representation of XMPSchema interface from
+ * abstract model based on xmpbox from pdfbox.
  *
  * @author Maksim Bezrukov
  */
@@ -29,7 +30,7 @@ public class PBXMPSchema extends PBXMPObject implements XMPSchema {
 	 */
 	@Override
 	public String geturi() {
-		return xmpSchema.getNamespace();
+		return this.xmpSchema.getNamespace();
 	}
 
 	/**
@@ -37,11 +38,11 @@ public class PBXMPSchema extends PBXMPObject implements XMPSchema {
 	 */
 	@Override
 	public String getprefix() {
-		return xmpSchema.getPrefix();
+		return this.xmpSchema.getPrefix();
 	}
 
 	protected org.apache.xmpbox.schema.XMPSchema getXmpSchema() {
-		return xmpSchema;
+		return this.xmpSchema;
 	}
 
 }

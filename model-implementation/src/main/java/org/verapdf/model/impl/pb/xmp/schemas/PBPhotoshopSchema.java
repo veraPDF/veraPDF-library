@@ -3,17 +3,15 @@ package org.verapdf.model.impl.pb.xmp.schemas;
 import org.apache.xmpbox.schema.PhotoshopSchema;
 
 /**
- * Current class is representation of PhotoshopSchema interface from abstract model based on xmpbox from pdfbox.
+ * Current class is representation of PhotoshopSchema interface from
+ * abstract model based on xmpbox from pdfbox.
  *
  * @author Maksim Bezrukov
  */
-public class PBPhotoshopSchema extends PBXMPPredefinedSchema implements org.verapdf.model.xmplayer.PhotoshopSchema {
+public class PBPhotoshopSchema extends PBXMPPredefinedSchema
+		implements org.verapdf.model.xmplayer.PhotoshopSchema {
 
-	public static final String PHOTOSHOP_SCHEMA = "PhotoshopSchema";
-
-	private static final String AUTHOR = "Author";
-	private static final String COPYRIGHT = "Copyright";
-	private static final String TITLE = "Title";
+	public static final String PHOTOSHOP_SCHEMA_TYPE = "PhotoshopSchema";
 
 	/**
 	 * Constructs new object
@@ -21,7 +19,7 @@ public class PBPhotoshopSchema extends PBXMPPredefinedSchema implements org.vera
 	 * @param xmpSchema object from xmpbox represented this schema
 	 */
 	public PBPhotoshopSchema(PhotoshopSchema xmpSchema) {
-		super(xmpSchema, PHOTOSHOP_SCHEMA);
+		super(xmpSchema, PHOTOSHOP_SCHEMA_TYPE);
 	}
 
 	/**
@@ -29,7 +27,7 @@ public class PBPhotoshopSchema extends PBXMPPredefinedSchema implements org.vera
 	 */
 	@Override
 	public String getauthor() {
-		return getXmpSchema().getProperty(AUTHOR) == null ? null : getXmpSchema().getProperty(AUTHOR).toString();
+		return this.getProperty(AUTHOR);
 	}
 
 	/**
@@ -37,7 +35,7 @@ public class PBPhotoshopSchema extends PBXMPPredefinedSchema implements org.vera
 	 */
 	@Override
 	public String getcopyright() {
-		return getXmpSchema().getProperty(COPYRIGHT) == null ? null : getXmpSchema().getProperty(COPYRIGHT).toString();
+		return this.getProperty(COPYRIGHT);
 	}
 
 	/**
@@ -45,7 +43,7 @@ public class PBPhotoshopSchema extends PBXMPPredefinedSchema implements org.vera
 	 */
 	@Override
 	public String gethistory() {
-		return ((PhotoshopSchema) getXmpSchema()).getHistory();
+		return ((PhotoshopSchema) this.getXmpSchema()).getHistory();
 	}
 
 	/**
@@ -53,6 +51,6 @@ public class PBPhotoshopSchema extends PBXMPPredefinedSchema implements org.vera
 	 */
 	@Override
 	public String gettitle() {
-		return getXmpSchema().getProperty(TITLE) == null ? null : getXmpSchema().getProperty(TITLE).toString();
+		return this.getProperty(TITLE);
 	}
 }

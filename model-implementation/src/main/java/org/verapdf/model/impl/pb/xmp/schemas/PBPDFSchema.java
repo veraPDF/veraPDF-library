@@ -4,21 +4,20 @@ import org.apache.xmpbox.schema.AdobePDFSchema;
 import org.verapdf.model.xmplayer.PDFSchema;
 
 /**
- * Current class is representation of PDFSchema interface from abstract model based on xmpbox from pdfbox.
+ * Current class is representation of PDFSchema interface from
+ * abstract model based on xmpbox from pdfbox.
  *
  * @author Maksim Bezrukov
  */
 public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
 
-	public static final String PDF_SCHEMA = "PDFSchema";
+	public static final String PDF_SCHEMA_TYPE = "PDFSchema";
 
-	private static final String AUTHOR = "Author";
 	private static final String BASE_URL = "BaseURL";
 	private static final String CREATION_DATE = "CreationDate";
 	private static final String CREATOR = "Creator";
 	private static final String MOD_DATE = "ModDate";
 	private static final String SUBJECT = "Subject";
-	private static final String TITLE = "Title";
 	private static final String TRAPPED = "Trapped";
 
 	/**
@@ -27,7 +26,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
 	 * @param xmpSchema object from xmpbox represented this schema
 	 */
 	public PBPDFSchema(AdobePDFSchema xmpSchema) {
-		super(xmpSchema, PDF_SCHEMA);
+		super(xmpSchema, PDF_SCHEMA_TYPE);
 	}
 
 	/**
@@ -35,7 +34,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
 	 */
 	@Override
 	public String getauthor() {
-		return getXmpSchema().getProperty(AUTHOR) == null ? null : getXmpSchema().getProperty(AUTHOR).toString();
+		return this.getProperty(AUTHOR);
 	}
 
 	/**
@@ -43,7 +42,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
 	 */
 	@Override
 	public String getbaseURL() {
-		return getXmpSchema().getProperty(BASE_URL) == null ? null : getXmpSchema().getProperty(BASE_URL).toString();
+		return this.getProperty(BASE_URL);
 	}
 
 	/**
@@ -51,7 +50,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
 	 */
 	@Override
 	public String getcreationDate() {
-		return getXmpSchema().getProperty(CREATION_DATE) == null ? null : getXmpSchema().getProperty(CREATION_DATE).toString();
+		return this.getProperty(CREATION_DATE);
 	}
 
 	/**
@@ -59,7 +58,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
 	 */
 	@Override
 	public String getcreator() {
-		return getXmpSchema().getProperty(CREATOR) == null ? null : getXmpSchema().getProperty(CREATOR).toString();
+		return this.getProperty(CREATOR);
 	}
 
 	/**
@@ -67,7 +66,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
 	 */
 	@Override
 	public String getmodDate() {
-		return getXmpSchema().getProperty(MOD_DATE) == null ? null : getXmpSchema().getProperty(MOD_DATE).toString();
+		return this.getProperty(MOD_DATE);
 	}
 
 	/**
@@ -75,7 +74,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
 	 */
 	@Override
 	public String getsubject() {
-		return getXmpSchema().getProperty(SUBJECT) == null ? null : getXmpSchema().getProperty(SUBJECT).toString();
+		return this.getProperty(SUBJECT);
 	}
 
 	/**
@@ -83,7 +82,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
 	 */
 	@Override
 	public String gettitle() {
-		return getXmpSchema().getProperty(TITLE) == null ? null : getXmpSchema().getProperty(TITLE).toString();
+		return this.getProperty(TITLE);
 	}
 
 	/**
@@ -91,6 +90,7 @@ public class PBPDFSchema extends PBXMPPredefinedSchema implements PDFSchema {
 	 */
 	@Override
 	public String gettrapped() {
-		return getXmpSchema().getProperty(TRAPPED) == null ? null : getXmpSchema().getProperty(TRAPPED).toString();
+		return this.getProperty(TRAPPED);
 	}
+
 }

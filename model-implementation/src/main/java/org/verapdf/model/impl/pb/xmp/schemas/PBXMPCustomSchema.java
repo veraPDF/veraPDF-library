@@ -3,13 +3,14 @@ package org.verapdf.model.impl.pb.xmp.schemas;
 import org.verapdf.model.xmplayer.XMPCustomSchema;
 
 /**
- * Current class is representation of XMPSchema interface from abstract model based on xmpbox from pdfbox.
+ * Current class is representation of XMPSchema interface from
+ * abstract model based on xmpbox from pdfbox.
  *
  * @author Maksim Bezrukov
  */
 public class PBXMPCustomSchema extends PBXMPSchema implements XMPCustomSchema {
 
-	private static final String XMP_CUSTOM_SCHEMA = "XMPCustomSchema";
+	public static final String XMP_CUSTOM_SCHEMA_TYPE = "XMPCustomSchema";
 
 	/**
 	 * Constructs new object
@@ -17,7 +18,7 @@ public class PBXMPCustomSchema extends PBXMPSchema implements XMPCustomSchema {
 	 * @param xmpSchema object from xmpbox represented this schema
 	 */
 	public PBXMPCustomSchema(org.apache.xmpbox.schema.XMPSchema xmpSchema) {
-		super(xmpSchema, XMP_CUSTOM_SCHEMA);
+		super(xmpSchema, XMP_CUSTOM_SCHEMA_TYPE);
 	}
 
 	/**

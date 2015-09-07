@@ -17,61 +17,59 @@ import java.util.List;
  */
 public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent {
 
-    private static final Logger LOGGER = Logger
-            .getLogger(PBoxPDOutputIntent.class);
+	private static final Logger LOGGER = Logger
+			.getLogger(PBoxPDOutputIntent.class);
 
 	public static final String OUTPUT_INTENT_TYPE = "PDOutputIntent";
 
-    public static final String DEST_PROFILE = "destProfile";
+	public static final String DEST_PROFILE = "destProfile";
 
-    public PBoxPDOutputIntent(
-            org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent simplePDObject) {
-        super(simplePDObject, OUTPUT_INTENT_TYPE);
-    }
+	public PBoxPDOutputIntent(
+			org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent simplePDObject) {
+		super(simplePDObject, OUTPUT_INTENT_TYPE);
+	}
 
-    @Override
-    public String getdestOutputProfileRef() {
-        COSDictionary dictionary = (COSDictionary) this.simplePDObject
-                .getCOSObject();
-        COSBase item = dictionary.getItem(COSName.DEST_OUTPUT_PROFILE);
-        if (item instanceof COSObject) {
-            StringBuilder buffer = new StringBuilder();
-            buffer.append(((COSObject) item).getObjectNumber()).append(' ');
-            buffer.append(((COSObject) item).getGenerationNumber());
-            return buffer.toString();
-        }
-        return null;
-    }
+	@Override
+	public String getdestOutputProfileRef() {
+		COSDictionary dictionary = (COSDictionary) this.simplePDObject
+				.getCOSObject();
+		COSBase item = dictionary.getItem(COSName.DEST_OUTPUT_PROFILE);
+		if (item instanceof COSObject) {
+			return String.valueOf(((COSObject) item).getObjectNumber()) +
+					' ' + ((COSObject) item).getGenerationNumber();
+		}
+		return null;
+	}
 
-    @Override
-    public List<? extends Object> getLinkedObjects(String link) {
-        if (DEST_PROFILE.equals(link)) {
-            return this.getDestProfile();
-        }
-        return super.getLinkedObjects(link);
-    }
+	@Override
+	public List<? extends Object> getLinkedObjects(String link) {
+		if (DEST_PROFILE.equals(link)) {
+			return this.getDestProfile();
+		}
+		return super.getLinkedObjects(link);
+	}
 
-    private List<ICCOutputProfile> getDestProfile() {
-        List<ICCOutputProfile> profile = new ArrayList<>();
-        COSBase dict = this.simplePDObject.getCOSObject();
-        String subtype = null;
-        if (dict instanceof COSDictionary) {
-            subtype = ((COSDictionary) dict).getNameAsString(COSName.S);
-        }
-        try {
-            COSStream dest = ((org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent) this.simplePDObject)
-                    .getDestOutputIntent();
-            if (dest != null) {
-                final InputStream unfilteredStream = dest.getUnfilteredStream();
-                long N = dest.getLong(COSName.N);
-                profile.add(new PBoxICCOutputProfile(unfilteredStream, subtype,
-                        N != -1 ? Long.valueOf(N) : null));
-                unfilteredStream.close();
-            }
-        } catch (IOException e) {
-            LOGGER.error("Can not read dest output profile. " + e.getMessage(),
-                    e);
-        }
-        return profile;
-    }
+	private List<ICCOutputProfile> getDestProfile() {
+		List<ICCOutputProfile> profile = new ArrayList<>();
+		COSBase dict = this.simplePDObject.getCOSObject();
+		String subtype = null;
+		if (dict instanceof COSDictionary) {
+			subtype = ((COSDictionary) dict).getNameAsString(COSName.S);
+		}
+		try {
+			COSStream dest = ((org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent) this.simplePDObject)
+					.getDestOutputIntent();
+			if (dest != null) {
+				final InputStream unfilteredStream = dest.getUnfilteredStream();
+				long N = dest.getLong(COSName.N);
+				profile.add(new PBoxICCOutputProfile(unfilteredStream, subtype,
+						N != -1 ? Long.valueOf(N) : null));
+				unfilteredStream.close();
+			}
+		} catch (IOException e) {
+			LOGGER.error("Can not read dest output profile. " + e.getMessage(),
+					e);
+		}
+		return profile;
+	}
 }

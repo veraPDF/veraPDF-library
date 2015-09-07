@@ -4,13 +4,14 @@ import org.apache.xmpbox.schema.XMPSchema;
 import org.verapdf.model.xmplayer.AUXSchema;
 
 /**
- * Current class is representation of AUXSchema interface from abstract model based on xmpbox from pdfbox.
+ * Current class is representation of AUXSchema interface from
+ * abstract model based on xmpbox from pdfbox.
  *
  * @author Maksim Bezrukov
  */
 public class PBAUXSchema extends PBXMPPredefinedSchema implements AUXSchema {
 
-	public static final String AUX_SCHEMA = "AUXSchema";
+	public static final String AUX_SCHEMA_TYPE = "AUXSchema";
 
 	/**
 	 * Constructs new object
@@ -18,7 +19,7 @@ public class PBAUXSchema extends PBXMPPredefinedSchema implements AUXSchema {
 	 * @param xmpSchema object from xmpbox represented this schema
 	 */
 	public PBAUXSchema(XMPSchema xmpSchema) {
-		super(xmpSchema, AUX_SCHEMA);
+		super(xmpSchema, AUX_SCHEMA_TYPE);
 	}
 
 }

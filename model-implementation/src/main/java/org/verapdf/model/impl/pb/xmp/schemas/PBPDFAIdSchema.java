@@ -7,13 +7,14 @@ import org.verapdf.model.xmplayer.PDFAIdSchema;
 
 
 /**
- * Current class is representation of PDFAIdSchema interface from abstract model based on xmpbox from pdfbox.
+ * Current class is representation of PDFAIdSchema interface from
+ * abstract model based on xmpbox from pdfbox.
  *
  * @author Maksim Bezrukov
  */
 public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchema {
 
-	public static final String PDF_AID_SCHEMA = "PDFAIdSchema";
+	public static final String PDF_AID_SCHEMA_TYPE = "PDFAIdSchema";
 
 	private static final String CORR = "corr";
 
@@ -23,7 +24,7 @@ public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchem
 	 * @param xmpSchema object from xmpbox represented this schema
 	 */
 	public PBPDFAIdSchema(PDFAIdentificationSchema xmpSchema) {
-		super(xmpSchema, PDF_AID_SCHEMA);
+		super(xmpSchema, PDF_AID_SCHEMA_TYPE);
 	}
 
 	/**
@@ -31,7 +32,8 @@ public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchem
 	 */
 	@Override
 	public Long getpart() {
-		return ((PDFAIdentificationSchema) getXmpSchema()).getPart() == null ? null : Long.valueOf(((PDFAIdentificationSchema) getXmpSchema()).getPart().longValue());
+		Integer part = ((PDFAIdentificationSchema) getXmpSchema()).getPart();
+		return part == null ? null : Long.valueOf(part.longValue());
 	}
 
 	/**
@@ -39,7 +41,7 @@ public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchem
 	 */
 	@Override
 	public String getconformance() {
-		return ((PDFAIdentificationSchema) getXmpSchema()).getConformance();
+		return ((PDFAIdentificationSchema) this.getXmpSchema()).getConformance();
 	}
 
 	/**
@@ -47,7 +49,7 @@ public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchem
 	 */
 	@Override
 	public String getamd() {
-		return ((PDFAIdentificationSchema) getXmpSchema()).getAmd();
+		return ((PDFAIdentificationSchema) this.getXmpSchema()).getAmd();
 	}
 
 	/**
@@ -55,7 +57,7 @@ public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchem
 	 */
 	@Override
 	public String getcorr() {
-		AbstractField corr = getXmpSchema().getProperty(CORR);
+		AbstractField corr = this.getXmpSchema().getProperty(CORR);
 
 		if (corr instanceof TextType) {
 			return ((TextType) corr).getStringValue();

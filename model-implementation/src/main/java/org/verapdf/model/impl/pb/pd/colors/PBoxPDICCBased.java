@@ -51,9 +51,7 @@ public class PBoxPDICCBased extends PBoxPDColorSpace implements PDICCBased {
                 inputProfile.add(new PBoxICCInputProfile(stream, N));
             }
         } catch (IOException e) {
-            LOGGER.error(
-                    "Can not get input profile from ICCBased. "
-                            + e.getMessage(), e);
+            LOGGER.error("Can not get input profile from ICCBased. ", e);
         }
         return inputProfile;
     }

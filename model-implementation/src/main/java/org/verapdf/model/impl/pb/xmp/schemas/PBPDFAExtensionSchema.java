@@ -5,13 +5,15 @@ import org.apache.xmpbox.schema.PDFAExtensionSchema;
 
 
 /**
- * Current class is representation of PDFAExtensionSchema interface from abstract model based on xmpbox from pdfbox.
+ * Current class is representation of PDFAExtensionSchema interface from
+ * abstract model based on xmpbox from pdfbox.
  *
  * @author Maksim Bezrukov
  */
-public class PBPDFAExtensionSchema extends PBXMPPredefinedSchema implements org.verapdf.model.xmplayer.PDFAExtensionSchema {
+public class PBPDFAExtensionSchema extends PBXMPPredefinedSchema
+		implements org.verapdf.model.xmplayer.PDFAExtensionSchema {
 
-	public static final String PDF_A_EXTENSION_SCHEMA = "PDFAExtensionSchema";
+	public static final String PDF_A_EXTENSION_SCHEMA_TYPE = "PDFAExtensionSchema";
 
 	/**
 	 * Constructs new object
@@ -19,7 +21,7 @@ public class PBPDFAExtensionSchema extends PBXMPPredefinedSchema implements org.
 	 * @param xmpSchema object from xmpbox represented this schema
 	 */
 	public PBPDFAExtensionSchema(PDFAExtensionSchema xmpSchema) {
-		super(xmpSchema, PDF_A_EXTENSION_SCHEMA);
+		super(xmpSchema, PDF_A_EXTENSION_SCHEMA_TYPE);
 	}
 
 	/**

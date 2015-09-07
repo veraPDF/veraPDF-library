@@ -3,17 +3,17 @@ package org.verapdf.model.impl.pb.xmp.schemas;
 import org.apache.xmpbox.schema.XMPBasicSchema;
 
 /**
- * Current class is representation of XMPBasicSchema interface from abstract model based on xmpbox from pdfbox.
+ * Current class is representation of XMPBasicSchema interface from
+ * abstract model based on xmpbox from pdfbox.
  *
  * @author Maksim Bezrukov
  */
-public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verapdf.model.xmplayer.XMPBasicSchema {
+public class PBXMPBasicSchema extends PBXMPPredefinedSchema
+		implements org.verapdf.model.xmplayer.XMPBasicSchema {
 
-	public static final String XMP_BASIC_SCHEMA = "XMPBasicSchema";
+	public static final String XMP_BASIC_SCHEMA_TYPE = "XMPBasicSchema";
 
-	private static final String AUTHOR = "Author";
 	private static final String DESCRIPTION = "Description";
-	private static final String TITLE = "Title";
 
 	/**
 	 * Constructs new object
@@ -21,7 +21,7 @@ public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verap
 	 * @param xmpSchema object from xmpbox represented this schema
 	 */
 	public PBXMPBasicSchema(org.apache.xmpbox.schema.XMPBasicSchema xmpSchema) {
-		super(xmpSchema, XMP_BASIC_SCHEMA);
+		super(xmpSchema, XMP_BASIC_SCHEMA_TYPE);
 	}
 
 	/**
@@ -29,7 +29,7 @@ public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verap
 	 */
 	@Override
 	public String getauthor() {
-		return getXmpSchema().getProperty(AUTHOR) == null ? null : getXmpSchema().getProperty(AUTHOR).toString();
+		return this.getProperty(AUTHOR);
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verap
 	 */
 	@Override
 	public String getdescription() {
-		return getXmpSchema().getProperty(DESCRIPTION) == null ? null : getXmpSchema().getProperty(DESCRIPTION).toString();
+		return this.getProperty(DESCRIPTION);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verap
 	 */
 	@Override
 	public String getlabel() {
-		return ((XMPBasicSchema) getXmpSchema()).getLabel();
+		return ((XMPBasicSchema) this.getXmpSchema()).getLabel();
 	}
 
 	/**
@@ -53,7 +53,8 @@ public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verap
 	 */
 	@Override
 	public Long getrating() {
-		return ((XMPBasicSchema) getXmpSchema()).getRating() == null ? null : Long.valueOf(((XMPBasicSchema) getXmpSchema()).getRating().longValue());
+		Integer rating = ((XMPBasicSchema) this.getXmpSchema()).getRating();
+		return rating == null ? null : Long.valueOf(rating.longValue());
 	}
 
 	/**
@@ -61,6 +62,6 @@ public class PBXMPBasicSchema extends PBXMPPredefinedSchema implements org.verap
 	 */
 	@Override
 	public String gettitle() {
-		return getXmpSchema().getProperty(TITLE) == null ? null : getXmpSchema().getProperty(TITLE).toString();
+		return this.getProperty(TITLE);
 	}
 }

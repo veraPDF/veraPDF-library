@@ -141,16 +141,14 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         return actions;
     }
 
-    private List<PDPage> getPages() {
-        PDPageTree pageTree = this.document.getPages();
-        List<PDPage> pages = new ArrayList<>(pageTree.getCount());
-        for (org.apache.pdfbox.pdmodel.PDPage page : pageTree) {
-            if (page != null) {
-                pages.add(new PBoxPDPage(page));
-            }
-        }
-        return pages;
-    }
+	private List<PDPage> getPages() {
+		PDPageTree pageTree = this.document.getPages();
+		List<PDPage> pages = new ArrayList<>(pageTree.getCount());
+		for (org.apache.pdfbox.pdmodel.PDPage page : pageTree) {
+			pages.add(new PBoxPDPage(page));
+		}
+		return pages;
+	}
 
     private List<PDMetadata> getMetadata() {
         List<PDMetadata> metadata = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
@@ -175,7 +173,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
     }
 
     private List<PDAcroForm> getAcroForms() {
-        List<PDAcroForm> forms = new ArrayList<>();
+        List<PDAcroForm> forms = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm form =
 				this.document.getDocumentCatalog().getAcroForm();
         if (form != null) {
@@ -183,4 +181,5 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         }
         return forms;
     }
+
 }

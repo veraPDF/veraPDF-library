@@ -131,9 +131,9 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 		if (actionDictionary instanceof COSDictionary) {
 			org.apache.pdfbox.pdmodel.interactive.action.PDAction action = PDActionFactory
 					.createAction((COSDictionary) actionDictionary);
-			if (action != null) {
-				boolean isNamedAction = NAMED_KEYWORD.equals(((COSDictionary) actionDictionary).getNameAsString("S"));
-				actions.add(isNamedAction ? new PBoxPDNamedAction((PDActionNamed) action) : new PBoxPDAction(action));
+			PDAction result = PBoxPDAction.getAction(action);
+			if (result != null) {
+				actions.add(result);
 			}
 		}
 		return actions;

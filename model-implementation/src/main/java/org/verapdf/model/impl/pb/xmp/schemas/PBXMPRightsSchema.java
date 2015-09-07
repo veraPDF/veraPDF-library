@@ -4,15 +4,14 @@ import org.apache.xmpbox.schema.XMPRightsManagementSchema;
 import org.verapdf.model.xmplayer.XMPRightsSchema;
 
 /**
- * Current class is representation of XMPRightsSchema interface from abstract model based on xmpbox from pdfbox.
+ * Current class is representation of XMPRightsSchema interface from
+ * abstract model based on xmpbox from pdfbox.
  *
  * @author Maksim Bezrukov
  */
 public class PBXMPRightsSchema extends PBXMPPredefinedSchema implements XMPRightsSchema {
 
-	private static final String XMP_RIGHTS_SCHEMA = "XMPRightsSchema";
-
-	private static final String COPYRIGHT = "Copyright";
+	public static final String XMP_RIGHTS_SCHEMA_TYPE = "XMPRightsSchema";
 
 	/**
 	 * Constructs new object
@@ -20,7 +19,7 @@ public class PBXMPRightsSchema extends PBXMPPredefinedSchema implements XMPRight
 	 * @param xmpSchema object from xmpbox represented this schema
 	 */
 	public PBXMPRightsSchema(XMPRightsManagementSchema xmpSchema) {
-		super(xmpSchema, XMP_RIGHTS_SCHEMA);
+		super(xmpSchema, XMP_RIGHTS_SCHEMA_TYPE);
 	}
 
 	/**
@@ -28,6 +27,6 @@ public class PBXMPRightsSchema extends PBXMPPredefinedSchema implements XMPRight
 	 */
 	@Override
 	public String getcopyright() {
-		return getXmpSchema().getProperty(COPYRIGHT) == null ? null : getXmpSchema().getProperty(COPYRIGHT).toString();
+		return this.getProperty(COPYRIGHT);
 	}
 }
