@@ -9,23 +9,23 @@ import org.verapdf.exceptions.VeraPDFException;
  */
 public class NullLinkNameException extends VeraPDFException {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 7066609417374831590L;
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 7066609417374831590L;
 
-    /**
-     * Constructs new NullLinkNameException
-     */
-    public NullLinkNameException() {
-    }
+	/**
+	 * Constructs new NullLinkNameException
+	 */
+	public NullLinkNameException() {
+	}
 
-    /**
-     * Constructs new NullLinkNameException
-     *
-     * @param message - the message of the exception
-     */
-    public NullLinkNameException(String message) {
-        super(message);
-    }
+	/**
+	 * Constructs new NullLinkNameException
+	 *
+	 * @param message the message of the exception
+	 */
+	public NullLinkNameException(String message) {
+		super(message);
+	}
 }

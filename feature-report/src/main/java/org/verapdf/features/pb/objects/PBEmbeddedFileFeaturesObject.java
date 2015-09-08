@@ -22,98 +22,98 @@ import java.util.List;
  */
 public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
 
-    private static final Logger LOGGER = Logger
-            .getLogger(PBEmbeddedFileFeaturesObject.class);
+	private static final Logger LOGGER = Logger
+			.getLogger(PBEmbeddedFileFeaturesObject.class);
 
-    private static final String CREATION_DATE = "creationDate";
-    private static final String MOD_DATE = "modDate";
+	private static final String CREATION_DATE = "creationDate";
+	private static final String MOD_DATE = "modDate";
 
-    private PDComplexFileSpecification embFile;
-    private int index;
+	private PDComplexFileSpecification embFile;
+	private int index;
 
-    /**
-     * Constructs new Embedded File Feature Object
-     *
-     * @param embFile - pdfbox class represents Embedded File object
-     * @param index   - page index
-     */
-    public PBEmbeddedFileFeaturesObject(PDComplexFileSpecification embFile, int index) {
-        this.embFile = embFile;
-        this.index = index;
-    }
+	/**
+	 * Constructs new Embedded File Feature Object
+	 *
+	 * @param embFile pdfbox class represents Embedded File object
+	 * @param index   page index
+	 */
+	public PBEmbeddedFileFeaturesObject(PDComplexFileSpecification embFile, int index) {
+		this.embFile = embFile;
+		this.index = index;
+	}
 
-    /**
-     * @return EMBEDDED_FILE instance of the FeaturesObjectTypesEnum enumeration
-     */
-    @Override
-    public FeaturesObjectTypesEnum getType() {
-        return FeaturesObjectTypesEnum.EMBEDDED_FILE;
-    }
+	/**
+	 * @return EMBEDDED_FILE instance of the FeaturesObjectTypesEnum enumeration
+	 */
+	@Override
+	public FeaturesObjectTypesEnum getType() {
+		return FeaturesObjectTypesEnum.EMBEDDED_FILE;
+	}
 
-    /**
-     * Reports all features from the object into the collection
-     *
-     * @param collection - collection for feature report
-     * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-     * @throws FeaturesTreeNodeException - occurs when wrong features tree node constructs
-     */
-    @Override
-    public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	/**
+	 * Reports all features from the object into the collection
+	 *
+	 * @param collection collection for feature report
+	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
+	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 */
+	@Override
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
 
-        if (embFile != null) {
-            FeatureTreeNode root = FeatureTreeNode.newRootInstance("embeddedFile");
-            root.addAttribute("id", "file" + index);
+		if (embFile != null) {
+			FeatureTreeNode root = FeatureTreeNode.newRootInstance("embeddedFile");
+			root.addAttribute("id", "file" + index);
 
-            PBCreateNodeHelper.addNotEmptyNode("fileName", embFile.getFilename(), root);
-            PBCreateNodeHelper.addNotEmptyNode("description", embFile.getFileDescription(), root);
+			PBCreateNodeHelper.addNotEmptyNode("fileName", embFile.getFilename(), root);
+			PBCreateNodeHelper.addNotEmptyNode("description", embFile.getFileDescription(), root);
 
-            PDEmbeddedFile ef = embFile.getEmbeddedFile();
-            if (ef != null) {
-                PBCreateNodeHelper.addNotEmptyNode("subtype", ef.getSubtype(), root);
+			PDEmbeddedFile ef = embFile.getEmbeddedFile();
+			if (ef != null) {
+				PBCreateNodeHelper.addNotEmptyNode("subtype", ef.getSubtype(), root);
 
-                PBCreateNodeHelper.addNotEmptyNode("filter", getFilters(ef.getFilters()), root);
+				PBCreateNodeHelper.addNotEmptyNode("filter", getFilters(ef.getFilters()), root);
 
-                try {
-                    PBCreateNodeHelper.createDateNode(CREATION_DATE, root, ef.getCreationDate(), collection);
-                } catch (IOException e) {
-                    LOGGER.debug("PDFBox error obtaining creation date", e);
-                    FeatureTreeNode creationDate = FeatureTreeNode.newChildInstance(CREATION_DATE, root);
-                    creationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
-                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
-                }
+				try {
+					PBCreateNodeHelper.createDateNode(CREATION_DATE, root, ef.getCreationDate(), collection);
+				} catch (IOException e) {
+					LOGGER.debug("PDFBox error obtaining creation date", e);
+					FeatureTreeNode creationDate = FeatureTreeNode.newChildInstance(CREATION_DATE, root);
+					creationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
+					ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
+				}
 
-                try {
-                    PBCreateNodeHelper.createDateNode(MOD_DATE, root, ef.getModDate(), collection);
-                } catch (IOException e) {
-                    LOGGER.debug("PDFBox error obtaining modification date", e);
-                    FeatureTreeNode modDate = FeatureTreeNode.newChildInstance(MOD_DATE, root);
-                    modDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
-                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
-                }
+				try {
+					PBCreateNodeHelper.createDateNode(MOD_DATE, root, ef.getModDate(), collection);
+				} catch (IOException e) {
+					LOGGER.debug("PDFBox error obtaining modification date", e);
+					FeatureTreeNode modDate = FeatureTreeNode.newChildInstance(MOD_DATE, root);
+					modDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
+					ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
+				}
 
-                PBCreateNodeHelper.addNotEmptyNode("checkSum", ef.getCheckSum(), root);
-                PBCreateNodeHelper.addNotEmptyNode("size", String.valueOf(ef.getSize()), root);
-            }
+				PBCreateNodeHelper.addNotEmptyNode("checkSum", ef.getCheckSum(), root);
+				PBCreateNodeHelper.addNotEmptyNode("size", String.valueOf(ef.getSize()), root);
+			}
 
-            collection.addNewFeatureTree(FeaturesObjectTypesEnum.EMBEDDED_FILE, root);
-            return root;
-        }
-        return null;
-    }
+			collection.addNewFeatureTree(FeaturesObjectTypesEnum.EMBEDDED_FILE, root);
+			return root;
+		}
+		return null;
+	}
 
-    private static String getFilters(List<COSName> list) {
-        if (list != null) {
-            StringBuilder builder = new StringBuilder();
+	private static String getFilters(List<COSName> list) {
+		if (list != null) {
+			StringBuilder builder = new StringBuilder();
 
-            for (COSName filter : list) {
-                if (filter != null && filter.getName() != null) {
-                    builder.append(filter.getName());
-                    builder.append(" ");
-                }
-            }
+			for (COSName filter : list) {
+				if (filter != null && filter.getName() != null) {
+					builder.append(filter.getName());
+					builder.append(" ");
+				}
+			}
 
-            return builder.toString().trim();
-        }
-        return null;
-    }
+			return builder.toString().trim();
+		}
+		return null;
+	}
 }

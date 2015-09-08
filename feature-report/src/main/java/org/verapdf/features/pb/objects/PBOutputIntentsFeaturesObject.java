@@ -20,80 +20,80 @@ import org.verapdf.features.tools.FeaturesCollection;
  */
 public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
 
-    private PDOutputIntent outInt;
-    private String id;
-    private String iccProfileID;
+	private PDOutputIntent outInt;
+	private String id;
+	private String iccProfileID;
 
-    /**
-     * Constructs new OutputIntent Feature Object
-     *
-     * @param outInt - pdfbox class represents OutputIntent object
-     * @param id - id of the outputIntent
-     * @param iccProfileID - id of the icc profile which use in this outputIntent
-     */
-    public PBOutputIntentsFeaturesObject(PDOutputIntent outInt, String id, String iccProfileID) {
-        this.outInt = outInt;
-        this.id = id;
-        this.iccProfileID = iccProfileID;
-    }
+	/**
+	 * Constructs new OutputIntent Feature Object
+	 *
+	 * @param outInt       pdfbox class represents OutputIntent object
+	 * @param id           id of the outputIntent
+	 * @param iccProfileID id of the icc profile which use in this outputIntent
+	 */
+	public PBOutputIntentsFeaturesObject(PDOutputIntent outInt, String id, String iccProfileID) {
+		this.outInt = outInt;
+		this.id = id;
+		this.iccProfileID = iccProfileID;
+	}
 
-    /**
-     * @return OUTPUTINTENT instance of the FeaturesObjectTypesEnum enumeration
-     */
-    @Override
-    public FeaturesObjectTypesEnum getType() {
-        return FeaturesObjectTypesEnum.OUTPUTINTENT;
-    }
+	/**
+	 * @return OUTPUTINTENT instance of the FeaturesObjectTypesEnum enumeration
+	 */
+	@Override
+	public FeaturesObjectTypesEnum getType() {
+		return FeaturesObjectTypesEnum.OUTPUTINTENT;
+	}
 
-    /**
-     * Reports featurereport into collection
-     *
-     * @param collection - collection for feature report
-     * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-     * @throws FeaturesTreeNodeException - occurs when wrong features tree node constructs
-     */
-    @Override
-    public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
-        if (outInt != null) {
-            FeatureTreeNode root = FeatureTreeNode.newRootInstance("outputIntent");
-            root.addAttribute("id", id);
+	/**
+	 * Reports featurereport into collection
+	 *
+	 * @param collection collection for feature report
+	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
+	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 */
+	@Override
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+		if (outInt != null) {
+			FeatureTreeNode root = FeatureTreeNode.newRootInstance("outputIntent");
+			root.addAttribute("id", id);
 
-            addSubtype(collection, root);
+			addSubtype(collection, root);
 
-            PBCreateNodeHelper.addNotEmptyNode("outputCondition", outInt.getOutputCondition(), root);
-            PBCreateNodeHelper.addNotEmptyNode("outputConditionIdentifier", outInt.getOutputConditionIdentifier(), root);
-            PBCreateNodeHelper.addNotEmptyNode("registryName", outInt.getRegistryName(), root);
-            PBCreateNodeHelper.addNotEmptyNode("info", outInt.getInfo(), root);
+			PBCreateNodeHelper.addNotEmptyNode("outputCondition", outInt.getOutputCondition(), root);
+			PBCreateNodeHelper.addNotEmptyNode("outputConditionIdentifier", outInt.getOutputConditionIdentifier(), root);
+			PBCreateNodeHelper.addNotEmptyNode("registryName", outInt.getRegistryName(), root);
+			PBCreateNodeHelper.addNotEmptyNode("info", outInt.getInfo(), root);
 
-            FeatureTreeNode destOutInt = FeatureTreeNode.newChildInstance("destOutputIntent", root);
-            destOutInt.addAttribute("id", iccProfileID);
+			FeatureTreeNode destOutInt = FeatureTreeNode.newChildInstance("destOutputIntent", root);
+			destOutInt.addAttribute("id", iccProfileID);
 
-            collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTPUTINTENT, root);
+			collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTPUTINTENT, root);
 
-            return root;
-        }
-        return null;
-    }
+			return root;
+		}
+		return null;
+	}
 
-    private void addSubtype(FeaturesCollection collection, FeatureTreeNode root) throws FeaturesTreeNodeException {
-        COSBase base = outInt.getCOSObject();
-        if (base instanceof COSDictionary) {
-            COSDictionary dict = (COSDictionary) base;
-            COSBase baseType = dict.getDictionaryObject(COSName.S);
+	private void addSubtype(FeaturesCollection collection, FeatureTreeNode root) throws FeaturesTreeNodeException {
+		COSBase base = outInt.getCOSObject();
+		if (base instanceof COSDictionary) {
+			COSDictionary dict = (COSDictionary) base;
+			COSBase baseType = dict.getDictionaryObject(COSName.S);
 
-            while (baseType instanceof COSObject) {
-                baseType = ((COSObject) baseType).getObject();
-            }
+			while (baseType instanceof COSObject) {
+				baseType = ((COSObject) baseType).getObject();
+			}
 
-            if (baseType != null) {
-                FeatureTreeNode type = FeatureTreeNode.newChildInstance("subtype", root);
-                if (baseType instanceof COSName) {
-                    type.setValue(((COSName) baseType).getName());
-                } else {
-                    type.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.OUTPUTINTENTSTYPE_ID);
-                    ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.OUTPUTINTENTSTYPE_ID, ErrorsHelper.OUTPUTINTENTSTYPE_MESSAGE);
-                }
-            }
-        }
-    }
+			if (baseType != null) {
+				FeatureTreeNode type = FeatureTreeNode.newChildInstance("subtype", root);
+				if (baseType instanceof COSName) {
+					type.setValue(((COSName) baseType).getName());
+				} else {
+					type.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.OUTPUTINTENTSTYPE_ID);
+					ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.OUTPUTINTENTSTYPE_ID, ErrorsHelper.OUTPUTINTENTSTYPE_MESSAGE);
+				}
+			}
+		}
+	}
 }

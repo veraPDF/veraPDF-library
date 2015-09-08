@@ -60,7 +60,7 @@ public class Validator {
 	/**
      * Creates new Validator with given validation profile
      *
-     * @param profile - validation profile model for validator
+     * @param profile validation profile model for validator
      */
     private Validator(ValidationProfile profile, boolean logPassedChecks) {
         this.profile = profile;
