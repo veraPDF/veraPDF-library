@@ -66,7 +66,9 @@ public class PBoxPDAnnotTest extends BaseTest {
 		Assert.assertEquals(1, action.size());
 		for (Object object : action) {
 			Assert.assertTrue(PBoxPDAction.ACTION_TYPE.equals(object.getObjectType()) ||
-					PBoxPDNamedAction.NAMED_ACTION_TYPE.equals(object.getObjectType()));
+					PBoxPDNamedAction.NAMED_ACTION_TYPE.equals(object.getObjectType()) ||
+					PBoxPDGoToAction.GOTO_ACTION_TYPE.equals(object.getObjectType()) ||
+					PBoxPDGoToRemoteAction.GOTO_REMOTE_ACTION_TYPE.equals(object.getObjectType()));
 		}
 	}
 
