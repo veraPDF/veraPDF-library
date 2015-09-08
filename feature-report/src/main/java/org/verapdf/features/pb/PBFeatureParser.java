@@ -483,6 +483,7 @@ public final class PBFeatureParser {
 							imageXObjects.put(thumbID, img);
 							parseImageXObject(img, thumbID);
 						} catch (IOException e) {
+							LOGGER.error(e);
 							xobjectCreationProblem(thumbID);
 						}
 					} else {
