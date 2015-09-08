@@ -25,6 +25,7 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 	private static final String ID = "id";
 
 	private PDPage page;
+	private String thumb;
 	private Set<String> annotsId;
 	private Set<String> extGStateChild;
 	private Set<String> colorSpaceChild;
@@ -41,6 +42,7 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 	 * Constructs new Page Feature Object
 	 *
 	 * @param page            pdfbox class represents page object
+	 * @param thumb           thumbnail image id
 	 * @param annotsId        set of annotations id which contains in this page
 	 * @param extGStateChild  set of external graphics state id which contains in resource dictionary of this page
 	 * @param colorSpaceChild set of ColorSpace id which contains in resource dictionary of this page
@@ -54,6 +56,7 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 	 * @param index           page index
 	 */
 	public PBPageFeaturesObject(PDPage page,
+								String thumb,
 								Set<String> annotsId,
 								Set<String> extGStateChild,
 								Set<String> colorSpaceChild,
@@ -66,6 +69,7 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 								String id,
 								int index) {
 		this.page = page;
+		this.thumb = thumb;
 		this.annotsId = annotsId;
 		this.extGStateChild = extGStateChild;
 		this.colorSpaceChild = colorSpaceChild;
@@ -128,7 +132,10 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 				}
 			}
 
-			FeatureTreeNode.newChildInstanceWithValue("thumbnail", Boolean.toString(page.getCOSObject().getDictionaryObject(COSName.getPDFName("Thumb")) != null), root);
+			if (thumb != null) {
+				FeatureTreeNode thumbNode = FeatureTreeNode.newChildInstance("thumbnail", root);
+				thumbNode.addAttribute(ID, thumb);
+			}
 
 			PBCreateNodeHelper.parseMetadata(page.getMetadata(), "metadata", root, collection);
 

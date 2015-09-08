@@ -107,7 +107,10 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 				FeatureTreeNode mask = FeatureTreeNode.newChildInstance("sMask", root);
 				mask.addAttribute(ID, sMaskChild);
 			}
-			FeatureTreeNode.newChildInstanceWithValue("structParent", String.valueOf(imageXObject.getStructParent()), root);
+
+			if (imageXObject.getCOSStream().getItem(COSName.STRUCT_PARENT) != null) {
+				FeatureTreeNode.newChildInstanceWithValue("structParent", String.valueOf(imageXObject.getStructParent()), root);
+			}
 
 			try {
 				if (imageXObject.getStream().getFilters() != null && !imageXObject.getStream().getFilters().isEmpty()) {

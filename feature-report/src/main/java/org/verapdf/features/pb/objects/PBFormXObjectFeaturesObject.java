@@ -122,7 +122,9 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
 				}
 			}
 
-			FeatureTreeNode.newChildInstanceWithValue("structParents", String.valueOf(formXObject.getStructParents()), root);
+			if (formXObject.getCOSStream().getItem(COSName.STRUCT_PARENTS) != null) {
+				FeatureTreeNode.newChildInstanceWithValue("structParents", String.valueOf(formXObject.getStructParents()), root);
+			}
 
 
 			COSBase cosBase = formXObject.getCOSStream().getDictionaryObject(COSName.METADATA);

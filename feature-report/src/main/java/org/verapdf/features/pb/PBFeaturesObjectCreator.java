@@ -127,6 +127,7 @@ public final class PBFeaturesObjectCreator {
 	 * Creates new PBPageFeaturesObject
 	 *
 	 * @param page            pdfbox class represents page object
+	 * @param thumb           thumbnail image id
 	 * @param annotsId        set of annotations id which contains in this page
 	 * @param extGStateChild  set of extGState id which contains in resource dictionary of this page
 	 * @param colorSpaceChild set of ColorSpace id which contains in resource dictionary of this page
@@ -141,6 +142,7 @@ public final class PBFeaturesObjectCreator {
 	 * @return created PBPageFeaturesObject
 	 */
 	public static PBPageFeaturesObject createPageFeaturesObject(PDPage page,
+																String thumb,
 																Set<String> annotsId,
 																Set<String> extGStateChild,
 																Set<String> colorSpaceChild,
@@ -152,7 +154,7 @@ public final class PBFeaturesObjectCreator {
 																Set<String> propertiesChild,
 																String id,
 																int index) {
-		return new PBPageFeaturesObject(page, annotsId, extGStateChild,
+		return new PBPageFeaturesObject(page, thumb, annotsId, extGStateChild,
 				colorSpaceChild, patternChild, shadingChild, xobjectChild,
 				fontChild, procSetChild, propertiesChild, id, index);
 	}

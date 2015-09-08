@@ -397,7 +397,7 @@ public final class PBFeatureParser {
 								id,
 								groupXObjectColorSpaceChild.get(id),
 								formXObjectExtGStateChild.get(id),
-								fontColorSpaceChild.get(id),
+								formXObjectColorSpaceChild.get(id),
 								formXObjectPatternChild.get(id),
 								formXObjectShadingChild.get(id),
 								formXObjectXObjectChild.get(id),
@@ -466,6 +466,30 @@ public final class PBFeatureParser {
 
 			int pageIndex = pageTree.indexOf(page) + 1;
 			Set<String> annotsId = addAnnotsDependencies(page, pageIndex);
+			String thumbID = null;
+
+			if (page.getCOSObject().getDictionaryObject(COSName.getPDFName("Thumb")) != null) {
+				COSBase baseThumb = page.getCOSObject().getItem(COSName.getPDFName("Thumb"));
+				thumbID = getId(baseThumb, XOBJECT_ID, imageXObjects.size() + formXObjects.size());
+				if (imageXObjectPageParent.get(thumbID) == null) {
+					imageXObjectPageParent.put(thumbID, new HashSet<String>());
+				}
+				imageXObjectPageParent.get(thumbID).add(PAGE + pageIndex);
+				if (!imageXObjects.containsKey(thumbID)) {
+					COSBase base = getBase(baseThumb);
+					if (base instanceof COSStream) {
+						try {
+							PDImageXObject img = new PDImageXObject(new PDStream((COSStream) base), null);
+							imageXObjects.put(thumbID, img);
+							parseImageXObject(img, thumbID);
+						} catch (IOException e) {
+							xobjectCreationProblem(thumbID);
+						}
+					} else {
+						xobjectCreationProblem(thumbID);
+					}
+				}
+			}
 
 			getResourceDictionaryDependencies(page.getResources(),
 					PAGE + pageIndex,
@@ -490,6 +514,7 @@ public final class PBFeatureParser {
 
 			reporter.report(PBFeaturesObjectCreator
 					.createPageFeaturesObject(page,
+							thumbID,
 							annotsId,
 							pageExtGStateChild.get(PAGE + pageIndex),
 							pageColorSpaceChild.get(PAGE + pageIndex),

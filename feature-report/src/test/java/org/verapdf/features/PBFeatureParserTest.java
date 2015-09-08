@@ -51,7 +51,7 @@ public class PBFeatureParserTest {
 		assertEquals(FeaturesObjectTypesEnum.METADATA, new PBMetadataFeaturesObject(null).getType());
 		assertEquals(FeaturesObjectTypesEnum.OUTLINES, new PBOutlinesFeaturesObject(null).getType());
 		assertEquals(FeaturesObjectTypesEnum.OUTPUTINTENT, new PBOutputIntentsFeaturesObject(null, null, null).getType());
-		assertEquals(FeaturesObjectTypesEnum.PAGE, new PBPageFeaturesObject(null, null, null, null, null, null, null, null, null, null, null, 0).getType());
+		assertEquals(FeaturesObjectTypesEnum.PAGE, new PBPageFeaturesObject(null, null, null, null, null, null, null, null, null, null, null, null, 0).getType());
 		assertEquals(FeaturesObjectTypesEnum.PROCSET, new PBProcSetFeaturesObject(null, null, null, null, null, null).getType());
 		assertEquals(FeaturesObjectTypesEnum.PROPERTIES, new PBPropertiesDictFeaturesObject(null, null, null, null, null, null).getType());
 		assertEquals(FeaturesObjectTypesEnum.SHADING, new PBShadingFeaturesObject(null, null, null, null, null, null, null).getType());
@@ -77,8 +77,8 @@ public class PBFeatureParserTest {
 		assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.SHADING).size());
 		assertEquals(2, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN).size());
 		assertEquals(7, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROCSET).size());
-		assertEquals(33, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.COLORSPACE).size());
-		assertEquals(9, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.IMAGE_XOBJECT).size());
+		assertEquals(34, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.COLORSPACE).size());
+		assertEquals(10, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.IMAGE_XOBJECT).size());
 		assertEquals(12, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FORM_XOBJECT).size());
 		assertEquals(7, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FONT).size());
 
