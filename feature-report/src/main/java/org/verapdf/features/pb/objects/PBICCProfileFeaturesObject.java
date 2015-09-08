@@ -17,10 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Feature object for icc profile
@@ -245,7 +242,10 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 		int sec = getCreationPart(header, CREATION_SEC);
 
 		if (year != 0 || month != 0 || day != 0 || hour != 0 || min != 0 || sec != 0) {
-			return new GregorianCalendar(year, month - 1, day, hour, min, sec);
+			GregorianCalendar cal = new GregorianCalendar(TimeZone.getTimeZone("UTC"), Locale.US);
+			cal.set(year, month - 1, day, hour, min, sec);
+			cal.set(Calendar.MILLISECOND, 0);
+			return cal;
 		}
 
 		return null;

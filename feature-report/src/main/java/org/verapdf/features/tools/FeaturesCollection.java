@@ -2,10 +2,7 @@ package org.verapdf.features.tools;
 
 import org.verapdf.features.FeaturesObjectTypesEnum;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Features Collection
@@ -49,6 +46,6 @@ public class FeaturesCollection {
 	public List<FeatureTreeNode> getFeatureTreesForType(FeaturesObjectTypesEnum type) {
 		List<FeatureTreeNode> list = collection.get(type);
 
-		return list == null ? new ArrayList<FeatureTreeNode>() : list;
-	}
+        return list == null ? Collections.<FeatureTreeNode>emptyList() : list;
+    }
 }

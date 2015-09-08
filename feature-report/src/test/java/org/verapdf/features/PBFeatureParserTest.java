@@ -100,6 +100,39 @@ public class PBFeatureParserTest {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.LOW_LEVEL_INFO).contains(TestNodeGenerator.getLowLvlInfo()));
 	}
 
+    @Test
+    public void testICCProfiles() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
+        assertEquals(5, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).size());
+        Set<String> outInts19 = new HashSet<>();
+        outInts19.add("outIntDir0");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir19",
+                outInts19, null, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:52:24.000Z", null, "Copyright 2000 Adobe Systems Incorporated",
+                "Apple RGB", null, null, "none", getMetadataBytesFromFile("/iccprofile19_metadata_bytes.txt"))));
+        Set<String> iccbsds81 = new HashSet<>();
+        iccbsds81.add("clrspDir9");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir81",
+                null, iccbsds81, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:54:18.000Z", null, "Copyright 2000 Adobe Systems Incorporated",
+                "PAL/SECAM", null, null, "none", null)));
+        Set<String> iccbsds84 = new HashSet<>();
+        iccbsds84.add("clrspDir12");
+        iccbsds84.add("clrspDir22");
+        iccbsds84.add("clrspDir21");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir84",
+                null, iccbsds84, "2.2.0", "appl", "RGB ", "appl", "2000-08-13T16:06:07.000Z", "\u0000\u0000\u0000\u0001", "Copyright 1998 - 2003 Apple Computer Inc., all rights reserved.",
+                "sRGB Profile", null, null, "appl", null)));
+        Set<String> iccbsds85 = new HashSet<>();
+        iccbsds85.add("clrspDir13");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir85",
+                null, iccbsds85, "4.2.0", "ADBE", "RGB ", "ADBE", "2007-10-24T00:00:00.000Z", "\u0000\u0000\u0000\u0001", "Copyright 2007 Adobe Systems Incorporated",
+                "HDTV (Rec. 709)", "t\u001C$ﾦ\u0012\u0017ﾉHQﾃ\uFFEFￋ￨<\uFFE7,", null, null, null)));
+        Set<String> iccbsds77 = new HashSet<>();
+        iccbsds77.add("clrspDir3");
+        iccbsds77.add("clrspDir2");
+        iccbsds77.add("clrspDir0");
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(getICCProfile("iccProfileIndir77",
+                null, iccbsds77, "2.1.0", "ADBE", "GRAY", "ADBE", "1999-06-03T00:00:00.000Z", null, "Copyright 1999 Adobe Systems Incorporated",
+                "Dot Gain 20%", null, null, "none", null)));
+    }
 	@Test
 	public void testEmbeddedFiles() throws FeaturesTreeNodeException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE).contains(TestNodeGenerator.getEmbeddedFileNode("file1", "1.txt", "",
@@ -110,40 +143,6 @@ public class PBFeatureParserTest {
 				"text/xml", "FlateDecode", "2015-08-31T13:33:38.000+03:00", "2015-08-20T12:24:50.000Z", "\u0006\u0005¼ä\u0017Uw\r⁄©>ñ8\u000EnÔ", "876")));
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE).contains(TestNodeGenerator.getEmbeddedFileNode("file4", "fox_1.jpg", "Some Description for embedded file",
 				"image/jpeg", "FlateDecode", "2015-08-22T14:01:19.000+03:00", "2014-09-08T12:01:07.000Z", "ËÓþVf\u0007ç`ºŁåk\u0015?A\r", "67142")));
-	}
-
-	@Test
-	@Ignore
-	public void testICCProfiles() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
-		Set<String> outInts19 = new HashSet<>();
-		outInts19.add("outIntDir0");
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(TestNodeGenerator.getICCProfile("iccProfileIndir19",
-				outInts19, null, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:52:24.000+03:00", "Perceptual", "Copyright 2000 Adobe Systems Incorporated",
-				"Apple RGB", null, null, "none", TestNodeGenerator.getMetadataBytesFromFile("/iccprofile19_metadata_bytes.txt"))));
-		Set<String> iccbsds81 = new HashSet<>();
-		iccbsds81.add("clrspDir9");
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(TestNodeGenerator.getICCProfile("iccProfileIndir81",
-				null, iccbsds81, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:54:18.000+03:00", "Perceptual", "Copyright 2000 Adobe Systems Incorporated",
-				"PAL/SECAM", null, null, "none", null)));
-		Set<String> iccbsds84 = new HashSet<>();
-		iccbsds84.add("clrspDir12");
-		iccbsds84.add("clrspDir22");
-		iccbsds84.add("clrspDir23");
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(TestNodeGenerator.getICCProfile("iccProfileIndir84",
-				null, iccbsds84, "2.2.0", "appl", "RGB ", "appl", "2000-08-13T16:06:07.000+03:00", "Media-Relative Colorimetric", "Copyright 1998 - 2003 Apple Computer Inc., all rights reserved.",
-				"sRGB Profile", null, null, "appl", null)));
-		Set<String> iccbsds85 = new HashSet<>();
-		iccbsds85.add("clrspDir13");
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(TestNodeGenerator.getICCProfile("iccProfileIndir85",
-				null, iccbsds85, "4.2.0", "ADBE", "RGB ", "ADBE", "2007-10-24T00:00:00.000+03:00", "Media-Relative Colorimetric", "Copyright 2007 Adobe Systems Incorporated",
-				"HDTV (Rec. 709)", "t\u001C$ﾦ\u0012\u0017ﾉHQﾃ\uFFEFￋ￨<\uFFE7,", null, null, null)));
-		Set<String> iccbsds77 = new HashSet<>();
-		iccbsds77.add("clrspDir3");
-		iccbsds77.add("clrspDir2");
-		iccbsds77.add("clrspDir0");
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(TestNodeGenerator.getICCProfile("iccProfileIndir77",
-				null, iccbsds77, "2.1.0", "ADBE", "GRAY", "ADBE", "1999-06-03T00:00:00.000+03:00", "Perceptual", "Copyright 1999 Adobe Systems Incorporated",
-				"Dot Gain 20%", null, null, "none", null)));
 	}
 
 	@Test
@@ -197,12 +196,11 @@ public class PBFeatureParserTest {
 				"85f36ad6-ae92-479e-9b24-ba07c8702837", "D:20150831140515+03'00'", xobj39, "annotIndir40", "1.0", null, null, null,
 				"false", "false", "true", "true", "true", "false", "false", "false", "false", "false")));
 	}
-
-	@Test
-	@Ignore
-	public void testPage() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE).contains(TestNodeGenerator.getPage()));
-	}
+    @Test
+    public void testPage() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
+        assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE).size());
+        assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE).contains(getPage()));
+    }
 
 	@Test
 	@Ignore

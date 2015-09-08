@@ -194,41 +194,52 @@ public final class FeatureTreeNode {
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        FeatureTreeNode other = (FeatureTreeNode) obj;
+        if (this.attributes == null) {
+            if (other.attributes != null)
+                return false;
+        } else if (!this.attributes.equals(other.attributes))
+            return false;
+        if (this.children == null) {
+            if (other.children != null)
+                return false;
+        } else if (!isChildrenMatch(this, other))
+            return false;
+        if (this.name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!this.name.equals(other.name))
+            return false;
+        if (this.value == null) {
+            if (other.value != null)
+                return false;
+        } else {
+            if (this.value instanceof byte[] && other.value instanceof byte[]) {
+                if (!Arrays.equals((byte[]) this.value, (byte[]) other.value)) {
+                    return false;
+                }
+            } else if (!this.value.equals(other.value))
+                return false;
+        }
+        return true;
+    }
+
+	private static boolean isChildrenMatch(FeatureTreeNode aThis, FeatureTreeNode other) {
+		if (aThis.children == other.children) {
 			return true;
-		if (obj == null)
+		} else if (aThis.children == null ^ other.children == null) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		FeatureTreeNode other = (FeatureTreeNode) obj;
-		if (this.attributes == null) {
-			if (other.attributes != null)
-				return false;
-		} else if (!this.attributes.equals(other.attributes))
-			return false;
-		if (this.children == null) {
-			if (other.children != null)
-				return false;
-		} else if (!this.children.equals(other.children))
-			return false;
-		if (this.name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!this.name.equals(other.name))
-			return false;
-		if (this.value == null) {
-			if (other.value != null)
-				return false;
-		} else {
-			if (this.value instanceof byte[] && other.value instanceof byte[]) {
-				if (!Arrays.equals((byte[]) this.value, (byte[]) other.value)) {
-					return false;
-				}
-			} else if (!this.value.equals(other.value))
-				return false;
 		}
-		return true;
+		return aThis.children.size() == other.children.size() &&
+				aThis.children.containsAll(other.children);
 	}
+
 }
