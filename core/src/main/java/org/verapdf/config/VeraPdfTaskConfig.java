@@ -22,18 +22,17 @@ public final class VeraPdfTaskConfig {
     private final Input input;
     private final String profile;
 	private final boolean logPassedChecks;
+	private final int failedChecksCount;
     private final String output;
 
-    private VeraPdfTaskConfig() {
-        this(false, null, null, false, null);
-    }
-
     public VeraPdfTaskConfig(boolean validate, Input input, String profile,
-							 boolean logPassedChecks, String output) {
+							 boolean logPassedChecks, int failedChecksCount,
+							 String output) {
         this.validate = validate;
         this.input = input;
         this.profile = profile;
 		this.logPassedChecks = logPassedChecks;
+		this.failedChecksCount = failedChecksCount;
         this.output = output;
     }
 
@@ -66,6 +65,13 @@ public final class VeraPdfTaskConfig {
 	}
 
 	/**
+	 * @return maximum amount of failed checks for each rule during validation
+	 */
+	public int getFailedChecksCount() {
+		return failedChecksCount;
+	}
+
+	/**
      * @return the output
      */
     public String getOutput() {
@@ -78,16 +84,10 @@ public final class VeraPdfTaskConfig {
         private Input input;
         private String profile;
 		private boolean logPassedChecks;
+		private int failedChecksCount;
         private String output;
 
         public Builder() {
-        }
-
-        public Builder(VeraPdfTaskConfig config) {
-            this.validate = config.validate;
-            this.input = config.input;
-            this.profile = config.profile;
-            this.output = config.output;
         }
 
         public Builder validate(boolean validate) {
@@ -110,13 +110,19 @@ public final class VeraPdfTaskConfig {
 			return this;
 		}
 
+		public Builder failedChecksCount(int failedChecksCount) {
+			this.failedChecksCount = failedChecksCount;
+			return this;
+		}
+
         public Builder output(String output) {
             this.output = output;
             return this;
         }
 
         public VeraPdfTaskConfig build() {
-            return new VeraPdfTaskConfig(validate, input, profile, logPassedChecks, output);
+            return new VeraPdfTaskConfig(validate, input, profile,
+					logPassedChecks, failedChecksCount, output);
         }
 
     }
