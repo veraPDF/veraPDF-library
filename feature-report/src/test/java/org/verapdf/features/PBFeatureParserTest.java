@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.pb.objects.*;
+import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import java.io.File;
@@ -95,7 +96,6 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
-	@Ignore
 	public void testLowLvlInfo() throws FeaturesTreeNodeException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.LOW_LEVEL_INFO).contains(TestNodeGenerator.getLowLvlInfo()));
 	}
@@ -113,36 +113,35 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
-	@Ignore
 	public void testICCProfiles() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
 		Set<String> outInts19 = new HashSet<>();
 		outInts19.add("outIntDir0");
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(TestNodeGenerator.getICCProfile("iccProfileIndir19",
-				outInts19, null, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:52:24.000+03:00", "Perceptual", "Copyright 2000 Adobe Systems Incorporated",
+				outInts19, null, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:52:24.000Z", "Perceptual", "Copyright 2000 Adobe Systems Incorporated",
 				"Apple RGB", null, null, "none", TestNodeGenerator.getMetadataBytesFromFile("/iccprofile19_metadata_bytes.txt"))));
 		Set<String> iccbsds81 = new HashSet<>();
-		iccbsds81.add("clrspDir9");
+		iccbsds81.add("clrspDir10");
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(TestNodeGenerator.getICCProfile("iccProfileIndir81",
-				null, iccbsds81, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:54:18.000+03:00", "Perceptual", "Copyright 2000 Adobe Systems Incorporated",
+				null, iccbsds81, "2.1.0", "ADBE", "RGB ", "ADBE", "2000-08-11T19:54:18.000Z", "Perceptual", "Copyright 2000 Adobe Systems Incorporated",
 				"PAL/SECAM", null, null, "none", null)));
 		Set<String> iccbsds84 = new HashSet<>();
-		iccbsds84.add("clrspDir12");
-		iccbsds84.add("clrspDir22");
+		iccbsds84.add("clrspDir13");
+		iccbsds84.add("clrspDir24");
 		iccbsds84.add("clrspDir23");
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(TestNodeGenerator.getICCProfile("iccProfileIndir84",
-				null, iccbsds84, "2.2.0", "appl", "RGB ", "appl", "2000-08-13T16:06:07.000+03:00", "Media-Relative Colorimetric", "Copyright 1998 - 2003 Apple Computer Inc., all rights reserved.",
+				null, iccbsds84, "2.2.0", "appl", "RGB ", "appl", "2000-08-13T16:06:07.000Z", "Media-Relative Colorimetric", "Copyright 1998 - 2003 Apple Computer Inc., all rights reserved.",
 				"sRGB Profile", null, null, "appl", null)));
 		Set<String> iccbsds85 = new HashSet<>();
-		iccbsds85.add("clrspDir13");
+		iccbsds85.add("clrspDir14");
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(TestNodeGenerator.getICCProfile("iccProfileIndir85",
-				null, iccbsds85, "4.2.0", "ADBE", "RGB ", "ADBE", "2007-10-24T00:00:00.000+03:00", "Media-Relative Colorimetric", "Copyright 2007 Adobe Systems Incorporated",
+				null, iccbsds85, "4.2.0", "ADBE", "RGB ", "ADBE", "2007-10-24T00:00:00.000Z", "Media-Relative Colorimetric", "Copyright 2007 Adobe Systems Incorporated",
 				"HDTV (Rec. 709)", "t\u001C$ﾦ\u0012\u0017ﾉHQﾃ\uFFEFￋ￨<\uFFE7,", null, null, null)));
 		Set<String> iccbsds77 = new HashSet<>();
-		iccbsds77.add("clrspDir3");
+		iccbsds77.add("clrspDir4");
 		iccbsds77.add("clrspDir2");
-		iccbsds77.add("clrspDir0");
+		iccbsds77.add("clrspDir5");
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(TestNodeGenerator.getICCProfile("iccProfileIndir77",
-				null, iccbsds77, "2.1.0", "ADBE", "GRAY", "ADBE", "1999-06-03T00:00:00.000+03:00", "Perceptual", "Copyright 1999 Adobe Systems Incorporated",
+				null, iccbsds77, "2.1.0", "ADBE", "GRAY", "ADBE", "1999-06-03T00:00:00.000Z", "Perceptual", "Copyright 1999 Adobe Systems Incorporated",
 				"Dot Gain 20%", null, null, "none", null)));
 	}
 
@@ -199,13 +198,11 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
-	@Ignore
 	public void testPage() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE).contains(TestNodeGenerator.getPage()));
 	}
 
 	@Test
-	@Ignore
 	public void testGraphicsState() throws FeaturesTreeNodeException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE).contains(TestNodeGenerator.getGraphicsState("exGStIndir93",
 				null, "ptrnIndir50", null, null, null, "true", "false", "false", "false", "fntIndir89")));
@@ -239,7 +236,6 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
-	@Ignore
 	public void testPatterns() throws FeaturesTreeNodeException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN).contains(TestNodeGenerator.getShadingPattern()));
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN).contains(TestNodeGenerator.getTilingPattern()));

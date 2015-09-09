@@ -87,7 +87,7 @@ public final class TestNodeGenerator {
 		FeatureTreeNode clr2 = FeatureTreeNode.newChildInstance("colorSpace", colorSpaces);
 		clr2.addAttribute(ID, "clrspDir19");
 		FeatureTreeNode clr1 = FeatureTreeNode.newChildInstance("colorSpace", colorSpaces);
-		clr1.addAttribute(ID, "clrspDir18");
+		clr1.addAttribute(ID, "clrspDir20");
 		FeatureTreeNode xobjects = FeatureTreeNode.newChildInstance("xobjects", resources);
 		FeatureTreeNode xobj2 = FeatureTreeNode.newChildInstance("xobject", xobjects);
 		xobj2.addAttribute(ID, "xobjIndir60");
@@ -248,23 +248,25 @@ public final class TestNodeGenerator {
 		makeList("graphicsState", graphicsStates, resources);
 
 		List<String> colorSpaces = new ArrayList<>();
-		colorSpaces.add("devrgb");
-		colorSpaces.add("clrspDir9");
-		colorSpaces.add("clrspDir8");
-		colorSpaces.add("clrspDir5");
-		colorSpaces.add("clrspDir17");
-		colorSpaces.add("clrspDir3");
-		colorSpaces.add("clrspDir16");
-		colorSpaces.add("clrspDir4");
-		colorSpaces.add("clrspDir14");
-		colorSpaces.add("clrspDir2");
-		colorSpaces.add("clrspDir13");
-		colorSpaces.add("clrspDir12");
-		colorSpaces.add("clrspDir0");
-		colorSpaces.add("clrspDir11");
+
 		colorSpaces.add("clrspDir10");
+		colorSpaces.add("clrspDir11");
 		colorSpaces.add("devcmyk");
+		colorSpaces.add("clrspDir18");
+		colorSpaces.add("clrspDir4");
+		colorSpaces.add("clrspDir5");
+		colorSpaces.add("clrspDir6");
+		colorSpaces.add("clrspDir17");
+		colorSpaces.add("clrspDir14");
+		colorSpaces.add("clrspDir15");
+		colorSpaces.add("clrspDir12");
+		colorSpaces.add("clrspDir2");
 		colorSpaces.add("devgray");
+		colorSpaces.add("clrspDir13");
+		colorSpaces.add("devrgb");
+		colorSpaces.add("clrspDir7");
+		colorSpaces.add("clrspDir9");
+
 		makeList("colorSpace", colorSpaces, resources);
 
 		List<String> patterns = new ArrayList<>();
@@ -509,6 +511,7 @@ public final class TestNodeGenerator {
 		FeatureTreeNode filters = FeatureTreeNode.newChildInstance("filters", lli);
 		addFilter("FlateDecode", filters);
 		addFilter("ASCIIHexDecode", filters);
+		addFilter("ASCII85Decode", filters);
 		addFilter("CCITTFaxDecode", filters);
 		addFilter("DCTDecode", filters);
 		return lli;
