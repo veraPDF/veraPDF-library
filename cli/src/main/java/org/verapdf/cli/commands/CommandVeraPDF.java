@@ -25,6 +25,9 @@ public class CommandVeraPDF extends Command {
 	@Parameter(names = "--log-passed-checks")
 	private boolean logPassedChecks = false;
 
+	@Parameter(names = "--failed")
+	private int failedChecksCount = 100;
+
     @Parameter(names = "--output")
     private String output;
 
@@ -32,41 +35,48 @@ public class CommandVeraPDF extends Command {
      * @return the validate
      */
     public boolean isValidate() {
-        return validate;
+        return this.validate;
     }
 
     /**
      * @return the inputPath
      */
     public String getInputPath() {
-        return inputPath;
+        return this.inputPath;
     }
 
     /**
      * @return the inputPathURL
      */
     public boolean isInputPathURL() {
-        return inputPathURL;
+        return this.inputPathURL;
     }
 
     /**
      * @return the profile
      */
     public String getProfile() {
-        return profile;
+        return this.profile;
     }
 
 	/**
 	 * @return the logPassedChecks
 	 */
 	public boolean isLogPassedChecks() {
-		return logPassedChecks;
+		return this.logPassedChecks;
+	}
+
+	/**
+	 * @return maximum amount of failed checks for each rule during validation
+	 */
+	public int getFailedChecksCount() {
+		return this.failedChecksCount;
 	}
 
 	/**
      * @return the output
      */
     public String getOutput() {
-        return output;
+        return this.output;
     }
 }

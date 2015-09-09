@@ -61,9 +61,11 @@ public class VeraPdfCli {
         VeraPdfTaskConfig.Builder configBuilder = new VeraPdfTaskConfig.Builder();
         configBuilder
                 .input(new Input(cmdVeraPDF.getInputPath(), cmdVeraPDF
-                        .isInputPathURL())).profile(cmdVeraPDF.getProfile())
+                        .isInputPathURL()))
+				.profile(cmdVeraPDF.getProfile())
                 .validate(cmdVeraPDF.isValidate())
                 .output(cmdVeraPDF.getOutput())
+				.failedChecksCount(cmdVeraPDF.getFailedChecksCount())
 				.logPassedChecks(cmdVeraPDF.isLogPassedChecks());
         return configBuilder.build();
     }

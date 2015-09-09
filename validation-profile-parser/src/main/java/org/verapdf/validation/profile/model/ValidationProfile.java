@@ -97,8 +97,7 @@ public class ValidationProfile {
 	 * @return List of rules for the given object.
 	 */
 	public List<Rule> getRoolsForObject(String objName) {
-		return this.rules != null ? this.rules.get(objName)
-				: new ArrayList<Rule>();
+		return this.rules.get(objName);
 	}
 
 	/**
