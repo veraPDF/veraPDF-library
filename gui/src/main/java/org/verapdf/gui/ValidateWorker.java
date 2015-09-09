@@ -98,8 +98,9 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 	private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
 		try {
-			// TODO : make checkbox
-			return Validator.validate(root, this.profile, false, false);
+			// TODO : make checkbox for log passed checks
+			// TODO : make text field for count of log failed checks
+			return Validator.validate(root, this.profile, false, false, 100);
 		} catch (IOException | NullLinkNameException | NullLinkException |
 				NullLinkedObjectException | MissedHashTagException |
 				WrongSignatureException | MultiplyGlobalVariableNameException |
