@@ -149,19 +149,20 @@ public final class XMLFeaturesReport {
 		return pdfFeatures;
 	}
 
-	private static void parseElements(FeaturesObjectTypesEnum type, FeaturesCollection collection, Element root, Document doc) {
-		if (collection.getFeatureTreesForType(type) != null) {
-			for (FeatureTreeNode rootNode : collection.getFeatureTreesForType(type)) {
-				if (rootNode != null) {
-					root.appendChild(makeNode(rootNode, collection, doc));
-				}
+	private static void parseElements(FeaturesObjectTypesEnum type,
+									  FeaturesCollection collection,
+									  Element root, Document doc) {
+		for (FeatureTreeNode rootNode : collection.getFeatureTreesForType(type)) {
+			if (rootNode != null) {
+				root.appendChild(makeNode(rootNode, collection, doc));
 			}
 		}
 	}
 
-	private static void makeList(String listName, List<FeatureTreeNode> list, Element parent, FeaturesCollection collection, Document doc) {
-
-		if (list != null && !list.isEmpty()) {
+	private static void makeList(String listName, List<FeatureTreeNode> list,
+								 Element parent, FeaturesCollection collection,
+								 Document doc) {
+		if (!list.isEmpty()) {
 			Element listElement = doc.createElement(listName);
 			for (FeatureTreeNode node : list) {
 				if (node != null) {
@@ -172,17 +173,20 @@ public final class XMLFeaturesReport {
 		}
 	}
 
-	private static Element makeNode(FeatureTreeNode node, FeaturesCollection collection, Document doc) {
+	private static Element makeNode(FeatureTreeNode node,
+									FeaturesCollection collection, Document doc) {
 		if ("metadata".equalsIgnoreCase(node.getName())) {
 			return parseMetadata(node, collection, doc);
 		} else {
 			Element root = doc.createElement(node.getName());
 			for (Map.Entry<String, String> attr : node.getAttributes().entrySet()) {
-				root.setAttribute(attr.getKey(), replaceInvalidCharacters(attr.getValue()));
+				root.setAttribute(attr.getKey(),
+								  replaceInvalidCharacters(attr.getValue()));
 			}
 
 			if (node.getValue() != null) {
-				root.appendChild(doc.createTextNode(replaceInvalidCharacters(node.getValue().toString())));
+				root.appendChild(doc.createTextNode(
+						replaceInvalidCharacters(node.getValue().toString())));
 			} else if (node.getChildren() != null) {
 				for (FeatureTreeNode child : node.getChildren()) {
 					root.appendChild(makeNode(child, collection, doc));
@@ -192,7 +196,8 @@ public final class XMLFeaturesReport {
 		}
 	}
 
-	private static Element parseMetadata(FeatureTreeNode metadataNode, FeaturesCollection collection, Document doc) {
+	private static Element parseMetadata(FeatureTreeNode metadataNode,
+										 FeaturesCollection collection, Document doc) {
 
 		if (metadataNode.getAttributes().get(ErrorsHelper.ERRORID) == null) {
 			Element metadata = doc.createElement(metadataNode.getName());
@@ -257,7 +262,8 @@ public final class XMLFeaturesReport {
 
 	private static void parseMetadataError(FeaturesCollection collection, Element metadata) {
 		metadata.setAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATAPARSER_ID);
-		ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATAPARSER_ID, ErrorsHelper.METADATAPARSER_MESSAGE);
+		ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATAPARSER_ID,
+				ErrorsHelper.METADATAPARSER_MESSAGE);
 	}
 
 	private static InputSource getInputSourceWithEncoding(byte[] array) {
@@ -265,7 +271,8 @@ public final class XMLFeaturesReport {
 			for (int i = 0; i < array.length; ++i) {
 				String encoding = getEncodingWithBegin(array, i);
 				if (encoding != null) {
-					ByteArrayInputStream is = new ByteArrayInputStream(Arrays.copyOfRange(array, i, array.length));
+					ByteArrayInputStream is = new ByteArrayInputStream(
+							Arrays.copyOfRange(array, i, array.length));
 					InputSource source = new InputSource(is);
 					source.setEncoding(encoding);
 					return source;
