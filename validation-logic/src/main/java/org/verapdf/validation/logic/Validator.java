@@ -11,11 +11,11 @@ import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.validation.profile.model.ValidationProfile;
-import org.verapdf.validation.profile.model.Variable;
+import org.verapdf.validation.profile.model.*;
 import org.verapdf.validation.profile.parser.ValidationProfileParser;
 import org.verapdf.validation.report.model.*;
 import org.verapdf.validation.report.model.Check.Status;
+import org.verapdf.validation.report.model.Rule;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -41,7 +41,7 @@ public class Validator {
     private Deque<Object> objectsStack;
     private Deque<String> objectsContext;
     private Deque<Set<String>> contextSet;
-    private Map<String, List<Check>> checkMap;
+    private Map<String, Rule> checkMap;
 
     private Map<String, Script> ruleScripts = new HashMap<>();
     private Map<String, List<Script>> ruleArgScripts = new HashMap<>();
@@ -54,6 +54,7 @@ public class Validator {
     private ValidationProfile profile;
 
 	private final boolean logPassedChecks;
+	private final int failedChecksCount;
 
 	private int rulesChecksCount = 0;
 
@@ -62,9 +63,11 @@ public class Validator {
      *
      * @param profile validation profile model for validator
      */
-    private Validator(ValidationProfile profile, boolean logPassedChecks) {
+    private Validator(ValidationProfile profile, boolean logPassedChecks,
+					  int failedChecksCount) {
         this.profile = profile;
 		this.logPassedChecks = logPassedChecks;
+		this.failedChecksCount = failedChecksCount;
     }
 
     private ValidationInfo validate(Object root) throws NullLinkNameException,
@@ -80,7 +83,7 @@ public class Validator {
         this.checkMap = new HashMap<>();
 
         for (String id : this.profile.getAllRulesId()) {
-            this.checkMap.put(id, new ArrayList<Check>());
+            this.checkMap.put(id, new Rule(id, new ArrayList<Check>()));
         }
 
         initializeAllVariables();
@@ -104,12 +107,16 @@ public class Validator {
 
         Context.exit();
 
-        List<Rule> rules = new ArrayList<>();
-
-        for (Map.Entry<String, List<Check>> id : this.checkMap.entrySet()) {
-
-            rules.add(new Rule(id.getKey(), id.getValue()));
-        }
+        List<Rule> rules = new ArrayList<>(this.checkMap.values());
+		Iterator<Rule> it = rules.iterator();
+		while (it.hasNext()) {
+			Rule rule = it.next();
+			if (logPassedChecks || !rule.getChecks().isEmpty()) {
+				rule.setStatus();
+			} else {
+				it.remove();
+			}
+		}
 
 		Profile profile = new Profile(this.profile.getName(),
 				this.profile.getHash());
@@ -253,9 +260,10 @@ public class Validator {
 
     private boolean checkAllRules(Object checkObject, String checkContext) {
         boolean res = true;
-        if (this.profile.getRoolsForObject(checkObject.getObjectType()) != null) {
-            for (org.verapdf.validation.profile.model.Rule rule : this.profile
-                    .getRoolsForObject(checkObject.getObjectType())) {
+		List<org.verapdf.validation.profile.model.Rule> roolsForObject =
+				this.profile.getRoolsForObject(checkObject.getObjectType());
+		if (roolsForObject != null) {
+            for (org.verapdf.validation.profile.model.Rule rule : roolsForObject) {
                 if (rule != null) {
                     res &= checkObjWithRule(checkObject, checkContext, rule);
                 }
@@ -263,12 +271,11 @@ public class Validator {
         }
 
         for (String checkType : checkObject.getSuperTypes()) {
-            if (this.profile.getRoolsForObject(checkType) != null) {
-                for (org.verapdf.validation.profile.model.Rule rule : this.profile
-                        .getRoolsForObject(checkType)) {
+			roolsForObject = this.profile.getRoolsForObject(checkType);
+			if (roolsForObject != null) {
+                for (org.verapdf.validation.profile.model.Rule rule : roolsForObject) {
                     if (rule != null) {
-                        res &= checkObjWithRule(checkObject, checkContext,
-                                rule);
+                        res &= checkObjWithRule(checkObject, checkContext, rule);
                     }
                 }
             }
@@ -325,33 +332,40 @@ public class Validator {
 
     private boolean checkObjWithRule(Object obj, String context,
                                      org.verapdf.validation.profile.model.Rule rule) {
-        this.scope.put("obj", this.scope, obj);
+		Rule currentRule = this.checkMap.get(rule.getAttrID());
+		if (currentRule.getFailedChecksCount() < this.failedChecksCount) {
+			this.scope.put("obj", this.scope, obj);
 
-        Script scr;
-        if (!this.ruleScripts.containsKey(rule.getAttrID())) {
-            scr = this.context.compileString(getScript(obj, rule), null, 0, null);
-            this.ruleScripts.put(rule.getAttrID(), scr);
-        } else {
-            scr = this.ruleScripts.get(rule.getAttrID());
-        }
+			Script scr;
+			if (!this.ruleScripts.containsKey(rule.getAttrID())) {
+				scr = this.context.compileString(getScript(obj, rule), null, 0, null);
+				this.ruleScripts.put(rule.getAttrID(), scr);
+			} else {
+				scr = this.ruleScripts.get(rule.getAttrID());
+			}
 
-        Boolean res = (Boolean) scr.exec(this.context, this.scope);
+			Boolean res = (Boolean) scr.exec(this.context, this.scope);
 
-        CheckLocation loc = new CheckLocation(this.rootType, context);
-		Check check = null;
-		if (!res) {
-			check = createFailCheck(obj, loc, rule);
-		} else if (this.logPassedChecks) {
-			check = new Check(Status.PASSED, loc, null);
+			CheckLocation loc = new CheckLocation(this.rootType, context);
+			Check check = null;
+			if (!res) {
+				check = createFailCheck(obj, loc, rule);
+			} else if (this.logPassedChecks) {
+				check = new Check(Status.PASSED, loc, null);
+			}
+
+			if (check != null) {
+				currentRule.add(check);
+			} else {
+				currentRule.incChecksCount();
+			}
+
+			this.rulesChecksCount++;
+
+			return res;
+		} else {
+			return true;
 		}
-
-		if (check != null) {
-			this.checkMap.get(rule.getAttrID()).add(check);
-		}
-
-		this.rulesChecksCount++;
-
-        return res;
     }
 
     private Check createFailCheck(Object obj, CheckLocation loc,
@@ -407,6 +421,7 @@ public class Validator {
      * @param root                  the root object for validation
      * @param validationProfilePath validation profile's file path
 	 * @param isLogPassedChecks 		is need to log passed rules to report
+	 * @param failedChecksCount maximum amount of failed checks for each rule
      * @return validation info structure
      * @throws ParserConfigurationException        if a DocumentBuilder cannot be created which satisfies the
      *                                             configuration requested.
@@ -428,7 +443,8 @@ public class Validator {
     public static ValidationInfo validate(Object root,
                                           String validationProfilePath,
 										  boolean isSignCheckOn,
-										  boolean isLogPassedChecks)
+										  boolean isLogPassedChecks,
+										  int failedChecksCount)
             throws IOException, SAXException, ParserConfigurationException,
             NullLinkNameException, NullLinkException,
             NullLinkedObjectException, MissedHashTagException,
@@ -440,7 +456,7 @@ public class Validator {
             throw new IllegalArgumentException(
                     "Parameter (String validationProfilePath) cannot be null.");
         return validate(root, ValidationProfileParser.parseFromFilePath(
-                validationProfilePath, isSignCheckOn), isLogPassedChecks);
+                validationProfilePath, isSignCheckOn), isLogPassedChecks, failedChecksCount);
     }
 
     /**
@@ -453,6 +469,7 @@ public class Validator {
      * @param root              the root object for validation
      * @param validationProfile validation profile's file
 	 * @param isLogPassedChecks is need to log passed rules to report
+	 * @param failedChecksCount maximum amount of failed checks for each rule
      * @return validation info structure
      * @throws ParserConfigurationException        if a DocumentBuilder cannot be created which satisfies the
      *                                             configuration requested.
@@ -473,7 +490,8 @@ public class Validator {
      */
     public static ValidationInfo validate(Object root, File validationProfile,
                                           boolean isSignCheckOn,
-										  boolean isLogPassedChecks) throws ParserConfigurationException,
+										  boolean isLogPassedChecks,
+										  int failedChecksCount) throws ParserConfigurationException,
             SAXException, IOException, NullLinkNameException,
             NullLinkException, NullLinkedObjectException,
             MissedHashTagException, XMLStreamException,
@@ -485,7 +503,7 @@ public class Validator {
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile validationProfile) cannot be null.");
         return validate(root, ValidationProfileParser.parseFromFile(
-                validationProfile, isSignCheckOn), isLogPassedChecks);
+                validationProfile, isSignCheckOn), isLogPassedChecks, failedChecksCount);
     }
 
     /**
@@ -495,17 +513,19 @@ public class Validator {
      * This method doesn't need to parse validation profile (it works faster
      * than those ones, which parses profile).
      *
-     * @param root              the root object for validation
-     * @param validationProfile validation profile's structure
+	 * @param root              the root object for validation
+	 * @param validationProfile validation profile's structure
 	 * @param isLogPassedChecks is need to log passed rules to report
-     * @return validation info structure
-     * @throws NullLinkNameException     if there is a null link name in some object
-     * @throws NullLinkException         if there is a null link
-     * @throws NullLinkedObjectException if there is a null object in links list
+	 * @param failedChecksCount maximum amount of failed checks for each rule
+	 * @return validation info structure
+	 * @throws NullLinkNameException     if there is a null link name in some object
+	 * @throws NullLinkException         if there is a null link
+	 * @throws NullLinkedObjectException if there is a null object in links list
      */
     public static ValidationInfo validate(Object root,
                                           ValidationProfile validationProfile,
-										  boolean isLogPassedChecks) throws NullLinkNameException,
+										  boolean isLogPassedChecks,
+										  int failedChecksCount) throws NullLinkNameException,
             NullLinkException, NullLinkedObjectException {
         if (root == null)
             throw new IllegalArgumentException(
@@ -513,7 +533,7 @@ public class Validator {
         if (validationProfile == null)
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile validationProfile) cannot be null.");
-        Validator validator = new Validator(validationProfile, isLogPassedChecks);
+        Validator validator = new Validator(validationProfile, isLogPassedChecks, failedChecksCount);
         return validator.validate(root);
     }
 

@@ -13,8 +13,10 @@ import java.util.List;
 public class Rule {
 
 	private final String ID;
-	private final Status status;
-	private final List<Check> checks;
+	private Status status;
+	private List<Check> checks;
+	private int checksCount;
+	private int failedChecksCount;
 
 	/**
 	 * Creates rule model for the validation report
@@ -24,22 +26,8 @@ public class Rule {
 	 */
 	public Rule(final String attrID, final List<Check> checks) {
 		this.ID = attrID;
-
-		Status ruleStatus = Status.PASSED;
-
-		if (checks != null) {
-			for (Check check : checks) {
-				if (check != null && Status.FAILED == check.getStatus()) {
-					ruleStatus = Status.FAILED;
-				}
-			}
-			this.checks = Collections.unmodifiableList(checks);
-		} else {
-			this.checks = Collections.emptyList();
-		}
-
-		this.status = ruleStatus;
-
+		this.checks = checks;
+		this.checksCount = checks.size();
 	}
 
 	/**
@@ -56,11 +44,23 @@ public class Rule {
 		return this.status;
 	}
 
+	public void setStatus() {
+		Status ruleStatus = Status.PASSED;
+		for (Check check : checks) {
+			if (Status.FAILED == check.getStatus()) {
+				ruleStatus = Status.FAILED;
+				break;
+			}
+		}
+		this.checks = Collections.unmodifiableList(checks);
+		this.status = ruleStatus;
+	}
+
 	/**
 	 * @return number of checks for this rule
 	 */
 	public int getCheckCount() {
-		return this.checks.size();
+		return this.checksCount;
 	}
 
 	/**
@@ -68,6 +68,35 @@ public class Rule {
 	 */
 	public List<Check> getChecks() {
 		return this.checks;
+	}
+
+	/**
+	 * Increment count of performed checks.  Count of
+	 * performed checks and count of checks in
+	 * {@link Rule#checks} can be different
+	 */
+	public void incChecksCount() {
+		this.checksCount++;
+	}
+
+	public int getFailedChecksCount() {
+		return this.failedChecksCount;
+	}
+
+	public void incFailedChecksCount() {
+		this.failedChecksCount++;
+	}
+
+	/**
+	 * Add another one performed check for current rule
+	 * @param check another one check
+	 */
+	public void add(Check check) {
+		this.checks.add(check);
+		incChecksCount();
+		if (check.getStatus() == Status.FAILED) {
+			incFailedChecksCount();
+		}
 	}
 
 }
