@@ -58,10 +58,10 @@ public class OperatorParserTest {
 	@Parameterized.Parameters(name = "{index}: {0} -> {1}")
 	public static Collection<Object[]> data() {
 		List<Object[]> parameters = new ArrayList<>();
-		parameters.add(getParameters(Operator.getOperator(Operators.D_SET_DASH), PBOp_d.OP_D_TYPE));
-		parameters.add(getParameters(Operator.getOperator(Operators.GS), PBOp_gs.OP_GS_TYPE));
-		parameters.add(getParameters(Operator.getOperator(Operators.I_SETFLAT), PBOp_i.OP_I_TYPE));
-		parameters.add(getParameters(Operator.getOperator(Operators.J_LINE_CAP), PBOp_J_line_cap.OP_J_LINE_CAP_TYPE));
+		parameters.add(new Object[] {Operator.getOperator(Operators.D_SET_DASH), PBOp_d.OP_D_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.GS), PBOp_gs.OP_GS_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.I_SETFLAT), PBOp_i.OP_I_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.J_LINE_CAP), PBOp_J_line_cap.OP_J_LINE_CAP_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.J_LINE_JOIN), PBOp_j_line_join.OP_J_LINE_JOIN_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.M_MITER_LIMIT), PBOp_M_miter_limit.OP_M_MITER_LIMIT_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.RI), PBOp_ri.OP_RI_TYPE});
@@ -137,10 +137,6 @@ public class OperatorParserTest {
 		parameters.add(new Object[] {Operator.getOperator(Operators.DO), PBOp_Do.OP_DO_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(UNDEFINED), PBOp_Undefined.OP_UNDEFINED_TYPE});
 		return parameters;
-	}
-
-	private static Object[] getParameters(Operator actualOperator, String expectedType) {
-		return new Object[] {actualOperator, expectedType};
 	}
 
 	@Parameterized.Parameter

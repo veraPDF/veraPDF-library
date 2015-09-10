@@ -3,8 +3,9 @@ package org.verapdf.model.impl.pb.operator.textstate;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSName;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.coslayer.CosName;
 import org.verapdf.model.coslayer.CosReal;
-import org.verapdf.model.factory.font.FontFactory;
+import org.verapdf.model.impl.pb.cos.PBCosName;
 import org.verapdf.model.pdlayer.PDFont;
 
 import java.util.ArrayList;
@@ -21,11 +22,8 @@ public class PBOp_Tf extends PBOpTextState implements Op_Tf {
 	public static final String SIZE = "size";
 	public static final String FONT = "font";
 
-	private final org.apache.pdfbox.pdmodel.font.PDFont font;
-
-	public PBOp_Tf(List<COSBase> arguments, org.apache.pdfbox.pdmodel.font.PDFont font) {
+	public PBOp_Tf(List<COSBase> arguments) {
 		super(arguments, OP_TF_TYPE);
-		this.font = font;
 	}
 
 	@Override
@@ -34,7 +32,7 @@ public class PBOp_Tf extends PBOpTextState implements Op_Tf {
 			case SIZE:
 				return this.getSize();
 			case FONT:
-				return this.getFont();
+				return this.getFontName();
 			default:
 				return super.getLinkedObjects(link);
 		}
@@ -44,22 +42,16 @@ public class PBOp_Tf extends PBOpTextState implements Op_Tf {
 		return this.getLastReal();
 	}
 
-	private List<PDFont> getFont() {
-		PDFont pdFont = FontFactory.parseFont(this.font);
-		if (pdFont != null) {
-			List<PDFont> fonts = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-			fonts.add(pdFont);
-			return fonts;
+	private List<CosName> getFontName() {
+		if (this.arguments.size() > 1) {
+			COSBase base = this.arguments.get(this.arguments.size() - 2);
+			if (base instanceof COSName) {
+				List<CosName> names = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+				names.add(new PBCosName((COSName) base));
+				return names;
+			}
 		}
-
 		return Collections.emptyList();
 	}
 
-	private COSName getFontName() {
-		if (this.arguments.size() > 1) {
-			COSBase base = this.arguments.get(this.arguments.size() - 2);
-			return base instanceof COSName ? (COSName) base : null;
-		}
-		return null;
-	}
 }

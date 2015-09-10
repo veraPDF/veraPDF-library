@@ -230,7 +230,7 @@ class OperatorParser {
 			case Operators.TF:
 				this.graphicState.setFont(getFontFromResources(resources,
 						getFirstCOSName(arguments)));
-				operators.add(new PBOp_Tf(arguments, this.graphicState.getFont()));
+				operators.add(new PBOp_Tf(arguments));
 				break;
 			case Operators.TC:
 				operators.add(new PBOp_Tc(arguments));
