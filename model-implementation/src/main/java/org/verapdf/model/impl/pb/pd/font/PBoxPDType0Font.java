@@ -46,9 +46,10 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
 						.getString(COSName.REGISTRY);
 			}
 		}
-		if (this.cMap != null) {
-			parentOrdering = this.cMap.getOrdering();
-			parentRegistry = this.cMap.getRegistry();
+		CMap cMap = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike).getCMap();
+		if (cMap != null) {
+			parentOrdering = cMap.getOrdering();
+			parentRegistry = cMap.getRegistry();
 		}
 		String descOrdering = null;
 		String descRegistry = null;
@@ -94,7 +95,13 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
         CMap charMap = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike)
                 .getCMap();
         if (charMap != null) {
-            list.add(new PBoxPDCMap(charMap));
+			COSDictionary cosDictionary = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike).getCOSObject();
+			COSBase cmap = cosDictionary.getDictionaryObject(COSName.ENCODING);
+			if (cmap != null && cmap instanceof COSStream) {
+				list.add(new PBoxPDCMap(charMap, (COSStream) cmap));
+			} else {
+				list.add(new PBoxPDCMap(charMap, null));
+			}
         }
         return list;
     }

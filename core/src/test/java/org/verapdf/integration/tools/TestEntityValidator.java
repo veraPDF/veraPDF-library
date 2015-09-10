@@ -25,7 +25,8 @@ public class TestEntityValidator {
         taskConfigBuilder.input(new Input(entity.getTestFile().getAbsolutePath(), false))
                          .profile(entity.getValidationProfile().getAbsolutePath())
                          .validate(true)
-                         .output(new String());
+                         .output(new String())
+                         .failedChecksCount(100);
         return taskConfigBuilder.build();
     }
 
