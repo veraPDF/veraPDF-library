@@ -1,16 +1,16 @@
 package org.verapdf.model.impl.pb.pd;
 
-import java.util.List;
-
 import org.apache.fontbox.cmap.CMap;
 import org.apache.pdfbox.contentstream.PDContentStream;
+import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.font.PDFontLike;
-import org.apache.pdfbox.pdmodel.interactive.action.PDActionNamed;
 import org.verapdf.model.GenericModelObject;
 import org.verapdf.model.pdlayer.PDAction;
 import org.verapdf.model.pdlayer.PDObject;
+
+import java.util.List;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -45,9 +45,10 @@ public class PBoxPDObject extends GenericModelObject implements PDObject {
 		this.pdFontLike = pdFontLike;
 	}
 
-	protected PBoxPDObject(CMap cMap, final String type) {
+	protected PBoxPDObject(CMap cMap, COSStream cMapFile, final String type) {
 		super(type);
 		this.cMap = cMap;
+		this.simplePDObject = cMapFile;
 	}
 
     protected void addAction(List<PDAction> actions,
