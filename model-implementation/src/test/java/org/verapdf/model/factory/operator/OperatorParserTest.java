@@ -30,14 +30,15 @@ import org.verapdf.model.impl.pb.operator.textobject.PBOpTextObject;
 import org.verapdf.model.impl.pb.operator.textposition.PBOpTextPosition;
 import org.verapdf.model.impl.pb.operator.textposition.PBOp_TD_Big;
 import org.verapdf.model.impl.pb.operator.textposition.PBOp_Td;
+import org.verapdf.model.impl.pb.operator.textposition.PBOp_Tm;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_DoubleQuote;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_Quote;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_TJ_Big;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_Tj;
-import org.verapdf.model.impl.pb.operator.textstate.PBOpTextState;
-import org.verapdf.model.impl.pb.operator.textstate.PBOp_Tr;
-import org.verapdf.model.impl.pb.operator.textstate.PBOp_Tz;
+import org.verapdf.model.impl.pb.operator.textstate.*;
 import org.verapdf.model.impl.pb.operator.type3font.PBOpType3Font;
+import org.verapdf.model.impl.pb.operator.type3font.PBOp_d0;
+import org.verapdf.model.impl.pb.operator.type3font.PBOp_d1;
 import org.verapdf.model.impl.pb.operator.xobject.PBOp_Do;
 import org.verapdf.model.tools.constants.Operators;
 
@@ -57,10 +58,10 @@ public class OperatorParserTest {
 	@Parameterized.Parameters(name = "{index}: {0} -> {1}")
 	public static Collection<Object[]> data() {
 		List<Object[]> parameters = new ArrayList<>();
-		parameters.add(new Object[] {Operator.getOperator(Operators.D_SET_DASH), PBOp_d.OP_D_TYPE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.GS), PBOp_gs.OP_GS_TYPE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.I_SETFLAT), PBOp_i.OP_I_TYPE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.J_LINE_CAP), PBOp_J_line_cap.OP_J_LINE_CAP_TYPE});
+		parameters.add(getParameters(Operator.getOperator(Operators.D_SET_DASH), PBOp_d.OP_D_TYPE));
+		parameters.add(getParameters(Operator.getOperator(Operators.GS), PBOp_gs.OP_GS_TYPE));
+		parameters.add(getParameters(Operator.getOperator(Operators.I_SETFLAT), PBOp_i.OP_I_TYPE));
+		parameters.add(getParameters(Operator.getOperator(Operators.J_LINE_CAP), PBOp_J_line_cap.OP_J_LINE_CAP_TYPE));
 		parameters.add(new Object[] {Operator.getOperator(Operators.J_LINE_JOIN), PBOp_j_line_join.OP_J_LINE_JOIN_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.M_MITER_LIMIT), PBOp_M_miter_limit.OP_M_MITER_LIMIT_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.RI), PBOp_ri.OP_RI_TYPE});
@@ -88,7 +89,7 @@ public class OperatorParserTest {
 		parameters.add(new Object[] {Operator.getOperator(Operators.BT), PBOpTextObject.OP_TEXT_OBJECT_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.TD_MOVE), PBOp_Td.OP_TD_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.TD_MOVE_SET_LEADING), PBOp_TD_Big.OP_TD_BIG_TYPE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.TM), PBOpTextPosition.OP_TEXT_POSITION_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.TM), PBOp_Tm.OP_TM_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.T_STAR), PBOpTextPosition.OP_TEXT_POSITION_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.TJ_SHOW), PBOp_Tj.OP_TJ_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.TJ_SHOW_POS), PBOp_TJ_Big.OP_TJ_BIG_TYPE});
@@ -96,13 +97,13 @@ public class OperatorParserTest {
 		parameters.add(new Object[] {Operator.getOperator(Operators.DOUBLE_QUOTE), PBOp_DoubleQuote.OP_DOUBLIE_QUOTE_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.TZ), PBOp_Tz.OP_TZ_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.TR), PBOp_Tr.OP_TR_TYPE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.TF), PBOpTextState.OP_TEXT_STATE_TYPE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.TC), PBOpTextState.OP_TEXT_STATE_TYPE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.TW), PBOpTextState.OP_TEXT_STATE_TYPE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.TL), PBOpTextState.OP_TEXT_STATE_TYPE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.TS), PBOpTextState.OP_TEXT_STATE_TYPE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.D0), PBOpType3Font.OP_TYPE_3_FONT_TYPE});
-		parameters.add(new Object[] {Operator.getOperator(Operators.D1), PBOpType3Font.OP_TYPE_3_FONT_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.TF), PBOp_Tf.OP_TF_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.TC), PBOp_Tc.OP_TC_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.TW), PBOp_Tw.OP_TW_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.TL), PBOp_Tl.OP_TL_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.TS), PBOp_Ts.OP_TS_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.D0), PBOp_d0.OP_D0_TYPE});
+		parameters.add(new Object[] {Operator.getOperator(Operators.D1), PBOp_d1.OP_D1_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.BI), null});
 		parameters.add(new Object[] {Operator.getOperator(Operators.BX), PBOp_BX.OP_BX_TYPE});
 		parameters.add(new Object[] {Operator.getOperator(Operators.EX), PBOp_EX.OP_EX_TYPE});
@@ -138,6 +139,10 @@ public class OperatorParserTest {
 		return parameters;
 	}
 
+	private static Object[] getParameters(Operator actualOperator, String expectedType) {
+		return new Object[] {actualOperator, expectedType};
+	}
+
 	@Parameterized.Parameter
 	public Operator operator;
 
@@ -147,19 +152,19 @@ public class OperatorParserTest {
 	@Test
 	public void testParseOperatorMethod() {
 		// TODO : simplify this ....
-		if (Operators.BI.equals(operator.getName())) {
+		if (Operators.BI.equals(this.operator.getName())) {
 			testBIParse();
 		} else {
 			List<Object> operator = new ArrayList<>(1);
 			operator.add(this.operator);
 			final org.verapdf.model.operator.Operator veraOperator =
 					OperatorFactory.operatorsFromTokens(operator, RESOURCES).get(0);
-			Assert.assertEquals(expectedType, veraOperator.getObjectType());
+			Assert.assertEquals(this.expectedType, veraOperator.getObjectType());
 		}
 	}
 
 	public void testBIParse() {
-		List<Object> operator = new ArrayList<>(2);
+		List<Object> operator = new ArrayList<>();
 		Operator pdfBoxOperator = Operator.getOperator(Operators.BI);
 		pdfBoxOperator.setImageData(new byte[0]);
 		pdfBoxOperator.setImageParameters(new COSDictionary());
