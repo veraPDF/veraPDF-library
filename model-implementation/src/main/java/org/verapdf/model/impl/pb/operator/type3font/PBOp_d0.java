@@ -5,6 +5,7 @@ import org.apache.pdfbox.cos.COSNumber;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
+import org.verapdf.model.operator.Op_d0;
 
 import java.util.ArrayList;
 import java.util.Collections;

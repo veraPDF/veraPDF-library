@@ -3,6 +3,7 @@ package org.verapdf.model.impl.pb.operator.textstate;
 import org.apache.pdfbox.cos.COSBase;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosReal;
+import org.verapdf.model.operator.Op_Tw;
 
 import java.util.List;
 

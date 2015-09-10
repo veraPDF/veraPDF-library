@@ -6,7 +6,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosName;
 import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.impl.pb.cos.PBCosName;
-import org.verapdf.model.pdlayer.PDFont;
+import org.verapdf.model.operator.Op_Tf;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +20,7 @@ public class PBOp_Tf extends PBOpTextState implements Op_Tf {
 	public static final String OP_TF_TYPE = "Op_Tf";
 
 	public static final String SIZE = "size";
-	public static final String FONT = "font";
+	public static final String FONT_NAME = "fontName";
 
 	public PBOp_Tf(List<COSBase> arguments) {
 		super(arguments, OP_TF_TYPE);
@@ -31,7 +31,7 @@ public class PBOp_Tf extends PBOpTextState implements Op_Tf {
 		switch (link) {
 			case SIZE:
 				return this.getSize();
-			case FONT:
+			case FONT_NAME:
 				return this.getFontName();
 			default:
 				return super.getLinkedObjects(link);
