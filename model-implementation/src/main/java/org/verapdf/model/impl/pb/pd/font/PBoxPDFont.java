@@ -5,6 +5,7 @@ import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.font.PDCIDFont;
 import org.apache.pdfbox.pdmodel.font.PDFontDescriptor;
 import org.apache.pdfbox.pdmodel.font.PDFontLike;
+import org.apache.pdfbox.pdmodel.font.PDType1CFont;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.font.FontFactory;
 import org.verapdf.model.impl.pb.external.PBoxFontProgram;
@@ -76,7 +77,11 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
             PDFontDescriptor fontDescriptor = pdFontLike.getFontDescriptor();
             PDStream fontFile;
             if (getSubtype().equals(FontFactory.TYPE_1)) {
-                fontFile = fontDescriptor.getFontFile();
+				if (this.pdFontLike instanceof PDType1CFont) {
+					fontFile = fontDescriptor.getFontFile3();
+				} else {
+					fontFile = fontDescriptor.getFontFile();
+				}
             } else if (getSubtype().equals(FontFactory.TRUE_TYPE)) {
                 fontFile = fontDescriptor.getFontFile2();
             } else {
