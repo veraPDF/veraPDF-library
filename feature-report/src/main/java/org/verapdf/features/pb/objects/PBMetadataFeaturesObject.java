@@ -15,42 +15,42 @@ import org.verapdf.features.tools.FeaturesCollection;
  */
 public class PBMetadataFeaturesObject implements IFeaturesObject {
 
-    private PDMetadata metadata;
+	private PDMetadata metadata;
 
-    /**
-     * Constructs new Metadata Feature Object
-     *
-     * @param metadata  - pdfbox class represents metadata object
-     */
-    public PBMetadataFeaturesObject(PDMetadata metadata) {
-        this.metadata = metadata;
-    }
+	/**
+	 * Constructs new Metadata Feature Object
+	 *
+	 * @param metadata pdfbox class represents metadata object
+	 */
+	public PBMetadataFeaturesObject(PDMetadata metadata) {
+		this.metadata = metadata;
+	}
 
-    /**
-     * @return METADATA instance of the FeaturesObjectTypesEnum enumeration
-     */
-    @Override
-    public FeaturesObjectTypesEnum getType() {
-        return FeaturesObjectTypesEnum.METADATA;
-    }
+	/**
+	 * @return METADATA instance of the FeaturesObjectTypesEnum enumeration
+	 */
+	@Override
+	public FeaturesObjectTypesEnum getType() {
+		return FeaturesObjectTypesEnum.METADATA;
+	}
 
-    /**
-     * Reports featurereport into collection
-     *
-     * @param collection - collection for feature report
-     * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-     * @throws FeaturesTreeNodeException   - occurs when wrong features tree node constructs
-     */
-    @Override
-    public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException{
-        if (metadata != null) {
-            FeatureTreeNode root = PBCreateNodeHelper.parseMetadata(metadata, "metadata", null, collection);
+	/**
+	 * Reports featurereport into collection
+	 *
+	 * @param collection collection for feature report
+	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
+	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 */
+	@Override
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+		if (metadata != null) {
+			FeatureTreeNode root = PBCreateNodeHelper.parseMetadata(metadata, "metadata", null, collection);
 
-            if (root != null) {
-                collection.addNewFeatureTree(FeaturesObjectTypesEnum.METADATA, root);
-            }
-            return root;
-        }
-        return null;
-    }
+			if (root != null) {
+				collection.addNewFeatureTree(FeaturesObjectTypesEnum.METADATA, root);
+			}
+			return root;
+		}
+		return null;
+	}
 }

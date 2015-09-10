@@ -4,6 +4,7 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.PDCIDFont;
 import org.verapdf.model.pdlayer.PDType0Font;
 
@@ -56,7 +57,7 @@ public class PBoxPDType0CIDType2Test extends PBoxPDType0FontTest {
 
 	@Override
 	public void testAreRegistryOrderingCompatible() {
-		Assert.assertFalse(((PDType0Font) actual).getareRegistryOrderingCompatible());
+		Assert.assertTrue(((PDType0Font) actual).getareRegistryOrderingCompatible());
 	}
 
 }

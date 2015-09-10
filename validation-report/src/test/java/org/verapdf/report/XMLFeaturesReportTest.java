@@ -30,44 +30,44 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Parameterized.class)
 public class XMLFeaturesReportTest {
 
-    private static DocumentBuilder builder;
+	private static DocumentBuilder builder;
 
-    @BeforeClass
-    public static void before() throws ParserConfigurationException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        builder = factory.newDocumentBuilder();
-    }
+	@BeforeClass
+	public static void before() throws ParserConfigurationException {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		builder = factory.newDocumentBuilder();
+	}
 
-    @Parameterized.Parameters
-    public static List<String> data() {
-        List<String> parameters = new ArrayList<>();
-        for (char c = 'a'; c <= 't'; ++c) {
-            parameters.add("/veraPDF test suite 6-7-9-t04-pass-" + c + ".pdf");
-        }
-        return parameters;
-    }
+	@Parameterized.Parameters
+	public static List<String> data() {
+		List<String> parameters = new ArrayList<>();
+		for (char c = 'a'; c <= 't'; ++c) {
+			parameters.add("/veraPDF test suite 6-7-9-t04-pass-" + c + ".pdf");
+		}
+		return parameters;
+	}
 
-    @Parameterized.Parameter
-    public String filePath;
+	@Parameterized.Parameter
+	public String filePath;
 
-    @Test
-    public void test() throws URISyntaxException, IOException, ParserConfigurationException {
-        File pdf = new File(getSystemIndependentPath(filePath));
-        PDDocument document = PDDocument.load(pdf, false, true);
-        FeaturesCollection collection = PBFeatureParser.getFeaturesCollection(document);
-        Document doc = builder.newDocument();
+	@Test
+	public void test() throws URISyntaxException, IOException, ParserConfigurationException {
+		File pdf = new File(getSystemIndependentPath(filePath));
+		PDDocument document = PDDocument.load(pdf, false, true);
+		FeaturesCollection collection = PBFeatureParser.getFeaturesCollection(document);
+		Document doc = builder.newDocument();
 
-        Element features = XMLFeaturesReport.makeXMLTree(collection, doc);
+		Element features = XMLFeaturesReport.makeXMLTree(collection, doc);
 
-        assertEquals("metadata", features.getFirstChild().getNextSibling().getNodeName());
-        assertEquals("x:xmpmeta", features.getFirstChild().getNextSibling().getFirstChild().getNodeName());
+		assertEquals("metadata", features.getFirstChild().getNextSibling().getNodeName());
+		assertEquals("x:xmpmeta", features.getFirstChild().getNextSibling().getFirstChild().getNodeName());
 
-        document.close();
-    }
+		document.close();
+	}
 
-    private static String getSystemIndependentPath(String path) throws URISyntaxException {
-        URL resourceUrl = ClassLoader.class.getResource(path);
-        Path resourcePath = Paths.get(resourceUrl.toURI());
-        return resourcePath.toString();
-    }
+	private static String getSystemIndependentPath(String path) throws URISyntaxException {
+		URL resourceUrl = ClassLoader.class.getResource(path);
+		Path resourcePath = Paths.get(resourceUrl.toURI());
+		return resourcePath.toString();
+	}
 }

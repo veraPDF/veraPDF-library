@@ -19,81 +19,81 @@ import java.util.TreeSet;
  */
 public class PBInfoDictFeaturesObject implements IFeaturesObject {
 
-    private static final String[] predefinedKeys = {"Title", "Author", "Subject", "Keywords", "Creator", "Producer", "CreationDate", "ModDate", "Trapped"};
+	private static final String[] predefinedKeys = {"Title", "Author", "Subject", "Keywords", "Creator", "Producer", "CreationDate", "ModDate", "Trapped"};
 
-    private static final String ENTRY = "entry";
-    private static final String KEY = "key";
+	private static final String ENTRY = "entry";
+	private static final String KEY = "key";
 
-    private PDDocumentInformation info;
+	private PDDocumentInformation info;
 
-    /**
-     * Constructs new information dictionary feature object.
-     *
-     * @param info - pdfbox class represents page object
-     */
-    public PBInfoDictFeaturesObject(PDDocumentInformation info) {
-        this.info = info;
-    }
+	/**
+	 * Constructs new information dictionary feature object.
+	 *
+	 * @param info pdfbox class represents page object
+	 */
+	public PBInfoDictFeaturesObject(PDDocumentInformation info) {
+		this.info = info;
+	}
 
-    /**
-     * @return INFORMATION_DICTIONARY instance of the FeaturesObjectTypesEnum enumeration
-     */
-    @Override
-    public FeaturesObjectTypesEnum getType() {
-        return FeaturesObjectTypesEnum.INFORMATION_DICTIONARY;
-    }
+	/**
+	 * @return INFORMATION_DICTIONARY instance of the FeaturesObjectTypesEnum enumeration
+	 */
+	@Override
+	public FeaturesObjectTypesEnum getType() {
+		return FeaturesObjectTypesEnum.INFORMATION_DICTIONARY;
+	}
 
-    /**
-     * Reports all features from the object into the collection
-     *
-     * @param collection - collection for feature report
-     * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-     * @throws FeaturesTreeNodeException   - occurs when wrong features tree node constructs
-     */
-    @Override
-    public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException{
+	/**
+	 * Reports all features from the object into the collection
+	 *
+	 * @param collection collection for feature report
+	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
+	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 */
+	@Override
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
 
-        if (info != null) {
-            FeatureTreeNode root = FeatureTreeNode.newRootInstance("informationDict");
+		if (info != null) {
+			FeatureTreeNode root = FeatureTreeNode.newRootInstance("informationDict");
 
-            addEntry("Title", info.getTitle(), root);
-            addEntry("Author", info.getAuthor(), root);
-            addEntry("Subject", info.getSubject(), root);
-            addEntry("Keywords", info.getKeywords(), root);
-            addEntry("Creator", info.getCreator(), root);
-            addEntry("Producer", info.getProducer(), root);
+			addEntry("Title", info.getTitle(), root);
+			addEntry("Author", info.getAuthor(), root);
+			addEntry("Subject", info.getSubject(), root);
+			addEntry("Keywords", info.getKeywords(), root);
+			addEntry("Creator", info.getCreator(), root);
+			addEntry("Producer", info.getProducer(), root);
 
-            FeatureTreeNode creationDate = PBCreateNodeHelper.createDateNode(ENTRY, root, info.getCreationDate(), collection);
-            if (creationDate != null) {
-                creationDate.addAttribute(KEY, "CreationDate");
-            }
+			FeatureTreeNode creationDate = PBCreateNodeHelper.createDateNode(ENTRY, root, info.getCreationDate(), collection);
+			if (creationDate != null) {
+				creationDate.addAttribute(KEY, "CreationDate");
+			}
 
-            FeatureTreeNode modificationDate = PBCreateNodeHelper.createDateNode(ENTRY, root, info.getModificationDate(), collection);
-            if (modificationDate != null) {
-                modificationDate.addAttribute(KEY, "ModDate");
-            }
+			FeatureTreeNode modificationDate = PBCreateNodeHelper.createDateNode(ENTRY, root, info.getModificationDate(), collection);
+			if (modificationDate != null) {
+				modificationDate.addAttribute(KEY, "ModDate");
+			}
 
-            addEntry("Trapped", info.getTrapped(), root);
+			addEntry("Trapped", info.getTrapped(), root);
 
-            if (info.getMetadataKeys() != null) {
-                Set<String> keys = new TreeSet<>(info.getMetadataKeys());
-                keys.removeAll(Arrays.asList(predefinedKeys));
-                for (String key : keys) {
-                    addEntry(key, info.getCustomMetadataValue(key), root);
-                }
-            }
+			if (info.getMetadataKeys() != null) {
+				Set<String> keys = new TreeSet<>(info.getMetadataKeys());
+				keys.removeAll(Arrays.asList(predefinedKeys));
+				for (String key : keys) {
+					addEntry(key, info.getCustomMetadataValue(key), root);
+				}
+			}
 
-            collection.addNewFeatureTree(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY, root);
+			collection.addNewFeatureTree(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY, root);
 
-            return root;
-        }
-        return null;
-    }
+			return root;
+		}
+		return null;
+	}
 
-    private static void addEntry(String name, String value, FeatureTreeNode root) throws FeaturesTreeNodeException {
-        if (name != null && value != null) {
-            FeatureTreeNode entry = FeatureTreeNode.newChildInstanceWithValue(ENTRY, value, root);
-            entry.addAttribute(KEY, name);
-        }
-    }
+	private static void addEntry(String name, String value, FeatureTreeNode root) throws FeaturesTreeNodeException {
+		if (name != null && value != null) {
+			FeatureTreeNode entry = FeatureTreeNode.newChildInstanceWithValue(ENTRY, value, root);
+			entry.addAttribute(KEY, name);
+		}
+	}
 }
