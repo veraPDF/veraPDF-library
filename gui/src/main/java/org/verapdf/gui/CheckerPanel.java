@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -52,16 +53,20 @@ public class CheckerPanel extends JPanel {
 	private JButton saveHTML;
 	private JButton viewHTML;
 
+	private Properties settings;
+
 	JProgressBar progressBar;
 	transient ValidateWorker validateWorker;
 
 	/**
 	 * Creates the Panel.
+	 * @param settings properties object indicates validation settings for the panel
 	 *
 	 * @throws IOException when there's a problem reading an image from the input stream
 	 */
-	public CheckerPanel() throws IOException {
+	public CheckerPanel(final Properties settings) throws IOException {
 
+		this.settings = settings == null ? GUIConstants.DEFAULT_PROPERTIES : settings;
 		setPreferredSize(new Dimension(GUIConstants.PREFERRED_SIZE_WIDTH,
 				GUIConstants.PREFERRED_SIZE_HEIGHT));
 
@@ -232,7 +237,7 @@ public class CheckerPanel extends JPanel {
 				isValidationErrorOccurred = false;
 
 				validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile,
-						profile);
+						profile, settings);
 				validateWorker.execute();
 			}
 		});
@@ -321,24 +326,25 @@ public class CheckerPanel extends JPanel {
 				}
 
 				result.setVisible(true);
+
+				this.xmlReport = xmlReport;
+				this.htmlReport = htmlReport;
+
+				if (xmlReport != null) {
+					saveXML.setEnabled(true);
+					viewXML.setEnabled(true);
+				}
+
+				if (htmlReport != null) {
+					saveHTML.setEnabled(true);
+					viewHTML.setEnabled(true);
+				}
+
 			} catch (InterruptedException e) {
-				errorInValidatingOccur("Validation has interrupted.", e);
+				errorInValidatingOccur("Process has interrupted.", e);
 			} catch (ExecutionException e) {
-				errorInValidatingOccur("Execution exception in validating.", e);
+				errorInValidatingOccur("Execution exception in processing.", e);
 			}
-		}
-
-		this.xmlReport = xmlReport;
-		this.htmlReport = htmlReport;
-
-		if (xmlReport != null) {
-			saveXML.setEnabled(true);
-			viewXML.setEnabled(true);
-		}
-
-		if (htmlReport != null) {
-			saveHTML.setEnabled(true);
-			viewHTML.setEnabled(true);
 		}
 
 	}
@@ -493,5 +499,12 @@ public class CheckerPanel extends JPanel {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @param settings settings for update
+	 */
+	public void setSettings(Properties settings) {
+		this.settings = settings;
 	}
 }

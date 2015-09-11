@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Main frame of the PDFA Conformance Checker
@@ -25,6 +26,9 @@ public class PDFValidationApplication extends JFrame {
 	private static final Logger LOGGER = Logger.getLogger(PDFValidationApplication.class);
 
 	private AboutPanel aboutPanel;
+	private Properties settings;
+	private SettingsPanel settingsPanel;
+	private CheckerPanel checkerPanel;
 
 	/**
 	 * Creates the frame.
@@ -36,6 +40,8 @@ public class PDFValidationApplication extends JFrame {
 
 		setTitle(GUIConstants.TITLE);
 
+		loadSettings();
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
@@ -46,6 +52,27 @@ public class PDFValidationApplication extends JFrame {
 			JOptionPane.showMessageDialog(this, "Error in reading logo image.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
 			LOGGER.error("Exception in reading logo image: ", e);
 		}
+
+		settingsPanel = new SettingsPanel();
+
+		final JMenuItem sett = new JMenuItem("<html><p style='text-align:left;'>Settings</p></html>");
+		sett.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (settingsPanel != null && settingsPanel.showDialog(PDFValidationApplication.this, "Settings", settings)) {
+					settings.setProperty(GUIConstants.PROPERTY_PROCESSING_TYPE, String.valueOf(settingsPanel.getProcessingType()));
+					settings.setProperty(GUIConstants.PROPERTY_HIDE_PASSED_RULES, String.valueOf(settingsPanel.isDispPassedRules()));
+					settings.setProperty(GUIConstants.PROPERTY_MAX_NUMBER_FAILED_CHECKS, String.valueOf(settingsPanel.getFailedChecksNumber()));
+					settings.setProperty(GUIConstants.PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS, String.valueOf(settingsPanel.getFailedChecksDisplayNumber()));
+					saveSettings();
+					if (checkerPanel != null) {
+						checkerPanel.setSettings(settings);
+					}
+				}
+			}
+		});
+
+		menuBar.add(sett);
 
 		JMenuItem about = new JMenuItem("About");
 		about.addActionListener(new ActionListener() {
@@ -74,14 +101,23 @@ public class PDFValidationApplication extends JFrame {
 
 		contentPane.add(logoPanel);
 
-		CheckerPanel checkerPanel = null;
+		checkerPanel = null;
 		try {
-			checkerPanel = new CheckerPanel();
+			checkerPanel = new CheckerPanel(settings);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(PDFValidationApplication.this, "Error in loading xml or html image.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
 			LOGGER.error("Exception in loading xml or html image: ", e);
 		}
 		contentPane.add(checkerPanel);
+	}
+
+	private void loadSettings() {
+		//TODO: do it
+		settings = GUIConstants.DEFAULT_PROPERTIES;
+	}
+
+	private void saveSettings() {
+		//TODO: do it
 	}
 
 	/**

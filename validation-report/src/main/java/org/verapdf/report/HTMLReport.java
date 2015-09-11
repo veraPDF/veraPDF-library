@@ -5,7 +5,9 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Generating HTML validation report
@@ -36,21 +38,6 @@ public final class HTMLReport {
 		transformer.setParameter("profilePath", validationProfile.getAbsolutePath());
 
 		transformer.transform(new StreamSource(xmlReport), new StreamResult(new FileOutputStream(htmlReportPath)));
-
-		File dir = new File(htmlReportPath).getParentFile();
-
-		InputStream imageResource = HTMLReport.class.getClassLoader().getResourceAsStream(LOGO_NAME);
-
-		File image = new File(dir, LOGO_NAME);
-
-		try (OutputStream outStream = new FileOutputStream(image)) {
-			byte[] bytes = new byte[imageResource.available()];
-
-			int read;
-			while ((read = imageResource.read(bytes)) != -1) {
-				outStream.write(bytes, 0, read);
-			}
-		}
 	}
 
 	/**
