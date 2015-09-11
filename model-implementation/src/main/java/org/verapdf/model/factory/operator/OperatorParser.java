@@ -40,14 +40,15 @@ import org.verapdf.model.impl.pb.operator.textobject.PBOpTextObject;
 import org.verapdf.model.impl.pb.operator.textposition.PBOpTextPosition;
 import org.verapdf.model.impl.pb.operator.textposition.PBOp_TD_Big;
 import org.verapdf.model.impl.pb.operator.textposition.PBOp_Td;
+import org.verapdf.model.impl.pb.operator.textposition.PBOp_Tm;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_DoubleQuote;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_Quote;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_TJ_Big;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_Tj;
-import org.verapdf.model.impl.pb.operator.textstate.PBOpTextState;
-import org.verapdf.model.impl.pb.operator.textstate.PBOp_Tr;
-import org.verapdf.model.impl.pb.operator.textstate.PBOp_Tz;
+import org.verapdf.model.impl.pb.operator.textstate.*;
 import org.verapdf.model.impl.pb.operator.type3font.PBOpType3Font;
+import org.verapdf.model.impl.pb.operator.type3font.PBOp_d0;
+import org.verapdf.model.impl.pb.operator.type3font.PBOp_d1;
 import org.verapdf.model.impl.pb.operator.xobject.PBOp_Do;
 import org.verapdf.model.operator.Operator;
 import org.verapdf.model.tools.constants.Operators;
@@ -198,6 +199,8 @@ class OperatorParser {
 				operators.add(new PBOp_TD_Big(arguments));
 				break;
 			case Operators.TM:
+				operators.add(new PBOp_Tm(arguments));
+				break;
 			case Operators.T_STAR:
 				operators.add(new PBOpTextPosition(arguments));
 				break;
@@ -227,19 +230,27 @@ class OperatorParser {
 			case Operators.TF:
 				this.graphicState.setFont(getFontFromResources(resources,
 						getFirstCOSName(arguments)));
-				operators.add(new PBOpTextState(arguments));
+				operators.add(new PBOp_Tf(arguments));
 				break;
 			case Operators.TC:
+				operators.add(new PBOp_Tc(arguments));
+				break;
 			case Operators.TW:
+				operators.add(new PBOp_Tw(arguments));
+				break;
 			case Operators.TL:
+				operators.add(new PBOp_Tl(arguments));
+				break;
 			case Operators.TS:
-				operators.add(new PBOpTextState(arguments));
+				operators.add(new PBOp_Ts(arguments));
 				break;
 
 				// TYPE 3 FONT
 			case Operators.D0:
+				operators.add(new PBOp_d0(arguments));
+				break;
 			case Operators.D1:
-				operators.add(new PBOpType3Font(arguments));
+				operators.add(new PBOp_d1(arguments));
 				break;
 
 				// INLINE IMAGE

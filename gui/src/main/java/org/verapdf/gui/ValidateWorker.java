@@ -10,6 +10,7 @@ import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.tools.GUIConstants;
+import org.verapdf.gui.tools.SettingsHelper;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.report.HTMLReport;
 import org.verapdf.report.XMLReport;
@@ -24,6 +25,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Validates PDF in a new threat.
@@ -37,6 +39,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 	private File pdf;
 	private File profile;
 	private CheckerPanel parent;
+	private Properties settings;
 	private File xmlReport = null;
 	private File htmlReport = null;
 
@@ -46,14 +49,16 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 	/**
 	 * Creates new validate worker
 	 *
-	 * @param parent  parent component
-	 * @param pdf     pdf file for validating
-	 * @param profile validation profile for validating
+	 * @param parent   parent component
+	 * @param pdf      pdf file for validating
+	 * @param profile  validation profile for validating
+	 * @param settings settings for validation
 	 */
-	public ValidateWorker(CheckerPanel parent, File pdf, File profile) {
+	public ValidateWorker(CheckerPanel parent, File pdf, File profile, Properties settings) {
 		this.parent = parent;
 		this.pdf = pdf;
 		this.profile = profile;
+		this.settings = settings;
 	}
 
 	@Override
@@ -66,16 +71,22 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 		ModelLoader loader = new ModelLoader(this.pdf.getPath());
 
 		try {
-			org.verapdf.model.baselayer.Object root = loader.getRoot();
-			info = runValidator(root);
+			int flag = SettingsHelper.getProcessingType(settings);
 
-			try {
-				collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(this.parent,
-						"Some error in creating features collection.",
-						GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-				LOGGER.error("Exception in creating features collection: ", e);
+			if ((flag & 1) == 1) {
+				org.verapdf.model.baselayer.Object root = loader.getRoot();
+				info = runValidator(root);
+			}
+
+			if ((flag & (1 << 1)) == (1 << 1)) {
+				try {
+					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(this.parent,
+							"Some error in creating features collection.",
+							GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+					LOGGER.error("Exception in creating features collection: ", e);
+				}
 			}
 
 			try {
@@ -98,9 +109,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 	private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
 		try {
-			// TODO : make checkbox for log passed checks
-			// TODO : make text field for count of log failed checks
-			return Validator.validate(root, this.profile, false, false, 100);
+			return Validator.validate(root, this.profile, false, SettingsHelper.isDispPassedRules(settings), SettingsHelper.getNumbOfFail(settings));
 		} catch (IOException | NullLinkNameException | NullLinkException |
 				NullLinkedObjectException | MissedHashTagException |
 				WrongSignatureException | MultiplyGlobalVariableNameException |
@@ -124,9 +133,8 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 					throw new IOException("Can not create temporary directory.");
 				}
 				xmlReport = new File("./temp/tempXMLReport.xml");
-				// TODO : make checkbox
 				XMLReport.writeXMLReport(info, collection, xmlReport.getPath(),
-						endTimeOfValidation - startTimeOfValidation, false);
+						endTimeOfValidation - startTimeOfValidation, SettingsHelper.isDispPassedRules(settings));
 
 				if (info != null) {
 					try {
@@ -139,6 +147,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 								GUIConstants.ERROR_IN_SAVING_HTML_REPORT,
 								GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
 						LOGGER.error("Exception saving the HTML report", e);
+						htmlReport = null;
 					}
 				}
 
@@ -148,6 +157,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 						GUIConstants.ERROR_IN_SAVING_XML_REPORT,
 						GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
 				LOGGER.error("Exception saving the XML report", e);
+				xmlReport = null;
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 package org.verapdf.gui.tools;
 
 import java.awt.*;
+import java.util.Properties;
 
 /**
  * Constants for GUI
@@ -9,6 +10,10 @@ import java.awt.*;
  */
 public final class GUIConstants {
 
+	public static final String PROPERTY_PROCESSING_TYPE = "processingType";
+	public static final String PROPERTY_HIDE_PASSED_RULES = "hidePassedRules";
+	public static final String PROPERTY_MAX_NUMBER_FAILED_CHECKS = "maxNumbFailedChecks";
+	public static final String PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS = "maxNumbDisplFailedChecks";
 	public static final String LOGO_NAME = "veraPDF-logo-600.png";
 	public static final Color LOGO_BACKGROUND = Color.LIGHT_GRAY;
 	public static final String PARTNERS_NAME = "partners.png";
@@ -22,7 +27,7 @@ public final class GUIConstants {
 	public static final String PDF_NOT_CHOSEN_TEXT = "PDF file not chosen";
 	public static final String CHOOSE_PROFILE_BUTTON_TEXT = "Choose Profile";
 	public static final String VALIDATION_PROFILE_NOT_CHOSEN = "Validation profile not chosen";
-	public static final String VALIDATE_BUTTON_TEXT = "Validate";
+	public static final String VALIDATE_BUTTON_TEXT = "Generate";
 	public static final String VALIDATION_OK = "PDF file is compliant with Validation Profile requirements";
 	public static final String VALIDATION_FALSE = "PDF file is not compliant with Validation Profile requirements";
 	public static final String SAVE_REPORT_BUTTON_TEXT = "Save XML";
@@ -32,7 +37,7 @@ public final class GUIConstants {
 	public static final String REPORT = "Report";
 	public static final String ERROR_IN_SAVING_HTML_REPORT = "Some error in saving the HTML report.";
 	public static final String ERROR_IN_SAVING_XML_REPORT = "Some error in saving the XML report.";
-	public static final String LABEL_TEXT = "     Please specify input PDF, Validation Profile and press \"Validate\"";
+	public static final String LABEL_TEXT = "     Please specify input PDF, Validation Profile and press \"" + VALIDATE_BUTTON_TEXT + "\"";
 	public static final String CONSORTIUM_TEXT = "© 2015 veraPDF Consortium";
 	public static final String PROPERTIES_NAME = "config.properties";
 	public static final String TITLE = "PDF/A Conformance Checker";
@@ -42,6 +47,18 @@ public final class GUIConstants {
 	public static final String XML = "xml";
 	public static final String HTML = "html";
 	public static final String DOT = ".";
+	public static final String PROCESSING_TYPE = "Generate reports: ";
+	public static final String VALIDATING_AND_FEATURES = "Validating & Features";
+	public static final String VALIDATING = "Validating";
+	public static final String FEATURES = "Features";
+	public static final String DISPLAY_PASSED_RULES = "Include passed rules ";
+	public static final String MAX_NUMBER_FAILED_DISPLAYED_CHECKS = "Maximum number of displayed failed checks for rule: ";
+	public static final String MAX_NUMBER_FAILED_CHECKS = "Maximum number of failed checks for rule: ";
+	public static final String FEATURES_GENERATED_CORRECT = "Features report generating finished";
+
+	public static final int VALIDATING_AND_FEATURES_FLAG = 3;
+	public static final int FEATURES_FLAG = 2;
+	public static final int VALIDATING_FLAG = 1;
 
 	public static final int EMPTYBORDER_INSETS = 5;
 	public static final int FRAME_COORD_X = 100;
@@ -55,6 +72,8 @@ public final class GUIConstants {
 	public static final int HTMLLOGO_BORDER_WIDTH = 4;
 	public static final int ABOUTDIALOG_COORD_X = 150;
 	public static final int ABOUTDIALOG_COORD_Y = 150;
+	public static final int SETTINGSDIALOG_COORD_X = 150;
+	public static final int SETTINGSDIALOG_COORD_Y = 150;
 	public static final int PREFERRED_WIDTH = 450;
 	public static final int PREFERRED_SIZE_WIDTH = 450;
 	public static final int PREFERRED_SIZE_HEIGHT = 200;
@@ -130,6 +149,17 @@ public final class GUIConstants {
 			VALIDATION_SUCCESS_COLOR_RGB_GREEN, 0);
 	public static final Color VALIDATION_FAILED_COLOR = new Color(
 			VALIDATION_FAILED_COLOR_RGB_RED, 0, 0);
+
+	public static final Properties DEFAULT_PROPERTIES;
+
+	static {
+		Properties def = new Properties();
+		def.setProperty(PROPERTY_PROCESSING_TYPE, "3");
+		def.setProperty(PROPERTY_HIDE_PASSED_RULES, "false");
+		def.setProperty(PROPERTY_MAX_NUMBER_FAILED_CHECKS, "100");
+		def.setProperty(PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS, "100");
+		DEFAULT_PROPERTIES = def;
+	}
 
 	private GUIConstants() {
 		// Disable default constructor
