@@ -116,15 +116,13 @@ public final class Rule {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((this.attrID == null) ? 0 : this.attrID.hashCode());
+		result = prime * result + this.attrID.hashCode();
 		result = prime * result
 				+ ((this.attrObject == null) ? 0 : this.attrObject.hashCode());
 		result = prime
 				* result
 				+ ((this.description == null) ? 0 : this.description.hashCode());
-		result = prime * result
-				+ ((this.fixes == null) ? 0 : this.fixes.hashCode());
+		result = prime * result + this.fixes.hashCode();
 		result = prime * result
 				+ ((this.reference == null) ? 0 : this.reference.hashCode());
 		result = prime * result
@@ -139,48 +137,58 @@ public final class Rule {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		} else if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		} else if (getClass() != obj.getClass()) {
 			return false;
+		}
+
 		Rule other = (Rule) obj;
-		if (this.attrID == null) {
-			if (other.attrID != null)
-				return false;
-		} else if (!this.attrID.equals(other.attrID))
+		if (!this.attrID.equals(other.attrID))
 			return false;
 		if (this.attrObject == null) {
-			if (other.attrObject != null)
+			if (other.attrObject != null) {
 				return false;
-		} else if (!this.attrObject.equals(other.attrObject))
+			}
+		} else if (!this.attrObject.equals(other.attrObject)) {
 			return false;
+		}
 		if (this.description == null) {
-			if (other.description != null)
+			if (other.description != null) {
 				return false;
-		} else if (!this.description.equals(other.description))
+			}
+		} else if (!this.description.equals(other.description)) {
 			return false;
-		if (this.fixes == null) {
-			if (other.fixes != null)
-				return false;
-		} else if (!this.fixes.equals(other.fixes))
-			return false;
-		if (this.reference == null) {
-			if (other.reference != null)
-				return false;
-		} else if (!this.reference.equals(other.reference))
-			return false;
-		if (this.ruleError == null) {
-			if (other.ruleError != null)
-				return false;
-		} else if (!this.ruleError.equals(other.ruleError))
-			return false;
+		}
 		if (this.test == null) {
 			if (other.test != null)
 				return false;
 		} else if (!this.test.equals(other.test))
 			return false;
+		if (!isEquals(other)) {
+			return false;
+		}
+		if (this.reference == null) {
+			if (other.reference != null) {
+				return false;
+			}
+		} else if (!this.reference.equals(other.reference)) {
+			return false;
+		}
+		if (this.ruleError == null) {
+			if (other.ruleError != null) {
+				return false;
+			}
+		} else if (!this.ruleError.equals(other.ruleError)) {
+			return false;
+		}
 		return true;
+	}
+
+	private boolean isEquals(Rule other) {
+		return this.fixes.size() == other.fixes.size() &&
+				this.fixes.containsAll(other.fixes);
 	}
 }

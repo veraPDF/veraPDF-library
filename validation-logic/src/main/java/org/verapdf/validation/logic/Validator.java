@@ -290,19 +290,15 @@ public class Validator {
     }
 
     private static String getStringScript(Object obj, String arg) {
-        StringBuilder builder = new StringBuilder();
-
-        builder.append(getScriptPrefix(obj, arg));
-        builder.append(arg);
-        builder.append(getScriptSuffix());
-        return builder.toString();
+		return getScriptPrefix(obj, arg) + arg + getScriptSuffix();
     }
 
     private static String getScriptPrefix(Object obj, String test) {
         StringBuilder builder = new StringBuilder();
+		String[] vars = test.split("\\W");
 
         for (String prop : obj.getProperties()) {
-            if (test.contains(prop)) {
+            if (contains(vars, prop)) {
                 builder.append("var ");
                 builder.append(prop);
                 builder.append(" = obj.get");
@@ -312,7 +308,7 @@ public class Validator {
         }
 
         for (String linkName : obj.getLinks()) {
-            if (test.contains(linkName + "_size")) {
+            if (contains(vars, linkName + "_size")) {
                 builder.append("var ");
                 builder.append(linkName);
                 builder.append("_size = obj.getLinkedObjects(\"");
@@ -326,7 +322,16 @@ public class Validator {
         return builder.toString();
     }
 
-    private static String getScriptSuffix() {
+	private static boolean contains(String[] values, String prop) {
+		for (String value : values) {
+			if (value.equals(prop)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static String getScriptSuffix() {
         return ";}\ntest();";
     }
 
