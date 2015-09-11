@@ -11,11 +11,11 @@ import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.validation.profile.model.*;
+import org.verapdf.validation.profile.model.ValidationProfile;
+import org.verapdf.validation.profile.model.Variable;
 import org.verapdf.validation.profile.parser.ValidationProfileParser;
 import org.verapdf.validation.report.model.*;
 import org.verapdf.validation.report.model.Check.Status;
-import org.verapdf.validation.report.model.Rule;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -333,8 +333,8 @@ public class Validator {
     private boolean checkObjWithRule(Object obj, String context,
                                      org.verapdf.validation.profile.model.Rule rule) {
 		Rule currentRule = this.checkMap.get(rule.getAttrID());
-		if (currentRule.getFailedChecksCount() < this.failedChecksCount) {
-			this.scope.put("obj", this.scope, obj);
+        if (this.failedChecksCount == -1 || currentRule.getFailedChecksCount() < this.failedChecksCount) {
+            this.scope.put("obj", this.scope, obj);
 
 			Script scr;
 			if (!this.ruleScripts.containsKey(rule.getAttrID())) {

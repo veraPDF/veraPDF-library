@@ -317,7 +317,10 @@ public class CheckerPanel extends JPanel {
 		if (!isValidationErrorOccurred) {
 			try {
 				info = validateWorker.get();
-				if (info.getResult().isCompliant()) {
+				if (info == null) {
+					result.setForeground(GUIConstants.BEFORE_VALIDATION_COLOR);
+					result.setText(GUIConstants.FEATURES_GENERATED_CORRECT);
+				} else if (info.getResult().isCompliant()) {
 					result.setForeground(GUIConstants.VALIDATION_SUCCESS_COLOR);
 					result.setText(GUIConstants.VALIDATION_OK);
 				} else {
