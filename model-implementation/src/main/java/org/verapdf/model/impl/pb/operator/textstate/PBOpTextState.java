@@ -15,11 +15,7 @@ public class PBOpTextState extends PBOperator implements OpTextState {
 
     public static final String OP_TEXT_STATE_TYPE = "OpTextState";
 
-    public PBOpTextState(List<COSBase> arguments) {
-        this(arguments, OP_TEXT_STATE_TYPE);
-    }
-
-    public PBOpTextState(List<COSBase> arguments, final String opType) {
+    protected PBOpTextState(List<COSBase> arguments, final String opType) {
         super(arguments, opType);
     }
 
