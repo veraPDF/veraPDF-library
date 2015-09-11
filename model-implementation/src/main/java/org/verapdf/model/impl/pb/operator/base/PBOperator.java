@@ -9,6 +9,7 @@ import org.verapdf.model.impl.pb.cos.PBCosReal;
 import org.verapdf.model.operator.Operator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,14 +28,15 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
     }
 
     protected List<CosReal> getLastReal() {
-        List<CosReal> cosReals = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		if (!this.arguments.isEmpty()) {
+			List<CosReal> cosReals = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 			COSBase base = this.arguments.get(this.arguments.size() - 1);
 			if (base instanceof COSNumber) {
 				cosReals.add(new PBCosReal((COSNumber) base));
+				return Collections.unmodifiableList(cosReals);
 			}
 		}
-        return cosReals;
+        return Collections.emptyList();
     }
 
 	protected List<CosReal> getListOfReals() {
@@ -46,7 +48,7 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
 				list.add(new PBCosReal((COSNumber) base));
 			}
 		}
-		return list;
+		return Collections.unmodifiableList(list);
 	}
 
 	private static void addArrayElements(List<CosReal> list, COSArray base) {
