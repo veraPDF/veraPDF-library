@@ -451,7 +451,7 @@ public class CheckerPanel extends JPanel {
 					JOptionPane.ERROR_MESSAGE);
 		} else {
 			chooser.setSelectedFile(new File(extension.toLowerCase()
-					+ "Report.html"));
+					+ "Report." + extension.toLowerCase()));
 			int resultChoose = chooser.showSaveDialog(CheckerPanel.this);
 			if (resultChoose == JFileChooser.APPROVE_OPTION) {
 				File temp = chooser.getSelectedFile();
