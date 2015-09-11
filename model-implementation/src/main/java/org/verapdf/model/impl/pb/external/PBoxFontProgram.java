@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.external;
 
+import org.apache.fontbox.FontBoxFont;
 import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.verapdf.model.external.FontProgram;
 
@@ -10,24 +11,22 @@ public class PBoxFontProgram extends PBoxExternal implements FontProgram {
 
     public static final String FONT_PROGRAM_TYPE = "FontProgram";
 
-    private PDStream fontProgram;
+    protected FontBoxFont fontProgram;
+    protected PDStream fontProgramStream;
 
-    // for validating widths array in simple fonts
-    private Long firstChar;
-    private Long lastChar;
-    private Long widthSize;
+    public PBoxFontProgram(PDStream fontProgramStream) {
+        super(FONT_PROGRAM_TYPE);
+        this.fontProgramStream = fontProgramStream;
+    }
 
-    public PBoxFontProgram(PDStream fontProgram) {
+    public PBoxFontProgram(FontBoxFont fontProgram) {
         super(FONT_PROGRAM_TYPE);
         this.fontProgram = fontProgram;
     }
 
-    public PBoxFontProgram(PDStream fontProgram, Long firstChar, Long lastChar,
-            Long widthSize) {
-        this(fontProgram);
-        this.firstChar = firstChar;
-        this.lastChar = lastChar;
-        this.widthSize = widthSize;
+    public PBoxFontProgram(FontBoxFont fontProgram, String type) {
+        super(type);
+        this.fontProgram = fontProgram;
     }
 
 }

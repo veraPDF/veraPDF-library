@@ -2,13 +2,11 @@ package org.verapdf.model.impl.pb.pd.font;
 
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.common.PDStream;
-import org.apache.pdfbox.pdmodel.font.PDCIDFont;
-import org.apache.pdfbox.pdmodel.font.PDFontDescriptor;
-import org.apache.pdfbox.pdmodel.font.PDFontLike;
-import org.apache.pdfbox.pdmodel.font.PDType1CFont;
+import org.apache.pdfbox.pdmodel.font.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.font.FontFactory;
 import org.verapdf.model.impl.pb.external.PBoxFontProgram;
+import org.verapdf.model.impl.pb.external.PBoxTrueTypeFontProgram;
 import org.verapdf.model.impl.pb.pd.PBoxPDResources;
 import org.verapdf.model.pdlayer.PDFont;
 
@@ -72,24 +70,28 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 
     private List<PBoxFontProgram> getFontFile() {
         List<PBoxFontProgram> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-        if (!getSubtype().equals(FontFactory.TYPE_3)
+		if (!getSubtype().equals(FontFactory.TYPE_3)
                 && (this.pdFontLike.isEmbedded())) {
-            PDFontDescriptor fontDescriptor = pdFontLike.getFontDescriptor();
-            PDStream fontFile;
-            if (getSubtype().equals(FontFactory.TYPE_1)) {
-				if (this.pdFontLike instanceof PDType1CFont) {
-					fontFile = fontDescriptor.getFontFile3();
+            if (getSubtype().equals(FontFactory.TRUE_TYPE)) {
+				PBoxTrueTypeFontProgram trueTypeFontProgram = new PBoxTrueTypeFontProgram(((PDTrueTypeFont) this.pdFontLike).getTrueTypeFont(), getisSymbolic());
+				list.add(trueTypeFontProgram);
+				return list;
+			} else {
+				PDFontDescriptor fontDescriptor = pdFontLike.getFontDescriptor();
+				PDStream fontFile;
+				if (getSubtype().equals(FontFactory.TYPE_1)) {
+					if (this.pdFontLike instanceof PDType1CFont) {
+						fontFile = fontDescriptor.getFontFile3();
+					} else {
+						fontFile = fontDescriptor.getFontFile();
+					}
 				} else {
-					fontFile = fontDescriptor.getFontFile();
+					fontFile = fontDescriptor.getFontFile3();
 				}
-            } else if (getSubtype().equals(FontFactory.TRUE_TYPE)) {
-                fontFile = fontDescriptor.getFontFile2();
-            } else {
-                fontFile = fontDescriptor.getFontFile3();
-            }
-            if (fontFile != null) {
-                list.add(new PBoxFontProgram(fontFile));
-            }
+				if (fontFile != null) {
+					list.add(new PBoxFontProgram(fontFile));
+				}
+			}
         }
         return list;
     }
