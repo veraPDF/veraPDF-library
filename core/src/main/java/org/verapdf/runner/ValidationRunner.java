@@ -36,7 +36,8 @@ public class ValidationRunner {
 			loader = new ModelLoader(config.getInput().getPath());
             org.verapdf.model.baselayer.Object root = loader.getRoot();
 			ValidationInfo info = Validator.validate(root, config.getProfile(), false,
-					config.isLogPassedChecks(), config.getFailedChecksCount());
+					config.isLogPassedChecks(), config.getMaxFailedChecks(),
+					config.getMaxDisplayedFailedChecks());
 			return info;
             // TODO: Better exception handling, we need a policy and this isn't it.
             // Carl to think a little harder and tidy up, it's not a new idea I'm after,

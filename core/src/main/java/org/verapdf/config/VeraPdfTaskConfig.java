@@ -22,17 +22,19 @@ public final class VeraPdfTaskConfig {
     private final Input input;
     private final String profile;
 	private final boolean logPassedChecks;
-	private final int failedChecksCount;
+	private final int maxFailedChecks;
+	private final int maxDisplayedFailedChecks;
     private final String output;
 
     public VeraPdfTaskConfig(boolean validate, Input input, String profile,
-							 boolean logPassedChecks, int failedChecksCount,
-							 String output) {
+							 boolean logPassedChecks, int maxFailedChecks,
+							 int maxDisplayedFailedChecks, String output) {
         this.validate = validate;
         this.input = input;
         this.profile = profile;
 		this.logPassedChecks = logPassedChecks;
-		this.failedChecksCount = failedChecksCount;
+		this.maxFailedChecks = maxFailedChecks;
+		this.maxDisplayedFailedChecks = maxDisplayedFailedChecks;
         this.output = output;
     }
 
@@ -67,8 +69,15 @@ public final class VeraPdfTaskConfig {
 	/**
 	 * @return maximum amount of failed checks for each rule during validation
 	 */
-	public int getFailedChecksCount() {
-		return failedChecksCount;
+	public int getMaxFailedChecks() {
+		return maxFailedChecks;
+	}
+
+	/**
+	 * @return	maximum displayed amount of failed checks for each rule during validation
+	 */
+	public int getMaxDisplayedFailedChecks() {
+		return maxDisplayedFailedChecks;
 	}
 
 	/**
@@ -84,10 +93,12 @@ public final class VeraPdfTaskConfig {
         private Input input;
         private String profile;
 		private boolean logPassedChecks;
-		private int failedChecksCount;
-        private String output;
+		private int maxFailedChecks;
+		private int maxDisplayedFailedChecks;
+		private String output;
 
-        public Builder() {
+		public Builder() {
+
         }
 
         public Builder validate(boolean validate) {
@@ -110,8 +121,13 @@ public final class VeraPdfTaskConfig {
 			return this;
 		}
 
-		public Builder failedChecksCount(int failedChecksCount) {
-			this.failedChecksCount = failedChecksCount;
+		public Builder maxFailedChecks(int failedChecksCount) {
+			this.maxFailedChecks = failedChecksCount;
+			return this;
+		}
+
+		public Builder maxDisplayedFailedChecks(int failedChecksCount) {
+			this.maxDisplayedFailedChecks = failedChecksCount;
 			return this;
 		}
 
@@ -121,8 +137,9 @@ public final class VeraPdfTaskConfig {
         }
 
         public VeraPdfTaskConfig build() {
-            return new VeraPdfTaskConfig(validate, input, profile,
-					logPassedChecks, failedChecksCount, output);
+            return new VeraPdfTaskConfig(this.validate, this.input, this.profile,
+					this.logPassedChecks, this.maxFailedChecks, this.maxDisplayedFailedChecks,
+					this.output);
         }
 
     }
