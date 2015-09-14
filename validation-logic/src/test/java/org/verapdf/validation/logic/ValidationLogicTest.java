@@ -49,8 +49,9 @@ public class ValidationLogicTest {
 
 		((List<Object>) cd2.getLinkedObjects("Object")).add(obj);
 
+		// TODO : fix last int value for test
 		ValidationInfo info = Validator.validate(obj,
-				getSystemIndependentPath("/test.xml"), false, true, 100);
+				getSystemIndependentPath("/test.xml"), false, true, 100, 100);
 
 		assertEquals("Validation profile for testing",
 				info.getProfile().getName());
@@ -82,7 +83,8 @@ public class ValidationLogicTest {
 		}
 
 		assertNotNull(rule);
-		assertEquals(2, rule.getCheckCount());
+		assertEquals(1, rule.getPassedChecksCount());
+		assertEquals(1, rule.getFailedChecksCount());
 
 		Check check = null;
 		for (Check che : rule.getChecks()) {

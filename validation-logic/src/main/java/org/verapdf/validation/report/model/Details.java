@@ -13,18 +13,20 @@ public class Details {
 	private final List<Rule> rules;
 	private final List<String> warnings;
 	private final int rulesChecksCount;
+	private final int rulesCount;
 
 	/**
 	 * Creates Details model
-	 *
 	 * @param rules            list of checked rules
 	 * @param warnings         list of warnings
 	 * @param rulesChecksCount count of all checks
+	 * @param rulesCount	   count of all rules
 	 */
-	public Details(final List<Rule> rules, final List<String> warnings, int rulesChecksCount) {
+	public Details(final List<Rule> rules, final List<String> warnings, int rulesChecksCount, int rulesCount) {
 		this.rules = Collections.unmodifiableList(rules);
 		this.warnings = Collections.unmodifiableList(warnings);
 		this.rulesChecksCount = rulesChecksCount;
+		this.rulesCount = rulesCount;
 	}
 
 	/**
@@ -47,4 +49,12 @@ public class Details {
 	public int getRulesChecksCount() {
 		return rulesChecksCount;
 	}
+
+	/**
+	 * @return count of all rules
+	 */
+	public int getRulesCount() {
+		return rulesCount;
+	}
+
 }
