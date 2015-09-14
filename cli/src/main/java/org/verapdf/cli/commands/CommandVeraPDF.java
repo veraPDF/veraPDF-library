@@ -25,8 +25,11 @@ public class CommandVeraPDF extends Command {
 	@Parameter(names = "--log-passed-checks")
 	private boolean logPassedChecks = false;
 
-	@Parameter(names = "--failed")
-	private int failedChecksCount = 100;
+	@Parameter(names = "--max-failed-checks")
+	private int maxFailedChecks = 100;
+
+	@Parameter(names = "--max-displayed")
+	private int maxDisplayedFailedChecks = 100;
 
     @Parameter(names = "--output")
     private String output;
@@ -69,8 +72,12 @@ public class CommandVeraPDF extends Command {
 	/**
 	 * @return maximum amount of failed checks for each rule during validation
 	 */
-	public int getFailedChecksCount() {
-		return this.failedChecksCount;
+	public int getMaxFailedChecks() {
+		return this.maxFailedChecks;
+	}
+
+	public int getMaxDisplayedFailedChecks() {
+		return maxDisplayedFailedChecks;
 	}
 
 	/**
