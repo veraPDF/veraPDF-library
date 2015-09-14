@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.preflight.font.container.FontContainer;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
@@ -83,8 +84,16 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
                     int code = font.readCode(inputStream);
                     Boolean glyphPresent = fontContainer.hasGlyph(code);
                     Boolean widthsConsistent = this.checkWidths(code);
-                    res.add(new PBGlyph(glyphPresent, widthsConsistent,
-										font.getName(), code));
+                    PBGlyph glyph;
+					if (font.getSubType().equals(FontFactory.TYPE_0)) {
+						int CID = ((PDType0Font) font).codeToCID(code);
+						glyph = new PBCIDGlyph(glyphPresent, widthsConsistent,
+								font.getName(), code, CID);
+					} else {
+						glyph = new PBGlyph(glyphPresent, widthsConsistent,
+								font.getName(), code);
+					}
+					res.add(glyph);
                 }
             } catch (IOException e) {
                 LOGGER.error("Error processing text show operator's string argument : "
