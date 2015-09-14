@@ -2,7 +2,6 @@ package org.verapdf.model.impl.pb.pd;
 
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionFactory;
-import org.apache.pdfbox.pdmodel.interactive.action.PDActionNamed;
 import org.apache.pdfbox.pdmodel.interactive.action.PDAnnotationAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceDictionary;
@@ -23,6 +22,9 @@ import java.util.List;
 public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 
     public static final String ANNOTATION_TYPE = "PDAnnot";
+
+    public static final String DICT = "Dict";
+    public static final String STREAM = "Stream";
 
     public static final String APPEARANCE = "appearance";
     public static final String C = "C";
@@ -63,7 +65,34 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
                 .doubleValue()) : null;
     }
 
-	@Override
+    @Override
+    public String getN_type() {
+        PDAppearanceDictionary appearanceDictionary = ((PDAnnotation) this.simplePDObject).getAppearance();
+        if (appearanceDictionary != null) {
+            PDAppearanceEntry normalAppearance = appearanceDictionary.getNormalAppearance();
+            if (normalAppearance == null) {
+                return null;
+            } else if (normalAppearance.isSubDictionary()) {
+                return DICT;
+            } else {
+                return STREAM;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String getFT() {
+        COSBase ft = ((PDAnnotation) this.simplePDObject).getCOSObject().getDictionaryObject(COSName.FT);
+        if (ft != null && ft instanceof COSName) {
+            return ((COSName) ft).getName();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
 	public List<? extends Object> getLinkedObjects(String link) {
 		switch (link) {
 			case ADDITIONAL_ACTION:
