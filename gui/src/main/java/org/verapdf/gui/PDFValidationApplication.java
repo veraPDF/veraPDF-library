@@ -43,6 +43,7 @@ public class PDFValidationApplication extends JFrame {
 		loadSettings();
 
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		setJMenuBar(menuBar);
 
 		aboutPanel = null;
