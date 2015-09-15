@@ -141,7 +141,7 @@ public final class XMLValidationReport {
 		for (Rule rul : rulesList) {
 
 			if (rul != null) {
-				if (isLogPassedChecks || rul.getCheckCount() > 0) {
+				if (isLogPassedChecks || rul.getFailedChecksCount() > 0) {
 					Element rule = doc.createElement("rule");
 
 					if (rul.getID() != null) {
@@ -149,8 +149,10 @@ public final class XMLValidationReport {
 					}
 					rule.setAttribute("status", rul.getStatus().toString());
 
-					rule.setAttribute("checks",
-							Integer.toString(rul.getCheckCount()));
+					rule.setAttribute("passedChecks",
+							Integer.toString(rul.getPassedChecksCount()));
+					rule.setAttribute("failedChecks",
+							Integer.toString(rul.getFailedChecksCount()));
 
 					if (rul.getChecks() != null) {
 						for (Check che : rul.getChecks()) {

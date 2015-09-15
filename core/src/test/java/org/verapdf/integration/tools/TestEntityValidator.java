@@ -22,11 +22,14 @@ public class TestEntityValidator {
 
     private static VeraPdfTaskConfig createTaskConfig(TestEntity entity) {
         VeraPdfTaskConfig.Builder taskConfigBuilder = new VeraPdfTaskConfig.Builder();
-        taskConfigBuilder.input(new Input(entity.getTestFile().getAbsolutePath(), false))
+        taskConfigBuilder
+						 .input(new Input(entity.getTestFile().getAbsolutePath(), false))
                          .profile(entity.getValidationProfile().getAbsolutePath())
                          .validate(true)
-                         .output(new String())
-                         .failedChecksCount(100);
+                         .output("")
+                         .maxFailedChecks(100)
+						 .maxDisplayedFailedChecks(100);
+
         return taskConfigBuilder.build();
     }
 

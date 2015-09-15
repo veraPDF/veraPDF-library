@@ -31,27 +31,21 @@ public class Result {
 		if (details != null) {
 			for (Rule rule : details.getRules()) {
 				if (rule != null) {
-					if (Status.PASSED == rule.getStatus()) {
-						++passedRules;
-					} else {
+					if (Status.FAILED == rule.getStatus()) {
 						compliantCheck = false;
 						++failedRules;
 					}
 
-					for (Check check : rule.getChecks()) {
-						if (check != null) {
-							if (Status.FAILED == check.getStatus()) {
-								++failedChecks;
-							}
-						}
-					}
+					failedChecks += rule.getFailedChecksCount();
 				}
 			}
+			passedRules = details.getRulesCount() - failedRules;
 			passedChecks = details.getRulesChecksCount() - failedChecks;
 		}
 
 		this.compliant = compliantCheck;
-		this.statement = compliantCheck ? "PDF file is compliant with Validation Profile requirements" : "PDF file is not compliant with Validation Profile requirements";
+		this.statement = compliantCheck ? "PDF file is compliant with Validation Profile requirements" :
+				"PDF file is not compliant with Validation Profile requirements";
 		this.summary = new Summary(passedRules, failedRules, passedChecks, failedChecks, completedMetadataFixes, failedMetadataFixes, warnings);
 		this.details = details;
 	}

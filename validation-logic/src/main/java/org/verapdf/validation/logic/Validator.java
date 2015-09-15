@@ -54,20 +54,22 @@ public class Validator {
     private ValidationProfile profile;
 
 	private final boolean logPassedChecks;
-	private final int failedChecksCount;
+	private final int maxFailedChecks;
+	private final int maxDisplayedFailedChecks;
 
 	private int rulesChecksCount = 0;
 
 	/**
      * Creates new Validator with given validation profile
      *
-     * @param profile validation profile model for validator
-     */
+	 * @param profile validation profile model for validator
+	 */
     private Validator(ValidationProfile profile, boolean logPassedChecks,
-					  int failedChecksCount) {
+					  int maxFailedChecks, int maxDisplayedFailedChecks) {
         this.profile = profile;
 		this.logPassedChecks = logPassedChecks;
-		this.failedChecksCount = failedChecksCount;
+		this.maxFailedChecks = maxFailedChecks;
+		this.maxDisplayedFailedChecks = maxDisplayedFailedChecks;
     }
 
     private ValidationInfo validate(Object root) throws NullLinkNameException,
@@ -108,20 +110,19 @@ public class Validator {
         Context.exit();
 
         List<Rule> rules = new ArrayList<>(this.checkMap.values());
-		Iterator<Rule> it = rules.iterator();
-		while (it.hasNext()) {
-			Rule rule = it.next();
-			if (logPassedChecks || !rule.getChecks().isEmpty()) {
-				rule.setStatus();
+		int rulesCount = rules.size();
+		for (int i = 0; i < rulesCount; i++) {
+			if (logPassedChecks || !rules.get(i).getChecks().isEmpty()) {
+				rules.get(i).setStatus();
 			} else {
-				it.remove();
+				rules.set(i, null);
 			}
 		}
 
 		Profile profile = new Profile(this.profile.getName(),
 				this.profile.getHash());
 		Result result = new Result(
-				new Details(rules, warnings, this.rulesChecksCount));
+				new Details(rules, warnings, this.rulesChecksCount, rulesCount));
 		return new ValidationInfo(profile, result);
     }
 
@@ -251,7 +252,7 @@ public class Validator {
         if (obj.getID() == null) {
             return true;
         } else if (obj.isContextDependent() == null
-                || obj.isContextDependent().booleanValue()) {
+                || obj.isContextDependent()) {
             return !checkIDContext.contains(obj.getID());
         } else {
             return !this.idSet.contains(obj.getID());
@@ -338,7 +339,7 @@ public class Validator {
     private boolean checkObjWithRule(Object obj, String context,
                                      org.verapdf.validation.profile.model.Rule rule) {
 		Rule currentRule = this.checkMap.get(rule.getAttrID());
-        if (this.failedChecksCount == -1 || currentRule.getFailedChecksCount() < this.failedChecksCount) {
+        if (this.maxFailedChecks == -1 || currentRule.getFailedChecksCount() < this.maxFailedChecks) {
             this.scope.put("obj", this.scope, obj);
 
 			Script scr;
@@ -360,7 +361,11 @@ public class Validator {
 			}
 
 			if (check != null) {
-				currentRule.add(check);
+				if (currentRule.getFailedChecksCount() < this.maxDisplayedFailedChecks) {
+					currentRule.add(check);
+				} else {
+					currentRule.incChecksCount(check);
+				}
 			} else {
 				currentRule.incChecksCount();
 			}
@@ -426,7 +431,7 @@ public class Validator {
      * @param root                  the root object for validation
      * @param validationProfilePath validation profile's file path
 	 * @param isLogPassedChecks 		is need to log passed rules to report
-	 * @param failedChecksCount maximum amount of failed checks for each rule
+	 * @param maxFailedChecks maximum amount of failed checks for each rule
      * @return validation info structure
      * @throws ParserConfigurationException        if a DocumentBuilder cannot be created which satisfies the
      *                                             configuration requested.
@@ -449,7 +454,8 @@ public class Validator {
                                           String validationProfilePath,
 										  boolean isSignCheckOn,
 										  boolean isLogPassedChecks,
-										  int failedChecksCount)
+										  int maxFailedChecks,
+										  int maxDisplayedFailedChecks)
             throws IOException, SAXException, ParserConfigurationException,
             NullLinkNameException, NullLinkException,
             NullLinkedObjectException, MissedHashTagException,
@@ -461,7 +467,8 @@ public class Validator {
             throw new IllegalArgumentException(
                     "Parameter (String validationProfilePath) cannot be null.");
         return validate(root, ValidationProfileParser.parseFromFilePath(
-                validationProfilePath, isSignCheckOn), isLogPassedChecks, failedChecksCount);
+                validationProfilePath, isSignCheckOn),
+				isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
     }
 
     /**
@@ -474,7 +481,7 @@ public class Validator {
      * @param root              the root object for validation
      * @param validationProfile validation profile's file
 	 * @param isLogPassedChecks is need to log passed rules to report
-	 * @param failedChecksCount maximum amount of failed checks for each rule
+	 * @param maxFailedChecks maximum amount of failed checks for each rule
      * @return validation info structure
      * @throws ParserConfigurationException        if a DocumentBuilder cannot be created which satisfies the
      *                                             configuration requested.
@@ -496,7 +503,8 @@ public class Validator {
     public static ValidationInfo validate(Object root, File validationProfile,
                                           boolean isSignCheckOn,
 										  boolean isLogPassedChecks,
-										  int failedChecksCount) throws ParserConfigurationException,
+										  int maxFailedChecks,
+										  int maxDisplayedFailedChecks) throws ParserConfigurationException,
             SAXException, IOException, NullLinkNameException,
             NullLinkException, NullLinkedObjectException,
             MissedHashTagException, XMLStreamException,
@@ -508,7 +516,8 @@ public class Validator {
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile validationProfile) cannot be null.");
         return validate(root, ValidationProfileParser.parseFromFile(
-                validationProfile, isSignCheckOn), isLogPassedChecks, failedChecksCount);
+                validationProfile, isSignCheckOn),
+				isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
     }
 
     /**
@@ -521,7 +530,8 @@ public class Validator {
 	 * @param root              the root object for validation
 	 * @param validationProfile validation profile's structure
 	 * @param isLogPassedChecks is need to log passed rules to report
-	 * @param failedChecksCount maximum amount of failed checks for each rule
+	 * @param maxFailedChecks maximum amount of failed checks for each rule
+	 * @param maxDisplayedFailedChecks maximum amount of failed checks for each rule
 	 * @return validation info structure
 	 * @throws NullLinkNameException     if there is a null link name in some object
 	 * @throws NullLinkException         if there is a null link
@@ -530,7 +540,8 @@ public class Validator {
     public static ValidationInfo validate(Object root,
                                           ValidationProfile validationProfile,
 										  boolean isLogPassedChecks,
-										  int failedChecksCount) throws NullLinkNameException,
+										  int maxFailedChecks,
+										  int maxDisplayedFailedChecks) throws NullLinkNameException,
             NullLinkException, NullLinkedObjectException {
         if (root == null)
             throw new IllegalArgumentException(
@@ -538,7 +549,8 @@ public class Validator {
         if (validationProfile == null)
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile validationProfile) cannot be null.");
-        Validator validator = new Validator(validationProfile, isLogPassedChecks, failedChecksCount);
+        Validator validator = new Validator(validationProfile,
+				isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
         return validator.validate(root);
     }
 

@@ -479,9 +479,12 @@ h0VPlmlyQMZGQ9tIBoUckBBSKzJSyqdSk96dyocLYPv/HwA372s4d5Ps1gAAAABJRU5ErkJggg=="/>
             </td>
         </tr>
         <tr style="BACKGROUND: #dcdaf6">
-            <td width="500">
-                <xsl:value-of select="count(check[@status = 'failed'])"/> occurrences
-            </td>
+            <xsl:variable name="failedChecksCount" select="count(check[@status = 'failed'])"/>
+            <xsl:if test="$failedChecksCount > 0">
+                <td width="500">
+                    <xsl:value-of select="$failedChecksCount"/> occurrences
+                </td>
+            </xsl:if>
             <td>
                 <xsl:if test="@status = 'failed'">
                     <a id="lable{$id}" href="#" style="display: none;"
