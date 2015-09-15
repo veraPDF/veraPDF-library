@@ -27,7 +27,7 @@ public final class GUIConstants {
 	public static final String PDF_NOT_CHOSEN_TEXT = "PDF file not chosen";
 	public static final String CHOOSE_PROFILE_BUTTON_TEXT = "Choose Profile";
 	public static final String VALIDATION_PROFILE_NOT_CHOSEN = "Validation profile not chosen";
-	public static final String VALIDATE_BUTTON_TEXT = "Generate";
+	public static final String VALIDATE_BUTTON_TEXT = "Validate";
 	public static final String VALIDATION_OK = "PDF file is compliant with Validation Profile requirements";
 	public static final String VALIDATION_FALSE = "PDF file is not compliant with Validation Profile requirements";
 	public static final String SAVE_REPORT_BUTTON_TEXT = "Save XML";

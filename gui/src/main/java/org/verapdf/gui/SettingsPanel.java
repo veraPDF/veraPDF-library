@@ -1,6 +1,5 @@
 package org.verapdf.gui;
 
-import org.apache.log4j.Logger;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.gui.tools.SettingsHelper;
 
@@ -19,9 +18,6 @@ import java.util.Properties;
  * @author Maksim Bezrukov
  */
 class SettingsPanel extends JPanel {
-
-	private static final Logger LOGGER = Logger
-			.getLogger(SettingsPanel.class);
 
 	private JButton okButton;
 	private boolean ok;
@@ -42,7 +38,8 @@ class SettingsPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(4, 2));
+		panel.setLayout(new GridLayout(6, 2));
+
 		panel.add(new JLabel(GUIConstants.PROCESSING_TYPE));
 
 		JPanel radioPanel = new JPanel();
