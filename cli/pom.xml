@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.verapdf</groupId>
     <artifactId>verapdf-library</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>0.4.0</version>
   </parent>
 
   <artifactId>vera-cli</artifactId>
