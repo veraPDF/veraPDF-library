@@ -482,7 +482,7 @@ h0VPlmlyQMZGQ9tIBoUckBBSKzJSyqdSk96dyocLYPv/HwA372s4d5Ps1gAAAABJRU5ErkJggg=="/>
             <xsl:variable name="failedChecksCount" select="count(check[@status = 'failed'])"/>
             <xsl:if test="$failedChecksCount > 0">
                 <td width="500">
-                    <xsl:value-of select="$failedChecksCount"/> occurrences
+                    <xsl:value-of select="@failedChecks"/> occurrences
                 </td>
             </xsl:if>
             <td>

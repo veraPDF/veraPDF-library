@@ -8,6 +8,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -56,7 +59,7 @@ public class PDFValidationApplication extends JFrame {
 
 		settingsPanel = new SettingsPanel();
 
-		final JMenuItem sett = new JMenuItem("<html><p style='text-align:left;'>Settings</p></html>");
+		final JMenuItem sett = new JMenuItem("Settings");
 		sett.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -113,12 +116,28 @@ public class PDFValidationApplication extends JFrame {
 	}
 
 	private void loadSettings() {
-		//TODO: do it
-		settings = GUIConstants.DEFAULT_PROPERTIES;
+		File configFile = new File("./temp/config.properties");
+		settings = new Properties(GUIConstants.DEFAULT_PROPERTIES);
+		if (configFile.exists()) {
+			try {
+				FileReader reader = new FileReader(configFile);
+				settings.load(reader);
+				reader.close();
+			} catch (IOException e) {
+				LOGGER.error("Couldn't load config file", e);
+			}
+		}
 	}
 
 	private void saveSettings() {
-		//TODO: do it
+		File configFile = new File("./temp/config.properties");
+		try {
+			FileWriter writer = new FileWriter(configFile);
+			settings.store(writer, "settings");
+			writer.close();
+		} catch (IOException e) {
+			LOGGER.error("Couldn't save config into file", e);
+		}
 	}
 
 	/**

@@ -109,8 +109,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 	private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
 		try {
-			// TODO : add check box for last parameter
-			return Validator.validate(root, this.profile, false, SettingsHelper.isDispPassedRules(settings), SettingsHelper.getNumbOfFail(settings), 100);
+			return Validator.validate(root, this.profile, false, SettingsHelper.isDispPassedRules(settings), SettingsHelper.getNumbOfFail(settings), SettingsHelper.getNumbOfFailDisp(settings));
 		} catch (IOException | NullLinkNameException | NullLinkException |
 				NullLinkedObjectException | MissedHashTagException |
 				WrongSignatureException | MultiplyGlobalVariableNameException |
