@@ -52,6 +52,30 @@ The releases includes a fully functional prototype for the PDF/A-1b valitation a
 
 ***
 
+# Version 0.4 (September 16, 2015)
+
+The releases includes a fully functional implementation (alpha version) for the complete PDF/A-1b valitation and the PDF Feature Report generation
+
+## Features
+
+- A number of bug fixes in the implementation of the formal PDF model for PDF/A Level B validation
+- Added missing validation rules for the full coverage of ISO 19005-1:2005, 19005-1:2005/Cor.1:2011, 19005-1:2005/Cor.1:2007, 19005-1:2005/Cor.2:2011, Level B
+- Complete implementation of the PDF Feature Report generation
+- Minor imporvements in the GUI and the Human-readable Report in HTML format
+- Added extra parameters to limit the number of rule failtures and the number of reported errors
+- Optimized performance
+
+## Infrastructure
+
+- Increased unit test coverage to 70%
+- Increased the number of atomic validation tests to 226, including the full coverage of tests against Isartor test corpus
+
+## Test corpus
+
+- Total 176 atomic test files for PDF/A-1B extending Isartor test suite
+
+***
+
 
 
 <img src="http://verapdf.openpreservation.org/wp-content/uploads/sites/3/2015/06/veraPDF-logo-200.png" width="88" alt="veraPDF Consortium"/>
