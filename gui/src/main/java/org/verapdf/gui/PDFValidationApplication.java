@@ -59,7 +59,7 @@ public class PDFValidationApplication extends JFrame {
 
 		settingsPanel = new SettingsPanel();
 
-		final JMenuItem sett = new JMenuItem("<html><p style='text-align:left;'>Settings</p></html>");
+		final JMenuItem sett = new JMenuItem("Settings");
 		sett.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
