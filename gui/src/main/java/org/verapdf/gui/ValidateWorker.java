@@ -68,9 +68,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 		startTimeOfValidation = System.currentTimeMillis();
 
-		ModelLoader loader = new ModelLoader(this.pdf.getPath());
-
-		try {
+		try (ModelLoader loader = new ModelLoader(this.pdf.getPath())) {
 			int flag = SettingsHelper.getProcessingType(settings);
 
 			if ((flag & 1) == 1) {

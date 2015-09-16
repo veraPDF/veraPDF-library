@@ -33,9 +33,9 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
     public static final String ADDITIONAL_ACTION = "AA";
 
     public static final int MAX_COUNT_OF_ACTIONS = 10;
-	public static final String NAMED_KEYWORD = "Named";
+    public static final String NAMED_KEYWORD = "Named";
 
-	public PBoxPDAnnot(PDAnnotation simplePDObject) {
+    public PBoxPDAnnot(PDAnnotation simplePDObject) {
         super(simplePDObject, ANNOTATION_TYPE);
     }
 
@@ -48,7 +48,17 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
     public String getAP() {
         COSBase ap = ((PDAnnotation) this.simplePDObject).getCOSObject()
                 .getDictionaryObject(COSName.AP);
-        return ap != null ? ap.toString() : null;
+        if (ap != null && ap instanceof COSDictionary) {
+            StringBuilder result = new StringBuilder();
+            for (COSName key : ((COSDictionary) ap).keySet()) {
+                result.append(key.getName());
+                result.append(' ');
+            }
+            //remove last whitespace character
+            return result.length() > 0 ? result.substring(0, result.length() - 1) : result.toString();
+
+        }
+        return null;
     }
 
     @Override
