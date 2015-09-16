@@ -18,6 +18,8 @@ public final class FontFactory {
     public static final String TYPE_1 = "Type1";
     public static final String TYPE_3 = "Type3";
     public static final String TRUE_TYPE = "TrueType";
+    public static final String CID_FONT_TYPE_2 = "CIDFontType2";
+
 
     private FontFactory() {
         // Disable default constructor

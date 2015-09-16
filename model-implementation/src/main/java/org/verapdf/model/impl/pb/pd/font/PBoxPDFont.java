@@ -85,6 +85,8 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 					} else {
 						fontFile = fontDescriptor.getFontFile();
 					}
+				} else if (getSubtype().equals(FontFactory.CID_FONT_TYPE_2)) {
+					fontFile = fontDescriptor.getFontFile2();
 				} else {
 					fontFile = fontDescriptor.getFontFile3();
 				}
