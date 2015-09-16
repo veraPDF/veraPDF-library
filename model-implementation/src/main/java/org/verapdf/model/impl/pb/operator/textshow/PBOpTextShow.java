@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -65,12 +66,13 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 	}
 
     private List<PDFont> getFont() {
-        List<PDFont> result = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         PDFont font = FontFactory.parseFont(this.state.getFont());
 		if (font != null) {
+			List<PDFont> result = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 			result.add(font);
+			return Collections.unmodifiableList(result);
 		}
-        return result;
+        return Collections.emptyList();
     }
 
     private List<PBGlyph> getUsedGlyphs() {
@@ -82,8 +84,8 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
             try (InputStream inputStream = new ByteArrayInputStream(string)) {
                 while (inputStream.available() > 0) {
                     int code = font.readCode(inputStream);
-                    Boolean glyphPresent = fontContainer.hasGlyph(code);
-                    Boolean widthsConsistent = this.checkWidths(code);
+                    boolean glyphPresent = fontContainer.hasGlyph(code);
+                    boolean widthsConsistent = this.checkWidths(code);
                     PBGlyph glyph;
 					if (font.getSubType().equals(FontFactory.TYPE_0)) {
 						int CID = ((PDType0Font) font).codeToCID(code);
@@ -106,27 +108,28 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 
     private List<PDColorSpace> getFillColorSpace() {
 		if (this.state.getRenderingMode().isFill()) {
-			return getColorSpace(this.state.getFillColorSpace());
+			return this.getColorSpace(this.state.getFillColorSpace());
 		} else {
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
     }
 
 	private List<PDColorSpace> getStrokeColorSpace() {
 		if (this.state.getRenderingMode().isStroke()) {
-			return getColorSpace(this.state.getStrokeColorSpace());
+			return this.getColorSpace(this.state.getStrokeColorSpace());
 		} else {
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
     }
 
 	private List<PDColorSpace> getColorSpace(org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace fillColorSpace) {
-		List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(fillColorSpace, this.state.getPattern());
 		if (colorSpace != null) {
+			List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 			colorSpaces.add(colorSpace);
+			return Collections.unmodifiableList(colorSpaces);
 		}
-		return colorSpaces;
+		return Collections.emptyList();
 	}
 
     private Boolean checkWidths(int glyphCode) throws IOException {
@@ -138,8 +141,8 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     }
 
     private List<byte[]> getStrings(List<COSBase> arguments) {
-        List<byte[]> res = new ArrayList<>();
 		if (!arguments.isEmpty()) {
+			List<byte[]> res = new ArrayList<>();
 			COSBase arg = arguments.get(0);
 			if (arg instanceof COSArray) {
 				this.addArrayElements(res, (COSArray) arg);
@@ -148,8 +151,10 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 					res.add(((COSString) arg).getBytes());
 				}
 			}
+			return res;
+		} else {
+			return Collections.emptyList();
 		}
-        return res;
     }
 
 	private void addArrayElements(List<byte[]> res, COSArray arg) {

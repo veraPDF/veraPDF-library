@@ -8,6 +8,7 @@ import org.verapdf.model.impl.pb.cos.PBCosName;
 import org.verapdf.model.operator.Op_BMC;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,16 +39,17 @@ public class PBOp_BMC extends PBOpMarkedContent implements Op_BMC {
 
 	@Override
 	protected List<CosName> getTag() {
-		List<CosName> list =
-				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		if (!this.arguments.isEmpty()) {
 			COSBase name = this.arguments
 					.get(this.arguments.size() - 1);
 			if (name instanceof COSName) {
+				List<CosName> list =
+						new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				list.add(new PBCosName((COSName) name));
+				return Collections.unmodifiableList(list);
 			}
 		}
-		return list;
+		return Collections.emptyList();
 	}
 
 }

@@ -11,6 +11,7 @@ import org.verapdf.model.impl.pb.cos.PBCosReal;
 import org.verapdf.model.operator.Op_DoubleQuote;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -63,15 +64,16 @@ public class PBOp_DoubleQuote extends PBOpStringTextShow implements
 	}
 
 	private List<CosReal> getSpecialReal(int operandNumber) {
-		List<CosReal> real = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		final int size = this.arguments.size();
 		if (size >= COUNT_OF_OPERATOR_OPERANDS) {
 			int index = size - COUNT_OF_OPERATOR_OPERANDS + operandNumber;
 			COSBase base = this.arguments.get(index);
 			if (base instanceof COSNumber) {
+				List<CosReal> real = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				real.add(new PBCosReal((COSNumber) base));
+				return Collections.unmodifiableList(real);
 			}
 		}
-		return real;
+		return Collections.emptyList();
 	}
 }

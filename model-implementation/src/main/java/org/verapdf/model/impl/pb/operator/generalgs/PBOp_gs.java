@@ -8,6 +8,7 @@ import org.verapdf.model.operator.Op_gs;
 import org.verapdf.model.pdlayer.PDExtGState;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,10 +41,11 @@ public class PBOp_gs extends PBOpGeneralGS implements Op_gs {
     }
 
     private List<PDExtGState> getExtGState() {
-        List<PDExtGState> extGStates = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         if (this.extGState != null) {
-            extGStates.add(new PBoxPDExtGState(this.extGState));
+			List<PDExtGState> extGStates = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			extGStates.add(new PBoxPDExtGState(this.extGState));
+			return Collections.unmodifiableList(extGStates);
         }
-        return extGStates;
+        return Collections.emptyList();
     }
 }

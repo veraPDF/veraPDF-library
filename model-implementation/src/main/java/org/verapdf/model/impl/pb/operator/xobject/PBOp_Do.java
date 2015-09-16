@@ -13,6 +13,7 @@ import org.verapdf.model.operator.Op_Do;
 import org.verapdf.model.pdlayer.PDXObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,12 +46,13 @@ public class PBOp_Do extends PBOperator implements Op_Do {
     }
 
 	private List<PDXObject> getXObject() {
-		List<PDXObject> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		PDXObject typedPDXObject = PBoxPDXObject.getTypedPDXObject(this.pbXObject);
 		if (typedPDXObject != null) {
+			List<PDXObject> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 			list.add(typedPDXObject);
+			return Collections.unmodifiableList(list);
 		}
-		return list;
+		return Collections.emptyList();
 	}
 
 }

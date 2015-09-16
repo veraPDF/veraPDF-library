@@ -8,6 +8,7 @@ import org.verapdf.model.impl.pb.cos.PBCosRenderingIntent;
 import org.verapdf.model.operator.Op_ri;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -37,16 +38,17 @@ public class PBOp_ri extends PBOpGeneralGS implements Op_ri {
     }
 
     private List<CosRenderingIntent> getRenderingIntent() {
-        List<CosRenderingIntent> list =
-				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		if (!this.arguments.isEmpty()) {
 			COSBase base = this.arguments
 					.get(this.arguments.size() - 1);
 			if (base instanceof COSName) {
+				List<CosRenderingIntent> list =
+						new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				list.add(new PBCosRenderingIntent((COSName) base));
+				return Collections.unmodifiableList(list);
 			}
 		}
-        return list;
+        return Collections.emptyList();
     }
 
 }

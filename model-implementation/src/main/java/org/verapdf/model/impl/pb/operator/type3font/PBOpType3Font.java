@@ -11,8 +11,6 @@ import java.util.List;
  */
 public class PBOpType3Font extends PBOperator implements OpType3Font {
 
-    public static final String OP_TYPE_3_FONT_TYPE = "OpType3Font";
-
 	protected PBOpType3Font(List<COSBase> arguments, String type) {
 		super(arguments, type);
 	}
