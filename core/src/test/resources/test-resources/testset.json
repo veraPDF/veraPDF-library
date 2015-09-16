@@ -1349,12 +1349,6 @@
         "validationProfileName": "verapdf-profile-6-9-t02.xml",
         "comparingStrategy": "FAIL",
         "expectedReportName": ""
-      },
-      {
-        "testFileName": "isartor-6-9-t02-fail-b.pdf",
-        "validationProfileName": "verapdf-profile-6-9-t02.xml",
-        "comparingStrategy": "FAIL",
-        "expectedReportName": ""
       }
     ],
     "Bavaria testsuite" : [

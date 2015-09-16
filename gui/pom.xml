@@ -62,7 +62,7 @@
               <goal>wget</goal>
             </goals>
             <configuration>
-              <url>https://github.com/veraPDF/veraPDF-corpus/archive/master.zip</url>
+              <url>https://github.com/veraPDF/veraPDF-corpus/archive/staging.zip</url>
               <unpack>true</unpack>
               <skipCache>true</skipCache>
               <outputDirectory>${project.build.directory}/appassembler/resources</outputDirectory>
