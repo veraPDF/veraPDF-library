@@ -14,7 +14,7 @@ import java.net.URISyntaxException;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class PBOp_TzTest extends PBOperatorTest {
+public class PBOp_TzTest extends PBOpTextStateTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {

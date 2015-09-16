@@ -57,13 +57,6 @@ public class Rule {
 	}
 
 	/**
-	 * @return number of checks for this rule
-	 */
-	public int getCheckCount() {
-		return this.checksCount;
-	}
-
-	/**
 	 * @return list of checks structure
 	 */
 	public List<Check> getChecks() {
@@ -87,12 +80,20 @@ public class Rule {
 		this.failedChecksCount++;
 	}
 
+	public int getPassedChecksCount() {
+		return this.checksCount - this.failedChecksCount;
+	}
+
 	/**
 	 * Add another one performed check for current rule
 	 * @param check another one check
 	 */
 	public void add(Check check) {
 		this.checks.add(check);
+		incChecksCount(check);
+	}
+
+	public void incChecksCount(Check check) {
 		incChecksCount();
 		if (check.getStatus() == Status.FAILED) {
 			incFailedChecksCount();

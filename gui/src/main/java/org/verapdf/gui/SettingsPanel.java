@@ -1,6 +1,5 @@
 package org.verapdf.gui;
 
-import org.apache.log4j.Logger;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.gui.tools.SettingsHelper;
 
@@ -20,9 +19,6 @@ import java.util.Properties;
  */
 class SettingsPanel extends JPanel {
 
-	private static final Logger LOGGER = Logger
-			.getLogger(SettingsPanel.class);
-
 	private JButton okButton;
 	private boolean ok;
 	JDialog dialog;
@@ -38,40 +34,49 @@ class SettingsPanel extends JPanel {
 	 */
 	public SettingsPanel() {
 		setBorder(new EmptyBorder(GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS));
-
 		setLayout(new BorderLayout());
 
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(4, 2));
-		panel.add(new JLabel(GUIConstants.PROCESSING_TYPE));
-
-		JPanel radioPanel = new JPanel();
-		radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.Y_AXIS));
-		panel.add(radioPanel);
-
 		ButtonGroup bGroup = new ButtonGroup();
+		panel.setLayout(new GridLayout(6, 2));
+
+		panel.add(new JPanel());
 		valAndFeat = new JRadioButton(GUIConstants.VALIDATING_AND_FEATURES);
 		bGroup.add(valAndFeat);
-		radioPanel.add(valAndFeat);
+		panel.add(valAndFeat);
+		panel.add(new JLabel(GUIConstants.PROCESSING_TYPE));
 		val = new JRadioButton(GUIConstants.VALIDATING);
 		bGroup.add(val);
-		radioPanel.add(val);
+		panel.add(val);
+		panel.add(new JPanel());
 		feat = new JRadioButton(GUIConstants.FEATURES);
 		bGroup.add(feat);
-		radioPanel.add(feat);
+		panel.add(feat);
 
 		panel.add(new JLabel(GUIConstants.DISPLAY_PASSED_RULES));
 		hidePassedRules = new JCheckBox();
 		panel.add(hidePassedRules);
 		panel.add(new JLabel(GUIConstants.MAX_NUMBER_FAILED_CHECKS));
+
 		numberOfFailed = new JTextField();
 		numberOfFailed.addKeyListener(getKeyAdapter(numberOfFailed, false));
-		panel.add(numberOfFailed);
+
+		JPanel panel1 = new JPanel();
+		panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
+		panel1.add(numberOfFailed);
+		panel1.add(new JLabel(GUIConstants.MAX_FAILED_CHECKS_SETTING_TIP));
+		panel.add(panel1);
+
 		panel.add(new JLabel(GUIConstants.MAX_NUMBER_FAILED_DISPLAYED_CHECKS));
+
 		numberOfFailedDisplay = new JTextField();
 		numberOfFailedDisplay.addKeyListener(getKeyAdapter(numberOfFailedDisplay, true));
-		panel.add(numberOfFailedDisplay);
 
+		JPanel panel2 = new JPanel();
+		panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
+		panel2.add(numberOfFailedDisplay);
+		panel2.add(new JLabel(GUIConstants.MAX_FAILED_CHECKS_DISP_SETTING_TIP));
+		panel.add(panel2);
 		add(panel, BorderLayout.CENTER);
 
 		okButton = new JButton("Ok");
@@ -161,7 +166,7 @@ class SettingsPanel extends JPanel {
 		return new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if ((field.getText().length() == 6) &&
+				if ((field.getText().length() == 6) && field.getSelectedText().length() == 0 &&
 						(c != KeyEvent.VK_BACK_SPACE) &&
 						(c != KeyEvent.VK_DELETE)) {
 					e.consume();

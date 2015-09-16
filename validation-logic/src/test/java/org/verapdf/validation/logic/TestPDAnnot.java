@@ -31,6 +31,16 @@ public class TestPDAnnot implements PDAnnot {
 	}
 
 	@Override
+	public String getN_type() {
+		return "";
+	}
+
+	@Override
+	public String getFT() {
+		return "";
+	}
+
+	@Override
 	public Double getCA() {
 		return Double.valueOf(0.0);
 	}

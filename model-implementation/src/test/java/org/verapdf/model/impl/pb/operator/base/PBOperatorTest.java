@@ -6,10 +6,14 @@ import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdfparser.PDFStreamParser;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.junit.Assert;
+import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
+import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.factory.operator.OperatorFactory;
 import org.verapdf.model.impl.BaseTest;
+import org.verapdf.model.impl.pb.cos.PBCosReal;
+import org.verapdf.model.impl.pb.operator.type3font.PBOp_d0;
 import org.verapdf.model.operator.Operator;
 
 import java.io.IOException;
@@ -81,6 +85,12 @@ public abstract class PBOperatorTest extends BaseTest {
 		}
 
 		return null;
+	}
+
+	protected static void testReal(String link, int expectedValue) {
+		CosReal object = (CosReal) testObject(link, 1, PBCosReal.COS_REAL_TYPE);
+		Assert.assertNotNull(object);
+		Assert.assertEquals(Long.valueOf(expectedValue), object.getintValue());
 	}
 
 }

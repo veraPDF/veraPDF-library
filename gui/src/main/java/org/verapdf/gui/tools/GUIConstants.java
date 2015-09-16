@@ -27,7 +27,7 @@ public final class GUIConstants {
 	public static final String PDF_NOT_CHOSEN_TEXT = "PDF file not chosen";
 	public static final String CHOOSE_PROFILE_BUTTON_TEXT = "Choose Profile";
 	public static final String VALIDATION_PROFILE_NOT_CHOSEN = "Validation profile not chosen";
-	public static final String VALIDATE_BUTTON_TEXT = "Generate";
+	public static final String VALIDATE_BUTTON_TEXT = "Validate";
 	public static final String VALIDATION_OK = "PDF file is compliant with Validation Profile requirements";
 	public static final String VALIDATION_FALSE = "PDF file is not compliant with Validation Profile requirements";
 	public static final String SAVE_REPORT_BUTTON_TEXT = "Save XML";
@@ -48,13 +48,15 @@ public final class GUIConstants {
 	public static final String HTML = "html";
 	public static final String DOT = ".";
 	public static final String PROCESSING_TYPE = "Generate reports: ";
-	public static final String VALIDATING_AND_FEATURES = "Validating & Features";
-	public static final String VALIDATING = "Validating";
+	public static final String VALIDATING_AND_FEATURES = "Validation & Features";
+	public static final String VALIDATING = "Validation";
 	public static final String FEATURES = "Features";
 	public static final String DISPLAY_PASSED_RULES = "Include passed rules ";
 	public static final String MAX_NUMBER_FAILED_DISPLAYED_CHECKS = "Maximum number of displayed failed checks for rule: ";
 	public static final String MAX_NUMBER_FAILED_CHECKS = "Maximum number of failed checks for rule: ";
 	public static final String FEATURES_GENERATED_CORRECT = "Features report generating finished";
+	public static final String MAX_FAILED_CHECKS_SETTING_TIP = "    (1 to 999999 or empty for unlimited)";
+	public static final String MAX_FAILED_CHECKS_DISP_SETTING_TIP = "    (0 to 999999 or empty for unlimited)";
 
 	public static final int VALIDATING_AND_FEATURES_FLAG = 3;
 	public static final int FEATURES_FLAG = 2;

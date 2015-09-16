@@ -65,7 +65,8 @@ public class VeraPdfCli {
 				.profile(cmdVeraPDF.getProfile())
                 .validate(cmdVeraPDF.isValidate())
                 .output(cmdVeraPDF.getOutput())
-				.failedChecksCount(cmdVeraPDF.getFailedChecksCount())
+				.maxFailedChecks(cmdVeraPDF.getMaxFailedChecks())
+				.maxDisplayedFailedChecks(cmdVeraPDF.getMaxDisplayedFailedChecks())
 				.logPassedChecks(cmdVeraPDF.isLogPassedChecks());
         return configBuilder.build();
     }

@@ -6,7 +6,7 @@
   <parent>
     <artifactId>verapdf-library</artifactId>
     <groupId>org.verapdf</groupId>
-    <version>0.3.0-SNAPSHOT</version>
+    <version>0.5.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>gui</artifactId>
@@ -31,7 +31,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>appassembler-maven-plugin</artifactId>
-        <version>1.10</version>
         <configuration>
           <programs>
             <program>
@@ -63,7 +62,7 @@
               <goal>wget</goal>
             </goals>
             <configuration>
-              <url>https://github.com/veraPDF/veraPDF-corpus/archive/master.zip</url>
+              <url>https://github.com/veraPDF/veraPDF-corpus/archive/staging.zip</url>
               <unpack>true</unpack>
               <skipCache>true</skipCache>
               <outputDirectory>${project.build.directory}/appassembler/resources</outputDirectory>
@@ -100,7 +99,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.5.4</version>
         <executions>
           <execution>
             <id>${project.id}-zip</id>

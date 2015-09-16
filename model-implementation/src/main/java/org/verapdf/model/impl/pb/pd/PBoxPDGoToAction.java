@@ -2,6 +2,7 @@ package org.verapdf.model.impl.pb.pd;
 
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.interactive.action.PDAction;
+import org.apache.pdfbox.pdmodel.interactive.action.PDActionGoTo;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
@@ -19,7 +20,7 @@ public class PBoxPDGoToAction extends PBoxPDAction implements PDGoToAction {
 
 	public static final String D = "D";
 
-	public PBoxPDGoToAction(PDAction simplePDObject) {
+	public PBoxPDGoToAction(PDActionGoTo simplePDObject) {
 		super(simplePDObject, GOTO_ACTION_TYPE);
 	}
 

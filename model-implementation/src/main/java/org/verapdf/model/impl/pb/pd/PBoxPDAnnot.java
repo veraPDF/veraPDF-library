@@ -2,7 +2,6 @@ package org.verapdf.model.impl.pb.pd;
 
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionFactory;
-import org.apache.pdfbox.pdmodel.interactive.action.PDActionNamed;
 import org.apache.pdfbox.pdmodel.interactive.action.PDAnnotationAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceDictionary;
@@ -24,6 +23,9 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 
     public static final String ANNOTATION_TYPE = "PDAnnot";
 
+    public static final String DICT = "Dict";
+    public static final String STREAM = "Stream";
+
     public static final String APPEARANCE = "appearance";
     public static final String C = "C";
     public static final String IC = "IC";
@@ -31,9 +33,9 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
     public static final String ADDITIONAL_ACTION = "AA";
 
     public static final int MAX_COUNT_OF_ACTIONS = 10;
-	public static final String NAMED_KEYWORD = "Named";
+    public static final String NAMED_KEYWORD = "Named";
 
-	public PBoxPDAnnot(PDAnnotation simplePDObject) {
+    public PBoxPDAnnot(PDAnnotation simplePDObject) {
         super(simplePDObject, ANNOTATION_TYPE);
     }
 
@@ -46,7 +48,17 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
     public String getAP() {
         COSBase ap = ((PDAnnotation) this.simplePDObject).getCOSObject()
                 .getDictionaryObject(COSName.AP);
-        return ap != null ? ap.toString() : null;
+        if (ap != null && ap instanceof COSDictionary) {
+            StringBuilder result = new StringBuilder();
+            for (COSName key : ((COSDictionary) ap).keySet()) {
+                result.append(key.getName());
+                result.append(' ');
+            }
+            //remove last whitespace character
+            return result.length() > 0 ? result.substring(0, result.length() - 1) : result.toString();
+
+        }
+        return null;
     }
 
     @Override
@@ -63,7 +75,34 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
                 .doubleValue()) : null;
     }
 
-	@Override
+    @Override
+    public String getN_type() {
+        PDAppearanceDictionary appearanceDictionary = ((PDAnnotation) this.simplePDObject).getAppearance();
+        if (appearanceDictionary != null) {
+            PDAppearanceEntry normalAppearance = appearanceDictionary.getNormalAppearance();
+            if (normalAppearance == null) {
+                return null;
+            } else if (normalAppearance.isSubDictionary()) {
+                return DICT;
+            } else {
+                return STREAM;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String getFT() {
+        COSBase ft = ((PDAnnotation) this.simplePDObject).getCOSObject().getDictionaryObject(COSName.FT);
+        if (ft != null && ft instanceof COSName) {
+            return ((COSName) ft).getName();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
 	public List<? extends Object> getLinkedObjects(String link) {
 		switch (link) {
 			case ADDITIONAL_ACTION:

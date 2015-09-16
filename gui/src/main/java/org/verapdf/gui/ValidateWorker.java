@@ -68,9 +68,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 		startTimeOfValidation = System.currentTimeMillis();
 
-		ModelLoader loader = new ModelLoader(this.pdf.getPath());
-
-		try {
+		try (ModelLoader loader = new ModelLoader(this.pdf.getPath())) {
 			int flag = SettingsHelper.getProcessingType(settings);
 
 			if ((flag & 1) == 1) {
@@ -109,7 +107,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 	private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
 		try {
-			return Validator.validate(root, this.profile, false, SettingsHelper.isDispPassedRules(settings), SettingsHelper.getNumbOfFail(settings));
+			return Validator.validate(root, this.profile, false, SettingsHelper.isDispPassedRules(settings), SettingsHelper.getNumbOfFail(settings), SettingsHelper.getNumbOfFailDisp(settings));
 		} catch (IOException | NullLinkNameException | NullLinkException |
 				NullLinkedObjectException | MissedHashTagException |
 				WrongSignatureException | MultiplyGlobalVariableNameException |
