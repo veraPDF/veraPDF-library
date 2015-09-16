@@ -31,8 +31,8 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
 
 	@Override
 	public Boolean getareRegistryOrderingCompatible() {
-		String parentOrdering = null;
-		String parentRegistry = null;
+		String parentCIDOrdering = null;
+		String parentCIDRegistry = null;
 		COSDictionary dictionary = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike)
 				.getCOSObject();
 		COSBase encoding = dictionary.getDictionaryObject(COSName.ENCODING);
@@ -40,16 +40,18 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
 			COSBase cidSystemInfo = ((COSStream) encoding)
 					.getDictionaryObject(COSName.CIDSYSTEMINFO);
 			if (cidSystemInfo instanceof COSDictionary) {
-				parentOrdering = ((COSDictionary) cidSystemInfo)
+				parentCIDOrdering = ((COSDictionary) cidSystemInfo)
 						.getString(COSName.ORDERING);
-				parentRegistry = ((COSDictionary) cidSystemInfo)
+				parentCIDRegistry = ((COSDictionary) cidSystemInfo)
 						.getString(COSName.REGISTRY);
 			}
 		}
 		CMap cMap = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike).getCMap();
+		String parentCMapOrdering = null;
+		String parentCMapRegistry = null;
 		if (cMap != null) {
-			parentOrdering = cMap.getOrdering();
-			parentRegistry = cMap.getRegistry();
+			parentCMapOrdering = cMap.getOrdering();
+			parentCMapRegistry = cMap.getRegistry();
 		}
 		String descOrdering = null;
 		String descRegistry = null;
@@ -59,9 +61,9 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
 			descOrdering = info.getOrdering();
 			descRegistry = info.getRegistry();
 		}
-		if (parentOrdering != null && parentRegistry != null
-				&& parentOrdering.equals(descOrdering)
-				&& parentRegistry.equals(descRegistry)) {
+		if (parentCIDOrdering != null && parentCIDRegistry != null
+				&& (parentCIDOrdering.equals(parentCMapOrdering) && parentCIDRegistry.equals(parentCMapRegistry))
+				&& (parentCIDOrdering.equals(descOrdering) && parentCIDRegistry.equals(descRegistry))) {
 			return Boolean.TRUE;
 		}
 		return Boolean.FALSE;
