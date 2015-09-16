@@ -28,7 +28,6 @@ public class PBCosDict extends PBCosObject implements CosDict {
     public static final String KEYS = "keys";
     public static final String VALUES = "values";
     public static final String METADATA = "metadata";
-	public static final int MAX_NUMBER_OF_METADATA = 1;
 
     private final int size;
 
@@ -97,15 +96,16 @@ public class PBCosDict extends PBCosObject implements CosDict {
      */
     private List<PDMetadata> getMetadata() {
 		COSDictionary dictionary = (COSDictionary) this.baseObject;
-        ArrayList<PDMetadata> pdMetadatas = new ArrayList<>(MAX_NUMBER_OF_METADATA);
         COSBase meta = dictionary.getDictionaryObject(COSName.METADATA);
         COSName type = dictionary.getCOSName(COSName.TYPE);
         if (meta != null && meta instanceof COSStream
                 && type != COSName.CATALOG) {
-            org.apache.pdfbox.pdmodel.common.PDMetadata md = new org.apache.pdfbox.pdmodel.common.PDMetadata(
+			ArrayList<PDMetadata> pdMetadatas = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			org.apache.pdfbox.pdmodel.common.PDMetadata md = new org.apache.pdfbox.pdmodel.common.PDMetadata(
                     (COSStream) meta);
             pdMetadatas.add(new PBoxPDMetadata(md, Boolean.FALSE));
+			return pdMetadatas;
         }
-        return Collections.unmodifiableList(pdMetadatas);
+        return Collections.emptyList();
     }
 }
