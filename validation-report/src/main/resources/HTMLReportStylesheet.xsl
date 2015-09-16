@@ -455,13 +455,20 @@ h0VPlmlyQMZGQ9tIBoUckBBSKzJSyqdSk96dyocLYPv/HwA372s4d5Ps1gAAAABJRU5ErkJggg=="/>
         <xsl:param name="id" select="@id"/>
 
         <tr style="BACKGROUND: #dcdaf6">
-            <td width="500">
+            <td>
+                <b>
+                    Rule ID:
+                    <xsl:value-of select="$id"/>
+                </b>
+            </td>
+            <td/>
+        </tr>
+        <tr style="BACKGROUND: #dcdaf6">
+            <td width="800">
                 <b>
                     <xsl:value-of
                             select="$profile/profilens:profile/profilens:rules/profilens:rule[@id = $id]/profilens:description"/>
                 </b>
-                <br/>
-                <xsl:value-of select="check[@status = 'failed']/error/message"/>
             </td>
             <td>
                 <b>
@@ -481,7 +488,7 @@ h0VPlmlyQMZGQ9tIBoUckBBSKzJSyqdSk96dyocLYPv/HwA372s4d5Ps1gAAAABJRU5ErkJggg=="/>
         <tr style="BACKGROUND: #dcdaf6">
             <xsl:variable name="failedChecksCount" select="count(check[@status = 'failed'])"/>
             <xsl:if test="$failedChecksCount > 0">
-                <td width="500">
+                <td width="800">
                     <xsl:value-of select="@failedChecks"/> occurrences
                 </td>
             </xsl:if>
@@ -497,7 +504,7 @@ h0VPlmlyQMZGQ9tIBoUckBBSKzJSyqdSk96dyocLYPv/HwA372s4d5Ps1gAAAABJRU5ErkJggg=="/>
         </tr>
         <xsl:for-each select="check[@status = 'failed']">
             <tr class="hideable hide{$id}">
-                <td width="500">
+                <td width="800">
                     <xsl:value-of select="location/context"/>
                 </td>
             </tr>
