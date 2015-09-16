@@ -10,7 +10,7 @@ import org.verapdf.model.impl.pb.operator.base.PBOperatorTest;
 /**
  * @author Evgeniy Muravitskiy
  */
-public abstract class PBOp_General_TdTest extends PBOperatorTest {
+public abstract class PBOp_General_TdTest extends PBOpTextPositionTest {
 
 	protected static Long expectedVertical;
 	protected static Long expectedHorizontal;

@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class PBOp_TrTest extends PBOperatorTest {
+public class PBOp_TrTest extends PBOpTextStateTest {
 
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {

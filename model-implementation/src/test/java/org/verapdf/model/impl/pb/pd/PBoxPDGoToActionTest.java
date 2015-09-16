@@ -1,13 +1,11 @@
 package org.verapdf.model.impl.pb.pd;
 
-import org.apache.pdfbox.pdmodel.interactive.action.PDActionNamed;
+import org.apache.pdfbox.pdmodel.interactive.action.PDActionGoTo;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.verapdf.model.baselayer.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.PDAction;
-import org.verapdf.model.pdlayer.PDNamedAction;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -16,22 +14,17 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class PBoxPDNamedActionTest extends PBoxPDActionTest {
+public class PBoxPDGoToActionTest extends PBoxPDActionTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		actual = new PBoxPDNamedAction((PDActionNamed) setUp(PBoxPDNamedAction.NAMED_ACTION_TYPE, 67));
+		actual = new PBoxPDGoToAction((PDActionGoTo) setUp(PBoxPDGoToAction.GOTO_ACTION_TYPE, 66));
 	}
 
 	@Override
 	@Test
 	public void testSMethod() {
-		Assert.assertEquals("Named", ((PDAction) actual).getS());
-	}
-
-	@Test
-	public void testNMethod() {
-		Assert.assertEquals("FirstPage", ((PDNamedAction) actual).getN());
+		Assert.assertEquals("GoTo", ((PDAction) actual).getS());
 	}
 
 	@Override
@@ -39,7 +32,13 @@ public class PBoxPDNamedActionTest extends PBoxPDActionTest {
 	public void testNextLink() {
 		List<? extends Object> nextAction = actual.getLinkedObjects(PBoxPDAction.NEXT);
 		Assert.assertEquals(1, nextAction.size());
-		Assert.assertEquals(PBoxPDGoToRemoteAction.GOTO_REMOTE_ACTION_TYPE, nextAction.get(0).getObjectType());
+		Assert.assertEquals(PBoxPDNamedAction.NAMED_ACTION_TYPE, nextAction.get(0).getObjectType());
+	}
+
+	@Test
+	public void testDLink() {
+		List<? extends Object> link = actual.getLinkedObjects(PBoxPDGoToAction.D);
+		Assert.assertEquals(0, link.size());
 	}
 
 }
