@@ -67,7 +67,7 @@ class SettingsPanel extends JPanel {
 		panel1.add(new JLabel(GUIConstants.MAX_FAILED_CHECKS_SETTING_TIP));
 		panel.add(panel1);
 
-		panel.add(new JLabel(GUIConstants.MAX_NUMBER_FAILED_CHECKS));
+		panel.add(new JLabel(GUIConstants.MAX_NUMBER_FAILED_DISPLAYED_CHECKS));
 
 		numberOfFailedDisplay = new JTextField();
 		numberOfFailedDisplay.addKeyListener(getKeyAdapter(numberOfFailedDisplay, true));
@@ -75,7 +75,7 @@ class SettingsPanel extends JPanel {
 		JPanel panel2 = new JPanel();
 		panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
 		panel2.add(numberOfFailedDisplay);
-		panel2.add(new JLabel(GUIConstants.MAX_FAILED_CHECKS_SETTING_TIP));
+		panel2.add(new JLabel(GUIConstants.MAX_FAILED_CHECKS_DISP_SETTING_TIP));
 		panel.add(panel2);
 		add(panel, BorderLayout.CENTER);
 
@@ -154,7 +154,6 @@ class SettingsPanel extends JPanel {
 			dialog.getRootPane().setDefaultButton(okButton);
 			dialog.pack();
 			dialog.setTitle(title);
-			dialog.setSize(GUIConstants.FRAME_WIDTH + 50, getHeight());
 		}
 
 		dialog.setLocation(GUIConstants.SETTINGSDIALOG_COORD_X, GUIConstants.SETTINGSDIALOG_COORD_Y);
@@ -167,7 +166,7 @@ class SettingsPanel extends JPanel {
 		return new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if ((field.getText().length() == 6) &&
+				if ((field.getText().length() == 6) && field.getSelectedText().length() == 0 &&
 						(c != KeyEvent.VK_BACK_SPACE) &&
 						(c != KeyEvent.VK_DELETE)) {
 					e.consume();
