@@ -55,8 +55,8 @@ public final class GUIConstants {
 	public static final String MAX_NUMBER_FAILED_DISPLAYED_CHECKS = "Maximum number of displayed failed checks for rule: ";
 	public static final String MAX_NUMBER_FAILED_CHECKS = "Maximum number of failed checks for rule: ";
 	public static final String FEATURES_GENERATED_CORRECT = "Features report generating finished";
-	public static final String MAX_FAILED_CHECKS_SETTING_TIP = "(1 to 999999 or empty for unlimited)";
-	public static final String MAX_FAILED_CHECKS_DISP_SETTING_TIP = "(0 to 999999 or empty for unlimited)";
+	public static final String MAX_FAILED_CHECKS_SETTING_TIP = "    (1 to 999999 or empty for unlimited)";
+	public static final String MAX_FAILED_CHECKS_DISP_SETTING_TIP = "    (0 to 999999 or empty for unlimited)";
 
 	public static final int VALIDATING_AND_FEATURES_FLAG = 3;
 	public static final int FEATURES_FLAG = 2;
