@@ -12,6 +12,7 @@ import org.verapdf.model.pdlayer.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,17 +52,18 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 	}
 
 	private List<PDGroup> getGroup() {
-		List<PDGroup> groups = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		COSDictionary dictionary = ((org.apache.pdfbox.pdmodel.PDPage) this.simplePDObject)
 				.getCOSObject();
 		COSBase groupDictionary = dictionary.getDictionaryObject(COSName.GROUP);
 		if (groupDictionary instanceof COSDictionary) {
+			List<PDGroup> groups = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 			org.apache.pdfbox.pdmodel.graphics.form.PDGroup group =
 					new org.apache.pdfbox.pdmodel.graphics.form.PDGroup(
 							(COSDictionary) groupDictionary);
 			groups.add(new PBoxPDGroup(group));
+			return Collections.unmodifiableList(groups);
 		}
-		return groups;
+		return Collections.emptyList();
 	}
 
 	private List<PDContentStream> getContentStream() {
@@ -72,10 +74,11 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 	}
 
 	private List<PDAction> getActions() {
-		List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ACTIONS);
 		PDPageAdditionalActions pbActions = ((org.apache.pdfbox.pdmodel.PDPage) this.simplePDObject)
 				.getActions();
 		if (pbActions != null) {
+			List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ACTIONS);
+
 			org.apache.pdfbox.pdmodel.interactive.action.PDAction action;
 
 			action = pbActions.getC();
@@ -83,24 +86,27 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 
 			action = pbActions.getO();
 			this.addAction(actions, action);
+
+			return Collections.unmodifiableList(actions);
 		}
-		return actions;
+		return Collections.emptyList();
 	}
 
 	private List<PDAnnot> getAnnotations() {
-		List<PDAnnot> annotations = new ArrayList<>();
 		try {
 			List<PDAnnotation> pdfboxAnnotations = ((org.apache.pdfbox.pdmodel.PDPage) this.simplePDObject)
 					.getAnnotations();
 			if (pdfboxAnnotations != null) {
+				List<PDAnnot> annotations = new ArrayList<>(pdfboxAnnotations.size());
 				this.addAllAnnotations(annotations, pdfboxAnnotations);
+				return Collections.unmodifiableList(annotations);
 			}
 		} catch (IOException e) {
 			LOGGER.error(
 					"Problems in obtaining pdfbox PDAnnotations. "
 							+ e.getMessage(), e);
 		}
-		return annotations;
+		return Collections.emptyList();
 	}
 
 	private void addAllAnnotations(List<PDAnnot> annotations,

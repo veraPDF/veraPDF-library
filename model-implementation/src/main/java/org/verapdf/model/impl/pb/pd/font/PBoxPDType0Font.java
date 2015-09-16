@@ -13,6 +13,7 @@ import org.verapdf.model.pdlayer.PDCMap;
 import org.verapdf.model.pdlayer.PDType0Font;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -82,30 +83,30 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
 	}
 
     private List<PDCIDFont> getDescendantFonts() {
-        List<PDCIDFont> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         org.apache.pdfbox.pdmodel.font.PDCIDFont pdcidFont =
 				((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike)
                 .getDescendantFont();
         if (pdcidFont != null) {
-            list.add(new PBoxPDCIDFont(pdcidFont));
+			List<PDCIDFont> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			list.add(new PBoxPDCIDFont(pdcidFont));
+			return Collections.unmodifiableList(list);
         }
-        return list;
+        return Collections.emptyList();
     }
 
     private List<PDCMap> getEncoding() {
-        List<PDCMap> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         CMap charMap = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike)
                 .getCMap();
         if (charMap != null) {
 			COSDictionary cosDictionary = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike).getCOSObject();
 			COSBase cmap = cosDictionary.getDictionaryObject(COSName.ENCODING);
-			if (cmap != null && cmap instanceof COSStream) {
-				list.add(new PBoxPDCMap(charMap, (COSStream) cmap));
-			} else {
-				list.add(new PBoxPDCMap(charMap, null));
-			}
+			List<PDCMap> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			boolean isCMapCorrect = cmap != null && cmap instanceof COSStream;
+			list.add(isCMapCorrect ?
+					new PBoxPDCMap(charMap, (COSStream) cmap) : new PBoxPDCMap(charMap, null));
+			return Collections.unmodifiableList(list);
         }
-        return list;
+        return Collections.emptyList();
     }
 
 }

@@ -8,6 +8,7 @@ import org.verapdf.model.pdlayer.PDDeviceN;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -37,18 +38,19 @@ public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
     }
 
     private List<PDColorSpace> getAlternate() {
-        List<PDColorSpace> colorSpace = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
             org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace alternateColorSpace =
 					((org.apache.pdfbox.pdmodel.graphics.color.PDDeviceN) this.simplePDObject)
                     .getAlternateColorSpace();
             PDColorSpace space = ColorSpaceFactory.getColorSpace(alternateColorSpace);
             if (space != null) {
-                colorSpace.add(space);
+				List<PDColorSpace> colorSpace = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+				colorSpace.add(space);
+				return Collections.unmodifiableList(colorSpace);
             }
         } catch (IOException e) {
             LOGGER.error("Can not get alternate color space from DeviceN. ", e);
         }
-        return colorSpace;
+        return Collections.emptyList();
     }
 }

@@ -10,6 +10,7 @@ import org.verapdf.model.pdlayer.PDOutputIntent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -50,7 +51,6 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent {
 	}
 
 	private List<ICCOutputProfile> getDestProfile() {
-		List<ICCOutputProfile> profile = new ArrayList<>();
 		COSBase dict = this.simplePDObject.getCOSObject();
 		String subtype = null;
 		if (dict instanceof COSDictionary) {
@@ -60,16 +60,18 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent {
 			COSStream dest = ((org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent) this.simplePDObject)
 					.getDestOutputIntent();
 			if (dest != null) {
+				List<ICCOutputProfile> profile = new ArrayList<>();
 				final InputStream unfilteredStream = dest.getUnfilteredStream();
 				long N = dest.getLong(COSName.N);
 				profile.add(new PBoxICCOutputProfile(unfilteredStream, subtype,
 						N != -1 ? Long.valueOf(N) : null));
 				unfilteredStream.close();
+				return Collections.unmodifiableList(profile);
 			}
 		} catch (IOException e) {
 			LOGGER.error("Can not read dest output profile. " + e.getMessage(),
 					e);
 		}
-		return profile;
+		return Collections.emptyList();
 	}
 }

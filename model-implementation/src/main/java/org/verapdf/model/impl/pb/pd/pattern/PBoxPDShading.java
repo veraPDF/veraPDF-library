@@ -9,6 +9,7 @@ import org.verapdf.model.pdlayer.PDShading;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,18 +37,20 @@ public class PBoxPDShading extends PBoxPDResources implements PDShading {
     }
 
     private List<PDColorSpace> getColorSpace() {
-        List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
             org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace cs =
 					((org.apache.pdfbox.pdmodel.graphics.shading.PDShading) this.simplePDObject)
                     .getColorSpace();
             if (cs != null) {
-                colorSpaces.add(ColorSpaceFactory.getColorSpace(cs));
+				List<PDColorSpace> colorSpaces =
+						new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+				colorSpaces.add(ColorSpaceFactory.getColorSpace(cs));
+				return Collections.unmodifiableList(colorSpaces);
             }
         } catch (IOException e) {
             LOGGER.error("Problems with color space obtaining from shading. "
                     + e.getMessage(), e);
         }
-        return colorSpaces;
+        return Collections.emptyList();
     }
 }
