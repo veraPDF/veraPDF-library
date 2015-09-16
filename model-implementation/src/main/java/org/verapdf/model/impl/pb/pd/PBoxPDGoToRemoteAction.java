@@ -1,6 +1,6 @@
 package org.verapdf.model.impl.pb.pd;
 
-import org.apache.pdfbox.pdmodel.interactive.action.PDAction;
+import org.apache.pdfbox.pdmodel.interactive.action.PDActionRemoteGoTo;
 import org.verapdf.model.pdlayer.PDGoToRemoteAction;
 
 /**
@@ -10,7 +10,7 @@ public class PBoxPDGoToRemoteAction extends PBoxPDGoToAction implements PDGoToRe
 
 	public static final String GOTO_REMOTE_ACTION_TYPE = "PDGoToRemoteAction";
 
-	public PBoxPDGoToRemoteAction(PDAction simplePDObject) {
+	public PBoxPDGoToRemoteAction(PDActionRemoteGoTo simplePDObject) {
 		super(simplePDObject, GOTO_REMOTE_ACTION_TYPE);
 	}
 

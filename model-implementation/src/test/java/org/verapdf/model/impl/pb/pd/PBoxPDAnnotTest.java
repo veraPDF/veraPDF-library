@@ -51,6 +51,16 @@ public class PBoxPDAnnotTest extends BaseTest {
 	}
 
 	@Test
+	public void testNTypeMethod() {
+		Assert.assertEquals("Stream", ((PDAnnot) actual).getN_type());
+	}
+
+	@Test
+	public void testFTMethod() {
+		Assert.assertEquals("Btn", ((PDAnnot) actual).getFT());
+	}
+
+	@Test
 	public void testAdditionalActionLink() {
 		List<? extends Object> action = actual.getLinkedObjects(PBoxPDAnnot.ADDITIONAL_ACTION);
 		Assert.assertEquals(0, action.size());

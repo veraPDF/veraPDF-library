@@ -239,7 +239,7 @@ public final class XMPChecker {
         final Object value = properties.get(checksRule);
         if (value != null) {
             if (value instanceof String) {
-                return Boolean.valueOf(value.equals(string.getASCII()));
+                return Boolean.valueOf(value.equals(string.getString()));
             } else if (value instanceof Calendar) {
                 // DateConverter can parse as pdf date format as simple date
                 // format
