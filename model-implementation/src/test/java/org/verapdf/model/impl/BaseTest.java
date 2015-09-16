@@ -57,7 +57,9 @@ public abstract class BaseTest {
 		expectedID = null;
 		actual = null;
 
-		document.close();
+		if (document != null) {
+			document.close();
+		}
 	}
 
 	protected static void setUp(String path) throws URISyntaxException, IOException {
