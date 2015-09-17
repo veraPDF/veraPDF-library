@@ -469,8 +469,6 @@ h0VPlmlyQMZGQ9tIBoUckBBSKzJSyqdSk96dyocLYPv/HwA372s4d5Ps1gAAAABJRU5ErkJggg=="/>
                     <xsl:value-of
                             select="$profile/profilens:profile/profilens:rules/profilens:rule[@id = $id]/profilens:description"/>
                 </b>
-                <br/>
-                <xsl:value-of select="check[@status = 'failed']/error/message"/>
             </td>
             <td>
                 <b>
