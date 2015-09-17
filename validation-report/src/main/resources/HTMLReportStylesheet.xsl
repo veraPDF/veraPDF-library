@@ -455,6 +455,15 @@ h0VPlmlyQMZGQ9tIBoUckBBSKzJSyqdSk96dyocLYPv/HwA372s4d5Ps1gAAAABJRU5ErkJggg=="/>
         <xsl:param name="id" select="@id"/>
 
         <tr style="BACKGROUND: #dcdaf6">
+            <td width="500">
+                <b>
+                    Rule ID:
+                    <xsl:value-of select="$id"/>
+                </b>
+            </td>
+            <td/>
+        </tr>
+        <tr style="BACKGROUND: #dcdaf6">
             <td width="800">
                 <b>
                     <xsl:value-of
