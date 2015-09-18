@@ -2,6 +2,7 @@ package org.verapdf.features.pb.objects;
 
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
 import org.verapdf.features.pb.tools.PBCreateNodeHelper;
@@ -110,6 +111,14 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
 			collection.addNewFeatureTree(FeaturesObjectTypesEnum.ANNOTATION, root);
 			return root;
 		}
+		return null;
+	}
+
+	/**
+	 * @return null
+	 */
+	@Override
+	public FeaturesData getData() {
 		return null;
 	}
 

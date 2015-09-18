@@ -13,7 +13,7 @@ public final class FeatureTreeNode {
 
 	private final String name;
 	private Object value;
-	private final FeatureTreeNode parent;
+	private FeatureTreeNode parent;
 	private Map<String, String> attributes = new HashMap<>();
 	private List<FeatureTreeNode> children;
 
@@ -137,6 +137,7 @@ public final class FeatureTreeNode {
 					children = new ArrayList<>();
 				}
 				children.add(child);
+				child.parent = this;
 			} else {
 				throw new FeaturesTreeNodeException(
 						"You can not add childrens for nodes with defined values. Node name "

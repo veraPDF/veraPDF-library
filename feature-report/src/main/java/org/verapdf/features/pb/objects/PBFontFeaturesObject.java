@@ -6,6 +6,7 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSNumber;
 import org.apache.pdfbox.pdmodel.font.*;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
 import org.verapdf.features.pb.tools.PBCreateNodeHelper;
@@ -167,6 +168,14 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 			return root;
 		}
 
+		return null;
+	}
+
+	/**
+	 * @return null
+	 */
+	@Override
+	public FeaturesData getData() {
 		return null;
 	}
 

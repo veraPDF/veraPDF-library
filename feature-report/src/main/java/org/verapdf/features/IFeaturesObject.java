@@ -25,5 +25,8 @@ public interface IFeaturesObject {
 	 */
 	FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException;
 
-
+	/**
+	 * @return features data for object
+	 */
+	FeaturesData getData();
 }
