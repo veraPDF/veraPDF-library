@@ -29,9 +29,9 @@ public abstract class PBOperator extends GenericModelObject implements Operator 
 
     protected List<CosReal> getLastReal() {
 		if (!this.arguments.isEmpty()) {
-			List<CosReal> cosReals = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 			COSBase base = this.arguments.get(this.arguments.size() - 1);
 			if (base instanceof COSNumber) {
+				List<CosReal> cosReals = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				cosReals.add(new PBCosReal((COSNumber) base));
 				return Collections.unmodifiableList(cosReals);
 			}

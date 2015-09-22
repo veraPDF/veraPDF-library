@@ -9,6 +9,7 @@ import org.verapdf.model.baselayer.*;
 import org.verapdf.model.operator.Op_J_line_cap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,16 +40,7 @@ public class PBOp_J_line_cap extends PBOpGeneralGS
     }
 
     private List<CosInteger> getLineCap() {
-        List<CosInteger> list =
-				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-        if (!this.arguments.isEmpty()) {
-			COSBase number = this.arguments
-					.get(this.arguments.size() - 1);
-			if (number instanceof COSInteger) {
-				list.add(new PBCosInteger((COSInteger) number));
-			}
-        }
-        return list;
+		return this.getLastInteger();
     }
 
 }

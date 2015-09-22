@@ -10,6 +10,7 @@ import org.verapdf.model.impl.pb.cos.PBCosArray;
 import org.verapdf.model.operator.Op_TJ_Big;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,15 +41,16 @@ public class PBOp_TJ_Big extends PBOpTextShow implements Op_TJ_Big {
     }
 
     private List<CosArray> getSpecialStrings() {
-        List<CosArray> array =
-				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		if (!this.arguments.isEmpty()) {
 			COSBase base = this.arguments.get(
 					this.arguments.size() - 1);
 			if (base instanceof COSArray) {
+				List<CosArray> array =
+						new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				array.add(new PBCosArray((COSArray) base));
+				return Collections.unmodifiableList(array);
 			}
 		}
-        return array;
+        return Collections.emptyList();
     }
 }

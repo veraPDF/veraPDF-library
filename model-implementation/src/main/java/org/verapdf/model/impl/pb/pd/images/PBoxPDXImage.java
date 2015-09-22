@@ -15,6 +15,7 @@ import org.verapdf.model.pdlayer.PDXImage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -59,36 +60,38 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 	}
 
     private List<CosRenderingIntent> getIntent() {
-        List<CosRenderingIntent> intents = new ArrayList<>(
-                MAX_NUMBER_OF_ELEMENTS);
         COSDictionary imageStream = (COSDictionary) this.simplePDObject
 				.getCOSObject();
         COSName intent = imageStream.getCOSName(COSName.getPDFName(INTENT));
         if (intent != null) {
-            intents.add(new PBCosRenderingIntent(intent));
+			List<CosRenderingIntent> intents = new ArrayList<>(
+					MAX_NUMBER_OF_ELEMENTS);
+			intents.add(new PBCosRenderingIntent(intent));
+			return Collections.unmodifiableList(intents);
         }
-        return intents;
+        return Collections.emptyList();
     }
 
     private List<PDColorSpace> getImageCS() {
-        List<PDColorSpace> colorSpaces = new ArrayList<>(
-				MAX_NUMBER_OF_ELEMENTS);
         try {
             PDColorSpace buffer = ColorSpaceFactory
                     .getColorSpace(((PDImage) this.simplePDObject)
                             .getColorSpace());
             if (buffer != null) {
-                colorSpaces.add(buffer);
+				List<PDColorSpace> colorSpaces =
+						new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+				colorSpaces.add(buffer);
+				return Collections.unmodifiableList(colorSpaces);
             }
         } catch (IOException e) {
             LOGGER.error(
                     "Problems with color space obtaining from Image XObject. "
                             + e.getMessage(), e);
         }
-        return colorSpaces;
+        return Collections.emptyList();
     }
 
-    protected List getAlternates() {
+    protected List<? extends PDXImage> getAlternates() {
         final List<PDXImage> alternates = new ArrayList<>();
         final COSStream imageStream = ((PDImageXObject) this.simplePDObject)
                 .getCOSStream();

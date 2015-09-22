@@ -7,6 +7,7 @@ import org.verapdf.model.xmplayer.XMPPackage;
 import org.verapdf.model.xmplayer.XMPSchema;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -89,9 +90,8 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 	}
 
 	private List<XMPSchema> getSchemas() {
-		List<XMPSchema> resultSchemas = new ArrayList<>();
-
 		if (this.xmpMetadata != null && this.xmpMetadata.getAllSchemas() != null) {
+			List<XMPSchema> resultSchemas = new ArrayList<>();
 			for (org.apache.xmpbox.schema.XMPSchema pbschema : this.xmpMetadata
 					.getAllSchemas()) {
 				XMPSchema schema = PBSchemaFactory.createSchema(pbschema);
@@ -99,9 +99,10 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 					resultSchemas.add(schema);
 				}
 			}
+			return Collections.unmodifiableList(resultSchemas);
 		}
 
-		return resultSchemas;
+		return Collections.emptyList();
 	}
 
 }

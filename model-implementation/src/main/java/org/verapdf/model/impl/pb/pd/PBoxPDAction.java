@@ -7,6 +7,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.PDAction;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -46,19 +47,20 @@ public class PBoxPDAction extends PBoxPDObject implements PDAction {
     }
 
     private List<PDAction> getNext() {
-        List<PDAction> actions = new ArrayList<>();
-        List<org.apache.pdfbox.pdmodel.interactive.action.PDAction> next =
+        List<org.apache.pdfbox.pdmodel.interactive.action.PDAction> nextActionList =
 				((org.apache.pdfbox.pdmodel.interactive.action.PDAction) this.simplePDObject)
                 .getNext();
-        if (next != null) {
-            for (org.apache.pdfbox.pdmodel.interactive.action.PDAction action : next) {
+        if (nextActionList != null) {
+			List<PDAction> actions = new ArrayList<>(nextActionList.size());
+			for (org.apache.pdfbox.pdmodel.interactive.action.PDAction action : nextActionList) {
 				PDAction result = getAction(action);
 				if (result != null) {
 					actions.add(result);
 				}
 			}
+			return Collections.unmodifiableList(actions);
         }
-        return actions;
+        return Collections.emptyList();
     }
 
 	public static PDAction getAction(org.apache.pdfbox.pdmodel.interactive.action.PDAction action) {

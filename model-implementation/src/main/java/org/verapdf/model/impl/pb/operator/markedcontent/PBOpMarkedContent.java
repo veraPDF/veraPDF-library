@@ -11,6 +11,7 @@ import org.verapdf.model.impl.pb.operator.base.PBOperator;
 import org.verapdf.model.operator.OpMarkedContent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,27 +32,31 @@ public abstract class PBOpMarkedContent extends PBOperator implements
     }
 
     protected List<CosName> getTag() {
-        List<CosName> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         if (this.arguments.size() > 1) {
 			COSBase name = this.arguments
 					.get(this.arguments.size() - 2);
 			if (name instanceof COSName) {
+				List<CosName> list =
+						new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				list.add(new PBCosName((COSName) name));
+				return Collections.unmodifiableList(list);
 			}
         }
-        return list;
+        return Collections.emptyList();
     }
 
     protected List<CosDict> getPropertiesDict() {
-        List<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         if (!this.arguments.isEmpty()) {
 			COSBase dict = this.arguments
 					.get(this.arguments.size() - 1);
 			if (dict instanceof COSDictionary) {
+				List<CosDict> list =
+						new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				list.add(new PBCosDict((COSDictionary) dict));
+				return Collections.unmodifiableList(list);
 			}
         }
-        return list;
+        return Collections.emptyList();
     }
 
 }

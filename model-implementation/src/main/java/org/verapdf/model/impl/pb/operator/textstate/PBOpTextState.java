@@ -13,8 +13,6 @@ import java.util.List;
  */
 public class PBOpTextState extends PBOperator implements OpTextState {
 
-    public static final String OP_TEXT_STATE_TYPE = "OpTextState";
-
     protected PBOpTextState(List<COSBase> arguments, final String opType) {
         super(arguments, opType);
     }

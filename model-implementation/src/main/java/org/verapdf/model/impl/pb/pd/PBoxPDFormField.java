@@ -7,6 +7,7 @@ import org.verapdf.model.pdlayer.PDAction;
 import org.verapdf.model.pdlayer.PDFormField;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,11 +39,12 @@ public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
     }
 
     private List<PDAction> getAdditionalAction() {
-        List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ACTIONS);
         PDFormFieldAdditionalActions pbActions = ((PDField) this.simplePDObject)
                 .getActions();
         if (pbActions != null) {
-            org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;
+			List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ACTIONS);
+
+			org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;
 
             buffer = pbActions.getC();
             this.addAction(actions, buffer);
@@ -55,9 +57,11 @@ public class PBoxPDFormField extends PBoxPDObject implements PDFormField {
 
             buffer = pbActions.getV();
             this.addAction(actions, buffer);
+
+			return Collections.unmodifiableList(actions);
         }
 
-        return actions;
+        return Collections.emptyList();
     }
 
 }

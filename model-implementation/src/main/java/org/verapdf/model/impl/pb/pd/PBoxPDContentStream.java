@@ -9,6 +9,7 @@ import org.verapdf.model.pdlayer.PDContentStream;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,17 +39,17 @@ public class PBoxPDContentStream extends PBoxPDObject implements
     }
 
     private List<Operator> getOperators() {
-        List<Operator> result = new ArrayList<>();
         try {
             PDFStreamParser streamParser = new PDFStreamParser(
                     this.contentStream.getContentStream(), true);
             streamParser.parse();
-            result = OperatorFactory.operatorsFromTokens(streamParser.getTokens(),
+			List<Operator> result = OperatorFactory.operatorsFromTokens(streamParser.getTokens(),
                     this.contentStream.getResources());
+			return Collections.unmodifiableList(result);
         } catch (IOException e) {
             LOGGER.error(
                     "Error while parsing content stream. " + e.getMessage(), e);
         }
-        return result;
+        return Collections.emptyList();
     }
 }
