@@ -54,10 +54,15 @@ public class PDFValidationApplication extends JFrame {
 			aboutPanel = new AboutPanel();
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(this, "Error in reading logo image.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-			LOGGER.error("Exception in reading logo image: ", e);
+			LOGGER.error("Exception in reading logo image", e);
 		}
 
-		settingsPanel = new SettingsPanel();
+		try {
+			settingsPanel = new SettingsPanel();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(PDFValidationApplication.this, "Error initialising settings panel.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+			LOGGER.error("Exception in initialising settings panel", e);
+		}
 
 		final JMenuItem sett = new JMenuItem("Settings");
 		sett.addActionListener(new ActionListener() {
@@ -68,6 +73,7 @@ public class PDFValidationApplication extends JFrame {
 					settings.setProperty(GUIConstants.PROPERTY_HIDE_PASSED_RULES, String.valueOf(settingsPanel.isDispPassedRules()));
 					settings.setProperty(GUIConstants.PROPERTY_MAX_NUMBER_FAILED_CHECKS, String.valueOf(settingsPanel.getFailedChecksNumber()));
 					settings.setProperty(GUIConstants.PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS, String.valueOf(settingsPanel.getFailedChecksDisplayNumber()));
+					settings.setProperty(GUIConstants.PROPERTY_FEATURES_CONFIG_FILE, settingsPanel.getFeaturesPluginConfigPath());
 					saveSettings();
 					if (checkerPanel != null) {
 						checkerPanel.setSettings(settings);
@@ -100,7 +106,7 @@ public class PDFValidationApplication extends JFrame {
 			logoPanel = new MiniLogoPanel(GUIConstants.LOGO_NAME);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(PDFValidationApplication.this, "Error in creating mini logo.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-			LOGGER.error("Exception in creating mini logo: ", e);
+			LOGGER.error("Exception in creating mini logo", e);
 		}
 
 		contentPane.add(logoPanel);
@@ -110,7 +116,7 @@ public class PDFValidationApplication extends JFrame {
 			checkerPanel = new CheckerPanel(settings);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(PDFValidationApplication.this, "Error in loading xml or html image.", GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-			LOGGER.error("Exception in loading xml or html image: ", e);
+			LOGGER.error("Exception in loading xml or html image", e);
 		}
 		contentPane.add(checkerPanel);
 	}
@@ -130,8 +136,12 @@ public class PDFValidationApplication extends JFrame {
 	}
 
 	private void saveSettings() {
-		File configFile = new File("./temp/config.properties");
 		try {
+			File dir = new File("./temp/");
+			if (!dir.exists() && !dir.mkdir()) {
+				throw new IOException("Can not create temporary directory.");
+			}
+			File configFile = new File("./temp/config.properties");
 			FileWriter writer = new FileWriter(configFile);
 			settings.store(writer, "settings");
 			writer.close();
@@ -153,13 +163,13 @@ public class PDFValidationApplication extends JFrame {
 					UIManager.setLookAndFeel(
 							UIManager.getSystemLookAndFeelClassName());
 				} catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException e) {
-					LOGGER.error("Exception in configuring UI manager: ", e);
+					LOGGER.error("Exception in configuring UI manager", e);
 				}
 				try {
 					PDFValidationApplication frame = new PDFValidationApplication();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					LOGGER.error("Exception: ", e);
+					LOGGER.error("Exception", e);
 				}
 			}
 		});
