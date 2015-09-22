@@ -2,6 +2,7 @@ package org.verapdf.model.impl.pb.pd.images;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -47,7 +48,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
     public String getSubtype() {
         COSDictionary dict = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) this.simplePDObject)
                 .getCOSStream();
-        return getSubtypeString(dict.getDictionaryObject(COSName.SUBTYPE));
+        return this.getSubtypeString(dict.getDictionaryObject(COSName.SUBTYPE));
     }
 
     protected String getSubtypeString(COSBase item) {
@@ -73,7 +74,6 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 	}
 
     protected List<PDXObject> getSMask() {
-        List<PDXObject> mask = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
             COSStream cosStream = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) this.simplePDObject)
                     .getCOSStream();
@@ -82,13 +82,15 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
             if (smaskDictionary instanceof COSDictionary) {
                 PDXObject xObject = this.getXObject(smaskDictionary);
                 if (xObject != null) {
-                    mask.add(xObject);
+					List<PDXObject> mask = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+					mask.add(xObject);
+					return Collections.unmodifiableList(mask);
                 }
             }
         } catch (IOException e) {
             LOGGER.error("Problems with obtaining SMask. " + e.getMessage(), e);
         }
-        return mask;
+        return Collections.emptyList();
     }
 
     private PDXObject getXObject(COSBase smaskDictionary) throws IOException {
@@ -123,14 +125,15 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
     }
 
     protected List<CosDict> getLinkToDictionary(String key) {
-        List<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         COSDictionary object = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) this.simplePDObject)
                 .getCOSStream();
         COSBase item = object.getDictionaryObject(COSName.getPDFName(key));
         if (item instanceof COSDictionary) {
+			List<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 			list.add(new PBCosDict((COSDictionary) item));
+			return Collections.unmodifiableList(list);
         }
-        return list;
+        return Collections.emptyList();
     }
 
 }

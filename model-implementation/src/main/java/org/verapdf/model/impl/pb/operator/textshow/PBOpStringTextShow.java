@@ -11,6 +11,7 @@ import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.impl.pb.cos.PBCosString;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,16 +39,17 @@ public abstract class PBOpStringTextShow extends PBOpTextShow {
     }
 
     private List<CosString> getShowString() {
-        List<CosString> string =
-				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		if (!this.arguments.isEmpty()) {
 			COSBase base = this.arguments
 					.get(this.arguments.size() - 1);
 			if (base instanceof COSString) {
+				List<CosString> string =
+						new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				string.add(new PBCosString((COSString) base));
+				return Collections.unmodifiableList(string);
 			}
 		}
-        return string;
+        return Collections.emptyList();
     }
 
 }

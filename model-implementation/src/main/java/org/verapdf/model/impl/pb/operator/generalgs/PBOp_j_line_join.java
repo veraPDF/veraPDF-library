@@ -8,6 +8,7 @@ import org.verapdf.model.impl.pb.cos.PBCosInteger;
 import org.verapdf.model.operator.Op_j_line_join;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,16 +37,7 @@ public class PBOp_j_line_join extends PBOpGeneralGS implements Op_j_line_join {
         return super.getLinkedObjects(link);
     }
 
-    private List<CosInteger> getLineJoin() {
-        List<CosInteger> list =
-				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-        if (!this.arguments.isEmpty()) {
-			COSBase number = this.arguments
-					.get(this.arguments.size() - 1);
-			if (number instanceof COSInteger) {
-				list.add(new PBCosInteger((COSInteger) number));
-			}
-        }
-        return list;
-    }
+	private List<CosInteger> getLineJoin() {
+		return this.getLastInteger();
+	}
 }

@@ -14,6 +14,7 @@ import org.verapdf.model.pdlayer.PDAnnot;
 import org.verapdf.model.pdlayer.PDContentStream;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -121,11 +122,12 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	}
 
     private List<PDAction> getAdditionalActions() {
-        List<PDAction> actions = new ArrayList<>(MAX_COUNT_OF_ACTIONS);
         COSBase actionDictionary = ((PDAnnotation) simplePDObject)
                 .getCOSObject().getDictionaryObject(COSName.AA);
         if (actionDictionary instanceof COSDictionary) {
-            PDAnnotationAdditionalActions additionalActions = new PDAnnotationAdditionalActions(
+			List<PDAction> actions = new ArrayList<>(MAX_COUNT_OF_ACTIONS);
+
+			PDAnnotationAdditionalActions additionalActions = new PDAnnotationAdditionalActions(
                     (COSDictionary) actionDictionary);
             org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;
 
@@ -159,12 +161,12 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
             buffer = additionalActions.getX();
             this.addAction(actions, buffer);
 
+			return Collections.unmodifiableList(actions);
         }
-        return actions;
+        return Collections.emptyList();
     }
 
 	private List<PDAction> getA() {
-		List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		COSBase actionDictionary = ((PDAnnotation) this.simplePDObject)
 				.getCOSObject().getDictionaryObject(COSName.A);
 		if (actionDictionary instanceof COSDictionary) {
@@ -172,10 +174,13 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 					.createAction((COSDictionary) actionDictionary);
 			PDAction result = PBoxPDAction.getAction(action);
 			if (result != null) {
+				List<PDAction> actions =
+						new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				actions.add(result);
+				return Collections.unmodifiableList(actions);
 			}
 		}
-		return actions;
+		return Collections.emptyList();
 	}
 
     private List<CosReal> getIC() {
@@ -187,17 +192,18 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
     }
 
     private List<CosReal> getRealsFromArray(COSName arrayName) {
-        List<CosReal> color = new ArrayList<>();
         COSBase colorArray = ((PDAnnotation) this.simplePDObject).getCOSObject()
                 .getDictionaryObject(arrayName);
         if (colorArray instanceof COSArray) {
-            for (COSBase colorValue : (COSArray) colorArray) {
+			List<CosReal> color = new ArrayList<>(((COSArray) colorArray).size());
+			for (COSBase colorValue : (COSArray) colorArray) {
                 if (colorValue instanceof COSNumber) {
                     color.add(new PBCosReal((COSNumber) colorValue));
                 }
             }
+			return Collections.unmodifiableList(color);
         }
-        return color;
+        return Collections.emptyList();
     }
 
     /**
@@ -205,18 +211,19 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
      *         the annotation
      */
     private List<PDContentStream> getAppearance() {
-        List<PDContentStream> appearances = new ArrayList<>(
-                MAX_NUMBER_OF_ELEMENTS);
         PDAppearanceDictionary appearanceDictionary = ((PDAnnotation) this.simplePDObject)
                 .getAppearance();
         if (appearanceDictionary != null) {
             PDAppearanceEntry normalAppearance = appearanceDictionary
                     .getNormalAppearance();
             if (normalAppearance != null && normalAppearance.isStream()) {
-                appearances.add(new PBoxPDContentStream(normalAppearance
+				List<PDContentStream> appearances =
+						new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+				appearances.add(new PBoxPDContentStream(normalAppearance
                         .getAppearanceStream()));
+				return Collections.unmodifiableList(appearances);
             }
         }
-        return appearances;
+        return Collections.emptyList();
     }
 }

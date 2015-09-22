@@ -6,6 +6,7 @@ import org.verapdf.model.pdlayer.PDAcroForm;
 import org.verapdf.model.pdlayer.PDFormField;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,12 +41,14 @@ public class PBoxPDAcroForm extends PBoxPDObject implements PDAcroForm {
     }
 
     private List<PDFormField> getFormFields() {
-        List<PDFormField> formFields = new ArrayList<>();
         List<PDField> fields = ((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) this.simplePDObject)
                 .getFields();
         for (PDField field : fields) {
-            formFields.add(new PBoxPDFormField(field));
+			List<PDFormField> formFields =
+					new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			formFields.add(new PBoxPDFormField(field));
+			return Collections.unmodifiableList(formFields);
         }
-        return formFields;
+        return Collections.emptyList();
     }
 }

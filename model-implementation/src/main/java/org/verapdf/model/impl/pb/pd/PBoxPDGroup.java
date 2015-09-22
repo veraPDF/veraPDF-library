@@ -2,6 +2,7 @@ package org.verapdf.model.impl.pb.pd;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -41,7 +42,6 @@ public class PBoxPDGroup extends PBoxPDObject implements PDGroup {
     }
 
     private List<PDColorSpace> getColorSpace() {
-        List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
             org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace pbColorSpace =
 					((org.apache.pdfbox.pdmodel.graphics.form.PDGroup) this.simplePDObject)
@@ -49,13 +49,15 @@ public class PBoxPDGroup extends PBoxPDObject implements PDGroup {
             PDColorSpace colorSpace = ColorSpaceFactory
                     .getColorSpace(pbColorSpace);
             if (colorSpace != null) {
-                colorSpaces.add(colorSpace);
+				List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+				colorSpaces.add(colorSpace);
+				return Collections.unmodifiableList(colorSpaces);
             }
         } catch (IOException e) {
             LOGGER.error(
                     "Problems with color space obtaining on group. "
                             + e.getMessage(), e);
         }
-        return colorSpaces;
+        return Collections.emptyList();
     }
 }

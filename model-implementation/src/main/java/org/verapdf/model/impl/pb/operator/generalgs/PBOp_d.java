@@ -9,6 +9,7 @@ import org.verapdf.model.impl.pb.cos.PBCosArray;
 import org.verapdf.model.operator.Op_d;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,16 +45,16 @@ public class PBOp_d extends PBOpGeneralGS implements Op_d {
     }
 
     private List<CosArray> getDashArray() {
-        List<CosArray> list =
-				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         if (this.arguments.size() > 1) {
 			COSBase array = this.arguments
 					.get(this.arguments.size() - 2);
 			if (array instanceof COSArray) {
+				List<CosArray> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				list.add(new PBCosArray((COSArray) array));
+				return Collections.unmodifiableList(list);
 			}
         }
-        return list;
+        return Collections.emptyList();
     }
 
     private List<CosReal> getDashPhase() {

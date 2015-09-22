@@ -8,6 +8,7 @@ import org.verapdf.model.impl.pb.cos.PBCosDict;
 import org.verapdf.model.operator.Op_ID;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,14 +40,15 @@ public class PBOp_ID extends PBOpInlineImage implements Op_ID {
 	}
 
 	private List<CosDict> getInlineImageDictionary() {
-		List<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		if (!this.arguments.isEmpty()) {
 			COSBase dict = this.arguments
 					.get(this.arguments.size() - 1);
 			if (dict instanceof COSDictionary) {
+				List<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				list.add(new PBCosDict((COSDictionary) dict));
+				return Collections.unmodifiableList(list);
 			}
 		}
-		return list;
+		return Collections.emptyList();
 	}
 }

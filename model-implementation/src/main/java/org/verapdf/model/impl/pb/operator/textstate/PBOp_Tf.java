@@ -48,7 +48,7 @@ public class PBOp_Tf extends PBOpTextState implements Op_Tf {
 			if (base instanceof COSName) {
 				List<CosName> names = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				names.add(new PBCosName((COSName) base));
-				return names;
+				return Collections.unmodifiableList(names);
 			}
 		}
 		return Collections.emptyList();
