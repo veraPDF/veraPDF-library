@@ -4,6 +4,7 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
 import org.verapdf.features.pb.tools.PBCreateNodeHelper;
@@ -75,6 +76,14 @@ public class PBPropertiesDictFeaturesObject implements IFeaturesObject {
 			return root;
 		}
 
+		return null;
+	}
+
+	/**
+	 * @return null
+	 */
+	@Override
+	public FeaturesData getData() {
 		return null;
 	}
 

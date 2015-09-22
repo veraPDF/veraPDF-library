@@ -28,10 +28,12 @@ import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceStream;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.FeaturesReporter;
+import org.verapdf.features.FeaturesReporterConfigurator;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -202,7 +204,7 @@ public final class PBFeatureParser {
 	 */
 	public static FeaturesCollection getFeaturesCollection(
 			final PDDocument document) {
-		return getFeaturesCollection(document, new FeaturesReporter());
+		return getFeaturesCollection(document, null);
 	}
 
 	/**
@@ -210,11 +212,15 @@ public final class PBFeatureParser {
 	 * Features Reporter
 	 *
 	 * @param document the document for parsing
-	 * @param reporter Features Reporter for report
+	 * @param thirdPartySoftwareConfig Features Reporter for report
 	 * @return FeaturesCollection class with information about all featurereport
 	 */
 	public static FeaturesCollection getFeaturesCollection(
-			final PDDocument document, final FeaturesReporter reporter) {
+			final PDDocument document, File thirdPartySoftwareConfig) {
+
+		FeaturesReporter reporter = new FeaturesReporter();
+
+		FeaturesReporterConfigurator.configurate(reporter, thirdPartySoftwareConfig);
 
 		if (document != null) {
 			PBFeatureParser parser = new PBFeatureParser(reporter);
