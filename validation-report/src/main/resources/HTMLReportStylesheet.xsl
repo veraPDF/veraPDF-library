@@ -455,7 +455,7 @@ h0VPlmlyQMZGQ9tIBoUckBBSKzJSyqdSk96dyocLYPv/HwA372s4d5Ps1gAAAABJRU5ErkJggg=="/>
         <xsl:param name="id" select="@id"/>
 
         <tr style="BACKGROUND: #dcdaf6">
-            <td>
+            <td width="800">
                 <b>
                     Rule ID:
                     <xsl:value-of select="$id"/>
@@ -504,7 +504,7 @@ h0VPlmlyQMZGQ9tIBoUckBBSKzJSyqdSk96dyocLYPv/HwA372s4d5Ps1gAAAABJRU5ErkJggg=="/>
         </tr>
         <xsl:for-each select="check[@status = 'failed']">
             <tr class="hideable hide{$id}">
-                <td width="800">
+                <td width="800" style="word-break: break-all">
                     <xsl:value-of select="location/context"/>
                 </td>
             </tr>
