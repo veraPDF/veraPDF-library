@@ -154,7 +154,7 @@ public final class XMLFeaturesReport {
 									  Element root, Document doc) {
 		for (FeatureTreeNode rootNode : collection.getFeatureTreesForType(type)) {
 			if (rootNode != null) {
-				root.appendChild(makeNode(rootNode, collection, doc));
+				root.appendChild(makeNode(rootNode, collection, doc, false));
 			}
 		}
 	}
@@ -166,7 +166,7 @@ public final class XMLFeaturesReport {
 			Element listElement = doc.createElement(listName);
 			for (FeatureTreeNode node : list) {
 				if (node != null) {
-					listElement.appendChild(makeNode(node, collection, doc));
+					listElement.appendChild(makeNode(node, collection, doc, false));
 				}
 			}
 			parent.appendChild(listElement);
@@ -174,14 +174,14 @@ public final class XMLFeaturesReport {
 	}
 
 	private static Element makeNode(FeatureTreeNode node,
-									FeaturesCollection collection, Document doc) {
-		if ("metadata".equalsIgnoreCase(node.getName())) {
+									FeaturesCollection collection, Document doc, boolean isPassedMetadata) {
+		if ("metadata".equalsIgnoreCase(node.getName()) && !isPassedMetadata) {
 			return parseMetadata(node, collection, doc);
 		} else {
 			Element root = doc.createElement(node.getName());
 			for (Map.Entry<String, String> attr : node.getAttributes().entrySet()) {
 				root.setAttribute(attr.getKey(),
-								  replaceInvalidCharacters(attr.getValue()));
+						replaceInvalidCharacters(attr.getValue()));
 			}
 
 			if (node.getValue() != null) {
@@ -189,7 +189,7 @@ public final class XMLFeaturesReport {
 						replaceInvalidCharacters(node.getValue().toString())));
 			} else if (node.getChildren() != null) {
 				for (FeatureTreeNode child : node.getChildren()) {
-					root.appendChild(makeNode(child, collection, doc));
+					root.appendChild(makeNode(child, collection, doc, false));
 				}
 			}
 			return root;
@@ -198,7 +198,9 @@ public final class XMLFeaturesReport {
 
 	private static Element parseMetadata(FeatureTreeNode metadataNode,
 										 FeaturesCollection collection, Document doc) {
-
+		if (!(metadataNode.getValue() instanceof byte[])) {
+			return makeNode(metadataNode, collection, doc, true);
+		}
 		if (metadataNode.getAttributes().get(ErrorsHelper.ERRORID) == null) {
 			Element metadata = doc.createElement(metadataNode.getName());
 			for (Map.Entry<String, String> attr : metadataNode.getAttributes().entrySet()) {
@@ -218,6 +220,7 @@ public final class XMLFeaturesReport {
 					LOGGER.debug("Metadata stream does not contains valid prefix.");
 					parseMetadataError(collection, metadata);
 				}
+
 			} catch (ParserConfigurationException | SAXException | IOException e) {
 				LOGGER.debug("Caught exception and checking XML String.", e);
 				parseMetadataError(collection, metadata);
@@ -225,7 +228,7 @@ public final class XMLFeaturesReport {
 
 			return metadata;
 		}
-		return makeNode(metadataNode, collection, doc);
+		return makeNode(metadataNode, collection, doc, true);
 
 	}
 
