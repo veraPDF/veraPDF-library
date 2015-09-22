@@ -437,6 +437,10 @@
                       <argument>clone</argument>
                       <argument>https://github.com/veraPDF/veraPDF-corpus-PDFA-1b</argument>
                     </arguments>
+                    <successCodes>
+                        <successCode>0</successCode>
+                        <successCode>1</successCode>
+                    </successCodes>
                   </configuration>
                 </execution>
 
@@ -455,6 +459,10 @@
                       <argument>integration</argument>
                       <argument>https://github.com/veraPDF/veraPDF-validation-profiles</argument>
                     </arguments>
+                    <successCodes>
+                        <successCode>0</successCode>
+                        <successCode>1</successCode>
+                    </successCodes>
                   </configuration>
                 </execution>
 
@@ -532,6 +540,10 @@
                     <arguments>
                       <argument>pull</argument>
                     </arguments>
+                    <successCodes>
+                        <successCode>0</successCode>
+                        <successCode>1</successCode>
+                    </successCodes>
                   </configuration>
                 </execution>
 
@@ -549,6 +561,10 @@
                     <arguments>
                       <argument>pull</argument>
                     </arguments>
+                    <successCodes>
+                        <successCode>0</successCode>
+                        <successCode>1</successCode>
+                    </successCodes>
                   </configuration>
                 </execution>
               </executions>
