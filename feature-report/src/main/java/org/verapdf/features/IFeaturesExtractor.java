@@ -29,5 +29,5 @@ public interface IFeaturesExtractor {
 	 *
 	 * @param parametrs parametrs for the initializing
 	 */
-	void initialize(Map<String, String> parametrs);
+	void initialise(Map<String, String> parametrs);
 }

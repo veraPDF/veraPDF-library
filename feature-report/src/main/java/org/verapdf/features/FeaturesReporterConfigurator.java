@@ -63,14 +63,14 @@ public final class FeaturesReporterConfigurator {
 
 		List<IFeaturesExtractor> res = new ArrayList<>();
 
-		if (!"thirdPartySoftwares".equals(root.getNodeName())) {
+		if (!"pluginsConfig".equals(root.getNodeName())) {
 			return res;
 		}
 
 		NodeList list = root.getChildNodes();
 		for (int i = 0; i < list.getLength(); ++i) {
 			Node node = list.item(i);
-			if ("cli".equals(node.getNodeName())) {
+			if ("localClass".equals(node.getNodeName())) {
 				IFeaturesExtractor ext = getExtractor(node);
 				if (ext != null) {
 					res.add(ext);
@@ -110,7 +110,7 @@ public final class FeaturesReporterConfigurator {
 		Object obj = cls.newInstance();
 		if (obj instanceof IFeaturesExtractor) {
 			IFeaturesExtractor extractor = (IFeaturesExtractor) obj;
-			extractor.initialize(parametrs);
+			extractor.initialise(parametrs);
 			return extractor;
 		}
 

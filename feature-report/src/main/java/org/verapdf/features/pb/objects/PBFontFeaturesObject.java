@@ -222,24 +222,24 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 						putIfNotNull(properties, "FontBBox", "[" + rex.getLowerLeftX() + " " + rex.getLowerLeftY()
 								+ " " + rex.getUpperRightX() + " " + rex.getUpperRightY() + "]");
 					}
-					putIfNotNull(properties, "italicAngle", String.valueOf(descriptor.getItalicAngle()));
-					putIfNotNull(properties, "ascent", String.valueOf(descriptor.getAscent()));
-					putIfNotNull(properties, "descent", String.valueOf(descriptor.getDescent()));
-					putIfNotNull(properties, "leading", String.valueOf(descriptor.getLeading()));
-					putIfNotNull(properties, "capHeight", String.valueOf(descriptor.getCapHeight()));
-					putIfNotNull(properties, "xHeight", String.valueOf(descriptor.getXHeight()));
-					putIfNotNull(properties, "stemV", String.valueOf(descriptor.getStemV()));
-					putIfNotNull(properties, "stemH", String.valueOf(descriptor.getStemH()));
-					putIfNotNull(properties, "averageWidth", String.valueOf(descriptor.getAverageWidth()));
-					putIfNotNull(properties, "maxWidth", String.valueOf(descriptor.getMaxWidth()));
-					putIfNotNull(properties, "missingWidth", String.valueOf(descriptor.getMissingWidth()));
-					putIfNotNull(properties, "charSet", descriptor.getCharSet());
+					putIfNotNull(properties, "ItalicAngle", String.valueOf(descriptor.getItalicAngle()));
+					putIfNotNull(properties, "Ascent", String.valueOf(descriptor.getAscent()));
+					putIfNotNull(properties, "Descent", String.valueOf(descriptor.getDescent()));
+					putIfNotNull(properties, "Leading", String.valueOf(descriptor.getLeading()));
+					putIfNotNull(properties, "CapHeight", String.valueOf(descriptor.getCapHeight()));
+					putIfNotNull(properties, "XHeight", String.valueOf(descriptor.getXHeight()));
+					putIfNotNull(properties, "StemV", String.valueOf(descriptor.getStemV()));
+					putIfNotNull(properties, "StemH", String.valueOf(descriptor.getStemH()));
+					putIfNotNull(properties, "AverageWidth", String.valueOf(descriptor.getAverageWidth()));
+					putIfNotNull(properties, "MaxWidth", String.valueOf(descriptor.getMaxWidth()));
+					putIfNotNull(properties, "MissingWidth", String.valueOf(descriptor.getMissingWidth()));
+					putIfNotNull(properties, "CharSet", descriptor.getCharSet());
 
 					ArrayList<byte[]> fontFileList = new ArrayList<>();
 					fontFileList.add(stream);
 					return new FeaturesData(metadata, fontFileList, properties);
 				} catch (IOException e) {
-					e.printStackTrace();
+					LOGGER.error("Error in obtaining features data for fonts", e);
 				}
 			}
 		}

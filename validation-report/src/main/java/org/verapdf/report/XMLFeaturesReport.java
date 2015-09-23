@@ -184,7 +184,7 @@ public final class XMLFeaturesReport {
 						replaceInvalidCharacters(attr.getValue()));
 			}
 
-			if (node.getValue() != null) {
+			if (node.getValue() instanceof String) {
 				root.appendChild(doc.createTextNode(
 						replaceInvalidCharacters(node.getValue().toString())));
 			} else if (node.getChildren() != null) {
