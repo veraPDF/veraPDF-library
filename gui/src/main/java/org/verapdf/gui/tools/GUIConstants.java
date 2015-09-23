@@ -26,10 +26,8 @@ public final class GUIConstants {
 	public static final String HTML_LOGO_NAME = "html-logo.png";
 	public static final String CHOOSE_PDF_BUTTON_TEXT = "Choose PDF";
 	public static final String PDF_NOT_CHOSEN_TEXT = "PDF file not chosen";
-	public static final String THIRDPARTY_CONFIG_NOT_CHOSEN_TEXT = "Config file for feature report plugins not chosen";
-	public static final String THIRDPARTY_CONFIG_CHOOSE_BUTTON = "Choose config file";
-	public static final String THIRDPARTY_CONFIG_CLEAR_BUTTON = "Clear config file";
-	public static final String THIRDPARTY_CONFIG_LABEL_TEXT = "Config file for features report plugins:";
+	public static final String THIRDPARTY_CONFIG_CHOOSE_BUTTON = "Choose";
+	public static final String THIRDPARTY_CONFIG_LABEL_TEXT = "Load features report plugins using the config file:";
 	public static final String CHOOSE_PROFILE_BUTTON_TEXT = "Choose Profile";
 	public static final String VALIDATION_PROFILE_NOT_CHOSEN = "Validation profile not chosen";
 	public static final String VALIDATE_BUTTON_TEXT = "Validate";
@@ -56,9 +54,9 @@ public final class GUIConstants {
 	public static final String VALIDATING_AND_FEATURES = "Validation & Features";
 	public static final String VALIDATING = "Validation";
 	public static final String FEATURES = "Features";
-	public static final String DISPLAY_PASSED_RULES = "Include passed rules ";
-	public static final String MAX_NUMBER_FAILED_DISPLAYED_CHECKS = "Maximum number of displayed failed checks for rule: ";
-	public static final String MAX_NUMBER_FAILED_CHECKS = "Maximum number of failed checks for rule: ";
+	public static final String DISPLAY_PASSED_RULES = "Include passed rules:";
+	public static final String MAX_NUMBER_FAILED_DISPLAYED_CHECKS = "Display failed checks for rule: ";
+	public static final String MAX_NUMBER_FAILED_CHECKS = "Stop checking rule after failed checks:";
 	public static final String FEATURES_GENERATED_CORRECT = "Features report generating finished";
 	public static final String MAX_FAILED_CHECKS_SETTING_TIP = "    (1 to 999999 or empty for unlimited)";
 	public static final String MAX_FAILED_CHECKS_DISP_SETTING_TIP = "    (0 to 999999 or empty for unlimited)";
