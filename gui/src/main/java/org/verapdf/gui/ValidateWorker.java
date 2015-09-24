@@ -78,7 +78,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 			if ((flag & (1 << 1)) == (1 << 1)) {
 				try {
-					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
+					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument(), new File(SettingsHelper.getFeaturesPluginConfigFilePath(settings)));
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(this.parent,
 							"Some error in creating features collection.",

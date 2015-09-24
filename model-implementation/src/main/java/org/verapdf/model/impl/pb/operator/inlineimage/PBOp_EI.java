@@ -11,6 +11,7 @@ import org.verapdf.model.pdlayer.PDInlineImage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,7 +45,6 @@ public class PBOp_EI extends PBOpInlineImage implements Op_EI {
 	}
 
 	private List<PDInlineImage> getInlineImage() {
-		List<PDInlineImage> inlineImages = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		try {
 			COSBase parameters = this.arguments.get(0);
 			org.apache.pdfbox.pdmodel.graphics.image.PDInlineImage inlineImage =
@@ -52,10 +52,13 @@ public class PBOp_EI extends PBOpInlineImage implements Op_EI {
 							(COSDictionary) parameters,
 							this.imageData,
 							this.resources);
+
+			List<PDInlineImage> inlineImages = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 			inlineImages.add(new PBoxPDInlineImage(inlineImage));
+			return Collections.unmodifiableList(inlineImages);
 		} catch (IOException e) {
 			LOGGER.error(e);
 		}
-		return inlineImages;
+		return Collections.emptyList();
 	}
 }

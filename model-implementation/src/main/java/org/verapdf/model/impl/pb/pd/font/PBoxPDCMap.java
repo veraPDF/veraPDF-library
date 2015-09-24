@@ -9,6 +9,7 @@ import org.verapdf.model.impl.pb.pd.PBoxPDObject;
 import org.verapdf.model.pdlayer.PDCMap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,6 +25,11 @@ public class PBoxPDCMap extends PBoxPDObject implements PDCMap {
         super(cMap, cMapFile, CMAP_TYPE);
     }
 
+	@Override
+	public String getCMapName() {
+		return this.cMap.getName();
+	}
+
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         if (EMBEDDED_FILE.equals(link)) {
@@ -33,16 +39,12 @@ public class PBoxPDCMap extends PBoxPDObject implements PDCMap {
     }
 
     private List<CMapFile> getEmbeddedFile() {
-        List<CMapFile> result = new ArrayList<>();
         if (simplePDObject != null && simplePDObject instanceof COSStream) {
-            result.add(new PBoxCMapFile((COSStream) simplePDObject));
+			List<CMapFile> result = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			result.add(new PBoxCMapFile((COSStream) simplePDObject));
+			return Collections.unmodifiableList(result);
         }
-		return result;
-    }
-
-    @Override
-    public String getCMapName() {
-        return this.cMap.getName();
+		return Collections.emptyList();
     }
 
 }

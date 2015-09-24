@@ -16,6 +16,7 @@ import org.verapdf.model.xmplayer.XMPPackage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -88,10 +89,13 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
     }
 
     private List<CosStream> getStream() {
-        List<CosStream> streams = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         COSStream stream = ((org.apache.pdfbox.pdmodel.common.PDMetadata) this.simplePDObject)
                 .getStream();
-        streams.add(new PBCosStream(stream));
-        return streams;
+		if (stream != null) {
+			List<CosStream> streams = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			streams.add(new PBCosStream(stream));
+			return Collections.unmodifiableList(streams);
+		}
+        return Collections.emptyList();
     }
 }

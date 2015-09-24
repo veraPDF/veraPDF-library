@@ -15,6 +15,7 @@ import org.verapdf.model.impl.pb.cos.PBCosRenderingIntent;
 import org.verapdf.model.pdlayer.PDExtGState;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -99,25 +100,27 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 	}
 
     private List<CosRenderingIntent> getRI() {
-        List<CosRenderingIntent> renderingIntents = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         RenderingIntent renderingIntent = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getRenderingIntent();
         if (renderingIntent != null) {
-            COSName pdfName = COSName.getPDFName(renderingIntent.stringValue());
+			List<CosRenderingIntent> renderingIntents = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			COSName pdfName = COSName.getPDFName(renderingIntent.stringValue());
             renderingIntents.add(new PBCosRenderingIntent(pdfName));
+			return Collections.unmodifiableList(renderingIntents);
         }
-        return renderingIntents;
+        return Collections.emptyList();
     }
 
     private List<CosReal> getFontSize() {
-        List<CosReal> result = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         PDFontSetting fontSetting = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getFontSetting();
         if (fontSetting != null) {
-            result.add(new PBCosReal(new COSFloat(fontSetting.getFontSize())));
+			List<CosReal> result = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			result.add(new PBCosReal(new COSFloat(fontSetting.getFontSize())));
+			return Collections.unmodifiableList(result);
         }
 
-        return result;
+        return Collections.emptyList();
     }
 
 }

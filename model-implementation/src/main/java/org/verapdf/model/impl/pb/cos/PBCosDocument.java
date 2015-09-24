@@ -219,40 +219,37 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      * @return list of embedded files
      */
     private List<Object> getEmbeddedFiles() {
-        List<Object> files = new ArrayList<>();
         try {
             COSDictionary buffer = (COSDictionary) pdDocument.getDocument()
                     .getCatalog().getObject();
             buffer = (COSDictionary) buffer.getDictionaryObject(
 					COSName.NAMES);
             if (buffer != null) {
-                buffer = (COSDictionary) buffer
-                        .getDictionaryObject(COSName.EMBEDDED_FILES);
-            }
-            getNamesEmbeddedFiles(files, buffer);
+                COSBase base = buffer.getDictionaryObject(COSName.EMBEDDED_FILES);
+				if (base instanceof COSDictionary) {
+					List<Object> files = new ArrayList<>();
+					this.getNamesEmbeddedFiles(files, (COSDictionary) base);
+					return Collections.unmodifiableList(files);
+				}
+			}
         } catch (IOException e) {
             LOGGER.error(
                     "Something wrong with getting embedded files - return empty list. "
                             + e.getMessage(), e);
         }
-        return files;
+        return Collections.emptyList();
     }
 
-    private static void getNamesEmbeddedFiles(List<Object> files,
-            COSDictionary buffer) throws IOException {
-        PDEmbeddedFilesNameTreeNode root = null;
-        if (buffer != null) {
-            root = new PDEmbeddedFilesNameTreeNode(buffer);
-        }
-        if (root != null) {
-            final Set<Map.Entry<String, PDComplexFileSpecification>> entries = root
-                    .getNames().entrySet();
-            for (Map.Entry<String, PDComplexFileSpecification> entry : entries) {
-                files.add(new PBCosFileSpecification(entry.getValue()
-                        .getCOSObject()));
-            }
-        }
-    }
+	private void getNamesEmbeddedFiles(List<Object> files,
+									   COSDictionary buffer) throws IOException {
+		PDEmbeddedFilesNameTreeNode root = new PDEmbeddedFilesNameTreeNode(buffer);
+		final Set<Map.Entry<String, PDComplexFileSpecification>> entries = root
+				.getNames().entrySet();
+		for (Map.Entry<String, PDComplexFileSpecification> entry : entries) {
+			files.add(new PBCosFileSpecification(entry.getValue()
+					.getCOSObject()));
+		}
+	}
 
     /**
      * trailer dictionary
@@ -281,11 +278,13 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      * link to the high-level PDF Document structure
      */
     private List<org.verapdf.model.pdlayer.PDDocument> getDocument() {
-        List<org.verapdf.model.pdlayer.PDDocument> document = new ArrayList<>(1);
 		if (pdDocument != null) {
+			List<org.verapdf.model.pdlayer.PDDocument> document =
+					new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 			document.add(new PBoxPDDocument(pdDocument));
+			return Collections.unmodifiableList(document);
 		}
-        return document;
+        return Collections.emptyList();
     }
 
     /**

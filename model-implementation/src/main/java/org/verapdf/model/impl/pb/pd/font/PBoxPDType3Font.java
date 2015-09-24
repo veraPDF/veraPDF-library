@@ -10,7 +10,9 @@ import org.verapdf.model.pdlayer.PDContentStream;
 import org.verapdf.model.pdlayer.PDType3Font;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Timur Kamalov
@@ -39,15 +41,19 @@ public class PBoxPDType3Font extends PBoxPDSimpleFont implements PDType3Font {
     }
 
     private List<PDContentStream> getCharStrings() {
-        List<PDContentStream> list = new ArrayList<>();
         COSDictionary charProcDict = ((org.apache.pdfbox.pdmodel.font.PDType3Font) this.pdFontLike)
                 .getCharProcs();
-        for (COSName cosName : charProcDict.keySet()) {
-            PDType3CharProc charProc = ((org.apache.pdfbox.pdmodel.font.PDType3Font) this.pdFontLike)
-                    .getCharProc(cosName);
-            list.add(new PBoxPDContentStream(charProc));
-        }
-        return list;
+		if (charProcDict != null) {
+			Set<COSName> keySet = charProcDict.keySet();
+			List<PDContentStream> list = new ArrayList<>(keySet.size());
+			for (COSName cosName : keySet) {
+				PDType3CharProc charProc = ((org.apache.pdfbox.pdmodel.font.PDType3Font) this.pdFontLike)
+						.getCharProc(cosName);
+				list.add(new PBoxPDContentStream(charProc));
+			}
+			return Collections.unmodifiableList(list);
+		}
+		return Collections.emptyList();
     }
 
 }

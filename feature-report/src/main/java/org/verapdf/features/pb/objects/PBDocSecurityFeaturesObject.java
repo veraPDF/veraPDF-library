@@ -5,6 +5,7 @@ import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.PDEncryption;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
 import org.verapdf.features.pb.tools.PBCreateNodeHelper;
@@ -100,6 +101,14 @@ public class PBDocSecurityFeaturesObject implements IFeaturesObject {
 			collection.addNewFeatureTree(FeaturesObjectTypesEnum.DOCUMENT_SECURITY, root);
 			return root;
 		}
+		return null;
+	}
+
+	/**
+	 * @return null
+	 */
+	@Override
+	public FeaturesData getData() {
 		return null;
 	}
 }

@@ -7,6 +7,7 @@ import org.verapdf.model.pdlayer.PDShadingPattern;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,17 +37,19 @@ public class PBoxPDShadingPattern extends PBoxPDPattern implements
     }
 
     private List<PDShading> getShading() {
-        List<PDShading> shadings = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
             org.apache.pdfbox.pdmodel.graphics.shading.PDShading shading =
 					((org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern) this.simplePDObject)
                     .getShading();
             if (shading != null) {
-                shadings.add(new PBoxPDShading(shading));
+				List<PDShading> shadings =
+						new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+				shadings.add(new PBoxPDShading(shading));
+				return Collections.unmodifiableList(shadings);
             }
         } catch (IOException e) {
             LOGGER.error("Can`t get shading pattern. " + e.getMessage(), e);
         }
-        return shadings;
+        return Collections.emptyList();
     }
 }

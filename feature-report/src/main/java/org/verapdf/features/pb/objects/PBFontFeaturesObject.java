@@ -1,19 +1,22 @@
 package org.verapdf.features.pb.objects;
 
-import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSDictionary;
-import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSNumber;
+import org.apache.log4j.Logger;
+import org.apache.pdfbox.cos.*;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.font.*;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
 import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import java.util.List;
-import java.util.Set;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
 
 /**
  * Feature object for fonts
@@ -21,6 +24,9 @@ import java.util.Set;
  * @author Maksim Bezrukov
  */
 public class PBFontFeaturesObject implements IFeaturesObject {
+
+	private static final Logger LOGGER = Logger
+			.getLogger(PBFontFeaturesObject.class);
 
 	private static final String ID = "id";
 
@@ -107,7 +113,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 
 				if (font instanceof PDType0Font) {
 					PBCreateNodeHelper.parseIDSet(fontChild, "descendedFont", null, FeatureTreeNode.newChildInstance("descendedFonts", root));
-					parseFontDescriptior(fontLike.getFontDescriptor(), root);
+					parseFontDescriptior(fontLike.getFontDescriptor(), root, collection);
 				} else if (font instanceof PDSimpleFont) {
 					PDSimpleFont sFont = (PDSimpleFont) font;
 
@@ -132,7 +138,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 						}
 					}
 
-					parseFontDescriptior(fontLike.getFontDescriptor(), root);
+					parseFontDescriptior(fontLike.getFontDescriptor(), root, collection);
 
 					if (sFont instanceof PDType3Font) {
 						PDType3Font type3 = (PDType3Font) sFont;
@@ -160,7 +166,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 					FeatureTreeNode.newChildInstanceWithValue("supplement", String.valueOf(cid.getCIDSystemInfo().getSupplement()), cidS);
 
 				}
-				parseFontDescriptior(fontLike.getFontDescriptor(), root);
+				parseFontDescriptior(fontLike.getFontDescriptor(), root, collection);
 			}
 
 			collection.addNewFeatureTree(FeaturesObjectTypesEnum.FONT, root);
@@ -170,7 +176,83 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private static void parseFontDescriptior(PDFontDescriptor descriptor, FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private static byte[] inputStreamToByteArray(InputStream is) throws IOException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		int reads = is.read();
+		while (reads != -1) {
+			baos.write(reads);
+			reads = is.read();
+		}
+		return baos.toByteArray();
+	}
+
+	/**
+	 * @return null if it can not get font file stream and features data of the font file and descriptor in other case.
+	 */
+	@Override
+	public FeaturesData getData() {
+		PDFontDescriptor descriptor = fontLike.getFontDescriptor();
+		if (descriptor != null) {
+			PDStream file = descriptor.getFontFile();
+			if (file == null) {
+				file = descriptor.getFontFile2();
+			}
+			if (file == null) {
+				file = descriptor.getFontFile3();
+			}
+			if (file != null) {
+				try {
+					byte[] stream = inputStreamToByteArray(file.getStream().getUnfilteredStream());
+					byte[] metadata = null;
+					try {
+						metadata = inputStreamToByteArray(file.getMetadata().getStream().getUnfilteredStream());
+					} catch (IOException e) {
+						LOGGER.error("Can not get metadata stream for font file", e);
+					}
+
+					Map<String, String> properties = new HashMap<>();
+
+					putIfNotNull(properties, "FontName", descriptor.getFontName());
+					putIfNotNull(properties, "FontFamily", descriptor.getFontFamily());
+					putIfNotNull(properties, "FontStretch", descriptor.getFontStretch());
+					putIfNotNull(properties, "FontWeight", String.valueOf(descriptor.getFontWeight()));
+					putIfNotNull(properties, "Flags", String.valueOf(descriptor.getFlags()));
+					PDRectangle rex = descriptor.getFontBoundingBox();
+					if (rex != null) {
+						putIfNotNull(properties, "FontBBox", "[" + rex.getLowerLeftX() + " " + rex.getLowerLeftY()
+								+ " " + rex.getUpperRightX() + " " + rex.getUpperRightY() + "]");
+					}
+					putIfNotNull(properties, "italicAngle", String.valueOf(descriptor.getItalicAngle()));
+					putIfNotNull(properties, "ascent", String.valueOf(descriptor.getAscent()));
+					putIfNotNull(properties, "descent", String.valueOf(descriptor.getDescent()));
+					putIfNotNull(properties, "leading", String.valueOf(descriptor.getLeading()));
+					putIfNotNull(properties, "capHeight", String.valueOf(descriptor.getCapHeight()));
+					putIfNotNull(properties, "xHeight", String.valueOf(descriptor.getXHeight()));
+					putIfNotNull(properties, "stemV", String.valueOf(descriptor.getStemV()));
+					putIfNotNull(properties, "stemH", String.valueOf(descriptor.getStemH()));
+					putIfNotNull(properties, "averageWidth", String.valueOf(descriptor.getAverageWidth()));
+					putIfNotNull(properties, "maxWidth", String.valueOf(descriptor.getMaxWidth()));
+					putIfNotNull(properties, "missingWidth", String.valueOf(descriptor.getMissingWidth()));
+					putIfNotNull(properties, "charSet", descriptor.getCharSet());
+
+					ArrayList<byte[]> fontFileList = new ArrayList<>();
+					fontFileList.add(stream);
+					return new FeaturesData(metadata, fontFileList, properties);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
+
+	private static void putIfNotNull(Map<String, String> map, String key, String value) {
+		if (key != null && value != null) {
+			map.put(key, value);
+		}
+	}
+
+	private static void parseFontDescriptior(PDFontDescriptor descriptor, FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
 		if (descriptor != null) {
 			FeatureTreeNode descriptorNode = FeatureTreeNode.newChildInstance("fontDescriptor", root);
 
@@ -201,6 +283,35 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 			FeatureTreeNode.newChildInstanceWithValue("maxWidth", String.valueOf(descriptor.getMaxWidth()), descriptorNode);
 			FeatureTreeNode.newChildInstanceWithValue("missingWidth", String.valueOf(descriptor.getMissingWidth()), descriptorNode);
 			PBCreateNodeHelper.addNotEmptyNode("charSet", descriptor.getCharSet(), descriptorNode);
+
+			PDStream file = descriptor.getFontFile();
+			if (file == null) {
+				file = descriptor.getFontFile2();
+			}
+			if (file == null) {
+				file = descriptor.getFontFile3();
+			}
+
+			if (file != null) {
+				FeatureTreeNode fileNode = FeatureTreeNode.newChildInstance("fontFile", descriptorNode);
+				COSBase len1 = file.getStream().getDictionaryObject(COSName.LENGTH1);
+				if (len1 instanceof COSInteger) {
+					FeatureTreeNode.newChildInstanceWithValue("length1", String.valueOf(((COSInteger) len1).intValue()), fileNode);
+				}
+				COSBase len2 = file.getStream().getDictionaryObject(COSName.LENGTH2);
+				if (len2 instanceof COSInteger) {
+					FeatureTreeNode.newChildInstanceWithValue("length2", String.valueOf(((COSInteger) len2).intValue()), fileNode);
+				}
+				COSBase len3 = file.getStream().getDictionaryObject(COSName.getPDFName("Length3"));
+				if (len3 instanceof COSInteger) {
+					FeatureTreeNode.newChildInstanceWithValue("length3", String.valueOf(((COSInteger) len3).intValue()), fileNode);
+				}
+				COSBase subType = file.getStream().getDictionaryObject(COSName.SUBTYPE);
+				if (subType instanceof COSName) {
+					FeatureTreeNode.newChildInstanceWithValue("subtype", ((COSName) subType).getName(), fileNode);
+				}
+				PBCreateNodeHelper.parseMetadata(file.getMetadata(), "metadata", fileNode, collection);
+			}
 		}
 	}
 

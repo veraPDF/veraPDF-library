@@ -14,6 +14,7 @@ public final class GUIConstants {
 	public static final String PROPERTY_HIDE_PASSED_RULES = "hidePassedRules";
 	public static final String PROPERTY_MAX_NUMBER_FAILED_CHECKS = "maxNumbFailedChecks";
 	public static final String PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS = "maxNumbDisplFailedChecks";
+	public static final String PROPERTY_FEATURES_CONFIG_FILE = "featuresPluginConfigFile";
 	public static final String LOGO_NAME = "veraPDF-logo-600.png";
 	public static final Color LOGO_BACKGROUND = Color.LIGHT_GRAY;
 	public static final String PARTNERS_NAME = "partners.png";
@@ -25,6 +26,10 @@ public final class GUIConstants {
 	public static final String HTML_LOGO_NAME = "html-logo.png";
 	public static final String CHOOSE_PDF_BUTTON_TEXT = "Choose PDF";
 	public static final String PDF_NOT_CHOSEN_TEXT = "PDF file not chosen";
+	public static final String THIRDPARTY_CONFIG_NOT_CHOSEN_TEXT = "Config file for feature report plugins not chosen";
+	public static final String THIRDPARTY_CONFIG_CHOOSE_BUTTON = "Choose config file";
+	public static final String THIRDPARTY_CONFIG_CLEAR_BUTTON = "Clear config file";
+	public static final String THIRDPARTY_CONFIG_LABEL_TEXT = "Config file for features report plugins:";
 	public static final String CHOOSE_PROFILE_BUTTON_TEXT = "Choose Profile";
 	public static final String VALIDATION_PROFILE_NOT_CHOSEN = "Validation profile not chosen";
 	public static final String VALIDATE_BUTTON_TEXT = "Validate";
@@ -160,6 +165,7 @@ public final class GUIConstants {
 		def.setProperty(PROPERTY_HIDE_PASSED_RULES, "false");
 		def.setProperty(PROPERTY_MAX_NUMBER_FAILED_CHECKS, "100");
 		def.setProperty(PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS, "100");
+		def.setProperty(PROPERTY_FEATURES_CONFIG_FILE, "");
 		DEFAULT_PROPERTIES = def;
 	}
 

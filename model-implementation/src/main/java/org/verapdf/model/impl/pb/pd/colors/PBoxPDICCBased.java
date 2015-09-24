@@ -3,6 +3,7 @@ package org.verapdf.model.impl.pb.pd.colors;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -40,19 +41,20 @@ public class PBoxPDICCBased extends PBoxPDColorSpace implements PDICCBased {
     }
 
     private List<ICCInputProfile> getICCProfile() {
-        List<ICCInputProfile> inputProfile = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         try {
             PDStream pdStream = ((org.apache.pdfbox.pdmodel.graphics.color.PDICCBased) this.simplePDObject)
                     .getPDStream();
             InputStream stream = pdStream.createInputStream();
             Long N = pdStream.getStream().getLong(COSName.N);
             if (stream != null && stream.available() > 0) {
+				List<ICCInputProfile> inputProfile = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				N = N != -1 ? N : null;
                 inputProfile.add(new PBoxICCInputProfile(stream, N));
+				return Collections.unmodifiableList(inputProfile);
             }
         } catch (IOException e) {
             LOGGER.error("Can not get input profile from ICCBased. ", e);
         }
-        return inputProfile;
+        return Collections.emptyList();
     }
 }

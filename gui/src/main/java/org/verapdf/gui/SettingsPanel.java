@@ -5,11 +5,14 @@ import org.verapdf.gui.tools.SettingsHelper;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -28,17 +31,19 @@ class SettingsPanel extends JPanel {
 	private JRadioButton val;
 	private JRadioButton feat;
 	private JCheckBox hidePassedRules;
+	private JTextField thirdPartyProfilePathField;
+	private JFileChooser chooser;
 
 	/**
 	 * Settings panel
 	 */
-	public SettingsPanel() {
+	public SettingsPanel() throws IOException {
 		setBorder(new EmptyBorder(GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS));
 		setLayout(new BorderLayout());
 
 		JPanel panel = new JPanel();
 		ButtonGroup bGroup = new ButtonGroup();
-		panel.setLayout(new GridLayout(6, 2));
+		panel.setLayout(new GridLayout(8, 2));
 
 		panel.add(new JPanel());
 		valAndFeat = new JRadioButton(GUIConstants.VALIDATING_AND_FEATURES);
@@ -77,6 +82,60 @@ class SettingsPanel extends JPanel {
 		panel2.add(numberOfFailedDisplay);
 		panel2.add(new JLabel(GUIConstants.MAX_FAILED_CHECKS_DISP_SETTING_TIP));
 		panel.add(panel2);
+
+		panel.add(new JLabel(GUIConstants.THIRDPARTY_CONFIG_LABEL_TEXT));
+
+		thirdPartyProfilePathField = new JTextField();
+		panel.add(thirdPartyProfilePathField);
+
+		panel.add(new JLabel());
+		JButton choose = new JButton(GUIConstants.THIRDPARTY_CONFIG_CHOOSE_BUTTON);
+
+		chooser = new JFileChooser();
+		File currentDir = new File(
+				new File(GUIConstants.DOT).getCanonicalPath());
+		chooser.setCurrentDirectory(currentDir);
+		chooser.setAcceptAllFileFilterUsed(false);
+		chooser.setFileFilter(new FileNameExtensionFilter(GUIConstants.XML, GUIConstants.XML));
+
+		choose.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int resultChoose = chooser.showOpenDialog(SettingsPanel.this);
+				if (resultChoose == JFileChooser.APPROVE_OPTION) {
+					if (!chooser.getSelectedFile().exists()) {
+						JOptionPane.showMessageDialog(SettingsPanel.this,
+								"Error. Selected file doesn't exist.",
+								GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+					} else if (!chooser.getSelectedFile().getName().toLowerCase()
+							.endsWith(GUIConstants.DOT + GUIConstants.XML.toLowerCase())) {
+						JOptionPane.showMessageDialog(
+								SettingsPanel.this,
+								"Error. Selected file is not in "
+										+ GUIConstants.XML.toUpperCase() + " format.",
+								GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+					} else {
+						thirdPartyProfilePathField.setText(chooser.getSelectedFile().getAbsolutePath());
+					}
+				}
+
+			}
+		});
+
+		JButton clear = new JButton(GUIConstants.THIRDPARTY_CONFIG_CLEAR_BUTTON);
+		clear.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				thirdPartyProfilePathField.setText("");
+			}
+		});
+
+		JPanel panel3 = new JPanel();
+		panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
+		panel3.add(choose);
+		panel3.add(clear);
+		panel.add(panel3);
+
 		add(panel, BorderLayout.CENTER);
 
 		okButton = new JButton("Ok");
@@ -139,6 +198,7 @@ class SettingsPanel extends JPanel {
 				feat.setSelected(true);
 				break;
 		}
+		thirdPartyProfilePathField.setText(SettingsHelper.getFeaturesPluginConfigFilePath(prop));
 
 		Frame owner;
 		if (parent instanceof Frame) {
@@ -157,6 +217,7 @@ class SettingsPanel extends JPanel {
 		}
 
 		dialog.setLocation(GUIConstants.SETTINGSDIALOG_COORD_X, GUIConstants.SETTINGSDIALOG_COORD_Y);
+		dialog.setSize(690, 281);
 		dialog.setVisible(true);
 
 		return ok;
@@ -232,5 +293,13 @@ class SettingsPanel extends JPanel {
 	public int getFailedChecksDisplayNumber() {
 		String str = numberOfFailedDisplay.getText();
 		return str.length() > 0 ? Integer.parseInt(str) : -1;
+	}
+
+	/**
+	 * @return path to the config file for features plugins
+	 */
+	public String getFeaturesPluginConfigPath() {
+		return GUIConstants.THIRDPARTY_CONFIG_NOT_CHOSEN_TEXT.equals(thirdPartyProfilePathField.getText()) ?
+				null : thirdPartyProfilePathField.getText();
 	}
 }

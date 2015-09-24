@@ -91,4 +91,16 @@ public final class SettingsHelper {
 		}
 		return dispPassedRulesBool;
 	}
+
+	/**
+	 * @param settings properties object for obtaining settings
+	 * @return path to the selected features report plugin config file
+	 */
+	public static String getFeaturesPluginConfigFilePath(Properties settings) {
+		if (settings == null || settings.getProperty(GUIConstants.PROPERTY_FEATURES_CONFIG_FILE) == null) {
+			return GUIConstants.DEFAULT_PROPERTIES.getProperty(GUIConstants.PROPERTY_FEATURES_CONFIG_FILE);
+		} else {
+			return settings.getProperty(GUIConstants.PROPERTY_FEATURES_CONFIG_FILE);
+		}
+	}
 }

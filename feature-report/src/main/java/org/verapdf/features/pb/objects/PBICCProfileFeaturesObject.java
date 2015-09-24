@@ -1,11 +1,10 @@
 package org.verapdf.features.pb.objects;
 
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSStream;
+import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
 import org.verapdf.features.pb.tools.PBCreateNodeHelper;
@@ -122,6 +121,68 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 			return root;
 		}
 		return null;
+	}
+
+	/**
+	 * @return null if it can not get iccProfile stream and features data of the profile in other case.
+	 */
+	@Override
+	public FeaturesData getData() {
+		try {
+			byte[] stream = inputStreamToByteArray(profile.getUnfilteredStream());
+
+			byte[] metadata = null;
+			COSBase cosBase = profile.getDictionaryObject(COSName.METADATA);
+			if (cosBase instanceof COSStream) {
+				try {
+					metadata = inputStreamToByteArray(((COSStream) cosBase).getUnfilteredStream());
+				} catch (IOException e) {
+					LOGGER.error("Can not get metadata stream for iccProfile", e);
+				}
+			}
+
+			Map<String, String> properties = new HashMap<>();
+
+			COSBase nBase = profile.getDictionaryObject(COSName.N);
+			if (nBase instanceof COSInteger) {
+				properties.put("N", String.valueOf(((COSInteger) nBase).intValue()));
+			}
+
+			COSBase rangeBase = profile.getDictionaryObject(COSName.RANGE);
+			if (rangeBase instanceof COSArray && ((COSArray) rangeBase).size() > 0) {
+				boolean isOK = true;
+				COSArray array = (COSArray) rangeBase;
+				StringBuilder builder = new StringBuilder();
+				builder.append("[");
+				if (array.get(0) instanceof COSNumber) {
+					builder.append(((COSNumber) array.get(0)).doubleValue());
+				} else {
+					LOGGER.error("Range array contains non number element");
+					isOK = false;
+				}
+				for (int i = 1; i < array.size() && isOK; ++i) {
+					if (array.get(i) instanceof COSNumber) {
+						builder.append(" " + ((COSNumber) array.get(i)).doubleValue());
+					} else {
+						LOGGER.error("Range array contains non number element");
+						isOK = false;
+					}
+				}
+				builder.append("]");
+
+				if (isOK) {
+					properties.put("Range", builder.toString());
+				}
+			}
+
+			ArrayList<byte[]> iccProfileList = new ArrayList<>();
+			iccProfileList.add(stream);
+			return new FeaturesData(metadata, iccProfileList, properties);
+
+		} catch (IOException e) {
+			LOGGER.error("Can not get metadata stream for iccProfile", e);
+			return null;
+		}
 	}
 
 	private void addParents(FeatureTreeNode root) throws FeaturesTreeNodeException {

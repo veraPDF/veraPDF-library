@@ -1,7 +1,13 @@
 package org.verapdf.features;
 
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Features reporter
@@ -11,12 +17,26 @@ import org.verapdf.features.tools.FeaturesCollection;
 public class FeaturesReporter {
 
 	private final FeaturesCollection collection;
+	private Map<FeaturesObjectTypesEnum, List<IFeaturesExtractor>> featuresExtractors;
 
 	/**
 	 * Creates new FeaturesReporter
 	 */
 	public FeaturesReporter() {
 		collection = new FeaturesCollection();
+		featuresExtractors = new HashMap<>();
+	}
+
+	/**
+	 * Registers feature extractor for features object type
+	 *
+	 * @param extractor object for extract custom features
+	 */
+	public void registerFeaturesExtractor(IFeaturesExtractor extractor) {
+		if (featuresExtractors.get(extractor.getType()) == null) {
+			featuresExtractors.put(extractor.getType(), new ArrayList<IFeaturesExtractor>());
+		}
+		featuresExtractors.get(extractor.getType()).add(extractor);
 	}
 
 	/**
@@ -26,7 +46,15 @@ public class FeaturesReporter {
 	 */
 	public void report(IFeaturesObject obj) {
 		try {
-			obj.reportFeatures(collection);
+			FeatureTreeNode root = obj.reportFeatures(collection);
+			if (featuresExtractors.get(obj.getType()) != null) {
+				FeatureTreeNode custom = FeatureTreeNode.newChildInstance("customFeatures", root);
+				for (IFeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
+					FeatureTreeNode cust = ext.getFeatures(obj.getData());
+					custom.addChild(cust);
+				}
+			}
+
 		} catch (FeaturesTreeNodeException ignore) {
 			// The method logic should ensure this never happens, so if it does
 			// it's catastrophic. We'll throw an IllegalStateException with this

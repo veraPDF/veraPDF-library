@@ -14,6 +14,7 @@ import org.verapdf.model.pdlayer.PDGroup;
 import org.verapdf.model.pdlayer.PDXForm;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -57,24 +58,26 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
 	}
 
     private List<PDGroup> getGroup() {
-        List<PDGroup> groups = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         org.apache.pdfbox.pdmodel.graphics.form.PDGroup group = ((PDFormXObject) this.simplePDObject)
                 .getGroup();
         if (group != null) {
-            groups.add(new PBoxPDGroup(group));
+			List<PDGroup> groups = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			groups.add(new PBoxPDGroup(group));
+			return Collections.unmodifiableList(groups);
         }
-        return groups;
+        return Collections.emptyList();
     }
 
     private List<CosStream> getPS() {
-        List<CosStream> postScript = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         final COSStream cosStream = ((PDFormXObject) this.simplePDObject)
                 .getCOSStream();
         COSStream ps = (COSStream) cosStream.getDictionaryObject(COSName.PS);
         if (ps != null) {
-            postScript.add(new PBCosStream(ps));
+			List<CosStream> postScript = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			postScript.add(new PBCosStream(ps));
+			return Collections.unmodifiableList(postScript);
         }
-        return postScript;
+        return Collections.emptyList();
     }
 
     private List<CosDict> getREF() {

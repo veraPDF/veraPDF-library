@@ -1,12 +1,14 @@
 package org.verapdf.model.impl.pb.operator.shading;
 
 import org.apache.pdfbox.cos.COSBase;
+import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.pb.operator.base.PBOperator;
 import org.verapdf.model.impl.pb.pd.pattern.PBoxPDShading;
 import org.verapdf.model.operator.Op_sh;
 import org.verapdf.model.pdlayer.PDShading;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,7 +34,7 @@ public class PBOp_sh extends PBOperator implements Op_sh {
     }
 
     @Override
-    public List<? extends org.verapdf.model.baselayer.Object> getLinkedObjects(
+    public List<? extends Object> getLinkedObjects(
             String link) {
         if (SHADING.equals(link)) {
             return this.getShading();
@@ -41,11 +43,13 @@ public class PBOp_sh extends PBOperator implements Op_sh {
     }
 
     private List<PDShading> getShading() {
-        List<PDShading> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         if (this.shading != null) {
-            list.add(new PBoxPDShading(this.shading));
+			List<PDShading> list =
+					new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			list.add(new PBoxPDShading(this.shading));
+			return Collections.unmodifiableList(list);
         }
-        return list;
+        return Collections.emptyList();
     }
 
 }
