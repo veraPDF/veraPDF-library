@@ -248,10 +248,10 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 			putIntegerWithDefault(res, "EndOfLine", base.getDictionaryObject(COSName.COLORS), "false");
 			putIntegerWithDefault(res, "EncodedByteAlign", base.getDictionaryObject(COSName.BITS_PER_COMPONENT), "false");
 			putIntegerWithDefault(res, "Columns", base.getDictionaryObject(COSName.COLUMNS), "1728");
-			putIntegerWithDefault(res, "Rows", base.getDictionaryObject(COSName.EARLY_CHANGE), "0");
-			putIntegerWithDefault(res, "EndOfBlock", base.getDictionaryObject(COSName.EARLY_CHANGE), "true");
-			putIntegerWithDefault(res, "BlackIs1", base.getDictionaryObject(COSName.EARLY_CHANGE), "false");
-			putIntegerWithDefault(res, "DamagedRowsBeforeError", base.getDictionaryObject(COSName.EARLY_CHANGE), "0");
+			putIntegerWithDefault(res, "Rows", base.getDictionaryObject(COSName.ROWS), "0");
+			putIntegerWithDefault(res, "EndOfBlock", base.getDictionaryObject(COSName.getPDFName("EndOfBlock")), "true");
+			putIntegerWithDefault(res, "BlackIs1", base.getDictionaryObject(COSName.BLACK_IS_1), "false");
+			putIntegerWithDefault(res, "DamagedRowsBeforeError", base.getDictionaryObject(COSName.getPDFName("DamagedRowsBeforeError")), "0");
 		} else {
 			res.put("K", "0");
 			res.put("EndOfLine", "false");
