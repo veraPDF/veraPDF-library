@@ -15,8 +15,8 @@ public final class GUIConstants {
 	public static final String PROPERTY_MAX_NUMBER_FAILED_CHECKS = "maxNumbFailedChecks";
 	public static final String PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS = "maxNumbDisplFailedChecks";
 	public static final String PROPERTY_FEATURES_CONFIG_FILE = "featuresPluginConfigFile";
-	public static final String LOGO_NAME = "veraPDF-logo-600.png";
-	public static final Color LOGO_BACKGROUND = Color.LIGHT_GRAY;
+	public static final String LOGO_NAME = "veraPDF-logo.jpg";
+	public static final Color LOGO_BACKGROUND = Color.WHITE;
 	public static final String PARTNERS_NAME = "partners.png";
 	public static final Color PARTNERS_BACKGROUND = Color.WHITE;
 	public static final String LOGO_LINK_TEXT = "Visit veraPDF.org";

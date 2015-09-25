@@ -141,37 +141,32 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 				}
 			}
 
-			Map<String, String> properties = new HashMap<>();
+			Map<String, Object> properties = new HashMap<>();
 
 			COSBase nBase = profile.getDictionaryObject(COSName.N);
 			if (nBase instanceof COSInteger) {
 				properties.put("N", String.valueOf(((COSInteger) nBase).intValue()));
-			}
 
-			COSBase rangeBase = profile.getDictionaryObject(COSName.RANGE);
-			if (rangeBase instanceof COSArray && ((COSArray) rangeBase).size() > 0) {
-				boolean isOK = true;
-				COSArray array = (COSArray) rangeBase;
-				StringBuilder builder = new StringBuilder();
-				builder.append("[");
-				if (array.get(0) instanceof COSNumber) {
-					builder.append(((COSNumber) array.get(0)).doubleValue());
-				} else {
-					LOGGER.error("Range array contains non number element");
-					isOK = false;
-				}
-				for (int i = 1; i < array.size() && isOK; ++i) {
-					if (array.get(i) instanceof COSNumber) {
-						builder.append(" " + ((COSNumber) array.get(i)).doubleValue());
-					} else {
-						LOGGER.error("Range array contains non number element");
-						isOK = false;
+				COSBase rangeBase = profile.getDictionaryObject(COSName.RANGE);
+				if (rangeBase instanceof COSArray) {
+					COSArray array = (COSArray) rangeBase;
+					List<String> range = new ArrayList<>();
+					for (COSBase baseNumb : array) {
+						if (baseNumb instanceof COSNumber) {
+							range.add(String.valueOf(((COSNumber) baseNumb).doubleValue()));
+						} else {
+							range.add(null);
+						}
 					}
-				}
-				builder.append("]");
-
-				if (isOK) {
-					properties.put("Range", builder.toString());
+					properties.put("Range", range);
+				} else {
+					int n = ((COSInteger) nBase).intValue();
+					List<String> range = new ArrayList<>();
+					for (int i = 0; i < n; ++i) {
+						range.add("0.0");
+						range.add("1.0");
+					}
+					properties.put("Range", range);
 				}
 			}
 

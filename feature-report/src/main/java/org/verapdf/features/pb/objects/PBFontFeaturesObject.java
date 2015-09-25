@@ -210,29 +210,49 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 						LOGGER.error("Can not get metadata stream for font file", e);
 					}
 
-					Map<String, String> properties = new HashMap<>();
+					Map<String, Object> properties = new HashMap<>();
 
 					putIfNotNull(properties, "FontName", descriptor.getFontName());
 					putIfNotNull(properties, "FontFamily", descriptor.getFontFamily());
 					putIfNotNull(properties, "FontStretch", descriptor.getFontStretch());
-					putIfNotNull(properties, "FontWeight", String.valueOf(descriptor.getFontWeight()));
-					putIfNotNull(properties, "Flags", String.valueOf(descriptor.getFlags()));
+					putNumberWithDefault(properties, "FontWeight",
+							descriptor.getCOSObject().getDictionaryObject(COSName.FONT_WEIGHT), null);
+					COSBase fl = descriptor.getCOSObject().getDictionaryObject(COSName.FLAGS);
+					if (fl instanceof COSInteger) {
+						properties.put("Flags", String.valueOf(((COSInteger) fl).intValue()));
+					}
 					PDRectangle rex = descriptor.getFontBoundingBox();
 					if (rex != null) {
-						putIfNotNull(properties, "FontBBox", "[" + rex.getLowerLeftX() + " " + rex.getLowerLeftY()
-								+ " " + rex.getUpperRightX() + " " + rex.getUpperRightY() + "]");
+						List<String> rect = new ArrayList<>();
+						rect.add(String.valueOf(rex.getLowerLeftX()));
+						rect.add(String.valueOf(rex.getLowerLeftY()));
+						rect.add(String.valueOf(rex.getUpperRightX()));
+						rect.add(String.valueOf(rex.getUpperRightY()));
+						properties.put("FontBBox", rect);
 					}
-					putIfNotNull(properties, "ItalicAngle", String.valueOf(descriptor.getItalicAngle()));
-					putIfNotNull(properties, "Ascent", String.valueOf(descriptor.getAscent()));
-					putIfNotNull(properties, "Descent", String.valueOf(descriptor.getDescent()));
-					putIfNotNull(properties, "Leading", String.valueOf(descriptor.getLeading()));
-					putIfNotNull(properties, "CapHeight", String.valueOf(descriptor.getCapHeight()));
-					putIfNotNull(properties, "XHeight", String.valueOf(descriptor.getXHeight()));
-					putIfNotNull(properties, "StemV", String.valueOf(descriptor.getStemV()));
-					putIfNotNull(properties, "StemH", String.valueOf(descriptor.getStemH()));
-					putIfNotNull(properties, "AverageWidth", String.valueOf(descriptor.getAverageWidth()));
-					putIfNotNull(properties, "MaxWidth", String.valueOf(descriptor.getMaxWidth()));
-					putIfNotNull(properties, "MissingWidth", String.valueOf(descriptor.getMissingWidth()));
+					putNumberWithDefault(properties, "ItalicAngle",
+							descriptor.getCOSObject().getDictionaryObject(COSName.ITALIC_ANGLE), null);
+					putNumberWithDefault(properties, "Ascent",
+							descriptor.getCOSObject().getDictionaryObject(COSName.ASCENT), null);
+					putNumberWithDefault(properties, "Descent",
+							descriptor.getCOSObject().getDictionaryObject(COSName.DESCENT), null);
+					putNumberWithDefault(properties, "Leading",
+							descriptor.getCOSObject().getDictionaryObject(COSName.LEADING), "0");
+					putNumberWithDefault(properties, "CapHeight",
+							descriptor.getCOSObject().getDictionaryObject(COSName.CAP_HEIGHT), null);
+					putNumberWithDefault(properties, "XHeight",
+							descriptor.getCOSObject().getDictionaryObject(COSName.XHEIGHT), "0");
+					putNumberWithDefault(properties, "StemV",
+							descriptor.getCOSObject().getDictionaryObject(COSName.STEM_V), null);
+					putNumberWithDefault(properties, "StemH",
+							descriptor.getCOSObject().getDictionaryObject(COSName.STEM_H), "0");
+					putNumberWithDefault(properties, "AvgWidth",
+							descriptor.getCOSObject().getDictionaryObject(COSName.AVG_WIDTH), "0");
+					putNumberWithDefault(properties, "MaxWidth",
+							descriptor.getCOSObject().getDictionaryObject(COSName.MAX_WIDTH), "0");
+					putNumberWithDefault(properties, "MissingWidth",
+							descriptor.getCOSObject().getDictionaryObject(COSName.MISSING_WIDTH), "0");
+
 					putIfNotNull(properties, "CharSet", descriptor.getCharSet());
 
 					ArrayList<byte[]> fontFileList = new ArrayList<>();
@@ -246,7 +266,17 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private static void putIfNotNull(Map<String, String> map, String key, String value) {
+	private static void putNumberWithDefault(Map<String, Object> map, String key, Object value, String defaultValue) {
+		if (value instanceof COSNumber) {
+			map.put(key, String.valueOf(((COSNumber) value).doubleValue()));
+		} else {
+			if (!(defaultValue == null)) {
+				map.put(key, defaultValue);
+			}
+		}
+	}
+
+	private static void putIfNotNull(Map<String, Object> map, String key, Object value) {
 		if (key != null && value != null) {
 			map.put(key, value);
 		}
