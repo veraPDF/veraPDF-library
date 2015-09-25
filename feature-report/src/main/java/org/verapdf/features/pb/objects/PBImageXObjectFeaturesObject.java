@@ -178,8 +178,10 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 					COSDictionary dic = i < decodeList.size() ? decodeList.get(i) : null;
 					switch (filter) {
 						case "LZWDecode":
+							decodeParms.add(getLWZOrFlatFiltersMap(dic, true));
+							break;
 						case "FlateDecode":
-							decodeParms.add(getLWZOrFlatFiltersMap(dic));
+							decodeParms.add(getLWZOrFlatFiltersMap(dic, false));
 							break;
 						case "CCITTFaxDecode":
 							decodeParms.add(getCCITTFaxFiltersMap(dic));
@@ -275,7 +277,7 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 		}
 	}
 
-	private static Map<String, Object> getLWZOrFlatFiltersMap(COSDictionary base) {
+	private static Map<String, Object> getLWZOrFlatFiltersMap(COSDictionary base, boolean isLWZ) {
 		Map<String, Object> res = new HashMap<>();
 
 		if (base != null) {
@@ -283,13 +285,17 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 			putIntegerWithDefault(res, "Colors", base.getDictionaryObject(COSName.COLORS), "1");
 			putIntegerWithDefault(res, "BitsPerComponent", base.getDictionaryObject(COSName.BITS_PER_COMPONENT), "8");
 			putIntegerWithDefault(res, "Columns", base.getDictionaryObject(COSName.COLUMNS), "1");
-			putIntegerWithDefault(res, "EarlyChange", base.getDictionaryObject(COSName.EARLY_CHANGE), "1");
+			if (isLWZ) {
+				putIntegerWithDefault(res, "EarlyChange", base.getDictionaryObject(COSName.EARLY_CHANGE), "1");
+			}
 		} else {
 			res.put("Predictor", "1");
 			res.put("Colors", "1");
 			res.put("BitsPerComponent", "8");
 			res.put("Columns", "1");
-			res.put("EarlyChange", "1");
+			if (isLWZ) {
+				res.put("EarlyChange", "1");
+			}
 		}
 
 		return res;
