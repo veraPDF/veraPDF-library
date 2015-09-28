@@ -155,10 +155,12 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 			List<byte[]> streams = new ArrayList<>();
 			streams.add(stream);
 			byte[] metadata = null;
-			try {
-				metadata = inputStreamToByteArray(imageXObject.getMetadata().getStream().getUnfilteredStream());
-			} catch (IOException e) {
-				LOGGER.error("Can not get metadata stream for image xobject", e);
+			if (imageXObject.getMetadata() != null) {
+				try {
+					metadata = inputStreamToByteArray(imageXObject.getMetadata().getStream().getUnfilteredStream());
+				} catch (IOException e) {
+					LOGGER.error("Can not get metadata stream for image xobject", e);
+				}
 			}
 
 			Map<String, Object> properties = new HashMap<>();

@@ -110,7 +110,7 @@ public final class FeaturesReporterConfigurator {
 		Object obj = cls.newInstance();
 		if (obj instanceof IFeaturesExtractor) {
 			IFeaturesExtractor extractor = (IFeaturesExtractor) obj;
-			extractor.initialise(parametrs);
+			extractor.initialize(parametrs);
 			return extractor;
 		}
 

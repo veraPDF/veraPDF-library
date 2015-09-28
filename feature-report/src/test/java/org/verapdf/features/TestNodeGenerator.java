@@ -504,7 +504,7 @@ public final class TestNodeGenerator {
 
 	public static FeatureTreeNode getLowLvlInfo() throws FeaturesTreeNodeException {
 		FeatureTreeNode lli = FeatureTreeNode.newRootInstance("lowLevelInfo");
-		FeatureTreeNode.newChildInstanceWithValue("indirectObjectsNumber", "128", lli);
+		FeatureTreeNode.newChildInstanceWithValue("indirectObjectsNumber", "129", lli);
 		FeatureTreeNode docID = FeatureTreeNode.newChildInstance("documentId", lli);
 		docID.addAttribute("modificationId", "295EBB0E08D32644B7E5C1825F15AD3A");
 		docID.addAttribute("creationId", "85903F3A2C43B1DA24E486CD15B8154E");

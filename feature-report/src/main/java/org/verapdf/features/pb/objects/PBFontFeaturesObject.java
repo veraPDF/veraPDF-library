@@ -204,10 +204,12 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 				try {
 					byte[] stream = inputStreamToByteArray(file.getStream().getUnfilteredStream());
 					byte[] metadata = null;
-					try {
-						metadata = inputStreamToByteArray(file.getMetadata().getStream().getUnfilteredStream());
-					} catch (IOException e) {
-						LOGGER.error("Can not get metadata stream for font file", e);
+					if (file.getMetadata() != null) {
+						try {
+							metadata = inputStreamToByteArray(file.getMetadata().getStream().getUnfilteredStream());
+						} catch (IOException e) {
+							LOGGER.error("Can not get metadata stream for font file", e);
+						}
 					}
 
 					Map<String, Object> properties = new HashMap<>();
