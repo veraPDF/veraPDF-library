@@ -4,10 +4,7 @@ import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Features reporter
@@ -17,7 +14,7 @@ import java.util.Map;
 public class FeaturesReporter {
 
 	private final FeaturesCollection collection;
-	private Map<FeaturesObjectTypesEnum, List<IFeaturesExtractor>> featuresExtractors;
+	private Map<FeaturesObjectTypesEnum, List<ExtractorStructure>> featuresExtractors;
 
 	/**
 	 * Creates new FeaturesReporter
@@ -31,12 +28,14 @@ public class FeaturesReporter {
 	 * Registers feature extractor for features object type
 	 *
 	 * @param extractor object for extract custom features
+	 * @param id UUID object which represents id for the extractor
 	 */
-	public void registerFeaturesExtractor(IFeaturesExtractor extractor) {
+	public void registerFeaturesExtractor(IFeaturesExtractor extractor, UUID id) {
 		if (featuresExtractors.get(extractor.getType()) == null) {
-			featuresExtractors.put(extractor.getType(), new ArrayList<IFeaturesExtractor>());
+			featuresExtractors.put(extractor.getType(), new ArrayList<ExtractorStructure>());
 		}
-		featuresExtractors.get(extractor.getType()).add(extractor);
+
+		featuresExtractors.get(extractor.getType()).add(new ExtractorStructure(extractor, id));
 	}
 
 	/**
@@ -49,9 +48,17 @@ public class FeaturesReporter {
 			FeatureTreeNode root = obj.reportFeatures(collection);
 			if (featuresExtractors.get(obj.getType()) != null) {
 				FeatureTreeNode custom = FeatureTreeNode.newChildInstance("customFeatures", root);
-				for (IFeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
-					FeatureTreeNode cust = ext.getFeatures(obj.getData());
-					custom.addChild(cust);
+				for (ExtractorStructure extSt : featuresExtractors.get(obj.getType())) {
+					List<FeatureTreeNode> cust = extSt.extractor.getFeatures(obj.getData());
+					if (cust != null) {
+						FeatureTreeNode custRoot = FeatureTreeNode.newChildInstance("pluginFeatures", custom);
+						custRoot.addAttribute("id", extSt.id.toString());
+						for (FeatureTreeNode ftn : cust) {
+							if (ftn != null) {
+								custRoot.addChild(ftn);
+							}
+						}
+					}
 				}
 			}
 
@@ -72,5 +79,15 @@ public class FeaturesReporter {
 	 */
 	public FeaturesCollection getCollection() {
 		return collection;
+	}
+
+	private static class ExtractorStructure {
+		UUID id;
+		IFeaturesExtractor extractor;
+
+		ExtractorStructure(IFeaturesExtractor extractor, UUID id) {
+			this.extractor = extractor;
+			this.id = id;
+		}
 	}
 }

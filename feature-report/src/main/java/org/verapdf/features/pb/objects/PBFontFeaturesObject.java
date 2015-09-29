@@ -13,9 +13,7 @@ import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -176,16 +174,6 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private static byte[] inputStreamToByteArray(InputStream is) throws IOException {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		int reads = is.read();
-		while (reads != -1) {
-			baos.write(reads);
-			reads = is.read();
-		}
-		return baos.toByteArray();
-	}
-
 	/**
 	 * @return null if it can not get font file stream and features data of the font file and descriptor in other case.
 	 */
@@ -202,11 +190,11 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 			}
 			if (file != null) {
 				try {
-					byte[] stream = inputStreamToByteArray(file.getStream().getUnfilteredStream());
+					byte[] stream = PBCreateNodeHelper.inputStreamToByteArray(file.getStream().getUnfilteredStream());
 					byte[] metadata = null;
 					if (file.getMetadata() != null) {
 						try {
-							metadata = inputStreamToByteArray(file.getMetadata().getStream().getUnfilteredStream());
+							metadata = PBCreateNodeHelper.inputStreamToByteArray(file.getMetadata().getStream().getUnfilteredStream());
 						} catch (IOException e) {
 							LOGGER.error("Can not get metadata stream for font file", e);
 						}

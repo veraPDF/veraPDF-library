@@ -10,9 +10,7 @@ import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -135,29 +133,19 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private static byte[] inputStreamToByteArray(InputStream is) throws IOException {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		int reads = is.read();
-		while (reads != -1) {
-			baos.write(reads);
-			reads = is.read();
-		}
-		return baos.toByteArray();
-	}
-
 	/**
 	 * @return null if it can not get image xobject stream and features data of the image in other case.
 	 */
 	@Override
 	public FeaturesData getData() {
 		try {
-			byte[] stream = inputStreamToByteArray(imageXObject.getCOSStream().getFilteredStream());
+			byte[] stream = PBCreateNodeHelper.inputStreamToByteArray(imageXObject.getCOSStream().getFilteredStream());
 			List<byte[]> streams = new ArrayList<>();
 			streams.add(stream);
 			byte[] metadata = null;
 			if (imageXObject.getMetadata() != null) {
 				try {
-					metadata = inputStreamToByteArray(imageXObject.getMetadata().getStream().getUnfilteredStream());
+					metadata = PBCreateNodeHelper.inputStreamToByteArray(imageXObject.getMetadata().getStream().getUnfilteredStream());
 				} catch (IOException e) {
 					LOGGER.error("Can not get metadata stream for image xobject", e);
 				}
@@ -196,7 +184,7 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 								LOGGER.error("JBIG2Decode has no global segments stream in decode params");
 								return null;
 							} else {
-								byte[] global = inputStreamToByteArray(((COSStream) dic.getDictionaryObject(COSName.JBIG2_GLOBALS)).getUnfilteredStream());
+								byte[] global = PBCreateNodeHelper.inputStreamToByteArray(((COSStream) dic.getDictionaryObject(COSName.JBIG2_GLOBALS)).getUnfilteredStream());
 								int index = streams.size();
 								streams.add(index, global);
 								Map<String, Object> map = new HashMap<>();

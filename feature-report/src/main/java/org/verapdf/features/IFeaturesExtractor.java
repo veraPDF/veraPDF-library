@@ -2,6 +2,7 @@ package org.verapdf.features;
 
 import org.verapdf.features.tools.FeatureTreeNode;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,7 +18,7 @@ public interface IFeaturesExtractor {
 	 * @param data features data for extractor
 	 * @return root for extracted data tree
 	 */
-	FeatureTreeNode getFeatures(FeaturesData data);
+	List<FeatureTreeNode> getFeatures(FeaturesData data);
 
 	/**
 	 * @return type of object for which this extractor applies

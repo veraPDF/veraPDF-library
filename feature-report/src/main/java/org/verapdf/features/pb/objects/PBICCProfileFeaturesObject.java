@@ -12,9 +12,7 @@ import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
@@ -129,13 +127,13 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 	@Override
 	public FeaturesData getData() {
 		try {
-			byte[] stream = inputStreamToByteArray(profile.getUnfilteredStream());
+			byte[] stream = PBCreateNodeHelper.inputStreamToByteArray(profile.getUnfilteredStream());
 
 			byte[] metadata = null;
 			COSBase cosBase = profile.getDictionaryObject(COSName.METADATA);
 			if (cosBase instanceof COSStream) {
 				try {
-					metadata = inputStreamToByteArray(((COSStream) cosBase).getUnfilteredStream());
+					metadata = PBCreateNodeHelper.inputStreamToByteArray(((COSStream) cosBase).getUnfilteredStream());
 				} catch (IOException e) {
 					LOGGER.error("Can not get metadata stream for iccProfile", e);
 				}
@@ -206,7 +204,7 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 
 	private void parseProfileHeader(FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
 		try {
-			byte[] profileBytes = inputStreamToByteArray(profile.getUnfilteredStream());
+			byte[] profileBytes = PBCreateNodeHelper.inputStreamToByteArray(profile.getUnfilteredStream());
 
 			if (profileBytes.length < HEADER_SIZE) {
 				root.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.GETINGICCPROFILEHEADERSIZEERROR_ID);
@@ -235,16 +233,6 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 					ErrorsHelper.GETINGICCPROFILEHEADERERROR_ID,
 					ErrorsHelper.GETINGICCPROFILEHEADERERROR_MESSAGE);
 		}
-	}
-
-	private static byte[] inputStreamToByteArray(InputStream is) throws IOException {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		int reads = is.read();
-		while (reads != -1) {
-			baos.write(reads);
-			reads = is.read();
-		}
-		return baos.toByteArray();
 	}
 
 	private static String getIntent(String str) {
