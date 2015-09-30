@@ -248,7 +248,9 @@ public final class XMPChecker {
                     final Calendar valueDate = DateConverter.toCalendar(string);
                     return Boolean.valueOf(valueDate != null
                             && valueDate.compareTo((Calendar) value) == 0);
-                }
+                } else {
+					LOGGER.warn("Date format in info dictionary is not complies pdf date format");
+				}
             }
         }
         return Boolean.FALSE;
