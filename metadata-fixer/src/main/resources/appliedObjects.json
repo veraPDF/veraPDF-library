@@ -1,0 +1,16 @@
+{
+  "checkObjects": [
+    {
+      "objectType": "CosDocument",
+      "test": "doesInfoMatchXMP"
+    },
+    {
+      "objectType": "PDMetadata",
+      "test": "Filter == null"
+    },
+    {
+      "objectType": "PDDocument",
+      "test": "metadata_size == 1"
+    }
+  ]
+}
