@@ -85,10 +85,8 @@ class SettingsPanel extends JPanel {
 
 		panel.add(new JLabel(GUIConstants.THIRDPARTY_CONFIG_LABEL_TEXT));
 
-		thirdPartyProfilePathField = new JTextField();
-		panel.add(thirdPartyProfilePathField);
 
-		panel.add(new JLabel());
+
 		JButton choose = new JButton(GUIConstants.THIRDPARTY_CONFIG_CHOOSE_BUTTON);
 
 		chooser = new JFileChooser();
@@ -122,18 +120,12 @@ class SettingsPanel extends JPanel {
 			}
 		});
 
-		JButton clear = new JButton(GUIConstants.THIRDPARTY_CONFIG_CLEAR_BUTTON);
-		clear.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				thirdPartyProfilePathField.setText("");
-			}
-		});
+		thirdPartyProfilePathField = new JTextField();
 
 		JPanel panel3 = new JPanel();
 		panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
+		panel3.add(thirdPartyProfilePathField);
 		panel3.add(choose);
-		panel3.add(clear);
 		panel.add(panel3);
 
 		add(panel, BorderLayout.CENTER);
@@ -217,7 +209,7 @@ class SettingsPanel extends JPanel {
 		}
 
 		dialog.setLocation(GUIConstants.SETTINGSDIALOG_COORD_X, GUIConstants.SETTINGSDIALOG_COORD_Y);
-		dialog.setSize(690, 281);
+		dialog.setSize(650, 281);
 		dialog.setVisible(true);
 
 		return ok;
@@ -299,7 +291,6 @@ class SettingsPanel extends JPanel {
 	 * @return path to the config file for features plugins
 	 */
 	public String getFeaturesPluginConfigPath() {
-		return GUIConstants.THIRDPARTY_CONFIG_NOT_CHOSEN_TEXT.equals(thirdPartyProfilePathField.getText()) ?
-				null : thirdPartyProfilePathField.getText();
+		return thirdPartyProfilePathField.getText();
 	}
 }

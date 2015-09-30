@@ -82,7 +82,7 @@
   <repositories>
     <repository>
       <snapshots>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
       </snapshots>
       <id>vera-dev</id>
       <name>Vera development</name>

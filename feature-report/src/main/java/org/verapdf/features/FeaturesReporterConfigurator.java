@@ -15,10 +15,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Configurates features reporter with given config file
@@ -43,9 +40,9 @@ public final class FeaturesReporterConfigurator {
 	public static void configurate(FeaturesReporter reporter, File config) {
 		if (config != null && config.exists()) {
 			try {
-				List<IFeaturesExtractor> exts = parse(config);
-				for (IFeaturesExtractor ext : exts) {
-					reporter.registerFeaturesExtractor(ext);
+				List<ExtractorStructure> exts = parse(config);
+				for (ExtractorStructure ext : exts) {
+					reporter.registerFeaturesExtractor(ext.extractor, ext.id);
 				}
 			} catch (ParserConfigurationException | ClassNotFoundException | InstantiationException | IllegalAccessException | SAXException | IOException e) {
 				LOGGER.error("Error while loading external features extractor class", e);
@@ -53,7 +50,7 @@ public final class FeaturesReporterConfigurator {
 		}
 	}
 
-	private static List<IFeaturesExtractor> parse(File config) throws ParserConfigurationException, IOException, SAXException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+	private static List<ExtractorStructure> parse(File config) throws ParserConfigurationException, IOException, SAXException, IllegalAccessException, InstantiationException, ClassNotFoundException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		factory.setIgnoringElementContentWhitespace(true);
@@ -61,17 +58,17 @@ public final class FeaturesReporterConfigurator {
 		Node root = doc.getDocumentElement();
 		root.normalize();
 
-		List<IFeaturesExtractor> res = new ArrayList<>();
+		List<ExtractorStructure> res = new ArrayList<>();
 
-		if (!"thirdPartySoftwares".equals(root.getNodeName())) {
+		if (!"pluginsConfig".equals(root.getNodeName())) {
 			return res;
 		}
 
 		NodeList list = root.getChildNodes();
 		for (int i = 0; i < list.getLength(); ++i) {
 			Node node = list.item(i);
-			if ("cli".equals(node.getNodeName())) {
-				IFeaturesExtractor ext = getExtractor(node);
+			if ("plugin".equals(node.getNodeName())) {
+				ExtractorStructure ext = getExtractor(node);
 				if (ext != null) {
 					res.add(ext);
 				}
@@ -81,24 +78,38 @@ public final class FeaturesReporterConfigurator {
 		return res;
 	}
 
-	private static IFeaturesExtractor getExtractor(Node node) throws MalformedURLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+	private static ExtractorStructure getExtractor(Node node) throws MalformedURLException, ClassNotFoundException, IllegalAccessException, InstantiationException {
 		NodeList list = node.getChildNodes();
 		String classPath = null;
 		String className = null;
+		UUID id = null;
 		Map<String, String> parametrs = new HashMap<>();
 		for (int i = 0; i < list.getLength(); ++i) {
 			Node child = list.item(i);
 
-			if ("classPath".equals(child.getNodeName())) {
-				classPath = child.getTextContent().trim();
-			} else if ("className".equals(child.getNodeName())) {
-				className = child.getTextContent().trim();
-			} else if ("parameters".equals(child.getNodeName())) {
-				getParametrs(parametrs, child);
+			switch (child.getNodeName()) {
+				case "classPath":
+					classPath = child.getTextContent().trim();
+					break;
+				case "className":
+					className = child.getTextContent().trim();
+					break;
+				case "parameters":
+					getParametrs(parametrs, child);
+					break;
+				case "id":
+					try {
+						id = UUID.fromString(child.getTextContent().trim());
+					} catch (IllegalArgumentException e) {
+						LOGGER.error("Attribute id of the plugin is not in UUID format", e);
+						return null;
+					}
+					break;
 			}
 		}
 
-		if (classPath == null || className == null) {
+		if (classPath == null || className == null || id == null) {
+			LOGGER.error("Some of required nodes have not founded.");
 			return null;
 		}
 
@@ -111,7 +122,7 @@ public final class FeaturesReporterConfigurator {
 		if (obj instanceof IFeaturesExtractor) {
 			IFeaturesExtractor extractor = (IFeaturesExtractor) obj;
 			extractor.initialize(parametrs);
-			return extractor;
+			return new ExtractorStructure(extractor, id);
 		}
 
 		return null;
@@ -128,4 +139,13 @@ public final class FeaturesReporterConfigurator {
 		}
 	}
 
+	private static class ExtractorStructure {
+		UUID id;
+		IFeaturesExtractor extractor;
+
+		ExtractorStructure(IFeaturesExtractor extractor, UUID id) {
+			this.extractor = extractor;
+			this.id = id;
+		}
+	}
 }
