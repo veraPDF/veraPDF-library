@@ -34,7 +34,10 @@ public class CommandVeraPDF extends Command {
     @Parameter(names = "--output")
     private String output;
 
-    /**
+	@Parameter(names = "--incremental-save")
+	private String incrementalSave;
+
+	/**
      * @return the validate
      */
     public boolean isValidate() {
@@ -86,4 +89,8 @@ public class CommandVeraPDF extends Command {
     public String getOutput() {
         return this.output;
     }
+
+	public String getIncrementalSave() {
+		return incrementalSave;
+	}
 }
