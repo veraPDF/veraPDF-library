@@ -11,6 +11,7 @@ import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.gui.tools.SettingsHelper;
+import org.verapdf.metadata.fixer.MetadataFixer;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.report.HTMLReport;
 import org.verapdf.report.XMLReport;
@@ -25,6 +26,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 /**
@@ -86,20 +88,17 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 					LOGGER.error("Exception in creating features collection: ", e);
 				}
 			}
-
-			try {
-				loader.getPDDocument().close();
-			} catch (IOException e) {
-				JOptionPane.showMessageDialog(this.parent, "Some error in closing document.",
-						GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-				LOGGER.error("Exception in closing document: ", e);
+			// TODO : make field for incremental save
+			if (true) {
+				MetadataFixer fixer = new MetadataFixer(loader.getPDDocument(), info);
+				fixer.fixDocument(new File("res" + this.pdf.getName()));
 			}
-
 			endTimeOfValidation = System.currentTimeMillis();
 			writeReports(info, collection);
-
 		} catch (IOException e) {
 			this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
+		} catch (TransformerException | URISyntaxException e) {
+			this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_INCREMETAL_SAVE, e);
 		}
 
 		return info;
