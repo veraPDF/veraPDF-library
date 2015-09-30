@@ -1,6 +1,6 @@
 package org.verapdf.features.pb.objects;
 
-import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesData;
@@ -11,7 +11,7 @@ import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import java.io.IOException;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Features object for image xobject
@@ -134,12 +134,178 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 	}
 
 	/**
-	 * @return null
+	 * @return null if it can not get image xobject stream and features data of the image in other case.
 	 */
 	@Override
 	public FeaturesData getData() {
-		return null;
+		try {
+			byte[] stream = PBCreateNodeHelper.inputStreamToByteArray(imageXObject.getCOSStream().getFilteredStream());
+			List<byte[]> streams = new ArrayList<>();
+			streams.add(stream);
+			byte[] metadata = null;
+			if (imageXObject.getMetadata() != null) {
+				try {
+					metadata = PBCreateNodeHelper.inputStreamToByteArray(imageXObject.getMetadata().getStream().getUnfilteredStream());
+				} catch (IOException e) {
+					LOGGER.error("Can not get metadata stream for image xobject", e);
+				}
+			}
+
+			Map<String, Object> properties = new HashMap<>();
+
+			if (imageXObject.getPDStream().getFilters() != null) {
+				List<String> filters = new ArrayList<>();
+				for (COSName filter : imageXObject.getPDStream().getFilters()) {
+					filters.add(filter.getName());
+				}
+				properties.put("Filter", filters);
+
+				List<COSDictionary> decodeList = getDecodeList(imageXObject.getCOSStream().getDictionaryObject(COSName.DECODE_PARMS));
+				List<Map<String, Object>> decodeParms = new ArrayList<>();
+
+				for (int i = 0; i < filters.size(); ++i) {
+					String filter = filters.get(i);
+					COSDictionary dic = i < decodeList.size() ? decodeList.get(i) : null;
+					switch (filter) {
+						case "LZWDecode":
+							decodeParms.add(getLWZOrFlatFiltersMap(dic, true));
+							break;
+						case "FlateDecode":
+							decodeParms.add(getLWZOrFlatFiltersMap(dic, false));
+							break;
+						case "CCITTFaxDecode":
+							decodeParms.add(getCCITTFaxFiltersMap(dic));
+							break;
+						case "DCTDecode":
+							decodeParms.add(getDCTFiltersMap(dic));
+							break;
+						case "JBIG2Decode":
+							if (dic == null || !(dic.getDictionaryObject(COSName.JBIG2_GLOBALS) instanceof COSStream)) {
+								LOGGER.error("JBIG2Decode has no global segments stream in decode params");
+								return null;
+							} else {
+								byte[] global = PBCreateNodeHelper.inputStreamToByteArray(((COSStream) dic.getDictionaryObject(COSName.JBIG2_GLOBALS)).getUnfilteredStream());
+								int index = streams.size();
+								streams.add(index, global);
+								Map<String, Object> map = new HashMap<>();
+								map.put("JBIG2Globals", String.valueOf(index));
+								decodeParms.add(map);
+							}
+							break;
+						case "Crypt":
+							LOGGER.error("An Image has Crypt filter");
+							return null;
+						default:
+							decodeParms.add(null);
+					}
+				}
+				properties.put("DecodeParms", decodeParms);
+			}
+
+			putIntegerWithDefault(properties, "Width", imageXObject.getCOSStream().getDictionaryObject(COSName.WIDTH), null);
+			putIntegerWithDefault(properties, "Height", imageXObject.getCOSStream().getDictionaryObject(COSName.HEIGHT), null);
+
+			return new FeaturesData(metadata, streams, properties);
+		} catch (IOException e) {
+			LOGGER.error("Error in obtaining features data for fonts", e);
+			return null;
+		}
 	}
+
+	private static List<COSDictionary> getDecodeList(COSBase base) {
+		List<COSDictionary> res = new ArrayList<>();
+
+		if (base instanceof COSDictionary) {
+			res.add((COSDictionary) base);
+		} else if (base instanceof COSArray) {
+			for (COSBase baseElem : (COSArray) base) {
+				if (baseElem instanceof COSDictionary) {
+					res.add((COSDictionary) baseElem);
+				} else {
+					res.add(null);
+				}
+			}
+		}
+
+		return res;
+	}
+
+	private static Map<String, Object> getCCITTFaxFiltersMap(COSDictionary base) {
+		Map<String, Object> res = new HashMap<>();
+
+		if (base != null) {
+			putIntegerWithDefault(res, "K", base.getDictionaryObject(COSName.K), "0");
+			putIntegerWithDefault(res, "EndOfLine", base.getDictionaryObject(COSName.COLORS), "false");
+			putIntegerWithDefault(res, "EncodedByteAlign", base.getDictionaryObject(COSName.BITS_PER_COMPONENT), "false");
+			putIntegerWithDefault(res, "Columns", base.getDictionaryObject(COSName.COLUMNS), "1728");
+			putIntegerWithDefault(res, "Rows", base.getDictionaryObject(COSName.ROWS), "0");
+			putIntegerWithDefault(res, "EndOfBlock", base.getDictionaryObject(COSName.getPDFName("EndOfBlock")), "true");
+			putIntegerWithDefault(res, "BlackIs1", base.getDictionaryObject(COSName.BLACK_IS_1), "false");
+			putIntegerWithDefault(res, "DamagedRowsBeforeError", base.getDictionaryObject(COSName.getPDFName("DamagedRowsBeforeError")), "0");
+		} else {
+			res.put("K", "0");
+			res.put("EndOfLine", "false");
+			res.put("EncodedByteAlign", "false");
+			res.put("Columns", "1728");
+			res.put("Rows", "0");
+			res.put("EndOfBlock", "true");
+			res.put("BlackIs1", "false");
+			res.put("DamagedRowsBeforeError", "0");
+		}
+
+		return res;
+	}
+
+	private static Map<String, Object> getDCTFiltersMap(COSDictionary base) {
+		if (base != null && base.getDictionaryObject(COSName.getPDFName("ColorTransform")) != null
+				&& base.getDictionaryObject(COSName.getPDFName("ColorTransform")) instanceof COSInteger) {
+			Map<String, Object> res = new HashMap<>();
+			res.put("ColorTransform", String.valueOf(((COSInteger) (base).getDictionaryObject(COSName.getPDFName("ColorTransform"))).intValue()));
+			return res;
+		} else {
+			return null;
+		}
+	}
+
+	private static Map<String, Object> getLWZOrFlatFiltersMap(COSDictionary base, boolean isLWZ) {
+		Map<String, Object> res = new HashMap<>();
+
+		if (base != null) {
+			putIntegerWithDefault(res, "Predictor", base.getDictionaryObject(COSName.PREDICTOR), "1");
+			putIntegerWithDefault(res, "Colors", base.getDictionaryObject(COSName.COLORS), "1");
+			putIntegerWithDefault(res, "BitsPerComponent", base.getDictionaryObject(COSName.BITS_PER_COMPONENT), "8");
+			putIntegerWithDefault(res, "Columns", base.getDictionaryObject(COSName.COLUMNS), "1");
+			if (isLWZ) {
+				putIntegerWithDefault(res, "EarlyChange", base.getDictionaryObject(COSName.EARLY_CHANGE), "1");
+			}
+		} else {
+			res.put("Predictor", "1");
+			res.put("Colors", "1");
+			res.put("BitsPerComponent", "8");
+			res.put("Columns", "1");
+			if (isLWZ) {
+				res.put("EarlyChange", "1");
+			}
+		}
+
+		return res;
+	}
+
+	private static void putIntegerWithDefault(Map<String, Object> map, String key, Object value, String defaultValue) {
+		if (value instanceof COSInteger) {
+			map.put(key, String.valueOf(((COSInteger) value).intValue()));
+		} else {
+			if (!(defaultValue == null)) {
+				map.put(key, defaultValue);
+			}
+		}
+	}
+
+//	private static void putIfNotNull(Map<String, Object> map, String key, Object value) {
+//		if (key != null && value != null) {
+//			map.put(key, value);
+//		}
+//	}
 
 	private void parseParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
 		if ((pageParent != null && !pageParent.isEmpty()) ||

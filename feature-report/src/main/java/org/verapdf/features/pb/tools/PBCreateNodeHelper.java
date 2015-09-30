@@ -15,7 +15,9 @@ import org.verapdf.features.tools.FeaturesCollection;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -209,6 +211,25 @@ public final class PBCreateNodeHelper {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Generates byte array with contents of a stream
+	 *
+	 * @param is input stream for converting
+	 * @return byte array with contents of a stream
+	 * @throws IOException If the first byte cannot be read for any reason
+	 *                     other than end of file, or if the input stream has been closed, or if
+	 *                     some other I/O error occurs.
+	 */
+	public static byte[] inputStreamToByteArray(InputStream is) throws IOException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		byte[] bytes = new byte[1024];
+		int length;
+		while ((length = is.read(bytes)) != -1) {
+			baos.write(bytes, 0, length);
+		}
+		return baos.toByteArray();
 	}
 
 	/**

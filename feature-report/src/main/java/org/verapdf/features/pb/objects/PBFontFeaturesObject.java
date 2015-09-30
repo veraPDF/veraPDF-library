@@ -13,9 +13,7 @@ import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -176,16 +174,6 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private static byte[] inputStreamToByteArray(InputStream is) throws IOException {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		int reads = is.read();
-		while (reads != -1) {
-			baos.write(reads);
-			reads = is.read();
-		}
-		return baos.toByteArray();
-	}
-
 	/**
 	 * @return null if it can not get font file stream and features data of the font file and descriptor in other case.
 	 */
@@ -202,51 +190,83 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 			}
 			if (file != null) {
 				try {
-					byte[] stream = inputStreamToByteArray(file.getStream().getUnfilteredStream());
+					byte[] stream = PBCreateNodeHelper.inputStreamToByteArray(file.getStream().getUnfilteredStream());
 					byte[] metadata = null;
-					try {
-						metadata = inputStreamToByteArray(file.getMetadata().getStream().getUnfilteredStream());
-					} catch (IOException e) {
-						LOGGER.error("Can not get metadata stream for font file", e);
+					if (file.getMetadata() != null) {
+						try {
+							metadata = PBCreateNodeHelper.inputStreamToByteArray(file.getMetadata().getStream().getUnfilteredStream());
+						} catch (IOException e) {
+							LOGGER.error("Can not get metadata stream for font file", e);
+						}
 					}
 
-					Map<String, String> properties = new HashMap<>();
+					Map<String, Object> properties = new HashMap<>();
 
 					putIfNotNull(properties, "FontName", descriptor.getFontName());
 					putIfNotNull(properties, "FontFamily", descriptor.getFontFamily());
 					putIfNotNull(properties, "FontStretch", descriptor.getFontStretch());
-					putIfNotNull(properties, "FontWeight", String.valueOf(descriptor.getFontWeight()));
-					putIfNotNull(properties, "Flags", String.valueOf(descriptor.getFlags()));
+					putNumberWithDefault(properties, "FontWeight",
+							descriptor.getCOSObject().getDictionaryObject(COSName.FONT_WEIGHT), null);
+					COSBase fl = descriptor.getCOSObject().getDictionaryObject(COSName.FLAGS);
+					if (fl instanceof COSInteger) {
+						properties.put("Flags", String.valueOf(((COSInteger) fl).intValue()));
+					}
 					PDRectangle rex = descriptor.getFontBoundingBox();
 					if (rex != null) {
-						putIfNotNull(properties, "FontBBox", "[" + rex.getLowerLeftX() + " " + rex.getLowerLeftY()
-								+ " " + rex.getUpperRightX() + " " + rex.getUpperRightY() + "]");
+						List<String> rect = new ArrayList<>();
+						rect.add(String.valueOf(rex.getLowerLeftX()));
+						rect.add(String.valueOf(rex.getLowerLeftY()));
+						rect.add(String.valueOf(rex.getUpperRightX()));
+						rect.add(String.valueOf(rex.getUpperRightY()));
+						properties.put("FontBBox", rect);
 					}
-					putIfNotNull(properties, "italicAngle", String.valueOf(descriptor.getItalicAngle()));
-					putIfNotNull(properties, "ascent", String.valueOf(descriptor.getAscent()));
-					putIfNotNull(properties, "descent", String.valueOf(descriptor.getDescent()));
-					putIfNotNull(properties, "leading", String.valueOf(descriptor.getLeading()));
-					putIfNotNull(properties, "capHeight", String.valueOf(descriptor.getCapHeight()));
-					putIfNotNull(properties, "xHeight", String.valueOf(descriptor.getXHeight()));
-					putIfNotNull(properties, "stemV", String.valueOf(descriptor.getStemV()));
-					putIfNotNull(properties, "stemH", String.valueOf(descriptor.getStemH()));
-					putIfNotNull(properties, "averageWidth", String.valueOf(descriptor.getAverageWidth()));
-					putIfNotNull(properties, "maxWidth", String.valueOf(descriptor.getMaxWidth()));
-					putIfNotNull(properties, "missingWidth", String.valueOf(descriptor.getMissingWidth()));
-					putIfNotNull(properties, "charSet", descriptor.getCharSet());
+					putNumberWithDefault(properties, "ItalicAngle",
+							descriptor.getCOSObject().getDictionaryObject(COSName.ITALIC_ANGLE), null);
+					putNumberWithDefault(properties, "Ascent",
+							descriptor.getCOSObject().getDictionaryObject(COSName.ASCENT), null);
+					putNumberWithDefault(properties, "Descent",
+							descriptor.getCOSObject().getDictionaryObject(COSName.DESCENT), null);
+					putNumberWithDefault(properties, "Leading",
+							descriptor.getCOSObject().getDictionaryObject(COSName.LEADING), "0");
+					putNumberWithDefault(properties, "CapHeight",
+							descriptor.getCOSObject().getDictionaryObject(COSName.CAP_HEIGHT), null);
+					putNumberWithDefault(properties, "XHeight",
+							descriptor.getCOSObject().getDictionaryObject(COSName.XHEIGHT), "0");
+					putNumberWithDefault(properties, "StemV",
+							descriptor.getCOSObject().getDictionaryObject(COSName.STEM_V), null);
+					putNumberWithDefault(properties, "StemH",
+							descriptor.getCOSObject().getDictionaryObject(COSName.STEM_H), "0");
+					putNumberWithDefault(properties, "AvgWidth",
+							descriptor.getCOSObject().getDictionaryObject(COSName.AVG_WIDTH), "0");
+					putNumberWithDefault(properties, "MaxWidth",
+							descriptor.getCOSObject().getDictionaryObject(COSName.MAX_WIDTH), "0");
+					putNumberWithDefault(properties, "MissingWidth",
+							descriptor.getCOSObject().getDictionaryObject(COSName.MISSING_WIDTH), "0");
+
+					putIfNotNull(properties, "CharSet", descriptor.getCharSet());
 
 					ArrayList<byte[]> fontFileList = new ArrayList<>();
 					fontFileList.add(stream);
 					return new FeaturesData(metadata, fontFileList, properties);
 				} catch (IOException e) {
-					e.printStackTrace();
+					LOGGER.error("Error in obtaining features data for fonts", e);
 				}
 			}
 		}
 		return null;
 	}
 
-	private static void putIfNotNull(Map<String, String> map, String key, String value) {
+	private static void putNumberWithDefault(Map<String, Object> map, String key, Object value, String defaultValue) {
+		if (value instanceof COSNumber) {
+			map.put(key, String.valueOf(((COSNumber) value).doubleValue()));
+		} else {
+			if (!(defaultValue == null)) {
+				map.put(key, defaultValue);
+			}
+		}
+	}
+
+	private static void putIfNotNull(Map<String, Object> map, String key, Object value) {
 		if (key != null && value != null) {
 			map.put(key, value);
 		}

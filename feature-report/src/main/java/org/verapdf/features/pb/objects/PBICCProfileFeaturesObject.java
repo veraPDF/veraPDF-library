@@ -12,9 +12,7 @@ import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
@@ -129,49 +127,44 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 	@Override
 	public FeaturesData getData() {
 		try {
-			byte[] stream = inputStreamToByteArray(profile.getUnfilteredStream());
+			byte[] stream = PBCreateNodeHelper.inputStreamToByteArray(profile.getUnfilteredStream());
 
 			byte[] metadata = null;
 			COSBase cosBase = profile.getDictionaryObject(COSName.METADATA);
 			if (cosBase instanceof COSStream) {
 				try {
-					metadata = inputStreamToByteArray(((COSStream) cosBase).getUnfilteredStream());
+					metadata = PBCreateNodeHelper.inputStreamToByteArray(((COSStream) cosBase).getUnfilteredStream());
 				} catch (IOException e) {
 					LOGGER.error("Can not get metadata stream for iccProfile", e);
 				}
 			}
 
-			Map<String, String> properties = new HashMap<>();
+			Map<String, Object> properties = new HashMap<>();
 
 			COSBase nBase = profile.getDictionaryObject(COSName.N);
 			if (nBase instanceof COSInteger) {
 				properties.put("N", String.valueOf(((COSInteger) nBase).intValue()));
-			}
 
-			COSBase rangeBase = profile.getDictionaryObject(COSName.RANGE);
-			if (rangeBase instanceof COSArray && ((COSArray) rangeBase).size() > 0) {
-				boolean isOK = true;
-				COSArray array = (COSArray) rangeBase;
-				StringBuilder builder = new StringBuilder();
-				builder.append("[");
-				if (array.get(0) instanceof COSNumber) {
-					builder.append(((COSNumber) array.get(0)).doubleValue());
-				} else {
-					LOGGER.error("Range array contains non number element");
-					isOK = false;
-				}
-				for (int i = 1; i < array.size() && isOK; ++i) {
-					if (array.get(i) instanceof COSNumber) {
-						builder.append(" " + ((COSNumber) array.get(i)).doubleValue());
-					} else {
-						LOGGER.error("Range array contains non number element");
-						isOK = false;
+				COSBase rangeBase = profile.getDictionaryObject(COSName.RANGE);
+				if (rangeBase instanceof COSArray) {
+					COSArray array = (COSArray) rangeBase;
+					List<String> range = new ArrayList<>();
+					for (COSBase baseNumb : array) {
+						if (baseNumb instanceof COSNumber) {
+							range.add(String.valueOf(((COSNumber) baseNumb).doubleValue()));
+						} else {
+							range.add(null);
+						}
 					}
-				}
-				builder.append("]");
-
-				if (isOK) {
-					properties.put("Range", builder.toString());
+					properties.put("Range", range);
+				} else {
+					int n = ((COSInteger) nBase).intValue();
+					List<String> range = new ArrayList<>();
+					for (int i = 0; i < n; ++i) {
+						range.add("0.0");
+						range.add("1.0");
+					}
+					properties.put("Range", range);
 				}
 			}
 
@@ -211,7 +204,7 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 
 	private void parseProfileHeader(FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
 		try {
-			byte[] profileBytes = inputStreamToByteArray(profile.getUnfilteredStream());
+			byte[] profileBytes = PBCreateNodeHelper.inputStreamToByteArray(profile.getUnfilteredStream());
 
 			if (profileBytes.length < HEADER_SIZE) {
 				root.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.GETINGICCPROFILEHEADERSIZEERROR_ID);
@@ -240,16 +233,6 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 					ErrorsHelper.GETINGICCPROFILEHEADERERROR_ID,
 					ErrorsHelper.GETINGICCPROFILEHEADERERROR_MESSAGE);
 		}
-	}
-
-	private static byte[] inputStreamToByteArray(InputStream is) throws IOException {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		int reads = is.read();
-		while (reads != -1) {
-			baos.write(reads);
-			reads = is.read();
-		}
-		return baos.toByteArray();
 	}
 
 	private static String getIntent(String str) {

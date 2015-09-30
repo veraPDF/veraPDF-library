@@ -14,7 +14,7 @@ public class FeaturesData {
 
 	private byte[] metadata;
 	private List<byte[]> streams;
-	private Map<String, String> properties;
+	private Map<String, Object> properties;
 
 	/**
 	 * Constructs new FeaturesData
@@ -23,10 +23,10 @@ public class FeaturesData {
 	 * @param streams    list of byte arrays represent all necessary streams for object
 	 * @param properties map of properties for object
 	 */
-	public FeaturesData(byte[] metadata, List<byte[]> streams, Map<String, String> properties) {
+	public FeaturesData(byte[] metadata, List<byte[]> streams, Map<String, Object> properties) {
 		this.metadata = metadata;
 		this.streams = streams == null ? new ArrayList<byte[]>() : streams;
-		this.properties = properties == null ? new HashMap<String, String>() : properties;
+		this.properties = properties == null ? new HashMap<String, Object>() : properties;
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class FeaturesData {
 	/**
 	 * @return map of properties for object
 	 */
-	public Map<String, String> getProperties() {
+	public Map<String, Object> getProperties() {
 		return properties;
 	}
 }
