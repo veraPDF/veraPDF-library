@@ -11,7 +11,7 @@ public class Profile {
 
 	private final String name;
 	private final String hash;
-	private final ValidationProfile profile;
+	private final ValidationProfile validationProfile;
 
 	/**
 	 * Creates model of an information about used profile
@@ -19,10 +19,10 @@ public class Profile {
 	 * @param name name of the validation profile
 	 * @param hash hash code of the validation profile
 	 */
-	public Profile(final String name, final String hash, ValidationProfile profile) {
+	public Profile(final String name, final String hash, ValidationProfile validationProfile) {
 		this.name = name;
 		this.hash = hash;
-		this.profile = profile;
+		this.validationProfile = validationProfile;
 	}
 
 	/**
@@ -42,8 +42,8 @@ public class Profile {
 	/**
 	 * @return representation of validation profile
 	 */
-	public ValidationProfile getProfile() {
-		return profile;
+	public ValidationProfile getValidationProfile() {
+		return validationProfile;
 	}
 
 }

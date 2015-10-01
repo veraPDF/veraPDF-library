@@ -97,7 +97,8 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 			writeReports(info, collection);
 		} catch (IOException e) {
 			this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
-		} catch (TransformerException | URISyntaxException e) {
+		} catch (TransformerException | URISyntaxException |
+				ParserConfigurationException | SAXException e) {
 			this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_INCREMETAL_SAVE, e);
 		}
 

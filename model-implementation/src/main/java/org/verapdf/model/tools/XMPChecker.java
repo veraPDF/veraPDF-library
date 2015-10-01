@@ -243,7 +243,7 @@ public final class XMPChecker {
             } else if (value instanceof Calendar) {
                 // DateConverter can parse as pdf date format as simple date
                 // format
-                final String regex = "(D:)?(\\d\\d){2,7}(([+-](\\d\\d[']))(\\d\\d['])?)?";
+                final String regex = "(D:)?(\\d\\d){2,7}((([+-](\\d\\d[']))(\\d\\d['])?)?|[Z])";
                 if (string.getASCII().matches(regex)) {
                     final Calendar valueDate = DateConverter.toCalendar(string);
                     return Boolean.valueOf(valueDate != null
