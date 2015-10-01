@@ -23,6 +23,10 @@
       <artifactId>validation-report</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>metadata-fixer</artifactId>
+    </dependency>
+    <dependency>
       <groupId>xmlunit</groupId>
       <artifactId>xmlunit</artifactId>
     </dependency>

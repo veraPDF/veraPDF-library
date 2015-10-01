@@ -42,13 +42,18 @@ public final class PBCosVisitor implements ICOSVisitor {
         return PBCosBool.valueOf(obj);
     }
 
-    /** {@inheritDoc} Create a PBCosDict for corresponding COSDictionary.
-     * @return PBCosDict object
+    /** {@inheritDoc} Create a PBCosFileSpecification COSDictionary if
+	 * value of type key of {@code obj} is file specification. Otherwise
+	 * create PBCosDict
+     * @return PBCosFileSpecification or PBCosDict
      * @see PBCosDict
+	 * @see PBCosFileSpecification
      */
     @Override
     public Object visitFromDictionary(COSDictionary obj) throws IOException {
-        return new PBCosDict(obj);
+		COSName type = obj.getCOSName(COSName.TYPE);
+		boolean isFileSpec = type != null && COSName.FILESPEC.equals(type);
+		return isFileSpec ? new PBCosFileSpecification(obj) : new PBCosDict(obj);
     }
 
     /** {@inheritDoc} Create a PBCosDocument for corresponding COSDocument.

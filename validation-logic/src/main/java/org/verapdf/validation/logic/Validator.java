@@ -20,10 +20,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -74,27 +71,14 @@ public class Validator {
 
     private ValidationInfo validate(Object root) throws NullLinkNameException,
             NullLinkException, NullLinkedObjectException {
-        this.context = Context.enter();
-        this.context.setOptimizationLevel(OPTIMIZATION_LEVEL);
-        this.scope = context.initStandardObjects();
-        this.objectsStack = new ArrayDeque<>();
-        this.objectsContext = new ArrayDeque<>();
-        this.contextSet = new ArrayDeque<>();
-        List<String> warnings = new ArrayList<>();
-        this.idSet = new HashSet<>();
-        this.checkMap = new HashMap<>();
+		initialize();
 
-        for (String id : this.profile.getAllRulesId()) {
-            this.checkMap.put(id, new Rule(id, new ArrayList<Check>()));
-        }
+		this.rootType = root.getObjectType();
+		this.objectsStack.push(root);
+		this.objectsContext.push("root");
 
-        initializeAllVariables();
-
-        this.rootType = root.getObjectType();
-        this.objectsStack.push(root);
-        this.objectsContext.push("root");
-
-        Set<String> rootIDContext = new HashSet<>();
+		List<String> warnings = new ArrayList<>();
+		Set<String> rootIDContext = new HashSet<>();
 
         if (root.getID() != null) {
             rootIDContext.add(root.getID());
@@ -109,24 +93,41 @@ public class Validator {
 
         Context.exit();
 
-        List<Rule> rules = new ArrayList<>(this.checkMap.values());
-		int rulesCount = rules.size();
-		for (int i = 0; i < rulesCount; i++) {
-			if (logPassedChecks || !rules.get(i).getChecks().isEmpty()) {
-				rules.get(i).setStatus();
-			} else {
-				rules.set(i, null);
+        List<Rule> rules = new ArrayList<>();
+		Collection<Rule> values = this.checkMap.values();
+		int rulesCount = values.size();
+		for (Rule rule : values) {
+			if (logPassedChecks || !rule.getChecks().isEmpty()) {
+				rules.add(rule);
+				rule.setStatus();
 			}
 		}
 
 		Profile profile = new Profile(this.profile.getName(),
-				this.profile.getHash());
+				this.profile.getHash(), this.profile);
 		Result result = new Result(
 				new Details(rules, warnings, this.rulesChecksCount, rulesCount));
 		return new ValidationInfo(profile, result);
     }
 
-    private void initializeAllVariables() {
+	private void initialize() {
+		this.context = Context.enter();
+		this.context.setOptimizationLevel(OPTIMIZATION_LEVEL);
+		this.scope = context.initStandardObjects();
+		this.objectsStack = new ArrayDeque<>();
+		this.objectsContext = new ArrayDeque<>();
+		this.contextSet = new ArrayDeque<>();
+		this.idSet = new HashSet<>();
+		this.checkMap = new HashMap<>();
+
+		for (String id : this.profile.getAllRulesId()) {
+			this.checkMap.put(id, new Rule(id, new ArrayList<Check>()));
+		}
+
+		initializeAllVariables();
+	}
+
+	private void initializeAllVariables() {
         for (Variable var : this.profile.getAllVariables()) {
             if (var == null)
                 continue;
