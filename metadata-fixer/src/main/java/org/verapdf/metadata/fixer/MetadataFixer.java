@@ -16,12 +16,13 @@ import org.apache.xmpbox.type.*;
 import org.apache.xmpbox.xml.DomXmpParser;
 import org.apache.xmpbox.xml.XmpParsingException;
 import org.apache.xmpbox.xml.XmpSerializer;
-import org.verapdf.metadata.fixer.entity.FixEntity;
+import org.verapdf.metadata.fixer.entity.FixReport;
 import org.verapdf.metadata.fixer.entity.ValidationStatus;
-import org.verapdf.metadata.fixer.utils.TargetObjects;
-import org.verapdf.validation.profile.model.ValidationProfile;
+import org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector;
 import org.verapdf.validation.report.model.ValidationInfo;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.net.URISyntaxException;
@@ -81,25 +82,26 @@ public class MetadataFixer {
 		return null;
 	}
 
-	public FixEntity fixDocument(File outputFile) throws IOException, URISyntaxException, TransformerException {
-		FixEntity entity;
+	public FixReport fixDocument(File outputFile) throws IOException, URISyntaxException,
+			TransformerException, ParserConfigurationException, SAXException {
+		FixReport report;
 		if (this.validationResult.getResult().isCompliant()) {
-			entity = new FixEntity();
-			return entity;
+			report = new FixReport();
+			return report;
 		} else if (this.metadata != null) {
 
-			entity = TargetObjects.validationStatus(this.validationResult.getResult()
-					.getDetails().getRules(), this.validationResult.getProfile().getProfile());
+			report = ProcessedObjectsInspector.validationStatus(this.validationResult.getResult()
+					.getDetails().getRules(), this.validationResult.getProfile().getValidationProfile());
 
-			switch (entity.getStatus()) {
+			switch (report.getStatus()) {
 				case INVALID_DOCUMENT:
 					this.metadata.removeSchema(this.metadata.getPDFIdentificationSchema());
 					this.document.getDocumentCatalog().getMetadata().getStream().setNeedToBeUpdated(true);
-					this.fixMetadata(entity);
+					this.fixMetadata(report);
 					break;
 				case INVALID_METADATA:
-					this.fixMetadata(entity);
-					addPDFASchema(entity);
+					this.fixMetadata(report);
+					addPDFASchema(report);
 					break;
 				case INVALID_STRUCTURE:
 					this.metadata.removeSchema(this.metadata.getPDFIdentificationSchema());
@@ -109,22 +111,22 @@ public class MetadataFixer {
 
 			saveDocumentIncremental(outputFile);
 
-			return entity;
+			return report;
 		} else {
-			entity = new FixEntity();
-			entity.setStatus(ValidationStatus.INVALID_METADATA);
-			entity.addFix("Problems with metadata obtain, nothing to save or change.");
-			return entity;
+			report = new FixReport();
+			report.setStatus(ValidationStatus.INVALID_METADATA);
+			report.addFix("Problems with metadata obtain, nothing to save or change.");
+			return report;
 		}
 	}
 
-	private void fixMetadata(FixEntity entity) {
+	private void fixMetadata(FixReport entity) {
 		this.fixDublinCoreSchema(entity);
 		this.fixAdobePDFSchema(entity);
 		this.fixBasicXMLSchema(entity);
 	}
 
-	private void fixDublinCoreSchema(FixEntity entity) {
+	private void fixDublinCoreSchema(FixReport entity) {
 		DublinCoreSchema schema = this.metadata.getDublinCoreSchema();
 		if (schema == null && dublinCoreInfoPresent()) {
 			schema = this.metadata.createAndAddDublinCoreSchema();
@@ -140,7 +142,7 @@ public class MetadataFixer {
 		}
 	}
 
-	private void fixAdobePDFSchema(FixEntity entity) {
+	private void fixAdobePDFSchema(FixReport entity) {
 		AdobePDFSchema schema = this.metadata.getAdobePDFSchema();
 		if (schema == null && adobePDFInfoPresent()) {
 			schema = this.metadata.createAndAddAdobePDFSchema();
@@ -154,7 +156,7 @@ public class MetadataFixer {
 		}
 	}
 
-	private void fixBasicXMLSchema(FixEntity entity) {
+	private void fixBasicXMLSchema(FixReport entity) {
 		XMPBasicSchema schema = this.metadata.getXMPBasicSchema();
 		if (schema == null && xmpBasicInfoPresent()) {
 			schema = this.metadata.createAndAddXMPBasicSchema();
@@ -169,7 +171,7 @@ public class MetadataFixer {
 		}
 	}
 
-	private void fixProperty(FixEntity entity, XMPSchema schema, String metaValue,
+	private void fixProperty(FixReport entity, XMPSchema schema, String metaValue,
 							 String infoValue, String attribute) {
 		String key = attributes.get(attribute);
 		if (metaValue == null && infoValue != null) {
@@ -183,7 +185,7 @@ public class MetadataFixer {
 		}
 	}
 
-	private void fixCalendarProperty(FixEntity entity, XMPBasicSchema schema, Calendar metaValue,
+	private void fixCalendarProperty(FixReport entity, XMPBasicSchema schema, Calendar metaValue,
 									 Calendar infoValue, String attribute) {
 		String key = attributes.get(attribute);
 		if (metaValue == null && infoValue != null) {
@@ -201,7 +203,7 @@ public class MetadataFixer {
 		}
 	}
 
-	private void addPDFASchema(FixEntity entity) {
+	private void addPDFASchema(FixReport entity) {
 		if (this.metadata.getPDFIdentificationSchema() == null) {
 			this.metadata.createAndAddPFAIdentificationSchema();
 			this.document.getDocumentCatalog().getMetadata()
@@ -211,7 +213,7 @@ public class MetadataFixer {
 	}
 
 	private boolean isValidDateFormat(String key) {
-		final String pdfDateFormatRegex = "(D:)?(\\d\\d){2,7}(([+-](\\d\\d[']))(\\d\\d['])?)?";
+		final String pdfDateFormatRegex = "(D:)?(\\d\\d){2,7}((([+-](\\d\\d[']))(\\d\\d['])?)?|[Z])";
 		String date = this.document.getDocumentInformation().getCOSObject().getString(key);
 		return date.matches(pdfDateFormatRegex);
 	}
@@ -225,7 +227,7 @@ public class MetadataFixer {
 				((DublinCoreSchema) schema).setDescription(value);
 				break;
 			case CREATOR:
-				fixCreator(schema, value);
+				this.fixCreator(schema, value);
 				break;
 			case PRODUCER:
 				((AdobePDFSchema) schema).setProducer(value);

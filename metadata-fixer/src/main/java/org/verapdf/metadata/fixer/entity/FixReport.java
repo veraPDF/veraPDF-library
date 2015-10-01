@@ -6,22 +6,18 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class FixEntity {
+public class FixReport {
 
-	private ValidationStatus status;
+	private ValidationStatus status = ValidationStatus.VALID;
 
-	private List<String> fixes = new ArrayList<>();
-
-	public FixEntity() {
-		status = ValidationStatus.VALID;
-	}
+	private List<String> appliedFixes = new ArrayList<>();
 
 	public void addFix(String fix) {
-		this.fixes.add(fix);
+		this.appliedFixes.add(fix);
 	}
 
-	public List<String> getFixes() {
-		return this.fixes;
+	public List<String> getAppliedFixes() {
+		return this.appliedFixes;
 	}
 
 	public ValidationStatus getStatus() {
