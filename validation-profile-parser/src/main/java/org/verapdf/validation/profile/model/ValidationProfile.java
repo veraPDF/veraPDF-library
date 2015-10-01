@@ -107,7 +107,7 @@ public class ValidationProfile {
 	 * @return rule by it's id or null, if there is no rule with such id.
 	 */
 	public Rule getRuleById(String id) {
-		if (id == null || this.rules == null) {
+		if (id == null) {
 			return null;
 		}
 
@@ -128,10 +128,6 @@ public class ValidationProfile {
 	public List<String> getAllRulesId() {
 		List<String> result = new ArrayList<>();
 
-		if (this.rules == null) {
-			return result;
-		}
-
 		for (List<Rule> ruleList : this.rules.values()) {
 			for (Rule rule : ruleList) {
 				if (rule != null) {
@@ -150,10 +146,10 @@ public class ValidationProfile {
 	 * @return List of variables for the given object.
 	 */
 	public List<Variable> getVariablesForObject(String objName) {
-		if (this.variables != null && this.variables.get(objName) != null) {
+		if (this.variables.get(objName) != null) {
 			return this.variables.get(objName);
 		}
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	/**
@@ -162,10 +158,8 @@ public class ValidationProfile {
 	public List<Variable> getAllVariables() {
 		List<Variable> result = new ArrayList<>();
 
-		if (this.variables != null) {
-			for (List<Variable> variablesList : this.variables.values()) {
-				result.addAll(variablesList);
-			}
+		for (List<Variable> variablesList : this.variables.values()) {
+			result.addAll(variablesList);
 		}
 
 		return result;

@@ -25,10 +25,12 @@ public final class VeraPdfTaskConfig {
 	private final int maxFailedChecks;
 	private final int maxDisplayedFailedChecks;
     private final String output;
+	private final String incrementalSave;
 
     public VeraPdfTaskConfig(boolean validate, Input input, String profile,
 							 boolean logPassedChecks, int maxFailedChecks,
-							 int maxDisplayedFailedChecks, String output) {
+							 int maxDisplayedFailedChecks, String output,
+							 String incrementalSave) {
         this.validate = validate;
         this.input = input;
         this.profile = profile;
@@ -36,6 +38,7 @@ public final class VeraPdfTaskConfig {
 		this.maxFailedChecks = maxFailedChecks;
 		this.maxDisplayedFailedChecks = maxDisplayedFailedChecks;
         this.output = output;
+		this.incrementalSave = incrementalSave;
     }
 
     /**
@@ -81,6 +84,13 @@ public final class VeraPdfTaskConfig {
 	}
 
 	/**
+	 * @return path for repaired document
+	 */
+	public String getIncrementalSave() {
+		return incrementalSave;
+	}
+
+	/**
      * @return the output
      */
     public String getOutput() {
@@ -96,6 +106,7 @@ public final class VeraPdfTaskConfig {
 		private int maxFailedChecks;
 		private int maxDisplayedFailedChecks;
 		private String output;
+		private String incrementalSave;
 
 		public Builder() {
 
@@ -136,10 +147,15 @@ public final class VeraPdfTaskConfig {
             return this;
         }
 
+		public Builder incrementalSave(String savePath) {
+			this.incrementalSave = savePath;
+			return this;
+		}
+
         public VeraPdfTaskConfig build() {
             return new VeraPdfTaskConfig(this.validate, this.input, this.profile,
 					this.logPassedChecks, this.maxFailedChecks, this.maxDisplayedFailedChecks,
-					this.output);
+					this.output, this.incrementalSave);
         }
 
     }
