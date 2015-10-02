@@ -56,6 +56,7 @@
     <module>cli</module>
     <module>gui</module>
     <module>feature-report</module>
+    <module>metadata-fixer</module>
   </modules>
 
   <scm>
@@ -82,7 +83,7 @@
   <repositories>
     <repository>
       <snapshots>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
       </snapshots>
       <id>vera-dev</id>
       <name>Vera development</name>
@@ -178,6 +179,12 @@
       <dependency>
         <groupId>org.verapdf</groupId>
         <artifactId>model-implementation</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.verapdf</groupId>
+        <artifactId>metadata-fixer</artifactId>
         <version>${project.version}</version>
       </dependency>
 

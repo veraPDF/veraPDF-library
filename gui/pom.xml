@@ -157,6 +157,11 @@
     </dependency>
 
     <dependency>
+        <groupId>org.verapdf</groupId>
+        <artifactId>metadata-fixer</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcprov-jdk15on</artifactId>
     </dependency>
