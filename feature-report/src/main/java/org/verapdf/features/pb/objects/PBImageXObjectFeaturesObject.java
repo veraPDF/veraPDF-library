@@ -181,8 +181,7 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 							break;
 						case "JBIG2Decode":
 							if (dic == null || !(dic.getDictionaryObject(COSName.JBIG2_GLOBALS) instanceof COSStream)) {
-								LOGGER.error("JBIG2Decode has no global segments stream in decode params");
-								return null;
+								decodeParms.add(null);
 							} else {
 								byte[] global = PBCreateNodeHelper.inputStreamToByteArray(((COSStream) dic.getDictionaryObject(COSName.JBIG2_GLOBALS)).getUnfilteredStream());
 								int index = streams.size();
