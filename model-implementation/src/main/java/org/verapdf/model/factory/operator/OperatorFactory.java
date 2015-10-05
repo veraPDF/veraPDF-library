@@ -5,6 +5,7 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.verapdf.model.operator.Operator;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,12 +49,14 @@ public final class OperatorFactory {
                     parser.parseOperator(result,
                             (org.apache.pdfbox.contentstream.operator.Operator) pdfBoxToken,
                             resources, arguments);
-					arguments = new ArrayList<>();
                 } catch (CloneNotSupportedException e) {
-                    LOGGER.debug("GraphicsState clone issues for pdfBoxToken:" + pdfBoxToken);
-                    LOGGER.debug(GS_CLONE_MALFUNCTION, e);
-                }
-            } else {
+					LOGGER.debug("GraphicsState clone issues for pdfBoxToken:" + pdfBoxToken);
+					LOGGER.debug(GS_CLONE_MALFUNCTION, e);
+				} catch (IOException e) {
+					LOGGER.debug(e);
+				}
+				arguments = new ArrayList<>();
+			} else {
                 LOGGER.error(MSG_UNEXPECTED_OBJECT_TYPE
                         + pdfBoxToken.getClass().getName());
             }

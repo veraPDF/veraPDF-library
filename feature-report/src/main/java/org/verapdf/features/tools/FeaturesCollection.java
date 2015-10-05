@@ -17,7 +17,7 @@ public class FeaturesCollection {
 	 * Constructs new object
 	 */
 	public FeaturesCollection() {
-		collection = new HashMap<>();
+		collection = new EnumMap<>(FeaturesObjectTypesEnum.class);
 	}
 
 	/**

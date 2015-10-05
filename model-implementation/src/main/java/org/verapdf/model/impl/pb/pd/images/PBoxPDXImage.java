@@ -32,12 +32,8 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     public static final String INTENT = "Intent";
 
     public PBoxPDXImage(PDImage simplePDObject) {
-        this(simplePDObject, X_IMAGE_TYPE);
+        super(simplePDObject, X_IMAGE_TYPE);
     }
-
-	public PBoxPDXImage(PDImage simplePDObject, final String type) {
-		super(simplePDObject, type);
-	}
 
     @Override
     public Boolean getInterpolate() {
@@ -91,7 +87,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
         return Collections.emptyList();
     }
 
-    protected List<? extends PDXImage> getAlternates() {
+    private List<? extends PDXImage> getAlternates() {
         final List<PDXImage> alternates = new ArrayList<>();
         final COSStream imageStream = ((PDImageXObject) this.simplePDObject)
                 .getCOSStream();

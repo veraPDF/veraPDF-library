@@ -173,7 +173,7 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 			return new FeaturesData(metadata, iccProfileList, properties);
 
 		} catch (IOException e) {
-			LOGGER.error("Can not get metadata stream for iccProfile", e);
+			LOGGER.error("Can not get iccProfile stream", e);
 			return null;
 		}
 	}

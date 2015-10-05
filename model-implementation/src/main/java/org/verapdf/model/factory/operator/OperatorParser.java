@@ -81,8 +81,9 @@ class OperatorParser {
 
 	void parseOperator(List<Operator> operators,
 					   org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
-					   PDResources resources, List<COSBase> arguments) throws CloneNotSupportedException {
+					   PDResources resources, List<COSBase> arguments) throws CloneNotSupportedException, IOException {
 		String operatorName = pdfBoxOperator.getName();
+		PDColorSpace cs;
 		switch (operatorName) {
 			// GENERAL GS
 			case Operators.D_SET_DASH:
@@ -136,30 +137,48 @@ class OperatorParser {
 				break;
 
 				// COLOR
-			case Operators.G_STROKE:
-				this.graphicState.setStrokeColorSpace(PDDeviceGray.INSTANCE);
+			case Operators.G_STROKE: {
+				cs = resources == null ? PDDeviceGray.INSTANCE :
+						resources.getColorSpace(COSName.DEVICEGRAY);
+				this.graphicState.setStrokeColorSpace(cs);
 				operators.add(new PBOpColor(arguments));
 				break;
-			case Operators.G_FILL:
-				this.graphicState.setFillColorSpace(PDDeviceGray.INSTANCE);
+			}
+			case Operators.G_FILL: {
+				cs = resources == null ? PDDeviceGray.INSTANCE :
+						resources.getColorSpace(COSName.DEVICEGRAY);
+				this.graphicState.setFillColorSpace(cs);
 				operators.add(new PBOpColor(arguments));
 				break;
-			case Operators.RG_STROKE:
-				this.graphicState.setStrokeColorSpace(PDDeviceRGB.INSTANCE);
+			}
+			case Operators.RG_STROKE: {
+				cs = resources == null ? PDDeviceRGB.INSTANCE :
+						resources.getColorSpace(COSName.DEVICERGB);
+				this.graphicState.setStrokeColorSpace(cs);
 				operators.add(new PBOpColor(arguments));
 				break;
-			case Operators.RG_FILL:
-				this.graphicState.setFillColorSpace(PDDeviceRGB.INSTANCE);
+			}
+			case Operators.RG_FILL: {
+				cs = resources == null ? PDDeviceRGB.INSTANCE :
+						resources.getColorSpace(COSName.DEVICERGB);
+				this.graphicState.setFillColorSpace(cs);
 				operators.add(new PBOpColor(arguments));
 				break;
-			case Operators.K_STROKE:
-				this.graphicState.setStrokeColorSpace(PDDeviceCMYK.INSTANCE);
+			}
+			case Operators.K_STROKE: {
+				cs = resources == null ? PDDeviceCMYK.INSTANCE :
+						resources.getColorSpace(COSName.DEVICECMYK);
+				this.graphicState.setStrokeColorSpace(cs);
 				operators.add(new PBOpColor(arguments));
 				break;
-			case Operators.K_FILL:
-				this.graphicState.setFillColorSpace(PDDeviceCMYK.INSTANCE);
+			}
+			case Operators.K_FILL: {
+				cs = resources == null ? PDDeviceCMYK.INSTANCE :
+						resources.getColorSpace(COSName.DEVICECMYK);
+				this.graphicState.setFillColorSpace(cs);
 				operators.add(new PBOpColor(arguments));
 				break;
+			}
 			case Operators.CS_STROKE:
 				this.graphicState.setStrokeColorSpace(getColorSpaceFromResources(
 						resources, getLastCOSName(arguments)));
