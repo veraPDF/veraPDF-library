@@ -5,7 +5,6 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSStream;
 import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.xml.DomXmpParser;
-import org.apache.xmpbox.xml.XmpParsingException;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosStream;
 import org.verapdf.model.impl.pb.cos.PBCosStream;
@@ -14,7 +13,6 @@ import org.verapdf.model.impl.pb.xmp.PBXMPPackage;
 import org.verapdf.model.pdlayer.PDMetadata;
 import org.verapdf.model.xmplayer.XMPPackage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -78,11 +76,8 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
                 xmp.add(this.isMainMetadata ? new PBXMPMainPackage(metadata, true)
                         : new PBXMPPackage(metadata, true));
             }
-        } catch (XmpParsingException e) {
+        } catch (Exception e) {
             LOGGER.error("Problems with parsing metadata. " + e.getMessage(), e);
-            xmp.add(new PBXMPPackage(null, false));
-        } catch (IOException e) {
-            LOGGER.error("Metadata stream is closed. " + e.getMessage(), e);
             xmp.add(new PBXMPPackage(null, false));
         }
         return xmp;

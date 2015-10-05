@@ -60,7 +60,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 
     public PBCosDocument(COSDocument cosDocument, long length) {
         super(cosDocument, COS_DOCUMENT_TYPE);
-        sizeOfDocument = length;
+        this.sizeOfDocument = length;
         this.indirectObjectCount = cosDocument.getObjects().size();
         this.version = cosDocument.getVersion();
         this.isBinaryHeaderPDFACompliant = !(cosDocument
@@ -72,7 +72,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         this.isOptionalContentPresent = parseOptionalContentPresent(cosDocument);
         this.isEofPDFACompliant = cosDocument.getEofComplyPDFA();
         this.lastID = getTrailerID((COSArray) cosDocument.getLastTrailer()
-                .getItem(ID));
+                .getDictionaryObject(ID));
         this.firstPageID = getTrailerID((COSArray) cosDocument
                 .getFirstPageTrailer().getDictionaryObject(ID));
         this.isLinearised = cosDocument.getTrailer() != cosDocument
@@ -243,12 +243,14 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 	private void getNamesEmbeddedFiles(List<Object> files,
 									   COSDictionary buffer) throws IOException {
 		PDEmbeddedFilesNameTreeNode root = new PDEmbeddedFilesNameTreeNode(buffer);
-		final Set<Map.Entry<String, PDComplexFileSpecification>> entries = root
-				.getNames().entrySet();
-		for (Map.Entry<String, PDComplexFileSpecification> entry : entries) {
-			files.add(new PBCosFileSpecification(entry.getValue()
-					.getCOSObject()));
-		}
+        final Map<String, PDComplexFileSpecification> names = root.getNames();
+        if (names != null) {
+            final Set<Map.Entry<String, PDComplexFileSpecification>> entries = names.entrySet();
+            for (Map.Entry<String, PDComplexFileSpecification> entry : entries) {
+                files.add(new PBCosFileSpecification(entry.getValue()
+                        .getCOSObject()));
+            }
+        }
 	}
 
     /**

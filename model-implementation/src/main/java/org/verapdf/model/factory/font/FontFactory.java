@@ -16,6 +16,7 @@ public final class FontFactory {
 
     public static final String TYPE_0 = "Type0";
     public static final String TYPE_1 = "Type1";
+    public static final String MM_TYPE_1 = "MMType1";
     public static final String TYPE_3 = "Type3";
     public static final String TRUE_TYPE = "TrueType";
     public static final String CID_FONT_TYPE_2 = "CIDFontType2";
