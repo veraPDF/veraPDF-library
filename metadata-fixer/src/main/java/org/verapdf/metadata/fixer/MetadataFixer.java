@@ -83,24 +83,86 @@ public class MetadataFixer {
 		return null;
 	}
 
+	/**
+	 * Fix metadata and info dictionary for {@link MetadataFixer#document} and
+	 * save fixed file near source file. If fixer no changes apply then no save
+	 * will be produced.
+	 * <p>
+	 * {@code input} is file near which will be save fixed version of document.
+	 * Input file give provides path to the folder and the result file name
+	 *
+	 * @param input file near which will be save fixed version of document
+	 * @return report of made corrections
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @throws ParserConfigurationException
+	 * @throws TransformerException
+	 * @throws SAXException
+	 */
 	public FixReport fixDocument(File input) throws IOException, URISyntaxException,
 			ParserConfigurationException, TransformerException, SAXException {
 		File output = FileGenerator.createOutputFile(input);
 		return fixDocument(new BufferedOutputStream(new FileOutputStream(output)));
 	}
 
+	/**
+	 * Fix metadata and info dictionary for {@link MetadataFixer#document} and
+	 * save fixed file near source file. If fixer no changes apply then no save
+	 * will be produced.
+	 * <p>
+	 * {@code input} is file near which will be save fixed version of document.
+	 * Input file provides path to the folder and the result file name. Prefix
+	 * provide additional part for the result file name.
+	 *
+	 * @param inputFile file near which will be save fixed version of document
+	 * @param prefix    for the result file name
+	 * @return report of made corrections
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @throws ParserConfigurationException
+	 * @throws TransformerException
+	 * @throws SAXException
+	 */
 	public FixReport fixDocument(File inputFile, String prefix) throws IOException, URISyntaxException,
 			TransformerException, ParserConfigurationException, SAXException {
 		File output = FileGenerator.createOutputFile(inputFile, prefix);
 		return fixDocument(new BufferedOutputStream(new FileOutputStream(output)));
 	}
 
+	/**
+	 * Fix metadata and info dictionary for {@link MetadataFixer#document} and
+	 * save fixed file a certain path. If fixer no changes apply then no save
+	 * will be produced.
+	 *
+	 * @param folderPath a certain path for store result file
+	 * @param fileName   the result file name
+	 * @param prefix     for the result file name
+	 * @return report of made corrections
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @throws ParserConfigurationException
+	 * @throws TransformerException
+	 * @throws SAXException
+	 */
 	public FixReport fixDocument(String folderPath, String fileName, String prefix) throws IOException, URISyntaxException,
 			TransformerException, ParserConfigurationException, SAXException {
 		File output = FileGenerator.createOutputFile(folderPath, fileName, prefix);
 		return fixDocument(new BufferedOutputStream(new FileOutputStream(output)));
 	}
 
+	/**
+	 * Fix metadata and info dictionary for {@link MetadataFixer#document} and
+	 * save fixed file a certain path. If fixer no changes apply then no save
+	 * will be produced.
+	 *
+	 * @param output stream to result file
+	 * @return report of made corrections
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @throws TransformerException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 */
 	public FixReport fixDocument(OutputStream output) throws IOException, URISyntaxException,
 			TransformerException, ParserConfigurationException, SAXException {
 		FixReport report;
