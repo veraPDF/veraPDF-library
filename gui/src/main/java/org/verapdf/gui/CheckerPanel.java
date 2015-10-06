@@ -2,7 +2,7 @@ package org.verapdf.gui;
 
 import org.apache.log4j.Logger;
 import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.report.HTMLReport;
+import org.verapdf.gui.tools.SettingsManager;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import javax.swing.*;
@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -43,7 +42,6 @@ public class CheckerPanel extends JPanel {
 	transient ValidationInfo info;
 	private File xmlReport;
 	private File htmlReport;
-	private File image = new File("./temp/" + HTMLReport.getLogoImageName());
 
 	private boolean isValidationErrorOccurred;
 
@@ -53,7 +51,7 @@ public class CheckerPanel extends JPanel {
 	private JButton saveHTML;
 	private JButton viewHTML;
 
-	private Properties settings;
+	private SettingsManager settings;
 
 	JProgressBar progressBar;
 	transient ValidateWorker validateWorker;
@@ -63,10 +61,15 @@ public class CheckerPanel extends JPanel {
 	 * @param settings properties object indicates validation settings for the panel
 	 *
 	 * @throws IOException when there's a problem reading an image from the input stream
+	 * @throws IllegalArgumentException when parameter settings for the constructor is null
 	 */
-	public CheckerPanel(final Properties settings) throws IOException {
+	public CheckerPanel(final SettingsManager settings) throws IOException {
 
-		this.settings = settings == null ? GUIConstants.DEFAULT_PROPERTIES : settings;
+		this.settings = settings;
+		if (settings == null) {
+			throw new IllegalArgumentException("Parameter settings for checker panel must not be null");
+		}
+
 		setPreferredSize(new Dimension(GUIConstants.PREFERRED_SIZE_WIDTH,
 				GUIConstants.PREFERRED_SIZE_HEIGHT));
 
@@ -226,6 +229,7 @@ public class CheckerPanel extends JPanel {
 			}
 		});
 
+
 		validate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -235,9 +239,11 @@ public class CheckerPanel extends JPanel {
 				validate.setEnabled(false);
 				info = null;
 				isValidationErrorOccurred = false;
-
-				validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile,
-						profile, settings);
+				viewXML.setEnabled(false);
+				saveXML.setEnabled(false);
+				viewHTML.setEnabled(false);
+				saveHTML.setEnabled(false);
+				validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, profile, settings);
 				validateWorker.execute();
 			}
 		});
@@ -445,7 +451,7 @@ public class CheckerPanel extends JPanel {
 	}
 
 	private void saveReport(JFileChooser chooser, String extension, File report) {
-		if (info == null) {
+		if (report == null) {
 			JOptionPane.showMessageDialog(CheckerPanel.this,
 					"Validation hasn't been run.", GUIConstants.ERROR,
 					JOptionPane.ERROR_MESSAGE);
@@ -465,13 +471,6 @@ public class CheckerPanel extends JPanel {
 				try {
 					try {
 						Files.copy(report.toPath(), temp.toPath());
-						if (GUIConstants.HTML.equalsIgnoreCase(extension
-								.toLowerCase())) {
-							File newImage = new File(temp.getParentFile(),
-									image.getName());
-							Files.copy(image.toPath(), newImage.toPath(),
-									StandardCopyOption.REPLACE_EXISTING);
-						}
 					} catch (FileAlreadyExistsException e1) {
 						LOGGER.debug(
 								"File already exists, conform overwrite with user",
@@ -485,12 +484,6 @@ public class CheckerPanel extends JPanel {
 						if (resultOption == JOptionPane.YES_OPTION) {
 							Files.copy(report.toPath(), temp.toPath(),
 									StandardCopyOption.REPLACE_EXISTING);
-							if (GUIConstants.HTML.equalsIgnoreCase(extension)) {
-								File newImage = new File(temp.getParentFile(),
-										image.getName());
-								Files.copy(image.toPath(), newImage.toPath(),
-										StandardCopyOption.REPLACE_EXISTING);
-							}
 						}
 					}
 				} catch (IOException e) {
@@ -502,12 +495,5 @@ public class CheckerPanel extends JPanel {
 				}
 			}
 		}
-	}
-
-	/**
-	 * @param settings settings for update
-	 */
-	public void setSettings(Properties settings) {
-		this.settings = settings;
 	}
 }

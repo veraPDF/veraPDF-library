@@ -10,7 +10,7 @@ import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.gui.tools.SettingsHelper;
+import org.verapdf.gui.tools.SettingsManager;
 import org.verapdf.metadata.fixer.MetadataFixer;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.report.HTMLReport;
@@ -27,7 +27,6 @@ import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Properties;
 
 /**
  * Validates PDF in a new threat.
@@ -41,7 +40,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 	private File pdf;
 	private File profile;
 	private CheckerPanel parent;
-	private Properties settings;
+	private SettingsManager settings;
 	private File xmlReport = null;
 	private File htmlReport = null;
 
@@ -56,7 +55,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 	 * @param profile  validation profile for validating
 	 * @param settings settings for validation
 	 */
-	public ValidateWorker(CheckerPanel parent, File pdf, File profile, Properties settings) {
+	public ValidateWorker(CheckerPanel parent, File pdf, File profile, SettingsManager settings) {
 		this.parent = parent;
 		this.pdf = pdf;
 		this.profile = profile;
@@ -65,33 +64,40 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 	@Override
 	protected ValidationInfo doInBackground() {
+		xmlReport = null;
+		htmlReport = null;
 		ValidationInfo info = null;
 		FeaturesCollection collection = null;
 
 		startTimeOfValidation = System.currentTimeMillis();
 
 		try (ModelLoader loader = new ModelLoader(this.pdf.getPath())) {
-			int flag = SettingsHelper.getProcessingType(settings);
+			int flag = settings.getProcessingType();
 
 			if ((flag & 1) == 1) {
 				org.verapdf.model.baselayer.Object root = loader.getRoot();
 				info = runValidator(root);
+
+				// TODO : make field for incremental save
+				if (false) {
+					MetadataFixer fixer = new MetadataFixer(loader.getPDDocument(), info);
+					fixer.fixDocument(new File("res" + this.pdf.getName()));
+				}
 			}
 
 			if ((flag & (1 << 1)) == (1 << 1)) {
 				try {
-					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument(), new File(SettingsHelper.getFeaturesPluginConfigFilePath(settings)));
+					File config = null;
+					if (settings.getFeaturesPluginsConfigFilePath() != null) {
+						config = settings.getFeaturesPluginsConfigFilePath().toFile();
+					}
+					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument(), config);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(this.parent,
 							"Some error in creating features collection.",
 							GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
 					LOGGER.error("Exception in creating features collection: ", e);
 				}
-			}
-			// TODO : make field for incremental save
-			if (true) {
-				MetadataFixer fixer = new MetadataFixer(loader.getPDDocument(), info);
-				fixer.fixDocument(new File("res" + this.pdf.getName()));
 			}
 			endTimeOfValidation = System.currentTimeMillis();
 			writeReports(info, collection);
@@ -107,7 +113,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 	private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
 		try {
-			return Validator.validate(root, this.profile, false, SettingsHelper.isDispPassedRules(settings), SettingsHelper.getNumbOfFail(settings), SettingsHelper.getNumbOfFailDisp(settings));
+			return Validator.validate(root, this.profile, false, settings.isShowPassedRules(), settings.getMaxNumberOfFailedChecks(), settings.getMaxNumberOfDisplayedFailedChecks());
 		} catch (IOException | NullLinkNameException | NullLinkException |
 				NullLinkedObjectException | MissedHashTagException |
 				WrongSignatureException | MultiplyGlobalVariableNameException |
@@ -126,17 +132,15 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 	private void writeReports(ValidationInfo info, FeaturesCollection collection) {
 		if (info != null || collection != null) {
 			try {
-				File dir = new File("./temp/");
-				if (!dir.exists() && !dir.mkdir()) {
-					throw new IOException("Can not create temporary directory.");
-				}
-				xmlReport = new File("./temp/tempXMLReport.xml");
+				xmlReport = File.createTempFile("veraPDF-tempXMLReport", ".xml");
+				xmlReport.deleteOnExit();
 				XMLReport.writeXMLReport(info, collection, xmlReport.getPath(),
-						endTimeOfValidation - startTimeOfValidation, SettingsHelper.isDispPassedRules(settings));
+						endTimeOfValidation - startTimeOfValidation, settings.isShowPassedRules());
 
 				if (info != null) {
 					try {
-						htmlReport = new File("./temp/tempHTMLReport.html");
+						htmlReport = File.createTempFile("veraPDF-tempHTMLReport", ".html");
+						htmlReport.deleteOnExit();
 						HTMLReport.writeHTMLReport(htmlReport.getPath(), xmlReport,
 								profile);
 
