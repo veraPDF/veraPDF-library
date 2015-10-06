@@ -3,24 +3,74 @@ package org.verapdf.metadata.fixer.utils;
 import java.io.File;
 
 /**
+ * Class for generate non existing file.
+ * Returned file must point to file for which
+ * {@link File#exists()} return false.
+ *
  * @author Evgeniy Muravitskiy
  */
 public class FileGenerator {
 
 	public static final String DEFAULT_PREFIX = "veraPDF_";
 
+	private FileGenerator() {
+		// hide default constructor
+	}
+
+	/**
+	 * Create new unique file which store near source file.
+	 * Current method not return existing file -
+	 * {@link File#exists()} return {@code false}
+	 *
+	 * @param sourcePath path to source file
+	 * @return non-existing file which stored near source file
+	 * @throws NullPointerException if {@code sourcePath} is {@code null}
+	 */
 	public static File createOutputFile(String sourcePath) {
 		return createOutputFile(new File(sourcePath));
 	}
 
+	/**
+	 * Create new unique file which store near source file.
+	 * Current method not return existing file -
+	 * {@link File#exists()} return {@code false}
+	 *
+	 * @param source source file
+	 * @return non-existing file which stored near source file
+	 * @throws IllegalArgumentException if {@code source} is {@code null}
+	 */
 	public static File createOutputFile(File source) {
 		return createOutputFile(source, DEFAULT_PREFIX);
 	}
 
+	/**
+	 * Create new unique file which store near source file and
+	 * has redefined prefix for name. Current method not return
+	 * existing file - {@link File#exists()} return {@code false}.
+	 * {@code prefix} must be not {@code null} and not empty.
+	 *
+	 * @param sourcePath path to source file
+	 * @param prefix     prefix for result file name
+	 * @return non-existing file which stored near source file
+	 * @throws IllegalArgumentException if {@code prefix} is {@code null}
+	 * @throws NullPointerException     if {@code sourcePath} is {@code null}
+	 */
 	public static File createOutputFile(String sourcePath, String prefix) {
 		return createOutputFile(new File(sourcePath), prefix);
 	}
 
+	/**
+	 * Create new unique file which store near source file.
+	 * Current method not return existing file -
+	 * {@link File#exists()} return {@code false}.
+	 * {@code prefix} must be not {@code null} and not empty.
+	 *
+	 * @param source source file
+	 * @param prefix prefix for result file name
+	 * @return non-existing file which stored near source file
+	 * @throws IllegalArgumentException if {@code source} or
+	 *                                  {@code prefix} are {@code null} or empty
+	 */
 	public static File createOutputFile(File source, String prefix) {
 		if (source == null) {
 			throw new IllegalArgumentException("Incorrect source file");
@@ -29,6 +79,21 @@ public class FileGenerator {
 		return createOutputFile(source.getAbsoluteFile().getParent(), source.getName(), prefix);
 	}
 
+	/**
+	 * Create new unique file which on {@code folderPath} with
+	 * {@code fileName} name and has redefined prefix for name.
+	 * Current method not return existing file -
+	 * {@link File#exists()} return {@code false}.
+	 * {@code folderPath}, {@code fileName} and {@code prefix}
+	 * must be not {@code null} and not empty.
+	 *
+	 * @param folderPath path for store result file
+	 * @param fileName   name of the result file
+	 * @param prefix     prefix for the result file name
+	 * @return non-existing file which stored near source file
+	 * @throws IllegalArgumentException if {@code folderPath} or
+	 * {@code fileName}, or {@code prefix} are {@code null}
+	 */
 	public static File createOutputFile(String folderPath, String fileName, String prefix) {
 		if (folderPath == null || folderPath.trim().isEmpty()) {
 			throw new IllegalArgumentException("Incorrect path to folder.");
@@ -58,7 +123,7 @@ public class FileGenerator {
 			for (int i = 1; i < split.length - 1; i++) {
 				resultPath.append('.').append(split[i]);
 			}
-			return  '.' + split[split.length - 1];
+			return '.' + split[split.length - 1];
 		}
 		return "";
 	}
