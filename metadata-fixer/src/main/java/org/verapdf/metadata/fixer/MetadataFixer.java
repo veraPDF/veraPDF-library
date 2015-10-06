@@ -85,13 +85,19 @@ public class MetadataFixer {
 
 	public FixReport fixDocument(File input) throws IOException, URISyntaxException,
 			ParserConfigurationException, TransformerException, SAXException {
-		File output = FileGenerator.createNonExistFile(input);
+		File output = FileGenerator.createOutputFile(input);
 		return fixDocument(new BufferedOutputStream(new FileOutputStream(output)));
 	}
 
 	public FixReport fixDocument(File inputFile, String prefix) throws IOException, URISyntaxException,
 			TransformerException, ParserConfigurationException, SAXException {
-		File output = FileGenerator.createNonExistFile(inputFile, prefix);
+		File output = FileGenerator.createOutputFile(inputFile, prefix);
+		return fixDocument(new BufferedOutputStream(new FileOutputStream(output)));
+	}
+
+	public FixReport fixDocument(String folderPath, String fileName, String prefix) throws IOException, URISyntaxException,
+			TransformerException, ParserConfigurationException, SAXException {
+		File output = FileGenerator.createOutputFile(folderPath, fileName, prefix);
 		return fixDocument(new BufferedOutputStream(new FileOutputStream(output)));
 	}
 
