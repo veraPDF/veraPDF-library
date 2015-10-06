@@ -88,10 +88,10 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 					LOGGER.error("Exception in creating features collection: ", e);
 				}
 			}
-			// TODO : make field for incremental save
+			// TODO : make field for incremental save and for prefix
 			if (true) {
 				MetadataFixer fixer = new MetadataFixer(loader.getPDDocument(), info);
-				fixer.fixDocument(new File("res" + this.pdf.getName()));
+				fixer.fixDocument(loader.getFile());
 			}
 			endTimeOfValidation = System.currentTimeMillis();
 			writeReports(info, collection);

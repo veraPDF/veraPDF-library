@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>metadata-fixer</artifactId>
-    <name>Metadata fixer</name>
+    <name>veraPDF Metadata Fixer</name>
 
     <dependencies>
         <dependency>
