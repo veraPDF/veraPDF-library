@@ -43,9 +43,10 @@ public class PBoxPDContentStream extends PBoxPDObject implements
             COSStream cStream = this.contentStream.getContentStream();
             if (cStream != null) {
                 PDFStreamParser streamParser = new PDFStreamParser(
-                        this.contentStream.getContentStream(), true);
+                        cStream, true);
                 streamParser.parse();
-                List<Operator> result = OperatorFactory.operatorsFromTokens(streamParser.getTokens(),
+                List<Operator> result = OperatorFactory.operatorsFromTokens(
+						streamParser.getTokens(),
                         this.contentStream.getResources());
                 return Collections.unmodifiableList(result);
             }

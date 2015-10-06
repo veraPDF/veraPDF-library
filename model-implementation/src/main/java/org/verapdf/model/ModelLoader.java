@@ -25,7 +25,14 @@ public final class ModelLoader implements Closeable {
         this.file = new File(path);
     }
 
-    /**
+	/**
+	 * @return target file
+	 */
+	public File getFile() {
+		return this.file;
+	}
+
+	/**
      * Get {@code PDDocument} object for current file.
      *
      * @return {@link org.apache.pdfbox.pdmodel.PDDocument} object of pdfbox
