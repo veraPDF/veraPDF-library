@@ -300,12 +300,6 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 		}
 	}
 
-//	private static void putIfNotNull(Map<String, Object> map, String key, Object value) {
-//		if (key != null && value != null) {
-//			map.put(key, value);
-//		}
-//	}
-
 	private void parseParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
 		if ((pageParent != null && !pageParent.isEmpty()) ||
 				(patternParent != null && !patternParent.isEmpty()) ||
