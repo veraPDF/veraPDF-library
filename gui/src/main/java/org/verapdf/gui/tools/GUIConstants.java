@@ -1,7 +1,6 @@
 package org.verapdf.gui.tools;
 
 import java.awt.*;
-import java.util.Properties;
 
 /**
  * Constants for GUI
@@ -10,11 +9,6 @@ import java.util.Properties;
  */
 public final class GUIConstants {
 
-	public static final String PROPERTY_PROCESSING_TYPE = "processingType";
-	public static final String PROPERTY_HIDE_PASSED_RULES = "hidePassedRules";
-	public static final String PROPERTY_MAX_NUMBER_FAILED_CHECKS = "maxNumbFailedChecks";
-	public static final String PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS = "maxNumbDisplFailedChecks";
-	public static final String PROPERTY_FEATURES_CONFIG_FILE = "featuresPluginConfigFile";
 	public static final String LOGO_NAME = "veraPDF-logo.jpg";
 	public static final Color LOGO_BACKGROUND = Color.WHITE;
 	public static final String PARTNERS_NAME = "partners.png";
@@ -155,18 +149,6 @@ public final class GUIConstants {
 			VALIDATION_SUCCESS_COLOR_RGB_GREEN, 0);
 	public static final Color VALIDATION_FAILED_COLOR = new Color(
 			VALIDATION_FAILED_COLOR_RGB_RED, 0, 0);
-
-	public static final Properties DEFAULT_PROPERTIES;
-
-	static {
-		Properties def = new Properties();
-		def.setProperty(PROPERTY_PROCESSING_TYPE, "3");
-		def.setProperty(PROPERTY_HIDE_PASSED_RULES, "false");
-		def.setProperty(PROPERTY_MAX_NUMBER_FAILED_CHECKS, "100");
-		def.setProperty(PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS, "100");
-		def.setProperty(PROPERTY_FEATURES_CONFIG_FILE, "");
-		DEFAULT_PROPERTIES = def;
-	}
 
 	private GUIConstants() {
 		// Disable default constructor

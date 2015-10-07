@@ -944,6 +944,11 @@ public final class PBFeatureParser {
 				parseColorSpace(colorSpace, idColorSpace);
 			}
 		} catch (IOException e) {
+			if (colorSpaceXObjectParent.get(idColorSpace) == null) {
+				colorSpaceXObjectParent.put(idColorSpace, new HashSet<String>());
+			}
+			colorSpaceXObjectParent.get(idColorSpace).add(id);
+			imageXObjectColorSpaceChild.put(id, idColorSpace);
 			LOGGER.info(e);
 			colorSpaceCreationProblem(idColorSpace);
 		}
@@ -1074,6 +1079,11 @@ public final class PBFeatureParser {
 									parseColorSpace(colorSpace, idColorSpace);
 								}
 							} catch (IOException e) {
+								if (colorSpaceXObjectParent.get(idColorSpace) == null) {
+									colorSpaceXObjectParent.put(idColorSpace, new HashSet<String>());
+								}
+								colorSpaceXObjectParent.get(idColorSpace).add(id);
+								groupXObjectColorSpaceChild.put(id, idColorSpace);
 								LOGGER.info(e);
 								colorSpaceCreationProblem(idColorSpace);
 							}
@@ -1104,7 +1114,6 @@ public final class PBFeatureParser {
 				}
 			} catch (IOException e) {
 				LOGGER.info(e);
-
 				xobjectCreationProblem(id);
 			}
 		}
@@ -1410,6 +1419,11 @@ public final class PBFeatureParser {
 				parseColorSpace(colorSpace, id);
 			}
 		} catch (IOException e) {
+			if (colorSpaceShadingParent.get(id) == null) {
+				colorSpaceShadingParent.put(id, new HashSet<String>());
+			}
+			colorSpaceShadingParent.get(id).add(parentID);
+			shadingColorSpaceChild.put(parentID, id);
 			LOGGER.info(e);
 			colorSpaceCreationProblem(id);
 		}
