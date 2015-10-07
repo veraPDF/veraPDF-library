@@ -58,7 +58,7 @@ public class FileGenerator {
 			for (int i = 1; i < split.length - 1; i++) {
 				resultPath.append('.').append(split[i]);
 			}
-			return  '.' + split[split.length - 1];
+			return '.' + split[split.length - 1];
 		}
 		return "";
 	}

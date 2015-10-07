@@ -2,17 +2,14 @@ package org.verapdf.gui;
 
 import org.apache.log4j.Logger;
 import org.verapdf.gui.tools.GUIConstants;
+import org.verapdf.gui.tools.SettingsManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Properties;
 
 /**
  * Main frame of the PDFA Conformance Checker
@@ -29,7 +26,7 @@ public class PDFValidationApplication extends JFrame {
 	private static final Logger LOGGER = Logger.getLogger(PDFValidationApplication.class);
 
 	private AboutPanel aboutPanel;
-	private Properties settings;
+	private SettingsManager settings;
 	private SettingsPanel settingsPanel;
 	private CheckerPanel checkerPanel;
 
@@ -43,7 +40,7 @@ public class PDFValidationApplication extends JFrame {
 
 		setTitle(GUIConstants.TITLE);
 
-		loadSettings();
+		settings = new SettingsManager();
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -69,15 +66,9 @@ public class PDFValidationApplication extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (settingsPanel != null && settingsPanel.showDialog(PDFValidationApplication.this, "Settings", settings)) {
-					settings.setProperty(GUIConstants.PROPERTY_PROCESSING_TYPE, String.valueOf(settingsPanel.getProcessingType()));
-					settings.setProperty(GUIConstants.PROPERTY_HIDE_PASSED_RULES, String.valueOf(settingsPanel.isDispPassedRules()));
-					settings.setProperty(GUIConstants.PROPERTY_MAX_NUMBER_FAILED_CHECKS, String.valueOf(settingsPanel.getFailedChecksNumber()));
-					settings.setProperty(GUIConstants.PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS, String.valueOf(settingsPanel.getFailedChecksDisplayNumber()));
-					settings.setProperty(GUIConstants.PROPERTY_FEATURES_CONFIG_FILE, settingsPanel.getFeaturesPluginConfigPath());
-					saveSettings();
-					if (checkerPanel != null) {
-						checkerPanel.setSettings(settings);
-					}
+					settings.setState(settingsPanel.getProcessingType(), settingsPanel.isDispPassedRules(),
+							settingsPanel.getFailedChecksNumber(), settingsPanel.getFailedChecksDisplayNumber(),
+							settingsPanel.getFeaturesPluginConfigPath());
 				}
 			}
 		});
@@ -119,35 +110,6 @@ public class PDFValidationApplication extends JFrame {
 			LOGGER.error("Exception in loading xml or html image", e);
 		}
 		contentPane.add(checkerPanel);
-	}
-
-	private void loadSettings() {
-		File configFile = new File("./temp/config.properties");
-		settings = new Properties(GUIConstants.DEFAULT_PROPERTIES);
-		if (configFile.exists()) {
-			try {
-				FileReader reader = new FileReader(configFile);
-				settings.load(reader);
-				reader.close();
-			} catch (IOException e) {
-				LOGGER.error("Couldn't load config file", e);
-			}
-		}
-	}
-
-	private void saveSettings() {
-		try {
-			File dir = new File("./temp/");
-			if (!dir.exists() && !dir.mkdir()) {
-				throw new IOException("Can not create temporary directory.");
-			}
-			File configFile = new File("./temp/config.properties");
-			FileWriter writer = new FileWriter(configFile);
-			settings.store(writer, "settings");
-			writer.close();
-		} catch (IOException e) {
-			LOGGER.error("Couldn't save config into file", e);
-		}
 	}
 
 	/**

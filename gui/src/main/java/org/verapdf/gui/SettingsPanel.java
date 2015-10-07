@@ -1,7 +1,7 @@
 package org.verapdf.gui;
 
 import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.gui.tools.SettingsHelper;
+import org.verapdf.gui.tools.SettingsManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,7 +13,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.Properties;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 /**
  * Settings Panel
@@ -157,28 +158,28 @@ class SettingsPanel extends JPanel {
 	 * @param parent parent component of the dialog
 	 * @param title  title of the dialog
 	 */
-	public boolean showDialog(Component parent, String title, Properties prop) {
+	public boolean showDialog(Component parent, String title, SettingsManager settings) {
 
 		ok = false;
 
-		boolean dispPassedRulesBool = SettingsHelper.isDispPassedRules(prop);
+		boolean dispPassedRulesBool = settings.isShowPassedRules();
 		hidePassedRules.setSelected(dispPassedRulesBool);
 
-		int numbOfFail = SettingsHelper.getNumbOfFail(prop);
+		int numbOfFail = settings.getMaxNumberOfFailedChecks();
 		if (numbOfFail == -1) {
 			numberOfFailed.setText("");
 		} else {
 			numberOfFailed.setText(String.valueOf(numbOfFail));
 		}
 
-		int numbOfFailDisp = SettingsHelper.getNumbOfFailDisp(prop);
+		int numbOfFailDisp = settings.getMaxNumberOfDisplayedFailedChecks();
 		if (numbOfFailDisp == -1) {
 			numberOfFailedDisplay.setText("");
 		} else {
 			numberOfFailedDisplay.setText(String.valueOf(numbOfFailDisp));
 		}
 
-		int type = SettingsHelper.getProcessingType(prop);
+		int type = settings.getProcessingType();
 		switch (type) {
 			case 3:
 				valAndFeat.setSelected(true);
@@ -190,7 +191,11 @@ class SettingsPanel extends JPanel {
 				feat.setSelected(true);
 				break;
 		}
-		thirdPartyProfilePathField.setText(SettingsHelper.getFeaturesPluginConfigFilePath(prop));
+		if (settings.getFeaturesPluginsConfigFilePath() != null) {
+			thirdPartyProfilePathField.setText(settings.getFeaturesPluginsConfigFilePath().toString());
+		} else {
+			thirdPartyProfilePathField.setText("");
+		}
 
 		Frame owner;
 		if (parent instanceof Frame) {
@@ -290,7 +295,11 @@ class SettingsPanel extends JPanel {
 	/**
 	 * @return path to the config file for features plugins
 	 */
-	public String getFeaturesPluginConfigPath() {
-		return thirdPartyProfilePathField.getText();
+	public Path getFeaturesPluginConfigPath() {
+		if ("".equals(thirdPartyProfilePathField.getText()) || thirdPartyProfilePathField.getText() == null) {
+			return null;
+		} else {
+			return FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText());
+		}
 	}
 }
