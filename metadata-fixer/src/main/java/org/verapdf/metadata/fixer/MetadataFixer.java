@@ -20,6 +20,10 @@ import org.verapdf.metadata.fixer.entity.FixReport;
 import org.verapdf.metadata.fixer.entity.ValidationStatus;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector;
+import org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser;
+import org.verapdf.metadata.fixer.utils.parser.XMLProcessedObjectsParser;
+import org.verapdf.validation.profile.model.ValidationProfile;
+import org.verapdf.validation.report.model.Rule;
 import org.verapdf.validation.report.model.ValidationInfo;
 import org.xml.sax.SAXException;
 
@@ -54,6 +58,8 @@ public class MetadataFixer {
 	private final XMPMetadata metadata;
 	private final ValidationInfo validationResult;
 
+	private ProcessedObjectsParser parser;
+
 	public MetadataFixer(PDDocument document,
 						 ValidationInfo validationResult) {
 		this.document = document;
@@ -81,6 +87,16 @@ public class MetadataFixer {
 
 		}
 		return null;
+	}
+
+	/**
+	 * Initialize parser of processed objects. By default using
+	 * {@link org.verapdf.metadata.fixer.utils.parser.XMLProcessedObjectsParser}
+	 *
+	 * @param parser parser of processed objects
+	 */
+	public void setParser(ProcessedObjectsParser parser) {
+		this.parser = parser;
 	}
 
 	/**
@@ -175,8 +191,7 @@ public class MetadataFixer {
 			return report;
 		} else if (this.metadata != null) {
 
-			report = ProcessedObjectsInspector.validationStatus(this.validationResult.getResult()
-					.getDetails().getRules(), this.validationResult.getProfile().getValidationProfile());
+			report = getFixReport();
 
 			switch (report.getStatus()) {
 				case INVALID_DOCUMENT:
@@ -203,6 +218,17 @@ public class MetadataFixer {
 			report.addFix("Problems with metadata obtain, nothing to save or change.");
 			return report;
 		}
+	}
+
+	private FixReport getFixReport() throws IOException, URISyntaxException, ParserConfigurationException, SAXException {
+		FixReport report;
+		List<Rule> rules = this.validationResult.getResult().getDetails().getRules();
+		ValidationProfile profile = this.validationResult.getProfile().getValidationProfile();
+		if (parser == null) {
+			parser = XMLProcessedObjectsParser.getInstance();
+		}
+		report = ProcessedObjectsInspector.validationStatus(rules, profile, parser);
+		return report;
 	}
 
 	private void fixMetadata(FixReport entity) {
