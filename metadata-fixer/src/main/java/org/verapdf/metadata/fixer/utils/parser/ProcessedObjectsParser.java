@@ -4,8 +4,8 @@ import org.verapdf.metadata.fixer.utils.model.ProcessedObjects;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 
 /**
@@ -23,7 +23,7 @@ public interface ProcessedObjectsParser {
 
 	ProcessedObjects getProcessedObjects(String path) throws IOException, SAXException, ParserConfigurationException;
 
-	ProcessedObjects getProcessedObjects(File file) throws ParserConfigurationException, IOException, SAXException;
+	ProcessedObjects getProcessedObjects(InputStream file) throws ParserConfigurationException, IOException, SAXException;
 
 	String getProcessedObjectsPathProperty();
 
