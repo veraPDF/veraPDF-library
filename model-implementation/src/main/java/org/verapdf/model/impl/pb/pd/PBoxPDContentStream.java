@@ -46,7 +46,7 @@ public class PBoxPDContentStream extends PBoxPDObject implements
                         cStream, true);
                 streamParser.parse();
                 List<Operator> result = OperatorFactory.operatorsFromTokens(
-						streamParser.getTokens(),
+                        streamParser.getTokens(),
                         this.contentStream.getResources());
                 return Collections.unmodifiableList(result);
             }

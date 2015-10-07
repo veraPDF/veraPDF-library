@@ -27,7 +27,6 @@ import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Properties;
 
 /**
  * Validates PDF in a new threat.
