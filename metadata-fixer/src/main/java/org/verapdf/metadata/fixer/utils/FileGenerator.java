@@ -1,6 +1,7 @@
 package org.verapdf.metadata.fixer.utils;
 
 import java.io.File;
+import java.nio.file.Path;
 
 /**
  * Class for generate non existing file.
@@ -95,7 +96,7 @@ public class FileGenerator {
 	 * {@code fileName}, or {@code prefix} are {@code null}
 	 */
 	public static File createOutputFile(String folderPath, String fileName, String prefix) {
-		if (folderPath == null || folderPath.trim().isEmpty()) {
+		if (folderPath == null) {
 			throw new IllegalArgumentException("Incorrect path to folder.");
 		}
 
@@ -103,7 +104,7 @@ public class FileGenerator {
 			throw new IllegalArgumentException("Incorrect file name");
 		}
 
-		if (prefix == null || prefix.trim().isEmpty()) {
+		if (prefix == null) {
 			throw new IllegalArgumentException("Incorrect prefix is used");
 		}
 
