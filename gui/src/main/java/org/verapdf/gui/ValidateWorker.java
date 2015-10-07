@@ -27,6 +27,7 @@ import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Properties;
 
 /**
  * Validates PDF in a new threat.
@@ -81,7 +82,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 				// TODO : make field for incremental save
 				if (false) {
 					MetadataFixer fixer = new MetadataFixer(loader.getPDDocument(), info);
-					fixer.fixDocument(new File("res" + this.pdf.getName()));
+					fixer.fixDocument(loader.getFile());
 				}
 			}
 

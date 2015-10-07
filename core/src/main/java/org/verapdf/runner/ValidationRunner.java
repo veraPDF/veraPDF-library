@@ -42,7 +42,7 @@ public class ValidationRunner {
 					config.getMaxDisplayedFailedChecks());
 			if (config.getIncrementalSave() != null && !config.getIncrementalSave().trim().isEmpty()) {
 				MetadataFixer fixer = new MetadataFixer(loader.getPDDocument(), info);
-				fixer.fixDocument(new File(config.getIncrementalSave()));
+				fixer.fixDocument(loader.getFile());
 			}
 			return info;
             // TODO: Better exception handling, we need a policy and this isn't it.

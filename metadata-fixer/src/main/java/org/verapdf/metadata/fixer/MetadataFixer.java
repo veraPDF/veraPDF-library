@@ -18,6 +18,7 @@ import org.apache.xmpbox.xml.XmpParsingException;
 import org.apache.xmpbox.xml.XmpSerializer;
 import org.verapdf.metadata.fixer.entity.FixReport;
 import org.verapdf.metadata.fixer.entity.ValidationStatus;
+import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector;
 import org.verapdf.validation.report.model.ValidationInfo;
 import org.xml.sax.SAXException;
@@ -82,7 +83,25 @@ public class MetadataFixer {
 		return null;
 	}
 
-	public FixReport fixDocument(File outputFile) throws IOException, URISyntaxException,
+	public FixReport fixDocument(File input) throws IOException, URISyntaxException,
+			ParserConfigurationException, TransformerException, SAXException {
+		File output = FileGenerator.createOutputFile(input);
+		return fixDocument(new BufferedOutputStream(new FileOutputStream(output)));
+	}
+
+	public FixReport fixDocument(File inputFile, String prefix) throws IOException, URISyntaxException,
+			TransformerException, ParserConfigurationException, SAXException {
+		File output = FileGenerator.createOutputFile(inputFile, prefix);
+		return fixDocument(new BufferedOutputStream(new FileOutputStream(output)));
+	}
+
+	public FixReport fixDocument(String folderPath, String fileName, String prefix) throws IOException, URISyntaxException,
+			TransformerException, ParserConfigurationException, SAXException {
+		File output = FileGenerator.createOutputFile(folderPath, fileName, prefix);
+		return fixDocument(new BufferedOutputStream(new FileOutputStream(output)));
+	}
+
+	public FixReport fixDocument(OutputStream output) throws IOException, URISyntaxException,
 			TransformerException, ParserConfigurationException, SAXException {
 		FixReport report;
 		if (this.validationResult.getResult().isCompliant()) {
@@ -109,7 +128,7 @@ public class MetadataFixer {
 					break;
 			}
 
-			saveDocumentIncremental(outputFile);
+			saveDocumentIncremental(output);
 
 			return report;
 		} else {
@@ -271,7 +290,7 @@ public class MetadataFixer {
 				info.getModificationDate() != null;
 	}
 
-	private void saveDocumentIncremental(File output) throws IOException, TransformerException {
+	private void saveDocumentIncremental(OutputStream output) throws IOException, TransformerException {
 		PDMetadata metadata = this.document.getDocumentCatalog().getMetadata();
 		checkFilters(metadata);
 		if (metadata.getStream().isNeedToBeUpdated()) {
@@ -281,9 +300,8 @@ public class MetadataFixer {
 		}
 		COSDictionary infoDict = this.document.getDocumentInformation().getCOSObject();
 		if (metadata.getStream().isNeedToBeUpdated() || infoDict.isNeedToBeUpdated()) {
-			try (OutputStream out = new BufferedOutputStream(new FileOutputStream(output))) {
-				this.document.saveIncremental(out);
-			}
+			this.document.saveIncremental(output);
+			// TODO : are we need to close stream after save?
 		}
 	}
 
