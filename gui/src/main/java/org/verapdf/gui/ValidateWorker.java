@@ -10,7 +10,6 @@ import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.gui.tools.SettingsManager;
 import org.verapdf.metadata.fixer.MetadataFixer;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.report.HTMLReport;
@@ -40,7 +39,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 	private File pdf;
 	private File profile;
 	private CheckerPanel parent;
-	private SettingsManager settings;
+	private Settings settings;
 	private File xmlReport = null;
 	private File htmlReport = null;
 
@@ -55,7 +54,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 	 * @param profile  validation profile for validating
 	 * @param settings settings for validation
 	 */
-	public ValidateWorker(CheckerPanel parent, File pdf, File profile, SettingsManager settings) {
+	public ValidateWorker(CheckerPanel parent, File pdf, File profile, Settings settings) {
 		this.parent = parent;
 		this.pdf = pdf;
 		this.profile = profile;
@@ -87,11 +86,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 			if ((flag & (1 << 1)) == (1 << 1)) {
 				try {
-					File config = null;
-					if (settings.getFeaturesPluginsConfigFilePath() != null) {
-						config = settings.getFeaturesPluginsConfigFilePath().toFile();
-					}
-					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument(), config);
+					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument(), settings.getFeaturesPluginsConfigFilePath().toFile());
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(this.parent,
 							"Some error in creating features collection.",

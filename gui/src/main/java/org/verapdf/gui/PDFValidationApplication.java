@@ -2,7 +2,6 @@ package org.verapdf.gui;
 
 import org.apache.log4j.Logger;
 import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.gui.tools.SettingsManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -26,7 +25,7 @@ public class PDFValidationApplication extends JFrame {
 	private static final Logger LOGGER = Logger.getLogger(PDFValidationApplication.class);
 
 	private AboutPanel aboutPanel;
-	private SettingsManager settings;
+	private Settings settings;
 	private SettingsPanel settingsPanel;
 	private CheckerPanel checkerPanel;
 
@@ -40,7 +39,7 @@ public class PDFValidationApplication extends JFrame {
 
 		setTitle(GUIConstants.TITLE);
 
-		settings = new SettingsManager();
+		settings = new Settings();
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -66,9 +65,11 @@ public class PDFValidationApplication extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (settingsPanel != null && settingsPanel.showDialog(PDFValidationApplication.this, "Settings", settings)) {
-					settings.setState(settingsPanel.getProcessingType(), settingsPanel.isDispPassedRules(),
-							settingsPanel.getFailedChecksNumber(), settingsPanel.getFailedChecksDisplayNumber(),
-							settingsPanel.getFeaturesPluginConfigPath());
+					settings.setProcessingType(settingsPanel.getProcessingType());
+					settings.setShowPassedRules(settingsPanel.isDispPassedRules());
+					settings.setMaxNumberOfFailedChecks(settingsPanel.getFailedChecksNumber());
+					settings.setMaxNumberOfDisplayedFailedChecks(settingsPanel.getFailedChecksDisplayNumber());
+					settings.setFeaturesPluginsConfigFilePath(settingsPanel.getFeaturesPluginConfigPath());
 				}
 			}
 		});

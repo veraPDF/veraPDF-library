@@ -38,7 +38,7 @@ public final class FeaturesReporterConfigurator {
 	 * @param config   config file for reporter configurating
 	 */
 	public static void configurate(FeaturesReporter reporter, File config) {
-		if (config != null && config.exists()) {
+		if (config != null && config.isFile()) {
 			try {
 				List<ExtractorStructure> exts = parse(config);
 				for (ExtractorStructure ext : exts) {

@@ -1,7 +1,7 @@
 package org.verapdf.gui;
 
+import org.verapdf.gui.config.ConfigBuilder;
 import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.gui.tools.SettingsManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -87,7 +87,6 @@ class SettingsPanel extends JPanel {
 		panel.add(new JLabel(GUIConstants.THIRDPARTY_CONFIG_LABEL_TEXT));
 
 
-
 		JButton choose = new JButton(GUIConstants.THIRDPARTY_CONFIG_CHOOSE_BUTTON);
 
 		chooser = new JFileChooser();
@@ -134,8 +133,12 @@ class SettingsPanel extends JPanel {
 		okButton = new JButton("Ok");
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				ok = true;
-				dialog.setVisible(false);
+				if (ConfigBuilder.isValidPathForFeaturesPluginsConfigFilePath(FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText()))) {
+					ok = true;
+					dialog.setVisible(false);
+				} else {
+					JOptionPane.showMessageDialog(SettingsPanel.this, "Invalid path for features plugins config file.", "Invalid data", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 
@@ -158,7 +161,7 @@ class SettingsPanel extends JPanel {
 	 * @param parent parent component of the dialog
 	 * @param title  title of the dialog
 	 */
-	public boolean showDialog(Component parent, String title, SettingsManager settings) {
+	public boolean showDialog(Component parent, String title, Settings settings) {
 
 		ok = false;
 
@@ -191,11 +194,9 @@ class SettingsPanel extends JPanel {
 				feat.setSelected(true);
 				break;
 		}
-		if (settings.getFeaturesPluginsConfigFilePath() != null) {
-			thirdPartyProfilePathField.setText(settings.getFeaturesPluginsConfigFilePath().toString());
-		} else {
-			thirdPartyProfilePathField.setText("");
-		}
+
+		thirdPartyProfilePathField.setText(settings.getFeaturesPluginsConfigFilePath().toString());
+
 
 		Frame owner;
 		if (parent instanceof Frame) {
@@ -296,10 +297,6 @@ class SettingsPanel extends JPanel {
 	 * @return path to the config file for features plugins
 	 */
 	public Path getFeaturesPluginConfigPath() {
-		if ("".equals(thirdPartyProfilePathField.getText()) || thirdPartyProfilePathField.getText() == null) {
-			return null;
-		} else {
-			return FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText());
-		}
+		return FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText());
 	}
 }

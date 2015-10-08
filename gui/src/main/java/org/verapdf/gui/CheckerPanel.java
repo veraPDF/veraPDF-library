@@ -2,7 +2,6 @@ package org.verapdf.gui;
 
 import org.apache.log4j.Logger;
 import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.gui.tools.SettingsManager;
 import org.verapdf.validation.report.model.ValidationInfo;
 
 import javax.swing.*;
@@ -51,7 +50,7 @@ public class CheckerPanel extends JPanel {
 	private JButton saveHTML;
 	private JButton viewHTML;
 
-	private SettingsManager settings;
+	private Settings settings;
 
 	JProgressBar progressBar;
 	transient ValidateWorker validateWorker;
@@ -63,7 +62,7 @@ public class CheckerPanel extends JPanel {
 	 * @throws IOException when there's a problem reading an image from the input stream
 	 * @throws IllegalArgumentException when parameter settings for the constructor is null
 	 */
-	public CheckerPanel(final SettingsManager settings) throws IOException {
+	public CheckerPanel(final Settings settings) throws IOException {
 
 		this.settings = settings;
 		if (settings == null) {
