@@ -20,6 +20,10 @@ import org.verapdf.metadata.fixer.entity.FixReport;
 import org.verapdf.metadata.fixer.entity.ValidationStatus;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector;
+import org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser;
+import org.verapdf.metadata.fixer.utils.parser.XMLProcessedObjectsParser;
+import org.verapdf.validation.profile.model.ValidationProfile;
+import org.verapdf.validation.report.model.Rule;
 import org.verapdf.validation.report.model.ValidationInfo;
 import org.xml.sax.SAXException;
 
@@ -27,6 +31,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +58,8 @@ public class MetadataFixer {
 	private final PDDocument document;
 	private final XMPMetadata metadata;
 	private final ValidationInfo validationResult;
+
+	private ProcessedObjectsParser parser;
 
 	public MetadataFixer(PDDocument document,
 						 ValidationInfo validationResult) {
@@ -83,24 +90,100 @@ public class MetadataFixer {
 		return null;
 	}
 
+	/**
+	 * Initialize parser of processed objects. By default using
+	 * {@link org.verapdf.metadata.fixer.utils.parser.XMLProcessedObjectsParser}
+	 *
+	 * @param parser parser of processed objects
+	 */
+	public void setParser(ProcessedObjectsParser parser) {
+		this.parser = parser;
+	}
+
+	/**
+	 * Fix metadata and info dictionary for {@link MetadataFixer#document} and
+	 * save fixed file near source file. If fixer no changes apply then no save
+	 * will be produced.
+	 * <p>
+	 * {@code input} is file near which will be save fixed version of document.
+	 * Input file give provides path to the folder and the result file name
+	 *
+	 * @param input file near which will be save fixed version of document
+	 * @return report of made corrections
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @throws ParserConfigurationException
+	 * @throws TransformerException
+	 * @throws SAXException
+	 */
 	public FixReport fixDocument(File input) throws IOException, URISyntaxException,
 			ParserConfigurationException, TransformerException, SAXException {
 		File output = FileGenerator.createOutputFile(input);
-		return fixDocument(new BufferedOutputStream(new FileOutputStream(output)));
+		return fixDocument(getOutputStream(output));
 	}
 
+	/**
+	 * Fix metadata and info dictionary for {@link MetadataFixer#document} and
+	 * save fixed file near source file. If fixer no changes apply then no save
+	 * will be produced.
+	 * <p>
+	 * {@code input} is file near which will be save fixed version of document.
+	 * Input file provides path to the folder and the result file name. Prefix
+	 * provide additional part for the result file name.
+	 *
+	 * @param inputFile file near which will be save fixed version of document
+	 * @param prefix    for the result file name
+	 * @return report of made corrections
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @throws ParserConfigurationException
+	 * @throws TransformerException
+	 * @throws SAXException
+	 */
 	public FixReport fixDocument(File inputFile, String prefix) throws IOException, URISyntaxException,
 			TransformerException, ParserConfigurationException, SAXException {
 		File output = FileGenerator.createOutputFile(inputFile, prefix);
-		return fixDocument(new BufferedOutputStream(new FileOutputStream(output)));
+		return fixDocument(getOutputStream(output));
 	}
 
+	/**
+	 * Fix metadata and info dictionary for {@link MetadataFixer#document} and
+	 * save fixed file a certain path. If fixer no changes apply then no save
+	 * will be produced.
+	 *
+	 * @param folderPath a certain path for store result file
+	 * @param fileName   the result file name
+	 * @param prefix     for the result file name
+	 * @return report of made corrections
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @throws ParserConfigurationException
+	 * @throws TransformerException
+	 * @throws SAXException
+	 */
 	public FixReport fixDocument(String folderPath, String fileName, String prefix) throws IOException, URISyntaxException,
 			TransformerException, ParserConfigurationException, SAXException {
 		File output = FileGenerator.createOutputFile(folderPath, fileName, prefix);
-		return fixDocument(new BufferedOutputStream(new FileOutputStream(output)));
+		return fixDocument(getOutputStream(output));
 	}
 
+	private BufferedOutputStream getOutputStream(File output) throws FileNotFoundException {
+		return new BufferedOutputStream(new FileOutputStream(output));
+	}
+
+	/**
+	 * Fix metadata and info dictionary for {@link MetadataFixer#document} and
+	 * save fixed file a certain path. If fixer no changes apply then no save
+	 * will be produced.
+	 *
+	 * @param output stream to result file
+	 * @return report of made corrections
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @throws TransformerException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 */
 	public FixReport fixDocument(OutputStream output) throws IOException, URISyntaxException,
 			TransformerException, ParserConfigurationException, SAXException {
 		FixReport report;
@@ -109,8 +192,7 @@ public class MetadataFixer {
 			return report;
 		} else if (this.metadata != null) {
 
-			report = ProcessedObjectsInspector.validationStatus(this.validationResult.getResult()
-					.getDetails().getRules(), this.validationResult.getProfile().getValidationProfile());
+			report = getFixReport();
 
 			switch (report.getStatus()) {
 				case INVALID_DOCUMENT:
@@ -137,6 +219,17 @@ public class MetadataFixer {
 			report.addFix("Problems with metadata obtain, nothing to save or change.");
 			return report;
 		}
+	}
+
+	private FixReport getFixReport() throws IOException, URISyntaxException, ParserConfigurationException, SAXException {
+		FixReport report;
+		List<Rule> rules = this.validationResult.getResult().getDetails().getRules();
+		ValidationProfile profile = this.validationResult.getProfile().getValidationProfile();
+		if (parser == null) {
+			parser = XMLProcessedObjectsParser.getInstance();
+		}
+		report = ProcessedObjectsInspector.validationStatus(rules, profile, parser);
+		return report;
 	}
 
 	private void fixMetadata(FixReport entity) {

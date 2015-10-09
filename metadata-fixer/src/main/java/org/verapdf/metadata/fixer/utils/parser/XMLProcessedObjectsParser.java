@@ -10,13 +10,11 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Properties;
 
 /**
@@ -39,17 +37,17 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
 		InputStream inputStream = ClassLoader.class.getResourceAsStream(PROCESSED_OBJECTS_PROPERTIES_PATH);
 		prop.load(inputStream);
 		String appliedObjectsPath = prop.getProperty(this.getProcessedObjectsPathProperty());
-		File xml = new File(getSystemIndependentPath(appliedObjectsPath));
+		InputStream xml = ClassLoader.class.getResourceAsStream(appliedObjectsPath);
 		return this.getProcessedObjects(xml);
 	}
 
 	@Override
 	public ProcessedObjects getProcessedObjects(String path) throws IOException, SAXException, ParserConfigurationException {
-		return this.getProcessedObjects(new File(path));
+		return this.getProcessedObjects(new BufferedInputStream(new FileInputStream(path)));
 	}
 
 	@Override
-	public ProcessedObjects getProcessedObjects(File xml) throws ParserConfigurationException, IOException, SAXException {
+	public ProcessedObjects getProcessedObjects(InputStream xml) throws ParserConfigurationException, IOException, SAXException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
 		DocumentBuilder builder = factory.newDocumentBuilder();
@@ -104,12 +102,6 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
 		boolean isValidNode = type != null && !type.trim().isEmpty() &&
 				test != null && !test.trim().isEmpty();
 		return isValidNode ? new RuleDescription(test, type) : null;
-	}
-
-	private static String getSystemIndependentPath(String path) throws URISyntaxException {
-		URL resourceUrl = ClassLoader.class.getResource(path);
-		Path resourcePath = Paths.get(resourceUrl.toURI());
-		return resourcePath.toString();
 	}
 
 	public static ProcessedObjectsParser getInstance() {
