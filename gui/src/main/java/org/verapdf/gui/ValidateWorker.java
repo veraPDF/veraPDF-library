@@ -10,7 +10,6 @@ import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.gui.tools.SettingsManager;
 import org.verapdf.metadata.fixer.MetadataFixer;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.report.HTMLReport;
@@ -27,35 +26,28 @@ import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 
 /**
  * Validates PDF in a new threat.
  *
  * @author Maksim Bezrukov
  */
-public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
+class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 	private static final Logger LOGGER = Logger.getLogger(ValidateWorker.class);
 
 	private File pdf;
 	private File profile;
 	private CheckerPanel parent;
-	private SettingsManager settings;
+	private Settings settings;
 	private File xmlReport = null;
 	private File htmlReport = null;
 
 	private long startTimeOfValidation;
 	private long endTimeOfValidation;
 
-	/**
-	 * Creates new validate worker
-	 *
-	 * @param parent   parent component
-	 * @param pdf      pdf file for validating
-	 * @param profile  validation profile for validating
-	 * @param settings settings for validation
-	 */
-	public ValidateWorker(CheckerPanel parent, File pdf, File profile, SettingsManager settings) {
+	ValidateWorker(CheckerPanel parent, File pdf, File profile, Settings settings) {
 		this.parent = parent;
 		this.pdf = pdf;
 		this.profile = profile;
@@ -78,20 +70,20 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 				org.verapdf.model.baselayer.Object root = loader.getRoot();
 				info = runValidator(root);
 
-				// TODO : make field for incremental save
-				if (false) {
+				if (settings.isFixMetadata()) {
 					MetadataFixer fixer = new MetadataFixer(loader.getPDDocument(), info);
-					fixer.fixDocument(loader.getFile());
+					Path path = settings.getFixMetadataPathFolder();
+					if (!path.toString().isEmpty()) {
+						fixer.fixDocument(settings.getFixMetadataPathFolder().toString(), loader.getFile().getName(), settings.getMetadataFixerPrefix());
+					} else {
+						fixer.fixDocument(loader.getFile(), settings.getMetadataFixerPrefix());
+					}
 				}
 			}
 
 			if ((flag & (1 << 1)) == (1 << 1)) {
 				try {
-					File config = null;
-					if (settings.getFeaturesPluginsConfigFilePath() != null) {
-						config = settings.getFeaturesPluginsConfigFilePath().toFile();
-					}
-					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument(), config);
+					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument(), settings.getFeaturesPluginsConfigFilePath().toFile());
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(this.parent,
 							"Some error in creating features collection.",

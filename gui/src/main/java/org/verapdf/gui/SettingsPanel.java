@@ -1,7 +1,7 @@
 package org.verapdf.gui;
 
+import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.gui.tools.SettingsManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -34,17 +34,18 @@ class SettingsPanel extends JPanel {
 	private JCheckBox hidePassedRules;
 	private JTextField thirdPartyProfilePathField;
 	private JFileChooser chooser;
+	private JCheckBox fixMetadata;
+	private JTextField fixMetadataPrefix;
+	private JTextField fixMetadataFolder;
+	private JFileChooser folderChooser;
 
-	/**
-	 * Settings panel
-	 */
-	public SettingsPanel() throws IOException {
+	SettingsPanel() throws IOException {
 		setBorder(new EmptyBorder(GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS));
 		setLayout(new BorderLayout());
 
 		JPanel panel = new JPanel();
 		ButtonGroup bGroup = new ButtonGroup();
-		panel.setLayout(new GridLayout(8, 2));
+		panel.setLayout(new GridLayout(10, 2));
 
 		panel.add(new JPanel());
 		valAndFeat = new JRadioButton(GUIConstants.VALIDATING_AND_FEATURES);
@@ -85,7 +86,6 @@ class SettingsPanel extends JPanel {
 		panel.add(panel2);
 
 		panel.add(new JLabel(GUIConstants.THIRDPARTY_CONFIG_LABEL_TEXT));
-
 
 
 		JButton choose = new JButton(GUIConstants.THIRDPARTY_CONFIG_CHOOSE_BUTTON);
@@ -129,13 +129,62 @@ class SettingsPanel extends JPanel {
 		panel3.add(choose);
 		panel.add(panel3);
 
+		panel.add(new JLabel(GUIConstants.FIX_METADATA_LABEL_TEXT));
+		fixMetadata = new JCheckBox();
+		panel.add(fixMetadata);
+
+		panel.add(new JLabel(GUIConstants.FIX_METADATA_PREFIX_LABEL_TEXT));
+		fixMetadataPrefix = new JTextField();
+		panel.add(fixMetadataPrefix);
+
+		panel.add(new JLabel(GUIConstants.SELECTED_PATH_FOR_FIXER_LABEL_TEXT));
+
+		JButton choose2 = new JButton(GUIConstants.THIRDPARTY_CONFIG_CHOOSE_BUTTON);
+		folderChooser = new JFileChooser();
+		folderChooser.setCurrentDirectory(currentDir);
+		folderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		choose2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int resultChoose = folderChooser.showOpenDialog(SettingsPanel.this);
+				if (resultChoose == JFileChooser.APPROVE_OPTION) {
+					if (!folderChooser.getSelectedFile().isDirectory()) {
+						JOptionPane.showMessageDialog(SettingsPanel.this,
+								"Error. Selected directory doesn't exist.",
+								GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+					} else {
+						fixMetadataFolder.setText(folderChooser.getSelectedFile().getAbsolutePath());
+					}
+				}
+
+			}
+		});
+		fixMetadataFolder = new JTextField();
+		fixMetadataFolder.setToolTipText(GUIConstants.SELECTED_PATH_FOR_FIXER_TOOLTIP);
+		JPanel panel4 = new JPanel();
+		panel4.setLayout(new BoxLayout(panel4, BoxLayout.X_AXIS));
+		panel4.add(fixMetadataFolder);
+		panel4.add(choose2);
+		panel.add(panel4);
+
 		add(panel, BorderLayout.CENTER);
 
 		okButton = new JButton("Ok");
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				ok = true;
-				dialog.setVisible(false);
+				boolean isEverythingValid = true;
+				if (!Config.Builder.isValidPathForFeaturesPluginsConfigFilePath(FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText()))) {
+					isEverythingValid = false;
+					JOptionPane.showMessageDialog(SettingsPanel.this, "Invalid path for features plugins config file.", "Invalid data", JOptionPane.INFORMATION_MESSAGE);
+				}
+				if (!Config.Builder.isValidPathForFixMetadataPathFolder(FileSystems.getDefault().getPath(fixMetadataFolder.getText()))) {
+					isEverythingValid = false;
+					JOptionPane.showMessageDialog(SettingsPanel.this, "Invalid path for saving fixed files.", "Invalid data", JOptionPane.INFORMATION_MESSAGE);
+				}
+				if (isEverythingValid) {
+					ok = true;
+					dialog.setVisible(false);
+				}
 			}
 		});
 
@@ -152,18 +201,11 @@ class SettingsPanel extends JPanel {
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
 
-	/**
-	 * Shows about dialog
-	 *
-	 * @param parent parent component of the dialog
-	 * @param title  title of the dialog
-	 */
-	public boolean showDialog(Component parent, String title, SettingsManager settings) {
+	boolean showDialog(Component parent, String title, Settings settings) {
 
 		ok = false;
 
-		boolean dispPassedRulesBool = settings.isShowPassedRules();
-		hidePassedRules.setSelected(dispPassedRulesBool);
+		hidePassedRules.setSelected(settings.isShowPassedRules());
 
 		int numbOfFail = settings.getMaxNumberOfFailedChecks();
 		if (numbOfFail == -1) {
@@ -191,11 +233,11 @@ class SettingsPanel extends JPanel {
 				feat.setSelected(true);
 				break;
 		}
-		if (settings.getFeaturesPluginsConfigFilePath() != null) {
-			thirdPartyProfilePathField.setText(settings.getFeaturesPluginsConfigFilePath().toString());
-		} else {
-			thirdPartyProfilePathField.setText("");
-		}
+		thirdPartyProfilePathField.setText(settings.getFeaturesPluginsConfigFilePath().toString());
+
+		fixMetadata.setSelected(settings.isFixMetadata());
+		fixMetadataPrefix.setText(settings.getMetadataFixerPrefix());
+		fixMetadataFolder.setText(settings.getFixMetadataPathFolder().toString());
 
 		Frame owner;
 		if (parent instanceof Frame) {
@@ -214,7 +256,7 @@ class SettingsPanel extends JPanel {
 		}
 
 		dialog.setLocation(GUIConstants.SETTINGSDIALOG_COORD_X, GUIConstants.SETTINGSDIALOG_COORD_Y);
-		dialog.setSize(650, 281);
+		dialog.setSize(650, 311);
 		dialog.setVisible(true);
 
 		return ok;
@@ -256,10 +298,7 @@ class SettingsPanel extends JPanel {
 		};
 	}
 
-	/**
-	 * @return integer that indicates selected processing type.
-	 */
-	public int getProcessingType() {
+	int getProcessingType() {
 		if (valAndFeat.isSelected()) {
 			return GUIConstants.VALIDATING_AND_FEATURES_FLAG;
 		} else if (val.isSelected()) {
@@ -269,37 +308,33 @@ class SettingsPanel extends JPanel {
 		}
 	}
 
-	/**
-	 * @return true if desplay passed pules option selected
-	 */
-	public boolean isDispPassedRules() {
+	boolean isDispPassedRules() {
 		return hidePassedRules.isSelected();
 	}
 
-	/**
-	 * @return selected number for maximum fail checks for a rule. If not selected returns -1
-	 */
-	public int getFailedChecksNumber() {
+	int getFailedChecksNumber() {
 		String str = numberOfFailed.getText();
 		return str.length() > 0 ? Integer.parseInt(str) : -1;
 	}
 
-	/**
-	 * @return selected number for maximum displayed fail checks for a rule. If not selected returns -1
-	 */
-	public int getFailedChecksDisplayNumber() {
+	int getFailedChecksDisplayNumber() {
 		String str = numberOfFailedDisplay.getText();
 		return str.length() > 0 ? Integer.parseInt(str) : -1;
 	}
 
-	/**
-	 * @return path to the config file for features plugins
-	 */
-	public Path getFeaturesPluginConfigPath() {
-		if ("".equals(thirdPartyProfilePathField.getText()) || thirdPartyProfilePathField.getText() == null) {
-			return null;
-		} else {
-			return FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText());
-		}
+	Path getFeaturesPluginConfigPath() {
+		return FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText());
+	}
+
+	boolean isFixMetadata() {
+		return fixMetadata.isSelected();
+	}
+
+	Path getFixMetadataDirectory() {
+		return FileSystems.getDefault().getPath(fixMetadataFolder.getText());
+	}
+
+	String getFixMetadataPrefix() {
+		return fixMetadataPrefix.getText();
 	}
 }

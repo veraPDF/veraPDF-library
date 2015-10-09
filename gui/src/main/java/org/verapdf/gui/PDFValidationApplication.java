@@ -2,7 +2,6 @@ package org.verapdf.gui;
 
 import org.apache.log4j.Logger;
 import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.gui.tools.SettingsManager;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,29 +17,23 @@ import java.io.IOException;
  */
 public class PDFValidationApplication extends JFrame {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -5569669411392145783L;
 
 	private static final Logger LOGGER = Logger.getLogger(PDFValidationApplication.class);
 
 	private AboutPanel aboutPanel;
-	private SettingsManager settings;
+	private Settings settings;
 	private SettingsPanel settingsPanel;
 	private CheckerPanel checkerPanel;
 
-	/**
-	 * Creates the frame.
-	 */
-	public PDFValidationApplication() {
+	private PDFValidationApplication() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(GUIConstants.FRAME_COORD_X, GUIConstants.FRAME_COORD_Y, GUIConstants.FRAME_WIDTH, GUIConstants.FRAME_HEIGHT);
 		setResizable(false);
 
 		setTitle(GUIConstants.TITLE);
 
-		settings = new SettingsManager();
+		settings = new Settings();
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -66,9 +59,14 @@ public class PDFValidationApplication extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (settingsPanel != null && settingsPanel.showDialog(PDFValidationApplication.this, "Settings", settings)) {
-					settings.setState(settingsPanel.getProcessingType(), settingsPanel.isDispPassedRules(),
-							settingsPanel.getFailedChecksNumber(), settingsPanel.getFailedChecksDisplayNumber(),
-							settingsPanel.getFeaturesPluginConfigPath());
+					settings.setProcessingType(settingsPanel.getProcessingType());
+					settings.setShowPassedRules(settingsPanel.isDispPassedRules());
+					settings.setMaxNumberOfFailedChecks(settingsPanel.getFailedChecksNumber());
+					settings.setMaxNumberOfDisplayedFailedChecks(settingsPanel.getFailedChecksDisplayNumber());
+					settings.setFeaturesPluginsConfigFilePath(settingsPanel.getFeaturesPluginConfigPath());
+					settings.setFixMetadata(settingsPanel.isFixMetadata());
+					settings.setFixMetadataPathFolder(settingsPanel.getFixMetadataDirectory());
+					settings.setMetadataFixerPrefix(settingsPanel.getFixMetadataPrefix());
 				}
 			}
 		});

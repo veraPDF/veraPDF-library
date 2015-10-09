@@ -31,12 +31,7 @@ class AboutPanel extends JPanel {
 	private JButton okButton;
 	JDialog dialog;
 
-	/**
-	 * About panel
-	 *
-	 * @throws IOException throws when there is a problem with reading image from the input stream
-	 */
-	public AboutPanel() throws IOException {
+	AboutPanel() throws IOException {
 		setLayout(new BorderLayout());
 
 
@@ -92,13 +87,7 @@ class AboutPanel extends JPanel {
 		add(bottomPanel, BorderLayout.SOUTH);
 	}
 
-	/**
-	 * Shows about dialog
-	 *
-	 * @param parent parent component of the dialog
-	 * @param title  title of the dialog
-	 */
-	public void showDialog(Component parent, String title) {
+	void showDialog(Component parent, String title) {
 
 		Frame owner;
 		if (parent instanceof Frame) {

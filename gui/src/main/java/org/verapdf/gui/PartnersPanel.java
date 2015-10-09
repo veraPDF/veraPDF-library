@@ -18,7 +18,7 @@ import java.util.Properties;
  *
  * @author Maksim Bezrukov
  */
-public class PartnersPanel extends JPanel {
+class PartnersPanel extends JPanel {
 
 	/**
 	 * ID for serialisation
@@ -29,14 +29,7 @@ public class PartnersPanel extends JPanel {
 	private JLabel consortium;
 	private JLabel version;
 
-	/**
-	 * Creates logo panel
-	 *
-	 * @param logoName        name of the partners logo image
-	 * @param backgroundColor background color
-	 * @throws IOException throws when there is a problem with reading image from the input stream
-	 */
-	public PartnersPanel(String logoName, Color backgroundColor) throws IOException {
+	PartnersPanel(String logoName, Color backgroundColor) throws IOException {
 		try (InputStream is = getClass().getClassLoader().getResourceAsStream(logoName)) {
 			partnersLogo = ImageIO.read(is);
 		}
