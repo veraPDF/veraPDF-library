@@ -22,7 +22,7 @@ final class Settings {
 	private boolean isSerrialized;
 	private Path path = null;
 
-	public Settings() {
+	Settings() {
 		File user = new File(System.getProperty("user.home"));
 		File f = new File(user, ".veraPDF");
 		if (!f.exists() && !f.mkdir()) {
@@ -46,11 +46,11 @@ final class Settings {
 		}
 	}
 
-	public int getProcessingType() {
+	int getProcessingType() {
 		return config.getProcessingType();
 	}
 
-	public void setProcessingType(int processingType) {
+	void setProcessingType(int processingType) {
 		builder.processingType(processingType);
 		this.config = builder.build();
 		if (isSerrialized) {
@@ -62,11 +62,11 @@ final class Settings {
 		}
 	}
 
-	public boolean isShowPassedRules() {
+	boolean isShowPassedRules() {
 		return config.isShowPassedRules();
 	}
 
-	public void setShowPassedRules(boolean showPassedRules) {
+	void setShowPassedRules(boolean showPassedRules) {
 		builder.showPassedRules(showPassedRules);
 		this.config = builder.build();
 		if (isSerrialized) {
@@ -78,11 +78,11 @@ final class Settings {
 		}
 	}
 
-	public int getMaxNumberOfFailedChecks() {
+	int getMaxNumberOfFailedChecks() {
 		return config.getMaxNumberOfFailedChecks();
 	}
 
-	public void setMaxNumberOfFailedChecks(int maxNumberOfFailedChecks) {
+	void setMaxNumberOfFailedChecks(int maxNumberOfFailedChecks) {
 		builder.maxNumberOfFailedChecks(maxNumberOfFailedChecks);
 		this.config = builder.build();
 		if (isSerrialized) {
@@ -94,11 +94,11 @@ final class Settings {
 		}
 	}
 
-	public int getMaxNumberOfDisplayedFailedChecks() {
+	int getMaxNumberOfDisplayedFailedChecks() {
 		return config.getMaxNumberOfDisplayedFailedChecks();
 	}
 
-	public void setMaxNumberOfDisplayedFailedChecks(int maxNumberOfDisplayedFailedChecks) {
+	void setMaxNumberOfDisplayedFailedChecks(int maxNumberOfDisplayedFailedChecks) {
 		builder.maxNumberOfDisplayedFailedChecks(maxNumberOfDisplayedFailedChecks);
 		this.config = builder.build();
 		if (isSerrialized) {
@@ -110,11 +110,11 @@ final class Settings {
 		}
 	}
 
-	public Path getFeaturesPluginsConfigFilePath() {
+	Path getFeaturesPluginsConfigFilePath() {
 		return config.getFeaturesPluginsConfigFilePath();
 	}
 
-	public void setFeaturesPluginsConfigFilePath(Path featuresPluginsConfigFilePath) {
+	void setFeaturesPluginsConfigFilePath(Path featuresPluginsConfigFilePath) {
 		builder.featuresPluginsConfigFilePath(featuresPluginsConfigFilePath);
 		this.config = builder.build();
 		if (isSerrialized) {
@@ -126,11 +126,11 @@ final class Settings {
 		}
 	}
 
-	public boolean isFixMetadata() {
+	boolean isFixMetadata() {
 		return config.isFixMetadata();
 	}
 
-	public void setFixMetadata(boolean fixMetadata) {
+	void setFixMetadata(boolean fixMetadata) {
 		builder.fixMetadata(fixMetadata);
 		this.config = builder.build();
 		if (isSerrialized) {
@@ -142,11 +142,11 @@ final class Settings {
 		}
 	}
 
-	public String getMetadataFixerPrefix() {
+	String getMetadataFixerPrefix() {
 		return config.getMetadataFixerPrefix();
 	}
 
-	public void setMetadataFixerPrefix(String metadataFixerPrefix) {
+	void setMetadataFixerPrefix(String metadataFixerPrefix) {
 		builder.metadataFixerPrefix(metadataFixerPrefix);
 		this.config = builder.build();
 		if (isSerrialized) {
@@ -158,11 +158,11 @@ final class Settings {
 		}
 	}
 
-	public Path getFixMetadataPathFolder() {
+	Path getFixMetadataPathFolder() {
 		return config.getFixMetadataPathFolder();
 	}
 
-	public void setFixMetadataPathFolder(Path fixMetadataPathFolder) {
+	void setFixMetadataPathFolder(Path fixMetadataPathFolder) {
 		builder.fixMetadataPathFolder(fixMetadataPathFolder);
 		this.config = builder.build();
 		if (isSerrialized) {
