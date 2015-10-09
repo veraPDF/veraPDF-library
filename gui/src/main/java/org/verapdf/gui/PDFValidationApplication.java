@@ -64,6 +64,9 @@ public class PDFValidationApplication extends JFrame {
 					settings.setMaxNumberOfFailedChecks(settingsPanel.getFailedChecksNumber());
 					settings.setMaxNumberOfDisplayedFailedChecks(settingsPanel.getFailedChecksDisplayNumber());
 					settings.setFeaturesPluginsConfigFilePath(settingsPanel.getFeaturesPluginConfigPath());
+					settings.setFixMetadata(settingsPanel.isFixMetadata());
+					settings.setFixMetadataPathFolder(settingsPanel.getFixMetadataDirectory());
+					settings.setMetadataFixerPrefix(settingsPanel.getFixMetadataPrefix());
 				}
 			}
 		});

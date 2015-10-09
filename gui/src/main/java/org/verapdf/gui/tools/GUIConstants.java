@@ -51,8 +51,12 @@ public final class GUIConstants {
 	public static final String MAX_NUMBER_FAILED_DISPLAYED_CHECKS = "Display failed checks for rule: ";
 	public static final String MAX_NUMBER_FAILED_CHECKS = "Stop checking rule after failed checks:";
 	public static final String FEATURES_GENERATED_CORRECT = "Features report generating finished";
-	public static final String MAX_FAILED_CHECKS_SETTING_TIP = "    (1 to 999999 or empty for unlimited)";
-	public static final String MAX_FAILED_CHECKS_DISP_SETTING_TIP = "    (0 to 999999 or empty for unlimited)";
+	public static final String MAX_FAILED_CHECKS_SETTING_TIP = "  (1 to 999999 or empty for unlimited)";
+	public static final String MAX_FAILED_CHECKS_DISP_SETTING_TIP = "  (0 to 999999 or empty for unlimited)";
+	public static final String FIX_METADATA_LABEL_TEXT = "Fix metadata:";
+	public static final String SELECTED_PATH_FOR_FIXER_LABEL_TEXT = "Save fixed files into the directory:";
+	public static final String FIX_METADATA_PREFIX_LABEL_TEXT = "Save fixed files with prefix:";
+	public static final String SELECTED_PATH_FOR_FIXER_TOOLTIP = "This path determines a directory in which will be saved fixed file. Leave empty to save it near the original file.";
 
 	public static final int VALIDATING_AND_FEATURES_FLAG = 3;
 	public static final int FEATURES_FLAG = 2;

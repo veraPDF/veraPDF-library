@@ -17,18 +17,16 @@ public final class Config {
 	private final int maxNumberOfDisplayedFailedChecks;
 	private final Path featuresPluginsConfigFilePath;
 	private final boolean fixMetadata;
-	private final boolean useSelectedPathForFixer;
 	private final String metadataFixerPrefix;
 	private final Path fixMetadataPathFolder;
 
-	private Config(int processingType, boolean showPassedRules, int maxNumberOfFailedChecks, int maxNumberOfDisplayedFailedChecks, Path featuresPluginsConfigFilePath, boolean fixMetadata, boolean useSelectedPathForFixer, String metadataFixerPrefix, Path fixMetadataPathFolder) {
+	private Config(int processingType, boolean showPassedRules, int maxNumberOfFailedChecks, int maxNumberOfDisplayedFailedChecks, Path featuresPluginsConfigFilePath, boolean fixMetadata, String metadataFixerPrefix, Path fixMetadataPathFolder) {
 		this.processingType = processingType;
 		this.showPassedRules = showPassedRules;
 		this.maxNumberOfFailedChecks = maxNumberOfFailedChecks;
 		this.maxNumberOfDisplayedFailedChecks = maxNumberOfDisplayedFailedChecks;
 		this.featuresPluginsConfigFilePath = featuresPluginsConfigFilePath;
 		this.fixMetadata = fixMetadata;
-		this.useSelectedPathForFixer = useSelectedPathForFixer;
 		this.metadataFixerPrefix = metadataFixerPrefix;
 		this.fixMetadataPathFolder = fixMetadataPathFolder;
 	}
@@ -89,14 +87,6 @@ public final class Config {
 		return fixMetadataPathFolder;
 	}
 
-	/**
-	 * @return true if use selected path for fixer is on
-	 */
-	public boolean isUseSelectedPathForFixer() {
-		return useSelectedPathForFixer;
-	}
-
-
 	public static final class Builder {
 		private static final int DEFAULT_PROCESSING_TYPE = 3;
 		private static final boolean DEFAULT_SHOW_PASSED_RULES = false;
@@ -104,11 +94,10 @@ public final class Config {
 		private static final int DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS = 100;
 		private static final Path DEFAULT_FEATURES_PLUGINS_CONFIG_FILE_PATH = FileSystems.getDefault().getPath("");
 		private static final boolean DEFAULT_FIX_METADATA = false;
-		private static final boolean DEFAULT_USE_SELECTED_PATH_FOR_FIXER = false;
 		private static final String DEFAULT_METADATA_FIXER_PREFIX = FileGenerator.DEFAULT_PREFIX;
 		private static final Path DEFAULT_FIX_METADATA_PATH_FOLDER = FileSystems.getDefault().getPath("");
 
-		private static final Config DEFAULT_CONFIG = new Config(DEFAULT_PROCESSING_TYPE, DEFAULT_SHOW_PASSED_RULES, DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, DEFAULT_FEATURES_PLUGINS_CONFIG_FILE_PATH, DEFAULT_FIX_METADATA, DEFAULT_USE_SELECTED_PATH_FOR_FIXER, DEFAULT_METADATA_FIXER_PREFIX, DEFAULT_FIX_METADATA_PATH_FOLDER);
+		private static final Config DEFAULT_CONFIG = new Config(DEFAULT_PROCESSING_TYPE, DEFAULT_SHOW_PASSED_RULES, DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, DEFAULT_FEATURES_PLUGINS_CONFIG_FILE_PATH, DEFAULT_FIX_METADATA, DEFAULT_METADATA_FIXER_PREFIX, DEFAULT_FIX_METADATA_PATH_FOLDER);
 
 		private int processingType = DEFAULT_PROCESSING_TYPE;
 		private boolean showPassedRules = DEFAULT_SHOW_PASSED_RULES;
@@ -116,7 +105,6 @@ public final class Config {
 		private int maxNumberOfDisplayedFailedChecks = DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS;
 		private Path featuresPluginsConfigFilePath = DEFAULT_FEATURES_PLUGINS_CONFIG_FILE_PATH;
 		private boolean fixMetadata = DEFAULT_FIX_METADATA;
-		private boolean useSelectedPathForFixer = DEFAULT_USE_SELECTED_PATH_FOR_FIXER;
 		private String metadataFixerPrefix = DEFAULT_METADATA_FIXER_PREFIX;
 		private Path fixMetadataPathFolder = DEFAULT_FIX_METADATA_PATH_FOLDER;
 
@@ -124,7 +112,7 @@ public final class Config {
 		}
 
 		public Config build() {
-			return new Config(this.processingType, this.showPassedRules, this.maxNumberOfFailedChecks, this.maxNumberOfDisplayedFailedChecks, this.featuresPluginsConfigFilePath, this.fixMetadata, this.useSelectedPathForFixer, this.metadataFixerPrefix, this.fixMetadataPathFolder);
+			return new Config(this.processingType, this.showPassedRules, this.maxNumberOfFailedChecks, this.maxNumberOfDisplayedFailedChecks, this.featuresPluginsConfigFilePath, this.fixMetadata, this.metadataFixerPrefix, this.fixMetadataPathFolder);
 		}
 
 		public static Config buildDefaultConfig() {
@@ -133,11 +121,6 @@ public final class Config {
 
 		public Builder fixMetadata(boolean fixMetadata) {
 			this.fixMetadata = fixMetadata;
-			return this;
-		}
-
-		public Builder useSelectedPathForFixer(boolean useSelectedPathForFixer) {
-			this.useSelectedPathForFixer = useSelectedPathForFixer;
 			return this;
 		}
 
@@ -152,25 +135,6 @@ public final class Config {
 				throw new IllegalArgumentException("Prefix for metadata fixer can not be null");
 			}
 			this.metadataFixerPrefix = metadataFixerPrefix;
-			return this;
-		}
-
-		/**
-		 * Changes settings parameters
-		 *
-		 * @param fixMetadataPathFolder a path to the folder in which fixed files will be saved
-		 * @throws IllegalArgumentException parameter should be an empty path or a path to an existing and write acceptable directory
-		 */
-		public Builder fixMetadataPathFolder(Path fixMetadataPathFolder) {
-			if (fixMetadataPathFolder == null) {
-				throw new IllegalArgumentException("Path can not be null");
-			}
-			File f = fixMetadataPathFolder.toFile();
-			if (fixMetadataPathFolder.toString().isEmpty() || (f.isDirectory() && f.canWrite())) {
-				this.fixMetadataPathFolder = fixMetadataPathFolder;
-			} else {
-				throw new IllegalArgumentException("Path should be an empty path or a path to an existing and write acceptable directory");
-			}
 			return this;
 		}
 
@@ -239,10 +203,39 @@ public final class Config {
 		public Builder featuresPluginsConfigFilePath(Path featuresPluginsConfigFilePath) {
 			if (isValidPathForFeaturesPluginsConfigFilePath(featuresPluginsConfigFilePath)) {
 				this.featuresPluginsConfigFilePath = featuresPluginsConfigFilePath;
+				return this;
 			} else {
 				throw new IllegalArgumentException("Path should be an empty path or a path to an existing and read acceptable file");
 			}
-			return this;
+		}
+
+		/**
+		 * Changes settings parameters
+		 *
+		 * @param fixMetadataPathFolder a path to the folder in which fixed files will be saved
+		 * @throws IllegalArgumentException parameter should be an empty path or a path to an existing and write acceptable directory
+		 */
+		public Builder fixMetadataPathFolder(Path fixMetadataPathFolder) {
+			if (isValidPathForFixMetadataPathFolder(fixMetadataPathFolder)) {
+				this.fixMetadataPathFolder = fixMetadataPathFolder;
+				return this;
+			} else {
+				throw new IllegalArgumentException("Path should be an empty path or a path to an existing and write acceptable directory");
+			}
+		}
+
+		/**
+		 * Checks is the parameter path a valid for saving fixed file
+		 *
+		 * @param path path for check
+		 * @return true if it is valid
+		 */
+		public static boolean isValidPathForFixMetadataPathFolder(Path path) {
+			if (path == null) {
+				return false;
+			}
+			File f = path.toFile();
+			return path.toString().isEmpty() || (f.isDirectory() && f.canWrite());
 		}
 
 		/**

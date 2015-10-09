@@ -20,7 +20,6 @@ public final class ConfigPropertiesSerializator {
 	private static final String PROPERTY_FIX_METADATA = "fixMetadata";
 	private static final String PROPERTY_METADATA_FIXER_PREFIX = "metadataFixerPrefix";
 	private static final String PROPERTY_FIX_METADATA_PATH_FOLDER = "fixMetadataPathFolder";
-	private static final String PROPERTY_USE_SELECTED_PATH_FOR_FIXER = "useSelectedPathForFixer";
 
 	/**
 	 * Saves config by serrializing it as properties
@@ -49,7 +48,6 @@ public final class ConfigPropertiesSerializator {
 		settings.setProperty(PROPERTY_SHOW_PASSED_RULES, String.valueOf(config.isShowPassedRules()));
 		settings.setProperty(PROPERTY_FEATURES_CONFIG_FILE, config.getFeaturesPluginsConfigFilePath().toString());
 		settings.setProperty(PROPERTY_FIX_METADATA, String.valueOf(config.isFixMetadata()));
-		settings.setProperty(PROPERTY_USE_SELECTED_PATH_FOR_FIXER, String.valueOf(config.isUseSelectedPathForFixer()));
 		settings.setProperty(PROPERTY_METADATA_FIXER_PREFIX, config.getMetadataFixerPrefix());
 		settings.setProperty(PROPERTY_FIX_METADATA_PATH_FOLDER, config.getFixMetadataPathFolder().toString());
 		settings.store(writer, "settings");
@@ -124,7 +122,6 @@ public final class ConfigPropertiesSerializator {
 		builder.maxNumberOfDisplayedFailedChecks(getIntegerValue(settings, PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS));
 		builder.showPassedRules(getBooleanValue(settings, PROPERTY_SHOW_PASSED_RULES));
 		builder.fixMetadata(getBooleanValue(settings, PROPERTY_FIX_METADATA));
-		builder.useSelectedPathForFixer(getBooleanValue(settings, PROPERTY_USE_SELECTED_PATH_FOR_FIXER));
 		builder.metadataFixerPrefix(getStringValue(settings, PROPERTY_METADATA_FIXER_PREFIX));
 		builder.fixMetadataPathFolder(getPathValue(settings, PROPERTY_FIX_METADATA_PATH_FOLDER));
 		builder.featuresPluginsConfigFilePath(getPathValue(settings, PROPERTY_FEATURES_CONFIG_FILE));

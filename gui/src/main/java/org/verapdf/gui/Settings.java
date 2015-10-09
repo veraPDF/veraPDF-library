@@ -142,22 +142,6 @@ final class Settings {
 		}
 	}
 
-	public boolean isUseSelectedPathForFixer() {
-		return config.isUseSelectedPathForFixer();
-	}
-
-	public void setUseSelectedPathForFixer(boolean useSelectedPathForFixer) {
-		builder.useSelectedPathForFixer(useSelectedPathForFixer);
-		this.config = builder.build();
-		if (isSerrialized) {
-			try {
-				ConfigPropertiesSerializator.saveConfig(this.config, path);
-			} catch (IOException e) {
-				LOGGER.error("Can not save config", e);
-			}
-		}
-	}
-
 	public String getMetadataFixerPrefix() {
 		return config.getMetadataFixerPrefix();
 	}

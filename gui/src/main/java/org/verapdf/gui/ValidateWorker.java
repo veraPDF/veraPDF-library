@@ -26,6 +26,7 @@ import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 
 /**
  * Validates PDF in a new threat.
@@ -71,7 +72,8 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 				if (settings.isFixMetadata()) {
 					MetadataFixer fixer = new MetadataFixer(loader.getPDDocument(), info);
-					if (settings.isUseSelectedPathForFixer()) {
+					Path path = settings.getFixMetadataPathFolder();
+					if (!path.toString().isEmpty()) {
 						fixer.fixDocument(settings.getFixMetadataPathFolder().toString(), loader.getFile().getName(), settings.getMetadataFixerPrefix());
 					} else {
 						fixer.fixDocument(loader.getFile(), settings.getMetadataFixerPrefix());
