@@ -22,8 +22,6 @@ public final class ConfigPropertiesSerializator {
 	private static final String PROPERTY_FIX_METADATA_PATH_FOLDER = "fixMetadataPathFolder";
 	private static final String PROPERTY_USE_SELECTED_PATH_FOR_FIXER = "useSelectedPathForFixer";
 
-	private static final ConfigBuilder builder = new ConfigBuilder();
-
 	/**
 	 * Saves config by serrializing it as properties
 	 *
@@ -119,16 +117,17 @@ public final class ConfigPropertiesSerializator {
 		FileReader reader = new FileReader(path.toFile());
 		settings.load(reader);
 		reader.close();
+		Config.Builder builder = new Config.Builder();
 
-		builder.setProcessingType(getIntegerValue(settings, PROPERTY_PROCESSING_TYPE));
-		builder.setMaxNumberOfFailedChecks(getIntegerValue(settings, PROPERTY_MAX_NUMBER_FAILED_CHECKS));
-		builder.setMaxNumberOfDisplayedFailedChecks(getIntegerValue(settings, PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS));
-		builder.setShowPassedRules(getBooleanValue(settings, PROPERTY_SHOW_PASSED_RULES));
-		builder.setFixMetadata(getBooleanValue(settings, PROPERTY_FIX_METADATA));
-		builder.setUseSelectedPathForFixer(getBooleanValue(settings, PROPERTY_USE_SELECTED_PATH_FOR_FIXER));
-		builder.setMetadataFixerPrefix(getStringValue(settings, PROPERTY_METADATA_FIXER_PREFIX));
-		builder.setFixMetadataPathFolder(getPathValue(settings, PROPERTY_FIX_METADATA_PATH_FOLDER));
-		builder.setFeaturesPluginsConfigFilePath(getPathValue(settings, PROPERTY_FEATURES_CONFIG_FILE));
-		return builder.buildConfig();
+		builder.processingType(getIntegerValue(settings, PROPERTY_PROCESSING_TYPE));
+		builder.maxNumberOfFailedChecks(getIntegerValue(settings, PROPERTY_MAX_NUMBER_FAILED_CHECKS));
+		builder.maxNumberOfDisplayedFailedChecks(getIntegerValue(settings, PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS));
+		builder.showPassedRules(getBooleanValue(settings, PROPERTY_SHOW_PASSED_RULES));
+		builder.fixMetadata(getBooleanValue(settings, PROPERTY_FIX_METADATA));
+		builder.useSelectedPathForFixer(getBooleanValue(settings, PROPERTY_USE_SELECTED_PATH_FOR_FIXER));
+		builder.metadataFixerPrefix(getStringValue(settings, PROPERTY_METADATA_FIXER_PREFIX));
+		builder.fixMetadataPathFolder(getPathValue(settings, PROPERTY_FIX_METADATA_PATH_FOLDER));
+		builder.featuresPluginsConfigFilePath(getPathValue(settings, PROPERTY_FEATURES_CONFIG_FILE));
+		return builder.build();
 	}
 }

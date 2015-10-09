@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
  *
  * @author Maksim Bezrukov
  */
-public class CheckerPanel extends JPanel {
+class CheckerPanel extends JPanel {
 
 	/**
 	 * ID for serialisation
@@ -55,14 +55,7 @@ public class CheckerPanel extends JPanel {
 	JProgressBar progressBar;
 	transient ValidateWorker validateWorker;
 
-	/**
-	 * Creates the Panel.
-	 * @param settings properties object indicates validation settings for the panel
-	 *
-	 * @throws IOException when there's a problem reading an image from the input stream
-	 * @throws IllegalArgumentException when parameter settings for the constructor is null
-	 */
-	public CheckerPanel(final Settings settings) throws IOException {
+	CheckerPanel(final Settings settings) throws IOException {
 
 		this.settings = settings;
 		if (settings == null) {
@@ -307,13 +300,7 @@ public class CheckerPanel extends JPanel {
 
 	}
 
-	/**
-	 * Method to notify panel that validation was done.
-	 *
-	 * @param xmlReport  xml report file
-	 * @param htmlReport html report file
-	 */
-	public void validationEnded(File xmlReport, File htmlReport) {
+	void validationEnded(File xmlReport, File htmlReport) {
 
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		progressBar.setVisible(false);
@@ -357,13 +344,7 @@ public class CheckerPanel extends JPanel {
 
 	}
 
-	/**
-	 * Method to notify panel that some error occurs at validating
-	 *
-	 * @param message a message to be displayed
-	 * @param e       the {@link Throwable} thrown during the validation process
-	 */
-	public void errorInValidatingOccur(String message, Throwable e) {
+	void errorInValidatingOccur(String message, Throwable e) {
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		progressBar.setVisible(false);
 		isValidationErrorOccurred = true;

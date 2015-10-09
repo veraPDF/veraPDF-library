@@ -14,7 +14,7 @@ import java.io.InputStream;
  *
  * @author Maksim Bezrukov
  */
-public class LogoPanel extends JPanel {
+class LogoPanel extends JPanel {
 
 	/**
 	 * ID for serialisation
@@ -25,16 +25,7 @@ public class LogoPanel extends JPanel {
 	private int borderWidth;
 	private Color background;
 
-	/**
-	 * Creates logo panel
-	 *
-	 * @param logoName        name of the logo image
-	 * @param backgroundColor background colour
-	 * @param borderWidth     width of the panel border
-	 * @throws IOException throws when there is a problem with reading image from the
-	 *                     input stream
-	 */
-	public LogoPanel(String logoName, Color backgroundColor, int borderWidth) throws IOException {
+	LogoPanel(String logoName, Color backgroundColor, int borderWidth) throws IOException {
 		this.borderWidth = borderWidth;
 		try (InputStream is = getClass().getClassLoader().getResourceAsStream(logoName)) {
 			logo = ImageIO.read(is);

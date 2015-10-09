@@ -3,8 +3,6 @@ package org.verapdf.gui.tools;
 import java.awt.*;
 
 /**
- * Constants for GUI
- *
  * @author Maksim Bezrukov
  */
 public final class GUIConstants {

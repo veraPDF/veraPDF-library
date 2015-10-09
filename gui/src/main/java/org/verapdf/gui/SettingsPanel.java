@@ -1,6 +1,6 @@
 package org.verapdf.gui;
 
-import org.verapdf.gui.config.ConfigBuilder;
+import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
 
 import javax.swing.*;
@@ -35,10 +35,7 @@ class SettingsPanel extends JPanel {
 	private JTextField thirdPartyProfilePathField;
 	private JFileChooser chooser;
 
-	/**
-	 * Settings panel
-	 */
-	public SettingsPanel() throws IOException {
+	SettingsPanel() throws IOException {
 		setBorder(new EmptyBorder(GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS, GUIConstants.EMPTYBORDER_INSETS));
 		setLayout(new BorderLayout());
 
@@ -133,7 +130,7 @@ class SettingsPanel extends JPanel {
 		okButton = new JButton("Ok");
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				if (ConfigBuilder.isValidPathForFeaturesPluginsConfigFilePath(FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText()))) {
+				if (Config.Builder.isValidPathForFeaturesPluginsConfigFilePath(FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText()))) {
 					ok = true;
 					dialog.setVisible(false);
 				} else {
@@ -155,13 +152,7 @@ class SettingsPanel extends JPanel {
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
 
-	/**
-	 * Shows about dialog
-	 *
-	 * @param parent parent component of the dialog
-	 * @param title  title of the dialog
-	 */
-	public boolean showDialog(Component parent, String title, Settings settings) {
+	boolean showDialog(Component parent, String title, Settings settings) {
 
 		ok = false;
 
@@ -257,10 +248,7 @@ class SettingsPanel extends JPanel {
 		};
 	}
 
-	/**
-	 * @return integer that indicates selected processing type.
-	 */
-	public int getProcessingType() {
+	int getProcessingType() {
 		if (valAndFeat.isSelected()) {
 			return GUIConstants.VALIDATING_AND_FEATURES_FLAG;
 		} else if (val.isSelected()) {
@@ -270,33 +258,21 @@ class SettingsPanel extends JPanel {
 		}
 	}
 
-	/**
-	 * @return true if desplay passed pules option selected
-	 */
-	public boolean isDispPassedRules() {
+	boolean isDispPassedRules() {
 		return hidePassedRules.isSelected();
 	}
 
-	/**
-	 * @return selected number for maximum fail checks for a rule. If not selected returns -1
-	 */
-	public int getFailedChecksNumber() {
+	int getFailedChecksNumber() {
 		String str = numberOfFailed.getText();
 		return str.length() > 0 ? Integer.parseInt(str) : -1;
 	}
 
-	/**
-	 * @return selected number for maximum displayed fail checks for a rule. If not selected returns -1
-	 */
-	public int getFailedChecksDisplayNumber() {
+	int getFailedChecksDisplayNumber() {
 		String str = numberOfFailedDisplay.getText();
 		return str.length() > 0 ? Integer.parseInt(str) : -1;
 	}
 
-	/**
-	 * @return path to the config file for features plugins
-	 */
-	public Path getFeaturesPluginConfigPath() {
+	Path getFeaturesPluginConfigPath() {
 		return FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText());
 	}
 }

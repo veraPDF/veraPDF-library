@@ -32,7 +32,7 @@ import java.net.URISyntaxException;
  *
  * @author Maksim Bezrukov
  */
-public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
+class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 	private static final Logger LOGGER = Logger.getLogger(ValidateWorker.class);
 
@@ -46,15 +46,7 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 	private long startTimeOfValidation;
 	private long endTimeOfValidation;
 
-	/**
-	 * Creates new validate worker
-	 *
-	 * @param parent   parent component
-	 * @param pdf      pdf file for validating
-	 * @param profile  validation profile for validating
-	 * @param settings settings for validation
-	 */
-	public ValidateWorker(CheckerPanel parent, File pdf, File profile, Settings settings) {
+	ValidateWorker(CheckerPanel parent, File pdf, File profile, Settings settings) {
 		this.parent = parent;
 		this.pdf = pdf;
 		this.profile = profile;
@@ -77,10 +69,13 @@ public class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 				org.verapdf.model.baselayer.Object root = loader.getRoot();
 				info = runValidator(root);
 
-				// TODO : make field for incremental save
-				if (false) {
+				if (settings.isFixMetadata()) {
 					MetadataFixer fixer = new MetadataFixer(loader.getPDDocument(), info);
-					fixer.fixDocument(loader.getFile());
+					if (settings.isUseSelectedPathForFixer()) {
+						fixer.fixDocument(settings.getFixMetadataPathFolder().toString(), loader.getFile().getName(), settings.getMetadataFixerPrefix());
+					} else {
+						fixer.fixDocument(loader.getFile(), settings.getMetadataFixerPrefix());
+					}
 				}
 			}
 

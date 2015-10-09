@@ -14,20 +14,14 @@ import java.io.InputStream;
  *
  * @author Maksim Bezrukov
  */
-public class MiniLogoPanel extends JPanel {
+class MiniLogoPanel extends JPanel {
 
 	/**
 	 * ID for serialisation
 	 */
 	private static final long serialVersionUID = -199053265127458738L;
 
-	/**
-	 * Creates mini logo panel
-	 *
-	 * @param logoPath path to the logo image
-	 * @throws IOException throws when there is a problem with reading image from the input stream
-	 */
-	public MiniLogoPanel(String logoPath) throws IOException {
+	MiniLogoPanel(String logoPath) throws IOException {
 
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 

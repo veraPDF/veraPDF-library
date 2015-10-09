@@ -17,9 +17,6 @@ import java.io.IOException;
  */
 public class PDFValidationApplication extends JFrame {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -5569669411392145783L;
 
 	private static final Logger LOGGER = Logger.getLogger(PDFValidationApplication.class);
@@ -29,10 +26,7 @@ public class PDFValidationApplication extends JFrame {
 	private SettingsPanel settingsPanel;
 	private CheckerPanel checkerPanel;
 
-	/**
-	 * Creates the frame.
-	 */
-	public PDFValidationApplication() {
+	private PDFValidationApplication() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(GUIConstants.FRAME_COORD_X, GUIConstants.FRAME_COORD_Y, GUIConstants.FRAME_WIDTH, GUIConstants.FRAME_HEIGHT);
 		setResizable(false);

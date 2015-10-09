@@ -2,7 +2,6 @@ package org.verapdf.gui;
 
 import org.apache.log4j.Logger;
 import org.verapdf.gui.config.Config;
-import org.verapdf.gui.config.ConfigBuilder;
 import org.verapdf.gui.config.ConfigPropertiesSerializator;
 
 import java.io.File;
@@ -14,12 +13,12 @@ import java.nio.file.Path;
  *
  * @author Maksim Bezrukov
  */
-public final class Settings {
+final class Settings {
 
 	private static final Logger LOGGER = Logger.getLogger(Settings.class);
 
 	private Config config;
-	private ConfigBuilder builder = new ConfigBuilder();
+	private Config.Builder builder = new Config.Builder();
 	private boolean isSerrialized;
 	private Path path = null;
 
@@ -28,7 +27,7 @@ public final class Settings {
 		File f = new File(user, ".veraPDF");
 		if (!f.exists() && !f.mkdir()) {
 			this.isSerrialized = false;
-			this.config = ConfigBuilder.getDefaultConfig();
+			this.config = Config.Builder.buildDefaultConfig();
 		} else {
 			File configFile = new File(f, "config.properties");
 			this.isSerrialized = true;
@@ -38,11 +37,11 @@ public final class Settings {
 					this.config = ConfigPropertiesSerializator.loadConfig(configFile.toPath());
 				} catch (IOException e) {
 					LOGGER.error("Can not read config file", e);
-					this.config = ConfigBuilder.getDefaultConfig();
+					this.config = Config.Builder.buildDefaultConfig();
 				}
 
 			} else {
-				this.config = ConfigBuilder.getDefaultConfig();
+				this.config = Config.Builder.buildDefaultConfig();
 			}
 		}
 	}
@@ -52,8 +51,8 @@ public final class Settings {
 	}
 
 	public void setProcessingType(int processingType) {
-		builder.setProcessingType(processingType);
-		this.config = builder.buildConfig();
+		builder.processingType(processingType);
+		this.config = builder.build();
 		if (isSerrialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
@@ -68,8 +67,8 @@ public final class Settings {
 	}
 
 	public void setShowPassedRules(boolean showPassedRules) {
-		builder.setShowPassedRules(showPassedRules);
-		this.config = builder.buildConfig();
+		builder.showPassedRules(showPassedRules);
+		this.config = builder.build();
 		if (isSerrialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
@@ -84,8 +83,8 @@ public final class Settings {
 	}
 
 	public void setMaxNumberOfFailedChecks(int maxNumberOfFailedChecks) {
-		builder.setMaxNumberOfFailedChecks(maxNumberOfFailedChecks);
-		this.config = builder.buildConfig();
+		builder.maxNumberOfFailedChecks(maxNumberOfFailedChecks);
+		this.config = builder.build();
 		if (isSerrialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
@@ -100,8 +99,8 @@ public final class Settings {
 	}
 
 	public void setMaxNumberOfDisplayedFailedChecks(int maxNumberOfDisplayedFailedChecks) {
-		builder.setMaxNumberOfDisplayedFailedChecks(maxNumberOfDisplayedFailedChecks);
-		this.config = builder.buildConfig();
+		builder.maxNumberOfDisplayedFailedChecks(maxNumberOfDisplayedFailedChecks);
+		this.config = builder.build();
 		if (isSerrialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
@@ -116,8 +115,8 @@ public final class Settings {
 	}
 
 	public void setFeaturesPluginsConfigFilePath(Path featuresPluginsConfigFilePath) {
-		builder.setFeaturesPluginsConfigFilePath(featuresPluginsConfigFilePath);
-		this.config = builder.buildConfig();
+		builder.featuresPluginsConfigFilePath(featuresPluginsConfigFilePath);
+		this.config = builder.build();
 		if (isSerrialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
@@ -132,8 +131,8 @@ public final class Settings {
 	}
 
 	public void setFixMetadata(boolean fixMetadata) {
-		builder.setFixMetadata(fixMetadata);
-		this.config = builder.buildConfig();
+		builder.fixMetadata(fixMetadata);
+		this.config = builder.build();
 		if (isSerrialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
@@ -148,8 +147,8 @@ public final class Settings {
 	}
 
 	public void setUseSelectedPathForFixer(boolean useSelectedPathForFixer) {
-		builder.setUseSelectedPathForFixer(useSelectedPathForFixer);
-		this.config = builder.buildConfig();
+		builder.useSelectedPathForFixer(useSelectedPathForFixer);
+		this.config = builder.build();
 		if (isSerrialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
@@ -164,8 +163,8 @@ public final class Settings {
 	}
 
 	public void setMetadataFixerPrefix(String metadataFixerPrefix) {
-		builder.setMetadataFixerPrefix(metadataFixerPrefix);
-		this.config = builder.buildConfig();
+		builder.metadataFixerPrefix(metadataFixerPrefix);
+		this.config = builder.build();
 		if (isSerrialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
@@ -180,8 +179,8 @@ public final class Settings {
 	}
 
 	public void setFixMetadataPathFolder(Path fixMetadataPathFolder) {
-		builder.setFixMetadataPathFolder(fixMetadataPathFolder);
-		this.config = builder.buildConfig();
+		builder.fixMetadataPathFolder(fixMetadataPathFolder);
+		this.config = builder.build();
 		if (isSerrialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
