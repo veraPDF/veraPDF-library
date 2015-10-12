@@ -28,13 +28,9 @@ class SettingsPanel extends JPanel {
 	JDialog dialog;
 	private JTextField numberOfFailed;
 	private JTextField numberOfFailedDisplay;
-	private JRadioButton valAndFeat;
-	private JRadioButton val;
-	private JRadioButton feat;
 	private JCheckBox hidePassedRules;
 	private JTextField thirdPartyProfilePathField;
 	private JFileChooser chooser;
-	private JCheckBox fixMetadata;
 	private JTextField fixMetadataPrefix;
 	private JTextField fixMetadataFolder;
 	private JFileChooser folderChooser;
@@ -44,21 +40,7 @@ class SettingsPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		JPanel panel = new JPanel();
-		ButtonGroup bGroup = new ButtonGroup();
-		panel.setLayout(new GridLayout(10, 2));
-
-		panel.add(new JPanel());
-		valAndFeat = new JRadioButton(GUIConstants.VALIDATING_AND_FEATURES);
-		bGroup.add(valAndFeat);
-		panel.add(valAndFeat);
-		panel.add(new JLabel(GUIConstants.PROCESSING_TYPE));
-		val = new JRadioButton(GUIConstants.VALIDATING);
-		bGroup.add(val);
-		panel.add(val);
-		panel.add(new JPanel());
-		feat = new JRadioButton(GUIConstants.FEATURES);
-		bGroup.add(feat);
-		panel.add(feat);
+		panel.setLayout(new GridLayout(6, 2));
 
 		panel.add(new JLabel(GUIConstants.DISPLAY_PASSED_RULES));
 		hidePassedRules = new JCheckBox();
@@ -85,14 +67,47 @@ class SettingsPanel extends JPanel {
 		panel2.add(new JLabel(GUIConstants.MAX_FAILED_CHECKS_DISP_SETTING_TIP));
 		panel.add(panel2);
 
+		panel.add(new JLabel(GUIConstants.FIX_METADATA_PREFIX_LABEL_TEXT));
+		fixMetadataPrefix = new JTextField();
+		panel.add(fixMetadataPrefix);
+
+		panel.add(new JLabel(GUIConstants.SELECTED_PATH_FOR_FIXER_LABEL_TEXT));
+
+		File currentDir = new File(
+				new File(GUIConstants.DOT).getCanonicalPath());
+
+		JButton choose2 = new JButton(GUIConstants.THIRDPARTY_CONFIG_CHOOSE_BUTTON);
+		folderChooser = new JFileChooser();
+		folderChooser.setCurrentDirectory(currentDir);
+		folderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		choose2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int resultChoose = folderChooser.showOpenDialog(SettingsPanel.this);
+				if (resultChoose == JFileChooser.APPROVE_OPTION) {
+					if (!folderChooser.getSelectedFile().isDirectory()) {
+						JOptionPane.showMessageDialog(SettingsPanel.this,
+								"Error. Selected directory doesn't exist.",
+								GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+					} else {
+						fixMetadataFolder.setText(folderChooser.getSelectedFile().getAbsolutePath());
+					}
+				}
+
+			}
+		});
+		fixMetadataFolder = new JTextField();
+		fixMetadataFolder.setToolTipText(GUIConstants.SELECTED_PATH_FOR_FIXER_TOOLTIP);
+		JPanel panel4 = new JPanel();
+		panel4.setLayout(new BoxLayout(panel4, BoxLayout.X_AXIS));
+		panel4.add(fixMetadataFolder);
+		panel4.add(choose2);
+		panel.add(panel4);
+
 		panel.add(new JLabel(GUIConstants.THIRDPARTY_CONFIG_LABEL_TEXT));
-
-
 		JButton choose = new JButton(GUIConstants.THIRDPARTY_CONFIG_CHOOSE_BUTTON);
 
 		chooser = new JFileChooser();
-		File currentDir = new File(
-				new File(GUIConstants.DOT).getCanonicalPath());
 		chooser.setCurrentDirectory(currentDir);
 		chooser.setAcceptAllFileFilterUsed(false);
 		chooser.setFileFilter(new FileNameExtensionFilter(GUIConstants.XML, GUIConstants.XML));
@@ -128,44 +143,6 @@ class SettingsPanel extends JPanel {
 		panel3.add(thirdPartyProfilePathField);
 		panel3.add(choose);
 		panel.add(panel3);
-
-		panel.add(new JLabel(GUIConstants.FIX_METADATA_LABEL_TEXT));
-		fixMetadata = new JCheckBox();
-		panel.add(fixMetadata);
-
-		panel.add(new JLabel(GUIConstants.FIX_METADATA_PREFIX_LABEL_TEXT));
-		fixMetadataPrefix = new JTextField();
-		panel.add(fixMetadataPrefix);
-
-		panel.add(new JLabel(GUIConstants.SELECTED_PATH_FOR_FIXER_LABEL_TEXT));
-
-		JButton choose2 = new JButton(GUIConstants.THIRDPARTY_CONFIG_CHOOSE_BUTTON);
-		folderChooser = new JFileChooser();
-		folderChooser.setCurrentDirectory(currentDir);
-		folderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		choose2.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int resultChoose = folderChooser.showOpenDialog(SettingsPanel.this);
-				if (resultChoose == JFileChooser.APPROVE_OPTION) {
-					if (!folderChooser.getSelectedFile().isDirectory()) {
-						JOptionPane.showMessageDialog(SettingsPanel.this,
-								"Error. Selected directory doesn't exist.",
-								GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-					} else {
-						fixMetadataFolder.setText(folderChooser.getSelectedFile().getAbsolutePath());
-					}
-				}
-
-			}
-		});
-		fixMetadataFolder = new JTextField();
-		fixMetadataFolder.setToolTipText(GUIConstants.SELECTED_PATH_FOR_FIXER_TOOLTIP);
-		JPanel panel4 = new JPanel();
-		panel4.setLayout(new BoxLayout(panel4, BoxLayout.X_AXIS));
-		panel4.add(fixMetadataFolder);
-		panel4.add(choose2);
-		panel.add(panel4);
 
 		add(panel, BorderLayout.CENTER);
 
@@ -221,21 +198,7 @@ class SettingsPanel extends JPanel {
 			numberOfFailedDisplay.setText(String.valueOf(numbOfFailDisp));
 		}
 
-		int type = settings.getProcessingType();
-		switch (type) {
-			case 3:
-				valAndFeat.setSelected(true);
-				break;
-			case 1:
-				val.setSelected(true);
-				break;
-			case 2:
-				feat.setSelected(true);
-				break;
-		}
 		thirdPartyProfilePathField.setText(settings.getFeaturesPluginsConfigFilePath().toString());
-
-		fixMetadata.setSelected(settings.isFixMetadata());
 		fixMetadataPrefix.setText(settings.getMetadataFixerPrefix());
 		fixMetadataFolder.setText(settings.getFixMetadataPathFolder().toString());
 
@@ -256,7 +219,7 @@ class SettingsPanel extends JPanel {
 		}
 
 		dialog.setLocation(GUIConstants.SETTINGSDIALOG_COORD_X, GUIConstants.SETTINGSDIALOG_COORD_Y);
-		dialog.setSize(650, 311);
+		dialog.setSize(650, 241);
 		dialog.setVisible(true);
 
 		return ok;
@@ -298,16 +261,6 @@ class SettingsPanel extends JPanel {
 		};
 	}
 
-	int getProcessingType() {
-		if (valAndFeat.isSelected()) {
-			return GUIConstants.VALIDATING_AND_FEATURES_FLAG;
-		} else if (val.isSelected()) {
-			return GUIConstants.VALIDATING_FLAG;
-		} else {
-			return GUIConstants.FEATURES_FLAG;
-		}
-	}
-
 	boolean isDispPassedRules() {
 		return hidePassedRules.isSelected();
 	}
@@ -326,9 +279,6 @@ class SettingsPanel extends JPanel {
 		return FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText());
 	}
 
-	boolean isFixMetadata() {
-		return fixMetadata.isSelected();
-	}
 
 	Path getFixMetadataDirectory() {
 		return FileSystems.getDefault().getPath(fixMetadataFolder.getText());

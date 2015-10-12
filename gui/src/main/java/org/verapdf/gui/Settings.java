@@ -35,6 +35,7 @@ final class Settings {
 			if (configFile.exists()) {
 				try {
 					this.config = ConfigPropertiesSerializator.loadConfig(configFile.toPath());
+					ConfigPropertiesSerializator.saveConfig(this.config, configFile.toPath());
 				} catch (IOException e) {
 					LOGGER.error("Can not read config file", e);
 					this.config = Config.Builder.buildDefaultConfig();
