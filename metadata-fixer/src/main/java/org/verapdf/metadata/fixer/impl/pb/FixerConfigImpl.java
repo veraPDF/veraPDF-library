@@ -26,13 +26,10 @@ public class FixerConfigImpl implements FixerConfig {
 
 	public FixerConfigImpl(PDDocument document, ValidationInfo validationResult, ProcessedObjectsParser parser) {
 		if (document == null) {
-			throw new NullPointerException("Document can not be null");
-		}
-		if (validationResult == null) {
-			throw new NullPointerException("Validation infor can not be null.");
+			throw new IllegalArgumentException("Document can not be null");
 		}
 		if (parser == null) {
-			throw new NullPointerException("Parser can not be null.");
+			throw new IllegalArgumentException("Parser can not be null.");
 		}
 		this.document = new PDFDocumentImpl(document);
 		this.validationResult = validationResult;
