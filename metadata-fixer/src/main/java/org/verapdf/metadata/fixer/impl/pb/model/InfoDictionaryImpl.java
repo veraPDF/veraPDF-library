@@ -78,7 +78,7 @@ public class InfoDictionaryImpl implements InfoDictionary {
 
 	@Override
 	public String getCreationDate() {
-		return getDateString(COSName.CREATION_DATE);
+		return DateConverter.toUTCString(this.info.getCreationDate());
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class InfoDictionaryImpl implements InfoDictionary {
 
 	@Override
 	public String getModificationDate() {
-		return getDateString(COSName.MOD_DATE);
+		return DateConverter.toUTCString(this.info.getModificationDate());
 	}
 
 	@Override
