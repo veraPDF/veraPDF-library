@@ -1,0 +1,68 @@
+package org.verapdf.metadata.fixer.impl.pb;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.verapdf.metadata.fixer.entity.Metadata;
+import org.verapdf.metadata.fixer.entity.PDFDocument;
+import org.verapdf.metadata.fixer.impl.pb.model.PDFDocumentImpl;
+import org.verapdf.metadata.fixer.utils.FixerConfig;
+import org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser;
+import org.verapdf.metadata.fixer.utils.parser.XMLProcessedObjectsParser;
+import org.verapdf.validation.profile.model.ValidationProfile;
+import org.verapdf.validation.report.model.Result;
+import org.verapdf.validation.report.model.ValidationInfo;
+
+/**
+ * @author Evgeniy Muravitskiy
+ */
+public class FixerConfigImpl implements FixerConfig {
+
+	private final PDFDocument document;
+	private final ValidationInfo validationResult;
+	private final ProcessedObjectsParser parser;
+
+	public FixerConfigImpl(PDDocument document, ValidationInfo validationResult) {
+		this(document, validationResult, XMLProcessedObjectsParser.getInstance());
+	}
+
+	public FixerConfigImpl(PDDocument document, ValidationInfo validationResult, ProcessedObjectsParser parser) {
+		if (document == null) {
+			throw new NullPointerException("Document can not be null");
+		}
+		if (validationResult == null) {
+			throw new NullPointerException("Validation infor can not be null.");
+		}
+		if (parser == null) {
+			throw new NullPointerException("Parser can not be null.");
+		}
+		this.document = new PDFDocumentImpl(document);
+		this.validationResult = validationResult;
+		this.parser = parser;
+	}
+
+	@Override
+	public Result getValidationResult() {
+		return validationResult != null ? validationResult.getResult() : null;
+	}
+
+	@Override
+	public ValidationProfile getValidationProfile() {
+		return validationResult == null ? null :
+				validationResult.getProfile().getValidationProfile();
+	}
+
+	@Override
+	public Metadata getMetadata() {
+		return document.getMetadata();
+	}
+
+	@Override
+	public PDFDocument getDocument() {
+		return document;
+	}
+
+	@Override
+	public ProcessedObjectsParser getParser() {
+		return parser;
+	}
+
+}
