@@ -48,27 +48,30 @@ class SettingsPanel extends JPanel {
 		panel.add(new JLabel(GUIConstants.MAX_NUMBER_FAILED_CHECKS));
 
 		numberOfFailed = new JTextField();
+		numberOfFailed.setTransferHandler(null);
 		numberOfFailed.addKeyListener(getKeyAdapter(numberOfFailed, false));
-
+		numberOfFailed.setToolTipText(GUIConstants.MAX_FAILED_CHECKS_SETTING_TIP);
 		JPanel panel1 = new JPanel();
-		panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
+		panel1.setLayout(null);
+		numberOfFailed.setBounds(0, 0, 65, 23);
 		panel1.add(numberOfFailed);
-		panel1.add(new JLabel(GUIConstants.MAX_FAILED_CHECKS_SETTING_TIP));
 		panel.add(panel1);
 
 		panel.add(new JLabel(GUIConstants.MAX_NUMBER_FAILED_DISPLAYED_CHECKS));
 
 		numberOfFailedDisplay = new JTextField();
+		numberOfFailedDisplay.setTransferHandler(null);
 		numberOfFailedDisplay.addKeyListener(getKeyAdapter(numberOfFailedDisplay, true));
-
+		numberOfFailedDisplay.setToolTipText(GUIConstants.MAX_FAILED_CHECKS_DISP_SETTING_TIP);
 		JPanel panel2 = new JPanel();
-		panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
+		panel2.setLayout(null);
+		numberOfFailedDisplay.setBounds(0, 0, 65, 23);
 		panel2.add(numberOfFailedDisplay);
-		panel2.add(new JLabel(GUIConstants.MAX_FAILED_CHECKS_DISP_SETTING_TIP));
 		panel.add(panel2);
 
 		panel.add(new JLabel(GUIConstants.FIX_METADATA_PREFIX_LABEL_TEXT));
 		fixMetadataPrefix = new JTextField();
+		fixMetadataPrefix.setTransferHandler(null);
 		panel.add(fixMetadataPrefix);
 
 		panel.add(new JLabel(GUIConstants.SELECTED_PATH_FOR_FIXER_LABEL_TEXT));
@@ -106,6 +109,20 @@ class SettingsPanel extends JPanel {
 
 		panel.add(new JLabel(GUIConstants.THIRDPARTY_CONFIG_LABEL_TEXT));
 		JButton choose = new JButton(GUIConstants.THIRDPARTY_CONFIG_CHOOSE_BUTTON);
+
+		fixMetadataPrefix.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (!Config.Builder.isValidFileNameCharacter(e.getKeyChar())) {
+					e.consume();
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				super.keyReleased(e);
+			}
+		});
 
 		chooser = new JFileChooser();
 		chooser.setCurrentDirectory(currentDir);
@@ -150,13 +167,13 @@ class SettingsPanel extends JPanel {
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				boolean isEverythingValid = true;
-				if (!Config.Builder.isValidPathForFeaturesPluginsConfigFilePath(FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText()))) {
-					isEverythingValid = false;
-					JOptionPane.showMessageDialog(SettingsPanel.this, "Invalid path for features plugins config file.", "Invalid data", JOptionPane.INFORMATION_MESSAGE);
-				}
-				if (!Config.Builder.isValidPathForFixMetadataPathFolder(FileSystems.getDefault().getPath(fixMetadataFolder.getText()))) {
+				if (!Config.Builder.isValidFolderPath(FileSystems.getDefault().getPath(fixMetadataFolder.getText()))) {
 					isEverythingValid = false;
 					JOptionPane.showMessageDialog(SettingsPanel.this, "Invalid path for saving fixed files.", "Invalid data", JOptionPane.INFORMATION_MESSAGE);
+				}
+				if (!Config.Builder.isValidFilePath(FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText()))) {
+					isEverythingValid = false;
+					JOptionPane.showMessageDialog(SettingsPanel.this, "Invalid path for features plugins config file.", "Invalid data", JOptionPane.INFORMATION_MESSAGE);
 				}
 				if (isEverythingValid) {
 					ok = true;
@@ -229,7 +246,7 @@ class SettingsPanel extends JPanel {
 		return new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if ((field.getText().length() == 6) && field.getSelectedText().length() == 0 &&
+				if ((field.getText().length() == 6) && ((field.getSelectedText() == null) || (field.getSelectedText().length() == 0)) &&
 						(c != KeyEvent.VK_BACK_SPACE) &&
 						(c != KeyEvent.VK_DELETE)) {
 					e.consume();
@@ -239,8 +256,6 @@ class SettingsPanel extends JPanel {
 						(c == KeyEvent.VK_BACK_SPACE) ||
 						(c == KeyEvent.VK_DELETE))) {
 					e.consume();
-				} else {
-					super.keyTyped(e);
 				}
 			}
 

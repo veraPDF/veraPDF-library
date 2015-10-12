@@ -165,11 +165,6 @@ class CheckerPanel extends JPanel {
 		gbl.setConstraints(validate, gbc);
 		this.add(validate);
 
-		////////////////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////////////////
-
 		final JLabel processType = new JLabel(GUIConstants.PROCESSING_TYPE);
 		setGridBagConstraintsParameters(gbc,
 				0,
@@ -184,18 +179,6 @@ class CheckerPanel extends JPanel {
 
 		String[] types = new String[]{GUIConstants.VALIDATING_AND_FEATURES, GUIConstants.VALIDATING, GUIConstants.FEATURES};
 		processingType = new JComboBox<>(types);
-		int type = settings.getProcessingType();
-		switch (type) {
-			case 3:
-				processingType.setSelectedIndex(0);
-				break;
-			case 1:
-				processingType.setSelectedIndex(1);
-				break;
-			case 2:
-				processingType.setSelectedIndex(2);
-				break;
-		}
 		setGridBagConstraintsParameters(gbc,
 				1,
 				3,
@@ -220,9 +203,19 @@ class CheckerPanel extends JPanel {
 		gbl.setConstraints(fixMetadata, gbc);
 		this.add(fixMetadata);
 
-		////////////////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////////////////
-		////////////////////////////////////////////////////////////////////////////////////////////
+		int type = settings.getProcessingType();
+		switch (type) {
+			case GUIConstants.VALIDATING_AND_FEATURES_FLAG:
+				processingType.setSelectedIndex(0);
+				break;
+			case GUIConstants.VALIDATING_FLAG:
+				processingType.setSelectedIndex(1);
+				break;
+			case GUIConstants.FEATURES_FLAG:
+				processingType.setSelectedIndex(2);
+				fixMetadata.setEnabled(false);
+				break;
+		}
 
 		JPanel reports = new JPanel();
 		reports.setBorder(BorderFactory.createTitledBorder(GUIConstants.REPORT));
@@ -287,18 +280,22 @@ class CheckerPanel extends JPanel {
 		validate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				progressBar.setVisible(true);
-				result.setVisible(false);
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-				validate.setEnabled(false);
-				info = null;
-				isValidationErrorOccurred = false;
-				viewXML.setEnabled(false);
-				saveXML.setEnabled(false);
-				viewHTML.setEnabled(false);
-				saveHTML.setEnabled(false);
-				validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, profile, settings);
-				validateWorker.execute();
+				try {
+					validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, profile, settings);
+					progressBar.setVisible(true);
+					result.setVisible(false);
+					setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+					validate.setEnabled(false);
+					info = null;
+					isValidationErrorOccurred = false;
+					viewXML.setEnabled(false);
+					saveXML.setEnabled(false);
+					viewHTML.setEnabled(false);
+					saveHTML.setEnabled(false);
+					validateWorker.execute();
+				} catch (IllegalArgumentException exep) {
+					JOptionPane.showMessageDialog(CheckerPanel.this, exep.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 
@@ -372,13 +369,16 @@ class CheckerPanel extends JPanel {
 				int index = processingType.getSelectedIndex();
 				switch (index) {
 					case 0:
-						settings.setProcessingType(3);
+						settings.setProcessingType(GUIConstants.VALIDATING_AND_FEATURES_FLAG);
+						fixMetadata.setEnabled(true);
 						break;
 					case 1:
-						settings.setProcessingType(1);
+						settings.setProcessingType(GUIConstants.VALIDATING_FLAG);
+						fixMetadata.setEnabled(true);
 						break;
 					case 2:
-						settings.setProcessingType(2);
+						settings.setProcessingType(GUIConstants.FEATURES_FLAG);
+						fixMetadata.setEnabled(false);
 						break;
 				}
 			}

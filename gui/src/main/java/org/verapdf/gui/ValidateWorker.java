@@ -48,6 +48,12 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 	private long endTimeOfValidation;
 
 	ValidateWorker(CheckerPanel parent, File pdf, File profile, Settings settings) {
+		if (pdf == null || !pdf.isFile() || !pdf.canRead()) {
+			throw new IllegalArgumentException("PDF file doesn't exist or it can not be read");
+		}
+		if (profile == null || !profile.isFile() || !profile.canRead()) {
+			throw new IllegalArgumentException("Profile doesn't exist or it can not be read");
+		}
 		this.parent = parent;
 		this.pdf = pdf;
 		this.profile = profile;
