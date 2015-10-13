@@ -1,7 +1,6 @@
 package org.verapdf.metadata.fixer.utils;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Class for generate non existing file.

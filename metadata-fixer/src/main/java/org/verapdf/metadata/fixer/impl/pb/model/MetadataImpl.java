@@ -9,12 +9,12 @@ import org.apache.xmpbox.schema.XMPBasicSchema;
 import org.verapdf.metadata.fixer.entity.FixReport;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
-import org.verapdf.metadata.fixer.schemas.AdobePDF;
-import org.verapdf.metadata.fixer.schemas.DublinCore;
-import org.verapdf.metadata.fixer.schemas.XMPBasic;
 import org.verapdf.metadata.fixer.impl.pb.schemas.AdobePDFSchemaImpl;
 import org.verapdf.metadata.fixer.impl.pb.schemas.DublinCoreSchemaImpl;
 import org.verapdf.metadata.fixer.impl.pb.schemas.XMPBasicSchemaImpl;
+import org.verapdf.metadata.fixer.schemas.AdobePDF;
+import org.verapdf.metadata.fixer.schemas.DublinCore;
+import org.verapdf.metadata.fixer.schemas.XMPBasic;
 
 /**
  * @author Evgeniy Muravitskiy

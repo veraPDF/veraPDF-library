@@ -1,6 +1,5 @@
 package org.verapdf.metadata.fixer.utils;
 
-import org.verapdf.metadata.fixer.entity.FixReport;
 import org.verapdf.metadata.fixer.entity.ValidationStatus;
 import org.verapdf.metadata.fixer.utils.model.ProcessedObjects;
 import org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser;
