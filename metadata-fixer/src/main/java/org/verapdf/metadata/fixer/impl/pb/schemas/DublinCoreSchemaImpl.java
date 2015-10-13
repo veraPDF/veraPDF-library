@@ -22,6 +22,12 @@ public class DublinCoreSchemaImpl implements DublinCore {
 	private final Metadata metadata;
 
 	public DublinCoreSchemaImpl(DublinCoreSchema schema, Metadata metadata) {
+		if (schema == null) {
+			throw new IllegalArgumentException("DublinCore schema representation can not be null");
+		}
+		if (metadata == null) {
+			throw new IllegalArgumentException("Metadata representation can not be null");
+		}
 		this.schema = schema;
 		this.metadata = metadata;
 	}

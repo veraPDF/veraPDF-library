@@ -27,7 +27,7 @@ public class FileGenerator {
 	 * @return non-existing file which stored near source file
 	 * @throws NullPointerException if {@code sourcePath} is {@code null}
 	 */
-	public static File createOutputFile(String sourcePath) throws IOException {
+	public static File createOutputFile(String sourcePath) {
 		return createOutputFile(new File(sourcePath));
 	}
 
@@ -40,7 +40,7 @@ public class FileGenerator {
 	 * @return non-existing file which stored near source file
 	 * @throws IllegalArgumentException if {@code source} is {@code null}
 	 */
-	public static File createOutputFile(File source) throws IOException {
+	public static File createOutputFile(File source) {
 		return createOutputFile(source, DEFAULT_PREFIX);
 	}
 
@@ -56,7 +56,7 @@ public class FileGenerator {
 	 * @throws IllegalArgumentException if {@code source} or
 	 *                                  {@code prefix} are {@code null} or empty
 	 */
-	public static File createOutputFile(File source, String prefix) throws IOException {
+	public static File createOutputFile(File source, String prefix) {
 		if (source == null) {
 			throw new IllegalArgumentException("Incorrect source file");
 		}
@@ -79,7 +79,7 @@ public class FileGenerator {
 	 * @throws IllegalArgumentException if {@code folderFile} or
 	 * {@code fileName}, or {@code prefix} are {@code null}
 	 */
-	public static File createOutputFile(File folderFile, String fileName, String prefix) throws IOException {
+	public static File createOutputFile(File folderFile, String fileName, String prefix) {
 		if (folderFile == null) {
 			throw new IllegalArgumentException("Incorrect path to folder.");
 		}
@@ -113,7 +113,7 @@ public class FileGenerator {
 		return "";
 	}
 
-	private static File createOutputFile(String path, String extension, int index) throws IOException {
+	private static File createOutputFile(String path, String extension, int index) {
 		while (true) {
 			String resPath = path + (index != 0 ? "(" + index + ")" : "") + extension;
 			File resultFile = new File(resPath);

@@ -14,6 +14,12 @@ public class XMPBasicSchemaImpl implements XMPBasic {
 	private final Metadata metadata;
 
 	public XMPBasicSchemaImpl(XMPBasicSchema schema, Metadata metadata) {
+		if (schema == null) {
+			throw new IllegalArgumentException("XMPBasic schema representation can not be null");
+		}
+		if (metadata == null) {
+			throw new IllegalArgumentException("Metadata representation can not be null");
+		}
 		this.schema = schema;
 		this.metadata = metadata;
 	}

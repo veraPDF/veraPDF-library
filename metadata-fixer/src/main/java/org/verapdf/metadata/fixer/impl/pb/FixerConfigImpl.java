@@ -38,28 +38,29 @@ public class FixerConfigImpl implements FixerConfig {
 
 	@Override
 	public Result getValidationResult() {
-		return validationResult != null ? validationResult.getResult() : null;
+		return this.validationResult == null ? null :
+				this.validationResult.getResult();
 	}
 
 	@Override
 	public ValidationProfile getValidationProfile() {
-		return validationResult == null ? null :
-				validationResult.getProfile().getValidationProfile();
+		return this.validationResult == null ? null :
+				this.validationResult.getProfile().getValidationProfile();
 	}
 
 	@Override
 	public Metadata getMetadata() {
-		return document.getMetadata();
+		return this.document.getMetadata();
 	}
 
 	@Override
 	public PDFDocument getDocument() {
-		return document;
+		return this.document;
 	}
 
 	@Override
 	public ProcessedObjectsParser getParser() {
-		return parser;
+		return this.parser;
 	}
 
 }

@@ -129,10 +129,10 @@ public class MetadataFixer {
 	}
 
 	private static FixReport fixAndSaveDocument(OutputStream output, FixerConfig config) throws IOException {
-		FixReport report;
+		FixReport report = new FixReport();;
 		Metadata metadata = config.getMetadata();
 		if (metadata != null) {
-			report = getValidationStatus(config);
+			report.setStatus(getValidationStatus(config));
 
 			switch (report.getStatus()) {
 				case INVALID_DOCUMENT:
@@ -153,14 +153,13 @@ public class MetadataFixer {
 
 			return report;
 		} else {
-			report = new FixReport();
 			report.setStatus(ValidationStatus.INVALID_METADATA);
 			report.addFix("Problems with metadata obtain, nothing to save or change.");
 			return report;
 		}
 	}
 
-	private static FixReport getValidationStatus(FixerConfig config) {
+	private static ValidationStatus getValidationStatus(FixerConfig config) {
 		Result result = config.getValidationResult();
 		if (result != null) {
 			List<Rule> rules = result.getDetails().getRules();
@@ -169,15 +168,14 @@ public class MetadataFixer {
 				try {
 					return ProcessedObjectsInspector.validationStatus(rules, profile, config.getParser());
 				} catch (IOException | URISyntaxException | ParserConfigurationException | SAXException e) {
-					FixReport invalidStatus = getInvalidStatus(ValidationStatus.INVALID_DOCUMENT,
-							"Problem with validation status obtain. Validation status set as Invalid Document.");
+					LOGGER.error("Problem with validation status obtain. Validation status set as Invalid Document.");
 					LOGGER.error(e);
-					return invalidStatus;
+					return ValidationStatus.INVALID_DOCUMENT;
 				}
 			}
 		}
-		return getInvalidStatus(ValidationStatus.INVALID_METADATA,
-				"Problem with validation status obtain. Validation status set as Invalid Metadata.");
+		LOGGER.error("Problem with validation status obtain. Validation status set as Invalid Metadata.");
+		return ValidationStatus.INVALID_METADATA;
 	}
 
 	private static FixReport getInvalidStatus(ValidationStatus status, String message) {
@@ -231,10 +229,10 @@ public class MetadataFixer {
 		String key = attributes.get(attribute);
 		if (metaValue == null && infoValue != null) {
 			doSaveAction(schema, attribute, infoValue);
-			entity.addFix("Add '" + key + "' to metadata from info dictionary");
+			entity.addFix("Added '" + key + "' to metadata from info dictionary");
 		} else if (metaValue != null && infoValue != null && !metaValue.equals(infoValue)) {
 			doSaveAction(info, attribute, metaValue);
-			entity.addFix("Add '" + attribute + "' to info dictionary from metadata");
+			entity.addFix("Added '" + attribute + "' to info dictionary from metadata");
 		}
 	}
 
@@ -243,11 +241,11 @@ public class MetadataFixer {
 		String key = attributes.get(attribute);
 		if (metaValue == null && infoValue != null) {
 			doSaveAction(schema, attribute, infoValue);
-			entity.addFix("Add '" + key + "' to metadata from info dictionary");
+			entity.addFix("Added '" + key + "' to metadata from info dictionary");
 		} else if (metaValue != null && infoValue != null &&
 				(metaValue.compareTo(infoValue) != 0 || !isValidDateFormat(infoValue))) {
 			doSaveAction(info, attribute, metaValue);
-			entity.addFix("Add '" + attribute + "' to info dictionary from metadata");
+			entity.addFix("Added '" + attribute + "' to info dictionary from metadata");
 		}
 	}
 

@@ -13,6 +13,12 @@ public class AdobePDFSchemaImpl implements AdobePDF {
 	private final Metadata metadata;
 
 	public AdobePDFSchemaImpl(AdobePDFSchema schema, Metadata metadata) {
+		if (schema == null) {
+			throw new IllegalArgumentException("AdobePdf schema representation can not be null");
+		}
+		if (metadata == null) {
+			throw new IllegalArgumentException("Metadata representation can not be null");
+		}
 		this.schema = schema;
 		this.metadata = metadata;
 	}

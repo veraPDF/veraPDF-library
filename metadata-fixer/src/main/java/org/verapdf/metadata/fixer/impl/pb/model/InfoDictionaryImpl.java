@@ -13,6 +13,9 @@ public class InfoDictionaryImpl implements InfoDictionary {
 	private final PDDocumentInformation info;
 
 	public InfoDictionaryImpl(PDDocumentInformation info) {
+		if (info == null) {
+			throw new IllegalArgumentException("Info dictionary representation can not be null");
+		}
 		this.info = info;
 	}
 

@@ -25,6 +25,12 @@ public class MetadataImpl implements Metadata {
 	private final COSStream stream;
 
 	public MetadataImpl(XMPMetadata metadata, COSStream stream) {
+		if (metadata == null) {
+			throw new IllegalArgumentException("Metadata package can not be null");
+		}
+		if (stream == null) {
+			throw new IllegalArgumentException("Metadata stream can not be null");
+		}
 		this.metadata = metadata;
 		this.stream = stream;
 	}

@@ -30,6 +30,9 @@ public class PDFDocumentImpl implements PDFDocument {
 	private InfoDictionaryImpl info;
 
 	public PDFDocumentImpl(PDDocument document) {
+		if (document == null) {
+			throw new IllegalArgumentException("Document representation can not be null");
+		}
 		this.document = document;
 	}
 
