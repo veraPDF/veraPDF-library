@@ -32,7 +32,7 @@ public final class GUIConstants {
 	public static final String REPORT = "Report";
 	public static final String ERROR_IN_SAVING_HTML_REPORT = "Some error in saving the HTML report.";
 	public static final String ERROR_IN_SAVING_XML_REPORT = "Some error in saving the XML report.";
-	public static final String LABEL_TEXT = " Please specify input PDF, Validation Profile and press \"" + VALIDATE_BUTTON_TEXT + "\"";
+	public static final String LABEL_TEXT = "     Please specify input PDF, Validation Profile and press \"" + VALIDATE_BUTTON_TEXT + "\"";
 	public static final String CONSORTIUM_TEXT = "© 2015 veraPDF Consortium";
 	public static final String PROPERTIES_NAME = "config.properties";
 	public static final String TITLE = "PDF/A Conformance Checker";
@@ -51,12 +51,12 @@ public final class GUIConstants {
 	public static final String MAX_NUMBER_FAILED_DISPLAYED_CHECKS = "Display failed checks for rule: ";
 	public static final String MAX_NUMBER_FAILED_CHECKS = "Stop checking rule after failed checks:";
 	public static final String FEATURES_GENERATED_CORRECT = "Features report generating finished";
-	public static final String MAX_FAILED_CHECKS_SETTING_TIP = "  (1 to 999999 or empty for unlimited)";
-	public static final String MAX_FAILED_CHECKS_DISP_SETTING_TIP = "  (0 to 999999 or empty for unlimited)";
-	public static final String FIX_METADATA_LABEL_TEXT = "Fix metadata:";
-	public static final String SELECTED_PATH_FOR_FIXER_LABEL_TEXT = "Save fixed files into the directory:";
+	public static final String MAX_FAILED_CHECKS_SETTING_TIP = "1 to 999999 or empty for unlimited";
+	public static final String MAX_FAILED_CHECKS_DISP_SETTING_TIP = "0 to 999999 or empty for unlimited";
+	public static final String FIX_METADATA_LABEL_TEXT = "Fix metadata";
+	public static final String SELECTED_PATH_FOR_FIXER_LABEL_TEXT = "Save fixed files into the folder:";
 	public static final String FIX_METADATA_PREFIX_LABEL_TEXT = "Save fixed files with prefix:";
-	public static final String SELECTED_PATH_FOR_FIXER_TOOLTIP = "This path determines a directory in which will be saved fixed file. Leave empty to save it near the original file.";
+	public static final String SELECTED_PATH_FOR_FIXER_TOOLTIP = "The folder to save the fixed file to. Leave empty to save it near the original file.";
 
 	public static final int VALIDATING_AND_FEATURES_FLAG = 3;
 	public static final int FEATURES_FLAG = 2;
@@ -65,7 +65,7 @@ public final class GUIConstants {
 	public static final int EMPTYBORDER_INSETS = 5;
 	public static final int FRAME_COORD_X = 100;
 	public static final int FRAME_COORD_Y = 100;
-	public static final int FRAME_WIDTH = 550;
+	public static final int FRAME_WIDTH = 600;
 	public static final int FRAME_HEIGHT = 350;
 
 	public static final int BORDER_WIDTH = 4;
@@ -134,7 +134,7 @@ public final class GUIConstants {
 	public static final int VALIDATE_BUTTON_CONSTRAINT_GRIDHEIGHT = 1;
 
 	public static final int REPORT_PANEL_CONSTRAINT_GRIDX = 0;
-	public static final int REPORT_PANEL_CONSTRAINT_GRIDY = 3;
+	public static final int REPORT_PANEL_CONSTRAINT_GRIDY = 4;
 	public static final int REPORT_PANEL_CONSTRAINT_WEIGHTX = 4;
 	public static final int REPORT_PANEL_CONSTRAINT_WEIGHTY = 3;
 	public static final int REPORT_PANEL_CONSTRAINT_GRIDWIDTH = 4;

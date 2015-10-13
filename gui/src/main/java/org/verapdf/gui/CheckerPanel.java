@@ -42,6 +42,9 @@ class CheckerPanel extends JPanel {
 	private File xmlReport;
 	private File htmlReport;
 
+	private JComboBox<String> processingType;
+	private JCheckBox fixMetadata;
+
 	private boolean isValidationErrorOccurred;
 
 	private JButton validate;
@@ -162,6 +165,58 @@ class CheckerPanel extends JPanel {
 		gbl.setConstraints(validate, gbc);
 		this.add(validate);
 
+		final JLabel processType = new JLabel(GUIConstants.PROCESSING_TYPE);
+		setGridBagConstraintsParameters(gbc,
+				0,
+				3,
+				0,
+				1,
+				1,
+				1,
+				GridBagConstraints.HORIZONTAL);
+		gbl.setConstraints(processType, gbc);
+		this.add(processType);
+
+		String[] types = new String[]{GUIConstants.VALIDATING_AND_FEATURES, GUIConstants.VALIDATING, GUIConstants.FEATURES};
+		processingType = new JComboBox<>(types);
+		setGridBagConstraintsParameters(gbc,
+				1,
+				3,
+				0,
+				1,
+				1,
+				1,
+				GridBagConstraints.HORIZONTAL);
+		gbl.setConstraints(processingType, gbc);
+		this.add(processingType);
+
+		fixMetadata = new JCheckBox(GUIConstants.FIX_METADATA_LABEL_TEXT);
+		fixMetadata.setSelected(settings.isFixMetadata());
+		setGridBagConstraintsParameters(gbc,
+				2,
+				3,
+				0,
+				1,
+				1,
+				1,
+				GridBagConstraints.HORIZONTAL);
+		gbl.setConstraints(fixMetadata, gbc);
+		this.add(fixMetadata);
+
+		int type = settings.getProcessingType();
+		switch (type) {
+			case GUIConstants.VALIDATING_AND_FEATURES_FLAG:
+				processingType.setSelectedIndex(0);
+				break;
+			case GUIConstants.VALIDATING_FLAG:
+				processingType.setSelectedIndex(1);
+				break;
+			case GUIConstants.FEATURES_FLAG:
+				processingType.setSelectedIndex(2);
+				fixMetadata.setEnabled(false);
+				break;
+		}
+
 		JPanel reports = new JPanel();
 		reports.setBorder(BorderFactory.createTitledBorder(GUIConstants.REPORT));
 		reports.setLayout(new GridLayout(
@@ -225,18 +280,22 @@ class CheckerPanel extends JPanel {
 		validate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				progressBar.setVisible(true);
-				result.setVisible(false);
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-				validate.setEnabled(false);
-				info = null;
-				isValidationErrorOccurred = false;
-				viewXML.setEnabled(false);
-				saveXML.setEnabled(false);
-				viewHTML.setEnabled(false);
-				saveHTML.setEnabled(false);
-				validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, profile, settings);
-				validateWorker.execute();
+				try {
+					validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, profile, settings);
+					progressBar.setVisible(true);
+					result.setVisible(false);
+					setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+					validate.setEnabled(false);
+					info = null;
+					isValidationErrorOccurred = false;
+					viewXML.setEnabled(false);
+					saveXML.setEnabled(false);
+					viewHTML.setEnabled(false);
+					saveHTML.setEnabled(false);
+					validateWorker.execute();
+				} catch (IllegalArgumentException exep) {
+					JOptionPane.showMessageDialog(CheckerPanel.this, exep.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 
@@ -294,6 +353,33 @@ class CheckerPanel extends JPanel {
 								GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
 						LOGGER.error("Exception in opening the HTML report", e1);
 					}
+				}
+			}
+		});
+
+		fixMetadata.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				settings.setFixMetadata(CheckerPanel.this.fixMetadata.isSelected());
+			}
+		});
+		processingType.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int index = processingType.getSelectedIndex();
+				switch (index) {
+					case 0:
+						settings.setProcessingType(GUIConstants.VALIDATING_AND_FEATURES_FLAG);
+						fixMetadata.setEnabled(true);
+						break;
+					case 1:
+						settings.setProcessingType(GUIConstants.VALIDATING_FLAG);
+						fixMetadata.setEnabled(true);
+						break;
+					case 2:
+						settings.setProcessingType(GUIConstants.FEATURES_FLAG);
+						fixMetadata.setEnabled(false);
+						break;
 				}
 			}
 		});

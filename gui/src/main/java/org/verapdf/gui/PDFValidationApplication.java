@@ -59,12 +59,10 @@ public class PDFValidationApplication extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (settingsPanel != null && settingsPanel.showDialog(PDFValidationApplication.this, "Settings", settings)) {
-					settings.setProcessingType(settingsPanel.getProcessingType());
 					settings.setShowPassedRules(settingsPanel.isDispPassedRules());
 					settings.setMaxNumberOfFailedChecks(settingsPanel.getFailedChecksNumber());
 					settings.setMaxNumberOfDisplayedFailedChecks(settingsPanel.getFailedChecksDisplayNumber());
 					settings.setFeaturesPluginsConfigFilePath(settingsPanel.getFeaturesPluginConfigPath());
-					settings.setFixMetadata(settingsPanel.isFixMetadata());
 					settings.setFixMetadataPathFolder(settingsPanel.getFixMetadataDirectory());
 					settings.setMetadataFixerPrefix(settingsPanel.getFixMetadataPrefix());
 				}

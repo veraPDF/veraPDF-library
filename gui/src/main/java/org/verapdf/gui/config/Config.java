@@ -88,6 +88,9 @@ public final class Config {
 	}
 
 	public static final class Builder {
+
+		private static final char[] FORBIDDEN_SYMBOLS_IN_FILE_NAME = new char[]{'\\', '/', ':', '*', '?', '\"', '<', '>', '|', '+', '\0', '%'};
+
 		private static final int DEFAULT_PROCESSING_TYPE = 3;
 		private static final boolean DEFAULT_SHOW_PASSED_RULES = false;
 		private static final int DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS = 100;
@@ -133,6 +136,11 @@ public final class Config {
 		public Builder metadataFixerPrefix(String metadataFixerPrefix) {
 			if (metadataFixerPrefix == null) {
 				throw new IllegalArgumentException("Prefix for metadata fixer can not be null");
+			}
+			for (char c : metadataFixerPrefix.toCharArray()) {
+				if (!isValidFileNameCharacter(c)) {
+					throw new IllegalArgumentException("Prefix for metadata fixer contains forbidden symbols");
+				}
 			}
 			this.metadataFixerPrefix = metadataFixerPrefix;
 			return this;
@@ -201,7 +209,7 @@ public final class Config {
 		 * @throws IllegalArgumentException parameter should be an empty path or a path to an existing file
 		 */
 		public Builder featuresPluginsConfigFilePath(Path featuresPluginsConfigFilePath) {
-			if (isValidPathForFeaturesPluginsConfigFilePath(featuresPluginsConfigFilePath)) {
+			if (isValidFilePath(featuresPluginsConfigFilePath)) {
 				this.featuresPluginsConfigFilePath = featuresPluginsConfigFilePath;
 				return this;
 			} else {
@@ -216,7 +224,7 @@ public final class Config {
 		 * @throws IllegalArgumentException parameter should be an empty path or a path to an existing and write acceptable directory
 		 */
 		public Builder fixMetadataPathFolder(Path fixMetadataPathFolder) {
-			if (isValidPathForFixMetadataPathFolder(fixMetadataPathFolder)) {
+			if (isValidFolderPath(fixMetadataPathFolder)) {
 				this.fixMetadataPathFolder = fixMetadataPathFolder;
 				return this;
 			} else {
@@ -230,7 +238,7 @@ public final class Config {
 		 * @param path path for check
 		 * @return true if it is valid
 		 */
-		public static boolean isValidPathForFixMetadataPathFolder(Path path) {
+		public static boolean isValidFolderPath(Path path) {
 			if (path == null) {
 				return false;
 			}
@@ -244,12 +252,27 @@ public final class Config {
 		 * @param path path for check
 		 * @return true if it is valid
 		 */
-		public static boolean isValidPathForFeaturesPluginsConfigFilePath(Path path) {
+		public static boolean isValidFilePath(Path path) {
 			if (path == null) {
 				return false;
 			}
 			File f = path.toFile();
 			return path.toString().isEmpty() || (f.isFile() && f.canRead());
+		}
+
+		/**
+		 * Checks is the character valid for file name
+		 *
+		 * @param c character to be checked
+		 * @return true if it is valid
+		 */
+		public static boolean isValidFileNameCharacter(char c) {
+			for (char ch : FORBIDDEN_SYMBOLS_IN_FILE_NAME) {
+				if (ch == c) {
+					return false;
+				}
+			}
+			return true;
 		}
 	}
 }
