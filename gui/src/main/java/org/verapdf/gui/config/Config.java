@@ -3,14 +3,16 @@ package org.verapdf.gui.config;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 
 import java.io.File;
+import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 /**
  * @author Maksim Bezrukov
  */
-public final class Config {
+public final class Config implements Serializable {
 
+	private static final long serialVersionUID = -489741899162049734L;
 	private final int processingType;
 	private final boolean showPassedRules;
 	private final int maxNumberOfFailedChecks;

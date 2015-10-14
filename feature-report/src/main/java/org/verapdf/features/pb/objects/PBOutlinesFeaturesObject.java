@@ -94,32 +94,28 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
 			PBCreateNodeHelper.addNotEmptyNode("title", item.getTitle(),
 					itemNode);
 
-			if (item.getTextColor() != null) {
-				FeatureTreeNode color = FeatureTreeNode.newChildInstance(
-						"color", itemNode);
 
-				PDColor clr = item.getTextColor();
-				float[] rgb = clr.getComponents();
-				if (rgb.length == RGB_COLORS_NUMBER) {
-					FeatureTreeNode.newChildInstanceWithValue("red",
-							String.valueOf(rgb[RGB_RED_COLOR_NUMBER]), color);
-					FeatureTreeNode.newChildInstanceWithValue("green",
-							String.valueOf(rgb[RGB_GREEN_COLOR_NUMBER]), color);
-					FeatureTreeNode.newChildInstanceWithValue("blue",
-							String.valueOf(rgb[RGB_BLUE_COLOR_NUMBER]), color);
-				} else {
-					color.addAttribute(ErrorsHelper.ERRORID,
-							ErrorsHelper.OUTLINESCOLOR_ID);
-					ErrorsHelper.addErrorIntoCollection(collection,
-							ErrorsHelper.OUTLINESCOLOR_ID,
-							ErrorsHelper.OUTLINESCOLOR_MESSAGE);
-				}
+			FeatureTreeNode color = FeatureTreeNode.newChildInstance(
+					"color", itemNode);
+
+			PDColor clr = item.getTextColor();
+			float[] rgb = clr.getComponents();
+			if (rgb.length == RGB_COLORS_NUMBER) {
+				color.addAttribute("red", String.valueOf(rgb[RGB_RED_COLOR_NUMBER]));
+				color.addAttribute("green", String.valueOf(rgb[RGB_GREEN_COLOR_NUMBER]));
+				color.addAttribute("blue", String.valueOf(rgb[RGB_BLUE_COLOR_NUMBER]));
+			} else {
+				color.addAttribute(ErrorsHelper.ERRORID,
+						ErrorsHelper.OUTLINESCOLOR_ID);
+				ErrorsHelper.addErrorIntoCollection(collection,
+						ErrorsHelper.OUTLINESCOLOR_ID,
+						ErrorsHelper.OUTLINESCOLOR_MESSAGE);
 			}
 
-			FeatureTreeNode.newChildInstanceWithValue("italic",
-					String.valueOf(item.isItalic()), itemNode);
-			FeatureTreeNode.newChildInstanceWithValue("bold",
-					String.valueOf(item.isBold()), itemNode);
+
+			FeatureTreeNode style = FeatureTreeNode.newChildInstance("style", itemNode);
+			style.addAttribute("italic", String.valueOf(item.isItalic()));
+			style.addAttribute("bold", String.valueOf(item.isBold()));
 
 			for (PDOutlineItem child : item.children()) {
 				if (!items.contains(child)) {

@@ -1,7 +1,10 @@
 package org.verapdf.features.pb.objects;
 
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDEmbeddedFile;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
@@ -92,7 +95,18 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
 					ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
 				}
 
-				PBCreateNodeHelper.addNotEmptyNode("checkSum", ef.getCheckSum(), root);
+				COSBase baseParams = ef.getStream().getDictionaryObject(COSName.PARAMS);
+				if (baseParams instanceof COSDictionary) {
+					COSBase baseChecksum = ((COSDictionary) baseParams).getDictionaryObject(COSName.getPDFName("CheckSum"));
+					if (baseChecksum instanceof COSString) {
+						COSString str = (COSString) baseChecksum;
+						if (str.isHex()) {
+							PBCreateNodeHelper.addNotEmptyNode("checkSum", str.toHexString(), root);
+						} else {
+							PBCreateNodeHelper.addNotEmptyNode("checkSum", str.getString(), root);
+						}
+					}
+				}
 				PBCreateNodeHelper.addNotEmptyNode("size", String.valueOf(ef.getSize()), root);
 			}
 

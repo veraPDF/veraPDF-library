@@ -34,7 +34,6 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 	private Set<String> shadingChild;
 	private Set<String> xobjectChild;
 	private Set<String> fontChild;
-	private Set<String> procSetChild;
 	private Set<String> propertiesChild;
 	private String id;
 	private int index;
@@ -51,7 +50,6 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 	 * @param shadingChild    set of shading id which contains in resource dictionary of this page
 	 * @param xobjectChild    set of XObject id which contains in resource dictionary of this page
 	 * @param fontChild       set of font id which contains in resource dictionary of this page
-	 * @param procSetChild    set of procedure set id which contains in resource dictionary of this page
 	 * @param propertiesChild set of properties id which contains in resource dictionary of this page
 	 * @param id              page id
 	 * @param index           page index
@@ -65,7 +63,6 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 								Set<String> shadingChild,
 								Set<String> xobjectChild,
 								Set<String> fontChild,
-								Set<String> procSetChild,
 								Set<String> propertiesChild,
 								String id,
 								int index) {
@@ -78,7 +75,6 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 		this.shadingChild = shadingChild;
 		this.xobjectChild = xobjectChild;
 		this.fontChild = fontChild;
-		this.procSetChild = procSetChild;
 		this.propertiesChild = propertiesChild;
 		this.id = id;
 		this.index = index;
@@ -167,7 +163,6 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 				(shadingChild != null && !shadingChild.isEmpty()) ||
 				(xobjectChild != null && !xobjectChild.isEmpty()) ||
 				(fontChild != null && !fontChild.isEmpty()) ||
-				(procSetChild != null && !procSetChild.isEmpty()) ||
 				(propertiesChild != null && !propertiesChild.isEmpty())) {
 			FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
 
@@ -177,7 +172,6 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 			PBCreateNodeHelper.parseIDSet(shadingChild, "shading", "shadings", resources);
 			PBCreateNodeHelper.parseIDSet(xobjectChild, "xobject", "xobjects", resources);
 			PBCreateNodeHelper.parseIDSet(fontChild, "font", "fonts", resources);
-			PBCreateNodeHelper.parseIDSet(procSetChild, "procSet", "procSets", resources);
 			PBCreateNodeHelper.parseIDSet(propertiesChild, "propertiesDict", "propertiesDicts", resources);
 		}
 	}

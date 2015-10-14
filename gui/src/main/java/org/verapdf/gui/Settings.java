@@ -6,6 +6,7 @@ import org.verapdf.gui.config.ConfigPropertiesSerializator;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Path;
 
 /**
@@ -13,12 +14,14 @@ import java.nio.file.Path;
  *
  * @author Maksim Bezrukov
  */
-final class Settings {
+final class Settings implements Serializable {
 
 	private static final Logger LOGGER = Logger.getLogger(Settings.class);
+	private static final long serialVersionUID = -5062754518184773560L;
 
-	private Config config;
-	private Config.Builder builder = new Config.Builder();
+	//TODO: change config to fields?
+	private transient Config config;
+	private transient Config.Builder builder = new Config.Builder();
 	private boolean isSerrialized;
 	private Path path = null;
 

@@ -58,7 +58,7 @@ class CheckerPanel extends JPanel {
 	JProgressBar progressBar;
 	transient ValidateWorker validateWorker;
 
-	CheckerPanel(final Settings settings) throws IOException {
+	CheckerPanel(Settings settings) throws IOException {
 
 		this.settings = settings;
 		if (settings == null) {
@@ -281,7 +281,7 @@ class CheckerPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, profile, settings);
+					validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, profile, CheckerPanel.this.settings);
 					progressBar.setVisible(true);
 					result.setVisible(false);
 					setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -360,7 +360,7 @@ class CheckerPanel extends JPanel {
 		fixMetadata.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				settings.setFixMetadata(CheckerPanel.this.fixMetadata.isSelected());
+				CheckerPanel.this.settings.setFixMetadata(CheckerPanel.this.fixMetadata.isSelected());
 			}
 		});
 		processingType.addActionListener(new ActionListener() {
@@ -369,15 +369,15 @@ class CheckerPanel extends JPanel {
 				int index = processingType.getSelectedIndex();
 				switch (index) {
 					case 0:
-						settings.setProcessingType(GUIConstants.VALIDATING_AND_FEATURES_FLAG);
+						CheckerPanel.this.settings.setProcessingType(GUIConstants.VALIDATING_AND_FEATURES_FLAG);
 						fixMetadata.setEnabled(true);
 						break;
 					case 1:
-						settings.setProcessingType(GUIConstants.VALIDATING_FLAG);
+						CheckerPanel.this.settings.setProcessingType(GUIConstants.VALIDATING_FLAG);
 						fixMetadata.setEnabled(true);
 						break;
 					case 2:
-						settings.setProcessingType(GUIConstants.FEATURES_FLAG);
+						CheckerPanel.this.settings.setProcessingType(GUIConstants.FEATURES_FLAG);
 						fixMetadata.setEnabled(false);
 						break;
 				}

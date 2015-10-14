@@ -267,19 +267,19 @@ public final class PBCreateNodeHelper {
 	}
 
 	private static void createGray(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {
-		FeatureTreeNode.newChildInstanceWithValue("gray", String.valueOf(components[GRAY_COMPONENT_NUMBER]), parent);
+		parent.addAttribute("gray", String.valueOf(components[GRAY_COMPONENT_NUMBER]));
 	}
 
 	private static void createRGB(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {
-		FeatureTreeNode.newChildInstanceWithValue("red", String.valueOf(components[RED_COMPONENT_NUMBER]), parent);
-		FeatureTreeNode.newChildInstanceWithValue("green", String.valueOf(components[GREEN_COMPONENT_NUMBER]), parent);
-		FeatureTreeNode.newChildInstanceWithValue("blue", String.valueOf(components[BLUE_COMPONENT_NUMBER]), parent);
+		parent.addAttribute("red", String.valueOf(components[RED_COMPONENT_NUMBER]));
+		parent.addAttribute("green", String.valueOf(components[GREEN_COMPONENT_NUMBER]));
+		parent.addAttribute("blue", String.valueOf(components[BLUE_COMPONENT_NUMBER]));
 	}
 
 	private static void createCMYK(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {
-		FeatureTreeNode.newChildInstanceWithValue("cyan", String.valueOf(components[CYAN_COMPONENT_NUMBER]), parent);
-		FeatureTreeNode.newChildInstanceWithValue("magenta", String.valueOf(components[MAGENTA_COMPONENT_NUMBER]), parent);
-		FeatureTreeNode.newChildInstanceWithValue("yellow", String.valueOf(components[YELLOW_COMPONENT_NUMBER]), parent);
-		FeatureTreeNode.newChildInstanceWithValue("black", String.valueOf(components[BLACK_COMPONENT_NUMBER]), parent);
+		parent.addAttribute("cyan", String.valueOf(components[CYAN_COMPONENT_NUMBER]));
+		parent.addAttribute("magenta", String.valueOf(components[MAGENTA_COMPONENT_NUMBER]));
+		parent.addAttribute("yellow", String.valueOf(components[YELLOW_COMPONENT_NUMBER]));
+		parent.addAttribute("black", String.valueOf(components[BLACK_COMPONENT_NUMBER]));
 	}
 }

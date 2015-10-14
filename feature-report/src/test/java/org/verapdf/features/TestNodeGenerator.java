@@ -45,26 +45,6 @@ public final class TestNodeGenerator {
 		return root;
 	}
 
-	public static FeatureTreeNode getProcSet(String id, String pageParent, String xobjParent, List<String> entries) throws FeaturesTreeNodeException {
-		FeatureTreeNode root = FeatureTreeNode.newRootInstance("procSet");
-		root.addAttribute(ID, id);
-		FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
-		if (pageParent != null) {
-			FeatureTreeNode page = FeatureTreeNode.newChildInstance("page", parents);
-			page.addAttribute(ID, pageParent);
-		}
-		if (xobjParent != null) {
-			FeatureTreeNode xobj = FeatureTreeNode.newChildInstance("xobject", parents);
-			xobj.addAttribute(ID, xobjParent);
-		}
-		int n = 0;
-		for (String entr : entries) {
-			FeatureTreeNode entry = FeatureTreeNode.newChildInstanceWithValue("entry", entr, root);
-			entry.addAttribute("number", String.valueOf(n++));
-		}
-		return root;
-	}
-
 	public static FeatureTreeNode getTilingPattern() throws FeaturesTreeNodeException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("pattern");
 		root.addAttribute(ID, "ptrnIndir49");
@@ -298,10 +278,6 @@ public final class TestNodeGenerator {
 		fonts.add("fntIndir89");
 		makeList("font", fonts, resources);
 
-		List<String> procSets = new ArrayList<>();
-		procSets.add("prsetDir0");
-		makeList("procSet", procSets, resources);
-
 		List<String> propertiesDicts = new ArrayList<>();
 		propertiesDicts.add("propDir0");
 		makeList("propertiesDict", propertiesDicts, resources);
@@ -369,18 +345,18 @@ public final class TestNodeGenerator {
 
 		if (red != null && green != null && blue != null && kayan != null) {
 			FeatureTreeNode color = FeatureTreeNode.newChildInstance("color", root);
-			FeatureTreeNode.newChildInstanceWithValue("cyan", red, color);
-			FeatureTreeNode.newChildInstanceWithValue("magenta", green, color);
-			FeatureTreeNode.newChildInstanceWithValue("yellow", blue, color);
-			FeatureTreeNode.newChildInstanceWithValue("black", blue, color);
+			color.addAttribute("cyan", red);
+			color.addAttribute("magenta", green);
+			color.addAttribute("yellow", blue);
+			color.addAttribute("black", blue);
 		} else if (red != null && green != null && blue != null) {
 			FeatureTreeNode color = FeatureTreeNode.newChildInstance("color", root);
-			FeatureTreeNode.newChildInstanceWithValue("red", red, color);
-			FeatureTreeNode.newChildInstanceWithValue("green", green, color);
-			FeatureTreeNode.newChildInstanceWithValue("blue", blue, color);
+			color.addAttribute("red", red);
+			color.addAttribute("green", green);
+			color.addAttribute("blue", blue);
 		} else if (red != null) {
 			FeatureTreeNode color = FeatureTreeNode.newChildInstance("color", root);
-			FeatureTreeNode.newChildInstanceWithValue("gray", red, color);
+			color.addAttribute("gray", red);
 		}
 
 		FeatureTreeNode.newChildInstanceWithValue("invisible", invisible, root);
@@ -425,11 +401,12 @@ public final class TestNodeGenerator {
 	public static void makeOutline(String title, String red, String green, String blue, String italic, String bold, FeatureTreeNode root) throws FeaturesTreeNodeException {
 		FeatureTreeNode.newChildInstanceWithValue("title", title, root);
 		FeatureTreeNode color = FeatureTreeNode.newChildInstance("color", root);
-		FeatureTreeNode.newChildInstanceWithValue("red", red, color);
-		FeatureTreeNode.newChildInstanceWithValue("green", green, color);
-		FeatureTreeNode.newChildInstanceWithValue("blue", blue, color);
-		FeatureTreeNode.newChildInstanceWithValue("italic", italic, root);
-		FeatureTreeNode.newChildInstanceWithValue("bold", bold, root);
+		color.addAttribute("red", red);
+		color.addAttribute("green", green);
+		color.addAttribute("blue", blue);
+		FeatureTreeNode style = FeatureTreeNode.newChildInstance("style", root);
+		style.addAttribute("italic", italic);
+		style.addAttribute("bold", bold);
 	}
 
 	public static FeatureTreeNode getOutputIntent() throws FeaturesTreeNodeException {
