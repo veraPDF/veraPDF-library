@@ -6,6 +6,7 @@ import org.apache.xmpbox.schema.AdobePDFSchema;
 import org.apache.xmpbox.schema.DublinCoreSchema;
 import org.apache.xmpbox.schema.PDFAIdentificationSchema;
 import org.apache.xmpbox.schema.XMPBasicSchema;
+import org.verapdf.metadata.fixer.MetadataFixerResult;
 import org.verapdf.metadata.fixer.entity.FixReport;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
@@ -36,18 +37,18 @@ public class MetadataImpl implements Metadata {
 	}
 
 	@Override
-	public void removePDFIdentificationSchema(FixReport report) {
+	public void removePDFIdentificationSchema(MetadataFixerResult result) {
 		PDFAIdentificationSchema schema = this.metadata.getPDFIdentificationSchema();
 		if (schema != null) {
 			this.metadata.removeSchema(schema);
-			report.addFix("Identification schema removed.");
+			result.addAppliedFix("Identification schema removed.");
 		}
 	}
 
 	@Override
-	public void addPDFIdentificationSchema(FixReport report) {
+	public void addPDFIdentificationSchema(MetadataFixerResult report) {
 		this.metadata.createAndAddPFAIdentificationSchema();
-		report.addFix("Identification schema added.");
+		report.addAppliedFix("Identification schema added.");
 	}
 
 	@Override

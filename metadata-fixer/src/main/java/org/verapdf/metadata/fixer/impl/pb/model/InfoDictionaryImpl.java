@@ -109,8 +109,4 @@ public class InfoDictionaryImpl implements InfoDictionary {
 		this.info.getCOSObject().setNeedToBeUpdated(true);
 	}
 
-	private String getDateString(COSName name) {
-		return this.info.getCOSObject().getString(name);
-	}
-
 }

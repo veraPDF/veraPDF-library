@@ -5,6 +5,7 @@ import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
 import org.verapdf.metadata.fixer.impl.pb.model.PDFDocumentImpl;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
+import org.verapdf.metadata.fixer.utils.PDFAFlavour;
 import org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser;
 import org.verapdf.metadata.fixer.utils.parser.XMLProcessedObjectsParser;
 import org.verapdf.validation.profile.model.ValidationProfile;
@@ -61,6 +62,16 @@ public class FixerConfigImpl implements FixerConfig {
 	@Override
 	public ProcessedObjectsParser getParser() {
 		return this.parser;
+	}
+
+	@Override
+	public boolean isFixIdentification() {
+		return false;
+	}
+
+	@Override
+	public PDFAFlavour getPDFAFlavour() {
+		return null;
 	}
 
 }

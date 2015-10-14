@@ -8,7 +8,7 @@ import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.xml.DomXmpParser;
 import org.apache.xmpbox.xml.XmpParsingException;
 import org.apache.xmpbox.xml.XmpSerializer;
-import org.verapdf.metadata.fixer.entity.FixReport;
+import org.verapdf.metadata.fixer.MetadataFixerResult;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
@@ -34,24 +34,25 @@ public class PDFDocumentImpl implements PDFDocument {
 			throw new IllegalArgumentException("Document representation can not be null");
 		}
 		this.document = document;
+		this.metadata = parseMetadata();
 	}
 
 	@Override
 	public Metadata getMetadata() {
-		if (this.metadata == null) {
-			PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
-			if (meta == null) {
-				if (this.document.getDocumentInformation().getCOSObject().size() > 0) {
-					COSStream stream = this.document.getDocument().createCOSStream();
-					this.document.getDocumentCatalog().setMetadata(new PDMetadata(stream));
-					XMPMetadata xmp = XMPMetadata.createXMPMetadata();
-					this.metadata = new MetadataImpl(xmp, stream);
-				}
-			} else {
-				this.metadata = parseMetadata(meta);
-			}
-		}
 		return this.metadata;
+	}
+
+	private MetadataImpl parseMetadata() {
+		PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
+		if (meta == null) {
+			// TODO : do we need to check count of predefined fields in info dictionary?
+			COSStream stream = this.document.getDocument().createCOSStream();
+			this.document.getDocumentCatalog().setMetadata(new PDMetadata(stream));
+			XMPMetadata xmp = XMPMetadata.createXMPMetadata();
+			return new MetadataImpl(xmp, stream);
+		} else {
+			return parseMetadata(meta);
+		}
 	}
 
 	private MetadataImpl parseMetadata(PDMetadata meta) {
@@ -87,7 +88,7 @@ public class PDFDocumentImpl implements PDFDocument {
 	}
 
 	@Override
-	public void saveDocumentIncremental(FixReport report, OutputStream output) throws IOException {
+	public void saveDocumentIncremental(MetadataFixerResult result, OutputStream output) throws IOException {
 		PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
 		if (meta != null) {
 			checkFilters(meta);
@@ -95,6 +96,9 @@ public class PDFDocumentImpl implements PDFDocument {
 			if (isNeedToBeUpdated()) {
 				this.document.saveIncremental(output);
 				output.close();
+				result.setStatus(MetadataFixerResult.RepairStatus.SUCCESSFUL);
+			} else {
+				result.setStatus(MetadataFixerResult.RepairStatus.NO_ACTION);
 			}
 		}
 	}
@@ -116,7 +120,7 @@ public class PDFDocumentImpl implements PDFDocument {
 				new XmpSerializer().serialize(this.metadata.getAbsorbedMetadata(), out, true);
 				meta.importXMPMetadata(out.toByteArray());
 			} catch (TransformerException e) {
-				e.printStackTrace();
+				LOGGER.error("Problems with xmp serializing");
 			}
 		}
 	}
