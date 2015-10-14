@@ -1,5 +1,6 @@
 package org.verapdf.metadata.fixer.entity;
 
+import org.verapdf.metadata.fixer.MetadataFixerResult;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
@@ -9,9 +10,9 @@ import org.verapdf.metadata.fixer.schemas.XMPBasic;
  */
 public interface Metadata {
 
-	void removePDFIdentificationSchema(FixReport report);
+	void removePDFIdentificationSchema(MetadataFixerResult result);
 
-	void addPDFIdentificationSchema(FixReport report);
+	void addPDFIdentificationSchema(MetadataFixerResult report);
 
 	DublinCore getDublinCoreSchema(InfoDictionary info);
 

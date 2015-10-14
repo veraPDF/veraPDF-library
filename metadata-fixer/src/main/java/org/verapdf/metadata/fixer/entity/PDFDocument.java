@@ -1,5 +1,7 @@
 package org.verapdf.metadata.fixer.entity;
 
+import org.verapdf.metadata.fixer.MetadataFixerResult;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -14,5 +16,5 @@ public interface PDFDocument {
 
 	boolean isNeedToBeUpdated();
 
-	void saveDocumentIncremental(FixReport report, OutputStream output) throws IOException;
+	void saveDocumentIncremental(MetadataFixerResult report, OutputStream output) throws IOException;
 }
