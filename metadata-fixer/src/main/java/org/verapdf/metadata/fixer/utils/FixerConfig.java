@@ -20,4 +20,8 @@ public interface FixerConfig {
 	PDFDocument getDocument();
 
 	ProcessedObjectsParser getParser();
+
+	boolean isFixIdentification();
+
+	PDFAFlavour getPDFAFlavour();
 }
