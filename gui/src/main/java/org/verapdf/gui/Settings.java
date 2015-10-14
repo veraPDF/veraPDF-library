@@ -22,18 +22,18 @@ final class Settings implements Serializable {
 	//TODO: change config to fields?
 	private transient Config config;
 	private transient Config.Builder builder = new Config.Builder();
-	private boolean isSerrialized;
+	private boolean isSerialized;
 	private Path path = null;
 
 	Settings() {
 		File user = new File(System.getProperty("user.home"));
 		File f = new File(user, ".veraPDF");
 		if (!f.exists() && !f.mkdir()) {
-			this.isSerrialized = false;
+			this.isSerialized = false;
 			this.config = Config.Builder.buildDefaultConfig();
 		} else {
 			File configFile = new File(f, "config.properties");
-			this.isSerrialized = true;
+			this.isSerialized = true;
 			this.path = configFile.toPath();
 			if (configFile.exists()) {
 				try {
@@ -57,7 +57,7 @@ final class Settings implements Serializable {
 	void setProcessingType(int processingType) {
 		builder.processingType(processingType);
 		this.config = builder.build();
-		if (isSerrialized) {
+		if (isSerialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
 			} catch (IOException e) {
@@ -73,7 +73,7 @@ final class Settings implements Serializable {
 	void setShowPassedRules(boolean showPassedRules) {
 		builder.showPassedRules(showPassedRules);
 		this.config = builder.build();
-		if (isSerrialized) {
+		if (isSerialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
 			} catch (IOException e) {
@@ -89,7 +89,7 @@ final class Settings implements Serializable {
 	void setMaxNumberOfFailedChecks(int maxNumberOfFailedChecks) {
 		builder.maxNumberOfFailedChecks(maxNumberOfFailedChecks);
 		this.config = builder.build();
-		if (isSerrialized) {
+		if (isSerialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
 			} catch (IOException e) {
@@ -105,7 +105,7 @@ final class Settings implements Serializable {
 	void setMaxNumberOfDisplayedFailedChecks(int maxNumberOfDisplayedFailedChecks) {
 		builder.maxNumberOfDisplayedFailedChecks(maxNumberOfDisplayedFailedChecks);
 		this.config = builder.build();
-		if (isSerrialized) {
+		if (isSerialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
 			} catch (IOException e) {
@@ -121,7 +121,7 @@ final class Settings implements Serializable {
 	void setFeaturesPluginsConfigFilePath(Path featuresPluginsConfigFilePath) {
 		builder.featuresPluginsConfigFilePath(featuresPluginsConfigFilePath);
 		this.config = builder.build();
-		if (isSerrialized) {
+		if (isSerialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
 			} catch (IOException e) {
@@ -137,7 +137,7 @@ final class Settings implements Serializable {
 	void setFixMetadata(boolean fixMetadata) {
 		builder.fixMetadata(fixMetadata);
 		this.config = builder.build();
-		if (isSerrialized) {
+		if (isSerialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
 			} catch (IOException e) {
@@ -153,7 +153,7 @@ final class Settings implements Serializable {
 	void setMetadataFixerPrefix(String metadataFixerPrefix) {
 		builder.metadataFixerPrefix(metadataFixerPrefix);
 		this.config = builder.build();
-		if (isSerrialized) {
+		if (isSerialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
 			} catch (IOException e) {
@@ -169,7 +169,7 @@ final class Settings implements Serializable {
 	void setFixMetadataPathFolder(Path fixMetadataPathFolder) {
 		builder.fixMetadataPathFolder(fixMetadataPathFolder);
 		this.config = builder.build();
-		if (isSerrialized) {
+		if (isSerialized) {
 			try {
 				ConfigPropertiesSerializator.saveConfig(this.config, path);
 			} catch (IOException e) {
