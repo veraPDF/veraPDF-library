@@ -1,12 +1,13 @@
 package org.verapdf.metadata.fixer.entity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author Evgeniy Muravitskiy
  */
-public class FixReport {
+public class FixReport implements Iterable<String> {
 
 	private ValidationStatus status = ValidationStatus.VALID;
 
@@ -26,5 +27,10 @@ public class FixReport {
 
 	public void setStatus(ValidationStatus status) {
 		this.status = status;
+	}
+
+	@Override
+	public Iterator<String> iterator() {
+		return appliedFixes.iterator();
 	}
 }

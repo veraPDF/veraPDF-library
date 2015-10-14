@@ -1,6 +1,5 @@
 package org.verapdf.metadata.fixer.utils;
 
-import org.verapdf.metadata.fixer.entity.FixReport;
 import org.verapdf.metadata.fixer.entity.ValidationStatus;
 import org.verapdf.metadata.fixer.utils.model.ProcessedObjects;
 import org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser;
@@ -24,38 +23,38 @@ public class ProcessedObjectsInspector {
 		// hide default constructor
 	}
 
-	public static FixReport validationStatus(List<Rule> rules, ValidationProfile profile)
+	public static ValidationStatus validationStatus(List<Rule> rules, ValidationProfile profile)
 			throws URISyntaxException, IOException, ParserConfigurationException, SAXException {
 		ProcessedObjectsParser parser = XMLProcessedObjectsParser.getInstance();
 		return validationStatus(rules, profile, parser);
 	}
 
-	public static FixReport validationStatus(List<Rule> rules, ValidationProfile profile, ProcessedObjectsParser parser)
+	public static ValidationStatus validationStatus(List<Rule> rules, ValidationProfile profile, ProcessedObjectsParser parser)
 			throws IOException, URISyntaxException, ParserConfigurationException, SAXException {
 		return validationStatus(rules, profile, parser.getProcessedObjects());
 	}
 
-	public static FixReport validationStatus(List<Rule> rules, ValidationProfile profile, ProcessedObjects objects)
+	public static ValidationStatus validationStatus(List<Rule> rules, ValidationProfile profile, ProcessedObjects objects)
 			throws IOException, URISyntaxException, ParserConfigurationException, SAXException {
-		FixReport entity = new FixReport();
+		ValidationStatus status = ValidationStatus.VALID;
 
 		for (Rule rule : rules) {
 			if (rule.getStatus() == Check.Status.FAILED) {
-				checkCurrentRule(profile, objects, rule, entity);
+				status = checkCurrentRule(profile, objects, rule, status);
 			}
 		}
 
-		return entity;
+		return status;
 	}
 
-	private static void checkCurrentRule(ValidationProfile profile, ProcessedObjects objects,
-										 Rule rule, FixReport entity) {
+	private static ValidationStatus checkCurrentRule(ValidationProfile profile, ProcessedObjects objects,
+													 Rule rule, ValidationStatus status) {
 		org.verapdf.validation.profile.model.Rule profileRule = profile.getRuleById(rule.getID());
 		String objectType = profileRule.getAttrObject();
 		if (objects.contains(objectType, profileRule.getTest())) {
-			entity.setStatus(ValidationStatus.INVALID_METADATA.getStatus(entity.getStatus()));
+			return ValidationStatus.INVALID_METADATA.getStatus(status);
 		} else {
-			entity.setStatus(ValidationStatus.INVALID_STRUCTURE.getStatus(entity.getStatus()));
+			return ValidationStatus.INVALID_STRUCTURE.getStatus(status);
 		}
 	}
 
