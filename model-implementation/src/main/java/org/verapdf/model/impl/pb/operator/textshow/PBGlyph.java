@@ -19,12 +19,7 @@ public class PBGlyph extends GenericModelObject implements Glyph {
 	private int glyphCode;
 
 	public PBGlyph(Boolean glyphPresent, Boolean widthsConsistent, String fontName, int glyphCode) {
-		super(GLYPH_TYPE);
-		this.glyphPresent = glyphPresent;
-		this.widthsConsistent = widthsConsistent;
-
-		this.fontName = fontName;
-		this.glyphCode = glyphCode;
+		this(glyphPresent, widthsConsistent, fontName, glyphCode, GLYPH_TYPE);
 	}
 
 	public PBGlyph(Boolean glyphPresent, Boolean widthsConsistent, String fontName, int glyphCode, String type) {
