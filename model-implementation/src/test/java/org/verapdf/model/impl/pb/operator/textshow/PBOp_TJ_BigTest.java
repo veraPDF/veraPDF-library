@@ -27,7 +27,7 @@ public class PBOp_TJ_BigTest extends PBOpTextShowTest {
 
 	@Override
 	protected int getUsedGlyphsAmount() {
-		return 10;
+		return 7;
 	}
 
 }

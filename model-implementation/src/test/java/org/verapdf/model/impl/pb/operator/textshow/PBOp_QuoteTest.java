@@ -23,7 +23,7 @@ public class PBOp_QuoteTest extends PBOpStringTextShowTest {
 
 	@Override
 	protected int getUsedGlyphsAmount() {
-		return 5;
+		return 4;
 	}
 
 }
