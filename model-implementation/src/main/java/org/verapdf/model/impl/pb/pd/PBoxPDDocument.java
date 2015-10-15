@@ -33,21 +33,10 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
     public static final int MAX_NUMBER_OF_ACTIONS = 5;
     public static final String PD_DOCUMENT_TYPE = "PDDocument";
 
-	public static final ThreadLocal<Map<COSDictionary, List<Integer>>> SAVED_GLYPHS = new ThreadLocal<>();
-
     public PBoxPDDocument(org.apache.pdfbox.pdmodel.PDDocument document) {
         super(document, PD_DOCUMENT_TYPE);
 		clearGlyphs();
     }
-
-	private void clearGlyphs() {
-		Map<COSDictionary, List<Integer>> map = SAVED_GLYPHS.get();
-		if (map != null) {
-			map.clear();
-		} else {
-			SAVED_GLYPHS.set(new HashMap<COSDictionary, List<Integer>>());
-		}
-	}
 
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
@@ -200,5 +189,20 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         }
         return Collections.emptyList();
     }
+
+	public static final ThreadLocal<Map<COSDictionary, List<Integer>>> SAVED_GLYPHS;
+
+	static {
+		SAVED_GLYPHS  = new ThreadLocal<Map<COSDictionary, List<Integer>>>() {
+			@Override
+			protected Map<COSDictionary, List<Integer>> initialValue() {
+				return new HashMap<>();
+			}
+		};
+	}
+
+	private void clearGlyphs() {
+		SAVED_GLYPHS.get().clear();
+	}
 
 }
