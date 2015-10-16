@@ -167,7 +167,7 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 				}
 			}
 
-			return new ICCProfileFeaturesData(metadata, stream, n, range);
+			return ICCProfileFeaturesData.newInstance(metadata, stream, n, range);
 
 		} catch (IOException e) {
 			LOGGER.error("Can not get iccProfile stream", e);

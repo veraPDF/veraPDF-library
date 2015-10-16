@@ -164,29 +164,29 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 					COSDictionary dic = i < decodeList.size() ? decodeList.get(i) : null;
 					switch (filter) {
 						case "LZWDecode":
-							filters.add(new ImageFeaturesData.FilterStructure(filter, getLWZOrFlatFiltersMap(dic, true), null));
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLWZOrFlatFiltersMap(dic, true), null));
 							break;
 						case "FlateDecode":
-							filters.add(new ImageFeaturesData.FilterStructure(filter, getLWZOrFlatFiltersMap(dic, false), null));
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLWZOrFlatFiltersMap(dic, false), null));
 							break;
 						case "CCITTFaxDecode":
-							filters.add(new ImageFeaturesData.FilterStructure(filter, getCCITTFaxFiltersMap(dic), null));
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getCCITTFaxFiltersMap(dic), null));
 							break;
 						case "DCTDecode":
-							filters.add(new ImageFeaturesData.FilterStructure(filter, getDCTFiltersMap(dic), null));
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getDCTFiltersMap(dic), null));
 							break;
 						case "JBIG2Decode":
 							byte[] global = null;
 							if (dic != null && dic.getDictionaryObject(COSName.JBIG2_GLOBALS) instanceof COSStream) {
 								global = PBCreateNodeHelper.inputStreamToByteArray(((COSStream) dic.getDictionaryObject(COSName.JBIG2_GLOBALS)).getUnfilteredStream());
 							}
-							filters.add(new ImageFeaturesData.FilterStructure(filter, new HashMap<String, String>(), global));
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, new HashMap<String, String>(), global));
 							break;
 						case "Crypt":
 							LOGGER.error("An Image has a Crypt filter");
 							return null;
 						default:
-							filters.add(new ImageFeaturesData.FilterStructure(filter, new HashMap<String, String>(), null));
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, new HashMap<String, String>(), null));
 					}
 				}
 			}
@@ -194,7 +194,7 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 			Integer width = getIntegerWithDefault(imageXObject.getCOSStream().getDictionaryObject(COSName.WIDTH), null);
 			Integer height = getIntegerWithDefault(imageXObject.getCOSStream().getDictionaryObject(COSName.HEIGHT), null);
 
-			return new ImageFeaturesData(metadata, stream, width, height, filters);
+			return ImageFeaturesData.newInstance(metadata, stream, width, height, filters);
 		} catch (IOException e) {
 			LOGGER.error("Error in obtaining features data for fonts", e);
 			return null;

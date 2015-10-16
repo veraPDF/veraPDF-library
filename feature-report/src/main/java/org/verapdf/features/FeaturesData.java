@@ -19,9 +19,6 @@ public class FeaturesData {
 	 * @param stream     byte array represents object stream
 	 */
 	protected FeaturesData(byte[] metadata, byte[] stream) {
-		if (stream == null) {
-			throw new IllegalArgumentException("List of streams argument have to contain at least one element");
-		}
 		this.metadata = metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
 		this.stream = Arrays.copyOf(stream, stream.length);
 	}

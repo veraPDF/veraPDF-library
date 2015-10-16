@@ -132,16 +132,10 @@ public final class TestNodeGenerator {
 		return root;
 	}
 
-	public static FeatureTreeNode getFailedXObject(String id) throws FeaturesTreeNodeException {
+	public static FeatureTreeNode getFailedXObject(String id, String errorid) throws FeaturesTreeNodeException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("xobject");
 		root.addAttribute(ID, id);
-		root.addAttribute("errorID", "xobjerr1");
-		return root;
-	}
-
-	public static FeatureTreeNode getError() throws FeaturesTreeNodeException {
-		FeatureTreeNode root = FeatureTreeNode.newRootInstanceWIthValue("error", "Error while getting xobject.");
-		root.addAttribute(ID, "xobjerr1");
+		root.addAttribute("errorID", errorid);
 		return root;
 	}
 

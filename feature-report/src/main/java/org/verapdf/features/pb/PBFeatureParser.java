@@ -483,7 +483,7 @@ public final class PBFeatureParser {
 							xobjectCreationProblem(thumbID, e.getMessage());
 						}
 					} else {
-						xobjectCreationProblem(thumbID, "Thimb is not a stream");
+						xobjectCreationProblem(thumbID, "Thumb is not a stream");
 					}
 				}
 			}

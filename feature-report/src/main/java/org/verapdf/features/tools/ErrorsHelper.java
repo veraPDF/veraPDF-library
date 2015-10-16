@@ -43,7 +43,8 @@ public final class ErrorsHelper {
 			for (FeatureTreeNode errNode : collection.getFeatureTreesForType(
 					FeaturesObjectTypesEnum.ERROR)) {
 				if (errorMessage.equals(errNode.getValue())) {
-					id = errNode.getAttributes().get(ERRORID);
+					id = errNode.getAttributes().get(ID);
+					break;
 				}
 			}
 			if (id == null) {

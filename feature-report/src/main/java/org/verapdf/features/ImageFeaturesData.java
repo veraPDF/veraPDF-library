@@ -13,17 +13,7 @@ public final class ImageFeaturesData extends FeaturesData {
 	private Integer height;
 	private List<FilterStructure> filters;
 
-
-	/**
-	 * Creates ICCProfileFeaturesData
-	 *
-	 * @param metadata byte array represents metadata stream
-	 * @param stream   byte array represents object stream
-	 * @param width    parameter Width from the iccprofile dictionary
-	 * @param height   parameter Height from the iccprofile dictionary
-	 * @param filters  list of FilterStructures elements. The order of them is the same as in pdf file
-	 */
-	public ImageFeaturesData(byte[] metadata, byte[] stream, Integer width, Integer height, List<FilterStructure> filters) {
+	private ImageFeaturesData(byte[] metadata, byte[] stream, Integer width, Integer height, List<FilterStructure> filters) {
 		super(metadata, stream);
 		this.width = width;
 		this.height = height;
@@ -35,6 +25,22 @@ public final class ImageFeaturesData extends FeaturesData {
 				this.filters.add(new FilterStructure(fs.name, fs.properties, fs.stream));
 			}
 		}
+	}
+
+	/**
+	 * Creates ICCProfileFeaturesData
+	 *
+	 * @param metadata byte array represents metadata stream
+	 * @param stream   byte array represents object stream
+	 * @param width    parameter Width from the iccprofile dictionary
+	 * @param height   parameter Height from the iccprofile dictionary
+	 * @param filters  list of FilterStructures elements. The order of them is the same as in pdf file
+	 */
+	public static ImageFeaturesData newInstance(byte[] metadata, byte[] stream, Integer width, Integer height, List<FilterStructure> filters) {
+		if (stream == null) {
+			throw new IllegalArgumentException("Image stream can not be null");
+		}
+		return new ImageFeaturesData(metadata, stream, width, height, filters);
 	}
 
 	/**
@@ -70,6 +76,12 @@ public final class ImageFeaturesData extends FeaturesData {
 		private Map<String, String> properties;
 		private byte[] stream;
 
+		private FilterStructure(String name, Map<String, String> properties, byte[] stream) {
+			this.name = name;
+			this.properties = new HashMap<>(properties);
+			this.stream = Arrays.copyOf(stream, stream.length);
+		}
+
 		/**
 		 * Constructs new FilterStructure
 		 *
@@ -77,16 +89,14 @@ public final class ImageFeaturesData extends FeaturesData {
 		 * @param properties map of properties of a filter
 		 * @param stream     stream which used in filter as its parameter for JBIG2Decode filter
 		 */
-		public FilterStructure(String name, Map<String, String> properties, byte[] stream) {
+		public static FilterStructure newInstance(String name, Map<String, String> properties, byte[] stream) {
 			if (name == null) {
 				throw new IllegalArgumentException("Name of a filter can not be null");
 			}
 			if (properties == null) {
 				throw new IllegalArgumentException("Properties can not be null");
 			}
-			this.name = name;
-			this.properties = new HashMap<>(properties);
-			this.stream = Arrays.copyOf(stream, stream.length);
+			return new FilterStructure(name, properties, stream);
 		}
 
 		/**

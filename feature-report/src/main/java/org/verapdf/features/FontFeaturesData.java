@@ -224,6 +224,9 @@ public final class FontFeaturesData extends FeaturesData {
 		}
 
 		public FontFeaturesData build() {
+			if (this.stream == null) {
+				throw new IllegalArgumentException("Font stream can not be null");
+			}
 			return new FontFeaturesData(metadata, stream, fontName, fontFamily, fontStretch, fontWeight,
 					flags, fontBBox, italicAngle, ascent, descent, leading, capHeight, xHeight, stemV,
 					stemH, avgWidth, maxWidth, missingWidth, charSet);

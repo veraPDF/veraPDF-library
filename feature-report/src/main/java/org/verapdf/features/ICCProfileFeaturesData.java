@@ -14,6 +14,12 @@ public final class ICCProfileFeaturesData extends FeaturesData {
 	private Integer n;
 	private List<Double> range;
 
+	private ICCProfileFeaturesData(byte[] metadata, byte[] stream, Integer n, List<Double> range) {
+		super(metadata, stream);
+		this.n = n;
+		this.range = range == null ? null : new ArrayList<>(range);
+	}
+
 	/**
 	 * Creates ICCProfileFeaturesData
 	 *
@@ -22,10 +28,11 @@ public final class ICCProfileFeaturesData extends FeaturesData {
 	 * @param n        parameter N from the iccprofile dictionary
 	 * @param range    parameter Range from the iccprofile dictionary
 	 */
-	public ICCProfileFeaturesData(byte[] metadata, byte[] stream, Integer n, List<Double> range) {
-		super(metadata, stream);
-		this.n = n;
-		this.range = range == null ? null : new ArrayList<>(range);
+	public static ICCProfileFeaturesData newInstance(byte[] metadata, byte[] stream, Integer n, List<Double> range) {
+		if (stream == null) {
+			throw new IllegalArgumentException("ICCProfile stream can not be null");
+		}
+		return new ICCProfileFeaturesData(metadata, stream, n, range);
 	}
 
 	/**
