@@ -131,12 +131,12 @@ public final class XMLFeaturesReport {
 			Element xobjects = doc.createElement("xobjects");
 			makeList("images", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.IMAGE_XOBJECT), xobjects, collection, doc);
 			makeList("forms", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FORM_XOBJECT), xobjects, collection, doc);
+			makeList("postscripts", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.POSTSCRIPT_XOBJECT), xobjects, collection, doc);
 			makeList("failed", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FAILED_XOBJECT), xobjects, collection, doc);
 			if (xobjects.getChildNodes().getLength() > 0) {
 				resources.appendChild(xobjects);
 			}
 			makeList("fonts", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FONT), resources, collection, doc);
-			makeList("procSets", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROCSET), resources, collection, doc);
 			makeList("propertiesDicts", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROPERTIES), resources, collection, doc);
 
 			if (resources.getChildNodes().getLength() > 0) {

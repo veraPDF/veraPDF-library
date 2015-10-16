@@ -16,12 +16,10 @@ public final class ConfigPropertiesSerializator {
 
 	private static final Logger LOGGER = Logger.getLogger(ConfigPropertiesSerializator.class);
 
-	private static final String PROPERTY_PROCESSING_TYPE = "processingType";
 	private static final String PROPERTY_SHOW_PASSED_RULES = "showPassedRules";
 	private static final String PROPERTY_MAX_NUMBER_FAILED_CHECKS = "maxNumbFailedChecks";
 	private static final String PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS = "maxNumbDisplFailedChecks";
 	private static final String PROPERTY_FEATURES_CONFIG_FILE = "featuresPluginConfigFile";
-	private static final String PROPERTY_FIX_METADATA = "fixMetadata";
 	private static final String PROPERTY_METADATA_FIXER_PREFIX = "metadataFixerPrefix";
 	private static final String PROPERTY_FIX_METADATA_PATH_FOLDER = "fixMetadataPathFolder";
 
@@ -46,12 +44,10 @@ public final class ConfigPropertiesSerializator {
 		FileWriter writer = new FileWriter(path.toFile());
 
 		Properties settings = new Properties();
-		settings.setProperty(PROPERTY_PROCESSING_TYPE, String.valueOf(config.getProcessingType()));
 		settings.setProperty(PROPERTY_MAX_NUMBER_FAILED_CHECKS, String.valueOf(config.getMaxNumberOfFailedChecks()));
 		settings.setProperty(PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS, String.valueOf(config.getMaxNumberOfDisplayedFailedChecks()));
 		settings.setProperty(PROPERTY_SHOW_PASSED_RULES, String.valueOf(config.isShowPassedRules()));
 		settings.setProperty(PROPERTY_FEATURES_CONFIG_FILE, config.getFeaturesPluginsConfigFilePath().toString());
-		settings.setProperty(PROPERTY_FIX_METADATA, String.valueOf(config.isFixMetadata()));
 		settings.setProperty(PROPERTY_METADATA_FIXER_PREFIX, config.getMetadataFixerPrefix());
 		settings.setProperty(PROPERTY_FIX_METADATA_PATH_FOLDER, config.getFixMetadataPathFolder().toString());
 		settings.store(writer, "settings");
@@ -112,52 +108,42 @@ public final class ConfigPropertiesSerializator {
 	 * @throws IllegalArgumentException if any error with values occurs or some value is missing
 	 */
 	public static Config loadConfig(Path path) throws IOException {
-		Properties settings = new Properties();
+		Properties properties = new Properties();
 		if (!path.toFile().isFile() || !path.toFile().canRead()) {
 			throw new IllegalArgumentException("Path should specify an existed and read accessible file");
 		}
 		FileReader reader = new FileReader(path.toFile());
-		settings.load(reader);
+		properties.load(reader);
 		reader.close();
 		Config.Builder builder = new Config.Builder();
 
 		try {
-			builder.processingType(getIntegerValue(settings, PROPERTY_PROCESSING_TYPE));
-		} catch (IllegalArgumentException e) {
-			LOGGER.error("Property " + PROPERTY_PROCESSING_TYPE + " is missing or containing a wrong value. Setting it to default");
-		}
-		try {
-			builder.maxNumberOfFailedChecks(getIntegerValue(settings, PROPERTY_MAX_NUMBER_FAILED_CHECKS));
+			builder.maxNumberOfFailedChecks(getIntegerValue(properties, PROPERTY_MAX_NUMBER_FAILED_CHECKS));
 		} catch (IllegalArgumentException e) {
 			LOGGER.error("Property " + PROPERTY_MAX_NUMBER_FAILED_CHECKS + " is missing or containing a wrong value. Setting it to default");
 		}
 		try {
-			builder.maxNumberOfDisplayedFailedChecks(getIntegerValue(settings, PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS));
+			builder.maxNumberOfDisplayedFailedChecks(getIntegerValue(properties, PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS));
 		} catch (IllegalArgumentException e) {
 			LOGGER.error("Property " + PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS + " is missing or containing a wrong value. Setting it to default");
 		}
 		try {
-			builder.showPassedRules(getBooleanValue(settings, PROPERTY_SHOW_PASSED_RULES));
+			builder.showPassedRules(getBooleanValue(properties, PROPERTY_SHOW_PASSED_RULES));
 		} catch (IllegalArgumentException e) {
 			LOGGER.error("Property " + PROPERTY_SHOW_PASSED_RULES + " is missing or containing a wrong value. Setting it to default");
 		}
 		try {
-			builder.fixMetadata(getBooleanValue(settings, PROPERTY_FIX_METADATA));
-		} catch (IllegalArgumentException e) {
-			LOGGER.error("Property " + PROPERTY_FIX_METADATA + " is missing or containing a wrong value. Setting it to default");
-		}
-		try {
-			builder.metadataFixerPrefix(getStringValue(settings, PROPERTY_METADATA_FIXER_PREFIX));
+			builder.metadataFixerPrefix(getStringValue(properties, PROPERTY_METADATA_FIXER_PREFIX));
 		} catch (IllegalArgumentException e) {
 			LOGGER.error("Property " + PROPERTY_METADATA_FIXER_PREFIX + " is missing or containing a wrong value. Setting it to default");
 		}
 		try {
-			builder.fixMetadataPathFolder(getPathValue(settings, PROPERTY_FIX_METADATA_PATH_FOLDER));
+			builder.fixMetadataPathFolder(getPathValue(properties, PROPERTY_FIX_METADATA_PATH_FOLDER));
 		} catch (IllegalArgumentException e) {
 			LOGGER.error("Property " + PROPERTY_FIX_METADATA_PATH_FOLDER + " is missing or containing a wrong value. Setting it to default");
 		}
 		try {
-			builder.featuresPluginsConfigFilePath(getPathValue(settings, PROPERTY_FEATURES_CONFIG_FILE));
+			builder.featuresPluginsConfigFilePath(getPathValue(properties, PROPERTY_FEATURES_CONFIG_FILE));
 		} catch (IllegalArgumentException e) {
 			LOGGER.error("Property " + PROPERTY_FEATURES_CONFIG_FILE + " is missing or containing a wrong value. Setting it to default");
 		}

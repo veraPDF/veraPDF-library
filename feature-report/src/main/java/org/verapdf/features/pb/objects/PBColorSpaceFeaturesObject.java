@@ -55,7 +55,16 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 	 * @param xobjectParents    set of xobject ids which contains the given colorspace as its resources
 	 * @param fontParents       set of font ids which contains the given colorspace as its resources
 	 */
-	public PBColorSpaceFeaturesObject(PDColorSpace colorSpace, String id, String iccProfileChild, String colorSpaceChild, Set<String> pageParents, Set<String> colorSpaceParents, Set<String> patternParents, Set<String> shadingParents, Set<String> xobjectParents, Set<String> fontParents) {
+	public PBColorSpaceFeaturesObject(PDColorSpace colorSpace,
+									  String id,
+									  String iccProfileChild,
+									  String colorSpaceChild,
+									  Set<String> pageParents,
+									  Set<String> colorSpaceParents,
+									  Set<String> patternParents,
+									  Set<String> shadingParents,
+									  Set<String> xobjectParents,
+									  Set<String> fontParents) {
 		this.colorSpace = colorSpace;
 		this.id = id;
 		this.iccProfileChild = iccProfileChild;

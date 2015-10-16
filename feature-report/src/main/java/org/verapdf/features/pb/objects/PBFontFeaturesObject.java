@@ -36,7 +36,6 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 	private Set<String> shadingChild;
 	private Set<String> xobjectChild;
 	private Set<String> fontChild;
-	private Set<String> procSetChild;
 	private Set<String> propertiesChild;
 	private Set<String> extGStateParent;
 	private Set<String> pageParent;
@@ -55,7 +54,6 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 	 * @param shadingChild    set of shading id which contains in resource dictionary of this font
 	 * @param xobjectChild    set of XObject id which contains in resource dictionary of this font
 	 * @param fontChild       set of font id which contains in resource dictionary of this font
-	 * @param procSetChild    set of procedure set id which contains in resource dictionary of this font
 	 * @param propertiesChild set of properties id which contains in resource dictionary of this font
 	 * @param pageParent      set of page ids which contains the given font as its resources
 	 * @param extGStateParent set of graphicsState ids which contains the given font as their resource
@@ -63,7 +61,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 	 * @param xobjectParent   set of xobject ids which contains the given font as its resources
 	 * @param fontParent      set of font ids which contains the given font as its resources
 	 */
-	public PBFontFeaturesObject(PDFontLike fontLike, String id, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> extGStateParent, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+	public PBFontFeaturesObject(PDFontLike fontLike, String id, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> propertiesChild, Set<String> extGStateParent, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
 		this.fontLike = fontLike;
 		this.id = id;
 		this.extGStateChild = extGStateChild;
@@ -72,7 +70,6 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 		this.shadingChild = shadingChild;
 		this.xobjectChild = xobjectChild;
 		this.fontChild = fontChild;
-		this.procSetChild = procSetChild;
 		this.propertiesChild = propertiesChild;
 		this.extGStateParent = extGStateParent;
 		this.pageParent = pageParent;
@@ -124,7 +121,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 						FeatureTreeNode.newChildInstanceWithValue("lastChar", String.valueOf(lc), root);
 					}
 
-					parseIntList(sFont.getWidths(), FeatureTreeNode.newChildInstance("widths", root));
+					parseWidths(sFont.getWidths(), fc, FeatureTreeNode.newChildInstance("widths", root));
 
 					COSBase enc = sFont.getCOSObject().getDictionaryObject(COSName.ENCODING);
 					if (enc instanceof COSName) {
@@ -313,23 +310,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 			}
 
 			if (file != null) {
-				FeatureTreeNode fileNode = FeatureTreeNode.newChildInstance("fontFile", descriptorNode);
-				COSBase len1 = file.getStream().getDictionaryObject(COSName.LENGTH1);
-				if (len1 instanceof COSInteger) {
-					FeatureTreeNode.newChildInstanceWithValue("length1", String.valueOf(((COSInteger) len1).intValue()), fileNode);
-				}
-				COSBase len2 = file.getStream().getDictionaryObject(COSName.LENGTH2);
-				if (len2 instanceof COSInteger) {
-					FeatureTreeNode.newChildInstanceWithValue("length2", String.valueOf(((COSInteger) len2).intValue()), fileNode);
-				}
-				COSBase len3 = file.getStream().getDictionaryObject(COSName.getPDFName("Length3"));
-				if (len3 instanceof COSInteger) {
-					FeatureTreeNode.newChildInstanceWithValue("length3", String.valueOf(((COSInteger) len3).intValue()), fileNode);
-				}
-				COSBase subType = file.getStream().getDictionaryObject(COSName.SUBTYPE);
-				if (subType instanceof COSName) {
-					FeatureTreeNode.newChildInstanceWithValue("subtype", ((COSName) subType).getName(), fileNode);
-				}
+				FeatureTreeNode fileNode = FeatureTreeNode.newChildInstance("embeddedFont", descriptorNode);
 				PBCreateNodeHelper.parseMetadata(file.getMetadata(), "metadata", fileNode, collection);
 			}
 		}
@@ -346,11 +327,11 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 		}
 	}
 
-	private static void parseIntList(List<Integer> array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+	private static void parseWidths(List<Integer> array, int firstChar, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+		int fc = firstChar == -1 ? 0 : firstChar;
 		for (int i = 0; i < array.size(); ++i) {
-			FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
-			element.addAttribute("number", String.valueOf(i));
-			element.addAttribute("value", String.valueOf(array.get(i)));
+			FeatureTreeNode element = FeatureTreeNode.newChildInstanceWithValue("width", String.valueOf(array.get(i)), parent);
+			element.addAttribute("char", String.valueOf(i + fc));
 		}
 	}
 
@@ -378,7 +359,6 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 				(shadingChild != null && !shadingChild.isEmpty()) ||
 				(xobjectChild != null && !xobjectChild.isEmpty()) ||
 				(fontChild != null && !fontChild.isEmpty()) ||
-				(procSetChild != null && !procSetChild.isEmpty()) ||
 				(propertiesChild != null && !propertiesChild.isEmpty())) {
 			FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
 
@@ -388,7 +368,6 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 			PBCreateNodeHelper.parseIDSet(shadingChild, "shading", "shadings", resources);
 			PBCreateNodeHelper.parseIDSet(xobjectChild, "xobject", "xobjects", resources);
 			PBCreateNodeHelper.parseIDSet(fontChild, "font", "fonts", resources);
-			PBCreateNodeHelper.parseIDSet(procSetChild, "procSet", "procSets", resources);
 			PBCreateNodeHelper.parseIDSet(propertiesChild, "propertiesDict", "propertiesDicts", resources);
 		}
 	}

@@ -62,9 +62,6 @@ public final class ErrorsHelper {
 	public static final String GETINGXOBJECTERROR_ID = "xobjerr1";
 	public static final String GETINGXOBJECTERROR_MESSAGE = "Error while getting xobject.";
 
-	public static final String GETINGPROCSETERROR_ID = "procseterr1";
-	public static final String GETINGPROCSETERROR_MESSAGE = "Error while getting ProcSet from the resource dictionary. The resulting value is not an array.";
-
 	public static final String COLOR_ID = "colorerr1";
 	public static final String COLOR_MESSAGE = "Devise color space contains wrong number of components.";
 

@@ -1,6 +1,7 @@
 package org.verapdf.gui;
 
 import org.apache.log4j.Logger;
+import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.validation.report.model.ValidationInfo;
 
@@ -53,18 +54,14 @@ class CheckerPanel extends JPanel {
 	private JButton saveHTML;
 	private JButton viewHTML;
 
-	private Settings settings;
+	private Config config;
 
 	JProgressBar progressBar;
 	transient ValidateWorker validateWorker;
 
-	CheckerPanel(final Settings settings) throws IOException {
+	CheckerPanel(Config config) throws IOException {
 
-		this.settings = settings;
-		if (settings == null) {
-			throw new IllegalArgumentException("Parameter settings for checker panel must not be null");
-		}
-
+		this.config = config;
 		setPreferredSize(new Dimension(GUIConstants.PREFERRED_SIZE_WIDTH,
 				GUIConstants.PREFERRED_SIZE_HEIGHT));
 
@@ -191,7 +188,7 @@ class CheckerPanel extends JPanel {
 		this.add(processingType);
 
 		fixMetadata = new JCheckBox(GUIConstants.FIX_METADATA_LABEL_TEXT);
-		fixMetadata.setSelected(settings.isFixMetadata());
+		fixMetadata.setSelected(false);
 		setGridBagConstraintsParameters(gbc,
 				2,
 				3,
@@ -202,20 +199,6 @@ class CheckerPanel extends JPanel {
 				GridBagConstraints.HORIZONTAL);
 		gbl.setConstraints(fixMetadata, gbc);
 		this.add(fixMetadata);
-
-		int type = settings.getProcessingType();
-		switch (type) {
-			case GUIConstants.VALIDATING_AND_FEATURES_FLAG:
-				processingType.setSelectedIndex(0);
-				break;
-			case GUIConstants.VALIDATING_FLAG:
-				processingType.setSelectedIndex(1);
-				break;
-			case GUIConstants.FEATURES_FLAG:
-				processingType.setSelectedIndex(2);
-				fixMetadata.setEnabled(false);
-				break;
-		}
 
 		JPanel reports = new JPanel();
 		reports.setBorder(BorderFactory.createTitledBorder(GUIConstants.REPORT));
@@ -281,7 +264,22 @@ class CheckerPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, profile, settings);
+					int index = processingType.getSelectedIndex();
+					int flag;
+					switch (index) {
+						case 0:
+							flag = GUIConstants.VALIDATING_AND_FEATURES_FLAG;
+							break;
+						case 1:
+							flag = GUIConstants.VALIDATING_FLAG;
+							break;
+						case 2:
+							flag = GUIConstants.FEATURES_FLAG;
+							break;
+						default:
+							throw new IllegalComponentStateException("Processing type list must contain only 3 values");
+					}
+					validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, profile, CheckerPanel.this.config, flag, fixMetadata.isSelected());
 					progressBar.setVisible(true);
 					result.setVisible(false);
 					setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -357,27 +355,18 @@ class CheckerPanel extends JPanel {
 			}
 		});
 
-		fixMetadata.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				settings.setFixMetadata(CheckerPanel.this.fixMetadata.isSelected());
-			}
-		});
 		processingType.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int index = processingType.getSelectedIndex();
 				switch (index) {
 					case 0:
-						settings.setProcessingType(GUIConstants.VALIDATING_AND_FEATURES_FLAG);
 						fixMetadata.setEnabled(true);
 						break;
 					case 1:
-						settings.setProcessingType(GUIConstants.VALIDATING_FLAG);
 						fixMetadata.setEnabled(true);
 						break;
 					case 2:
-						settings.setProcessingType(GUIConstants.FEATURES_FLAG);
 						fixMetadata.setEnabled(false);
 						break;
 				}
@@ -561,5 +550,9 @@ class CheckerPanel extends JPanel {
 				}
 			}
 		}
+	}
+
+	void setConfig(Config config) {
+		this.config = config;
 	}
 }

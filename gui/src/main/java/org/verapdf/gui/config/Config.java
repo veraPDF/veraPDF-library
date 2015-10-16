@@ -3,39 +3,30 @@ package org.verapdf.gui.config;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 
 import java.io.File;
+import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 /**
  * @author Maksim Bezrukov
  */
-public final class Config {
+public final class Config implements Serializable {
 
-	private final int processingType;
+	private static final long serialVersionUID = -6958696360087498892L;
 	private final boolean showPassedRules;
 	private final int maxNumberOfFailedChecks;
 	private final int maxNumberOfDisplayedFailedChecks;
 	private final Path featuresPluginsConfigFilePath;
-	private final boolean fixMetadata;
 	private final String metadataFixerPrefix;
 	private final Path fixMetadataPathFolder;
 
-	private Config(int processingType, boolean showPassedRules, int maxNumberOfFailedChecks, int maxNumberOfDisplayedFailedChecks, Path featuresPluginsConfigFilePath, boolean fixMetadata, String metadataFixerPrefix, Path fixMetadataPathFolder) {
-		this.processingType = processingType;
+	private Config(boolean showPassedRules, int maxNumberOfFailedChecks, int maxNumberOfDisplayedFailedChecks, Path featuresPluginsConfigFilePath, String metadataFixerPrefix, Path fixMetadataPathFolder) {
 		this.showPassedRules = showPassedRules;
 		this.maxNumberOfFailedChecks = maxNumberOfFailedChecks;
 		this.maxNumberOfDisplayedFailedChecks = maxNumberOfDisplayedFailedChecks;
 		this.featuresPluginsConfigFilePath = featuresPluginsConfigFilePath;
-		this.fixMetadata = fixMetadata;
 		this.metadataFixerPrefix = metadataFixerPrefix;
 		this.fixMetadataPathFolder = fixMetadataPathFolder;
-	}
-
-	/**
-	 * @return integer that indicates selected processing type
-	 */
-	public int getProcessingType() {
-		return processingType;
 	}
 
 	/**
@@ -67,13 +58,6 @@ public final class Config {
 	}
 
 	/**
-	 * @return true if metadata fixing is on
-	 */
-	public boolean isFixMetadata() {
-		return fixMetadata;
-	}
-
-	/**
 	 * @return String representation of prefix for fixed files
 	 */
 	public String getMetadataFixerPrefix() {
@@ -91,23 +75,19 @@ public final class Config {
 
 		private static final char[] FORBIDDEN_SYMBOLS_IN_FILE_NAME = new char[]{'\\', '/', ':', '*', '?', '\"', '<', '>', '|', '+', '\0', '%'};
 
-		private static final int DEFAULT_PROCESSING_TYPE = 3;
 		private static final boolean DEFAULT_SHOW_PASSED_RULES = false;
 		private static final int DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS = 100;
 		private static final int DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS = 100;
 		private static final Path DEFAULT_FEATURES_PLUGINS_CONFIG_FILE_PATH = FileSystems.getDefault().getPath("");
-		private static final boolean DEFAULT_FIX_METADATA = false;
 		private static final String DEFAULT_METADATA_FIXER_PREFIX = FileGenerator.DEFAULT_PREFIX;
 		private static final Path DEFAULT_FIX_METADATA_PATH_FOLDER = FileSystems.getDefault().getPath("");
 
-		private static final Config DEFAULT_CONFIG = new Config(DEFAULT_PROCESSING_TYPE, DEFAULT_SHOW_PASSED_RULES, DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, DEFAULT_FEATURES_PLUGINS_CONFIG_FILE_PATH, DEFAULT_FIX_METADATA, DEFAULT_METADATA_FIXER_PREFIX, DEFAULT_FIX_METADATA_PATH_FOLDER);
+		private static final Config DEFAULT_CONFIG = new Config(DEFAULT_SHOW_PASSED_RULES, DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, DEFAULT_FEATURES_PLUGINS_CONFIG_FILE_PATH, DEFAULT_METADATA_FIXER_PREFIX, DEFAULT_FIX_METADATA_PATH_FOLDER);
 
-		private int processingType = DEFAULT_PROCESSING_TYPE;
 		private boolean showPassedRules = DEFAULT_SHOW_PASSED_RULES;
 		private int maxNumberOfFailedChecks = DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS;
 		private int maxNumberOfDisplayedFailedChecks = DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS;
 		private Path featuresPluginsConfigFilePath = DEFAULT_FEATURES_PLUGINS_CONFIG_FILE_PATH;
-		private boolean fixMetadata = DEFAULT_FIX_METADATA;
 		private String metadataFixerPrefix = DEFAULT_METADATA_FIXER_PREFIX;
 		private Path fixMetadataPathFolder = DEFAULT_FIX_METADATA_PATH_FOLDER;
 
@@ -115,16 +95,11 @@ public final class Config {
 		}
 
 		public Config build() {
-			return new Config(this.processingType, this.showPassedRules, this.maxNumberOfFailedChecks, this.maxNumberOfDisplayedFailedChecks, this.featuresPluginsConfigFilePath, this.fixMetadata, this.metadataFixerPrefix, this.fixMetadataPathFolder);
+			return new Config(this.showPassedRules, this.maxNumberOfFailedChecks, this.maxNumberOfDisplayedFailedChecks, this.featuresPluginsConfigFilePath, this.metadataFixerPrefix, this.fixMetadataPathFolder);
 		}
 
 		public static Config buildDefaultConfig() {
 			return DEFAULT_CONFIG;
-		}
-
-		public Builder fixMetadata(boolean fixMetadata) {
-			this.fixMetadata = fixMetadata;
-			return this;
 		}
 
 		/**
@@ -143,21 +118,6 @@ public final class Config {
 				}
 			}
 			this.metadataFixerPrefix = metadataFixerPrefix;
-			return this;
-		}
-
-		/**
-		 * Changes settings parameters
-		 *
-		 * @param processingType must be in range from 1 to 3
-		 * @throws IllegalArgumentException if parameter is not an integer of range from 1 to 3
-		 */
-		public Builder processingType(int processingType) {
-			if (processingType >= 1 && processingType <= 3) {
-				this.processingType = processingType;
-			} else {
-				throw new IllegalArgumentException("Processing type must be an integer in range from 1 to 3");
-			}
 			return this;
 		}
 

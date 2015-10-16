@@ -9,6 +9,7 @@ import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
+import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.metadata.fixer.MetadataFixer;
 import org.verapdf.metadata.fixer.entity.FixReport;
@@ -43,14 +44,16 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 	private File pdf;
 	private File profile;
 	private CheckerPanel parent;
-	private Settings settings;
+	private Config settings;
 	private File xmlReport = null;
 	private File htmlReport = null;
+	private int flag;
+	private boolean isFixMetadata;
 
 	private long startTimeOfValidation;
 	private long endTimeOfValidation;
 
-	ValidateWorker(CheckerPanel parent, File pdf, File profile, Settings settings) {
+	ValidateWorker(CheckerPanel parent, File pdf, File profile, Config settings, int flag, boolean isFixMetadata) {
 		if (pdf == null || !pdf.isFile() || !pdf.canRead()) {
 			throw new IllegalArgumentException("PDF file doesn't exist or it can not be read");
 		}
@@ -61,6 +64,8 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 		this.pdf = pdf;
 		this.profile = profile;
 		this.settings = settings;
+		this.flag = flag;
+		this.isFixMetadata = isFixMetadata;
 	}
 
 	@Override
@@ -73,13 +78,12 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 		startTimeOfValidation = System.currentTimeMillis();
 
 		try (ModelLoader loader = new ModelLoader(this.pdf.getPath())) {
-			int flag = settings.getProcessingType();
 
 			if ((flag & 1) == 1) {
 				org.verapdf.model.baselayer.Object root = loader.getRoot();
 				info = runValidator(root);
 
-				if (settings.isFixMetadata()) {
+				if (isFixMetadata) {
 					FixerConfig fixerConfig = new FixerConfigImpl(loader.getPDDocument(), info);
 					Path path = settings.getFixMetadataPathFolder();
 					FixReport report;
