@@ -31,6 +31,11 @@ public class PBCosBool extends PBCosObject implements CosBool {
         return this.value;
     }
 
+    /**
+     * This method will create CosBool object instance from pdfbox COSBoolean
+     * @param bool pdfbox COSBoolean
+     * @return instance of CosBool
+     */
 	public static CosBool valueOf(COSBoolean bool) {
 		return bool.getValue() ? TRUE : FALSE;
 	}

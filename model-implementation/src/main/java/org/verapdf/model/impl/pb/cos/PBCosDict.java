@@ -31,10 +31,19 @@ public class PBCosDict extends PBCosObject implements CosDict {
 
     private final int size;
 
+    /**
+     * Default constructor
+     * @param dictionary pdfbox COSDictionary
+     */
 	public PBCosDict(COSDictionary dictionary) {
         this(dictionary, COS_DICT_TYPE);
     }
 
+    /**
+     * Constructor used by child classes
+     * @param dictionary pdfbox COSDictionary
+     * @param type type of child class
+     */
     public PBCosDict(COSDictionary dictionary, final String type) {
         super(dictionary, type);
         this.size = dictionary.size();
