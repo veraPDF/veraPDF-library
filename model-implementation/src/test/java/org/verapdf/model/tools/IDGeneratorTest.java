@@ -2,6 +2,7 @@ package org.verapdf.model.tools;
 
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSObject;
+import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -31,8 +32,8 @@ public class IDGeneratorTest {
 
 	@Test
 	public void testGlyphIDGenerator() {
-		String actualID = IDGenerator.generateID("name", 10);
-		String expectedID = "name 10";
+		String actualID = IDGenerator.generateID(1298374, "name", 10);
+		String expectedID = "1298374 name 10";
 		Assert.assertEquals(expectedID, actualID);
 	}
 }
