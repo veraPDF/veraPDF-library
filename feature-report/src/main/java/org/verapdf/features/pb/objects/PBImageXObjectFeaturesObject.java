@@ -287,7 +287,7 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 		if (value instanceof COSInteger) {
 			map.put(key, String.valueOf(((COSInteger) value).intValue()));
 		} else {
-			if (!(defaultValue == null)) {
+			if (defaultValue != null) {
 				map.put(key, defaultValue.toString());
 			}
 		}
@@ -297,7 +297,7 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 		if (value instanceof COSBoolean) {
 			map.put(key, String.valueOf(((COSBoolean) value).getValue()));
 		} else {
-			if (!(defaultValue == null)) {
+			if (defaultValue != null) {
 				map.put(key, defaultValue.toString());
 			}
 		}
