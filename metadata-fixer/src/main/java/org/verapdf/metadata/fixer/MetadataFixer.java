@@ -1,7 +1,6 @@
 package org.verapdf.metadata.fixer;
 
 import org.apache.log4j.Logger;
-import org.verapdf.metadata.fixer.entity.FixReport;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.ValidationStatus;
@@ -16,6 +15,7 @@ import org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector;
 import org.verapdf.validation.profile.model.ValidationProfile;
 import org.verapdf.validation.report.model.Result;
 import org.verapdf.validation.report.model.Rule;
+import org.verapdf.validation.report.model.ValidationInfo;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -134,12 +134,10 @@ public class MetadataFixer {
 
 			switch (status) {
 				case INVALID_DOCUMENT:
-					metadata.removePDFIdentificationSchema(result);
-					fixMetadata(result, config);
+					executeInvalidDocumentCase(config, metadata, result);
 					break;
 				case INVALID_METADATA:
-					fixMetadata(result, config);
-					metadata.addPDFIdentificationSchema(result);
+					executeInvalidMetadataCase(config, metadata, result);
 					break;
 				case INVALID_STRUCTURE:
 					metadata.removePDFIdentificationSchema(result);
@@ -173,6 +171,20 @@ public class MetadataFixer {
 		}
 		LOGGER.error("Problem with validation status obtain. Validation status set as Invalid Metadata.");
 		return ValidationStatus.INVALID_METADATA;
+	}
+
+	private static void executeInvalidDocumentCase(FixerConfig config, Metadata metadata, MetadataFixerResult result) {
+		if (config.isFixIdentification()) {
+			metadata.removePDFIdentificationSchema(result);
+		}
+		fixMetadata(result, config);
+	}
+
+	private static void executeInvalidMetadataCase(FixerConfig config, Metadata metadata, MetadataFixerResult result) {
+		if (config.isFixIdentification()) {
+			metadata.addPDFIdentificationSchema(result, config.getPDFAFlavour());
+		}
+		fixMetadata(result, config);
 	}
 
 	private static void fixMetadata(MetadataFixerResult result, FixerConfig config) {
