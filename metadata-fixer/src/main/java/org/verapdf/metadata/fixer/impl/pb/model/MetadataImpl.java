@@ -1,13 +1,14 @@
 package org.verapdf.metadata.fixer.impl.pb.model;
 
+import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSStream;
 import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.schema.AdobePDFSchema;
 import org.apache.xmpbox.schema.DublinCoreSchema;
 import org.apache.xmpbox.schema.PDFAIdentificationSchema;
 import org.apache.xmpbox.schema.XMPBasicSchema;
+import org.apache.xmpbox.type.BadFieldValueException;
 import org.verapdf.metadata.fixer.MetadataFixerResult;
-import org.verapdf.metadata.fixer.entity.FixReport;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.impl.pb.schemas.AdobePDFSchemaImpl;
@@ -16,11 +17,14 @@ import org.verapdf.metadata.fixer.impl.pb.schemas.XMPBasicSchemaImpl;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
+import org.verapdf.metadata.fixer.utils.PDFAFlavour;
 
 /**
  * @author Evgeniy Muravitskiy
  */
 public class MetadataImpl implements Metadata {
+
+	private static final Logger LOGGER = Logger.getLogger(MetadataImpl.class);
 
 	private final XMPMetadata metadata;
 	private final COSStream stream;
@@ -41,14 +45,25 @@ public class MetadataImpl implements Metadata {
 		PDFAIdentificationSchema schema = this.metadata.getPDFIdentificationSchema();
 		if (schema != null) {
 			this.metadata.removeSchema(schema);
+			this.stream.setNeedToBeUpdated(true);
 			result.addAppliedFix("Identification schema removed.");
 		}
 	}
 
 	@Override
-	public void addPDFIdentificationSchema(MetadataFixerResult report) {
-		this.metadata.createAndAddPFAIdentificationSchema();
-		report.addAppliedFix("Identification schema added.");
+	public void addPDFIdentificationSchema(MetadataFixerResult report, PDFAFlavour flavour) {
+		PDFAIdentificationSchema schema = this.metadata.getPDFIdentificationSchema();
+		if (schema == null) {
+			schema = this.metadata.createAndAddPFAIdentificationSchema();
+		}
+		try {
+			schema.setPart(flavour.getPart().getPartNumber());
+			schema.setConformance(flavour.getLevel().getCode());
+			this.stream.setNeedToBeUpdated(true);
+			report.addAppliedFix("Identification schema added.");
+		} catch (BadFieldValueException e) {
+			LOGGER.error(e);
+		}
 	}
 
 	@Override

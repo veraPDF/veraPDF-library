@@ -82,9 +82,7 @@ public class PDFDocumentImpl implements PDFDocument {
 
 	@Override
 	public boolean isNeedToBeUpdated() {
-		PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
-		COSDictionary info = this.document.getDocumentInformation().getCOSObject();
-		return meta != null && (meta.getStream().isNeedToBeUpdated() || info.isNeedToBeUpdated());
+		return this.metadata.isNeedToBeUpdated() || this.info.isNeedToBeUpdated();
 	}
 
 	@Override
