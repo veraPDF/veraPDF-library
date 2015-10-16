@@ -1,14 +1,14 @@
 package org.verapdf.model.impl.pb.pd;
 
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.common.PDDestinationOrAction;
-import org.apache.pdfbox.pdmodel.interactive.action.*;
+import org.apache.pdfbox.pdmodel.interactive.action.PDDocumentCatalogAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.*;
-import org.verapdf.model.pdlayer.PDAction;
 
 import java.io.IOException;
 import java.util.*;
@@ -35,6 +35,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
     public PBoxPDDocument(org.apache.pdfbox.pdmodel.PDDocument document) {
         super(document, PD_DOCUMENT_TYPE);
+		clearGlyphs();
     }
 
 	@Override
@@ -188,5 +189,20 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         }
         return Collections.emptyList();
     }
+
+	public static final ThreadLocal<Map<COSDictionary, List<Integer>>> SAVED_GLYPHS;
+
+	static {
+		SAVED_GLYPHS  = new ThreadLocal<Map<COSDictionary, List<Integer>>>() {
+			@Override
+			protected Map<COSDictionary, List<Integer>> initialValue() {
+				return new HashMap<>();
+			}
+		};
+	}
+
+	private void clearGlyphs() {
+		SAVED_GLYPHS.get().clear();
+	}
 
 }

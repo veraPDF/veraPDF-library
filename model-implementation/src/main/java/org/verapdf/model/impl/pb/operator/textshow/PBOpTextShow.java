@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.verapdf.model.impl.pb.pd.PBoxPDDocument.SAVED_GLYPHS;
 /**
  * Base class for all text show operators
  *
@@ -79,23 +80,27 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
         List<PBGlyph> res = new ArrayList<>();
 		org.apache.pdfbox.pdmodel.font.PDFont font = this.state.getFont();
 		FontContainer fontContainer = FontHelper.getFontContainer(font);
-        List<byte[]> strings = this.getStrings(this.arguments);
+		List<Integer> checkedCodes = this.getCodes(font);
+		List<byte[]> strings = this.getStrings(this.arguments);
         for (byte[] string : strings) {
             try (InputStream inputStream = new ByteArrayInputStream(string)) {
                 while (inputStream.available() > 0) {
                     int code = font.readCode(inputStream);
-                    boolean glyphPresent = fontContainer.hasGlyph(code);
-                    boolean widthsConsistent = this.checkWidths(code);
-                    PBGlyph glyph;
-					if (font.getSubType().equals(FontFactory.TYPE_0)) {
-						int CID = ((PDType0Font) font).codeToCID(code);
-						glyph = new PBCIDGlyph(glyphPresent, widthsConsistent,
-								font.getName(), code, CID);
-					} else {
-						glyph = new PBGlyph(glyphPresent, widthsConsistent,
-								font.getName(), code);
+					if (!checkedCodes.contains(code)) {
+						boolean glyphPresent = fontContainer.hasGlyph(code);
+						boolean widthsConsistent = this.checkWidths(code);
+						PBGlyph glyph;
+						if (font.getSubType().equals(FontFactory.TYPE_0)) {
+							int CID = ((PDType0Font) font).codeToCID(code);
+							glyph = new PBCIDGlyph(glyphPresent, widthsConsistent,
+									font.getName(), code, CID);
+						} else {
+							glyph = new PBGlyph(glyphPresent, widthsConsistent,
+									font.getName(), code);
+						}
+						res.add(glyph);
+						checkedCodes.add(code);
 					}
-					res.add(glyph);
                 }
             } catch (IOException e) {
                 LOGGER.error("Error processing text show operator's string argument : "
@@ -106,7 +111,18 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
         return res;
     }
 
-    private List<PDColorSpace> getFillColorSpace() {
+	private List<Integer> getCodes(org.apache.pdfbox.pdmodel.font.PDFont font) {
+		List<Integer> codes = SAVED_GLYPHS.get().get(font.getCOSObject());
+		if (codes != null) {
+			return codes;
+		} else {
+			codes = new ArrayList<>();
+			SAVED_GLYPHS.get().put(font.getCOSObject(), codes);
+			return codes;
+		}
+	}
+
+	private List<PDColorSpace> getFillColorSpace() {
 		if (this.state.getRenderingMode().isFill()) {
 			return this.getColorSpace(this.state.getFillColorSpace());
 		} else {
