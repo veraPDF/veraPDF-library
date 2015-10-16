@@ -49,15 +49,29 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     private final String firstPageID;
     private final String lastID;
 
+    /**
+     * Default constructor
+     * @param pdDocument pdfbox PDDocument
+     * @param length original length of the document
+     */
 	public PBCosDocument(PDDocument pdDocument, long length) {
         this(pdDocument.getDocument(), length);
         this.pdDocument = pdDocument;
     }
 
+    /**
+     * Constructor using pdfbox COSDocument without length
+     * @param cosDocument pdfbox COSDocument
+     */
     public PBCosDocument(COSDocument cosDocument) {
         this(cosDocument, -1);
     }
 
+    /**
+     * Constructor using pdfbox COSDocument
+     * @param cosDocument pdfbox COSDocument
+     * @param length original length of the document
+     */
     public PBCosDocument(COSDocument cosDocument, long length) {
         super(cosDocument, COS_DOCUMENT_TYPE);
         this.sizeOfDocument = length;
