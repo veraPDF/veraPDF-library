@@ -2,6 +2,8 @@ package org.verapdf.model.tools;
 
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSObject;
+import org.apache.pdfbox.pdmodel.common.COSObjectable;
+import org.apache.pdfbox.pdmodel.font.PDFontLike;
 
 /**
  * Created by Evgeniy Muravitskiy on 4/27/15.
@@ -45,4 +47,17 @@ public final class IDGenerator {
 		return String.valueOf(hashcode) + ' ' + fontName + ' ' + glyphCode;
 	}
 
+	/**
+	 * Generate ID for font. Current method generate a string of the form
+	 * 'hashcode fontName', where 'hashcode' is hashcode of font dictionary
+	 * and 'fontName' is String
+	 *
+	 * @param font target font for generating ID
+	 * @return string representation of ID
+	 */
+	public static String generateID(PDFontLike font) {
+		int hashcode = font instanceof COSObjectable ?
+				((COSObjectable) font).getCOSObject().hashCode() : -1;
+		return String.valueOf(hashcode) + ' ' + font.getName();
+	}
 }

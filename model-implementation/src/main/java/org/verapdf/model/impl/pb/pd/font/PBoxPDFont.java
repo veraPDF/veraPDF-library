@@ -10,6 +10,7 @@ import org.verapdf.model.impl.pb.external.PBoxFontProgram;
 import org.verapdf.model.impl.pb.external.PBoxTrueTypeFontProgram;
 import org.verapdf.model.impl.pb.pd.PBoxPDResources;
 import org.verapdf.model.pdlayer.PDFont;
+import org.verapdf.model.tools.IDGenerator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,8 +23,16 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 
     public static final String FONT_FILE = "fontFile";
 
+	private final String id;
+
 	protected PBoxPDFont(PDFontLike font, final String type) {
 		super(font, type);
+		this.id = IDGenerator.generateID(font);
+	}
+
+	@Override
+	public String getID() {
+		return this.id;
 	}
 
 	@Override
