@@ -32,18 +32,17 @@ public final class IDGenerator {
     }
 
 	/**
-	 * Generate ID for font glyph. Curren method generate a string of the
-	 * form 'fontName glyphCode', where 'fontName' is String and
-	 * 'glyphCode' is number.
+	 * Generate ID for font glyph. Current method generate a string of the
+	 * form 'hashcode fontName glyphCode', where 'hashcode' is hashcode of
+	 * font dictionary, 'fontName' is String and 'glyphCode' is number.
 	 *
+	 * @param hashcode  hashcode of font dictionary
 	 * @param fontName  name of font
 	 * @param glyphCode code of glyph
 	 * @return string representation of ID
 	 */
-	public static String generateID(String fontName, int glyphCode) {
-		StringBuilder builder = new StringBuilder();
-		builder.append(fontName).append(' ').append(glyphCode);
-		return builder.toString();
+	public static String generateID(int hashcode, String fontName, int glyphCode) {
+		return String.valueOf(hashcode) + ' ' + fontName + ' ' + glyphCode;
 	}
 
 }
