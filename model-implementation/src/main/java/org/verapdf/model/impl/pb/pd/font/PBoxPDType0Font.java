@@ -37,6 +37,11 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
 		COSDictionary dictionary = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike)
 				.getCOSObject();
 		COSBase encoding = dictionary.getDictionaryObject(COSName.ENCODING);
+		if (encoding instanceof COSName) {
+			if (encoding.equals(COSName.IDENTITY_H)) {
+				return Boolean.TRUE;
+			}
+		}
 		if (encoding instanceof COSStream) {
 			COSBase cidSystemInfo = ((COSStream) encoding)
 					.getDictionaryObject(COSName.CIDSYSTEMINFO);
