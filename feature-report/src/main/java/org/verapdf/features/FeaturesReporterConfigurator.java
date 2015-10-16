@@ -119,8 +119,8 @@ public final class FeaturesReporterConfigurator {
 		ClassLoader cl = new URLClassLoader(urls);
 		Class cls = cl.loadClass(className);
 		Object obj = cls.newInstance();
-		if (obj instanceof IFeaturesExtractor) {
-			IFeaturesExtractor extractor = (IFeaturesExtractor) obj;
+		if (obj instanceof FeaturesExtractor) {
+			FeaturesExtractor extractor = (FeaturesExtractor) obj;
 			extractor.initialize(parametrs);
 			return new ExtractorStructure(extractor, id);
 		}
@@ -141,9 +141,9 @@ public final class FeaturesReporterConfigurator {
 
 	private static class ExtractorStructure {
 		UUID id;
-		IFeaturesExtractor extractor;
+		FeaturesExtractor extractor;
 
-		ExtractorStructure(IFeaturesExtractor extractor, UUID id) {
+		ExtractorStructure(FeaturesExtractor extractor, UUID id) {
 			this.extractor = extractor;
 			this.id = id;
 		}

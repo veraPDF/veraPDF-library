@@ -6,6 +6,7 @@ import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
+import org.verapdf.features.ImageFeaturesData;
 import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
@@ -140,8 +141,6 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 	public FeaturesData getData() {
 		try {
 			byte[] stream = PBCreateNodeHelper.inputStreamToByteArray(imageXObject.getCOSStream().getFilteredStream());
-			List<byte[]> streams = new ArrayList<>();
-			streams.add(stream);
 			byte[] metadata = null;
 			if (imageXObject.getMetadata() != null) {
 				try {
@@ -151,60 +150,51 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 				}
 			}
 
-			Map<String, Object> properties = new HashMap<>();
-
+			List<ImageFeaturesData.FilterStructure> filters = new ArrayList<>();
 			if (imageXObject.getPDStream().getFilters() != null) {
-				List<String> filters = new ArrayList<>();
+				List<String> filtersNames = new ArrayList<>();
 				for (COSName filter : imageXObject.getPDStream().getFilters()) {
-					filters.add(filter.getName());
+					filtersNames.add(filter.getName());
 				}
-				properties.put("Filter", filters);
 
 				List<COSDictionary> decodeList = getDecodeList(imageXObject.getCOSStream().getDictionaryObject(COSName.DECODE_PARMS));
-				List<Map<String, Object>> decodeParms = new ArrayList<>();
 
-				for (int i = 0; i < filters.size(); ++i) {
-					String filter = filters.get(i);
+				for (int i = 0; i < filtersNames.size(); ++i) {
+					String filter = filtersNames.get(i);
 					COSDictionary dic = i < decodeList.size() ? decodeList.get(i) : null;
 					switch (filter) {
 						case "LZWDecode":
-							decodeParms.add(getLWZOrFlatFiltersMap(dic, true));
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLWZOrFlatFiltersMap(dic, true), null));
 							break;
 						case "FlateDecode":
-							decodeParms.add(getLWZOrFlatFiltersMap(dic, false));
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLWZOrFlatFiltersMap(dic, false), null));
 							break;
 						case "CCITTFaxDecode":
-							decodeParms.add(getCCITTFaxFiltersMap(dic));
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getCCITTFaxFiltersMap(dic), null));
 							break;
 						case "DCTDecode":
-							decodeParms.add(getDCTFiltersMap(dic));
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getDCTFiltersMap(dic), null));
 							break;
 						case "JBIG2Decode":
-							if (dic == null || !(dic.getDictionaryObject(COSName.JBIG2_GLOBALS) instanceof COSStream)) {
-								decodeParms.add(null);
-							} else {
-								byte[] global = PBCreateNodeHelper.inputStreamToByteArray(((COSStream) dic.getDictionaryObject(COSName.JBIG2_GLOBALS)).getUnfilteredStream());
-								int index = streams.size();
-								streams.add(index, global);
-								Map<String, Object> map = new HashMap<>();
-								map.put("JBIG2Globals", String.valueOf(index));
-								decodeParms.add(map);
+							byte[] global = null;
+							if (dic != null && dic.getDictionaryObject(COSName.JBIG2_GLOBALS) instanceof COSStream) {
+								global = PBCreateNodeHelper.inputStreamToByteArray(((COSStream) dic.getDictionaryObject(COSName.JBIG2_GLOBALS)).getUnfilteredStream());
 							}
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, new HashMap<String, String>(), global));
 							break;
 						case "Crypt":
-							LOGGER.error("An Image has Crypt filter");
+							LOGGER.error("An Image has a Crypt filter");
 							return null;
 						default:
-							decodeParms.add(null);
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, new HashMap<String, String>(), null));
 					}
 				}
-				properties.put("DecodeParms", decodeParms);
 			}
 
-			putIntegerWithDefault(properties, "Width", imageXObject.getCOSStream().getDictionaryObject(COSName.WIDTH), null);
-			putIntegerWithDefault(properties, "Height", imageXObject.getCOSStream().getDictionaryObject(COSName.HEIGHT), null);
+			Integer width = getIntegerWithDefault(imageXObject.getCOSStream().getDictionaryObject(COSName.WIDTH), null);
+			Integer height = getIntegerWithDefault(imageXObject.getCOSStream().getDictionaryObject(COSName.HEIGHT), null);
 
-			return new FeaturesData(metadata, streams, properties);
+			return ImageFeaturesData.newInstance(metadata, stream, width, height, filters);
 		} catch (IOException e) {
 			LOGGER.error("Error in obtaining features data for fonts", e);
 			return null;
@@ -229,18 +219,17 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 		return res;
 	}
 
-	private static Map<String, Object> getCCITTFaxFiltersMap(COSDictionary base) {
-		Map<String, Object> res = new HashMap<>();
-
+	private static Map<String, String> getCCITTFaxFiltersMap(COSDictionary base) {
+		Map<String, String> res = new HashMap<>();
 		if (base != null) {
-			putIntegerWithDefault(res, "K", base.getDictionaryObject(COSName.K), "0");
-			putIntegerWithDefault(res, "EndOfLine", base.getDictionaryObject(COSName.COLORS), "false");
-			putIntegerWithDefault(res, "EncodedByteAlign", base.getDictionaryObject(COSName.BITS_PER_COMPONENT), "false");
-			putIntegerWithDefault(res, "Columns", base.getDictionaryObject(COSName.COLUMNS), "1728");
-			putIntegerWithDefault(res, "Rows", base.getDictionaryObject(COSName.ROWS), "0");
-			putIntegerWithDefault(res, "EndOfBlock", base.getDictionaryObject(COSName.getPDFName("EndOfBlock")), "true");
-			putIntegerWithDefault(res, "BlackIs1", base.getDictionaryObject(COSName.BLACK_IS_1), "false");
-			putIntegerWithDefault(res, "DamagedRowsBeforeError", base.getDictionaryObject(COSName.getPDFName("DamagedRowsBeforeError")), "0");
+			putIntegerAsStringWithDefault(res, "K", base.getDictionaryObject(COSName.K), 0);
+			putBooleanAsStringWithDefault(res, "EndOfLine", base.getDictionaryObject(COSName.COLORS), false);
+			putBooleanAsStringWithDefault(res, "EncodedByteAlign", base.getDictionaryObject(COSName.BITS_PER_COMPONENT), false);
+			putIntegerAsStringWithDefault(res, "Columns", base.getDictionaryObject(COSName.COLUMNS), 1728);
+			putIntegerAsStringWithDefault(res, "Rows", base.getDictionaryObject(COSName.ROWS), 0);
+			putBooleanAsStringWithDefault(res, "EndOfBlock", base.getDictionaryObject(COSName.getPDFName("EndOfBlock")), true);
+			putBooleanAsStringWithDefault(res, "BlackIs1", base.getDictionaryObject(COSName.BLACK_IS_1), false);
+			putIntegerAsStringWithDefault(res, "DamagedRowsBeforeError", base.getDictionaryObject(COSName.getPDFName("DamagedRowsBeforeError")), 0);
 		} else {
 			res.put("K", "0");
 			res.put("EndOfLine", "false");
@@ -255,27 +244,24 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 		return res;
 	}
 
-	private static Map<String, Object> getDCTFiltersMap(COSDictionary base) {
+	private static Map<String, String> getDCTFiltersMap(COSDictionary base) {
+		Map<String, String> res = new HashMap<>();
 		if (base != null && base.getDictionaryObject(COSName.getPDFName("ColorTransform")) != null
 				&& base.getDictionaryObject(COSName.getPDFName("ColorTransform")) instanceof COSInteger) {
-			Map<String, Object> res = new HashMap<>();
 			res.put("ColorTransform", String.valueOf(((COSInteger) (base).getDictionaryObject(COSName.getPDFName("ColorTransform"))).intValue()));
-			return res;
-		} else {
-			return null;
 		}
+		return res;
 	}
 
-	private static Map<String, Object> getLWZOrFlatFiltersMap(COSDictionary base, boolean isLWZ) {
-		Map<String, Object> res = new HashMap<>();
-
+	private static Map<String, String> getLWZOrFlatFiltersMap(COSDictionary base, boolean isLWZ) {
+		Map<String, String> res = new HashMap<>();
 		if (base != null) {
-			putIntegerWithDefault(res, "Predictor", base.getDictionaryObject(COSName.PREDICTOR), "1");
-			putIntegerWithDefault(res, "Colors", base.getDictionaryObject(COSName.COLORS), "1");
-			putIntegerWithDefault(res, "BitsPerComponent", base.getDictionaryObject(COSName.BITS_PER_COMPONENT), "8");
-			putIntegerWithDefault(res, "Columns", base.getDictionaryObject(COSName.COLUMNS), "1");
+			putIntegerAsStringWithDefault(res, "Predictor", base.getDictionaryObject(COSName.PREDICTOR), 1);
+			putIntegerAsStringWithDefault(res, "Colors", base.getDictionaryObject(COSName.COLORS), 1);
+			putIntegerAsStringWithDefault(res, "BitsPerComponent", base.getDictionaryObject(COSName.BITS_PER_COMPONENT), 8);
+			putIntegerAsStringWithDefault(res, "Columns", base.getDictionaryObject(COSName.COLUMNS), 1);
 			if (isLWZ) {
-				putIntegerWithDefault(res, "EarlyChange", base.getDictionaryObject(COSName.EARLY_CHANGE), "1");
+				putIntegerAsStringWithDefault(res, "EarlyChange", base.getDictionaryObject(COSName.EARLY_CHANGE), 1);
 			}
 		} else {
 			res.put("Predictor", "1");
@@ -286,16 +272,33 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 				res.put("EarlyChange", "1");
 			}
 		}
-
 		return res;
 	}
 
-	private static void putIntegerWithDefault(Map<String, Object> map, String key, Object value, String defaultValue) {
+	private static Integer getIntegerWithDefault(Object value, Integer defaultValue) {
+		if (value instanceof COSInteger) {
+			return ((COSInteger) value).intValue();
+		} else {
+			return defaultValue;
+		}
+	}
+
+	private static void putIntegerAsStringWithDefault(Map<String, String> map, String key, Object value, Integer defaultValue) {
 		if (value instanceof COSInteger) {
 			map.put(key, String.valueOf(((COSInteger) value).intValue()));
 		} else {
 			if (!(defaultValue == null)) {
-				map.put(key, defaultValue);
+				map.put(key, defaultValue.toString());
+			}
+		}
+	}
+
+	private static void putBooleanAsStringWithDefault(Map<String, String> map, String key, Object value, Boolean defaultValue) {
+		if (value instanceof COSBoolean) {
+			map.put(key, String.valueOf(((COSBoolean) value).getValue()));
+		} else {
+			if (!(defaultValue == null)) {
+				map.put(key, defaultValue.toString());
 			}
 		}
 	}

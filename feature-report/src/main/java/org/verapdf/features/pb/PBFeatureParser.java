@@ -480,10 +480,10 @@ public final class PBFeatureParser {
 							parseImageXObject(img, thumbID);
 						} catch (IOException e) {
 							LOGGER.error(e);
-							xobjectCreationProblem(thumbID);
+							xobjectCreationProblem(thumbID, e.getMessage());
 						}
 					} else {
-						xobjectCreationProblem(thumbID);
+						xobjectCreationProblem(thumbID, "Thumb is not a stream");
 					}
 				}
 			}
@@ -590,11 +590,9 @@ public final class PBFeatureParser {
 			FeatureTreeNode annot = FeatureTreeNode
 					.newRootInstance(ANNOTATION);
 			annot.addAttribute(ID, id);
-			annot.addAttribute(ErrorsHelper.ERRORID,
-					ErrorsHelper.ANNOTATIONPARSER_ID);
 			ErrorsHelper.addErrorIntoCollection(reporter.getCollection(),
-					ErrorsHelper.ANNOTATIONPARSER_ID,
-					ErrorsHelper.ANNOTATIONPARSER_MESSAGE);
+					annot,
+					"Unknown annotation type");
 			reporter.getCollection().addNewFeatureTree(FeaturesObjectTypesEnum.ANNOTATION,
 					annot);
 		} catch (FeaturesTreeNodeException e) {
@@ -622,7 +620,7 @@ public final class PBFeatureParser {
 			}
 		} catch (IOException e) {
 			LOGGER.debug("Error creating PDFBox SubType.", e);
-			handleSubtypeCreationProblem();
+			handleSubtypeCreationProblem(e.getMessage());
 		}
 
 		if (efTree.getKids() != null) {
@@ -651,7 +649,7 @@ public final class PBFeatureParser {
 			}
 		} catch (IOException e) {
 			LOGGER.debug("Subtype creation exception caught", e);
-			handleSubtypeCreationProblem();
+			handleSubtypeCreationProblem(e.getMessage());
 		}
 
 		if (node.getKids() != null) {
@@ -688,56 +686,50 @@ public final class PBFeatureParser {
 		return null;
 	}
 
-	private void handleSubtypeCreationProblem() {
+	private void handleSubtypeCreationProblem(String errorMessage) {
 		creationProblem(EMBEDDEDFILE,
 				null,
-				ErrorsHelper.PARSINGEMBEDDEDFILEERROR_ID,
-				ErrorsHelper.PARSINGEMBEDDEDFILEERROR_MESSAGE,
+				errorMessage,
 				FeaturesObjectTypesEnum.EMBEDDED_FILE,
 				"PBFeatureParser.reportEmbeddedFileNode logic failure.");
 	}
 
-	private void fontCreationProblem(final String nodeID) {
+	private void fontCreationProblem(final String nodeID, String errorMessage) {
 		creationProblem(FONT,
 				nodeID,
-				ErrorsHelper.GETINGFONTERROR_ID,
-				ErrorsHelper.GETINGFONTERROR_MESSAGE,
+				errorMessage,
 				FeaturesObjectTypesEnum.FONT,
 				"PBFeatureParser.fontCreationProblem logic failure.");
 	}
 
-	private void patternCreationProblem(final String nodeID) {
+	private void patternCreationProblem(final String nodeID, String errorMessage) {
 		creationProblem(PATTERN,
 				nodeID,
-				ErrorsHelper.GETINGPATTERNERROR_ID,
-				ErrorsHelper.GETINGPATTERNERROR_MESSAGE,
+				errorMessage,
 				FeaturesObjectTypesEnum.PATTERN,
 				"PBFeatureParser.patternCreationProblem logic failure.");
 	}
 
-	private void colorSpaceCreationProblem(final String nodeID) {
+	private void colorSpaceCreationProblem(final String nodeID, String errorMessage) {
 		creationProblem(COLORSPACE,
 				nodeID,
-				ErrorsHelper.GETINGCOLORSPACEERROR_ID,
-				ErrorsHelper.GETINGCOLORSPACEERROR_MESSAGE,
+				errorMessage,
 				FeaturesObjectTypesEnum.COLORSPACE,
 				"PBFeatureParser.colorSpaceCreationProblem logic failure.");
 	}
 
-	private void shadingCreationProblem(final String nodeID) {
+	private void shadingCreationProblem(final String nodeID, String errorMessage) {
 		creationProblem(SHADING,
 				nodeID,
-				ErrorsHelper.GETINGSHADINGERROR_ID,
-				ErrorsHelper.GETINGSHADINGERROR_MESSAGE,
+				errorMessage,
 				FeaturesObjectTypesEnum.SHADING,
 				"PBFeatureParser.shadingCreationProblem logic failure.");
 	}
 
-	private void xobjectCreationProblem(final String nodeID) {
+	private void xobjectCreationProblem(final String nodeID, String errorMessage) {
 		creationProblem(XOBJECT,
 				nodeID,
-				ErrorsHelper.GETINGXOBJECTERROR_ID,
-				ErrorsHelper.GETINGXOBJECTERROR_MESSAGE,
+				errorMessage,
 				FeaturesObjectTypesEnum.FAILED_XOBJECT,
 				"PBFeatureParser.xobjectCreationProblem logic failure.");
 	}
@@ -745,19 +737,18 @@ public final class PBFeatureParser {
 	private void creationProblem(
 			final String nodeName,
 			final String nodeID,
-			final String errorID,
 			final String errorMessage,
 			final FeaturesObjectTypesEnum type,
 			final String loggerMessage) {
 		try {
 			FeatureTreeNode node = FeatureTreeNode.newRootInstance(nodeName);
-			node.addAttribute(ErrorsHelper.ERRORID, errorID);
 			if (nodeID != null) {
 				node.addAttribute(ID, nodeID);
 			}
 			reporter.getCollection().addNewFeatureTree(type, node);
 			ErrorsHelper.addErrorIntoCollection(reporter.getCollection(),
-					errorID, errorMessage);
+					node,
+					errorMessage);
 		} catch (FeaturesTreeNodeException e) {
 			// This exception occurs when wrong node creates for feature
 			// tree.
@@ -879,7 +870,7 @@ public final class PBFeatureParser {
 						xobjectChildMap.put(parentID, new HashSet<String>());
 					}
 					xobjectChildMap.get(parentID).add(id);
-					colorSpaceCreationProblem(id);
+					colorSpaceCreationProblem(id, e.getMessage());
 				}
 			}
 		}
@@ -925,7 +916,7 @@ public final class PBFeatureParser {
 			colorSpaceXObjectParent.get(idColorSpace).add(id);
 			imageXObjectColorSpaceChild.put(id, idColorSpace);
 			LOGGER.info(e);
-			colorSpaceCreationProblem(idColorSpace);
+			colorSpaceCreationProblem(idColorSpace, e.getMessage());
 		}
 
 		COSBase mask = xobj.getCOSStream().getDictionaryObject(COSName.MASK);
@@ -946,7 +937,7 @@ public final class PBFeatureParser {
 					parseImageXObject(imxobj, idMask);
 				} catch (IOException e) {
 					LOGGER.info(e);
-					xobjectCreationProblem(idMask);
+					xobjectCreationProblem(idMask, e.getMessage());
 				}
 			}
 		}
@@ -969,7 +960,7 @@ public final class PBFeatureParser {
 					parseImageXObject(imxobj, idMask);
 				} catch (IOException e) {
 					LOGGER.info(e);
-					xobjectCreationProblem(idMask);
+					xobjectCreationProblem(idMask, e.getMessage());
 				}
 			}
 		}
@@ -994,7 +985,7 @@ public final class PBFeatureParser {
 								parseImageXObject(im, idImage);
 							} catch (IOException e) {
 								LOGGER.info(e);
-								xobjectCreationProblem(idImage);
+								xobjectCreationProblem(idImage, e.getMessage());
 							}
 						}
 					}
@@ -1061,7 +1052,7 @@ public final class PBFeatureParser {
 								colorSpaceXObjectParent.get(idColorSpace).add(id);
 								groupXObjectColorSpaceChild.put(id, idColorSpace);
 								LOGGER.info(e);
-								colorSpaceCreationProblem(idColorSpace);
+								colorSpaceCreationProblem(idColorSpace, e.getMessage());
 							}
 						}
 
@@ -1092,7 +1083,7 @@ public final class PBFeatureParser {
 				}
 			} catch (IOException e) {
 				LOGGER.info(e);
-				xobjectCreationProblem(id);
+				xobjectCreationProblem(id, e.getMessage());
 			}
 		}
 	}
@@ -1141,7 +1132,7 @@ public final class PBFeatureParser {
 					parseFont(font, id);
 				} catch (IOException e) {
 					LOGGER.info(e);
-					fontCreationProblem(id);
+					fontCreationProblem(id, e.getMessage());
 				}
 
 			}
@@ -1186,7 +1177,7 @@ public final class PBFeatureParser {
 						parseFont(font, fontID);
 					} catch (IOException e) {
 						LOGGER.info(e);
-						fontCreationProblem(fontID);
+						fontCreationProblem(fontID, e.getMessage());
 					}
 				}
 			}
@@ -1303,7 +1294,7 @@ public final class PBFeatureParser {
 									parseFont(font, fontID);
 								} catch (IOException e) {
 									LOGGER.info(e);
-									fontCreationProblem(fontID);
+									fontCreationProblem(fontID, e.getMessage());
 								}
 							}
 						}
@@ -1311,7 +1302,7 @@ public final class PBFeatureParser {
 				}
 			} catch (IOException e) {
 				LOGGER.info(e);
-				patternCreationProblem(id);
+				patternCreationProblem(id, e.getMessage());
 			}
 		}
 	}
@@ -1337,7 +1328,7 @@ public final class PBFeatureParser {
 					parseShading(shading, id);
 				} catch (IOException e) {
 					LOGGER.info(e);
-					shadingCreationProblem(id);
+					shadingCreationProblem(id, e.getMessage());
 				}
 			}
 		}
@@ -1373,7 +1364,7 @@ public final class PBFeatureParser {
 			colorSpaceShadingParent.get(id).add(parentID);
 			shadingColorSpaceChild.put(parentID, id);
 			LOGGER.info(e);
-			colorSpaceCreationProblem(id);
+			colorSpaceCreationProblem(id, e.getMessage());
 		}
 	}
 
@@ -1452,7 +1443,7 @@ public final class PBFeatureParser {
 				}
 			} catch (IOException e) {
 				LOGGER.info(e);
-				colorSpaceCreationProblem(idAlt);
+				colorSpaceCreationProblem(idAlt, e.getMessage());
 			}
 		} else if (colorSpace instanceof PDIndexed ||
 				colorSpace instanceof PDSeparation ||
@@ -1493,7 +1484,7 @@ public final class PBFeatureParser {
 				}
 			} catch (IOException e) {
 				LOGGER.info(e);
-				colorSpaceCreationProblem(id);
+				colorSpaceCreationProblem(id, e.getMessage());
 			}
 
 		}

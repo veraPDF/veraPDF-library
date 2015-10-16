@@ -123,9 +123,9 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 					COSNumber number = (COSNumber) base;
 					scaling.setValue(String.valueOf(number.doubleValue()));
 				} else {
-					scaling.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.PAGESCALLING_ID);
-
-					ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.PAGESCALLING_ID, ErrorsHelper.PAGESCALLING_MESSAGE);
+					ErrorsHelper.addErrorIntoCollection(collection,
+							scaling,
+							"Scaling is not a number");
 				}
 			}
 

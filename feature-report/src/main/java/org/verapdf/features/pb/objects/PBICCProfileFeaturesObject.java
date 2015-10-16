@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
+import org.verapdf.features.ICCProfileFeaturesData;
 import org.verapdf.features.IFeaturesObject;
 import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.ErrorsHelper;
@@ -139,38 +140,34 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 				}
 			}
 
-			Map<String, Object> properties = new HashMap<>();
+			Integer n = null;
+			List<Double> range = null;
 
 			COSBase nBase = profile.getDictionaryObject(COSName.N);
 			if (nBase instanceof COSInteger) {
-				properties.put("N", String.valueOf(((COSInteger) nBase).intValue()));
+				n = ((COSInteger) nBase).intValue();
 
 				COSBase rangeBase = profile.getDictionaryObject(COSName.RANGE);
 				if (rangeBase instanceof COSArray) {
 					COSArray array = (COSArray) rangeBase;
-					List<String> range = new ArrayList<>();
+					range = new ArrayList<>();
 					for (COSBase baseNumb : array) {
 						if (baseNumb instanceof COSNumber) {
-							range.add(String.valueOf(((COSNumber) baseNumb).doubleValue()));
+							range.add(((COSNumber) baseNumb).doubleValue());
 						} else {
 							range.add(null);
 						}
 					}
-					properties.put("Range", range);
 				} else {
-					int n = ((COSInteger) nBase).intValue();
-					List<String> range = new ArrayList<>();
+					range = new ArrayList<>();
 					for (int i = 0; i < n; ++i) {
-						range.add("0.0");
-						range.add("1.0");
+						range.add(0.);
+						range.add(1.);
 					}
-					properties.put("Range", range);
 				}
 			}
 
-			ArrayList<byte[]> iccProfileList = new ArrayList<>();
-			iccProfileList.add(stream);
-			return new FeaturesData(metadata, iccProfileList, properties);
+			return ICCProfileFeaturesData.newInstance(metadata, stream, n, range);
 
 		} catch (IOException e) {
 			LOGGER.error("Can not get iccProfile stream", e);
@@ -207,10 +204,9 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 			byte[] profileBytes = PBCreateNodeHelper.inputStreamToByteArray(profile.getUnfilteredStream());
 
 			if (profileBytes.length < HEADER_SIZE) {
-				root.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.GETINGICCPROFILEHEADERSIZEERROR_ID);
 				ErrorsHelper.addErrorIntoCollection(collection,
-						ErrorsHelper.GETINGICCPROFILEHEADERSIZEERROR_ID,
-						ErrorsHelper.GETINGICCPROFILEHEADERSIZEERROR_MESSAGE);
+						root,
+						"ICCProfile contains less than " + HEADER_SIZE + " bytes");
 			} else {
 				PBCreateNodeHelper.addNotEmptyNode("version", getVersion(profileBytes), root);
 				PBCreateNodeHelper.addNotEmptyNode("cmmType", getString(profileBytes, CMMTYPE_BEGIN, CMMTYPE_END), root);
@@ -228,10 +224,9 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 
 		} catch (IOException e) {
 			LOGGER.debug("Reading byte array from InputStream error", e);
-			root.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.GETINGICCPROFILEHEADERERROR_ID);
 			ErrorsHelper.addErrorIntoCollection(collection,
-					ErrorsHelper.GETINGICCPROFILEHEADERERROR_ID,
-					ErrorsHelper.GETINGICCPROFILEHEADERERROR_MESSAGE);
+					root,
+					e.getMessage());
 		}
 	}
 

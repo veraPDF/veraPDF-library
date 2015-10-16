@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Interface for features extractors
+ * Class for features extractors
  *
  * @author Maksim Bezrukov
  */
-public interface IFeaturesExtractor {
+abstract class FeaturesExtractor {
 
 	/**
 	 * Extract features from features data
@@ -18,17 +18,17 @@ public interface IFeaturesExtractor {
 	 * @param data features data for extractor
 	 * @return root for extracted data tree
 	 */
-	List<FeatureTreeNode> getFeatures(FeaturesData data);
+	abstract List<FeatureTreeNode> getFeatures(FeaturesData data);
 
 	/**
 	 * @return type of object for which this extractor applies
 	 */
-	FeaturesObjectTypesEnum getType();
+	abstract FeaturesObjectTypesEnum getType();
 
 	/**
 	 * Initializing extractor
 	 *
 	 * @param parametrs parametrs for the initializing
 	 */
-	void initialize(Map<String, String> parametrs);
+	public abstract void initialize(Map<String, String> parametrs);
 }

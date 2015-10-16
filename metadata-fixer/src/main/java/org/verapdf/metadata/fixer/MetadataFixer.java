@@ -129,7 +129,7 @@ public class MetadataFixer {
 	}
 
 	private static FixReport fixAndSaveDocument(OutputStream output, FixerConfig config) throws IOException {
-		FixReport report = new FixReport();;
+		FixReport report = new FixReport();
 		Metadata metadata = config.getMetadata();
 		if (metadata != null) {
 			report.setStatus(getValidationStatus(config));
@@ -237,7 +237,7 @@ public class MetadataFixer {
 	}
 
 	private static void fixCalendarProperty(FixReport entity, BasicSchema schema, InfoDictionary info, String metaValue,
-									String infoValue, String attribute) {
+											String infoValue, String attribute) {
 		String key = attributes.get(attribute);
 		if (metaValue == null && infoValue != null) {
 			doSaveAction(schema, attribute, infoValue);

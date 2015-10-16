@@ -64,8 +64,9 @@ public class PBDocSecurityFeaturesObject implements IFeaturesObject {
 			} catch (IOException e) {
 				LOGGER.debug("PDFBox error getting owner key data", e);
 				FeatureTreeNode ownerKey = FeatureTreeNode.newChildInstance("ownerKey", root);
-				ownerKey.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.BYTETOSTRING_ID);
-				ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.BYTETOSTRING_ID, ErrorsHelper.BYTETOSTRING_MESSAGE);
+				ErrorsHelper.addErrorIntoCollection(collection,
+						ownerKey,
+						e.getMessage());
 			}
 
 			try {
@@ -74,8 +75,9 @@ public class PBDocSecurityFeaturesObject implements IFeaturesObject {
 			} catch (IOException e) {
 				LOGGER.debug("PDFBox error getting user key data", e);
 				FeatureTreeNode userKey = FeatureTreeNode.newChildInstance("userKey", root);
-				userKey.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.BYTETOSTRING_ID);
-				ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.BYTETOSTRING_ID, ErrorsHelper.BYTETOSTRING_MESSAGE);
+				ErrorsHelper.addErrorIntoCollection(collection,
+						userKey,
+						e.getMessage());
 			}
 
 			PBCreateNodeHelper.addNotEmptyNode("encryptMetadata", String.valueOf(encryption.isEncryptMetaData()), root);
