@@ -76,8 +76,7 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 			int flag = settings.getProcessingType();
 
 			if ((flag & 1) == 1) {
-				org.verapdf.model.baselayer.Object root = loader.getRoot();
-				info = runValidator(root);
+				info = runValidator(loader.getRoot());
 
 				if (settings.isFixMetadata()) {
 					FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(loader.getPDDocument(), info);
@@ -86,15 +85,14 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 
 					if (!path.toString().trim().isEmpty()) {
 						// TODO : what we need do with fixing result?
-						fixerResult = MetadataFixer.fixDocument(settings.getFixMetadataPathFolder().toFile(),
+						fixerResult = MetadataFixer.fixMetadata(settings.getFixMetadataPathFolder().toFile(),
 								loader.getFile().getName(), settings.getMetadataFixerPrefix(), fixerConfig);
 					} else {
-						fixerResult = MetadataFixer.fixDocument(loader.getFile(),
+						fixerResult = MetadataFixer.fixMetadata(loader.getFile(),
 								settings.getMetadataFixerPrefix(), fixerConfig);
 					}
 				}
 			}
-
 			if ((flag & (1 << 1)) == (1 << 1)) {
 				try {
 					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument(), settings.getFeaturesPluginsConfigFilePath().toFile());

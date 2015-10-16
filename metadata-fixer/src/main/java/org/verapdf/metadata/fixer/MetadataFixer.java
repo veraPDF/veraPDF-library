@@ -15,7 +15,6 @@ import org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector;
 import org.verapdf.validation.profile.model.ValidationProfile;
 import org.verapdf.validation.report.model.Result;
 import org.verapdf.validation.report.model.Rule;
-import org.verapdf.validation.report.model.ValidationInfo;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -53,11 +52,12 @@ public class MetadataFixer {
 	 * Fix metadata and info dictionary for {@link org.verapdf.metadata.fixer.entity.PDFDocument} and
 	 * save fixed file near source file. If fixer no changes apply then no save
 	 * will be produced.
-	 * <p>
+	 * <p/>
 	 * {@code input} is file near which will be save fixed version of document.
 	 * Input file give provides path to the folder and the result file name
 	 *
-	 * @param input file near which will be save fixed version of document
+	 * @param input  file near which will be save fixed version of document
+	 * @param config configuration for metadata fixer
 	 * @return report of made corrections
 	 * @throws IOException
 	 * @throws URISyntaxException
@@ -65,23 +65,24 @@ public class MetadataFixer {
 	 * @throws TransformerException
 	 * @throws SAXException
 	 */
-	public static MetadataFixerResult fixDocument(File input, FixerConfig config) throws IOException, URISyntaxException,
+	public static MetadataFixerResult fixMetadata(File input, FixerConfig config) throws IOException, URISyntaxException,
 			ParserConfigurationException, TransformerException, SAXException {
 		File output = FileGenerator.createOutputFile(input);
-		return fixDocument(getOutputStream(output), config);
+		return fixMetadata(getOutputStream(output), config);
 	}
 
 	/**
 	 * Fix metadata and info dictionary for {@link org.verapdf.metadata.fixer.entity.PDFDocument} and
 	 * save fixed file near source file. If fixer no changes apply then no save
 	 * will be produced.
-	 * <p>
+	 * <p/>
 	 * {@code input} is file near which will be save fixed version of document.
 	 * Input file provides path to the folder and the result file name. Prefix
 	 * provide additional part for the result file name.
 	 *
 	 * @param inputFile file near which will be save fixed version of document
 	 * @param prefix    for the result file name
+	 * @param config    configuration for metadata fixer
 	 * @return report of made corrections
 	 * @throws IOException
 	 * @throws URISyntaxException
@@ -89,19 +90,38 @@ public class MetadataFixer {
 	 * @throws TransformerException
 	 * @throws SAXException
 	 */
-	public static MetadataFixerResult fixDocument(File inputFile, String prefix, FixerConfig config) throws IOException, URISyntaxException,
+	public static MetadataFixerResult fixMetadata(File inputFile, String prefix, FixerConfig config) throws IOException, URISyntaxException,
 			TransformerException, ParserConfigurationException, SAXException {
 		File output = FileGenerator.createOutputFile(inputFile, prefix);
-		return fixDocument(getOutputStream(output), config);
+		return fixMetadata(getOutputStream(output), config);
 	}
 
-	public static MetadataFixerResult fixDocument(File inputFile, String fileName, String prefix, FixerConfig config)
+	/**
+	 * Fix metadata and info dictionary for {@link org.verapdf.metadata.fixer.entity.PDFDocument} and
+	 * save fixed file near source file. If fixer no changes apply then no save
+	 * will be produced.
+	 * <p/>
+	 * {@code input} is file near which will be save fixed version of document.
+	 * Input file give provides path to the folder and the result file name
+	 *
+	 * @param inputFile file near which will be save fixed version of document
+	 * @param fileName  expected name of result file
+	 * @param prefix    prefix for name of result file
+	 * @param config    configuration for metadata fixer
+	 * @return report of made corrections
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 * @throws ParserConfigurationException
+	 * @throws TransformerException
+	 * @throws SAXException
+	 */
+	public static MetadataFixerResult fixMetadata(File inputFile, String fileName, String prefix, FixerConfig config)
 			throws IOException, URISyntaxException, TransformerException, ParserConfigurationException, SAXException {
 		File output = FileGenerator.createOutputFile(inputFile, fileName, prefix);
-		return fixDocument(getOutputStream(output), config);
+		return fixMetadata(getOutputStream(output), config);
 	}
 
-	private static BufferedOutputStream getOutputStream(File output) throws FileNotFoundException {
+	private static OutputStream getOutputStream(File output) throws FileNotFoundException {
 		return new BufferedOutputStream(new FileOutputStream(output));
 	}
 
@@ -111,7 +131,7 @@ public class MetadataFixer {
 	 * will be produced.
 	 *
 	 * @param output stream to result file
-	 * @param config
+	 * @param config configuration for metadata fixer
 	 * @return report of made corrections
 	 * @throws IOException
 	 * @throws URISyntaxException
@@ -119,7 +139,7 @@ public class MetadataFixer {
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
 	 */
-	public static MetadataFixerResult fixDocument(OutputStream output, FixerConfig config) throws IOException, URISyntaxException,
+	public static MetadataFixerResult fixMetadata(OutputStream output, FixerConfig config) throws IOException, URISyntaxException,
 			TransformerException, ParserConfigurationException, SAXException {
 		Result result = config.getValidationResult();
 		return result != null && result.isCompliant() ? new MetadataFixerResult() :
@@ -140,8 +160,7 @@ public class MetadataFixer {
 					executeInvalidMetadataCase(config, metadata, result);
 					break;
 				case INVALID_STRUCTURE:
-					metadata.removePDFIdentificationSchema(result);
-					metadata.setNeedToBeUpdated(true);
+					executeInvalidStructureCase(config, metadata, result);
 					break;
 			}
 
@@ -187,6 +206,12 @@ public class MetadataFixer {
 		fixMetadata(result, config);
 	}
 
+	private static void executeInvalidStructureCase(FixerConfig config, Metadata metadata, MetadataFixerResult result) {
+		if (config.isFixIdentification()) {
+			metadata.removePDFIdentificationSchema(result);
+		}
+	}
+
 	private static void fixMetadata(MetadataFixerResult result, FixerConfig config) {
 		fixDublinCoreSchema(result, config);
 		fixAdobePDFSchema(result, config);
@@ -226,21 +251,6 @@ public class MetadataFixer {
 		}
 	}
 
-	private static void updateModificationDate(InfoDictionary info, XMPBasic schema,
-											   FixerConfig config, MetadataFixerResult result) {
-		if (config.getDocument().isNeedToBeUpdated()) {
-			Calendar time = Calendar.getInstance();
-			if (schema.getModificationDate() != null) {
-				doSaveAction(schema, MODIFY_DATE, DateConverter.toUTCString(time));
-				result.addAppliedFix("Set new modification date to metadata");
-			}
-			if (info.getModificationDate() != null) {
-				doSaveAction(info, MODIFY_DATE, DateConverter.toPDFFormat(time));
-				result.addAppliedFix("Set new modification date to info dictionary");
-			}
-		}
-	}
-
 	private static void fixProperty(MetadataFixerResult result, BasicSchema schema, InfoDictionary info, String metaValue,
 									String infoValue, String attribute) {
 		String key = attributes.get(attribute);
@@ -254,7 +264,7 @@ public class MetadataFixer {
 	}
 
 	private static void fixCalendarProperty(MetadataFixerResult result, BasicSchema schema, InfoDictionary info, String metaValue,
-									String infoValue, String attribute) {
+											String infoValue, String attribute) {
 		String key = attributes.get(attribute);
 		if (metaValue == null && infoValue != null) {
 			doSaveAction(schema, attribute, infoValue);
@@ -301,6 +311,21 @@ public class MetadataFixer {
 				return;
 		}
 		schema.setNeedToBeUpdated(true);
+	}
+
+	private static void updateModificationDate(InfoDictionary info, XMPBasic schema,
+											   FixerConfig config, MetadataFixerResult result) {
+		if (config.getDocument().isNeedToBeUpdated()) {
+			Calendar time = Calendar.getInstance();
+			if (schema.getModificationDate() != null) {
+				doSaveAction(schema, MODIFY_DATE, DateConverter.toUTCString(time));
+				result.addAppliedFix("Set new modification date to metadata");
+			}
+			if (info.getModificationDate() != null) {
+				doSaveAction(info, MODIFY_DATE, DateConverter.toPDFFormat(time));
+				result.addAppliedFix("Set new modification date to info dictionary");
+			}
+		}
 	}
 
 	static {

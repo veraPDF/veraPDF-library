@@ -45,7 +45,7 @@ public class ValidationRunner {
 			if (config.getIncrementalSave() != null && !config.getIncrementalSave().trim().isEmpty()) {
 				FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(loader.getPDDocument(), info);
 				// TODO : what we need do with fixing result?
-				MetadataFixerResult fixerResult = MetadataFixer.fixDocument(loader.getFile(), fixerConfig);
+				MetadataFixerResult fixerResult = MetadataFixer.fixMetadata(loader.getFile(), fixerConfig);
 			}
 			return info;
             // TODO: Better exception handling, we need a policy and this isn't it.
