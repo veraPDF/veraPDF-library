@@ -16,6 +16,11 @@ public class PBCosXRef extends PBCosObject implements CosXRef {
     private Boolean xrefHeaderSpacingsComplyPDFA;
     private Boolean xrefEOLSpacingsComplyPDFA;
 
+    /**
+     * Default constructor
+     * @param xrefHeaderSpacingsComplyPDFA is xref header spacings comply pdfa specification
+     * @param xrefEOLSpacingsComplyPDFA is xref eol spacings comply pdfa
+     */
     public PBCosXRef(Boolean xrefHeaderSpacingsComplyPDFA,
             Boolean xrefEOLSpacingsComplyPDFA) {
         super(null, COS_XREF_TYPE);

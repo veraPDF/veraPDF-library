@@ -16,6 +16,10 @@ public class PBCosInteger extends PBCosNumber implements CosInteger {
     /** Type name for PBCosInteger */
     public static final String COS_INTEGER_TYPE = "CosInteger";
 
+    /**
+     * Default constructor
+     * @param value pdfbox COSInteger
+     */
     public PBCosInteger(COSInteger value) {
         super(value, COS_INTEGER_TYPE);
     }

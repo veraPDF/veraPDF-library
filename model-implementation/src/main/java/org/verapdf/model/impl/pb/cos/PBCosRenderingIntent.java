@@ -12,6 +12,10 @@ public class PBCosRenderingIntent extends PBCosName implements
     /** Type name for PBCosRenderingIntent */
     public static final String COS_RENDERING_INTENT_TYPE = "CosRenderingIntent";
 
+    /**
+     * Default constructor
+     * @param value pdfbox COSName
+     */
     public PBCosRenderingIntent(COSName value) {
         super(value, COS_RENDERING_INTENT_TYPE);
     }

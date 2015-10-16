@@ -26,6 +26,10 @@ public class PBCosTrailer extends PBCosDict implements CosTrailer {
 
     private final boolean isEncrypted;
 
+    /**
+     * Default constructor
+     * @param dictionary pdfbox COSDictionary
+     */
     public PBCosTrailer(COSDictionary dictionary) {
         super(dictionary, COS_TRAILER_TYPE);
         this.isEncrypted = dictionary.getItem(COSName.ENCRYPT) != null;
