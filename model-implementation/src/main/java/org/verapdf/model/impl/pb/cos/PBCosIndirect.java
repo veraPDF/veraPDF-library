@@ -27,6 +27,10 @@ public class PBCosIndirect extends PBCosObject implements CosIndirect {
 
     private final String id;
 
+    /**
+     * Default constructor
+     * @param indirectObject pdfbox COSObject
+     */
     public PBCosIndirect(COSObject indirectObject) {
         super(indirectObject, COS_INDIRECT_TYPE);
         this.isSpacingPDFACompliant = getspacingCompliesPDFA(indirectObject);

@@ -18,6 +18,10 @@ public class PBCosString extends PBCosObject implements CosString {
     private final Boolean isHexSymbols;
     private final Long hexCount;
 
+    /**
+     * Default constructor
+     * @param cosString pdfbox COSString
+     */
     public PBCosString(COSString cosString) {
         super(cosString, COS_STRING_TYPE);
         this.value = cosString.getASCII();
