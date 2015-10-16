@@ -116,7 +116,7 @@ public class PDFDocumentImpl implements PDFDocument {
 				new XmpSerializer().serialize(this.metadata.getAbsorbedMetadata(), out, true);
 				meta.importXMPMetadata(out.toByteArray());
 			} catch (TransformerException e) {
-				e.printStackTrace();
+				LOGGER.error("Problem during metadata status update.", e);
 			}
 		}
 	}

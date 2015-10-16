@@ -11,7 +11,6 @@ import java.util.TimeZone;
 public class DateConverter {
 
 	private static final String UTC_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSX";
-	private static SimpleDateFormat DATE_FORMAT;
 
 	public static String toUTCString(Calendar calendar) {
 		return calendar == null ? null : toUTCString(calendar.getTime());
@@ -22,12 +21,10 @@ public class DateConverter {
 			return null;
 		}
 
-		if (DATE_FORMAT == null) {
-			DATE_FORMAT = new SimpleDateFormat(UTC_PATTERN);
-			DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
-		}
+		SimpleDateFormat dateFormat = new SimpleDateFormat(UTC_PATTERN);
+		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-		return DATE_FORMAT.format(time);
+		return dateFormat.format(time);
 	}
 
 	public static Calendar toCalendar(String date) {
