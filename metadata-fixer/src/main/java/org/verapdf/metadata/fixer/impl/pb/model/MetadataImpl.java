@@ -45,7 +45,7 @@ public class MetadataImpl implements Metadata {
 		PDFAIdentificationSchema schema = this.metadata.getPDFIdentificationSchema();
 		if (schema != null) {
 			this.metadata.removeSchema(schema);
-			this.stream.setNeedToBeUpdated(true);
+			this.setNeedToBeUpdated(true);
 			result.addAppliedFix("Identification schema removed.");
 		}
 	}
@@ -59,7 +59,7 @@ public class MetadataImpl implements Metadata {
 		try {
 			schema.setPart(flavour.getPart().getPartNumber());
 			schema.setConformance(flavour.getLevel().getCode());
-			this.stream.setNeedToBeUpdated(true);
+			this.setNeedToBeUpdated(true);
 			report.addAppliedFix("Identification schema added.");
 		} catch (BadFieldValueException e) {
 			LOGGER.error(e);
