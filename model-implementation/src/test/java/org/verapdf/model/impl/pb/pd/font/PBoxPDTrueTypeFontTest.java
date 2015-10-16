@@ -25,11 +25,12 @@ public class PBoxPDTrueTypeFontTest extends PBoxPDSimpleFontTest {
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
 		expectedType = TYPES.contains(PBoxPDTrueTypeFont.TRUETYPE_FONT_TYPE) ? PBoxPDTrueTypeFont.TRUETYPE_FONT_TYPE : null;
-		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
 		PDTrueTypeFont trueTypeFont = (PDTrueTypeFont) document.getPage(0).getResources().getFont(COSName.getPDFName(TRUETYPE_FONT_NAME));
 		actual = new PBoxPDTrueTypeFont(trueTypeFont);
+
+		expectedID = trueTypeFont.getCOSObject().hashCode() + " CUQUFZ+GillSansMT";
 	}
 
 	@Override

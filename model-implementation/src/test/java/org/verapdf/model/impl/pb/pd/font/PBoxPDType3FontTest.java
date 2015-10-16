@@ -29,11 +29,12 @@ public class PBoxPDType3FontTest extends PBoxPDSimpleFontTest {
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
 		expectedType = TYPES.contains(PBoxPDType3Font.TYPE3_FONT_TYPE) ? PBoxPDType3Font.TYPE3_FONT_TYPE : null;
-		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
 		PDFont type3Font = document.getPage(0).getResources().getFont(COSName.getPDFName(TYPE3_FONT_NAME));
 		actual = new PBoxPDType3Font(type3Font);
+
+		expectedID = type3Font.getCOSObject().hashCode() + " null";
 	}
 
 	@Override
