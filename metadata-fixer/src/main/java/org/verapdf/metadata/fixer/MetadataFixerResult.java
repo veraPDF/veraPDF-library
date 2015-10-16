@@ -1,12 +1,14 @@
 package org.verapdf.metadata.fixer;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author Evgeniy Muravitskiy
  */
-public class MetadataFixerResult {
+// TODO : remove me and use source implementation
+public class MetadataFixerResult implements Iterable<String> {
 
 	private RepairStatus status = RepairStatus.NO_ACTION;
 	private final List<String> appliedFixes = new ArrayList<>();
@@ -38,6 +40,11 @@ public class MetadataFixerResult {
 
 	}
 
+	@Override
+	public Iterator<String> iterator() {
+		return this.appliedFixes.iterator();
+	}
+
 	public enum RepairStatus {
 
 		FAILED("Metadata repair was attempted but failed"),
@@ -52,6 +59,10 @@ public class MetadataFixerResult {
 
 		RepairStatus(String value) {
 			this.value = value;
+		}
+
+		public String getDescription() {
+			return this.value;
 		}
 
 	}
