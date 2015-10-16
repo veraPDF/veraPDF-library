@@ -9,7 +9,7 @@ import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.metadata.fixer.MetadataFixer;
-import org.verapdf.metadata.fixer.entity.FixReport;
+import org.verapdf.metadata.fixer.MetadataFixerResult;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.model.ModelLoader;
@@ -43,9 +43,9 @@ public class ValidationRunner {
 					config.isLogPassedChecks(), config.getMaxFailedChecks(),
 					config.getMaxDisplayedFailedChecks());
 			if (config.getIncrementalSave() != null && !config.getIncrementalSave().trim().isEmpty()) {
-				FixerConfig fixerConfig = new FixerConfigImpl(loader.getPDDocument(), info);
+				FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(loader.getPDDocument(), info);
 				// TODO : what we need do with fixing result?
-				FixReport report = MetadataFixer.fixDocument(loader.getFile(), fixerConfig);
+				MetadataFixerResult fixerResult = MetadataFixer.fixDocument(loader.getFile(), fixerConfig);
 			}
 			return info;
             // TODO: Better exception handling, we need a policy and this isn't it.
