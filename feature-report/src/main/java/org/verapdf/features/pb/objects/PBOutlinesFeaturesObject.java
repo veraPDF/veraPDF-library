@@ -105,11 +105,9 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
 				color.addAttribute("green", String.valueOf(rgb[RGB_GREEN_COLOR_NUMBER]));
 				color.addAttribute("blue", String.valueOf(rgb[RGB_BLUE_COLOR_NUMBER]));
 			} else {
-				color.addAttribute(ErrorsHelper.ERRORID,
-						ErrorsHelper.OUTLINESCOLOR_ID);
 				ErrorsHelper.addErrorIntoCollection(collection,
-						ErrorsHelper.OUTLINESCOLOR_ID,
-						ErrorsHelper.OUTLINESCOLOR_MESSAGE);
+						color,
+						"Color must be in rgb form");
 			}
 
 

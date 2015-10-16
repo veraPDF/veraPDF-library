@@ -26,11 +26,11 @@ public class PDFValidationApplication extends JFrame {
 	private static final Logger LOGGER = Logger.getLogger(PDFValidationApplication.class);
 
 	private AboutPanel aboutPanel;
-	private Config config;
+	private transient Config config;
 	private SettingsPanel settingsPanel;
 	private CheckerPanel checkerPanel;
 	private boolean isSerializedConfig;
-	private Path configPath;
+	private transient Path configPath;
 
 	private PDFValidationApplication() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

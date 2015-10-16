@@ -99,8 +99,9 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
 				if (baseType instanceof COSName) {
 					type.setValue(((COSName) baseType).getName());
 				} else {
-					type.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.OUTPUTINTENTSTYPE_ID);
-					ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.OUTPUTINTENTSTYPE_ID, ErrorsHelper.OUTPUTINTENTSTYPE_MESSAGE);
+					ErrorsHelper.addErrorIntoCollection(collection,
+							type,
+							"Subtype is not of Name type");
 				}
 			}
 		}

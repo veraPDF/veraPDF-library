@@ -144,8 +144,9 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
 			}
 
 			if (ids.size() != 2 || creationId == null || modificationId == null) {
-				documentId.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.LOWLVLINFODOCUMENTID_ID);
-				ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.LOWLVLINFODOCUMENTID_ID, ErrorsHelper.LOWLVLINFODOCUMENTID_MESSAGE);
+				ErrorsHelper.addErrorIntoCollection(collection,
+						documentId,
+						"Document's ID must be an array of two not null elements");
 			}
 		}
 	}

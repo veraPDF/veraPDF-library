@@ -54,7 +54,7 @@ class CheckerPanel extends JPanel {
 	private JButton saveHTML;
 	private JButton viewHTML;
 
-	private Config config;
+	private transient Config config;
 
 	JProgressBar progressBar;
 	transient ValidateWorker validateWorker;
@@ -293,6 +293,7 @@ class CheckerPanel extends JPanel {
 					validateWorker.execute();
 				} catch (IllegalArgumentException exep) {
 					JOptionPane.showMessageDialog(CheckerPanel.this, exep.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					LOGGER.error(exep);
 				}
 			}
 		});

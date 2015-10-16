@@ -113,7 +113,7 @@ public final class FeatureTreeNode {
 	 * @return list of all children nodes for this node
 	 */
 	public List<FeatureTreeNode> getChildren() {
-		return children;
+		return children == null ? null : Collections.unmodifiableList(children);
 	}
 
 	/**
@@ -167,7 +167,7 @@ public final class FeatureTreeNode {
 	 * them equals to attributes values
 	 */
 	public Map<String, String> getAttributes() {
-		return attributes;
+		return Collections.unmodifiableMap(attributes);
 	}
 
 	/**

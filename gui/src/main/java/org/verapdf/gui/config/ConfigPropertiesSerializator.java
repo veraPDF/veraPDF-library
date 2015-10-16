@@ -120,32 +120,32 @@ public final class ConfigPropertiesSerializator {
 		try {
 			builder.maxNumberOfFailedChecks(getIntegerValue(properties, PROPERTY_MAX_NUMBER_FAILED_CHECKS));
 		} catch (IllegalArgumentException e) {
-			LOGGER.error("Property " + PROPERTY_MAX_NUMBER_FAILED_CHECKS + " is missing or containing a wrong value. Setting it to default");
+			LOGGER.error("Property " + PROPERTY_MAX_NUMBER_FAILED_CHECKS + " is missing or containing a wrong value. Setting it to default", e);
 		}
 		try {
 			builder.maxNumberOfDisplayedFailedChecks(getIntegerValue(properties, PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS));
 		} catch (IllegalArgumentException e) {
-			LOGGER.error("Property " + PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS + " is missing or containing a wrong value. Setting it to default");
+			LOGGER.error("Property " + PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS + " is missing or containing a wrong value. Setting it to default", e);
 		}
 		try {
 			builder.showPassedRules(getBooleanValue(properties, PROPERTY_SHOW_PASSED_RULES));
 		} catch (IllegalArgumentException e) {
-			LOGGER.error("Property " + PROPERTY_SHOW_PASSED_RULES + " is missing or containing a wrong value. Setting it to default");
+			LOGGER.error("Property " + PROPERTY_SHOW_PASSED_RULES + " is missing or containing a wrong value. Setting it to default", e);
 		}
 		try {
 			builder.metadataFixerPrefix(getStringValue(properties, PROPERTY_METADATA_FIXER_PREFIX));
 		} catch (IllegalArgumentException e) {
-			LOGGER.error("Property " + PROPERTY_METADATA_FIXER_PREFIX + " is missing or containing a wrong value. Setting it to default");
+			LOGGER.error("Property " + PROPERTY_METADATA_FIXER_PREFIX + " is missing or containing a wrong value. Setting it to default", e);
 		}
 		try {
 			builder.fixMetadataPathFolder(getPathValue(properties, PROPERTY_FIX_METADATA_PATH_FOLDER));
 		} catch (IllegalArgumentException e) {
-			LOGGER.error("Property " + PROPERTY_FIX_METADATA_PATH_FOLDER + " is missing or containing a wrong value. Setting it to default");
+			LOGGER.error("Property " + PROPERTY_FIX_METADATA_PATH_FOLDER + " is missing or containing a wrong value. Setting it to default", e);
 		}
 		try {
 			builder.featuresPluginsConfigFilePath(getPathValue(properties, PROPERTY_FEATURES_CONFIG_FILE));
 		} catch (IllegalArgumentException e) {
-			LOGGER.error("Property " + PROPERTY_FEATURES_CONFIG_FILE + " is missing or containing a wrong value. Setting it to default");
+			LOGGER.error("Property " + PROPERTY_FEATURES_CONFIG_FILE + " is missing or containing a wrong value. Setting it to default", e);
 		}
 		return builder.build();
 	}

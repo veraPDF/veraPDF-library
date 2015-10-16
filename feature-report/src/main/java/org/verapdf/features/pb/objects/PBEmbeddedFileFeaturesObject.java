@@ -82,8 +82,9 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
 				} catch (IOException e) {
 					LOGGER.debug("PDFBox error obtaining creation date", e);
 					FeatureTreeNode creationDate = FeatureTreeNode.newChildInstance(CREATION_DATE, root);
-					creationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
-					ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
+					ErrorsHelper.addErrorIntoCollection(collection,
+							creationDate,
+							e.getMessage());
 				}
 
 				try {
@@ -91,8 +92,9 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
 				} catch (IOException e) {
 					LOGGER.debug("PDFBox error obtaining modification date", e);
 					FeatureTreeNode modDate = FeatureTreeNode.newChildInstance(MOD_DATE, root);
-					modDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
-					ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
+					ErrorsHelper.addErrorIntoCollection(collection,
+							modDate,
+							e.getMessage());
 				}
 
 				COSBase baseParams = ef.getStream().getDictionaryObject(COSName.PARAMS);

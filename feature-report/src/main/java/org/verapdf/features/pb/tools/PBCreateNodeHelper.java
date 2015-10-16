@@ -81,8 +81,9 @@ public final class PBCreateNodeHelper {
 				modificationDate.setValue(getXMLFormat(date));
 			} catch (DatatypeConfigurationException e) {
 				LOGGER.debug("DatatypeFactory implementation not available or can't be instantiated", e);
-				modificationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
-				ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
+				ErrorsHelper.addErrorIntoCollection(collection,
+						modificationDate,
+						e.getMessage());
 			}
 		}
 
@@ -176,8 +177,9 @@ public final class PBCreateNodeHelper {
 					createCMYK(color.getComponents(), colorNode);
 					break;
 				default:
-					colorNode.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.COLOR_ID);
-					ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.COLOR_ID, ErrorsHelper.COLOR_MESSAGE);
+					ErrorsHelper.addErrorIntoCollection(collection,
+							colorNode,
+							"Can not define color type");
 			}
 
 			return colorNode;
@@ -259,8 +261,9 @@ public final class PBCreateNodeHelper {
 			node.setValue(bStream);
 		} catch (IOException e) {
 			LOGGER.debug("Error while converting stream to string", e);
-			node.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATACONVERT_ID);
-			ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATACONVERT_ID, ErrorsHelper.METADATACONVERT_MESSAGE);
+			ErrorsHelper.addErrorIntoCollection(collection,
+					node,
+					e.getMessage());
 		}
 
 		return node;
