@@ -199,6 +199,28 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         return this.doesInfoMatchXMP;
     }
 
+	public Boolean getMarked() {
+		try {
+			COSDictionary object = (COSDictionary)
+					((COSDocument) this.baseObject).getCatalog().getObject();
+			COSBase markInfo = object.getDictionaryObject(COSName.MARK_INFO);
+			if (markInfo == null) {
+				return Boolean.FALSE;
+			} else if (markInfo instanceof COSDictionary) {
+				COSName marked = COSName.getPDFName("Marked");
+				boolean value = ((COSDictionary) markInfo).getBoolean(marked, false);
+				return Boolean.valueOf(value);
+			} else {
+				LOGGER.warn("MarkedInfo must be a 'COSDictionary' but got: "
+						+ markInfo.getClass().getSimpleName());
+				return Boolean.FALSE;
+			}
+		} catch (IOException e) {
+			LOGGER.error("Problems with catalog obtain", e);
+			return Boolean.FALSE;
+		}
+	}
+
     @Override
 	public List<? extends Object> getLinkedObjects(String link) {
 		switch (link) {
@@ -234,8 +256,8 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      */
     private List<Object> getEmbeddedFiles() {
         try {
-            COSDictionary buffer = (COSDictionary) pdDocument.getDocument()
-                    .getCatalog().getObject();
+            COSDictionary buffer = (COSDictionary)
+					((COSDocument) this.baseObject).getCatalog().getObject();
             buffer = (COSDictionary) buffer.getDictionaryObject(
 					COSName.NAMES);
             if (buffer != null) {

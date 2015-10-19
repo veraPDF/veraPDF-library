@@ -1,9 +1,10 @@
-package org.verapdf.model.impl.pb.pd;
+package org.verapdf.model.impl.pb.pd.actions;
 
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionGoTo;
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionNamed;
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionRemoteGoTo;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.impl.pb.pd.PBoxPDObject;
 import org.verapdf.model.pdlayer.PDAction;
 
 import java.util.ArrayList;

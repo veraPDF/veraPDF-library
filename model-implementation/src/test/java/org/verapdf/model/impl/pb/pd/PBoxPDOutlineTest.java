@@ -6,6 +6,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.BaseTest;
+import org.verapdf.model.impl.pb.pd.actions.PBoxPDAction;
+import org.verapdf.model.impl.pb.pd.actions.PBoxPDNamedAction;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
