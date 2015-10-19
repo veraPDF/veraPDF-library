@@ -5,7 +5,7 @@ import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
 import org.verapdf.metadata.fixer.impl.pb.model.PDFDocumentImpl;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
-import org.verapdf.metadata.fixer.utils.PDFAFlavour;
+import org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour;
 import org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser;
 import org.verapdf.metadata.fixer.utils.parser.XMLProcessedObjectsParser;
 import org.verapdf.validation.profile.model.ValidationProfile;

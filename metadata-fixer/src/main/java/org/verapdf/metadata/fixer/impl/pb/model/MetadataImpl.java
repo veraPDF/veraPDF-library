@@ -1,6 +1,9 @@
 package org.verapdf.metadata.fixer.impl.pb.model;
 
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.cos.COSArray;
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSStream;
 import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.schema.AdobePDFSchema;
@@ -8,6 +11,7 @@ import org.apache.xmpbox.schema.DublinCoreSchema;
 import org.apache.xmpbox.schema.PDFAIdentificationSchema;
 import org.apache.xmpbox.schema.XMPBasicSchema;
 import org.apache.xmpbox.type.BadFieldValueException;
+import org.apache.xmpbox.xml.XmpSerializer;
 import org.verapdf.metadata.fixer.MetadataFixerResult;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
@@ -17,7 +21,11 @@ import org.verapdf.metadata.fixer.impl.pb.schemas.XMPBasicSchemaImpl;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
-import org.verapdf.metadata.fixer.utils.PDFAFlavour;
+import org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour;
+
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -38,6 +46,22 @@ public class MetadataImpl implements Metadata {
 		}
 		this.metadata = metadata;
 		this.stream = stream;
+	}
+
+	@Override
+	public void unfilterMetadataStream(MetadataFixerResult report) {
+		COSBase filters = this.stream.getFilters();
+		if (filters instanceof COSName ||
+				(filters instanceof COSArray && ((COSArray) filters).size() != 0)) {
+			try {
+				this.stream.setFilters(null);
+				this.stream.setNeedToBeUpdated(true);
+				report.addAppliedFix("Metadata stream unfiltered");
+			} catch (IOException e) {
+				LOGGER.warn("Problems with unfilter stream.");
+				LOGGER.warn(e);
+			}
+		}
 	}
 
 	@Override
@@ -116,8 +140,11 @@ public class MetadataImpl implements Metadata {
 				info.getModificationDate() != null;
 	}
 
-	public XMPMetadata getAbsorbedMetadata() {
-		return this.metadata;
+	public void updateMetadataStream() throws TransformerException, IOException {
+		if (this.stream.isNeedToBeUpdated()) {
+			OutputStream out = this.stream.createUnfilteredStream();
+			new XmpSerializer().serialize(this.metadata, out, true);
+		}
 	}
 
 }

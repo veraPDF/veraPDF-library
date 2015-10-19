@@ -37,6 +37,9 @@ public class PDFDocumentImpl implements PDFDocument {
 		this.metadata = parseMetadata();
 	}
 
+	/**
+	 * {@inheritDoc} Implemented by Apache PDFBox library.
+	 */
 	@Override
 	public Metadata getMetadata() {
 		return this.metadata;
@@ -45,7 +48,6 @@ public class PDFDocumentImpl implements PDFDocument {
 	private MetadataImpl parseMetadata() {
 		PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
 		if (meta == null) {
-			// TODO : do we need to check count of predefined fields in info dictionary?
 			COSStream stream = this.document.getDocument().createCOSStream();
 			this.document.getDocumentCatalog().setMetadata(new PDMetadata(stream));
 			XMPMetadata xmp = XMPMetadata.createXMPMetadata();
@@ -72,6 +74,9 @@ public class PDFDocumentImpl implements PDFDocument {
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc} Implemented by Apache PDFBox library.
+	 */
 	@Override
 	public InfoDictionary getInfoDictionary() {
 		if (this.info == null) {
@@ -80,46 +85,33 @@ public class PDFDocumentImpl implements PDFDocument {
 		return this.info;
 	}
 
+	/**
+	 * {@inheritDoc} Implemented by Apache PDFBox library.
+	 */
 	@Override
 	public boolean isNeedToBeUpdated() {
 		return this.metadata.isNeedToBeUpdated() || this.info.isNeedToBeUpdated();
 	}
 
+	/**
+	 * {@inheritDoc} Implemented by Apache PDFBox library.
+	 */
 	@Override
-	public void saveDocumentIncremental(MetadataFixerResult result, OutputStream output) throws IOException {
-		PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
-		if (meta != null) {
-			checkFilters(meta);
-			updateMetadataStatus(meta);
-			if (isNeedToBeUpdated()) {
+	public void saveDocumentIncremental(MetadataFixerResult result, OutputStream output) {
+		try {
+			PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
+			if (meta != null && this.isNeedToBeUpdated()) {
+				this.metadata.updateMetadataStream();
 				this.document.saveIncremental(output);
 				output.close();
 				result.setStatus(MetadataFixerResult.RepairStatus.SUCCESSFUL);
 			} else {
 				result.setStatus(MetadataFixerResult.RepairStatus.NO_ACTION);
 			}
-		}
-	}
-
-	private void checkFilters(PDMetadata metadata) {
-		COSStream stream = metadata.getStream();
-		COSBase filters = stream.getFilters();
-		if (filters instanceof COSName ||
-				(filters instanceof COSArray && ((COSArray) filters).size() != 0)) {
-			stream.setItem(COSName.FILTER, null);
-			stream.setNeedToBeUpdated(true);
-		}
-	}
-
-	private void updateMetadataStatus(PDMetadata meta) throws IOException {
-		if (meta.getStream().isNeedToBeUpdated()) {
-			try {
-				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				new XmpSerializer().serialize(this.metadata.getAbsorbedMetadata(), out, true);
-				meta.importXMPMetadata(out.toByteArray());
-			} catch (TransformerException e) {
-				LOGGER.error("Problems with xmp serializing");
-			}
+		} catch (IOException | TransformerException e) {
+			LOGGER.info(e);
+			result.setStatus(MetadataFixerResult.RepairStatus.FAILED);
+			result.addAppliedFix("Problems with document save");
 		}
 	}
 
