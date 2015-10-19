@@ -3,6 +3,7 @@ package org.verapdf.model.impl.pb.pd;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.common.PDDestinationOrAction;
+import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.PDStructureTreeRoot;
 import org.apache.pdfbox.pdmodel.interactive.action.*;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
@@ -14,7 +15,8 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * High-level representation of pdf document
+ * High-level representation of pdf document.
+ * Implemented by Apache PDFBox
  *
  * @author Evgeniy Muravitskiy
  */
@@ -22,17 +24,33 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
     private static final Logger LOGGER = Logger.getLogger(PBoxPDDocument.class);
 
-    public static final String PAGES = "pages";
-    public static final String METADATA = "metadata";
-    public static final String OUTPUT_INTENTS = "outputIntents";
-    public static final String ACRO_FORMS = "AcroForm";
-    public static final String ACTIONS = "AA";
-    public static final String OPEN_ACTION = "OpenAction";
+	/** Type name for {@code PBoxPDDocument} */
+	public static final String PD_DOCUMENT_TYPE = "PDDocument";
+
+	/** Link name for pages */
+	public static final String PAGES = "pages";
+	/** Link name for main metadata of document*/
+	public static final String METADATA = "metadata";
+	/** Link name for all output intents */
+	public static final String OUTPUT_INTENTS = "outputIntents";
+	/** Link name for acro forms */
+	public static final String ACRO_FORMS = "AcroForm";
+	/** Link name for additional actions of document */
+	public static final String ACTIONS = "AA";
+	/** Link name for open action of document */
+	public static final String OPEN_ACTION = "OpenAction";
+	/** Link name for all outlines of document */
     public static final String OUTLINES = "Outlines";
+	/** Link name for annotations structure tree root of document */
+	public static final String STRUCTURE_TREE_ROOT = "StructTreeRoot";
 
-    public static final int MAX_NUMBER_OF_ACTIONS = 5;
-    public static final String PD_DOCUMENT_TYPE = "PDDocument";
+	/** Maximal number of additional actions for AA key */
+	public static final int MAX_NUMBER_OF_ACTIONS = 5;
 
+	/**
+	 * Default constructor
+	 * @param document high level document representation
+	 */
     public PBoxPDDocument(org.apache.pdfbox.pdmodel.PDDocument document) {
         super(document, PD_DOCUMENT_TYPE);
     }
@@ -54,12 +72,14 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 				return this.getOutputIntents();
 			case ACRO_FORMS:
 				return this.getAcroForms();
+			case STRUCTURE_TREE_ROOT:
+				return this.getStructureTreeRoot();
 			default:
 				return super.getLinkedObjects(link);
 		}
 	}
 
-    private List<PDOutline> getOutlines() {
+	private List<PDOutline> getOutlines() {
         List<PDOutlineItem> outlines = this.getOutlinesList();
 		List<PDOutline> result = new ArrayList<>(outlines.size());
 		for (PDOutlineItem outlineItem : outlines) {
@@ -188,5 +208,15 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         }
         return Collections.emptyList();
     }
+
+	private List<PDStructTreeRoot> getStructureTreeRoot() {
+		PDStructureTreeRoot root = this.document.getDocumentCatalog().getStructureTreeRoot();
+		if (root != null) {
+			List<PDStructTreeRoot> treeRoot = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			treeRoot.add(new PBoxPDStructTreeRoot(root));
+			return Collections.unmodifiableList(treeRoot);
+		}
+		return Collections.emptyList();
+	}
 
 }
