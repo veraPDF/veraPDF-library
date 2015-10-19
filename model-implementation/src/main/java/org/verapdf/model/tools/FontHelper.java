@@ -1,19 +1,32 @@
 package org.verapdf.model.tools;
 
+import com.sun.istack.internal.Nullable;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.font.*;
 import org.apache.pdfbox.preflight.font.container.*;
 import org.verapdf.model.factory.font.FontFactory;
 
 /**
+ * Class for transforming Apache PDFBox font to
+ * Apache Preflight font container
+ *
  * @author Timur Kamalov
  */
 public class FontHelper {
 
+	/** CID font type 0 value of Subtype entry for type 0 font */
 	public static final String CID_FONT_TYPE_0 = "CIDFontType0";
+	/** CID font type 1 value of Subtype entry for type 0 font */
 	public static final String CID_FONT_TYPE_2 = "CIDFontType2";
 
-	public static FontContainer getFontContainer(PDFont font) {
+	/**
+	 * Transform Apache PDFBox font to Apache Preflight
+	 * font container representation
+	 *
+	 * @param font Apache PDFBox font
+	 * @return Apache Preflight font container
+	 */
+	public static @Nullable FontContainer getFontContainer(@Nullable PDFont font) {
 		switch (font.getSubType()) {
 			case FontFactory.TYPE_1:
 			case FontFactory.MM_TYPE_1:

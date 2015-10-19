@@ -15,12 +15,19 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
 
     private static final Logger LOGGER = Logger.getLogger(PBoxICCProfile.class);
 
+	/** Length of icc output profile header */
     public static final int HEADER_LENGTH = 128;
+	/** Offset of device class in header */
     public static final int DEVICE_CLASS_OFFSET = 12;
+	/** Offset of color space in header */
     public static final int COLOR_SPACE_OFFSET = 16;
+	/** Expected length for device class and so on */
     public static final int REQUIRED_LENGTH = 4;
+	/** Expected length version */
     public static final int VERSION_LENGTH = 3;
+	/** Offset of version byte */
     public static final int VERSION_BYTE = 8;
+	/** Offset of subversion byte */
     public static final int SUBVERSION_BYTE = 9;
 
     private byte[] profileHeader;
@@ -100,7 +107,12 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
         return null;
     }
 
-    // Custom implementation of customers
+	/**
+	 * Indicate validity of icc profile.
+	 * Need to implemented by customer.
+	 *
+	 * @return true if profile is valid
+	 */
     @Override
     public Boolean getisValid() {
         return Boolean.TRUE;
