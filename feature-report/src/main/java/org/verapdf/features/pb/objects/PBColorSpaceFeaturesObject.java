@@ -55,7 +55,16 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 	 * @param xobjectParents    set of xobject ids which contains the given colorspace as its resources
 	 * @param fontParents       set of font ids which contains the given colorspace as its resources
 	 */
-	public PBColorSpaceFeaturesObject(PDColorSpace colorSpace, String id, String iccProfileChild, String colorSpaceChild, Set<String> pageParents, Set<String> colorSpaceParents, Set<String> patternParents, Set<String> shadingParents, Set<String> xobjectParents, Set<String> fontParents) {
+	public PBColorSpaceFeaturesObject(PDColorSpace colorSpace,
+									  String id,
+									  String iccProfileChild,
+									  String colorSpaceChild,
+									  Set<String> pageParents,
+									  Set<String> colorSpaceParents,
+									  Set<String> patternParents,
+									  Set<String> shadingParents,
+									  Set<String> xobjectParents,
+									  Set<String> fontParents) {
 		this.colorSpace = colorSpace;
 		this.id = id;
 		this.iccProfileChild = iccProfileChild;
@@ -149,61 +158,63 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 			alt.addAttribute(ID, colorSpaceChild);
 		}
 
-		if (index.getCOSObject() instanceof COSArray &&
-				((COSArray) index.getCOSObject()).size() > 2 &&
-				((COSArray) index.getCOSObject()).getObject(2) instanceof COSNumber) {
-			FeatureTreeNode.newChildInstanceWithValue("hival",
-					String.valueOf(((COSNumber) ((COSArray) index.getCOSObject()).getObject(2)).intValue()),
-					root);
-		} else {
-			root.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.GETINGCOLORSPACEERROR_ID);
-			ErrorsHelper.addErrorIntoCollection(collection,
-					ErrorsHelper.GETINGCOLORSPACEERROR_ID,
-					ErrorsHelper.GETINGCOLORSPACEERROR_MESSAGE);
-		}
+		if (index.getCOSObject() instanceof COSArray) {
+			if (((COSArray) index.getCOSObject()).size() > 3 &&
+					((COSArray) index.getCOSObject()).getObject(2) instanceof COSNumber) {
+				FeatureTreeNode.newChildInstanceWithValue("hival",
+						String.valueOf(((COSNumber) ((COSArray) index.getCOSObject()).getObject(2)).intValue()),
+						root);
+			} else {
+				ErrorsHelper.addErrorIntoCollection(collection,
+						root,
+						"Indexed color space has no element hival or hival is not a number");
+			}
 
-		if (index.getCOSObject() instanceof COSArray &&
-				((COSArray) index.getCOSObject()).size() > 3) {
-			byte[] lookupData;
-			COSBase lookupTable = ((COSArray) index.getCOSObject()).getObject(3);
-			if (lookupTable instanceof COSString) {
-				lookupData = ((COSString) lookupTable).getBytes();
-			} else if (lookupTable instanceof COSStream) {
-				try {
-					lookupData = (new PDStream((COSStream) lookupTable)).getByteArray();
-				} catch (IOException e) {
-					LOGGER.info(e);
+			if (((COSArray) index.getCOSObject()).size() > 4) {
+				byte[] lookupData;
+				COSBase lookupTable = ((COSArray) index.getCOSObject()).getObject(3);
+				if (lookupTable instanceof COSString) {
+					lookupData = ((COSString) lookupTable).getBytes();
+				} else if (lookupTable instanceof COSStream) {
+					try {
+						lookupData = (new PDStream((COSStream) lookupTable)).getByteArray();
+					} catch (IOException e) {
+						LOGGER.info(e);
+						lookupData = new byte[0];
+						ErrorsHelper.addErrorIntoCollection(collection,
+								root,
+								e.getMessage());
+					}
+				} else {
+					if (lookupTable != null) {
+						ErrorsHelper.addErrorIntoCollection(collection,
+								root,
+								"Indexed color space has element lookup but it is not a String or a stream");
+					}
 					lookupData = new byte[0];
-					addError(root, collection);
+				}
+
+				try (Formatter formatter = new Formatter()) {
+					for (byte b : lookupData) {
+						formatter.format("%02X", b);
+					}
+
+					FeatureTreeNode.newChildInstanceWithValue("lookup",
+							formatter.toString(),
+							root);
 				}
 			} else {
-				if (lookupTable != null) {
-					addError(root, collection);
-				}
-
-				lookupData = new byte[0];
-			}
-
-			try (Formatter formatter = new Formatter()) {
-				for (byte b : lookupData) {
-					formatter.format("%02X", b);
-				}
-
-				FeatureTreeNode.newChildInstanceWithValue("lookup",
-						formatter.toString(),
-						root);
+				ErrorsHelper.addErrorIntoCollection(collection,
+						root,
+						"Indexed color space has no element lookup");
 			}
 		} else {
-			addError(root, collection);
+			ErrorsHelper.addErrorIntoCollection(collection,
+					root,
+					"Indexed color space is not an array");
 		}
 	}
 
-	private void addError(FeatureTreeNode root, FeaturesCollection collection) {
-		root.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.GETINGCOLORSPACEERROR_ID);
-		ErrorsHelper.addErrorIntoCollection(collection,
-				ErrorsHelper.GETINGCOLORSPACEERROR_ID,
-				ErrorsHelper.GETINGCOLORSPACEERROR_MESSAGE);
-	}
 
 	private void parseCIEDictionaryBased(FeatureTreeNode root) throws FeaturesTreeNodeException {
 		PDCIEDictionaryBasedColorSpace cie = (PDCIEDictionaryBasedColorSpace) colorSpace;

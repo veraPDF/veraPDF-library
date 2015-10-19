@@ -23,6 +23,10 @@ public final class PBCosNull extends PBCosObject implements CosNull {
         super(nil, COS_NULL_TYPE);
     }
 
+    /**
+     * Method to get instance of PBCosNull object
+     * @return PBCosNull object
+     */
 	public static CosNull getInstance() {
 		if (NULL == null) {
 			NULL = new PBCosNull(COSNull.NULL);

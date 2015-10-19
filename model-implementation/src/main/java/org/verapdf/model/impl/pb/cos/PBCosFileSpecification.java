@@ -17,6 +17,10 @@ public class PBCosFileSpecification extends PBCosDict implements
 
     private final String ef;
 
+    /**
+     * Default constructor
+     * @param dictionary pdfbox COSDictionary
+     */
     public PBCosFileSpecification(COSDictionary dictionary) {
         super(dictionary, COS_FILE_SPECIFICATION_TYPE);
         this.ef = dictionary.getItem(COSName.EF) == null ? null : dictionary

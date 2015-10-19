@@ -49,7 +49,7 @@ public final class XMPChecker {
     private static final int MAX_REQUIRED_RECORDS = 8;
 
     private XMPChecker() {
-
+		// disable default constructor
     }
 
     /**

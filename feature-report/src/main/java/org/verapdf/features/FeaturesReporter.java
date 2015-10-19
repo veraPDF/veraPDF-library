@@ -30,7 +30,7 @@ public class FeaturesReporter {
 	 * @param extractor object for extract custom features
 	 * @param id UUID object which represents id for the extractor
 	 */
-	public void registerFeaturesExtractor(IFeaturesExtractor extractor, UUID id) {
+	public void registerFeaturesExtractor(FeaturesExtractor extractor, UUID id) {
 		if (featuresExtractors.get(extractor.getType()) == null) {
 			featuresExtractors.put(extractor.getType(), new ArrayList<ExtractorStructure>());
 		}
@@ -83,9 +83,9 @@ public class FeaturesReporter {
 
 	private static class ExtractorStructure {
 		UUID id;
-		IFeaturesExtractor extractor;
+		FeaturesExtractor extractor;
 
-		ExtractorStructure(IFeaturesExtractor extractor, UUID id) {
+		ExtractorStructure(FeaturesExtractor extractor, UUID id) {
 			this.extractor = extractor;
 			this.id = id;
 		}

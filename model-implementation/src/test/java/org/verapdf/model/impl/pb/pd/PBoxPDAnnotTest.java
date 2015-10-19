@@ -7,6 +7,10 @@ import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.BaseTest;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
+import org.verapdf.model.impl.pb.pd.actions.PBoxPDAction;
+import org.verapdf.model.impl.pb.pd.actions.PBoxPDGoToAction;
+import org.verapdf.model.impl.pb.pd.actions.PBoxPDGoToRemoteAction;
+import org.verapdf.model.impl.pb.pd.actions.PBoxPDNamedAction;
 import org.verapdf.model.pdlayer.PDAnnot;
 
 import java.io.IOException;

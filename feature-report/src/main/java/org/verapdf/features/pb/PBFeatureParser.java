@@ -11,6 +11,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDFontLike;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType3Font;
+import org.apache.pdfbox.pdmodel.graphics.PDPostScriptXObject;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.color.*;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
@@ -55,7 +56,6 @@ public final class PBFeatureParser {
 	private static final String EMBEDDEDFILE = "embeddedFile";
 	private static final String FONT = "font";
 	private static final String SHADING = "shading";
-	private static final String PROCSET = "procSet";
 	private static final String XOBJECT = "xobject";
 	private static final String PATTERN = "pattern";
 	private static final String COLORSPACE = "colorSpace";
@@ -65,7 +65,6 @@ public final class PBFeatureParser {
 	private static final String SHADING_ID = "shdng";
 	private static final String XOBJECT_ID = "xobj";
 	private static final String FONT_ID = "fnt";
-	private static final String PROCSET_ID = "prset";
 	private static final String PROPERTIES_ID = "prop";
 	private static final String DEVICEGRAY_ID = "devgray";
 	private static final String DEVICERGB_ID = "devrgb";
@@ -83,7 +82,6 @@ public final class PBFeatureParser {
 	private Map<String, Set<String>> pageShadingChild = new HashMap<>();
 	private Map<String, Set<String>> pageXObjectChild = new HashMap<>();
 	private Map<String, Set<String>> pageFontChild = new HashMap<>();
-	private Map<String, Set<String>> pageProcSetChild = new HashMap<>();
 	private Map<String, Set<String>> pagePropertiesChild = new HashMap<>();
 
 	private Map<String, PDAnnotation> annots = new HashMap<>();
@@ -116,7 +114,6 @@ public final class PBFeatureParser {
 	private Map<String, Set<String>> tilingPatternShadingChild = new HashMap<>();
 	private Map<String, Set<String>> tilingPatternXObjectChild = new HashMap<>();
 	private Map<String, Set<String>> tilingPatternFontChild = new HashMap<>();
-	private Map<String, Set<String>> tilingPatternProcSetChild = new HashMap<>();
 	private Map<String, Set<String>> tilingPatternPropertiesChild = new HashMap<>();
 	private Map<String, Set<String>> tilingPatternPageParent = new HashMap<>();
 	private Map<String, Set<String>> tilingPatternPatternParent = new HashMap<>();
@@ -156,7 +153,6 @@ public final class PBFeatureParser {
 	private Map<String, Set<String>> formXObjectShadingChild = new HashMap<>();
 	private Map<String, Set<String>> formXObjectXObjectChild = new HashMap<>();
 	private Map<String, Set<String>> formXObjectFontChild = new HashMap<>();
-	private Map<String, Set<String>> formXObjectProcSetChild = new HashMap<>();
 	private Map<String, Set<String>> formXObjectPropertiesChild = new HashMap<>();
 	private Map<String, Set<String>> formXObjectPageParent = new HashMap<>();
 	private Map<String, Set<String>> formXObjectAnnotationParent = new HashMap<>();
@@ -171,7 +167,6 @@ public final class PBFeatureParser {
 	private Map<String, Set<String>> fontShadingChild = new HashMap<>();
 	private Map<String, Set<String>> fontXObjectChild = new HashMap<>();
 	private Map<String, Set<String>> fontFontChild = new HashMap<>();
-	private Map<String, Set<String>> fontProcSetChild = new HashMap<>();
 	private Map<String, Set<String>> fontPropertiesChild = new HashMap<>();
 	private Map<String, Set<String>> fontExtGStateParent = new HashMap<>();
 	private Map<String, Set<String>> fontPageParent = new HashMap<>();
@@ -179,17 +174,17 @@ public final class PBFeatureParser {
 	private Map<String, Set<String>> fontXObjectParent = new HashMap<>();
 	private Map<String, Set<String>> fontFontParent = new HashMap<>();
 
-	private Map<String, COSArray> procSets = new HashMap<>();
-	private Map<String, Set<String>> procSetPageParent = new HashMap<>();
-	private Map<String, Set<String>> procSetPatternParent = new HashMap<>();
-	private Map<String, Set<String>> procSetXObjectParent = new HashMap<>();
-	private Map<String, Set<String>> procSetFontParent = new HashMap<>();
-
 	private Map<String, COSDictionary> properties = new HashMap<>();
 	private Map<String, Set<String>> propertyPageParent = new HashMap<>();
 	private Map<String, Set<String>> propertyPatternParent = new HashMap<>();
 	private Map<String, Set<String>> propertyXObjectParent = new HashMap<>();
 	private Map<String, Set<String>> propertyFontParent = new HashMap<>();
+
+	private Set<String> postscripts = new HashSet<>();
+	private Map<String, Set<String>> postscriptPageParent = new HashMap<>();
+	private Map<String, Set<String>> postscriptPatternParent = new HashMap<>();
+	private Map<String, Set<String>> postscriptXObjectParent = new HashMap<>();
+	private Map<String, Set<String>> postscriptFontParent = new HashMap<>();
 
 	private PBFeatureParser(FeaturesReporter reporter) {
 		this.reporter = reporter;
@@ -340,7 +335,6 @@ public final class PBFeatureParser {
 								tilingPatternShadingChild.get(id),
 								tilingPatternXObjectChild.get(id),
 								tilingPatternFontChild.get(id),
-								tilingPatternProcSetChild.get(id),
 								tilingPatternPropertiesChild.get(id),
 								tilingPatternPageParent.get(id),
 								tilingPatternPatternParent.get(id),
@@ -408,13 +402,23 @@ public final class PBFeatureParser {
 								formXObjectShadingChild.get(id),
 								formXObjectXObjectChild.get(id),
 								formXObjectFontChild.get(id),
-								formXObjectProcSetChild.get(id),
 								formXObjectPropertiesChild.get(id),
 								formXObjectPageParent.get(id),
 								formXObjectAnnotationParent.get(id),
 								formXObjectPatternParent.get(id),
 								formXObjectXObjectParent.get(id),
 								formXObjectFontParent.get(id)));
+			}
+		}
+
+		for (String postscript : postscripts) {
+			if (postscript != null) {
+				reporter.report(PBFeaturesObjectCreator
+						.createPostScriptXObjectFeaturesObject(postscript,
+								postscriptPageParent.get(postscript),
+								postscriptPatternParent.get(postscript),
+								postscriptXObjectParent.get(postscript),
+								postscriptFontParent.get(postscript)));
 			}
 		}
 
@@ -430,26 +434,12 @@ public final class PBFeatureParser {
 								fontShadingChild.get(id),
 								fontXObjectChild.get(id),
 								fontFontChild.get(id),
-								fontProcSetChild.get(id),
 								fontPropertiesChild.get(id),
 								fontExtGStateParent.get(id),
 								fontPageParent.get(id),
 								fontPatternParent.get(id),
 								fontXObjectParent.get(id),
 								fontFontParent.get(id)));
-			}
-		}
-
-		for (Map.Entry<String, COSArray> procSetEntry : procSets.entrySet()) {
-			if (procSetEntry.getValue() != null) {
-				String id = procSetEntry.getKey();
-				reporter.report(PBFeaturesObjectCreator
-						.createProcSetFeaturesObject(procSetEntry.getValue(),
-								id,
-								procSetPageParent.get(id),
-								procSetPatternParent.get(id),
-								procSetXObjectParent.get(id),
-								procSetFontParent.get(id)));
 			}
 		}
 
@@ -476,7 +466,7 @@ public final class PBFeatureParser {
 
 			if (page.getCOSObject().getDictionaryObject(COSName.getPDFName("Thumb")) != null) {
 				COSBase baseThumb = page.getCOSObject().getItem(COSName.getPDFName("Thumb"));
-				thumbID = getId(baseThumb, XOBJECT_ID, imageXObjects.size() + formXObjects.size());
+				thumbID = getId(baseThumb, XOBJECT_ID, imageXObjects.size() + formXObjects.size() + postscripts.size());
 				if (imageXObjectPageParent.get(thumbID) == null) {
 					imageXObjectPageParent.put(thumbID, new HashSet<String>());
 				}
@@ -490,10 +480,10 @@ public final class PBFeatureParser {
 							parseImageXObject(img, thumbID);
 						} catch (IOException e) {
 							LOGGER.error(e);
-							xobjectCreationProblem(thumbID);
+							xobjectCreationProblem(thumbID, e.getMessage());
 						}
 					} else {
-						xobjectCreationProblem(thumbID);
+						xobjectCreationProblem(thumbID, "Thumb is not a stream");
 					}
 				}
 			}
@@ -506,7 +496,6 @@ public final class PBFeatureParser {
 					pageShadingChild,
 					pageXObjectChild,
 					pageFontChild,
-					pageProcSetChild,
 					pagePropertiesChild,
 					exGStatePageParent,
 					colorSpacePageParent,
@@ -515,8 +504,8 @@ public final class PBFeatureParser {
 					shadingPageParent,
 					imageXObjectPageParent,
 					formXObjectPageParent,
+					postscriptPageParent,
 					fontPageParent,
-					procSetPageParent,
 					propertyPageParent);
 
 			reporter.report(PBFeaturesObjectCreator
@@ -529,7 +518,6 @@ public final class PBFeatureParser {
 							pageShadingChild.get(PAGE + pageIndex),
 							pageXObjectChild.get(PAGE + pageIndex),
 							pageFontChild.get(PAGE + pageIndex),
-							pageProcSetChild.get(PAGE + pageIndex),
 							pagePropertiesChild.get(PAGE + pageIndex),
 							PAGE + pageIndex,
 							pageIndex));
@@ -602,11 +590,9 @@ public final class PBFeatureParser {
 			FeatureTreeNode annot = FeatureTreeNode
 					.newRootInstance(ANNOTATION);
 			annot.addAttribute(ID, id);
-			annot.addAttribute(ErrorsHelper.ERRORID,
-					ErrorsHelper.ANNOTATIONPARSER_ID);
 			ErrorsHelper.addErrorIntoCollection(reporter.getCollection(),
-					ErrorsHelper.ANNOTATIONPARSER_ID,
-					ErrorsHelper.ANNOTATIONPARSER_MESSAGE);
+					annot,
+					"Unknown annotation type");
 			reporter.getCollection().addNewFeatureTree(FeaturesObjectTypesEnum.ANNOTATION,
 					annot);
 		} catch (FeaturesTreeNodeException e) {
@@ -634,7 +620,7 @@ public final class PBFeatureParser {
 			}
 		} catch (IOException e) {
 			LOGGER.debug("Error creating PDFBox SubType.", e);
-			handleSubtypeCreationProblem();
+			handleSubtypeCreationProblem(e.getMessage());
 		}
 
 		if (efTree.getKids() != null) {
@@ -663,7 +649,7 @@ public final class PBFeatureParser {
 			}
 		} catch (IOException e) {
 			LOGGER.debug("Subtype creation exception caught", e);
-			handleSubtypeCreationProblem();
+			handleSubtypeCreationProblem(e.getMessage());
 		}
 
 		if (node.getKids() != null) {
@@ -700,65 +686,50 @@ public final class PBFeatureParser {
 		return null;
 	}
 
-	private void handleSubtypeCreationProblem() {
+	private void handleSubtypeCreationProblem(String errorMessage) {
 		creationProblem(EMBEDDEDFILE,
 				null,
-				ErrorsHelper.PARSINGEMBEDDEDFILEERROR_ID,
-				ErrorsHelper.PARSINGEMBEDDEDFILEERROR_MESSAGE,
+				errorMessage,
 				FeaturesObjectTypesEnum.EMBEDDED_FILE,
 				"PBFeatureParser.reportEmbeddedFileNode logic failure.");
 	}
 
-	private void fontCreationProblem(final String nodeID) {
+	private void fontCreationProblem(final String nodeID, String errorMessage) {
 		creationProblem(FONT,
 				nodeID,
-				ErrorsHelper.GETINGFONTERROR_ID,
-				ErrorsHelper.GETINGFONTERROR_MESSAGE,
+				errorMessage,
 				FeaturesObjectTypesEnum.FONT,
 				"PBFeatureParser.fontCreationProblem logic failure.");
 	}
 
-	private void patternCreationProblem(final String nodeID) {
+	private void patternCreationProblem(final String nodeID, String errorMessage) {
 		creationProblem(PATTERN,
 				nodeID,
-				ErrorsHelper.GETINGPATTERNERROR_ID,
-				ErrorsHelper.GETINGPATTERNERROR_MESSAGE,
+				errorMessage,
 				FeaturesObjectTypesEnum.PATTERN,
 				"PBFeatureParser.patternCreationProblem logic failure.");
 	}
 
-	private void colorSpaceCreationProblem(final String nodeID) {
+	private void colorSpaceCreationProblem(final String nodeID, String errorMessage) {
 		creationProblem(COLORSPACE,
 				nodeID,
-				ErrorsHelper.GETINGCOLORSPACEERROR_ID,
-				ErrorsHelper.GETINGCOLORSPACEERROR_MESSAGE,
+				errorMessage,
 				FeaturesObjectTypesEnum.COLORSPACE,
 				"PBFeatureParser.colorSpaceCreationProblem logic failure.");
 	}
 
-	private void shadingCreationProblem(final String nodeID) {
+	private void shadingCreationProblem(final String nodeID, String errorMessage) {
 		creationProblem(SHADING,
 				nodeID,
-				ErrorsHelper.GETINGSHADINGERROR_ID,
-				ErrorsHelper.GETINGSHADINGERROR_MESSAGE,
+				errorMessage,
 				FeaturesObjectTypesEnum.SHADING,
 				"PBFeatureParser.shadingCreationProblem logic failure.");
 	}
 
-	private void procSetCreationProblem(final String nodeID) {
-		creationProblem(PROCSET,
-				nodeID,
-				ErrorsHelper.GETINGPROCSETERROR_ID,
-				ErrorsHelper.GETINGPROCSETERROR_MESSAGE,
-				FeaturesObjectTypesEnum.PROCSET,
-				"PBFeatureParser.procSetCreationProblem logic failure.");
-	}
-
-	private void xobjectCreationProblem(final String nodeID) {
+	private void xobjectCreationProblem(final String nodeID, String errorMessage) {
 		creationProblem(XOBJECT,
 				nodeID,
-				ErrorsHelper.GETINGXOBJECTERROR_ID,
-				ErrorsHelper.GETINGXOBJECTERROR_MESSAGE,
+				errorMessage,
 				FeaturesObjectTypesEnum.FAILED_XOBJECT,
 				"PBFeatureParser.xobjectCreationProblem logic failure.");
 	}
@@ -766,19 +737,18 @@ public final class PBFeatureParser {
 	private void creationProblem(
 			final String nodeName,
 			final String nodeID,
-			final String errorID,
 			final String errorMessage,
 			final FeaturesObjectTypesEnum type,
 			final String loggerMessage) {
 		try {
 			FeatureTreeNode node = FeatureTreeNode.newRootInstance(nodeName);
-			node.addAttribute(ErrorsHelper.ERRORID, errorID);
 			if (nodeID != null) {
 				node.addAttribute(ID, nodeID);
 			}
 			reporter.getCollection().addNewFeatureTree(type, node);
 			ErrorsHelper.addErrorIntoCollection(reporter.getCollection(),
-					errorID, errorMessage);
+					node,
+					errorMessage);
 		} catch (FeaturesTreeNodeException e) {
 			// This exception occurs when wrong node creates for feature
 			// tree.
@@ -837,7 +807,6 @@ public final class PBFeatureParser {
 					formXObjectShadingChild,
 					formXObjectXObjectChild,
 					formXObjectFontChild,
-					formXObjectProcSetChild,
 					formXObjectPropertiesChild,
 					exGStateXObjectParent,
 					colorSpaceXObjectParent,
@@ -846,8 +815,8 @@ public final class PBFeatureParser {
 					shadingXObjectParent,
 					imageXObjectXObjectParent,
 					formXObjectXObjectParent,
+					postscriptXObjectParent,
 					fontXObjectParent,
-					procSetXObjectParent,
 					propertyXObjectParent);
 		}
 	}
@@ -860,7 +829,6 @@ public final class PBFeatureParser {
 												   Map<String, Set<String>> shadingChildMap,
 												   Map<String, Set<String>> xobjectChildMap,
 												   Map<String, Set<String>> fontChildMap,
-												   Map<String, Set<String>> procSetChildMap,
 												   Map<String, Set<String>> propertiesChildMap,
 												   Map<String, Set<String>> exGStateParentMap,
 												   Map<String, Set<String>> colorSpaceParentMap,
@@ -869,8 +837,8 @@ public final class PBFeatureParser {
 												   Map<String, Set<String>> shadingParentMap,
 												   Map<String, Set<String>> imageXObjectParentMap,
 												   Map<String, Set<String>> formXObjectParentMap,
+												   Map<String, Set<String>> postscriptParentMap,
 												   Map<String, Set<String>> fontParentMap,
-												   Map<String, Set<String>> procSetParentMap,
 												   Map<String, Set<String>> propertiesParentMap) {
 		parseExGStateFromResource(resources, parentID, exGStateChildMap, exGStateParentMap);
 
@@ -902,7 +870,7 @@ public final class PBFeatureParser {
 						xobjectChildMap.put(parentID, new HashSet<String>());
 					}
 					xobjectChildMap.get(parentID).add(id);
-					colorSpaceCreationProblem(id);
+					colorSpaceCreationProblem(id, e.getMessage());
 				}
 			}
 		}
@@ -911,11 +879,9 @@ public final class PBFeatureParser {
 
 		parseShadingFromResource(resources, parentID, shadingChildMap, shadingParentMap);
 
-		parseXObjectFromResources(resources, parentID, xobjectChildMap, imageXObjectParentMap, formXObjectParentMap);
+		parseXObjectFromResources(resources, parentID, xobjectChildMap, imageXObjectParentMap, formXObjectParentMap, postscriptParentMap);
 
 		parseFontFromResources(resources, parentID, fontChildMap, fontParentMap);
-
-		parseProcSetFromResources(resources, parentID, procSetChildMap, procSetParentMap);
 
 		parsePropertiesFromResources(resources, parentID, propertiesChildMap, propertiesParentMap);
 	}
@@ -950,7 +916,7 @@ public final class PBFeatureParser {
 			colorSpaceXObjectParent.get(idColorSpace).add(id);
 			imageXObjectColorSpaceChild.put(id, idColorSpace);
 			LOGGER.info(e);
-			colorSpaceCreationProblem(idColorSpace);
+			colorSpaceCreationProblem(idColorSpace, e.getMessage());
 		}
 
 		COSBase mask = xobj.getCOSStream().getDictionaryObject(COSName.MASK);
@@ -971,7 +937,7 @@ public final class PBFeatureParser {
 					parseImageXObject(imxobj, idMask);
 				} catch (IOException e) {
 					LOGGER.info(e);
-					xobjectCreationProblem(idMask);
+					xobjectCreationProblem(idMask, e.getMessage());
 				}
 			}
 		}
@@ -994,7 +960,7 @@ public final class PBFeatureParser {
 					parseImageXObject(imxobj, idMask);
 				} catch (IOException e) {
 					LOGGER.info(e);
-					xobjectCreationProblem(idMask);
+					xobjectCreationProblem(idMask, e.getMessage());
 				}
 			}
 		}
@@ -1019,7 +985,7 @@ public final class PBFeatureParser {
 								parseImageXObject(im, idImage);
 							} catch (IOException e) {
 								LOGGER.info(e);
-								xobjectCreationProblem(idImage);
+								xobjectCreationProblem(idImage, e.getMessage());
 							}
 						}
 					}
@@ -1032,7 +998,8 @@ public final class PBFeatureParser {
 										   String parentID,
 										   Map<String, Set<String>> xobjectChildMap,
 										   Map<String, Set<String>> imageXObjectParentMap,
-										   Map<String, Set<String>> formXObjectParentMap) {
+										   Map<String, Set<String>> formXObjectParentMap,
+										   Map<String, Set<String>> postscriptParentMap) {
 		if (resources == null || resources.getXObjectNames() == null) {
 			return;
 		}
@@ -1040,7 +1007,7 @@ public final class PBFeatureParser {
 		for (COSName name : resources.getXObjectNames()) {
 			COSDictionary dict = (COSDictionary) resources.getCOSObject().getDictionaryObject(COSName.XOBJECT);
 			COSBase base = dict.getItem(name);
-			String id = getId(base, XOBJECT_ID, imageXObjects.size() + formXObjects.size());
+			String id = getId(base, XOBJECT_ID, imageXObjects.size() + formXObjects.size() + postscripts.size());
 
 			try {
 				PDXObject xobj = resources.getXObject(name);
@@ -1085,7 +1052,7 @@ public final class PBFeatureParser {
 								colorSpaceXObjectParent.get(idColorSpace).add(id);
 								groupXObjectColorSpaceChild.put(id, idColorSpace);
 								LOGGER.info(e);
-								colorSpaceCreationProblem(idColorSpace);
+								colorSpaceCreationProblem(idColorSpace, e.getMessage());
 							}
 						}
 
@@ -1097,7 +1064,6 @@ public final class PBFeatureParser {
 								formXObjectShadingChild,
 								formXObjectXObjectChild,
 								formXObjectFontChild,
-								formXObjectProcSetChild,
 								formXObjectPropertiesChild,
 								exGStateXObjectParent,
 								colorSpaceXObjectParent,
@@ -1106,15 +1072,18 @@ public final class PBFeatureParser {
 								shadingXObjectParent,
 								imageXObjectXObjectParent,
 								formXObjectXObjectParent,
+								postscriptXObjectParent,
 								fontXObjectParent,
-								procSetXObjectParent,
 								propertyXObjectParent);
 
 					}
+				} else if (xobj instanceof PDPostScriptXObject) {
+					makePairDependence(id, parentID, postscriptParentMap, xobjectChildMap);
+					postscripts.add(id);
 				}
 			} catch (IOException e) {
 				LOGGER.info(e);
-				xobjectCreationProblem(id);
+				xobjectCreationProblem(id, e.getMessage());
 			}
 		}
 	}
@@ -1141,35 +1110,6 @@ public final class PBFeatureParser {
 		}
 	}
 
-	private void parseProcSetFromResources(PDResources resources,
-										   String parentID,
-										   Map<String, Set<String>> procSetChildMap,
-										   Map<String, Set<String>> procSetParentMap) {
-		if (resources == null) {
-			return;
-		}
-
-		COSBase base = resources.getCOSObject().getItem(COSName.PROC_SET);
-
-		if (base == null) {
-			return;
-		}
-
-		String id = getId(base, PROCSET_ID, procSets.size());
-
-		base = getBase(base);
-
-		makePairDependence(id, parentID, procSetParentMap, procSetChildMap);
-
-		if (base instanceof COSArray) {
-			if (!procSets.containsKey(id)) {
-				procSets.put(id, (COSArray) base);
-			}
-		} else {
-			procSetCreationProblem(id);
-		}
-	}
-
 	private void parseFontFromResources(PDResources resources,
 										String parentID,
 										Map<String, Set<String>> fontChildMap,
@@ -1192,7 +1132,7 @@ public final class PBFeatureParser {
 					parseFont(font, id);
 				} catch (IOException e) {
 					LOGGER.info(e);
-					fontCreationProblem(id);
+					fontCreationProblem(id, e.getMessage());
 				}
 
 			}
@@ -1237,7 +1177,7 @@ public final class PBFeatureParser {
 						parseFont(font, fontID);
 					} catch (IOException e) {
 						LOGGER.info(e);
-						fontCreationProblem(fontID);
+						fontCreationProblem(fontID, e.getMessage());
 					}
 				}
 			}
@@ -1286,7 +1226,6 @@ public final class PBFeatureParser {
 								tilingPatternShadingChild,
 								tilingPatternXObjectChild,
 								tilingPatternFontChild,
-								tilingPatternProcSetChild,
 								tilingPatternPropertiesChild,
 								exGStatePatternParent,
 								colorSpacePatternParent,
@@ -1295,8 +1234,8 @@ public final class PBFeatureParser {
 								shadingPatternParent,
 								imageXObjectPatternParent,
 								formXObjectPatternParent,
+								postscriptPatternParent,
 								fontPatternParent,
-								procSetPatternParent,
 								propertyPatternParent);
 					}
 				} else {
@@ -1355,7 +1294,7 @@ public final class PBFeatureParser {
 									parseFont(font, fontID);
 								} catch (IOException e) {
 									LOGGER.info(e);
-									fontCreationProblem(fontID);
+									fontCreationProblem(fontID, e.getMessage());
 								}
 							}
 						}
@@ -1363,7 +1302,7 @@ public final class PBFeatureParser {
 				}
 			} catch (IOException e) {
 				LOGGER.info(e);
-				patternCreationProblem(id);
+				patternCreationProblem(id, e.getMessage());
 			}
 		}
 	}
@@ -1389,7 +1328,7 @@ public final class PBFeatureParser {
 					parseShading(shading, id);
 				} catch (IOException e) {
 					LOGGER.info(e);
-					shadingCreationProblem(id);
+					shadingCreationProblem(id, e.getMessage());
 				}
 			}
 		}
@@ -1425,7 +1364,7 @@ public final class PBFeatureParser {
 			colorSpaceShadingParent.get(id).add(parentID);
 			shadingColorSpaceChild.put(parentID, id);
 			LOGGER.info(e);
-			colorSpaceCreationProblem(id);
+			colorSpaceCreationProblem(id, e.getMessage());
 		}
 	}
 
@@ -1440,7 +1379,6 @@ public final class PBFeatureParser {
 					fontShadingChild,
 					fontXObjectChild,
 					fontFontChild,
-					fontProcSetChild,
 					fontPropertiesChild,
 					exGStateFontParent,
 					colorSpaceFontParent,
@@ -1449,8 +1387,8 @@ public final class PBFeatureParser {
 					shadingFontParent,
 					imageXObjectFontParent,
 					formXObjectFontParent,
+					postscriptFontParent,
 					fontFontParent,
-					procSetFontParent,
 					propertyFontParent);
 		} else if (font instanceof PDType0Font) {
 			PDType0Font type0 = (PDType0Font) font;
@@ -1505,7 +1443,7 @@ public final class PBFeatureParser {
 				}
 			} catch (IOException e) {
 				LOGGER.info(e);
-				colorSpaceCreationProblem(idAlt);
+				colorSpaceCreationProblem(idAlt, e.getMessage());
 			}
 		} else if (colorSpace instanceof PDIndexed ||
 				colorSpace instanceof PDSeparation ||
@@ -1546,7 +1484,7 @@ public final class PBFeatureParser {
 				}
 			} catch (IOException e) {
 				LOGGER.info(e);
-				colorSpaceCreationProblem(id);
+				colorSpaceCreationProblem(id, e.getMessage());
 			}
 
 		}

@@ -24,6 +24,10 @@ public class PBCosArray extends PBCosObject implements CosArray {
     public static final String ELEMENTS = "elements";
     private final int size;
 
+    /**
+     * Default constructor
+     * @param array pdfbox COSArray
+     */
     public PBCosArray(COSArray array) {
         super(array, COS_ARRAY_TYPE);
         this.size = array.size();

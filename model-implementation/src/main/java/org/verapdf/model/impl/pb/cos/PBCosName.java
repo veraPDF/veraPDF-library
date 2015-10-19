@@ -17,10 +17,19 @@ public class PBCosName extends PBCosObject implements CosName {
     private final String value;
     private final long originalLength;
 
+    /**
+     * Default constructor
+     * @param cosName pdfbox COSName
+     */
     public PBCosName(COSName cosName) {
         this(cosName, COS_NAME_TYPE);
     }
 
+    /**
+     * Constructor for child classes
+     * @param cosName pdfbox COSName
+     * @param type child class type
+     */
     public PBCosName(COSName cosName, final String type) {
         super(cosName, type);
         this.value = cosName.getName();

@@ -23,6 +23,7 @@ import java.nio.file.Path;
  */
 class SettingsPanel extends JPanel {
 
+	private static final long serialVersionUID = -5688021756073449469L;
 	private JButton okButton;
 	private boolean ok;
 	JDialog dialog;
@@ -195,7 +196,7 @@ class SettingsPanel extends JPanel {
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
 
-	boolean showDialog(Component parent, String title, Settings settings) {
+	boolean showDialog(Component parent, String title, Config settings) {
 
 		ok = false;
 

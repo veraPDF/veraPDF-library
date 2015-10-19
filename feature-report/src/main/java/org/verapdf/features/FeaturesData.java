@@ -1,9 +1,6 @@
 package org.verapdf.features;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Arrays;
 
 /**
  * Features data of an object for feature extractor
@@ -13,40 +10,31 @@ import java.util.Map;
 public class FeaturesData {
 
 	private byte[] metadata;
-	private List<byte[]> streams;
-	private Map<String, Object> properties;
+	private byte[] stream;
 
 	/**
 	 * Constructs new FeaturesData
 	 *
 	 * @param metadata   byte array represents metadata stream
-	 * @param streams    list of byte arrays represent all necessary streams for object
-	 * @param properties map of properties for object
+	 * @param stream     byte array represents object stream
 	 */
-	public FeaturesData(byte[] metadata, List<byte[]> streams, Map<String, Object> properties) {
-		this.metadata = metadata;
-		this.streams = streams == null ? new ArrayList<byte[]>() : streams;
-		this.properties = properties == null ? new HashMap<String, Object>() : properties;
+	protected FeaturesData(byte[] metadata, byte[] stream) {
+		this.metadata = metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
+		this.stream = Arrays.copyOf(stream, stream.length);
 	}
 
 	/**
-	 * @return byte array represents metadata stream
+	 * @return byte array represent metadata stream
 	 */
 	public byte[] getMetadata() {
-		return metadata;
+		return Arrays.copyOf(metadata, metadata.length);
 	}
 
 	/**
-	 * @return list of byte arrays represent all necessary streams for object
+	 * @return byte array represent streams for object
 	 */
-	public List<byte[]> getStreams() {
-		return streams;
+	public byte[] getStream() {
+		return Arrays.copyOf(stream, stream.length);
 	}
 
-	/**
-	 * @return map of properties for object
-	 */
-	public Map<String, Object> getProperties() {
-		return properties;
-	}
 }

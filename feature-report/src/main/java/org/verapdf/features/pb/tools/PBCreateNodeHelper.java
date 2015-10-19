@@ -81,8 +81,9 @@ public final class PBCreateNodeHelper {
 				modificationDate.setValue(getXMLFormat(date));
 			} catch (DatatypeConfigurationException e) {
 				LOGGER.debug("DatatypeFactory implementation not available or can't be instantiated", e);
-				modificationDate.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.DATE_ID);
-				ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.DATE_ID, ErrorsHelper.DATE_MESSAGE);
+				ErrorsHelper.addErrorIntoCollection(collection,
+						modificationDate,
+						e.getMessage());
 			}
 		}
 
@@ -176,8 +177,9 @@ public final class PBCreateNodeHelper {
 					createCMYK(color.getComponents(), colorNode);
 					break;
 				default:
-					colorNode.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.COLOR_ID);
-					ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.COLOR_ID, ErrorsHelper.COLOR_MESSAGE);
+					ErrorsHelper.addErrorIntoCollection(collection,
+							colorNode,
+							"Can not define color type");
 			}
 
 			return colorNode;
@@ -259,27 +261,28 @@ public final class PBCreateNodeHelper {
 			node.setValue(bStream);
 		} catch (IOException e) {
 			LOGGER.debug("Error while converting stream to string", e);
-			node.addAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATACONVERT_ID);
-			ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATACONVERT_ID, ErrorsHelper.METADATACONVERT_MESSAGE);
+			ErrorsHelper.addErrorIntoCollection(collection,
+					node,
+					e.getMessage());
 		}
 
 		return node;
 	}
 
 	private static void createGray(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {
-		FeatureTreeNode.newChildInstanceWithValue("gray", String.valueOf(components[GRAY_COMPONENT_NUMBER]), parent);
+		parent.addAttribute("gray", String.valueOf(components[GRAY_COMPONENT_NUMBER]));
 	}
 
 	private static void createRGB(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {
-		FeatureTreeNode.newChildInstanceWithValue("red", String.valueOf(components[RED_COMPONENT_NUMBER]), parent);
-		FeatureTreeNode.newChildInstanceWithValue("green", String.valueOf(components[GREEN_COMPONENT_NUMBER]), parent);
-		FeatureTreeNode.newChildInstanceWithValue("blue", String.valueOf(components[BLUE_COMPONENT_NUMBER]), parent);
+		parent.addAttribute("red", String.valueOf(components[RED_COMPONENT_NUMBER]));
+		parent.addAttribute("green", String.valueOf(components[GREEN_COMPONENT_NUMBER]));
+		parent.addAttribute("blue", String.valueOf(components[BLUE_COMPONENT_NUMBER]));
 	}
 
 	private static void createCMYK(float[] components, FeatureTreeNode parent) throws FeaturesTreeNodeException {
-		FeatureTreeNode.newChildInstanceWithValue("cyan", String.valueOf(components[CYAN_COMPONENT_NUMBER]), parent);
-		FeatureTreeNode.newChildInstanceWithValue("magenta", String.valueOf(components[MAGENTA_COMPONENT_NUMBER]), parent);
-		FeatureTreeNode.newChildInstanceWithValue("yellow", String.valueOf(components[YELLOW_COMPONENT_NUMBER]), parent);
-		FeatureTreeNode.newChildInstanceWithValue("black", String.valueOf(components[BLACK_COMPONENT_NUMBER]), parent);
+		parent.addAttribute("cyan", String.valueOf(components[CYAN_COMPONENT_NUMBER]));
+		parent.addAttribute("magenta", String.valueOf(components[MAGENTA_COMPONENT_NUMBER]));
+		parent.addAttribute("yellow", String.valueOf(components[YELLOW_COMPONENT_NUMBER]));
+		parent.addAttribute("black", String.valueOf(components[BLACK_COMPONENT_NUMBER]));
 	}
 }

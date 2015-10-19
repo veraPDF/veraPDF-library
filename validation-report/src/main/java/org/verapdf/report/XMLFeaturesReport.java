@@ -131,12 +131,12 @@ public final class XMLFeaturesReport {
 			Element xobjects = doc.createElement("xobjects");
 			makeList("images", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.IMAGE_XOBJECT), xobjects, collection, doc);
 			makeList("forms", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FORM_XOBJECT), xobjects, collection, doc);
+			makeList("postscripts", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.POSTSCRIPT_XOBJECT), xobjects, collection, doc);
 			makeList("failed", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FAILED_XOBJECT), xobjects, collection, doc);
 			if (xobjects.getChildNodes().getLength() > 0) {
 				resources.appendChild(xobjects);
 			}
 			makeList("fonts", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FONT), resources, collection, doc);
-			makeList("procSets", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROCSET), resources, collection, doc);
 			makeList("propertiesDicts", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROPERTIES), resources, collection, doc);
 
 			if (resources.getChildNodes().getLength() > 0) {
@@ -218,18 +218,17 @@ public final class XMLFeaturesReport {
 					metadata.appendChild(pack);
 				} else {
 					LOGGER.debug("Metadata stream does not contains valid prefix.");
-					parseMetadataError(collection, metadata);
+					parseMetadataError(collection, metadata, "Metadata stream does not contains valid prefix.");
 				}
 
 			} catch (ParserConfigurationException | SAXException | IOException e) {
 				LOGGER.debug("Caught exception and checking XML String.", e);
-				parseMetadataError(collection, metadata);
+				parseMetadataError(collection, metadata, e.getMessage());
 			}
 
 			return metadata;
 		}
 		return makeNode(metadataNode, collection, doc, true);
-
 	}
 
 	private static String replaceInvalidCharacters(String source) {
@@ -263,10 +262,10 @@ public final class XMLFeaturesReport {
 		}
 	}
 
-	private static void parseMetadataError(FeaturesCollection collection, Element metadata) {
-		metadata.setAttribute(ErrorsHelper.ERRORID, ErrorsHelper.METADATAPARSER_ID);
-		ErrorsHelper.addErrorIntoCollection(collection, ErrorsHelper.METADATAPARSER_ID,
-				ErrorsHelper.METADATAPARSER_MESSAGE);
+	private static void parseMetadataError(FeaturesCollection collection, Element metadata, String message) {
+		String id = ErrorsHelper.addErrorIntoCollection(collection, null,
+				message);
+		metadata.setAttribute(ErrorsHelper.ERRORID, id);
 	}
 
 	private static InputSource getInputSourceWithEncoding(byte[] array) {

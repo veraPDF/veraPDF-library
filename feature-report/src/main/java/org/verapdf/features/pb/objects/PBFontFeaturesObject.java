@@ -8,13 +8,17 @@ import org.apache.pdfbox.pdmodel.font.*;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
+import org.verapdf.features.FontFeaturesData;
 import org.verapdf.features.IFeaturesObject;
 import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Feature object for fonts
@@ -36,7 +40,6 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 	private Set<String> shadingChild;
 	private Set<String> xobjectChild;
 	private Set<String> fontChild;
-	private Set<String> procSetChild;
 	private Set<String> propertiesChild;
 	private Set<String> extGStateParent;
 	private Set<String> pageParent;
@@ -55,7 +58,6 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 	 * @param shadingChild    set of shading id which contains in resource dictionary of this font
 	 * @param xobjectChild    set of XObject id which contains in resource dictionary of this font
 	 * @param fontChild       set of font id which contains in resource dictionary of this font
-	 * @param procSetChild    set of procedure set id which contains in resource dictionary of this font
 	 * @param propertiesChild set of properties id which contains in resource dictionary of this font
 	 * @param pageParent      set of page ids which contains the given font as its resources
 	 * @param extGStateParent set of graphicsState ids which contains the given font as their resource
@@ -63,7 +65,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 	 * @param xobjectParent   set of xobject ids which contains the given font as its resources
 	 * @param fontParent      set of font ids which contains the given font as its resources
 	 */
-	public PBFontFeaturesObject(PDFontLike fontLike, String id, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> procSetChild, Set<String> propertiesChild, Set<String> extGStateParent, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
+	public PBFontFeaturesObject(PDFontLike fontLike, String id, Set<String> extGStateChild, Set<String> colorSpaceChild, Set<String> patternChild, Set<String> shadingChild, Set<String> xobjectChild, Set<String> fontChild, Set<String> propertiesChild, Set<String> extGStateParent, Set<String> pageParent, Set<String> patternParent, Set<String> xobjectParent, Set<String> fontParent) {
 		this.fontLike = fontLike;
 		this.id = id;
 		this.extGStateChild = extGStateChild;
@@ -72,7 +74,6 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 		this.shadingChild = shadingChild;
 		this.xobjectChild = xobjectChild;
 		this.fontChild = fontChild;
-		this.procSetChild = procSetChild;
 		this.propertiesChild = propertiesChild;
 		this.extGStateParent = extGStateParent;
 		this.pageParent = pageParent;
@@ -124,7 +125,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 						FeatureTreeNode.newChildInstanceWithValue("lastChar", String.valueOf(lc), root);
 					}
 
-					parseIntList(sFont.getWidths(), FeatureTreeNode.newChildInstance("widths", root));
+					parseWidths(sFont.getWidths(), fc, FeatureTreeNode.newChildInstance("widths", root));
 
 					COSBase enc = sFont.getCOSObject().getDictionaryObject(COSName.ENCODING);
 					if (enc instanceof COSName) {
@@ -190,7 +191,10 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 			}
 			if (file != null) {
 				try {
+					FontFeaturesData.Builder builder = new FontFeaturesData.Builder();
 					byte[] stream = PBCreateNodeHelper.inputStreamToByteArray(file.getStream().getUnfilteredStream());
+					builder.stream(stream);
+
 					byte[] metadata = null;
 					if (file.getMetadata() != null) {
 						try {
@@ -199,55 +203,41 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 							LOGGER.error("Can not get metadata stream for font file", e);
 						}
 					}
+					builder.metadata(metadata);
 
-					Map<String, Object> properties = new HashMap<>();
-
-					putIfNotNull(properties, "FontName", descriptor.getFontName());
-					putIfNotNull(properties, "FontFamily", descriptor.getFontFamily());
-					putIfNotNull(properties, "FontStretch", descriptor.getFontStretch());
-					putNumberWithDefault(properties, "FontWeight",
-							descriptor.getCOSObject().getDictionaryObject(COSName.FONT_WEIGHT), null);
-					COSBase fl = descriptor.getCOSObject().getDictionaryObject(COSName.FLAGS);
+					builder.fontName(descriptor.getFontName());
+					builder.fontFamily(descriptor.getFontFamily());
+					builder.fontStretch(descriptor.getFontStretch());
+					COSDictionary descriptorDict = descriptor.getCOSObject();
+					builder.fontWeight(getNumber(descriptorDict.getDictionaryObject(COSName.FONT_WEIGHT)));
+					COSBase fl = descriptorDict.getDictionaryObject(COSName.FLAGS);
 					if (fl instanceof COSInteger) {
-						properties.put("Flags", String.valueOf(((COSInteger) fl).intValue()));
+						builder.flags(((COSInteger) fl).intValue());
 					}
 					PDRectangle rex = descriptor.getFontBoundingBox();
 					if (rex != null) {
-						List<String> rect = new ArrayList<>();
-						rect.add(String.valueOf(rex.getLowerLeftX()));
-						rect.add(String.valueOf(rex.getLowerLeftY()));
-						rect.add(String.valueOf(rex.getUpperRightX()));
-						rect.add(String.valueOf(rex.getUpperRightY()));
-						properties.put("FontBBox", rect);
+						List<Double> rect = new ArrayList<>();
+						rect.add((double) rex.getLowerLeftX());
+						rect.add((double) rex.getLowerLeftY());
+						rect.add((double) rex.getUpperRightX());
+						rect.add((double) rex.getUpperRightY());
+						builder.fontBBox(rect);
 					}
-					putNumberWithDefault(properties, "ItalicAngle",
-							descriptor.getCOSObject().getDictionaryObject(COSName.ITALIC_ANGLE), null);
-					putNumberWithDefault(properties, "Ascent",
-							descriptor.getCOSObject().getDictionaryObject(COSName.ASCENT), null);
-					putNumberWithDefault(properties, "Descent",
-							descriptor.getCOSObject().getDictionaryObject(COSName.DESCENT), null);
-					putNumberWithDefault(properties, "Leading",
-							descriptor.getCOSObject().getDictionaryObject(COSName.LEADING), "0");
-					putNumberWithDefault(properties, "CapHeight",
-							descriptor.getCOSObject().getDictionaryObject(COSName.CAP_HEIGHT), null);
-					putNumberWithDefault(properties, "XHeight",
-							descriptor.getCOSObject().getDictionaryObject(COSName.XHEIGHT), "0");
-					putNumberWithDefault(properties, "StemV",
-							descriptor.getCOSObject().getDictionaryObject(COSName.STEM_V), null);
-					putNumberWithDefault(properties, "StemH",
-							descriptor.getCOSObject().getDictionaryObject(COSName.STEM_H), "0");
-					putNumberWithDefault(properties, "AvgWidth",
-							descriptor.getCOSObject().getDictionaryObject(COSName.AVG_WIDTH), "0");
-					putNumberWithDefault(properties, "MaxWidth",
-							descriptor.getCOSObject().getDictionaryObject(COSName.MAX_WIDTH), "0");
-					putNumberWithDefault(properties, "MissingWidth",
-							descriptor.getCOSObject().getDictionaryObject(COSName.MISSING_WIDTH), "0");
 
-					putIfNotNull(properties, "CharSet", descriptor.getCharSet());
+					builder.italicAngle(getNumber(descriptorDict.getDictionaryObject(COSName.ITALIC_ANGLE)));
+					builder.ascent(getNumber(descriptorDict.getDictionaryObject(COSName.ASCENT)));
+					builder.descent(getNumber(descriptorDict.getDictionaryObject(COSName.DESCENT)));
+					builder.leading(getNumber(descriptorDict.getDictionaryObject(COSName.LEADING)));
+					builder.capHeight(getNumber(descriptorDict.getDictionaryObject(COSName.CAP_HEIGHT)));
+					builder.xHeight(getNumber(descriptorDict.getDictionaryObject(COSName.XHEIGHT)));
+					builder.stemV(getNumber(descriptorDict.getDictionaryObject(COSName.STEM_V)));
+					builder.stemH(getNumber(descriptorDict.getDictionaryObject(COSName.STEM_H)));
+					builder.avgWidth(getNumber(descriptorDict.getDictionaryObject(COSName.AVG_WIDTH)));
+					builder.maxWidth(getNumber(descriptorDict.getDictionaryObject(COSName.MAX_WIDTH)));
+					builder.missingWidth(getNumber(descriptorDict.getDictionaryObject(COSName.MISSING_WIDTH)));
+					builder.charSet(descriptor.getCharSet());
 
-					ArrayList<byte[]> fontFileList = new ArrayList<>();
-					fontFileList.add(stream);
-					return new FeaturesData(metadata, fontFileList, properties);
+					return builder.build();
 				} catch (IOException e) {
 					LOGGER.error("Error in obtaining features data for fonts", e);
 				}
@@ -256,13 +246,11 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private static void putNumberWithDefault(Map<String, Object> map, String key, Object value, String defaultValue) {
+	private static Double getNumber(Object value) {
 		if (value instanceof COSNumber) {
-			map.put(key, String.valueOf(((COSNumber) value).doubleValue()));
+			return ((COSNumber) value).doubleValue();
 		} else {
-			if (!(defaultValue == null)) {
-				map.put(key, defaultValue);
-			}
+			return null;
 		}
 	}
 
@@ -313,23 +301,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 			}
 
 			if (file != null) {
-				FeatureTreeNode fileNode = FeatureTreeNode.newChildInstance("fontFile", descriptorNode);
-				COSBase len1 = file.getStream().getDictionaryObject(COSName.LENGTH1);
-				if (len1 instanceof COSInteger) {
-					FeatureTreeNode.newChildInstanceWithValue("length1", String.valueOf(((COSInteger) len1).intValue()), fileNode);
-				}
-				COSBase len2 = file.getStream().getDictionaryObject(COSName.LENGTH2);
-				if (len2 instanceof COSInteger) {
-					FeatureTreeNode.newChildInstanceWithValue("length2", String.valueOf(((COSInteger) len2).intValue()), fileNode);
-				}
-				COSBase len3 = file.getStream().getDictionaryObject(COSName.getPDFName("Length3"));
-				if (len3 instanceof COSInteger) {
-					FeatureTreeNode.newChildInstanceWithValue("length3", String.valueOf(((COSInteger) len3).intValue()), fileNode);
-				}
-				COSBase subType = file.getStream().getDictionaryObject(COSName.SUBTYPE);
-				if (subType instanceof COSName) {
-					FeatureTreeNode.newChildInstanceWithValue("subtype", ((COSName) subType).getName(), fileNode);
-				}
+				FeatureTreeNode fileNode = FeatureTreeNode.newChildInstance("embeddedFont", descriptorNode);
 				PBCreateNodeHelper.parseMetadata(file.getMetadata(), "metadata", fileNode, collection);
 			}
 		}
@@ -346,11 +318,11 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 		}
 	}
 
-	private static void parseIntList(List<Integer> array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+	private static void parseWidths(List<Integer> array, int firstChar, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+		int fc = firstChar == -1 ? 0 : firstChar;
 		for (int i = 0; i < array.size(); ++i) {
-			FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
-			element.addAttribute("number", String.valueOf(i));
-			element.addAttribute("value", String.valueOf(array.get(i)));
+			FeatureTreeNode element = FeatureTreeNode.newChildInstanceWithValue("width", String.valueOf(array.get(i)), parent);
+			element.addAttribute("char", String.valueOf(i + fc));
 		}
 	}
 
@@ -378,7 +350,6 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 				(shadingChild != null && !shadingChild.isEmpty()) ||
 				(xobjectChild != null && !xobjectChild.isEmpty()) ||
 				(fontChild != null && !fontChild.isEmpty()) ||
-				(procSetChild != null && !procSetChild.isEmpty()) ||
 				(propertiesChild != null && !propertiesChild.isEmpty())) {
 			FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
 
@@ -388,7 +359,6 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 			PBCreateNodeHelper.parseIDSet(shadingChild, "shading", "shadings", resources);
 			PBCreateNodeHelper.parseIDSet(xobjectChild, "xobject", "xobjects", resources);
 			PBCreateNodeHelper.parseIDSet(fontChild, "font", "fonts", resources);
-			PBCreateNodeHelper.parseIDSet(procSetChild, "procSet", "procSets", resources);
 			PBCreateNodeHelper.parseIDSet(propertiesChild, "propertiesDict", "propertiesDicts", resources);
 		}
 	}

@@ -2,21 +2,16 @@ package org.verapdf.features;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.pb.PBFeatureParser;
-import org.verapdf.features.pb.objects.*;
-import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -37,30 +32,6 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
-	public void featuresObjectsTypeTest() {
-		assertEquals(FeaturesObjectTypesEnum.ANNOTATION, new PBAnnotationFeaturesObject(null, null, null, null, null, null).getType());
-		assertEquals(FeaturesObjectTypesEnum.COLORSPACE, new PBColorSpaceFeaturesObject(null, null, null, null, null, null, null, null, null, null).getType());
-		assertEquals(FeaturesObjectTypesEnum.DOCUMENT_SECURITY, new PBDocSecurityFeaturesObject(null).getType());
-		assertEquals(FeaturesObjectTypesEnum.EMBEDDED_FILE, new PBEmbeddedFileFeaturesObject(null, 0).getType());
-		assertEquals(FeaturesObjectTypesEnum.EXT_G_STATE, new PBExtGStateFeaturesObject(null, null, null, null, null, null, null).getType());
-		assertEquals(FeaturesObjectTypesEnum.FONT, new PBFontFeaturesObject(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null).getType());
-		assertEquals(FeaturesObjectTypesEnum.FORM_XOBJECT, new PBFormXObjectFeaturesObject(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null).getType());
-		assertEquals(FeaturesObjectTypesEnum.ICCPROFILE, new PBICCProfileFeaturesObject(null, null, null, null).getType());
-		assertEquals(FeaturesObjectTypesEnum.IMAGE_XOBJECT, new PBImageXObjectFeaturesObject(null, null, null, null, null, null, null, null, null, null).getType());
-		assertEquals(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY, new PBInfoDictFeaturesObject(null).getType());
-		assertEquals(FeaturesObjectTypesEnum.LOW_LEVEL_INFO, new PBLowLvlInfoFeaturesObject(null).getType());
-		assertEquals(FeaturesObjectTypesEnum.METADATA, new PBMetadataFeaturesObject(null).getType());
-		assertEquals(FeaturesObjectTypesEnum.OUTLINES, new PBOutlinesFeaturesObject(null).getType());
-		assertEquals(FeaturesObjectTypesEnum.OUTPUTINTENT, new PBOutputIntentsFeaturesObject(null, null, null).getType());
-		assertEquals(FeaturesObjectTypesEnum.PAGE, new PBPageFeaturesObject(null, null, null, null, null, null, null, null, null, null, null, null, 0).getType());
-		assertEquals(FeaturesObjectTypesEnum.PROCSET, new PBProcSetFeaturesObject(null, null, null, null, null, null).getType());
-		assertEquals(FeaturesObjectTypesEnum.PROPERTIES, new PBPropertiesDictFeaturesObject(null, null, null, null, null, null).getType());
-		assertEquals(FeaturesObjectTypesEnum.SHADING, new PBShadingFeaturesObject(null, null, null, null, null, null, null).getType());
-		assertEquals(FeaturesObjectTypesEnum.PATTERN, new PBShadingPatternFeaturesObject(null, null, null, null, null, null, null, null).getType());
-		assertEquals(FeaturesObjectTypesEnum.PATTERN, new PBTilingPatternFeaturesObject(null, null, null, null, null, null, null, null, null, null, null, null, null, null).getType());
-	}
-
-	@Test
 	public void objectsNumberTest() {
 		assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY).size());
 		assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.METADATA).size());
@@ -73,14 +44,14 @@ public class PBFeatureParserTest {
 		assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE).size());
 		assertEquals(4, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE).size());
 		assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROPERTIES).size());
-		assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR).size());
+		assertEquals(3, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR).size());
 		assertEquals(2, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FAILED_XOBJECT).size());
 		assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.SHADING).size());
 		assertEquals(2, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN).size());
-		assertEquals(7, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROCSET).size());
 		assertEquals(34, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.COLORSPACE).size());
 		assertEquals(10, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.IMAGE_XOBJECT).size());
 		assertEquals(12, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FORM_XOBJECT).size());
+		assertEquals(0, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.POSTSCRIPT_XOBJECT).size());
 		assertEquals(7, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FONT).size());
 
 	}
@@ -103,13 +74,13 @@ public class PBFeatureParserTest {
 	@Test
 	public void testEmbeddedFiles() throws FeaturesTreeNodeException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE).contains(TestNodeGenerator.getEmbeddedFileNode("file1", "1.txt", "",
-				"text/plain", "FlateDecode", "2015-08-31T13:33:43.000+03:00", "2015-08-31T13:20:39.000Z", "Ô˛„Ù‘\u0000²\u0004é•\tŸìøB~", "0")));
+				"text/plain", "FlateDecode", "2015-08-31T13:33:43.000+03:00", "2015-08-31T13:20:39.000Z", "D41D8CD98F00B204E9800998ECF8427E", "0")));
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE).contains(TestNodeGenerator.getEmbeddedFileNode("file2", "Arist.jpg", "",
-				"image/jpeg", "FlateDecode", "2015-08-31T13:33:33.000+03:00", "2014-08-15T17:17:58.000Z", "ù•8r‚‰$ŠKåŒêlŸm}", "26862")));
+				"image/jpeg", "FlateDecode", "2015-08-31T13:33:33.000+03:00", "2014-08-15T17:17:58.000Z", "F9803872918B24974BE596EA6C986D7D", "26862")));
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE).contains(TestNodeGenerator.getEmbeddedFileNode("file3", "XMP - 8.xml", "",
-				"text/xml", "FlateDecode", "2015-08-31T13:33:38.000+03:00", "2015-08-20T12:24:50.000Z", "\u0006\u0005¼ä\u0017Uw\r⁄©>ñ8\u000EnÔ", "876")));
+				"text/xml", "FlateDecode", "2015-08-31T13:33:38.000+03:00", "2015-08-20T12:24:50.000Z", "0605BCE41755770D87A93EF1380E6ED4", "876")));
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE).contains(TestNodeGenerator.getEmbeddedFileNode("file4", "fox_1.jpg", "Some Description for embedded file",
-				"image/jpeg", "FlateDecode", "2015-08-22T14:01:19.000+03:00", "2014-09-08T12:01:07.000Z", "ËÓþVf\u0007ç`ºŁåk\u0015?A\r", "67142")));
+				"image/jpeg", "FlateDecode", "2015-08-22T14:01:19.000+03:00", "2014-09-08T12:01:07.000Z", "CBD3FE566607E760BA95E56B153F410D", "67142")));
 	}
 
 	@Test
@@ -220,14 +191,9 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
-	public void testErrors() throws FeaturesTreeNodeException {
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR).contains(TestNodeGenerator.getError()));
-	}
-
-	@Test
 	public void testFailedXObjects() throws FeaturesTreeNodeException {
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FAILED_XOBJECT).contains(TestNodeGenerator.getFailedXObject("xobjIndir53")));
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FAILED_XOBJECT).contains(TestNodeGenerator.getFailedXObject("xobjIndir54")));
+		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FAILED_XOBJECT).contains(TestNodeGenerator.getFailedXObject("xobjIndir53", "error0")));
+		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FAILED_XOBJECT).contains(TestNodeGenerator.getFailedXObject("xobjIndir54", "error1")));
 	}
 
 	@Test
@@ -239,34 +205,6 @@ public class PBFeatureParserTest {
 	public void testPatterns() throws FeaturesTreeNodeException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN).contains(TestNodeGenerator.getShadingPattern()));
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN).contains(TestNodeGenerator.getTilingPattern()));
-	}
-
-	@Test
-	public void testProcSets() throws FeaturesTreeNodeException {
-		List<String> prsetDir6 = new ArrayList<>();
-		prsetDir6.add("PDF");
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROCSET).contains(TestNodeGenerator.getProcSet("prsetDir6",
-				null, "xobjIndir21", prsetDir6)));
-		List<String> prsetDir5 = new ArrayList<>();
-		prsetDir5.add("PDF");
-		prsetDir5.add("ImageC");
-		prsetDir5.add("ImageI");
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROCSET).contains(TestNodeGenerator.getProcSet("prsetDir5",
-				null, "xobjIndir25", prsetDir5)));
-
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROCSET).contains(TestNodeGenerator.getProcSet("prsetDir4",
-				null, "xobjIndir23", prsetDir6)));
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROCSET).contains(TestNodeGenerator.getProcSet("prsetDir3",
-				null, "xobjIndir26", prsetDir5)));
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROCSET).contains(TestNodeGenerator.getProcSet("prsetDir2",
-				null, "xobjIndir22", prsetDir6)));
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROCSET).contains(TestNodeGenerator.getProcSet("prsetDir1",
-				null, "xobjIndir24", prsetDir5)));
-		List<String> prsetDir0 = new ArrayList<>();
-		prsetDir0.add("PDF");
-		prsetDir0.add("ImageC");
-		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROCSET).contains(TestNodeGenerator.getProcSet("prsetDir0",
-				"page1", null, prsetDir0)));
 	}
 
 	@Test

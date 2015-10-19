@@ -25,6 +25,10 @@ public class PBCosStream extends PBCosDict implements CosStream {
 	private final String fDecodeParams;
 	private final boolean isSpacingPDFACompliant;
 
+    /**
+     * Default constructor
+     * @param stream pdfbox COSStream
+     */
 	public PBCosStream(COSStream stream) {
         super(stream, COS_STREAM_TYPE);
         this.length = parseLength(stream);
