@@ -82,7 +82,7 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 			if ((flag & 1) == 1) {
 				info = runValidator(loader.getRoot());
 
-				if (settings.isFixMetadata()) {
+				if (this.isFixMetadata) {
 					FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(loader.getPDDocument(), info);
 					Path path = settings.getFixMetadataPathFolder();
 					MetadataFixerResult fixerResult;
@@ -111,9 +111,6 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 			writeReports(info, collection);
 		} catch (IOException e) {
 			this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
-		} catch (TransformerException | URISyntaxException |
-				ParserConfigurationException | SAXException e) {
-			this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_INCREMETAL_SAVE, e);
 		}
 
 		return info;
