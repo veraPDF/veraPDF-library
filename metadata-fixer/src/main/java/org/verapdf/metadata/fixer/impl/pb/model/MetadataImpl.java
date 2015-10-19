@@ -76,12 +76,22 @@ public class MetadataImpl implements Metadata {
 	@Override
 	public void addPDFIdentificationSchema(MetadataFixerResult report, PDFAFlavour flavour) {
 		PDFAIdentificationSchema schema = this.metadata.getPDFIdentificationSchema();
-		if (schema == null) {
-			schema = this.metadata.createAndAddPFAIdentificationSchema();
+		int part = flavour.getPart().getPartNumber();
+		String conformance = flavour.getLevel().getCode();
+
+		if (schema != null) {
+			if (schema.getPart() == part && conformance.equals(schema.getConformance())) {
+				return;
+			} else {
+				this.metadata.removeSchema(schema);
+			}
 		}
+
+		schema = this.metadata.createAndAddPFAIdentificationSchema();
+
 		try {
-			schema.setPart(flavour.getPart().getPartNumber());
-			schema.setConformance(flavour.getLevel().getCode());
+			schema.setPart(part);
+			schema.setConformance(conformance);
 			this.setNeedToBeUpdated(true);
 			report.addAppliedFix("Identification schema added.");
 		} catch (BadFieldValueException e) {
@@ -95,7 +105,7 @@ public class MetadataImpl implements Metadata {
 		if (schema == null && dublinCoreInfoPresent(info)) {
 			schema = this.metadata.createAndAddDublinCoreSchema();
 		}
-		return new DublinCoreSchemaImpl(schema, this);
+		return schema != null ? new DublinCoreSchemaImpl(schema, this) : null;
 	}
 
 	@Override
@@ -104,7 +114,7 @@ public class MetadataImpl implements Metadata {
 		if (schema == null && adobePDFInfoPresent(info)) {
 			schema = this.metadata.createAndAddAdobePDFSchema();
 		}
-		return new AdobePDFSchemaImpl(schema, this);
+		return schema != null ? new AdobePDFSchemaImpl(schema, this) : null;
 	}
 
 	@Override
@@ -113,7 +123,7 @@ public class MetadataImpl implements Metadata {
 		if (schema == null && xmpBasicInfoPresent(info)) {
 			schema = this.metadata.createAndAddXMPBasicSchema();
 		}
-		return new XMPBasicSchemaImpl(schema, this);
+		return schema != null ? new XMPBasicSchemaImpl(schema, this) : null;
 	}
 
 	@Override

@@ -14,55 +14,47 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class DublinCoreSchemaImpl implements DublinCore {
+public class DublinCoreSchemaImpl extends BasicSchemaImpl implements DublinCore {
 
 	private static final String AUTHOR = "creator";
 
-	private final DublinCoreSchema schema;
-	private final Metadata metadata;
-
 	public DublinCoreSchemaImpl(DublinCoreSchema schema, Metadata metadata) {
-		if (schema == null) {
-			throw new IllegalArgumentException("DublinCore schema representation can not be null");
-		}
-		if (metadata == null) {
-			throw new IllegalArgumentException("Metadata representation can not be null");
-		}
-		this.schema = schema;
-		this.metadata = metadata;
+		super(schema, metadata);
 	}
 
 	@Override
 	public String getTitle() {
-		return this.schema.getTitle();
+		return ((DublinCoreSchema) this.schema).getTitle();
 	}
 
 	@Override
 	public void setTitle(String title) {
-		this.schema.setTitle(title);
+		this.removeProperty("title");
+		((DublinCoreSchema) this.schema).setTitle(title);
 	}
 
 	@Override
 	public String getSubject() {
-		return this.schema.getDescription();
+		return ((DublinCoreSchema) this.schema).getDescription();
 	}
 
 	@Override
 	public void setSubject(String description) {
-		this.schema.setDescription(description);
+		this.removeProperty("description");
+		((DublinCoreSchema) this.schema).setDescription(description);
 	}
 
 	@Override
 	public String getAuthor() {
-		List<String> creators = this.schema.getCreators();
+		List<String> creators = ((DublinCoreSchema) this.schema).getCreators();
 		return creators != null && creators.size() > 0 ? creators.get(0) : null;
 	}
 
 	@Override
 	public void setAuthor(String creator) {
-		ArrayProperty seq = (ArrayProperty) schema.getAbstractProperty(AUTHOR);
-		ArrayProperty newSeq = schema.createArrayProperty(AUTHOR, Cardinality.Seq);
-		TextType li = schema.createTextType(XmpConstants.LIST_NAME, creator);
+		ArrayProperty seq = (ArrayProperty) this.schema.getAbstractProperty(AUTHOR);
+		ArrayProperty newSeq = this.schema.createArrayProperty(AUTHOR, Cardinality.Seq);
+		TextType li = this.schema.createTextType(XmpConstants.LIST_NAME, creator);
 		newSeq.getContainer().addProperty(li);
 		if (seq != null) {
 			List<AbstractField> properties = seq.getContainer().getAllProperties();
@@ -74,8 +66,4 @@ public class DublinCoreSchemaImpl implements DublinCore {
 		this.schema.addProperty(newSeq);
 	}
 
-	@Override
-	public void setNeedToBeUpdated(boolean needToBeUpdated) {
-		this.metadata.setNeedToBeUpdated(needToBeUpdated);
-	}
 }

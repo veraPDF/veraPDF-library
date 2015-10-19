@@ -3,6 +3,7 @@ package org.verapdf.metadata.fixer.impl.pb.model;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.xml.DomXmpParser;
@@ -43,10 +44,12 @@ public class PDFDocumentImpl implements PDFDocument {
 	}
 
 	private MetadataImpl parseMetadata() {
-		PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
+		PDDocumentCatalog catalog = this.document.getDocumentCatalog();
+		PDMetadata meta = catalog.getMetadata();
 		if (meta == null) {
 			COSStream stream = this.document.getDocument().createCOSStream();
-			this.document.getDocumentCatalog().setMetadata(new PDMetadata(stream));
+			catalog.setMetadata(new PDMetadata(stream));
+			catalog.getCOSObject().setNeedToBeUpdated(true);
 			XMPMetadata xmp = XMPMetadata.createXMPMetadata();
 			return new MetadataImpl(xmp, stream);
 		} else {
@@ -87,7 +90,7 @@ public class PDFDocumentImpl implements PDFDocument {
 	 */
 	@Override
 	public boolean isNeedToBeUpdated() {
-		return this.metadata.isNeedToBeUpdated() || this.info.isNeedToBeUpdated();
+		return this.getMetadata().isNeedToBeUpdated() || this.getInfoDictionary().isNeedToBeUpdated();
 	}
 
 	/**
@@ -97,8 +100,13 @@ public class PDFDocumentImpl implements PDFDocument {
 	public void saveDocumentIncremental(MetadataFixerResult result, OutputStream output) {
 		try {
 			PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
-			if (meta != null && this.isNeedToBeUpdated()) {
+			boolean isMetaPresent = meta != null && this.isNeedToBeUpdated();
+			boolean isMetaAdd = meta == null && this.metadata != null;
+			if (isMetaPresent || isMetaAdd) {
 				this.metadata.updateMetadataStream();
+				if (isMetaAdd) {
+					this.document.getDocumentCatalog().getCOSObject().setNeedToBeUpdated(true);
+				}
 				this.document.saveIncremental(output);
 				output.close();
 				result.setStatus(MetadataFixerResult.RepairStatus.SUCCESSFUL);
