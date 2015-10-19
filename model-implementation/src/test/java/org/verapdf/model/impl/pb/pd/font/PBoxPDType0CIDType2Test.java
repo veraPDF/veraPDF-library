@@ -24,11 +24,12 @@ public class PBoxPDType0CIDType2Test extends PBoxPDType0FontTest {
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
 		expectedType = TYPES.contains(PBoxPDType0Font.TYPE_0_FONT_TYPE) ? PBoxPDType0Font.TYPE_0_FONT_TYPE : null;
-		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
 		PDFont type0Font = document.getPage(0).getResources().getFont(COSName.getPDFName(TYPE0_FONT_NAME));
 		actual = new PBoxPDType0Font(type0Font);
+
+		expectedID = type0Font.getCOSObject().hashCode() + " CBTOEA+ArialMT-Identity-H";
 	}
 
 	@Override

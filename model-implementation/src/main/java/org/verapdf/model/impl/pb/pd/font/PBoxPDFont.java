@@ -10,6 +10,7 @@ import org.verapdf.model.impl.pb.external.PBoxFontProgram;
 import org.verapdf.model.impl.pb.external.PBoxTrueTypeFontProgram;
 import org.verapdf.model.impl.pb.pd.PBoxPDResources;
 import org.verapdf.model.pdlayer.PDFont;
+import org.verapdf.model.tools.IDGenerator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,10 +21,18 @@ import java.util.List;
  */
 public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 
-    public static final String FONT_FILE = "fontFile";
+	public static final String FONT_FILE = "fontFile";
+
+	private final String id;
 
 	protected PBoxPDFont(PDFontLike font, final String type) {
 		super(font, type);
+		this.id = IDGenerator.generateID(font);
+	}
+
+	@Override
+	public String getID() {
+		return this.id;
 	}
 
 	@Override
@@ -64,17 +73,17 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 	}
 
 	@Override
-    public List<? extends Object> getLinkedObjects(String link) {
-        if (FONT_FILE.equals(link)) {
-            return this.getFontFile();
-        }
-        return super.getLinkedObjects(link);
-    }
+	public List<? extends Object> getLinkedObjects(String link) {
+		if (FONT_FILE.equals(link)) {
+			return this.getFontFile();
+		}
+		return super.getLinkedObjects(link);
+	}
 
-    private List<FontProgram> getFontFile() {
+	private List<FontProgram> getFontFile() {
 		if (!getSubtype().equals(FontFactory.TYPE_3)
-                && (this.pdFontLike.isEmbedded())) {
-            if (getSubtype().equals(FontFactory.TRUE_TYPE)) {
+				&& (this.pdFontLike.isEmbedded())) {
+			if (getSubtype().equals(FontFactory.TRUE_TYPE)) {
 				PBoxTrueTypeFontProgram trueTypeFontProgram = new PBoxTrueTypeFontProgram(
 						((PDTrueTypeFont) this.pdFontLike).getTrueTypeFont(), getisSymbolic());
 				return this.getFontProgramList(trueTypeFontProgram);
@@ -96,9 +105,9 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 					return this.getFontProgramList(new PBoxFontProgram(fontFile));
 				}
 			}
-        }
-        return Collections.emptyList();
-    }
+		}
+		return Collections.emptyList();
+	}
 
 	private List<FontProgram> getFontProgramList(FontProgram fontProgram) {
 		List<FontProgram> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);

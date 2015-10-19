@@ -30,11 +30,12 @@ public class PBoxPDType1FontTest extends PBoxPDSimpleFontTest {
 	@BeforeClass
 	public static void setUp() throws IOException, URISyntaxException {
 		expectedType = TYPES.contains(PBoxPDType1Font.TYPE1_FONT_TYPE) ? PBoxPDType1Font.TYPE1_FONT_TYPE : null;
-		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
 		PDType1CFont type1Font = (PDType1CFont) document.getPage(0).getResources().getFont(COSName.getPDFName(TYPE1_FONT_NAME));
 		actual = new PBoxPDType1Font(type1Font);
+
+		expectedID = type1Font.getCOSObject().hashCode() + " OLXYQW+MyriadPro-Regular";
 	}
 
 	@Override
