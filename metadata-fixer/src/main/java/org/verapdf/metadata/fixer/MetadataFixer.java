@@ -12,6 +12,7 @@ import org.verapdf.metadata.fixer.utils.DateConverter;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector;
+import org.verapdf.metadata.fixer.utils.flavour.Part;
 import org.verapdf.validation.profile.model.ValidationProfile;
 import org.verapdf.validation.report.model.Result;
 import org.verapdf.validation.report.model.Rule;
@@ -59,14 +60,8 @@ public class MetadataFixer {
 	 * @param input  file near which will be save fixed version of document
 	 * @param config configuration for metadata fixer
 	 * @return report of made corrections
-	 * @throws IOException
-	 * @throws URISyntaxException
-	 * @throws ParserConfigurationException
-	 * @throws TransformerException
-	 * @throws SAXException
 	 */
-	public static MetadataFixerResult fixMetadata(File input, FixerConfig config) throws IOException, URISyntaxException,
-			ParserConfigurationException, TransformerException, SAXException {
+	public static MetadataFixerResult fixMetadata(File input, FixerConfig config) throws FileNotFoundException {
 		File output = FileGenerator.createOutputFile(input);
 		return fixMetadata(getOutputStream(output), config);
 	}
@@ -84,14 +79,9 @@ public class MetadataFixer {
 	 * @param prefix    for the result file name
 	 * @param config    configuration for metadata fixer
 	 * @return report of made corrections
-	 * @throws IOException
-	 * @throws URISyntaxException
-	 * @throws ParserConfigurationException
-	 * @throws TransformerException
-	 * @throws SAXException
 	 */
-	public static MetadataFixerResult fixMetadata(File inputFile, String prefix, FixerConfig config) throws IOException, URISyntaxException,
-			TransformerException, ParserConfigurationException, SAXException {
+	public static MetadataFixerResult fixMetadata(File inputFile, String prefix, FixerConfig config)
+			throws FileNotFoundException {
 		File output = FileGenerator.createOutputFile(inputFile, prefix);
 		return fixMetadata(getOutputStream(output), config);
 	}
@@ -109,14 +99,9 @@ public class MetadataFixer {
 	 * @param prefix    prefix for name of result file
 	 * @param config    configuration for metadata fixer
 	 * @return report of made corrections
-	 * @throws IOException
-	 * @throws URISyntaxException
-	 * @throws ParserConfigurationException
-	 * @throws TransformerException
-	 * @throws SAXException
 	 */
 	public static MetadataFixerResult fixMetadata(File inputFile, String fileName, String prefix, FixerConfig config)
-			throws IOException, URISyntaxException, TransformerException, ParserConfigurationException, SAXException {
+			throws FileNotFoundException {
 		File output = FileGenerator.createOutputFile(inputFile, fileName, prefix);
 		return fixMetadata(getOutputStream(output), config);
 	}
@@ -133,24 +118,19 @@ public class MetadataFixer {
 	 * @param output stream to result file
 	 * @param config configuration for metadata fixer
 	 * @return report of made corrections
-	 * @throws IOException
-	 * @throws URISyntaxException
-	 * @throws TransformerException
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
 	 */
-	public static MetadataFixerResult fixMetadata(OutputStream output, FixerConfig config) throws IOException, URISyntaxException,
-			TransformerException, ParserConfigurationException, SAXException {
+	public static MetadataFixerResult fixMetadata(OutputStream output, FixerConfig config) {
 		Result result = config.getValidationResult();
 		return result != null && result.isCompliant() ? new MetadataFixerResult() :
 				fixAndSaveDocument(output, config);
 	}
 
-	private static MetadataFixerResult fixAndSaveDocument(OutputStream output, FixerConfig config) throws IOException {
+	private static MetadataFixerResult fixAndSaveDocument(OutputStream output, FixerConfig config) {
 		Metadata metadata = config.getMetadata();
 		if (metadata != null) {
 			MetadataFixerResult result = new MetadataFixerResult();
 			ValidationStatus status = getValidationStatus(config);
+			metadata.unfilterMetadataStream(result);
 
 			switch (status) {
 				case INVALID_DOCUMENT:
@@ -213,9 +193,11 @@ public class MetadataFixer {
 	}
 
 	private static void fixMetadata(MetadataFixerResult result, FixerConfig config) {
-		fixDublinCoreSchema(result, config);
-		fixAdobePDFSchema(result, config);
-		fixBasicXMLSchema(result, config);
+		if (config.getPDFAFlavour().getPart() == Part.ISO_19005_1) {
+			fixDublinCoreSchema(result, config);
+			fixAdobePDFSchema(result, config);
+			fixBasicXMLSchema(result, config);
+		}
 	}
 
 	private static void fixDublinCoreSchema(MetadataFixerResult result, FixerConfig config) {
