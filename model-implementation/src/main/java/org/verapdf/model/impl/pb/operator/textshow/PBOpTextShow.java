@@ -90,10 +90,10 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 					if (font.getSubType().equals(FontFactory.TYPE_0)) {
 						int CID = ((PDType0Font) font).codeToCID(code);
 						glyph = new PBCIDGlyph(glyphPresent, widthsConsistent,
-								font.getName(), code, CID);
+								font, code, CID);
 					} else {
 						glyph = new PBGlyph(glyphPresent, widthsConsistent,
-								font.getName(), code);
+								font, code);
 					}
 					res.add(glyph);
                 }
