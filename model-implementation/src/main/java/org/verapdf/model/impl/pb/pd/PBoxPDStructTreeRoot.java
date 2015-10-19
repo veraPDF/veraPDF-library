@@ -1,15 +1,13 @@
 package org.verapdf.model.impl.pb.pd;
 
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.COSArray;
-import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.PDStructureTreeRoot;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.pdlayer.PDStructElem;
+import org.verapdf.model.pdlayer.PDStructTreeRoot;
 import org.verapdf.model.tools.TaggedPDFHelper;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

@@ -6,6 +6,7 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.verapdf.model.impl.pb.pd.PBoxPDStructElem;
+import org.verapdf.model.pdlayer.PDStructElem;
 
 import java.util.ArrayList;
 import java.util.Collections;
