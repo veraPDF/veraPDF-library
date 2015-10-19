@@ -4,8 +4,10 @@ import org.apache.pdfbox.pdmodel.interactive.action.PDActionNamed;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.verapdf.model.baselayer.*;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.impl.pb.pd.actions.PBoxPDAction;
+import org.verapdf.model.impl.pb.pd.actions.PBoxPDGoToRemoteAction;
+import org.verapdf.model.impl.pb.pd.actions.PBoxPDNamedAction;
 import org.verapdf.model.pdlayer.PDAction;
 import org.verapdf.model.pdlayer.PDNamedAction;
 
