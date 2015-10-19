@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.operator.textshow;
 
+import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.verapdf.model.operator.CIDGlyph;
 
 /**
@@ -11,8 +12,8 @@ public class PBCIDGlyph extends PBGlyph implements CIDGlyph {
 
 	private int CID;
 
-	public PBCIDGlyph(Boolean glyphPresent, Boolean widthsConsistent, String fontName, int glyphCode, int CID) {
-		super(glyphPresent, widthsConsistent, fontName, glyphCode, CID_GLYPH_TYPE);
+	public PBCIDGlyph(Boolean glyphPresent, Boolean widthsConsistent, PDFont font, int glyphCode, int CID) {
+		super(glyphPresent, widthsConsistent, font, glyphCode, CID_GLYPH_TYPE);
 		this.CID = CID;
 	}
 
