@@ -1357,6 +1357,516 @@
         "validationProfileName": "verapdf-profile-6-3-5-t01.xml",
         "comparingStrategy": "FAIL",
         "expectedReportName": ""
+      },
+      {
+        "testFileName": "bug1771.pdf",
+        "validationProfileName": "verapdf-profile-6-2-3-t05.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "bug1771.pdf",
+        "validationProfileName": "verapdf-profile-6-1-7-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "bug1771.pdf",
+        "validationProfileName": "verapdf-profile-6-1-8-t01.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "empty_word.pdf",
+        "validationProfileName": "verapdf-profile-6-7-3-t01.xml",
+        "comparingStrategy": "IGNORE",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "Funktionale_Varietaeten.pdf",
+        "validationProfileName": "verapdf-profile-6-3-5-t03.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "Funktionale_Varietaeten.pdf",
+        "validationProfileName": "verapdf-profile-6-3-5-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "Funktionale_Varietaeten.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "Funktionale_Varietaeten.pdf",
+        "validationProfileName": "verapdf-profile-6-2-3-t03.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "literat.pdf",
+        "validationProfileName": "verapdf-profile-6-7-11-t01.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "literat.pdf",
+        "validationProfileName": "verapdf-profile-6-1-7-t01.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "nesrin.pdf",
+        "validationProfileName": "verapdf-profile-6-1-8-t01.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "nesrin.pdf",
+        "validationProfileName": "verapdf-profile-6-1-7-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "paper56.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "validierung_von_pdfa.pdf",
+        "validationProfileName": "verapdf-profile-6-3-5-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "validierung_von_pdfa.pdf",
+        "validationProfileName": "verapdf-profile-6-4-t03.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "vwdb_95.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "vwdb_95.pdf",
+        "validationProfileName": "verapdf-profile-6-1-7-t01.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "2001_28.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "rolfs_diss_A1b.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "rolfs_diss_A1b.pdf",
+        "validationProfileName": "verapdf-profile-6-7-2-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "UCC.pdf",
+        "validationProfileName": "verapdf-profile-6-7-9-t01.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "hopf1971.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "ide_diss_p1.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t06.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "laschewsky_1.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "laschewsky_1.pdf",
+        "validationProfileName": "verapdf-profile-6-2-9-t01.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "laschewsky_2.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "modules_acrobat9.pdf",
+        "validationProfileName": "verapdf-profile-6-2-3-t05.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "Pardes13_Art02.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "pardes14_Jid02_reduced.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "pardes14_Jid02_reduced.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t04.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "stat_dis_30_fixed.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "2002_28.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "beitraege_sorabistik.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "BIT2-2009.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "bley.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "braun_feudel.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "foerster_diss.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "isis09_04.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "kaiser_magister_fixed.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "koetter.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "kwmbl-2009-01.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "LT_demo.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "meister_dziourkevich.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "mgfn12_02_10.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "mm_image2pdfa.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "outcppxmp.pdf",
+        "validationProfileName": "verapdf-profile-6-7-11-t03.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "paperG3_A1b.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "paperG8_A1b.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "pardes_10_a4.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "PBS7.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "psgf1999_1.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "pueschel_etal_1987.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "schnurbein.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "signed_pdf.pdf",
+        "validationProfileName": "verapdf-profile-6-7-11-t03.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "Verbal_Dependencies.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "vjs_01.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "vjs_05_Art05.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "Garamond.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "images_to_pdfa.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "import_pdfa.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "MotionMountain.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "pdfa1b.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "starter_pdfa.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "text_to_pdfa.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "transparent_stamp.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "acmeemail_full.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0000.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0001.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0002.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0003.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0004.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0005.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0006.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0007.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0008.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0009.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0010.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0011.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0012.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0013.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "good0015.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "PDFExportDialog2.pdf",
+        "validationProfileName": "PDFA-1B.xml",
+        "comparingStrategy": "PASS",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "Pardes13_Rez02.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "pdfa_article_v11.pdf",
+        "validationProfileName": "verapdf-profile-6-4-t03.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
+      },
+      {
+        "testFileName": "wilhelm_diss_p1.pdf",
+        "validationProfileName": "verapdf-profile-6-1-12-t02.xml",
+        "comparingStrategy": "FAIL",
+        "expectedReportName": ""
       }
     ]
   }
