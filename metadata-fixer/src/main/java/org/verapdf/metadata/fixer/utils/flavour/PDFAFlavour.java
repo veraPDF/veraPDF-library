@@ -1,4 +1,4 @@
-package org.verapdf.metadata.fixer.utils;
+package org.verapdf.metadata.fixer.utils.flavour;
 
 import java.util.Collections;
 import java.util.HashSet;

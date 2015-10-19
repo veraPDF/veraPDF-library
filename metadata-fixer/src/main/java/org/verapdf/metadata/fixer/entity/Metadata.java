@@ -4,12 +4,14 @@ import org.verapdf.metadata.fixer.MetadataFixerResult;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
-import org.verapdf.metadata.fixer.utils.PDFAFlavour;
+import org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour;
 
 /**
  * @author Evgeniy Muravitskiy
  */
 public interface Metadata {
+
+	void unfilterMetadataStream(MetadataFixerResult report);
 
 	void removePDFIdentificationSchema(MetadataFixerResult result);
 
