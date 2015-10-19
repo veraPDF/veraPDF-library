@@ -12,14 +12,13 @@ import org.verapdf.metadata.fixer.utils.DateConverter;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector;
-import org.verapdf.metadata.fixer.utils.flavour.Part;
+import org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour;
 import org.verapdf.validation.profile.model.ValidationProfile;
 import org.verapdf.validation.report.model.Result;
 import org.verapdf.validation.report.model.Rule;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.Calendar;
@@ -193,7 +192,7 @@ public class MetadataFixer {
 	}
 
 	private static void fixMetadata(MetadataFixerResult result, FixerConfig config) {
-		if (config.getPDFAFlavour().getPart() == Part.ISO_19005_1) {
+		if (config.getPDFAFlavour().getPart() == PDFAFlavour.Part.ISO_19005_1) {
 			fixDublinCoreSchema(result, config);
 			fixAdobePDFSchema(result, config);
 			fixBasicXMLSchema(result, config);
@@ -236,25 +235,29 @@ public class MetadataFixer {
 	private static void fixProperty(MetadataFixerResult result, BasicSchema schema, InfoDictionary info, String metaValue,
 									String infoValue, String attribute) {
 		String key = attributes.get(attribute);
-		if (metaValue == null && infoValue != null) {
-			doSaveAction(schema, attribute, infoValue);
-			result.addAppliedFix("Added '" + key + "' to metadata from info dictionary");
-		} else if (metaValue != null && infoValue != null && !metaValue.equals(infoValue)) {
-			doSaveAction(info, attribute, metaValue);
-			result.addAppliedFix("Added '" + attribute + "' to info dictionary from metadata");
+		if (infoValue != null) {
+			if (metaValue == null) {
+				doSaveAction(schema, attribute, infoValue);
+				result.addAppliedFix("Added '" + key + "' to metadata from info dictionary");
+			} else if (!metaValue.equals(infoValue)) {
+				doSaveAction(info, attribute, metaValue);
+				result.addAppliedFix("Added '" + attribute + "' to info dictionary from metadata");
+			}
 		}
 	}
 
 	private static void fixCalendarProperty(MetadataFixerResult result, BasicSchema schema, InfoDictionary info, String metaValue,
 											String infoValue, String attribute) {
 		String key = attributes.get(attribute);
-		if (metaValue == null && infoValue != null) {
-			doSaveAction(schema, attribute, infoValue);
-			result.addAppliedFix("Added '" + key + "' to metadata from info dictionary");
-		} else if (metaValue != null && infoValue != null &&
-				(metaValue.compareTo(infoValue) != 0 || !isValidDateFormat(infoValue))) {
-			doSaveAction(info, attribute, metaValue);
-			result.addAppliedFix("Added '" + attribute + "' to info dictionary from metadata");
+		if (infoValue != null) {
+			String utcInfoValue = DateConverter.toUTCString(DateConverter.toCalendar(infoValue));
+			if (metaValue == null) {
+				doSaveAction(schema, attribute, infoValue);
+				result.addAppliedFix("Added '" + key + "' to metadata from info dictionary");
+			} else if (!metaValue.equals(utcInfoValue) || !isValidDateFormat(infoValue)) {
+				doSaveAction(info, attribute, metaValue);
+				result.addAppliedFix("Added '" + attribute + "' to info dictionary from metadata");
+			}
 		}
 	}
 

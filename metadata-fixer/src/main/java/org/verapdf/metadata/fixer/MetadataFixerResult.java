@@ -37,7 +37,7 @@ public class MetadataFixerResult implements Iterable<String> {
 	}
 
 	public void addAppliedFix(String fix) {
-
+		this.appliedFixes.add(fix);
 	}
 
 	@Override
