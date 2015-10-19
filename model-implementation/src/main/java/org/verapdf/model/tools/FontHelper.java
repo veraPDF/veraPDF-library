@@ -1,6 +1,5 @@
 package org.verapdf.model.tools;
 
-import com.sun.istack.internal.Nullable;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.font.*;
 import org.apache.pdfbox.preflight.font.container.*;
@@ -26,7 +25,7 @@ public class FontHelper {
 	 * @param font Apache PDFBox font
 	 * @return Apache Preflight font container
 	 */
-	public static @Nullable FontContainer getFontContainer(@Nullable PDFont font) {
+	public static FontContainer getFontContainer(PDFont font) {
 		switch (font.getSubType()) {
 			case FontFactory.TYPE_1:
 			case FontFactory.MM_TYPE_1:

@@ -1,7 +1,5 @@
 package org.verapdf.model.tools;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.pdmodel.common.COSObjectable;
@@ -27,7 +25,7 @@ public final class IDGenerator {
      *            object of pdf box library
      * @return string representation of ID
      */
-    public static @Nullable String generateID(@Nullable COSBase pdfBoxObject) {
+    public static String generateID(COSBase pdfBoxObject) {
         if (pdfBoxObject instanceof COSObject) {
             return ((COSObject) pdfBoxObject).getObjectNumber() + " "
                     + ((COSObject) pdfBoxObject).getGenerationNumber();
@@ -45,7 +43,7 @@ public final class IDGenerator {
      * @param glyphCode code of glyph
      * @return string representation of ID
      */
-    public static @NotNull String generateID(int hashcode, @Nullable String fontName, int glyphCode) {
+    public static String generateID(int hashcode, String fontName, int glyphCode) {
         return String.valueOf(hashcode) + ' ' + fontName + ' ' + glyphCode;
     }
 
@@ -57,7 +55,7 @@ public final class IDGenerator {
      * @param font target font for generating ID
      * @return string representation of ID
      */
-    public static @NotNull String generateID(@NotNull PDFontLike font) {
+    public static String generateID(PDFontLike font) {
         int hashcode = font instanceof COSObjectable ?
                 ((COSObjectable) font).getCOSObject().hashCode() : -1;
         return String.valueOf(hashcode) + ' ' + font.getName();

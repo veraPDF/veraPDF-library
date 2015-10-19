@@ -1,7 +1,5 @@
 package org.verapdf.model.factory.font;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
 import org.apache.pdfbox.pdmodel.font.PDType1CFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
@@ -44,8 +42,8 @@ public final class FontFactory {
 	 * @param pdfboxFont Apache PDFBox font representation
 	 * @return VeraPDF font representation
 	 */
-	public static @Nullable PDFont parseFont(
-			@NotNull org.apache.pdfbox.pdmodel.font.PDFont pdfboxFont) {
+	public static PDFont parseFont(
+			org.apache.pdfbox.pdmodel.font.PDFont pdfboxFont) {
 		switch (pdfboxFont.getSubType()) {
 			case TYPE_0:
 				return new PBoxPDType0Font(pdfboxFont);
