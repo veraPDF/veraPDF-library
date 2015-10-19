@@ -1,20 +1,17 @@
 package org.verapdf.metadata.fixer.impl.pb.model;
 
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.*;
+import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.xml.DomXmpParser;
 import org.apache.xmpbox.xml.XmpParsingException;
-import org.apache.xmpbox.xml.XmpSerializer;
 import org.verapdf.metadata.fixer.MetadataFixerResult;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
 
-import javax.xml.transform.TransformerException;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -108,7 +105,7 @@ public class PDFDocumentImpl implements PDFDocument {
 			} else {
 				result.setStatus(MetadataFixerResult.RepairStatus.NO_ACTION);
 			}
-		} catch (IOException | TransformerException e) {
+		} catch (Exception e) {
 			LOGGER.info(e);
 			result.setStatus(MetadataFixerResult.RepairStatus.FAILED);
 			result.addAppliedFix("Problems with document save");

@@ -23,7 +23,6 @@ import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
 import org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour;
 
-import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -127,6 +126,13 @@ public class MetadataImpl implements Metadata {
 		this.stream.setNeedToBeUpdated(true);
 	}
 
+	public void updateMetadataStream() throws Exception {
+		if (this.stream.isNeedToBeUpdated()) {
+			OutputStream out = this.stream.createUnfilteredStream();
+			new XmpSerializer().serialize(this.metadata, out, true);
+		}
+	}
+
 	private boolean dublinCoreInfoPresent(InfoDictionary info) {
 		return info.getTitle() != null || info.getSubject() != null || info.getAuthor() != null;
 	}
@@ -138,13 +144,6 @@ public class MetadataImpl implements Metadata {
 	private boolean xmpBasicInfoPresent(InfoDictionary info) {
 		return info.getCreator() != null || info.getCreationDate() != null ||
 				info.getModificationDate() != null;
-	}
-
-	public void updateMetadataStream() throws TransformerException, IOException {
-		if (this.stream.isNeedToBeUpdated()) {
-			OutputStream out = this.stream.createUnfilteredStream();
-			new XmpSerializer().serialize(this.metadata, out, true);
-		}
 	}
 
 }

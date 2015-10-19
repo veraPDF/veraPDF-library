@@ -1,7 +1,5 @@
 package org.verapdf.metadata.fixer.entity;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
 import org.verapdf.metadata.fixer.MetadataFixerResult;
 
 import java.io.OutputStream;
@@ -24,7 +22,7 @@ public interface PDFDocument {
 	 * @return metadata representation or null
 	 * @see Metadata
 	 */
-	@Nullable Metadata getMetadata();
+	Metadata getMetadata();
 
 	/**
 	 * Return pdf document information dictionary representation.
@@ -33,7 +31,7 @@ public interface PDFDocument {
 	 * @return information dictionary representation
 	 * @see InfoDictionary
 	 */
-	@NotNull InfoDictionary getInfoDictionary();
+	InfoDictionary getInfoDictionary();
 
 	// TODO : javadoc
 	boolean isNeedToBeUpdated();
@@ -60,5 +58,5 @@ public interface PDFDocument {
 	 * @param report result of {@code MetadataFixer} handling
 	 * @param output output stream for document save
 	 */
-	void saveDocumentIncremental(@NotNull MetadataFixerResult report, @NotNull OutputStream output);
+	void saveDocumentIncremental(MetadataFixerResult report, OutputStream output);
 }
