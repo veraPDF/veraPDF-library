@@ -19,9 +19,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 public class ValidationRunner {
 
@@ -54,7 +52,7 @@ public class ValidationRunner {
         } catch (IOException | SAXException | ParserConfigurationException |
 				NullLinkNameException | NullLinkException | NullLinkedObjectException |
 				MissedHashTagException | WrongSignatureException | XMLStreamException |
-				MultiplyGlobalVariableNameException | TransformerException | URISyntaxException e) {
+				MultiplyGlobalVariableNameException e) {
             //error while parsing validation profile
             LOGGER.error(e.getMessage(), e);
         }
