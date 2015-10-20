@@ -2,6 +2,7 @@ package org.verapdf.report;
 
 import org.apache.log4j.Logger;
 import org.verapdf.features.FeaturesObjectTypesEnum;
+import org.verapdf.features.FeaturesReporter;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
@@ -11,6 +12,7 @@ import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -174,8 +176,8 @@ public final class XMLFeaturesReport {
 	}
 
 	private static Element makeNode(FeatureTreeNode node,
-									FeaturesCollection collection, Document doc, boolean isPassedMetadata) {
-		if ("metadata".equalsIgnoreCase(node.getName()) && !isPassedMetadata) {
+									FeaturesCollection collection, Document doc, boolean isCustom) {
+		if (!isCustom && "metadata".equalsIgnoreCase(node.getName())) {
 			return parseMetadata(node, collection, doc);
 		} else {
 			Element root = doc.createElement(node.getName());
@@ -183,13 +185,13 @@ public final class XMLFeaturesReport {
 				root.setAttribute(attr.getKey(),
 						replaceInvalidCharacters(attr.getValue()));
 			}
-
-			if (node.getValue() instanceof String) {
+			if (node.getValue() != null) {
 				root.appendChild(doc.createTextNode(
-						replaceInvalidCharacters(node.getValue().toString())));
+						replaceInvalidCharacters(node.getValue())));
 			} else if (node.getChildren() != null) {
+				boolean isCustomChildren = isCustom || FeaturesReporter.CUSTOM_FEATURES_ROOT_NODE_NAME.equals(node.getName());
 				for (FeatureTreeNode child : node.getChildren()) {
-					root.appendChild(makeNode(child, collection, doc, false));
+					root.appendChild(makeNode(child, collection, doc, isCustomChildren));
 				}
 			}
 			return root;
@@ -198,37 +200,40 @@ public final class XMLFeaturesReport {
 
 	private static Element parseMetadata(FeatureTreeNode metadataNode,
 										 FeaturesCollection collection, Document doc) {
-		if (!(metadataNode.getValue() instanceof byte[])) {
-			return makeNode(metadataNode, collection, doc, true);
-		}
+		Element metadata = doc.createElement(metadataNode.getName());
+
 		if (metadataNode.getAttributes().get(ErrorsHelper.ERRORID) == null) {
-			Element metadata = doc.createElement(metadataNode.getName());
 			for (Map.Entry<String, String> attr : metadataNode.getAttributes().entrySet()) {
 				metadata.setAttribute(attr.getKey(), replaceInvalidCharacters(attr.getValue()));
 			}
-			try {
-				InputSource is = getInputSourceWithEncoding((byte[]) metadataNode.getValue());
+			if (metadataNode.getValue() != null) {
+				InputSource is = getInputSourceWithEncoding(DatatypeConverter.parseHexBinary(metadataNode.getValue()));
 				if (is != null) {
-					DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-					factory.setNamespaceAware(true);
-					DocumentBuilder builder = factory.newDocumentBuilder();
-					Document metadataDocument = builder.parse(is);
-					Node pack = doc.importNode(metadataDocument.getDocumentElement(), true);
-					pack.normalize();
-					metadata.appendChild(pack);
+					try {
+						DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+						factory.setNamespaceAware(true);
+						DocumentBuilder builder = factory.newDocumentBuilder();
+						Document metadataDocument = builder.parse(is);
+						Node pack = doc.importNode(metadataDocument.getDocumentElement(), true);
+						pack.normalize();
+						metadata.appendChild(pack);
+					} catch (ParserConfigurationException | SAXException | IOException e) {
+						LOGGER.debug("Caught exception while parsing metadata byte array.", e);
+						parseMetadataError(collection, metadata, e.getMessage());
+					}
 				} else {
 					LOGGER.debug("Metadata stream does not contains valid prefix.");
 					parseMetadataError(collection, metadata, "Metadata stream does not contains valid prefix.");
 				}
-
-			} catch (ParserConfigurationException | SAXException | IOException e) {
-				LOGGER.debug("Caught exception and checking XML String.", e);
-				parseMetadataError(collection, metadata, e.getMessage());
 			}
-
-			return metadata;
+		} else {
+			for (Map.Entry<String, String> attr : metadataNode.getAttributes().entrySet()) {
+				metadata.setAttribute(attr.getKey(),
+						replaceInvalidCharacters(attr.getValue()));
+			}
 		}
-		return makeNode(metadataNode, collection, doc, true);
+
+		return metadata;
 	}
 
 	private static String replaceInvalidCharacters(String source) {

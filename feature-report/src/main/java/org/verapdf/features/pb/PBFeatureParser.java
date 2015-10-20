@@ -28,14 +28,14 @@ import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceEntry;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceStream;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
+import org.verapdf.features.FeaturesPluginsLoader;
 import org.verapdf.features.FeaturesReporter;
-import org.verapdf.features.FeaturesReporterConfigurator;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.*;
 
 /**
@@ -206,16 +206,16 @@ public final class PBFeatureParser {
 	 * Parses the document and returns Feature collection by using given
 	 * Features Reporter
 	 *
-	 * @param document the document for parsing
-	 * @param thirdPartySoftwareConfig Features Reporter for report
+	 * @param document         the document for parsing
+	 * @param pluginsDirectory path to a directory with plugins for reporting
 	 * @return FeaturesCollection class with information about all featurereport
 	 */
 	public static FeaturesCollection getFeaturesCollection(
-			final PDDocument document, File thirdPartySoftwareConfig) {
+			final PDDocument document, Path pluginsDirectory) {
 
 		FeaturesReporter reporter = new FeaturesReporter();
 
-		FeaturesReporterConfigurator.configurate(reporter, thirdPartySoftwareConfig);
+		FeaturesPluginsLoader.loadExtractors(reporter, pluginsDirectory);
 
 		if (document != null) {
 			PBFeatureParser parser = new PBFeatureParser(reporter);
@@ -559,7 +559,6 @@ public final class PBFeatureParser {
 					}
 				} catch (IOException e) {
 					LOGGER.debug("Unknown annotation type detected.", e);
-					annots.put(id, null);
 					generateUnknownAnnotation(id);
 				}
 			}
@@ -575,14 +574,13 @@ public final class PBFeatureParser {
 		annotChild.put(parentId, id);
 		annotParent.put(id, parentId);
 
-		PDAnnotation annotation = null;
 		try {
-			annotation = PDAnnotation.createAnnotation(base);
+			PDAnnotation annotation = PDAnnotation.createAnnotation(base);
+			annots.put(id, annotation);
 		} catch (IOException e) {
 			LOGGER.debug("Unknown annotation type detected.", e);
 			generateUnknownAnnotation(id);
 		}
-		annots.put(id, annotation);
 	}
 
 	private void generateUnknownAnnotation(String id) {

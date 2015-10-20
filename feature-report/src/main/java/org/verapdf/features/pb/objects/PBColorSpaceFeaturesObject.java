@@ -13,8 +13,8 @@ import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
-import java.util.Formatter;
 import java.util.List;
 import java.util.Set;
 
@@ -159,19 +159,21 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 		}
 
 		if (index.getCOSObject() instanceof COSArray) {
+			FeatureTreeNode hival = FeatureTreeNode.newChildInstance("hival",
+					root);
 			if (((COSArray) index.getCOSObject()).size() > 3 &&
 					((COSArray) index.getCOSObject()).getObject(2) instanceof COSNumber) {
-				FeatureTreeNode.newChildInstanceWithValue("hival",
-						String.valueOf(((COSNumber) ((COSArray) index.getCOSObject()).getObject(2)).intValue()),
-						root);
+				hival.setValue(String.valueOf(((COSNumber) ((COSArray) index.getCOSObject()).getObject(2)).intValue()));
 			} else {
 				ErrorsHelper.addErrorIntoCollection(collection,
-						root,
+						hival,
 						"Indexed color space has no element hival or hival is not a number");
 			}
 
+			FeatureTreeNode lookup = FeatureTreeNode.newChildInstance("lookup",
+					root);
 			if (((COSArray) index.getCOSObject()).size() > 4) {
-				byte[] lookupData;
+				byte[] lookupData = null;
 				COSBase lookupTable = ((COSArray) index.getCOSObject()).getObject(3);
 				if (lookupTable instanceof COSString) {
 					lookupData = ((COSString) lookupTable).getBytes();
@@ -180,32 +182,22 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 						lookupData = (new PDStream((COSStream) lookupTable)).getByteArray();
 					} catch (IOException e) {
 						LOGGER.info(e);
-						lookupData = new byte[0];
 						ErrorsHelper.addErrorIntoCollection(collection,
-								root,
+								lookup,
 								e.getMessage());
 					}
 				} else {
-					if (lookupTable != null) {
-						ErrorsHelper.addErrorIntoCollection(collection,
-								root,
-								"Indexed color space has element lookup but it is not a String or a stream");
-					}
-					lookupData = new byte[0];
+					ErrorsHelper.addErrorIntoCollection(collection,
+							lookup,
+							"Indexed color space has element lookup but it is not a String or a stream");
 				}
 
-				try (Formatter formatter = new Formatter()) {
-					for (byte b : lookupData) {
-						formatter.format("%02X", b);
-					}
-
-					FeatureTreeNode.newChildInstanceWithValue("lookup",
-							formatter.toString(),
-							root);
+				if (lookupData != null) {
+					lookup.setValue(DatatypeConverter.printHexBinary(lookupData));
 				}
 			} else {
 				ErrorsHelper.addErrorIntoCollection(collection,
-						root,
+						lookup,
 						"Indexed color space has no element lookup");
 			}
 		} else {

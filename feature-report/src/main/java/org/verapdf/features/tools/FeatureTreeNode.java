@@ -11,17 +11,17 @@ import java.util.*;
  */
 public final class FeatureTreeNode {
 
-	private final String name;
-	private Object value;
+	private String name;
+	private String value;
 	private FeatureTreeNode parent;
 	private Map<String, String> attributes = new HashMap<>();
 	private List<FeatureTreeNode> children;
 
 	private FeatureTreeNode(final String name) throws FeaturesTreeNodeException {
-		this(name, null);
+		this(name, null, null);
 	}
 
-	private FeatureTreeNode(final String name, final Object value) throws FeaturesTreeNodeException {
+	private FeatureTreeNode(final String name, final String value) throws FeaturesTreeNodeException {
 		this(name, value, null);
 	}
 
@@ -30,7 +30,7 @@ public final class FeatureTreeNode {
 		this(name, null, parent);
 	}
 
-	private FeatureTreeNode(String name, Object value, FeatureTreeNode parent)
+	private FeatureTreeNode(String name, String value, FeatureTreeNode parent)
 			throws FeaturesTreeNodeException {
 		this.name = name;
 		this.value = value;
@@ -56,7 +56,7 @@ public final class FeatureTreeNode {
 	 * @throws FeaturesTreeNodeException when
 	 */
 	public static FeatureTreeNode newRootInstanceWIthValue(
-			final String name, final Object value)
+			final String name, final String value)
 			throws FeaturesTreeNodeException {
 		return new FeatureTreeNode(name, value);
 	}
@@ -83,7 +83,7 @@ public final class FeatureTreeNode {
 	 * @throws FeaturesTreeNodeException occurs when parent of the new node has String value
 	 */
 	public static FeatureTreeNode newChildInstanceWithValue(String name,
-															Object value, FeatureTreeNode parent)
+															String value, FeatureTreeNode parent)
 			throws FeaturesTreeNodeException {
 		return new FeatureTreeNode(name, value, parent);
 	}
@@ -98,7 +98,7 @@ public final class FeatureTreeNode {
 	/**
 	 * @return value of the node
 	 */
-	public Object getValue() {
+	public String getValue() {
 		return value;
 	}
 
@@ -114,13 +114,6 @@ public final class FeatureTreeNode {
 	 */
 	public List<FeatureTreeNode> getChildren() {
 		return children == null ? null : Collections.unmodifiableList(children);
-	}
-
-	/**
-	 * @return true if there is no childrens for this node
-	 */
-	public boolean isLeaf() {
-		return children == null;
 	}
 
 	/**
@@ -141,7 +134,7 @@ public final class FeatureTreeNode {
 			} else {
 				throw new FeaturesTreeNodeException(
 						"You can not add childrens for nodes with defined values. Node name "
-								+ name + ", value: " + value.toString() + ".");
+								+ name + ", value: " + value + ".");
 			}
 		}
 	}
@@ -149,10 +142,10 @@ public final class FeatureTreeNode {
 	/**
 	 * Add value to the node
 	 *
-	 * @param value String value
+	 * @param value value
 	 * @throws FeaturesTreeNodeException occurs when value adds to the node with childrens
 	 */
-	public void setValue(Object value) throws FeaturesTreeNodeException {
+	public void setValue(String value) throws FeaturesTreeNodeException {
 		if (children == null) {
 			this.value = value;
 		} else {
@@ -223,11 +216,7 @@ public final class FeatureTreeNode {
 			if (other.value != null)
 				return false;
 		} else {
-			if (this.value instanceof byte[] && other.value instanceof byte[]) {
-				if (!Arrays.equals((byte[]) this.value, (byte[]) other.value)) {
-					return false;
-				}
-			} else if (!this.value.equals(other.value))
+			if (!this.value.equals(other.value))
 				return false;
 		}
 		return true;

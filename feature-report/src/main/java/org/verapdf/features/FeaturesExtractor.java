@@ -3,7 +3,6 @@ package org.verapdf.features;
 import org.verapdf.features.tools.FeatureTreeNode;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Class for features extractors
@@ -25,10 +24,4 @@ abstract class FeaturesExtractor {
 	 */
 	abstract FeaturesObjectTypesEnum getType();
 
-	/**
-	 * Initializing extractor
-	 *
-	 * @param parametrs parametrs for the initializing
-	 */
-	public abstract void initialize(Map<String, String> parametrs);
 }
