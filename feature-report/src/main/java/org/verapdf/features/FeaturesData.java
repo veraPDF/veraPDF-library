@@ -27,14 +27,14 @@ public class FeaturesData {
 	 * @return byte array represent metadata stream
 	 */
 	public byte[] getMetadata() {
-		return Arrays.copyOf(metadata, metadata.length);
+		return metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
 	}
 
 	/**
 	 * @return byte array represent streams for object
 	 */
 	public byte[] getStream() {
-		return Arrays.copyOf(stream, stream.length);
+		return stream == null ? null : Arrays.copyOf(stream, stream.length);
 	}
 
 }

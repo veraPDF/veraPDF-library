@@ -5,7 +5,6 @@ import org.verapdf.gui.tools.GUIConstants;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -127,24 +126,15 @@ class SettingsPanel extends JPanel {
 
 		chooser = new JFileChooser();
 		chooser.setCurrentDirectory(currentDir);
-		chooser.setAcceptAllFileFilterUsed(false);
-		chooser.setFileFilter(new FileNameExtensionFilter(GUIConstants.XML, GUIConstants.XML));
-
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		choose.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int resultChoose = chooser.showOpenDialog(SettingsPanel.this);
 				if (resultChoose == JFileChooser.APPROVE_OPTION) {
-					if (!chooser.getSelectedFile().exists()) {
+					if (!chooser.getSelectedFile().isDirectory()) {
 						JOptionPane.showMessageDialog(SettingsPanel.this,
-								"Error. Selected file doesn't exist.",
-								GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-					} else if (!chooser.getSelectedFile().getName().toLowerCase()
-							.endsWith(GUIConstants.DOT + GUIConstants.XML.toLowerCase())) {
-						JOptionPane.showMessageDialog(
-								SettingsPanel.this,
-								"Error. Selected file is not in "
-										+ GUIConstants.XML.toUpperCase() + " format.",
+								"Error. Selected directory doesn't exist.",
 								GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
 					} else {
 						thirdPartyProfilePathField.setText(chooser.getSelectedFile().getAbsolutePath());
@@ -168,11 +158,11 @@ class SettingsPanel extends JPanel {
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				boolean isEverythingValid = true;
-				if (!Config.Builder.isValidFolderPath(FileSystems.getDefault().getPath(fixMetadataFolder.getText()))) {
+				if (!Config.Builder.isValidWrightableFolderPath(FileSystems.getDefault().getPath(fixMetadataFolder.getText()))) {
 					isEverythingValid = false;
 					JOptionPane.showMessageDialog(SettingsPanel.this, "Invalid path for saving fixed files.", "Invalid data", JOptionPane.INFORMATION_MESSAGE);
 				}
-				if (!Config.Builder.isValidFilePath(FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText()))) {
+				if (!Config.Builder.isValidReadableFolderPath(FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText()))) {
 					isEverythingValid = false;
 					JOptionPane.showMessageDialog(SettingsPanel.this, "Invalid path for features plugins config file.", "Invalid data", JOptionPane.INFORMATION_MESSAGE);
 				}

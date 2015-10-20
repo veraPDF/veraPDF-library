@@ -3,7 +3,6 @@ package org.verapdf.features;
 import org.verapdf.features.tools.FeatureTreeNode;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Base class for extending to extract features from ICCProfiles
@@ -30,11 +29,4 @@ public abstract class AbstractICCProfileFeaturesExtractor extends FeaturesExtrac
 	 */
 	public abstract List<FeatureTreeNode> getICCProfileFeatures(ICCProfileFeaturesData data);
 
-	/**
-	 * Initializing
-	 *
-	 * @param parametrs parametrs for the initializing
-	 */
-	@Override
-	public abstract void initialize(Map<String, String> parametrs);
 }

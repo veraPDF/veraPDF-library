@@ -167,7 +167,7 @@ public final class Config {
 		 * @throws IllegalArgumentException parameter should be an empty path or a path to an existing file
 		 */
 		public Builder featuresPluginsConfigFilePath(Path featuresPluginsConfigFilePath) {
-			if (isValidFilePath(featuresPluginsConfigFilePath)) {
+			if (isValidReadableFolderPath(featuresPluginsConfigFilePath)) {
 				this.featuresPluginsConfigFilePath = featuresPluginsConfigFilePath;
 				return this;
 			} else {
@@ -182,7 +182,7 @@ public final class Config {
 		 * @throws IllegalArgumentException parameter should be an empty path or a path to an existing and write acceptable directory
 		 */
 		public Builder fixMetadataPathFolder(Path fixMetadataPathFolder) {
-			if (isValidFolderPath(fixMetadataPathFolder)) {
+			if (isValidWrightableFolderPath(fixMetadataPathFolder)) {
 				this.fixMetadataPathFolder = fixMetadataPathFolder;
 				return this;
 			} else {
@@ -196,7 +196,7 @@ public final class Config {
 		 * @param path path for check
 		 * @return true if it is valid
 		 */
-		public static boolean isValidFolderPath(Path path) {
+		public static boolean isValidWrightableFolderPath(Path path) {
 			if (path == null) {
 				return false;
 			}
@@ -205,17 +205,17 @@ public final class Config {
 		}
 
 		/**
-		 * Checks is the parameter path a valid for features plugins config file
+		 * Checks is the parameter path a valid for saving fixed file
 		 *
 		 * @param path path for check
 		 * @return true if it is valid
 		 */
-		public static boolean isValidFilePath(Path path) {
+		public static boolean isValidReadableFolderPath(Path path) {
 			if (path == null) {
 				return false;
 			}
 			File f = path.toFile();
-			return path.toString().isEmpty() || (f.isFile() && f.canRead());
+			return path.toString().isEmpty() || (f.isDirectory() && f.canRead());
 		}
 
 		/**
