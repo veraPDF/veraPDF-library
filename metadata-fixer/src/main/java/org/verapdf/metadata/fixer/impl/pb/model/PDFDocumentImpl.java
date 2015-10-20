@@ -1,20 +1,18 @@
 package org.verapdf.metadata.fixer.impl.pb.model;
 
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.*;
+import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.xml.DomXmpParser;
 import org.apache.xmpbox.xml.XmpParsingException;
-import org.apache.xmpbox.xml.XmpSerializer;
-import org.verapdf.metadata.fixer.entity.FixReport;
+import org.verapdf.metadata.fixer.MetadataFixerResult;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
 
-import javax.xml.transform.TransformerException;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -34,24 +32,29 @@ public class PDFDocumentImpl implements PDFDocument {
 			throw new IllegalArgumentException("Document representation can not be null");
 		}
 		this.document = document;
+		this.metadata = parseMetadata();
 	}
 
+	/**
+	 * {@inheritDoc} Implemented by Apache PDFBox library.
+	 */
 	@Override
 	public Metadata getMetadata() {
-		if (this.metadata == null) {
-			PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
-			if (meta == null) {
-				if (this.document.getDocumentInformation().getCOSObject().size() > 0) {
-					COSStream stream = this.document.getDocument().createCOSStream();
-					this.document.getDocumentCatalog().setMetadata(new PDMetadata(stream));
-					XMPMetadata xmp = XMPMetadata.createXMPMetadata();
-					this.metadata = new MetadataImpl(xmp, stream);
-				}
-			} else {
-				this.metadata = parseMetadata(meta);
-			}
-		}
 		return this.metadata;
+	}
+
+	private MetadataImpl parseMetadata() {
+		PDDocumentCatalog catalog = this.document.getDocumentCatalog();
+		PDMetadata meta = catalog.getMetadata();
+		if (meta == null) {
+			COSStream stream = this.document.getDocument().createCOSStream();
+			catalog.setMetadata(new PDMetadata(stream));
+			catalog.getCOSObject().setNeedToBeUpdated(true);
+			XMPMetadata xmp = XMPMetadata.createXMPMetadata();
+			return new MetadataImpl(xmp, stream);
+		} else {
+			return parseMetadata(meta);
+		}
 	}
 
 	private MetadataImpl parseMetadata(PDMetadata meta) {
@@ -71,6 +74,9 @@ public class PDFDocumentImpl implements PDFDocument {
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc} Implemented by Apache PDFBox library.
+	 */
 	@Override
 	public InfoDictionary getInfoDictionary() {
 		if (this.info == null) {
@@ -79,45 +85,38 @@ public class PDFDocumentImpl implements PDFDocument {
 		return this.info;
 	}
 
+	/**
+	 * {@inheritDoc} Implemented by Apache PDFBox library.
+	 */
 	@Override
 	public boolean isNeedToBeUpdated() {
-		PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
-		COSDictionary info = this.document.getDocumentInformation().getCOSObject();
-		return meta != null && (meta.getStream().isNeedToBeUpdated() || info.isNeedToBeUpdated());
+		return this.getMetadata().isNeedToBeUpdated() || this.getInfoDictionary().isNeedToBeUpdated();
 	}
 
+	/**
+	 * {@inheritDoc} Implemented by Apache PDFBox library.
+	 */
 	@Override
-	public void saveDocumentIncremental(FixReport report, OutputStream output) throws IOException {
-		PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
-		if (meta != null) {
-			checkFilters(meta);
-			updateMetadataStatus(meta);
-			if (isNeedToBeUpdated()) {
+	public void saveDocumentIncremental(MetadataFixerResult result, OutputStream output) {
+		try {
+			PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
+			boolean isMetaPresent = meta != null && this.isNeedToBeUpdated();
+			boolean isMetaAdd = meta == null && this.metadata != null;
+			if (isMetaPresent || isMetaAdd) {
+				this.metadata.updateMetadataStream();
+				if (isMetaAdd) {
+					this.document.getDocumentCatalog().getCOSObject().setNeedToBeUpdated(true);
+				}
 				this.document.saveIncremental(output);
 				output.close();
+				result.setStatus(MetadataFixerResult.RepairStatus.SUCCESSFUL);
+			} else {
+				result.setStatus(MetadataFixerResult.RepairStatus.NO_ACTION);
 			}
-		}
-	}
-
-	private void checkFilters(PDMetadata metadata) {
-		COSStream stream = metadata.getStream();
-		COSBase filters = stream.getFilters();
-		if (filters instanceof COSName ||
-				(filters instanceof COSArray && ((COSArray) filters).size() != 0)) {
-			stream.setItem(COSName.FILTER, null);
-			stream.setNeedToBeUpdated(true);
-		}
-	}
-
-	private void updateMetadataStatus(PDMetadata meta) throws IOException {
-		if (meta.getStream().isNeedToBeUpdated()) {
-			try {
-				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				new XmpSerializer().serialize(this.metadata.getAbsorbedMetadata(), out, true);
-				meta.importXMPMetadata(out.toByteArray());
-			} catch (TransformerException e) {
-				LOGGER.error("Problem during metadata status update.", e);
-			}
+		} catch (Exception e) {
+			LOGGER.info(e);
+			result.setStatus(MetadataFixerResult.RepairStatus.FAILED);
+			result.addAppliedFix("Problems with document save");
 		}
 	}
 

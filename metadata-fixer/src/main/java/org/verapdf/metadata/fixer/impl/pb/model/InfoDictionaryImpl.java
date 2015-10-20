@@ -1,6 +1,8 @@
 package org.verapdf.metadata.fixer.impl.pb.model;
 
+import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.utils.DateConverter;
@@ -81,7 +83,8 @@ public class InfoDictionaryImpl implements InfoDictionary {
 
 	@Override
 	public String getCreationDate() {
-		return DateConverter.toUTCString(this.info.getCreationDate());
+		COSBase modDate = this.info.getCOSObject().getDictionaryObject(COSName.CREATION_DATE);
+		return modDate instanceof COSString ? ((COSString) modDate).getString() : null;
 	}
 
 	@Override
@@ -91,7 +94,8 @@ public class InfoDictionaryImpl implements InfoDictionary {
 
 	@Override
 	public String getModificationDate() {
-		return DateConverter.toUTCString(this.info.getModificationDate());
+		COSBase modDate = this.info.getCOSObject().getDictionaryObject(COSName.MOD_DATE);
+		return modDate instanceof COSString ? ((COSString) modDate).getString() : null;
 	}
 
 	@Override
@@ -107,10 +111,6 @@ public class InfoDictionaryImpl implements InfoDictionary {
 	@Override
 	public void setNeedToBeUpdated(boolean needToBeUpdated) {
 		this.info.getCOSObject().setNeedToBeUpdated(true);
-	}
-
-	private String getDateString(COSName name) {
-		return this.info.getCOSObject().getString(name);
 	}
 
 }

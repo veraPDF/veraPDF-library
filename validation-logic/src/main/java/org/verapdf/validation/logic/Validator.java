@@ -195,8 +195,9 @@ public class Validator {
     private void addAllLinkedObjects(Object checkObject, String checkContext,
                                      Set<String> checkIDContext) throws NullLinkNameException,
             NullLinkException, NullLinkedObjectException {
-        for (int j = checkObject.getLinks().size() - 1; j >= 0; --j) {
-            String link = checkObject.getLinks().get(j);
+		List<String> links = checkObject.getLinks();
+		for (int j = links.size() - 1; j >= 0; --j) {
+            String link = links.get(j);
 
             if (link == null) {
                 throw new NullLinkNameException(
@@ -461,15 +462,13 @@ public class Validator {
             NullLinkNameException, NullLinkException,
             NullLinkedObjectException, MissedHashTagException,
             XMLStreamException, WrongSignatureException, MultiplyGlobalVariableNameException {
-        if (root == null)
-            throw new IllegalArgumentException(
-                    "Parameter (Object root) cannot be null.");
-        if (validationProfilePath == null)
-            throw new IllegalArgumentException(
-                    "Parameter (String validationProfilePath) cannot be null.");
-        return validate(root, ValidationProfileParser.parseFromFilePath(
-                validationProfilePath, isSignCheckOn),
-				isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
+		if (validationProfilePath == null) {
+			throw new IllegalArgumentException(
+					"Parameter (String validationProfilePath) cannot be null.");
+		}
+		ValidationProfile profile = ValidationProfileParser.parseFromFilePath(
+				validationProfilePath, isSignCheckOn);
+		return validate(root, profile, isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
     }
 
     /**
@@ -510,15 +509,13 @@ public class Validator {
             NullLinkException, NullLinkedObjectException,
             MissedHashTagException, XMLStreamException,
             WrongSignatureException, MultiplyGlobalVariableNameException {
-        if (root == null)
-            throw new IllegalArgumentException(
-                    "Parameter (Object root) cannot be null.");
-        if (validationProfile == null)
-            throw new IllegalArgumentException(
-                    "Parameter (ValidationProfile validationProfile) cannot be null.");
-        return validate(root, ValidationProfileParser.parseFromFile(
-                validationProfile, isSignCheckOn),
-				isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
+		if (validationProfile == null) {
+			throw new IllegalArgumentException(
+					"Parameter (ValidationProfile validationProfile) cannot be null.");
+		}
+		ValidationProfile profile = ValidationProfileParser.parseFromFile(
+				validationProfile, isSignCheckOn);
+		return validate(root, profile, isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
     }
 
     /**

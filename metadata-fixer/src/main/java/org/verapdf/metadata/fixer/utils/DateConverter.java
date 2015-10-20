@@ -36,4 +36,8 @@ public class DateConverter {
 		return org.apache.pdfbox.util.DateConverter.toString(buffer);
 	}
 
+	public static String toPDFFormat(Calendar date) {
+		return org.apache.pdfbox.util.DateConverter.toString(date);
+	}
+
 }
