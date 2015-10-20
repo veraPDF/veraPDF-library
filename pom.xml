@@ -47,7 +47,6 @@
   </developers>
 
   <modules>
-    <module>verapdf-exceptions</module>
     <module>validation-profile-parser</module>
     <module>validation-logic</module>
     <module>validation-report</module>
@@ -216,12 +215,6 @@
       <dependency>
         <groupId>org.verapdf</groupId>
         <artifactId>validation-report</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>verapdf-exceptions</artifactId>
         <version>${project.version}</version>
       </dependency>
 

@@ -35,6 +35,7 @@
       <groupId>org.verapdf</groupId>
       <artifactId>validation-profile-parser</artifactId>
     </dependency>
+
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
