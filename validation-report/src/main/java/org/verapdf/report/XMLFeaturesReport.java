@@ -113,39 +113,39 @@ public final class XMLFeaturesReport {
 
 			parseElements(FeaturesObjectTypesEnum.LOW_LEVEL_INFO, collection, pdfFeatures, doc);
 
-			makeList("embeddedFiles", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE), pdfFeatures, collection, doc);
+			makeList("embeddedFiles", FeaturesObjectTypesEnum.EMBEDDED_FILE, pdfFeatures, collection, doc);
 
-			makeList("iccProfiles", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE), pdfFeatures, collection, doc);
+			makeList("iccProfiles", FeaturesObjectTypesEnum.ICCPROFILE, pdfFeatures, collection, doc);
 
-			makeList("outputIntents", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT), pdfFeatures, collection, doc);
+			makeList("outputIntents", FeaturesObjectTypesEnum.OUTPUTINTENT, pdfFeatures, collection, doc);
 
 			parseElements(FeaturesObjectTypesEnum.OUTLINES, collection, pdfFeatures, doc);
 
-			makeList("annotations", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION), pdfFeatures, collection, doc);
+			makeList("annotations", FeaturesObjectTypesEnum.ANNOTATION, pdfFeatures, collection, doc);
 
-			makeList("pages", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE), pdfFeatures, collection, doc);
+			makeList("pages", FeaturesObjectTypesEnum.PAGE, pdfFeatures, collection, doc);
 
 			Element resources = doc.createElement("resources");
-			makeList("graphicsStates", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE), resources, collection, doc);
-			makeList("colorSpaces", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.COLORSPACE), resources, collection, doc);
-			makeList("patterns", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN), resources, collection, doc);
-			makeList("shadings", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.SHADING), resources, collection, doc);
+			makeList("graphicsStates", FeaturesObjectTypesEnum.EXT_G_STATE, resources, collection, doc);
+			makeList("colorSpaces", FeaturesObjectTypesEnum.COLORSPACE, resources, collection, doc);
+			makeList("patterns", FeaturesObjectTypesEnum.PATTERN, resources, collection, doc);
+			makeList("shadings", FeaturesObjectTypesEnum.SHADING, resources, collection, doc);
 			Element xobjects = doc.createElement("xobjects");
-			makeList("images", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.IMAGE_XOBJECT), xobjects, collection, doc);
-			makeList("forms", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FORM_XOBJECT), xobjects, collection, doc);
-			makeList("postscripts", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.POSTSCRIPT_XOBJECT), xobjects, collection, doc);
-			makeList("failed", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FAILED_XOBJECT), xobjects, collection, doc);
+			makeList("images", FeaturesObjectTypesEnum.IMAGE_XOBJECT, xobjects, collection, doc);
+			makeList("forms", FeaturesObjectTypesEnum.FORM_XOBJECT, xobjects, collection, doc);
+			makeList("postscripts", FeaturesObjectTypesEnum.POSTSCRIPT_XOBJECT, xobjects, collection, doc);
+			makeList("failed", FeaturesObjectTypesEnum.FAILED_XOBJECT, xobjects, collection, doc);
 			if (xobjects.getChildNodes().getLength() > 0) {
 				resources.appendChild(xobjects);
 			}
-			makeList("fonts", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FONT), resources, collection, doc);
-			makeList("propertiesDicts", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROPERTIES), resources, collection, doc);
+			makeList("fonts", FeaturesObjectTypesEnum.FONT, resources, collection, doc);
+			makeList("propertiesDicts", FeaturesObjectTypesEnum.PROPERTIES, resources, collection, doc);
 
 			if (resources.getChildNodes().getLength() > 0) {
 				pdfFeatures.appendChild(resources);
 			}
 
-			makeList("errors", collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR), pdfFeatures, collection, doc);
+			makeList("errors", FeaturesObjectTypesEnum.ERROR, pdfFeatures, collection, doc);
 		}
 
 		return pdfFeatures;
@@ -161,10 +161,12 @@ public final class XMLFeaturesReport {
 		}
 	}
 
-	private static void makeList(String listName, List<FeatureTreeNode> list,
+	private static void makeList(String listName, FeaturesObjectTypesEnum type,
 								 Element parent, FeaturesCollection collection,
 								 Document doc) {
-		if (!list.isEmpty()) {
+		List<FeatureTreeNode> list = collection.getFeatureTreesForType(type);
+		List<String> errors = collection.getErrorsForType(type);
+		if (!list.isEmpty() || !errors.isEmpty()) {
 			Element listElement = doc.createElement(listName);
 			for (FeatureTreeNode node : list) {
 				if (node != null) {
@@ -172,6 +174,15 @@ public final class XMLFeaturesReport {
 				}
 			}
 			parent.appendChild(listElement);
+
+			if (!errors.isEmpty()) {
+				StringBuilder builder = new StringBuilder();
+				builder.append(errors.get(0));
+				for (int i = 1; i < errors.size(); ++i) {
+					builder.append(errors.get(i));
+				}
+				listElement.setAttribute(ErrorsHelper.ERRORID, builder.toString());
+			}
 		}
 	}
 

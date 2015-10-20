@@ -689,7 +689,7 @@ public final class PBFeatureParser {
 				null,
 				errorMessage,
 				FeaturesObjectTypesEnum.EMBEDDED_FILE,
-				"PBFeatureParser.reportEmbeddedFileNode logic failure.");
+				"PBFeatureParser.reportEmbeddedFileNode logic failure.", true);
 	}
 
 	private void fontCreationProblem(final String nodeID, String errorMessage) {
@@ -697,7 +697,7 @@ public final class PBFeatureParser {
 				nodeID,
 				errorMessage,
 				FeaturesObjectTypesEnum.FONT,
-				"PBFeatureParser.fontCreationProblem logic failure.");
+				"PBFeatureParser.fontCreationProblem logic failure.", false);
 	}
 
 	private void patternCreationProblem(final String nodeID, String errorMessage) {
@@ -705,7 +705,7 @@ public final class PBFeatureParser {
 				nodeID,
 				errorMessage,
 				FeaturesObjectTypesEnum.PATTERN,
-				"PBFeatureParser.patternCreationProblem logic failure.");
+				"PBFeatureParser.patternCreationProblem logic failure.", false);
 	}
 
 	private void colorSpaceCreationProblem(final String nodeID, String errorMessage) {
@@ -713,7 +713,7 @@ public final class PBFeatureParser {
 				nodeID,
 				errorMessage,
 				FeaturesObjectTypesEnum.COLORSPACE,
-				"PBFeatureParser.colorSpaceCreationProblem logic failure.");
+				"PBFeatureParser.colorSpaceCreationProblem logic failure.", false);
 	}
 
 	private void shadingCreationProblem(final String nodeID, String errorMessage) {
@@ -721,7 +721,7 @@ public final class PBFeatureParser {
 				nodeID,
 				errorMessage,
 				FeaturesObjectTypesEnum.SHADING,
-				"PBFeatureParser.shadingCreationProblem logic failure.");
+				"PBFeatureParser.shadingCreationProblem logic failure.", false);
 	}
 
 	private void xobjectCreationProblem(final String nodeID, String errorMessage) {
@@ -729,7 +729,7 @@ public final class PBFeatureParser {
 				nodeID,
 				errorMessage,
 				FeaturesObjectTypesEnum.FAILED_XOBJECT,
-				"PBFeatureParser.xobjectCreationProblem logic failure.");
+				"PBFeatureParser.xobjectCreationProblem logic failure.", false);
 	}
 
 	private void creationProblem(
@@ -737,16 +737,25 @@ public final class PBFeatureParser {
 			final String nodeID,
 			final String errorMessage,
 			final FeaturesObjectTypesEnum type,
-			final String loggerMessage) {
+			final String loggerMessage,
+			final boolean isTypeError) {
 		try {
-			FeatureTreeNode node = FeatureTreeNode.newRootInstance(nodeName);
-			if (nodeID != null) {
-				node.addAttribute(ID, nodeID);
+			if (!isTypeError) {
+				FeatureTreeNode node = FeatureTreeNode.newRootInstance(nodeName);
+				if (nodeID != null) {
+					node.addAttribute(ID, nodeID);
+				}
+				reporter.getCollection().addNewFeatureTree(type, node);
+				ErrorsHelper.addErrorIntoCollection(reporter.getCollection(),
+						node,
+						errorMessage);
+			} else {
+				String id = ErrorsHelper.addErrorIntoCollection(reporter.getCollection(),
+						null,
+						errorMessage);
+				reporter.getCollection().addNewError(type, id);
+
 			}
-			reporter.getCollection().addNewFeatureTree(type, node);
-			ErrorsHelper.addErrorIntoCollection(reporter.getCollection(),
-					node,
-					errorMessage);
 		} catch (FeaturesTreeNodeException e) {
 			// This exception occurs when wrong node creates for feature
 			// tree.
