@@ -14,7 +14,7 @@ import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -215,8 +215,8 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 				PBCreateNodeHelper.createDateNode("creationDate", root, getCreationDate(profileBytes), collection);
 				String intent = getIntent(getString(profileBytes, RENDERINGINTENT_BEGIN, RENDERINGINTENT_END));
 				PBCreateNodeHelper.addNotEmptyNode("defaultRenderingIntent", intent, root);
-				PBCreateNodeHelper.addNotEmptyNode("copyright", getStringTag(profileBytes, "cprt"), root);
-				PBCreateNodeHelper.addNotEmptyNode("description", getStringTag(profileBytes, "desc"), root);
+				PBCreateNodeHelper.addNotEmptyNode("copyright", getStringTag(profileBytes, "cprt", true), root);
+				PBCreateNodeHelper.addNotEmptyNode("description", getStringTag(profileBytes, "desc", false), root);
 				PBCreateNodeHelper.addNotEmptyNode("profileId", getString(profileBytes, PROFILEID_BEGIN, PROFILEID_END), root);
 				PBCreateNodeHelper.addNotEmptyNode("deviceModel", getString(profileBytes, DEVICEMODEL_BEGIN, DEVICEMODEL_END), root);
 				PBCreateNodeHelper.addNotEmptyNode("deviceManufacturer", getString(profileBytes, DEVICEMANUFACTURER_BEGIN, DEVICEMANUFACTURER_END), root);
@@ -297,7 +297,7 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 		return part;
 	}
 
-	private static String getStringTag(byte[] profileBytes, String tagName) {
+	private static String getStringTag(byte[] profileBytes, String tagName, boolean isCprt) {
 		if (profileBytes.length < HEADER_SIZE + REQUIRED_LENGTH) {
 			return null;
 		}
@@ -332,32 +332,21 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 									recOffset + REQUIRED_LENGTH + REQUIRED_LENGTH));
 							offset += byteArrayToInt(Arrays.copyOfRange(profileBytes, recOffset + REQUIRED_LENGTH * 2,
 									recOffset + REQUIRED_LENGTH * 2 + REQUIRED_LENGTH));
-							try {
-								return new String(Arrays.copyOfRange(profileBytes, offset, offset + length), "UTF-16BE").trim();
-							} catch (UnsupportedEncodingException e) {
-								// UTF-16BE Character set exists, so do nothing
-								/**
-								 * cfw Conversely if it doesn't exist (which is the only way this
-								 * block is hit) something is badly amiss, I'd suggest wrapping and
-								 * throwing a runtime IllegalStateException if this is ever hit.
-								 * e.g. throw new
-								 * IllegalStateException("No UTF-16BE encoding detected", e);
-								 */
-								throw new IllegalStateException(
-										"Required UTF-16BE encoding not found", e);
-							}
+							return new String(Arrays.copyOfRange(profileBytes, offset, offset + length), StandardCharsets.UTF_16BE).trim();
 						}
 					}
 				} else if ("desc".equals(type)) {
 					length = byteArrayToInt(Arrays.copyOfRange(profileBytes, offset + FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_BEGIN,
 							offset + FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_END));
 					offset += FIRST_RECORD_STRING_LENGTH_IN_TEXTDESCRIPTIONTYPE_END;
-				} else {
+				} else if (isCprt) {
 					offset += REQUIRED_LENGTH;
 					length -= REQUIRED_LENGTH;
+				} else {
+					return null;
 				}
 
-				return new String(Arrays.copyOfRange(profileBytes, offset, offset + length)).trim();
+				return new String(Arrays.copyOfRange(profileBytes, offset, offset + length), StandardCharsets.US_ASCII).trim();
 			}
 			curOffset += TAGINFO_LENGTH;
 		}

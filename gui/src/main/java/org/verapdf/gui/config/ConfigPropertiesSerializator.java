@@ -19,7 +19,6 @@ public final class ConfigPropertiesSerializator {
 	private static final String PROPERTY_SHOW_PASSED_RULES = "showPassedRules";
 	private static final String PROPERTY_MAX_NUMBER_FAILED_CHECKS = "maxNumbFailedChecks";
 	private static final String PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS = "maxNumbDisplFailedChecks";
-	private static final String PROPERTY_FEATURES_CONFIG_FILE = "featuresPluginConfigFile";
 	private static final String PROPERTY_METADATA_FIXER_PREFIX = "metadataFixerPrefix";
 	private static final String PROPERTY_FIX_METADATA_PATH_FOLDER = "fixMetadataPathFolder";
 
@@ -47,7 +46,6 @@ public final class ConfigPropertiesSerializator {
 		settings.setProperty(PROPERTY_MAX_NUMBER_FAILED_CHECKS, String.valueOf(config.getMaxNumberOfFailedChecks()));
 		settings.setProperty(PROPERTY_MAX_NUMBER_DISPLAYED_FAILED_CHECKS, String.valueOf(config.getMaxNumberOfDisplayedFailedChecks()));
 		settings.setProperty(PROPERTY_SHOW_PASSED_RULES, String.valueOf(config.isShowPassedRules()));
-		settings.setProperty(PROPERTY_FEATURES_CONFIG_FILE, config.getFeaturesPluginsConfigFilePath().toString());
 		settings.setProperty(PROPERTY_METADATA_FIXER_PREFIX, config.getMetadataFixerPrefix());
 		settings.setProperty(PROPERTY_FIX_METADATA_PATH_FOLDER, config.getFixMetadataPathFolder().toString());
 		settings.store(writer, "settings");
@@ -141,11 +139,6 @@ public final class ConfigPropertiesSerializator {
 			builder.fixMetadataPathFolder(getPathValue(properties, PROPERTY_FIX_METADATA_PATH_FOLDER));
 		} catch (IllegalArgumentException e) {
 			LOGGER.error("Property " + PROPERTY_FIX_METADATA_PATH_FOLDER + " is missing or containing a wrong value. Setting it to default", e);
-		}
-		try {
-			builder.featuresPluginsConfigFilePath(getPathValue(properties, PROPERTY_FEATURES_CONFIG_FILE));
-		} catch (IllegalArgumentException e) {
-			LOGGER.error("Property " + PROPERTY_FEATURES_CONFIG_FILE + " is missing or containing a wrong value. Setting it to default", e);
 		}
 		return builder.build();
 	}

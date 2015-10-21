@@ -85,6 +85,7 @@ public final class XMLReport {
 									  boolean isLogPassedChecks) throws DatatypeConfigurationException {
 
 		Element report = doc.createElement("report");
+		report.setAttribute("xmlns", "http://www.verapdf.org/MachineReadableReport");
 
 		GregorianCalendar gregorianCalendar = new GregorianCalendar();
 		XMLGregorianCalendar now = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
