@@ -3,7 +3,11 @@
  */
 package org.verapdf.validation.profile.parser;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -31,27 +35,46 @@ import org.xml.sax.SAXException;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
-public final class LegacyProfileParser {
+public final class LegacyProfileConverter {
     private static final String PART_1_LEGACY_CODE = "ISO 19005-1:2005";
 
-    private LegacyProfileParser() {
+    private LegacyProfileConverter() {
         /** Disable default constructor */
     }
 
     /**
      * @param args
-     * @throws XMLStreamException 
-     * @throws IOException 
-     * @throws SAXException 
-     * @throws ParserConfigurationException 
-     * @throws MultiplyGlobalVariableNameException 
-     * @throws WrongSignatureException 
-     * @throws MissedHashTagException 
-     * @throws JAXBException 
+     * @throws XMLStreamException
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     * @throws MultiplyGlobalVariableNameException
+     * @throws WrongSignatureException
+     * @throws MissedHashTagException
+     * @throws JAXBException
      */
-    public static void main(String[] args) throws MissedHashTagException, WrongSignatureException, MultiplyGlobalVariableNameException, ParserConfigurationException, SAXException, IOException, XMLStreamException, JAXBException {
-        org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser.parseFromFilePath("/home/cfw/GitHub/veraPDF/veraPDF-validation-profiles/PDF_A/PDFA-1B.xml", false);
-        ValidationProfile profile = fromLegacyProfile(toConvert, PDFAFlavour.PDFA_1_B);
+    public static void main(String[] args) throws MissedHashTagException,
+            WrongSignatureException, MultiplyGlobalVariableNameException,
+            ParserConfigurationException, SAXException, IOException,
+            XMLStreamException, JAXBException {
+        for (String path : args) {
+            org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser
+                    .parseFromFilePath(path, false);
+            ValidationProfile profile = fromLegacyProfile(toConvert,
+                    PDFAFlavour.PDFA_1_B);
+        }
+        if (args.length == 0) {
+            org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser
+                    .parseFromFilePath(
+                            "/home/cfw/GitHub/veraPDF/veraPDF-validation-profiles/PDF_A/PDFA-1B.xml",
+                            false);
+            ValidationProfile profile = fromLegacyProfile(toConvert,
+                    PDFAFlavour.PDFA_1_B);
+            Profiles.profileToXml(profile, System.out, Boolean.TRUE);
+            try (OutputStream fos = new FileOutputStream("/home/cfw/test-profile.xml")) {
+                Profiles.profileToXml(profile, fos, Boolean.TRUE);
+            }
+        }
     }
 
     /**
@@ -63,16 +86,20 @@ public final class LegacyProfileParser {
             final PDFAFlavour flavour) {
         Set<Rule> rules = new HashSet<>();
         for (String ruleId : toConvert.getAllRulesId()) {
-            org.verapdf.validation.profile.model.Rule rule = toConvert.getRuleById(ruleId);
+            org.verapdf.validation.profile.model.Rule rule = toConvert
+                    .getRuleById(ruleId);
             rules.add(fromLegacyRule(rule));
         }
         Set<Variable> variables = new HashSet<>();
-        for (org.verapdf.validation.profile.model.Variable var : toConvert.getAllVariables()) {
+        for (org.verapdf.validation.profile.model.Variable var : toConvert
+                .getAllVariables()) {
             variables.add(fromLegacyVariable(var));
         }
         String[] dateParts = toConvert.getCreated().split("T");
-        String cleanDate = dateParts[0] + "T" + dateParts[1].replace("-", ":").replace("+03", "");
-        Date created = javax.xml.bind.DatatypeConverter.parseDateTime(cleanDate).getTime();
+        String cleanDate = dateParts[0] + "T"
+                + dateParts[1].replace("-", ":").replace("+03", "");
+        Date created = javax.xml.bind.DatatypeConverter
+                .parseDateTime(cleanDate).getTime();
         return Profiles.profileFromValues(flavour, toConvert.getName(),
                 toConvert.getDescription(), toConvert.getCreator(), created,
                 "", rules, variables);
@@ -99,13 +126,14 @@ public final class LegacyProfileParser {
         RuleId id = fromLegacyRuleId(toConvert.getAttrID());
         // check consistency with root
         if (!id.getClause().equals(rootRef.getClause())) {
-            System.out.println(toConvert.getAttrID() + "\t" + toConvert.getReference().getClause());
+            System.out.println(toConvert.getAttrID() + "\t"
+                    + toConvert.getReference().getClause());
         }
         Rule converted = Profiles.ruleFromValues(id, toConvert.getAttrObject(),
-                toConvert.getDescription().trim().replaceAll(" +", " "), toConvert.getTest(), flattenedRefs);
+                toConvert.getDescription().trim().replaceAll(" +", " "),
+                toConvert.getTest(), flattenedRefs);
         return converted;
     }
-    
 
     public static RuleId fromLegacyRuleId(final String legacyId) {
         String[] parts = legacyId.split("-");
@@ -121,7 +149,8 @@ public final class LegacyProfileParser {
                 testNumber = Integer.parseInt(part.substring(1));
             }
         }
-        return Profiles.ruleIdFromValues(Specification.ISO_19005_1, builder.toString(), testNumber);
+        return Profiles.ruleIdFromValues(Specification.ISO_19005_1,
+                builder.toString(), testNumber);
     }
 
     /**
@@ -130,8 +159,9 @@ public final class LegacyProfileParser {
      */
     public static Reference fromLegacyReference(
             org.verapdf.validation.profile.model.Reference toConvert) {
-        Reference converted = Profiles.referenceFromValues(
-                toConvert.getSpecification(), (toConvert.getClause() == null) ? "" : toConvert.getClause());
+        Reference converted = Profiles.referenceFromValues(toConvert
+                .getSpecification(), (toConvert.getClause() == null) ? ""
+                : toConvert.getClause());
         return converted;
     }
 

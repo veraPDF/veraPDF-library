@@ -4,6 +4,7 @@
 package org.verapdf.pdfa.validation;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
@@ -212,7 +213,7 @@ final class RuleImpl implements Rule {
         varMarshaller.marshal(toConvert, stream);
     }
 
-    static RuleImpl fromXml(final Reader toConvert) throws JAXBException {
+    static RuleImpl fromXml(final InputStream toConvert) throws JAXBException {
         Unmarshaller stringUnmarshaller = getUnmarshaller();
         return (RuleImpl) stringUnmarshaller.unmarshal(toConvert);
     }
@@ -221,6 +222,11 @@ final class RuleImpl implements Rule {
             throws JAXBException {
         Marshaller varMarshaller = getMarshaller(prettyXml);
         varMarshaller.marshal(toConvert, writer);
+    }
+
+    static RuleImpl fromXml(final Reader toConvert) throws JAXBException {
+        Unmarshaller stringUnmarshaller = getUnmarshaller();
+        return (RuleImpl) stringUnmarshaller.unmarshal(toConvert);
     }
 
     static class Adapter extends XmlAdapter<RuleImpl, Rule> {
