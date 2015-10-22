@@ -3,8 +3,12 @@
  */
 package org.verapdf.pdfa.validation;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -40,7 +44,7 @@ final class RuleImpl implements Rule {
     @XmlElement
     private final String test;
     @XmlElementWrapper
-    @XmlElement(name="reference")
+    @XmlElement(name = "reference")
     private final List<Reference> references = new ArrayList<>();
 
     private RuleImpl() {
@@ -164,15 +168,17 @@ final class RuleImpl implements Rule {
      */
     @Override
     public String toString() {
-        return "Rule [id=" + this.id + ", object=" + this.object + ", description=" + this.description + ", test="
-                + this.test + ", references=" + this.references + "]";
+        return "Rule [id=" + this.id + ", object=" + this.object
+                + ", description=" + this.description + ", test=" + this.test
+                + ", references=" + this.references + "]";
     }
 
     static RuleImpl defaultInstance() {
         return RuleImpl.DEFAULT;
     }
 
-    static RuleImpl fromValues(final RuleIdImpl id, final String object, final String description, final String test,
+    static RuleImpl fromValues(final RuleIdImpl id, final String object,
+            final String description, final String test,
             final List<Reference> references) {
         return new RuleImpl(id, object, description, test, references);
     }
@@ -180,26 +186,41 @@ final class RuleImpl implements Rule {
     static RuleImpl fromRule(final Rule toConvert) {
         return RuleImpl.fromValues(
                 RuleIdImpl.fromRuleId(toConvert.getRuleId()),
-                toConvert.getObject(),
-                toConvert.getDescription(), toConvert.getTest(),
-                toConvert.getReferences());
+                toConvert.getObject(), toConvert.getDescription(),
+                toConvert.getTest(), toConvert.getReferences());
     }
 
-    static String toXml(final Rule toConvert) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(RuleImpl.class);
-        Marshaller varMarshaller = context.createMarshaller();
-        varMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-                Boolean.TRUE);
-        StringWriter writer = new StringWriter();
-        varMarshaller.marshal(toConvert, writer);
-        return writer.toString();
+    static String toXml(final Rule toConvert, Boolean prettyXml)
+            throws JAXBException, IOException {
+        String retVal = "";
+        try (StringWriter writer = new StringWriter()) {
+            toXml(toConvert, writer, prettyXml);
+            retVal = writer.toString();
+            return retVal;
+        }
     }
 
     static RuleImpl fromXml(final String toConvert) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(RuleImpl.class);
-        Unmarshaller stringUnmarshaller = context.createUnmarshaller();
-        StringReader reader = new StringReader(toConvert);
-        return (RuleImpl) stringUnmarshaller.unmarshal(reader);
+        try (StringReader reader = new StringReader(toConvert)) {
+            return fromXml(reader);
+        }
+    }
+
+    static void toXml(final Rule toConvert, OutputStream stream,
+            Boolean prettyXml) throws JAXBException {
+        Marshaller varMarshaller = getMarshaller(prettyXml);
+        varMarshaller.marshal(toConvert, stream);
+    }
+
+    static RuleImpl fromXml(final Reader toConvert) throws JAXBException {
+        Unmarshaller stringUnmarshaller = getUnmarshaller();
+        return (RuleImpl) stringUnmarshaller.unmarshal(toConvert);
+    }
+
+    static void toXml(final Rule toConvert, Writer writer, Boolean prettyXml)
+            throws JAXBException {
+        Marshaller varMarshaller = getMarshaller(prettyXml);
+        varMarshaller.marshal(toConvert, writer);
     }
 
     static class Adapter extends XmlAdapter<RuleImpl, Rule> {
@@ -213,4 +234,19 @@ final class RuleImpl implements Rule {
             return (RuleImpl) rule;
         }
     }
+
+    private static Unmarshaller getUnmarshaller() throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(RuleImpl.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        return unmarshaller;
+    }
+
+    private static Marshaller getMarshaller(Boolean setPretty)
+            throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(RuleImpl.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
+        return marshaller;
+    }
+
 }

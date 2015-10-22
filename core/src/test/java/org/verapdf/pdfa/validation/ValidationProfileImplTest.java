@@ -6,6 +6,7 @@ package org.verapdf.pdfa.validation;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -78,16 +79,17 @@ public class ValidationProfileImplTest {
     /**
      * Test method for {@link org.verapdf.pdfa.validation.ValidationProfileImpl#toXml(org.verapdf.pdfa.ValidationProfile)}.
      * @throws JAXBException 
+     * @throws IOException 
      */
     @Test
-    public final void testToXml() throws JAXBException {
+    public final void testToXml() throws JAXBException, IOException {
         Set<Rule> rules = new HashSet<>();
         Set<Variable> vars = new HashSet<>();
         rules.add(RuleImpl.defaultInstance());
         vars.add(VariableImpl.defaultInstance());
         ValidationProfile rule = ValidationProfileImpl.fromValues(PDFAFlavour.NO_FLAVOUR, "name", "description", "creator",
                 new Date(0L), "hash", rules, vars);
-        String xmlDefault = ValidationProfileImpl.toXml(rule);
+        String xmlDefault = ValidationProfileImpl.toXml(rule, Boolean.FALSE);
         ValidationProfile unmarshalledDefault = ValidationProfileImpl.fromXml(xmlDefault);
         assertFalse(rule == unmarshalledDefault);
         assertTrue(rule.equals(unmarshalledDefault));

@@ -3,8 +3,12 @@
  */
 package org.verapdf.pdfa.validation;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Writer;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.xml.bind.JAXBException;
@@ -263,19 +267,129 @@ public final class Profiles {
     /**
      * @param toConvert
      *            a {@link ValidationProfile} to convert to an XML String
+     * @param prettyXml
+     *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
+     *            for no space formatting
      * @return a String xml representation of toConvert
+     * @throws JAXBException
+     *             thrown by JAXB marshaller if there's an error converting the
+     *             object
+     * @throws IOException
+     *             thrown when's there's a problem closing the underlying
+     *             StringWriter
+     * @throws IllegalArgumentException
+     *             if toConvert is null
+     */
+    public static String profileToXmlString(final ValidationProfile toConvert,
+            Boolean prettyXml) throws JAXBException, IOException {
+        if (toConvert == null)
+            throw new IllegalArgumentException(
+                    "Parameter toConvert cannot be null");
+        return ValidationProfileImpl.toXml(toConvert, prettyXml);
+    }
+
+    /**
+     * @param toConvert
+     *            a {@link ValidationProfile} to convert to an XML String
+     * @param forXmlOutput an OutputStream used to write the generated XML to
+     * @param prettyXml
+     *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
+     *            for no space formatting
      * @throws JAXBException
      *             thrown by JAXB marshaller if there's an error converting the
      *             object
      * @throws IllegalArgumentException
      *             if toConvert is null
      */
-    public static String profileToXmlString(final ValidationProfile toConvert)
-            throws JAXBException {
+    public static void profileToXml(final ValidationProfile toConvert, OutputStream forXmlOutput,
+            Boolean prettyXml) throws JAXBException {
         if (toConvert == null)
             throw new IllegalArgumentException(
                     "Parameter toConvert cannot be null");
-        return ValidationProfileImpl.toXml(toConvert);
+        ValidationProfileImpl.toXml(toConvert, forXmlOutput, prettyXml);
     }
 
+    /**
+     * @param toConvert
+     *            a {@link ValidationProfile} to convert to an XML String
+     * @param forXmlOutput a Writer used to write the generated XML to
+     * @param prettyXml
+     *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
+     *            for no space formatting
+     * @throws JAXBException
+     *             thrown by JAXB marshaller if there's an error converting the
+     *             object
+     * @throws IllegalArgumentException
+     *             if toConvert is null
+     */
+    public static void profileToXml(final ValidationProfile toConvert, Writer forXmlOutput,
+            Boolean prettyXml) throws JAXBException {
+        if (toConvert == null)
+            throw new IllegalArgumentException(
+                    "Parameter toConvert cannot be null");
+        ValidationProfileImpl.toXml(toConvert, forXmlOutput, prettyXml);
+    }
+
+    /**
+     * @param profiles
+     *            a Set of {@link ValidationProfile}s used to populate the
+     *            directory instance
+     * @return a ProfileDirectory populated with the {@link ValidationProfile}s
+     *         passed in the profiles parameter
+     * @throws IllegalArgumentException
+     *             if the profiles parameter is null or empty
+     */
+    public static ProfileDirectory directoryFromProfiles(
+            Set<ValidationProfile> profiles) {
+        if (profiles == null)
+            throw new IllegalArgumentException(
+                    "Parameter profiles cannot be null.");
+        if (profiles.isEmpty())
+            throw new IllegalArgumentException(
+                    "Parameter profiles cannot be empty.");
+        return ProfileDirectoryImpl.fromProfileSet(profiles);
+    }
+
+    /**
+     * Creates a lookup Map of {@link ValidationProfile}s from the passed Set.
+     * 
+     * @param profileSet
+     *            a set of ValidationProfiles
+     * @return a Map<PDFAFlavour, ValidationProfile> from the Set of
+     *         {@link ValidationProfile}s
+     * @throws IllegalArgumentException
+     *             if the profileSet parameter is null or empty
+     */
+    public static Map<PDFAFlavour, ValidationProfile> profileMapFromSet(
+            Set<ValidationProfile> profileSet) {
+        if (profileSet == null)
+            throw new IllegalArgumentException(
+                    "Parameter profileSet cannot be null.");
+        if (profileSet.isEmpty())
+            throw new IllegalArgumentException(
+                    "Parameter profileSet cannot be empty.");
+        return ProfileDirectoryImpl.profileMapFromSet(profileSet);
+    }
+
+    /**
+     * Creates a lookup Map of {@link PDFAFlavour}s by String Id from the passed
+     * Set.
+     * 
+     * @param flavours
+     *            a Set of {@link PDFAFlavour}s
+     * @return a Map created from the passed set where the Map key is the String
+     *         ID of the flavour
+     * @throws IllegalArgumentException
+     *             if the flavours parameter is null or empty
+     */
+    public static Map<String, PDFAFlavour> flavourMapFromSet(
+            Set<PDFAFlavour> flavours) {
+        if (flavours == null)
+            throw new IllegalArgumentException(
+                    "Parameter flavours cannot be null.");
+        if (flavours.isEmpty())
+            throw new IllegalArgumentException(
+                    "Parameter flavours cannot be empty.");
+        return ProfileDirectoryImpl.flavourMapFromSet(flavours);
+    }
 }

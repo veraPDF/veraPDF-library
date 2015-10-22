@@ -6,6 +6,7 @@ package org.verapdf.pdfa.validation;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -85,14 +86,15 @@ public class RuleImplTest {
      * .
      * 
      * @throws JAXBException
+     * @throws IOException 
      */
     @Test
-    public final void testToXml() throws JAXBException {
+    public final void testToXml() throws JAXBException, IOException {
         List<Reference> refs = new ArrayList<>();
         refs.add(ReferenceImpl.defaultInstance());
         Rule rule = RuleImpl.fromValues(RuleIdImpl.defaultInstance(), "object",
                 "description", "test", refs);
-        String xmlDefault = RuleImpl.toXml(rule);
+        String xmlDefault = RuleImpl.toXml(rule, Boolean.FALSE);
         Rule unmarshalledDefault = RuleImpl.fromXml(xmlDefault);
         assertFalse(rule == unmarshalledDefault);
         assertTrue(rule.equals(unmarshalledDefault));

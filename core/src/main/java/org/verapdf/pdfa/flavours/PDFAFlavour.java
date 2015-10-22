@@ -63,6 +63,20 @@ public enum PDFAFlavour {
     /** 3u PDF Version 3 Level U */
     PDFA_3_U(Specification.ISO_19005_3, Level.U);
 
+    private final static Map<String, PDFAFlavour> FLAVOUR_LOOKUP;
+    static {
+        FLAVOUR_LOOKUP = new HashMap<>();
+        FLAVOUR_LOOKUP.put("", PDFAFlavour.NO_FLAVOUR);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_1_A.getId(), PDFAFlavour.PDFA_1_A);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_1_B.getId(), PDFAFlavour.PDFA_1_B);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_A.getId(), PDFAFlavour.PDFA_2_A);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_B.getId(), PDFAFlavour.PDFA_2_B);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_U.getId(), PDFAFlavour.PDFA_2_U);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_A.getId(), PDFAFlavour.PDFA_3_A);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_B.getId(), PDFAFlavour.PDFA_3_B);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_U.getId(), PDFAFlavour.PDFA_3_U);
+    }
+
     private final Specification part;
     private final Level level;
     private final String id;
@@ -102,7 +116,7 @@ public enum PDFAFlavour {
      *
      * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>.</p>
      */
-    public static enum Specification {
+    public enum Specification {
         /** PDF/A Version 1 */
         NO_STANDARD(IsoStandardSeries.NO_SERIES, PDFAFlavours.NONE_ID,
                 PDFAFlavours.NONE, PDFAFlavours.NONE),
@@ -133,9 +147,9 @@ public enum PDFAFlavour {
             this.year = year;
             this.description = description;
             this.id = this.series.getName()
-                    + "-" + String.valueOf(this.getPartNumber()) + ":" + this.getYear(); //$NON-NLS-1$//$NON-NLS-2$
+                    + "-" + this.getPartNumber() + ":" + this.getYear(); //$NON-NLS-1$//$NON-NLS-2$
             this.name = PDFAFlavours.PDFA_STRING_PREFIX
-                    + String.valueOf(this.getPartNumber());
+                    + this.getPartNumber();
         }
 
         /**
@@ -192,7 +206,7 @@ public enum PDFAFlavour {
      *
      * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>.</p>
      */
-    public static enum Level {
+    public enum Level {
         /** Special identifier for the none case */
         NO_LEVEL(PDFAFlavours.NONE, PDFAFlavours.NONE),
         /** Level A */
@@ -270,20 +284,6 @@ public enum PDFAFlavour {
         public String toString() {
             return this.getName() + " " + this.getDescription(); //$NON-NLS-1$
         }
-    }
-
-    private final static Map<String, PDFAFlavour> FLAVOUR_LOOKUP;
-    static {
-        FLAVOUR_LOOKUP = new HashMap<>();
-        FLAVOUR_LOOKUP.put("", PDFAFlavour.NO_FLAVOUR);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_1_A.getId(), PDFAFlavour.PDFA_1_A);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_1_B.getId(), PDFAFlavour.PDFA_1_B);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_A.getId(), PDFAFlavour.PDFA_2_A);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_B.getId(), PDFAFlavour.PDFA_2_B);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_U.getId(), PDFAFlavour.PDFA_2_U);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_A.getId(), PDFAFlavour.PDFA_3_A);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_B.getId(), PDFAFlavour.PDFA_3_B);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_U.getId(), PDFAFlavour.PDFA_3_U);
     }
 
     /**
