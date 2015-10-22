@@ -172,6 +172,11 @@ public enum PDFAFlavour {
         public String getDescription() {
             return this.description;
         }
+        
+        @Override
+        public String toString() {
+            return this.id;
+        }
     }
 
     /**
