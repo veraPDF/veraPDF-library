@@ -13,9 +13,22 @@
   <description>Command line invocation of the Vera PDF validator.</description>
 
   <dependencies>
+
     <dependency>
       <groupId>org.verapdf</groupId>
-      <artifactId>core</artifactId>
+      <artifactId>validation-logic</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>model-implementation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>validation-report</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>metadata-fixer</artifactId>
     </dependency>
 
     <dependency>
