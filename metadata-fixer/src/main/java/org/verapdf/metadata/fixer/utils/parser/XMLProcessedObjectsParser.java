@@ -17,6 +17,11 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Properties;
 
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.PROCESSED_OBJECTS_PROPERTIES_PATH;
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.TEST_TAG;
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.RULE_DESCRIPTION_TAG;
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.OBJECT_TYPE_TAG;
+
 /**
  * @author Evgeniy Muravitskiy
  */

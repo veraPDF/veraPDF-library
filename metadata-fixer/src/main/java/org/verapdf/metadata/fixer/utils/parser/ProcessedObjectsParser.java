@@ -13,12 +13,6 @@ import java.net.URISyntaxException;
  */
 public interface ProcessedObjectsParser {
 
-	String PROCESSED_OBJECTS_PROPERTIES_PATH = "/processed-objects.properties";
-
-	String RULE_DESCRIPTION_TAG = "ruleDescription";
-	String OBJECT_TYPE_TAG = "objectType";
-	String TEST_TAG = "test";
-
 	ProcessedObjects getProcessedObjects() throws IOException, URISyntaxException, ParserConfigurationException, SAXException;
 
 	ProcessedObjects getProcessedObjects(String path) throws IOException, SAXException, ParserConfigurationException;
