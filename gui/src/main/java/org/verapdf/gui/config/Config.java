@@ -1,6 +1,6 @@
 package org.verapdf.gui.config;
 
-import org.verapdf.metadata.fixer.utils.FileGenerator;
+import org.verapdf.metadata.fixer.utils.MetadataFixerConstants;
 
 import java.io.File;
 import java.nio.file.FileSystems;

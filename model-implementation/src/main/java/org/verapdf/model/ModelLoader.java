@@ -42,16 +42,16 @@ public final class ModelLoader implements Closeable {
      *             object
      */
     public PDDocument getPDDocument() throws IOException {
-        if (document == null) {
-            if (!file.exists() || !file.isFile()) {
-                LOGGER.error("Invalid path to document '" + file.getPath()
+        if (this.document == null) {
+            if (!this.file.exists() || !this.file.isFile()) {
+                LOGGER.error("Invalid path to document '" + this.file.getPath()
                         + "'. File does not exist or not a file.");
             } else {
-                document = PDDocument.load(file, false, true);
+                this.document = PDDocument.load(this.file, false, true);
             }
         }
 
-        return document;
+        return this.document;
     }
 
     /**
@@ -65,21 +65,21 @@ public final class ModelLoader implements Closeable {
      *             object
      */
     public CosDocument getRoot() throws IOException {
-        if (document == null) {
-            document = getPDDocument();
+        if (this.document == null) {
+            this.document = this.getPDDocument();
         }
-        return document != null ? new PBCosDocument(document, file.length())
+        return this.document != null ? new PBCosDocument(this.document, this.file.length())
                 : null;
     }
 
 	@Override
 	public void close() {
 		try {
-			if (document != null) {
-				document.close();
+			if (this.document != null) {
+				this.document.close();
 			}
 		} catch (IOException e) {
-			LOGGER.error("Problems with close document '" + file.getAbsolutePath() + "'.", e);
+			LOGGER.error("Problems with document close: '" + this.file.getAbsolutePath() + "'.", e);
 		}
 	}
 }

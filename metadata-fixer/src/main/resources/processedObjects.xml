@@ -12,4 +12,8 @@
         <objectType>PDDocument</objectType>
         <test>metadata_size == 1</test>
     </ruleDescription>
+    <ruleDescription>
+        <objectType>XMPMainPackage</objectType>
+        <test>ispdfaidNSPresent</test>
+    </ruleDescription>
 </appliedObjects>
