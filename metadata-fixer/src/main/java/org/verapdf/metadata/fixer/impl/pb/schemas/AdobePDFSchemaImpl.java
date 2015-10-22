@@ -4,8 +4,8 @@ import org.apache.xmpbox.schema.AdobePDFSchema;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.PRODUCER;
 import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.KEYWORDS;
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.PRODUCER;
 
 /**
  * @author Evgeniy Muravitskiy

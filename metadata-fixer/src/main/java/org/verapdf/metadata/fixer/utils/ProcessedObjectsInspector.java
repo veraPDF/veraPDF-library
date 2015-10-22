@@ -39,9 +39,8 @@ public class ProcessedObjectsInspector {
 	 * Return validation status according to failed rules and validation profile.
 	 * {@link ProcessedObjects} obtain from xml file.
 	 *
-	 * @param rules list of rules
+	 * @param rules   list of rules
 	 * @param profile validation profile
-	 *
 	 * @return validation status
 	 */
 	public static ValidationStatus validationStatus(List<Rule> rules, ValidationProfile profile)
@@ -54,10 +53,9 @@ public class ProcessedObjectsInspector {
 	 * Return validation status according to failed rules and validation profile.
 	 * {@link ProcessedObjects} obtain by {@link ProcessedObjectsParser}.
 	 *
-	 * @param rules list of rules
+	 * @param rules   list of rules
 	 * @param profile validation profile
-	 * @param parser parse some data to {@code ProcessedObjects}
-	 *
+	 * @param parser  parse some data to {@code ProcessedObjects}
 	 * @return validation status
 	 */
 	public static ValidationStatus validationStatus(
@@ -70,10 +68,9 @@ public class ProcessedObjectsInspector {
 	 * Return validation status according to failed rules, validation profile
 	 * and metadata failed rules type
 	 *
-	 * @param rules list of rules
+	 * @param rules   list of rules
 	 * @param profile validation profile
 	 * @param objects metadata failed rules type
-	 *
 	 * @return validation status
 	 */
 	public static ValidationStatus validationStatus(

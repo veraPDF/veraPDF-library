@@ -67,7 +67,7 @@ public final class Config {
 		private static final boolean DEFAULT_SHOW_PASSED_RULES = false;
 		private static final int DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS = 100;
 		private static final int DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS = 100;
-		private static final String DEFAULT_METADATA_FIXER_PREFIX = FileGenerator.DEFAULT_PREFIX;
+		private static final String DEFAULT_METADATA_FIXER_PREFIX = MetadataFixerConstants.DEFAULT_PREFIX;
 		private static final Path DEFAULT_FIX_METADATA_PATH_FOLDER = FileSystems.getDefault().getPath("");
 
 		private static final Config DEFAULT_CONFIG = new Config(DEFAULT_SHOW_PASSED_RULES, DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, DEFAULT_METADATA_FIXER_PREFIX, DEFAULT_FIX_METADATA_PATH_FOLDER);

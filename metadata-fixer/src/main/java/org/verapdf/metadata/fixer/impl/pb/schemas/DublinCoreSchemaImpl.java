@@ -6,12 +6,10 @@ import org.apache.xmpbox.type.*;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_TITLE;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_AUTHOR;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_SUBJECT;
-
 import javax.xml.XMLConstants;
 import java.util.List;
+
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.*;
 
 /**
  * @author Evgeniy Muravitskiy

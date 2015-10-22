@@ -18,7 +18,6 @@ public class DateConverter {
 	 * Convert {@code Calendar} object to string representation in UTC form
 	 *
 	 * @param calendar passed date
-	 *
 	 * @return string representation of passed date
 	 */
 	public static String toUTCString(Calendar calendar) {
@@ -44,7 +43,7 @@ public class DateConverter {
 
 	/**
 	 * Convert string date representation to string representation in UTC form.
-	 * <p>
+	 * <p/>
 	 * Note: current implementation is not effective
 	 *
 	 * @param date passed date
