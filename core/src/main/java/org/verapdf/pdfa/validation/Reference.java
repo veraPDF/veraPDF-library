@@ -3,6 +3,8 @@
  */
 package org.verapdf.pdfa.validation;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import org.verapdf.pdfa.flavours.PDFAFlavour.Part;
 
 /**
@@ -11,6 +13,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour.Part;
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
+@XmlJavaTypeAdapter(ReferenceImpl.Adapter.class)
 public interface Reference {
     /**
      * @return a {@link Part} that identifies the PDF/A Specification referred
