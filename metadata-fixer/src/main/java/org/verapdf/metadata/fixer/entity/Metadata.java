@@ -15,11 +15,11 @@ import org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour;
 public interface Metadata {
 
 	/**
-	 * Remove filters from stream
+	 * Remove filters from stream and add required fields to stream dictionary
 	 *
 	 * @param report report applied changes
 	 */
-	void unfilterMetadataStream(MetadataFixerResult report);
+	void checkMetadataStream(MetadataFixerResult report);
 
 	/**
 	 * Remove identification schema if {@code MetadataFixer}
