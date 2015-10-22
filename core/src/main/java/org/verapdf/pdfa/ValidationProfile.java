@@ -17,14 +17,6 @@ import org.verapdf.pdfa.validation.Variable;
  */
 public interface ValidationProfile {
     /**
-     * TODO: Is this OK to be subsumed by PDFAFlavour as we have one profile and
-     * one profile only for each flavour?
-     * 
-     * @return the String identifier for this ValidationProfile
-     */
-    public String getId();
-
-    /**
      * @return the {@link PDFAFlavour} that identifies the specification part
      *         and conformance level tested by this profile.
      */
