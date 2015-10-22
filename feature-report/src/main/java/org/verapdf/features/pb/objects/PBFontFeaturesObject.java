@@ -191,9 +191,8 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 			}
 			if (file != null) {
 				try {
-					FontFeaturesData.Builder builder = new FontFeaturesData.Builder();
 					byte[] stream = PBCreateNodeHelper.inputStreamToByteArray(file.getStream().getUnfilteredStream());
-					builder.stream(stream);
+					FontFeaturesData.Builder builder = new FontFeaturesData.Builder(stream);
 
 					byte[] metadata = null;
 					if (file.getMetadata() != null) {

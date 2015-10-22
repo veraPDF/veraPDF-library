@@ -25,7 +25,7 @@ public abstract class AbstractImageFeaturesExtractor extends FeaturesExtractor {
 	 * Extract features from features data
 	 *
 	 * @param data features data for extractor
-	 * @return root for extracted data tree
+	 * @return list of roots for extracted data tree
 	 */
 	public abstract List<FeatureTreeNode> getImageFeatures(ImageFeaturesData data);
 
