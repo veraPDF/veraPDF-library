@@ -13,4 +13,16 @@
   <name>veraPDF Library core</name>
   <description>Core classes for the veraPDF Library.</description>
 
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>nl.jqno.equalsverifier</groupId>
+      <artifactId>equalsverifier</artifactId>
+      <version>1.5.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>
