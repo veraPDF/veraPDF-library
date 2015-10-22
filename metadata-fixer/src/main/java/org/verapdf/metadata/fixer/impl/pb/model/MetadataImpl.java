@@ -48,7 +48,7 @@ public class MetadataImpl implements Metadata {
 	}
 
 	@Override
-	public void unfilterMetadataStream(MetadataFixerResult report) {
+	public void checkMetadataStream(MetadataFixerResult report) {
 		COSBase filters = this.stream.getFilters();
 		if (filters instanceof COSName ||
 				(filters instanceof COSArray && ((COSArray) filters).size() != 0)) {
@@ -60,6 +60,17 @@ public class MetadataImpl implements Metadata {
 				LOGGER.warn("Problems with unfilter stream.");
 				LOGGER.warn(e);
 			}
+		}
+		this.setRequiredDictionaryValue(COSName.METADATA, COSName.TYPE, report);
+		this.setRequiredDictionaryValue(COSName.getPDFName("XML"), COSName.SUBTYPE, report);
+	}
+
+	private void setRequiredDictionaryValue(COSName value, COSName key, MetadataFixerResult report) {
+		if (!value.equals(this.stream.getDictionaryObject(key))) {
+			this.stream.setItem(key, value);
+			this.stream.setNeedToBeUpdated(true);
+			report.addAppliedFix(value.getName() + " value of " + key.getName() + " key is set " +
+					"to metadata dictionary.");
 		}
 	}
 
@@ -144,16 +155,17 @@ public class MetadataImpl implements Metadata {
 	}
 
 	private boolean dublinCoreInfoPresent(InfoDictionary info) {
-		return info.getTitle() != null || info.getSubject() != null || info.getAuthor() != null;
+		return info != null && (info.getTitle() != null || info.getSubject() != null ||
+				info.getAuthor() != null);
 	}
 
 	private boolean adobePDFInfoPresent(InfoDictionary info) {
-		return info.getProducer() != null && info.getKeywords() != null;
+		return info != null && (info.getProducer() != null || info.getKeywords() != null);
 	}
 
 	private boolean xmpBasicInfoPresent(InfoDictionary info) {
-		return info.getCreator() != null || info.getCreationDate() != null ||
-				info.getModificationDate() != null;
+		return info != null && (info.getCreator() != null || info.getCreationDate() != null ||
+				info.getModificationDate() != null);
 	}
 
 }

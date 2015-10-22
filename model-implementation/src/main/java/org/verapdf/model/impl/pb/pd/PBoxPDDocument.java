@@ -1,15 +1,17 @@
 package org.verapdf.model.impl.pb.pd;
 
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.common.PDDestinationOrAction;
 import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.PDStructureTreeRoot;
-import org.apache.pdfbox.pdmodel.interactive.action.*;
+import org.apache.pdfbox.pdmodel.interactive.action.PDDocumentCatalogAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.*;
-import org.verapdf.model.pdlayer.PDAction;
 
 import java.io.IOException;
 import java.util.*;
@@ -141,9 +143,8 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
     }
 
     private List<PDAction> getActions() {
-        PDDocumentCatalogAdditionalActions pbActions = this.document
-                .getDocumentCatalog().getActions();
-        if (pbActions != null) {
+		PDDocumentCatalogAdditionalActions pbActions = this.getAdditionalAction();
+		if (pbActions != null) {
 			List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ACTIONS);
 
 			org.apache.pdfbox.pdmodel.interactive.action.PDAction buffer;
@@ -167,6 +168,13 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
         }
         return Collections.emptyList();
     }
+
+	private PDDocumentCatalogAdditionalActions getAdditionalAction() {
+		COSDictionary catalog = this.document.getDocumentCatalog().getCOSObject();
+		COSBase aaDictionary = catalog.getDictionaryObject(COSName.AA);
+		return !(aaDictionary instanceof COSDictionary) ? null :
+				new PDDocumentCatalogAdditionalActions((COSDictionary) aaDictionary);
+	}
 
 	private List<PDPage> getPages() {
 		PDPageTree pageTree = this.document.getPages();

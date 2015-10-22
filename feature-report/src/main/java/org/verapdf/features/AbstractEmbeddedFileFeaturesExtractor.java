@@ -5,20 +5,20 @@ import org.verapdf.features.tools.FeatureTreeNode;
 import java.util.List;
 
 /**
- * Base class for extending to extract features from fonts
+ * Base class for extending to extract features from embedded files
  *
  * @author Maksim Bezrukov
  */
-public abstract class AbstractFontFeaturesExtractor extends FeaturesExtractor {
+public abstract class AbstractEmbeddedFileFeaturesExtractor extends FeaturesExtractor {
 
 	@Override
 	List<FeatureTreeNode> getFeatures(FeaturesData data) {
-		return getFontFeatures((FontFeaturesData) data);
+		return getEmbeddedFileFeatures((EmbeddedFileFeaturesData) data);
 	}
 
 	@Override
 	FeaturesObjectTypesEnum getType() {
-		return FeaturesObjectTypesEnum.FONT;
+		return FeaturesObjectTypesEnum.EMBEDDED_FILE;
 	}
 
 	/**
@@ -27,6 +27,5 @@ public abstract class AbstractFontFeaturesExtractor extends FeaturesExtractor {
 	 * @param data features data for extractor
 	 * @return list of roots for extracted data tree
 	 */
-	public abstract List<FeatureTreeNode> getFontFeatures(FontFeaturesData data);
-
+	public abstract List<FeatureTreeNode> getEmbeddedFileFeatures(EmbeddedFileFeaturesData data);
 }

@@ -20,7 +20,10 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
@@ -195,8 +198,8 @@ public class Validator {
     private void addAllLinkedObjects(Object checkObject, String checkContext,
                                      Set<String> checkIDContext) throws NullLinkNameException,
             NullLinkException, NullLinkedObjectException {
-		List<String> links = checkObject.getLinks();
-		for (int j = links.size() - 1; j >= 0; --j) {
+        List<String> links = checkObject.getLinks();
+        for (int j = links.size() - 1; j >= 0; --j) {
             String link = links.get(j);
 
             if (link == null) {
@@ -462,13 +465,13 @@ public class Validator {
             NullLinkNameException, NullLinkException,
             NullLinkedObjectException, MissedHashTagException,
             XMLStreamException, WrongSignatureException, MultiplyGlobalVariableNameException {
-		if (validationProfilePath == null) {
-			throw new IllegalArgumentException(
-					"Parameter (String validationProfilePath) cannot be null.");
-		}
-		ValidationProfile profile = ValidationProfileParser.parseFromFilePath(
-				validationProfilePath, isSignCheckOn);
-		return validate(root, profile, isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
+        if (validationProfilePath == null) {
+            throw new IllegalArgumentException(
+                    "Parameter (String validationProfilePath) cannot be null.");
+        }
+        ValidationProfile profile = ValidationProfileParser.parseFromFilePath(
+                validationProfilePath, isSignCheckOn);
+        return validate(root, profile, isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
     }
 
     /**
@@ -509,13 +512,13 @@ public class Validator {
             NullLinkException, NullLinkedObjectException,
             MissedHashTagException, XMLStreamException,
             WrongSignatureException, MultiplyGlobalVariableNameException {
-		if (validationProfile == null) {
-			throw new IllegalArgumentException(
-					"Parameter (ValidationProfile validationProfile) cannot be null.");
-		}
-		ValidationProfile profile = ValidationProfileParser.parseFromFile(
-				validationProfile, isSignCheckOn);
-		return validate(root, profile, isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
+        if (validationProfile == null) {
+            throw new IllegalArgumentException(
+                    "Parameter (ValidationProfile validationProfile) cannot be null.");
+        }
+        ValidationProfile profile = ValidationProfileParser.parseFromFile(
+                validationProfile, isSignCheckOn);
+        return validate(root, profile, isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
     }
 
     /**

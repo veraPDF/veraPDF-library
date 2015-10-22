@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.JarEntry;
@@ -28,14 +27,21 @@ public class FeaturesPluginsLoader {
 	 * Configurates features reporter
 	 *
 	 * @param reporter features reporter for configurating
-	 * @param dir      plugins directory
 	 */
-	public static void loadExtractors(FeaturesReporter reporter, Path dir) {
-		if (dir != null && dir.toFile().isDirectory()) {
-			List<FeaturesExtractor> extractors = getAllExtractors(dir.toFile());
-			for (FeaturesExtractor ext : extractors) {
-				reporter.registerFeaturesExtractor(ext);
+	public static void loadExtractors(FeaturesReporter reporter) {
+		String appHome = System.getProperty("app.home");
+		if (appHome != null) {
+			File dir = new File(appHome, "plugins");
+			if (dir.isDirectory() && dir.canRead()) {
+				List<FeaturesExtractor> extractors = getAllExtractors(dir);
+				for (FeaturesExtractor ext : extractors) {
+					reporter.registerFeaturesExtractor(ext);
+				}
+			} else {
+				LOGGER.error("Plugins folder is not exists or it can not be read.");
 			}
+		} else {
+			LOGGER.error("Con not get system property \"app.home\"");
 		}
 	}
 
@@ -62,11 +68,23 @@ public class FeaturesPluginsLoader {
 		}
 		for (File f : files) {
 			if (f.isDirectory()) {
-				addAllJars(f, jars);
-			} else if (f.isFile() && f.getName().endsWith(".jar")) {
-				jars.add(f);
+				addJar(f, jars);
 			}
 		}
+	}
+
+	private static void addJar(File dir, List<File> jars) {
+		File[] files = dir.listFiles();
+		if (files == null) {
+			return;
+		}
+		for (File f : files) {
+			if (f.isFile() && f.getName().endsWith(".jar")) {
+				jars.add(f);
+				return;
+			}
+		}
+
 	}
 
 	private static void addAllExtractors(File jar, List<FeaturesExtractor> extractors) throws IOException {

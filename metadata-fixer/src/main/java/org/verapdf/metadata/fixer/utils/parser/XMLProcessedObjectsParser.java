@@ -17,6 +17,8 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Properties;
 
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.*;
+
 /**
  * @author Evgeniy Muravitskiy
  */

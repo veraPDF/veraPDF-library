@@ -18,8 +18,7 @@ public final class GUIConstants {
 	public static final String HTML_LOGO_NAME = "html-logo.png";
 	public static final String CHOOSE_PDF_BUTTON_TEXT = "Choose PDF";
 	public static final String PDF_NOT_CHOSEN_TEXT = "PDF file not chosen";
-	public static final String THIRDPARTY_CONFIG_CHOOSE_BUTTON = "Choose";
-	public static final String THIRDPARTY_CONFIG_LABEL_TEXT = "Load features report plugins using the config file:";
+	public static final String FIX_METADATA_FOLDER_CHOOSE_BUTTON = "Choose";
 	public static final String CHOOSE_PROFILE_BUTTON_TEXT = "Choose Profile";
 	public static final String VALIDATION_PROFILE_NOT_CHOSEN = "Validation profile not chosen";
 	public static final String VALIDATE_BUTTON_TEXT = "Validate";

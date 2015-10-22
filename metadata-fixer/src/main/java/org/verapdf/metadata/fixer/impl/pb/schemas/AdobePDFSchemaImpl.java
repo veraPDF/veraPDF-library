@@ -4,6 +4,9 @@ import org.apache.xmpbox.schema.AdobePDFSchema;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.KEYWORDS;
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.PRODUCER;
+
 /**
  * @author Evgeniy Muravitskiy
  */
@@ -20,7 +23,7 @@ public class AdobePDFSchemaImpl extends BasicSchemaImpl implements AdobePDF {
 
 	@Override
 	public void setProducer(String producer) {
-		this.removeProperty("Producer");
+		this.removeProperty(PRODUCER);
 		((AdobePDFSchema) this.schema).setProducer(producer);
 	}
 
@@ -31,7 +34,7 @@ public class AdobePDFSchemaImpl extends BasicSchemaImpl implements AdobePDF {
 
 	@Override
 	public void setKeywords(String keywords) {
-		this.removeProperty("Keywords");
+		this.removeProperty(KEYWORDS);
 		((AdobePDFSchema) this.schema).setKeywords(keywords);
 	}
 

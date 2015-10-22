@@ -9,12 +9,14 @@ import java.util.*;
  */
 public final class ImageFeaturesData extends FeaturesData {
 
-	private Integer width;
-	private Integer height;
-	private List<FilterStructure> filters;
+	private final byte[] metadata;
+	private final Integer width;
+	private final Integer height;
+	private final List<FilterStructure> filters;
 
 	private ImageFeaturesData(byte[] metadata, byte[] stream, Integer width, Integer height, List<FilterStructure> filters) {
-		super(metadata, stream);
+		super(stream);
+		this.metadata = metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
 		this.width = width;
 		this.height = height;
 		if (filters == null) {
@@ -41,6 +43,13 @@ public final class ImageFeaturesData extends FeaturesData {
 			throw new IllegalArgumentException("Image stream can not be null");
 		}
 		return new ImageFeaturesData(metadata, stream, width, height, filters);
+	}
+
+	/**
+	 * @return byte array represent metadata stream
+	 */
+	public byte[] getMetadata() {
+		return metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
 	}
 
 	/**
@@ -72,13 +81,13 @@ public final class ImageFeaturesData extends FeaturesData {
 	 * and not null stream.
 	 */
 	public static class FilterStructure {
-		private String name;
-		private Map<String, String> properties;
-		private byte[] stream;
+		private final String name;
+		private final Map<String, String> properties;
+		private final byte[] stream;
 
 		private FilterStructure(String name, Map<String, String> properties, byte[] stream) {
 			this.name = name;
-			this.properties = new HashMap<>(properties);
+			this.properties = properties == null ? new HashMap<String, String>() : new HashMap<>(properties);
 			this.stream = Arrays.copyOf(stream, stream.length);
 		}
 
@@ -110,7 +119,7 @@ public final class ImageFeaturesData extends FeaturesData {
 		 * @return map of properties of a filter
 		 */
 		public Map<String, String> getProperties() {
-			return properties == null ? null : Collections.unmodifiableMap(properties);
+			return Collections.unmodifiableMap(properties);
 		}
 
 		/**
