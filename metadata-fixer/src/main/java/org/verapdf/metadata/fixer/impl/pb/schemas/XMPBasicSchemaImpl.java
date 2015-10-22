@@ -5,9 +5,7 @@ import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
 import org.verapdf.metadata.fixer.utils.DateConverter;
 
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_CREATOR;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_CREATION_DATE;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_MODIFICATION_DATE;
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.*;
 
 /**
  * @author Evgeniy Muravitskiy

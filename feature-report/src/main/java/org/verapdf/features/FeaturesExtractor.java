@@ -15,7 +15,7 @@ abstract class FeaturesExtractor {
 	 * Extract features from features data
 	 *
 	 * @param data features data for extractor
-	 * @return root for extracted data tree
+	 * @return list of roots for extracted data tree
 	 */
 	abstract List<FeatureTreeNode> getFeatures(FeaturesData data);
 

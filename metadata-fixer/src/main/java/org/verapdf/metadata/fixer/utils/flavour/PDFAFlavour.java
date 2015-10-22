@@ -6,15 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour.Part.NO_STANDARD;
-import static org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour.Part.ISO_19005_1;
-import static org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour.Part.ISO_19005_2;
-import static org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour.Part.ISO_19005_3;
-
-import static org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour.Level.NO_LEVEL;
-import static org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour.Level.A;
-import static org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour.Level.B;
-import static org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour.Level.U;
+import static org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour.Level.*;
+import static org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour.Part.*;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -53,13 +46,13 @@ public enum PDFAFlavour {
 		Map<String, PDFAFlavour> buffer = new HashMap<>(8, 1);
 
 		buffer.put(NO_FLAVOUR.getId(), NO_FLAVOUR);
-		buffer.put(PDFA_1_A.getId()  , PDFA_1_A);
-		buffer.put(PDFA_1_B.getId()  , PDFA_1_B);
-		buffer.put(PDFA_2_A.getId()  , PDFA_2_A);
-		buffer.put(PDFA_2_B.getId()  , PDFA_2_B);
-		buffer.put(PDFA_3_A.getId()  , PDFA_3_A);
-		buffer.put(PDFA_3_B.getId()  , PDFA_3_B);
-		buffer.put(PDFA_3_U.getId()  , PDFA_3_U);
+		buffer.put(PDFA_1_A.getId(), PDFA_1_A);
+		buffer.put(PDFA_1_B.getId(), PDFA_1_B);
+		buffer.put(PDFA_2_A.getId(), PDFA_2_A);
+		buffer.put(PDFA_2_B.getId(), PDFA_2_B);
+		buffer.put(PDFA_3_A.getId(), PDFA_3_A);
+		buffer.put(PDFA_3_B.getId(), PDFA_3_B);
+		buffer.put(PDFA_3_U.getId(), PDFA_3_U);
 
 		FLAVOURS = Collections.unmodifiableMap(buffer);
 	}

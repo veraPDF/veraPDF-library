@@ -70,7 +70,7 @@ public class MetadataImpl implements Metadata {
 			this.stream.setItem(key, value);
 			this.stream.setNeedToBeUpdated(true);
 			report.addAppliedFix(value.getName() + " value of " + key.getName() + " key is set " +
-																			"to metadata dictionary.");
+					"to metadata dictionary.");
 		}
 	}
 

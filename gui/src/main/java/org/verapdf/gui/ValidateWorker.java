@@ -29,7 +29,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Path;
 
 /**
@@ -99,7 +98,7 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 			}
 			if ((flag & (1 << 1)) == (1 << 1)) {
 				try {
-					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument(), settings.getFeaturesPluginsConfigFilePath());
+					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(this.parent,
 							"Some error in creating features collection.",
@@ -141,7 +140,6 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 				xmlReport.deleteOnExit();
 				XMLReport.writeXMLReport(info, collection, xmlReport.getPath(),
 						endTimeOfValidation - startTimeOfValidation, settings.isShowPassedRules());
-
 				if (info != null) {
 					try {
 						htmlReport = File.createTempFile("veraPDF-tempHTMLReport", ".html");

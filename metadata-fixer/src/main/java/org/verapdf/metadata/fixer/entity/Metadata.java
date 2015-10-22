@@ -25,7 +25,7 @@ public interface Metadata {
 	 * Remove identification schema if {@code MetadataFixer}
 	 * can not repair document to valid PDF/A Document.
 	 *
-	 * @param result  report applied changes
+	 * @param result report applied changes
 	 */
 	void removePDFIdentificationSchema(MetadataFixerResult result);
 
@@ -33,7 +33,7 @@ public interface Metadata {
 	 * Add PDF/A identification schema if {@code MetadataFixer}
 	 * be able to repair document to valid PDF/A document.
 	 *
-	 * @param report report applied changes
+	 * @param report  report applied changes
 	 * @param flavour the checked flavour
 	 */
 	void addPDFIdentificationSchema(MetadataFixerResult report, PDFAFlavour flavour);

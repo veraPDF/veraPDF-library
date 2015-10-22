@@ -41,18 +41,18 @@ public interface PDFDocument {
 	 * only if metadata or information dictionary of document was changed.
 	 * In {@link MetadataFixerResult} must set 1 of 3 states:
 	 * <ul>
-	 *     <li>
-	 *         {@link org.verapdf.metadata.fixer.MetadataFixerResult.RepairStatus#FAILED}
-	 *     		if got problems with document save
-	 *     </li>
-	 * 	   <li>
-	 * 	       {@link org.verapdf.metadata.fixer.MetadataFixerResult.RepairStatus#NO_ACTION}
-	 * 	   		if metadata and information dictionary was not changed
-	 * 	   </li>
-	 *     <li>
-	 *         {@link org.verapdf.metadata.fixer.MetadataFixerResult.RepairStatus#SUCCESSFUL}
-	 *         if document save successful
-	 *     </li>
+	 * <li>
+	 * {@link org.verapdf.metadata.fixer.MetadataFixerResult.RepairStatus#FAILED}
+	 * if got problems with document save
+	 * </li>
+	 * <li>
+	 * {@link org.verapdf.metadata.fixer.MetadataFixerResult.RepairStatus#NO_ACTION}
+	 * if metadata and information dictionary was not changed
+	 * </li>
+	 * <li>
+	 * {@link org.verapdf.metadata.fixer.MetadataFixerResult.RepairStatus#SUCCESSFUL}
+	 * if document save successful
+	 * </li>
 	 * </ul>
 	 *
 	 * @param report result of {@code MetadataFixer} handling

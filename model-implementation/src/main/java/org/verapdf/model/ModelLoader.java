@@ -75,11 +75,11 @@ public final class ModelLoader implements Closeable {
 	@Override
 	public void close() {
 		try {
-			if (this.document != null) {
-				this.document.close();
-			}
+            if (this.document != null) {
+                this.document.close();
+            }
 		} catch (IOException e) {
-			LOGGER.error("Problems with document close: '" + this.file.getAbsolutePath() + "'.", e);
-		}
+            LOGGER.error("Problems with document close: '" + this.file.getAbsolutePath() + "'.", e);
+        }
 	}
 }

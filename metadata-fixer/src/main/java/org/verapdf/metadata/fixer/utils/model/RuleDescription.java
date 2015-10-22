@@ -14,7 +14,7 @@ public class RuleDescription {
 	/**
 	 * Default constructor.
 	 *
-	 * @param test test condition for current object type
+	 * @param test       test condition for current object type
 	 * @param objectType applied object type
 	 */
 	public RuleDescription(String test, String objectType) {

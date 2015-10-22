@@ -7,12 +7,11 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.common.PDDestinationOrAction;
 import org.apache.pdfbox.pdmodel.documentinterchange.logicalstructure.PDStructureTreeRoot;
-import org.apache.pdfbox.pdmodel.interactive.action.*;
+import org.apache.pdfbox.pdmodel.interactive.action.PDDocumentCatalogAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.pdlayer.*;
-import org.verapdf.model.pdlayer.PDAction;
 
 import java.io.IOException;
 import java.util.*;
