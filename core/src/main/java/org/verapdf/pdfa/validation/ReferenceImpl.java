@@ -14,8 +14,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import org.verapdf.pdfa.flavours.PDFAFlavour.Part;
-
 /**
  * JAXB serialisable implementation of {@link Reference} with safe methods for
  * equals and hashCode plus useful conversion methods.
@@ -29,15 +27,15 @@ import org.verapdf.pdfa.flavours.PDFAFlavour.Part;
 final class ReferenceImpl implements Reference {
     private final static ReferenceImpl DEFAULT = new ReferenceImpl();
     @XmlAttribute
-    private final Part specification;
+    private final String specification;
     @XmlAttribute
     private final String clause;
     
     private ReferenceImpl() {
-        this(Part.NO_STANDARD, "clause");
+        this("specification", "clause");
     }
 
-    private ReferenceImpl(final Part specification, final String clause) {
+    private ReferenceImpl(final String specification, final String clause) {
         super();
         this.specification = specification;
         this.clause = clause;
@@ -47,7 +45,7 @@ final class ReferenceImpl implements Reference {
      * @return the specification
      */
     @Override
-    public Part getSpecification() {
+    public String getSpecification() {
         return this.specification;
     }
 
@@ -119,7 +117,7 @@ final class ReferenceImpl implements Reference {
         return ReferenceImpl.DEFAULT;
     }
 
-    static ReferenceImpl fromValues(final Part specification,
+    static ReferenceImpl fromValues(final String specification,
             final String clause) {
         return new ReferenceImpl(specification, clause);
     }

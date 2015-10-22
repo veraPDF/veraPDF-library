@@ -35,26 +35,25 @@ final class RuleImpl implements Rule {
     private final RuleIdImpl id;
     @XmlAttribute
     private final String object;
-    @XmlAttribute
-    private final String name;
     @XmlElement
     private final String description;
     @XmlElement
     private final String test;
     @XmlElementWrapper
+    @XmlElement(name="reference")
     private final List<Reference> references = new ArrayList<>();
 
     private RuleImpl() {
-        this(RuleIdImpl.defaultInstance(), "object", "name", "description", "test", Collections.EMPTY_LIST);
+        this(RuleIdImpl.defaultInstance(), "object", "description", "test",
+                Collections.EMPTY_LIST);
     }
 
     private RuleImpl(final RuleIdImpl id, final String object,
-            final String name, final String description, final String test,
+            final String description, final String test,
             final List<Reference> references) {
         super();
         this.id = id;
         this.object = object;
-        this.name = name;
         this.description = description;
         this.test = test;
         this.references.addAll(references);
@@ -74,14 +73,6 @@ final class RuleImpl implements Rule {
     @Override
     public String getObject() {
         return this.object;
-    }
-
-    /**
-     * @return the name
-     */
-    @Override
-    public String getName() {
-        return this.name;
     }
 
     /**
@@ -115,14 +106,16 @@ final class RuleImpl implements Rule {
     public final int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result
+        result = prime
+                * result
                 + ((this.description == null) ? 0 : this.description.hashCode());
         result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-        result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
-        result = prime * result + ((this.object == null) ? 0 : this.object.hashCode());
+        result = prime * result
+                + ((this.object == null) ? 0 : this.object.hashCode());
         result = prime * result
                 + ((this.references == null) ? 0 : this.references.hashCode());
-        result = prime * result + ((this.test == null) ? 0 : this.test.hashCode());
+        result = prime * result
+                + ((this.test == null) ? 0 : this.test.hashCode());
         return result;
     }
 
@@ -148,11 +141,6 @@ final class RuleImpl implements Rule {
                 return false;
         } else if (!this.id.equals(other.getRuleId()))
             return false;
-        if (this.name == null) {
-            if (other.getName() != null)
-                return false;
-        } else if (!this.name.equals(other.getName()))
-            return false;
         if (this.object == null) {
             if (other.getObject() != null)
                 return false;
@@ -176,25 +164,23 @@ final class RuleImpl implements Rule {
      */
     @Override
     public String toString() {
-        return "Rule [id=" + this.id + ", object=" + this.object + ", name=" + this.name
-                + ", description=" + this.description + ", test=" + this.test
-                + ", references=" + this.references + "]";
+        return "Rule [id=" + this.id + ", object=" + this.object + ", description=" + this.description + ", test="
+                + this.test + ", references=" + this.references + "]";
     }
 
     static RuleImpl defaultInstance() {
         return RuleImpl.DEFAULT;
     }
 
-    static RuleImpl fromValues(final RuleIdImpl id, final String object,
-            final String name, final String description, final String test,
+    static RuleImpl fromValues(final RuleIdImpl id, final String object, final String description, final String test,
             final List<Reference> references) {
-        return new RuleImpl(id, object, name, description, test, references);
+        return new RuleImpl(id, object, description, test, references);
     }
 
     static RuleImpl fromRule(final Rule toConvert) {
         return RuleImpl.fromValues(
                 RuleIdImpl.fromRuleId(toConvert.getRuleId()),
-                toConvert.getObject(), toConvert.getName(),
+                toConvert.getObject(),
                 toConvert.getDescription(), toConvert.getTest(),
                 toConvert.getReferences());
     }
@@ -202,12 +188,13 @@ final class RuleImpl implements Rule {
     static String toXml(final Rule toConvert) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(RuleImpl.class);
         Marshaller varMarshaller = context.createMarshaller();
-        varMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        varMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+                Boolean.TRUE);
         StringWriter writer = new StringWriter();
         varMarshaller.marshal(toConvert, writer);
         return writer.toString();
     }
-    
+
     static RuleImpl fromXml(final String toConvert) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(RuleImpl.class);
         Unmarshaller stringUnmarshaller = context.createUnmarshaller();
@@ -217,8 +204,13 @@ final class RuleImpl implements Rule {
 
     static class Adapter extends XmlAdapter<RuleImpl, Rule> {
         @Override
-        public Rule unmarshal(RuleImpl ruleImpl) { return ruleImpl; }
+        public Rule unmarshal(RuleImpl ruleImpl) {
+            return ruleImpl;
+        }
+
         @Override
-        public RuleImpl marshal(Rule rule) { return (RuleImpl)rule; }
-      }
+        public RuleImpl marshal(Rule rule) {
+            return (RuleImpl) rule;
+        }
+    }
 }

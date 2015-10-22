@@ -3,14 +3,14 @@
  */
 package org.verapdf.pdfa.validation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import javax.xml.bind.JAXBException;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
-import org.verapdf.pdfa.flavours.PDFAFlavour.Part;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -18,7 +18,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour.Part;
  */
 @SuppressWarnings("static-method")
 public class ReferenceImplTest {
-    private final static String DEFAULT_REFERENCE_STRING = "Reference [specification=" + Part.NO_STANDARD + ", clause=clause]";
+    private final static String DEFAULT_REFERENCE_STRING = "Reference [specification=specification, clause=clause]";
 
     /**
      * Test method for {@link org.verapdf.pdfa.validation.ReferenceImpl#equals(java.lang.Object)}.
@@ -38,12 +38,12 @@ public class ReferenceImplTest {
     }
 
     /**
-     * Test method for {@link org.verapdf.pdfa.validation.ReferenceImpl#fromValues(org.verapdf.pdfa.flavours.PDFAFlavour.Part, java.lang.String)}.
+     * Test method for {@link org.verapdf.pdfa.validation.ReferenceImpl#fromValues(String, String)}.
      */
     @Test
     public final void testFromValues() {
         // Get an equivalent to the default instance
-        ReferenceImpl reference = ReferenceImpl.fromValues(Part.NO_STANDARD, "clause");
+        ReferenceImpl reference = ReferenceImpl.fromValues("specification", "clause");
         Reference defaultInstance = ReferenceImpl.defaultInstance();
         // Equivalent is NOT the same object as default instance
         assertFalse(reference == defaultInstance);

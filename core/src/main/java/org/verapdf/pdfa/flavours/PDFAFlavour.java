@@ -45,38 +45,38 @@ import java.util.Set;
  */
 public enum PDFAFlavour {
     /** Special ID for the none case */
-    NO_FLAVOUR(Part.NO_STANDARD, Level.NO_LEVEL),
+    NO_FLAVOUR(Specification.NO_STANDARD, Level.NO_LEVEL),
     /** 1a PDF Version 1 Level A */
-    PDFA_1_A(Part.ISO_19005_1, Level.A),
+    PDFA_1_A(Specification.ISO_19005_1, Level.A),
     /** 1b PDF Version 1 Level B */
-    PDFA_1_B(Part.ISO_19005_1, Level.B),
+    PDFA_1_B(Specification.ISO_19005_1, Level.B),
     /** 2a PDF Version 2 Level A */
-    PDFA_2_A(Part.ISO_19005_2, Level.A),
+    PDFA_2_A(Specification.ISO_19005_2, Level.A),
     /** 2b PDF Version 2 Level B */
-    PDFA_2_B(Part.ISO_19005_2, Level.B),
+    PDFA_2_B(Specification.ISO_19005_2, Level.B),
     /** 2u PDF Version 2 Level U */
-    PDFA_2_U(Part.ISO_19005_2, Level.U),
+    PDFA_2_U(Specification.ISO_19005_2, Level.U),
     /** 3a PDF Version 3 Level A */
-    PDFA_3_A(Part.ISO_19005_3, Level.A),
+    PDFA_3_A(Specification.ISO_19005_3, Level.A),
     /** 3b PDF Version 3 Level B */
-    PDFA_3_B(Part.ISO_19005_3, Level.B),
+    PDFA_3_B(Specification.ISO_19005_3, Level.B),
     /** 3u PDF Version 3 Level U */
-    PDFA_3_U(Part.ISO_19005_3, Level.U);
+    PDFA_3_U(Specification.ISO_19005_3, Level.U);
 
-    private final Part part;
+    private final Specification part;
     private final Level level;
     private final String id;
 
-    private PDFAFlavour(final Part standard, final Level level) {
+    private PDFAFlavour(final Specification standard, final Level level) {
         this.part = standard;
         this.level = level;
         this.id = this.part.getPartNumber() + this.level.getCode();
     }
 
     /**
-     * @return an {@link Part} instance that identifies the Specification Part
+     * @return an {@link Specification} instance that identifies the Specification Part
      */
-    public final Part getPart() {
+    public final Specification getPart() {
         return this.part;
     }
 
@@ -102,7 +102,7 @@ public enum PDFAFlavour {
      *
      * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>.</p>
      */
-    public static enum Part {
+    public static enum Specification {
         /** PDF/A Version 1 */
         NO_STANDARD(IsoStandardSeries.NO_SERIES, PDFAFlavours.NONE_ID,
                 PDFAFlavours.NONE, PDFAFlavours.NONE),
@@ -126,7 +126,7 @@ public enum PDFAFlavour {
         private final String name;
         private final String description;
 
-        Part(final IsoStandardSeries series, final int partNumber,
+        Specification(final IsoStandardSeries series, final int partNumber,
                 final String year, final String description) {
             this.series = series;
             this.partNumber = partNumber;
@@ -171,6 +171,13 @@ public enum PDFAFlavour {
          */
         public String getDescription() {
             return this.description;
+        }
+        
+        /**
+         * @return the standard series
+         */
+        public IsoStandardSeries getSeries() {
+            return this.series;
         }
         
         @Override

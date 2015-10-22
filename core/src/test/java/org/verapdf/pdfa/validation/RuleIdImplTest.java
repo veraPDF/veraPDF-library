@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBException;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
-import org.verapdf.pdfa.flavours.PDFAFlavour.Part;
+import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -18,7 +18,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour.Part;
  */
 @SuppressWarnings("static-method")
 public class RuleIdImplTest {
-    private final static String DEFAULT_RULE_ID_STRING = "RuleId [specifcation=" + Part.NO_STANDARD.toString() + ", clause=clause, testNumber=0]";
+    private final static String DEFAULT_RULE_ID_STRING = "RuleId [specifcation=" + Specification.NO_STANDARD.toString() + ", clause=clause, testNumber=0]";
     /**
      * Test method for {@link org.verapdf.pdfa.validation.RuleIdImpl#equals(java.lang.Object)}.
      */
@@ -37,12 +37,12 @@ public class RuleIdImplTest {
     }
 
     /**
-     * Test method for {@link org.verapdf.pdfa.validation.RuleIdImpl#fromValues(org.verapdf.pdfa.flavours.PDFAFlavour.Part, java.lang.String, int)}.
+     * Test method for {@link org.verapdf.pdfa.validation.RuleIdImpl#fromValues(org.verapdf.pdfa.flavours.PDFAFlavour.Specification, java.lang.String, int)}.
      */
     @Test
     public final void testFromValues() {
         // Get an equivalent to the default instance
-        RuleIdImpl ruleId = RuleIdImpl.fromValues(Part.NO_STANDARD, "clause", 0);
+        RuleIdImpl ruleId = RuleIdImpl.fromValues(Specification.NO_STANDARD, "clause", 0);
         RuleId defaultInstance = RuleIdImpl.defaultInstance();
         // Equivalent is NOT the same object as default instance
         assertFalse(ruleId == defaultInstance);
