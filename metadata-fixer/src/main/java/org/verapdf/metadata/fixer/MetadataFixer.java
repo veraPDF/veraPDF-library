@@ -3,6 +3,7 @@ package org.verapdf.metadata.fixer;
 import org.apache.log4j.Logger;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
+import org.verapdf.metadata.fixer.entity.PDFDocument;
 import org.verapdf.metadata.fixer.entity.ValidationStatus;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.BasicSchema;
@@ -26,6 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.*;
+
 /**
  * @author Evgeniy Muravitskiy
  */
@@ -34,15 +37,6 @@ public class MetadataFixer {
 	private static final Logger LOGGER = Logger.getLogger(MetadataFixer.class);
 
 	private static final Map<String, String> attributes = new HashMap<>(8);
-
-	private static final String TITLE = "title";
-	private static final String SUBJECT = "description";
-	private static final String AUTHOR = "creator";
-	private static final String PRODUCER = "Producer";
-	private static final String KEYWORDS = "Keywords";
-	private static final String CREATE_DATE = "CreateDate";
-	private static final String CREATOR = "CreatorTool";
-	private static final String MODIFY_DATE = "ModifyDate";
 
 	private MetadataFixer() {
 		// disable default constructor
@@ -129,7 +123,7 @@ public class MetadataFixer {
 		if (metadata != null) {
 			MetadataFixerResult result = new MetadataFixerResult();
 			ValidationStatus status = getValidationStatus(config);
-			metadata.unfilterMetadataStream(result);
+			metadata.checkMetadataStream(result);
 
 			switch (status) {
 				case INVALID_DOCUMENT:
@@ -142,6 +136,8 @@ public class MetadataFixer {
 					executeInvalidStructureCase(config, metadata, result);
 					break;
 			}
+
+			updateModificationDate(config, result);
 
 			config.getDocument().saveDocumentIncremental(result, output);
 
@@ -203,10 +199,10 @@ public class MetadataFixer {
 		Metadata metadata = config.getMetadata();
 		InfoDictionary info = config.getDocument().getInfoDictionary();
 		DublinCore schema = metadata.getDublinCoreSchema(info);
-		if (schema != null) {
-			fixProperty(result, schema, info, schema.getTitle(), info.getTitle(), TITLE);
-			fixProperty(result, schema, info, schema.getSubject(), info.getSubject(), SUBJECT);
-			fixProperty(result, schema, info, schema.getAuthor(), info.getAuthor(), AUTHOR);
+		if (schema != null && info != null) {
+			fixProperty(result, schema, info, schema.getTitle(), info.getTitle(), METADATA_TITLE);
+			fixProperty(result, schema, info, schema.getSubject(), info.getSubject(), METADATA_SUBJECT);
+			fixProperty(result, schema, info, schema.getAuthor(), info.getAuthor(), METADATA_AUTHOR);
 		}
 	}
 
@@ -214,7 +210,7 @@ public class MetadataFixer {
 		Metadata metadata = config.getMetadata();
 		InfoDictionary info = config.getDocument().getInfoDictionary();
 		AdobePDF schema = metadata.getAdobePDFSchema(info);
-		if (schema != null) {
+		if (schema != null && info != null) {
 			fixProperty(result, schema, info, schema.getProducer(), info.getProducer(), PRODUCER);
 			fixProperty(result, schema, info, schema.getKeywords(), info.getKeywords(), KEYWORDS);
 		}
@@ -224,18 +220,19 @@ public class MetadataFixer {
 		Metadata metadata = config.getMetadata();
 		InfoDictionary info = config.getDocument().getInfoDictionary();
 		XMPBasic schema = metadata.getXMPBasicSchema(info);
-		if (schema != null) {
-			fixProperty(result, schema, info, schema.getCreator(), info.getCreator(), CREATOR);
-			fixCalendarProperty(result, schema, info, schema.getCreationDate(), info.getCreationDate(), CREATE_DATE);
-			fixCalendarProperty(result, schema, info, schema.getModificationDate(), info.getModificationDate(), MODIFY_DATE);
-			updateModificationDate(info, schema, config, result);
+		if (schema != null && info != null) {
+			fixProperty(result, schema, info, schema.getCreator(), info.getCreator(), METADATA_CREATOR);
+			fixCalendarProperty(result, schema, info,
+					schema.getCreationDate(), info.getCreationDate(), METADATA_CREATION_DATE);
+			fixCalendarProperty(result, schema, info,
+					schema.getModificationDate(), info.getModificationDate(), METADATA_MODIFICATION_DATE);
 		}
 	}
 
 	private static void fixProperty(MetadataFixerResult result, BasicSchema schema, InfoDictionary info, String metaValue,
 									String infoValue, String attribute) {
-		String key = attributes.get(attribute);
 		if (infoValue != null) {
+			String key = attributes.get(attribute);
 			if (metaValue == null) {
 				doSaveAction(schema, attribute, infoValue);
 				result.addAppliedFix("Added '" + key + "' to metadata from info dictionary");
@@ -248,33 +245,28 @@ public class MetadataFixer {
 
 	private static void fixCalendarProperty(MetadataFixerResult result, BasicSchema schema, InfoDictionary info, String metaValue,
 											String infoValue, String attribute) {
-		String key = attributes.get(attribute);
 		if (infoValue != null) {
-			String utcInfoValue = DateConverter.toUTCString(DateConverter.toCalendar(infoValue));
+			String key = attributes.get(attribute);
+			String utcInfoValue = DateConverter.toUTCString(infoValue);
 			if (metaValue == null) {
 				doSaveAction(schema, attribute, infoValue);
 				result.addAppliedFix("Added '" + key + "' to metadata from info dictionary");
-			} else if (!metaValue.equals(utcInfoValue) || !isValidDateFormat(infoValue)) {
+			} else if (!metaValue.equals(utcInfoValue) || !infoValue.matches(PDF_DATE_FORMAT_REGEX)) {
 				doSaveAction(info, attribute, metaValue);
 				result.addAppliedFix("Added '" + attribute + "' to info dictionary from metadata");
 			}
 		}
 	}
 
-	private static boolean isValidDateFormat(String value) {
-		final String pdfDateFormatRegex = "(D:)?(\\d\\d){2,7}((([+-](\\d\\d[']))(\\d\\d['])?)?|[Z])";
-		return value.matches(pdfDateFormatRegex);
-	}
-
 	private static void doSaveAction(BasicSchema schema, String attribute, String value) {
 		switch (attribute) {
-			case TITLE:
+			case METADATA_TITLE:
 				((DublinCore) schema).setTitle(value);
 				break;
-			case SUBJECT:
+			case METADATA_SUBJECT:
 				((DublinCore) schema).setSubject(value);
 				break;
-			case AUTHOR:
+			case METADATA_AUTHOR:
 				((DublinCore) schema).setAuthor(value);
 				break;
 			case PRODUCER:
@@ -283,13 +275,13 @@ public class MetadataFixer {
 			case KEYWORDS:
 				((AdobePDF) schema).setKeywords(value);
 				break;
-			case CREATOR:
+			case METADATA_CREATOR:
 				((XMPBasic) schema).setCreator(value);
 				break;
-			case CREATE_DATE:
+			case METADATA_CREATION_DATE:
 				((XMPBasic) schema).setCreationDate(value);
 				break;
-			case MODIFY_DATE:
+			case METADATA_MODIFICATION_DATE:
 				((XMPBasic) schema).setModificationDate(value);
 				break;
 			default:
@@ -298,30 +290,33 @@ public class MetadataFixer {
 		schema.setNeedToBeUpdated(true);
 	}
 
-	private static void updateModificationDate(InfoDictionary info, XMPBasic schema,
-											   FixerConfig config, MetadataFixerResult result) {
-		if (config.getDocument().isNeedToBeUpdated()) {
+	private static void updateModificationDate(FixerConfig config, MetadataFixerResult result) {
+		PDFDocument document = config.getDocument();
+		InfoDictionary info = document.getInfoDictionary();
+		XMPBasic schema = document.getMetadata().getXMPBasicSchema(info);
+
+		if (document.isNeedToBeUpdated() && schema != null) {
 			Calendar time = Calendar.getInstance();
 			if (schema.getModificationDate() != null) {
-				doSaveAction(schema, MODIFY_DATE, DateConverter.toUTCString(time));
+				doSaveAction(schema, METADATA_MODIFICATION_DATE, DateConverter.toUTCString(time));
 				result.addAppliedFix("Set new modification date to metadata");
 			}
 			if (info.getModificationDate() != null) {
-				doSaveAction(info, MODIFY_DATE, DateConverter.toPDFFormat(time));
+				doSaveAction(info, METADATA_MODIFICATION_DATE, DateConverter.toPDFFormat(time));
 				result.addAppliedFix("Set new modification date to info dictionary");
 			}
 		}
 	}
 
 	static {
-		attributes.put(TITLE, "Title");
-		attributes.put(SUBJECT, "Subject");
-		attributes.put(AUTHOR, "Author");
+		attributes.put(METADATA_TITLE, INFO_TITLE);
+		attributes.put(METADATA_SUBJECT, INFO_SUBJECT);
+		attributes.put(METADATA_AUTHOR, INFO_AUTHOR);
 		attributes.put(PRODUCER, PRODUCER);
 		attributes.put(KEYWORDS, KEYWORDS);
-		attributes.put(CREATOR, "Creator");
-		attributes.put(CREATE_DATE, "CreationDate");
-		attributes.put(MODIFY_DATE, "ModDate");
+		attributes.put(METADATA_CREATOR, INFO_CREATOR);
+		attributes.put(METADATA_CREATION_DATE, INFO_CREATION_DATE);
+		attributes.put(METADATA_MODIFICATION_DATE, INFO_MODIFICATION_DATE);
 	}
 
 }

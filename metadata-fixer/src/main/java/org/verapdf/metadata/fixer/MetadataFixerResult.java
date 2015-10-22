@@ -10,11 +10,11 @@ import java.util.List;
 // TODO : remove me and use source implementation
 public class MetadataFixerResult implements Iterable<String> {
 
-	private RepairStatus status = RepairStatus.NO_ACTION;
+	private RepairStatus status;
 	private final List<String> appliedFixes = new ArrayList<>();
 
 	public MetadataFixerResult() {
-
+		this.status = RepairStatus.NO_ACTION;
 	}
 
 	public MetadataFixerResult(RepairStatus status) {

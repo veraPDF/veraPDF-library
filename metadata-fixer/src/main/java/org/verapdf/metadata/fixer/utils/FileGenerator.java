@@ -11,8 +11,6 @@ import java.io.File;
  */
 public class FileGenerator {
 
-	public static final String DEFAULT_PREFIX = "veraPDF_";
-
 	private FileGenerator() {
 		// hide default constructor
 	}
@@ -40,7 +38,7 @@ public class FileGenerator {
 	 * @throws IllegalArgumentException if {@code source} is {@code null}
 	 */
 	public static File createOutputFile(File source) {
-		return createOutputFile(source, DEFAULT_PREFIX);
+		return createOutputFile(source, MetadataFixerConstants.DEFAULT_PREFIX);
 	}
 
 	/**

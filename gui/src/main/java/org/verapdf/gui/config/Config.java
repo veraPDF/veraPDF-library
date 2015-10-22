@@ -1,6 +1,6 @@
 package org.verapdf.gui.config;
 
-import org.verapdf.metadata.fixer.utils.FileGenerator;
+import org.verapdf.metadata.fixer.utils.MetadataFixerConstants;
 
 import java.io.File;
 import java.nio.file.FileSystems;
@@ -77,7 +77,7 @@ public final class Config {
 		private static final int DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS = 100;
 		private static final int DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS = 100;
 		private static final Path DEFAULT_FEATURES_PLUGINS_CONFIG_FILE_PATH = FileSystems.getDefault().getPath("");
-		private static final String DEFAULT_METADATA_FIXER_PREFIX = FileGenerator.DEFAULT_PREFIX;
+		private static final String DEFAULT_METADATA_FIXER_PREFIX = MetadataFixerConstants.DEFAULT_PREFIX;
 		private static final Path DEFAULT_FIX_METADATA_PATH_FOLDER = FileSystems.getDefault().getPath("");
 
 		private static final Config DEFAULT_CONFIG = new Config(DEFAULT_SHOW_PASSED_RULES, DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, DEFAULT_FEATURES_PLUGINS_CONFIG_FILE_PATH, DEFAULT_METADATA_FIXER_PREFIX, DEFAULT_FIX_METADATA_PATH_FOLDER);

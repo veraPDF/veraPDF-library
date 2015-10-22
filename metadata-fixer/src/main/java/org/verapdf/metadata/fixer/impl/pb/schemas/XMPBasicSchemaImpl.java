@@ -5,6 +5,10 @@ import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
 import org.verapdf.metadata.fixer.utils.DateConverter;
 
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_CREATOR;
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_CREATION_DATE;
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_MODIFICATION_DATE;
+
 /**
  * @author Evgeniy Muravitskiy
  */
@@ -21,7 +25,7 @@ public class XMPBasicSchemaImpl extends BasicSchemaImpl implements XMPBasic {
 
 	@Override
 	public void setCreator(String creatorTool) {
-		this.removeProperty("CreatorTool");
+		this.removeProperty(METADATA_CREATOR);
 		((XMPBasicSchema) this.schema).setCreatorTool(creatorTool);
 	}
 
@@ -32,7 +36,7 @@ public class XMPBasicSchemaImpl extends BasicSchemaImpl implements XMPBasic {
 
 	@Override
 	public void setCreationDate(String creationDate) {
-		this.removeProperty("CreateDate");
+		this.removeProperty(METADATA_CREATION_DATE);
 		((XMPBasicSchema) this.schema).setCreateDate(DateConverter.toCalendar(creationDate));
 	}
 
@@ -43,7 +47,7 @@ public class XMPBasicSchemaImpl extends BasicSchemaImpl implements XMPBasic {
 
 	@Override
 	public void setModificationDate(String modificationDate) {
-		this.removeProperty("ModifyDate");
+		this.removeProperty(METADATA_MODIFICATION_DATE);
 		((XMPBasicSchema) this.schema).setModifyDate(DateConverter.toCalendar(modificationDate));
 	}
 
