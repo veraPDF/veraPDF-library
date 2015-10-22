@@ -5,7 +5,7 @@ package org.verapdf.pdfa.validation;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.verapdf.pdfa.flavours.PDFAFlavour.Part;
+import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 
 /**
  * A Reference is used to correlate a validation {@link Rule} to a specific
@@ -16,10 +16,10 @@ import org.verapdf.pdfa.flavours.PDFAFlavour.Part;
 @XmlJavaTypeAdapter(ReferenceImpl.Adapter.class)
 public interface Reference {
     /**
-     * @return a {@link Part} that identifies the PDF/A Specification referred
+     * @return a {@link Specification} that identifies the PDF/A Specification referred
      *         to.
      */
-    public Part getSpecification();
+    public String getSpecification();
 
     /**
      * @return a String identifier for the Specification clause referred to, e.g. 6.1.2

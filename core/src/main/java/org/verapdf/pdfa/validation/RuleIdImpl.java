@@ -13,7 +13,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.verapdf.pdfa.flavours.PDFAFlavour.Part;
+import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -23,17 +23,17 @@ import org.verapdf.pdfa.flavours.PDFAFlavour.Part;
 final class RuleIdImpl implements RuleId {
     private static final RuleIdImpl DEFAULT = new RuleIdImpl();
     @XmlAttribute
-    private final Part specifcation;
+    private final Specification specifcation;
     @XmlAttribute
     private final String clause;
     @XmlAttribute
     private final int testNumber;
 
     private RuleIdImpl() {
-        this(Part.NO_STANDARD, "clause", 0);
+        this(Specification.NO_STANDARD, "clause", 0);
     }
     
-    private RuleIdImpl(final Part specifcation, final String clause,
+    private RuleIdImpl(final Specification specifcation, final String clause,
             final int testNumber) {
         super();
         this.specifcation = specifcation;
@@ -45,7 +45,7 @@ final class RuleIdImpl implements RuleId {
      * { @inheritDoc }
      */
     @Override
-    public Part getSpecfication() {
+    public Specification getSpecfication() {
         return this.specifcation;
     }
 
@@ -120,7 +120,7 @@ final class RuleIdImpl implements RuleId {
         return RuleIdImpl.DEFAULT;
     }
     
-    static RuleIdImpl fromValues(final Part specifcation, final String clause,
+    static RuleIdImpl fromValues(final Specification specifcation, final String clause,
             final int testNumber) {
         return new RuleIdImpl(specifcation, clause, testNumber);
     }

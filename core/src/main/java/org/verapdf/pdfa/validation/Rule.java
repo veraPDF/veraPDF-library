@@ -29,11 +29,6 @@ public interface Rule {
     public String getObject();
 
     /**
-     * @return a String name for the Rule
-     */
-    public String getName();
-
-    /**
      * @return a textual description of the Rule
      */
     public String getDescription();

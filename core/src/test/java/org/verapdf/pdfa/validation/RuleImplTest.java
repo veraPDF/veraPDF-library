@@ -25,7 +25,7 @@ import org.junit.Test;
 public class RuleImplTest {
     private static final String DEFAULT_RULE_STRING = "Rule [id="
             + RuleIdImpl.defaultInstance()
-            + ", object=object, name=name, description=description, test=test, references=[]]";
+            + ", object=object, description=description, test=test, references=[]]";
 
     /**
      * Test method for
@@ -47,14 +47,14 @@ public class RuleImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.RuleImpl#fromValues(org.verapdf.pdfa.validation.RuleIdImpl, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.List)}
+     * {@link org.verapdf.pdfa.validation.RuleImpl#fromValues(RuleIdImpl, String, String, String, List)}
      * .
      */
     @Test
     public final void testFromValues() {
         // Get an equivalent to the default instance
         RuleImpl rule = RuleImpl
-                .fromValues(RuleIdImpl.defaultInstance(), "object", "name",
+                .fromValues(RuleIdImpl.defaultInstance(), "object",
                         "description", "test", Collections.EMPTY_LIST);
         Rule defaultInstance = RuleImpl.defaultInstance();
         // Equivalent is NOT the same object as default instance
@@ -91,7 +91,7 @@ public class RuleImplTest {
         List<Reference> refs = new ArrayList<>();
         refs.add(ReferenceImpl.defaultInstance());
         Rule rule = RuleImpl.fromValues(RuleIdImpl.defaultInstance(), "object",
-                "name", "description", "test", refs);
+                "description", "test", refs);
         String xmlDefault = RuleImpl.toXml(rule);
         Rule unmarshalledDefault = RuleImpl.fromXml(xmlDefault);
         assertFalse(rule == unmarshalledDefault);

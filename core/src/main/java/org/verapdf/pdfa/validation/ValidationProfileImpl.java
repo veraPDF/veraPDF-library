@@ -42,8 +42,10 @@ final class ValidationProfileImpl implements ValidationProfile {
     @XmlElement
     private final String hash;
     @XmlElementWrapper
+    @XmlElement(name="rule")
     private final Set<Rule> rules;
     @XmlElementWrapper
+    @XmlElement(name="variable")
     private final Set<Variable> variables;
 
     private ValidationProfileImpl() {
