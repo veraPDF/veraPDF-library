@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf.pdfa.validation;
+package org.verapdf.pdfa.reporting;
 
 /**
  * A TestAssertion records the result of performing a validation test on a

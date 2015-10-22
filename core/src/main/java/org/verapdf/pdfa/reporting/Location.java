@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf.pdfa.validation;
+package org.verapdf.pdfa.reporting;
 
 /**
  * Used to record the location of specific test assertions during the validation
