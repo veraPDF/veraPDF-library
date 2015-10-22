@@ -48,7 +48,7 @@ public class DublinCoreSchemaImpl extends BasicSchemaImpl implements DublinCore 
 		newSeq.addProperty(li);
 
 		int position = this.getPosition(seq);
-		this.copySubArray(seq, newSeq, position, li);
+		this.copySubArray(seq, newSeq, position);
 		this.schema.addProperty(li);
 	}
 
@@ -64,7 +64,7 @@ public class DublinCoreSchemaImpl extends BasicSchemaImpl implements DublinCore 
 		ArrayProperty newSeq = this.schema.createArrayProperty(METADATA_AUTHOR, Cardinality.Seq);
 		TextType li = this.schema.createTextType(XmpConstants.LIST_NAME, creator);
 		newSeq.addProperty(li);
-		this.copySubArray(seq, newSeq, 0, li);
+		this.copySubArray(seq, newSeq, 0);
 		this.schema.addProperty(newSeq);
 	}
 
@@ -83,7 +83,7 @@ public class DublinCoreSchemaImpl extends BasicSchemaImpl implements DublinCore 
 		return 0;
 	}
 
-	private void copySubArray(ArrayProperty seq, ArrayProperty newSeq, int exceptIndex, AbstractField value) {
+	private void copySubArray(ArrayProperty seq, ArrayProperty newSeq, int exceptIndex) {
 		if (seq != null) {
 			List<AbstractField> properties = seq.getContainer().getAllProperties();
 			ComplexPropertyContainer container = newSeq.getContainer();
