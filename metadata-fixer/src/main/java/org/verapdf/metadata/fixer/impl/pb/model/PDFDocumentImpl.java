@@ -1,9 +1,13 @@
 package org.verapdf.metadata.fixer.impl.pb.model;
 
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.xml.DomXmpParser;
@@ -33,14 +37,7 @@ public class PDFDocumentImpl implements PDFDocument {
 		}
 		this.document = document;
 		this.metadata = parseMetadata();
-	}
-
-	/**
-	 * {@inheritDoc} Implemented by Apache PDFBox library.
-	 */
-	@Override
-	public Metadata getMetadata() {
-		return this.metadata;
+		this.info = this.getInfo();
 	}
 
 	private MetadataImpl parseMetadata() {
@@ -74,14 +71,26 @@ public class PDFDocumentImpl implements PDFDocument {
 		return null;
 	}
 
+	private InfoDictionaryImpl getInfo() {
+		COSDictionary trailer = this.document.getDocument().getTrailer();
+		COSBase infoDict = trailer.getDictionaryObject(COSName.INFO);
+		return !(infoDict instanceof COSDictionary) ? null :
+				new InfoDictionaryImpl(new PDDocumentInformation((COSDictionary) infoDict));
+	}
+
+	/**
+	 * {@inheritDoc} Implemented by Apache PDFBox library.
+	 */
+	@Override
+	public Metadata getMetadata() {
+		return this.metadata;
+	}
+
 	/**
 	 * {@inheritDoc} Implemented by Apache PDFBox library.
 	 */
 	@Override
 	public InfoDictionary getInfoDictionary() {
-		if (this.info == null) {
-			this.info = new InfoDictionaryImpl(this.document.getDocumentInformation());
-		}
 		return this.info;
 	}
 
@@ -90,7 +99,9 @@ public class PDFDocumentImpl implements PDFDocument {
 	 */
 	@Override
 	public boolean isNeedToBeUpdated() {
-		return this.getMetadata().isNeedToBeUpdated() || this.getInfoDictionary().isNeedToBeUpdated();
+		boolean metaUpd = this.metadata != null && this.metadata.isNeedToBeUpdated();
+		boolean infoUpd = this.info != null && this.info.isNeedToBeUpdated();
+		return metaUpd || infoUpd;
 	}
 
 	/**
