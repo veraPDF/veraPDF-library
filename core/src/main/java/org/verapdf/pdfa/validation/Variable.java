@@ -3,10 +3,13 @@
  */
 package org.verapdf.pdfa.validation;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
+@XmlJavaTypeAdapter(VariableImpl.Adapter.class)
 public interface Variable {
     /**
      * @return the name of the Variable

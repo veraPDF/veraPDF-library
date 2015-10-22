@@ -5,6 +5,8 @@ package org.verapdf.pdfa.validation;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 /**
  * Encapsulates a PDF/A Validation Rule including the String property
  * {@link Rule#getTest()} which is the logical expression that is evaluated when
@@ -13,12 +15,13 @@ import java.util.List;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
+@XmlJavaTypeAdapter(RuleImpl.Adapter.class)
 public interface Rule {
+    
     /**
-     * @return a String ID for the Rule, usually a combination of specification
-     *         clause and test number.
+     * @return the RuleID instance that uniquely identifies this rule
      */
-    public String getId();
+    public RuleId getRuleId();
 
     /**
      * @return the String name of the PDF Object type to which the Rule applies
