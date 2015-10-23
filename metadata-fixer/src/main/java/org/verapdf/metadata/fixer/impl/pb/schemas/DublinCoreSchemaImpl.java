@@ -47,7 +47,7 @@ public class DublinCoreSchemaImpl extends BasicSchemaImpl implements DublinCore 
 
 		int position = this.getPosition(seq);
 		this.copySubArray(seq, newSeq, position);
-		this.schema.addProperty(li);
+		this.schema.addProperty(newSeq);
 	}
 
 	@Override
