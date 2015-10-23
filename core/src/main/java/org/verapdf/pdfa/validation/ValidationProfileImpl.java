@@ -1,10 +1,15 @@
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.validation;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -42,10 +47,10 @@ final class ValidationProfileImpl implements ValidationProfile {
     @XmlElement
     private final String hash;
     @XmlElementWrapper
-    @XmlElement(name="rule")
+    @XmlElement(name = "rule")
     private final Set<Rule> rules;
     @XmlElementWrapper
-    @XmlElement(name="variable")
+    @XmlElement(name = "variable")
     private final Set<Variable> variables;
 
     private ValidationProfileImpl() {
@@ -217,10 +222,11 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public String toString() {
-        return "ValidationProfile [flavour=" + this.flavour + ", name=" + this.name
-                + ", description=" + this.description + ", creator=" + this.creator
-                + ", created=" + this.created + ", hash=" + this.hash + ", rules="
-                + this.rules + ", variables=" + this.variables + "]";
+        return "ValidationProfile [flavour=" + this.flavour + ", name="
+                + this.name + ", description=" + this.description
+                + ", creator=" + this.creator + ", created=" + this.created
+                + ", hash=" + this.hash + ", rules=" + this.rules
+                + ", variables=" + this.variables + "]";
     }
 
     static ValidationProfileImpl defaultInstance() {
@@ -242,20 +248,61 @@ final class ValidationProfileImpl implements ValidationProfile {
                 toConvert.getDateCreated(), toConvert.getHexSha1Digest(),
                 toConvert.getRules(), toConvert.getVariables());
     }
-    
-    static String toXml(final ValidationProfile toConvert) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(ValidationProfileImpl.class);
-        Marshaller varMarshaller = context.createMarshaller();
-        varMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        StringWriter writer = new StringWriter();
-        varMarshaller.marshal(toConvert, writer);
-        return writer.toString();
+
+    static String toXml(final ValidationProfile toConvert, Boolean prettyXml)
+            throws JAXBException, IOException {
+        String retVal = "";
+        try (StringWriter writer = new StringWriter()) {
+            toXml(toConvert, writer, prettyXml);
+            retVal = writer.toString();
+            return retVal;
+        }
     }
-    
-    static ValidationProfileImpl fromXml(final String toConvert) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(ValidationProfileImpl.class);
-        Unmarshaller stringUnmarshaller = context.createUnmarshaller();
-        StringReader reader = new StringReader(toConvert);
-        return (ValidationProfileImpl) stringUnmarshaller.unmarshal(reader);
+
+    static ValidationProfileImpl fromXml(final String toConvert)
+            throws JAXBException {
+        try (StringReader reader = new StringReader(toConvert)) {
+            return fromXml(reader);
+        }
+    }
+
+    static void toXml(final ValidationProfile toConvert,
+            final OutputStream stream, Boolean prettyXml) throws JAXBException {
+        Marshaller varMarshaller = getMarshaller(prettyXml);
+        varMarshaller.marshal(toConvert, stream);
+    }
+
+    static ValidationProfileImpl fromXml(final InputStream toConvert)
+            throws JAXBException {
+        Unmarshaller stringUnmarshaller = getUnmarshaller();
+        return (ValidationProfileImpl) stringUnmarshaller.unmarshal(toConvert);
+    }
+
+    static void toXml(final ValidationProfile toConvert, final Writer writer, Boolean prettyXml)
+            throws JAXBException {
+        Marshaller varMarshaller = getMarshaller(prettyXml);
+        varMarshaller.marshal(toConvert, writer);
+    }
+
+    static ValidationProfileImpl fromXml(final Reader toConvert)
+            throws JAXBException {
+        Unmarshaller stringUnmarshaller = getUnmarshaller();
+        return (ValidationProfileImpl) stringUnmarshaller.unmarshal(toConvert);
+    }
+
+    private static Unmarshaller getUnmarshaller() throws JAXBException {
+        JAXBContext context = JAXBContext
+                .newInstance(ValidationProfileImpl.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        return unmarshaller;
+    }
+
+    private static Marshaller getMarshaller(Boolean setPretty)
+            throws JAXBException {
+        JAXBContext context = JAXBContext
+                .newInstance(ValidationProfileImpl.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
+        return marshaller;
     }
 }

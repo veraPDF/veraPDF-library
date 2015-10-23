@@ -1,11 +1,18 @@
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.validation;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -76,21 +83,46 @@ public class ValidationProfileImplTest {
     }
 
     /**
-     * Test method for {@link org.verapdf.pdfa.validation.ValidationProfileImpl#toXml(org.verapdf.pdfa.ValidationProfile)}.
-     * @throws JAXBException 
+     * Test method for {@link org.verapdf.pdfa.validation.ValidationProfileImpl#toXml(ValidationProfile, Boolean)}.
+     * @throws JAXBException
+     * @throws IOException
      */
     @Test
-    public final void testToXml() throws JAXBException {
+    public final void testToXmlString() throws JAXBException, IOException {
         Set<Rule> rules = new HashSet<>();
         Set<Variable> vars = new HashSet<>();
         rules.add(RuleImpl.defaultInstance());
         vars.add(VariableImpl.defaultInstance());
-        ValidationProfile rule = ValidationProfileImpl.fromValues(PDFAFlavour.NO_FLAVOUR, "name", "description", "creator",
+        ValidationProfile profile = ValidationProfileImpl.fromValues(PDFAFlavour.NO_FLAVOUR, "name", "description", "creator",
                 new Date(0L), "hash", rules, vars);
-        String xmlDefault = ValidationProfileImpl.toXml(rule);
+        String xmlDefault = ValidationProfileImpl.toXml(profile, Boolean.FALSE);
         ValidationProfile unmarshalledDefault = ValidationProfileImpl.fromXml(xmlDefault);
-        assertFalse(rule == unmarshalledDefault);
-        assertTrue(rule.equals(unmarshalledDefault));
+        assertFalse(profile == unmarshalledDefault);
+        assertTrue(profile.equals(unmarshalledDefault));
+    }
+
+    /**
+     * Test method for {@link org.verapdf.pdfa.validation.ValidationProfileImpl#toXml(ValidationProfile, OutputStream, Boolean)}.
+     * @throws JAXBException
+     * @throws IOException
+     */
+    @Test
+    public final void testToXmlStream() throws JAXBException, IOException {
+        Set<Rule> rules = new HashSet<>();
+        Set<Variable> vars = new HashSet<>();
+        rules.add(RuleImpl.defaultInstance());
+        vars.add(VariableImpl.defaultInstance());
+        ValidationProfile profile = ValidationProfileImpl.fromValues(PDFAFlavour.NO_FLAVOUR, "name", "description", "creator",
+                new Date(0L), "hash", rules, vars);
+        File temp = Files.createTempFile("profile", "xml").toFile();
+        try (OutputStream forXml = new FileOutputStream(temp)) {
+            ValidationProfileImpl.toXml(profile, forXml, Boolean.TRUE);
+        }
+        try (InputStream readXml = new FileInputStream(temp)) {
+            ValidationProfile unmarshalledDefault = ValidationProfileImpl.fromXml(readXml);
+            assertFalse(profile == unmarshalledDefault);
+            assertTrue(profile.equals(unmarshalledDefault));
+        }
     }
 
 }

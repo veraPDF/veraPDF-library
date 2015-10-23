@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Enums used as id for PDF/A flavours where a flavour uniquely identifies a
  * specific PDF/A Standard part and associated conformance level.
- * 
+ *
  * The PDF/A Specification:<br/>
  * ISO 19005 - Document Management - Electronic document format for long-term
  * preservation (PDF/A)<br/>
@@ -40,7 +40,7 @@ import java.util.Set;
  * <li>3b</li>
  * <li>3u</li>
  * </ul>
- * 
+ *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 public enum PDFAFlavour {
@@ -62,6 +62,20 @@ public enum PDFAFlavour {
     PDFA_3_B(Specification.ISO_19005_3, Level.B),
     /** 3u PDF Version 3 Level U */
     PDFA_3_U(Specification.ISO_19005_3, Level.U);
+
+    private final static Map<String, PDFAFlavour> FLAVOUR_LOOKUP;
+    static {
+        FLAVOUR_LOOKUP = new HashMap<>();
+        FLAVOUR_LOOKUP.put("", PDFAFlavour.NO_FLAVOUR);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_1_A.getId(), PDFAFlavour.PDFA_1_A);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_1_B.getId(), PDFAFlavour.PDFA_1_B);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_A.getId(), PDFAFlavour.PDFA_2_A);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_B.getId(), PDFAFlavour.PDFA_2_B);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_U.getId(), PDFAFlavour.PDFA_2_U);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_A.getId(), PDFAFlavour.PDFA_3_A);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_B.getId(), PDFAFlavour.PDFA_3_B);
+        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_U.getId(), PDFAFlavour.PDFA_3_U);
+    }
 
     private final Specification part;
     private final Level level;
@@ -102,7 +116,7 @@ public enum PDFAFlavour {
      *
      * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>.</p>
      */
-    public static enum Specification {
+    public enum Specification {
         /** PDF/A Version 1 */
         NO_STANDARD(IsoStandardSeries.NO_SERIES, PDFAFlavours.NONE_ID,
                 PDFAFlavours.NONE, PDFAFlavours.NONE),
@@ -133,9 +147,9 @@ public enum PDFAFlavour {
             this.year = year;
             this.description = description;
             this.id = this.series.getName()
-                    + "-" + String.valueOf(this.getPartNumber()) + ":" + this.getYear(); //$NON-NLS-1$//$NON-NLS-2$
+                    + "-" + this.getPartNumber() + ":" + this.getYear(); //$NON-NLS-1$//$NON-NLS-2$
             this.name = PDFAFlavours.PDFA_STRING_PREFIX
-                    + String.valueOf(this.getPartNumber());
+                    + this.getPartNumber();
         }
 
         /**
@@ -172,14 +186,14 @@ public enum PDFAFlavour {
         public String getDescription() {
             return this.description;
         }
-        
+
         /**
          * @return the standard series
          */
         public IsoStandardSeries getSeries() {
             return this.series;
         }
-        
+
         @Override
         public String toString() {
             return this.id;
@@ -192,7 +206,7 @@ public enum PDFAFlavour {
      *
      * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>.</p>
      */
-    public static enum Level {
+    public enum Level {
         /** Special identifier for the none case */
         NO_LEVEL(PDFAFlavours.NONE, PDFAFlavours.NONE),
         /** Level A */
@@ -271,21 +285,6 @@ public enum PDFAFlavour {
             return this.getName() + " " + this.getDescription(); //$NON-NLS-1$
         }
     }
-
-    private final static Map<String, PDFAFlavour> FLAVOUR_LOOKUP;
-    static {
-        FLAVOUR_LOOKUP = new HashMap<>();
-        FLAVOUR_LOOKUP.put("", PDFAFlavour.NO_FLAVOUR);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_1_A.getId(), PDFAFlavour.PDFA_1_A);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_1_B.getId(), PDFAFlavour.PDFA_1_B);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_A.getId(), PDFAFlavour.PDFA_2_A);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_B.getId(), PDFAFlavour.PDFA_2_B);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_U.getId(), PDFAFlavour.PDFA_2_U);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_A.getId(), PDFAFlavour.PDFA_3_A);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_B.getId(), PDFAFlavour.PDFA_3_B);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_U.getId(), PDFAFlavour.PDFA_3_U);
-    }
-
     /**
      * @param flavourId
      *            a two letter String that identifies a {@link PDFAFlavour},
