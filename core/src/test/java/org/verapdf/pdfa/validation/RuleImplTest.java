@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.validation;
 
@@ -91,9 +91,9 @@ public class RuleImplTest {
      * Test method for
      * {@link org.verapdf.pdfa.validation.RuleImpl#toXml(org.verapdf.pdfa.validation.Rule, Boolean)}
      * .
-     * 
+     *
      * @throws JAXBException
-     * @throws IOException 
+     * @throws IOException
      */
     @Test
     public final void testToXmlString() throws JAXBException, IOException {
@@ -111,9 +111,9 @@ public class RuleImplTest {
      * Test method for
      * {@link org.verapdf.pdfa.validation.RuleImpl#toXml(Rule, java.io.OutputStream, Boolean)}
      * .
-     * 
+     *
      * @throws JAXBException
-     * @throws IOException 
+     * @throws IOException
      */
     @Test
     public final void testToXmlStream() throws JAXBException, IOException {

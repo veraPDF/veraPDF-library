@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.validation;
 
@@ -84,8 +84,8 @@ public class ValidationProfileImplTest {
 
     /**
      * Test method for {@link org.verapdf.pdfa.validation.ValidationProfileImpl#toXml(ValidationProfile, Boolean)}.
-     * @throws JAXBException 
-     * @throws IOException 
+     * @throws JAXBException
+     * @throws IOException
      */
     @Test
     public final void testToXmlString() throws JAXBException, IOException {
@@ -103,8 +103,8 @@ public class ValidationProfileImplTest {
 
     /**
      * Test method for {@link org.verapdf.pdfa.validation.ValidationProfileImpl#toXml(ValidationProfile, OutputStream, Boolean)}.
-     * @throws JAXBException 
-     * @throws IOException 
+     * @throws JAXBException
+     * @throws IOException
      */
     @Test
     public final void testToXmlStream() throws JAXBException, IOException {

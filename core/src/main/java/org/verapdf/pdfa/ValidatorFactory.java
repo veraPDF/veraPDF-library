@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.verapdf.pdfa;
 
@@ -10,7 +10,7 @@ import org.verapdf.pdfa.validation.ProfileDirectory;
 /**
  * Provisional factory interface for instantiation of veraPDF PDF/A Validator
  * and related types.
- * 
+ *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 public interface ValidatorFactory {

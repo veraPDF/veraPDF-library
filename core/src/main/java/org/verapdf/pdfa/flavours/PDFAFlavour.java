@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Enums used as id for PDF/A flavours where a flavour uniquely identifies a
  * specific PDF/A Standard part and associated conformance level.
- * 
+ *
  * The PDF/A Specification:<br/>
  * ISO 19005 - Document Management - Electronic document format for long-term
  * preservation (PDF/A)<br/>
@@ -40,7 +40,7 @@ import java.util.Set;
  * <li>3b</li>
  * <li>3u</li>
  * </ul>
- * 
+ *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 public enum PDFAFlavour {
@@ -186,14 +186,14 @@ public enum PDFAFlavour {
         public String getDescription() {
             return this.description;
         }
-        
+
         /**
          * @return the standard series
          */
         public IsoStandardSeries getSeries() {
             return this.series;
         }
-        
+
         @Override
         public String toString() {
             return this.id;
@@ -285,7 +285,6 @@ public enum PDFAFlavour {
             return this.getName() + " " + this.getDescription(); //$NON-NLS-1$
         }
     }
-
     /**
      * @param flavourId
      *            a two letter String that identifies a {@link PDFAFlavour},

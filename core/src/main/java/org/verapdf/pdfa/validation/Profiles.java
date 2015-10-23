@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.validation;
 
@@ -19,7 +19,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 
 /**
  * TODO: Defensive Checks for all parameters & JavaDoc
- * 
+ *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
@@ -352,7 +352,7 @@ public final class Profiles {
 
     /**
      * Creates a lookup Map of {@link ValidationProfile}s from the passed Set.
-     * 
+     *
      * @param profileSet
      *            a set of ValidationProfiles
      * @return a Map<PDFAFlavour, ValidationProfile> from the Set of
@@ -374,7 +374,7 @@ public final class Profiles {
     /**
      * Creates a lookup Map of {@link PDFAFlavour}s by String Id from the passed
      * Set.
-     * 
+     *
      * @param flavours
      *            a Set of {@link PDFAFlavour}s
      * @return a Map created from the passed set where the Map key is the String

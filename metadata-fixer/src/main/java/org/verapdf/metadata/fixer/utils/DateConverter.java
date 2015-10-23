@@ -60,7 +60,13 @@ public class DateConverter {
 	 * @return {@code Calendar} date
 	 */
 	public static Calendar toCalendar(String date) {
-		return date == null ? null : org.apache.pdfbox.util.DateConverter.toCalendar(date);
+		if (date == null) {
+			return null;
+		}
+
+		Calendar buffer = org.apache.pdfbox.util.DateConverter.toCalendar(date);
+		buffer.setTimeZone(TimeZone.getTimeZone("UTC"));
+		return buffer;
 	}
 
 	/**
@@ -72,6 +78,7 @@ public class DateConverter {
 	 */
 	public static String toPDFFormat(String date) {
 		Calendar buffer = org.apache.pdfbox.util.DateConverter.toCalendar(date);
+		buffer.setTimeZone(TimeZone.getTimeZone("UTC"));
 		return org.apache.pdfbox.util.DateConverter.toString(buffer);
 	}
 

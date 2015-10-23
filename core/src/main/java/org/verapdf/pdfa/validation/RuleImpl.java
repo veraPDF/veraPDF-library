@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.validation;
 
@@ -27,10 +27,10 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 /**
  * JAXB serialisable implementation of {@link Reference} with safe methods for
  * equals and hashCode plus useful conversion methods.
- * 
+ *
  * Not meant for public consumption, hidden behind the {@link Reference}
  * interface.
- * 
+ *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 @XmlRootElement(name = "rule")

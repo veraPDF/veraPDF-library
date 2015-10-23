@@ -22,10 +22,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.URISyntaxException;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.*;
 
@@ -123,6 +120,7 @@ public class MetadataFixer {
 		if (metadata != null) {
 			MetadataFixerResult result = new MetadataFixerResult();
 			ValidationStatus status = getValidationStatus(config);
+
 			metadata.checkMetadataStream(result);
 
 			switch (status) {
@@ -296,12 +294,12 @@ public class MetadataFixer {
 		XMPBasic schema = document.getMetadata().getXMPBasicSchema(info);
 
 		if (document.isNeedToBeUpdated() && schema != null) {
-			Calendar time = Calendar.getInstance();
+			Calendar time = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 			if (schema.getModificationDate() != null) {
 				doSaveAction(schema, METADATA_MODIFICATION_DATE, DateConverter.toUTCString(time));
 				result.addAppliedFix("Set new modification date to metadata");
 			}
-			if (info.getModificationDate() != null) {
+			if (info != null && info.getModificationDate() != null) {
 				doSaveAction(info, METADATA_MODIFICATION_DATE, DateConverter.toPDFFormat(time));
 				result.addAppliedFix("Set new modification date to info dictionary");
 			}
