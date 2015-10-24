@@ -177,25 +177,30 @@ public final class Profiles {
     public static ErrorDetails defaultError() {
         return ErrorDetailsImpl.defaultInstance();
     }
-    
+
     /**
-     * @param message a String message for the {@link ErrorDetails}
-     * @param arguments a List of String arguments for the {@link ErrorDetails}.
+     * @param message
+     *            a String message for the {@link ErrorDetails}
+     * @param arguments
+     *            a List of String arguments for the {@link ErrorDetails}.
      * @return a new {@link ErrorDetails} instance
      * @throws IllegalArgumentException
-     *             if any of the parameters are null or
-     *             message is empty
+     *             if any of the parameters are null or message is empty
      */
-    public static ErrorDetails errorFromValues(final String message, final List<String> arguments) {
+    public static ErrorDetails errorFromValues(final String message,
+            final List<String> arguments) {
         if (message == null)
-            throw new IllegalArgumentException("Parameter message can not be null.");
+            throw new IllegalArgumentException(
+                    "Parameter message can not be null.");
         if (message.isEmpty())
-            throw new IllegalArgumentException("Parameter message can not be empty.");
+            throw new IllegalArgumentException(
+                    "Parameter message can not be empty.");
         if (arguments == null)
-            throw new IllegalArgumentException("Parameter arguments can not be null.");
+            throw new IllegalArgumentException(
+                    "Parameter arguments can not be null.");
         return ErrorDetailsImpl.fromValues(message, arguments);
     }
-    
+
     /**
      * @param id
      *            the {@link RuleId} id for the {@link Rule}
@@ -206,6 +211,8 @@ public final class Profiles {
      * @param test
      *            a JavaScript expression that is the test carried out on a
      *            model instance
+     * @param error
+     *            the {@link ErrorDetails} associated with the{@link Rule}.
      * @param references
      *            a list of further {@link Reference}s for this rule
      * @return a new {@link Rule} instance.
@@ -214,8 +221,8 @@ public final class Profiles {
      *             description is empty
      */
     public static Rule ruleFromValues(final RuleId id, final String object,
-            final String description, final String test, final ErrorDetails error,
-            final List<Reference> references) {
+            final String description, final String test,
+            final ErrorDetails error, final List<Reference> references) {
         if (id == null)
             throw new IllegalArgumentException("Parameter id can not be null.");
         if (object == null)
@@ -319,7 +326,8 @@ public final class Profiles {
     /**
      * @param toConvert
      *            a {@link ValidationProfile} to convert to an XML String
-     * @param forXmlOutput an OutputStream used to write the generated XML to
+     * @param forXmlOutput
+     *            an OutputStream used to write the generated XML to
      * @param prettyXml
      *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
      *            for no space formatting
@@ -329,8 +337,9 @@ public final class Profiles {
      * @throws IllegalArgumentException
      *             if toConvert is null
      */
-    public static void profileToXml(final ValidationProfile toConvert, final OutputStream forXmlOutput,
-            final Boolean prettyXml) throws JAXBException {
+    public static void profileToXml(final ValidationProfile toConvert,
+            final OutputStream forXmlOutput, final Boolean prettyXml)
+            throws JAXBException {
         if (toConvert == null)
             throw new IllegalArgumentException(
                     "Parameter toConvert cannot be null");
@@ -340,14 +349,15 @@ public final class Profiles {
     /**
      * @param toConvert
      *            an InputStream to an XML representation of a profile
-     * @return  a new {@link ValidationProfile} instance
+     * @return a new {@link ValidationProfile} instance
      * @throws JAXBException
      *             thrown by JAXB marshaller if there's an error converting the
      *             object
      * @throws IllegalArgumentException
      *             if toConvert is null
      */
-    public static ValidationProfile profileFromXml(final InputStream toConvert) throws JAXBException {
+    public static ValidationProfile profileFromXml(final InputStream toConvert)
+            throws JAXBException {
         if (toConvert == null)
             throw new IllegalArgumentException(
                     "Parameter toConvert cannot be null");
@@ -357,7 +367,8 @@ public final class Profiles {
     /**
      * @param toConvert
      *            a {@link ValidationProfile} to convert to an XML String
-     * @param forXmlOutput a Writer used to write the generated XML to
+     * @param forXmlOutput
+     *            a Writer used to write the generated XML to
      * @param prettyXml
      *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
      *            for no space formatting
@@ -367,8 +378,8 @@ public final class Profiles {
      * @throws IllegalArgumentException
      *             if toConvert is null
      */
-    public static void profileToXml(final ValidationProfile toConvert, Writer forXmlOutput,
-            Boolean prettyXml) throws JAXBException {
+    public static void profileToXml(final ValidationProfile toConvert,
+            Writer forXmlOutput, Boolean prettyXml) throws JAXBException {
         if (toConvert == null)
             throw new IllegalArgumentException(
                     "Parameter toConvert cannot be null");

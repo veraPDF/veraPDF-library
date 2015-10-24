@@ -278,8 +278,8 @@ final class ValidationProfileImpl implements ValidationProfile {
         return (ValidationProfileImpl) stringUnmarshaller.unmarshal(toConvert);
     }
 
-    static void toXml(final ValidationProfile toConvert, final Writer writer, Boolean prettyXml)
-            throws JAXBException {
+    static void toXml(final ValidationProfile toConvert, final Writer writer,
+            Boolean prettyXml) throws JAXBException {
         Marshaller varMarshaller = getMarshaller(prettyXml);
         varMarshaller.marshal(toConvert, writer);
     }
@@ -306,7 +306,8 @@ final class ValidationProfileImpl implements ValidationProfile {
         return marshaller;
     }
 
-    static class Adapter extends XmlAdapter<ValidationProfileImpl, ValidationProfile> {
+    static class Adapter extends
+            XmlAdapter<ValidationProfileImpl, ValidationProfile> {
         @Override
         public ValidationProfileImpl unmarshal(ValidationProfileImpl profileImpl) {
             return profileImpl;

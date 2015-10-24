@@ -54,7 +54,7 @@ public class RuleImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.RuleImpl#fromValues(RuleIdImpl, String, String, String, List)}
+     * {@link org.verapdf.pdfa.validation.RuleImpl#fromValues(RuleIdImpl, String, String, String, ErrorDetails, List)}
      * .
      */
     @Test

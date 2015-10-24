@@ -26,7 +26,7 @@ public class MapBackedRegistry<K, V> extends MapBackedDirectory<K, V>
      * { @inheritDoc }
      */
     @Override
-    public V addItem(final K key, final V value) {
+    public V registerItem(final K key, final V value) {
         return this.map.put(key, value);
     }
 
@@ -34,7 +34,7 @@ public class MapBackedRegistry<K, V> extends MapBackedDirectory<K, V>
      * { @inheritDoc }
      */
     @Override
-    public void addItems(final Map<K, V> itemMap) {
+    public void registerItems(final Map<K, V> itemMap) {
         this.map.putAll(itemMap);
     }
 
@@ -42,7 +42,7 @@ public class MapBackedRegistry<K, V> extends MapBackedDirectory<K, V>
      * { @inheritDoc }
      */
     @Override
-    public V deleteItem(final K key) {
+    public V removeItem(final K key) {
         return this.map.remove(key);
     }
 
@@ -50,7 +50,7 @@ public class MapBackedRegistry<K, V> extends MapBackedDirectory<K, V>
      * { @inheritDoc }
      */
     @Override
-    public void deleteItems(final Set<K> keys) {
+    public void removeItems(final Set<K> keys) {
         for (K key : keys) {
             this.map.remove(key);
         }

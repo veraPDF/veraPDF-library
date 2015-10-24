@@ -3,35 +3,44 @@
  */
 package org.verapdf.core;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 
 /**
+ * A read only Directory that supports key and value types.
+ * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- * @param <K> 
- * @param <V> 
+ * @param <K>
+ *            the Directory key type
+ * @param <V>
+ *            the Directory value type
  *
  */
 public interface Directory<K, V> {
     /**
      * @param key
-     * @return
+     *            the key used to lookup a particular item
+     * @return the value instance associated with the key
      */
     V getItem(final K key);
+
     /**
-     * @return
+     * @return the Collection of values contained in the directory
      */
-    List<V> getItems();
+    Collection<V> getItems();
+
     /**
-     * @return
+     * @return the Set of keys contained in the directory
      */
     Set<K> getKeys();
+
     /**
-     * @return
+     * @return the number of items held in the directory
      */
     int size();
+
     /**
-     * @return
+     * @return true if the directory contains no items, false if not.
      */
     boolean isEmpty();
 }

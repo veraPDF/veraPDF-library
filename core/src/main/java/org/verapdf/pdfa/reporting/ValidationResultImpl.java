@@ -4,12 +4,13 @@
 package org.verapdf.pdfa.reporting;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
@@ -24,19 +25,19 @@ final class ValidationResultImpl implements ValidationResult {
     private final PDFAFlavour flavour;
     @XmlElementWrapper
     @XmlElement(name = "assertion")
-    private final List<TestAssertion> assertions;
+    private final Set<TestAssertion> assertions;
     @XmlAttribute
     private final boolean isCompliant;
 
     private ValidationResultImpl() {
-        this(PDFAFlavour.NO_FLAVOUR, Collections.EMPTY_LIST, false);
+        this(PDFAFlavour.NO_FLAVOUR, Collections.EMPTY_SET, false);
     }
 
     private ValidationResultImpl(final PDFAFlavour flavour,
-            final List<TestAssertion> assertions, final boolean isCompliant) {
+            final Set<TestAssertion> assertions, final boolean isCompliant) {
         super();
         this.flavour = flavour;
-        this.assertions = assertions;
+        this.assertions = Collections.unmodifiableSet(assertions);
         this.isCompliant = isCompliant;
     }
 
@@ -60,7 +61,7 @@ final class ValidationResultImpl implements ValidationResult {
      * { @inheritDoc }
      */
     @Override
-    public List<TestAssertion> getTestAssertions() {
+    public Set<TestAssertion> getTestAssertions() {
         return this.assertions;
     }
 
@@ -118,7 +119,20 @@ final class ValidationResultImpl implements ValidationResult {
     }
 
     static ValidationResultImpl fromValues(final PDFAFlavour flavour,
-            final List<TestAssertion> assertions, final boolean isCompliant) {
+            final Set<TestAssertion> assertions, final boolean isCompliant) {
         return new ValidationResultImpl(flavour, assertions, isCompliant);
+    }
+
+
+    static class Adapter extends XmlAdapter<ValidationResultImpl, ValidationResult> {
+        @Override
+        public ValidationResult unmarshal(ValidationResultImpl validationResultImpl) {
+            return validationResultImpl;
+        }
+
+        @Override
+        public ValidationResultImpl marshal(ValidationResult validationResult) {
+            return (ValidationResultImpl) validationResult;
+        }
     }
 }

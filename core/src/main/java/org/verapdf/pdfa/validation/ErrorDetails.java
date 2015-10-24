@@ -17,6 +17,7 @@ public interface ErrorDetails {
      * @return the Error message as a String
      */
     public String getMessage();
+
     /**
      * @return a List of String arguments for the error
      */

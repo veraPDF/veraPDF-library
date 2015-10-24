@@ -3,6 +3,8 @@
  */
 package org.verapdf.pdfa.reporting;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import org.verapdf.pdfa.validation.RuleId;
 
 /**
@@ -11,6 +13,7 @@ import org.verapdf.pdfa.validation.RuleId;
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
+@XmlJavaTypeAdapter(TestAssertionImpl.Adapter.class)
 public interface TestAssertion {
     /**
      * @return the String id for the Rule
@@ -51,4 +54,5 @@ public interface TestAssertion {
          */
         FAILED;
     }
+
 }

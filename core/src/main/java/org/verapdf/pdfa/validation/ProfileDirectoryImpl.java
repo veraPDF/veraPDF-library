@@ -28,8 +28,8 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
 
     private ProfileDirectoryImpl(Map<PDFAFlavour, ValidationProfile> profileMap) {
         this.profileDir = new MapBackedDirectory<>(profileMap);
-        this.flavourDir = new MapBackedDirectory<>(ProfileDirectoryImpl.flavourMapFromSet(profileMap
-                .keySet()));
+        this.flavourDir = new MapBackedDirectory<>(
+                ProfileDirectoryImpl.flavourMapFromSet(profileMap.keySet()));
     }
 
     /**
@@ -87,8 +87,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
                 .getItems()));
     }
 
-    static ProfileDirectory fromProfileSet(
-            Set<ValidationProfile> profiles) {
+    static ProfileDirectory fromProfileSet(Set<ValidationProfile> profiles) {
         return new ProfileDirectoryImpl(profiles);
     }
 
@@ -101,8 +100,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
         return Collections.unmodifiableMap(profileMap);
     }
 
-    static Map<String, PDFAFlavour> flavourMapFromSet(
-            Set<PDFAFlavour> flavours) {
+    static Map<String, PDFAFlavour> flavourMapFromSet(Set<PDFAFlavour> flavours) {
         Map<String, PDFAFlavour> flavourMap = new HashMap<>();
         for (PDFAFlavour flavour : flavours) {
             flavourMap.put(flavour.getId(), flavour);

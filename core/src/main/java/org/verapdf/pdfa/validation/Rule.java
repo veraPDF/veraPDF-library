@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlJavaTypeAdapter(RuleImpl.Adapter.class)
 public interface Rule {
-    
+
     /**
      * @return the RuleID instance that uniquely identifies this rule
      */
@@ -43,6 +43,7 @@ public interface Rule {
      * @return the {@link ErrorDetails} associated with this Rule
      */
     public ErrorDetails getError();
+
     /**
      * @return a List of {@link Reference}s to the specification clause(s) from
      *         which the rule is derived.
