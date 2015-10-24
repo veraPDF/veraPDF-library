@@ -1,6 +1,5 @@
-package org.verapdf.exceptions.validationlogic;
+package org.verapdf.core;
 
-import org.verapdf.core.VeraPDFException;
 
 /**
  * Exception that occurs when there is a null object returns from link
@@ -8,7 +7,7 @@ import org.verapdf.core.VeraPDFException;
  * @author Maksim Bezrukov
  */
 
-public class NullLinkedObjectException extends VeraPDFException {
+public class ValidationException extends VeraPDFException {
 
 	/**
 	 *
@@ -18,7 +17,7 @@ public class NullLinkedObjectException extends VeraPDFException {
 	/**
 	 * Constructs new NullLinkedObjectException
 	 */
-	public NullLinkedObjectException() {
+	public ValidationException() {
 	}
 
 	/**
@@ -26,7 +25,7 @@ public class NullLinkedObjectException extends VeraPDFException {
 	 *
 	 * @param message the message of the exception
 	 */
-	public NullLinkedObjectException(String message) {
+	public ValidationException(String message) {
 		super(message);
 	}
 }

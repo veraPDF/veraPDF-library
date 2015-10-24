@@ -1,6 +1,6 @@
 package org.verapdf.validation.profile.parser;
 
-import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameException;
+import org.verapdf.core.ValidationException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.validation.profile.model.*;
@@ -13,6 +13,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -60,7 +61,7 @@ public final class ValidationProfileParser {
 
 	private ValidationProfileParser(File resourceFile, boolean isSignCheckOn)
 			throws ParserConfigurationException, IOException, SAXException,
-			XMLStreamException, MissedHashTagException, WrongSignatureException, MultiplyGlobalVariableNameException {
+			XMLStreamException, MissedHashTagException, WrongSignatureException, ValidationException {
 		this.resource = resourceFile;
 
 		if (isSignCheckOn) {
@@ -88,7 +89,7 @@ public final class ValidationProfileParser {
 	}
 
 	private void parseRoot(Node root, boolean isSignCheckOn)
-			throws IOException, SAXException, MultiplyGlobalVariableNameException {
+			throws IOException, SAXException, ValidationException {
 		String model = null;
 		String name = null;
 		String description = null;
@@ -276,7 +277,7 @@ public final class ValidationProfileParser {
 	}
 
 	private void parseVariables(Node rules,
-								Map<String, List<Variable>> variablesMap) throws MultiplyGlobalVariableNameException {
+								Map<String, List<Variable>> variablesMap) throws ValidationException {
 		NodeList children = rules.getChildNodes();
 
 		for (int i = 0; i < children.getLength(); ++i) {
@@ -294,7 +295,7 @@ public final class ValidationProfileParser {
 		}
 	}
 
-	private Variable parseVariable(Node rule) throws MultiplyGlobalVariableNameException {
+	private Variable parseVariable(Node rule) throws ValidationException {
 		String name = null;
 		String object = null;
 		String defaultValue = null;
@@ -307,7 +308,7 @@ public final class ValidationProfileParser {
 		}
 
 		if (this.variables.contains(name)) {
-			throw new MultiplyGlobalVariableNameException(
+			throw new ValidationException(
 					"Founded multiply variable with name: "
 							+ name + "\".");
 		}
@@ -476,13 +477,13 @@ public final class ValidationProfileParser {
 	 * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
 	 *                                             signature
 	 * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
-	 * @throws MultiplyGlobalVariableNameException if there is more than one identical global variable names in
+	 * @throws ValidationException if there is more than one identical global variable names in
 	 *                                             the profile model
 	 */
 	public static ValidationProfile parseFromFilePath(String profileFilePath,
 													  boolean isSignCheckOn) throws ParserConfigurationException,
 			SAXException, IOException, MissedHashTagException,
-			XMLStreamException, WrongSignatureException, MultiplyGlobalVariableNameException {
+			XMLStreamException, WrongSignatureException, ValidationException {
 		if (profileFilePath == null)
 			throw new IllegalArgumentException(
 					"Parameter (String profileFilePath) can not be null");
@@ -507,13 +508,13 @@ public final class ValidationProfileParser {
 	 * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
 	 *                                             signature
 	 * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
-	 * @throws MultiplyGlobalVariableNameException if there is more than one identical global variable names in
+	 * @throws ValidationException if there is more than one identical global variable names in
 	 *                                             the profile model
 	 */
 	public static ValidationProfile parseFromFile(File profileFile,
 												  boolean isSignCheckOn) throws ParserConfigurationException,
 			SAXException, IOException, MissedHashTagException,
-			XMLStreamException, WrongSignatureException, MultiplyGlobalVariableNameException {
+			XMLStreamException, WrongSignatureException, ValidationException {
 		if (profileFile == null)
 			throw new IllegalArgumentException(
 					"Parameter (File resourceFile) can not be null");

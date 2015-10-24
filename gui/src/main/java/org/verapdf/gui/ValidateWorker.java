@@ -1,10 +1,7 @@
 package org.verapdf.gui;
 
 import org.apache.log4j.Logger;
-import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameException;
-import org.verapdf.exceptions.validationlogic.NullLinkException;
-import org.verapdf.exceptions.validationlogic.NullLinkNameException;
-import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
+import org.verapdf.core.ValidationException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.features.pb.PBFeatureParser;
@@ -27,6 +24,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.TransformerException;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -118,9 +116,8 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 	private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
 		try {
 			return Validator.validate(root, this.profile, false, settings.isShowPassedRules(), settings.getMaxNumberOfFailedChecks(), settings.getMaxNumberOfDisplayedFailedChecks());
-		} catch (IOException | NullLinkNameException | NullLinkException |
-				NullLinkedObjectException | MissedHashTagException |
-				WrongSignatureException | MultiplyGlobalVariableNameException |
+		} catch (IOException | MissedHashTagException |
+				WrongSignatureException | ValidationException |
 				ParserConfigurationException | SAXException | XMLStreamException e) {
 
 			this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_VALIDATING, e);

@@ -2,10 +2,7 @@ package org.verapdf.runner;
 
 import org.apache.log4j.Logger;
 import org.verapdf.config.VeraPdfTaskConfig;
-import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameException;
-import org.verapdf.exceptions.validationlogic.NullLinkException;
-import org.verapdf.exceptions.validationlogic.NullLinkNameException;
-import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
+import org.verapdf.core.ValidationException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.metadata.fixer.MetadataFixer;
@@ -19,6 +16,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
+
 import java.io.IOException;
 
 public class ValidationRunner {
@@ -50,9 +48,8 @@ public class ValidationRunner {
             // Carl to think a little harder and tidy up, it's not a new idea I'm after,
             // more a case of ensuring we use the best of 2 methods.
         } catch (IOException | SAXException | ParserConfigurationException |
-				NullLinkNameException | NullLinkException | NullLinkedObjectException |
 				MissedHashTagException | WrongSignatureException | XMLStreamException |
-				MultiplyGlobalVariableNameException e) {
+				ValidationException e) {
             //error while parsing validation profile
             LOGGER.error(e.getMessage(), e);
         }

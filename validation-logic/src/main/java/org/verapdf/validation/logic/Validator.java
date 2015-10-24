@@ -4,10 +4,7 @@ import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
-import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameException;
-import org.verapdf.exceptions.validationlogic.NullLinkException;
-import org.verapdf.exceptions.validationlogic.NullLinkNameException;
-import org.verapdf.exceptions.validationlogic.NullLinkedObjectException;
+import org.verapdf.core.ValidationException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.model.baselayer.Object;
@@ -20,6 +17,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -72,8 +70,8 @@ public class Validator {
 		this.maxDisplayedFailedChecks = maxDisplayedFailedChecks;
     }
 
-    private ValidationInfo validate(Object root) throws NullLinkNameException,
-            NullLinkException, NullLinkedObjectException {
+    private ValidationInfo validate(Object root) throws ValidationException,
+            ValidationException, ValidationException {
 		initialize();
 
 		this.rootType = root.getObjectType();
@@ -146,8 +144,8 @@ public class Validator {
         }
     }
 
-    private boolean checkNext() throws NullLinkException,
-            NullLinkedObjectException, NullLinkNameException {
+    private boolean checkNext() throws ValidationException,
+            ValidationException, ValidationException {
 
         Object checkObject = this.objectsStack.pop();
         String checkContext = this.objectsContext.pop();
@@ -196,20 +194,20 @@ public class Validator {
     }
 
     private void addAllLinkedObjects(Object checkObject, String checkContext,
-                                     Set<String> checkIDContext) throws NullLinkNameException,
-            NullLinkException, NullLinkedObjectException {
+                                     Set<String> checkIDContext) throws ValidationException,
+            ValidationException, ValidationException {
         List<String> links = checkObject.getLinks();
         for (int j = links.size() - 1; j >= 0; --j) {
             String link = links.get(j);
 
             if (link == null) {
-                throw new NullLinkNameException(
+                throw new ValidationException(
                         "There is a null link name in an object. Context: "
                                 + checkContext);
             }
             List<? extends Object> objects = checkObject.getLinkedObjects(link);
             if (objects == null) {
-                throw new NullLinkException(
+                throw new ValidationException(
                         "There is a null link in an object. Context: "
                                 + checkContext);
             }
@@ -225,7 +223,7 @@ public class Validator {
                 path.append("]");
 
                 if (obj == null) {
-                    throw new NullLinkedObjectException(
+                    throw new ValidationException(
                             "There is a null link in an object. Context of the link: "
                                     + path);
                 }
@@ -443,16 +441,16 @@ public class Validator {
      * @throws IOException                         if any IO errors occur.
      * @throws FileNotFoundException               if the profileFile is not an existing file
      * @throws SAXException                        if any parse errors occur.
-     * @throws NullLinkNameException               if there is a null link name in some object
-     * @throws NullLinkException                   if there is a null link
-     * @throws NullLinkedObjectException           if there is a null object in links list
+     * @throws ValidationException               if there is a null link name in some object
+     * @throws ValidationException                   if there is a null link
+     * @throws ValidationException           if there is a null object in links list
      * @throws MissedHashTagException              if validation profile must be signed, but it has no hash tag
      * @throws XMLStreamException                  if exception occurs in parsing a validation profile with xml
      *                                             stream (in checking signature of the validation profile)
      * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
      *                                             signature
      * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
-     * @throws MultiplyGlobalVariableNameException if there is more than one identical global variable names in
+     * @throws ValidationException if there is more than one identical global variable names in
      *                                             the profile model
      */
     public static ValidationInfo validate(Object root,
@@ -462,9 +460,9 @@ public class Validator {
 										  int maxFailedChecks,
 										  int maxDisplayedFailedChecks)
             throws IOException, SAXException, ParserConfigurationException,
-            NullLinkNameException, NullLinkException,
-            NullLinkedObjectException, MissedHashTagException,
-            XMLStreamException, WrongSignatureException, MultiplyGlobalVariableNameException {
+            ValidationException, ValidationException,
+            ValidationException, MissedHashTagException,
+            XMLStreamException, WrongSignatureException, ValidationException {
         if (validationProfilePath == null) {
             throw new IllegalArgumentException(
                     "Parameter (String validationProfilePath) cannot be null.");
@@ -491,16 +489,16 @@ public class Validator {
      * @throws IOException                         If any IO errors occur.
      * @throws FileNotFoundException               if the profileFile is not an existing file
      * @throws SAXException                        If any parse errors occur.
-     * @throws NullLinkNameException               if there is a null link name in some object
-     * @throws NullLinkException                   if there is a null link
-     * @throws NullLinkedObjectException           if there is a null object in links list
+     * @throws ValidationException               if there is a null link name in some object
+     * @throws ValidationException                   if there is a null link
+     * @throws ValidationException           if there is a null object in links list
      * @throws MissedHashTagException              if validation profile must be signed, but it has no hash tag
      * @throws XMLStreamException                  if exception occurs in parsing a validation profile with xml
      *                                             stream (in checking signature of the validation profile)
      * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
      *                                             signature
      * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
-     * @throws MultiplyGlobalVariableNameException if there is more than one identical global variable names in
+     * @throws ValidationException if there is more than one identical global variable names in
      *                                             the profile model
      */
     public static ValidationInfo validate(Object root, File validationProfile,
@@ -508,10 +506,10 @@ public class Validator {
 										  boolean isLogPassedChecks,
 										  int maxFailedChecks,
 										  int maxDisplayedFailedChecks) throws ParserConfigurationException,
-            SAXException, IOException, NullLinkNameException,
-            NullLinkException, NullLinkedObjectException,
+            SAXException, IOException, ValidationException,
+            ValidationException, ValidationException,
             MissedHashTagException, XMLStreamException,
-            WrongSignatureException, MultiplyGlobalVariableNameException {
+            WrongSignatureException, ValidationException {
         if (validationProfile == null) {
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile validationProfile) cannot be null.");
@@ -534,16 +532,16 @@ public class Validator {
 	 * @param maxFailedChecks maximum amount of failed checks for each rule
 	 * @param maxDisplayedFailedChecks maximum amount of failed checks for each rule
 	 * @return validation info structure
-	 * @throws NullLinkNameException     if there is a null link name in some object
-	 * @throws NullLinkException         if there is a null link
-	 * @throws NullLinkedObjectException if there is a null object in links list
+	 * @throws ValidationException     if there is a null link name in some object
+	 * @throws ValidationException         if there is a null link
+	 * @throws ValidationException if there is a null object in links list
      */
     public static ValidationInfo validate(Object root,
                                           ValidationProfile validationProfile,
 										  boolean isLogPassedChecks,
 										  int maxFailedChecks,
-										  int maxDisplayedFailedChecks) throws NullLinkNameException,
-            NullLinkException, NullLinkedObjectException {
+										  int maxDisplayedFailedChecks) throws ValidationException,
+            ValidationException, ValidationException {
         if (root == null)
             throw new IllegalArgumentException(
                     "Parameter (Object root) cannot be null.");
