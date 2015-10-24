@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.verapdf.core.Directory;
+import org.verapdf.core.MapBackedDirectory;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.utils.Directory;
-import org.verapdf.utils.MapBackedDirectory;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

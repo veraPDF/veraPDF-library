@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf.utils;
+package org.verapdf.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
