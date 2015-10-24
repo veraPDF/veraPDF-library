@@ -6,8 +6,6 @@ package org.verapdf.validation.profile.parser;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -21,13 +19,14 @@ import javax.xml.stream.XMLStreamException;
 import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameException;
 import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
 import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
-import org.verapdf.pdfa.ValidationProfile;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
+import org.verapdf.pdfa.validation.ErrorDetails;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.Reference;
 import org.verapdf.pdfa.validation.Rule;
 import org.verapdf.pdfa.validation.RuleId;
+import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validation.Variable;
 import org.xml.sax.SAXException;
 
@@ -48,15 +47,15 @@ public final class LegacyProfileConverter {
      * @throws IOException
      * @throws SAXException
      * @throws ParserConfigurationException
-     * @throws MultiplyGlobalVariableNameException
      * @throws WrongSignatureException
      * @throws MissedHashTagException
      * @throws JAXBException
+     * @throws MultiplyGlobalVariableNameException
      */
-    public static void main(String[] args) throws MissedHashTagException,
-            WrongSignatureException, MultiplyGlobalVariableNameException,
-            ParserConfigurationException, SAXException, IOException,
-            XMLStreamException, JAXBException {
+    public static void main(String[] args) throws ParserConfigurationException,
+            SAXException, IOException, XMLStreamException, JAXBException,
+            MissedHashTagException, WrongSignatureException,
+            MultiplyGlobalVariableNameException {
         for (String path : args) {
             org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser
                     .parseFromFilePath(path, false);
@@ -71,7 +70,8 @@ public final class LegacyProfileConverter {
             ValidationProfile profile = fromLegacyProfile(toConvert,
                     PDFAFlavour.PDFA_1_B);
             Profiles.profileToXml(profile, System.out, Boolean.TRUE);
-            try (OutputStream fos = new FileOutputStream("/home/cfw/test-profile.xml")) {
+            try (OutputStream fos = new FileOutputStream(
+                    "/home/cfw/test-profile.xml")) {
                 Profiles.profileToXml(profile, fos, Boolean.TRUE);
             }
         }
@@ -79,7 +79,9 @@ public final class LegacyProfileConverter {
 
     /**
      * @param toConvert
-     * @return
+     *            a legacy validation profile instance to convert
+     * @return a new ValidatioProfile instance populated from the legacy profile
+     *         instance
      */
     public static ValidationProfile fromLegacyProfile(
             org.verapdf.validation.profile.model.ValidationProfile toConvert,
@@ -107,7 +109,8 @@ public final class LegacyProfileConverter {
 
     /**
      * @param toConvert
-     * @return
+     *            a legacy Rule type to convert
+     * @return a new validationRule created from the legacy type
      */
     public static Rule fromLegacyRule(
             org.verapdf.validation.profile.model.Rule toConvert) {
@@ -131,10 +134,15 @@ public final class LegacyProfileConverter {
         }
         Rule converted = Profiles.ruleFromValues(id, toConvert.getAttrObject(),
                 toConvert.getDescription().trim().replaceAll(" +", " "),
-                toConvert.getTest(), flattenedRefs);
+                toConvert.getTest(), fromLegacyError(toConvert.getRuleError()),
+                flattenedRefs);
         return converted;
     }
 
+    /**
+     * @param legacyId
+     * @return
+     */
     public static RuleId fromLegacyRuleId(final String legacyId) {
         String[] parts = legacyId.split("-");
         StringBuilder builder = new StringBuilder();
@@ -151,6 +159,16 @@ public final class LegacyProfileConverter {
         }
         return Profiles.ruleIdFromValues(Specification.ISO_19005_1,
                 builder.toString(), testNumber);
+    }
+
+    /**
+     * @param toConvert
+     * @return
+     */
+    public static ErrorDetails fromLegacyError(
+            org.verapdf.validation.profile.model.RuleError toConvert) {
+        return Profiles.errorFromValues(toConvert.getMessage(),
+                toConvert.getArgument());
     }
 
     /**
