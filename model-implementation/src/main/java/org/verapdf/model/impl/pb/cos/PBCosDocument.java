@@ -6,10 +6,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDEmbeddedFilesNameTreeNode;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.model.coslayer.CosDocument;
-import org.verapdf.model.coslayer.CosIndirect;
-import org.verapdf.model.coslayer.CosTrailer;
-import org.verapdf.model.coslayer.CosXRef;
+import org.verapdf.model.coslayer.*;
 import org.verapdf.model.impl.pb.pd.PBoxPDDocument;
 import org.verapdf.model.tools.XMPChecker;
 
@@ -34,6 +31,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     public static final String DOCUMENT = "document";
     public static final String EMBEDDED_FILES = "EmbeddedFiles";
     public static final String ID = "ID";
+	public static final String REQUIREMENTS = "Requirements";
 
     private PDDocument pdDocument;
 
@@ -93,6 +91,18 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
                 .getLastTrailer() && cosDocument.isLinearized().booleanValue();
         this.doesInfoMatchXMP = XMPChecker.doesInfoMatchXMP(cosDocument);
     }
+
+	private boolean parseOptionalContentPresent(
+			final COSDocument cosDocument) {
+		try {
+			COSDictionary root = (COSDictionary) (cosDocument).getCatalog()
+					.getObject();
+			return root.getItem(COSName.OCPROPERTIES) != null;
+		} catch (IOException e) {
+			LOGGER.debug("No document catalog found", e);
+			return false;
+		}
+	}
 
     /**
      * Number of indirect objects in the document
@@ -234,22 +244,12 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 				return this.getXRefs();
 			case EMBEDDED_FILES:
 				return this.getEmbeddedFiles();
+			case REQUIREMENTS:
+				return this.getRequirements();
 			default:
 				return super.getLinkedObjects(link);
 		}
 	}
-
-    private static boolean parseOptionalContentPresent(
-            final COSDocument cosDocument) {
-        try {
-            COSDictionary root = (COSDictionary) (cosDocument).getCatalog()
-                    .getObject();
-            return root.getItem(COSName.OCPROPERTIES) != null;
-        } catch (IOException e) {
-            LOGGER.debug("No document catalog found", e);
-            return false;
-        }
-    }
 
     /**
      * @return list of embedded files
@@ -335,4 +335,29 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
                 cosDocument.isXRefEOLCompliesPDFA()));
         return Collections.unmodifiableList(list);
     }
+
+	private List<CosDict> getRequirements() {
+		try {
+			COSDictionary object = (COSDictionary)
+					((COSDocument) this.baseObject).getCatalog().getObject();
+			COSName requirementsName = COSName.getPDFName("Requirements");
+			COSBase reqArray = object.getDictionaryObject(requirementsName);
+			if (reqArray instanceof COSArray) {
+				return this.getRequirementsList(reqArray);
+			}
+		} catch (IOException e) {
+			LOGGER.warn("Problems with catalog obtain.", e);
+		}
+		return Collections.emptyList();
+	}
+
+	private List<CosDict> getRequirementsList(COSBase reqArray) {
+		ArrayList<CosDict> list = new ArrayList<>(((COSArray) reqArray).size());
+		for (COSBase element : (COSArray) reqArray) {
+			if (element instanceof COSDictionary) {
+				list.add(new PBCosDict((COSDictionary) element));
+			}
+		}
+		return Collections.unmodifiableList(list);
+	}
 }
