@@ -1,6 +1,6 @@
 package org.verapdf.exceptions.featurereport;
 
-import org.verapdf.exceptions.VeraPDFException;
+import org.verapdf.core.VeraPDFException;
 
 /**
  * Exception that occurs when wrong features tree node constructs

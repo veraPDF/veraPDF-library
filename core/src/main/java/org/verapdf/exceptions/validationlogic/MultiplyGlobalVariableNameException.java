@@ -1,6 +1,6 @@
 package org.verapdf.exceptions.validationlogic;
 
-import org.verapdf.exceptions.VeraPDFException;
+import org.verapdf.core.VeraPDFException;
 
 /**
  * Exception that occurs when there is more than one identical global variable names in the profile model

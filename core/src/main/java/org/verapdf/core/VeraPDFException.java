@@ -1,4 +1,4 @@
-package org.verapdf.exceptions;
+package org.verapdf.core;
 
 /**
  * General exception class for all expected exceptions in veraPDF library

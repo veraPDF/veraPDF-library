@@ -1,6 +1,6 @@
 package org.verapdf.exceptions.validationlogic;
 
-import org.verapdf.exceptions.VeraPDFException;
+import org.verapdf.core.VeraPDFException;
 
 /**
  * Exception that occurs when there is a null object returns from link
