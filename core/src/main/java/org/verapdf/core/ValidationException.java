@@ -1,31 +1,45 @@
 package org.verapdf.core;
 
-
 /**
- * Exception that occurs when there is a null object returns from link
+ * Exception type for problems encountered while performing validation.
  *
  * @author Maksim Bezrukov
  */
 
 public class ValidationException extends VeraPDFException {
 
-	/**
+    /**
 	 *
 	 */
-	private static final long serialVersionUID = 2140287213702618800L;
+    private static final long serialVersionUID = 2140287213702618800L;
 
-	/**
-	 * Constructs new NullLinkedObjectException
-	 */
-	public ValidationException() {
-	}
+    /**
+     * Default constructor for ValidationException.
+     */
+    public ValidationException() {
+        super();
+    }
 
-	/**
-	 * Constructs new NullLinkedObjectException
-	 *
-	 * @param message the message of the exception
-	 */
-	public ValidationException(String message) {
-		super(message);
-	}
+    /**
+     * Constructs new ValidationException with a String message
+     *
+     * @param message
+     *            a String message describing the cause of the exception.
+     */
+    public ValidationException(String message) {
+        super(message);
+    }
+
+    /**
+     * Constructs new ValidationException with a String message and a Throwable
+     * cause.
+     *
+     * @param message
+     *            a String message describing the cause of the exception.
+     * @param cause
+     *            Throwable cause of the exception.
+     */
+    public ValidationException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

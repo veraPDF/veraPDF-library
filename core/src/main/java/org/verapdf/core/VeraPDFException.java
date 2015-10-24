@@ -1,39 +1,44 @@
 package org.verapdf.core;
 
 /**
- * General exception class for all expected exceptions in veraPDF library
+ * Top level exception class for all exceptions in veraPDF library.
  *
  * @author Maksim Bezrukov
  */
 public class VeraPDFException extends Exception {
 
-	/**
+    /**
 	 *
 	 */
-	private static final long serialVersionUID = -6566760719467943980L;
+    private static final long serialVersionUID = -6566760719467943980L;
 
-	/**
-	 * Constructs new VeraPDFException
-	 */
-	public VeraPDFException() {
-	}
+    /**
+     * Default constructor for VeraPDFException.
+     */
+    public VeraPDFException() {
+        super();
+    }
 
-	/**
-	 * Constructs new VeraPDFException
-	 *
-	 * @param message the message of the exception
-	 */
-	public VeraPDFException(String message) {
-		super(message);
-	}
+    /**
+     * Constructs new VeraPDFException with a String message
+     *
+     * @param message
+     *            a String message describing the cause of the exception.
+     */
+    public VeraPDFException(String message) {
+        super(message);
+    }
 
-	/**
-	 * Constructs new VeraPDFException
-	 *
-	 * @param message the message of the exception
-	 * @param cause   Throwable cause of the exception
-	 */
-	public VeraPDFException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * Constructs new VeraPDFException with a String message and a Throwable
+     * cause.
+     *
+     * @param message
+     *            a String message describing the cause of the exception.
+     * @param cause
+     *            Throwable cause of the exception.
+     */
+    public VeraPDFException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
