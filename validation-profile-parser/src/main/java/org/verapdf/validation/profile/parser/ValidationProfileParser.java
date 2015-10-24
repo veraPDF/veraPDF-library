@@ -1,8 +1,7 @@
 package org.verapdf.validation.profile.parser;
 
+import org.verapdf.core.ProfileException;
 import org.verapdf.core.ValidationException;
-import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
-import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.validation.profile.model.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -61,14 +60,14 @@ public final class ValidationProfileParser {
 
 	private ValidationProfileParser(File resourceFile, boolean isSignCheckOn)
 			throws ParserConfigurationException, IOException, SAXException,
-			XMLStreamException, MissedHashTagException, WrongSignatureException, ValidationException {
+			XMLStreamException, ProfileException, ProfileException, ValidationException {
 		this.resource = resourceFile;
 
 		if (isSignCheckOn) {
 			ValidationProfileSignatureChecker checker = ValidationProfileSignatureChecker
 					.newInstance(this.resource);
 			if (!checker.isValidSignature()) {
-				throw new WrongSignatureException(
+				throw new ProfileException(
 						"Unsigned validation profile: "
 								+ this.resource.getCanonicalPath());
 			}
@@ -471,10 +470,10 @@ public final class ValidationProfileParser {
 	 * @throws IOException                         if any IO errors occur.
 	 * @throws FileNotFoundException               if the profileFile is not an existing file
 	 * @throws SAXException                        if any parse errors occur.
-	 * @throws MissedHashTagException              if validation profile must be signed, but it has no hash tag
+	 * @throws ProfileException              if validation profile must be signed, but it has no hash tag
 	 * @throws XMLStreamException                  if exception occurs in parsing a validation profile with xml
 	 *                                             stream (in checking signature of the validation profile)
-	 * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
+	 * @throws ProfileException             if validation profile must be signed, but it has wrong
 	 *                                             signature
 	 * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
 	 * @throws ValidationException if there is more than one identical global variable names in
@@ -482,8 +481,8 @@ public final class ValidationProfileParser {
 	 */
 	public static ValidationProfile parseFromFilePath(String profileFilePath,
 													  boolean isSignCheckOn) throws ParserConfigurationException,
-			SAXException, IOException, MissedHashTagException,
-			XMLStreamException, WrongSignatureException, ValidationException {
+			SAXException, IOException, ProfileException,
+			XMLStreamException, ProfileException, ValidationException {
 		if (profileFilePath == null)
 			throw new IllegalArgumentException(
 					"Parameter (String profileFilePath) can not be null");
@@ -502,10 +501,10 @@ public final class ValidationProfileParser {
 	 * @throws IOException                         if any IO errors occur.
 	 * @throws FileNotFoundException               if the profileFile is not an existing file
 	 * @throws SAXException                        if any parse errors occur.
-	 * @throws MissedHashTagException              if validation profile must be signed, but it has no hash tag
+	 * @throws ProfileException              if validation profile must be signed, but it has no hash tag
 	 * @throws XMLStreamException                  if exception occurs in parsing a validation profile with xml
 	 *                                             stream (in checking signature of the validation profile)
-	 * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
+	 * @throws ProfileException             if validation profile must be signed, but it has wrong
 	 *                                             signature
 	 * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
 	 * @throws ValidationException if there is more than one identical global variable names in
@@ -513,8 +512,8 @@ public final class ValidationProfileParser {
 	 */
 	public static ValidationProfile parseFromFile(File profileFile,
 												  boolean isSignCheckOn) throws ParserConfigurationException,
-			SAXException, IOException, MissedHashTagException,
-			XMLStreamException, WrongSignatureException, ValidationException {
+			SAXException, IOException, ProfileException,
+			XMLStreamException, ProfileException, ValidationException {
 		if (profileFile == null)
 			throw new IllegalArgumentException(
 					"Parameter (File resourceFile) can not be null");

@@ -1,13 +1,12 @@
-package org.verapdf.exceptions.validationprofileparser;
+package org.verapdf.core;
 
-import org.verapdf.core.VeraPDFException;
 
 /**
  * Exception that occurs when there is no hash tag in a validation profile
  *
  * @author Maksim Bezrukov
  */
-public class MissedHashTagException extends VeraPDFException {
+public class ProfileException extends VeraPDFException {
 
 	/**
 	 *
@@ -17,7 +16,7 @@ public class MissedHashTagException extends VeraPDFException {
 	/**
 	 * Constructs new MissedHashTagException
 	 */
-	public MissedHashTagException() {
+	public ProfileException() {
 	}
 
 	/**
@@ -25,7 +24,7 @@ public class MissedHashTagException extends VeraPDFException {
 	 *
 	 * @param message the message of the exception
 	 */
-	public MissedHashTagException(String message) {
+	public ProfileException(String message) {
 		super(message);
 	}
 }

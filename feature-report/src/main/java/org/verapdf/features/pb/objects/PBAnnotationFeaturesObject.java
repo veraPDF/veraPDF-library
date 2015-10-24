@@ -1,7 +1,7 @@
 package org.verapdf.features.pb.objects;
 
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -62,10 +62,10 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (annot != null) {
 			FeatureTreeNode root = FeatureTreeNode.newRootInstance("annotation");
 			root.addAttribute(ID, id);
@@ -122,7 +122,7 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private void addParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void addParents(FeatureTreeNode root) throws FeatureParsingException {
 		if ((pages != null && !pages.isEmpty()) || annotId != null) {
 			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
 

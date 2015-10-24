@@ -1,9 +1,8 @@
 package org.verapdf.gui;
 
 import org.apache.log4j.Logger;
+import org.verapdf.core.ProfileException;
 import org.verapdf.core.ValidationException;
-import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
-import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.config.Config;
@@ -116,8 +115,7 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 	private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
 		try {
 			return Validator.validate(root, this.profile, false, settings.isShowPassedRules(), settings.getMaxNumberOfFailedChecks(), settings.getMaxNumberOfDisplayedFailedChecks());
-		} catch (IOException | MissedHashTagException |
-				WrongSignatureException | ValidationException |
+		} catch (IOException | ProfileException | ValidationException |
 				ParserConfigurationException | SAXException | XMLStreamException e) {
 
 			this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_VALIDATING, e);

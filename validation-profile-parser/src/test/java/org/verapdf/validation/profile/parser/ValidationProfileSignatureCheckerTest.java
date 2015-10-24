@@ -8,9 +8,10 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
+import org.verapdf.core.ProfileException;
 
 import javax.xml.stream.XMLStreamException;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -36,7 +37,7 @@ public class ValidationProfileSignatureCheckerTest {
 	}
 
 	@Test
-	public void test() throws IOException, XMLStreamException, MissedHashTagException {
+	public void test() throws IOException, XMLStreamException, ProfileException {
 		ValidationProfileSignatureChecker expected = ValidationProfileSignatureChecker.newInstance(copy);
 		ValidationProfileSignatureChecker actual = ValidationProfileSignatureChecker.newInstance(xml);
 

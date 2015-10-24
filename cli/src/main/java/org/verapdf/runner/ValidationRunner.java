@@ -2,9 +2,8 @@ package org.verapdf.runner;
 
 import org.apache.log4j.Logger;
 import org.verapdf.config.VeraPdfTaskConfig;
+import org.verapdf.core.ProfileException;
 import org.verapdf.core.ValidationException;
-import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
-import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.metadata.fixer.MetadataFixer;
 import org.verapdf.metadata.fixer.MetadataFixerResult;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
@@ -48,7 +47,7 @@ public class ValidationRunner {
             // Carl to think a little harder and tidy up, it's not a new idea I'm after,
             // more a case of ensuring we use the best of 2 methods.
         } catch (IOException | SAXException | ParserConfigurationException |
-				MissedHashTagException | WrongSignatureException | XMLStreamException |
+				ProfileException | XMLStreamException |
 				ValidationException e) {
             //error while parsing validation profile
             LOGGER.error(e.getMessage(), e);

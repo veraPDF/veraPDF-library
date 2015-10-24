@@ -4,9 +4,8 @@ import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
+import org.verapdf.core.ProfileException;
 import org.verapdf.core.ValidationException;
-import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
-import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.validation.profile.model.ValidationProfile;
 import org.verapdf.validation.profile.model.Variable;
@@ -444,10 +443,10 @@ public class Validator {
      * @throws ValidationException               if there is a null link name in some object
      * @throws ValidationException                   if there is a null link
      * @throws ValidationException           if there is a null object in links list
-     * @throws MissedHashTagException              if validation profile must be signed, but it has no hash tag
+     * @throws ProfileException              if validation profile must be signed, but it has no hash tag
      * @throws XMLStreamException                  if exception occurs in parsing a validation profile with xml
      *                                             stream (in checking signature of the validation profile)
-     * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
+     * @throws ProfileException             if validation profile must be signed, but it has wrong
      *                                             signature
      * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
      * @throws ValidationException if there is more than one identical global variable names in
@@ -461,8 +460,8 @@ public class Validator {
 										  int maxDisplayedFailedChecks)
             throws IOException, SAXException, ParserConfigurationException,
             ValidationException, ValidationException,
-            ValidationException, MissedHashTagException,
-            XMLStreamException, WrongSignatureException, ValidationException {
+            ValidationException, ProfileException,
+            XMLStreamException, ProfileException, ValidationException {
         if (validationProfilePath == null) {
             throw new IllegalArgumentException(
                     "Parameter (String validationProfilePath) cannot be null.");
@@ -492,10 +491,10 @@ public class Validator {
      * @throws ValidationException               if there is a null link name in some object
      * @throws ValidationException                   if there is a null link
      * @throws ValidationException           if there is a null object in links list
-     * @throws MissedHashTagException              if validation profile must be signed, but it has no hash tag
+     * @throws ProfileException              if validation profile must be signed, but it has no hash tag
      * @throws XMLStreamException                  if exception occurs in parsing a validation profile with xml
      *                                             stream (in checking signature of the validation profile)
-     * @throws WrongSignatureException             if validation profile must be signed, but it has wrong
+     * @throws ProfileException             if validation profile must be signed, but it has wrong
      *                                             signature
      * @throws UnsupportedEncodingException        if validation profile has not utf8 encoding
      * @throws ValidationException if there is more than one identical global variable names in
@@ -508,8 +507,8 @@ public class Validator {
 										  int maxDisplayedFailedChecks) throws ParserConfigurationException,
             SAXException, IOException, ValidationException,
             ValidationException, ValidationException,
-            MissedHashTagException, XMLStreamException,
-            WrongSignatureException, ValidationException {
+            ProfileException, XMLStreamException,
+            ProfileException, ValidationException {
         if (validationProfile == null) {
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile validationProfile) cannot be null.");

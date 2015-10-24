@@ -1,11 +1,12 @@
 package org.verapdf.validation.profile.parser;
 
-import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
+import org.verapdf.core.ProfileException;
 
 import javax.xml.stream.Location;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.security.MessageDigest;
@@ -81,11 +82,11 @@ public final class ValidationProfileSignatureChecker {
 		}
 	}
 
-	private byte[] getBytesForHash() throws IOException, MissedHashTagException {
+	private byte[] getBytesForHash() throws IOException, ProfileException {
 
 		if (this.startOfHash < 0 || this.endOfHash < 0
 				|| this.startOfHash > this.endOfHash) {
-			throw new MissedHashTagException(
+			throw new ProfileException(
 					"Can not find well formed hash element in the validation profile at path: "
 							+ this.profile.getCanonicalPath());
 		}
@@ -183,11 +184,11 @@ public final class ValidationProfileSignatureChecker {
 	 * @return a new {@link ValidationProfileSignatureChecker} instance
 	 * @throws IOException                  if an I/O error occurs reading from the file's path stream
 	 * @throws XMLStreamException           error in parsing profile
-	 * @throws MissedHashTagException       occurs when there is no hash element in the given profile
+	 * @throws ProfileException       occurs when there is no hash element in the given profile
 	 * @throws UnsupportedEncodingException occurs when the given profile has not utf8 encoding
 	 */
 	public static ValidationProfileSignatureChecker newInstance(File profile)
-			throws MissedHashTagException, XMLStreamException, IOException {
+			throws ProfileException, XMLStreamException, IOException {
 		if (profile == null) {
 			throw new NullPointerException(
 					"Null pointer to the profile is used for creating signature checker.");

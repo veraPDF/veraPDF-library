@@ -16,9 +16,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 
+import org.verapdf.core.ProfileException;
 import org.verapdf.core.ValidationException;
-import org.verapdf.exceptions.validationprofileparser.MissedHashTagException;
-import org.verapdf.exceptions.validationprofileparser.WrongSignatureException;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 import org.verapdf.pdfa.validation.ErrorDetails;
@@ -47,14 +46,14 @@ public final class LegacyProfileConverter {
      * @throws IOException
      * @throws SAXException
      * @throws ParserConfigurationException
-     * @throws WrongSignatureException
-     * @throws MissedHashTagException
+     * @throws ProfileException
+     * @throws ProfileException
      * @throws JAXBException
      * @throws ValidationException
      */
     public static void main(String[] args) throws ParserConfigurationException,
             SAXException, IOException, XMLStreamException, JAXBException,
-            MissedHashTagException, WrongSignatureException,
+            ProfileException, ProfileException,
             ValidationException {
         for (String path : args) {
             org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser

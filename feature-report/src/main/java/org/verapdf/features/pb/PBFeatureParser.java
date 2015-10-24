@@ -26,7 +26,7 @@ import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceDictionary;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceEntry;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceStream;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.FeaturesPluginsLoader;
 import org.verapdf.features.FeaturesReporter;
@@ -579,7 +579,7 @@ public final class PBFeatureParser {
 					"Unknown annotation type");
 			reporter.getCollection().addNewFeatureTree(FeaturesObjectTypesEnum.ANNOTATION,
 					annot);
-		} catch (FeaturesTreeNodeException e) {
+		} catch (FeatureParsingException e) {
 			// This exception occurs when wrong node creates for feature tree.
 			// The logic of the method guarantees this doesn't occur.
 			String message = "PBFeatureParser.generateUnknownAnnotation logic failure.";
@@ -742,7 +742,7 @@ public final class PBFeatureParser {
 				reporter.getCollection().addNewError(type, id);
 
 			}
-		} catch (FeaturesTreeNodeException e) {
+		} catch (FeatureParsingException e) {
 			// This exception occurs when wrong node creates for feature
 			// tree.
 			// The logic of the method guarantees this doesn't occur.
