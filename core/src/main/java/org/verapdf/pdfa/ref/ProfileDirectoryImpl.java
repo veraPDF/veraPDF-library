@@ -11,8 +11,8 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.verapdf.pdfa.ProfileDirectory;
-import org.verapdf.pdfa.ValidationProfile;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.validation.ValidationProfile;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

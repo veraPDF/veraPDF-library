@@ -10,25 +10,26 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.verapdf.pdfa.ValidationProfile;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.utils.Directory;
+import org.verapdf.utils.MapBackedDirectory;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
 final class ProfileDirectoryImpl implements ProfileDirectory {
-    private final Map<PDFAFlavour, ValidationProfile> profileMap;
-    private final Map<String, PDFAFlavour> flavourMap;
+    private final Directory<PDFAFlavour, ValidationProfile> profileDir;
+    private final Directory<String, PDFAFlavour> flavourDir;
 
     private ProfileDirectoryImpl(Set<ValidationProfile> profileSet) {
         this(ProfileDirectoryImpl.profileMapFromSet(profileSet));
     }
 
     private ProfileDirectoryImpl(Map<PDFAFlavour, ValidationProfile> profileMap) {
-        this.profileMap = Collections.unmodifiableMap(profileMap);
-        this.flavourMap = ProfileDirectoryImpl.flavourMapFromSet(profileMap
-                .keySet());
+        this.profileDir = new MapBackedDirectory<>(profileMap);
+        this.flavourDir = new MapBackedDirectory<>(ProfileDirectoryImpl.flavourMapFromSet(profileMap
+                .keySet()));
     }
 
     /**
@@ -36,7 +37,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
      */
     @Override
     public Set<String> getValidationProfileIds() {
-        return Collections.unmodifiableSet(this.flavourMap.keySet());
+        return Collections.unmodifiableSet(this.flavourDir.getKeys());
     }
 
     /**
@@ -44,7 +45,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
      */
     @Override
     public Set<PDFAFlavour> getPDFAFlavours() {
-        return Collections.unmodifiableSet(this.profileMap.keySet());
+        return this.profileDir.getKeys();
     }
 
     /**
@@ -55,7 +56,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
         if (profileID == null)
             throw new IllegalArgumentException(
                     "Parameter profileID cannot be null");
-        PDFAFlavour flavour = this.flavourMap.get(profileID);
+        PDFAFlavour flavour = this.flavourDir.getItem(profileID);
         if (flavour == null)
             throw new NoSuchElementException("PDFAFlavour " + flavour
                     + " is not supported by this directory.");
@@ -70,7 +71,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
         if (flavour == null)
             throw new IllegalArgumentException(
                     "Parameter flavour cannot be null");
-        ValidationProfile profile = this.profileMap.get(flavour);
+        ValidationProfile profile = this.profileDir.getItem(flavour);
         if (profile == null)
             throw new NoSuchElementException("PDFAFlavour " + flavour
                     + " is not supported by this directory.");
@@ -82,8 +83,8 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
      */
     @Override
     public Set<ValidationProfile> getValidationProfiles() {
-        return Collections.unmodifiableSet(new HashSet<>(this.profileMap
-                .values()));
+        return Collections.unmodifiableSet(new HashSet<>(this.profileDir
+                .getItems()));
     }
 
     static ProfileDirectory fromProfileSet(

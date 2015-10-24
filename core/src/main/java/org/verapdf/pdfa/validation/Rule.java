@@ -40,6 +40,10 @@ public interface Rule {
     public String getTest();
 
     /**
+     * @return the {@link ErrorDetails} associated with this Rule
+     */
+    public ErrorDetails getError();
+    /**
      * @return a List of {@link Reference}s to the specification clause(s) from
      *         which the rule is derived.
      */

@@ -3,7 +3,6 @@ package org.verapdf.pdfa.validation;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.verapdf.pdfa.ValidationProfile;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**

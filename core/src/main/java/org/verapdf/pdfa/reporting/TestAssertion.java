@@ -3,6 +3,8 @@
  */
 package org.verapdf.pdfa.reporting;
 
+import org.verapdf.pdfa.validation.RuleId;
+
 /**
  * A TestAssertion records the result of performing a validation test on a
  * particular document property, or set of properties.
@@ -13,7 +15,7 @@ public interface TestAssertion {
     /**
      * @return the String id for the Rule
      */
-    public String getRuleId();
+    public RuleId getRuleId();
 
     /**
      * @return the {@link Status} that indicates the result of this test

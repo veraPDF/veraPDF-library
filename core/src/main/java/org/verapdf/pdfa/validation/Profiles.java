@@ -4,6 +4,7 @@
 package org.verapdf.pdfa.validation;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Date;
@@ -13,7 +14,6 @@ import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
-import org.verapdf.pdfa.ValidationProfile;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 
@@ -172,6 +172,31 @@ public final class Profiles {
     }
 
     /**
+     * @return the {@link ErrorDetails} default instance
+     */
+    public static ErrorDetails defaultError() {
+        return ErrorDetailsImpl.defaultInstance();
+    }
+    
+    /**
+     * @param message a String message for the {@link ErrorDetails}
+     * @param arguments a List of String arguments for the {@link ErrorDetails}.
+     * @return a new {@link ErrorDetails} instance
+     * @throws IllegalArgumentException
+     *             if any of the parameters are null or
+     *             message is empty
+     */
+    public static ErrorDetails errorFromValues(final String message, final List<String> arguments) {
+        if (message == null)
+            throw new IllegalArgumentException("Parameter message can not be null.");
+        if (message.isEmpty())
+            throw new IllegalArgumentException("Parameter message can not be empty.");
+        if (arguments == null)
+            throw new IllegalArgumentException("Parameter arguments can not be null.");
+        return ErrorDetailsImpl.fromValues(message, arguments);
+    }
+    
+    /**
      * @param id
      *            the {@link RuleId} id for the {@link Rule}
      * @param object
@@ -189,7 +214,7 @@ public final class Profiles {
      *             description is empty
      */
     public static Rule ruleFromValues(final RuleId id, final String object,
-            final String description, final String test,
+            final String description, final String test, final ErrorDetails error,
             final List<Reference> references) {
         if (id == null)
             throw new IllegalArgumentException("Parameter id can not be null.");
@@ -211,11 +236,14 @@ public final class Profiles {
         if (test.isEmpty())
             throw new IllegalArgumentException(
                     "Parameter test can not be empty.");
+        if (error == null)
+            throw new IllegalArgumentException(
+                    "Parameter error can not be null.");
         if (references == null)
             throw new IllegalArgumentException(
                     "Parameter references can not be null.");
         return RuleImpl.fromValues(RuleIdImpl.fromRuleId(id), object,
-                description, test, references);
+                description, test, error, references);
     }
 
     /**
@@ -281,7 +309,7 @@ public final class Profiles {
      *             if toConvert is null
      */
     public static String profileToXmlString(final ValidationProfile toConvert,
-            Boolean prettyXml) throws JAXBException, IOException {
+            final Boolean prettyXml) throws JAXBException, IOException {
         if (toConvert == null)
             throw new IllegalArgumentException(
                     "Parameter toConvert cannot be null");
@@ -301,12 +329,29 @@ public final class Profiles {
      * @throws IllegalArgumentException
      *             if toConvert is null
      */
-    public static void profileToXml(final ValidationProfile toConvert, OutputStream forXmlOutput,
-            Boolean prettyXml) throws JAXBException {
+    public static void profileToXml(final ValidationProfile toConvert, final OutputStream forXmlOutput,
+            final Boolean prettyXml) throws JAXBException {
         if (toConvert == null)
             throw new IllegalArgumentException(
                     "Parameter toConvert cannot be null");
         ValidationProfileImpl.toXml(toConvert, forXmlOutput, prettyXml);
+    }
+
+    /**
+     * @param toConvert
+     *            an InputStream to an XML representation of a profile
+     * @return  a new {@link ValidationProfile} instance
+     * @throws JAXBException
+     *             thrown by JAXB marshaller if there's an error converting the
+     *             object
+     * @throws IllegalArgumentException
+     *             if toConvert is null
+     */
+    public static ValidationProfile profileFromXml(final InputStream toConvert) throws JAXBException {
+        if (toConvert == null)
+            throw new IllegalArgumentException(
+                    "Parameter toConvert cannot be null");
+        return ValidationProfileImpl.fromXml(toConvert);
     }
 
     /**

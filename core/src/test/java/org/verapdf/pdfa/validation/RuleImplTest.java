@@ -62,7 +62,7 @@ public class RuleImplTest {
         // Get an equivalent to the default instance
         RuleImpl rule = RuleImpl
                 .fromValues(RuleIdImpl.defaultInstance(), "object",
-                        "description", "test", Collections.EMPTY_LIST);
+                        "description", "test", ErrorDetailsImpl.defaultInstance(), Collections.EMPTY_LIST);
         Rule defaultInstance = RuleImpl.defaultInstance();
         // Equivalent is NOT the same object as default instance
         assertFalse(rule == defaultInstance);
@@ -99,7 +99,7 @@ public class RuleImplTest {
         List<Reference> refs = new ArrayList<>();
         refs.add(ReferenceImpl.defaultInstance());
         Rule rule = RuleImpl.fromValues(RuleIdImpl.defaultInstance(), "object",
-                "description", "test", refs);
+                "description", "test", ErrorDetailsImpl.defaultInstance(), refs);
         String xmlDefault = RuleImpl.toXml(rule, Boolean.FALSE);
         Rule unmarshalledDefault = RuleImpl.fromXml(xmlDefault);
         assertFalse(rule == unmarshalledDefault);

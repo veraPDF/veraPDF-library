@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.validation.ValidationProfile;
 
 /**
  * A ProfileDirectory provides access to a set of {@link ValidationProfile}s

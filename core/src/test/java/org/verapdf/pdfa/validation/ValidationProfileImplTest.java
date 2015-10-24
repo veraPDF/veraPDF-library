@@ -24,7 +24,6 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
 import org.junit.Test;
-import org.verapdf.pdfa.ValidationProfile;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**
@@ -69,7 +68,7 @@ public class ValidationProfileImplTest {
     }
 
     /**
-     * Test method for {@link org.verapdf.pdfa.validation.ValidationProfileImpl#fromValidationProfile(org.verapdf.pdfa.ValidationProfile)}.
+     * Test method for {@link org.verapdf.pdfa.validation.ValidationProfileImpl#fromValidationProfile(org.verapdf.pdfa.validation.ValidationProfile)}.
      */
     @Test
     public final void testFromValidationProfile() {

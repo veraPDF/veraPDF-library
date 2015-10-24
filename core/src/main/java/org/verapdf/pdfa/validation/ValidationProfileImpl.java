@@ -23,8 +23,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import org.verapdf.pdfa.ValidationProfile;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**
@@ -304,5 +304,17 @@ final class ValidationProfileImpl implements ValidationProfile {
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
         return marshaller;
+    }
+
+    static class Adapter extends XmlAdapter<ValidationProfileImpl, ValidationProfile> {
+        @Override
+        public ValidationProfileImpl unmarshal(ValidationProfileImpl profileImpl) {
+            return profileImpl;
+        }
+
+        @Override
+        public ValidationProfileImpl marshal(ValidationProfile profile) {
+            return (ValidationProfileImpl) profile;
+        }
     }
 }

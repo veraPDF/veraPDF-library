@@ -1,11 +1,11 @@
-package org.verapdf.pdfa;
+package org.verapdf.pdfa.validation;
 
 import java.util.Date;
 import java.util.Set;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.validation.Rule;
-import org.verapdf.pdfa.validation.Variable;
 
 /**
  * veraPDF ValidationProfiles encapsulate the validation rules and tests that
@@ -15,6 +15,7 @@ import org.verapdf.pdfa.validation.Variable;
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
+@XmlJavaTypeAdapter(ValidationProfileImpl.Adapter.class)
 public interface ValidationProfile {
     /**
      * @return the {@link PDFAFlavour} that identifies the specification part
