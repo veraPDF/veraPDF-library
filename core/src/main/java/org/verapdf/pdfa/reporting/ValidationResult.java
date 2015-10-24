@@ -1,12 +1,11 @@
 /**
  * 
  */
-package org.verapdf.pdfa;
+package org.verapdf.pdfa.reporting;
 
 import java.util.List;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.reporting.TestAssertion;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

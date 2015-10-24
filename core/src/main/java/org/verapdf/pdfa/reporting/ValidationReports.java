@@ -5,7 +5,6 @@ package org.verapdf.pdfa.reporting;
 
 import java.util.List;
 
-import org.verapdf.pdfa.ValidationResult;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**

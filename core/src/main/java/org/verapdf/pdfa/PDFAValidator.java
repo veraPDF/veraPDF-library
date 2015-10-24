@@ -3,6 +3,7 @@ package org.verapdf.pdfa;
 import java.io.InputStream;
 
 import org.verapdf.pdfa.config.ValidatorConfiguration;
+import org.verapdf.pdfa.reporting.ValidationResult;
 import org.verapdf.pdfa.validation.ValidationProfile;
 
 /**
