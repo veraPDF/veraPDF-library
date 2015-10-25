@@ -64,7 +64,7 @@ public class PBoxPDStructElem extends PBoxPDObject implements PDStructElem {
 			case STRUCTURE_TYPE:
 				return this.getStructureType();
 			default:
-				super.getLinkedObjects(link);
+				return super.getLinkedObjects(link);
 		}
 	}
 
