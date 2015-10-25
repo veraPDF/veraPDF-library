@@ -5,9 +5,13 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.coslayer.CosUnicodeName;
+import org.verapdf.model.impl.pb.cos.PBCosUnicodeName;
 import org.verapdf.model.pdlayer.PDStructElem;
 import org.verapdf.model.tools.TaggedPDFHelper;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,6 +29,8 @@ public class PBoxPDStructElem extends PBoxPDObject implements PDStructElem {
 
 	/** Link name for {@code K} key */
 	public static final String CHILDREN = "K";
+	/** Link name for {@code S} key */
+	public static final String STRUCTURE_TYPE = "S";
 
 	/**
 	 * Default constructor
@@ -38,6 +44,7 @@ public class PBoxPDStructElem extends PBoxPDObject implements PDStructElem {
 	/**
 	 * @return Type entry of current structure element
 	 */
+	@Override
 	public String getType() {
 		COSBase value = ((COSDictionary) this.simplePDObject).getDictionaryObject(COSName.TYPE);
 		if (value instanceof COSName) {
@@ -51,13 +58,27 @@ public class PBoxPDStructElem extends PBoxPDObject implements PDStructElem {
 
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
-		if (CHILDREN.equals(link)) {
-			return this.getChildren();
+		switch (link) {
+			case CHILDREN:
+				return this.getChildren();
+			case STRUCTURE_TYPE:
+				return this.getStructureType();
+			default:
+				return super.getLinkedObjects(link);
 		}
-		return super.getLinkedObjects(link);
 	}
 
 	private List<PDStructElem> getChildren() {
 		return TaggedPDFHelper.getChildren(((COSDictionary) this.simplePDObject), LOGGER);
+	}
+
+	private List<CosUnicodeName> getStructureType() {
+		COSBase type = ((COSDictionary) this.simplePDObject).getDictionaryObject(COSName.S);
+		if (type instanceof COSName) {
+			ArrayList<CosUnicodeName> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			list.add(new PBCosUnicodeName((COSName) type));
+			return Collections.unmodifiableList(list);
+		}
+		return Collections.emptyList();
 	}
 }
