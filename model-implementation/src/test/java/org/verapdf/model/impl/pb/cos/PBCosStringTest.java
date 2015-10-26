@@ -31,7 +31,7 @@ public class PBCosStringTest extends BaseTest {
 
         final String string = "AAFFFEEE";
         COSString value = COSString.parseHex(string);
-        value.setIsHexSymbols(Boolean.FALSE);
+        value.setContainsOnlyHex(Boolean.FALSE);
         value.setHexCount(Long.valueOf(string.length()));
 
         actual = new PBCosString(value);
@@ -58,8 +58,8 @@ public class PBCosStringTest extends BaseTest {
 
     @Test
     public void testGetIsHexSymbolsMethod() {
-        Assert.assertFalse(((CosString) actual).getisHexSymbols().booleanValue());
-        Assert.assertTrue(secondActual.getisHexSymbols().booleanValue());
+        Assert.assertFalse(((CosString) actual).getcontainsOnlyHex().booleanValue());
+        Assert.assertTrue(secondActual.getcontainsOnlyHex().booleanValue());
     }
 
     @Test

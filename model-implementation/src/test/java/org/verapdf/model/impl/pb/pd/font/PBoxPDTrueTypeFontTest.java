@@ -41,7 +41,7 @@ public class PBoxPDTrueTypeFontTest extends PBoxPDSimpleFontTest {
 		List<? extends Object> baseFonts = actual.getLinkedObjects(PBoxPDType1Font.BASE_FONT);
 		Object object = baseFonts.get(0);
 		Assert.assertEquals("CosUnicodeName", object.getObjectType());
-		Assert.assertEquals("CUQUFZ+GillSansMT", ((CosName) object).getvalue());
+		Assert.assertEquals("CUQUFZ+GillSansMT", ((CosName) object).getinternalRepresentation());
 	}
 
 	@Override

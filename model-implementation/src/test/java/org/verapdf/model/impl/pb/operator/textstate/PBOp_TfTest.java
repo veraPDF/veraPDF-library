@@ -28,6 +28,6 @@ public class PBOp_TfTest extends PBOpTextStateTest {
 	public void testFontName() {
 		CosName object = (CosName) testObject(PBOp_Tf.FONT_NAME, 1, PBCosName.COS_NAME_TYPE);
 		Assert.assertNotNull(object);
-		Assert.assertEquals("F1", object.getvalue());
+		Assert.assertEquals("F1", object.getinternalRepresentation());
 	}
 }
