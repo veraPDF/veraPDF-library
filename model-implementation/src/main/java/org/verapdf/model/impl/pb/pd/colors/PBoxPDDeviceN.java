@@ -3,18 +3,22 @@ package org.verapdf.model.impl.pb.pd.colors;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceNAttributes;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosUnicodeName;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.impl.pb.cos.PBCosUnicodeName;
 import org.verapdf.model.pdlayer.PDColorSpace;
 import org.verapdf.model.pdlayer.PDDeviceN;
+import org.verapdf.model.pdlayer.PDSeparation;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * DeviceN color space
@@ -29,12 +33,47 @@ public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
 
 	public static final String ALTERNATE = "alternate";
 	public static final String COLORANT_NAMES = "colorantNames";
+	public static final String COLORANTS = "Colorants";
 
 	public static final int COLORANT_NAMES_POSITION = 1;
+
+	private final boolean areColorantsPresent;
 
 	public PBoxPDDeviceN(
 			org.apache.pdfbox.pdmodel.graphics.color.PDDeviceN simplePDObject) {
 		super(simplePDObject, DEVICE_N_TYPE);
+		this.areColorantsPresent = this.areColorantsPresent(simplePDObject);
+	}
+
+	private boolean areColorantsPresent(
+			org.apache.pdfbox.pdmodel.graphics.color.PDDeviceN simplePDObject) {
+		COSDictionary attrDict = simplePDObject.getAttributes().getCOSDictionary();
+		COSBase colorantsDict = attrDict.getDictionaryObject(COSName.COLORANTS);
+		if (colorantsDict instanceof COSDictionary) {
+			COSArray array = (COSArray) simplePDObject.getCOSObject();
+			COSBase colorantsArray = array.get(1);
+
+			if (colorantsArray instanceof COSArray) {
+				return this.areColorantsPresent((COSDictionary) colorantsDict, colorantsArray);
+			}
+		}
+		return false;
+	}
+
+	public Boolean getareColorantsPresent() {
+		return Boolean.valueOf(this.areColorantsPresent);
+	}
+
+	private boolean areColorantsPresent(COSDictionary colorantsDict, COSBase colorantsArray) {
+		Set<COSName> colorantDictionaryEntries = colorantsDict.keySet();
+		for (int i = 0; i < ((COSArray) colorantsArray).size(); i++) {
+			COSBase object = ((COSArray) colorantsArray).getObject(i);
+			if (object instanceof COSName &&
+					!colorantDictionaryEntries.contains(object)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -44,6 +83,8 @@ public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
 				return this.getAlternate();
 			case COLORANT_NAMES:
 				return this.getColorantNames();
+			case COLORANTS:
+				return this.getColorants();
 			default:
 				return super.getLinkedObjects(link);
 		}
@@ -79,5 +120,34 @@ public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
 			return Collections.unmodifiableList(list);
 		}
 		return Collections.emptyList();
+	}
+
+	private List<PDSeparation> getColorants() {
+		PDDeviceNAttributes attributes =
+				((org.apache.pdfbox.pdmodel.graphics.color.PDDeviceN) this.simplePDObject).getAttributes();
+		if (attributes != null) {
+			COSDictionary dictionary = attributes.getCOSDictionary();
+			COSBase colorantsDict = dictionary.getDictionaryObject(COSName.COLORANTS);
+			if (colorantsDict instanceof COSDictionary) {
+				return this.getColorants((COSDictionary) colorantsDict);
+			}
+		}
+		return Collections.emptyList();
+	}
+
+	private List<PDSeparation> getColorants(COSDictionary colorantsDict) {
+		ArrayList<PDSeparation> list = new ArrayList<>(colorantsDict.size());
+		for (COSBase value : colorantsDict.getValues()) {
+			try {
+				org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace =
+						org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace.create(value);
+				if (colorSpace instanceof org.apache.pdfbox.pdmodel.graphics.color.PDSeparation) {
+					list.add(new PBoxPDSeparation((org.apache.pdfbox.pdmodel.graphics.color.PDSeparation) colorSpace));
+				}
+			} catch (IOException e) {
+				LOGGER.warn("Problems with color space obtain.", e);
+			}
+		}
+		return Collections.unmodifiableList(list);
 	}
 }
