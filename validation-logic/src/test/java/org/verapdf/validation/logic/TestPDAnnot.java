@@ -36,6 +36,16 @@ public class TestPDAnnot implements PDAnnot {
 	}
 
 	@Override
+	public Double getwidth() {
+		return null;
+	}
+
+	@Override
+	public Double getheight() {
+		return null;
+	}
+
+	@Override
 	public String getFT() {
 		return "";
 	}
