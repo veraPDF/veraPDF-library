@@ -1,11 +1,21 @@
 /**
  * 
  */
-package org.verapdf.pdfa.reporting;
+package org.verapdf.pdfa.results;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Collections;
 import java.util.Set;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -109,7 +119,7 @@ final class ValidationResultImpl implements ValidationResult {
      */
     @Override
     public String toString() {
-        return "ValidationResultImpl [flavour=" + this.flavour
+        return "ValidationResult [flavour=" + this.flavour
                 + ", assertions=" + this.assertions + ", isCompliant="
                 + this.isCompliant + "]";
     }
@@ -123,10 +133,50 @@ final class ValidationResultImpl implements ValidationResult {
         return new ValidationResultImpl(flavour, assertions, isCompliant);
     }
 
+    static ValidationResultImpl fromValidationResult(ValidationResult toConvert) {
+        return fromValues(toConvert.getPDFAFlavour(),
+                toConvert.getTestAssertions(), toConvert.isCompliant());
+    }
 
-    static class Adapter extends XmlAdapter<ValidationResultImpl, ValidationResult> {
+    static String toXml(final ValidationResult toConvert, Boolean prettyXml)
+            throws JAXBException, IOException {
+        String retVal = "";
+        try (StringWriter writer = new StringWriter()) {
+            toXml(toConvert, writer, prettyXml);
+            retVal = writer.toString();
+            return retVal;
+        }
+    }
+
+    static void toXml(final ValidationResult toConvert,
+            final OutputStream stream, Boolean prettyXml) throws JAXBException {
+        Marshaller varMarshaller = getMarshaller(prettyXml);
+        varMarshaller.marshal(toConvert, stream);
+    }
+
+    static ValidationResultImpl fromXml(final InputStream toConvert)
+            throws JAXBException {
+        Unmarshaller stringUnmarshaller = getUnmarshaller();
+        return (ValidationResultImpl) stringUnmarshaller.unmarshal(toConvert);
+    }
+
+    static void toXml(final ValidationResult toConvert,
+            final Writer writer, Boolean prettyXml) throws JAXBException {
+        Marshaller varMarshaller = getMarshaller(prettyXml);
+        varMarshaller.marshal(toConvert, writer);
+    }
+
+    static ValidationResultImpl fromXml(final Reader toConvert)
+            throws JAXBException {
+        Unmarshaller stringUnmarshaller = getUnmarshaller();
+        return (ValidationResultImpl) stringUnmarshaller.unmarshal(toConvert);
+    }
+
+    static class Adapter extends
+            XmlAdapter<ValidationResultImpl, ValidationResult> {
         @Override
-        public ValidationResult unmarshal(ValidationResultImpl validationResultImpl) {
+        public ValidationResult unmarshal(
+                ValidationResultImpl validationResultImpl) {
             return validationResultImpl;
         }
 
@@ -134,5 +184,21 @@ final class ValidationResultImpl implements ValidationResult {
         public ValidationResultImpl marshal(ValidationResult validationResult) {
             return (ValidationResultImpl) validationResult;
         }
+    }
+
+    private static Unmarshaller getUnmarshaller() throws JAXBException {
+        JAXBContext context = JAXBContext
+                .newInstance(ValidationResultImpl.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        return unmarshaller;
+    }
+
+    private static Marshaller getMarshaller(Boolean setPretty)
+            throws JAXBException {
+        JAXBContext context = JAXBContext
+                .newInstance(ValidationResultImpl.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
+        return marshaller;
     }
 }
