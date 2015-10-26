@@ -1,6 +1,5 @@
 package org.verapdf.pdfa.validation;
 
-import java.util.Date;
 import java.util.Set;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -22,26 +21,11 @@ public interface ValidationProfile {
      *         and conformance level tested by this profile.
      */
     public PDFAFlavour getPDFAFlavour();
-
+    
     /**
-     * @return a human interpretable name for this ValidationProfile
+     * @return the {@link ProfileDetails} for this profile.
      */
-    public String getName();
-
-    /**
-     * @return a brief textual description of this ValidationProfile
-     */
-    public String getDescription();
-
-    /**
-     * @return a String that identifies the creator of this ValidationProfile
-     */
-    public String getCreator();
-
-    /**
-     * @return the Date that this ValidationProfile was created
-     */
-    public Date getDateCreated();
+    public ProfileDetails getDetails();
 
     /**
      * @return a hex-encoded String representation of the SHA-1 digest of this
@@ -56,9 +40,32 @@ public interface ValidationProfile {
     public Set<Rule> getRules();
 
     /**
+     * @param id
+     * @return
+     */
+    public Rule getRuleByRuleId(final RuleId id);
+
+    /**
+     * @param objectName
+     * @return the full set of Validation {@link Rule}s that are associated with
+     *         object name
+     */
+    public Set<Rule> getRulesByObject(final String objectName);
+
+    /**
      * TODO: A better explanation of Variables and their role.
      * 
      * @return the full set of {@link Variable}s used by this ValidationProfile.
      */
     public Set<Variable> getVariables();
+
+    /**
+     * TODO: A better explanation of Variables and their role.
+     * 
+     * @param objectName
+     * 
+     * @return the full set of {@link Variable}s that are associated with object
+     *         name.
+     */
+    public Set<Variable> getVariablesByObject(final String objectName);
 }

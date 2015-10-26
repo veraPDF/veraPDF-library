@@ -3,12 +3,16 @@
  */
 package org.verapdf.pdfa.validation;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
+import javax.xml.bind.JAXBException;
 
 import org.verapdf.core.Directory;
 import org.verapdf.core.MapBackedDirectory;
@@ -19,6 +23,8 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
  *
  */
 final class ProfileDirectoryImpl implements ProfileDirectory {
+    private static final ProfileDirectoryImpl DEFAULT = makeVeraProfileDir();
+
     private final Directory<PDFAFlavour, ValidationProfile> profileDir;
     private final Directory<String, PDFAFlavour> flavourDir;
 
@@ -87,7 +93,11 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
                 .getItems()));
     }
 
-    static ProfileDirectory fromProfileSet(Set<ValidationProfile> profiles) {
+    static ProfileDirectoryImpl getVeraProfileDirectory() {
+        return DEFAULT;
+    }
+
+    static ProfileDirectoryImpl fromProfileSet(Set<ValidationProfile> profiles) {
         return new ProfileDirectoryImpl(profiles);
     }
 
@@ -106,5 +116,20 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
             flavourMap.put(flavour.getId(), flavour);
         }
         return Collections.unmodifiableMap(flavourMap);
+    }
+
+    private static ProfileDirectoryImpl makeVeraProfileDir() {
+        Set<ValidationProfile> profiles = new HashSet<>();
+        profiles.add(getFallBackPDFA1b());
+        return ProfileDirectoryImpl.fromProfileSet(profiles);
+    }
+
+    private static ValidationProfile getFallBackPDFA1b() {
+        try (InputStream is = ValidationProfileImpl.class.getClassLoader()
+                .getResourceAsStream("org/verapdf/pdfa/validation/pdfa-1b.xml")) {
+            return ValidationProfileImpl.fromXml(is);
+        } catch (JAXBException | IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 }
