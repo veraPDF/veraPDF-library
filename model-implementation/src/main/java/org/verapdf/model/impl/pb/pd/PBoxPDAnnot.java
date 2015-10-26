@@ -35,74 +35,131 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
     public static final String ADDITIONAL_ACTION = "AA";
 
     public static final int MAX_COUNT_OF_ACTIONS = 10;
-    public static final String NAMED_KEYWORD = "Named";
+	public static final int X_AXIS = 0;
+	public static final int Y_AXIS = 1;
 
-    public PBoxPDAnnot(PDAnnotation simplePDObject) {
-        super(simplePDObject, ANNOTATION_TYPE);
+	private final String subtype;
+	private final String ap;
+	private final int annotationFlag;
+	private final Double ca;
+	private final String nType;
+	private final String ft;
+	private final Double width;
+	private final Double height;
+
+	public PBoxPDAnnot(PDAnnotation annot) {
+        super(annot, ANNOTATION_TYPE);
+		this.subtype = annot.getSubtype();
+		this.ap = this.getAP(annot);
+		this.annotationFlag = annot.getAnnotationFlags();
+		this.ca = this.getCA(annot);
+		this.nType = this.getN_type(annot);
+		this.ft = this.getFT(annot);
+		this.width = this.getWidth(annot);
+		this.height = this.getHeight(annot);
     }
 
-    @Override
+	private String getAP(PDAnnotation annot) {
+		COSBase ap = annot.getCOSObject().getDictionaryObject(COSName.AP);
+		if (ap != null && ap instanceof COSDictionary) {
+			StringBuilder result = new StringBuilder();
+			for (COSName key : ((COSDictionary) ap).keySet()) {
+				result.append(key.getName());
+				result.append(' ');
+			}
+			//remove last whitespace character
+			return result.length() <= 0 ? result.toString() :
+					result.substring(0, result.length() - 1);
+		}
+		return null;
+	}
+
+	private Double getCA(PDAnnotation annot) {
+		COSBase ca = annot.getCOSObject().getDictionaryObject(COSName.CA);
+		return !(ca instanceof COSNumber) ? null :
+				Double.valueOf(((COSNumber) ca).doubleValue());
+	}
+
+	private String getN_type(PDAnnotation annot) {
+		PDAppearanceDictionary appearanceDictionary = annot.getAppearance();
+		if (appearanceDictionary != null) {
+			PDAppearanceEntry normalAppearance =
+					appearanceDictionary.getNormalAppearance();
+			if (normalAppearance == null) {
+				return null;
+			} else if (normalAppearance.isSubDictionary()) {
+				return DICT;
+			} else {
+				return STREAM;
+			}
+		} else {
+			return null;
+		}
+	}
+
+	private String getFT(PDAnnotation annot) {
+		COSBase ft = annot.getCOSObject().getDictionaryObject(COSName.FT);
+		return ft instanceof COSName ? ((COSName) ft).getName() : null;
+	}
+
+	private Double getWidth(PDAnnotation annot) {
+		return this.getDifference(annot, X_AXIS);
+	}
+
+	private Double getHeight(PDAnnotation annot) {
+		return this.getDifference(annot, Y_AXIS);
+	}
+
+	private Double getDifference(PDAnnotation annot, int shift) {
+		COSBase array = annot.getCOSObject().getDictionaryObject(COSName.RECT);
+		if (array instanceof COSArray && ((COSArray) array).size() == 4) {
+			COSBase less = ((COSArray) array).getObject(shift);
+			COSBase great = ((COSArray) array).getObject(2 + shift);
+			if (less instanceof COSNumber && great instanceof COSNumber) {
+				return Double.valueOf(
+						((COSNumber) great).doubleValue() - ((COSNumber) less).doubleValue());
+			}
+		}
+		return null;
+	}
+
+	@Override
     public String getSubtype() {
-        return ((PDAnnotation) this.simplePDObject).getSubtype();
+        return this.subtype;
     }
 
     @Override
     public String getAP() {
-        COSBase ap = ((PDAnnotation) this.simplePDObject).getCOSObject()
-                .getDictionaryObject(COSName.AP);
-        if (ap != null && ap instanceof COSDictionary) {
-            StringBuilder result = new StringBuilder();
-            for (COSName key : ((COSDictionary) ap).keySet()) {
-                result.append(key.getName());
-                result.append(' ');
-            }
-            //remove last whitespace character
-            return result.length() > 0 ? result.substring(0, result.length() - 1) : result.toString();
-
-        }
-        return null;
+        return this.ap;
     }
 
     @Override
     public Long getF() {
-        return Long.valueOf(((PDAnnotation) this.simplePDObject)
-                .getAnnotationFlags());
+        return Long.valueOf(this.annotationFlag);
     }
 
     @Override
     public Double getCA() {
-        COSBase ca = ((PDAnnotation) this.simplePDObject).getCOSObject()
-                .getDictionaryObject(COSName.CA);
-        return ca instanceof COSNumber ? Double.valueOf(((COSNumber) ca)
-                .doubleValue()) : null;
+        return this.ca;
     }
 
     @Override
     public String getN_type() {
-        PDAppearanceDictionary appearanceDictionary = ((PDAnnotation) this.simplePDObject).getAppearance();
-        if (appearanceDictionary != null) {
-            PDAppearanceEntry normalAppearance = appearanceDictionary.getNormalAppearance();
-            if (normalAppearance == null) {
-                return null;
-            } else if (normalAppearance.isSubDictionary()) {
-                return DICT;
-            } else {
-                return STREAM;
-            }
-        } else {
-            return null;
-        }
+		return this.nType;
     }
 
     @Override
     public String getFT() {
-        COSBase ft = ((PDAnnotation) this.simplePDObject).getCOSObject().getDictionaryObject(COSName.FT);
-        if (ft != null && ft instanceof COSName) {
-            return ((COSName) ft).getName();
-        } else {
-            return null;
-        }
+        return this.ft;
     }
+
+	public Double getwidth() {
+		return this.width;
+	}
+
+	public Double getheight() {
+		return this.height;
+	}
 
     @Override
 	public List<? extends Object> getLinkedObjects(String link) {

@@ -31,7 +31,7 @@ public class PBoxPDOutputIntentTest extends BaseTest {
 
 	@Test
 	public void testDestOutputProfileRefMethod() {
-		Assert.assertEquals("7 0", ((PDOutputIntent) actual).getdestOutputProfileRef());
+		Assert.assertEquals("7 0", ((PDOutputIntent) actual).getdestOutputProfileIndirect());
 	}
 
 	@Test

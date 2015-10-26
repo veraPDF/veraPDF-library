@@ -3,7 +3,9 @@ package org.verapdf.model.impl.pb.pd;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.external.ICCOutputProfile;
+import org.verapdf.model.impl.pb.cos.PBCosDict;
 import org.verapdf.model.impl.pb.external.PBoxICCOutputProfile;
 import org.verapdf.model.pdlayer.PDOutputIntent;
 
@@ -24,6 +26,7 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent {
 	public static final String OUTPUT_INTENT_TYPE = "PDOutputIntent";
 
 	public static final String DEST_PROFILE = "destProfile";
+	public static final String DEST_OUTPUT_PROFILE_REF = "DestOutputProfileRef";
 
 	public PBoxPDOutputIntent(
 			org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent simplePDObject) {
@@ -31,7 +34,7 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent {
 	}
 
 	@Override
-	public String getdestOutputProfileRef() {
+	public String getdestOutputProfileIndirect() {
 		COSDictionary dictionary = (COSDictionary) this.simplePDObject
 				.getCOSObject();
 		COSBase item = dictionary.getItem(COSName.DEST_OUTPUT_PROFILE);
@@ -44,10 +47,14 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent {
 
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
-		if (DEST_PROFILE.equals(link)) {
-			return this.getDestProfile();
+		switch (link) {
+			case DEST_PROFILE:
+				return this.getDestProfile();
+			case DEST_OUTPUT_PROFILE_REF:
+				return this.getDestOutputProfileRef();
+			default:
+				return super.getLinkedObjects(link);
 		}
-		return super.getLinkedObjects(link);
 	}
 
 	private List<ICCOutputProfile> getDestProfile() {
@@ -65,12 +72,23 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent {
 				long N = dest.getLong(COSName.N);
 				profile.add(new PBoxICCOutputProfile(unfilteredStream, subtype,
 						N != -1 ? Long.valueOf(N) : null));
-				unfilteredStream.close();
 				return Collections.unmodifiableList(profile);
 			}
 		} catch (IOException e) {
 			LOGGER.error("Can not read dest output profile. " + e.getMessage(),
 					e);
+		}
+		return Collections.emptyList();
+	}
+
+	// TODO : check me, please
+	private List<CosDict> getDestOutputProfileRef() {
+		COSDictionary dict = (COSDictionary) this.simplePDObject.getCOSObject();
+		COSBase ref = dict.getDictionaryObject(COSName.getPDFName(DEST_OUTPUT_PROFILE_REF));
+		if (ref instanceof COSDictionary) {
+			ArrayList<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			list.add(new PBCosDict((COSDictionary) ref));
+			return Collections.unmodifiableList(list);
 		}
 		return Collections.emptyList();
 	}

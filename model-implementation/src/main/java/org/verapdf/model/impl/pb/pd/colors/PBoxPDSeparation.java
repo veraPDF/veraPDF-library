@@ -33,6 +33,11 @@ public class PBoxPDSeparation extends PBoxPDColorSpace implements PDSeparation {
 		super(simplePDObject, SEPARATION_TYPE);
 	}
 
+	// TODO : implement me
+	public Boolean getareTintAndAlternateConsistent() {
+		return null;
+	}
+
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
 		switch (link) {

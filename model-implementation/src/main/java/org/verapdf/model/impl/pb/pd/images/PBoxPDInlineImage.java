@@ -64,16 +64,15 @@ public class PBoxPDInlineImage extends PBoxPDObject implements PDInlineImage {
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
 		switch (link) {
-			case PBoxPDXObject.S_MASK:
-				return this.getSMask();
-			case PBoxPDXObject.OPI:
-				return this.getOPI();
-			case PBoxPDXImage.ALTERNATES:
-				return this.getAlternates();
 			case PBoxPDXImage.INTENT:
 				return this.getIntent();
 			case PBoxPDXImage.IMAGE_CS:
 				return this.getImageCS();
+			case PBoxPDXObject.S_MASK:
+			case PBoxPDXObject.OPI:
+			case PBoxPDXImage.ALTERNATES:
+			case PBoxPDXImage.JPX_STREAM:
+				return Collections.emptyList();
 			default:
 				return super.getLinkedObjects(link);
 		}
@@ -112,15 +111,4 @@ public class PBoxPDInlineImage extends PBoxPDObject implements PDInlineImage {
 		return Collections.emptyList();
 	}
 
-	private List<PDXImage> getAlternates() {
-		return Collections.emptyList();
-	}
-
-	private List<PDXObject> getSMask() {
-		return Collections.emptyList();
-	}
-
-	private List<CosDict> getOPI() {
-		return Collections.emptyList();
-	}
 }
