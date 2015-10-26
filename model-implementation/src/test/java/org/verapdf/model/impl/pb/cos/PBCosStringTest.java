@@ -69,9 +69,8 @@ public class PBCosStringTest extends BaseTest {
     }
 
     @AfterClass
-    public static void tearDown() {
-        expectedType = null;
-        expectedID = null;
+    public static void tearDown() throws IOException {
+        BaseTest.tearDown();
 
         actual = null;
         secondActual = null;

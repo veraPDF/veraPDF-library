@@ -42,6 +42,7 @@ public class PBCosUnicodeName extends PBCosName implements CosUnicodeName {
 			charsetDecoder.decode(wrap);
 			return Boolean.TRUE;
 		} catch (CharacterCodingException e) {
+			LOGGER.info("Name is not valid utf-8 string", e);
 			return Boolean.FALSE;
 		}
 	}
@@ -56,7 +57,7 @@ public class PBCosUnicodeName extends PBCosName implements CosUnicodeName {
 		try {
 			return new String(bytes, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			LOGGER.warn("Can not transform " + name + " to unicode string.");
+			LOGGER.warn("Can not transform " + name + " to unicode string.", e);
 			return null;
 		}
 	}

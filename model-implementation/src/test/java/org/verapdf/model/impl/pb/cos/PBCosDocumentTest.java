@@ -13,6 +13,8 @@ import org.verapdf.model.coslayer.CosTrailer;
 import org.verapdf.model.coslayer.CosXRef;
 import org.verapdf.model.impl.BaseTest;
 
+import static org.verapdf.model.impl.pb.cos.PBCosDocument.*;
+
 /**
  * @author Evgeniy Muravitskiy
  */
@@ -29,7 +31,7 @@ public class PBCosDocumentTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() throws URISyntaxException, IOException {
-        expectedType = TYPES.contains(PBCosDocument.COS_DOCUMENT_TYPE) ? PBCosDocument.COS_DOCUMENT_TYPE : null;
+        expectedType = TYPES.contains(COS_DOCUMENT_TYPE) ? COS_DOCUMENT_TYPE : null;
         expectedID = null;
 
         String fileAbsolutePath = getSystemIndependentPath(FILE_RELATIVE_PATH);
@@ -46,35 +48,60 @@ public class PBCosDocumentTest extends BaseTest {
 
 	@Test
 	public void testVersionMethod() {
-		Assert.assertEquals(expectedDocumentVersion, ((CosDocument) actual).getversion().doubleValue(), 0.01);
+		double actualVersion = ((CosDocument) actual).getversion().doubleValue();
+		Assert.assertEquals(expectedDocumentVersion, actualVersion, 0.01);
 	}
 
     @Test
     public void testSizeMethod() {
-        Assert.assertEquals(expectedSizeOfDocument, ((CosDocument) actual).getsize());
+		Long actual = ((CosDocument) BaseTest.actual).getsize();
+		Assert.assertEquals(expectedSizeOfDocument, actual);
     }
 
-	@Ignore
-    @Test
-    public void testBinaryHeaderMethod() {
-        //Assert.assertFalse(((CosDocument) actual).getbinaryHeaderComplyPDFA().booleanValue());
-    }
+	@Test
+	public void testHeaderOffset() {
+		Long actualOffset = ((CosDocument) BaseTest.actual).getheaderOffset();
+		Assert.assertEquals(Long.valueOf(0), actualOffset);
+	}
 
-	@Ignore
-    @Test
-    public void testPDFHeaderMethod() {
-        //Assert.assertTrue(((CosDocument) actual).getpdfHeaderCompliesPDFA().booleanValue());
-    }
+	@Test
+	public void testHeader() {
+		String actualHeader = ((CosDocument) actual).getheader();
+		Assert.assertEquals("%PDF-1.4", actualHeader);
+	}
+
+	@Test
+	public void testHeaderByte1() {
+		Long actualHeaderByte = ((CosDocument) BaseTest.actual).getheaderByte1();
+		Assert.assertEquals(Long.valueOf(-1), actualHeaderByte);
+	}
+
+	@Test
+	public void testHeaderByte2() {
+		Long actualHeaderByte = ((CosDocument) BaseTest.actual).getheaderByte2();
+		Assert.assertEquals(Long.valueOf(-1), actualHeaderByte);
+	}
+
+	@Test
+	public void testHeaderByte3() {
+		Long actualHeaderByte = ((CosDocument) BaseTest.actual).getheaderByte3();
+		Assert.assertEquals(Long.valueOf(-1), actualHeaderByte);
+	}
+
+	@Test
+	public void testHeaderByte4() {
+		Long actualHeaderByte = ((CosDocument) BaseTest.actual).getheaderByte4();
+		Assert.assertEquals(Long.valueOf(-1), actualHeaderByte);
+	}
 
     @Test
     public void testOptionalContentMethod() {
         Assert.assertFalse(((CosDocument) actual).getisOptionalContentPresent().booleanValue());
     }
 
-	@Ignore
     @Test
-    public void testEOFMethod() {
-        //Assert.assertTrue(((CosDocument) actual).geteofCompliesPDFA().booleanValue());
+    public void testPostEOFDate() {
+		Assert.assertEquals(Long.valueOf(0), ((CosDocument) actual).getpostEOFDataSize());
     }
 
     @Test
@@ -118,7 +145,7 @@ public class PBCosDocumentTest extends BaseTest {
     public void testTrailerLink() {
         List<? extends Object> trailer = actual.getLinkedObjects(PBCosDocument.TRAILER);
         Assert.assertEquals(1, trailer.size());
-        Assert.assertTrue(trailer.get(0) != null && trailer.get(0) instanceof CosTrailer);
+        Assert.assertTrue(trailer.get(0) instanceof CosTrailer);
     }
 
     @Test
@@ -126,7 +153,6 @@ public class PBCosDocumentTest extends BaseTest {
         List<? extends Object> indirects = actual.getLinkedObjects(PBCosDocument.INDIRECT_OBJECTS);
         Assert.assertEquals(expectedNumberOfIndirects.intValue(), indirects.size());
         for (Object indirect : indirects) {
-            Assert.assertTrue(indirect != null);
             Assert.assertTrue(indirect instanceof PBCosIndirect);
         }
     }
@@ -135,7 +161,6 @@ public class PBCosDocumentTest extends BaseTest {
     public void testDocumentLink() {
         List<? extends Object> doc = actual.getLinkedObjects(PBCosDocument.DOCUMENT);
         Assert.assertEquals(1, doc.size());
-        Assert.assertTrue(doc.get(0) != null);
         Assert.assertTrue(doc.get(0) instanceof org.verapdf.model.pdlayer.PDDocument);
     }
 
@@ -153,10 +178,4 @@ public class PBCosDocumentTest extends BaseTest {
         Assert.assertEquals(0, embeddedFiles.size());
     }
 
-    @AfterClass
-    public static void tearDown() {
-        expectedType = null;
-        expectedID = null;
-        actual = null;
-    }
 }
