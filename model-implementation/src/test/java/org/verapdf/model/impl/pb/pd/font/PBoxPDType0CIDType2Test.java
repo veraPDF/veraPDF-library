@@ -38,7 +38,7 @@ public class PBoxPDType0CIDType2Test extends PBoxPDType0FontTest {
 		List<? extends Object> baseFonts = actual.getLinkedObjects(PBoxPDType1Font.BASE_FONT);
 		Object object = baseFonts.get(0);
 		Assert.assertEquals("CosUnicodeName", object.getObjectType());
-		Assert.assertEquals("CBTOEA+ArialMT-Identity-H", ((CosName) object).getvalue());
+		Assert.assertEquals("CBTOEA+ArialMT-Identity-H", ((CosName) object).getinternalRepresentation());
 	}
 
 	@Override

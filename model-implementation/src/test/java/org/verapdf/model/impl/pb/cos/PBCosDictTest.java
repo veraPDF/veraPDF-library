@@ -54,10 +54,10 @@ public class PBCosDictTest extends BaseTest {
         List<CosName> keys = (List<CosName>) actual
                 .getLinkedObjects(PBCosDict.KEYS);
         for (int index = 1; index < expectedLength; index++) {
-            Assert.assertEquals(keys.get(index - 1).getvalue(),
+            Assert.assertEquals(keys.get(index - 1).getinternalRepresentation(),
                     String.valueOf(index));
         }
-        Assert.assertEquals(keys.get(keys.size() - 1).getvalue(),
+        Assert.assertEquals(keys.get(keys.size() - 1).getinternalRepresentation(),
                 COSName.METADATA.getName());
     }
 

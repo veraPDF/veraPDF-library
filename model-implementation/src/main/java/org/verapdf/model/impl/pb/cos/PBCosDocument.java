@@ -38,11 +38,15 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     private final long sizeOfDocument;
     private final long indirectObjectCount;
     private final float version;
-    private final boolean isBinaryHeaderPDFACompliant;
-    private final boolean isPDFHeaderPDFACompliant;
+	private final long headerOffset;
+	private final String header;
+	private final int headerCommentByte1;
+	private final int headerCommentByte2;
+	private final int headerCommentByte3;
+	private final int headerCommentByte4;
     private final boolean isOptionalContentPresent;
     private final boolean isLinearised;
-    private final Boolean isEofPDFACompliant;
+    private final int postEOFDataSize;
     private final Boolean doesInfoMatchXMP;
     private final String firstPageID;
     private final String lastID;
@@ -75,20 +79,20 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         this.sizeOfDocument = length;
         this.indirectObjectCount = cosDocument.getObjects().size();
         this.version = cosDocument.getVersion();
-        this.isBinaryHeaderPDFACompliant = !(cosDocument
-                .getNonValidCommentContent().booleanValue()
-                || cosDocument.getNonValidCommentLength().booleanValue() || cosDocument
-                .getNonValidCommentStart().booleanValue());
-        this.isPDFHeaderPDFACompliant = !cosDocument.getNonValidHeader()
-                .booleanValue();
+		this.headerOffset = cosDocument.getHeaderOffset();
+		this.header = cosDocument.getHeader();
+		this.headerCommentByte1 = cosDocument.getHeaderCommentByte1();
+		this.headerCommentByte2 = cosDocument.getHeaderCommentByte2();
+		this.headerCommentByte3 = cosDocument.getHeaderCommentByte3();
+		this.headerCommentByte4 = cosDocument.getHeaderCommentByte4();
         this.isOptionalContentPresent = parseOptionalContentPresent(cosDocument);
-        this.isEofPDFACompliant = cosDocument.getEofComplyPDFA();
+        this.postEOFDataSize = cosDocument.getPostEOFDataSize();
         this.lastID = getTrailerID((COSArray) cosDocument.getLastTrailer()
                 .getDictionaryObject(ID));
         this.firstPageID = getTrailerID((COSArray) cosDocument
                 .getFirstPageTrailer().getDictionaryObject(ID));
         this.isLinearised = cosDocument.getTrailer() != cosDocument
-                .getLastTrailer() && cosDocument.isLinearized().booleanValue();
+                .getLastTrailer() && cosDocument.isLinearized();
         this.doesInfoMatchXMP = XMPChecker.doesInfoMatchXMP(cosDocument);
     }
 
@@ -128,23 +132,35 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
         return Long.valueOf(sizeOfDocument);
     }
 
-    /**
-     * true if the second line of the document is a comment with at least 4
-     * symbols in the code range 128-255 as required by PDF/A standard
-     */
-    @Override
-    public Boolean getbinaryHeaderComplyPDFA() {
+	@Override
+	public Long getheaderOffset() {
+		return Long.valueOf(this.headerOffset);
+	}
 
-        return Boolean.valueOf(this.isBinaryHeaderPDFACompliant);
-    }
+	@Override
+	public String getheader() {
+		return this.header;
+	}
 
-    /**
-     * true if first line of document complies PDF/A standard
-     */
-    @Override
-    public Boolean getpdfHeaderCompliesPDFA() {
-        return Boolean.valueOf(this.isPDFHeaderPDFACompliant);
-    }
+	@Override
+	public Long getheaderByte1() {
+		return Long.valueOf(this.headerCommentByte1);
+	}
+
+	@Override
+	public Long getheaderByte2() {
+		return Long.valueOf(this.headerCommentByte2);
+	}
+
+	@Override
+	public Long getheaderByte3() {
+		return Long.valueOf(this.headerCommentByte3);
+	}
+
+	@Override
+	public Long getheaderByte4() {
+		return Long.valueOf(this.headerCommentByte4);
+	}
 
     /**
      * true if catalog contain OCProperties key
@@ -158,8 +174,8 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
      * EOF must complies PDF/A standard
      */
     @Override
-    public Boolean geteofCompliesPDFA() {
-        return this.isEofPDFACompliant;
+    public Long getpostEOFDataSize() {
+        return Long.valueOf(this.postEOFDataSize);
     }
 
     /**
@@ -331,8 +347,8 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     private List<CosXRef> getXRefs() {
 		COSDocument cosDocument = (COSDocument) this.baseObject;
         List<CosXRef> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-        list.add(new PBCosXRef(cosDocument.isXRefSpacingsCompliesPDFA(),
-                cosDocument.isXRefEOLCompliesPDFA()));
+        list.add(new PBCosXRef(cosDocument.subSectionHeaderSpaceSeparated(),
+                cosDocument.isXrefEOLMarkersComplyPDFA()));
         return Collections.unmodifiableList(list);
     }
 

@@ -13,27 +13,27 @@ public class PBCosXRef extends PBCosObject implements CosXRef {
     /** Type name for PBCosXRef */
     public static final String COS_XREF_TYPE = "CosXRef";
 
-    private Boolean xrefHeaderSpacingsComplyPDFA;
-    private Boolean xrefEOLSpacingsComplyPDFA;
+    private Boolean subsectionHeaderSpaceSeparated;
+    private Boolean xrefEOLMarkersComplyPDFA;
 
     /**
      * Default constructor
-     * @param xrefHeaderSpacingsComplyPDFA is xref header spacings comply pdfa specification
-     * @param xrefEOLSpacingsComplyPDFA is xref eol spacings comply pdfa
+     * @param subsectionHeaderSpaceSeparated is xref header spacings comply pdfa specification
+     * @param xrefEOLMarkersComplyPDFA is xref eol spacings comply pdfa
      */
-    public PBCosXRef(Boolean xrefHeaderSpacingsComplyPDFA,
-            Boolean xrefEOLSpacingsComplyPDFA) {
+    public PBCosXRef(Boolean subsectionHeaderSpaceSeparated,
+            Boolean xrefEOLMarkersComplyPDFA) {
         super(null, COS_XREF_TYPE);
-        this.xrefHeaderSpacingsComplyPDFA = xrefHeaderSpacingsComplyPDFA;
-        this.xrefEOLSpacingsComplyPDFA = xrefEOLSpacingsComplyPDFA;
+        this.subsectionHeaderSpaceSeparated = subsectionHeaderSpaceSeparated;
+        this.xrefEOLMarkersComplyPDFA = xrefEOLMarkersComplyPDFA;
     }
 
     /**
      * true if header of cross reference table complies PDF/A standard
      */
     @Override
-    public Boolean getxrefHeaderSpacingsComplyPDFA() {
-        return this.xrefHeaderSpacingsComplyPDFA;
+    public Boolean getsubsectionHeaderSpaceSeparated() {
+        return this.subsectionHeaderSpaceSeparated;
     }
 
     /**
@@ -41,6 +41,6 @@ public class PBCosXRef extends PBCosObject implements CosXRef {
      */
     @Override
     public Boolean getxrefEOLMarkersComplyPDFA() {
-        return xrefEOLSpacingsComplyPDFA;
+        return this.xrefEOLMarkersComplyPDFA;
     }
 }

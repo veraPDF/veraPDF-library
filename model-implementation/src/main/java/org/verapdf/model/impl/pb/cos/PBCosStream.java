@@ -23,7 +23,8 @@ public class PBCosStream extends PBCosDict implements CosStream {
 	private final String fileSpec;
 	private final String fFilter;
 	private final String fDecodeParams;
-	private final boolean isSpacingPDFACompliant;
+	private final boolean streamKeywordCRLFCompliant;
+	private final boolean endstreamKeywordEOLCompliant;
 
     /**
      * Default constructor
@@ -40,9 +41,8 @@ public class PBCosStream extends PBCosDict implements CosStream {
                 .getDictionaryObject(COSName.F_FILTER));
         this.fDecodeParams = stream.getItem(F_DECODE_PARMS) != null ? stream
                 .getItem(F_DECODE_PARMS).toString() : null;
-        this.isSpacingPDFACompliant = stream.getStreamSpacingsComplyPDFA()
-                .booleanValue()
-                && stream.getEndStreamSpacingsComplyPDFA().booleanValue();
+        this.streamKeywordCRLFCompliant = stream.isStreamKeywordCRLFCompliant();
+		this.endstreamKeywordEOLCompliant = stream.isEndstreamKeywordEOLCompliant();
     }
 
     /**
@@ -87,13 +87,18 @@ public class PBCosStream extends PBCosDict implements CosStream {
     }
 
     /**
-     * true if the spacing around stream / endstream complies with the PDF/A
+     * true if the spacing around stream complies with the PDF/A
      * requirements
      */
     @Override
-    public Boolean getspacingCompliesPDFA() {
-        return Boolean.valueOf(this.isSpacingPDFACompliant);
+    public Boolean getstreamKeywordCRLFCompliant() {
+        return Boolean.valueOf(this.streamKeywordCRLFCompliant);
     }
+
+	@Override
+	public Boolean getendstreamKeywordEOLCompliant() {
+		return Boolean.valueOf(this.endstreamKeywordEOLCompliant);
+	}
 
     /**
      * true if the value of Length key matches the actual length of the stream
