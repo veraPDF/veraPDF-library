@@ -32,7 +32,7 @@ import org.junit.Test;
 public class RuleImplTest {
     private static final String DEFAULT_RULE_STRING = "Rule [id="
             + RuleIdImpl.defaultInstance()
-            + ", object=object, description=description, test=test, references=[]]";
+            + ", object=object, description=description, test=test, error=" + ErrorDetailsImpl.defaultInstance() + ", references=[]]";
 
     /**
      * Test method for
