@@ -8,6 +8,7 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImage;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosRenderingIntent;
+import org.verapdf.model.external.JPEG2000;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.impl.pb.cos.PBCosRenderingIntent;
 import org.verapdf.model.pdlayer.PDColorSpace;
@@ -30,6 +31,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     public static final String IMAGE_CS = "imageCS";
     public static final String ALTERNATES = "Alternates";
     public static final String INTENT = "Intent";
+	public static final String JPX_STREAM = "jpxStream";
 
     public PBoxPDXImage(PDImage simplePDObject) {
         super(simplePDObject, X_IMAGE_TYPE);
@@ -50,12 +52,14 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 				return this.getImageCS();
 			case ALTERNATES:
 				return this.getAlternates();
+			case JPX_STREAM:
+				return this.getJPXStream();
 			default:
 				return super.getLinkedObjects(link);
 		}
 	}
 
-    private List<CosRenderingIntent> getIntent() {
+	private List<CosRenderingIntent> getIntent() {
         COSDictionary imageStream = (COSDictionary) this.simplePDObject
 				.getCOSObject();
         COSName intent = imageStream.getCOSName(COSName.getPDFName(INTENT));
@@ -128,6 +132,11 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 								+ e.getMessage(), e);
 			}
 		}
+	}
+
+	// TODO : implement me
+	private List<JPEG2000> getJPXStream() {
+		return Collections.emptyList();
 	}
 
 }
