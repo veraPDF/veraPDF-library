@@ -21,6 +21,7 @@ import org.verapdf.core.ValidationException;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 import org.verapdf.pdfa.validation.ErrorDetails;
+import org.verapdf.pdfa.validation.ProfileDetails;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.Reference;
 import org.verapdf.pdfa.validation.Rule;
@@ -53,13 +54,13 @@ public final class LegacyProfileConverter {
      */
     public static void main(String[] args) throws ParserConfigurationException,
             SAXException, IOException, XMLStreamException, JAXBException,
-            ProfileException, ProfileException,
-            ValidationException {
+            ProfileException, ProfileException, ValidationException {
         for (String path : args) {
             org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser
                     .parseFromFilePath(path, false);
             ValidationProfile profile = fromLegacyProfile(toConvert,
                     PDFAFlavour.PDFA_1_B);
+            Profiles.profileToXml(profile, System.out, Boolean.TRUE);
         }
         if (args.length == 0) {
             org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser
@@ -96,14 +97,20 @@ public final class LegacyProfileConverter {
                 .getAllVariables()) {
             variables.add(fromLegacyVariable(var));
         }
+        return Profiles.profileFromValues(flavour, parsedFromLegacyProfile(toConvert),
+                "", rules, variables);
+    }
+
+    public static ProfileDetails parsedFromLegacyProfile(
+            org.verapdf.validation.profile.model.ValidationProfile toConvert) {
         String[] dateParts = toConvert.getCreated().split("T");
         String cleanDate = dateParts[0] + "T"
                 + dateParts[1].replace("-", ":").replace("+03", "");
         Date created = javax.xml.bind.DatatypeConverter
                 .parseDateTime(cleanDate).getTime();
-        return Profiles.profileFromValues(flavour, toConvert.getName(),
-                toConvert.getDescription(), toConvert.getCreator(), created,
-                "", rules, variables);
+        return Profiles.profileDetailsFromValues(toConvert.getName(),
+                toConvert.getDescription(), toConvert.getCreator(),
+                created);
     }
 
     /**
