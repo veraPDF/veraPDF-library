@@ -11,7 +11,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosObject;
 import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.coslayer.CosRenderingIntent;
-import org.verapdf.model.external.PDHalftone;
+import org.verapdf.model.pdlayer.PDHalftone;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
 import org.verapdf.model.impl.pb.cos.PBCosRenderingIntent;
 import org.verapdf.model.pdlayer.PDExtGState;

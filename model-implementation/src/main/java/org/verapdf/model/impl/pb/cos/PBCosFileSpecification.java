@@ -51,6 +51,7 @@ public class PBCosFileSpecification extends PBCosDict implements
 		return super.getLinkedObjects(link);
 	}
 
+	// TODO : what the types can be here?
 	private List<EmbeddedFile> getEFFile() {
 		COSBase efDictionary = ((COSDictionary) this.baseObject)
 				.getDictionaryObject(COSName.EF);

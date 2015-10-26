@@ -47,14 +47,17 @@ public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
 
 	private boolean areColorantsPresent(
 			org.apache.pdfbox.pdmodel.graphics.color.PDDeviceN simplePDObject) {
-		COSDictionary attrDict = simplePDObject.getAttributes().getCOSDictionary();
-		COSBase colorantsDict = attrDict.getDictionaryObject(COSName.COLORANTS);
-		if (colorantsDict instanceof COSDictionary) {
-			COSArray array = (COSArray) simplePDObject.getCOSObject();
-			COSBase colorantsArray = array.get(1);
+		PDDeviceNAttributes attributes = simplePDObject.getAttributes();
+		if (attributes != null) {
+			COSDictionary attrDict = attributes.getCOSDictionary();
+			COSBase colorantsDict = attrDict.getDictionaryObject(COSName.COLORANTS);
+			if (colorantsDict instanceof COSDictionary) {
+				COSArray array = (COSArray) simplePDObject.getCOSObject();
+				COSBase colorantsArray = array.get(1);
 
-			if (colorantsArray instanceof COSArray) {
-				return this.areColorantsPresent((COSDictionary) colorantsDict, colorantsArray);
+				if (colorantsArray instanceof COSArray) {
+					return this.areColorantsPresent((COSDictionary) colorantsDict, colorantsArray);
+				}
 			}
 		}
 		return false;

@@ -4,7 +4,7 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSNumber;
-import org.verapdf.model.external.PDHalftone;
+import org.verapdf.model.pdlayer.PDHalftone;
 
 /**
  * @author Evgeniy Muravitskiy

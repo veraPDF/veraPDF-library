@@ -14,37 +14,37 @@ public class PBoxJPEG2000 extends PBoxExternal implements JPEG2000 {
 	}
 
 	@Override
-	public Long nrColorChannels() {
+	public Long getnrColorChannels() {
 		return null;
 	}
 
 	@Override
-	public Long nrColorSpaceSpecs() {
+	public Long getnrColorSpaceSpecs() {
 		return null;
 	}
 
 	@Override
-	public Long nrColorSpacesWithApproxField() {
+	public Long getnrColorSpacesWithApproxField() {
 		return null;
 	}
 
 	@Override
-	public Long colrMethod() {
+	public Long getcolrMethod() {
 		return null;
 	}
 
 	@Override
-	public Long colrEnumCS() {
+	public Long getcolrEnumCS() {
 		return null;
 	}
 
 	@Override
-	public Long bitDepth() {
+	public Long getbitDepth() {
 		return null;
 	}
 
 	@Override
-	public Boolean bpccBoxPresent() {
+	public Boolean getbpccBoxPresent() {
 		return null;
 	}
 }
