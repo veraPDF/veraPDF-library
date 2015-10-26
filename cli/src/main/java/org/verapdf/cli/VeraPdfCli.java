@@ -3,13 +3,15 @@
  */
 package org.verapdf.cli;
 
-import com.beust.jcommander.JCommander;
+import javax.xml.bind.JAXBException;
+
 import org.verapdf.cli.commands.CommandVeraPDF;
 import org.verapdf.config.Input;
 import org.verapdf.config.VeraPdfTaskConfig;
-import org.verapdf.report.XMLReport;
+import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.runner.ValidationRunner;
-import org.verapdf.validation.report.model.ValidationInfo;
+
+import com.beust.jcommander.JCommander;
 
 public class VeraPdfCli {
 
@@ -30,21 +32,21 @@ public class VeraPdfCli {
      *            Java.lang.String array of command line args, to be processed
      *            using Apache commons CLI.
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         JCommander jCommander = new JCommander();
         jCommander.addCommand(commandVeraPDF);
         jCommander.parse(args);
 
         VeraPdfTaskConfig taskConfig = createConfigFromCliOptions(commandVeraPDF);
         long startTime = System.currentTimeMillis();
-        ValidationInfo validationInfo = ValidationRunner
-                .runValidation(taskConfig);
-        long endTime = System.currentTimeMillis();
-        if (validationInfo != null) {
-            XMLReport.writeXMLReport(validationInfo, taskConfig.getOutput(),
-                    endTime - startTime, taskConfig.isLogPassedChecks());
-        } else {
-            throw new IllegalStateException("Internal error during validation");
+        ValidationResult validationResult;
+        try {
+            validationResult = ValidationRunner
+                    .runValidation(taskConfig);
+            System.out.println(validationResult.toString());
+        } catch (JAXBException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 

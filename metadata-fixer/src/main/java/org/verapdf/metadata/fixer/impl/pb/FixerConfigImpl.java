@@ -1,19 +1,17 @@
 package org.verapdf.metadata.fixer.impl.pb;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
 import org.verapdf.metadata.fixer.impl.pb.model.PDFDocumentImpl;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
-import org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour;
 import org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser;
 import org.verapdf.metadata.fixer.utils.parser.XMLProcessedObjectsParser;
-import org.verapdf.validation.profile.model.ValidationProfile;
-import org.verapdf.validation.report.model.Result;
-import org.verapdf.validation.report.model.ValidationInfo;
-
-import java.io.IOException;
-import java.io.InputStream;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.ValidationResult;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -21,12 +19,12 @@ import java.io.InputStream;
 public class FixerConfigImpl implements FixerConfig {
 
 	private final PDFDocument document;
-	private final ValidationInfo validationResult;
+	private final ValidationResult validationResult;
 	private final ProcessedObjectsParser parser;
 	private final PDFAFlavour flavour;
 	private final boolean fixFlavour;
 
-	private FixerConfigImpl(PDDocument document, ValidationInfo validationResult,
+	private FixerConfigImpl(PDDocument document, ValidationResult validationResult,
 							ProcessedObjectsParser parser, PDFAFlavour flavour, boolean fixFlavour) {
 		this.document = new PDFDocumentImpl(document);
 		this.validationResult = validationResult;
@@ -36,13 +34,8 @@ public class FixerConfigImpl implements FixerConfig {
 	}
 
 	@Override
-	public Result getValidationResult() {
-		return this.validationResult.getResult();
-	}
-
-	@Override
-	public ValidationProfile getValidationProfile() {
-		return this.validationResult.getProfile().getValidationProfile();
+	public ValidationResult getValidationResult() {
+		return this.validationResult;
 	}
 
 	@Override
@@ -70,19 +63,19 @@ public class FixerConfigImpl implements FixerConfig {
 		return this.flavour;
 	}
 
-	public static FixerConfig getFixerConfig(InputStream toFix, ValidationInfo result) {
+	public static FixerConfig getFixerConfig(InputStream toFix, ValidationResult result) {
 		return getFixerConfig(toFix, result, XMLProcessedObjectsParser.getInstance(), PDFAFlavour.PDFA_1_B, true);
 	}
 
-	public static FixerConfig getFixerConfig(InputStream toFix, ValidationInfo result, ProcessedObjectsParser parser) {
+	public static FixerConfig getFixerConfig(InputStream toFix, ValidationResult result, ProcessedObjectsParser parser) {
 		return getFixerConfig(toFix, result, parser, PDFAFlavour.PDFA_1_B, true);
 	}
 
-	public static FixerConfig getFixerConfig(InputStream toFix, ValidationInfo result, PDFAFlavour flavour) {
+	public static FixerConfig getFixerConfig(InputStream toFix, ValidationResult result, PDFAFlavour flavour) {
 		return getFixerConfig(toFix, result, XMLProcessedObjectsParser.getInstance(), flavour, true);
 	}
 
-	public static FixerConfig getFixerConfig(InputStream toFix, ValidationInfo result,
+	public static FixerConfig getFixerConfig(InputStream toFix, ValidationResult result,
 											 ProcessedObjectsParser parser, PDFAFlavour flavour, boolean fixFlavour) {
 		if (toFix == null) {
 			throw new IllegalArgumentException("Input stream of source document can not be null");
@@ -94,19 +87,19 @@ public class FixerConfigImpl implements FixerConfig {
 		}
 	}
 
-	public static FixerConfig getFixerConfig(PDDocument toFix, ValidationInfo result) {
+	public static FixerConfig getFixerConfig(PDDocument toFix, ValidationResult result) {
 		return getFixerConfig(toFix, result, XMLProcessedObjectsParser.getInstance());
 	}
 
-	public static FixerConfig getFixerConfig(PDDocument toFix, ValidationInfo result, ProcessedObjectsParser parser) {
+	public static FixerConfig getFixerConfig(PDDocument toFix, ValidationResult result, ProcessedObjectsParser parser) {
 		return getFixerConfig(toFix, result, parser, PDFAFlavour.PDFA_1_B, true);
 	}
 
-	public static FixerConfig getFixerConfig(PDDocument toFix, ValidationInfo result, PDFAFlavour flavour) {
+	public static FixerConfig getFixerConfig(PDDocument toFix, ValidationResult result, PDFAFlavour flavour) {
 		return getFixerConfig(toFix, result, XMLProcessedObjectsParser.getInstance(), flavour, true);
 	}
 
-	public static FixerConfig getFixerConfig(PDDocument toFix, ValidationInfo result,
+	public static FixerConfig getFixerConfig(PDDocument toFix, ValidationResult result,
 											 ProcessedObjectsParser parser, PDFAFlavour flavour, boolean fixFlavour) {
 		if (toFix == null) {
 			throw new IllegalArgumentException("Document for fix can not be null");
