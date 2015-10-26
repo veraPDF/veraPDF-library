@@ -3,7 +3,7 @@ package org.verapdf.pdfa;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.verapdf.pdfa.reporting.ValidationResult;
+import org.verapdf.pdfa.results.ValidationResult;
 
 /**
  * Simple interface for PDF/A metadata repair.

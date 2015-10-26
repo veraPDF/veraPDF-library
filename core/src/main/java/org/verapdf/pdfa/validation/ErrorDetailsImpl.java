@@ -28,6 +28,7 @@ final class ErrorDetailsImpl implements ErrorDetails {
     private ErrorDetailsImpl() {
         this("message", Collections.EMPTY_LIST);
     }
+
     private ErrorDetailsImpl(final String message, final List<String> arguments) {
         super();
         this.message = message;
@@ -49,6 +50,7 @@ final class ErrorDetailsImpl implements ErrorDetails {
     public List<String> getArguments() {
         return Collections.unmodifiableList(this.arguments);
     }
+
     /**
      * { @inheritDoc }
      */
@@ -58,9 +60,11 @@ final class ErrorDetailsImpl implements ErrorDetails {
         int result = 1;
         result = prime * result
                 + ((this.arguments == null) ? 0 : this.arguments.hashCode());
-        result = prime * result + ((this.message == null) ? 0 : this.message.hashCode());
+        result = prime * result
+                + ((this.message == null) ? 0 : this.message.hashCode());
         return result;
     }
+
     /**
      * { @inheritDoc }
      */
@@ -86,11 +90,21 @@ final class ErrorDetailsImpl implements ErrorDetails {
         return true;
     }
 
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public String toString() {
+        return "ErrorDetails [message=" + this.message + ", arguments="
+                + this.arguments + "]";
+    }
+
     static ErrorDetailsImpl defaultInstance() {
         return DEFAULT;
     }
-    
-    static ErrorDetailsImpl fromValues(final String message, final List<String> arguments) {
+
+    static ErrorDetailsImpl fromValues(final String message,
+            final List<String> arguments) {
         return new ErrorDetailsImpl(message, arguments);
     }
 

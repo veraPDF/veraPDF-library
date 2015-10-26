@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf.pdfa.reporting;
+package org.verapdf.pdfa.results;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -92,7 +92,7 @@ final class LocationImpl implements Location {
      */
     @Override
     public final String toString() {
-        return "LocationImpl [level=" + this.level + ", context="
+        return "Location [level=" + this.level + ", context="
                 + this.context + "]";
     }
 

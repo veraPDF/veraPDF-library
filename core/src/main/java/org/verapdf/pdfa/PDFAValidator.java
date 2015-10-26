@@ -3,7 +3,7 @@ package org.verapdf.pdfa;
 import java.io.InputStream;
 
 import org.verapdf.pdfa.config.ValidatorConfiguration;
-import org.verapdf.pdfa.reporting.ValidationResult;
+import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.ValidationProfile;
 
 /**
@@ -40,7 +40,7 @@ public interface PDFAValidator {
     public String getProfileID();
 
     /**
-     * Returns the complete ValidationProfile enforced by this PDFAValidator.
+     * Returns the complete {@link ValidationProfile} enforced by this PDFAValidator.
      *
      * @return this PDFAValidator instance's ValiationProfile
      */

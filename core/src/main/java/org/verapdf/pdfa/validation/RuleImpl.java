@@ -51,13 +51,13 @@ final class RuleImpl implements Rule {
     private final List<Reference> references = new ArrayList<>();
 
     private RuleImpl() {
-        this(RuleIdImpl.defaultInstance(), "object", "description", "test", ErrorDetailsImpl.defaultInstance(),
-                Collections.EMPTY_LIST);
+        this(RuleIdImpl.defaultInstance(), "object", "description", "test",
+                ErrorDetailsImpl.defaultInstance(), Collections.EMPTY_LIST);
     }
 
     private RuleImpl(final RuleIdImpl id, final String object,
-            final String description, final String test, final ErrorDetails error,
-            final List<Reference> references) {
+            final String description, final String test,
+            final ErrorDetails error, final List<Reference> references) {
         super();
         this.id = id;
         this.object = object;
@@ -189,7 +189,8 @@ final class RuleImpl implements Rule {
     public String toString() {
         return "Rule [id=" + this.id + ", object=" + this.object
                 + ", description=" + this.description + ", test=" + this.test
-                + ", references=" + this.references + "]";
+                + ", error=" + this.error + ", references=" + this.references
+                + "]";
     }
 
     static RuleImpl defaultInstance() {
@@ -197,8 +198,8 @@ final class RuleImpl implements Rule {
     }
 
     static RuleImpl fromValues(final RuleIdImpl id, final String object,
-            final String description, final String test, final ErrorDetails error,
-            final List<Reference> references) {
+            final String description, final String test,
+            final ErrorDetails error, final List<Reference> references) {
         return new RuleImpl(id, object, description, test, error, references);
     }
 
@@ -206,7 +207,8 @@ final class RuleImpl implements Rule {
         return RuleImpl.fromValues(
                 RuleIdImpl.fromRuleId(toConvert.getRuleId()),
                 toConvert.getObject(), toConvert.getDescription(),
-                toConvert.getTest(), toConvert.getError(), toConvert.getReferences());
+                toConvert.getTest(), toConvert.getError(),
+                toConvert.getReferences());
     }
 
     static String toXml(final Rule toConvert, Boolean prettyXml)

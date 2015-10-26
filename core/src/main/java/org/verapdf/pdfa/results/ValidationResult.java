@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf.pdfa.reporting;
+package org.verapdf.pdfa.results;
 
 import java.util.Set;
 

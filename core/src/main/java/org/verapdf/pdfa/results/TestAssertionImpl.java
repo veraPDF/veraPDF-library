@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf.pdfa.reporting;
+package org.verapdf.pdfa.results;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -125,7 +125,7 @@ final class TestAssertionImpl implements TestAssertion {
      */
     @Override
     public String toString() {
-        return "TestAssertionImpl [ruleId=" + this.ruleId + ", status=" + this.status
+        return "TestAssertion [ruleId=" + this.ruleId + ", status=" + this.status
                 + ", message=" + this.message + ", location=" + this.location + "]";
     }
     
