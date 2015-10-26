@@ -167,7 +167,7 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLZWOrFlatFiltersMap(dic, true), null));
 							break;
 						case "FlateDecode":
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLWZOrFlatFiltersMap(dic, false), null));
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLZWOrFlatFiltersMap(dic, false), null));
 							break;
 						case "CCITTFaxDecode":
 							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getCCITTFaxFiltersMap(dic), null));
