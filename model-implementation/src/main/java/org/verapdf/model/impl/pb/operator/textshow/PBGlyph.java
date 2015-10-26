@@ -29,6 +29,11 @@ public class PBGlyph extends GenericModelObject implements Glyph {
 		this.id = IDGenerator.generateID(font.getCOSObject().hashCode(), font.getName(), glyphCode);
 	}
 
+	// TODO : implement me
+	public String getname() {
+		return null;
+	}
+
 	@Override
 	public Boolean getisGlyphPresent() {
 		return this.glyphPresent;
