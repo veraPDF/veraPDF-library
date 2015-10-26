@@ -117,4 +117,12 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
     public Boolean getisValid() {
         return Boolean.TRUE;
     }
+
+	@Override
+	protected void finalize() throws Throwable {
+		if (this.profileStream != null) {
+			this.profileStream.close();
+		}
+		super.finalize();
+	}
 }

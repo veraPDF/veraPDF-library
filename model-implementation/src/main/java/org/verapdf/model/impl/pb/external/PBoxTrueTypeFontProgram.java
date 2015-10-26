@@ -54,4 +54,9 @@ public class PBoxTrueTypeFontProgram extends PBoxFontProgram implements TrueType
 	public Boolean getisSymbolic() {
 		return this.isSymbolic;
 	}
+
+	// TODO : implement me
+	public Boolean cmap30Present() {
+		return null;
+	}
 }
