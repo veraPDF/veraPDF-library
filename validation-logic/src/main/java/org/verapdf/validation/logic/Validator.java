@@ -414,7 +414,7 @@ public class Validator {
                 if (resArg instanceof NativeJavaObject) {
                     resStringArg = ((NativeJavaObject) resArg).unwrap().toString();
                 } else {
-                    resStringArg = resArg.toString();
+                    resStringArg = String.valueOf(resArg);
                 }
 
                 argsRes.add(resStringArg);

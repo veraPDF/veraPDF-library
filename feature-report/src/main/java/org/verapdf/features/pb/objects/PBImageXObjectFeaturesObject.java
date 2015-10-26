@@ -164,7 +164,7 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 					COSDictionary dic = i < decodeList.size() ? decodeList.get(i) : null;
 					switch (filter) {
 						case "LZWDecode":
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLWZOrFlatFiltersMap(dic, true), null));
+							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLZWOrFlatFiltersMap(dic, true), null));
 							break;
 						case "FlateDecode":
 							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLWZOrFlatFiltersMap(dic, false), null));
@@ -253,14 +253,14 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 		return res;
 	}
 
-	private static Map<String, String> getLWZOrFlatFiltersMap(COSDictionary base, boolean isLWZ) {
+	private static Map<String, String> getLZWOrFlatFiltersMap(COSDictionary base, boolean isLZW) {
 		Map<String, String> res = new HashMap<>();
 		if (base != null) {
 			putIntegerAsStringWithDefault(res, "Predictor", base.getDictionaryObject(COSName.PREDICTOR), 1);
 			putIntegerAsStringWithDefault(res, "Colors", base.getDictionaryObject(COSName.COLORS), 1);
 			putIntegerAsStringWithDefault(res, "BitsPerComponent", base.getDictionaryObject(COSName.BITS_PER_COMPONENT), 8);
 			putIntegerAsStringWithDefault(res, "Columns", base.getDictionaryObject(COSName.COLUMNS), 1);
-			if (isLWZ) {
+			if (isLZW) {
 				putIntegerAsStringWithDefault(res, "EarlyChange", base.getDictionaryObject(COSName.EARLY_CHANGE), 1);
 			}
 		} else {
@@ -268,7 +268,7 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 			res.put("Colors", "1");
 			res.put("BitsPerComponent", "8");
 			res.put("Columns", "1");
-			if (isLWZ) {
+			if (isLZW) {
 				res.put("EarlyChange", "1");
 			}
 		}
