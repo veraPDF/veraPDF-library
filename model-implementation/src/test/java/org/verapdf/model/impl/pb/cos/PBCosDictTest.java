@@ -3,7 +3,6 @@ package org.verapdf.model.impl.pb.cos;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSStream;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,6 +16,8 @@ import org.verapdf.model.pdlayer.PDMetadata;
 
 import java.util.List;
 
+import static org.verapdf.model.impl.pb.cos.PBCosDict.COS_DICT_TYPE;
+
 /**
  * @author Evgeniy Muravitskiy
  */
@@ -26,8 +27,7 @@ public class PBCosDictTest extends BaseTest {
 
     @BeforeClass
     public static void setUp() {
-        expectedType = TYPES.contains(PBCosDict.COS_DICT_TYPE) ? PBCosDict.COS_DICT_TYPE
-                : null;
+        expectedType = TYPES.contains(COS_DICT_TYPE) ? COS_DICT_TYPE : null;
         expectedID = null;
 
         COSDictionary dictionary = new COSDictionary();
@@ -35,8 +35,7 @@ public class PBCosDictTest extends BaseTest {
         for (int index = 1; index < 6; index++) {
             dictionary.setInt(COSName.getPDFName(String.valueOf(index)), index);
         }
-        dictionary
-                .setItem(COSName.METADATA, new COSStream(new COSDictionary()));
+        dictionary.setItem(COSName.METADATA, new COSStream(new COSDictionary()));
 
         expectedLength = dictionary.size();
 
@@ -45,8 +44,7 @@ public class PBCosDictTest extends BaseTest {
 
     @Test
     public void testGetSizeMethod() {
-        Assert.assertEquals(expectedLength, ((CosDict) actual).getsize()
-                .longValue());
+        Assert.assertEquals(expectedLength, ((CosDict) actual).getsize().longValue());
     }
 
     @Test
@@ -54,11 +52,11 @@ public class PBCosDictTest extends BaseTest {
         List<CosName> keys = (List<CosName>) actual
                 .getLinkedObjects(PBCosDict.KEYS);
         for (int index = 1; index < expectedLength; index++) {
-            Assert.assertEquals(keys.get(index - 1).getinternalRepresentation(),
-                    String.valueOf(index));
+			String expected = keys.get(index - 1).getinternalRepresentation();
+			Assert.assertEquals(expected, String.valueOf(index));
         }
-        Assert.assertEquals(keys.get(keys.size() - 1).getinternalRepresentation(),
-                COSName.METADATA.getName());
+		String expected = keys.get(keys.size() - 1).getinternalRepresentation();
+		Assert.assertEquals(expected, COSName.METADATA.getName());
     }
 
     @Test
@@ -68,23 +66,18 @@ public class PBCosDictTest extends BaseTest {
         for (int index = 1; index < expectedLength; index++) {
             Object object = values.get(index - 1);
             Assert.assertTrue(object instanceof CosInteger);
-            Assert.assertEquals(((CosInteger) object).getintValue(),
-                    Long.valueOf(index));
+			Long expected = ((CosInteger) object).getintValue();
+			Assert.assertEquals(expected, Long.valueOf(index));
         }
-        Assert.assertTrue(values.get(values.size() - 1) instanceof CosStream);
+		Object object = values.get(values.size() - 1);
+		Assert.assertTrue(object instanceof CosStream);
     }
 
     @Test
     public void testGetMetadataLink() {
-        List<PDMetadata> metadata = (List<PDMetadata>) actual
-                .getLinkedObjects(PBCosDict.METADATA);
-        Assert.assertTrue(metadata.size() == 1);
-        Assert.assertTrue(metadata.get(0) != null);
+        List<? extends Object> metadata = actual.getLinkedObjects(PBCosDict.METADATA);
+        Assert.assertEquals(1, metadata.size());
+        Assert.assertTrue(metadata.get(0) instanceof PDMetadata);
     }
 
-    @AfterClass
-    public static void tearDown() {
-        expectedType = null;
-        actual = null;
-    }
 }

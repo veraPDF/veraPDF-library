@@ -80,11 +80,15 @@ public class PBCosStreamTest extends BaseTest {
         Assert.assertTrue(((CosStream) actual).getFDecodeParms() != null);
     }
 
-	@Ignore
     @Test
-    public void testGetSpacingCompliesPDFAMethod() {
-        //Assert.assertTrue(((CosStream) actual).getspacingCompliesPDFA().booleanValue());
+    public void testGetStreamKeywordCRLFCompliant() {
+        Assert.assertTrue(((CosStream) actual).getstreamKeywordCRLFCompliant().booleanValue());
     }
+
+	@Test
+	public void testGetEndstreamKeywordEOLCompliant() {
+		Assert.assertTrue(((CosStream) actual).getendstreamKeywordEOLCompliant().booleanValue());
+	}
 
     @Test
     public void testGetIsLengthCorrect() {
@@ -98,9 +102,8 @@ public class PBCosStreamTest extends BaseTest {
     }
 
     @AfterClass
-    public static void tearDown() {
-        expectedType = null;
-        actual = null;
+    public static void tearDown() throws IOException {
+        BaseTest.tearDown();
         for (int i = 0; i < expectedFiltersArray.length; i++) {
             expectedFiltersArray[i] = null;
         }

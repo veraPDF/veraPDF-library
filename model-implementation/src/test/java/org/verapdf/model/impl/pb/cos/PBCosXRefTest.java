@@ -26,10 +26,9 @@ public class PBCosXRefTest extends BaseTest {
         actual = new PBCosXRef(expectedHeaderSpacings, expectedEOLMarkers);
     }
 
-	@Ignore
     @Test
     public void testGetHeaderSpacingsMethod() {
-        //Assert.assertEquals(((CosXRef) actual).getxrefHeaderSpacingsComplyPDFA(), expectedHeaderSpacings);
+        Assert.assertEquals(((CosXRef) actual).getsubsectionHeaderSpaceSeparated(), expectedHeaderSpacings);
     }
 
     @Test
