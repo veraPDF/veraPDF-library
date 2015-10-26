@@ -14,9 +14,9 @@ public class PBCosString extends PBCosObject implements CosString {
     /** Type name for PBCosString */
     public static final String COS_STRING_TYPE = "CosString";
     private final String value;
-    private final Boolean isHex;
-    private final Boolean isHexSymbols;
-    private final Long hexCount;
+    private final boolean isHex;
+    private final boolean containsOnlyHex;
+    private final long hexCount;
 
     /**
      * Default constructor
@@ -26,7 +26,7 @@ public class PBCosString extends PBCosObject implements CosString {
         super(cosString, COS_STRING_TYPE);
         this.value = cosString.getASCII();
         this.isHex = cosString.isHex();
-        this.isHexSymbols = cosString.getIsHexSymbols();
+        this.containsOnlyHex = cosString.isContainsOnlyHex();
         this.hexCount = cosString.getHexCount();
     }
 
@@ -50,8 +50,8 @@ public class PBCosString extends PBCosObject implements CosString {
      * true if all symbols below range 0-9,a-f,A-F
      */
     @Override
-    public Boolean getisHexSymbols() {
-        return this.isHexSymbols;
+    public Boolean getcontainsOnlyHex() {
+        return this.containsOnlyHex;
     }
 
     /**
