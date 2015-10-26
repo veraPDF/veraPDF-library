@@ -8,8 +8,10 @@ import org.apache.pdfbox.pdmodel.graphics.PDFontSetting;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingIntent;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.coslayer.CosObject;
 import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.coslayer.CosRenderingIntent;
+import org.verapdf.model.external.PDHalftone;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
 import org.verapdf.model.impl.pb.cos.PBCosRenderingIntent;
 import org.verapdf.model.pdlayer.PDExtGState;
@@ -29,6 +31,8 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
     public static final String RI = "RI";
     public static final String FONT_SIZE = "fontSize";
+	public static final String HALFTONE = "HT";
+	public static final String HALFTONE_PHASE = "HTP";
 
     public PBoxPDExtGState(PDExtendedGraphicsState simplePDObject) {
         super(simplePDObject, EXT_G_STATE_TYPE);
@@ -94,12 +98,16 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 				return this.getRI();
 			case FONT_SIZE:
 				return this.getFontSize();
+			case HALFTONE:
+				return this.getHalftone();
+			case HALFTONE_PHASE:
+				return this.getHalftonePhase();
 			default:
 				return super.getLinkedObjects(link);
 		}
 	}
 
-    private List<CosRenderingIntent> getRI() {
+	private List<CosRenderingIntent> getRI() {
         RenderingIntent renderingIntent = ((PDExtendedGraphicsState) this.simplePDObject)
                 .getRenderingIntent();
         if (renderingIntent != null) {
@@ -122,5 +130,26 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
         return Collections.emptyList();
     }
+
+	private List<PDHalftone> getHalftone() {
+		COSDictionary dict = ((PDExtendedGraphicsState) this.simplePDObject).getCOSObject();
+		COSBase halftone = dict.getDictionaryObject(COSName.getPDFName("HT"));
+		boolean isDictionary = halftone instanceof COSDictionary;
+		if (isDictionary || halftone instanceof COSName) {
+			ArrayList<PDHalftone> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			if (isDictionary) {
+				list.add(new PBoxPDHalftone((COSDictionary) halftone));
+			} else {
+				list.add(new PBoxPDHalftone((COSName) halftone));
+			}
+			return Collections.unmodifiableList(list);
+		}
+		return Collections.emptyList();
+	}
+
+	// TODO : implement me
+	private List<CosObject> getHalftonePhase() {
+		return Collections.emptyList();
+	}
 
 }

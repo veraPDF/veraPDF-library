@@ -36,8 +36,8 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 
 	/** Link name for page annotations */
 	public static final String ANNOTS = "annots";
-	/** Link name for page actions */
-	public static final String ACTION = "action";
+	/** Link name for page additional actions */
+	public static final String ACTION = "AA";
 	/** Link name for page content stream */
 	public static final String CONTENT_STREAM = "contentStream";
 	/** Link name for page transparency group */
