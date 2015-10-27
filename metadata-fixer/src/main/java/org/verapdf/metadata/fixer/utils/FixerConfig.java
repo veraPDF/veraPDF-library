@@ -5,8 +5,6 @@ import org.verapdf.metadata.fixer.entity.PDFDocument;
 import org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.validation.profile.model.ValidationProfile;
-import org.verapdf.validation.report.model.Result;
 
 /**
  * @author Evgeniy Muravitskiy
