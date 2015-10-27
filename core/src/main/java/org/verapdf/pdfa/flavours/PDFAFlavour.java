@@ -63,18 +63,11 @@ public enum PDFAFlavour {
     /** 3u PDF Version 3 Level U */
     PDFA_3_U(Specification.ISO_19005_3, Level.U);
 
-    private final static Map<String, PDFAFlavour> FLAVOUR_LOOKUP;
+    private final static Map<String, PDFAFlavour> FLAVOUR_LOOKUP = new HashMap<>();
     static {
-        FLAVOUR_LOOKUP = new HashMap<>();
-        FLAVOUR_LOOKUP.put("", PDFAFlavour.NO_FLAVOUR);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_1_A.getId(), PDFAFlavour.PDFA_1_A);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_1_B.getId(), PDFAFlavour.PDFA_1_B);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_A.getId(), PDFAFlavour.PDFA_2_A);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_B.getId(), PDFAFlavour.PDFA_2_B);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_U.getId(), PDFAFlavour.PDFA_2_U);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_A.getId(), PDFAFlavour.PDFA_3_A);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_B.getId(), PDFAFlavour.PDFA_3_B);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_U.getId(), PDFAFlavour.PDFA_3_U);
+        for (PDFAFlavour flavour : PDFAFlavour.values()) {
+            FLAVOUR_LOOKUP.put(flavour.id, flavour);
+        }
     }
 
     private final Specification part;
