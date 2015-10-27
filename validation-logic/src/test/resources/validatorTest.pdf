@@ -1,0 +1,171 @@
+%PDF-1.4
+%abcd
+1 0 obj
+<<
+/Type /Catalog
+/Outlines 2 0 R
+/Pages 3 0 R
+/Metadata 4 0 R
+/PageMode /UseOutlines
+/AA 9 0 R
+>>
+endobj
+2 0 obj
+<<
+/Type /Outlines
+/First 5 0 R
+/Count -1
+/Last 5 0 R
+>>
+endobj
+3 0 obj
+<<
+/Type /Pages
+/Kids [6 0 R]
+/Count 1
+>>
+endobj
+4 0 obj
+<<
+/Type /Metadata
+/Subtype /XML
+/Length 867>>
+stream
+<?xpacket begin='' id='W5M0MpCehiHzreSzNTczkc9d'?><x:xmpmeta xmlns:x="adobe:ns:meta/">  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">    <rdf:Description xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:about="">      <dc:creator>        <rdf:Seq>          <rdf:li>veraPDF Consortium</rdf:li>        </rdf:Seq>      </dc:creator>    </rdf:Description>    <rdf:Description xmlns:xmp="http://ns.adobe.com/xap/1.0/" rdf:about="" xmp:CreatorTool="veraPDF Test Builder" xmp:CreateDate="2015-03-10T17:19:21+01:00" xmp:ModifyDate="2015-03-10T17:19:21+01:00"/>    <rdf:Description xmlns:pdf="http://ns.adobe.com/pdf/1.3/" rdf:about="" pdf:Producer="veraPDF Test Builder 1.0 "/>    <rdf:Description xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/" rdf:about="" pdfaid:part="1" pdfaid:conformance="B"/>  </rdf:RDF></x:xmpmeta><?xpacket end='w'?>
+endstream
+endobj
+5 0 obj
+<<
+/Title (Description: PDF document doesn't contain output intent ; DefaultRGB uses CalRGB colorspace on the first page)
+/Parent 2 0 R
+>>
+endobj
+6 0 obj
+<<
+/Type /Page
+/Parent 3 0 R
+/MediaBox [0 0 612 792]
+/Contents 7 0 R
+/Resources <<
+/ProcSet [/PDF]
+/ColorSpace <<
+/DefaultRGB [/CalRGB 8 0 R]
+/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA [/CalRGB 8 0 R]
+>>
+>>
+>>
+endobj
+7 0 obj
+<<
+/Length 810>>
+stream
+q
+0.1875 0.765625 0.4765625 rg
+40 650 m 
+40 680 l 
+50 680 l 
+50 690 l 
+60 690 l 
+60 700 l 
+70 700 l 
+70 710 l 
+60 710 l 
+60 720 l 
+70 720 l 
+70 710 l 
+80 710 l 
+80 700 l 
+110 700 l 
+110 710 l 
+120 710 l 
+120 720 l 
+130 720 l 
+130 710 l 
+120 710 l 
+120 700 l 
+130 700 l 
+130 690 l 
+140 690 l 
+140 680 l 
+150 680 l 
+150 650 l 
+140 650 l 
+140 670 l 
+130 670 l 
+130 650 l 
+120 650 l 
+120 640 l 
+100 640 l 
+100 650 l 
+120 650 l 
+120 660 l 
+70 660 l 
+70 650 l 
+90 650 l 
+90 640 l 
+70 640 l 
+70 650 l 
+60 650 l 
+60 670 l 
+50 670 l 
+50 650 l 
+f
+Q
+q
+1 1 1 rg
+70 680 10 10 re
+f
+110 680 10 10 re
+f
+Q
+q
+BT
+40000.0 0 Td
+/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA CS
+ET
+Q
+q
+1.0 0.0 0.0 0.0 K
+1.0 0.0 0.0 0.0 k
+10 10 10 10 re
+S
+Q
+endstream
+endobj
+8 0 obj
+<<
+/WhitePoint [0.9505 1.0000 1.0890]
+/Gamma [1.8000 1.8000 1.8000]
+/Matrix [0.4497 0.2446 0.0252 0.3163 0.6720 0.1412 0.1845 0.0833 0.9227]
+>>
+endobj
+9 0 obj
+<<
+/Type /Action
+/S /Named
+/N /FirstPage
+>>
+endobj
+
+xref
+0 10
+0000000000 65535 f
+0000000015 00000 n
+0000000129 00000 n
+0000000201 00000 n
+0000000258 00000 n
+0000001207 00000 n
+0000001361 00000 n
+0000001682 00000 n
+0000002544 00000 n
+0000002703 00000 n
+
+trailer
+<<
+/Size 10
+/Root 1 0 R
+/ID [<4F21C15395DA7D89C9CA9AC9B6A982BC> <4F21C15395DA7D89C9CA9AC9B6A982BC>]
+>>
+startxref
+2765
+%%EOF
