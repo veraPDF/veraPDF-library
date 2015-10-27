@@ -13,8 +13,6 @@ import java.io.Writer;
 import java.util.Set;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion.Status;
@@ -52,9 +50,6 @@ public class ValidationResults {
      *            performed
      * @param assertions
      *            the Set of TestAssertions reported by during validation
-     * @param isCompliant
-     *            a boolean that indicating whether the validated PDF/A data was
-     *            compliant with the indicated flavour
      * @return a new ValidationResult instance populated from the values
      */
     public static ValidationResult resultFromValues(final PDFAFlavour flavour,
