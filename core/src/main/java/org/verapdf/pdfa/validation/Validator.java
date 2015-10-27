@@ -29,7 +29,7 @@ import org.verapdf.pdfa.results.ValidationResults;
 public class Validator {
 
     private static final int OPTIMIZATION_LEVEL = 9;
-    private static ProfileDirectory PROFILE_DIRECTORY = Profiles
+    private static ProfileDirectory PROFILES = Profiles
             .getVeraProfileDirectory();
 
     private Context context;
@@ -46,7 +46,7 @@ public class Validator {
     private Set<String> idSet = new HashSet<>();
 
     private String rootType;
-    private final PDFAFlavour flavour;
+    private ValidationProfile profile;
     private final boolean logPassedAssertions;
 
     /**
@@ -56,7 +56,13 @@ public class Validator {
      *            validation profile model for validator
      */
     private Validator(final PDFAFlavour flavour, final boolean logPassedAssertions) {
-        this.flavour = flavour;
+        this(PROFILES.getValidationProfileByFlavour(flavour), logPassedAssertions);
+        
+    }
+
+    private Validator(final ValidationProfile profile, final boolean logPassedAssertions) {
+        super();
+        this.profile = profile;
         this.logPassedAssertions = logPassedAssertions;
     }
 
@@ -81,7 +87,7 @@ public class Validator {
 
         Context.exit();
 
-        return ValidationResults.resultFromValues(this.flavour, this.results);
+        return ValidationResults.resultFromValues(this.profile.getPDFAFlavour(), this.results);
     }
 
     private void initialize() {
@@ -97,8 +103,7 @@ public class Validator {
     }
 
     private void initializeAllVariables() {
-        for (Variable var : PROFILE_DIRECTORY.getValidationProfileByFlavour(
-                this.flavour).getVariables()) {
+        for (Variable var : this.profile.getVariables()) {
             if (var == null)
                 continue;
 
@@ -131,8 +136,7 @@ public class Validator {
 
     private void updateVariables(Object object) {
         if (object != null) {
-            for (Variable var : PROFILE_DIRECTORY
-                    .getValidationProfileByFlavour(this.flavour)
+            for (Variable var :this.profile
                     .getVariablesByObject(object.getObjectType())) {
 
                 if (var == null)
@@ -234,16 +238,14 @@ public class Validator {
 
     private boolean checkAllRules(Object checkObject, String checkContext) {
         boolean res = true;
-        Set<Rule> roolsForObject = PROFILE_DIRECTORY
-                .getValidationProfileByFlavour(this.flavour).getRulesByObject(
+        Set<Rule> roolsForObject = this.profile.getRulesByObject(
                         checkObject.getObjectType());
         for (Rule rule : roolsForObject) {
             res &= checkObjWithRule(checkObject, checkContext, rule);
         }
 
         for (String checkType : checkObject.getSuperTypes()) {
-            roolsForObject = PROFILE_DIRECTORY.getValidationProfileByFlavour(
-                    this.flavour).getRulesByObject(checkType);
+            roolsForObject = this.profile.getRulesByObject(checkType);
             if (roolsForObject != null) {
                 for (Rule rule : roolsForObject) {
                     if (rule != null) {
@@ -359,6 +361,35 @@ public class Validator {
             throw new IllegalArgumentException(
                     "Parameter (PDFAFlavour flavour) cannot be null.");
         Validator validator = new Validator(flavour, logSuccess);
+        ValidationResult res = validator.validate(root);
+        return res;
+    }
+
+    /**
+     * Generates validation info for objects with root {@code root} and
+     * validation profile structure {@code validationProfile}
+     * <p/>
+     * This method doesn't need to parse validation profile (it works faster
+     * than those ones, which parses profile).
+     * 
+     * @param profile
+     *
+     * @param root
+     *            the root object for validation
+     * @param logSuccess 
+     * @return validation info structure
+     * @throws ValidationException
+     *             when a problem occurs validating the PDF
+     */
+    public static ValidationResult validate(final ValidationProfile profile, final Object root, boolean logSuccess)
+            throws ValidationException {
+        if (root == null)
+            throw new IllegalArgumentException(
+                    "Parameter (Object root) cannot be null.");
+        if (profile == null)
+            throw new IllegalArgumentException(
+                    "Parameter (ValidationProfile profile) cannot be null.");
+        Validator validator = new Validator(profile, logSuccess);
         ValidationResult res = validator.validate(root);
         return res;
     }
