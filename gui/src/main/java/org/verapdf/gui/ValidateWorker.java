@@ -1,6 +1,7 @@
 package org.verapdf.gui;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -70,10 +71,10 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         ValidationResult result = null;
         FeaturesCollection collection = null;
 
-        try (ModelLoader loader = new ModelLoader(this.pdf.getPath())) {
+        try (ModelLoader loader = new ModelLoader(new FileInputStream(this.pdf.getPath()))) {
 
             if ((this.flag & 1) == 1) {
-                result = runValidator(loader.getRoot());
+                result = runValidator(loader.getRoot(), this.settings.isShowPassedRules());
 
                 if (this.isFixMetadata) {
                     FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(
@@ -84,12 +85,11 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
                     if (!path.toString().trim().isEmpty()) {
                         // TODO : what we need do with fixing result?
                         fixerResult = MetadataFixer.fixMetadata(this.settings
-                                .getFixMetadataPathFolder().toFile(), loader
-                                .getFile().getName(), this.settings
+                                .getFixMetadataPathFolder().toFile(), this.pdf.getPath(), this.settings
                                 .getMetadataFixerPrefix(), fixerConfig);
                     } else {
                         fixerResult = MetadataFixer.fixMetadata(
-                                loader.getFile(),
+                                this.pdf,
                                 this.settings.getMetadataFixerPrefix(), fixerConfig);
                     }
                 }
@@ -116,10 +116,10 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     }
 
     private ValidationResult runValidator(
-            org.verapdf.model.baselayer.Object root) {
+            org.verapdf.model.baselayer.Object root, boolean logSuccess) {
         try {
             // TODO : FIX SETTINGS
-            return Validator.validate(this.flavour, root);
+            return Validator.validate(this.flavour, root, logSuccess);
         } catch (ValidationException e) {
 
             this.parent.errorInValidatingOccur(
