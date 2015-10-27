@@ -35,10 +35,12 @@ public class PBCosFileSpecification extends PBCosDict implements
         super(dictionary, COS_FILE_SPECIFICATION_TYPE);
     }
 
+	@Override
 	public String getF() {
 		return this.getStringValue(COSName.F);
 	}
 
+	@Override
 	public String getUF() {
 		return this.getStringValue(COSName.UF);
 	}
