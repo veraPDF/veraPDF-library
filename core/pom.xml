@@ -15,6 +15,15 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>pdf-model</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>rhino</groupId>
+      <artifactId>js</artifactId>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
     </dependency>

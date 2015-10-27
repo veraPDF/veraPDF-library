@@ -1,11 +1,5 @@
-package org.verapdf.validation.logic;
+package org.verapdf.pdfa.validation;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -14,30 +8,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
-
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
-import org.verapdf.core.ProfileException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.Location;
 import org.verapdf.pdfa.results.TestAssertion;
-import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.TestAssertion.Status;
-import org.verapdf.pdfa.validation.ProfileDirectory;
-import org.verapdf.pdfa.validation.Profiles;
-import org.verapdf.pdfa.validation.Rule;
-import org.verapdf.pdfa.validation.RuleId;
-import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validation.Variable;
-import org.xml.sax.SAXException;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.results.ValidationResults;
 
 /**
  * Validation logic

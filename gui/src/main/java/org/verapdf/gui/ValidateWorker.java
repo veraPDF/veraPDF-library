@@ -27,8 +27,8 @@ import org.verapdf.model.ModelLoader;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
+import org.verapdf.pdfa.validation.Validator;
 import org.verapdf.report.XMLReport;
-import org.verapdf.validation.logic.Validator;
 
 /**
  * Validates PDF in a new threat.

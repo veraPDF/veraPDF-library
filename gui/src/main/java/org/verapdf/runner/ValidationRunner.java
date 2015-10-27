@@ -16,7 +16,7 @@ import org.verapdf.model.ModelLoader;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.validation.logic.Validator;
+import org.verapdf.pdfa.validation.Validator;
 
 public class ValidationRunner {
 

@@ -48,7 +48,6 @@
 
   <modules>
     <module>validation-profile-parser</module>
-    <module>validation-logic</module>
     <module>validation-report</module>
     <module>model-implementation</module>
     <module>core</module>
@@ -201,7 +200,7 @@
 
       <dependency>
         <groupId>org.verapdf</groupId>
-        <artifactId>validation-logic</artifactId>
+        <artifactId>core</artifactId>
         <version>${project.version}</version>
       </dependency>
 
