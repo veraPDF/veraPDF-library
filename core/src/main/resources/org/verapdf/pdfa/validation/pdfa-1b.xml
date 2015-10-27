@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:profile xmlns:ns2="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_B">
-    <details creator="veraPDF Consortium" created="2015-10-27T10:19:19Z">
+    <details creator="veraPDF Consortium" created="2015-10-27T11:47:12Z">
         <name>PDF/A-1B validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011</description>
     </details>
@@ -30,17 +30,6 @@
             <references>
                 <reference specification="PDF 1.4 Reference" clause="5.6.2"/>
             </references>
-        </rule>
-        <rule object="CosRenderingIntent">
-            <id specifcation="ISO_19005_1" clause="6.2.9" testNumber="1"/>
-            <description>Where a rendering intent is specified, its value shall be one of the four values defined in PDF Reference
-			RelativeColorimetric, AbsoluteColorimetric, Perceptual or Saturation</description>
-            <test>value == &quot;RelativeColorimetric&quot; || value == &quot;AbsoluteColorimetric&quot; || value == &quot;Perceptual&quot; || value == &quot;Saturation&quot;</test>
-            <error>
-                <message>A rendering intent with non-standard value is used</message>
-                <arguments/>
-            </error>
-            <references/>
         </rule>
         <rule object="PDXForm">
             <id specifcation="ISO_19005_1" clause="6.2.6" testNumber="1"/>
@@ -592,6 +581,18 @@
             </error>
             <references/>
         </rule>
+        <rule object="CosFileSpecification">
+            <id specifcation="ISO_19005_1" clause="6.1.11" testNumber="1"/>
+            <description>A file specification dictionary, as defined in PDF 3.10.2, shall not contain the EF key</description>
+            <test>EF_size == 0</test>
+            <error>
+                <message>A file specification dictionary contains the EF key</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="PDF 1.4 Reference" clause="3.10.2"/>
+            </references>
+        </rule>
         <rule object="PDFormField">
             <id specifcation="ISO_19005_1" clause="6.6.2" testNumber="2"/>
             <description>A Field dictionary shall not include an AA entry for an additional-actions dictionary</description>
@@ -627,24 +628,23 @@
                 <reference specification="ISO19005-1:2005/Cor.2:2011" clause="6.4"/>
             </references>
         </rule>
-        <rule object="CosFileSpecification">
-            <id specifcation="ISO_19005_1" clause="6.1.11" testNumber="1"/>
-            <description>A file specification dictionary, as defined in PDF 3.10.2, shall not contain the EF key</description>
-            <test>EF == null</test>
-            <error>
-                <message>A file specification dictionary contains the EF key</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="PDF 1.4 Reference" clause="3.10.2"/>
-            </references>
-        </rule>
         <rule object="PDAnnot">
             <id specifcation="ISO_19005_1" clause="6.9" testNumber="2"/>
             <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys</description>
             <test>Subtype != &quot;Widget&quot; || (A_size == 0 &amp;&amp; AA_size == 0)</test>
             <error>
                 <message>A Widget annotation contains either A or AA entry</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="CosRenderingIntent">
+            <id specifcation="ISO_19005_1" clause="6.2.9" testNumber="1"/>
+            <description>Where a rendering intent is specified, its value shall be one of the four values defined in PDF Reference
+			RelativeColorimetric, AbsoluteColorimetric, Perceptual or Saturation</description>
+            <test>internalRepresentation == &quot;RelativeColorimetric&quot; || internalRepresentation == &quot;AbsoluteColorimetric&quot; || internalRepresentation == &quot;Perceptual&quot; || internalRepresentation == &quot;Saturation&quot;</test>
+            <error>
+                <message>A rendering intent with non-standard value is used</message>
                 <arguments/>
             </error>
             <references/>
@@ -857,17 +857,6 @@
                 <reference specification="PDF 1.4 Reference" clause="4.5.4, Table 4.16"/>
             </references>
         </rule>
-        <rule object="PDOutputIntent">
-            <id specifcation="ISO_19005_1" clause="6.2.2" testNumber="2"/>
-            <description>If a file's OutputIntents array contains more than one entry, then all entries that contain a DestOutputProfile
-			key shall have as the value of that key the same indirect object, which shall be a valid ICC profile stream</description>
-            <test>destOutputProfileRef == null || gOutputProfileRef == null || destOutputProfileRef == gOutputProfileRef</test>
-            <error>
-                <message>File's OutputIntents array contains output intent dictionaries with non-matching destination output profiles</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
         <rule object="ICCInputProfile">
             <id specifcation="ISO_19005_1" clause="6.2.3" testNumber="1"/>
             <description>All ICCBased colour spaces shall be embedded as ICC profile streams as described in PDF Reference 4.5</description>
@@ -1026,6 +1015,17 @@
             <test>spacingCompliesPDFA</test>
             <error>
                 <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDOutputIntent">
+            <id specifcation="ISO_19005_1" clause="6.2.2" testNumber="2"/>
+            <description>If a file's OutputIntents array contains more than one entry, then all entries that contain a DestOutputProfile
+			key shall have as the value of that key the same indirect object, which shall be a valid ICC profile stream</description>
+            <test>destOutputProfileIndirect == null || gOutputProfileIndirect == null || destOutputProfileIndirect == gOutputProfileIndirect</test>
+            <error>
+                <message>File's OutputIntents array contains output intent dictionaries with non-matching destination output profiles</message>
                 <arguments/>
             </error>
             <references/>
@@ -1225,9 +1225,9 @@
             <defaultValue>null</defaultValue>
             <value>S == &quot;GTS_PDFA1&quot; ? colorSpace : gOutputCS</value>
         </variable>
-        <variable name="gOutputProfileRef" object="PDOutputIntent">
+        <variable name="gOutputProfileIndirect" object="PDOutputIntent">
             <defaultValue>null</defaultValue>
-            <value>gOutputProfileRef == null ? destOutputProfileRef : gOutputProfileRef</value>
+            <value>gOutputProfileIndirect == null ? destOutputProfileIndirect : gOutputProfileIndirect</value>
         </variable>
     </variables>
 </ns2:profile>
