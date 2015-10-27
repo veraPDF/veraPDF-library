@@ -149,7 +149,7 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 
 	private List<CosObject> getHalftonePhase() {
 		COSDictionary dict = ((PDExtendedGraphicsState) this.simplePDObject).getCOSObject();
-		COSBase halftonePhase = dict.getDictionaryObject(COSName.getPDFName("HT"));
+		COSBase halftonePhase = dict.getDictionaryObject(COSName.getPDFName("HTP"));
 		CosObject value = PBCosObject.getFromValue(halftonePhase);
 		if (value != null) {
 			ArrayList<CosObject> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
