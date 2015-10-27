@@ -52,7 +52,6 @@
     <module>validation-report</module>
     <module>model-implementation</module>
     <module>core</module>
-    <module>cli</module>
     <module>gui</module>
     <module>feature-report</module>
     <module>metadata-fixer</module>
@@ -172,7 +171,7 @@
 
       <dependency>
         <groupId>org.verapdf</groupId>
-        <artifactId>vera-cli</artifactId>
+        <artifactId>gui</artifactId>
         <version>${project.version}</version>
       </dependency>
 
