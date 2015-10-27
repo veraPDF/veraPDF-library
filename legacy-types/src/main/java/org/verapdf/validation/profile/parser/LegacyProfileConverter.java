@@ -5,7 +5,9 @@ package org.verapdf.validation.profile.parser;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -63,12 +65,10 @@ public final class LegacyProfileConverter {
             Profiles.profileToXml(profile, System.out, Boolean.TRUE);
         }
         if (args.length == 0) {
-            org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser
-                    .parseFromFilePath(
+            ValidationProfile profile = fromLegacyProfile(
+                    ValidationProfileParser.parseFromFilePath(
                             "/home/cfw/GitHub/veraPDF/veraPDF-validation-profiles/PDF_A/PDFA-1B.xml",
-                            false);
-            ValidationProfile profile = fromLegacyProfile(toConvert,
-                    PDFAFlavour.PDFA_1_B);
+                            false), PDFAFlavour.PDFA_1_B);
             Profiles.profileToXml(profile, System.out, Boolean.TRUE);
             try (OutputStream fos = new FileOutputStream(
                     "/home/cfw/test-profile.xml")) {
@@ -78,8 +78,31 @@ public final class LegacyProfileConverter {
     }
 
     /**
+     * @param toParse
+     * @param flavour
+     * @return
+     * @throws ProfileException
+     */
+    public static ValidationProfile fromLegacyStream(final InputStream toParse,
+            final PDFAFlavour flavour) throws ProfileException {
+        try {
+            return LegacyProfileConverter.fromLegacyProfile(
+                    ValidationProfileParser.parseFromStream(toParse, false),
+                    flavour);
+        } catch (ParserConfigurationException | SAXException
+                | XMLStreamException e) {
+            throw new ProfileException("Exception parsing profile from URL "
+                    + toParse, e);
+        } catch (IOException e) {
+            throw new ProfileException("IOException reading profile from URL "
+                    + toParse, e);
+        }
+    }
+
+    /**
      * @param toConvert
      *            a legacy validation profile instance to convert
+     * @param flavour
      * @return a new ValidatioProfile instance populated from the legacy profile
      *         instance
      */
@@ -97,10 +120,14 @@ public final class LegacyProfileConverter {
                 .getAllVariables()) {
             variables.add(fromLegacyVariable(var));
         }
-        return Profiles.profileFromValues(flavour, parsedFromLegacyProfile(toConvert),
-                "", rules, variables);
+        return Profiles.profileFromValues(flavour,
+                parsedFromLegacyProfile(toConvert), "", rules, variables);
     }
 
+    /**
+     * @param toConvert
+     * @return
+     */
     public static ProfileDetails parsedFromLegacyProfile(
             org.verapdf.validation.profile.model.ValidationProfile toConvert) {
         String[] dateParts = toConvert.getCreated().split("T");
@@ -109,8 +136,7 @@ public final class LegacyProfileConverter {
         Date created = javax.xml.bind.DatatypeConverter
                 .parseDateTime(cleanDate).getTime();
         return Profiles.profileDetailsFromValues(toConvert.getName(),
-                toConvert.getDescription(), toConvert.getCreator(),
-                created);
+                toConvert.getDescription(), toConvert.getCreator(), created);
     }
 
     /**
