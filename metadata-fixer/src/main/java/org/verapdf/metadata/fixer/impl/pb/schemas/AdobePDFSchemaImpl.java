@@ -4,47 +4,38 @@ import org.apache.xmpbox.schema.AdobePDFSchema;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.KEYWORDS;
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.PRODUCER;
+
 /**
  * @author Evgeniy Muravitskiy
  */
-public class AdobePDFSchemaImpl implements AdobePDF {
-
-	private final AdobePDFSchema schema;
-	private final Metadata metadata;
+public class AdobePDFSchemaImpl extends BasicSchemaImpl implements AdobePDF {
 
 	public AdobePDFSchemaImpl(AdobePDFSchema schema, Metadata metadata) {
-		if (schema == null) {
-			throw new IllegalArgumentException("AdobePdf schema representation can not be null");
-		}
-		if (metadata == null) {
-			throw new IllegalArgumentException("Metadata representation can not be null");
-		}
-		this.schema = schema;
-		this.metadata = metadata;
+		super(schema, metadata);
 	}
 
 	@Override
 	public String getProducer() {
-		return this.schema.getProducer();
+		return ((AdobePDFSchema) this.schema).getProducer();
 	}
 
 	@Override
 	public void setProducer(String producer) {
-		this.schema.setProducer(producer);
+		this.removeProperty(PRODUCER);
+		((AdobePDFSchema) this.schema).setProducer(producer);
 	}
 
 	@Override
 	public String getKeywords() {
-		return this.schema.getKeywords();
+		return ((AdobePDFSchema) this.schema).getKeywords();
 	}
 
 	@Override
 	public void setKeywords(String keywords) {
-		this.schema.setKeywords(keywords);
+		this.removeProperty(KEYWORDS);
+		((AdobePDFSchema) this.schema).setKeywords(keywords);
 	}
 
-	@Override
-	public void setNeedToBeUpdated(boolean needToBeUpdated) {
-		this.metadata.setNeedToBeUpdated(needToBeUpdated);
-	}
 }

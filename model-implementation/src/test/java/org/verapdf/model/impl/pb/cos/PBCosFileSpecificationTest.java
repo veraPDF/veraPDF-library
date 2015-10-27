@@ -8,7 +8,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosFileSpecification;
+import org.verapdf.model.external.EmbeddedFile;
 import org.verapdf.model.impl.BaseTest;
+import org.verapdf.model.impl.pb.external.PBoxEmbeddedFile;
 
 import java.util.List;
 
@@ -24,15 +26,19 @@ public class PBCosFileSpecificationTest extends BaseTest {
         expectedID = null;
 
         COSDictionary specification = new COSDictionary();
-        specification.setString(COSName.EF, "some link");
+        specification.setItem(COSName.EF, new COSDictionary());
 
         actual = new PBCosFileSpecification(specification);
     }
 
     @Test
     public void testGetEFMethod() {
-        Assert.assertNotEquals(((CosFileSpecification) actual).getEF(), null);
-    }
+		List<? extends Object> links = actual.getLinkedObjects(PBCosFileSpecification.EF);
+		Assert.assertEquals(1, links.size());
+		Object object = links.get(0);
+		Assert.assertEquals(PBoxEmbeddedFile.EMBEDDED_FILE_TYPE, object.getObjectType());
+		Assert.assertFalse(((EmbeddedFile) object).getisValidPDFA12());
+	}
 
     @Test
     public void testParentLink() {

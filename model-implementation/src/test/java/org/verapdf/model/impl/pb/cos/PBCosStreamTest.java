@@ -1,10 +1,7 @@
 package org.verapdf.model.impl.pb.cos;
 
 import org.apache.pdfbox.cos.*;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosStream;
 import org.verapdf.model.impl.BaseTest;
@@ -84,9 +81,14 @@ public class PBCosStreamTest extends BaseTest {
     }
 
     @Test
-    public void testGetSpacingCompliesPDFAMethod() {
-        Assert.assertTrue(((CosStream) actual).getspacingCompliesPDFA().booleanValue());
+    public void testGetStreamKeywordCRLFCompliant() {
+        Assert.assertTrue(((CosStream) actual).getstreamKeywordCRLFCompliant().booleanValue());
     }
+
+	@Test
+	public void testGetEndstreamKeywordEOLCompliant() {
+		Assert.assertTrue(((CosStream) actual).getendstreamKeywordEOLCompliant().booleanValue());
+	}
 
     @Test
     public void testGetIsLengthCorrect() {
@@ -100,9 +102,8 @@ public class PBCosStreamTest extends BaseTest {
     }
 
     @AfterClass
-    public static void tearDown() {
-        expectedType = null;
-        actual = null;
+    public static void tearDown() throws IOException {
+        BaseTest.tearDown();
         for (int i = 0; i < expectedFiltersArray.length; i++) {
             expectedFiltersArray[i] = null;
         }

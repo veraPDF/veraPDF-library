@@ -21,7 +21,7 @@
     </dependency>
     <dependency>
       <groupId>org.verapdf</groupId>
-      <artifactId>verapdf-exceptions</artifactId>
+      <artifactId>core</artifactId>
     </dependency>
     <dependency>
       <groupId>nl.jqno.equalsverifier</groupId>

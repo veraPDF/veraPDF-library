@@ -4,6 +4,8 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.coslayer.CosName;
 import org.verapdf.model.pdlayer.PDCIDFont;
 import org.verapdf.model.pdlayer.PDType0Font;
 
@@ -33,7 +35,10 @@ public class PBoxPDType0CIDType0Test extends PBoxPDType0FontTest {
 
 	@Override
 	public void testBaseFont() {
-		Assert.assertEquals(TYPE0_BASE_FONT, ((PDType0Font) actual).getBaseFont());
+		List<? extends Object> baseFonts = actual.getLinkedObjects(PBoxPDType1Font.BASE_FONT);
+		Object object = baseFonts.get(0);
+		Assert.assertEquals("CosUnicodeName", object.getObjectType());
+		Assert.assertEquals("IIWNIN+AdobeFanHeitiStd-Bold", ((CosName) object).getinternalRepresentation());
 	}
 
 	@Override

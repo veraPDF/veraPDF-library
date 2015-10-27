@@ -14,8 +14,7 @@ public class PBCosName extends PBCosObject implements CosName {
     /** Type name for PBCosName */
     public static final String COS_NAME_TYPE = "CosName";
 
-    private final String value;
-    private final long originalLength;
+    private final String internalRepresentation;
 
     /**
      * Default constructor
@@ -32,8 +31,7 @@ public class PBCosName extends PBCosObject implements CosName {
      */
     public PBCosName(COSName cosName, final String type) {
         super(cosName, type);
-        this.value = cosName.getName();
-        this.originalLength = cosName.getOriginalLength().longValue();
+        this.internalRepresentation = cosName.getName();
     }
 
     /**
@@ -41,16 +39,12 @@ public class PBCosName extends PBCosObject implements CosName {
      * escape mechanism and converting to Unicode using Utf8 encoding
      */
     @Override
-    public String getvalue() {
-        return this.value;
+    public String getinternalRepresentation() {
+        return this.internalRepresentation;
     }
 
-    /**
-     * Get original length of the name before applying any escape mechanisms and
-     * encodings
-     */
-    @Override
-    public Long getorigLength() {
-        return Long.valueOf(this.originalLength);
-    }
+	public Long getorigLength() {
+		return null;
+	}
+
 }

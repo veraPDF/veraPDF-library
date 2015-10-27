@@ -47,6 +47,12 @@ public class PBoxPDCIDFont extends PBoxPDFont implements PDCIDFont {
 		return null;
 	}
 
+	// TODO : implement me
+	@Override
+	public Boolean getcidSetListsAllGlyphs() {
+		return Boolean.FALSE;
+	}
+
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         if (CID_SET.equals(link)) {

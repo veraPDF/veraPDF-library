@@ -4,8 +4,10 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.font.*;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.coslayer.CosUnicodeName;
 import org.verapdf.model.external.FontProgram;
 import org.verapdf.model.factory.font.FontFactory;
+import org.verapdf.model.impl.pb.cos.PBCosUnicodeName;
 import org.verapdf.model.impl.pb.external.PBoxFontProgram;
 import org.verapdf.model.impl.pb.external.PBoxTrueTypeFontProgram;
 import org.verapdf.model.impl.pb.pd.PBoxPDResources;
@@ -22,6 +24,7 @@ import java.util.List;
 public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 
 	public static final String FONT_FILE = "fontFile";
+	public static final String BASE_FONT = "BaseFont";
 
 	private final String id;
 
@@ -62,11 +65,6 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 	}
 
 	@Override
-	public String getBaseFont() {
-		return this.pdFontLike.getName();
-	}
-
-	@Override
 	public Boolean getisSymbolic() {
 		PDFontDescriptor fontDescriptor = this.pdFontLike.getFontDescriptor();
 		return Boolean.valueOf(fontDescriptor.isSymbolic());
@@ -74,10 +72,14 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
-		if (FONT_FILE.equals(link)) {
-			return this.getFontFile();
+		switch (link) {
+			case FONT_FILE:
+				return this.getFontFile();
+			case BASE_FONT:
+				return this.getBaseFont();
+			default:
+				return super.getLinkedObjects(link);
 		}
-		return super.getLinkedObjects(link);
 	}
 
 	private List<FontProgram> getFontFile() {
@@ -113,6 +115,16 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 		List<FontProgram> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		list.add(fontProgram);
 		return Collections.unmodifiableList(list);
+	}
+
+	private List<CosUnicodeName> getBaseFont() {
+		String name = this.pdFontLike.getName();
+		if (name != null) {
+			ArrayList<CosUnicodeName> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			list.add(new PBCosUnicodeName(COSName.getPDFName(name)));
+			return Collections.unmodifiableList(list);
+		}
+		return Collections.emptyList();
 	}
 
 }

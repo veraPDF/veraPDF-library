@@ -8,6 +8,7 @@ import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDComplexFileSpecification;
 import org.apache.pdfbox.pdmodel.common.filespecification.PDEmbeddedFile;
 import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.features.EmbeddedFileFeaturesData;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -119,11 +120,45 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
 	}
 
 	/**
-	 * @return null
+	 * @return null if it can not get embedded file stream and features data of the embedded file in other case.
 	 */
 	@Override
 	public FeaturesData getData() {
-		return null;
+		try {
+			PDEmbeddedFile ef = embFile.getEmbeddedFile();
+			if (ef == null) {
+				LOGGER.error("Missed embedded file in PDComplexFileSpecification");
+				return null;
+			}
+			byte[] stream = PBCreateNodeHelper.inputStreamToByteArray(ef.getStream().getUnfilteredStream());
+
+			EmbeddedFileFeaturesData.Builder builder = new EmbeddedFileFeaturesData.Builder(stream);
+
+			builder.name(embFile.getFilename());
+			builder.description(embFile.getFileDescription());
+			builder.subtype(ef.getSubtype());
+			builder.creationDate(ef.getCreationDate());
+			builder.modDate(ef.getModDate());
+			builder.size(ef.getSize());
+
+			COSBase baseParams = ef.getStream().getDictionaryObject(COSName.PARAMS);
+			if (baseParams instanceof COSDictionary) {
+				COSBase baseChecksum = ((COSDictionary) baseParams).getDictionaryObject(COSName.getPDFName("CheckSum"));
+				if (baseChecksum instanceof COSString) {
+					COSString str = (COSString) baseChecksum;
+					if (str.isHex()) {
+						builder.checkSum(str.toHexString());
+					} else {
+						builder.checkSum(str.getString());
+					}
+				}
+			}
+
+			return builder.build();
+		} catch (IOException e) {
+			LOGGER.error("Can not get embedded file stream", e);
+			return null;
+		}
 	}
 
 	private static String getFilters(List<COSName> list) {

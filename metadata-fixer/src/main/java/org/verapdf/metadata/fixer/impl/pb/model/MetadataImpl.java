@@ -1,12 +1,18 @@
 package org.verapdf.metadata.fixer.impl.pb.model;
 
+import org.apache.log4j.Logger;
+import org.apache.pdfbox.cos.COSArray;
+import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSStream;
 import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.schema.AdobePDFSchema;
 import org.apache.xmpbox.schema.DublinCoreSchema;
 import org.apache.xmpbox.schema.PDFAIdentificationSchema;
 import org.apache.xmpbox.schema.XMPBasicSchema;
-import org.verapdf.metadata.fixer.entity.FixReport;
+import org.apache.xmpbox.type.BadFieldValueException;
+import org.apache.xmpbox.xml.XmpSerializer;
+import org.verapdf.metadata.fixer.MetadataFixerResult;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.impl.pb.schemas.AdobePDFSchemaImpl;
@@ -15,11 +21,17 @@ import org.verapdf.metadata.fixer.impl.pb.schemas.XMPBasicSchemaImpl;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
+import org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour;
+
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * @author Evgeniy Muravitskiy
  */
 public class MetadataImpl implements Metadata {
+
+	private static final Logger LOGGER = Logger.getLogger(MetadataImpl.class);
 
 	private final XMPMetadata metadata;
 	private final COSStream stream;
@@ -36,18 +48,66 @@ public class MetadataImpl implements Metadata {
 	}
 
 	@Override
-	public void removePDFIdentificationSchema(FixReport report) {
-		PDFAIdentificationSchema schema = this.metadata.getPDFIdentificationSchema();
-		if (schema != null) {
-			this.metadata.removeSchema(schema);
-			report.addFix("Identification schema removed.");
+	public void checkMetadataStream(MetadataFixerResult report) {
+		COSBase filters = this.stream.getFilters();
+		if (filters instanceof COSName ||
+				(filters instanceof COSArray && ((COSArray) filters).size() != 0)) {
+			try {
+				this.stream.setFilters(null);
+				this.stream.setNeedToBeUpdated(true);
+				report.addAppliedFix("Metadata stream unfiltered");
+			} catch (IOException e) {
+				LOGGER.warn("Problems with unfilter stream.");
+				LOGGER.warn(e);
+			}
+		}
+		this.setRequiredDictionaryValue(COSName.METADATA, COSName.TYPE, report);
+		this.setRequiredDictionaryValue(COSName.getPDFName("XML"), COSName.SUBTYPE, report);
+	}
+
+	private void setRequiredDictionaryValue(COSName value, COSName key, MetadataFixerResult report) {
+		if (!value.equals(this.stream.getDictionaryObject(key))) {
+			this.stream.setItem(key, value);
+			this.stream.setNeedToBeUpdated(true);
+			report.addAppliedFix(value.getName() + " value of " + key.getName() + " key is set " +
+					"to metadata dictionary.");
 		}
 	}
 
 	@Override
-	public void addPDFIdentificationSchema(FixReport report) {
-		this.metadata.createAndAddPFAIdentificationSchema();
-		report.addFix("Identification schema added.");
+	public void removePDFIdentificationSchema(MetadataFixerResult result) {
+		PDFAIdentificationSchema schema = this.metadata.getPDFIdentificationSchema();
+		if (schema != null) {
+			this.metadata.removeSchema(schema);
+			this.setNeedToBeUpdated(true);
+			result.addAppliedFix("Identification schema removed.");
+		}
+	}
+
+	@Override
+	public void addPDFIdentificationSchema(MetadataFixerResult report, PDFAFlavour flavour) {
+		PDFAIdentificationSchema schema = this.metadata.getPDFIdentificationSchema();
+		int part = flavour.getPart().getPartNumber();
+		String conformance = flavour.getLevel().getCode();
+
+		if (schema != null) {
+			if (schema.getPart() == part && conformance.equals(schema.getConformance())) {
+				return;
+			} else {
+				this.metadata.removeSchema(schema);
+			}
+		}
+
+		schema = this.metadata.createAndAddPFAIdentificationSchema();
+
+		try {
+			schema.setPart(part);
+			schema.setConformance(conformance);
+			this.setNeedToBeUpdated(true);
+			report.addAppliedFix("Identification schema added.");
+		} catch (BadFieldValueException e) {
+			LOGGER.error(e);
+		}
 	}
 
 	@Override
@@ -56,7 +116,7 @@ public class MetadataImpl implements Metadata {
 		if (schema == null && dublinCoreInfoPresent(info)) {
 			schema = this.metadata.createAndAddDublinCoreSchema();
 		}
-		return new DublinCoreSchemaImpl(schema, this);
+		return schema != null ? new DublinCoreSchemaImpl(schema, this) : null;
 	}
 
 	@Override
@@ -65,7 +125,7 @@ public class MetadataImpl implements Metadata {
 		if (schema == null && adobePDFInfoPresent(info)) {
 			schema = this.metadata.createAndAddAdobePDFSchema();
 		}
-		return new AdobePDFSchemaImpl(schema, this);
+		return schema != null ? new AdobePDFSchemaImpl(schema, this) : null;
 	}
 
 	@Override
@@ -74,7 +134,7 @@ public class MetadataImpl implements Metadata {
 		if (schema == null && xmpBasicInfoPresent(info)) {
 			schema = this.metadata.createAndAddXMPBasicSchema();
 		}
-		return new XMPBasicSchemaImpl(schema, this);
+		return schema != null ? new XMPBasicSchemaImpl(schema, this) : null;
 	}
 
 	@Override
@@ -87,21 +147,25 @@ public class MetadataImpl implements Metadata {
 		this.stream.setNeedToBeUpdated(true);
 	}
 
+	public void updateMetadataStream() throws Exception {
+		if (this.stream.isNeedToBeUpdated()) {
+			OutputStream out = this.stream.createUnfilteredStream();
+			new XmpSerializer().serialize(this.metadata, out, true);
+		}
+	}
+
 	private boolean dublinCoreInfoPresent(InfoDictionary info) {
-		return info.getTitle() != null || info.getSubject() != null || info.getAuthor() != null;
+		return info != null && (info.getTitle() != null || info.getSubject() != null ||
+				info.getAuthor() != null);
 	}
 
 	private boolean adobePDFInfoPresent(InfoDictionary info) {
-		return info.getProducer() != null && info.getKeywords() != null;
+		return info != null && (info.getProducer() != null || info.getKeywords() != null);
 	}
 
 	private boolean xmpBasicInfoPresent(InfoDictionary info) {
-		return info.getCreator() != null || info.getCreationDate() != null ||
-				info.getModificationDate() != null;
-	}
-
-	public XMPMetadata getAbsorbedMetadata() {
-		return this.metadata;
+		return info != null && (info.getCreator() != null || info.getCreationDate() != null ||
+				info.getModificationDate() != null);
 	}
 
 }

@@ -26,6 +26,6 @@ public class PBOp_riTest extends PBOperatorTest {
 	@Test
 	public void testRenderingIntentLink() {
 		Object object = testObject(PBOp_ri.RENDERING_INTENT, 1, PBCosRenderingIntent.COS_RENDERING_INTENT_TYPE);
-		Assert.assertEquals(RELATIVE_COLORIMETRIC, ((CosRenderingIntent) object).getvalue());
+		Assert.assertEquals(RELATIVE_COLORIMETRIC, ((CosRenderingIntent) object).getinternalRepresentation());
 	}
 }

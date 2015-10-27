@@ -1,6 +1,7 @@
 package org.verapdf.features;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,11 +12,13 @@ import java.util.List;
  */
 public final class ICCProfileFeaturesData extends FeaturesData {
 
-	private Integer n;
-	private List<Double> range;
+	private final byte[] metadata;
+	private final Integer n;
+	private final List<Double> range;
 
 	private ICCProfileFeaturesData(byte[] metadata, byte[] stream, Integer n, List<Double> range) {
-		super(metadata, stream);
+		super(stream);
+		this.metadata = metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
 		this.n = n;
 		this.range = range == null ? null : new ArrayList<>(range);
 	}
@@ -33,6 +36,13 @@ public final class ICCProfileFeaturesData extends FeaturesData {
 			throw new IllegalArgumentException("ICCProfile stream can not be null");
 		}
 		return new ICCProfileFeaturesData(metadata, stream, n, range);
+	}
+
+	/**
+	 * @return byte array represent metadata stream
+	 */
+	public byte[] getMetadata() {
+		return metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
 	}
 
 	/**

@@ -6,7 +6,8 @@
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:profilens="http://www.verapdf.org/ValidationProfile">
+                xmlns:profilens="http://www.verapdf.org/ValidationProfile"
+                xmlns:vmrr="http://www.verapdf.org/MachineReadableReport">
 
     <xsl:output method="html"/>
 
@@ -46,7 +47,7 @@
     </xsl:template>
 
     <!-- Validation Report header -->
-    <xsl:template match="report">
+    <xsl:template match="vmrr:report">
 
         <!-- Header image and overall title -->
         <p>
@@ -66,7 +67,7 @@
                     <b>Validation Profile:</b>
                 </td>
                 <td>
-                    <xsl:value-of select="/report/validationInfo/profile/name"/>
+                    <xsl:value-of select="/vmrr:report/vmrr:validationInfo/vmrr:profile/vmrr:name"/>
                 </td>
             </tr>
             <!--<tr>
@@ -79,24 +80,24 @@
             </tr>-->
             <tr>
                 <td width="200">
-                    <xsl:if test="/report/validationInfo/result/compliant = 'true'">
+                    <xsl:if test="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:compliant = 'true'">
                         <font color="green">
                             <b>Compliance status:</b>
                         </font>
                     </xsl:if>
-                    <xsl:if test="/report/validationInfo/result/compliant = 'false'">
+                    <xsl:if test="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:compliant = 'false'">
                         <font color="red">
                             <b>Compliance status:</b>
                         </font>
                     </xsl:if>
                 </td>
                 <td>
-                    <xsl:if test="/report/validationInfo/result/compliant = 'true'">
+                    <xsl:if test="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:compliant = 'true'">
                         <font color="green">
                             <b>Passed</b>
                         </font>
                     </xsl:if>
-                    <xsl:if test="/report/validationInfo/result/compliant = 'false'">
+                    <xsl:if test="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:compliant = 'false'">
                         <font color="red">
                             <b>Failed</b>
                         </font>
@@ -112,7 +113,7 @@
                     <b>Processing time:</b>
                 </td>
                 <td>
-                    <xsl:value-of select="/report/@processingTime"/>
+                    <xsl:value-of select="/vmrr:report/@processingTime"/>
                 </td>
             </tr>
             <tr>
@@ -121,7 +122,7 @@
                 </td>
                 <td>
                     <xsl:value-of
-                            select="/report/validationInfo/result/summary/@passedRules + /report/validationInfo/result/summary/@failedRules"/>
+                            select="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:summary/@passedRules + /vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:summary/@failedRules"/>
                 </td>
             </tr>
             <tr>
@@ -129,7 +130,7 @@
                     <b>Passed Checks:</b>
                 </td>
                 <td>
-                    <xsl:value-of select="/report/validationInfo/result/summary/@passedChecks"/>
+                    <xsl:value-of select="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:summary/@passedChecks"/>
                 </td>
             </tr>
             <tr>
@@ -137,7 +138,7 @@
                     <b>Failed Checks:</b>
                 </td>
                 <td>
-                    <xsl:value-of select="/report/validationInfo/result/summary/@failedChecks"/>
+                    <xsl:value-of select="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:summary/@failedChecks"/>
                 </td>
             </tr>
         </table>
@@ -153,7 +154,8 @@
                     <b>Status</b>
                 </td>
             </tr>
-            <xsl:apply-templates select="/report/validationInfo/result/details/rules/rule"/>
+            <xsl:apply-templates
+                    select="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:details/vmrr:rules/vmrr:rule"/>
 
         </table>
 
@@ -161,7 +163,7 @@
     </xsl:template>
 
     <!-- Detailed Information -->
-    <xsl:template match="/report/validationInfo/result/details/rules/rule">
+    <xsl:template match="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:details/vmrr:rules/vmrr:rule">
 
         <xsl:param name="id" select="@id"/>
 
@@ -193,7 +195,7 @@
             </td>
         </tr>
         <tr style="BACKGROUND: #dcdaf6">
-            <xsl:variable name="failedChecksCount" select="count(check[@status = 'failed'])"/>
+            <xsl:variable name="failedChecksCount" select="count(vmrr:check[@status = 'failed'])"/>
             <xsl:if test="$failedChecksCount > 0">
                 <td width="800">
                     <xsl:value-of select="@failedChecks"/> occurrences
@@ -209,10 +211,10 @@
                 </xsl:if>
             </td>
         </tr>
-        <xsl:for-each select="check[@status = 'failed']">
+        <xsl:for-each select="vmrr:check[@status = 'failed']">
             <tr class="hideable hide{$id}">
                 <td width="800" style="word-break: break-all">
-                    <xsl:value-of select="location/context"/>
+                    <xsl:value-of select="vmrr:location/vmrr:context"/>
                 </td>
             </tr>
         </xsl:for-each>

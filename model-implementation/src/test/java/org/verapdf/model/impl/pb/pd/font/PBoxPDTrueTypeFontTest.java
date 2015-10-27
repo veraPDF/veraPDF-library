@@ -4,10 +4,13 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.coslayer.CosName;
 import org.verapdf.model.pdlayer.PDSimpleFont;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 /**
  * @author Timur Kamalov
@@ -35,7 +38,10 @@ public class PBoxPDTrueTypeFontTest extends PBoxPDSimpleFontTest {
 
 	@Override
 	public void testBaseFont() {
-		Assert.assertEquals(TRUETYPE_BASE_FONT, ((PDSimpleFont) actual).getBaseFont());
+		List<? extends Object> baseFonts = actual.getLinkedObjects(PBoxPDType1Font.BASE_FONT);
+		Object object = baseFonts.get(0);
+		Assert.assertEquals("CosUnicodeName", object.getObjectType());
+		Assert.assertEquals("CUQUFZ+GillSansMT", ((CosName) object).getinternalRepresentation());
 	}
 
 	@Override

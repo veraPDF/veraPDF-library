@@ -1,6 +1,7 @@
 package org.verapdf.features;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,24 +12,25 @@ import java.util.List;
  */
 public final class FontFeaturesData extends FeaturesData {
 
-	private String fontName;
-	private String fontFamily;
-	private String fontStretch;
-	private Double fontWeight;
-	private Integer flags;
-	private List<Double> fontBBox;
-	private Double italicAngle;
-	private Double ascent;
-	private Double descent;
-	private Double leading;
-	private Double capHeight;
-	private Double xHeight;
-	private Double stemV;
-	private Double stemH;
-	private Double avgWidth;
-	private Double maxWidth;
-	private Double missingWidth;
-	private String charSet;
+	private final byte[] metadata;
+	private final String fontName;
+	private final String fontFamily;
+	private final String fontStretch;
+	private final Double fontWeight;
+	private final Integer flags;
+	private final List<Double> fontBBox;
+	private final Double italicAngle;
+	private final Double ascent;
+	private final Double descent;
+	private final Double leading;
+	private final Double capHeight;
+	private final Double xHeight;
+	private final Double stemV;
+	private final Double stemH;
+	private final Double avgWidth;
+	private final Double maxWidth;
+	private final Double missingWidth;
+	private final String charSet;
 
 	private FontFeaturesData(byte[] metadata,
 							 byte[] stream,
@@ -50,7 +52,8 @@ public final class FontFeaturesData extends FeaturesData {
 							 Double maxWidth,
 							 Double missingWidth,
 							 String charSet) {
-		super(metadata, stream);
+		super(stream);
+		this.metadata = metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
 		this.fontName = fontName;
 		this.fontFamily = fontFamily;
 		this.fontStretch = fontStretch;
@@ -69,6 +72,13 @@ public final class FontFeaturesData extends FeaturesData {
 		this.maxWidth = maxWidth;
 		this.missingWidth = missingWidth;
 		this.charSet = charSet;
+	}
+
+	/**
+	 * @return byte array represent metadata stream
+	 */
+	public byte[] getMetadata() {
+		return metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
 	}
 
 	/**
@@ -220,7 +230,8 @@ public final class FontFeaturesData extends FeaturesData {
 		private Double missingWidth = 0.;
 		private String charSet = null;
 
-		public Builder() {
+		public Builder(byte[] stream) {
+			this.stream = stream;
 		}
 
 		public FontFeaturesData build() {

@@ -11,6 +11,10 @@ import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
 import java.io.IOException;
 
 /**
+ * Implementation of graphic state for content stream.
+ * Contains follows settings: fill and stroke color spaces,
+ * pattern, rendering mode and font
+ *
  * @author Timur Kamalov
  */
 public class GraphicState implements Cloneable {
@@ -23,42 +27,72 @@ public class GraphicState implements Cloneable {
     private RenderingMode renderingMode = RenderingMode.FILL;
     private PDFont font;
 
+	/**
+	 * @return fill color space of current state
+	 */
     public PDColorSpace getFillColorSpace() {
         return fillColorSpace;
     }
 
+	/**
+	 * @param fillColorSpace set fill color space to current state
+	 */
     public void setFillColorSpace(PDColorSpace fillColorSpace) {
         this.fillColorSpace = fillColorSpace;
     }
 
+	/**
+	 * @return stroke color space of current state
+	 */
     public PDColorSpace getStrokeColorSpace() {
         return strokeColorSpace;
     }
 
+	/**
+	 * @param strokeColorSpace set stroke color space to current state
+	 */
     public void setStrokeColorSpace(PDColorSpace strokeColorSpace) {
         this.strokeColorSpace = strokeColorSpace;
     }
 
+	/**
+	 * @return pattern of current state
+	 */
     public PDAbstractPattern getPattern() {
         return pattern;
     }
 
+	/**
+	 * @param pattern set pattern to current state
+	 */
     public void setPattern(PDAbstractPattern pattern) {
         this.pattern = pattern;
     }
 
+	/**
+	 * @return rendering mode of current state
+	 */
     public RenderingMode getRenderingMode() {
         return renderingMode;
     }
 
+	/**
+	 * @param renderingMode set renderint mode to color space
+	 */
     public void setRenderingMode(RenderingMode renderingMode) {
         this.renderingMode = renderingMode;
     }
 
+	/**
+	 * @return font of current state
+	 */
     public PDFont getFont() {
         return font;
     }
 
+	/**
+	 * @param font set font to current state
+	 */
     public void setFont(PDFont font) {
         this.font = font;
     }
@@ -78,6 +112,11 @@ public class GraphicState implements Cloneable {
         this.font = graphicState.getFont();
     }
 
+	/**
+	 * Set font to current state from extended graphic state
+	 *
+	 * @param extGState extended graphic state
+	 */
     public void copyPropertiesFromExtGState(PDExtendedGraphicsState extGState) {
         if (extGState != null) {
             try {
@@ -90,6 +129,12 @@ public class GraphicState implements Cloneable {
         }
     }
 
+	/**
+	 * Create copy of current graphic state.
+	 *
+	 * @return copy of current graphic state
+	 * @throws CloneNotSupportedException
+	 */
     @Override
     public GraphicState clone() throws CloneNotSupportedException {
         GraphicState graphicState = (GraphicState) super.clone();

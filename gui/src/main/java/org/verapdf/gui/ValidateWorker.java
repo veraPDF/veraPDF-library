@@ -12,7 +12,7 @@ import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.metadata.fixer.MetadataFixer;
-import org.verapdf.metadata.fixer.entity.FixReport;
+import org.verapdf.metadata.fixer.MetadataFixerResult;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.model.ModelLoader;
@@ -29,7 +29,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Path;
 
 /**
@@ -80,28 +79,26 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 		try (ModelLoader loader = new ModelLoader(this.pdf.getPath())) {
 
 			if ((flag & 1) == 1) {
-				org.verapdf.model.baselayer.Object root = loader.getRoot();
-				info = runValidator(root);
+				info = runValidator(loader.getRoot());
 
-				if (isFixMetadata) {
-					FixerConfig fixerConfig = new FixerConfigImpl(loader.getPDDocument(), info);
+				if (this.isFixMetadata) {
+					FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(loader.getPDDocument(), info);
 					Path path = settings.getFixMetadataPathFolder();
-					FixReport report;
+					MetadataFixerResult fixerResult;
 
 					if (!path.toString().trim().isEmpty()) {
 						// TODO : what we need do with fixing result?
-						report = MetadataFixer.fixDocument(settings.getFixMetadataPathFolder().toFile(),
+						fixerResult = MetadataFixer.fixMetadata(settings.getFixMetadataPathFolder().toFile(),
 								loader.getFile().getName(), settings.getMetadataFixerPrefix(), fixerConfig);
 					} else {
-						report = MetadataFixer.fixDocument(loader.getFile(),
+						fixerResult = MetadataFixer.fixMetadata(loader.getFile(),
 								settings.getMetadataFixerPrefix(), fixerConfig);
 					}
 				}
 			}
-
 			if ((flag & (1 << 1)) == (1 << 1)) {
 				try {
-					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument(), settings.getFeaturesPluginsConfigFilePath().toFile());
+					collection = PBFeatureParser.getFeaturesCollection(loader.getPDDocument());
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(this.parent,
 							"Some error in creating features collection.",
@@ -113,9 +110,6 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 			writeReports(info, collection);
 		} catch (IOException e) {
 			this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
-		} catch (TransformerException | URISyntaxException |
-				ParserConfigurationException | SAXException e) {
-			this.parent.errorInValidatingOccur(GUIConstants.ERROR_IN_INCREMETAL_SAVE, e);
 		}
 
 		return info;
@@ -146,7 +140,6 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 				xmlReport.deleteOnExit();
 				XMLReport.writeXMLReport(info, collection, xmlReport.getPath(),
 						endTimeOfValidation - startTimeOfValidation, settings.isShowPassedRules());
-
 				if (info != null) {
 					try {
 						htmlReport = File.createTempFile("veraPDF-tempHTMLReport", ".html");

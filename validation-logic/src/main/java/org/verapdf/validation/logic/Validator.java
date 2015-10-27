@@ -20,7 +20,10 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
@@ -161,17 +164,23 @@ public class Validator {
 
     private void updateVariables(Object object) {
         if (object != null) {
-            for (Variable var : this.profile
-                    .getVariablesForObject(object.getObjectType())) {
+			updateVariablesForObject(object.getObjectType(), object);
 
-                if (var == null)
-                    continue;
-
-                java.lang.Object variable = evalVariableResult(var, object);
-                this.scope.put(var.getAttrName(), this.scope, variable);
-            }
-        }
+			for (String parentName : object.getSuperTypes()) {
+				updateVariablesForObject(parentName, object);
+			}
+		}
     }
+
+	private void updateVariablesForObject(String objectType, Object object) {
+		for (Variable var : this.profile
+				.getVariablesForObject(objectType)) {
+			if (var == null)
+				continue;
+			java.lang.Object variable = evalVariableResult(var, object);
+			this.scope.put(var.getAttrName(), this.scope, variable);
+		}
+	}
 
     private java.lang.Object evalVariableResult(Variable variable, Object object) {
         Script script;
@@ -195,8 +204,9 @@ public class Validator {
     private void addAllLinkedObjects(Object checkObject, String checkContext,
                                      Set<String> checkIDContext) throws NullLinkNameException,
             NullLinkException, NullLinkedObjectException {
-        for (int j = checkObject.getLinks().size() - 1; j >= 0; --j) {
-            String link = checkObject.getLinks().get(j);
+        List<String> links = checkObject.getLinks();
+        for (int j = links.size() - 1; j >= 0; --j) {
+            String link = links.get(j);
 
             if (link == null) {
                 throw new NullLinkNameException(
@@ -362,7 +372,7 @@ public class Validator {
 			}
 
 			if (check != null) {
-				if (currentRule.getFailedChecksCount() < this.maxDisplayedFailedChecks) {
+				if (this.maxDisplayedFailedChecks == -1 || currentRule.getFailedChecksCount() < this.maxDisplayedFailedChecks) {
 					currentRule.add(check);
 				} else {
 					currentRule.incChecksCount(check);
@@ -410,7 +420,7 @@ public class Validator {
                 if (resArg instanceof NativeJavaObject) {
                     resStringArg = ((NativeJavaObject) resArg).unwrap().toString();
                 } else {
-                    resStringArg = resArg.toString();
+                    resStringArg = String.valueOf(resArg);
                 }
 
                 argsRes.add(resStringArg);
@@ -461,15 +471,13 @@ public class Validator {
             NullLinkNameException, NullLinkException,
             NullLinkedObjectException, MissedHashTagException,
             XMLStreamException, WrongSignatureException, MultiplyGlobalVariableNameException {
-        if (root == null)
-            throw new IllegalArgumentException(
-                    "Parameter (Object root) cannot be null.");
-        if (validationProfilePath == null)
+        if (validationProfilePath == null) {
             throw new IllegalArgumentException(
                     "Parameter (String validationProfilePath) cannot be null.");
-        return validate(root, ValidationProfileParser.parseFromFilePath(
-                validationProfilePath, isSignCheckOn),
-				isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
+        }
+        ValidationProfile profile = ValidationProfileParser.parseFromFilePath(
+                validationProfilePath, isSignCheckOn);
+        return validate(root, profile, isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
     }
 
     /**
@@ -510,15 +518,13 @@ public class Validator {
             NullLinkException, NullLinkedObjectException,
             MissedHashTagException, XMLStreamException,
             WrongSignatureException, MultiplyGlobalVariableNameException {
-        if (root == null)
-            throw new IllegalArgumentException(
-                    "Parameter (Object root) cannot be null.");
-        if (validationProfile == null)
+        if (validationProfile == null) {
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile validationProfile) cannot be null.");
-        return validate(root, ValidationProfileParser.parseFromFile(
-                validationProfile, isSignCheckOn),
-				isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
+        }
+        ValidationProfile profile = ValidationProfileParser.parseFromFile(
+                validationProfile, isSignCheckOn);
+        return validate(root, profile, isLogPassedChecks, maxFailedChecks, maxDisplayedFailedChecks);
     }
 
     /**

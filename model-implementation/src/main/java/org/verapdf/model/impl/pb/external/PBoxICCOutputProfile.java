@@ -14,9 +14,19 @@ import java.io.InputStream;
 public class PBoxICCOutputProfile extends PBoxICCProfile implements
         ICCOutputProfile {
 
+	/**	Type name for {@code PBoxICCOutputProfile} */
     public static final String ICC_OUTPUT_PROFILE_TYPE = "ICCOutputProfile";
+
     private String subtype;
 
+	/**
+	 * Default constructor
+	 *
+	 * @param profile icc profile stream
+	 * @param subtype subtype value for current profile
+	 * @param N number of colors defined in stream dictionary
+	 * @throws IOException
+	 */
     public PBoxICCOutputProfile(InputStream profile, String subtype, Long N)
             throws IOException {
         super(profile, N, ICC_OUTPUT_PROFILE_TYPE);

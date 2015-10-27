@@ -1,14 +1,12 @@
 package org.verapdf.model.impl.pb.cos;
 
 import org.apache.pdfbox.cos.COSName;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.verapdf.model.ModelHelper;
 import org.verapdf.model.coslayer.CosName;
 import org.verapdf.model.impl.BaseTest;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,33 +34,29 @@ public class PBCosNameTest extends BaseTest {
     private static void setUpCOSNames() {
         expectedNames = new ArrayList<>(6);
 
-        addCOSName(COSName.INDEX);
-        addCOSName(COSName.ACRO_FORM);
-        addCOSName(COSName.ATTACHED);
-        addCOSName(COSName.BITS_PER_COORDINATE);
-        final String firstCustom = "FirstCustom";
-        final String secondCustom = "SecondCustom";
-        expectedNames.add(COSName.getPDFName(firstCustom, firstCustom.length()));
-        expectedNames.add(COSName.getPDFName(secondCustom, secondCustom.length()));
-    }
-
-    private static void addCOSName(COSName cosName) {
-        String name = cosName.getName();
-        expectedNames.add(COSName.getPDFName(name, name.length()));
+        expectedNames.add(COSName.INDEX);
+        expectedNames.add(COSName.ACRO_FORM);
+        expectedNames.add(COSName.ATTACHED);
+        expectedNames.add(COSName.BITS_PER_COORDINATE);
+		expectedNames.add(COSName.getPDFName("FirstCustom"));
+		expectedNames.add(COSName.getPDFName("SecondCustom"));
     }
 
     @Test
     public void testGetValueMethod() {
         for (int i = 0; i < expectedNames.size(); i++) {
-            Assert.assertEquals(expectedNames.get(i).getName(), actualNames.get(i).getvalue());
+			String expected = expectedNames.get(i).getName();
+			String actualValue = actualNames.get(i).getinternalRepresentation();
+			Assert.assertEquals(expected, actualValue);
         }
     }
 
     @Test
     public void testGetOriginalLength() {
         for (int i = 0; i < expectedNames.size(); i++) {
-            final Long originalLength = Long.valueOf(expectedNames.get(i).getOriginalLength().longValue());
-            Assert.assertEquals(originalLength, actualNames.get(i).getorigLength());
+            Long originalLength = Long.valueOf(expectedNames.get(i).getName().length());
+			Long actaulValue = Long.valueOf(actualNames.get(i).getinternalRepresentation().length());
+            Assert.assertEquals(originalLength, actaulValue);
         }
     }
 
@@ -96,8 +90,8 @@ public class PBCosNameTest extends BaseTest {
 	}
 
     @AfterClass
-    public static void tearDown() {
-        expectedType = null;
+    public static void tearDown() throws IOException {
+		BaseTest.tearDown();
         expectedNames.clear();
         actualNames.clear();
         expectedNames = null;

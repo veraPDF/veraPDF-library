@@ -13,6 +13,12 @@ public class PBoxPDTrueTypeFont extends PBoxPDSimpleFont implements PDTrueTypeFo
 		super(font, TRUETYPE_FONT_TYPE);
 	}
 
+	// TODO : implement me
+	@Override
+	public Boolean getdifferencesAreUnicodeCompliant() {
+		return Boolean.FALSE;
+	}
+
 	@Override
 	public Boolean getisStandard() {
 		return Boolean.FALSE;

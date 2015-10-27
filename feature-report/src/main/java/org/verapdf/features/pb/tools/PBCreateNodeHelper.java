@@ -12,6 +12,7 @@ import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -106,7 +107,7 @@ public final class PBCreateNodeHelper {
 
 		if (base instanceof COSString) {
 			COSString str = (COSString) base;
-			return str.isHex().booleanValue() ? str.toHexString() : str.getString();
+			return str.isHex() ? str.toHexString() : str.getString();
 		}
 		return null;
 	}
@@ -258,7 +259,10 @@ public final class PBCreateNodeHelper {
 		}
 		try {
 			byte[] bStream = metadata.getByteArray();
-			node.setValue(bStream);
+			if (bStream != null) {
+				String hexString = DatatypeConverter.printHexBinary(bStream);
+				node.setValue(hexString);
+			}
 		} catch (IOException e) {
 			LOGGER.debug("Error while converting stream to string", e);
 			ErrorsHelper.addErrorIntoCollection(collection,

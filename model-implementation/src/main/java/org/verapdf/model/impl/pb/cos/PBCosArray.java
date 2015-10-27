@@ -29,9 +29,19 @@ public class PBCosArray extends PBCosObject implements CosArray {
      * @param array pdfbox COSArray
      */
     public PBCosArray(COSArray array) {
-        super(array, COS_ARRAY_TYPE);
-        this.size = array.size();
+        this(array, COS_ARRAY_TYPE);
     }
+
+	/**
+	 * Constructor used by child classes
+	 *
+	 * @param array pdfbox COSArray
+	 * @param type type of object
+	 */
+	public PBCosArray(COSArray array, String type) {
+		super(array, type);
+		this.size = array.size();
+	}
 
     /**
      * Getter for array size.

@@ -5,6 +5,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.pb.pd.PBoxPDContentStream;
 import org.verapdf.model.pdlayer.PDType3Font;
 
@@ -39,7 +40,8 @@ public class PBoxPDType3FontTest extends PBoxPDSimpleFontTest {
 
 	@Override
 	public void testBaseFont() {
-		Assert.assertNull(((PDType3Font) actual).getBaseFont());
+		List<? extends org.verapdf.model.baselayer.Object> baseFonts = actual.getLinkedObjects(PBoxPDType1Font.BASE_FONT);
+		Assert.assertEquals(0, baseFonts.size());
 	}
 
 	@Override

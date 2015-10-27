@@ -5,11 +5,14 @@ import org.apache.pdfbox.pdmodel.font.PDType1CFont;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.coslayer.CosName;
 import org.verapdf.model.pdlayer.PDSimpleFont;
 import org.verapdf.model.pdlayer.PDType1Font;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 /**
  * @author Timur Kamalov
@@ -40,7 +43,10 @@ public class PBoxPDType1FontTest extends PBoxPDSimpleFontTest {
 
 	@Override
 	public void testBaseFont() {
-		Assert.assertEquals(TYPE1_BASE_FONT, ((PDSimpleFont) actual).getBaseFont());
+		List<? extends Object> baseFonts = actual.getLinkedObjects(PBoxPDType1Font.BASE_FONT);
+		Object object = baseFonts.get(0);
+		Assert.assertEquals("CosUnicodeName", object.getObjectType());
+		Assert.assertEquals("OLXYQW+MyriadPro-Regular", ((CosName) object).getinternalRepresentation());
 	}
 
 	@Override

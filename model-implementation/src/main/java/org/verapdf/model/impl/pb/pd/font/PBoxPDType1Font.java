@@ -18,6 +18,12 @@ public class PBoxPDType1Font extends PBoxPDSimpleFont implements PDType1Font {
 		super(font, TYPE1_FONT_TYPE);
 	}
 
+	// TODO implement me
+	@Override
+	public Boolean getcharSetListsAllGlyphs() {
+		return Boolean.FALSE;
+	}
+
 	@Override
 	public Boolean getisStandard() {
 		return Boolean.valueOf(((org.apache.pdfbox.pdmodel.font.PDSimpleFont) this.pdFontLike)
@@ -27,11 +33,7 @@ public class PBoxPDType1Font extends PBoxPDSimpleFont implements PDType1Font {
 	@Override
 	public String getCharSet() {
 		PDFontDescriptor fontDescriptor = pdFontLike.getFontDescriptor();
-		if (fontDescriptor != null) {
-			return fontDescriptor.getCharSet();
-		} else {
-			return null;
-		}
+		return fontDescriptor != null ? fontDescriptor.getCharSet() : null;
 	}
 
 }

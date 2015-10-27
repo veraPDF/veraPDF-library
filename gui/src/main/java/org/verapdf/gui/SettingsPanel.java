@@ -5,7 +5,6 @@ import org.verapdf.gui.tools.GUIConstants;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,8 +29,6 @@ class SettingsPanel extends JPanel {
 	private JTextField numberOfFailed;
 	private JTextField numberOfFailedDisplay;
 	private JCheckBox hidePassedRules;
-	private JTextField thirdPartyProfilePathField;
-	private JFileChooser chooser;
 	private JTextField fixMetadataPrefix;
 	private JTextField fixMetadataFolder;
 	private JFileChooser folderChooser;
@@ -41,7 +38,7 @@ class SettingsPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(6, 2));
+		panel.setLayout(new GridLayout(5, 2));
 
 		panel.add(new JLabel(GUIConstants.DISPLAY_PASSED_RULES));
 		hidePassedRules = new JCheckBox();
@@ -80,7 +77,7 @@ class SettingsPanel extends JPanel {
 		File currentDir = new File(
 				new File(GUIConstants.DOT).getCanonicalPath());
 
-		JButton choose2 = new JButton(GUIConstants.THIRDPARTY_CONFIG_CHOOSE_BUTTON);
+		JButton choose2 = new JButton(GUIConstants.FIX_METADATA_FOLDER_CHOOSE_BUTTON);
 		folderChooser = new JFileChooser();
 		folderChooser.setCurrentDirectory(currentDir);
 		folderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -108,9 +105,6 @@ class SettingsPanel extends JPanel {
 		panel4.add(choose2);
 		panel.add(panel4);
 
-		panel.add(new JLabel(GUIConstants.THIRDPARTY_CONFIG_LABEL_TEXT));
-		JButton choose = new JButton(GUIConstants.THIRDPARTY_CONFIG_CHOOSE_BUTTON);
-
 		fixMetadataPrefix.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -125,43 +119,6 @@ class SettingsPanel extends JPanel {
 			}
 		});
 
-		chooser = new JFileChooser();
-		chooser.setCurrentDirectory(currentDir);
-		chooser.setAcceptAllFileFilterUsed(false);
-		chooser.setFileFilter(new FileNameExtensionFilter(GUIConstants.XML, GUIConstants.XML));
-
-		choose.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int resultChoose = chooser.showOpenDialog(SettingsPanel.this);
-				if (resultChoose == JFileChooser.APPROVE_OPTION) {
-					if (!chooser.getSelectedFile().exists()) {
-						JOptionPane.showMessageDialog(SettingsPanel.this,
-								"Error. Selected file doesn't exist.",
-								GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-					} else if (!chooser.getSelectedFile().getName().toLowerCase()
-							.endsWith(GUIConstants.DOT + GUIConstants.XML.toLowerCase())) {
-						JOptionPane.showMessageDialog(
-								SettingsPanel.this,
-								"Error. Selected file is not in "
-										+ GUIConstants.XML.toUpperCase() + " format.",
-								GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-					} else {
-						thirdPartyProfilePathField.setText(chooser.getSelectedFile().getAbsolutePath());
-					}
-				}
-
-			}
-		});
-
-		thirdPartyProfilePathField = new JTextField();
-
-		JPanel panel3 = new JPanel();
-		panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
-		panel3.add(thirdPartyProfilePathField);
-		panel3.add(choose);
-		panel.add(panel3);
-
 		add(panel, BorderLayout.CENTER);
 
 		okButton = new JButton("Ok");
@@ -171,10 +128,6 @@ class SettingsPanel extends JPanel {
 				if (!Config.Builder.isValidFolderPath(FileSystems.getDefault().getPath(fixMetadataFolder.getText()))) {
 					isEverythingValid = false;
 					JOptionPane.showMessageDialog(SettingsPanel.this, "Invalid path for saving fixed files.", "Invalid data", JOptionPane.INFORMATION_MESSAGE);
-				}
-				if (!Config.Builder.isValidFilePath(FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText()))) {
-					isEverythingValid = false;
-					JOptionPane.showMessageDialog(SettingsPanel.this, "Invalid path for features plugins config file.", "Invalid data", JOptionPane.INFORMATION_MESSAGE);
 				}
 				if (isEverythingValid) {
 					ok = true;
@@ -216,7 +169,6 @@ class SettingsPanel extends JPanel {
 			numberOfFailedDisplay.setText(String.valueOf(numbOfFailDisp));
 		}
 
-		thirdPartyProfilePathField.setText(settings.getFeaturesPluginsConfigFilePath().toString());
 		fixMetadataPrefix.setText(settings.getMetadataFixerPrefix());
 		fixMetadataFolder.setText(settings.getFixMetadataPathFolder().toString());
 
@@ -237,7 +189,7 @@ class SettingsPanel extends JPanel {
 		}
 
 		dialog.setLocation(GUIConstants.SETTINGSDIALOG_COORD_X, GUIConstants.SETTINGSDIALOG_COORD_Y);
-		dialog.setSize(650, 241);
+		dialog.setSize(650, 211);
 		dialog.setVisible(true);
 
 		return ok;
@@ -290,11 +242,6 @@ class SettingsPanel extends JPanel {
 		String str = numberOfFailedDisplay.getText();
 		return str.length() > 0 ? Integer.parseInt(str) : -1;
 	}
-
-	Path getFeaturesPluginConfigPath() {
-		return FileSystems.getDefault().getPath(thirdPartyProfilePathField.getText());
-	}
-
 
 	Path getFixMetadataDirectory() {
 		return FileSystems.getDefault().getPath(fixMetadataFolder.getText());
