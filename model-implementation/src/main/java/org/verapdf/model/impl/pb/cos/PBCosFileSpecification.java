@@ -27,22 +27,27 @@ public class PBCosFileSpecification extends PBCosDict implements
 
 	public static final String EF = "EF";
 
+	private final String f;
+	private final String uf;
+
     /**
      * Default constructor
      * @param dictionary pdfbox COSDictionary
      */
     public PBCosFileSpecification(COSDictionary dictionary) {
         super(dictionary, COS_FILE_SPECIFICATION_TYPE);
+		this.f = this.getStringValue(COSName.F);
+		this.uf = this.getStringValue(COSName.UF);
     }
 
 	@Override
 	public String getF() {
-		return this.getStringValue(COSName.F);
+		return this.f;
 	}
 
 	@Override
 	public String getUF() {
-		return this.getStringValue(COSName.UF);
+		return this.uf;
 	}
 
 	@Override
@@ -53,7 +58,6 @@ public class PBCosFileSpecification extends PBCosDict implements
 		return super.getLinkedObjects(link);
 	}
 
-	// TODO : what the types can be here?
 	private List<EmbeddedFile> getEFFile() {
 		COSBase efDictionary = ((COSDictionary) this.baseObject)
 				.getDictionaryObject(COSName.EF);

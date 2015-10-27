@@ -1,9 +1,6 @@
 package org.verapdf.model.impl.pb.pd;
 
-import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSDictionary;
-import org.apache.pdfbox.cos.COSFloat;
-import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.graphics.PDFontSetting;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingIntent;
@@ -11,6 +8,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosObject;
 import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.coslayer.CosRenderingIntent;
+import org.verapdf.model.impl.pb.cos.PBCosObject;
 import org.verapdf.model.pdlayer.PDHalftone;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
 import org.verapdf.model.impl.pb.cos.PBCosRenderingIntent;
@@ -34,62 +32,64 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 	public static final String HALFTONE = "HT";
 	public static final String HALFTONE_PHASE = "HTP";
 
-    public PBoxPDExtGState(PDExtendedGraphicsState simplePDObject) {
-        super(simplePDObject, EXT_G_STATE_TYPE);
+	private final String tr;
+	private final String tr2;
+	private final String sMask;
+	private final String BM;
+	private final Double ca;
+	private final Double CA;
+
+    public PBoxPDExtGState(PDExtendedGraphicsState state) {
+        super(state, EXT_G_STATE_TYPE);
+		this.tr = this.getStringProperty(state, COSName.TR);
+		this.tr2 = this.getStringProperty(state, COSName.getPDFName("TR2"));
+		this.sMask = this.getStringProperty(state, COSName.SMASK);
+		this.BM = this.getStringProperty(state, COSName.BM);
+		this.ca = this.getDoubleProperty(state, COSName.CA_NS);
+		this.CA = this.getDoubleProperty(state, COSName.CA);
     }
 
-    @Override
+	@Override
     public String getTR() {
-        COSDictionary dictionary = ((PDExtendedGraphicsState) this.simplePDObject)
-                .getCOSObject();
-        COSBase tr = dictionary.getDictionaryObject(COSName.TR);
-        return this.getStringProperty(tr);
+		return this.tr;
     }
 
     @Override
     public String getTR2() {
-        COSDictionary dictionary = ((PDExtendedGraphicsState) this.simplePDObject)
-                .getCOSObject();
-        COSBase tr2 = dictionary.getDictionaryObject(COSName.getPDFName("TR2"));
-        return this.getStringProperty(tr2);
+		return this.tr2;
     }
 
     @Override
     public String getSMask() {
-        COSDictionary dictionary = ((PDExtendedGraphicsState) this.simplePDObject)
-                .getCOSObject();
-        COSBase sMask = dictionary.getDictionaryObject(COSName.SMASK);
-        return this.getStringProperty(sMask);
+		return this.sMask;
     }
 
     @Override
     public String getBM() {
-        COSDictionary dictionary = ((PDExtendedGraphicsState) this.simplePDObject)
-                .getCOSObject();
-        COSBase sMask = dictionary.getDictionaryObject(COSName.BM);
-        return this.getStringProperty(sMask);
+        return this.BM;
     }
 
     @Override
     public Double getca() {
-        Float nonStrokingAlphaConstant = ((PDExtendedGraphicsState) this.simplePDObject)
-                .getNonStrokingAlphaConstant();
-        return nonStrokingAlphaConstant != null ? Double
-                .valueOf(nonStrokingAlphaConstant.doubleValue()) : null;
+        return this.ca;
     }
 
     @Override
     public Double getCA() {
-        Float strokingAlphaConstant = ((PDExtendedGraphicsState) this.simplePDObject)
-                .getStrokingAlphaConstant();
-        return strokingAlphaConstant != null ? Double
-                .valueOf(strokingAlphaConstant.doubleValue()) : null;
+        return this.CA;
     }
 
-    private String getStringProperty(COSBase base) {
+    private String getStringProperty(PDExtendedGraphicsState state, COSName key) {
+		COSBase base = state.getCOSObject().getDictionaryObject(key);
 		return base == null ? null : base instanceof COSName ?
 				((COSName) base).getName() : base.toString();
     }
+
+	private Double getDoubleProperty(PDExtendedGraphicsState state, COSName key) {
+		COSBase base = state.getCOSObject().getDictionaryObject(key);
+		return !(base instanceof COSNumber) ? null :
+				Double.valueOf(((COSNumber) base).doubleValue());
+	}
 
 	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
@@ -147,8 +147,15 @@ public class PBoxPDExtGState extends PBoxPDResources implements PDExtGState {
 		return Collections.emptyList();
 	}
 
-	// TODO : implement me
 	private List<CosObject> getHalftonePhase() {
+		COSDictionary dict = ((PDExtendedGraphicsState) this.simplePDObject).getCOSObject();
+		COSBase halftonePhase = dict.getDictionaryObject(COSName.getPDFName("HT"));
+		CosObject value = PBCosObject.getFromValue(halftonePhase);
+		if (value != null) {
+			ArrayList<CosObject> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			list.add(value);
+			return Collections.unmodifiableList(list);
+		}
 		return Collections.emptyList();
 	}
 
