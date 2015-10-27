@@ -52,6 +52,8 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
         this.profileStream.mark(size);
         this.profileStream.read(this.profileHeader, 0, size);
         this.profileStream.reset();
+		// TODO : finalize it correct, when object will destroy
+		this.profileStream.close();
     }
 
     /**
@@ -118,11 +120,4 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
         return Boolean.TRUE;
     }
 
-	@Override
-	protected void finalize() throws Throwable {
-		if (this.profileStream != null) {
-			this.profileStream.close();
-		}
-		super.finalize();
-	}
 }

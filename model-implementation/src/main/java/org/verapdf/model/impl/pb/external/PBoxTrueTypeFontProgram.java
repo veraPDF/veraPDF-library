@@ -58,6 +58,6 @@ public class PBoxTrueTypeFontProgram extends PBoxFontProgram implements TrueType
 	@Override
 	// TODO : implement me
 	public Boolean getcmap30Present() {
-		return null;
+		return Boolean.FALSE;
 	}
 }

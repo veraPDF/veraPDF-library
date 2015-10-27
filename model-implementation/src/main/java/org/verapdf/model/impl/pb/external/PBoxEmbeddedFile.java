@@ -20,8 +20,9 @@ public class PBoxEmbeddedFile extends PBoxExternal implements EmbeddedFile {
 		this.dictionary = dictionary;
 	}
 
+	// TODO : implement me
 	@Override
 	public Boolean getisValidPDFA12() {
-		return null;
+		return Boolean.FALSE;
 	}
 }

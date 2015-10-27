@@ -75,12 +75,16 @@ public class PBoxPDType0Font extends PBoxPDFont implements PDType0Font {
 		return Boolean.FALSE;
 	}
 
+	// TODO : implement me
+	@Override
 	public Boolean getisSupplementCompatible() {
-		return null;
+		return Boolean.FALSE;
 	}
 
+	@Override
 	public String getcmapName() {
-		return ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike).getCMap().getName();
+		CMap cMap = ((org.apache.pdfbox.pdmodel.font.PDType0Font) this.pdFontLike).getCMap();
+		return cMap != null ? cMap.getName() : null;
 	}
 
 	@Override
