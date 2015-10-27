@@ -28,7 +28,7 @@ public final class IDGenerator {
     public static String generateID(COSBase pdfBoxObject) {
         if (pdfBoxObject instanceof COSObject) {
             return String.valueOf(((COSObject) pdfBoxObject)
-					.getObjectNumber() + ' ' + ((COSObject) pdfBoxObject)
+					.getObjectNumber() + " " + ((COSObject) pdfBoxObject)
 					.getGenerationNumber());
         }
         return null;
