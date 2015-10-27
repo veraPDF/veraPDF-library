@@ -48,7 +48,6 @@
 
   <modules>
     <module>legacy-types</module>
-    <module>validation-report</module>
     <module>model-implementation</module>
     <module>core</module>
     <module>gui</module>
