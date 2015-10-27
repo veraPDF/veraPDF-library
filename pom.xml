@@ -47,7 +47,7 @@
   </developers>
 
   <modules>
-    <module>validation-profile-parser</module>
+    <module>legacy-types</module>
     <module>validation-report</module>
     <module>model-implementation</module>
     <module>core</module>
@@ -196,18 +196,6 @@
         <groupId>org.verapdf</groupId>
         <artifactId>pdf-model</artifactId>
         <version>${verapdf.model.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>core</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>validation-profile-parser</artifactId>
-        <version>${project.version}</version>
       </dependency>
 
       <dependency>
