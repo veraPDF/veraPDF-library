@@ -11,10 +11,12 @@ import org.verapdf.model.coslayer.CosRenderingIntent;
 import org.verapdf.model.external.JPEG2000;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.impl.pb.cos.PBCosRenderingIntent;
+import org.verapdf.model.impl.pb.external.PBoxJPEG2000;
 import org.verapdf.model.pdlayer.PDColorSpace;
 import org.verapdf.model.pdlayer.PDXImage;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,14 +35,16 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
     public static final String INTENT = "Intent";
 	public static final String JPX_STREAM = "jpxStream";
 
+	private final boolean interpolate;
+
     public PBoxPDXImage(PDImage simplePDObject) {
         super(simplePDObject, X_IMAGE_TYPE);
+		this.interpolate = simplePDObject.getInterpolate();
     }
 
     @Override
     public Boolean getInterpolate() {
-        return Boolean.valueOf(((PDImage) this.simplePDObject)
-                .getInterpolate());
+        return Boolean.valueOf(this.interpolate);
     }
 
 	@Override
@@ -134,8 +138,20 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 		}
 	}
 
-	// TODO : implement me
 	private List<JPEG2000> getJPXStream() {
+		try {
+			PDStream stream = ((PDImage) (this.simplePDObject)).getStream();
+			List<COSName> filters = stream.getFilters();
+			if (filters != null && (
+					filters.contains(COSName.JBIG2_DECODE) || filters.contains(COSName.JPX_DECODE))) {
+				InputStream image = stream.getStream().getUnfilteredStream();
+				ArrayList<JPEG2000> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+				list.add(new PBoxJPEG2000(image));
+				return Collections.unmodifiableList(list);
+			}
+		} catch (IOException e) {
+			LOGGER.warn("Problems with stream obtain.", e);
+		}
 		return Collections.emptyList();
 	}
 

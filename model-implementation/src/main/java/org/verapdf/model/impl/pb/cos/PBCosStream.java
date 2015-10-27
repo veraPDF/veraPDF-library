@@ -25,8 +25,9 @@ public class PBCosStream extends PBCosDict implements CosStream {
 	private final String fDecodeParams;
 	private final boolean streamKeywordCRLFCompliant;
 	private final boolean endstreamKeywordEOLCompliant;
+	private final boolean isLengthCorrect;
 
-    /**
+	/**
      * Default constructor
      * @param stream pdfbox COSStream
      */
@@ -43,6 +44,7 @@ public class PBCosStream extends PBCosDict implements CosStream {
                 .getItem(F_DECODE_PARMS).toString() : null;
         this.streamKeywordCRLFCompliant = stream.isStreamKeywordCRLFCompliant();
 		this.endstreamKeywordEOLCompliant = stream.isEndstreamKeywordEOLCompliant();
+		this.isLengthCorrect = this.length != null && this.length.equals(this.originalLength);
     }
 
     /**
@@ -105,8 +107,7 @@ public class PBCosStream extends PBCosDict implements CosStream {
      */
     @Override
     public Boolean getisLengthCorrect() {
-        return Boolean.valueOf(this.length != null
-                && this.length.equals(this.originalLength));
+        return Boolean.valueOf(this.isLengthCorrect);
     }
 
     private static Long parseLength(final COSStream stream) {
@@ -134,7 +135,6 @@ public class PBCosStream extends PBCosDict implements CosStream {
         } else {
 			logger.error("Incorrect type for stream filter " +
 					base.getClass().getName());
-			// TODO : how we should handle this case?
 			return null;
         }
         // need to discard last white space
