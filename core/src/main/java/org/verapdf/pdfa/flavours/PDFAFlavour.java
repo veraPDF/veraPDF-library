@@ -88,14 +88,15 @@ public enum PDFAFlavour {
     }
 
     /**
-     * @return an {@link Specification} instance that identifies the Specification Part
+     * @return an {@link Specification} instance that identifies the
+     *         Specification Part
      */
     public final Specification getPart() {
         return this.part;
     }
 
     /**
-     * @return the level
+     * @return the {@link Level} instance for this flavour
      */
     public final Level getLevel() {
         return this.level;
@@ -113,8 +114,6 @@ public enum PDFAFlavour {
      * Enumeration of PDF/A Specification Parts, 1-3 used to provide ids and a
      * standard source of details such as name and description for PDF/A
      * Specifications.
-     *
-     * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>.</p>
      */
     public enum Specification {
         /** PDF/A Version 1 */
@@ -148,8 +147,7 @@ public enum PDFAFlavour {
             this.description = description;
             this.id = this.series.getName()
                     + "-" + this.getPartNumber() + ":" + this.getYear(); //$NON-NLS-1$//$NON-NLS-2$
-            this.name = PDFAFlavours.PDFA_STRING_PREFIX
-                    + this.getPartNumber();
+            this.name = PDFAFlavours.PDFA_STRING_PREFIX + this.getPartNumber();
         }
 
         /**
@@ -188,7 +186,8 @@ public enum PDFAFlavour {
         }
 
         /**
-         * @return the standard series
+         * @return the {@link IsoStandardSeries} instance indicating the
+         *         standard series
          */
         public IsoStandardSeries getSeries() {
             return this.series;
@@ -204,7 +203,6 @@ public enum PDFAFlavour {
      * Enum type that identifies the different PDF/A Conformance Levels A
      * (accessible), B (basic) & U (unicode).
      *
-     * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>.</p>
      */
     public enum Level {
         /** Special identifier for the none case */
@@ -285,14 +283,20 @@ public enum PDFAFlavour {
             return this.getName() + " " + this.getDescription(); //$NON-NLS-1$
         }
     }
+
     /**
      * @param flavourId
      *            a two letter String that identifies a {@link PDFAFlavour},
      *            e.g. 1a, 1b, 2a, 2b, 2u, 3a, 3b, 3u
-     * @return the correct {@link PDFAFlavour} looked up by String id
+     * @return the correct {@link PDFAFlavour} looked up by String id or
+     *         {@link PDFAFlavour#NO_FLAVOUR} if id does not match a flavour
      */
     public static PDFAFlavour byFlavourId(final String flavourId) {
-        return FLAVOUR_LOOKUP.get(flavourId);
+        PDFAFlavour flavour = FLAVOUR_LOOKUP.get(flavourId);
+        if (flavour == null) {
+            flavour = PDFAFlavour.NO_FLAVOUR;
+        }
+        return flavour;
     }
 
     /**
