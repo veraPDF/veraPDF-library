@@ -105,7 +105,7 @@ public final class LegacyProfileConverter {
             org.verapdf.validation.profile.model.ValidationProfile toConvert) {
         String[] dateParts = toConvert.getCreated().split("T");
         String cleanDate = dateParts[0] + "T"
-                + dateParts[1].replace("-", ":").replace("+03", "");
+                + dateParts[1].replace("-", ":").replace("+02", "");
         Date created = javax.xml.bind.DatatypeConverter
                 .parseDateTime(cleanDate).getTime();
         return Profiles.profileDetailsFromValues(toConvert.getName(),
