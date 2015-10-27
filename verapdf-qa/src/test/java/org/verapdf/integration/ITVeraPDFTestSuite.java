@@ -1,6 +1,18 @@
 package org.verapdf.integration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -9,20 +21,12 @@ import org.verapdf.integration.model.TestEntity;
 import org.verapdf.integration.model.TestSet;
 import org.verapdf.integration.model.comparing.CompareStrategyResource;
 import org.verapdf.integration.model.comparing.ComparingStrategies;
-import org.verapdf.integration.model.comparing.StatsStrategyResource;
 import org.verapdf.integration.model.reporting.TestSetReport;
 import org.verapdf.integration.tools.ResultComparator;
 import org.verapdf.integration.tools.ResultReporter;
 import org.verapdf.integration.tools.TestEntityValidator;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ITVeraPDFTestSuite {
 
@@ -102,11 +106,7 @@ public class ITVeraPDFTestSuite {
     }
 
     private static void attachStrategyResource(TestEntity testEntity, Map<String, File> expectedReports) throws IOException {
-        if (testEntity.getComparingStrategy().equals(ComparingStrategies.STATS)) {
-            if (expectedReports.containsKey(testEntity.getExpectedReportName())) {
-                testEntity.setStrategyResource(MAPPER.readValue(expectedReports.get(testEntity.getExpectedReportName()), StatsStrategyResource.class));
-            }
-        } else if (testEntity.getComparingStrategy().equals(ComparingStrategies.COMPARE)) {
+        if (testEntity.getComparingStrategy().equals(ComparingStrategies.COMPARE)) {
             if (expectedReports.containsKey(testEntity.getExpectedReportName())) {
                 testEntity.setStrategyResource(MAPPER.readValue(expectedReports.get(testEntity.getExpectedReportName()), CompareStrategyResource.class));
             }

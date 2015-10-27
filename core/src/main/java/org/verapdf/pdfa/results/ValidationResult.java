@@ -1,17 +1,19 @@
 /**
  * 
  */
-package org.verapdf.pdfa;
+package org.verapdf.pdfa.results;
 
-import java.util.List;
+import java.util.Set;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.reporting.TestAssertion;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
+@XmlJavaTypeAdapter(TestAssertionImpl.Adapter.class)
 public interface ValidationResult {
     /**
      * @return true if the PDF/A document complies with the PDF/A specification
@@ -29,5 +31,5 @@ public interface ValidationResult {
     /**
      * @return the list of {@link TestAssertion}s made during PDF/A validation
      */
-    public List<TestAssertion> getTestAssertions();
+    public Set<TestAssertion> getTestAssertions();
 }

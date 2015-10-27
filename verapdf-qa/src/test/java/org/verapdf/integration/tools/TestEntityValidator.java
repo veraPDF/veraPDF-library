@@ -1,21 +1,25 @@
 package org.verapdf.integration.tools;
 
+import javax.xml.bind.JAXBException;
+
 import org.verapdf.config.Input;
 import org.verapdf.config.VeraPdfTaskConfig;
+import org.verapdf.core.VeraPDFException;
 import org.verapdf.integration.model.TestEntity;
 import org.verapdf.integration.model.comparing.ComparingStrategies;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.runner.ValidationRunner;
-import org.verapdf.validation.report.model.ValidationInfo;
 
 /**
  * @author Timur Kamalov
  */
 public class TestEntityValidator {
 
-    public static void validate(TestEntity testEntity) {
+    public static void validate(TestEntity testEntity) throws JAXBException, VeraPDFException {
         if (testEntity.getComparingStrategy() != ComparingStrategies.IGNORE) {
             VeraPdfTaskConfig taskConfig = createTaskConfig(testEntity);
-            ValidationInfo info = runValidation(taskConfig);
+            ValidationResult info = runValidation(taskConfig);
             testEntity.setInfo(info);
         }
     }
@@ -33,8 +37,8 @@ public class TestEntityValidator {
         return taskConfigBuilder.build();
     }
 
-    private static ValidationInfo runValidation(VeraPdfTaskConfig taskConfig) {
-        ValidationInfo info = ValidationRunner.runValidation(taskConfig);
+    private static ValidationResult runValidation(VeraPdfTaskConfig taskConfig) throws JAXBException, VeraPDFException {
+        ValidationResult info = ValidationRunner.runValidation(taskConfig);
         return info;
     }
 

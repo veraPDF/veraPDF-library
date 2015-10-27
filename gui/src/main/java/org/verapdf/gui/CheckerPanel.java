@@ -1,13 +1,12 @@
 package org.verapdf.gui;
 
-import org.apache.log4j.Logger;
-import org.verapdf.gui.config.Config;
-import org.verapdf.gui.tools.GUIConstants;
-import org.verapdf.validation.report.model.ValidationInfo;
-
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.IllegalComponentStateException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -16,6 +15,25 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.ExecutionException;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import org.apache.log4j.Logger;
+import org.verapdf.gui.config.Config;
+import org.verapdf.gui.tools.GUIConstants;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.ValidationResult;
 
 /**
  * Panel with functionality for checker.
@@ -38,8 +56,8 @@ class CheckerPanel extends JPanel {
 	private File profile;
 	private JTextField chosenPDF;
 	private JTextField chosenProfile;
-	private JLabel result;
-	transient ValidationInfo info;
+	private JLabel resultLabel;
+	transient ValidationResult result;
 	private File xmlReport;
 	private File htmlReport;
 
@@ -121,9 +139,9 @@ class CheckerPanel extends JPanel {
 		gbl.setConstraints(chooseProfile, gbc);
 		this.add(chooseProfile);
 
-		result = new JLabel();
-		result.setForeground(GUIConstants.BEFORE_VALIDATION_COLOR);
-		result.setHorizontalTextPosition(SwingConstants.CENTER);
+		resultLabel = new JLabel();
+		resultLabel.setForeground(GUIConstants.BEFORE_VALIDATION_COLOR);
+		resultLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		setGridBagConstraintsParameters(gbc,
 				GUIConstants.RESULT_LABEL_CONSTRAINT_GRIDX,
 				GUIConstants.RESULT_LABEL_CONSTRAINT_GRIDY,
@@ -132,8 +150,8 @@ class CheckerPanel extends JPanel {
 				GUIConstants.RESULT_LABEL_CONSTRAINT_GRIDWIDTH,
 				GUIConstants.RESULT_LABEL_CONSTRAINT_GRIDHEIGHT,
 				GridBagConstraints.CENTER);
-		gbl.setConstraints(result, gbc);
-		this.add(result);
+		gbl.setConstraints(resultLabel, gbc);
+		this.add(resultLabel);
 
 		progressBar = new JProgressBar();
 		progressBar.setIndeterminate(true);
@@ -279,12 +297,12 @@ class CheckerPanel extends JPanel {
 						default:
 							throw new IllegalComponentStateException("Processing type list must contain only 3 values");
 					}
-					validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, profile, CheckerPanel.this.config, flag, fixMetadata.isSelected());
+					validateWorker = new ValidateWorker(CheckerPanel.this, pdfFile, PDFAFlavour.PDFA_1_B, CheckerPanel.this.config, flag, fixMetadata.isSelected());
 					progressBar.setVisible(true);
-					result.setVisible(false);
+					resultLabel.setVisible(false);
 					setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 					validate.setEnabled(false);
-					info = null;
+					result = null;
 					isValidationErrorOccurred = false;
 					viewXML.setEnabled(false);
 					saveXML.setEnabled(false);
@@ -384,19 +402,19 @@ class CheckerPanel extends JPanel {
 
 		if (!isValidationErrorOccurred) {
 			try {
-				info = validateWorker.get();
-				if (info == null) {
-					result.setForeground(GUIConstants.BEFORE_VALIDATION_COLOR);
-					result.setText(GUIConstants.FEATURES_GENERATED_CORRECT);
-				} else if (info.getResult().isCompliant()) {
-					result.setForeground(GUIConstants.VALIDATION_SUCCESS_COLOR);
-					result.setText(GUIConstants.VALIDATION_OK);
+				result = validateWorker.get();
+				if (result == null) {
+					resultLabel.setForeground(GUIConstants.BEFORE_VALIDATION_COLOR);
+					resultLabel.setText(GUIConstants.FEATURES_GENERATED_CORRECT);
+				} else if (result.isCompliant()) {
+					resultLabel.setForeground(GUIConstants.VALIDATION_SUCCESS_COLOR);
+					resultLabel.setText(GUIConstants.VALIDATION_OK);
 				} else {
-					result.setForeground(GUIConstants.VALIDATION_FAILED_COLOR);
-					result.setText(GUIConstants.VALIDATION_FALSE);
+					resultLabel.setForeground(GUIConstants.VALIDATION_FAILED_COLOR);
+					resultLabel.setText(GUIConstants.VALIDATION_FALSE);
 				}
 
-				result.setVisible(true);
+				resultLabel.setVisible(true);
 
 				this.xmlReport = xmlReport;
 				this.htmlReport = htmlReport;
@@ -429,9 +447,9 @@ class CheckerPanel extends JPanel {
 
 		LOGGER.error("Exception during the validation process", e);
 
-		result.setForeground(GUIConstants.VALIDATION_FAILED_COLOR);
-		result.setText(message);
-		result.setVisible(true);
+		resultLabel.setForeground(GUIConstants.VALIDATION_FAILED_COLOR);
+		resultLabel.setText(message);
+		resultLabel.setVisible(true);
 	}
 
 	private static JFileChooser getChooser(String type) throws IOException {
@@ -473,9 +491,9 @@ class CheckerPanel extends JPanel {
 						GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
 			} else {
 
-				info = null;
-				result.setForeground(GUIConstants.BEFORE_VALIDATION_COLOR);
-				result.setText("");
+				result = null;
+				resultLabel.setForeground(GUIConstants.BEFORE_VALIDATION_COLOR);
+				resultLabel.setText("");
 				xmlReport = null;
 				htmlReport = null;
 				saveXML.setEnabled(false);

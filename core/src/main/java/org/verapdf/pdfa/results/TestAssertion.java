@@ -1,7 +1,11 @@
 /**
  * 
  */
-package org.verapdf.pdfa.reporting;
+package org.verapdf.pdfa.results;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import org.verapdf.pdfa.validation.RuleId;
 
 /**
  * A TestAssertion records the result of performing a validation test on a
@@ -9,11 +13,12 @@ package org.verapdf.pdfa.reporting;
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
+@XmlJavaTypeAdapter(TestAssertionImpl.Adapter.class)
 public interface TestAssertion {
     /**
      * @return the String id for the Rule
      */
-    public String getRuleId();
+    public RuleId getRuleId();
 
     /**
      * @return the {@link Status} that indicates the result of this test
@@ -49,4 +54,5 @@ public interface TestAssertion {
          */
         FAILED;
     }
+
 }

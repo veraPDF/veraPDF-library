@@ -4,16 +4,15 @@
 package org.verapdf.pdfa.validation;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
-import org.verapdf.pdfa.ValidationProfile;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 
@@ -28,14 +27,8 @@ public final class Profiles {
      * @param flavour
      *            the PDF/A flavour supported by this profile represented as a
      *            {@link PDFAFlavour} instance.
-     * @param name
-     *            a String name for the profile
-     * @param description
-     *            a short textual description of the profile
-     * @param creator
-     *            a String identifying the profile's creator
-     * @param created
-     *            a Date instance signifying the creation date of the profile
+     * @param details
+     *            the {@link ProfileDetails} for the profile.
      * @param hash
      *            an identifying hash for the profile
      * @param rules
@@ -47,35 +40,15 @@ public final class Profiles {
      *             if any of the passed parameters are null or if any of name,
      *             description or creator are empty.
      */
-    public static ValidationProfile profileFromValues(
-            final PDFAFlavour flavour, final String name,
-            final String description, final String creator, final Date created,
-            final String hash, final Set<Rule> rules,
-            final Set<Variable> variables) {
+    public static ValidationProfile profileFromValues(final PDFAFlavour flavour,
+            final ProfileDetails details, final String hash,
+            final Set<Rule> rules, final Set<Variable> variables) {
         if (flavour == null)
             throw new IllegalArgumentException(
                     "Parameter flavour can not be null.");
-        if (name == null)
+        if (details == null)
             throw new IllegalArgumentException(
                     "Parameter name can not be null.");
-        if (name.isEmpty())
-            throw new IllegalArgumentException(
-                    "Parameter name can not be empty.");
-        if (description == null)
-            throw new IllegalArgumentException(
-                    "Parameter description can not be null.");
-        if (description.isEmpty())
-            throw new IllegalArgumentException(
-                    "Parameter description can not be empty.");
-        if (creator == null)
-            throw new IllegalArgumentException(
-                    "Parameter creator can not be null.");
-        if (creator.isEmpty())
-            throw new IllegalArgumentException(
-                    "Parameter creator can not be empty.");
-        if (created == null)
-            throw new IllegalArgumentException(
-                    "Parameter created can not be null.");
         if (hash == null)
             throw new IllegalArgumentException(
                     "Parameter hash can not be null.");
@@ -85,8 +58,8 @@ public final class Profiles {
         if (variables == null)
             throw new IllegalArgumentException(
                     "Parameter variables can not be null.");
-        return ValidationProfileImpl.fromValues(flavour, name, description,
-                creator, created, hash, rules, variables);
+        return ValidationProfileImpl.fromValues(flavour, details, hash, rules,
+                variables);
     }
 
     /**
@@ -94,6 +67,18 @@ public final class Profiles {
      */
     public static ValidationProfile defaultProfile() {
         return ValidationProfileImpl.defaultInstance();
+    }
+
+    /**
+     * @param name
+     * @param description
+     * @param creator
+     * @param created
+     * @return
+     */
+    public static ProfileDetails profileDetailsFromValues(final String name,
+            final String description, final String creator, final Date created) {
+        return ProfileDetailsImpl.fromValues(name, description, creator, created);
     }
 
     /**
@@ -172,6 +157,36 @@ public final class Profiles {
     }
 
     /**
+     * @return the {@link ErrorDetails} default instance
+     */
+    public static ErrorDetails defaultError() {
+        return ErrorDetailsImpl.defaultInstance();
+    }
+
+    /**
+     * @param message
+     *            a String message for the {@link ErrorDetails}
+     * @param arguments
+     *            a List of String arguments for the {@link ErrorDetails}.
+     * @return a new {@link ErrorDetails} instance
+     * @throws IllegalArgumentException
+     *             if any of the parameters are null or message is empty
+     */
+    public static ErrorDetails errorFromValues(final String message,
+            final List<String> arguments) {
+        if (message == null)
+            throw new IllegalArgumentException(
+                    "Parameter message can not be null.");
+        if (message.isEmpty())
+            throw new IllegalArgumentException(
+                    "Parameter message can not be empty.");
+        if (arguments == null)
+            throw new IllegalArgumentException(
+                    "Parameter arguments can not be null.");
+        return ErrorDetailsImpl.fromValues(message, arguments);
+    }
+
+    /**
      * @param id
      *            the {@link RuleId} id for the {@link Rule}
      * @param object
@@ -181,6 +196,8 @@ public final class Profiles {
      * @param test
      *            a JavaScript expression that is the test carried out on a
      *            model instance
+     * @param error
+     *            the {@link ErrorDetails} associated with the{@link Rule}.
      * @param references
      *            a list of further {@link Reference}s for this rule
      * @return a new {@link Rule} instance.
@@ -190,7 +207,7 @@ public final class Profiles {
      */
     public static Rule ruleFromValues(final RuleId id, final String object,
             final String description, final String test,
-            final List<Reference> references) {
+            final ErrorDetails error, final List<Reference> references) {
         if (id == null)
             throw new IllegalArgumentException("Parameter id can not be null.");
         if (object == null)
@@ -211,11 +228,14 @@ public final class Profiles {
         if (test.isEmpty())
             throw new IllegalArgumentException(
                     "Parameter test can not be empty.");
+        if (error == null)
+            throw new IllegalArgumentException(
+                    "Parameter error can not be null.");
         if (references == null)
             throw new IllegalArgumentException(
                     "Parameter references can not be null.");
         return RuleImpl.fromValues(RuleIdImpl.fromRuleId(id), object,
-                description, test, references);
+                description, test, error, references);
     }
 
     /**
@@ -281,7 +301,7 @@ public final class Profiles {
      *             if toConvert is null
      */
     public static String profileToXmlString(final ValidationProfile toConvert,
-            Boolean prettyXml) throws JAXBException, IOException {
+            final Boolean prettyXml) throws JAXBException, IOException {
         if (toConvert == null)
             throw new IllegalArgumentException(
                     "Parameter toConvert cannot be null");
@@ -291,7 +311,8 @@ public final class Profiles {
     /**
      * @param toConvert
      *            a {@link ValidationProfile} to convert to an XML String
-     * @param forXmlOutput an OutputStream used to write the generated XML to
+     * @param forXmlOutput
+     *            an OutputStream used to write the generated XML to
      * @param prettyXml
      *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
      *            for no space formatting
@@ -301,8 +322,9 @@ public final class Profiles {
      * @throws IllegalArgumentException
      *             if toConvert is null
      */
-    public static void profileToXml(final ValidationProfile toConvert, OutputStream forXmlOutput,
-            Boolean prettyXml) throws JAXBException {
+    public static void profileToXml(final ValidationProfile toConvert,
+            final OutputStream forXmlOutput, final Boolean prettyXml)
+            throws JAXBException {
         if (toConvert == null)
             throw new IllegalArgumentException(
                     "Parameter toConvert cannot be null");
@@ -311,8 +333,27 @@ public final class Profiles {
 
     /**
      * @param toConvert
+     *            an InputStream to an XML representation of a profile
+     * @return a new {@link ValidationProfile} instance
+     * @throws JAXBException
+     *             thrown by JAXB marshaller if there's an error converting the
+     *             object
+     * @throws IllegalArgumentException
+     *             if toConvert is null
+     */
+    public static ValidationProfile profileFromXml(final InputStream toConvert)
+            throws JAXBException {
+        if (toConvert == null)
+            throw new IllegalArgumentException(
+                    "Parameter toConvert cannot be null");
+        return ValidationProfileImpl.fromXml(toConvert);
+    }
+
+    /**
+     * @param toConvert
      *            a {@link ValidationProfile} to convert to an XML String
-     * @param forXmlOutput a Writer used to write the generated XML to
+     * @param forXmlOutput
+     *            a Writer used to write the generated XML to
      * @param prettyXml
      *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
      *            for no space formatting
@@ -322,8 +363,8 @@ public final class Profiles {
      * @throws IllegalArgumentException
      *             if toConvert is null
      */
-    public static void profileToXml(final ValidationProfile toConvert, Writer forXmlOutput,
-            Boolean prettyXml) throws JAXBException {
+    public static void profileToXml(final ValidationProfile toConvert,
+            Writer forXmlOutput, Boolean prettyXml) throws JAXBException {
         if (toConvert == null)
             throw new IllegalArgumentException(
                     "Parameter toConvert cannot be null");
@@ -351,45 +392,9 @@ public final class Profiles {
     }
 
     /**
-     * Creates a lookup Map of {@link ValidationProfile}s from the passed Set.
-     *
-     * @param profileSet
-     *            a set of ValidationProfiles
-     * @return a Map<PDFAFlavour, ValidationProfile> from the Set of
-     *         {@link ValidationProfile}s
-     * @throws IllegalArgumentException
-     *             if the profileSet parameter is null or empty
+     * @return the pre-populated veraPDF ValidationProfile directory 
      */
-    public static Map<PDFAFlavour, ValidationProfile> profileMapFromSet(
-            Set<ValidationProfile> profileSet) {
-        if (profileSet == null)
-            throw new IllegalArgumentException(
-                    "Parameter profileSet cannot be null.");
-        if (profileSet.isEmpty())
-            throw new IllegalArgumentException(
-                    "Parameter profileSet cannot be empty.");
-        return ProfileDirectoryImpl.profileMapFromSet(profileSet);
-    }
-
-    /**
-     * Creates a lookup Map of {@link PDFAFlavour}s by String Id from the passed
-     * Set.
-     *
-     * @param flavours
-     *            a Set of {@link PDFAFlavour}s
-     * @return a Map created from the passed set where the Map key is the String
-     *         ID of the flavour
-     * @throws IllegalArgumentException
-     *             if the flavours parameter is null or empty
-     */
-    public static Map<String, PDFAFlavour> flavourMapFromSet(
-            Set<PDFAFlavour> flavours) {
-        if (flavours == null)
-            throw new IllegalArgumentException(
-                    "Parameter flavours cannot be null.");
-        if (flavours.isEmpty())
-            throw new IllegalArgumentException(
-                    "Parameter flavours cannot be empty.");
-        return ProfileDirectoryImpl.flavourMapFromSet(flavours);
+    public static ProfileDirectory getVeraProfileDirectory() {
+        return ProfileDirectoryImpl.getVeraProfileDirectory();
     }
 }

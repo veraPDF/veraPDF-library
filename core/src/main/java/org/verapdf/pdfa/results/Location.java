@@ -1,7 +1,9 @@
 /**
  * 
  */
-package org.verapdf.pdfa.reporting;
+package org.verapdf.pdfa.results;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Used to record the location of specific test assertions during the validation
@@ -10,6 +12,7 @@ package org.verapdf.pdfa.reporting;
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
+@XmlJavaTypeAdapter(LocationImpl.Adapter.class)
 public interface Location {
     /**
      * @return the level of the location within the PDF Document

@@ -1,13 +1,19 @@
 package org.verapdf.report;
 
+import javax.xml.bind.JAXBException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.results.ValidationResults;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Generating HTML validation report
@@ -29,15 +35,15 @@ public final class HTMLReport {
 	 * @param validationProfile validation profile file
 	 * @throws TransformerException if an unrecoverable error occurs during the course of the transformation or
 	 * @throws IOException          file system exceptions
+	 * @throws JAXBException 
 	 */
-	public static void writeHTMLReport(String htmlReportPath, File xmlReport, File validationProfile) throws TransformerException, IOException {
+	public static void writeHTMLReport(ValidationResult result, OutputStream destination) throws TransformerException, IOException, JAXBException {
 
 		TransformerFactory factory = TransformerFactory.newInstance();
 
 		Transformer transformer = factory.newTransformer(new StreamSource(HTMLReport.class.getClassLoader().getResourceAsStream("HTMLReportStylesheet.xsl")));
-		transformer.setParameter("profilePath", validationProfile.getAbsolutePath());
 
-		transformer.transform(new StreamSource(xmlReport), new StreamResult(new FileOutputStream(htmlReportPath)));
+		transformer.transform(new StreamSource(ValidationResults.resultToXml(result, Boolean.FALSE)), new StreamResult(destination));
 	}
 
 	/**
