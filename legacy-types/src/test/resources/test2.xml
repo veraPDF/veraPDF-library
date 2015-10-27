@@ -5,10 +5,6 @@
     <creator>User2</creator>
     <created>2015-02-23T17:30:15Z</created>
     <hash>Some hash</hash>
-    <imports>
-        <import>test2.xml</import>
-        <import>test.xml</import>
-    </imports>
     <rules>
         <rule id="rule35" object="PDXObject">
         </rule>
