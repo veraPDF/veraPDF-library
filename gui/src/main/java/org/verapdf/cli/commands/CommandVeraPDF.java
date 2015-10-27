@@ -8,7 +8,7 @@ import com.beust.jcommander.Parameters;
  * @author Timur Kamalov
  */
 @Parameters(commandNames = "verapdf")
-public class CommandVeraPDF extends Command {
+public class CommandVeraPDF {
 
     @Parameter(names = "--validate", required = true)
     private boolean validate;
