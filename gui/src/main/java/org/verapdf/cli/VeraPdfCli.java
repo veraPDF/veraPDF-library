@@ -66,38 +66,29 @@ public final class VeraPdfCli {
                 profileFromInput(cliArgParser.getProfile()));
 
     }
-
-
     private static void processPaths(final List<String> paths,
             final ValidationProfile profile) {
         for (String pathToValidate : paths) {
-            try (ModelLoader loader = new ModelLoader(new FileInputStream(
-                    pathToValidate))) {
-                ValidationResult result = Validator.validate(profile,
-                        loader.getRoot(), false);
-                ValidationResults.toXml(result, System.out, Boolean.TRUE);
+            try (InputStream fis = new FileInputStream(pathToValidate)) {
+                ValidationResults.toXml(validate(fis, profile), System.out, Boolean.TRUE);
             } catch (FileNotFoundException e) {
-                System.err.println("Could not find file:" + pathToValidate);
-                System.out.println();
+                logThrowable(e, "Could not find file: " + pathToValidate);
             } catch (IOException e) {
-                System.err.println("IOException validating file:"
-                        + pathToValidate);
-                e.printStackTrace();
-                System.out.println();
-            } catch (ValidationException e) {
-                System.err.println("ValidationException validating file:"
-                        + pathToValidate);
-                e.printStackTrace();
-                System.out.println();
-            } catch (JAXBException e) {
-                System.err.println("ValidationException validating file:"
-                        + pathToValidate);
-                e.printStackTrace();
-                System.out.println();
+                logThrowable(e, "Could not read file: " + pathToValidate);
+            } catch (ValidationException | JAXBException e) {
+                logThrowable(e, "Exception thrown validating file: " + pathToValidate);
             }
         }
     }
 
+    private static ValidationResult validate(final InputStream toValidate,
+            final ValidationProfile profile) throws IOException, ValidationException {
+            try (ModelLoader loader = new ModelLoader(toValidate)) {
+                return Validator.validate(profile,
+                        loader.getRoot(), false);
+            }
+    }
+    
     private static ValidationProfile profileFromInput(String userInput) {
         PDFAFlavour flavour = PDFAFlavour.byFlavourId(userInput);
         if (flavour != PDFAFlavour.NO_FLAVOUR) {
