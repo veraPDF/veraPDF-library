@@ -1,23 +1,35 @@
 package org.verapdf.validation.profile.parser;
 
-import org.verapdf.core.ProfileException;
-import org.verapdf.core.ValidationException;
-import org.verapdf.validation.profile.model.*;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.*;
+import org.verapdf.core.ProfileException;
+import org.verapdf.core.ValidationException;
+import org.verapdf.validation.profile.model.Fix;
+import org.verapdf.validation.profile.model.Reference;
+import org.verapdf.validation.profile.model.Rule;
+import org.verapdf.validation.profile.model.RuleError;
+import org.verapdf.validation.profile.model.ValidationProfile;
+import org.verapdf.validation.profile.model.Variable;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * This class is for parse the validation profile xml file into java classes.
@@ -56,22 +68,10 @@ public final class ValidationProfileParser {
 	private Set<String> variables = new HashSet<>();
 	private ValidationProfile profile;
 	private DocumentBuilder builder;
-	private File resource;
 
-	private ValidationProfileParser(File resourceFile, boolean isSignCheckOn)
+	private ValidationProfileParser(InputStream is, boolean isSignCheckOn)
 			throws ParserConfigurationException, IOException, SAXException,
-			XMLStreamException, ProfileException, ProfileException, ValidationException {
-		this.resource = resourceFile;
-
-		if (isSignCheckOn) {
-			ValidationProfileSignatureChecker checker = ValidationProfileSignatureChecker
-					.newInstance(this.resource);
-			if (!checker.isValidSignature()) {
-				throw new ProfileException(
-						"Unsigned validation profile: "
-								+ this.resource.getCanonicalPath());
-			}
-		}
+			ProfileException {
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -79,16 +79,15 @@ public final class ValidationProfileParser {
 
 		factory.setIgnoringElementContentWhitespace(true);
 
-		Document doc = this.builder.parse(this.resource);
+		Document doc = this.builder.parse(is);
 
-		this.profilesPaths.add(resourceFile.getCanonicalPath());
 		Node root = doc.getDocumentElement();
 		root.normalize();
 		parseRoot(root, isSignCheckOn);
 	}
 
 	private void parseRoot(Node root, boolean isSignCheckOn)
-			throws IOException, SAXException, ValidationException {
+			throws ProfileException {
 		String model = null;
 		String name = null;
 		String description = null;
@@ -127,9 +126,6 @@ public final class ValidationProfileParser {
 					if (isSignCheckOn) {
 						hash = child.getTextContent().trim();
 					}
-					break;
-				case IMPORTS:
-					parseImports(this.resource, child, rules);
 					break;
 				case RULES:
 					parseRules(child, rules);
@@ -276,7 +272,7 @@ public final class ValidationProfileParser {
 	}
 
 	private void parseVariables(Node rules,
-								Map<String, List<Variable>> variablesMap) throws ValidationException {
+								Map<String, List<Variable>> variablesMap) throws ProfileException {
 		NodeList children = rules.getChildNodes();
 
 		for (int i = 0; i < children.getLength(); ++i) {
@@ -294,7 +290,7 @@ public final class ValidationProfileParser {
 		}
 	}
 
-	private Variable parseVariable(Node rule) throws ValidationException {
+	private Variable parseVariable(Node rule) throws ProfileException {
 		String name = null;
 		String object = null;
 		String defaultValue = null;
@@ -307,7 +303,7 @@ public final class ValidationProfileParser {
 		}
 
 		if (this.variables.contains(name)) {
-			throw new ValidationException(
+			throw new ProfileException(
 					"Founded multiply variable with name: "
 							+ name + "\".");
 		}
@@ -489,7 +485,9 @@ public final class ValidationProfileParser {
 		if (profileFilePath.isEmpty())
 			throw new IllegalArgumentException(
 					"Parameter (String profileFilePath) can not be an empty String");
-		return parseFromFile(new File(profileFilePath), isSignCheckOn);
+		try (InputStream is = new FileInputStream(profileFilePath)) {
+	        return parseFromStream(is, isSignCheckOn);
+		}
 	}
 
 	/**
@@ -510,16 +508,13 @@ public final class ValidationProfileParser {
 	 * @throws ValidationException if there is more than one identical global variable names in
 	 *                                             the profile model
 	 */
-	public static ValidationProfile parseFromFile(File profileFile,
+	public static ValidationProfile parseFromStream(InputStream profileStream,
 												  boolean isSignCheckOn) throws ParserConfigurationException,
 			SAXException, IOException, ProfileException,
-			XMLStreamException, ProfileException, ValidationException {
-		if (profileFile == null)
+			XMLStreamException, ProfileException {
+		if (profileStream == null)
 			throw new IllegalArgumentException(
 					"Parameter (File resourceFile) can not be null");
-		if (!profileFile.isFile())
-			throw new IllegalArgumentException(
-					"Parameter (File resourceFile) must be an existing file.");
-		return new ValidationProfileParser(profileFile, isSignCheckOn).profile;
+		return new ValidationProfileParser(profileStream, isSignCheckOn).profile;
 	}
 }
