@@ -37,7 +37,7 @@ public class PBCosFileSpecificationTest extends BaseTest {
 		Assert.assertEquals(1, links.size());
 		Object object = links.get(0);
 		Assert.assertEquals(PBoxEmbeddedFile.EMBEDDED_FILE_TYPE, object.getObjectType());
-		Assert.assertNull(((EmbeddedFile) object).getisValidPDFA12());
+		Assert.assertFalse(((EmbeddedFile) object).getisValidPDFA12());
 	}
 
     @Test
