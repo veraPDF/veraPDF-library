@@ -157,6 +157,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>legacy-types</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
         <groupId>org.verapdf</groupId>
         <artifactId>metadata-fixer</artifactId>
     </dependency>

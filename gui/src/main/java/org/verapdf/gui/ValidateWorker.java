@@ -28,6 +28,7 @@ import org.verapdf.model.ModelLoader;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
+import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validation.Validator;
 import org.verapdf.report.XMLReport;
 
@@ -42,15 +43,15 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     private static final String TEMP_PREFIX = "veraPDF-";
 
     private File pdf;
-    private PDFAFlavour flavour;
     private CheckerPanel parent;
     private Config settings;
+    ValidationProfile profile;
     private File xmlReport = null;
     private File htmlReport = null;
     private int flag;
     private boolean isFixMetadata;
 
-    ValidateWorker(CheckerPanel parent, File pdf, PDFAFlavour flavour,
+    ValidateWorker(CheckerPanel parent, File pdf, ValidationProfile profile,
             Config settings, int flag, boolean isFixMetadata) {
         if (pdf == null || !pdf.isFile() || !pdf.canRead()) {
             throw new IllegalArgumentException(
@@ -58,7 +59,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         }
         this.parent = parent;
         this.pdf = pdf;
-        this.flavour = flavour;
+        this.profile = profile;
         this.settings = settings;
         this.flag = flag;
         this.isFixMetadata = isFixMetadata;
@@ -119,7 +120,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
             org.verapdf.model.baselayer.Object root, boolean logSuccess) {
         try {
             // TODO : FIX SETTINGS
-            return Validator.validate(this.flavour, root, logSuccess);
+            return Validator.validate(this.profile, root, logSuccess);
         } catch (ValidationException e) {
 
             this.parent.errorInValidatingOccur(
