@@ -45,15 +45,8 @@ public class Rule {
 	}
 
 	public void setStatus() {
-		Status ruleStatus = Status.PASSED;
-		for (Check check : checks) {
-			if (Status.FAILED == check.getStatus()) {
-				ruleStatus = Status.FAILED;
-				break;
-			}
-		}
 		this.checks = Collections.unmodifiableList(checks);
-		this.status = ruleStatus;
+		this.status = this.failedChecksCount > 0 ? Status.FAILED : Status.PASSED;
 	}
 
 	/**

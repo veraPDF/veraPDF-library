@@ -164,17 +164,23 @@ public class Validator {
 
     private void updateVariables(Object object) {
         if (object != null) {
-            for (Variable var : this.profile
-                    .getVariablesForObject(object.getObjectType())) {
+			updateVariablesForObject(object.getObjectType(), object);
 
-                if (var == null)
-                    continue;
-
-                java.lang.Object variable = evalVariableResult(var, object);
-                this.scope.put(var.getAttrName(), this.scope, variable);
-            }
-        }
+			for (String parentName : object.getSuperTypes()) {
+				updateVariablesForObject(parentName, object);
+			}
+		}
     }
+
+	private void updateVariablesForObject(String objectType, Object object) {
+		for (Variable var : this.profile
+				.getVariablesForObject(objectType)) {
+			if (var == null)
+				continue;
+			java.lang.Object variable = evalVariableResult(var, object);
+			this.scope.put(var.getAttrName(), this.scope, variable);
+		}
+	}
 
     private java.lang.Object evalVariableResult(Variable variable, Object object) {
         Script script;
@@ -366,7 +372,7 @@ public class Validator {
 			}
 
 			if (check != null) {
-				if (currentRule.getFailedChecksCount() < this.maxDisplayedFailedChecks) {
+				if (this.maxDisplayedFailedChecks == -1 || currentRule.getFailedChecksCount() < this.maxDisplayedFailedChecks) {
 					currentRule.add(check);
 				} else {
 					currentRule.incChecksCount(check);

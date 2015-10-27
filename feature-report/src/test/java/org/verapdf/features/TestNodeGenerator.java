@@ -329,7 +329,7 @@ public final class TestNodeGenerator {
 		if (xobj != null && !xobj.isEmpty()) {
 			FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
 			for (String objID : xobj) {
-				FeatureTreeNode node = FeatureTreeNode.newChildInstance("xObject", resources);
+				FeatureTreeNode node = FeatureTreeNode.newChildInstance("xobject", resources);
 				node.addAttribute(ID, objID);
 			}
 		}
