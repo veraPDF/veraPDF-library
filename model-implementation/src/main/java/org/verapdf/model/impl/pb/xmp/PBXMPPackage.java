@@ -24,29 +24,25 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 
 	private XMPMetadata xmpMetadata;
 	private boolean isMetadataValid;
+	private String errorMessage;
 
 	/**
 	 * Constructs new object
 	 *
 	 * @param xmpMetadata     object from xmpbox represented this package
 	 * @param isMetadataValid true if metadata is valid
+	 * @param errorMessage    message from the error if metadata is not valid
 	 */
-	public PBXMPPackage(XMPMetadata xmpMetadata, boolean isMetadataValid) {
-		this(xmpMetadata, isMetadataValid, XMP_PACKAGE_TYPE);
+	public PBXMPPackage(XMPMetadata xmpMetadata, boolean isMetadataValid, String errorMessage) {
+		this(xmpMetadata, isMetadataValid, XMP_PACKAGE_TYPE, errorMessage);
 	}
 
-	/**
-	 * Constructs new object
-	 *
-	 * @param xmpMetadata     object from xmpbox represented this package
-	 * @param isMetadataValid true if metadata is valid
-	 * @param type            type of current object
-	 */
-	public PBXMPPackage(XMPMetadata xmpMetadata, boolean isMetadataValid,
-						final String type) {
+	protected PBXMPPackage(XMPMetadata xmpMetadata, boolean isMetadataValid,
+						   final String type, String errorMessage) {
 		super(type);
 		this.xmpMetadata = xmpMetadata;
 		this.isMetadataValid = isMetadataValid;
+		this.errorMessage = errorMessage;
 	}
 
 	/**
@@ -55,6 +51,11 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 	@Override
 	public Boolean getisMetadataValid() {
 		return Boolean.valueOf(isMetadataValid);
+	}
+
+	@Override
+	public String geterrorMessage() {
+		return errorMessage;
 	}
 
 	/**
