@@ -1,96 +1,73 @@
 package org.verapdf.cli.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.beust.jcommander.Parameter;
-import com.beust.jcommander.Parameters;
 
 /**
  * This class holds all command line options used by VeraPDF application.
  * @author Timur Kamalov
  */
-@Parameters(commandNames = "verapdf")
-public class CommandVeraPDF {
+public class VeraCliArgParser {
 
-    @Parameter(names = "--validate", required = true)
-    private boolean validate;
+    @Parameter(names = {"-v", "--version"}, description = "ouput version information.")
+    private boolean showVersion;
 
-    @Parameter(names = "--input", required = true)
-    private String inputPath;
+    @Parameter(names = {"-l", "--list"}, description = "lists all supported validation profiles.")
+    private boolean listProfiles;
 
-    @Parameter(names = "--urlinput")
-    private boolean inputPathURL;
+    @Parameter(names = {"-h", "--help"}, description = "shows this message and exit.", help = true)
+    private boolean help;
 
-    @Parameter(names = "--profile")
-    private String profile;
+    @Parameter(names = {"-p", "--profile"}, description = "validation profile code e.g. 1b, 1a, etc. or a path to a validation profile.")
+    private String profile = "1b";
 
-	@Parameter(names = "--log-passed-checks")
-	private boolean logPassedChecks = false;
+	@Parameter(names = {"-f", "--features"}, description = "extract and report PDF features.")
+	private boolean reportFeatures = false;
 
-	@Parameter(names = "--max-failed-checks")
-	private int maxFailedChecks = 100;
-
-	@Parameter(names = "--max-displayed")
-	private int maxDisplayedFailedChecks = 100;
-
-    @Parameter(names = "--output")
-    private String output;
-
-	@Parameter(names = "--incremental-save")
-	private String incrementalSave;
-
-	/**
-     * @return the validate
+	@Parameter(description = "FILES")
+	private List<String> filePaths = new ArrayList<>();
+	
+    /**
+     * @return true if version information requested
      */
-    public boolean isValidate() {
-        return this.validate;
+    public boolean showVersion() {
+        return this.showVersion;
     }
 
     /**
-     * @return the inputPath
+     * @return true if a list of supported profiles requested
      */
-    public String getInputPath() {
-        return this.inputPath;
+    public boolean listProfiles() {
+        return this.listProfiles;
     }
 
     /**
-     * @return the inputPathURL
+     * @return true if help requested
      */
-    public boolean isInputPathURL() {
-        return this.inputPathURL;
+    public boolean isHelp() {
+        return this.help;
     }
 
     /**
-     * @return the profile
+     * @return true if feature extraction requested
+     */
+    public boolean reportFeatures() {
+        return this.reportFeatures;
+    }
+    
+    /**
+     * @return
      */
     public String getProfile() {
         return this.profile;
     }
-
-	/**
-	 * @return the logPassedChecks
-	 */
-	public boolean isLogPassedChecks() {
-		return this.logPassedChecks;
-	}
-
-	/**
-	 * @return maximum amount of failed checks for each rule during validation
-	 */
-	public int getMaxFailedChecks() {
-		return this.maxFailedChecks;
-	}
-
-	public int getMaxDisplayedFailedChecks() {
-		return maxDisplayedFailedChecks;
-	}
-
-	/**
-     * @return the output
+    
+    /**
+     * @return the list of file paths for validation
      */
-    public String getOutput() {
-        return this.output;
+    public List<String> getPathsToValidate() {
+        return this.filePaths;
     }
-
-	public String getIncrementalSave() {
-		return incrementalSave;
-	}
 }

@@ -2,16 +2,12 @@ package org.verapdf.runner;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.xml.bind.JAXBException;
 
-import org.verapdf.config.VeraPdfTaskConfig;
 import org.verapdf.core.ValidationException;
 import org.verapdf.core.VeraPDFException;
-import org.verapdf.metadata.fixer.MetadataFixer;
-import org.verapdf.metadata.fixer.MetadataFixerResult;
-import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
-import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
@@ -31,9 +27,10 @@ public class ValidationRunner {
      *            validation task configuration
      * @return the validation result
      * @throws VeraPDFException 
+     * @throws IOException 
      */
-    public static ValidationResult runValidation(VeraPdfTaskConfig config) throws VeraPDFException {
-        try (ModelLoader loader = new ModelLoader(config.getInput().getPath())) {
+    public static ValidationResult runValidation(InputStream toValidate) throws VeraPDFException, IOException {
+        try (ModelLoader loader = new ModelLoader(toValidate)) {
             org.verapdf.model.baselayer.Object root;
             try {
                 root = loader.getRoot();
@@ -41,20 +38,8 @@ public class ValidationRunner {
                 throw new VeraPDFException("IOException when parsing Validation Model.", e);
             }
             ValidationResult result = Validator.validate(PDFAFlavour.PDFA_1_B,
-                    root);
+                    root, false);
             ValidationResults.toXml(result, System.out, Boolean.TRUE);
-            if (config.getIncrementalSave() != null
-                    && !config.getIncrementalSave().trim().isEmpty()) {
-                FixerConfig fixerConfig;
-                try {
-                    fixerConfig = FixerConfigImpl.getFixerConfig(loader.getPDDocument(), result);
-                } catch (IOException e) {
-                    throw new VeraPDFException("IOException when parsing Validation Model.", e);
-                }
-                // TODO : what we need do with fixing result?
-                MetadataFixerResult fixerResult =
-                MetadataFixer.fixMetadata(loader.getFile(), fixerConfig);
-            }
             return result;
             // TODO: Better exception handling, we need a policy and this isn't
             // it.
