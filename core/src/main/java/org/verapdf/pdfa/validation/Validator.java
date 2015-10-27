@@ -47,6 +47,7 @@ public class Validator {
 
     private String rootType;
     private final PDFAFlavour flavour;
+    private final boolean logPassedAssertions;
 
     /**
      * Creates new Validator with given validation profile
@@ -54,8 +55,9 @@ public class Validator {
      * @param profile
      *            validation profile model for validator
      */
-    private Validator(final PDFAFlavour flavour) {
+    private Validator(final PDFAFlavour flavour, final boolean logPassedAssertions) {
         this.flavour = flavour;
+        this.logPassedAssertions = logPassedAssertions;
     }
 
     private ValidationResult validate(Object root) throws ValidationException {
@@ -326,7 +328,9 @@ public class Validator {
         TestAssertion assertion = ValidationResults.assertionFromValues(
                 rule.getRuleId(), assertionStatus,
                 rule.getError().getMessage(), location);
-        this.results.add(assertion);
+        if ((assertionStatus == Status.FAILED) || this.logPassedAssertions) {
+            this.results.add(assertion);
+        }
 
         return testEvalResult;
     }
@@ -346,7 +350,7 @@ public class Validator {
      * @throws ValidationException
      *             when a problem occurs validating the PDF
      */
-    public static ValidationResult validate(PDFAFlavour flavour, Object root)
+    public static ValidationResult validate(PDFAFlavour flavour, Object root, boolean logSuccess)
             throws ValidationException {
         if (root == null)
             throw new IllegalArgumentException(
@@ -354,7 +358,7 @@ public class Validator {
         if (flavour == null)
             throw new IllegalArgumentException(
                     "Parameter (PDFAFlavour flavour) cannot be null.");
-        Validator validator = new Validator(flavour);
+        Validator validator = new Validator(flavour, logSuccess);
         ValidationResult res = validator.validate(root);
         return res;
     }
