@@ -17,9 +17,10 @@ public class PBXMPMainPackage extends PBXMPPackage implements XMPMainPackage {
 	 *
 	 * @param xmpMetadata     object from xmpbox represented this package
 	 * @param isMetadataValid true if metadata is valid
+	 * @param errorMessage message from the error if metadata is not valid
 	 */
-	public PBXMPMainPackage(XMPMetadata xmpMetadata, boolean isMetadataValid) {
-		super(xmpMetadata, isMetadataValid, XMP_MAIN_PACKAGE_TYPE);
+	public PBXMPMainPackage(XMPMetadata xmpMetadata, boolean isMetadataValid, String errorMessage) {
+		super(xmpMetadata, isMetadataValid, XMP_MAIN_PACKAGE_TYPE, errorMessage);
 	}
 
 	/**

@@ -45,51 +45,54 @@ public final class XMPHelper {
 	public static final String NSXAPG = "http://ns.adobe.com/xap/1.0/g/";
 	public static final String NSSTFNT = "http:ns.adobe.com/xap/1.0/sType/Font#";
 
-	private static final Set<String> predifinedSchemas = new HashSet<>();
+	private static final Set<String> predifinedSchemasXMP2004;
 
 	static {
-		predifinedSchemas.add(NSPDFAID);
+		Set<String> predifinedSchemasTemp = new HashSet<>();
+		predifinedSchemasTemp.add(NSPDFAID);
 
-		predifinedSchemas.add(NSPDF);
-		predifinedSchemas.add(NSDC);
-		predifinedSchemas.add(NSEXIF);
-		predifinedSchemas.add(NSTIFF);
-		predifinedSchemas.add(NSPHOTOSHOP);
-		predifinedSchemas.add(NSXMPBJ);
-		predifinedSchemas.add(NSXMPBASIC);
-		predifinedSchemas.add(NSXMPMM);
-		predifinedSchemas.add(NSXMPTPG);
-		predifinedSchemas.add(NSXMPRIGHTS);
+		predifinedSchemasTemp.add(NSPDF);
+		predifinedSchemasTemp.add(NSDC);
+		predifinedSchemasTemp.add(NSEXIF);
+		predifinedSchemasTemp.add(NSTIFF);
+		predifinedSchemasTemp.add(NSPHOTOSHOP);
+		predifinedSchemasTemp.add(NSXMPBJ);
+		predifinedSchemasTemp.add(NSXMPBASIC);
+		predifinedSchemasTemp.add(NSXMPMM);
+		predifinedSchemasTemp.add(NSXMPTPG);
+		predifinedSchemasTemp.add(NSXMPRIGHTS);
 
-		predifinedSchemas.add(NSSTDIM);
-		predifinedSchemas.add(NSXMPGIMG);
-		predifinedSchemas.add(NSSTEVT);
-		predifinedSchemas.add(NSSTREF);
-		predifinedSchemas.add(NSSTVER);
-		predifinedSchemas.add(NSSTJOB);
-		predifinedSchemas.add(NSXMPIDQ);
+		predifinedSchemasTemp.add(NSSTDIM);
+		predifinedSchemasTemp.add(NSXMPGIMG);
+		predifinedSchemasTemp.add(NSSTEVT);
+		predifinedSchemasTemp.add(NSSTREF);
+		predifinedSchemasTemp.add(NSSTVER);
+		predifinedSchemasTemp.add(NSSTJOB);
+		predifinedSchemasTemp.add(NSXMPIDQ);
 
-		predifinedSchemas.add(NSXAPG);
-		predifinedSchemas.add(NSSTFNT);
+		predifinedSchemasTemp.add(NSXAPG);
+		predifinedSchemasTemp.add(NSSTFNT);
 
-		predifinedSchemas.add(NSPDFAEXTENSION);
-		predifinedSchemas.add(NSPDFAFIELD);
-		predifinedSchemas.add(NSPDFAPROPERTY);
-		predifinedSchemas.add(NSPDFASCHEMA);
-		predifinedSchemas.add(NSPDFATYPE);
+		predifinedSchemasTemp.add(NSPDFAEXTENSION);
+		predifinedSchemasTemp.add(NSPDFAFIELD);
+		predifinedSchemasTemp.add(NSPDFAPROPERTY);
+		predifinedSchemasTemp.add(NSPDFASCHEMA);
+		predifinedSchemasTemp.add(NSPDFATYPE);
 
-		predifinedSchemas.add(NSCRS);
-		predifinedSchemas.add(NSAUX);
-		predifinedSchemas.add(NSXMPDM);
-		predifinedSchemas.add(NSXAPS);
+		predifinedSchemasTemp.add(NSCRS);
+		predifinedSchemasTemp.add(NSAUX);
+		predifinedSchemasTemp.add(NSXMPDM);
+		predifinedSchemasTemp.add(NSXAPS);
+
+		predifinedSchemasXMP2004 = predifinedSchemasTemp;
 	}
 
 	private XMPHelper() {
 		// Disable default constructor
 	}
 
-	public static boolean isPredifinedSchema(String schemaNS) {
-		return predifinedSchemas.contains(schemaNS);
+	public static boolean isPredifinedXMP2004Schema(String schemaNS) {
+		return predifinedSchemasXMP2004.contains(schemaNS);
 	}
 
 }

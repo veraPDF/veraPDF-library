@@ -1,8 +1,10 @@
 package org.verapdf.model.factory.xmp;
 
 import org.apache.log4j.Logger;
-import org.apache.xmpbox.schema.*;
-import org.verapdf.model.impl.pb.xmp.schemas.*;
+import org.apache.xmpbox.schema.PDFAIdentificationSchema;
+import org.apache.xmpbox.schema.XMPSchema;
+import org.verapdf.model.impl.pb.xmp.schemas.PBPDFAIdSchema;
+import org.verapdf.model.impl.pb.xmp.schemas.PBXMPSchema;
 import org.verapdf.model.tools.XMPHelper;
 
 /**
@@ -40,73 +42,8 @@ public final class PBSchemaFactory {
 					schemaExceptionMessage("PDFAIdentificationSchema", XMPHelper.NSPDFAID);
 				}
 				break;
-			case XMPHelper.NSPDFAEXTENSION:
-				if (schema instanceof PDFAExtensionSchema) {
-					resultSchema = new PBPDFAExtensionSchema((PDFAExtensionSchema) schema);
-				} else {
-					schemaExceptionMessage("PDFAExtensionSchema", XMPHelper.NSPDFAEXTENSION);
-				}
-				break;
-			case XMPHelper.NSXMPBASIC:
-				if (schema instanceof XMPBasicSchema) {
-					resultSchema = new PBXMPBasicSchema((XMPBasicSchema) schema);
-				} else {
-					schemaExceptionMessage("XMPBasicSchema", XMPHelper.NSXMPBASIC);
-				}
-				break;
-			case XMPHelper.NSXMPRIGHTS:
-				if (schema instanceof XMPRightsManagementSchema) {
-					resultSchema = new PBXMPRightsSchema((XMPRightsManagementSchema) schema);
-				} else {
-					schemaExceptionMessage("XMPRightsManagementSchema", XMPHelper.NSXMPRIGHTS);
-				}
-				break;
-			case XMPHelper.NSXMPMM:
-				if (schema instanceof XMPMediaManagementSchema) {
-					resultSchema = new PBXMPMMSchema((XMPMediaManagementSchema) schema);
-				} else {
-					schemaExceptionMessage("XMPMediaManagementSchema", XMPHelper.NSXMPMM);
-				}
-				break;
-			case XMPHelper.NSXMPTPG:
-				if (schema instanceof XMPageTextSchema) {
-					resultSchema = new PBXMPTPgSchema((XMPageTextSchema) schema);
-				} else {
-					schemaExceptionMessage("XMPageTextSchema", XMPHelper.NSXMPTPG);
-				}
-				break;
-			case XMPHelper.NSPDF:
-				if (schema instanceof AdobePDFSchema) {
-					resultSchema = new PBPDFSchema((AdobePDFSchema) schema);
-				} else {
-					schemaExceptionMessage("AdobePDFSchema", XMPHelper.NSPDF);
-				}
-				break;
-			case XMPHelper.NSPHOTOSHOP:
-				if (schema instanceof PhotoshopSchema) {
-					resultSchema = new PBPhotoshopSchema((PhotoshopSchema) schema);
-				} else {
-					schemaExceptionMessage("PhotoshopSchema", XMPHelper.NSPHOTOSHOP);
-				}
-				break;
-			case XMPHelper.NSCRS:
-				resultSchema = new PBCRSSchema(schema);
-				break;
-			case XMPHelper.NSAUX:
-				resultSchema = new PBAUXSchema(schema);
-				break;
-			case XMPHelper.NSXMPDM:
-				resultSchema = new PBXMPDMSchema(schema);
-				break;
-			case XMPHelper.NSXAPS:
-				resultSchema = new PBXAPSSchema(schema);
-				break;
 			default:
-				if (XMPHelper.isPredifinedSchema(schema.getNamespace())) {
-					resultSchema = new PBXMPPredefinedSchema(schema);
-				} else {
-					resultSchema = new PBXMPCustomSchema(schema);
-				}
+				resultSchema = new PBXMPSchema(schema);
 		}
 
 		return resultSchema;
