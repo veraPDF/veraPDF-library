@@ -16,6 +16,7 @@ import java.util.Properties;
  */
 public final class ReleaseDetails {
     private static final String APPLICATION_PROPERTIES_PATH = "org/verapdf/verapdf.properties";
+    private static final String RAW_DATE_FORMAT = "${maven.build.timestamp.format}";
     private static final String RIGHTS = "Developed and released by the veraPDF Consortium.\n"
             + "Funded by the PREFORMA project.\n"
             + "Released under the GNU General Public License v3.\n";
@@ -133,14 +134,16 @@ public final class ReleaseDetails {
     private static ReleaseDetails fromProperties(final Properties props) {
         String release = props.getProperty("verapdf.release.version");
         String dateFormat = props.getProperty("verapdf.date.format");
-        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
         Date date = new Date();
-        try {
-            date = formatter.parse(props.getProperty("verapdf.release.date"));
-        } catch (ParseException e) {
-            /**
-             * Safe to ignore this exception as release simply set to new date.
-             */
+        if (!dateFormat.equals(RAW_DATE_FORMAT)) {
+            SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+            try {
+                date = formatter.parse(props.getProperty("verapdf.release.date"));
+            } catch (ParseException e) {
+                /**
+                 * Safe to ignore this exception as release simply set to new date.
+                 */
+            }
         }
         return new ReleaseDetails(release, date);
     }
