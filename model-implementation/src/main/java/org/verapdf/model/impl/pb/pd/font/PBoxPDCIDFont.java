@@ -48,8 +48,9 @@ public class PBoxPDCIDFont extends PBoxPDFont implements PDCIDFont {
 	}
 
 	// TODO : implement me
+	@Override
 	public Boolean getcidSetListsAllGlyphs() {
-		return null;
+		return Boolean.FALSE;
 	}
 
     @Override

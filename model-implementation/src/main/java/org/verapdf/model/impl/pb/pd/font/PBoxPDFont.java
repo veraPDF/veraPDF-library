@@ -52,6 +52,11 @@ public abstract class PBoxPDFont extends PBoxPDResources implements PDFont {
 	}
 
 	@Override
+	public String getfontName() {
+		return this.pdFontLike.getName();
+	}
+
+	@Override
 	public String getSubtype() {
 		String subtype = null;
 		if (this.pdFontLike instanceof org.apache.pdfbox.pdmodel.font.PDFont) {

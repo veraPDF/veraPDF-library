@@ -34,8 +34,9 @@ public class PBoxPDSeparation extends PBoxPDColorSpace implements PDSeparation {
 	}
 
 	// TODO : implement me
+	@Override
 	public Boolean getareTintAndAlternateConsistent() {
-		return null;
+		return Boolean.FALSE;
 	}
 
 	@Override

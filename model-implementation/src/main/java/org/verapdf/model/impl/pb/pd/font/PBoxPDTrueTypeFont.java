@@ -14,8 +14,9 @@ public class PBoxPDTrueTypeFont extends PBoxPDSimpleFont implements PDTrueTypeFo
 	}
 
 	// TODO : implement me
+	@Override
 	public Boolean getdifferencesAreUnicodeCompliant() {
-		return null;
+		return Boolean.FALSE;
 	}
 
 	@Override

@@ -4,10 +4,13 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
+import org.verapdf.model.coslayer.CosObject;
 import org.verapdf.model.external.ICCOutputProfile;
 import org.verapdf.model.impl.pb.cos.PBCosDict;
+import org.verapdf.model.impl.pb.cos.PBCosObject;
 import org.verapdf.model.impl.pb.external.PBoxICCOutputProfile;
 import org.verapdf.model.pdlayer.PDOutputIntent;
+import org.verapdf.model.tools.IDGenerator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,21 +31,23 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent {
 	public static final String DEST_PROFILE = "destProfile";
 	public static final String DEST_OUTPUT_PROFILE_REF = "DestOutputProfileRef";
 
+	private final String destOutputProfileIndirect;
+
 	public PBoxPDOutputIntent(
 			org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent simplePDObject) {
 		super(simplePDObject, OUTPUT_INTENT_TYPE);
+		this.destOutputProfileIndirect = this.getDestOutputProfileIndirect(simplePDObject);
+	}
+
+	private String getDestOutputProfileIndirect(org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent intent) {
+		COSDictionary dictionary = (COSDictionary) intent.getCOSObject();
+		COSBase item = dictionary.getItem(COSName.DEST_OUTPUT_PROFILE);
+		return IDGenerator.generateID(item);
 	}
 
 	@Override
 	public String getdestOutputProfileIndirect() {
-		COSDictionary dictionary = (COSDictionary) this.simplePDObject
-				.getCOSObject();
-		COSBase item = dictionary.getItem(COSName.DEST_OUTPUT_PROFILE);
-		if (item instanceof COSObject) {
-			return String.valueOf(((COSObject) item).getObjectNumber()) +
-					' ' + ((COSObject) item).getGenerationNumber();
-		}
-		return null;
+		return this.destOutputProfileIndirect;
 	}
 
 	@Override
@@ -67,7 +72,7 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent {
 			COSStream dest = ((org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent) this.simplePDObject)
 					.getDestOutputIntent();
 			if (dest != null) {
-				List<ICCOutputProfile> profile = new ArrayList<>();
+				List<ICCOutputProfile> profile = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 				final InputStream unfilteredStream = dest.getUnfilteredStream();
 				long N = dest.getLong(COSName.N);
 				profile.add(new PBoxICCOutputProfile(unfilteredStream, subtype,
@@ -81,13 +86,13 @@ public class PBoxPDOutputIntent extends PBoxPDObject implements PDOutputIntent {
 		return Collections.emptyList();
 	}
 
-	// TODO : check me, please
-	private List<CosDict> getDestOutputProfileRef() {
+	private List<CosObject> getDestOutputProfileRef() {
 		COSDictionary dict = (COSDictionary) this.simplePDObject.getCOSObject();
 		COSBase ref = dict.getDictionaryObject(COSName.getPDFName(DEST_OUTPUT_PROFILE_REF));
-		if (ref instanceof COSDictionary) {
-			ArrayList<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-			list.add(new PBCosDict((COSDictionary) ref));
+		CosObject value = PBCosObject.getFromValue(ref);
+		if (value != null) {
+			ArrayList<CosObject> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+			list.add(value);
 			return Collections.unmodifiableList(list);
 		}
 		return Collections.emptyList();

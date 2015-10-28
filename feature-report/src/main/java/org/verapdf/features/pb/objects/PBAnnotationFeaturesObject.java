@@ -82,7 +82,7 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
 				FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
 				for (String xObjID : formXObjects) {
 					if (xObjID != null) {
-						FeatureTreeNode xObjNode = FeatureTreeNode.newChildInstance("xObject", resources);
+						FeatureTreeNode xObjNode = FeatureTreeNode.newChildInstance("xobject", resources);
 						xObjNode.addAttribute(ID, xObjID);
 					}
 				}

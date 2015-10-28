@@ -12,7 +12,7 @@ import org.verapdf.model.xmplayer.PDFAIdSchema;
  *
  * @author Maksim Bezrukov
  */
-public class PBPDFAIdSchema extends PBXMPPredefinedSchema implements PDFAIdSchema {
+public class PBPDFAIdSchema extends PBXMPSchema implements PDFAIdSchema {
 
 	public static final String PDF_AID_SCHEMA_TYPE = "PDFAIdSchema";
 

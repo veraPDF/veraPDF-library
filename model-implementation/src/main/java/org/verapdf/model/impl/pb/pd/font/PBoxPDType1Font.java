@@ -19,8 +19,9 @@ public class PBoxPDType1Font extends PBoxPDSimpleFont implements PDType1Font {
 	}
 
 	// TODO implement me
+	@Override
 	public Boolean getcharSetListsAllGlyphs() {
-		return null;
+		return Boolean.FALSE;
 	}
 
 	@Override
@@ -32,11 +33,7 @@ public class PBoxPDType1Font extends PBoxPDSimpleFont implements PDType1Font {
 	@Override
 	public String getCharSet() {
 		PDFontDescriptor fontDescriptor = pdFontLike.getFontDescriptor();
-		if (fontDescriptor != null) {
-			return fontDescriptor.getCharSet();
-		} else {
-			return null;
-		}
+		return fontDescriptor != null ? fontDescriptor.getCharSet() : null;
 	}
 
 }
