@@ -130,13 +130,8 @@ public final class LegacyProfileConverter {
      */
     public static ProfileDetails parsedFromLegacyProfile(
             org.verapdf.validation.profile.model.ValidationProfile toConvert) {
-        String[] dateParts = toConvert.getCreated().split("T");
-        String cleanDate = dateParts[0] + "T"
-                + dateParts[1].replace("-", ":").replace("+02", "");
-        Date created = javax.xml.bind.DatatypeConverter
-                .parseDateTime(cleanDate).getTime();
         return Profiles.profileDetailsFromValues(toConvert.getName(),
-                toConvert.getDescription(), toConvert.getCreator(), created);
+                toConvert.getDescription(), toConvert.getCreator(), new Date());
     }
 
     /**
@@ -160,10 +155,6 @@ public final class LegacyProfileConverter {
         // Get the Id
         RuleId id = fromLegacyRuleId(toConvert.getAttrID());
         // check consistency with root
-        if (!id.getClause().equals(rootRef.getClause())) {
-            System.out.println(toConvert.getAttrID() + "\t"
-                    + toConvert.getReference().getClause());
-        }
         Rule converted = Profiles.ruleFromValues(id, toConvert.getAttrObject(),
                 toConvert.getDescription().trim().replaceAll(" +", " "),
                 toConvert.getTest(), fromLegacyError(toConvert.getRuleError()),
