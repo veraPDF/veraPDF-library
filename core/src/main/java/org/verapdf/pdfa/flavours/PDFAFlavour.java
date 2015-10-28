@@ -291,6 +291,19 @@ public enum PDFAFlavour {
         }
         return flavour;
     }
+    
+    /**
+     * @param toParse
+     * @return
+     */
+    public static PDFAFlavour fromString(String toParse) {
+        for (String id : getFlavourIds()) {
+            if (toParse.toLowerCase().contains(id)) {
+                return byFlavourId(id);
+            }
+        }
+        return PDFAFlavour.NO_FLAVOUR;
+    }
 
     /**
      * @return the Set of PDFA Flavour String ids
