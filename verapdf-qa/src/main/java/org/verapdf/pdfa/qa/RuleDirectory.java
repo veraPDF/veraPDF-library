@@ -31,9 +31,12 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
 
     private final Registry<RuleId, Rule> rules = new MapBackedRegistry<>(
             Collections.EMPTY_MAP);
+    private final PDFAFlavour flavour;
+
 
     private RuleDirectory(final File root) {
-        Set<Rule> ruleSet = rulesFromDir(root);
+        this.flavour = PDFAFlavour.fromString(root.getName());
+        Set<Rule> ruleSet = rulesFromDir(root, this.flavour);
         for (Rule rule : ruleSet) {
             this.rules.putdateItem(rule.getRuleId(), rule);
         }
@@ -97,17 +100,17 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
      * @throws IOException
      * @throws ProfileException
      */
-    public static Set<Rule> rulesFromDir(final File dir) {
+    public static Set<Rule> rulesFromDir(final File dir, final PDFAFlavour flavour) {
         Set<Rule> rules = new HashSet<>();
         File[] files = dir.listFiles();
         for (File file : files) {
             if (file.isHidden())
                 continue;
             if (file.isDirectory())
-                rules.addAll(rulesFromDir(file));
+                rules.addAll(rulesFromDir(file, flavour));
             if (file.isFile() && file.canRead()) {
                 try (InputStream fis = new FileInputStream(file)) {
-                    Rule rule = getRuleFromLegacyProfile(fis);
+                    Rule rule = getRuleFromLegacyProfile(fis, flavour);
                     rules.add(rule);
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
@@ -121,10 +124,10 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
         return rules;
     }
 
-    private static Rule getRuleFromLegacyProfile(final InputStream toParse)
+    private static Rule getRuleFromLegacyProfile(final InputStream toParse, final PDFAFlavour flavour)
             throws ProfileException {
         ValidationProfile profile = LegacyProfileConverter.fromLegacyStream(
-                toParse, PDFAFlavour.NO_FLAVOUR);
+                toParse, flavour);
         return profile.getRules().iterator().next();
     }
 }

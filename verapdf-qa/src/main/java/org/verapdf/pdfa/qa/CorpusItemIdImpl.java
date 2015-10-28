@@ -62,6 +62,57 @@ public class CorpusItemIdImpl implements CorpusItemId {
         return this.status;
     }
 
+    
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((this.ruleId == null) ? 0 : this.ruleId.hashCode());
+        result = prime * result + ((this.status == null) ? 0 : this.status.hashCode());
+        result = prime * result
+                + ((this.testCode == null) ? 0 : this.testCode.hashCode());
+        return result;
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        CorpusItemIdImpl other = (CorpusItemIdImpl) obj;
+        if (this.ruleId == null) {
+            if (other.ruleId != null)
+                return false;
+        } else if (!this.ruleId.equals(other.ruleId))
+            return false;
+        if (this.status != other.status)
+            return false;
+        if (this.testCode == null) {
+            if (other.testCode != null)
+                return false;
+        } else if (!this.testCode.equals(other.testCode))
+            return false;
+        return true;
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public String toString() {
+        return "CorpusItemIdImpl [ruleId=" + this.ruleId + ", testCode=" + this.testCode
+                + ", status=" + this.status + "]";
+    }
+
     /**
      * @return
      */
@@ -88,7 +139,7 @@ public class CorpusItemIdImpl implements CorpusItemId {
     public static CorpusItemId fromFileName(final Specification specification, final String name) {
         for (String part : name.split(" ")) {
             if (part.endsWith(TEST_FILE_EXT)) {
-                return fromCode(specification, part.split(".")[0]);
+                return fromCode(specification, part);
             }
         }
         return DEFAULT;
@@ -106,17 +157,18 @@ public class CorpusItemIdImpl implements CorpusItemId {
         String testCode = "";
         int testNumber = 0;
         for (String part : code.split(SEPARATOR)) {
-            if (part.startsWith(TEST_PREFIX)) {
-                testNumber = Integer.parseInt(part.substring(1));
+            if (part.endsWith(TEST_FILE_EXT)){
+                testCode = part.substring(0, 1);
+                break;
             } else if (testPassFail(part) != Status.UNKNOWN) {
                 status = testPassFail(part);
+            } else if (part.startsWith(TEST_PREFIX)) {
+                testNumber = Integer.parseInt(part.substring(1));
             } else if (status == Status.UNKNOWN){
                 builder.append(separator);
                 builder.append(part);
                 separator = ".";
-            } else {
-                testCode = part;
-            }
+            } 
         }
         RuleId ruleId = Profiles.ruleIdFromValues(specification, builder.toString(), testNumber);
         return CorpusItemIdImpl.fromValues(ruleId, testCode, status);
