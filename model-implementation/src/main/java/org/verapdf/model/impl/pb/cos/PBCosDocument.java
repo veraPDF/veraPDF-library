@@ -385,7 +385,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 
 	private COSDictionary getCatalog() {
 		COSBase catalog = ((COSDocument) this.baseObject)
-				.getTrailer().getDictionaryObject(COSName.CATALOG);
+				.getTrailer().getDictionaryObject(COSName.ROOT);
 		return catalog instanceof COSDictionary ? (COSDictionary) catalog : null;
 	}
 
