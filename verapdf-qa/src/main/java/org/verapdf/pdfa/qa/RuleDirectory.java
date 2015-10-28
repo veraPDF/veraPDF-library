@@ -33,7 +33,6 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
             Collections.EMPTY_MAP);
     private final PDFAFlavour flavour;
 
-
     private RuleDirectory(final File root) {
         this.flavour = PDFAFlavour.fromString(root.getName());
         Set<Rule> ruleSet = rulesFromDir(root, this.flavour);
@@ -88,6 +87,13 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
         return this.rules.isEmpty();
     }
 
+    /**
+     * @return
+     */
+    public PDFAFlavour getFlavour() {
+        return this.flavour;
+    }
+
     public static RuleDirectory loadFromDir(final File root)
             throws FileNotFoundException, IOException {
         return new RuleDirectory(root);
@@ -100,7 +106,8 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
      * @throws IOException
      * @throws ProfileException
      */
-    public static Set<Rule> rulesFromDir(final File dir, final PDFAFlavour flavour) {
+    public static Set<Rule> rulesFromDir(final File dir,
+            final PDFAFlavour flavour) {
         Set<Rule> rules = new HashSet<>();
         File[] files = dir.listFiles();
         for (File file : files) {
@@ -124,8 +131,8 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
         return rules;
     }
 
-    private static Rule getRuleFromLegacyProfile(final InputStream toParse, final PDFAFlavour flavour)
-            throws ProfileException {
+    private static Rule getRuleFromLegacyProfile(final InputStream toParse,
+            final PDFAFlavour flavour) throws ProfileException {
         ValidationProfile profile = LegacyProfileConverter.fromLegacyStream(
                 toParse, flavour);
         return profile.getRules().iterator().next();

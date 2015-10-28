@@ -94,6 +94,12 @@ public class CorpusDirectory implements Directory<CorpusItemId, Path> {
     }
 
     /**
+     * @return
+     */
+    public PDFAFlavour getFlavour() {
+        return this.flavour;
+    }
+    /**
      * @param id
      * @return
      */
