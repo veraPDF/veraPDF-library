@@ -3,18 +3,28 @@
  */
 package org.verapdf.core;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- * @param <K> 
- * @param <V> 
+ * @param <K>
+ *            A key or lookup type
+ * @param <V>
+ *            A value type
  *
  */
-public class MapBackedRegistry<K, V> extends MapBackedDirectory<K, V>
-        implements Registry<K, V> {
+public class MapBackedRegistry<K, V> extends MapBackedDirectory<K, V> implements
+        Registry<K, V> {
+    /**
+     * @param map
+     */
+    public MapBackedRegistry() {
+        this(Collections.EMPTY_MAP);
+    }
+
     /**
      * @param map
      */
@@ -79,7 +89,7 @@ public class MapBackedRegistry<K, V> extends MapBackedDirectory<K, V>
     public V updateItem(final K key, final V value) {
         // If the item doesn't exist then a no such element exception
         if (!this.map.containsKey(key)) {
-            throw new NoSuchElementException(); 
+            throw new NoSuchElementException();
         }
         return this.map.put(key, value);
     }

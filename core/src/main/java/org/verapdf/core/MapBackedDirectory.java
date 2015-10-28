@@ -12,8 +12,10 @@ import java.util.Set;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- * @param <K> A key or lookup type for the directory
- * @param <V> 
+ * @param <K>
+ *            A key or lookup type
+ * @param <V>
+ *            A value type
  *
  */
 public class MapBackedDirectory<K, V> implements Directory<K, V> {
