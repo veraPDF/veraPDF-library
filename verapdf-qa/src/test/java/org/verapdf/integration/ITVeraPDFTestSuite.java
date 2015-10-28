@@ -29,7 +29,7 @@ public class ITVeraPDFTestSuite {
     public final static String TEST_RESOURCES_DIRECTORY_PREFIX = "/test-resources/";
     public final static String VERA_PDF_TEST_SUITE_PROPERTIES_PATH = "test-config.properties";
     private final static String VERA_PDF_TEST_SUITE_FILE_PATH_PROPERTY = "test.set.path";
-    private final static String VERA_PDF_VALIDATION_PROFILES_DIRECTORY = "veraPDF-validation-profiles/";
+    private final static String VERA_PDF_VALIDATION_PROFILES_DIRECTORY = "veraPDF-validation-profiles/PDF_A/1b";
     private final static String REPORTS_DIRECTORY_PREFIX = "/reports/";
 
     private final static ObjectMapper MAPPER = new ObjectMapper();
