@@ -41,8 +41,10 @@ public abstract class FileBackedRegistry<K, V> implements Registry<K, V> {
             throw new IllegalArgumentException("rootDir cannot be null.");
         if (!rootDir.isDirectory())
             throw new IllegalArgumentException("rootDir MUST be a directory.");
-        this.map = new MapBackedRegistry<>(map);
         this.root = rootDir;
+        this.map = new MapBackedRegistry<>(map);
+        this.load();
+        this.persist();
     }
 
     /**
@@ -228,4 +230,5 @@ public abstract class FileBackedRegistry<K, V> implements Registry<K, V> {
     }
 
     protected abstract void persist();
+    protected abstract void load();
 }
