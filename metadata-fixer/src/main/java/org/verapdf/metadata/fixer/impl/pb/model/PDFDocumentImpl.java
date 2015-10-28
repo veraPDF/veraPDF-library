@@ -120,15 +120,21 @@ public class PDFDocumentImpl implements PDFDocument {
 				}
 				this.document.saveIncremental(output);
 				output.close();
-				result.setStatus(MetadataFixerResult.RepairStatus.SUCCESSFUL);
+				result.setStatus(this.getStatus(result));
 			} else {
 				result.setStatus(MetadataFixerResult.RepairStatus.NO_ACTION);
+				result.addAppliedFix("No action performed.");
 			}
 		} catch (Exception e) {
 			LOGGER.info(e);
 			result.setStatus(MetadataFixerResult.RepairStatus.FAILED);
-			result.addAppliedFix("Problems with document save");
+			result.addAppliedFix("Problems with document save. " + e.getMessage());
 		}
+	}
+
+	private MetadataFixerResult.RepairStatus getStatus(MetadataFixerResult result) {
+		return result.getStatus() != MetadataFixerResult.RepairStatus.NOT_REPAIRABLE ?
+				MetadataFixerResult.RepairStatus.SUCCESSFUL : MetadataFixerResult.RepairStatus.NOT_REPAIRABLE;
 	}
 
 }

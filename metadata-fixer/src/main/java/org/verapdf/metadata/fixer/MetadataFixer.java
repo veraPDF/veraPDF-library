@@ -141,8 +141,11 @@ public class MetadataFixer {
 
 			return result;
 		} else {
-			MetadataFixerResult.RepairStatus res = MetadataFixerResult.RepairStatus.NOT_REPAIRABLE;
-			return new MetadataFixerResult(res);
+			MetadataFixerResult result = new MetadataFixerResult();
+			MetadataFixerResult.RepairStatus status = MetadataFixerResult.RepairStatus.FAILED;
+			result.setStatus(status);
+			result.addAppliedFix("Problems with metadata obtain. No possibility to fix metadata.");
+			return result;
 		}
 	}
 
@@ -169,7 +172,12 @@ public class MetadataFixer {
 		if (config.isFixIdentification()) {
 			metadata.removePDFIdentificationSchema(result);
 		}
+
 		fixMetadata(result, config);
+
+		if (result.getAppliedFixes().size() > 0) {
+			result.setStatus(MetadataFixerResult.RepairStatus.NOT_REPAIRABLE);
+		}
 	}
 
 	private static void executeInvalidMetadataCase(FixerConfig config, Metadata metadata, MetadataFixerResult result) {
@@ -182,6 +190,9 @@ public class MetadataFixer {
 	private static void executeInvalidStructureCase(FixerConfig config, Metadata metadata, MetadataFixerResult result) {
 		if (config.isFixIdentification()) {
 			metadata.removePDFIdentificationSchema(result);
+		}
+		if (result.getAppliedFixes().size() > 0) {
+			result.setStatus(MetadataFixerResult.RepairStatus.NOT_REPAIRABLE);
 		}
 	}
 
