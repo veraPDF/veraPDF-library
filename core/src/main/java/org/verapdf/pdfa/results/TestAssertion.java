@@ -52,7 +52,11 @@ public interface TestAssertion {
         /**
          * Indicates a test failure
          */
-        FAILED;
+        FAILED,
+        /**
+         * 
+         */
+        UNKNOWN;
     }
 
 }

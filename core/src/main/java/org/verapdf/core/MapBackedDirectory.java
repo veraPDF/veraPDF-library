@@ -22,9 +22,16 @@ public class MapBackedDirectory<K, V> implements Directory<K, V> {
     protected final Map<K, V> map;
     
     /**
+     * 
+     */
+    public MapBackedDirectory() {
+        this(Collections.EMPTY_MAP);
+    }
+    /**
      * @param map
      */
     public MapBackedDirectory(final Map<K, V> map) {
+        super();
         this.map = new HashMap<>(map);
     }
     /**
