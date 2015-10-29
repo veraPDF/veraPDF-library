@@ -57,6 +57,7 @@
     <module>feature-report</module>
     <module>metadata-fixer</module>
     <module>verapdf-qa</module>
+    <module>installer</module>
   </modules>
 
   <scm>
