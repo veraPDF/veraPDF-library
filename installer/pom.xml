@@ -116,9 +116,9 @@
             </goals>
             <configuration>
               <url>https://github.com/veraPDF/veraPDF-corpus/archive/staging.zip</url>
-              <unpack>true</unpack>
+              <unpack>false</unpack>
               <skipCache>true</skipCache>
-              <outputDirectory>${project.build.directory}/staging/corpora</outputDirectory>
+              <outputDirectory>${project.build.directory}/staging/corpus</outputDirectory>
             </configuration>
           </execution>
           <execution>
@@ -129,7 +129,7 @@
             </goals>
             <configuration>
               <url>https://github.com/veraPDF/veraPDF-validation-profiles/archive/integration.zip</url>
-              <unpack>true</unpack>
+              <unpack>false</unpack>
               <skipCache>true</skipCache>
               <outputDirectory>${project.build.directory}/staging/profiles</outputDirectory>
             </configuration>
@@ -142,7 +142,7 @@
             </goals>
             <configuration>
               <url>https://github.com/veraPDF/veraPDF-model/archive/integration.zip</url>
-              <unpack>true</unpack>
+              <unpack>false</unpack>
               <skipCache>true</skipCache>
               <outputDirectory>${project.build.directory}/staging/model</outputDirectory>
             </configuration>
