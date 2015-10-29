@@ -26,6 +26,9 @@ public class FontHelper {
 	 * @return Apache Preflight font container
 	 */
 	public static FontContainer getFontContainer(PDFont font) {
+		if (font == null) {
+			return null;
+		}
 		switch (font.getSubType()) {
 			case FontFactory.TYPE_1:
 			case FontFactory.MM_TYPE_1:
