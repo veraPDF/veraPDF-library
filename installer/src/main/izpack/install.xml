@@ -57,13 +57,13 @@
       <executable targetfile="$INSTALL_PATH/bin/gui-${project.version}.jar"/>
       <file targetdir="$INSTALL_PATH/profiles" src="profiles/integration.zip" unpack="true"/>
     </pack>
-    <pack name="veraPDF Scripts" required="yes" os="unix" executable="yes">
+    <pack name="veraPDF Mac and *nix Scripts" required="yes" os="unix" executable="yes">
       <description>Scripts for using the veraPDF software.</description>
       <file targetdir="$INSTALL_PATH" src="scripts/verapdf-gui"/>
       <parsable targetfile="$INSTALL_PATH/verapdf-gui" type="shell"/>
       <executable targetfile="$INSTALL_PATH/verapdf-gui"/>
     </pack>
-    <pack name="veraPDF Scripts" required="yes" os="windows">
+    <pack name="veraPDF Batch files" required="yes" os="windows">
       <description>Scripts for using the veraPDF software.</description>
       <file targetdir="$INSTALL_PATH" src="scripts/verapdf-gui.bat"/>
       <executable targetfile="$INSTALL_PATH/verapdf-gui.bat"/>
