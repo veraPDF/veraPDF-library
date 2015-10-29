@@ -5,6 +5,7 @@ import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
+import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
 import org.apache.pdfbox.preflight.font.container.FontContainer;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
@@ -76,6 +77,10 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     }
 
     private List<PBGlyph> getUsedGlyphs() {
+		if (this.state.getRenderingMode().equals(RenderingMode.NEITHER)) {
+			return Collections.emptyList();
+		}
+
 		org.apache.pdfbox.pdmodel.font.PDFont font = this.state.getFont();
 		FontContainer fontContainer = FontHelper.getFontContainer(font);
 
