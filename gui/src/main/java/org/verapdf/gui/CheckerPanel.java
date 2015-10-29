@@ -108,6 +108,16 @@ class CheckerPanel extends JPanel {
 		gbl.setConstraints(chosenProfile, gbc);
 		this.add(chosenProfile);
 
+		String appHome = System.getProperty("app.home");
+		if (appHome != null) {
+			File user = new File(System.getProperty("app.home"));
+			File defaultProfile = new File(user, "profiles/veraPDF-validation-profiles-integration/PDF_A/PDFA-1B.xml");
+			if (defaultProfile.isFile() && defaultProfile.canRead()) {
+				this.profile = defaultProfile;
+				this.chosenProfile.setText(this.profile.getAbsolutePath());
+			}
+		}
+
 		JButton chooseProfile = new JButton(
 				GUIConstants.CHOOSE_PROFILE_BUTTON_TEXT);
 		setGridBagConstraintsParameters(gbc,
