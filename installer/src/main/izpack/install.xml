@@ -63,10 +63,9 @@
       <parsable targetfile="$INSTALL_PATH/verapdf-gui" type="shell"/>
       <executable targetfile="$INSTALL_PATH/verapdf-gui"/>
     </pack>
-    <pack name="veraPDF Scripts" required="yes" os="windows" executable="yes">
+    <pack name="veraPDF Scripts" required="yes" os="windows">
       <description>Scripts for using the veraPDF software.</description>
       <file targetdir="$INSTALL_PATH" src="scripts/verapdf-gui.bat"/>
-      <parsable targetfile="$INSTALL_PATH/verapdf-gui.bat" type="plain"/>
       <executable targetfile="$INSTALL_PATH/verapdf-gui.bat"/>
     </pack>
     <pack name="veraPDF Corpus and Validation model" required="no">
