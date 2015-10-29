@@ -444,6 +444,9 @@ class OperatorParser {
 
     private static PDXObject getXObjectFromResources(PDResources resources,
             COSName xobject) {
+		if (resources == null) {
+			return null;
+		}
         try {
             return resources.getXObject(xobject);
         } catch (IOException e) {
@@ -456,6 +459,9 @@ class OperatorParser {
 
     private static PDColorSpace getColorSpaceFromResources(
             PDResources resources, COSName colorSpace) {
+		if (resources == null) {
+			return null;
+		}
         try {
             return resources.getColorSpace(colorSpace);
         } catch (IOException e) {
@@ -468,6 +474,9 @@ class OperatorParser {
 
     private static PDShading getShadingFromResources(PDResources resources,
             COSName shading) {
+		if (resources == null) {
+			return null;
+		}
         try {
             return resources.getShading(shading);
         } catch (IOException e) {
@@ -480,11 +489,14 @@ class OperatorParser {
 
     private static PDExtendedGraphicsState getExtGStateFromResources(
             PDResources resources, COSName extGState) {
-        return resources.getExtGState(extGState);
-    }
+		return resources == null ? null : resources.getExtGState(extGState);
+	}
 
     private static PDFont getFontFromResources(PDResources resources,
             COSName font) {
+		if (resources == null) {
+			return null;
+		}
         try {
             return resources.getFont(font);
         } catch (IOException e) {
@@ -500,11 +512,9 @@ class OperatorParser {
             COSBase renderingMode = arguments.get(0);
             if (renderingMode instanceof COSInteger) {
 				try {
-					RenderingMode rMode = RenderingMode.fromInt(((COSInteger) renderingMode).intValue());
-					return rMode;
+					return RenderingMode.fromInt(((COSInteger) renderingMode).intValue());
 				} catch (ArrayIndexOutOfBoundsException e) {
-					LOGGER.error("Rendering mode value is incorrect : " + renderingMode);
-					LOGGER.error(e);
+					LOGGER.error("Rendering mode value is incorrect : " + renderingMode, e);
 				}
 			}
         }
@@ -513,6 +523,9 @@ class OperatorParser {
 
     private static PDAbstractPattern getPatternFromResources(
             PDResources resources, COSName pattern) {
+		if (resources == null) {
+			return null;
+		}
         try {
             return resources.getPattern(pattern);
         } catch (IOException e) {

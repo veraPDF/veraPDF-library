@@ -80,10 +80,16 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 		if (this.state.getRenderingMode().equals(RenderingMode.NEITHER)) {
 			return Collections.emptyList();
 		}
-        List<PBGlyph> res = new ArrayList<>();
+
 		org.apache.pdfbox.pdmodel.font.PDFont font = this.state.getFont();
 		FontContainer fontContainer = FontHelper.getFontContainer(font);
-        List<byte[]> strings = this.getStrings(this.arguments);
+
+		if (fontContainer == null) {
+			return Collections.emptyList();
+		}
+
+		List<PBGlyph> res = new ArrayList<>();
+		List<byte[]> strings = this.getStrings(this.arguments);
         for (byte[] string : strings) {
             try (InputStream inputStream = new ByteArrayInputStream(string)) {
                 while (inputStream.available() > 0) {
