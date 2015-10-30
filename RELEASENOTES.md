@@ -92,7 +92,7 @@ The releases includes a fully functional and internally tested implementation (b
 
 ## Infrastructure
 
-- Added wizard-based installation package
+- Added cross-platform installer
 - Full coverage of Bavaria, Isartor, veraPDF test suites for ISO validation tests
 
 ## Test corpus
