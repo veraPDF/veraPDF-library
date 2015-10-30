@@ -54,7 +54,7 @@ The releases includes a fully functional prototype for the PDF/A-1b valitation a
 
 # Version 0.4 (September 16, 2015)
 
-The releases includes a fully functional implementation (alpha version) for the complete PDF/A-1b valitation and the PDF Feature Report generation
+The releases includes a fully functional implementation (alpha version) for the complete PDF/A-1B valitation and the PDF Feature Report generation
 
 ## Features
 
@@ -78,7 +78,7 @@ The releases includes a fully functional implementation (alpha version) for the 
 
 # Version 0.6 (October 30, 2015)
 
-The releases includes a fully functional and internally tested implementation (beta version) for the complete PDF/A-1b valitation, the PDF Feature Report generation and the Metadata Fixer.
+The releases includes a fully functional and internally tested implementation (beta version) for the complete PDF/A-1B valitation, the PDF Feature Report generation and the Metadata Fixer.
 
 ## Features
 
@@ -92,12 +92,12 @@ The releases includes a fully functional and internally tested implementation (b
 ## Infrastructure
 
 - Added wizard-based installation
-- Full coverage of Bavaria, Isartor, veraPDF test suites for PDF/A-1B
+- Full coverage of Bavaria, Isartor, veraPDF test suites for ISO integration tests
 
 ## Test corpus
 
-- Full coverage of
-- Total 176 atomic test files for PDF/A-1B extending Isartor test suite
+- Added new test files for the use of Device colour spaces and XMP Metadata
+- Total 200 atomic test files for PDF/A-1B extending Isartor and Bavaria test suite
 
 ***
 
