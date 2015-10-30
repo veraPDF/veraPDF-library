@@ -67,6 +67,10 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 	}
 
     private List<PDFont> getFont() {
+		if (this.state.getRenderingMode().equals(RenderingMode.NEITHER)) {
+			return Collections.emptyList();
+		}
+
         PDFont font = FontFactory.parseFont(this.state.getFont());
 		if (font != null) {
 			List<PDFont> result = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
