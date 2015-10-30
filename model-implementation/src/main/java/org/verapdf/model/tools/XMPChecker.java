@@ -15,6 +15,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class matches document information dictionary and xmp metadata by
@@ -244,8 +246,9 @@ public final class XMPChecker {
                 // DateConverter can parse as pdf date format as simple date
                 // format
                 final String regex = "(D:)?(\\d\\d){2,7}((([+-](\\d\\d[']))(\\d\\d['])?)?|[Z])";
-                if (string.getASCII().matches(regex)) {
-                    final Calendar valueDate = DateConverter.toCalendar(string);
+				String ascii = string.getASCII();
+				if (ascii.matches(regex)) {
+                    final Calendar valueDate = getCalendar(ascii);
                     return Boolean.valueOf(valueDate != null
                             && valueDate.compareTo((Calendar) value) == 0);
                 } else {
@@ -255,4 +258,10 @@ public final class XMPChecker {
         }
         return Boolean.FALSE;
     }
+
+	private static Calendar getCalendar(String date) {
+		Matcher matcher = Pattern
+				.compile("((([+-](\\d\\d[']))(\\d\\d['])?)|[Z])").matcher(date);
+		return DateConverter.toCalendar(date, matcher.find());
+	}
 }
