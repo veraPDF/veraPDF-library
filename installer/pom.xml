@@ -17,6 +17,7 @@
     <izpack.staging>${project.build.directory}/staging</izpack.staging>
     <izpack.target>${project.build.directory}</izpack.target>
     <izpack.scripts>${project.build.scriptSourceDirectory}</izpack.scripts>
+    <project.main.dir>${project.basedir}/..</project.main.dir>
   </properties>
 
   <build>
@@ -74,6 +75,27 @@
                   <excludes>
                     <exclude>izpack</exclude>
                   </excludes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>verapdf-documents</id>
+            <!-- here the phase you need -->
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${izpack.staging}/documents</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.main.dir}</directory>
+                  <includes>
+                    <include>README.md</include>
+                    <include>RELEASENOTES.md</include>
+                    <include>veraPDFPDFAConformanceCheckerGUI.pdf</include>
+                  </includes>
                 </resource>
               </resources>
             </configuration>
