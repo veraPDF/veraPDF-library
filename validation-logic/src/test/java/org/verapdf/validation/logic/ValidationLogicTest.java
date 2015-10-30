@@ -35,8 +35,6 @@ public class ValidationLogicTest {
 
 		assertEquals(318, info.getResult().getSummary().getAttrPassedChecks());
 		assertEquals(2, info.getResult().getSummary().getAttrFailedChecks());
-		assertEquals(0, info.getResult().getSummary().getAttrCompletedMetadataFixes());
-		assertEquals(0, info.getResult().getSummary().getAttrFailedMetadataFixes());
 		assertEquals(0, info.getResult().getSummary().getAttrWarnings());
 		assertEquals("PDF file is not compliant with Validation Profile requirements", info.getResult().getStatement());
 

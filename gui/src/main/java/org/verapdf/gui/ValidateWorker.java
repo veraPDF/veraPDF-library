@@ -17,6 +17,7 @@ import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.model.ModelLoader;
+import org.verapdf.pdfa.MetadataFixerResult;
 import org.verapdf.report.HTMLReport;
 import org.verapdf.report.XMLReport;
 import org.verapdf.validation.logic.Validator;
@@ -87,13 +88,12 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 				if (this.isFixMetadata) {
 					FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(loader.getPDDocument(), info);
 					Path path = settings.getFixMetadataPathFolder();
-					MetadataFixerResultImpl fixerResult;
 					File tempFile = File.createTempFile("fixedTempFile", ".pdf");
 					tempFile.deleteOnExit();
-					MetadataFixerResult fixerResult = MetadataFixer.fixMetadata(tempFile, fixerConfig);
-
+					MetadataFixerResultImpl fixerResult = MetadataFixer.fixMetadata(tempFile, fixerConfig);
 					info.setMetadataFixerResult(fixerResult);
-					if (fixerResult.getStatus().equals(MetadataFixerResult.RepairStatus.SUCCESSFUL)) {
+					if (fixerResult.getRepairStatus().equals(MetadataFixerResult.RepairStatus.SUCCESS) ||
+							fixerResult.getRepairStatus().equals(MetadataFixerResult.RepairStatus.ID_REMOVED)) {
 						File resFile;
 						boolean flag = true;
 						while (flag) {

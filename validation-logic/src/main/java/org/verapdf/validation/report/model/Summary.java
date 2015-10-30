@@ -34,9 +34,9 @@ public class Summary {
 	}
 
 	void setMetadataFixerResult(MetadataFixerResult res) {
-		//TODO: replace
-		this.attrMetadataFixerResult = res.getRepairStatus().toString();
-		if (res.getRepairStatus().equals(MetadataFixerResult.RepairStatus.SUCCESSFUL)) {
+		this.attrMetadataFixerResult = res.getRepairStatus().getReadableName();
+		if (res.getRepairStatus().equals(MetadataFixerResult.RepairStatus.SUCCESS) ||
+				res.getRepairStatus().equals(MetadataFixerResult.RepairStatus.ID_REMOVED)) {
 			this.attrCompletedMetadataFixes = res.getAppliedFixes().size();
 		}
 	}
