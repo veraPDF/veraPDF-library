@@ -73,5 +73,11 @@
       <file targetdir="$INSTALL_PATH/corpus" src="corpus/staging.zip" unpack="true"/>
       <file targetdir="$INSTALL_PATH/model" src="model/integration.zip" unpack="true"/>
     </pack>
+    <pack name="veraPDF Documentation" required="no">
+      <description>The veraPDF documentation.</description>
+      <file targetdir="$INSTALL_PATH/documents" src="documents/README.md"/>
+      <file targetdir="$INSTALL_PATH/documents" src="documents/RELEASENOTES.md"/>
+      <file targetdir="$INSTALL_PATH/documents" src="documents/veraPDFPDFAConformanceCheckerGUI.pdf"/>
+    </pack>
   </packs>
 </izpack:installation>
