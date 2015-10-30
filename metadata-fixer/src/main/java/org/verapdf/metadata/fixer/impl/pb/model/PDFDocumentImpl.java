@@ -20,6 +20,8 @@ import org.verapdf.metadata.fixer.entity.PDFDocument;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.*;
+
 /**
  * @author Evgeniy Muravitskiy
  */
@@ -122,19 +124,18 @@ public class PDFDocumentImpl implements PDFDocument {
 				output.close();
 				result.setRepairStatus(this.getStatus(result));
 			} else {
-				result.setRepairStatus(MetadataFixerResultImpl.RepairStatus.NO_ACTION);
+				result.setRepairStatus(NO_ACTION);
 				result.addAppliedFix("No action performed.");
 			}
 		} catch (Exception e) {
 			LOGGER.info(e);
-			result.setRepairStatus(MetadataFixerResultImpl.RepairStatus.FIX_ERROR);
+			result.setRepairStatus(FIX_ERROR);
 			result.addAppliedFix("Problems with document save. " + e.getMessage());
 		}
 	}
 
 	private MetadataFixerResultImpl.RepairStatus getStatus(MetadataFixerResultImpl result) {
-		return result.getRepairStatus() != MetadataFixerResultImpl.RepairStatus.WONT_FIX ?
-				MetadataFixerResultImpl.RepairStatus.SUCCESS : MetadataFixerResultImpl.RepairStatus.WONT_FIX;
+		return result.getRepairStatus() != WONT_FIX ? SUCCESS : WONT_FIX;
 	}
 
 }
