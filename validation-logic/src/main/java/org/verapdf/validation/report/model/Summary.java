@@ -1,5 +1,7 @@
 package org.verapdf.validation.report.model;
 
+import org.verapdf.pdfa.MetadataFixerResult;
+
 /**
  * Structure of the summary of a result.
  *
@@ -10,8 +12,8 @@ public class Summary {
 	private final int attrFailedRules;
 	private final int attrPassedChecks;
 	private final int attrFailedChecks;
-	private final int attrCompletedMetadataFixes;
-	private final int attrFailedMetadataFixes;
+	private String attrMetadataFixerResult = "";
+	private int attrCompletedMetadataFixes = -1;
 	private final int attrWarnings;
 
 	/**
@@ -21,18 +23,22 @@ public class Summary {
 	 * @param attrFailedRules            number of failed rules
 	 * @param attrPassedChecks           number of passed checks
 	 * @param attrFailedChecks           number of failed checks
-	 * @param attrCompletedMetadataFixes number of completed metadata fixes
-	 * @param attrFailedMetadataFixes    number of failed metadata fixes
 	 * @param attrWarnings               number of warnngs
 	 */
-	public Summary(int attrPassedRules, int attrFailedRules, int attrPassedChecks, int attrFailedChecks, int attrCompletedMetadataFixes, int attrFailedMetadataFixes, int attrWarnings) {
+	public Summary(int attrPassedRules, int attrFailedRules, int attrPassedChecks, int attrFailedChecks, int attrWarnings) {
 		this.attrPassedRules = attrPassedRules;
 		this.attrFailedRules = attrFailedRules;
 		this.attrPassedChecks = attrPassedChecks;
 		this.attrFailedChecks = attrFailedChecks;
-		this.attrCompletedMetadataFixes = attrCompletedMetadataFixes;
-		this.attrFailedMetadataFixes = attrFailedMetadataFixes;
 		this.attrWarnings = attrWarnings;
+	}
+
+	void setMetadataFixerResult(MetadataFixerResult res) {
+		this.attrMetadataFixerResult = res.getRepairStatus().getReadableName();
+		if (res.getRepairStatus().equals(MetadataFixerResult.RepairStatus.SUCCESS) ||
+				res.getRepairStatus().equals(MetadataFixerResult.RepairStatus.ID_REMOVED)) {
+			this.attrCompletedMetadataFixes = res.getAppliedFixes().size();
+		}
 	}
 
 	/**
@@ -71,10 +77,10 @@ public class Summary {
 	}
 
 	/**
-	 * @return the number of failed metadata fixes.
+	 * @return metadata fixer status or empty String if it is not set
 	 */
-	public int getAttrFailedMetadataFixes() {
-		return attrFailedMetadataFixes;
+	public String getAttrMetadataFixerResult() {
+		return attrMetadataFixerResult;
 	}
 
 	/**
