@@ -39,7 +39,7 @@ public interface MetadataFixerResult {
         /**
          * The fixer could not determine any action that could repair the PDF/A.
          */
-        WONT_FIX("Wont Fix"),
+        WONT_FIX("Won`t Fix"),
         /**
          * No action was taken because the file is already valid
          */
