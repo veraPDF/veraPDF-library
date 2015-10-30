@@ -15,34 +15,46 @@ public interface MetadataFixerResult {
     /**
      * @return the {@link RepairStatus} for the fix task
      */
-    public RepairStatus getRepairStatus();
+    RepairStatus getRepairStatus();
 
     /**
      * @return a List of Strings recording all fixes applies
      */
-    public List<String> getAppliedFixes();
+    List<String> getAppliedFixes();
 
     /**
      * Enumeration that indicates the status of a metadata repair task.
      * 
      * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
      */
-    public enum RepairStatus {
+    enum RepairStatus {
         /**
          * Metadata repair was carried out successfully.
          */
-        SUCCESSFUL,
+        SUCCESS("Success"),
         /**
          * Metadata repair was attempted but failed.
          */
-        FAILED,
+        FIX_ERROR("Fix Error"),
         /**
          * The fixer could not determine any action that could repair the PDF/A.
          */
-        NOT_REPAIRABLE,
+        WONT_FIX("Wont Fix"),
         /**
          * No action was taken because the file is already valid
          */
-        NO_ACTION;
-    }
+        NO_ACTION("No Action"),
+
+		ID_REMOVED("ID Removed");
+
+		private final String readableName;
+
+		RepairStatus(String readableName) {
+			this.readableName = readableName;
+		}
+
+		public String getReadableName() {
+			return this.readableName;
+		}
+	}
 }

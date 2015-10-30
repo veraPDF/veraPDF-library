@@ -12,7 +12,7 @@ import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.xml.DomXmpParser;
 import org.apache.xmpbox.xml.XmpParsingException;
-import org.verapdf.metadata.fixer.MetadataFixerResult;
+import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
@@ -108,7 +108,7 @@ public class PDFDocumentImpl implements PDFDocument {
 	 * {@inheritDoc} Implemented by Apache PDFBox library.
 	 */
 	@Override
-	public void saveDocumentIncremental(MetadataFixerResult result, OutputStream output) {
+	public void saveDocumentIncremental(MetadataFixerResultImpl result, OutputStream output) {
 		try {
 			PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
 			boolean isMetaPresent = meta != null && this.isNeedToBeUpdated();
@@ -120,21 +120,21 @@ public class PDFDocumentImpl implements PDFDocument {
 				}
 				this.document.saveIncremental(output);
 				output.close();
-				result.setStatus(this.getStatus(result));
+				result.setRepairStatus(this.getStatus(result));
 			} else {
-				result.setStatus(MetadataFixerResult.RepairStatus.NO_ACTION);
+				result.setRepairStatus(MetadataFixerResultImpl.RepairStatus.NO_ACTION);
 				result.addAppliedFix("No action performed.");
 			}
 		} catch (Exception e) {
 			LOGGER.info(e);
-			result.setStatus(MetadataFixerResult.RepairStatus.FAILED);
+			result.setRepairStatus(MetadataFixerResultImpl.RepairStatus.FIX_ERROR);
 			result.addAppliedFix("Problems with document save. " + e.getMessage());
 		}
 	}
 
-	private MetadataFixerResult.RepairStatus getStatus(MetadataFixerResult result) {
-		return result.getStatus() != MetadataFixerResult.RepairStatus.NOT_REPAIRABLE ?
-				MetadataFixerResult.RepairStatus.SUCCESSFUL : MetadataFixerResult.RepairStatus.NOT_REPAIRABLE;
+	private MetadataFixerResultImpl.RepairStatus getStatus(MetadataFixerResultImpl result) {
+		return result.getRepairStatus() != MetadataFixerResultImpl.RepairStatus.WONT_FIX ?
+				MetadataFixerResultImpl.RepairStatus.SUCCESS : MetadataFixerResultImpl.RepairStatus.WONT_FIX;
 	}
 
 }

@@ -1,6 +1,6 @@
 package org.verapdf.metadata.fixer.entity;
 
-import org.verapdf.metadata.fixer.MetadataFixerResult;
+import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
 
 import java.io.OutputStream;
 
@@ -39,18 +39,18 @@ public interface PDFDocument {
 	/**
 	 * Incremental save of pdf document. Document must be saved if and
 	 * only if metadata or information dictionary of document was changed.
-	 * In {@link MetadataFixerResult} must set 1 of 3 states:
+	 * In {@link MetadataFixerResultImpl} must set 1 of 3 states:
 	 * <ul>
 	 * <li>
-	 * {@link org.verapdf.metadata.fixer.MetadataFixerResult.RepairStatus#FAILED}
+	 * {@link MetadataFixerResultImpl.RepairStatus#FIX_ERROR}
 	 * if got problems with document save
 	 * </li>
 	 * <li>
-	 * {@link org.verapdf.metadata.fixer.MetadataFixerResult.RepairStatus#NO_ACTION}
+	 * {@link MetadataFixerResultImpl.RepairStatus#NO_ACTION}
 	 * if metadata and information dictionary was not changed
 	 * </li>
 	 * <li>
-	 * {@link org.verapdf.metadata.fixer.MetadataFixerResult.RepairStatus#SUCCESSFUL}
+	 * {@link MetadataFixerResultImpl.RepairStatus#SUCCESS}
 	 * if document save successful
 	 * </li>
 	 * </ul>
@@ -58,5 +58,5 @@ public interface PDFDocument {
 	 * @param report result of {@code MetadataFixer} handling
 	 * @param output output stream for document save
 	 */
-	void saveDocumentIncremental(MetadataFixerResult report, OutputStream output);
+	void saveDocumentIncremental(MetadataFixerResultImpl report, OutputStream output);
 }

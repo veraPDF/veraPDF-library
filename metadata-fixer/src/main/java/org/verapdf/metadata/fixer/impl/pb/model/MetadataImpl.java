@@ -12,7 +12,7 @@ import org.apache.xmpbox.schema.PDFAIdentificationSchema;
 import org.apache.xmpbox.schema.XMPBasicSchema;
 import org.apache.xmpbox.type.BadFieldValueException;
 import org.apache.xmpbox.xml.XmpSerializer;
-import org.verapdf.metadata.fixer.MetadataFixerResult;
+import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.impl.pb.schemas.AdobePDFSchemaImpl;
@@ -48,7 +48,7 @@ public class MetadataImpl implements Metadata {
 	}
 
 	@Override
-	public void checkMetadataStream(MetadataFixerResult report) {
+	public void checkMetadataStream(MetadataFixerResultImpl report) {
 		COSBase filters = this.stream.getFilters();
 		if (filters instanceof COSName ||
 				(filters instanceof COSArray && ((COSArray) filters).size() != 0)) {
@@ -65,7 +65,7 @@ public class MetadataImpl implements Metadata {
 		this.setRequiredDictionaryValue(COSName.getPDFName("XML"), COSName.SUBTYPE, report);
 	}
 
-	private void setRequiredDictionaryValue(COSName value, COSName key, MetadataFixerResult report) {
+	private void setRequiredDictionaryValue(COSName value, COSName key, MetadataFixerResultImpl report) {
 		if (!value.equals(this.stream.getDictionaryObject(key))) {
 			this.stream.setItem(key, value);
 			this.stream.setNeedToBeUpdated(true);
@@ -75,7 +75,7 @@ public class MetadataImpl implements Metadata {
 	}
 
 	@Override
-	public void removePDFIdentificationSchema(MetadataFixerResult result) {
+	public void removePDFIdentificationSchema(MetadataFixerResultImpl result) {
 		PDFAIdentificationSchema schema = this.metadata.getPDFIdentificationSchema();
 		if (schema != null) {
 			this.metadata.removeSchema(schema);
@@ -85,7 +85,7 @@ public class MetadataImpl implements Metadata {
 	}
 
 	@Override
-	public void addPDFIdentificationSchema(MetadataFixerResult report, PDFAFlavour flavour) {
+	public void addPDFIdentificationSchema(MetadataFixerResultImpl report, PDFAFlavour flavour) {
 		PDFAIdentificationSchema schema = this.metadata.getPDFIdentificationSchema();
 		int part = flavour.getPart().getPartNumber();
 		String conformance = flavour.getLevel().getCode();
