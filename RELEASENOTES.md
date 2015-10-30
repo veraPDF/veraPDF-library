@@ -54,7 +54,7 @@ The releases includes a fully functional prototype for the PDF/A-1b valitation a
 
 # Version 0.4 (September 16, 2015)
 
-The releases includes a fully functional implementation (alpha version) for the complete PDF/A-1b valitation and the PDF Feature Report generation
+The releases includes a fully functional implementation (alpha version) for the complete PDF/A-1B valitation and the PDF Feature Report generation
 
 ## Features
 
@@ -76,7 +76,31 @@ The releases includes a fully functional implementation (alpha version) for the 
 
 ***
 
+# Version 0.6 (October 30, 2015)
 
+The releases includes a fully functional and internally tested implementation (beta version) for the complete PDF/A-1B valitation, the PDF Feature Report generation and the Metadata Fixer.
+
+## Features
+
+- Stable (beta version) implementation of the formal PDF model for PDF/A-1 Level B
+- Prototype the formal PDF model for PDF/A-1 Level A and PDF/A-2,3 Level B
+- Minor refactoring and stricter naming conventions in validation rules for PDF/A-1 Level B 
+- Prototype valudation rules for PDF/A-1 Level A and PDF/A-2,3 Level B
+- Prototype implementation of the Metadata Fixer
+- Prototype implementation of the plug-in architecture for PDF Feature Report generation
+- Optimized performance for PDF/A font rules validation (glyphs presence, widths consistency)
+
+## Infrastructure
+
+- Added cross-platform installer
+- Full coverage of Bavaria, Isartor, veraPDF test suites for ISO validation tests
+
+## Test corpus
+
+- New test files for the use of Device colour spaces and XMP Metadata
+- Total 200 atomic test files for PDF/A-1B extending Isartor and Bavaria test suite
+
+***
 
 <img src="http://verapdf.openpreservation.org/wp-content/uploads/sites/3/2015/06/veraPDF-logo-200.png" width="88" alt="veraPDF Consortium"/>
 © 2015 [veraPDF Consortium](http://www.verapdf.org)
