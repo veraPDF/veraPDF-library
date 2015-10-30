@@ -1,6 +1,6 @@
 package org.verapdf.metadata.fixer.entity;
 
-import org.verapdf.metadata.fixer.MetadataFixerResult;
+import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
@@ -19,7 +19,7 @@ public interface Metadata {
 	 *
 	 * @param report report applied changes
 	 */
-	void checkMetadataStream(MetadataFixerResult report);
+	void checkMetadataStream(MetadataFixerResultImpl report);
 
 	/**
 	 * Remove identification schema if {@code MetadataFixer}
@@ -27,7 +27,7 @@ public interface Metadata {
 	 *
 	 * @param result report applied changes
 	 */
-	void removePDFIdentificationSchema(MetadataFixerResult result);
+	void removePDFIdentificationSchema(MetadataFixerResultImpl result);
 
 	/**
 	 * Add PDF/A identification schema if {@code MetadataFixer}
@@ -36,7 +36,7 @@ public interface Metadata {
 	 * @param report  report applied changes
 	 * @param flavour the checked flavour
 	 */
-	void addPDFIdentificationSchema(MetadataFixerResult report, PDFAFlavour flavour);
+	void addPDFIdentificationSchema(MetadataFixerResultImpl report, PDFAFlavour flavour);
 
 	/**
 	 * Get {@code DublinCore} representation. If current schema not presented

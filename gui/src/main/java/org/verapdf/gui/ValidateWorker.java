@@ -12,7 +12,7 @@ import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.metadata.fixer.MetadataFixer;
-import org.verapdf.metadata.fixer.MetadataFixerResult;
+import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
@@ -87,6 +87,7 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 				if (this.isFixMetadata) {
 					FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(loader.getPDDocument(), info);
 					Path path = settings.getFixMetadataPathFolder();
+					MetadataFixerResultImpl fixerResult;
 					File tempFile = File.createTempFile("fixedTempFile", ".pdf");
 					tempFile.deleteOnExit();
 					MetadataFixerResult fixerResult = MetadataFixer.fixMetadata(tempFile, fixerConfig);
