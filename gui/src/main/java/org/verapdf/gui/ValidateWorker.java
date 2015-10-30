@@ -14,6 +14,7 @@ import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.metadata.fixer.MetadataFixer;
 import org.verapdf.metadata.fixer.MetadataFixerResult;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
+import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.report.HTMLReport;
@@ -29,6 +30,8 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
@@ -84,15 +87,30 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 				if (this.isFixMetadata) {
 					FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(loader.getPDDocument(), info);
 					Path path = settings.getFixMetadataPathFolder();
-					MetadataFixerResult fixerResult;
+					File tempFile = File.createTempFile("fixedTempFile", ".pdf");
+					tempFile.deleteOnExit();
+					MetadataFixerResult fixerResult = MetadataFixer.fixMetadata(tempFile, fixerConfig);
 
-					if (!path.toString().trim().isEmpty()) {
-						// TODO : what we need do with fixing result?
-						fixerResult = MetadataFixer.fixMetadata(settings.getFixMetadataPathFolder().toFile(),
-								loader.getFile().getName(), settings.getMetadataFixerPrefix(), fixerConfig);
-					} else {
-						fixerResult = MetadataFixer.fixMetadata(loader.getFile(),
-								settings.getMetadataFixerPrefix(), fixerConfig);
+					info.setMetadataFixerResult(fixerResult);
+					if (fixerResult.getStatus().equals(MetadataFixerResult.RepairStatus.SUCCESSFUL)) {
+						File resFile;
+						boolean flag = true;
+						while (flag) {
+							if (!path.toString().trim().isEmpty()) {
+								resFile = FileGenerator.createOutputFile(settings.getFixMetadataPathFolder().toFile(),
+										loader.getFile().getName(), settings.getMetadataFixerPrefix());
+							} else {
+								resFile = FileGenerator.createOutputFile(loader.getFile(),
+										settings.getMetadataFixerPrefix());
+							}
+
+							try {
+								Files.copy(tempFile.toPath(), resFile.toPath());
+								flag = false;
+							} catch (FileAlreadyExistsException e) {
+								LOGGER.error(e);
+							}
+						}
 					}
 				}
 			}

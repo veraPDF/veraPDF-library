@@ -50,36 +50,37 @@ public final class XMLValidationReport {
 				}
 
 				if (info.getResult().getSummary() != null) {
-					Element summary = doc.createElement("summary");
-					summary.setAttribute(
+					Element summaryElement = doc.createElement("summary");
+					Summary summary = info.getResult().getSummary();
+					summaryElement.setAttribute(
 							"passedRules",
-							Integer.toString(info.getResult().getSummary()
-									.getAttrPassedRules()));
-					summary.setAttribute(
+							Integer.toString(summary.getAttrPassedRules()));
+					summaryElement.setAttribute(
 							"failedRules",
-							Integer.toString(info.getResult().getSummary()
-									.getAttrFailedRules()));
-					summary.setAttribute(
+							Integer.toString(summary.getAttrFailedRules()));
+					summaryElement.setAttribute(
 							"passedChecks",
-							Integer.toString(info.getResult().getSummary()
-									.getAttrPassedChecks()));
-					summary.setAttribute(
+							Integer.toString(summary.getAttrPassedChecks()));
+					summaryElement.setAttribute(
 							"failedChecks",
-							Integer.toString(info.getResult().getSummary()
-									.getAttrFailedChecks()));
-					summary.setAttribute(
-							"completedMetadataFixes",
-							Integer.toString(info.getResult().getSummary()
-									.getAttrCompletedMetadataFixes()));
-					summary.setAttribute(
-							"failedMetadataFixes",
-							Integer.toString(info.getResult().getSummary()
-									.getAttrFailedMetadataFixes()));
-					summary.setAttribute(
+							Integer.toString(summary.getAttrFailedChecks()));
+
+					if (!summary.getAttrMetadataFixerResult().isEmpty()) {
+						summaryElement.setAttribute(
+								"metadataFixesStatus",
+								summary.getAttrMetadataFixerResult()
+						);
+						if (summary.getAttrCompletedMetadataFixes() >= 0) {
+							summaryElement.setAttribute(
+									"completedMetadataFixes",
+									Integer.toString(summary.getAttrCompletedMetadataFixes()));
+						}
+					}
+
+					summaryElement.setAttribute(
 							"warnings",
-							Integer.toString(info.getResult().getSummary()
-									.getAttrWarnings()));
-					result.appendChild(summary);
+							Integer.toString(summary.getAttrWarnings()));
+					result.appendChild(summaryElement);
 				}
 
 				makeDetails(info.getResult().getDetails(), doc, result, isLogPassedChecks);
