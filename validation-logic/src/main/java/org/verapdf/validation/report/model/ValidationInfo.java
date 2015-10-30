@@ -1,5 +1,7 @@
 package org.verapdf.validation.report.model;
 
+import org.verapdf.pdfa.MetadataFixerResult;
+
 /**
  * Structure of the validation info part of the report.
  *
@@ -32,5 +34,9 @@ public class ValidationInfo {
 	 */
 	public Result getResult() {
 		return result;
+	}
+
+	public void setMetadataFixerResult(MetadataFixerResult res) {
+		result.getSummary().setMetadataFixerResult(res);
 	}
 }
