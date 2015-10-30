@@ -25,6 +25,7 @@ import org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Locale;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -75,13 +76,23 @@ public class MetadataImpl implements Metadata {
 	}
 
 	@Override
-	public void removePDFIdentificationSchema(MetadataFixerResultImpl result) {
+	public void removePDFIdentificationSchema(MetadataFixerResultImpl result, PDFAFlavour flavour) {
 		PDFAIdentificationSchema schema = this.metadata.getPDFIdentificationSchema();
-		if (schema != null) {
+		if (schema != null && this.schemaContainSameFlavour(schema, flavour)) {
 			this.metadata.removeSchema(schema);
 			this.setNeedToBeUpdated(true);
 			result.addAppliedFix("Identification schema removed.");
 		}
+	}
+
+	private boolean schemaContainSameFlavour(PDFAIdentificationSchema schema, PDFAFlavour flavour) {
+		if (!schema.getPart().equals(flavour.getPart().getPartNumber())) {
+			return false;
+		}
+		String schemaConf = schema.getConformance();
+		schemaConf = schemaConf != null ? schemaConf.toUpperCase(Locale.US) : null;
+		String flavourConf = flavour.getLevel().getCode();
+		return schemaConf != null && schemaConf.equals(flavourConf);
 	}
 
 	@Override

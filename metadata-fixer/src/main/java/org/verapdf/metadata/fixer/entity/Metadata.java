@@ -27,7 +27,7 @@ public interface Metadata {
 	 *
 	 * @param result report applied changes
 	 */
-	void removePDFIdentificationSchema(MetadataFixerResultImpl result);
+	void removePDFIdentificationSchema(MetadataFixerResultImpl result, PDFAFlavour flavour);
 
 	/**
 	 * Add PDF/A identification schema if {@code MetadataFixer}
