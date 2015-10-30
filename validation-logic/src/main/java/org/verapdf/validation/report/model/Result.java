@@ -24,8 +24,6 @@ public class Result {
 		int failedRules = 0;
 		int passedChecks = 0;
 		int failedChecks = 0;
-		int completedMetadataFixes = 0;
-		int failedMetadataFixes = 0;
 		int warnings = (details == null || details.getWarnings() == null) ? 0 : details.getWarnings().size();
 
 		if (details != null) {
@@ -46,7 +44,7 @@ public class Result {
 		this.compliant = compliantCheck;
 		this.statement = compliantCheck ? "PDF file is compliant with Validation Profile requirements" :
 				"PDF file is not compliant with Validation Profile requirements";
-		this.summary = new Summary(passedRules, failedRules, passedChecks, failedChecks, completedMetadataFixes, failedMetadataFixes, warnings);
+		this.summary = new Summary(passedRules, failedRules, passedChecks, failedChecks, warnings);
 		this.details = details;
 	}
 
