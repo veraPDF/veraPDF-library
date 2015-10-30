@@ -124,15 +124,16 @@ public class MetadataFixer {
 			metadata.checkMetadataStream(result);
 
 			switch (status) {
-				case INVALID_DOCUMENT:
-					executeInvalidDocumentCase(config, metadata, result);
-					break;
 				case INVALID_METADATA:
 					executeInvalidMetadataCase(config, metadata, result);
 					break;
-				case INVALID_STRUCTURE:
-					executeInvalidStructureCase(config, metadata, result);
+				case INVALID_DOCUMENT:
+				case INVALID_STRUCTURE: {
+					if (config.isFixIdentification()) {
+						metadata.removePDFIdentificationSchema(result, config.getPDFAFlavour());
+					}
 					break;
+				}
 			}
 
 			updateModificationDate(config, result);
@@ -168,32 +169,11 @@ public class MetadataFixer {
 		return ValidationStatus.INVALID_METADATA;
 	}
 
-	private static void executeInvalidDocumentCase(FixerConfig config, Metadata metadata, MetadataFixerResultImpl result) {
-		if (config.isFixIdentification()) {
-			metadata.removePDFIdentificationSchema(result);
-		}
-
-		fixMetadata(result, config);
-
-		if (result.getAppliedFixes().size() > 0) {
-			result.setRepairStatus(MetadataFixerResultImpl.RepairStatus.WONT_FIX);
-		}
-	}
-
 	private static void executeInvalidMetadataCase(FixerConfig config, Metadata metadata, MetadataFixerResultImpl result) {
 		if (config.isFixIdentification()) {
 			metadata.addPDFIdentificationSchema(result, config.getPDFAFlavour());
 		}
 		fixMetadata(result, config);
-	}
-
-	private static void executeInvalidStructureCase(FixerConfig config, Metadata metadata, MetadataFixerResultImpl result) {
-		if (config.isFixIdentification()) {
-			metadata.removePDFIdentificationSchema(result);
-		}
-		if (result.getAppliedFixes().size() > 0) {
-			result.setRepairStatus(MetadataFixerResultImpl.RepairStatus.WONT_FIX);
-		}
 	}
 
 	private static void fixMetadata(MetadataFixerResultImpl result, FixerConfig config) {

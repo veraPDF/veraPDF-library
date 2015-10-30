@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
-// TODO : remove me and use source implementation
 public class MetadataFixerResultImpl implements MetadataFixerResult, Iterable<String> {
 
 	private RepairStatus status;
