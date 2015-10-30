@@ -63,6 +63,8 @@ public class PDFValidationApplication extends JFrame {
 					this.config = Config.Builder.buildDefaultConfig();
 				}
 			}
+		} else {
+			this.config = Config.Builder.buildDefaultConfig();
 		}
 
 		JMenuBar menuBar = new JMenuBar();
