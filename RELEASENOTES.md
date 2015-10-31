@@ -1,6 +1,6 @@
 # Version 0.6 (October 30, 2015)
 
-The releases includes a fully functional, internally-tested implementation (beta version) for complete PDF/A-1B validation, PDF Feature Report generation and the Metadata Fixer.
+The releases includes a fully functional, internally-tested implementation (beta version) for complete PDF/A-1b validation, PDF Feature Report generation and the Metadata Fixer.
 
 ## Features
 
