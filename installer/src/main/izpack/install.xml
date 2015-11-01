@@ -6,7 +6,7 @@
     <appversion>${project.version}</appversion>
     <appsubpath>verapdf</appsubpath>
     <url>http://verapdf.org</url>
-    <javaversion>${java.version}</javaversion>
+    <javaversion>1.7</javaversion>
     <authors>
       <author name="The veraPDF Consortium" email="info@verapdf.org" />
     </authors>
