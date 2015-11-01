@@ -1,6 +1,7 @@
 package org.verapdf.gui;
 
 import org.apache.log4j.Logger;
+import org.bouncycastle.util.io.BufferingOutputStream;
 import org.verapdf.exceptions.validationlogic.MultiplyGlobalVariableNameException;
 import org.verapdf.exceptions.validationlogic.NullLinkException;
 import org.verapdf.exceptions.validationlogic.NullLinkNameException;
@@ -29,8 +30,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.TransformerException;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -86,33 +86,7 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 				info = runValidator(loader.getRoot());
 
 				if (this.isFixMetadata) {
-					FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(loader.getPDDocument(), info);
-					Path path = settings.getFixMetadataPathFolder();
-					File tempFile = File.createTempFile("fixedTempFile", ".pdf");
-					tempFile.deleteOnExit();
-					MetadataFixerResultImpl fixerResult = MetadataFixer.fixMetadata(tempFile, fixerConfig);
-					info.setMetadataFixerResult(fixerResult);
-					if (fixerResult.getRepairStatus().equals(MetadataFixerResult.RepairStatus.SUCCESS) ||
-							fixerResult.getRepairStatus().equals(MetadataFixerResult.RepairStatus.ID_REMOVED)) {
-						File resFile;
-						boolean flag = true;
-						while (flag) {
-							if (!path.toString().trim().isEmpty()) {
-								resFile = FileGenerator.createOutputFile(settings.getFixMetadataPathFolder().toFile(),
-										loader.getFile().getName(), settings.getMetadataFixerPrefix());
-							} else {
-								resFile = FileGenerator.createOutputFile(loader.getFile(),
-										settings.getMetadataFixerPrefix());
-							}
-
-							try {
-								Files.copy(tempFile.toPath(), resFile.toPath());
-								flag = false;
-							} catch (FileAlreadyExistsException e) {
-								LOGGER.error(e);
-							}
-						}
-					}
+					this.fixMetadata(info, loader);
 				}
 			}
 			if ((flag & (1 << 1)) == (1 << 1)) {
@@ -132,6 +106,37 @@ class ValidateWorker extends SwingWorker<ValidationInfo, Integer> {
 		}
 
 		return info;
+	}
+
+	private void fixMetadata(ValidationInfo info, ModelLoader loader) throws IOException {
+		FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(loader.getPDDocument(), info);
+		Path path = settings.getFixMetadataPathFolder();
+		File tempFile = File.createTempFile("fixedTempFile", ".pdf");
+		tempFile.deleteOnExit();
+		OutputStream tempOutput = new BufferedOutputStream(new FileOutputStream(tempFile));
+		MetadataFixerResultImpl fixerResult = MetadataFixer.fixMetadata(tempOutput, fixerConfig);
+		info.setMetadataFixerResult(fixerResult);
+		if (fixerResult.getRepairStatus().equals(MetadataFixerResult.RepairStatus.SUCCESS) ||
+				fixerResult.getRepairStatus().equals(MetadataFixerResult.RepairStatus.ID_REMOVED)) {
+			File resFile;
+			boolean flag = true;
+			while (flag) {
+				if (!path.toString().trim().isEmpty()) {
+					resFile = FileGenerator.createOutputFile(settings.getFixMetadataPathFolder().toFile(),
+							loader.getFile().getName(), settings.getMetadataFixerPrefix());
+				} else {
+					resFile = FileGenerator.createOutputFile(loader.getFile(),
+							settings.getMetadataFixerPrefix());
+				}
+
+				try {
+					Files.copy(tempFile.toPath(), resFile.toPath());
+					flag = false;
+				} catch (FileAlreadyExistsException e) {
+					LOGGER.error(e);
+				}
+			}
+		}
 	}
 
 	private ValidationInfo runValidator(org.verapdf.model.baselayer.Object root) {
