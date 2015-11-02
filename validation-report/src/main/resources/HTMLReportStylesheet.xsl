@@ -41,7 +41,7 @@
                 <title>Validation Report</title>
             </head>
             <body>
-                <xsl:apply-templates/>
+                <xsl:apply-templates select="vmrr:report"/>
             </body>
         </html>
     </xsl:template>
@@ -109,7 +109,7 @@
         <h2>Statistics</h2>
         <table border="0" id="table2">
             <tr>
-                <td width="200">
+                <td width="250">
                     <b>Processing time:</b>
                 </td>
                 <td>
@@ -117,7 +117,7 @@
                 </td>
             </tr>
             <tr>
-                <td width="200">
+                <td width="250">
                     <b>Total rules in profile:</b>
                 </td>
                 <td>
@@ -126,7 +126,7 @@
                 </td>
             </tr>
             <tr>
-                <td width="200">
+                <td width="250">
                     <b>Passed Checks:</b>
                 </td>
                 <td>
@@ -134,32 +134,59 @@
                 </td>
             </tr>
             <tr>
-                <td width="200">
+                <td width="250">
                     <b>Failed Checks:</b>
                 </td>
                 <td>
                     <xsl:value-of select="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:summary/@failedChecks"/>
                 </td>
             </tr>
-        </table>
 
-        <h2>Detailed information</h2>
-
-        <table border="0" id="table3">
-            <tr style="BACKGROUND: #bcbad6">
-                <td width="800">
-                    <b>Rule</b>
-                </td>
-                <td>
-                    <b>Status</b>
-                </td>
-            </tr>
             <xsl:apply-templates
-                    select="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:details/vmrr:rules/vmrr:rule"/>
-
+                    select="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:summary/@metadataFixesStatus"/>
+            <xsl:apply-templates
+                    select="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:summary/@completedMetadataFixes"/>
         </table>
 
+        <xsl:if test="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:details/vmrr:rules/vmrr:rule">
+            <h2>Detailed information</h2>
 
+            <table border="0" id="table3">
+                <tr style="BACKGROUND: #bcbad6">
+                    <td width="800">
+                        <b>Rule</b>
+                    </td>
+                    <td>
+                        <b>Status</b>
+                    </td>
+                </tr>
+                <xsl:apply-templates
+                        select="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:details/vmrr:rules/vmrr:rule"/>
+            </table>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:summary/@metadataFixesStatus">
+        <tr>
+            <td width="250">
+                <b>Metadata Fixes Status:</b>
+            </td>
+            <td>
+                <xsl:value-of select="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:summary/@metadataFixesStatus"/>
+            </td>
+        </tr>
+    </xsl:template>
+
+    <xsl:template match="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:summary/@completedMetadataFixes">
+        <tr>
+            <td width="250">
+                <b>Completed Metadata Fixes:</b>
+            </td>
+            <td>
+                <xsl:value-of
+                        select="/vmrr:report/vmrr:validationInfo/vmrr:result/vmrr:summary/@completedMetadataFixes"/>
+            </td>
+        </tr>
     </xsl:template>
 
     <!-- Detailed Information -->
@@ -176,8 +203,8 @@
         </tr>
         <tr style="BACKGROUND: #dcdaf6">
             <td width="800">
-                    <xsl:value-of
-                            select="$profile/profilens:profile/profilens:rules/profilens:rule[@id = $id]/profilens:description"/>
+                <xsl:value-of
+                        select="$profile/profilens:profile/profilens:rules/profilens:rule[@id = $id]/profilens:description"/>
             </td>
             <td>
                 <b>
@@ -194,23 +221,24 @@
                 </b>
             </td>
         </tr>
-        <tr style="BACKGROUND: #dcdaf6">
-            <xsl:variable name="failedChecksCount" select="count(vmrr:check[@status = 'failed'])"/>
-            <xsl:if test="$failedChecksCount > 0">
+        <xsl:variable name="failedChecksCount" select="count(vmrr:check[@status = 'failed'])"/>
+        <xsl:if test="$failedChecksCount > 0">
+            <tr style="BACKGROUND: #dcdaf6">
                 <td width="800">
                     <xsl:value-of select="@failedChecks"/> occurrences
                 </td>
-            </xsl:if>
-            <td>
-                <xsl:if test="@status = 'failed'">
-                    <a id="lable{$id}" href="#" style="display: none;"
-                       class="hide-tr"
-                       data-target="hide{$id}"
-                       data-translation-toggle="Hide">Show
-                    </a>
-                </xsl:if>
-            </td>
-        </tr>
+
+                <td>
+                    <xsl:if test="@status = 'failed'">
+                        <a id="lable{$id}" href="#" style="display: none;"
+                           class="hide-tr"
+                           data-target="hide{$id}"
+                           data-translation-toggle="Hide">Show
+                        </a>
+                    </xsl:if>
+                </td>
+            </tr>
+        </xsl:if>
         <xsl:for-each select="vmrr:check[@status = 'failed']">
             <tr class="hideable hide{$id}">
                 <td width="800" style="word-break: break-all">
