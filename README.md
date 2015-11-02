@@ -28,13 +28,13 @@ In order to use the GUI you'll need:
 
 ###veraPDF GUI
 ####Download release version
-You can download a Java based installer for the latest veraPDF GUI release [from our download site](http://downloads.verapdf.org/rel/verapdf-installer.jar). The current installation process requires Java 1.7 to be pre-installed, but we're working on a 1-click installer.
+You can download a Java based installer for the latest veraPDF GUI release [from our download site](http://downloads.verapdf.org/rel/verapdf-installer.zip). The current installation process requires Java 1.7 to be pre-installed, but we're working on a 1-click installer.
 
 ####veraPDF GUI manual
 We've prepared a manual for the GUI which is included in the libary project and can be [downloaded from GitHub](https://github.com/veraPDF/veraPDF-library/raw/release-0.6/veraPDFPDFAConformanceCheckerGUI.pdf).
 
 ####Download latest development version
-If you want to try the latest development version you can obtain it from our [development download site](http://downloads.verapdf.org/dev/http://downloads.verapdf.org/dev/verapdf-installer-dev-latest.jar). Be aware that we release development snapshots regularly, often more than once a day. While we try to ensure that development builds are well tested there are no guarantees.
+If you want to try the latest development version you can obtain it from our [development download site](http://downloads.verapdf.org/dev/http://downloads.verapdf.org/dev/verapdf-installer-dev.zip). Be aware that we release development snapshots regularly, often more than once a day. While we try to ensure that development builds are well tested there are no guarantees.
 
 Building the veraPDF-library from Source
 ----------------------------------------
