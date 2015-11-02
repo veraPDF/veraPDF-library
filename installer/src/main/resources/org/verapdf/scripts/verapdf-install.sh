@@ -97,4 +97,4 @@ if $cygwin; then
   [ -n "$REPO" ] && REPO=`cygpath --path --windows "$REPO"`
 fi
 
-java -jar verapdf-izpack-installer-0.6.0.jar 
+java -jar verapdf-izpack-installer-${project.version}.jar 
