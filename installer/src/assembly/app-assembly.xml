@@ -12,13 +12,13 @@
   <fileSets>
     <fileSet>
       <directory>src/main/resources/org/verapdf/scripts</directory>
-      <outputDirectory>/</outputDirectory>
+      <outputDirectory>./</outputDirectory>
       <filtered>true</filtered>
       <fileMode>0755</fileMode>
     </fileSet>
     <fileSet>
       <directory>${project.build.directory}</directory>
-      <outputDirectory>/</outputDirectory>
+      <outputDirectory>./</outputDirectory>
       <includes>
         <include>verapdf-izpack-installer-${project.version}.jar</include>
       </includes>
