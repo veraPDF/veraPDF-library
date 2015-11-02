@@ -419,7 +419,72 @@
   </reporting>
 
   <profiles>
-
+    <profile>
+      <id>apply-mpl-header</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+          <plugin>
+              <groupId>com.mycila</groupId>
+              <artifactId>license-maven-plugin</artifactId>
+              <version>2.3</version>
+              <configuration>
+                  <header>license/template/MPL-2.txt</header>
+                  <properties>
+                      <owner>veraPDF Consortium</owner>
+                      <email>info@verapdf.org</email>
+                  </properties>
+                  <excludes>
+                      <exclude>license/template/**</exclude>
+                      <exclude>src/test/resources/**</exclude>
+                      <exclude>src/main/resources/**</exclude>
+                  </excludes>
+              </configuration>
+              <executions>
+                  <execution>
+                      <goals>
+                          <goal>check</goal>
+                      </goals>
+                  </execution>
+              </executions>
+          </plugin>
+        </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+    <profile>
+      <id>apply-gpl-header</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+          <plugin>
+              <groupId>com.mycila</groupId>
+              <artifactId>license-maven-plugin</artifactId>
+              <version>2.3</version>
+              <configuration>
+                  <header>license/template/GPL-3.txt</header>
+                  <properties>
+                      <owner>veraPDF Consortium</owner>
+                      <email>info@verapdf.org</email>
+                  </properties>
+                  <excludes>
+                      <exclude>license/template/**</exclude>
+                      <exclude>src/test/resources/**</exclude>
+                      <exclude>src/main/resources/**</exclude>
+                  </excludes>
+              </configuration>
+              <executions>
+                  <execution>
+                      <goals>
+                          <goal>check</goal>
+                      </goals>
+                  </execution>
+              </executions>
+          </plugin>
+        </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
     <profile>
       <id>clone-test-resources</id>
       <build>
