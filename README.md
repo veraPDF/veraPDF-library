@@ -28,13 +28,32 @@ In order to use the GUI you'll need:
 
 ###veraPDF GUI
 ####Download release version
-You can download a Java based installer for the latest veraPDF GUI release [from our download site](http://downloads.verapdf.org/rel/verapdf-installer.zip). The current installation process requires Java 1.7 to be pre-installed, but we're working on a 1-click installer.
-
-####veraPDF GUI manual
-We've prepared a manual for the GUI which is included in the libary project and can be [downloaded from GitHub](https://github.com/veraPDF/veraPDF-library/raw/release-0.6/veraPDFPDFAConformanceCheckerGUI.pdf).
+You can download a Java based installer for the latest veraPDF GUI release [from our download site](http://downloads.verapdf.org/rel/verapdf-installer.zip). The current installation process requires Java 1.7 to be pre-installed.
 
 ####Download latest development version
 If you want to try the latest development version you can obtain it from our [development download site](http://downloads.verapdf.org/dev/http://downloads.verapdf.org/dev/verapdf-installer-dev.zip). Be aware that we release development snapshots regularly, often more than once a day. While we try to ensure that development builds are well tested there are no guarantees.
+
+####Install from zip package
+Once downloaded unzip the archive which contains the installer jar with batch and shell scripts to launch, the zip contents are as follows:
+
+    verapdf-0.6.0/verapdf-install.bat
+    verapdf-0.6.0/verapdf-install.sh
+    verapdf-0.6.0/verapdf-izpack-installer-0.6.0.jar
+
+Windows users should run the 'verapdf-install.bat' dos batch file, while linux and OSX users should run the shell script, `verapdf-install.sh`. It's possible to run the installer directly on any platform:
+
+    java - jar <path-to-installer-jar>/verapdf-izpack-installer-0.6.0.jar
+
+####Linux full command line download and install
+Linux users can download and execute the veraPDF installer using the following commands:
+
+    wget http://downloads.verapdf.org/rel/verapdf-installer.zip
+    unzip verapdf-installer.zip
+    cd verapdf-<version>
+    ./verapdf-install.sh
+
+####veraPDF GUI manual
+We've prepared a manual for the GUI which is included in the libary project and can be [downloaded from GitHub](https://github.com/veraPDF/veraPDF-library/raw/release-0.6/veraPDFPDFAConformanceCheckerGUI.pdf).
 
 Building the veraPDF-library from Source
 ----------------------------------------
