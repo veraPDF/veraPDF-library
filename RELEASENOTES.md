@@ -1,13 +1,13 @@
 # Version 0.6 (October 30, 2015)
 
-The releases includes a fully functional, internally-tested implementation (beta version) for complete PDF/A-1b validation, PDF Feature Report generation and the Metadata Fixer.
+This beta release includes a fully functional, internally-tested implementation for complete PDF/A-1b validation, PDF Feature Report generation and the Metadata Fixer.
 
 ## Features
 
 - Stable (beta version) implementation of the formal PDF model for PDF/A-1b
-- Prototype the formal PDF model for PDF/A-1a and PDF/A-2b,3b
+- Prototype the formal PDF model for PDF/A-1a and PDF/A-2b, 3b
 - Minor refactoring and stricter naming conventions in validation rules for PDF/A-1b 
-- Prototype validation rules for PDF/A-1a and PDF/A-2,3b
+- Prototype validation rules for PDF/A-1a and PDF/A-2b, 3b
 - Prototype implementation of the Metadata Fixer
 - Prototype implementation of the plug-in architecture for PDF Feature Report generation
 - Optimized performance for PDF/A font rules validation (glyphs presence, widths consistency)
@@ -15,12 +15,12 @@ The releases includes a fully functional, internally-tested implementation (beta
 ## Infrastructure
 
 - Added cross-platform installer
-- Full coverage of Bavaria, Isartor, veraPDF test suites
+- Full coverage of Bavaria, Isartor, veraPDF test suites in automated integration tests
 
 ## Test corpus
 
-- New test files for the use of Device colour spaces and XMP Metadata
-- 200 new atomic test files for PDF/A-1b extending Isartor and Bavaria test suite
+- New test files for the use of Device colour spaces and XMP metadata
+- 200 new atomic test files for PDF/A-1b extending Isartor and Bavaria test suites
 
 ***
 
