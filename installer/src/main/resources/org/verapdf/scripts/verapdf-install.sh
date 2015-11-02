@@ -15,10 +15,6 @@ done
 PRGDIR=`dirname "$PRG"`
 BASEDIR=`cd "$PRGDIR/" >/dev/null; pwd`
 
-# Reset the REPO variable. If you need to influence this use the environment setup file.
-REPO=
-
-
 # OS specific support.  $var _must_ be set to either true or false.
 cygwin=false;
 darwin=false;
@@ -72,29 +68,12 @@ if [ ! -x "$JAVACMD" ] ; then
   exit 1
 fi
 
-if [ -z "$REPO" ]
-then
-  REPO="$BASEDIR"/bin
-fi
-
-CLASSPATH="$BASEDIR"/etc:"$REPO"/*
-
-ENDORSED_DIR=
-if [ -n "$ENDORSED_DIR" ] ; then
-  CLASSPATH=$BASEDIR/$ENDORSED_DIR/*:$CLASSPATH
-fi
-
-if [ -n "$CLASSPATH_PREFIX" ] ; then
-  CLASSPATH=$CLASSPATH_PREFIX:$CLASSPATH
-fi
-
 # For Cygwin, switch paths to Windows format before running java
 if $cygwin; then
-  [ -n "$CLASSPATH" ] && CLASSPATH=`cygpath --path --windows "$CLASSPATH"`
   [ -n "$JAVA_HOME" ] && JAVA_HOME=`cygpath --path --windows "$JAVA_HOME"`
   [ -n "$HOME" ] && HOME=`cygpath --path --windows "$HOME"`
   [ -n "$BASEDIR" ] && BASEDIR=`cygpath --path --windows "$BASEDIR"`
-  [ -n "$REPO" ] && REPO=`cygpath --path --windows "$REPO"`
 fi
 
-java -jar verapdf-izpack-installer-${project.version}.jar 
+cd $BASEDIR
+java -jar verapdf-izpack-installer-${project.version}.jar

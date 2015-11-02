@@ -9,13 +9,19 @@
   <formats>
     <format>zip</format>
   </formats>
-  <fileSets>
-    <fileSet>
-      <directory>src/main/resources/org/verapdf/scripts</directory>
+  <files>
+    <file>
+      <source>src/main/resources/org/verapdf/scripts/verapdf-install.sh</source>
       <outputDirectory>./</outputDirectory>
-      <filtered>true</filtered>
-      <fileMode>0755</fileMode>
-    </fileSet>
+      <destName>verapdf-install</destName>
+    </file>
+    <file>
+      <source>src/main/resources/org/verapdf/scripts/verapdf-install.bat</source>
+      <outputDirectory>./</outputDirectory>
+      <destName>verapdf-install.bat</destName>
+    </file>
+  </files>
+  <fileSets>
     <fileSet>
       <directory>${project.build.directory}</directory>
       <outputDirectory>./</outputDirectory>
