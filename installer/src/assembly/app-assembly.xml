@@ -13,13 +13,15 @@
     <file>
       <source>src/main/resources/org/verapdf/scripts/verapdf-install.sh</source>
       <outputDirectory>./</outputDirectory>
-      <destName>verapdf-install.sh</destName>
+      <destName>verapdf-install</destName>
+      <filtered>true</filtered>
       <fileMode>0755</fileMode>
     </file>
     <file>
       <source>src/main/resources/org/verapdf/scripts/verapdf-install.bat</source>
       <outputDirectory>./</outputDirectory>
       <destName>verapdf-install.bat</destName>
+      <filtered>true</filtered>
       <fileMode>0755</fileMode>
     </file>
   </files>
