@@ -13,6 +13,7 @@
     <fileSet>
       <directory>src/main/resources/org/verapdf/scripts</directory>
       <outputDirectory>/</outputDirectory>
+      <filtered>true</filtered>
       <fileMode>0755</fileMode>
     </fileSet>
     <fileSet>

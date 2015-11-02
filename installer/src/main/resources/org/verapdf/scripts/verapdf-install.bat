@@ -63,6 +63,9 @@ set CMD_LINE_ARGS=
 goto postExec
 
 :endNT
+
+java -jar verapdf-izpack-installer-${project.version}.jar 
+
 @REM If error code is set to 1 then the endlocal was done already in :error.
 if %ERROR_CODE% EQU 0 @endlocal
 
