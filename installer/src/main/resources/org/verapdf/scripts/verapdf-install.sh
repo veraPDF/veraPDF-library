@@ -96,13 +96,5 @@ if $cygwin; then
   [ -n "$BASEDIR" ] && BASEDIR=`cygpath --path --windows "$BASEDIR"`
   [ -n "$REPO" ] && REPO=`cygpath --path --windows "$REPO"`
 fi
-echo "$CLASSPATH"
-exec "$JAVACMD" $JAVA_OPTS  \
-  -classpath "$CLASSPATH" \
-  -Dapp.name="VeraPDF validation GUI" \
-  -Dapp.pid="$$" \
-  -Dapp.repo="$REPO" \
-  -Dapp.home="$BASEDIR" \
-  -Dbasedir="$BASEDIR" \
-  org.verapdf.gui.PDFValidationApplication \
-  "$@"
+
+java -jar verapdf-izpack-installer-0.6.0.jar 
