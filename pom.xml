@@ -448,31 +448,31 @@
       <build>
         <pluginManagement>
           <plugins>
-          <plugin>
+            <plugin>
               <groupId>com.mycila</groupId>
               <artifactId>license-maven-plugin</artifactId>
               <version>2.3</version>
               <configuration>
-                  <header>license/template/MPL-2.txt</header>
-                  <properties>
-                      <owner>veraPDF Consortium</owner>
-                      <email>info@verapdf.org</email>
-                  </properties>
-                  <excludes>
-                      <exclude>license/template/**</exclude>
-                      <exclude>src/test/resources/**</exclude>
-                      <exclude>src/main/resources/**</exclude>
-                  </excludes>
+                <header>license/template/MPL-2.txt</header>
+                <properties>
+                  <owner>veraPDF Consortium</owner>
+                  <email>info@verapdf.org</email>
+                </properties>
+                <excludes>
+                  <exclude>license/template/**</exclude>
+                  <exclude>src/test/resources/**</exclude>
+                  <exclude>src/main/resources/**</exclude>
+                </excludes>
               </configuration>
               <executions>
-                  <execution>
-                      <goals>
-                          <goal>check</goal>
-                      </goals>
-                  </execution>
+                <execution>
+                  <goals>
+                    <goal>check</goal>
+                  </goals>
+                </execution>
               </executions>
-          </plugin>
-        </plugins>
+            </plugin>
+          </plugins>
         </pluginManagement>
       </build>
     </profile>
@@ -481,31 +481,31 @@
       <build>
         <pluginManagement>
           <plugins>
-          <plugin>
+            <plugin>
               <groupId>com.mycila</groupId>
               <artifactId>license-maven-plugin</artifactId>
               <version>2.3</version>
               <configuration>
-                  <header>license/template/GPL-3.txt</header>
-                  <properties>
-                      <owner>veraPDF Consortium</owner>
-                      <email>info@verapdf.org</email>
-                  </properties>
-                  <excludes>
-                      <exclude>license/template/**</exclude>
-                      <exclude>src/test/resources/**</exclude>
-                      <exclude>src/main/resources/**</exclude>
-                  </excludes>
+                <header>license/template/GPL-3.txt</header>
+                <properties>
+                  <owner>veraPDF Consortium</owner>
+                  <email>info@verapdf.org</email>
+                </properties>
+                <excludes>
+                  <exclude>license/template/**</exclude>
+                  <exclude>src/test/resources/**</exclude>
+                  <exclude>src/main/resources/**</exclude>
+                </excludes>
               </configuration>
               <executions>
-                  <execution>
-                      <goals>
-                          <goal>check</goal>
-                      </goals>
-                  </execution>
+                <execution>
+                  <goals>
+                    <goal>check</goal>
+                  </goals>
+                </execution>
               </executions>
-          </plugin>
-        </plugins>
+            </plugin>
+          </plugins>
         </pluginManagement>
       </build>
     </profile>
@@ -720,6 +720,17 @@
 
         </plugins>
       </build>
+    </profile>
+
+    <profile>
+      <id>jenkins-site</id>
+      <distributionManagement>
+        <site>
+          <id>jenkins.local.site</id>
+          <name>veraPDF Site</name>
+          <url>file:///var/www/projects.verapdf.org/verapdf-library</url>
+        </site>
+      </distributionManagement>
     </profile>
 
     <profile>
