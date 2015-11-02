@@ -59,7 +59,7 @@
     </pack>
     <pack name="veraPDF Mac and *nix Scripts" required="yes" os="unix" executable="yes">
       <description>Scripts for using the veraPDF software.</description>
-      <file targetdir="$INSTALL_PATH" src="scripts/verapdf-gui"/>
+      <singlefile src="scripts/verapdf-gui.sh" target="$INSTALL_PATH/verapdf-gui"/>
       <parsable targetfile="$INSTALL_PATH/verapdf-gui" type="shell"/>
       <executable targetfile="$INSTALL_PATH/verapdf-gui"/>
     </pack>

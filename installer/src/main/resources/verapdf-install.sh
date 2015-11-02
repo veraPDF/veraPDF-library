@@ -96,5 +96,5 @@ if $cygwin; then
   [ -n "$BASEDIR" ] && BASEDIR=`cygpath --path --windows "$BASEDIR"`
   [ -n "$REPO" ] && REPO=`cygpath --path --windows "$REPO"`
 fi
-exec "java -jar verapdf-izpack-installer-${project.version}.jar  -Dapp.name="VeraPDF installer" \
-  "$@"
+
+java -jar verapdf-izpack-installer-0.6.0.jar 

@@ -45,7 +45,7 @@ goto repoSetup
 :WinNTGetScriptDir
 set BASEDIR=%~dp0\
 
-java -jar verapdf-izpack-installer-${project.version}.jar  -Dapp.name="VeraPDF installer" %CMD_LINE_ARGS%
+java -jar verapdf-izpack-installer-0.6.0.jar
 if %ERRORLEVEL% NEQ 0 goto error
 goto end
 
