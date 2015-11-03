@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.verapdf</groupId>
     <artifactId>verapdf-library</artifactId>
-    <version>0.5.0-SNAPSHOT</version>
+    <version>0.6.0</version>
   </parent>
   <artifactId>installer</artifactId>
   <name>veraPDF Installer</name>
@@ -17,6 +17,7 @@
     <izpack.staging>${project.build.directory}/staging</izpack.staging>
     <izpack.target>${project.build.directory}</izpack.target>
     <izpack.scripts>${project.build.scriptSourceDirectory}</izpack.scripts>
+    <project.main.dir>${project.basedir}/..</project.main.dir>
   </properties>
 
   <build>
@@ -35,8 +36,8 @@
             <configuration>
               <outputDirectory>${izpack.staging}</outputDirectory>
 
-              <!-- recursive copy of all resource under src/main/izpack. this is the stuff to install as well as install.xml 
-                and panel data and such -->
+              <!-- recursive copy of all resource under src/main/izpack. 
+                this is the stuff to install as well as install.xml and panel data and such -->
               <resources>
                 <resource>
                   <directory>src/main/izpack</directory>
@@ -65,8 +66,8 @@
             <configuration>
               <outputDirectory>${izpack.staging}</outputDirectory>
 
-              <!-- recursive copy of all resource under src/main/izpack. this is the stuff to install as well as install.xml 
-                and panel data and such -->
+              <!-- recursive copy of all resource under src/main/izpack. 
+                this is the stuff to install as well as install.xml and panel data and such -->
               <resources>
                 <resource>
                   <directory>src/main/</directory>
@@ -74,6 +75,27 @@
                   <excludes>
                     <exclude>izpack</exclude>
                   </excludes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>verapdf-documents</id>
+            <!-- here the phase you need -->
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${izpack.staging}/documents</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.main.dir}</directory>
+                  <includes>
+                    <include>README.md</include>
+                    <include>RELEASENOTES.md</include>
+                    <include>veraPDFPDFAConformanceCheckerGUI.pdf</include>
+                  </includes>
                 </resource>
               </resources>
             </configuration>
@@ -86,7 +108,8 @@
         <executions>
 
           <execution>
-            <!-- copy izpack custom (custom panels, etc.) jars to izpack staging custom -->
+            <!-- copy izpack custom (custom panels, etc.) jars to izpack 
+              staging custom -->
             <id>copy-izpack-dependencies</id>
             <phase>prepare-package</phase>
             <goals>
@@ -150,8 +173,9 @@
         </executions>
       </plugin>
 
-      <!-- We need to tell the izpack-maven-plugin what to use as the base directory (this is our staging area), and also 
-        tell it the install file to use: -->
+      <!-- We need to tell the izpack-maven-plugin what to use as the base 
+        directory (this is our staging area), and also tell it the install file to 
+        use: -->
       <plugin>
         <groupId>org.codehaus.izpack</groupId>
         <artifactId>izpack-maven-plugin</artifactId>
@@ -173,8 +197,9 @@
             </configuration>
           </execution>
         </executions>
-        <!-- must have a dependency here on any code used in the installer, otherwise the classloader will not find it. So 
-          in this case we need our panels and then the package that contains the base classes for the panels -->
+        <!-- must have a dependency here on any code used in the installer, 
+          otherwise the classloader will not find it. So in this case we need our panels 
+          and then the package that contains the base classes for the panels -->
         <dependencies>
           <dependency>
             <groupId>org.codehaus.izpack</groupId>
@@ -183,6 +208,32 @@
           </dependency>
         </dependencies>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptor>src/assembly/app-assembly.xml</descriptor>
+          <finalName>verapdf-${pom.version}</finalName>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 

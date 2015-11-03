@@ -16,13 +16,14 @@ import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 @XmlJavaTypeAdapter(ReferenceImpl.Adapter.class)
 public interface Reference {
     /**
-     * @return a {@link Specification} that identifies the PDF/A Specification referred
-     *         to.
+     * @return a {@link Specification} that identifies the PDF/A Specification
+     *         referred to.
      */
     public String getSpecification();
 
     /**
-     * @return a String identifier for the Specification clause referred to, e.g. 6.1.2
+     * @return a String identifier for the Specification clause referred to,
+     *         e.g. 6.1.2
      */
     public String getClause();
 }

@@ -4,7 +4,7 @@ import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
-import org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**
  * Current interface provide necessary behavior of pdf metadata
@@ -27,7 +27,7 @@ public interface Metadata {
 	 *
 	 * @param result report applied changes
 	 */
-	void removePDFIdentificationSchema(MetadataFixerResultImpl result);
+	void removePDFIdentificationSchema(MetadataFixerResultImpl result, PDFAFlavour flavour);
 
 	/**
 	 * Add PDF/A identification schema if {@code MetadataFixer}

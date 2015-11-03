@@ -3,7 +3,6 @@ package org.verapdf.pdfa.validation;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.verapdf.pdfa.ValidationProfile;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**
@@ -33,7 +32,8 @@ public interface ProfileDirectory {
      * @throws NoSuchElementException
      *             when there is no profile associated with the profileID string
      *             IllegalArgumentException if the profileID parameter is null
-     * @throws IllegalArgumentException if profileID is null
+     * @throws IllegalArgumentException
+     *             if profileID is null
      */
     public ValidationProfile getValidationProfileById(String profileID);
 
@@ -45,7 +45,8 @@ public interface ProfileDirectory {
      * @throws NoSuchElementException
      *             when there is no profile associated with the flavour
      *             IllegalArgumentException if the flavour parameter is null
-     * @throws IllegalArgumentException if flavour is null
+     * @throws IllegalArgumentException
+     *             if flavour is null
      */
     public ValidationProfile getValidationProfileByFlavour(PDFAFlavour flavour);
 

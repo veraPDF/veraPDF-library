@@ -4,7 +4,6 @@
 package org.verapdf.pdfa.validation;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +14,6 @@ import java.util.Set;
 import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
-import org.verapdf.pdfa.ValidationProfile;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**

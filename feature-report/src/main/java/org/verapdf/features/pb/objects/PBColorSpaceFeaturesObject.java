@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.graphics.color.*;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -14,6 +14,7 @@ import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import javax.xml.bind.DatatypeConverter;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -90,10 +91,10 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (colorSpace != null) {
 			FeatureTreeNode root = FeatureTreeNode.newRootInstance("colorSpace");
 
@@ -150,7 +151,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private void parseIndexed(FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
+	private void parseIndexed(FeatureTreeNode root, FeaturesCollection collection) throws FeatureParsingException {
 		PDIndexed index = (PDIndexed) colorSpace;
 
 		if (colorSpaceChild != null) {
@@ -208,7 +209,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 	}
 
 
-	private void parseCIEDictionaryBased(FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void parseCIEDictionaryBased(FeatureTreeNode root) throws FeatureParsingException {
 		PDCIEDictionaryBasedColorSpace cie = (PDCIEDictionaryBasedColorSpace) colorSpace;
 
 		parseTristimulus(cie.getWhitepoint(), FeatureTreeNode.newChildInstance("whitePoint", root));
@@ -236,7 +237,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 
 	}
 
-	private void parseFloatArray(float[] array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+	private void parseFloatArray(float[] array, FeatureTreeNode parent) throws FeatureParsingException {
 		for (int i = 0; i < array.length; ++i) {
 			FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
 			element.addAttribute("number", String.valueOf(i));
@@ -244,7 +245,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 		}
 	}
 
-	private void parseStringList(List<String> array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+	private void parseStringList(List<String> array, FeatureTreeNode parent) throws FeatureParsingException {
 		for (int i = 0; i < array.size(); ++i) {
 			FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
 			element.addAttribute("number", String.valueOf(i));
@@ -258,7 +259,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 		curNode.addAttribute("z", String.valueOf(tris.getZ()));
 	}
 
-	private void parseParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void parseParents(FeatureTreeNode root) throws FeatureParsingException {
 		if ((pageParents != null && !pageParents.isEmpty()) ||
 				(colorSpaceParents != null && !colorSpaceParents.isEmpty()) ||
 				(patternParents != null && !patternParents.isEmpty()) ||

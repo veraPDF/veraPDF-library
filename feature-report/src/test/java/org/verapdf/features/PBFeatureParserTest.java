@@ -3,7 +3,7 @@ package org.verapdf.features;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -57,22 +57,22 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
-	public void testInfoDict() throws FeaturesTreeNodeException {
+	public void testInfoDict() throws FeatureParsingException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.INFORMATION_DICTIONARY).contains(TestNodeGenerator.getInfDictNode()));
 	}
 
 	@Test
-	public void testMetadata() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
+	public void testMetadata() throws FeatureParsingException, FileNotFoundException, URISyntaxException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.METADATA).contains(TestNodeGenerator.getMetadataNode()));
 	}
 
 	@Test
-	public void testLowLvlInfo() throws FeaturesTreeNodeException {
+	public void testLowLvlInfo() throws FeatureParsingException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.LOW_LEVEL_INFO).contains(TestNodeGenerator.getLowLvlInfo()));
 	}
 
 	@Test
-	public void testEmbeddedFiles() throws FeaturesTreeNodeException {
+	public void testEmbeddedFiles() throws FeatureParsingException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE).contains(TestNodeGenerator.getEmbeddedFileNode("file1", "1.txt", "",
 				"text/plain", "FlateDecode", "2015-08-31T13:33:43.000+03:00", "2015-08-31T13:20:39.000Z", "D41D8CD98F00B204E9800998ECF8427E", "0")));
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE).contains(TestNodeGenerator.getEmbeddedFileNode("file2", "Arist.jpg", "",
@@ -84,7 +84,7 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
-	public void testICCProfiles() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
+	public void testICCProfiles() throws FeatureParsingException, FileNotFoundException, URISyntaxException {
 		Set<String> outInts19 = new HashSet<>();
 		outInts19.add("outIntDir0");
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE).contains(TestNodeGenerator.getICCProfile("iccProfileIndir19",
@@ -117,17 +117,17 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
-	public void testOutputIntent() throws FeaturesTreeNodeException {
+	public void testOutputIntent() throws FeatureParsingException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT).contains(TestNodeGenerator.getOutputIntent()));
 	}
 
 	@Test
-	public void testOutlines() throws FeaturesTreeNodeException {
+	public void testOutlines() throws FeatureParsingException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTLINES).contains(TestNodeGenerator.getOutlines()));
 	}
 
 	@Test
-	public void testAnnotations() throws FeaturesTreeNodeException {
+	public void testAnnotations() throws FeatureParsingException {
 		Set<String> xobj37 = new HashSet<>();
 		xobj37.add("xobjIndir28");
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION).contains(TestNodeGenerator.getAnnotation("annotIndir37",
@@ -169,12 +169,12 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
-	public void testPage() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
+	public void testPage() throws FeatureParsingException, FileNotFoundException, URISyntaxException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE).contains(TestNodeGenerator.getPage()));
 	}
 
 	@Test
-	public void testGraphicsState() throws FeaturesTreeNodeException {
+	public void testGraphicsState() throws FeatureParsingException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE).contains(TestNodeGenerator.getGraphicsState("exGStIndir93",
 				null, "ptrnIndir50", null, null, null, "true", "false", "false", "false", "fntIndir89")));
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE).contains(TestNodeGenerator.getGraphicsState("exGStDir2",
@@ -186,23 +186,23 @@ public class PBFeatureParserTest {
 	}
 
 	@Test
-	public void testPropertiesDicts() throws FeaturesTreeNodeException {
+	public void testPropertiesDicts() throws FeatureParsingException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROPERTIES).contains(TestNodeGenerator.getProperties()));
 	}
 
 	@Test
-	public void testFailedXObjects() throws FeaturesTreeNodeException {
+	public void testFailedXObjects() throws FeatureParsingException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FAILED_XOBJECT).contains(TestNodeGenerator.getFailedXObject("xobjIndir53", "error0")));
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FAILED_XOBJECT).contains(TestNodeGenerator.getFailedXObject("xobjIndir54", "error1")));
 	}
 
 	@Test
-	public void testShadings() throws FeaturesTreeNodeException {
+	public void testShadings() throws FeatureParsingException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.SHADING).contains(TestNodeGenerator.getShading()));
 	}
 
 	@Test
-	public void testPatterns() throws FeaturesTreeNodeException {
+	public void testPatterns() throws FeatureParsingException {
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN).contains(TestNodeGenerator.getShadingPattern()));
 		assertTrue(collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN).contains(TestNodeGenerator.getTilingPattern()));
 	}

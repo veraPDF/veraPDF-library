@@ -6,7 +6,7 @@
     <appversion>${project.version}</appversion>
     <appsubpath>verapdf</appsubpath>
     <url>http://verapdf.org</url>
-    <javaversion>${java.target.version}</javaversion>
+    <javaversion>1.7</javaversion>
     <authors>
       <author name="The veraPDF Consortium" email="info@verapdf.org" />
     </authors>
@@ -59,7 +59,7 @@
     </pack>
     <pack name="veraPDF Mac and *nix Scripts" required="yes" os="unix" executable="yes">
       <description>Scripts for using the veraPDF software.</description>
-      <file targetdir="$INSTALL_PATH" src="scripts/verapdf-gui"/>
+      <singlefile src="scripts/verapdf-gui.sh" target="$INSTALL_PATH/verapdf-gui"/>
       <parsable targetfile="$INSTALL_PATH/verapdf-gui" type="shell"/>
       <executable targetfile="$INSTALL_PATH/verapdf-gui"/>
     </pack>
@@ -72,6 +72,12 @@
       <description>The veraPDF test files and the validation model API.</description>
       <file targetdir="$INSTALL_PATH/corpus" src="corpus/staging.zip" unpack="true"/>
       <file targetdir="$INSTALL_PATH/model" src="model/integration.zip" unpack="true"/>
+    </pack>
+    <pack name="veraPDF Documentation" required="no">
+      <description>The veraPDF documentation.</description>
+      <file targetdir="$INSTALL_PATH/documents" src="documents/README.md"/>
+      <file targetdir="$INSTALL_PATH/documents" src="documents/RELEASENOTES.md"/>
+      <file targetdir="$INSTALL_PATH/documents" src="documents/veraPDFPDFAConformanceCheckerGUI.pdf"/>
     </pack>
   </packs>
 </izpack:installation>

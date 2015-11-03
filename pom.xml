@@ -11,7 +11,7 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-library</artifactId>
-  <version>0.5.0-SNAPSHOT</version>
+  <version>0.6.0</version>
   <packaging>pom</packaging>
 
   <name>veraPDF PDF/A Validation Library</name>
@@ -47,12 +47,9 @@
   </developers>
 
   <modules>
-    <module>validation-profile-parser</module>
-    <module>validation-logic</module>
-    <module>validation-report</module>
+    <module>legacy-types</module>
     <module>model-implementation</module>
     <module>core</module>
-    <module>cli</module>
     <module>gui</module>
     <module>feature-report</module>
     <module>metadata-fixer</module>
@@ -113,9 +110,11 @@
     <maven.failsafe.version>2.18.1</maven.failsafe.version>
     <maven.surefire.version>2.18.1</maven.surefire.version>
     <maven.exec.version>1.4.0</maven.exec.version>
+    <mvn.javadoc.version>2.10</mvn.javadoc.version>
+    <mvn.source.version>2.4</mvn.source.version>
     <mvn.gpg.plugin.version>1.6</mvn.gpg.plugin.version>
     <verapdf.pdfbox.version>2.0.0-SNAPSHOT</verapdf.pdfbox.version>
-    <verapdf.model.version>[0.5.0,0.6.0)</verapdf.model.version>
+    <verapdf.model.version>[0.6.0,0.7.0)</verapdf.model.version>
   </properties>
 
   <dependencyManagement>
@@ -173,7 +172,7 @@
 
       <dependency>
         <groupId>org.verapdf</groupId>
-        <artifactId>vera-cli</artifactId>
+        <artifactId>gui</artifactId>
         <version>${project.version}</version>
       </dependency>
 
@@ -199,18 +198,6 @@
         <groupId>org.verapdf</groupId>
         <artifactId>pdf-model</artifactId>
         <version>${verapdf.model.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>validation-logic</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>validation-profile-parser</artifactId>
-        <version>${project.version}</version>
       </dependency>
 
       <dependency>
@@ -294,6 +281,12 @@
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>${maven.failsafe.version}</version>
           <executions>
@@ -347,6 +340,18 @@
           <version>2.2</version>
         </plugin>
 
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${mvn.source.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${mvn.javadoc.version}</version>
+        </plugin>
+
       </plugins>
     </pluginManagement>
 
@@ -384,6 +389,16 @@
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
         <configuration>
           <attach>true</attach>
@@ -395,14 +410,18 @@
 
   <reporting>
     <plugins>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.8</version>
+        <version>2.4</version>
+        <configuration>
+          <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+          <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+        </configuration>
         <reportSets>
           <reportSet>
             <reports>
+              <report>index</report>
               <report>dependencies</report>
               <report>project-team</report>
               <report>mailing-list</report>
@@ -414,12 +433,84 @@
           </reportSet>
         </reportSets>
       </plugin>
-
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.3</version>
+        <configuration>
+          <show>public</show>
+        </configuration>
+      </plugin>
     </plugins>
   </reporting>
 
   <profiles>
-
+    <profile>
+      <id>apply-mpl-header</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>com.mycila</groupId>
+              <artifactId>license-maven-plugin</artifactId>
+              <version>2.3</version>
+              <configuration>
+                <header>license/template/MPL-2.txt</header>
+                <properties>
+                  <owner>veraPDF Consortium</owner>
+                  <email>info@verapdf.org</email>
+                </properties>
+                <excludes>
+                  <exclude>license/template/**</exclude>
+                  <exclude>src/test/resources/**</exclude>
+                  <exclude>src/main/resources/**</exclude>
+                </excludes>
+              </configuration>
+              <executions>
+                <execution>
+                  <goals>
+                    <goal>check</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+    <profile>
+      <id>apply-gpl-header</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>com.mycila</groupId>
+              <artifactId>license-maven-plugin</artifactId>
+              <version>2.3</version>
+              <configuration>
+                <header>license/template/GPL-3.txt</header>
+                <properties>
+                  <owner>veraPDF Consortium</owner>
+                  <email>info@verapdf.org</email>
+                </properties>
+                <excludes>
+                  <exclude>license/template/**</exclude>
+                  <exclude>src/test/resources/**</exclude>
+                  <exclude>src/main/resources/**</exclude>
+                </excludes>
+              </configuration>
+              <executions>
+                <execution>
+                  <goals>
+                    <goal>check</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
     <profile>
       <id>clone-test-resources</id>
       <build>
@@ -631,6 +722,17 @@
 
         </plugins>
       </build>
+    </profile>
+
+    <profile>
+      <id>jenkins-site</id>
+      <distributionManagement>
+        <site>
+          <id>jenkins.local.site</id>
+          <name>veraPDF Site</name>
+          <url>file:///var/www/projects.verapdf.org/verapdf-library</url>
+        </site>
+      </distributionManagement>
     </profile>
 
     <profile>
