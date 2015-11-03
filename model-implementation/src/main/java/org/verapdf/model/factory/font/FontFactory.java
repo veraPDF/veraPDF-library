@@ -44,6 +44,9 @@ public final class FontFactory {
 	 */
 	public static PDFont parseFont(
 			org.apache.pdfbox.pdmodel.font.PDFont pdfboxFont) {
+		if (pdfboxFont == null) {
+			return null;
+		}
 		switch (pdfboxFont.getSubType()) {
 			case TYPE_0:
 				return new PBoxPDType0Font(pdfboxFont);

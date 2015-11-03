@@ -22,6 +22,12 @@ public class PBoxEmbeddedFile extends PBoxExternal implements EmbeddedFile {
 
 	// TODO : implement me
 	@Override
+	public String getSubtype() {
+		return null;
+	}
+
+	// TODO : implement me
+	@Override
 	public Boolean getisValidPDFA12() {
 		return Boolean.FALSE;
 	}

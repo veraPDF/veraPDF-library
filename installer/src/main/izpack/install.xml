@@ -1,0 +1,83 @@
+<izpack:installation version="5.0" xmlns:izpack="http://izpack.org/schema/installation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://izpack.org/schema/installation http://izpack.org/schema/5.0/izpack-installation-5.0.xsd">
+
+  <info>
+    <appname>veraPDF Software</appname>
+    <appversion>${project.version}</appversion>
+    <appsubpath>verapdf</appsubpath>
+    <url>http://verapdf.org</url>
+    <javaversion>1.7</javaversion>
+    <authors>
+      <author name="The veraPDF Consortium" email="info@verapdf.org" />
+    </authors>
+  </info>
+
+  <guiprefs height="400" resizable="no" width="640">
+    <modifier key="useButtonIcons" value="yes"/>
+    <modifier key="useLabelIcons" value="no"/>
+    <modifier key="labelGap" value="2"/>
+    <modifier key="layoutAnchor" value="NORTHWEST"/>
+    <modifier key="useHeadingPanel" value="no"/>
+    <modifier key="headingImageOnLeft" value="yes"/>
+    <modifier key="headingLineCount" value="1"/>
+    <modifier key="headingFontSize" value="1.5"/>
+    <modifier key="headingBackgroundColor" value="0x00ffffff"/>
+    <modifier key="headingPanelCounter" value="progressbar"/>
+    <modifier key="headingPanelCounterPos" value="inNavigationPanel"/>
+  </guiprefs>
+
+  <locale>
+    <langpack iso3="eng" />
+  </locale>
+
+  <resources>
+    <res id="HTMLInfoPanel.welcome" src="welcome.html"/>
+    <res id="veraLogo" src="veralogo.jpg"/>
+  </resources>
+
+  <variables>
+    <variable name="InstallerFrame.logfilePath" value="Default"/>
+    <variable name="VERSION" value="v ${project.version}"/>
+    <variable name="BUILD_DATE" value="Built ${verapdf.timestamp}"/>    
+    <variable name="TargetPanel.dir" value="$USER_HOME/verapdf"/>
+  </variables>
+
+  <panels>
+    <panel classname="HTMLInfoPanel" id="welcome"/>
+    <panel classname="TargetPanel" id="install_dir"/>
+    <panel classname="PacksPanel" id="sdk_pack_select"/>
+    <panel classname="InstallPanel" id="install"/>
+    <panel classname="FinishPanel" id="finish"/>
+  </panels>
+
+  <packs>
+    <pack name="veraPDF GUI" required="yes">
+      <description>veraPDF GUI.</description>
+      <file targetdir="$INSTALL_PATH/bin" src="bin/gui-${project.version}.jar"/>
+      <executable targetfile="$INSTALL_PATH/bin/gui-${project.version}.jar"/>
+      <file targetdir="$INSTALL_PATH/profiles" src="profiles/integration.zip" unpack="true"/>
+    </pack>
+    <pack name="veraPDF Mac and *nix Scripts" required="yes" os="unix" executable="yes">
+      <description>Scripts for using the veraPDF software.</description>
+      <singlefile src="scripts/verapdf-gui.sh" target="$INSTALL_PATH/verapdf-gui"/>
+      <parsable targetfile="$INSTALL_PATH/verapdf-gui" type="shell"/>
+      <executable targetfile="$INSTALL_PATH/verapdf-gui"/>
+    </pack>
+    <pack name="veraPDF Batch files" required="yes" os="windows">
+      <description>Scripts for using the veraPDF software.</description>
+      <file targetdir="$INSTALL_PATH" src="scripts/verapdf-gui.bat"/>
+      <executable targetfile="$INSTALL_PATH/verapdf-gui.bat"/>
+    </pack>
+    <pack name="veraPDF Corpus and Validation model" required="no">
+      <description>The veraPDF test files and the validation model API.</description>
+      <file targetdir="$INSTALL_PATH/corpus" src="corpus/staging.zip" unpack="true"/>
+      <file targetdir="$INSTALL_PATH/model" src="model/integration.zip" unpack="true"/>
+    </pack>
+    <pack name="veraPDF Documentation" required="no">
+      <description>The veraPDF documentation.</description>
+      <file targetdir="$INSTALL_PATH/documents" src="documents/README.md"/>
+      <file targetdir="$INSTALL_PATH/documents" src="documents/RELEASENOTES.md"/>
+      <file targetdir="$INSTALL_PATH/documents" src="documents/veraPDFPDFAConformanceCheckerGUI.pdf"/>
+    </pack>
+  </packs>
+</izpack:installation>

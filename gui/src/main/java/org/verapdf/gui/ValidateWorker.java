@@ -1,10 +1,13 @@
 package org.verapdf.gui;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javax.swing.JOptionPane;
@@ -12,6 +15,7 @@ import javax.swing.SwingWorker;
 import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.TransformerException;
 
 import org.apache.log4j.Logger;
@@ -21,16 +25,19 @@ import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.metadata.fixer.MetadataFixer;
-import org.verapdf.metadata.fixer.MetadataFixerResult;
+import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
+import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.model.ModelLoader;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.results.ValidationResults;
+import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validation.Validator;
+import org.verapdf.report.HTMLReport;
 import org.verapdf.report.XMLReport;
+import org.xml.sax.SAXException;
 
 /**
  * Validates PDF in a new threat.
@@ -40,22 +47,28 @@ import org.verapdf.report.XMLReport;
 class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
 
     private static final Logger LOGGER = Logger.getLogger(ValidateWorker.class);
-    private static final String TEMP_PREFIX = "veraPDF-";
 
     private File pdf;
+    private ValidationProfile profile;
     private CheckerPanel parent;
     private Config settings;
-    ValidationProfile profile;
     private File xmlReport = null;
     private File htmlReport = null;
     private int flag;
     private boolean isFixMetadata;
+
+    private long startTimeOfValidation;
+    private long endTimeOfValidation;
 
     ValidateWorker(CheckerPanel parent, File pdf, ValidationProfile profile,
             Config settings, int flag, boolean isFixMetadata) {
         if (pdf == null || !pdf.isFile() || !pdf.canRead()) {
             throw new IllegalArgumentException(
                     "PDF file doesn't exist or it can not be read");
+        }
+        if (profile == null) {
+            throw new IllegalArgumentException(
+                    "Profile doesn't exist or it can not be read");
         }
         this.parent = parent;
         this.pdf = pdf;
@@ -67,35 +80,23 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
 
     @Override
     protected ValidationResult doInBackground() {
-        this.xmlReport = null;
-        this.htmlReport = null;
-        ValidationResult result = null;
+        xmlReport = null;
+        htmlReport = null;
+        ValidationResult info = null;
         FeaturesCollection collection = null;
+
+        startTimeOfValidation = System.currentTimeMillis();
 
         try (ModelLoader loader = new ModelLoader(new FileInputStream(this.pdf.getPath()))) {
 
-            if ((this.flag & 1) == 1) {
-                result = runValidator(loader.getRoot(), this.settings.isShowPassedRules());
+            if ((flag & 1) == 1) {
+                info = runValidator(loader.getRoot());
 
                 if (this.isFixMetadata) {
-                    FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(
-                            loader.getPDDocument(), result);
-                    Path path = this.settings.getFixMetadataPathFolder();
-                    MetadataFixerResult fixerResult;
-
-                    if (!path.toString().trim().isEmpty()) {
-                        // TODO : what we need do with fixing result?
-                        fixerResult = MetadataFixer.fixMetadata(this.settings
-                                .getFixMetadataPathFolder().toFile(), this.pdf.getPath(), this.settings
-                                .getMetadataFixerPrefix(), fixerConfig);
-                    } else {
-                        fixerResult = MetadataFixer.fixMetadata(
-                                this.pdf,
-                                this.settings.getMetadataFixerPrefix(), fixerConfig);
-                    }
+                    this.fixMetadata(info, loader);
                 }
             }
-            if ((this.flag & (1 << 1)) == (1 << 1)) {
+            if ((flag & (1 << 1)) == (1 << 1)) {
                 try {
                     collection = PBFeatureParser.getFeaturesCollection(loader
                             .getPDDocument());
@@ -107,20 +108,56 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
                             e);
                 }
             }
-            writeReport(result, collection);
+            endTimeOfValidation = System.currentTimeMillis();
+            writeReports(info, collection);
         } catch (IOException e) {
             this.parent
                     .errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
         }
 
-        return result;
+        return info;
     }
 
-    private ValidationResult runValidator(
-            org.verapdf.model.baselayer.Object root, boolean logSuccess) {
+    private void fixMetadata(ValidationResult info, ModelLoader loader)
+            throws IOException {
+        FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(
+                loader.getPDDocument(), info);
+        Path path = settings.getFixMetadataPathFolder();
+        File tempFile = File.createTempFile("fixedTempFile", ".pdf");
+        tempFile.deleteOnExit();
+        OutputStream tempOutput = new BufferedOutputStream(
+                new FileOutputStream(tempFile));
+        MetadataFixerResult fixerResult = MetadataFixer.fixMetadata(
+                tempOutput, fixerConfig);
+         if (fixerResult.getRepairStatus().equals(
+                MetadataFixerResult.RepairStatus.SUCCESS)
+                || fixerResult.getRepairStatus().equals(
+                        MetadataFixerResult.RepairStatus.ID_REMOVED)) {
+            File resFile;
+            boolean flag = true;
+            while (flag) {
+                if (!path.toString().trim().isEmpty()) {
+                    resFile = FileGenerator.createOutputFile(settings
+                            .getFixMetadataPathFolder().toFile(), this.pdf.getName(), settings
+                            .getMetadataFixerPrefix());
+                } else {
+                    resFile = FileGenerator.createOutputFile(this.pdf,
+                            settings.getMetadataFixerPrefix());
+                }
+
+                try {
+                    Files.copy(tempFile.toPath(), resFile.toPath());
+                    flag = false;
+                } catch (FileAlreadyExistsException e) {
+                    LOGGER.error(e);
+                }
+            }
+        }
+    }
+
+    private ValidationResult runValidator(org.verapdf.model.baselayer.Object root) {
         try {
-            // TODO : FIX SETTINGS
-            return Validator.validate(this.profile, root, logSuccess);
+            return Validator.validate(this.profile, root, false);
         } catch (ValidationException e) {
 
             this.parent.errorInValidatingOccur(
@@ -134,32 +171,27 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         this.parent.validationEnded(this.xmlReport, this.htmlReport);
     }
 
-    private void writeReport(ValidationResult result,
-            FeaturesCollection collection) {
-        if (result != null || collection != null) {
+    private void writeReports(ValidationResult info, FeaturesCollection collection) {
+        if (info != null || collection != null) {
             try {
-                this.xmlReport = File
-                        .createTempFile(TEMP_PREFIX, ".xml");
-                try (OutputStream fos = new FileOutputStream(this.xmlReport)) {
-                    ValidationResults.toXml(result, fos, Boolean.TRUE);
-                    XMLReport.writeXMLReport(collection, fos);
-                } catch (JAXBException e) {
-                    LOGGER.error("Marshalling error serialising JAXB type.", e);
-                }
-                if (result != null) {
+                xmlReport = File
+                        .createTempFile("veraPDF-tempXMLReport", ".xml");
+                xmlReport.deleteOnExit();
+                XMLReport.writeXMLReport(info, collection, new FileInputStream(xmlReport));
+                if (info != null) {
                     try {
-                        this.htmlReport = File.createTempFile(
-                                TEMP_PREFIX, ".html");
-                        this.htmlReport.deleteOnExit();
-                        //HTMLReport.writeHTMLReport(this.htmlReport.getPath(),
-                        //        result);
+                        htmlReport = File.createTempFile(
+                                "veraPDF-tempHTMLReport", ".html");
+                        htmlReport.deleteOnExit();
+                        HTMLReport.writeHTMLReport(htmlReport.getPath(),
+                                xmlReport, profile);
 
-                    } catch (IOException e) {
+                    } catch (IOException | TransformerException e) {
                         JOptionPane.showMessageDialog(this.parent,
                                 GUIConstants.ERROR_IN_SAVING_HTML_REPORT,
                                 GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
                         LOGGER.error("Exception saving the HTML report", e);
-                        this.htmlReport = null;
+                        htmlReport = null;
                     }
                 }
 
@@ -170,7 +202,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
                         GUIConstants.ERROR_IN_SAVING_XML_REPORT,
                         GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
                 LOGGER.error("Exception saving the XML report", e);
-                this.xmlReport = null;
+                xmlReport = null;
             }
         }
     }

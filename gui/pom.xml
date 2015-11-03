@@ -6,7 +6,7 @@
   <parent>
     <artifactId>verapdf-library</artifactId>
     <groupId>org.verapdf</groupId>
-    <version>0.5.0-SNAPSHOT</version>
+    <version>0.6.0</version>
   </parent>
 
   <artifactId>gui</artifactId>
@@ -29,91 +29,26 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>appassembler-maven-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
-          <programs>
-            <program>
+          <archive>
+            <manifest>
               <mainClass>org.verapdf.gui.PDFValidationApplication</mainClass>
-              <id>VeraPDF validation GUI</id>
-            </program>
-          </programs>
-          <repositoryLayout>flat</repositoryLayout>
-          <useWildcardClassPath>true</useWildcardClassPath>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <appendAssemblyId>false</appendAssemblyId>
         </configuration>
         <executions>
           <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>assemble</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>com.googlecode.maven-download-plugin</groupId>
-        <artifactId>download-maven-plugin</artifactId>
-        <version>1.2.1</version>
-        <executions>
-          <execution>
-            <id>corpus-master</id>
-            <phase>package</phase>
-            <goals>
-              <goal>wget</goal>
-            </goals>
-            <configuration>
-              <url>https://github.com/veraPDF/veraPDF-corpus/archive/staging.zip</url>
-              <unpack>true</unpack>
-              <skipCache>true</skipCache>
-              <outputDirectory>${project.build.directory}/appassembler/resources</outputDirectory>
-            </configuration>
-          </execution>
-          <execution>
-            <id>profiles-integration</id>
-            <phase>package</phase>
-            <goals>
-              <goal>wget</goal>
-            </goals>
-            <configuration>
-              <url>https://github.com/veraPDF/veraPDF-validation-profiles/archive/integration.zip</url>
-              <unpack>true</unpack>
-              <skipCache>true</skipCache>
-              <outputDirectory>${project.build.directory}/appassembler/resources</outputDirectory>
-            </configuration>
-          </execution>
-          <execution>
-            <id>model-integration</id>
-            <phase>package</phase>
-            <goals>
-              <goal>wget</goal>
-            </goals>
-            <configuration>
-              <url>https://github.com/veraPDF/veraPDF-model/archive/integration.zip</url>
-              <unpack>true</unpack>
-              <skipCache>true</skipCache>
-              <outputDirectory>${project.build.directory}/appassembler/resources</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>${project.id}-zip</id>
-            <phase>package</phase>
+            <id>make-assembly</id> <!-- this is used for inheritance merges -->
+            <phase>package</phase> <!-- bind to the packaging phase -->
             <goals>
               <goal>single</goal>
             </goals>
-            <!-- bind to the packaging phase -->
-            <configuration>
-              <appendAssemblyId>false</appendAssemblyId>
-              <finalName>veraPDF-library-GUI-${project.version}</finalName>
-              <descriptors>
-                <descriptor>assembly/app-assembly.xml</descriptor>
-              </descriptors>
-            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -148,7 +83,7 @@
 
     <dependency>
       <groupId>org.verapdf</groupId>
-      <artifactId>validation-report</artifactId>
+      <artifactId>feature-report</artifactId>
     </dependency>
 
     <dependency>

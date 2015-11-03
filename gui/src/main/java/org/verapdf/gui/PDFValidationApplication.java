@@ -39,27 +39,32 @@ public class PDFValidationApplication extends JFrame {
 
 		setTitle(GUIConstants.TITLE);
 
-		File user = new File(System.getProperty("user.home"));
-		File f = new File(user, ".veraPDF");
-		if (!f.exists() && !f.mkdir()) {
-			this.isSerializedConfig = false;
-			this.config = Config.Builder.buildDefaultConfig();
-		} else {
-			File configFile = new File(f, "config.properties");
-			this.isSerializedConfig = true;
-			this.configPath = configFile.toPath();
-			if (configFile.exists()) {
-				try {
-					this.config = ConfigPropertiesSerializator.loadConfig(configFile.toPath());
-					ConfigPropertiesSerializator.saveConfig(this.config, configFile.toPath());
-				} catch (IOException e) {
-					LOGGER.error("Can not read config file", e);
+		String appHome = System.getProperty("app.home");
+		if (appHome != null) {
+			File user = new File(appHome);
+			File f = new File(user, "config");
+			if (!f.exists() && !f.mkdir()) {
+				this.isSerializedConfig = false;
+				this.config = Config.Builder.buildDefaultConfig();
+			} else {
+				File configFile = new File(f, "config.properties");
+				this.isSerializedConfig = true;
+				this.configPath = configFile.toPath();
+				if (configFile.exists()) {
+					try {
+						this.config = ConfigPropertiesSerializator.loadConfig(configFile.toPath());
+						ConfigPropertiesSerializator.saveConfig(this.config, configFile.toPath());
+					} catch (IOException e) {
+						LOGGER.error("Can not read config file", e);
+						this.config = Config.Builder.buildDefaultConfig();
+					}
+
+				} else {
 					this.config = Config.Builder.buildDefaultConfig();
 				}
-
-			} else {
-				this.config = Config.Builder.buildDefaultConfig();
 			}
+		} else {
+			this.config = Config.Builder.buildDefaultConfig();
 		}
 
 		JMenuBar menuBar = new JMenuBar();

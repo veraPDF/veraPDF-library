@@ -5,6 +5,7 @@ import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
+import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
 import org.apache.pdfbox.preflight.font.container.FontContainer;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
@@ -66,6 +67,10 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 	}
 
     private List<PDFont> getFont() {
+		if (this.state.getRenderingMode().equals(RenderingMode.NEITHER)) {
+			return Collections.emptyList();
+		}
+
         PDFont font = FontFactory.parseFont(this.state.getFont());
 		if (font != null) {
 			List<PDFont> result = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
@@ -76,10 +81,19 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     }
 
     private List<PBGlyph> getUsedGlyphs() {
-        List<PBGlyph> res = new ArrayList<>();
+		if (this.state.getRenderingMode().equals(RenderingMode.NEITHER)) {
+			return Collections.emptyList();
+		}
+
 		org.apache.pdfbox.pdmodel.font.PDFont font = this.state.getFont();
 		FontContainer fontContainer = FontHelper.getFontContainer(font);
-        List<byte[]> strings = this.getStrings(this.arguments);
+
+		if (fontContainer == null) {
+			return Collections.emptyList();
+		}
+
+		List<PBGlyph> res = new ArrayList<>();
+		List<byte[]> strings = this.getStrings(this.arguments);
         for (byte[] string : strings) {
             try (InputStream inputStream = new ByteArrayInputStream(string)) {
                 while (inputStream.available() > 0) {

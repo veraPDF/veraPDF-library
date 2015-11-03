@@ -134,6 +134,16 @@ class CheckerPanel extends JPanel {
 		gbl.setConstraints(this.chosenProfile, gbc);
 		this.add(this.chosenProfile);
 
+		String appHome = System.getProperty("app.home");
+		if (appHome != null) {
+			File user = new File(System.getProperty("app.home"));
+			File defaultProfile = new File(user, "profiles/veraPDF-validation-profiles-integration/PDF_A/PDFA-1B.xml");
+			if (defaultProfile.isFile() && defaultProfile.canRead()) {
+				this.profile = defaultProfile;
+				this.chosenProfile.setText(this.profile.getAbsolutePath());
+			}
+		}
+
 		JButton chooseProfile = new JButton(
 				GUIConstants.CHOOSE_PROFILE_BUTTON_TEXT);
 		setGridBagConstraintsParameters(gbc,
@@ -311,7 +321,10 @@ class CheckerPanel extends JPanel {
 		                            "/home/cfw/GitHub/veraPDF/veraPDF-validation-profiles/PDF_A/PDFA-1B.xml",
 		                            false);
 					ValidationProfile prof = LegacyProfileConverter.fromLegacyProfile(toConvert, PDFAFlavour.PDFA_1_B);
-                    CheckerPanel.this.validateWorker = new ValidateWorker(CheckerPanel.this, CheckerPanel.this.pdfFile, prof, CheckerPanel.this.config, flag, CheckerPanel.this.fixMetadata.isSelected());
+                    CheckerPanel.this.validateWorker = new ValidateWorker(
+                            CheckerPanel.this, CheckerPanel.this.pdfFile, prof,
+                            CheckerPanel.this.config, flag,
+                            CheckerPanel.this.fixMetadata.isSelected());
 					CheckerPanel.this.progressBar.setVisible(true);
 					CheckerPanel.this.resultLabel.setVisible(false);
 					setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));

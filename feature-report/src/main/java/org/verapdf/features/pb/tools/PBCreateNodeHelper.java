@@ -251,7 +251,6 @@ public final class PBCreateNodeHelper {
 		if (metadata == null) {
 			return null;
 		}
-
 		FeatureTreeNode node;
 		if (parent == null) {
 			node = FeatureTreeNode.newRootInstance(nodeName);
@@ -265,7 +264,7 @@ public final class PBCreateNodeHelper {
 				node.setValue(hexString);
 			}
 		} catch (IOException e) {
-			LOGGER.debug("Error while converting stream to string", e);
+			LOGGER.debug("Error while obtaining unfiltered metadata stream", e);
 			ErrorsHelper.addErrorIntoCollection(collection,
 					node,
 					e.getMessage());

@@ -4,7 +4,6 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSString;
-import org.verapdf.model.baselayer.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosFileSpecification;
 import org.verapdf.model.external.EmbeddedFile;
@@ -48,6 +47,12 @@ public class PBCosFileSpecification extends PBCosDict implements
 	@Override
 	public String getUF() {
 		return this.uf;
+	}
+
+	// TODO : implement me
+	@Override
+	public String getAFRelationship() {
+		return null;
 	}
 
 	@Override

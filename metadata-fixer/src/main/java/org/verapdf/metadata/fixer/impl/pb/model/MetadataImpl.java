@@ -2,6 +2,7 @@ package org.verapdf.metadata.fixer.impl.pb.model;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Locale;
 
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSArray;
@@ -15,7 +16,7 @@ import org.apache.xmpbox.schema.PDFAIdentificationSchema;
 import org.apache.xmpbox.schema.XMPBasicSchema;
 import org.apache.xmpbox.type.BadFieldValueException;
 import org.apache.xmpbox.xml.XmpSerializer;
-import org.verapdf.metadata.fixer.MetadataFixerResult;
+import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.impl.pb.schemas.AdobePDFSchemaImpl;
@@ -48,7 +49,7 @@ public class MetadataImpl implements Metadata {
 	}
 
 	@Override
-	public void checkMetadataStream(MetadataFixerResult report) {
+	public void checkMetadataStream(MetadataFixerResultImpl report) {
 		COSBase filters = this.stream.getFilters();
 		if (filters instanceof COSName ||
 				(filters instanceof COSArray && ((COSArray) filters).size() != 0)) {
@@ -65,7 +66,7 @@ public class MetadataImpl implements Metadata {
 		this.setRequiredDictionaryValue(COSName.getPDFName("XML"), COSName.SUBTYPE, report);
 	}
 
-	private void setRequiredDictionaryValue(COSName value, COSName key, MetadataFixerResult report) {
+	private void setRequiredDictionaryValue(COSName value, COSName key, MetadataFixerResultImpl report) {
 		if (!value.equals(this.stream.getDictionaryObject(key))) {
 			this.stream.setItem(key, value);
 			this.stream.setNeedToBeUpdated(true);
@@ -75,17 +76,27 @@ public class MetadataImpl implements Metadata {
 	}
 
 	@Override
-	public void removePDFIdentificationSchema(MetadataFixerResult result) {
+	public void removePDFIdentificationSchema(MetadataFixerResultImpl result, PDFAFlavour flavour) {
 		PDFAIdentificationSchema schema = this.metadata.getPDFIdentificationSchema();
-		if (schema != null) {
+		if (schema != null && this.schemaContainSameFlavour(schema, flavour)) {
 			this.metadata.removeSchema(schema);
 			this.setNeedToBeUpdated(true);
 			result.addAppliedFix("Identification schema removed.");
 		}
 	}
 
+	private boolean schemaContainSameFlavour(PDFAIdentificationSchema schema, PDFAFlavour flavour) {
+		if (!schema.getPart().equals(flavour.getPart().getPartNumber())) {
+			return false;
+		}
+		String schemaConf = schema.getConformance();
+		schemaConf = schemaConf != null ? schemaConf.toUpperCase(Locale.US) : null;
+		String flavourConf = flavour.getLevel().getCode();
+		return schemaConf != null && schemaConf.equals(flavourConf);
+	}
+
 	@Override
-	public void addPDFIdentificationSchema(MetadataFixerResult report, PDFAFlavour flavour) {
+	public void addPDFIdentificationSchema(MetadataFixerResultImpl report, PDFAFlavour flavour) {
 		PDFAIdentificationSchema schema = this.metadata.getPDFIdentificationSchema();
 		int part = flavour.getPart().getPartNumber();
 		String conformance = flavour.getLevel().getCode();

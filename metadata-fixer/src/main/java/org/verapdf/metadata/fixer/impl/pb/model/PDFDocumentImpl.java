@@ -12,13 +12,15 @@ import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.xml.DomXmpParser;
 import org.apache.xmpbox.xml.XmpParsingException;
-import org.verapdf.metadata.fixer.MetadataFixerResult;
+import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
 
 import java.io.IOException;
 import java.io.OutputStream;
+
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.*;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -108,7 +110,7 @@ public class PDFDocumentImpl implements PDFDocument {
 	 * {@inheritDoc} Implemented by Apache PDFBox library.
 	 */
 	@Override
-	public void saveDocumentIncremental(MetadataFixerResult result, OutputStream output) {
+	public void saveDocumentIncremental(MetadataFixerResultImpl result, OutputStream output) {
 		try {
 			PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
 			boolean isMetaPresent = meta != null && this.isNeedToBeUpdated();
@@ -120,15 +122,20 @@ public class PDFDocumentImpl implements PDFDocument {
 				}
 				this.document.saveIncremental(output);
 				output.close();
-				result.setStatus(MetadataFixerResult.RepairStatus.SUCCESSFUL);
+				result.setRepairStatus(this.getStatus(result));
 			} else {
-				result.setStatus(MetadataFixerResult.RepairStatus.NO_ACTION);
+				result.setRepairStatus(NO_ACTION);
+				result.addAppliedFix("No action performed.");
 			}
 		} catch (Exception e) {
 			LOGGER.info(e);
-			result.setStatus(MetadataFixerResult.RepairStatus.FAILED);
-			result.addAppliedFix("Problems with document save");
+			result.setRepairStatus(FIX_ERROR);
+			result.addAppliedFix("Problems with document save. " + e.getMessage());
 		}
+	}
+
+	private MetadataFixerResultImpl.RepairStatus getStatus(MetadataFixerResultImpl result) {
+		return result.getRepairStatus() != WONT_FIX ? SUCCESS : WONT_FIX;
 	}
 
 }
