@@ -1,6 +1,8 @@
 package org.verapdf.model.impl.pb.pd;
 
+import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceStream;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -12,6 +14,7 @@ import org.verapdf.model.impl.pb.pd.actions.PBoxPDGoToAction;
 import org.verapdf.model.impl.pb.pd.actions.PBoxPDGoToRemoteAction;
 import org.verapdf.model.impl.pb.pd.actions.PBoxPDNamedAction;
 import org.verapdf.model.pdlayer.PDAnnot;
+import org.verapdf.model.tools.PDExtendedResources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -31,7 +34,18 @@ public class PBoxPDAnnotTest extends BaseTest {
 
 		setUp(FILE_RELATIVE_PATH);
 		List<PDAnnotation> annotations = document.getPage(0).getAnnotations();
-		actual = new PBoxPDAnnot(annotations.get(annotations.size() - 1));
+		PDAnnotation annot = annotations.get(annotations.size() - 1);
+		actual = new PBoxPDAnnot(annot, getResources(annot));
+	}
+
+	private static PDResources getResources(PDAnnotation annot) {
+		PDResources pageResources = document.getPage(0).getResources();
+		PDAppearanceStream stream = annot.getNormalAppearanceStream();
+		if (stream != null) {
+			return PDExtendedResources.getInstance(pageResources, stream.getResources());
+		} else {
+			return PDExtendedResources.getInstance(pageResources);
+		}
 	}
 
 	@Test

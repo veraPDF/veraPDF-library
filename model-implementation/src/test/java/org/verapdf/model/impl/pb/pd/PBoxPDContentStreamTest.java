@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.pb.pd;
 
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,7 +26,8 @@ public class PBoxPDContentStreamTest extends BaseTest {
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
-		actual = new PBoxPDContentStream(document.getPage(0));
+		PDPage page = document.getPage(0);
+		actual = new PBoxPDContentStream(page, page.getResources());
 	}
 
 	@Test
