@@ -1,7 +1,8 @@
 package org.verapdf.model.impl.pb.operator.pathpaint;
 
 import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
+import org.apache.pdfbox.pdmodel.PDResources;
+import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.operator.Op_S_stroke;
 
 import java.util.List;
@@ -13,12 +14,19 @@ import java.util.List;
  */
 public class PBOp_S_stroke extends PBOpStrokePaint implements Op_S_stroke {
 
-    public static final String OP_S_STROKE_TYPE = "Op_S_stroke";
+	/** Type name for {@code PBOp_S_stroke} */
+	public static final String OP_S_STROKE_TYPE = "Op_S_stroke";
 
-    public PBOp_S_stroke(List<COSBase> arguments,
-            org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace pbColorSpace,
-            PDAbstractPattern pattern) {
-        super(arguments, pattern, pbColorSpace, null, OP_S_STROKE_TYPE);
-    }
+	/**
+	 * Default constructor
+	 *
+	 * @param arguments arguments for current operator, must be empty.
+	 * @param state graphic state for current operator
+	 * @param resources resources for tilling pattern if it`s used
+	 */
+	public PBOp_S_stroke(List<COSBase> arguments,
+			final GraphicState state, final PDResources resources) {
+		super(arguments, state, resources, OP_S_STROKE_TYPE);
+	}
 
 }
