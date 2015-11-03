@@ -20,6 +20,8 @@ public class PDExtendedResources extends PDResources {
 
 	private static final Logger LOGGER = Logger.getLogger(PDExtendedResources.class);
 
+	public static final PDResources EMPTY = new PDResources();
+
 	private final PDResources currentResources;
 	private final PDResources pageResources;
 
@@ -50,6 +52,9 @@ public class PDExtendedResources extends PDResources {
 	@Override
 	public PDColorSpace getColorSpace(COSName name) throws IOException {
 		try {
+			if (this.getFromPageResources(name)) {
+				return this.pageResources.getColorSpace(name);
+			}
 			PDColorSpace colorSpace = this.currentResources.getColorSpace(name);
 			if (colorSpace != null) {
 				return colorSpace;
@@ -109,13 +114,27 @@ public class PDExtendedResources extends PDResources {
 		return this.pageResources.getXObject(name);
 	}
 
-	@Override
-	public boolean hasColorSpace(COSName name) {
-		return this.currentResources.hasColorSpace(name) || this.pageResources.hasColorSpace(name);
+	private boolean getFromPageResources(COSName name) {
+		if (this.isDeviceDepended(name)) {
+			COSName value = PDColorSpace.getDefaultValue(this.currentResources, name);
+			if (value != null) {
+				return false;
+			}
+			value = PDColorSpace.getDefaultValue(this.pageResources, name);
+			if (value != null) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isDeviceDepended(COSName name) {
+		return COSName.DEVICERGB.equals(name) ||
+				COSName.DEVICEGRAY.equals(name) || COSName.DEVICECMYK.equals(name);
 	}
 
 	public static PDExtendedResources getInstance(PDResources pageResources) {
-		return getInstance(pageResources, null);
+		return getInstance(pageResources, pageResources);
 	}
 
 	public static PDExtendedResources getInstance(
@@ -123,7 +142,7 @@ public class PDExtendedResources extends PDResources {
 		COSDictionary current = currentResources == null ? new COSDictionary() :
 														currentResources.getCOSObject();
 		return new PDExtendedResources(pageResources != null ?
-				pageResources : new PDResources(), current);
+				pageResources : EMPTY, current);
 	}
 
 }
