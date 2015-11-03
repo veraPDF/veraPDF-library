@@ -38,7 +38,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 	private final boolean interpolate;
 
     public PBoxPDXImage(PDImage simplePDObject) {
-        super(simplePDObject, X_IMAGE_TYPE);
+        super(simplePDObject, new PDResources(), X_IMAGE_TYPE);
 		this.interpolate = simplePDObject.getInterpolate();
     }
 

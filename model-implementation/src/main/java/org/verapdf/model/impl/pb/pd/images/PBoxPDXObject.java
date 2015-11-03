@@ -22,6 +22,7 @@ import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.impl.pb.cos.PBCosDict;
 import org.verapdf.model.impl.pb.pd.PBoxPDResources;
 import org.verapdf.model.pdlayer.PDXObject;
+import org.verapdf.model.tools.PDExtendedResources;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -35,30 +36,28 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
     public static final String OPI = "OPI";
     public static final String S_MASK = "SMask";
 
+	protected final PDResources resources;
+	private final String subtype;
+
     public PBoxPDXObject(
             org.apache.pdfbox.pdmodel.graphics.PDXObject simplePDObject) {
-        super(simplePDObject, X_OBJECT_TYPE);
+        this(simplePDObject, new PDResources(), X_OBJECT_TYPE);
     }
 
-	protected PBoxPDXObject(COSObjectable simplePDObject, final String type) {
+	protected PBoxPDXObject(COSObjectable simplePDObject, PDResources resources, final String type) {
 		super(simplePDObject, type);
+		this.resources = resources;
+		this.subtype = this.getSubtype((org.apache.pdfbox.pdmodel.graphics.PDXObject) this.simplePDObject);
 	}
 
-    @Override
-    public String getSubtype() {
-        COSDictionary dict = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) this.simplePDObject)
-                .getCOSStream();
-        return this.getSubtypeString(dict.getDictionaryObject(COSName.SUBTYPE));
-    }
+	private String getSubtype(org.apache.pdfbox.pdmodel.graphics.PDXObject object) {
+		COSBase base = object.getCOSStream().getDictionaryObject(COSName.SUBTYPE);
+		return base instanceof COSName ? ((COSName) base).getName() : null;
+	}
 
-    protected String getSubtypeString(COSBase item) {
-        if (item instanceof COSString) {
-            return ((COSString) item).getString();
-        } else if (item instanceof COSName) {
-            return ((COSName) item).getName();
-        } else {
-            return null;
-        }
+	@Override
+    public String getSubtype() {
+		return this.subtype;
     }
 
 	@Override
@@ -104,13 +103,16 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
         org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject =
 				org.apache.pdfbox.pdmodel.graphics.PDXObject.createXObject(
 						smaskDictionary, nameAsString, resources);
-        return getTypedPDXObject(pbObject);
+        return getTypedPDXObject(pbObject, this.resources);
     }
 
     public static PDXObject getTypedPDXObject(
-            org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject) {
+            org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject,
+			PDResources extendedResources) {
         if (pbObject instanceof PDFormXObject) {
-            return new PBoxPDXForm((PDFormXObject) pbObject);
+			PDFormXObject object = (PDFormXObject) pbObject;
+			return new PBoxPDXForm(object, getResources(
+					extendedResources, object.getResources()));
         } else if (pbObject instanceof PDImageXObject) {
             return new PBoxPDXImage((PDImageXObject) pbObject);
         } else if (pbObject instanceof PDPostScriptXObject) {
@@ -120,7 +122,18 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
         }
     }
 
-    protected List<CosDict> getOPI() {
+	private static PDResources getResources(PDResources extendedResources, PDResources resources) {
+		if (extendedResources instanceof PDExtendedResources) {
+			PDExtendedResources res = (PDExtendedResources) extendedResources;
+			return PDExtendedResources.getInstance(res.getPageResources(), resources);
+		} else if (extendedResources != null) {
+			return PDExtendedResources.getInstance(extendedResources, resources);
+		} else {
+			return resources;
+		}
+	}
+
+	protected List<CosDict> getOPI() {
         return this.getLinkToDictionary(OPI);
     }
 

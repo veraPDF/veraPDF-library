@@ -1,7 +1,9 @@
 package org.verapdf.model.impl.pb.pd.images;
 
+import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSStream;
+import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
@@ -30,15 +32,18 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
     public static final String CONTENT_STREAM = "contentStream";
 
     public PBoxPDXForm(PDFormXObject simplePDObject) {
-        super(simplePDObject, X_FORM_TYPE);
+        this(simplePDObject, new PDResources());
     }
 
-    @Override
+	public PBoxPDXForm(PDFormXObject simplePDObject, PDResources resources) {
+		super(simplePDObject, resources, X_FORM_TYPE);
+	}
+
+	@Override
     public String getSubtype2() {
-        final COSStream subtype2 = ((PDFormXObject) this.simplePDObject)
-                .getCOSStream();
-        return getSubtypeString(subtype2
-                .getDictionaryObject(COSName.getPDFName("Subtype2")));
+        final COSStream subtype2 = ((PDFormXObject) this.simplePDObject).getCOSStream();
+		COSBase item = subtype2.getDictionaryObject(COSName.getPDFName("Subtype2"));
+		return item instanceof COSName ? ((COSName) item).getName() : null;
     }
 
 	@Override
@@ -87,7 +92,7 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
     private List<PDContentStream> getContentStream() {
         List<PDContentStream> streams = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         streams.add(new PBoxPDContentStream(
-				(PDFormXObject) simplePDObject));
+				(PDFormXObject) this.simplePDObject, this.resources));
         return streams;
     }
 }
