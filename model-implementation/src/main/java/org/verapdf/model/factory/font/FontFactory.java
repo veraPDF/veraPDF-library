@@ -1,13 +1,16 @@
 package org.verapdf.model.factory.font;
 
+import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
 import org.apache.pdfbox.pdmodel.font.PDType1CFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.PDType3Font;
 import org.verapdf.model.impl.pb.pd.font.PBoxPDTrueTypeFont;
 import org.verapdf.model.impl.pb.pd.font.PBoxPDType0Font;
 import org.verapdf.model.impl.pb.pd.font.PBoxPDType1Font;
 import org.verapdf.model.impl.pb.pd.font.PBoxPDType3Font;
 import org.verapdf.model.pdlayer.PDFont;
+import org.verapdf.model.tools.PDExtendedResources;
 
 /**
  * Font factory for transforming Apache PDFBox
@@ -44,6 +47,12 @@ public final class FontFactory {
 	 */
 	public static PDFont parseFont(
 			org.apache.pdfbox.pdmodel.font.PDFont pdfboxFont) {
+		return parseFont(pdfboxFont, new PDResources());
+	}
+
+	public static PDFont parseFont(
+			org.apache.pdfbox.pdmodel.font.PDFont pdfboxFont,
+			PDResources resources) {
 		if (pdfboxFont == null) {
 			return null;
 		}
@@ -57,11 +66,27 @@ public final class FontFactory {
 					return new PBoxPDType1Font((PDType1CFont) pdfboxFont);
 				}
 			case TYPE_3:
-				return new PBoxPDType3Font(pdfboxFont);
+				return new PBoxPDType3Font(pdfboxFont,
+						getResources(pdfboxFont, resources));
 			case TRUE_TYPE:
 				return new PBoxPDTrueTypeFont((PDTrueTypeFont) pdfboxFont);
 			default:
 				return null;
+		}
+	}
+
+	private static PDResources getResources(
+			org.apache.pdfbox.pdmodel.font.PDFont pdfboxFont,
+			PDResources resources) {
+		PDResources fontResources = ((PDType3Font) pdfboxFont).getResources();
+		if (resources instanceof PDExtendedResources) {
+			PDExtendedResources extRes = (PDExtendedResources) resources;
+			return PDExtendedResources.getInstance(extRes.getPageResources(),
+					fontResources);
+		} else if (resources != null) {
+			return PDExtendedResources.getInstance(resources, fontResources);
+		} else {
+			return fontResources;
 		}
 	}
 
