@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
+import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
 import org.apache.pdfbox.preflight.font.container.FontContainer;
@@ -43,11 +44,13 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     public static final String STROKE_COLOR_SPACE = "strokeCS";
 
     protected final GraphicState state;
+	private final PDResources resources;
 
     protected PBOpTextShow(List<COSBase> arguments,
-            GraphicState state, final String opType) {
+            GraphicState state, PDResources resources, final String opType) {
         super(arguments, opType);
         this.state = state;
+		this.resources = resources;
     }
 
 	@Override
@@ -71,7 +74,7 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
 			return Collections.emptyList();
 		}
 
-        PDFont font = FontFactory.parseFont(this.state.getFont());
+        PDFont font = FontFactory.parseFont(this.state.getFont(), this.resources);
 		if (font != null) {
 			List<PDFont> result = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 			result.add(font);
@@ -137,7 +140,8 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     }
 
 	private List<PDColorSpace> getColorSpace(org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace fillColorSpace) {
-		PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(fillColorSpace, this.state.getPattern());
+		PDColorSpace colorSpace = ColorSpaceFactory.getColorSpace(
+				fillColorSpace, this.state.getPattern(), this.resources);
 		if (colorSpace != null) {
 			List<PDColorSpace> colorSpaces = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 			colorSpaces.add(colorSpace);

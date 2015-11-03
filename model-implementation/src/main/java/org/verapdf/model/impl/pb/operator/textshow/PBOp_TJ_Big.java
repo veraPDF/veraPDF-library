@@ -2,6 +2,7 @@ package org.verapdf.model.impl.pb.operator.textshow;
 
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosArray;
@@ -27,8 +28,8 @@ public class PBOp_TJ_Big extends PBOpTextShow implements Op_TJ_Big {
 	/** Name of link to the set of strings and numbers */
     public static final String SPECIAL_STRINGS = "specialStrings";
 
-    public PBOp_TJ_Big(List<COSBase> arguments, GraphicState state) {
-        super(arguments, state, OP_TJ_BIG_TYPE);
+    public PBOp_TJ_Big(List<COSBase> arguments, GraphicState state, PDResources resources) {
+        super(arguments, state, resources, OP_TJ_BIG_TYPE);
     }
 
     @Override
