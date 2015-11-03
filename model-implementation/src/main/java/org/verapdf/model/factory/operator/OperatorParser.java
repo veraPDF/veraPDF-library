@@ -226,16 +226,16 @@ class OperatorParser {
 
 				// TEXT SHOW
 			case Operators.TJ_SHOW:
-				operators.add(new PBOp_Tj(arguments, this.graphicState.clone()));
+				operators.add(new PBOp_Tj(arguments, this.graphicState.clone(), resources));
 				break;
 			case Operators.TJ_SHOW_POS:
-				operators.add(new PBOp_TJ_Big(arguments, this.graphicState.clone()));
+				operators.add(new PBOp_TJ_Big(arguments, this.graphicState.clone(), resources));
 				break;
 			case Operators.QUOTE:
-				operators.add(new PBOp_Quote(arguments, this.graphicState.clone()));
+				operators.add(new PBOp_Quote(arguments, this.graphicState.clone(), resources));
 				break;
 			case Operators.DOUBLE_QUOTE:
-				operators.add(new PBOp_DoubleQuote(arguments, this.graphicState.clone()));
+				operators.add(new PBOp_DoubleQuote(arguments, this.graphicState.clone(), resources));
 				break;
 
 				// TEXT STATE
@@ -311,55 +311,42 @@ class OperatorParser {
 				// PATH PAINT
 			case Operators.B_CLOSEPATH_FILL_STROKE:
 				operators.add(new PBOp_b_closepath_fill_stroke(arguments,
-						this.graphicState.getStrokeColorSpace(),
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.B_FILL_STROKE:
 				operators.add(new PBOp_B_fill_stroke(arguments,
-						this.graphicState.getStrokeColorSpace(),
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.B_STAR_CLOSEPATH_EOFILL_STROKE:
 				operators.add(new PBOp_bstar_closepath_eofill_stroke(arguments,
-						this.graphicState.getStrokeColorSpace(),
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.B_STAR_EOFILL_STROKE:
 				operators.add(new PBOp_BStar_eofill_stroke(arguments,
-						this.graphicState.getStrokeColorSpace(),
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.F_FILL:
 				operators.add(new PBOp_f_fill(arguments,
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.F_FILL_OBSOLETE:
 				operators.add(new PBOp_F_fill_obsolete(arguments,
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.F_STAR_FILL:
 				operators.add(new PBOp_FStar(arguments,
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.N:
 				operators.add(new PBOp_n(arguments));
 				break;
 			case Operators.S_CLOSE_STROKE:
 				operators.add(new PBOp_s_close_stroke(arguments,
-						this.graphicState.getStrokeColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.S_STROKE:
 				operators.add(new PBOp_S_stroke(arguments,
-						this.graphicState.getStrokeColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 
 				// SHADING
@@ -386,7 +373,7 @@ class OperatorParser {
 				// XOBJECT
 			case Operators.DO:
 				operators.add(new PBOp_Do(arguments, getXObjectFromResources(resources,
-						getLastCOSName(arguments))));
+						getLastCOSName(arguments)), resources));
 				break;
 			default:
 				operators.add(new PBOp_Undefined(arguments));
