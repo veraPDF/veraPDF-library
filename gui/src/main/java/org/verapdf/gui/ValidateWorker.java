@@ -1,23 +1,5 @@
 package org.verapdf.gui;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import javax.swing.JOptionPane;
-import javax.swing.SwingWorker;
-import javax.xml.bind.JAXBException;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.transform.TransformerException;
-
 import org.apache.log4j.Logger;
 import org.verapdf.core.ValidationException;
 import org.verapdf.features.pb.PBFeatureParser;
@@ -25,7 +7,6 @@ import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.metadata.fixer.MetadataFixer;
-import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
@@ -33,12 +14,17 @@ import org.verapdf.model.ModelLoader;
 import org.verapdf.pdfa.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validation.Validator;
 import org.verapdf.report.HTMLReport;
-import org.verapdf.report.XMLReport;
-import org.xml.sax.SAXException;
+
+import javax.swing.*;
+import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
+import java.io.*;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Validates PDF in a new threat.
@@ -179,7 +165,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         try {
             xmlReport = File.createTempFile("veraPDF-tempXMLReport", ".xml");
             xmlReport.deleteOnExit();
-            ValidationResults.toXml(result, new FileOutputStream(htmlReport), Boolean.TRUE);
+            ValidationResults.toXml(result, new FileOutputStream(xmlReport), Boolean.TRUE);
             try {
                 htmlReport = File.createTempFile("veraPDF-tempHTMLReport",
                         ".html");

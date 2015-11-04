@@ -1,13 +1,5 @@
 package org.verapdf.pdfa.validation;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.Script;
@@ -20,6 +12,8 @@ import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
+
+import java.util.*;
 
 /**
  * Validation logic
@@ -118,8 +112,7 @@ public class Validator {
         }
     }
 
-    private boolean checkNext() throws ValidationException,
-            ValidationException, ValidationException {
+	private boolean checkNext() throws ValidationException {
 
         Object checkObject = this.objectsStack.pop();
         String checkContext = this.objectsContext.pop();
@@ -136,25 +129,34 @@ public class Validator {
 
     private void updateVariables(Object object) {
         if (object != null) {
-            for (Variable var :this.profile
-                    .getVariablesByObject(object.getObjectType())) {
+			updateVariableForObjectWithType(object, object.getObjectType());
 
-                if (var == null)
-                    continue;
+			for (String parentName : object.getSuperTypes()) {
+				updateVariableForObjectWithType(object, parentName);
+			}
+		}
+	}
 
-                java.lang.Object variable = evalVariableResult(var, object);
-                this.scope.put(var.getName(), this.scope, variable);
-            }
-        }
-    }
+	private void updateVariableForObjectWithType(Object object, String objectType) {
+		for (Variable var : this.profile
+				.getVariablesByObject(objectType)) {
+
+			if (var == null)
+				continue;
+
+			java.lang.Object variable = evalVariableResult(var, object);
+			this.scope.put(var.getName(), this.scope, variable);
+		}
+	}
 
     private java.lang.Object evalVariableResult(Variable variable, Object object) {
         Script script;
         if (!this.variableScripts.containsKey(variable.getName())) {
             String source = getStringScript(object, variable.getValue());
             script = this.context.compileString(source, null, 0, null);
-        } else {
-            script = this.variableScripts.get(variable.getName());
+			this.variableScripts.put(variable.getName(), script);
+		} else {
+			script = this.variableScripts.get(variable.getName());
         }
 
         this.scope.put("obj", this.scope, object);
@@ -168,10 +170,9 @@ public class Validator {
     }
 
     private void addAllLinkedObjects(Object checkObject, String checkContext,
-            Set<String> checkIDContext) throws ValidationException,
-            ValidationException, ValidationException {
-        List<String> links = checkObject.getLinks();
-        for (int j = links.size() - 1; j >= 0; --j) {
+									 Set<String> checkIDContext) throws ValidationException {
+		List<String> links = checkObject.getLinks();
+		for (int j = links.size() - 1; j >= 0; --j) {
             String link = links.get(j);
 
             if (link == null) {
@@ -319,10 +320,9 @@ public class Validator {
             scr = this.ruleScripts.get(rule.getRuleId());
         }
 
-        boolean testEvalResult = false;
-        testEvalResult = ((Boolean) scr.exec(this.context, this.scope))
-                .booleanValue();
-        Status assertionStatus = (testEvalResult) ? Status.PASSED
+		boolean testEvalResult = ((Boolean) scr.exec(this.context, this.scope))
+				.booleanValue();
+		Status assertionStatus = (testEvalResult) ? Status.PASSED
                 : Status.FAILED;
 
         Location location = ValidationResults.locationFromValues(this.rootType,
