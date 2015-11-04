@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.log4j.Logger;
 import org.verapdf.ReleaseDetails;
 import org.verapdf.cli.commands.VeraCliArgParser;
 import org.verapdf.core.ProfileException;
@@ -32,6 +33,7 @@ import com.beust.jcommander.JCommander;
  *
  */
 public final class VeraPdfCli {
+    private static final Logger LOGGER = Logger.getLogger(VeraPdfCli.class);
     private static final String APP_NAME = "veraPDF";
     private static final ReleaseDetails RELEASE_DETAILS = ReleaseDetails
             .getInstance();
@@ -95,8 +97,8 @@ public final class VeraPdfCli {
             return PROFILES.getValidationProfileByFlavour(flavour);
         }
         // Try as a file
-        try (InputStream toParse = new FileInputStream(userInput)) {
-            return Profiles.profileFromXml(toParse);
+        try {
+            return Profiles.profileFromXml(new FileInputStream(userInput));
         } catch (JAXBException | IOException e) {
             // Do nothing as it's a parse error so try from legacy profile nex
         }
@@ -118,6 +120,8 @@ public final class VeraPdfCli {
 
     private static void logThrowable(final Throwable cause,
             final String message) {
+        LOGGER.fatal(message);
+        LOGGER.fatal(cause);
         System.err.println(message);
         cause.printStackTrace();
         return;
