@@ -3,7 +3,7 @@ package org.verapdf.features.pb.objects;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.ICCProfileFeaturesData;
@@ -94,10 +94,10 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 
 		if (profile != null) {
 			FeatureTreeNode root = FeatureTreeNode.newRootInstance("iccProfile");
@@ -175,7 +175,7 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 		}
 	}
 
-	private void addParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void addParents(FeatureTreeNode root) throws FeatureParsingException {
 		if ((outInts != null && !outInts.isEmpty()) || (iccBaseds != null && !iccBaseds.isEmpty())) {
 			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
 
@@ -199,7 +199,7 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 		}
 	}
 
-	private void parseProfileHeader(FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
+	private void parseProfileHeader(FeatureTreeNode root, FeaturesCollection collection) throws FeatureParsingException {
 		try {
 			byte[] profileBytes = PBCreateNodeHelper.inputStreamToByteArray(profile.getUnfilteredStream());
 

@@ -3,6 +3,8 @@
  */
 package org.verapdf.pdfa.validation;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,7 +12,10 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.verapdf.pdfa.ValidationProfile;
+import javax.xml.bind.JAXBException;
+
+import org.verapdf.core.Directory;
+import org.verapdf.core.MapBackedDirectory;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**
@@ -18,17 +23,19 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
  *
  */
 final class ProfileDirectoryImpl implements ProfileDirectory {
-    private final Map<PDFAFlavour, ValidationProfile> profileMap;
-    private final Map<String, PDFAFlavour> flavourMap;
+    private static final ProfileDirectoryImpl DEFAULT = makeVeraProfileDir();
+
+    private final Directory<PDFAFlavour, ValidationProfile> profileDir;
+    private final Directory<String, PDFAFlavour> flavourDir;
 
     private ProfileDirectoryImpl(Set<ValidationProfile> profileSet) {
         this(ProfileDirectoryImpl.profileMapFromSet(profileSet));
     }
 
     private ProfileDirectoryImpl(Map<PDFAFlavour, ValidationProfile> profileMap) {
-        this.profileMap = Collections.unmodifiableMap(profileMap);
-        this.flavourMap = ProfileDirectoryImpl.flavourMapFromSet(profileMap
-                .keySet());
+        this.profileDir = new MapBackedDirectory<>(profileMap);
+        this.flavourDir = new MapBackedDirectory<>(
+                ProfileDirectoryImpl.flavourMapFromSet(profileMap.keySet()));
     }
 
     /**
@@ -36,7 +43,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
      */
     @Override
     public Set<String> getValidationProfileIds() {
-        return Collections.unmodifiableSet(this.flavourMap.keySet());
+        return Collections.unmodifiableSet(this.flavourDir.getKeys());
     }
 
     /**
@@ -44,7 +51,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
      */
     @Override
     public Set<PDFAFlavour> getPDFAFlavours() {
-        return Collections.unmodifiableSet(this.profileMap.keySet());
+        return this.profileDir.getKeys();
     }
 
     /**
@@ -55,7 +62,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
         if (profileID == null)
             throw new IllegalArgumentException(
                     "Parameter profileID cannot be null");
-        PDFAFlavour flavour = this.flavourMap.get(profileID);
+        PDFAFlavour flavour = this.flavourDir.getItem(profileID);
         if (flavour == null)
             throw new NoSuchElementException("PDFAFlavour " + flavour
                     + " is not supported by this directory.");
@@ -70,7 +77,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
         if (flavour == null)
             throw new IllegalArgumentException(
                     "Parameter flavour cannot be null");
-        ValidationProfile profile = this.profileMap.get(flavour);
+        ValidationProfile profile = this.profileDir.getItem(flavour);
         if (profile == null)
             throw new NoSuchElementException("PDFAFlavour " + flavour
                     + " is not supported by this directory.");
@@ -82,12 +89,15 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
      */
     @Override
     public Set<ValidationProfile> getValidationProfiles() {
-        return Collections.unmodifiableSet(new HashSet<>(this.profileMap
-                .values()));
+        return Collections.unmodifiableSet(new HashSet<>(this.profileDir
+                .getItems()));
     }
 
-    static ProfileDirectory fromProfileSet(
-            Set<ValidationProfile> profiles) {
+    static ProfileDirectoryImpl getVeraProfileDirectory() {
+        return DEFAULT;
+    }
+
+    static ProfileDirectoryImpl fromProfileSet(Set<ValidationProfile> profiles) {
         return new ProfileDirectoryImpl(profiles);
     }
 
@@ -100,12 +110,26 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
         return Collections.unmodifiableMap(profileMap);
     }
 
-    static Map<String, PDFAFlavour> flavourMapFromSet(
-            Set<PDFAFlavour> flavours) {
+    static Map<String, PDFAFlavour> flavourMapFromSet(Set<PDFAFlavour> flavours) {
         Map<String, PDFAFlavour> flavourMap = new HashMap<>();
         for (PDFAFlavour flavour : flavours) {
             flavourMap.put(flavour.getId(), flavour);
         }
         return Collections.unmodifiableMap(flavourMap);
+    }
+
+    private static ProfileDirectoryImpl makeVeraProfileDir() {
+        Set<ValidationProfile> profiles = new HashSet<>();
+        profiles.add(getFallBackPDFA1b());
+        return ProfileDirectoryImpl.fromProfileSet(profiles);
+    }
+
+    private static ValidationProfile getFallBackPDFA1b() {
+        try (InputStream is = ValidationProfileImpl.class.getClassLoader()
+                .getResourceAsStream("org/verapdf/pdfa/validation/pdfa-1b.xml")) {
+            return ValidationProfileImpl.fromXml(is);
+        } catch (JAXBException | IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 }

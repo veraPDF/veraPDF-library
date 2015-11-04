@@ -1,7 +1,7 @@
 package org.verapdf.features.tools;
 
 import org.apache.log4j.Logger;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 
 /**
@@ -64,7 +64,7 @@ public final class ErrorsHelper {
 				element.addAttribute(ERRORID, elementErrorID);
 			}
 			return id;
-		} catch (FeaturesTreeNodeException ignore) {
+		} catch (FeatureParsingException ignore) {
 			// This exception occurs when wrong node creates for feature tree.
 			// The logic of the method guarantees this doesn't occur.
 			String message = "FeatureTreeNode root instance logic failure";
