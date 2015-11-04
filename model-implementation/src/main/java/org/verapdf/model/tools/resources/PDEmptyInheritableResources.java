@@ -13,9 +13,9 @@ import java.io.IOException;
 /**
  * @author Evgeniy Muravitskiy
  */
-class PDEmptyExtendedResources extends PDExtendedResources {
+class PDEmptyInheritableResources extends PDInheritableResources {
 
-	PDEmptyExtendedResources() {
+	PDEmptyInheritableResources() {
 		super(EMPTY_RESOURCES, EMPTY_RESOURCES);
 	}
 

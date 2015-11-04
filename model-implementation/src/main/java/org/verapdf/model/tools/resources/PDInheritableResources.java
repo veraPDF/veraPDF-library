@@ -15,17 +15,17 @@ import java.io.IOException;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class PDExtendedResources {
+public class PDInheritableResources {
 
-	private static final Logger LOGGER = Logger.getLogger(PDExtendedResources.class);
+	private static final Logger LOGGER = Logger.getLogger(PDInheritableResources.class);
 
 	public static final PDResources EMPTY_RESOURCES = new PDEmptyResources();
-	public static final PDExtendedResources EMPTY_EXTENDED_RESOURCES = new PDEmptyExtendedResources();
+	public static final PDInheritableResources EMPTY_EXTENDED_RESOURCES = new PDEmptyInheritableResources();
 
 	private final PDResources currentResources;
 	private final PDResources pageResources;
 
-	protected PDExtendedResources(PDResources pageResources, PDResources currentResources) {
+	protected PDInheritableResources(PDResources pageResources, PDResources currentResources) {
 		this.pageResources = pageResources;
 		this.currentResources = currentResources;
 	}
@@ -38,26 +38,24 @@ public class PDExtendedResources {
 		return this.currentResources;
 	}
 
-	public PDExtendedResources getExtendedResources(PDResources resources) {
+	public PDInheritableResources getExtendedResources(PDResources resources) {
 		return getInstance(this.pageResources, resources);
 	}
 
 	public PDFont getFont(COSName name) throws IOException {
-		try {
-			PDFont font = this.currentResources.getFont(name);
-			if (font != null) {
-				return font;
-			}
-		} catch (IOException e) {
-			LOGGER.warn("Problems during font obtain from current resource dictionary. " +
-					"Trying to find it in page dictionary");
-		}
-		return this.pageResources.getFont(name);
+		PDFont font = this.currentResources.getFont(name);
+		return font != null ? font : this.pageResources.getFont(name);
 	}
 
 	public PDColorSpace getColorSpace(COSName name) throws IOException {
 		try {
-			if (this.getFromPageResources(name)) {
+			/*
+				if name is name of device depended color space and
+				default color space defined only in page resource
+			 	dictionary that wee need to get it from page
+			 	resource dictionary
+			*/
+			if (this.isDefaultColorSpaceUsed(name)) {
 				return this.pageResources.getColorSpace(name);
 			}
 			PDColorSpace colorSpace = this.currentResources.getColorSpace(name);
@@ -77,45 +75,21 @@ public class PDExtendedResources {
 	}
 
 	public PDShading getShading(COSName name) throws IOException {
-		try {
-			PDShading shading = this.currentResources.getShading(name);
-			if (shading != null) {
-				return shading;
-			}
-		} catch (IOException e) {
-			LOGGER.warn("Problems during shading obtain from current resource dictionary. " +
-					"Trying to find it in page dictionary");
-		}
-		return this.pageResources.getShading(name);
+		PDShading shading = this.currentResources.getShading(name);
+		return shading != null ? shading : this.pageResources.getShading(name);
 	}
 
 	public PDAbstractPattern getPattern(COSName name) throws IOException {
-		try {
-			PDAbstractPattern pattern = this.currentResources.getPattern(name);
-			if (pattern != null) {
-				return pattern;
-			}
-		} catch (IOException e) {
-			LOGGER.warn("Problems during pattern obtain from current resource dictionary. " +
-					"Trying to find it in page dictionary");
-		}
-		return this.pageResources.getPattern(name);
+		PDAbstractPattern pattern = this.currentResources.getPattern(name);
+		return pattern != null ? pattern : this.pageResources.getPattern(name);
 	}
 
 	public PDXObject getXObject(COSName name) throws IOException {
-		try {
-			PDXObject object = this.currentResources.getXObject(name);
-			if (object != null) {
-				return object;
-			}
-		} catch (IOException e) {
-			LOGGER.warn("Problems during XObject obtain from current resource dictionary. " +
-					"Trying to find it in page dictionary");
-		}
-		return this.pageResources.getXObject(name);
+		PDXObject object = this.currentResources.getXObject(name);
+		return object != null ? object : this.pageResources.getXObject(name);
 	}
 
-	private boolean getFromPageResources(COSName name) {
+	private boolean isDefaultColorSpaceUsed(COSName name) {
 		if (this.isDeviceDepended(name)) {
 			COSName value = PDColorSpace.getDefaultValue(this.currentResources, name);
 			if (value != null) {
@@ -134,15 +108,15 @@ public class PDExtendedResources {
 				COSName.DEVICEGRAY.equals(name) || COSName.DEVICECMYK.equals(name);
 	}
 
-	public static PDExtendedResources getInstance(PDResources pageResources) {
+	public static PDInheritableResources getInstance(PDResources pageResources) {
 		return getInstance(pageResources, pageResources);
 	}
 
-	public static PDExtendedResources getInstance(
+	public static PDInheritableResources getInstance(
 			PDResources pageResources, PDResources currentResources) {
 		pageResources = pageResources != null ? pageResources : EMPTY_RESOURCES;
 		currentResources = currentResources != null ? currentResources : EMPTY_RESOURCES;
-		return new PDExtendedResources(pageResources, currentResources);
+		return new PDInheritableResources(pageResources, currentResources);
 	}
 
 }
