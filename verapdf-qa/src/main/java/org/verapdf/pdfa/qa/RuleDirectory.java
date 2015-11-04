@@ -30,10 +30,10 @@ import org.verapdf.validation.profile.parser.LegacyProfileConverter;
 public final class RuleDirectory implements Directory<RuleId, Rule> {
 
     private final Registry<RuleId, Rule> rules = new MapBackedRegistry<>(
-            Collections.EMPTY_MAP);
+            Collections.<RuleId, Rule> emptyMap());
     private final PDFAFlavour flavour;
 
-    private RuleDirectory(final File root) {
+    private RuleDirectory(final File root) throws FileNotFoundException, ProfileException, IOException {
         this.flavour = PDFAFlavour.fromString(root.getName());
         Set<Rule> ruleSet = rulesFromDir(root, this.flavour);
         for (Rule rule : ruleSet) {
@@ -94,8 +94,7 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
         return this.flavour;
     }
 
-    public static RuleDirectory loadFromDir(final File root)
-            throws FileNotFoundException, IOException {
+    public static RuleDirectory loadFromDir(final File root) throws FileNotFoundException, ProfileException, IOException {
         return new RuleDirectory(root);
     }
 
@@ -107,7 +106,8 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
      * @throws ProfileException
      */
     public static Set<Rule> rulesFromDir(final File dir,
-            final PDFAFlavour flavour) {
+            final PDFAFlavour flavour) throws FileNotFoundException,
+            IOException, ProfileException {
         Set<Rule> rules = new HashSet<>();
         File[] files = dir.listFiles();
         for (File file : files) {
@@ -119,12 +119,6 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
                 try (InputStream fis = new FileInputStream(file)) {
                     Rule rule = getRuleFromLegacyProfile(fis, flavour);
                     rules.add(rule);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (ProfileException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
                 }
             }
         }
