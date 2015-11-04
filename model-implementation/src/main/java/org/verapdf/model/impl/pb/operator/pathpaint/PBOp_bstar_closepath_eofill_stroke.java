@@ -1,9 +1,9 @@
 package org.verapdf.model.impl.pb.operator.pathpaint;
 
 import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.operator.Op_bstar_closepath_eofill_stroke;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.util.List;
 
@@ -17,7 +17,8 @@ public class PBOp_bstar_closepath_eofill_stroke extends PBOpFillAndStroke
 		implements Op_bstar_closepath_eofill_stroke {
 
 	/** Type name for {@code PBOp_bstar_closepath_eofill_stroke} */
-	public static final String OP_BSTAR_CLOSEPATH_EOFILL_STROKE_TYPE = "Op_bstar_closepath_eofill_stroke";
+	public static final String OP_BSTAR_CLOSEPATH_EOFILL_STROKE_TYPE
+			= "Op_bstar_closepath_eofill_stroke";
 
 	/**
 	 * Default constructor
@@ -27,7 +28,8 @@ public class PBOp_bstar_closepath_eofill_stroke extends PBOpFillAndStroke
 	 * @param resources resources for tilling pattern if it`s used
 	 */
 	public PBOp_bstar_closepath_eofill_stroke(List<COSBase> arguments,
-								final GraphicState state, final PDResources resources) {
+											  final GraphicState state,
+											  final PDExtendedResources resources) {
 		super(arguments, state, resources, OP_BSTAR_CLOSEPATH_EOFILL_STROKE_TYPE);
 	}
 }

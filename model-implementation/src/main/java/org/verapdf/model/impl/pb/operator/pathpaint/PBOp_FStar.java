@@ -1,9 +1,9 @@
 package org.verapdf.model.impl.pb.operator.pathpaint;
 
 import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.operator.Op_FStar;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.util.List;
 
@@ -15,9 +15,7 @@ import java.util.List;
  */
 public class PBOp_FStar extends PBOpFillPaint implements Op_FStar {
 
-	/**
-	 * Type name for {@code PBOp_FStar}
-	 */
+	/** Type name for {@code PBOp_FStar} */
 	public static final String OP_FSTAR_TYPE = "Op_FStar";
 
 	/**
@@ -28,7 +26,8 @@ public class PBOp_FStar extends PBOpFillPaint implements Op_FStar {
 	 * @param resources resources for tilling pattern if it`s used
 	 */
 	public PBOp_FStar(List<COSBase> arguments,
-			final GraphicState state, final PDResources resources) {
+					  final GraphicState state,
+					  final PDExtendedResources resources) {
 		super(arguments, state, resources, OP_FSTAR_TYPE);
 	}
 
