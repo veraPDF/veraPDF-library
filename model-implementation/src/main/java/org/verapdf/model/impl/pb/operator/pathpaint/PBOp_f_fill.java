@@ -3,7 +3,7 @@ package org.verapdf.model.impl.pb.operator.pathpaint;
 import org.apache.pdfbox.cos.COSBase;
 import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.operator.Op_f_fill;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class PBOp_f_fill extends PBOpFillPaint implements Op_f_fill {
 	 */
 	public PBOp_f_fill(List<COSBase> arguments,
 					   final GraphicState state,
-					   final PDExtendedResources resources) {
+					   final PDInheritableResources resources) {
 		super(arguments, state, resources, OP_F_FILL_TYPE);
 	}
 

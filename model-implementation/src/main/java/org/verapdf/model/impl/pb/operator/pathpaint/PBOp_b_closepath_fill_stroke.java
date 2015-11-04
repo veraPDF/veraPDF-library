@@ -3,7 +3,7 @@ package org.verapdf.model.impl.pb.operator.pathpaint;
 import org.apache.pdfbox.cos.COSBase;
 import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.operator.Op_b_closepath_fill_stroke;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class PBOp_b_closepath_fill_stroke extends PBOpFillAndStroke implements
 	 */
 	public PBOp_b_closepath_fill_stroke(List<COSBase> arguments,
 										final GraphicState state,
-										final PDExtendedResources resources) {
+										final PDInheritableResources resources) {
 		super(arguments, state, resources, OP_B_CLOSEPATH_FILL_STROKE_TYPE);
 	}
 

@@ -9,7 +9,7 @@ import org.verapdf.model.impl.pb.pd.pattern.PBoxPDShadingPattern;
 import org.verapdf.model.impl.pb.pd.pattern.PBoxPDTilingPattern;
 import org.verapdf.model.pdlayer.PDColorSpace;
 import org.verapdf.model.pdlayer.PDPattern;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 /**
  * Factory for transforming PDColorSpace objects of pdfbox to corresponding
@@ -46,7 +46,7 @@ public class ColorSpaceFactory {
 	 */
 	public static PDColorSpace getColorSpace(
 			org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace) {
-		return getColorSpace(colorSpace, null, PDExtendedResources.EMPTY_EXTENDED_RESOURCES);
+		return getColorSpace(colorSpace, null, PDInheritableResources.EMPTY_EXTENDED_RESOURCES);
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class ColorSpaceFactory {
 	 */
 	public static PDColorSpace getColorSpace(
 			org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace,
-			PDAbstractPattern pattern, PDExtendedResources resources) {
+			PDAbstractPattern pattern, PDInheritableResources resources) {
 		if (colorSpace == null) {
 			return null;
 		}
@@ -105,13 +105,13 @@ public class ColorSpaceFactory {
 	 * @return {@code <? extends PDPattern>} object or {@code null} if
 	 * {@code pattern} argument is {@code null}
 	 */
-	public static PDPattern getPattern(PDAbstractPattern pattern, PDExtendedResources resources) {
+	public static PDPattern getPattern(PDAbstractPattern pattern, PDInheritableResources resources) {
 		if (pattern != null) {
 			if (pattern.getPatternType() == PDAbstractPattern.TYPE_SHADING_PATTERN) {
 				return new PBoxPDShadingPattern((PDShadingPattern) pattern);
 			} else if (pattern.getPatternType() == PDAbstractPattern.TYPE_TILING_PATTERN) {
 				PDTilingPattern tiling = (PDTilingPattern) pattern;
-				PDExtendedResources pdResources = resources.getExtendedResources(tiling.getResources());
+				PDInheritableResources pdResources = resources.getExtendedResources(tiling.getResources());
 				return new PBoxPDTilingPattern(tiling, pdResources);
 			}
 		}

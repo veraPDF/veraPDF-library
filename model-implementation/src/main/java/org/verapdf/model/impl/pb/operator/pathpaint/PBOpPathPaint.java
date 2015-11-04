@@ -7,7 +7,7 @@ import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.impl.pb.operator.base.PBOperator;
 import org.verapdf.model.operator.OpPathPaint;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +29,7 @@ public abstract class PBOpPathPaint extends PBOperator implements OpPathPaint {
 	private final PDColorSpace pbFillColorSpace;
 	private final PDAbstractPattern pattern;
 
-	private final PDExtendedResources resources;
+	private final PDInheritableResources resources;
 
 	/**
 	 * Default constructor
@@ -39,14 +39,14 @@ public abstract class PBOpPathPaint extends PBOperator implements OpPathPaint {
 	 * @param resources resources for tilling pattern if it`s used
 	 */
     protected PBOpPathPaint(List<COSBase> arguments, final GraphicState state,
-			final PDExtendedResources resources, final String opType) {
+			final PDInheritableResources resources, final String opType) {
 		this(arguments, state.getPattern(), state.getStrokeColorSpace(),
 				state.getFillColorSpace(), resources, opType);
     }
 
 	protected PBOpPathPaint(List<COSBase> arguments, PDAbstractPattern pattern,
 							PDColorSpace pbStrokeColorSpace, PDColorSpace pbFillColorSpace,
-							PDExtendedResources resources, final String type) {
+							PDInheritableResources resources, final String type) {
 		super(arguments, type);
 		this.pbStrokeColorSpace = pbStrokeColorSpace;
 		this.pbFillColorSpace = pbFillColorSpace;

@@ -7,7 +7,7 @@ import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
 import org.verapdf.model.operator.Op_DoubleQuote;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,7 +38,7 @@ public class PBOp_DoubleQuote extends PBOpStringTextShow implements
 	/** Number of operands */
 	public static final int COUNT_OF_OPERATOR_OPERANDS = 3;
 
-	public PBOp_DoubleQuote(List<COSBase> arguments, GraphicState state, PDExtendedResources resources) {
+	public PBOp_DoubleQuote(List<COSBase> arguments, GraphicState state, PDInheritableResources resources) {
 		super(arguments, state, resources, OP_DOUBLIE_QUOTE_TYPE);
 	}
 

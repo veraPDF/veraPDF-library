@@ -7,7 +7,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.operator.OperatorFactory;
 import org.verapdf.model.operator.Operator;
 import org.verapdf.model.pdlayer.PDContentStream;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -26,11 +26,11 @@ public class PBoxPDContentStream extends PBoxPDObject implements
 
 	public static final String OPERATORS = "operators";
 
-	private final PDExtendedResources resources;
+	private final PDInheritableResources resources;
 
 	public PBoxPDContentStream(
 			org.apache.pdfbox.contentstream.PDContentStream contentStream,
-			PDExtendedResources resources) {
+			PDInheritableResources resources) {
 		super(contentStream, CONTENT_STREAM_TYPE);
 		this.resources = resources;
 	}

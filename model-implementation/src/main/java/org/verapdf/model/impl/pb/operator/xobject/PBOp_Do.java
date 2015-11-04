@@ -6,7 +6,7 @@ import org.verapdf.model.impl.pb.operator.base.PBOperator;
 import org.verapdf.model.impl.pb.pd.images.PBoxPDXObject;
 import org.verapdf.model.operator.Op_Do;
 import org.verapdf.model.pdlayer.PDXObject;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,11 +26,11 @@ public class PBOp_Do extends PBOperator implements Op_Do {
     public static final String X_OBJECT = "xObject";
 
     private final org.apache.pdfbox.pdmodel.graphics.PDXObject pbXObject;
-	private final PDExtendedResources resources;
+	private final PDInheritableResources resources;
 
     public PBOp_Do(List<COSBase> arguments,
             org.apache.pdfbox.pdmodel.graphics.PDXObject pbXObject,
-			PDExtendedResources resources) {
+			PDInheritableResources resources) {
         super(arguments, OP_DO_TYPE);
         this.pbXObject = pbXObject;
 		this.resources = resources;

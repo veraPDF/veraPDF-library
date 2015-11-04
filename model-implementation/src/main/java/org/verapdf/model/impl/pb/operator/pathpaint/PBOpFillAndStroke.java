@@ -3,7 +3,7 @@ package org.verapdf.model.impl.pb.operator.pathpaint;
 import org.apache.pdfbox.cos.COSBase;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.operator.GraphicState;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public abstract class PBOpFillAndStroke extends PBOpPathPaint {
 
 	protected PBOpFillAndStroke(List<COSBase> arguments, final GraphicState state,
-			final PDExtendedResources resources, final String opType) {
+			final PDInheritableResources resources, final String opType) {
 		super(arguments, state, resources, opType);
 	}
 

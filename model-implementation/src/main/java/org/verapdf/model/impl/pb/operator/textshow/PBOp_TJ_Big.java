@@ -7,7 +7,7 @@ import org.verapdf.model.coslayer.CosArray;
 import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.impl.pb.cos.PBCosArray;
 import org.verapdf.model.operator.Op_TJ_Big;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +28,7 @@ public class PBOp_TJ_Big extends PBOpTextShow implements Op_TJ_Big {
     public static final String SPECIAL_STRINGS = "specialStrings";
 
     public PBOp_TJ_Big(List<COSBase> arguments, GraphicState state,
-					   PDExtendedResources resources) {
+					   PDInheritableResources resources) {
         super(arguments, state, resources, OP_TJ_BIG_TYPE);
     }
 

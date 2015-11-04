@@ -6,7 +6,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosString;
 import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.impl.pb.cos.PBCosString;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +23,7 @@ public abstract class PBOpStringTextShow extends PBOpTextShow {
     public static final String SHOW_STRING = "showString";
 
     protected PBOpStringTextShow(List<COSBase> arguments, GraphicState state,
-								 PDExtendedResources resources, final String opType) {
+								 PDInheritableResources resources, final String opType) {
         super(arguments, state, resources, opType);
     }
 

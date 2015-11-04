@@ -3,7 +3,7 @@ package org.verapdf.model.impl.pb.operator.pathpaint;
 import org.apache.pdfbox.cos.COSBase;
 import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.operator.Op_S_stroke;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class PBOp_S_stroke extends PBOpStrokePaint implements Op_S_stroke {
 	 */
 	public PBOp_S_stroke(List<COSBase> arguments,
 						 final GraphicState state,
-						 final PDExtendedResources resources) {
+						 final PDInheritableResources resources) {
 		super(arguments, state, resources, OP_S_STROKE_TYPE);
 	}
 

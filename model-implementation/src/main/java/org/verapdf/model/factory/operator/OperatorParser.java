@@ -50,7 +50,7 @@ import org.verapdf.model.impl.pb.operator.type3font.PBOp_d1;
 import org.verapdf.model.impl.pb.operator.xobject.PBOp_Do;
 import org.verapdf.model.operator.Operator;
 import org.verapdf.model.tools.constants.Operators;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
@@ -80,7 +80,7 @@ class OperatorParser {
 
 	void parseOperator(List<Operator> operators,
 					   org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
-					   PDExtendedResources resources, List<COSBase> arguments)
+					   PDInheritableResources resources, List<COSBase> arguments)
 			throws CloneNotSupportedException, IOException {
 		String operatorName = pdfBoxOperator.getName();
 		PDColorSpace cs;
@@ -382,7 +382,7 @@ class OperatorParser {
 	}
 
 	private void setPatternColorSpace(List<Operator> operators, PDColorSpace colorSpace,
-									  PDExtendedResources resources, List<COSBase> arguments) {
+									  PDInheritableResources resources, List<COSBase> arguments) {
 		if (colorSpace != null &&
 				ColorSpaceFactory.PATTERN.equals(colorSpace.getName())) {
 			graphicState.setPattern(getPatternFromResources(resources,
@@ -392,7 +392,7 @@ class OperatorParser {
 	}
 
 	private void addExtGState(List<Operator> operators,
-							  PDExtendedResources resources, List<COSBase> arguments) {
+							  PDInheritableResources resources, List<COSBase> arguments) {
 		PDExtendedGraphicsState extGState = getExtGStateFromResources(resources,
 				getLastCOSName(arguments));
 		graphicState.copyPropertiesFromExtGState(extGState);
@@ -401,7 +401,7 @@ class OperatorParser {
 
 	private static void addInlineImage(List<Operator> operators,
 									   org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
-									   PDExtendedResources resources,
+									   PDInheritableResources resources,
 									   List<COSBase> arguments) {
 		if (pdfBoxOperator.getImageParameters() != null &&
 				pdfBoxOperator.getImageData() != null) {
@@ -430,7 +430,7 @@ class OperatorParser {
         return null;
     }
 
-    private static PDXObject getXObjectFromResources(PDExtendedResources resources,
+    private static PDXObject getXObjectFromResources(PDInheritableResources resources,
             COSName xobject) {
 		if (resources == null) {
 			return null;
@@ -446,7 +446,7 @@ class OperatorParser {
     }
 
     private static PDColorSpace getColorSpaceFromResources(
-			PDExtendedResources resources, COSName colorSpace) {
+			PDInheritableResources resources, COSName colorSpace) {
 		if (resources == null) {
 			return null;
 		}
@@ -461,7 +461,7 @@ class OperatorParser {
     }
 
     private static PDShading getShadingFromResources(
-			PDExtendedResources resources, COSName shading) {
+			PDInheritableResources resources, COSName shading) {
 		if (resources == null) {
 			return null;
 		}
@@ -476,11 +476,11 @@ class OperatorParser {
     }
 
     private static PDExtendedGraphicsState getExtGStateFromResources(
-			PDExtendedResources resources, COSName extGState) {
+			PDInheritableResources resources, COSName extGState) {
 		return resources == null ? null : resources.getExtGState(extGState);
 	}
 
-    private static PDFont getFontFromResources(PDExtendedResources resources,
+    private static PDFont getFontFromResources(PDInheritableResources resources,
             COSName font) {
 		if (resources == null) {
 			return null;
@@ -510,7 +510,7 @@ class OperatorParser {
     }
 
     private static PDAbstractPattern getPatternFromResources(
-			PDExtendedResources resources, COSName pattern) {
+			PDInheritableResources resources, COSName pattern) {
 		if (resources == null) {
 			return null;
 		}

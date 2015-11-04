@@ -16,7 +16,7 @@ import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.impl.pb.cos.PBCosBBox;
 import org.verapdf.model.impl.pb.cos.PBCosDict;
 import org.verapdf.model.pdlayer.*;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -115,8 +115,8 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 		List<PDContentStream> contentStreams = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		org.apache.pdfbox.pdmodel.PDPage stream =
 				(org.apache.pdfbox.pdmodel.PDPage) this.simplePDObject;
-		PDExtendedResources resources = PDExtendedResources
-				.getInstance(stream.getResources(), PDExtendedResources.EMPTY_RESOURCES);
+		PDInheritableResources resources = PDInheritableResources
+				.getInstance(stream.getResources(), PDInheritableResources.EMPTY_RESOURCES);
 		contentStreams.add(new PBoxPDContentStream(stream, resources));
 		return contentStreams;
 	}
@@ -164,8 +164,8 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 		for (PDAnnotation annotation : pdfboxAnnotations) {
 			if (annotation != null) {
 				PDAppearanceStream stream = annotation.getNormalAppearanceStream();
-				PDResources resources = stream != null ? stream.getResources() : PDExtendedResources.EMPTY_RESOURCES;
-				PDExtendedResources extRes = PDExtendedResources.getInstance(pageResources, resources);
+				PDResources resources = stream != null ? stream.getResources() : PDInheritableResources.EMPTY_RESOURCES;
+				PDInheritableResources extRes = PDInheritableResources.getInstance(pageResources, resources);
 				annotations.add(new PBoxPDAnnot(annotation, extRes));
 			}
 		}

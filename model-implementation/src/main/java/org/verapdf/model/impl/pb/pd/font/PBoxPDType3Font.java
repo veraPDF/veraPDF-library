@@ -8,7 +8,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.pb.pd.PBoxPDContentStream;
 import org.verapdf.model.pdlayer.PDContentStream;
 import org.verapdf.model.pdlayer.PDType3Font;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,9 +24,9 @@ public class PBoxPDType3Font extends PBoxPDSimpleFont implements PDType3Font {
 
     public static final String CHAR_STRINGS = "charStrings";
 
-	private final PDExtendedResources resources;
+	private final PDInheritableResources resources;
 
-	public PBoxPDType3Font(PDFontLike font, PDExtendedResources resources) {
+	public PBoxPDType3Font(PDFontLike font, PDInheritableResources resources) {
 		super(font, TYPE3_FONT_TYPE);
 		this.resources = resources;
 	}

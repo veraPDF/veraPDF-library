@@ -13,7 +13,7 @@ import org.verapdf.model.impl.pb.pd.PBoxPDGroup;
 import org.verapdf.model.pdlayer.PDContentStream;
 import org.verapdf.model.pdlayer.PDGroup;
 import org.verapdf.model.pdlayer.PDXForm;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +31,7 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
     public static final String REF = "Ref";
     public static final String CONTENT_STREAM = "contentStream";
 
-	public PBoxPDXForm(PDFormXObject simplePDObject, PDExtendedResources resources) {
+	public PBoxPDXForm(PDFormXObject simplePDObject, PDInheritableResources resources) {
 		super(simplePDObject, resources, X_FORM_TYPE);
 	}
 

@@ -9,7 +9,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.pb.pd.images.PBoxPDInlineImage;
 import org.verapdf.model.operator.Op_EI;
 import org.verapdf.model.pdlayer.PDInlineImage;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class PBOp_EI extends PBOpInlineImage implements Op_EI {
 	private final PDResources resources;
 
 	public PBOp_EI(List<COSBase> arguments, byte[] imageData,
-				   PDExtendedResources resources) {
+				   PDInheritableResources resources) {
 		super(arguments, OP_EI_TYPE);
 		this.imageData = imageData;
 		this.resources = this.getResources(resources);
@@ -64,7 +64,7 @@ public class PBOp_EI extends PBOpInlineImage implements Op_EI {
 		return Collections.emptyList();
 	}
 
-	private PDResources getResources(PDExtendedResources resources) {
+	private PDResources getResources(PDInheritableResources resources) {
 		PDResources currRes = resources.getCurrentResources();
 		COSDictionary dictionary = resources.getPageResources().getCOSObject();
 		PDResources pageRes = new PDResources(new COSDictionary(dictionary));

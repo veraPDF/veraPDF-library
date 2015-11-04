@@ -3,7 +3,7 @@ package org.verapdf.model.factory.operator;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.verapdf.model.operator.Operator;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public final class OperatorFactory {
 	 * @return list of {@link Operator} objects of veraPDF-library
 	 */
     public static List<Operator> operatorsFromTokens(List<Object> pdfBoxTokens,
-													 PDExtendedResources resources) {
+													 PDInheritableResources resources) {
         List<Operator> result = new ArrayList<>();
         List<COSBase> arguments = new ArrayList<>();
         OperatorParser parser = new OperatorParser();

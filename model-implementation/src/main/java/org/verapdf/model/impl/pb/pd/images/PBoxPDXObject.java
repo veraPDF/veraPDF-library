@@ -15,7 +15,7 @@ import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.impl.pb.cos.PBCosDict;
 import org.verapdf.model.impl.pb.pd.PBoxPDResources;
 import org.verapdf.model.pdlayer.PDXObject;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,15 +34,15 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
     public static final String OPI = "OPI";
     public static final String S_MASK = "SMask";
 
-	protected final PDExtendedResources resources;
+	protected final PDInheritableResources resources;
 	private final String subtype;
 
     public PBoxPDXObject(
             org.apache.pdfbox.pdmodel.graphics.PDXObject simplePDObject) {
-        this(simplePDObject, PDExtendedResources.EMPTY_EXTENDED_RESOURCES, X_OBJECT_TYPE);
+        this(simplePDObject, PDInheritableResources.EMPTY_EXTENDED_RESOURCES, X_OBJECT_TYPE);
     }
 
-	protected PBoxPDXObject(COSObjectable simplePDObject, PDExtendedResources resources, final String type) {
+	protected PBoxPDXObject(COSObjectable simplePDObject, PDInheritableResources resources, final String type) {
 		super(simplePDObject, type);
 		this.resources = resources;
 		this.subtype = this.getSubtype((org.apache.pdfbox.pdmodel.graphics.PDXObject) this.simplePDObject);
@@ -106,10 +106,10 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 
     public static PDXObject getTypedPDXObject(
             org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject,
-			PDExtendedResources extendedResources) {
+			PDInheritableResources extendedResources) {
         if (pbObject instanceof PDFormXObject) {
 			PDFormXObject object = (PDFormXObject) pbObject;
-			PDExtendedResources resources = extendedResources
+			PDInheritableResources resources = extendedResources
 					.getExtendedResources(object.getResources());
 			return new PBoxPDXForm(object, resources);
         } else if (pbObject instanceof PDImageXObject) {
