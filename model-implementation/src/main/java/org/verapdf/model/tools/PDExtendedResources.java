@@ -145,4 +145,14 @@ public class PDExtendedResources extends PDResources {
 				pageResources : EMPTY, current);
 	}
 
+	public static PDResources getResources(PDResources currentResources, PDResources resources) {
+		if (resources instanceof PDExtendedResources) {
+			PDExtendedResources extRes = (PDExtendedResources) resources;
+			return PDExtendedResources.getInstance(extRes.getPageResources(),
+					currentResources);
+		} else {
+			throw new IllegalStateException("Resource dictionary is not contain page resources.");
+		}
+	}
+
 }
