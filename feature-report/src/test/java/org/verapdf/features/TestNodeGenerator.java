@@ -1,10 +1,11 @@
 package org.verapdf.features;
 
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 
 import javax.xml.bind.DatatypeConverter;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
@@ -29,7 +30,7 @@ public final class TestNodeGenerator {
 	public static final String URX = "urx";
 	public static final String URY = "ury";
 
-	public static FeatureTreeNode getFontType0(String id, String pageParent, String gstParent, String baseFont, String descFont, FontDescriptorStructure descriptor) throws FeaturesTreeNodeException {
+	public static FeatureTreeNode getFontType0(String id, String pageParent, String gstParent, String baseFont, String descFont, FontDescriptorStructure descriptor) throws FeatureParsingException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("font");
 		root.addAttribute(ID, id);
 		FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
@@ -46,7 +47,7 @@ public final class TestNodeGenerator {
 		return root;
 	}
 
-	public static FeatureTreeNode getTilingPattern() throws FeaturesTreeNodeException {
+	public static FeatureTreeNode getTilingPattern() throws FeatureParsingException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("pattern");
 		root.addAttribute(ID, "ptrnIndir49");
 		root.addAttribute("type", "tiling");
@@ -77,7 +78,7 @@ public final class TestNodeGenerator {
 		return root;
 	}
 
-	public static FeatureTreeNode getShadingPattern() throws FeaturesTreeNodeException {
+	public static FeatureTreeNode getShadingPattern() throws FeatureParsingException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("pattern");
 		root.addAttribute(ID, "ptrnIndir50");
 		root.addAttribute("type", "shading");
@@ -94,7 +95,7 @@ public final class TestNodeGenerator {
 		return root;
 	}
 
-	public static void getStandartMatrix(FeatureTreeNode root) throws FeaturesTreeNodeException {
+	public static void getStandartMatrix(FeatureTreeNode root) throws FeatureParsingException {
 		FeatureTreeNode matr = FeatureTreeNode.newChildInstance("matrix", root);
 		addElement("1", "1", "1.0", matr);
 		addElement("2", "1", "0.0", matr);
@@ -104,14 +105,14 @@ public final class TestNodeGenerator {
 		addElement("2", "3", "0.0", matr);
 	}
 
-	public static void addElement(String column, String row, String value, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+	public static void addElement(String column, String row, String value, FeatureTreeNode parent) throws FeatureParsingException {
 		FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
 		element.addAttribute("column", column);
 		element.addAttribute("row", row);
 		element.addAttribute("value", value);
 	}
 
-	public static FeatureTreeNode getShading() throws FeaturesTreeNodeException {
+	public static FeatureTreeNode getShading() throws FeatureParsingException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("shading");
 		root.addAttribute(ID, "shdngIndir52");
 		FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
@@ -133,14 +134,14 @@ public final class TestNodeGenerator {
 		return root;
 	}
 
-	public static FeatureTreeNode getFailedXObject(String id, String errorid) throws FeaturesTreeNodeException {
+	public static FeatureTreeNode getFailedXObject(String id, String errorid) throws FeatureParsingException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("xobject");
 		root.addAttribute(ID, id);
 		root.addAttribute("errorID", errorid);
 		return root;
 	}
 
-	public static FeatureTreeNode getProperties() throws FeaturesTreeNodeException {
+	public static FeatureTreeNode getProperties() throws FeatureParsingException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("propertiesDict");
 		root.addAttribute(ID, "propDir0");
 		FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
@@ -150,7 +151,7 @@ public final class TestNodeGenerator {
 	}
 
 	public static FeatureTreeNode getGraphicsState(String id, String page, String pattern, String xobject1, String xobject2, String font, String transparency, String strokeAdjustment,
-												   String overprintForStroke, String overprintForFill, String fontChild) throws FeaturesTreeNodeException {
+												   String overprintForStroke, String overprintForFill, String fontChild) throws FeatureParsingException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("graphicsState");
 		root.addAttribute(ID, id);
 		FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
@@ -190,7 +191,7 @@ public final class TestNodeGenerator {
 		return root;
 	}
 
-	public static FeatureTreeNode getPage() throws FeaturesTreeNodeException, URISyntaxException, FileNotFoundException {
+	public static FeatureTreeNode getPage() throws FeatureParsingException, URISyntaxException, FileNotFoundException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("page");
 		root.addAttribute(ID, "page1");
 		root.addAttribute("orderNumber", "1");
@@ -280,7 +281,7 @@ public final class TestNodeGenerator {
 		return root;
 	}
 
-	public static void makeList(String name, List<String> values, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+	public static void makeList(String name, List<String> values, FeatureTreeNode parent) throws FeatureParsingException {
 		FeatureTreeNode head = FeatureTreeNode.newChildInstance(name + "s", parent);
 		for (String el : values) {
 			FeatureTreeNode element = FeatureTreeNode.newChildInstance(name, head);
@@ -288,7 +289,7 @@ public final class TestNodeGenerator {
 		}
 	}
 
-	public static void addBox(String name, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+	public static void addBox(String name, FeatureTreeNode parent) throws FeatureParsingException {
 		FeatureTreeNode box = FeatureTreeNode.newChildInstance(name, parent);
 		box.addAttribute(LLX, "0.0");
 		box.addAttribute(LLY, "0.0");
@@ -302,7 +303,7 @@ public final class TestNodeGenerator {
 												String popup, String red, String green, String blue, String kayan,
 												String invisible, String hidden, String print, String noZoom,
 												String noRotate, String noView, String readOnly, String locked,
-												String toggleNoView, String lockedContents) throws FeaturesTreeNodeException {
+												String toggleNoView, String lockedContents) throws FeatureParsingException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("annotation");
 		root.addAttribute(ID, id);
 		if (parentPage != null || parentAnnotation != null) {
@@ -368,7 +369,7 @@ public final class TestNodeGenerator {
 		return root;
 	}
 
-	public static FeatureTreeNode getOutlines() throws FeaturesTreeNodeException {
+	public static FeatureTreeNode getOutlines() throws FeatureParsingException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("outlines");
 		FeatureTreeNode out1 = FeatureTreeNode.newChildInstance("outline", root);
 		makeOutline("1 - COLOR", "1.0", "0.0", "0.0", "false", "false", out1);
@@ -393,7 +394,7 @@ public final class TestNodeGenerator {
 		return root;
 	}
 
-	public static void makeOutline(String title, String red, String green, String blue, String italic, String bold, FeatureTreeNode root) throws FeaturesTreeNodeException {
+	public static void makeOutline(String title, String red, String green, String blue, String italic, String bold, FeatureTreeNode root) throws FeatureParsingException {
 		FeatureTreeNode.newChildInstanceWithValue("title", title, root);
 		FeatureTreeNode color = FeatureTreeNode.newChildInstance("color", root);
 		color.addAttribute("red", red);
@@ -404,7 +405,7 @@ public final class TestNodeGenerator {
 		style.addAttribute("bold", bold);
 	}
 
-	public static FeatureTreeNode getOutputIntent() throws FeaturesTreeNodeException {
+	public static FeatureTreeNode getOutputIntent() throws FeatureParsingException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("outputIntent");
 		root.addAttribute(ID, "outIntDir0");
 		FeatureTreeNode.newChildInstanceWithValue("subtype", "GTS_PDFA1", root);
@@ -420,7 +421,7 @@ public final class TestNodeGenerator {
 	public static FeatureTreeNode getICCProfile(String id, Set<String> outInts, Set<String> iccBaseds, String version,
 												String cmmType, String dataColorSpace, String creator, String creationDate,
 												String defaultRenderingIntent, String copyright, String description,
-												String profileId, String deviceModel, String deviceManufacturer, byte[] metadata) throws FeaturesTreeNodeException {
+												String profileId, String deviceModel, String deviceManufacturer, byte[] metadata) throws FeatureParsingException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("iccProfile");
 		root.addAttribute(ID, id);
 
@@ -460,7 +461,7 @@ public final class TestNodeGenerator {
 
 	public static FeatureTreeNode getEmbeddedFileNode(String id, String fileName, String description, String subtype,
 													  String filter, String creationDate, String modDate, String checkSum,
-													  String size) throws FeaturesTreeNodeException {
+													  String size) throws FeatureParsingException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("embeddedFile");
 		root.addAttribute(ID, id);
 		FeatureTreeNode.newChildInstanceWithValue("fileName", fileName, root);
@@ -474,7 +475,7 @@ public final class TestNodeGenerator {
 		return root;
 	}
 
-	public static FeatureTreeNode getLowLvlInfo() throws FeaturesTreeNodeException {
+	public static FeatureTreeNode getLowLvlInfo() throws FeatureParsingException {
 		FeatureTreeNode lli = FeatureTreeNode.newRootInstance("lowLevelInfo");
 		FeatureTreeNode.newChildInstanceWithValue("indirectObjectsNumber", "129", lli);
 		FeatureTreeNode docID = FeatureTreeNode.newChildInstance("documentId", lli);
@@ -489,12 +490,12 @@ public final class TestNodeGenerator {
 		return lli;
 	}
 
-	public static void addFilter(String name, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+	public static void addFilter(String name, FeatureTreeNode parent) throws FeatureParsingException {
 		FeatureTreeNode filter = FeatureTreeNode.newChildInstance("filter", parent);
 		filter.addAttribute("name", name);
 	}
 
-	public static FeatureTreeNode getInfDictNode() throws FeaturesTreeNodeException {
+	public static FeatureTreeNode getInfDictNode() throws FeatureParsingException {
 		FeatureTreeNode infDict = FeatureTreeNode.newRootInstance("informationDict");
 		addEntry("Title", "SomeTitle", infDict);
 		addEntry("Author", "SomeAuthor", infDict);
@@ -510,7 +511,7 @@ public final class TestNodeGenerator {
 		return infDict;
 	}
 
-	public static FeatureTreeNode getMetadataNode() throws FeaturesTreeNodeException, FileNotFoundException, URISyntaxException {
+	public static FeatureTreeNode getMetadataNode() throws FeatureParsingException, FileNotFoundException, URISyntaxException {
 		return FeatureTreeNode.newRootInstanceWIthValue(METADATA, DatatypeConverter.printHexBinary(getMetadataBytesFromFile("/metadata_bytes.txt")));
 	}
 
@@ -524,7 +525,7 @@ public final class TestNodeGenerator {
 		return res;
 	}
 
-	public static void addEntry(String name, String value, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+	public static void addEntry(String name, String value, FeatureTreeNode parent) throws FeatureParsingException {
 		FeatureTreeNode entry = FeatureTreeNode.newChildInstanceWithValue(ENTRY, value, parent);
 		entry.addAttribute("key", name);
 	}
@@ -568,7 +569,7 @@ public final class TestNodeGenerator {
 		public FontDescriptorStructure() {
 		}
 
-		public FeatureTreeNode generateNode(FeatureTreeNode parent) throws FeaturesTreeNodeException {
+		public FeatureTreeNode generateNode(FeatureTreeNode parent) throws FeatureParsingException {
 			FeatureTreeNode root = FeatureTreeNode.newChildInstance("fontDescriptor", parent);
 
 			PBCreateNodeHelper.addNotEmptyNode("fontName", fontName, root);

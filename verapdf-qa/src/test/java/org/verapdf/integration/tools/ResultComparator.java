@@ -1,7 +1,6 @@
 package org.verapdf.integration.tools;
 
 import org.verapdf.integration.model.TestEntity;
-import org.verapdf.integration.model.comparing.StatsStrategyResource;
 
 /**
  * @author Timur Kamalov
@@ -14,7 +13,6 @@ public class ResultComparator {
             case DRAFT: return compareDraftStrategy(entity);
             case FAIL: return compareFailStrategy(entity);
             case PASS: return comparePassStrategy(entity);
-            case STATS: return compareStatsStrategy(entity);
             default: return false;
         }
     }
@@ -28,19 +26,10 @@ public class ResultComparator {
     }
 
     public static boolean compareFailStrategy(TestEntity entity) {
-        return !entity.getInfo().getResult().isCompliant();
+        return !entity.getInfo().isCompliant();
     }
 
     public static boolean comparePassStrategy(TestEntity entity) {
-        return entity.getInfo().getResult().isCompliant();
+        return entity.getInfo().isCompliant();
     }
-
-    public static boolean compareStatsStrategy(TestEntity entity) {
-        StatsStrategyResource resource = (StatsStrategyResource) entity.getStrategyResource();
-
-        int actualPassedChecks = entity.getInfo().getResult().getSummary().getAttrPassedChecks();
-        int actualFailedChecks = entity.getInfo().getResult().getSummary().getAttrFailedChecks();
-        return actualPassedChecks == resource.getPassedChecks() && actualFailedChecks == resource.getFailedChecks();
-    }
-
 }

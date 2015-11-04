@@ -23,9 +23,6 @@ public class ResultReporter {
 
 	public static void reportTestSetResult(TestSetReport report) throws IOException {
 		Properties prop = new Properties();
-		try (InputStream inputStream = ClassLoader.class.getResourceAsStream(ITVeraPDFTestSuite.TEST_RESOURCES_DIRECTORY_PREFIX + ITVeraPDFTestSuite.VERA_PDF_TEST_SUITE_PROPERTIES_PATH)) {
-		    prop.load(inputStream);
-		}
 		if (CONSOLE_REPORTING_OPT.equals(prop.getProperty(REPORTING_METHOD_OPT_NAME))) {
 		    reportToConsole(report);
 		}

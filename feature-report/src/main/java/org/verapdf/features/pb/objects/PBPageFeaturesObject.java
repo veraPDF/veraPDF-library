@@ -5,7 +5,7 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSNumber;
 import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -93,10 +93,10 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (page != null) {
 			FeatureTreeNode root = FeatureTreeNode.newRootInstance("page");
 
@@ -156,7 +156,7 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private void parseResources(FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void parseResources(FeatureTreeNode root) throws FeatureParsingException {
 		if ((extGStateChild != null && !extGStateChild.isEmpty()) ||
 				(colorSpaceChild != null && !colorSpaceChild.isEmpty()) ||
 				(patternChild != null && !patternChild.isEmpty()) ||

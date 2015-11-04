@@ -2,19 +2,16 @@ package org.verapdf.metadata.fixer.utils;
 
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
-import org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour;
 import org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser;
-import org.verapdf.validation.profile.model.ValidationProfile;
-import org.verapdf.validation.report.model.Result;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.ValidationResult;
 
 /**
  * @author Evgeniy Muravitskiy
  */
 public interface FixerConfig {
 
-	Result getValidationResult();
-
-	ValidationProfile getValidationProfile();
+    ValidationResult getValidationResult();
 
 	Metadata getMetadata();
 

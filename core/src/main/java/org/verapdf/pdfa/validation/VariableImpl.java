@@ -183,11 +183,15 @@ final class VariableImpl implements Variable {
         return (VariableImpl) stringUnmarshaller.unmarshal(reader);
     }
 
-
     static class Adapter extends XmlAdapter<VariableImpl, Variable> {
         @Override
-        public Variable unmarshal(VariableImpl variableImpl) { return variableImpl; }
+        public Variable unmarshal(VariableImpl variableImpl) {
+            return variableImpl;
+        }
+
         @Override
-        public VariableImpl marshal(Variable variable) { return (VariableImpl)variable; }
-      }
+        public VariableImpl marshal(Variable variable) {
+            return (VariableImpl) variable;
+        }
+    }
 }

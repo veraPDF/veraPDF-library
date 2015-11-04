@@ -26,8 +26,8 @@ final class PDFAFlavours {
     static final int ISO_19005_1_PART = 1;
     static final int ISO_19005_2_PART = 2;
     static final int ISO_19005_3_PART = 3;
-    static final String LEVEL_A_CODE = "a "; //$NON-NLS-1$
-    static final String LEVEL_B_CODE = "b "; //$NON-NLS-1$
+    static final String LEVEL_A_CODE = "a"; //$NON-NLS-1$
+    static final String LEVEL_B_CODE = "b"; //$NON-NLS-1$
     static final String LEVEL_U_CODE = "u"; //$NON-NLS-1$
     static final String LEVEL_A_NAME = "accessible"; //$NON-NLS-1$
     static final String LEVEL_B_NAME = "basic"; //$NON-NLS-1$

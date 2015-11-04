@@ -1,6 +1,6 @@
 package org.verapdf.features.tools;
 
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 
 import java.util.*;
 
@@ -17,21 +17,21 @@ public final class FeatureTreeNode {
 	private Map<String, String> attributes = new HashMap<>();
 	private List<FeatureTreeNode> children;
 
-	private FeatureTreeNode(final String name) throws FeaturesTreeNodeException {
+	private FeatureTreeNode(final String name) throws FeatureParsingException {
 		this(name, null, null);
 	}
 
-	private FeatureTreeNode(final String name, final String value) throws FeaturesTreeNodeException {
+	private FeatureTreeNode(final String name, final String value) throws FeatureParsingException {
 		this(name, value, null);
 	}
 
 	private FeatureTreeNode(String name, FeatureTreeNode parent)
-			throws FeaturesTreeNodeException {
+			throws FeatureParsingException {
 		this(name, null, parent);
 	}
 
 	private FeatureTreeNode(String name, String value, FeatureTreeNode parent)
-			throws FeaturesTreeNodeException {
+			throws FeatureParsingException {
 		this.name = name;
 		this.value = value;
 		this.parent = parent;
@@ -43,21 +43,21 @@ public final class FeatureTreeNode {
 	/**
 	 * @param name the name of the node
 	 * @return a new FeatureTreeNode with no parent
-	 * @throws FeaturesTreeNodeException when
+	 * @throws FeatureParsingException when
 	 */
 	public static FeatureTreeNode newRootInstance(String name)
-			throws FeaturesTreeNodeException {
+			throws FeatureParsingException {
 		return new FeatureTreeNode(name);
 	}
 
 	/**
 	 * @param name the name of the node
 	 * @return a new FeatureTreeNode with no parent
-	 * @throws FeaturesTreeNodeException when
+	 * @throws FeatureParsingException when
 	 */
 	public static FeatureTreeNode newRootInstanceWIthValue(
 			final String name, final String value)
-			throws FeaturesTreeNodeException {
+			throws FeatureParsingException {
 		return new FeatureTreeNode(name, value);
 	}
 
@@ -66,10 +66,10 @@ public final class FeatureTreeNode {
 	 *
 	 * @param name   name of the node
 	 * @param parent parent of the node
-	 * @throws FeaturesTreeNodeException occurs when parent of the new node has String value
+	 * @throws FeatureParsingException occurs when parent of the new node has String value
 	 */
 	public static FeatureTreeNode newChildInstance(String name,
-												   FeatureTreeNode parent) throws FeaturesTreeNodeException {
+												   FeatureTreeNode parent) throws FeatureParsingException {
 		return new FeatureTreeNode(name, parent);
 	}
 
@@ -80,11 +80,11 @@ public final class FeatureTreeNode {
 	 * @param value  value of the node
 	 * @param parent parend of the node
 	 * @return a new feature
-	 * @throws FeaturesTreeNodeException occurs when parent of the new node has String value
+	 * @throws FeatureParsingException occurs when parent of the new node has String value
 	 */
 	public static FeatureTreeNode newChildInstanceWithValue(String name,
 															String value, FeatureTreeNode parent)
-			throws FeaturesTreeNodeException {
+			throws FeatureParsingException {
 		return new FeatureTreeNode(name, value, parent);
 	}
 
@@ -120,10 +120,10 @@ public final class FeatureTreeNode {
 	 * Add a child to the node
 	 *
 	 * @param child new child node for the current node
-	 * @throws FeaturesTreeNodeException occurs when child adds to node with value
+	 * @throws FeatureParsingException occurs when child adds to node with value
 	 */
 	public void addChild(FeatureTreeNode child)
-			throws FeaturesTreeNodeException {
+			throws FeatureParsingException {
 		if (child != null) {
 			if (value == null) {
 				if (children == null) {
@@ -132,7 +132,7 @@ public final class FeatureTreeNode {
 				children.add(child);
 				child.parent = this;
 			} else {
-				throw new FeaturesTreeNodeException(
+				throw new FeatureParsingException(
 						"You can not add childrens for nodes with defined values. Node name "
 								+ name + ", value: " + value + ".");
 			}
@@ -143,13 +143,13 @@ public final class FeatureTreeNode {
 	 * Add value to the node
 	 *
 	 * @param value value
-	 * @throws FeaturesTreeNodeException occurs when value adds to the node with childrens
+	 * @throws FeatureParsingException occurs when value adds to the node with childrens
 	 */
-	public void setValue(String value) throws FeaturesTreeNodeException {
+	public void setValue(String value) throws FeatureParsingException {
 		if (children == null) {
 			this.value = value;
 		} else {
-			throw new FeaturesTreeNodeException(
+			throw new FeatureParsingException(
 					"You can not add value for nodes with childrens. Node name "
 							+ name + ".");
 		}

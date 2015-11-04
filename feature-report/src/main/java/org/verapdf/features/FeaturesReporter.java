@@ -1,6 +1,6 @@
 package org.verapdf.features;
 
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -65,7 +65,7 @@ public class FeaturesReporter {
 				}
 			}
 
-		} catch (FeaturesTreeNodeException ignore) {
+		} catch (FeatureParsingException ignore) {
 			// The method logic should ensure this never happens, so if it does
 			// it's catastrophic. We'll throw an IllegalStateException with this
 			// as a cause. The only time it's ignored is when the unthinkable
