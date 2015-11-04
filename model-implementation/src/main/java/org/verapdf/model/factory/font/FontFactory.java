@@ -10,7 +10,7 @@ import org.verapdf.model.impl.pb.pd.font.PBoxPDType0Font;
 import org.verapdf.model.impl.pb.pd.font.PBoxPDType1Font;
 import org.verapdf.model.impl.pb.pd.font.PBoxPDType3Font;
 import org.verapdf.model.pdlayer.PDFont;
-import org.verapdf.model.tools.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 /**
  * Font factory for transforming Apache PDFBox
@@ -47,12 +47,12 @@ public final class FontFactory {
 	 */
 	public static PDFont parseFont(
 			org.apache.pdfbox.pdmodel.font.PDFont pdfboxFont) {
-		return parseFont(pdfboxFont, new PDResources());
+		return parseFont(pdfboxFont, PDExtendedResources.EMPTY_EXTENDED_RESOURCES);
 	}
 
 	public static PDFont parseFont(
 			org.apache.pdfbox.pdmodel.font.PDFont pdfboxFont,
-			PDResources resources) {
+			PDExtendedResources resources) {
 		if (pdfboxFont == null) {
 			return null;
 		}
@@ -67,8 +67,7 @@ public final class FontFactory {
 				}
 			case TYPE_3: {
 				PDResources fontResources = ((PDType3Font) pdfboxFont).getResources();
-				PDResources pdResources = PDExtendedResources
-						.getResources(fontResources, resources);
+				PDExtendedResources pdResources = resources.getExtendedResources(fontResources);
 				return new PBoxPDType3Font(pdfboxFont, pdResources);
 			}
 			case TRUE_TYPE:

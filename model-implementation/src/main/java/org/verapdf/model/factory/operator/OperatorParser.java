@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSInteger;
 import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
@@ -46,12 +45,12 @@ import org.verapdf.model.impl.pb.operator.textshow.PBOp_Quote;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_TJ_Big;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_Tj;
 import org.verapdf.model.impl.pb.operator.textstate.*;
-import org.verapdf.model.impl.pb.operator.type3font.PBOpType3Font;
 import org.verapdf.model.impl.pb.operator.type3font.PBOp_d0;
 import org.verapdf.model.impl.pb.operator.type3font.PBOp_d1;
 import org.verapdf.model.impl.pb.operator.xobject.PBOp_Do;
 import org.verapdf.model.operator.Operator;
 import org.verapdf.model.tools.constants.Operators;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
@@ -81,7 +80,8 @@ class OperatorParser {
 
 	void parseOperator(List<Operator> operators,
 					   org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
-					   PDResources resources, List<COSBase> arguments) throws CloneNotSupportedException, IOException {
+					   PDExtendedResources resources, List<COSBase> arguments)
+			throws CloneNotSupportedException, IOException {
 		String operatorName = pdfBoxOperator.getName();
 		PDColorSpace cs;
 		switch (operatorName) {
@@ -382,7 +382,7 @@ class OperatorParser {
 	}
 
 	private void setPatternColorSpace(List<Operator> operators, PDColorSpace colorSpace,
-									  PDResources resources, List<COSBase> arguments) {
+									  PDExtendedResources resources, List<COSBase> arguments) {
 		if (colorSpace != null &&
 				ColorSpaceFactory.PATTERN.equals(colorSpace.getName())) {
 			graphicState.setPattern(getPatternFromResources(resources,
@@ -391,7 +391,8 @@ class OperatorParser {
 		operators.add(new PBOpColor(arguments));
 	}
 
-	private void addExtGState(List<Operator> operators, PDResources resources, List<COSBase> arguments) {
+	private void addExtGState(List<Operator> operators,
+							  PDExtendedResources resources, List<COSBase> arguments) {
 		PDExtendedGraphicsState extGState = getExtGStateFromResources(resources,
 				getLastCOSName(arguments));
 		graphicState.copyPropertiesFromExtGState(extGState);
@@ -400,7 +401,7 @@ class OperatorParser {
 
 	private static void addInlineImage(List<Operator> operators,
 									   org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
-									   PDResources resources,
+									   PDExtendedResources resources,
 									   List<COSBase> arguments) {
 		if (pdfBoxOperator.getImageParameters() != null &&
 				pdfBoxOperator.getImageData() != null) {
@@ -429,7 +430,7 @@ class OperatorParser {
         return null;
     }
 
-    private static PDXObject getXObjectFromResources(PDResources resources,
+    private static PDXObject getXObjectFromResources(PDExtendedResources resources,
             COSName xobject) {
 		if (resources == null) {
 			return null;
@@ -445,7 +446,7 @@ class OperatorParser {
     }
 
     private static PDColorSpace getColorSpaceFromResources(
-            PDResources resources, COSName colorSpace) {
+			PDExtendedResources resources, COSName colorSpace) {
 		if (resources == null) {
 			return null;
 		}
@@ -459,8 +460,8 @@ class OperatorParser {
         }
     }
 
-    private static PDShading getShadingFromResources(PDResources resources,
-            COSName shading) {
+    private static PDShading getShadingFromResources(
+			PDExtendedResources resources, COSName shading) {
 		if (resources == null) {
 			return null;
 		}
@@ -475,11 +476,11 @@ class OperatorParser {
     }
 
     private static PDExtendedGraphicsState getExtGStateFromResources(
-            PDResources resources, COSName extGState) {
+			PDExtendedResources resources, COSName extGState) {
 		return resources == null ? null : resources.getExtGState(extGState);
 	}
 
-    private static PDFont getFontFromResources(PDResources resources,
+    private static PDFont getFontFromResources(PDExtendedResources resources,
             COSName font) {
 		if (resources == null) {
 			return null;
@@ -509,7 +510,7 @@ class OperatorParser {
     }
 
     private static PDAbstractPattern getPatternFromResources(
-            PDResources resources, COSName pattern) {
+			PDExtendedResources resources, COSName pattern) {
 		if (resources == null) {
 			return null;
 		}

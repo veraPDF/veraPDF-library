@@ -1,6 +1,5 @@
 package org.verapdf.model.factory.colors;
 
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.color.*;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern;
@@ -8,9 +7,9 @@ import org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern;
 import org.verapdf.model.impl.pb.pd.colors.*;
 import org.verapdf.model.impl.pb.pd.pattern.PBoxPDShadingPattern;
 import org.verapdf.model.impl.pb.pd.pattern.PBoxPDTilingPattern;
-import org.verapdf.model.pdlayer.PDPattern;
 import org.verapdf.model.pdlayer.PDColorSpace;
-import org.verapdf.model.tools.PDExtendedResources;
+import org.verapdf.model.pdlayer.PDPattern;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 /**
  * Factory for transforming PDColorSpace objects of pdfbox to corresponding
@@ -47,7 +46,7 @@ public class ColorSpaceFactory {
 	 */
 	public static PDColorSpace getColorSpace(
 			org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace) {
-		return getColorSpace(colorSpace, null, null);
+		return getColorSpace(colorSpace, null, PDExtendedResources.EMPTY_EXTENDED_RESOURCES);
 	}
 
 	/**
@@ -64,7 +63,7 @@ public class ColorSpaceFactory {
 	 */
 	public static PDColorSpace getColorSpace(
 			org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace,
-			PDAbstractPattern pattern, PDResources resources) {
+			PDAbstractPattern pattern, PDExtendedResources resources) {
 		if (colorSpace == null) {
 			return null;
 		}
@@ -106,14 +105,13 @@ public class ColorSpaceFactory {
 	 * @return {@code <? extends PDPattern>} object or {@code null} if
 	 * {@code pattern} argument is {@code null}
 	 */
-	public static PDPattern getPattern(PDAbstractPattern pattern, PDResources resources) {
+	public static PDPattern getPattern(PDAbstractPattern pattern, PDExtendedResources resources) {
 		if (pattern != null) {
 			if (pattern.getPatternType() == PDAbstractPattern.TYPE_SHADING_PATTERN) {
 				return new PBoxPDShadingPattern((PDShadingPattern) pattern);
 			} else if (pattern.getPatternType() == PDAbstractPattern.TYPE_TILING_PATTERN) {
 				PDTilingPattern tiling = (PDTilingPattern) pattern;
-				PDResources pdResources = PDExtendedResources
-						.getResources(tiling.getResources(), resources);
+				PDExtendedResources pdResources = resources.getExtendedResources(tiling.getResources());
 				return new PBoxPDTilingPattern(tiling, pdResources);
 			}
 		}
