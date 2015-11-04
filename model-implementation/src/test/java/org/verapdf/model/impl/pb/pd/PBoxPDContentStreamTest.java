@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.BaseTest;
 import org.verapdf.model.impl.pb.operator.base.PBOperator;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import static org.verapdf.model.impl.pb.pd.PBoxPDContentStream.*;
 
@@ -29,7 +29,7 @@ public class PBoxPDContentStreamTest extends BaseTest {
 
 		setUp(FILE_RELATIVE_PATH);
 		PDPage page = document.getPage(0);
-		actual = new PBoxPDContentStream(page, PDExtendedResources.getInstance(page.getResources()));
+		actual = new PBoxPDContentStream(page, PDInheritableResources.getInstance(page.getResources()));
 	}
 
 	@Test

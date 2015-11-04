@@ -1,16 +1,13 @@
 package org.verapdf.model.factory.operator;
 
 import org.apache.pdfbox.contentstream.operator.Operator;
-import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.verapdf.model.impl.pb.operator.color.PBOpColor;
 import org.verapdf.model.impl.pb.operator.generalgs.*;
-import org.verapdf.model.impl.pb.operator.inlineimage.PBOpInlineImage;
 import org.verapdf.model.impl.pb.operator.inlineimage.PBOp_BI;
 import org.verapdf.model.impl.pb.operator.inlineimage.PBOp_EI;
 import org.verapdf.model.impl.pb.operator.inlineimage.PBOp_ID;
@@ -36,12 +33,11 @@ import org.verapdf.model.impl.pb.operator.textshow.PBOp_Quote;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_TJ_Big;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_Tj;
 import org.verapdf.model.impl.pb.operator.textstate.*;
-import org.verapdf.model.impl.pb.operator.type3font.PBOpType3Font;
 import org.verapdf.model.impl.pb.operator.type3font.PBOp_d0;
 import org.verapdf.model.impl.pb.operator.type3font.PBOp_d1;
 import org.verapdf.model.impl.pb.operator.xobject.PBOp_Do;
 import org.verapdf.model.tools.constants.Operators;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,7 +49,7 @@ import java.util.List;
 @RunWith(Parameterized.class)
 public class OperatorParserTest {
 
-	public static final PDExtendedResources RESOURCES = PDExtendedResources.EMPTY_EXTENDED_RESOURCES;
+	public static final PDInheritableResources RESOURCES = PDInheritableResources.EMPTY_EXTENDED_RESOURCES;
 	private static final String UNDEFINED = "Undefined";
 
 	@Parameterized.Parameters(name = "{index}: {0} -> {1}")

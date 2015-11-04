@@ -14,7 +14,7 @@ import org.verapdf.model.impl.pb.pd.actions.PBoxPDGoToAction;
 import org.verapdf.model.impl.pb.pd.actions.PBoxPDGoToRemoteAction;
 import org.verapdf.model.impl.pb.pd.actions.PBoxPDNamedAction;
 import org.verapdf.model.pdlayer.PDAnnot;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -38,13 +38,13 @@ public class PBoxPDAnnotTest extends BaseTest {
 		actual = new PBoxPDAnnot(annot, getResources(annot));
 	}
 
-	private static PDExtendedResources getResources(PDAnnotation annot) {
+	private static PDInheritableResources getResources(PDAnnotation annot) {
 		PDResources pageResources = document.getPage(0).getResources();
 		PDAppearanceStream stream = annot.getNormalAppearanceStream();
 		if (stream != null) {
-			return PDExtendedResources.getInstance(pageResources, stream.getResources());
+			return PDInheritableResources.getInstance(pageResources, stream.getResources());
 		} else {
-			return PDExtendedResources.getInstance(pageResources);
+			return PDInheritableResources.getInstance(pageResources);
 		}
 	}
 

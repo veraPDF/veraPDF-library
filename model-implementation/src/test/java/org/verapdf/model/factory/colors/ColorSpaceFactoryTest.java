@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.verapdf.model.pdlayer.*;
-import org.verapdf.model.tools.resources.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.awt.color.ColorSpace;
 import java.io.File;
@@ -105,7 +105,7 @@ public class ColorSpaceFactoryTest {
 	public void testTillingPatternGenerating() throws IOException {
 		PDColorSpace colorSpace = resources.getColorSpace(COSName.getPDFName("PatternCS"));
 		PDAbstractPattern pattern = resources.getPattern(COSName.getPDFName("P0"));
-		PDExtendedResources extRes = PDExtendedResources.getInstance(resources);
+		PDInheritableResources extRes = PDInheritableResources.getInstance(resources);
 		Assert.assertTrue(ColorSpaceFactory.getColorSpace(colorSpace, pattern, extRes) instanceof PDTilingPattern);
 	}
 
