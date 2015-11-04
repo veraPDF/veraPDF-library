@@ -14,7 +14,7 @@ public class VeraCliArgParser {
     @Parameter(names = {"-v", "--version"}, description = "ouput version information.")
     private boolean showVersion;
 
-    @Parameter(names = {"-l", "--list"}, description = "lists all supported validation profiles.")
+    @Parameter(names = {"-l", "--list"}, description = "lists all built in validation profiles.")
     private boolean listProfiles;
 
     @Parameter(names = {"-h", "--help"}, description = "shows this message and exit.", help = true)
@@ -22,9 +22,6 @@ public class VeraCliArgParser {
 
     @Parameter(names = {"-p", "--profile"}, description = "validation profile code e.g. 1b, 1a, etc. or a path to a validation profile.")
     private String profile = "1b";
-
-	@Parameter(names = {"-f", "--features"}, description = "extract and report PDF features.")
-	private boolean reportFeatures = false;
 
 	@Parameter(description = "FILES")
 	private List<String> filePaths = new ArrayList<>();
@@ -50,13 +47,6 @@ public class VeraCliArgParser {
         return this.help;
     }
 
-    /**
-     * @return true if feature extraction requested
-     */
-    public boolean reportFeatures() {
-        return this.reportFeatures;
-    }
-    
     /**
      * @return
      */
