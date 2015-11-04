@@ -163,13 +163,9 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 				this.simplePDObject).getResources();
 		for (PDAnnotation annotation : pdfboxAnnotations) {
 			if (annotation != null) {
-				PDResources resources;
 				PDAppearanceStream stream = annotation.getNormalAppearanceStream();
-				if (stream != null) {
-					resources = PDExtendedResources.getInstance(pageResources, stream.getResources());
-				} else {
-					resources = PDExtendedResources.getInstance(pageResources);
-				}
+				PDResources resources = stream != null ? stream.getResources() : PDExtendedResources.EMPTY;
+				resources = PDExtendedResources.getInstance(pageResources, resources);
 				annotations.add(new PBoxPDAnnot(annotation, resources));
 			}
 		}

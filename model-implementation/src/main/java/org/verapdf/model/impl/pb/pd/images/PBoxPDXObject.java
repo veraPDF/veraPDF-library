@@ -111,8 +111,9 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 			PDResources extendedResources) {
         if (pbObject instanceof PDFormXObject) {
 			PDFormXObject object = (PDFormXObject) pbObject;
-			return new PBoxPDXForm(object, getResources(
-					extendedResources, object.getResources()));
+			PDResources resources = PDExtendedResources.getResources(
+					object.getResources(),extendedResources);
+			return new PBoxPDXForm(object, resources);
         } else if (pbObject instanceof PDImageXObject) {
             return new PBoxPDXImage((PDImageXObject) pbObject);
         } else if (pbObject instanceof PDPostScriptXObject) {
@@ -121,17 +122,6 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
             return null;
         }
     }
-
-	private static PDResources getResources(PDResources extendedResources, PDResources resources) {
-		if (extendedResources instanceof PDExtendedResources) {
-			PDExtendedResources res = (PDExtendedResources) extendedResources;
-			return PDExtendedResources.getInstance(res.getPageResources(), resources);
-		} else if (extendedResources != null) {
-			return PDExtendedResources.getInstance(extendedResources, resources);
-		} else {
-			return resources;
-		}
-	}
 
 	protected List<CosDict> getOPI() {
         return this.getLinkToDictionary(OPI);

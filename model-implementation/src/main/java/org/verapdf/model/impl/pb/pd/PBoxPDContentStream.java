@@ -28,11 +28,6 @@ public class PBoxPDContentStream extends PBoxPDObject implements
 
 	private final PDResources resources;
 
-    public PBoxPDContentStream(
-            org.apache.pdfbox.contentstream.PDContentStream contentStream) {
-		this(contentStream, contentStream.getResources());
-    }
-
 	public PBoxPDContentStream(
 			org.apache.pdfbox.contentstream.PDContentStream contentStream,
 			PDResources resources) {

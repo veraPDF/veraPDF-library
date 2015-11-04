@@ -39,7 +39,7 @@ public class PBoxPDTilingPattern extends PBoxPDPattern implements
     private List<PDContentStream> getContentStream() {
         List<PDContentStream> contentStreams = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         contentStreams.add(new PBoxPDContentStream(
-				(org.apache.pdfbox.contentstream.PDContentStream) this.simplePDObject));
+				(org.apache.pdfbox.contentstream.PDContentStream) this.simplePDObject, this.resources));
         return contentStreams;
     }
 }
