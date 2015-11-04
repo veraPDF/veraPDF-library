@@ -65,28 +65,16 @@ public final class FontFactory {
 				} else if (pdfboxFont instanceof PDType1CFont) {
 					return new PBoxPDType1Font((PDType1CFont) pdfboxFont);
 				}
-			case TYPE_3:
-				return new PBoxPDType3Font(pdfboxFont,
-						getResources(pdfboxFont, resources));
+			case TYPE_3: {
+				PDResources fontResources = ((PDType3Font) pdfboxFont).getResources();
+				PDResources pdResources = PDExtendedResources
+						.getResources(fontResources, resources);
+				return new PBoxPDType3Font(pdfboxFont, pdResources);
+			}
 			case TRUE_TYPE:
 				return new PBoxPDTrueTypeFont((PDTrueTypeFont) pdfboxFont);
 			default:
 				return null;
-		}
-	}
-
-	private static PDResources getResources(
-			org.apache.pdfbox.pdmodel.font.PDFont pdfboxFont,
-			PDResources resources) {
-		PDResources fontResources = ((PDType3Font) pdfboxFont).getResources();
-		if (resources instanceof PDExtendedResources) {
-			PDExtendedResources extRes = (PDExtendedResources) resources;
-			return PDExtendedResources.getInstance(extRes.getPageResources(),
-					fontResources);
-		} else if (resources != null) {
-			return PDExtendedResources.getInstance(resources, fontResources);
-		} else {
-			return fontResources;
 		}
 	}
 

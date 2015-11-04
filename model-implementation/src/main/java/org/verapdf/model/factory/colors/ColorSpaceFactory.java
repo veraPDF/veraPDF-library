@@ -112,21 +112,12 @@ public class ColorSpaceFactory {
 				return new PBoxPDShadingPattern((PDShadingPattern) pattern);
 			} else if (pattern.getPatternType() == PDAbstractPattern.TYPE_TILING_PATTERN) {
 				PDTilingPattern tiling = (PDTilingPattern) pattern;
-				return new PBoxPDTilingPattern(tiling, getResources(tiling.getResources(), resources));
+				PDResources pdResources = PDExtendedResources
+						.getResources(tiling.getResources(), resources);
+				return new PBoxPDTilingPattern(tiling, pdResources);
 			}
 		}
 		return null;
-	}
-
-	private static PDResources getResources(PDResources tilingResources, PDResources resources) {
-		if (resources instanceof PDExtendedResources) {
-			return PDExtendedResources.getInstance(((PDExtendedResources) resources)
-					.getPageResources(), tilingResources);
-		} else if (resources != null) {
-			return PDExtendedResources.getInstance(resources, tilingResources);
-		} else {
-			return tilingResources;
-		}
 	}
 
 }
