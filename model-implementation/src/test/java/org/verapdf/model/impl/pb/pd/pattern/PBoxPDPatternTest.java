@@ -7,6 +7,7 @@ import org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.impl.BaseTest;
 import org.verapdf.model.pdlayer.PDPattern;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -26,10 +27,10 @@ public abstract class PBoxPDPatternTest extends BaseTest {
 		setUp(FILE_RELATIVE_PATH);
 		PDResources resources = document.getPage(0).getResources();
 		COSName patternCosName = COSName.getPDFName(patternName);
-		actual = getPattern(resources, patternCosName);
+		actual = getPattern(PDExtendedResources.getInstance(resources), patternCosName);
 	}
 
-	private static PDPattern getPattern(PDResources resources,
+	private static PDPattern getPattern(PDExtendedResources resources,
 										COSName patternCosName)
 			throws IOException {
 		return ColorSpaceFactory.getPattern(resources.getPattern(patternCosName), resources);

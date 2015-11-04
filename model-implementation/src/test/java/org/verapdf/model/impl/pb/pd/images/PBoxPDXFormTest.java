@@ -2,7 +2,6 @@ package org.verapdf.model.impl.pb.pd.images;
 
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDResources;
-import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -10,7 +9,7 @@ import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.pb.pd.PBoxPDContentStream;
 import org.verapdf.model.pdlayer.PDXForm;
-import org.verapdf.model.tools.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

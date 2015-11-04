@@ -15,6 +15,7 @@ import org.verapdf.model.impl.BaseTest;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
 import org.verapdf.model.impl.pb.operator.type3font.PBOp_d0;
 import org.verapdf.model.operator.Operator;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -41,7 +42,8 @@ public abstract class PBOperatorTest extends BaseTest {
 		PDFStreamParser parser = new PDFStreamParser(stream, true);
 		parser.parse();
 
-		List<Operator> operators = OperatorFactory.operatorsFromTokens(parser.getTokens(), resources);
+		List<Operator> operators = OperatorFactory.operatorsFromTokens(parser.getTokens(),
+				PDExtendedResources.getInstance(resources));
 		actual = getActual(operators, expectedType);
 
 		operators.clear();

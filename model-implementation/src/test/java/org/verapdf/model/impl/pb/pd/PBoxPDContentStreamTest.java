@@ -7,6 +7,9 @@ import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.BaseTest;
 import org.verapdf.model.impl.pb.operator.base.PBOperator;
+import org.verapdf.model.tools.resources.PDExtendedResources;
+
+import static org.verapdf.model.impl.pb.pd.PBoxPDContentStream.*;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -21,18 +24,17 @@ public class PBoxPDContentStreamTest extends BaseTest {
 
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
-		expectedType = TYPES.contains(PBoxPDContentStream.CONTENT_STREAM_TYPE) ?
-																	PBoxPDContentStream.CONTENT_STREAM_TYPE : null;
+		expectedType = TYPES.contains(CONTENT_STREAM_TYPE) ? CONTENT_STREAM_TYPE : null;
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
 		PDPage page = document.getPage(0);
-		actual = new PBoxPDContentStream(page, page.getResources());
+		actual = new PBoxPDContentStream(page, PDExtendedResources.getInstance(page.getResources()));
 	}
 
 	@Test
 	public void testOperatorsLink() {
-		List<? extends Object> operators = actual.getLinkedObjects(PBoxPDContentStream.OPERATORS);
+		List<? extends Object> operators = actual.getLinkedObjects(OPERATORS);
 		Assert.assertTrue(operators.size() > 0);
 		for (Object object : operators) {
 			Assert.assertTrue(object instanceof PBOperator);

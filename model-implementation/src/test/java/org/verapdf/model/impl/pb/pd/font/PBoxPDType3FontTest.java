@@ -2,14 +2,13 @@ package org.verapdf.model.impl.pb.pd.font;
 
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDResources;
-import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.pb.pd.PBoxPDContentStream;
 import org.verapdf.model.pdlayer.PDType3Font;
-import org.verapdf.model.tools.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -38,7 +37,7 @@ public class PBoxPDType3FontTest extends PBoxPDSimpleFontTest {
 		org.apache.pdfbox.pdmodel.font.PDType3Font type3Font =
 				(org.apache.pdfbox.pdmodel.font.PDType3Font)
 						pageResources.getFont(COSName.getPDFName(TYPE3_FONT_NAME));
-		PDResources resources = PDExtendedResources.getInstance(pageResources, type3Font.getResources());
+		PDExtendedResources resources = PDExtendedResources.getInstance(pageResources, type3Font.getResources());
 		actual = new PBoxPDType3Font(type3Font, resources);
 
 		expectedID = type3Font.getCOSObject().hashCode() + " null";

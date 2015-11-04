@@ -6,8 +6,12 @@ import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDJPXColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.verapdf.model.pdlayer.*;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.awt.color.ColorSpace;
 import java.io.File;
@@ -101,7 +105,8 @@ public class ColorSpaceFactoryTest {
 	public void testTillingPatternGenerating() throws IOException {
 		PDColorSpace colorSpace = resources.getColorSpace(COSName.getPDFName("PatternCS"));
 		PDAbstractPattern pattern = resources.getPattern(COSName.getPDFName("P0"));
-		Assert.assertTrue(ColorSpaceFactory.getColorSpace(colorSpace, pattern, resources) instanceof PDTilingPattern);
+		PDExtendedResources extRes = PDExtendedResources.getInstance(resources);
+		Assert.assertTrue(ColorSpaceFactory.getColorSpace(colorSpace, pattern, extRes) instanceof PDTilingPattern);
 	}
 
 	@Test

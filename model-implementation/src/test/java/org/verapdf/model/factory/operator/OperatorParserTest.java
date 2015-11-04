@@ -41,6 +41,7 @@ import org.verapdf.model.impl.pb.operator.type3font.PBOp_d0;
 import org.verapdf.model.impl.pb.operator.type3font.PBOp_d1;
 import org.verapdf.model.impl.pb.operator.xobject.PBOp_Do;
 import org.verapdf.model.tools.constants.Operators;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,7 +53,7 @@ import java.util.List;
 @RunWith(Parameterized.class)
 public class OperatorParserTest {
 
-	public static final PDResources RESOURCES = new PDResources(new COSDictionary());
+	public static final PDExtendedResources RESOURCES = PDExtendedResources.EMPTY_EXTENDED_RESOURCES;
 	private static final String UNDEFINED = "Undefined";
 
 	@Parameterized.Parameters(name = "{index}: {0} -> {1}")
