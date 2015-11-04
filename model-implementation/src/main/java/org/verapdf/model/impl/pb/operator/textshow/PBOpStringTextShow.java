@@ -2,14 +2,11 @@ package org.verapdf.model.impl.pb.operator.textshow;
 
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
-import org.apache.pdfbox.pdmodel.PDResources;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
-import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosString;
 import org.verapdf.model.factory.operator.GraphicState;
 import org.verapdf.model.impl.pb.cos.PBCosString;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,8 +22,8 @@ public abstract class PBOpStringTextShow extends PBOpTextShow {
 	/** Name of link to the showing strings for operators ", ', Tj */
     public static final String SHOW_STRING = "showString";
 
-    protected PBOpStringTextShow(List<COSBase> arguments,
-			GraphicState state, PDResources resources, final String opType) {
+    protected PBOpStringTextShow(List<COSBase> arguments, GraphicState state,
+								 PDExtendedResources resources, final String opType) {
         super(arguments, state, resources, opType);
     }
 

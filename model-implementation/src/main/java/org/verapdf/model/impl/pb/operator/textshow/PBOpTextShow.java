@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSString;
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
 import org.apache.pdfbox.preflight.font.container.FontContainer;
@@ -17,6 +16,7 @@ import org.verapdf.model.operator.OpTextShow;
 import org.verapdf.model.pdlayer.PDColorSpace;
 import org.verapdf.model.pdlayer.PDFont;
 import org.verapdf.model.tools.FontHelper;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -44,10 +44,10 @@ public abstract class PBOpTextShow extends PBOperator implements OpTextShow {
     public static final String STROKE_COLOR_SPACE = "strokeCS";
 
     protected final GraphicState state;
-	private final PDResources resources;
+	private final PDExtendedResources resources;
 
     protected PBOpTextShow(List<COSBase> arguments,
-            GraphicState state, PDResources resources, final String opType) {
+            GraphicState state, PDExtendedResources resources, final String opType) {
         super(arguments, opType);
         this.state = state;
 		this.resources = resources;
