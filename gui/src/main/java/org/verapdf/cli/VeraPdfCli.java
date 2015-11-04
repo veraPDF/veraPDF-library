@@ -100,6 +100,7 @@ public final class VeraPdfCli {
         try {
             return Profiles.profileFromXml(new FileInputStream(userInput));
         } catch (JAXBException | IOException e) {
+            LOGGER.warn("Couldn't parse profile, trying legacy profile parser.", e);
             // Do nothing as it's a parse error so try from legacy profile nex
         }
 
@@ -120,10 +121,7 @@ public final class VeraPdfCli {
 
     private static void logThrowable(final Throwable cause,
             final String message) {
-        LOGGER.fatal(message);
-        LOGGER.fatal(cause);
-        System.err.println(message);
-        cause.printStackTrace();
+        LOGGER.fatal(message, cause);
         return;
     }
 
