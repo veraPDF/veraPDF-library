@@ -1,7 +1,6 @@
-package org.verapdf.model.tools;
+package org.verapdf.model.tools.resources;
 
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.font.PDFont;
@@ -16,26 +15,33 @@ import java.io.IOException;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class PDExtendedResources extends PDResources {
+public class PDExtendedResources {
 
 	private static final Logger LOGGER = Logger.getLogger(PDExtendedResources.class);
 
-	public static final PDResources EMPTY = new PDResources();
+	public static final PDResources EMPTY_RESOURCES = new PDEmptyResources();
+	public static final PDExtendedResources EMPTY_EXTENDED_RESOURCES = new PDEmptyExtendedResources();
 
 	private final PDResources currentResources;
 	private final PDResources pageResources;
 
-	private PDExtendedResources(PDResources pageResources, COSDictionary currentResources) {
-		super(currentResources);
+	protected PDExtendedResources(PDResources pageResources, PDResources currentResources) {
 		this.pageResources = pageResources;
-		this.currentResources = new PDResources(currentResources);
+		this.currentResources = currentResources;
 	}
 
 	public PDResources getPageResources() {
 		return this.pageResources;
 	}
 
-	@Override
+	public PDResources getCurrentResources(){
+		return this.currentResources;
+	}
+
+	public PDExtendedResources getExtendedResources(PDResources resources) {
+		return getInstance(this.pageResources, resources);
+	}
+
 	public PDFont getFont(COSName name) throws IOException {
 		try {
 			PDFont font = this.currentResources.getFont(name);
@@ -49,7 +55,6 @@ public class PDExtendedResources extends PDResources {
 		return this.pageResources.getFont(name);
 	}
 
-	@Override
 	public PDColorSpace getColorSpace(COSName name) throws IOException {
 		try {
 			if (this.getFromPageResources(name)) {
@@ -66,13 +71,11 @@ public class PDExtendedResources extends PDResources {
 		return this.pageResources.getColorSpace(name);
 	}
 
-	@Override
 	public PDExtendedGraphicsState getExtGState(COSName name) {
 		PDExtendedGraphicsState state = this.currentResources.getExtGState(name);
 		return state != null ? state : this.pageResources.getExtGState(name);
 	}
 
-	@Override
 	public PDShading getShading(COSName name) throws IOException {
 		try {
 			PDShading shading = this.currentResources.getShading(name);
@@ -86,7 +89,6 @@ public class PDExtendedResources extends PDResources {
 		return this.pageResources.getShading(name);
 	}
 
-	@Override
 	public PDAbstractPattern getPattern(COSName name) throws IOException {
 		try {
 			PDAbstractPattern pattern = this.currentResources.getPattern(name);
@@ -100,7 +102,6 @@ public class PDExtendedResources extends PDResources {
 		return this.pageResources.getPattern(name);
 	}
 
-	@Override
 	public PDXObject getXObject(COSName name) throws IOException {
 		try {
 			PDXObject object = this.currentResources.getXObject(name);
@@ -139,20 +140,9 @@ public class PDExtendedResources extends PDResources {
 
 	public static PDExtendedResources getInstance(
 			PDResources pageResources, PDResources currentResources) {
-		COSDictionary current = currentResources == null ? new COSDictionary() :
-														currentResources.getCOSObject();
-		return new PDExtendedResources(pageResources != null ?
-				pageResources : EMPTY, current);
-	}
-
-	public static PDResources getResources(PDResources currentResources, PDResources resources) {
-		if (resources instanceof PDExtendedResources) {
-			PDExtendedResources extRes = (PDExtendedResources) resources;
-			return PDExtendedResources.getInstance(extRes.getPageResources(),
-					currentResources);
-		} else {
-			throw new IllegalStateException("Resource dictionary is not contain page resources.");
-		}
+		pageResources = pageResources != null ? pageResources : EMPTY_RESOURCES;
+		currentResources = currentResources != null ? currentResources : EMPTY_RESOURCES;
+		return new PDExtendedResources(pageResources, currentResources);
 	}
 
 }
