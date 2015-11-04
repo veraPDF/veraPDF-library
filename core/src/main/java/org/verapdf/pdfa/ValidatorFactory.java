@@ -6,6 +6,7 @@ package org.verapdf.pdfa;
 import org.verapdf.pdfa.config.ValidatorConfiguration;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.ProfileDirectory;
+import org.verapdf.pdfa.validation.ValidationProfile;
 
 /**
  * Provisional factory interface for instantiation of veraPDF PDF/A Validator

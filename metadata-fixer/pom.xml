@@ -7,7 +7,7 @@
     <parent>
         <artifactId>verapdf-library</artifactId>
         <groupId>org.verapdf</groupId>
-        <version>0.6.0</version>
+        <version>0.7.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>metadata-fixer</artifactId>
@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>org.verapdf</groupId>
-            <artifactId>validation-logic</artifactId>
+            <artifactId>core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.verapdf</groupId>

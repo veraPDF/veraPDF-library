@@ -1,13 +1,14 @@
 package org.verapdf.model;
 
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.verapdf.model.coslayer.CosDocument;
 import org.verapdf.model.impl.pb.cos.PBCosDocument;
-
-import java.io.Closeable;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Current class is entry point to model implementation.
@@ -18,18 +19,14 @@ public final class ModelLoader implements Closeable {
 
     private static final Logger LOGGER = Logger.getLogger(ModelLoader.class);
 
-    private File file;
     private PDDocument document;
 
-    public ModelLoader(String path) {
-        this.file = new File(path);
-    }
-
     /**
-     * @return target file
+     * @param toLoad
+     * @throws IOException
      */
-    public File getFile() {
-        return this.file;
+    public ModelLoader(InputStream toLoad) throws IOException {
+        this.document = PDDocument.load(toLoad, false, true);
     }
 
     /**
@@ -42,15 +39,6 @@ public final class ModelLoader implements Closeable {
      *             object
      */
     public PDDocument getPDDocument() throws IOException {
-        if (this.document == null) {
-            if (!this.file.exists() || !this.file.isFile()) {
-                LOGGER.error("Invalid path to document '" + this.file.getPath()
-                        + "'. File does not exist or not a file.");
-            } else {
-                this.document = PDDocument.load(this.file, false, true);
-            }
-        }
-
         return this.document;
     }
 
@@ -68,8 +56,7 @@ public final class ModelLoader implements Closeable {
         if (this.document == null) {
             this.document = this.getPDDocument();
         }
-        return this.document != null ? new PBCosDocument(this.document, this.file.length())
-                : null;
+        return new PBCosDocument(this.document, -1);
     }
 
 	@Override
@@ -79,7 +66,7 @@ public final class ModelLoader implements Closeable {
                 this.document.close();
             }
 		} catch (IOException e) {
-            LOGGER.error("Problems with document close: '" + this.file.getAbsolutePath() + "'.", e);
+            LOGGER.error("Problems with document close.", e);
         }
 	}
 }

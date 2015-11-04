@@ -3,7 +3,7 @@ package org.verapdf.features.pb.objects;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline;
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -52,11 +52,11 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the
 	 * constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection)
-			throws FeaturesTreeNodeException {
+			throws FeatureParsingException {
 		if (outline != null) {
 			FeatureTreeNode root = FeatureTreeNode.newRootInstance("outlines");
 
@@ -85,7 +85,7 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
 	}
 
 	private static void createItem(PDOutlineItem item, FeatureTreeNode root,
-								   FeaturesCollection collection, Set<PDOutlineItem> items) throws FeaturesTreeNodeException {
+								   FeaturesCollection collection, Set<PDOutlineItem> items) throws FeatureParsingException {
 		if (item != null) {
 			items.add(item);
 			FeatureTreeNode itemNode = FeatureTreeNode.newChildInstance(

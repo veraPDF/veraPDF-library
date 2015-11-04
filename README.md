@@ -55,6 +55,11 @@ Linux users can download and execute the veraPDF installer using the following c
 ####veraPDF GUI manual
 We've prepared a manual for the GUI which is included in the library project and can be [downloaded from GitHub](https://github.com/veraPDF/veraPDF-library/raw/release-0.6/veraPDFPDFAConformanceCheckerGUI.pdf).
 
+####JVM configuration options
+The startup script found in the install dir, e.g. `.../verapdf/verapdf-gui` for Linux, or `.../verapdf/verapdf-gui.bat` for Windows can be used to pass
+configuration options to the JVM. This is done by setting `$JAVA_OPTS` for Linux, or `%JAVA_OPTS%` in the Window batch file. Alternatively these can be
+passed directly as parameters when calling the shell or batch script.
+
 Building the veraPDF-library from Source
 ----------------------------------------
 ###Pre-requisites

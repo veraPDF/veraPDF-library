@@ -5,7 +5,7 @@ import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -51,10 +51,10 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (outInt != null) {
 			FeatureTreeNode root = FeatureTreeNode.newRootInstance("outputIntent");
 			root.addAttribute("id", id);
@@ -84,7 +84,7 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private void addSubtype(FeaturesCollection collection, FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void addSubtype(FeaturesCollection collection, FeatureTreeNode root) throws FeatureParsingException {
 		COSBase base = outInt.getCOSObject();
 		if (base instanceof COSDictionary) {
 			COSDictionary dict = (COSDictionary) base;
