@@ -1,17 +1,12 @@
 package org.verapdf.model.impl.pb.operator.xobject;
 
 import org.apache.pdfbox.cos.COSBase;
-import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.pdmodel.PDResources;
-import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.pb.operator.base.PBOperator;
-import org.verapdf.model.impl.pb.pd.images.PBoxPDXForm;
-import org.verapdf.model.impl.pb.pd.images.PBoxPDXImage;
 import org.verapdf.model.impl.pb.pd.images.PBoxPDXObject;
 import org.verapdf.model.operator.Op_Do;
 import org.verapdf.model.pdlayer.PDXObject;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,11 +26,11 @@ public class PBOp_Do extends PBOperator implements Op_Do {
     public static final String X_OBJECT = "xObject";
 
     private final org.apache.pdfbox.pdmodel.graphics.PDXObject pbXObject;
-	private final PDResources resources;
+	private final PDExtendedResources resources;
 
     public PBOp_Do(List<COSBase> arguments,
             org.apache.pdfbox.pdmodel.graphics.PDXObject pbXObject,
-			PDResources resources) {
+			PDExtendedResources resources) {
         super(arguments, OP_DO_TYPE);
         this.pbXObject = pbXObject;
 		this.resources = resources;
