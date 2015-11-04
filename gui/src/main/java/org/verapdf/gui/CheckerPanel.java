@@ -1,36 +1,5 @@
 package org.verapdf.gui;
 
-import java.awt.Cursor;
-import java.awt.Desktop;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.IllegalComponentStateException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.util.concurrent.ExecutionException;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
-
 import org.apache.log4j.Logger;
 import org.verapdf.core.ProfileException;
 import org.verapdf.core.ValidationException;
@@ -42,6 +11,20 @@ import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.validation.profile.parser.LegacyProfileConverter;
 import org.verapdf.validation.profile.parser.ValidationProfileParser;
 import org.xml.sax.SAXException;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Panel with functionality for checker.
@@ -318,8 +301,8 @@ class CheckerPanel extends JPanel {
 					
 					org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser
 		                    .parseFromFilePath(
-		                            "/home/cfw/GitHub/veraPDF/veraPDF-validation-profiles/PDF_A/PDFA-1B.xml",
-		                            false);
+									profile.getAbsolutePath(),
+									false);
 					ValidationProfile prof = LegacyProfileConverter.fromLegacyProfile(toConvert, PDFAFlavour.PDFA_1_B);
                     CheckerPanel.this.validateWorker = new ValidateWorker(
                             CheckerPanel.this, CheckerPanel.this.pdfFile, prof,
