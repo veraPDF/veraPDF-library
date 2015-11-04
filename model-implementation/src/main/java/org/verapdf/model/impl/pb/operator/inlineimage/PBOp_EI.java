@@ -69,20 +69,15 @@ public class PBOp_EI extends PBOpInlineImage implements Op_EI {
 		COSDictionary dictionary = resources.getPageResources().getCOSObject();
 		PDResources pageRes = new PDResources(new COSDictionary(dictionary));
 
-		this.putProperties(currRes, pageRes, COSName.FONT, currRes.getFontNames());
-		this.putProperties(currRes, pageRes, COSName.COLORSPACE, currRes.getColorSpaceNames());
-		this.putProperties(currRes, pageRes, COSName.EXT_G_STATE, currRes.getExtGStateNames());
-		this.putProperties(currRes, pageRes, COSName.SHADING, currRes.getShadingNames());
-		this.putProperties(currRes, pageRes, COSName.PATTERN, currRes.getPatternNames());
-		this.putProperties(currRes, pageRes, COSName.XOBJECT, currRes.getXObjectNames());
+		for (COSName name : currRes.getColorSpaceNames()) {
+			try {
+				pageRes.put(name, currRes.getColorSpace(name));
+			} catch (IOException e) {
+				LOGGER.warn("Problem with color space coping.", e);
+			}
+		}
 
 		return pageRes;
 	}
 
-	private void putProperties(PDResources currentResources, PDResources pageResources,
-							   COSName kind, Iterable<COSName> names) {
-		for (COSName name : names) {
-			pageResources.put(kind, name, currentResources.get(kind, name));
-		}
-	}
 }
