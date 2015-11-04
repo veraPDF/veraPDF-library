@@ -63,13 +63,14 @@ public class ITVeraPDFTestSuite {
             if (entry.isDirectory())
                 continue;
             if (entry.getName().endsWith(".pdf")) {
+                System.out.println();
+                System.out.println("Testing: " + entry.getName());
                 try (ModelLoader loader = new ModelLoader(
                         zipIn.getInputStream(entry))) {
                     ValidationResult result = Validator.validate(PROFILE_1B,
                             loader.getRoot(), false);
-                    System.out.println();
-                    System.out.println(entry.getName());
                     ValidationResults.toXml(result, System.out, Boolean.TRUE);
+                    System.out.println();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
