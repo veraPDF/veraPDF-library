@@ -58,8 +58,8 @@ public final class VeraPdfCli {
 
         try {
             jCommander.parse(args);
-        } catch (Throwable t) {
-            logThrowableAndExit(t, "Couldn't parse parameters.", 1);
+        } catch (Exception e) {
+            logThrowableAndExit(e, "Couldn't parse parameters.", 1);
         }
         messagesFromParser(jCommander, cliArgParser);
         processPaths(cliArgParser.getPathsToValidate(),
