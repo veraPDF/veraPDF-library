@@ -3,11 +3,11 @@ package org.verapdf.model.impl.pb.pd;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdfparser.PDFStreamParser;
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.operator.OperatorFactory;
 import org.verapdf.model.operator.Operator;
 import org.verapdf.model.pdlayer.PDContentStream;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -26,11 +26,11 @@ public class PBoxPDContentStream extends PBoxPDObject implements
 
 	public static final String OPERATORS = "operators";
 
-	private final PDResources resources;
+	private final PDExtendedResources resources;
 
 	public PBoxPDContentStream(
 			org.apache.pdfbox.contentstream.PDContentStream contentStream,
-			PDResources resources) {
+			PDExtendedResources resources) {
 		super(contentStream, CONTENT_STREAM_TYPE);
 		this.resources = resources;
 	}

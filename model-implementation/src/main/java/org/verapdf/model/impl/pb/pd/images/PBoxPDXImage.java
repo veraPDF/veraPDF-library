@@ -14,6 +14,7 @@ import org.verapdf.model.impl.pb.cos.PBCosRenderingIntent;
 import org.verapdf.model.impl.pb.external.PBoxJPEG2000;
 import org.verapdf.model.pdlayer.PDColorSpace;
 import org.verapdf.model.pdlayer.PDXImage;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,7 +39,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 	private final boolean interpolate;
 
     public PBoxPDXImage(PDImage simplePDObject) {
-        super(simplePDObject, new PDResources(), X_IMAGE_TYPE);
+        super(simplePDObject, PDExtendedResources.EMPTY_EXTENDED_RESOURCES, X_IMAGE_TYPE);
 		this.interpolate = simplePDObject.getInterpolate();
     }
 

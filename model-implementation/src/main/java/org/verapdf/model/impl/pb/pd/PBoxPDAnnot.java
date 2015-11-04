@@ -1,7 +1,6 @@
 package org.verapdf.model.impl.pb.pd;
 
 import org.apache.pdfbox.cos.*;
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionFactory;
 import org.apache.pdfbox.pdmodel.interactive.action.PDAnnotationAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
@@ -15,6 +14,7 @@ import org.verapdf.model.impl.pb.pd.actions.PBoxPDAction;
 import org.verapdf.model.pdlayer.PDAction;
 import org.verapdf.model.pdlayer.PDAnnot;
 import org.verapdf.model.pdlayer.PDContentStream;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +40,7 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	public static final int X_AXIS = 0;
 	public static final int Y_AXIS = 1;
 
-	private final PDResources resources;
+	private final PDExtendedResources resources;
 
 	private final String subtype;
 	private final String ap;
@@ -51,7 +51,7 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	private final Double width;
 	private final Double height;
 
-	public PBoxPDAnnot(PDAnnotation annot, PDResources resources) {
+	public PBoxPDAnnot(PDAnnotation annot, PDExtendedResources resources) {
 		super(annot, ANNOTATION_TYPE);
 		this.resources = resources;
 		this.subtype = annot.getSubtype();

@@ -5,7 +5,7 @@ import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.pdmodel.*;
+import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.interactive.action.PDPageAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
@@ -16,8 +16,7 @@ import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.impl.pb.cos.PBCosBBox;
 import org.verapdf.model.impl.pb.cos.PBCosDict;
 import org.verapdf.model.pdlayer.*;
-import org.verapdf.model.pdlayer.PDPage;
-import org.verapdf.model.tools.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -116,7 +115,8 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 		List<PDContentStream> contentStreams = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 		org.apache.pdfbox.pdmodel.PDPage stream =
 				(org.apache.pdfbox.pdmodel.PDPage) this.simplePDObject;
-		PDResources resources = PDExtendedResources.getInstance(stream.getResources());
+		PDExtendedResources resources = PDExtendedResources
+				.getInstance(stream.getResources(), PDExtendedResources.EMPTY_RESOURCES);
 		contentStreams.add(new PBoxPDContentStream(stream, resources));
 		return contentStreams;
 	}
@@ -164,9 +164,9 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 		for (PDAnnotation annotation : pdfboxAnnotations) {
 			if (annotation != null) {
 				PDAppearanceStream stream = annotation.getNormalAppearanceStream();
-				PDResources resources = stream != null ? stream.getResources() : PDExtendedResources.EMPTY;
-				resources = PDExtendedResources.getInstance(pageResources, resources);
-				annotations.add(new PBoxPDAnnot(annotation, resources));
+				PDResources resources = stream != null ? stream.getResources() : PDExtendedResources.EMPTY_RESOURCES;
+				PDExtendedResources extRes = PDExtendedResources.getInstance(pageResources, resources);
+				annotations.add(new PBoxPDAnnot(annotation, extRes));
 			}
 		}
 	}

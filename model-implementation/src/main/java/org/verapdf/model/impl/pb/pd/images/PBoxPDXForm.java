@@ -3,7 +3,6 @@ package org.verapdf.model.impl.pb.pd.images;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSStream;
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
@@ -14,6 +13,7 @@ import org.verapdf.model.impl.pb.pd.PBoxPDGroup;
 import org.verapdf.model.pdlayer.PDContentStream;
 import org.verapdf.model.pdlayer.PDGroup;
 import org.verapdf.model.pdlayer.PDXForm;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,11 +31,7 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
     public static final String REF = "Ref";
     public static final String CONTENT_STREAM = "contentStream";
 
-    public PBoxPDXForm(PDFormXObject simplePDObject) {
-        this(simplePDObject, new PDResources());
-    }
-
-	public PBoxPDXForm(PDFormXObject simplePDObject, PDResources resources) {
+	public PBoxPDXForm(PDFormXObject simplePDObject, PDExtendedResources resources) {
 		super(simplePDObject, resources, X_FORM_TYPE);
 	}
 

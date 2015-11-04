@@ -1,10 +1,10 @@
 package org.verapdf.model.impl.pb.pd.pattern;
 
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.pb.pd.PBoxPDContentStream;
 import org.verapdf.model.pdlayer.PDContentStream;
 import org.verapdf.model.pdlayer.PDTilingPattern;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +18,11 @@ public class PBoxPDTilingPattern extends PBoxPDPattern implements
     public static final String TILING_PATTERN_TYPE = "PDTilingPattern";
 
     public static final String CONTENT_STREAM = "contentStream";
-	private final PDResources resources;
+	private final PDExtendedResources resources;
 
 	public PBoxPDTilingPattern(
 			org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern simplePDObject,
-			PDResources resources) {
+			PDExtendedResources resources) {
 		super(simplePDObject, TILING_PATTERN_TYPE);
 		this.resources = resources;
 	}

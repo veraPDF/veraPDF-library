@@ -2,13 +2,13 @@ package org.verapdf.model.impl.pb.pd.font;
 
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.font.PDFontLike;
 import org.apache.pdfbox.pdmodel.font.PDType3CharProc;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.pb.pd.PBoxPDContentStream;
 import org.verapdf.model.pdlayer.PDContentStream;
 import org.verapdf.model.pdlayer.PDType3Font;
+import org.verapdf.model.tools.resources.PDExtendedResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,9 +24,9 @@ public class PBoxPDType3Font extends PBoxPDSimpleFont implements PDType3Font {
 
     public static final String CHAR_STRINGS = "charStrings";
 
-	private final PDResources resources;
+	private final PDExtendedResources resources;
 
-	public PBoxPDType3Font(PDFontLike font, PDResources resources) {
+	public PBoxPDType3Font(PDFontLike font, PDExtendedResources resources) {
 		super(font, TYPE3_FONT_TYPE);
 		this.resources = resources;
 	}

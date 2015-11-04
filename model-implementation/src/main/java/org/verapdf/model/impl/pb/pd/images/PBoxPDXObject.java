@@ -1,17 +1,10 @@
 package org.verapdf.model.impl.pb.pd.images;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.cos.COSStream;
-import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.graphics.PDPostScriptXObject;
@@ -22,7 +15,12 @@ import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.impl.pb.cos.PBCosDict;
 import org.verapdf.model.impl.pb.pd.PBoxPDResources;
 import org.verapdf.model.pdlayer.PDXObject;
-import org.verapdf.model.tools.PDExtendedResources;
+import org.verapdf.model.tools.resources.PDExtendedResources;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -36,15 +34,15 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
     public static final String OPI = "OPI";
     public static final String S_MASK = "SMask";
 
-	protected final PDResources resources;
+	protected final PDExtendedResources resources;
 	private final String subtype;
 
     public PBoxPDXObject(
             org.apache.pdfbox.pdmodel.graphics.PDXObject simplePDObject) {
-        this(simplePDObject, new PDResources(), X_OBJECT_TYPE);
+        this(simplePDObject, PDExtendedResources.EMPTY_EXTENDED_RESOURCES, X_OBJECT_TYPE);
     }
 
-	protected PBoxPDXObject(COSObjectable simplePDObject, PDResources resources, final String type) {
+	protected PBoxPDXObject(COSObjectable simplePDObject, PDExtendedResources resources, final String type) {
 		super(simplePDObject, type);
 		this.resources = resources;
 		this.subtype = this.getSubtype((org.apache.pdfbox.pdmodel.graphics.PDXObject) this.simplePDObject);
@@ -108,11 +106,11 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
 
     public static PDXObject getTypedPDXObject(
             org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject,
-			PDResources extendedResources) {
+			PDExtendedResources extendedResources) {
         if (pbObject instanceof PDFormXObject) {
 			PDFormXObject object = (PDFormXObject) pbObject;
-			PDResources resources = PDExtendedResources.getResources(
-					object.getResources(),extendedResources);
+			PDExtendedResources resources = extendedResources
+					.getExtendedResources(object.getResources());
 			return new PBoxPDXForm(object, resources);
         } else if (pbObject instanceof PDImageXObject) {
             return new PBoxPDXImage((PDImageXObject) pbObject);
