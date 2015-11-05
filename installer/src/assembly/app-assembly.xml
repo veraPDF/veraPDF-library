@@ -9,16 +9,26 @@
   <formats>
     <format>zip</format>
   </formats>
-  <fileSets>
-    <fileSet>
-      <directory>src/main/resources/org/verapdf/scripts</directory>
-      <outputDirectory>/</outputDirectory>
+  <files>
+    <file>
+      <source>src/main/resources/org/verapdf/scripts/verapdf-install.sh</source>
+      <outputDirectory>./</outputDirectory>
+      <destName>verapdf-install</destName>
       <filtered>true</filtered>
       <fileMode>0755</fileMode>
-    </fileSet>
+    </file>
+    <file>
+      <source>src/main/resources/org/verapdf/scripts/verapdf-install.bat</source>
+      <outputDirectory>./</outputDirectory>
+      <destName>verapdf-install.bat</destName>
+      <filtered>true</filtered>
+      <fileMode>0755</fileMode>
+    </file>
+  </files>
+  <fileSets>
     <fileSet>
       <directory>${project.build.directory}</directory>
-      <outputDirectory>/</outputDirectory>
+      <outputDirectory>./</outputDirectory>
       <includes>
         <include>verapdf-izpack-installer-${project.version}.jar</include>
       </includes>
