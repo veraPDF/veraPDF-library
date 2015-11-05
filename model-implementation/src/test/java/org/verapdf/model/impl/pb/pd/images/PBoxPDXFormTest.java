@@ -1,7 +1,7 @@
 package org.verapdf.model.impl.pb.pd.images;
 
 import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.pdmodel.graphics.PDXObject;
+import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.pb.pd.PBoxPDContentStream;
 import org.verapdf.model.pdlayer.PDXForm;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -28,8 +29,9 @@ public class PBoxPDXFormTest extends PBoxPDAbstractXObjectTest {
 		expectedID = null;
 
 		setUp(FILE_RELATIVE_PATH);
-		PDXObject xObject = document.getPage(0).getResources().getXObject(COSName.getPDFName(FORM_NAME));
-		actual = new PBoxPDXForm((PDFormXObject) xObject);
+		PDResources pageResources = document.getPage(0).getResources();
+		PDFormXObject xObject = (PDFormXObject) pageResources.getXObject(COSName.getPDFName(FORM_NAME));
+		actual = new PBoxPDXForm(xObject, PDInheritableResources.getInstance(pageResources, xObject.getResources()));
 	}
 
 	@Override

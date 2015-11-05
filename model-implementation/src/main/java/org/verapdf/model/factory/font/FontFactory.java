@@ -1,13 +1,16 @@
 package org.verapdf.model.factory.font;
 
+import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
 import org.apache.pdfbox.pdmodel.font.PDType1CFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.PDType3Font;
 import org.verapdf.model.impl.pb.pd.font.PBoxPDTrueTypeFont;
 import org.verapdf.model.impl.pb.pd.font.PBoxPDType0Font;
 import org.verapdf.model.impl.pb.pd.font.PBoxPDType1Font;
 import org.verapdf.model.impl.pb.pd.font.PBoxPDType3Font;
 import org.verapdf.model.pdlayer.PDFont;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 /**
  * Font factory for transforming Apache PDFBox
@@ -44,6 +47,12 @@ public final class FontFactory {
 	 */
 	public static PDFont parseFont(
 			org.apache.pdfbox.pdmodel.font.PDFont pdfboxFont) {
+		return parseFont(pdfboxFont, PDInheritableResources.EMPTY_EXTENDED_RESOURCES);
+	}
+
+	public static PDFont parseFont(
+			org.apache.pdfbox.pdmodel.font.PDFont pdfboxFont,
+			PDInheritableResources resources) {
 		if (pdfboxFont == null) {
 			return null;
 		}
@@ -56,8 +65,11 @@ public final class FontFactory {
 				} else if (pdfboxFont instanceof PDType1CFont) {
 					return new PBoxPDType1Font((PDType1CFont) pdfboxFont);
 				}
-			case TYPE_3:
-				return new PBoxPDType3Font(pdfboxFont);
+			case TYPE_3: {
+				PDResources fontResources = ((PDType3Font) pdfboxFont).getResources();
+				PDInheritableResources pdResources = resources.getExtendedResources(fontResources);
+				return new PBoxPDType3Font(pdfboxFont, pdResources);
+			}
 			case TRUE_TYPE:
 				return new PBoxPDTrueTypeFont((PDTrueTypeFont) pdfboxFont);
 			default:

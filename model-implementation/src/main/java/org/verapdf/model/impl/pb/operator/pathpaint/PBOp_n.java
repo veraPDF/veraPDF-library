@@ -16,10 +16,15 @@ import java.util.List;
 public class PBOp_n extends PBOpPathPaint implements Op_n {
 
 	/** Type name for {@code PBOp_n} */
-    public static final String OP_N_TYPE = "Op_n";
+	public static final String OP_N_TYPE = "Op_n";
 
-    public PBOp_n(List<COSBase> arguments) {
-        super(arguments, null, null, null, OP_N_TYPE);
-    }
+	/**
+	 * Default constructor
+	 *
+	 * @param arguments arguments for current operator, must be empty.
+	 */
+	public PBOp_n(List<COSBase> arguments) {
+		super(arguments, null, null, null, null, OP_N_TYPE);
+	}
 
 }
