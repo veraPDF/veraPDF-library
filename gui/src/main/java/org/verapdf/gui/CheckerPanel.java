@@ -5,6 +5,7 @@ import org.verapdf.core.ProfileException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
+import org.verapdf.gui.tools.ProcessingType;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.ValidationProfile;
@@ -52,7 +53,7 @@ class CheckerPanel extends JPanel {
 	private File xmlReport;
 	private File htmlReport;
 
-	private JComboBox<String> processingType;
+	private JComboBox<ProcessingType> processingType;
 	private JCheckBox fixMetadata;
 
 	private boolean isValidationErrorOccurred;
@@ -193,8 +194,7 @@ class CheckerPanel extends JPanel {
 		gbl.setConstraints(processType, gbc);
 		this.add(processType);
 
-		String[] types = new String[]{GUIConstants.VALIDATING_AND_FEATURES, GUIConstants.VALIDATING, GUIConstants.FEATURES};
-		this.processingType = new JComboBox<>(types);
+		this.processingType = new JComboBox<>(ProcessingType.values());
 		setGridBagConstraintsParameters(gbc,
 				1,
 				3,
@@ -283,22 +283,8 @@ class CheckerPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int index = CheckerPanel.this.processingType.getSelectedIndex();
-					int flag;
-					switch (index) {
-						case 0:
-							flag = GUIConstants.VALIDATING_AND_FEATURES_FLAG;
-							break;
-						case 1:
-							flag = GUIConstants.VALIDATING_FLAG;
-							break;
-						case 2:
-							flag = GUIConstants.FEATURES_FLAG;
-							break;
-						default:
-							throw new IllegalComponentStateException("Processing type list must contain only 3 values");
-					}
-					
+					ProcessingType type = (ProcessingType) CheckerPanel.this.processingType.getSelectedItem();
+
 					org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser
 		                    .parseFromFilePath(
 									profile.getAbsolutePath(),
@@ -306,7 +292,7 @@ class CheckerPanel extends JPanel {
 					ValidationProfile prof = LegacyProfileConverter.fromLegacyProfile(toConvert, PDFAFlavour.PDFA_1_B);
                     CheckerPanel.this.validateWorker = new ValidateWorker(
                             CheckerPanel.this, CheckerPanel.this.pdfFile, prof,
-                            CheckerPanel.this.config, flag,
+                            CheckerPanel.this.config, type,
                             CheckerPanel.this.fixMetadata.isSelected());
 					CheckerPanel.this.progressBar.setVisible(true);
 					CheckerPanel.this.resultLabel.setVisible(false);
