@@ -31,11 +31,11 @@ public class MachineReadableReport {
 	private static final long MS_IN_HOUR = MS_IN_MIN * MIN_IN_HOUR;
 
 	@XmlElement(name = "validationInfo")
-	private ValidationInfo info;
+	private final ValidationInfo info;
 	@XmlAttribute
-	private String creationDate;
+	private final String creationDate;
 	@XmlAttribute
-	private String processingTime;
+	private final String processingTime;
 
 	public MachineReadableReport() {
 		this(new ValidationInfo(), "", "");
@@ -75,6 +75,10 @@ public class MachineReadableReport {
 	}
 
 	public static MachineReadableReport fromValues(ValidationResult result, long processingTime) {
+		if (result == null) {
+			throw new IllegalArgumentException("Argument result con not be null");
+		}
+
 		ValidationInfo info = ValidationInfo.fromValues(result);
 		String creationDate = null;
 		GregorianCalendar gregorianCalendar = new GregorianCalendar();

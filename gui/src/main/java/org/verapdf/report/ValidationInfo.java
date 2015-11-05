@@ -12,9 +12,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ValidationInfo {
 
 	@XmlElement
-	private String profile;
+	private final String profile;
 	@XmlElement
-	private Result result;
+	private final Result result;
 
 
 	ValidationInfo() {
