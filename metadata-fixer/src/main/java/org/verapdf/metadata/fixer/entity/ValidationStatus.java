@@ -1,5 +1,6 @@
 package org.verapdf.metadata.fixer.entity;
 
+import org.verapdf.metadata.fixer.MetadataFixerImpl;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
 
 import java.io.OutputStream;
@@ -25,11 +26,11 @@ import java.io.OutputStream;
  * as other than metadata rules
  * </li>
  * </ul>
- * According to this status {@link org.verapdf.metadata.fixer.MetadataFixer}
+ * According to this status {@link MetadataFixerImpl}
  * run different handling of document.
  *
  * @author Evgeniy Muravitskiy
- * @see org.verapdf.metadata.fixer.MetadataFixer#fixAndSaveDocument(OutputStream, FixerConfig)
+ * @see MetadataFixerImpl#fixAndSaveDocument(OutputStream, FixerConfig)
  * @see org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector
  */
 public enum ValidationStatus {
