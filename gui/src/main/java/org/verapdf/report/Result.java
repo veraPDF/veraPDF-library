@@ -64,7 +64,7 @@ private final Details details;
 
 			Rule rule = rulesMap.get(ruleId);
 			if (rule == null) {
-				rule = Rule.fromValues(id, TestAssertion.Status.PASSED, 0);
+				rule = Rule.fromValues(id, assertion.getMessage(), TestAssertion.Status.PASSED, 0);
 				rulesMap.put(ruleId, rule);
 			}
 			rule.addCheck(Check.fromValue(assertion));

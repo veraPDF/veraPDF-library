@@ -108,5 +108,4 @@ public class MachineReadableReport {
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
 		return marshaller;
 	}
-
 }

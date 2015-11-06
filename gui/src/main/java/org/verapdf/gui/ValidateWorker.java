@@ -15,10 +15,12 @@ import org.verapdf.pdfa.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validation.Validator;
+import org.verapdf.report.HTMLReport;
 import org.verapdf.report.MachineReadableReport;
 
 import javax.swing.*;
 import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -165,20 +167,19 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
             xmlReport.deleteOnExit();
             MachineReadableReport report = MachineReadableReport.fromValues(result, this.endTimeOfValidation - this.startTimeOfValidation);
             MachineReadableReport.toXml(report, new FileOutputStream(xmlReport), Boolean.TRUE);
-//            ValidationResults.toXml(result, new FileOutputStream(xmlReport), Boolean.TRUE);
-//            try {
-//                htmlReport = File.createTempFile("veraPDF-tempHTMLReport",
-//                        ".html");
-//                htmlReport.deleteOnExit();
-//                HTMLReport.writeHTMLReport(result, new FileOutputStream(htmlReport));
-//
-//            } catch (IOException | TransformerException e) {
-//                JOptionPane.showMessageDialog(this.parent,
-//                        GUIConstants.ERROR_IN_SAVING_HTML_REPORT,
-//                        GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-//                LOGGER.error("Exception saving the HTML report", e);
-//                htmlReport = null;
-//            }
+            try {
+                htmlReport = File.createTempFile("veraPDF-tempHTMLReport",
+                        ".html");
+                htmlReport.deleteOnExit();
+                HTMLReport.writeHTMLReport(xmlReport, new FileOutputStream(htmlReport));
+
+            } catch (IOException | TransformerException e) {
+                JOptionPane.showMessageDialog(this.parent,
+                        GUIConstants.ERROR_IN_SAVING_HTML_REPORT,
+                        GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+                LOGGER.error("Exception saving the HTML report", e);
+                htmlReport = null;
+            }
 
         } catch (IOException | JAXBException e) {
             JOptionPane.showMessageDialog(this.parent,

@@ -5,7 +5,6 @@ import org.verapdf.pdfa.validation.RuleId;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,29 +26,34 @@ public class Rule {
 //	@XmlAttribute(name = "checks")
 //	private final int checksNumber;
 
-	@XmlElementWrapper
+	@XmlElement
+	private final String description;
 	@XmlElement(name = "check")
 	private final Set<Check> checks;
 
-	public Rule(String specification, String clause, String testNumber, TestAssertion.Status status, int checksNumber, Set<Check> checks) {
+	public Rule(String specification, String clause, String testNumber, TestAssertion.Status status, int checksNumber, String description, Set<Check> checks) {
 		this.specification = specification;
 		this.clause = clause;
 		this.testNumber = testNumber;
 		this.status = status;
 //		this.checksNumber = checksNumber;
+		this.description = description;
 		this.checks = checks;
 	}
 
 	private Rule() {
-		this("", "", "", TestAssertion.Status.PASSED, 0, new HashSet<Check>());
+		this("", "", "", TestAssertion.Status.PASSED, 0, "", new HashSet<Check>());
 	}
 
-	static Rule fromValues(RuleId id, TestAssertion.Status status, int checksNumber) {
+	static Rule fromValues(RuleId id, String description, TestAssertion.Status status, int checksNumber) {
 		if (id == null) {
 			throw new IllegalArgumentException("Argument id con not be null");
 		}
 		if (status == null) {
 			throw new IllegalArgumentException("Argument status con not be null");
+		}
+		if (description == null) {
+			throw new IllegalArgumentException("Argument description con not be null");
 		}
 
 		return new Rule(
@@ -58,6 +62,7 @@ public class Rule {
 				String.valueOf(id.getTestNumber()),
 				status,
 				checksNumber,
+				description,
 				new HashSet<Check>());
 	}
 
