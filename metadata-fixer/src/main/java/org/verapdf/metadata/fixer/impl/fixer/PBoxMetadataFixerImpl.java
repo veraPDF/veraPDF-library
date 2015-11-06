@@ -1,5 +1,6 @@
-package org.verapdf.metadata.fixer;
+package org.verapdf.metadata.fixer.impl.fixer;
 
+import org.verapdf.metadata.fixer.MetadataFixerImpl;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.pdfa.MetadataFixerResult;
@@ -13,10 +14,8 @@ import java.io.OutputStream;
  */
 public class PBoxMetadataFixerImpl extends MetadataFixerImpl {
 
-	private static MetadataFixerImpl FIXER;
+	PBoxMetadataFixerImpl() {
 
-	public PBoxMetadataFixerImpl() {
-		// disable default constructor
 	}
 
 	@Override
@@ -25,10 +24,6 @@ public class PBoxMetadataFixerImpl extends MetadataFixerImpl {
 										   ValidationResult result) {
 		FixerConfig config = FixerConfigImpl.getFixerConfig(toFix, result);
 		return super.fixMetadata(outputRepaired, config);
-	}
-
-	public static synchronized MetadataFixerImpl getInstance() {
-		return FIXER == null ? FIXER = new PBoxMetadataFixerImpl() : FIXER;
 	}
 
 }
