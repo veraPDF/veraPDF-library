@@ -6,12 +6,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.results.ValidationResults;
-
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -21,8 +16,6 @@ import java.io.OutputStream;
  * @author Maksim Bezrukov
  */
 public final class HTMLReport {
-
-	private static final String LOGO_NAME = "veraPDF-logo-200.png";
 
 	private HTMLReport() {
 	}
@@ -37,20 +30,13 @@ public final class HTMLReport {
 	 * @throws IOException          file system exceptions
 	 * @throws JAXBException 
 	 */
-	public static void writeHTMLReport(ValidationResult result, OutputStream destination) throws TransformerException, IOException, JAXBException {
+	public static void writeHTMLReport(File report, OutputStream destination) throws TransformerException, IOException, JAXBException {
 
 		TransformerFactory factory = TransformerFactory.newInstance();
 
 		Transformer transformer = factory.newTransformer(new StreamSource(HTMLReport.class.getClassLoader().getResourceAsStream("HTMLReportStylesheet.xsl")));
 
-		transformer.transform(new StreamSource(ValidationResults.resultToXml(result, Boolean.FALSE)), new StreamResult(destination));
-	}
-
-	/**
-	 * @return name of the generated image
-	 */
-	public static String getLogoImageName() {
-		return LOGO_NAME;
+		transformer.transform(new StreamSource(report), new StreamResult(destination));
 	}
 
 }

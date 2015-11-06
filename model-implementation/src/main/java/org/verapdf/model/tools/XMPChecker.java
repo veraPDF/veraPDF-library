@@ -7,6 +7,8 @@ import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.schema.AdobePDFSchema;
 import org.apache.xmpbox.schema.DublinCoreSchema;
 import org.apache.xmpbox.schema.XMPBasicSchema;
+import org.apache.xmpbox.type.AbstractField;
+import org.apache.xmpbox.type.ArrayProperty;
 import org.apache.xmpbox.xml.DomXmpParser;
 import org.apache.xmpbox.xml.XmpParsingException;
 
@@ -109,7 +111,7 @@ public final class XMPChecker {
 
     private static COSDictionary getInformationDictionary(COSDocument document) {
         final COSObject info = (COSObject) document.getTrailer().getItem(
-                COSName.INFO);
+				COSName.INFO);
         if (info != null) {
             if (info.getObject() instanceof COSDictionary) {
                 return (COSDictionary) info.getObject();
@@ -168,11 +170,11 @@ public final class XMPChecker {
         if (values != null) {
             StringBuilder builder = new StringBuilder();
             for (String value : values) {
-                if (value != null && !value.isEmpty()) {
+                if (value != null) {
                     builder.append(value).append(" ");
                 }
             }
-            if (builder.length() > 1) {
+            if (builder.length() > 0) {
                 // need to discard last space
                 properties.put(key, builder.substring(0, builder.length() - 1));
             }
@@ -188,19 +190,21 @@ public final class XMPChecker {
 
     private static Boolean checkMatch(COSDictionary info,
             Map<String, Object> properties) {
-        if ((checkProperty(info, properties, TITLE)).booleanValue()
-                && (checkProperty(info, properties, SUBJECT)).booleanValue()
-                && (checkProperty(info, properties, AUTHOR)).booleanValue()
-                && (checkProperty(info, properties, KEYWORDS)).booleanValue()
-                && (checkProperty(info, properties, PRODUCER)).booleanValue()
-                && (checkProperty(info, properties, CREATOR)).booleanValue()
-                && (checkProperty(info, properties, CREATION_DATE))
-                        .booleanValue()
-                && (checkProperty(info, properties, MODIFICATION_DATE))
-                        .booleanValue()) {
-            return Boolean.TRUE;
+		boolean isDublinCoreMatch = checkProperty(info, properties, TITLE)
+				&& checkProperty(info, properties, SUBJECT)
+				&& checkProperty(info, properties, AUTHOR);
+		if (!isDublinCoreMatch) {
+            return Boolean.FALSE;
         }
-        return Boolean.FALSE;
+		boolean isAdobePDFMatch = checkProperty(info, properties, KEYWORDS)
+				&& checkProperty(info, properties, PRODUCER);
+		if (!isAdobePDFMatch) {
+			return Boolean.FALSE;
+		}
+		boolean isXMPBasicMatch = checkProperty(info, properties, CREATOR)
+				&& checkProperty(info, properties, CREATION_DATE)
+				&& checkProperty(info, properties, MODIFICATION_DATE);
+		return Boolean.valueOf(isXMPBasicMatch);
     }
 
     private static Boolean checkProperty(COSDictionary info,

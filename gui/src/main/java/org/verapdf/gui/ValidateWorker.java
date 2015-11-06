@@ -15,10 +15,10 @@ import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.model.ModelLoader;
 import org.verapdf.pdfa.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validation.Validator;
 import org.verapdf.report.HTMLReport;
+import org.verapdf.report.MachineReadableReport;
 
 import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
 import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.ID_REMOVED;
@@ -168,12 +168,13 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         try {
             xmlReport = File.createTempFile("veraPDF-tempXMLReport", ".xml");
             xmlReport.deleteOnExit();
-            ValidationResults.toXml(result, new FileOutputStream(xmlReport), Boolean.TRUE);
+            MachineReadableReport report = MachineReadableReport.fromValues(result, this.endTimeOfValidation - this.startTimeOfValidation);
+            MachineReadableReport.toXml(report, new FileOutputStream(xmlReport), Boolean.TRUE);
             try {
                 htmlReport = File.createTempFile("veraPDF-tempHTMLReport",
                         ".html");
                 htmlReport.deleteOnExit();
-                HTMLReport.writeHTMLReport(result, new FileOutputStream(htmlReport));
+                HTMLReport.writeHTMLReport(xmlReport, new FileOutputStream(htmlReport));
 
             } catch (IOException | TransformerException e) {
                 JOptionPane.showMessageDialog(this.parent,
