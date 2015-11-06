@@ -329,9 +329,9 @@ public class Validator {
                 cntxtForRule);
         TestAssertion assertion = ValidationResults.assertionFromValues(
                 rule.getRuleId(), assertionStatus,
-                rule.getError().getMessage(), location);
-        if ((assertionStatus == Status.FAILED) || this.logPassedAssertions) {
-            this.results.add(assertion);
+				rule.getDescription(), location);
+		if ((assertionStatus == Status.FAILED) || this.logPassedAssertions) {
+			this.results.add(assertion);
         }
 
         return testEvalResult;
