@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSInteger;
 import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.graphics.PDXObject;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
@@ -46,12 +45,12 @@ import org.verapdf.model.impl.pb.operator.textshow.PBOp_Quote;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_TJ_Big;
 import org.verapdf.model.impl.pb.operator.textshow.PBOp_Tj;
 import org.verapdf.model.impl.pb.operator.textstate.*;
-import org.verapdf.model.impl.pb.operator.type3font.PBOpType3Font;
 import org.verapdf.model.impl.pb.operator.type3font.PBOp_d0;
 import org.verapdf.model.impl.pb.operator.type3font.PBOp_d1;
 import org.verapdf.model.impl.pb.operator.xobject.PBOp_Do;
 import org.verapdf.model.operator.Operator;
 import org.verapdf.model.tools.constants.Operators;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
@@ -81,7 +80,8 @@ class OperatorParser {
 
 	void parseOperator(List<Operator> operators,
 					   org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
-					   PDResources resources, List<COSBase> arguments) throws CloneNotSupportedException, IOException {
+					   PDInheritableResources resources, List<COSBase> arguments)
+			throws CloneNotSupportedException, IOException {
 		String operatorName = pdfBoxOperator.getName();
 		PDColorSpace cs;
 		switch (operatorName) {
@@ -226,16 +226,16 @@ class OperatorParser {
 
 				// TEXT SHOW
 			case Operators.TJ_SHOW:
-				operators.add(new PBOp_Tj(arguments, this.graphicState.clone()));
+				operators.add(new PBOp_Tj(arguments, this.graphicState.clone(), resources));
 				break;
 			case Operators.TJ_SHOW_POS:
-				operators.add(new PBOp_TJ_Big(arguments, this.graphicState.clone()));
+				operators.add(new PBOp_TJ_Big(arguments, this.graphicState.clone(), resources));
 				break;
 			case Operators.QUOTE:
-				operators.add(new PBOp_Quote(arguments, this.graphicState.clone()));
+				operators.add(new PBOp_Quote(arguments, this.graphicState.clone(), resources));
 				break;
 			case Operators.DOUBLE_QUOTE:
-				operators.add(new PBOp_DoubleQuote(arguments, this.graphicState.clone()));
+				operators.add(new PBOp_DoubleQuote(arguments, this.graphicState.clone(), resources));
 				break;
 
 				// TEXT STATE
@@ -311,55 +311,42 @@ class OperatorParser {
 				// PATH PAINT
 			case Operators.B_CLOSEPATH_FILL_STROKE:
 				operators.add(new PBOp_b_closepath_fill_stroke(arguments,
-						this.graphicState.getStrokeColorSpace(),
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.B_FILL_STROKE:
 				operators.add(new PBOp_B_fill_stroke(arguments,
-						this.graphicState.getStrokeColorSpace(),
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.B_STAR_CLOSEPATH_EOFILL_STROKE:
 				operators.add(new PBOp_bstar_closepath_eofill_stroke(arguments,
-						this.graphicState.getStrokeColorSpace(),
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.B_STAR_EOFILL_STROKE:
 				operators.add(new PBOp_BStar_eofill_stroke(arguments,
-						this.graphicState.getStrokeColorSpace(),
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.F_FILL:
 				operators.add(new PBOp_f_fill(arguments,
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.F_FILL_OBSOLETE:
 				operators.add(new PBOp_F_fill_obsolete(arguments,
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.F_STAR_FILL:
 				operators.add(new PBOp_FStar(arguments,
-						this.graphicState.getFillColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.N:
 				operators.add(new PBOp_n(arguments));
 				break;
 			case Operators.S_CLOSE_STROKE:
 				operators.add(new PBOp_s_close_stroke(arguments,
-						this.graphicState.getStrokeColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 			case Operators.S_STROKE:
 				operators.add(new PBOp_S_stroke(arguments,
-						this.graphicState.getStrokeColorSpace(),
-						this.graphicState.getPattern()));
+						this.graphicState, resources));
 				break;
 
 				// SHADING
@@ -386,7 +373,7 @@ class OperatorParser {
 				// XOBJECT
 			case Operators.DO:
 				operators.add(new PBOp_Do(arguments, getXObjectFromResources(resources,
-						getLastCOSName(arguments))));
+						getLastCOSName(arguments)), resources));
 				break;
 			default:
 				operators.add(new PBOp_Undefined(arguments));
@@ -395,7 +382,7 @@ class OperatorParser {
 	}
 
 	private void setPatternColorSpace(List<Operator> operators, PDColorSpace colorSpace,
-									  PDResources resources, List<COSBase> arguments) {
+									  PDInheritableResources resources, List<COSBase> arguments) {
 		if (colorSpace != null &&
 				ColorSpaceFactory.PATTERN.equals(colorSpace.getName())) {
 			graphicState.setPattern(getPatternFromResources(resources,
@@ -404,7 +391,8 @@ class OperatorParser {
 		operators.add(new PBOpColor(arguments));
 	}
 
-	private void addExtGState(List<Operator> operators, PDResources resources, List<COSBase> arguments) {
+	private void addExtGState(List<Operator> operators,
+							  PDInheritableResources resources, List<COSBase> arguments) {
 		PDExtendedGraphicsState extGState = getExtGStateFromResources(resources,
 				getLastCOSName(arguments));
 		graphicState.copyPropertiesFromExtGState(extGState);
@@ -413,7 +401,7 @@ class OperatorParser {
 
 	private static void addInlineImage(List<Operator> operators,
 									   org.apache.pdfbox.contentstream.operator.Operator pdfBoxOperator,
-									   PDResources resources,
+									   PDInheritableResources resources,
 									   List<COSBase> arguments) {
 		if (pdfBoxOperator.getImageParameters() != null &&
 				pdfBoxOperator.getImageData() != null) {
@@ -442,7 +430,7 @@ class OperatorParser {
         return null;
     }
 
-    private static PDXObject getXObjectFromResources(PDResources resources,
+    private static PDXObject getXObjectFromResources(PDInheritableResources resources,
             COSName xobject) {
 		if (resources == null) {
 			return null;
@@ -458,7 +446,7 @@ class OperatorParser {
     }
 
     private static PDColorSpace getColorSpaceFromResources(
-            PDResources resources, COSName colorSpace) {
+			PDInheritableResources resources, COSName colorSpace) {
 		if (resources == null) {
 			return null;
 		}
@@ -472,8 +460,8 @@ class OperatorParser {
         }
     }
 
-    private static PDShading getShadingFromResources(PDResources resources,
-            COSName shading) {
+    private static PDShading getShadingFromResources(
+			PDInheritableResources resources, COSName shading) {
 		if (resources == null) {
 			return null;
 		}
@@ -488,11 +476,11 @@ class OperatorParser {
     }
 
     private static PDExtendedGraphicsState getExtGStateFromResources(
-            PDResources resources, COSName extGState) {
+			PDInheritableResources resources, COSName extGState) {
 		return resources == null ? null : resources.getExtGState(extGState);
 	}
 
-    private static PDFont getFontFromResources(PDResources resources,
+    private static PDFont getFontFromResources(PDInheritableResources resources,
             COSName font) {
 		if (resources == null) {
 			return null;
@@ -522,7 +510,7 @@ class OperatorParser {
     }
 
     private static PDAbstractPattern getPatternFromResources(
-            PDResources resources, COSName pattern) {
+			PDInheritableResources resources, COSName pattern) {
 		if (resources == null) {
 			return null;
 		}

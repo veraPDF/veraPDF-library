@@ -6,8 +6,12 @@ import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.color.PDJPXColorSpace;
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.verapdf.model.pdlayer.*;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.awt.color.ColorSpace;
 import java.io.File;
@@ -94,19 +98,20 @@ public class ColorSpaceFactoryTest {
 	@Test
 	public void testDeviceNGenerating() throws IOException {
 		PDColorSpace colorSpace = resources.getColorSpace(COSName.getPDFName("DeviceNCS"));
-		Assert.assertTrue(ColorSpaceFactory.getColorSpace(colorSpace, null) instanceof PDDeviceN);
+		Assert.assertTrue(ColorSpaceFactory.getColorSpace(colorSpace) instanceof PDDeviceN);
 	}
 
 	@Test
 	public void testTillingPatternGenerating() throws IOException {
 		PDColorSpace colorSpace = resources.getColorSpace(COSName.getPDFName("PatternCS"));
 		PDAbstractPattern pattern = resources.getPattern(COSName.getPDFName("P0"));
-		Assert.assertTrue(ColorSpaceFactory.getColorSpace(colorSpace, pattern) instanceof PDTilingPattern);
+		PDInheritableResources extRes = PDInheritableResources.getInstance(resources);
+		Assert.assertTrue(ColorSpaceFactory.getColorSpace(colorSpace, pattern, extRes) instanceof PDTilingPattern);
 	}
 
 	@Test
 	public void testNullGenerating() {
-		Assert.assertNull(ColorSpaceFactory.getColorSpace(null, null));
+		Assert.assertNull(ColorSpaceFactory.getColorSpace(null));
 	}
 
 	@Test

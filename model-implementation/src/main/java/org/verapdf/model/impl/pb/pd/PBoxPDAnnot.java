@@ -6,6 +6,7 @@ import org.apache.pdfbox.pdmodel.interactive.action.PDAnnotationAdditionalAction
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceDictionary;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceEntry;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceStream;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosReal;
 import org.verapdf.model.impl.pb.cos.PBCosReal;
@@ -13,6 +14,7 @@ import org.verapdf.model.impl.pb.pd.actions.PBoxPDAction;
 import org.verapdf.model.pdlayer.PDAction;
 import org.verapdf.model.pdlayer.PDAnnot;
 import org.verapdf.model.pdlayer.PDContentStream;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,6 +40,8 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	public static final int X_AXIS = 0;
 	public static final int Y_AXIS = 1;
 
+	private final PDInheritableResources resources;
+
 	private final String subtype;
 	private final String ap;
 	private final int annotationFlag;
@@ -47,8 +51,9 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	private final Double width;
 	private final Double height;
 
-	public PBoxPDAnnot(PDAnnotation annot) {
-        super(annot, ANNOTATION_TYPE);
+	public PBoxPDAnnot(PDAnnotation annot, PDInheritableResources resources) {
+		super(annot, ANNOTATION_TYPE);
+		this.resources = resources;
 		this.subtype = annot.getSubtype();
 		this.ap = this.getAP(annot);
 		this.annotationFlag = annot.getAnnotationFlags();
@@ -57,7 +62,7 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 		this.ft = this.getFT(annot);
 		this.width = this.getWidth(annot);
 		this.height = this.getHeight(annot);
-    }
+	}
 
 	private String getAP(PDAnnotation annot) {
 		COSBase ap = annot.getCOSObject().getDictionaryObject(COSName.AP);
@@ -277,8 +282,8 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
             if (normalAppearance != null && normalAppearance.isStream()) {
 				List<PDContentStream> appearances =
 						new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-				appearances.add(new PBoxPDContentStream(normalAppearance
-                        .getAppearanceStream()));
+				PDAppearanceStream stream = normalAppearance.getAppearanceStream();
+				appearances.add(new PBoxPDContentStream(stream, this.resources));
 				return Collections.unmodifiableList(appearances);
             }
         }
