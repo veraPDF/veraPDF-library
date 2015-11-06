@@ -1,6 +1,6 @@
 package org.verapdf.metadata.fixer.impl.fixer;
 
-import org.verapdf.metadata.fixer.MetadataFixerImpl;
+import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
 
 /**
  * @author Evgeniy Muravitskiy

@@ -1,4 +1,4 @@
-package org.verapdf.metadata.fixer;
+package org.verapdf.metadata.fixer.impl;
 
 import org.verapdf.pdfa.MetadataFixerResult;
 

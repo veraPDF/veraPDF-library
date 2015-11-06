@@ -1,4 +1,4 @@
-package org.verapdf.metadata.fixer;
+package org.verapdf.metadata.fixer.impl;
 
 import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.INFO_AUTHOR;
 import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.INFO_CREATION_DATE;
@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
-import org.verapdf.metadata.fixer.entity.ValidationStatus;
+import org.verapdf.metadata.fixer.utils.ValidationStatus;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.BasicSchema;
 import org.verapdf.metadata.fixer.schemas.DublinCore;

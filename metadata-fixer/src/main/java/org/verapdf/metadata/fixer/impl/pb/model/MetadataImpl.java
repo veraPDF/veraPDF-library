@@ -16,7 +16,7 @@ import org.apache.xmpbox.schema.PDFAIdentificationSchema;
 import org.apache.xmpbox.schema.XMPBasicSchema;
 import org.apache.xmpbox.type.BadFieldValueException;
 import org.apache.xmpbox.xml.XmpSerializer;
-import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
+import org.verapdf.metadata.fixer.impl.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.impl.pb.schemas.AdobePDFSchemaImpl;

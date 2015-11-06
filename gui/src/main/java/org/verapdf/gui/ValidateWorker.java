@@ -7,7 +7,7 @@ import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.gui.tools.ProcessingType;
-import org.verapdf.metadata.fixer.MetadataFixerImpl;
+import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
 import org.verapdf.metadata.fixer.impl.fixer.MetadataFixerEnum;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
 import org.verapdf.metadata.fixer.utils.FileGenerator;

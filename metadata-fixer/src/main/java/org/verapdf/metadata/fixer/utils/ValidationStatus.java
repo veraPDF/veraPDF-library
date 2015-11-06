@@ -1,7 +1,6 @@
-package org.verapdf.metadata.fixer.entity;
+package org.verapdf.metadata.fixer.utils;
 
-import org.verapdf.metadata.fixer.MetadataFixerImpl;
-import org.verapdf.metadata.fixer.utils.FixerConfig;
+import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
 
 import java.io.OutputStream;
 
