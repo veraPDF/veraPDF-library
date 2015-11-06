@@ -3,16 +3,9 @@
  */
 package org.verapdf.validation.profile.parser;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -57,14 +50,7 @@ public final class LegacyProfileConverter {
     public static void main(String[] args) throws ParserConfigurationException,
             SAXException, IOException, XMLStreamException, JAXBException,
             ProfileException, ProfileException, ValidationException {
-        for (String path : args) {
-            org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser
-                    .parseFromFilePath(path, false);
-            ValidationProfile profile = fromLegacyProfile(toConvert,
-                    PDFAFlavour.PDFA_1_B);
-            Profiles.profileToXml(profile, System.out, Boolean.TRUE);
-        }
-        if (args.length == 0) {
+		if (args.length == 0) {
             ValidationProfile profile = fromLegacyProfile(
                     ValidationProfileParser.parseFromFilePath(
                             "/home/cfw/GitHub/veraPDF/veraPDF-validation-profiles/PDF_A/PDFA-1B.xml",
@@ -77,7 +63,23 @@ public final class LegacyProfileConverter {
         }
     }
 
-    /**
+	public static void transform(Map<String, String> profiles) throws ParserConfigurationException, SAXException, IOException, ProfileException, XMLStreamException, ValidationException, JAXBException {
+		for (Map.Entry<String, String> entry : profiles.entrySet()) {
+			org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser
+					.parseFromFilePath(entry.getKey(), false);
+			ValidationProfile profile = fromLegacyProfile(toConvert,
+					PDFAFlavour.PDFA_1_B);
+			OutputStream outputStream = getOutputStream(entry.getValue());
+			Profiles.profileToXml(profile, outputStream, Boolean.TRUE);
+			outputStream.close();
+		}
+	}
+
+	private static OutputStream getOutputStream(String value) throws FileNotFoundException {
+		return new BufferedOutputStream(new FileOutputStream(value));
+	}
+
+	/**
      * @param toParse
      * @param flavour
      * @return
