@@ -20,13 +20,15 @@ public final class ModelLoader implements Closeable {
     private static final Logger LOGGER = Logger.getLogger(ModelLoader.class);
 
     private PDDocument document;
+	private final long size;
 
     /**
      * @param toLoad
      * @throws IOException
      */
     public ModelLoader(InputStream toLoad) throws IOException {
-        this.document = PDDocument.load(toLoad, false, true);
+		this.size = toLoad.available();
+		this.document = PDDocument.load(toLoad, false, true);
     }
 
     /**
@@ -53,10 +55,7 @@ public final class ModelLoader implements Closeable {
      *             object
      */
     public CosDocument getRoot() throws IOException {
-        if (this.document == null) {
-            this.document = this.getPDDocument();
-        }
-        return new PBCosDocument(this.document, -1);
+        return new PBCosDocument(this.document, this.size);
     }
 
 	@Override
