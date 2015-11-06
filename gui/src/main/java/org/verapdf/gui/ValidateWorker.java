@@ -6,6 +6,7 @@ import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
+import org.verapdf.gui.tools.ProcessingType;
 import org.verapdf.metadata.fixer.MetadataFixerImpl;
 import org.verapdf.metadata.fixer.PBoxMetadataFixerImpl;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
@@ -44,14 +45,14 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     private Config settings;
     private File xmlReport = null;
     private File htmlReport = null;
-    private int flag;
+    private ProcessingType processingType;
     private boolean isFixMetadata;
 
     private long startTimeOfValidation;
     private long endTimeOfValidation;
 
     ValidateWorker(CheckerPanel parent, File pdf, ValidationProfile profile,
-            Config settings, int flag, boolean isFixMetadata) {
+            Config settings, ProcessingType processingType, boolean isFixMetadata) {
         if (pdf == null || !pdf.isFile() || !pdf.canRead()) {
             throw new IllegalArgumentException(
                     "PDF file doesn't exist or it can not be read");
@@ -64,7 +65,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         this.pdf = pdf;
         this.profile = profile;
         this.settings = settings;
-        this.flag = flag;
+        this.processingType = processingType;
         this.isFixMetadata = isFixMetadata;
     }
 
@@ -80,14 +81,14 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         try (ModelLoader loader = new ModelLoader(new FileInputStream(
                 this.pdf.getPath()))) {
 
-            if ((flag & 1) == 1) {
+            if (this.processingType.isValidating()) {
                 info = runValidator(loader.getRoot());
 
                 if (this.isFixMetadata) {
                     this.fixMetadata(info, loader);
                 }
             }
-            if ((flag & (1 << 1)) == (1 << 1)) {
+            if (this.processingType.isFeatures()) {
                 try {
                     collection = PBFeatureParser.getFeaturesCollection(loader
                             .getPDDocument());
@@ -112,7 +113,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     private void fixMetadata(ValidationResult info, ModelLoader loader)
             throws IOException {
         FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(
-                loader.getPDDocument(), info);
+				loader.getPDDocument(), info);
         Path path = settings.getFixMetadataPathFolder();
         File tempFile = File.createTempFile("fixedTempFile", ".pdf");
         tempFile.deleteOnExit();

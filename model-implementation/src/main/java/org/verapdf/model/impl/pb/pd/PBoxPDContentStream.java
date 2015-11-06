@@ -7,6 +7,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.factory.operator.OperatorFactory;
 import org.verapdf.model.operator.Operator;
 import org.verapdf.model.pdlayer.PDContentStream;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -25,10 +26,14 @@ public class PBoxPDContentStream extends PBoxPDObject implements
 
 	public static final String OPERATORS = "operators";
 
-    public PBoxPDContentStream(
-            org.apache.pdfbox.contentstream.PDContentStream contentStream) {
-        super(contentStream, CONTENT_STREAM_TYPE);
-    }
+	private final PDInheritableResources resources;
+
+	public PBoxPDContentStream(
+			org.apache.pdfbox.contentstream.PDContentStream contentStream,
+			PDInheritableResources resources) {
+		super(contentStream, CONTENT_STREAM_TYPE);
+		this.resources = resources;
+	}
 
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
@@ -47,7 +52,7 @@ public class PBoxPDContentStream extends PBoxPDObject implements
                 streamParser.parse();
                 List<Operator> result = OperatorFactory.operatorsFromTokens(
                         streamParser.getTokens(),
-                        this.contentStream.getResources());
+                        this.resources);
                 return Collections.unmodifiableList(result);
             }
         } catch (IOException e) {

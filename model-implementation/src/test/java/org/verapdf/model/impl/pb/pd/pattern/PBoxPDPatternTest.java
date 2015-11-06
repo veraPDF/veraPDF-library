@@ -2,9 +2,10 @@ package org.verapdf.model.impl.pb.pd.pattern;
 
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDResources;
-import org.apache.pdfbox.pdmodel.graphics.pattern.PDShadingPattern;
-import org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern;
+import org.verapdf.model.factory.colors.ColorSpaceFactory;
 import org.verapdf.model.impl.BaseTest;
+import org.verapdf.model.pdlayer.PDPattern;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -24,19 +25,13 @@ public abstract class PBoxPDPatternTest extends BaseTest {
 		setUp(FILE_RELATIVE_PATH);
 		PDResources resources = document.getPage(0).getResources();
 		COSName patternCosName = COSName.getPDFName(patternName);
-		actual = getPattern(resources, patternCosName, patternType);
+		actual = getPattern(PDInheritableResources.getInstance(resources), patternCosName);
 	}
 
-	private static PBoxPDPattern getPattern(PDResources resources,
-												   COSName patternCosName,
-												   String patternType)
+	private static PDPattern getPattern(PDInheritableResources resources,
+										COSName patternCosName)
 			throws IOException {
-		if (PBoxPDShadingPattern.SHADING_PATTERN_TYPE.equals(patternType)) {
-			return new PBoxPDShadingPattern((PDShadingPattern)
-					resources.getPattern(patternCosName));
-		} else {
-			return new PBoxPDTilingPattern((PDTilingPattern) resources.getPattern(patternCosName));
-		}
+		return ColorSpaceFactory.getPattern(resources.getPattern(patternCosName), resources);
 	}
 
 }

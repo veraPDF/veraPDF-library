@@ -5,17 +5,18 @@ import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.pdmodel.*;
+import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.interactive.action.PDPageAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
+import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceStream;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosBBox;
 import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.impl.pb.cos.PBCosBBox;
 import org.verapdf.model.impl.pb.cos.PBCosDict;
 import org.verapdf.model.pdlayer.*;
-import org.verapdf.model.pdlayer.PDPage;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -112,8 +113,11 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 
 	private List<PDContentStream> getContentStream() {
 		List<PDContentStream> contentStreams = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-		contentStreams.add(new PBoxPDContentStream(
-				(org.apache.pdfbox.pdmodel.PDPage) this.simplePDObject));
+		org.apache.pdfbox.pdmodel.PDPage stream =
+				(org.apache.pdfbox.pdmodel.PDPage) this.simplePDObject;
+		PDInheritableResources resources = PDInheritableResources
+				.getInstance(stream.getResources(), PDInheritableResources.EMPTY_RESOURCES);
+		contentStreams.add(new PBoxPDContentStream(stream, resources));
 		return contentStreams;
 	}
 
@@ -155,9 +159,14 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 
 	private void addAllAnnotations(List<PDAnnot> annotations,
 								   List<PDAnnotation> pdfboxAnnotations) {
+		PDResources pageResources = ((org.apache.pdfbox.pdmodel.PDPage)
+				this.simplePDObject).getResources();
 		for (PDAnnotation annotation : pdfboxAnnotations) {
 			if (annotation != null) {
-				annotations.add(new PBoxPDAnnot(annotation));
+				PDAppearanceStream stream = annotation.getNormalAppearanceStream();
+				PDResources resources = stream != null ? stream.getResources() : PDInheritableResources.EMPTY_RESOURCES;
+				PDInheritableResources extRes = PDInheritableResources.getInstance(pageResources, resources);
+				annotations.add(new PBoxPDAnnot(annotation, extRes));
 			}
 		}
 	}
