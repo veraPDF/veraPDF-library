@@ -111,7 +111,7 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 				PBCreateNodeHelper.addNotEmptyNode("baseFont", font.getName(), root);
 
 				if (font instanceof PDType0Font) {
-					PBCreateNodeHelper.parseIDSet(fontChild, "descendedFont", null, FeatureTreeNode.newChildInstance("descendedFonts", root));
+					PBCreateNodeHelper.parseIDSet(fontChild, "descendantFont", null, FeatureTreeNode.newChildInstance("descendantFonts", root));
 					parseFontDescriptior(fontLike.getFontDescriptor(), root, collection);
 				} else if (font instanceof PDSimpleFont) {
 					PDSimpleFont sFont = (PDSimpleFont) font;

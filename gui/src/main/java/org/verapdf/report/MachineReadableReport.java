@@ -1,6 +1,8 @@
 package org.verapdf.report;
 
 import org.apache.log4j.Logger;
+import org.verapdf.features.tools.FeaturesCollection;
+import org.verapdf.pdfa.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
 
 import javax.xml.bind.JAXBContext;
@@ -30,21 +32,24 @@ public class MachineReadableReport {
 	private static final int MIN_IN_HOUR = 60;
 	private static final long MS_IN_HOUR = MS_IN_MIN * MIN_IN_HOUR;
 
-	@XmlElement(name = "validationInfo")
-	private final ValidationInfo info;
 	@XmlAttribute
 	private final String creationDate;
 	@XmlAttribute
 	private final String processingTime;
+	@XmlElement(name = "validationInfo")
+	private final ValidationInfo info;
+	@XmlElement
+	private final FeaturesReport pdfFeatures;
 
 	public MachineReadableReport() {
-		this(new ValidationInfo(), "", "");
+		this(new ValidationInfo(), "", "", null);
 	}
 
-	public MachineReadableReport(ValidationInfo info, String creationDate, String processingTime) {
+	public MachineReadableReport(ValidationInfo info, String creationDate, String processingTime, FeaturesReport featuresReport) {
 		this.info = info;
 		this.creationDate = creationDate;
 		this.processingTime = processingTime;
+		this.pdfFeatures = featuresReport;
 	}
 
 	private static String getProcessingTimeAsString(long processTime) {
@@ -74,12 +79,14 @@ public class MachineReadableReport {
 		return res;
 	}
 
-	public static MachineReadableReport fromValues(ValidationResult result, long processingTime) {
-		if (result == null) {
-			throw new IllegalArgumentException("Argument result con not be null");
+	public static MachineReadableReport fromValues(ValidationResult result,
+												   MetadataFixerResult fixerResult,
+												   FeaturesCollection collection,
+												   long processingTime) {
+		ValidationInfo info = null;
+		if (result != null) {
+			info = ValidationInfo.fromValues(result, fixerResult);
 		}
-
-		ValidationInfo info = ValidationInfo.fromValues(result);
 		String creationDate = null;
 		GregorianCalendar gregorianCalendar = new GregorianCalendar();
 		try {
@@ -91,7 +98,8 @@ public class MachineReadableReport {
 		}
 		String processingTimeValue = getProcessingTimeAsString(processingTime);
 
-		return new MachineReadableReport(info, creationDate, processingTimeValue);
+		FeaturesReport featuresReport = FeaturesReport.fromValues(collection);
+		return new MachineReadableReport(info, creationDate, processingTimeValue, featuresReport);
 	}
 
 	public static void toXml(final MachineReadableReport toConvert,

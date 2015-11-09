@@ -27,6 +27,9 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.ID_REMOVED;
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
+
 /**
  * Validates PDF in a new threat.
  *
@@ -71,6 +74,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         xmlReport = null;
         htmlReport = null;
         ValidationResult info = null;
+        MetadataFixerResult fixerResult = null;
         FeaturesCollection collection = null;
 
         startTimeOfValidation = System.currentTimeMillis();
@@ -82,7 +86,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
                 info = runValidator(loader.getRoot());
 
                 if (this.isFixMetadata) {
-                    this.fixMetadata(info, loader);
+                    fixerResult = this.fixMetadata(info, loader);
                 }
             }
             if (this.processingType.isFeatures()) {
@@ -98,7 +102,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
                 }
             }
             endTimeOfValidation = System.currentTimeMillis();
-            writeReports(info, collection);
+            writeReports(info, fixerResult, collection);
         } catch (IOException e) {
             this.parent
                     .errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
@@ -107,7 +111,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         return info;
     }
 
-    private void fixMetadata(ValidationResult info, ModelLoader loader)
+    private MetadataFixerResult fixMetadata(ValidationResult info, ModelLoader loader)
             throws IOException {
         FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(
 				loader.getPDDocument(), info);
@@ -118,10 +122,9 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
                 new FileOutputStream(tempFile));
         MetadataFixerResult fixerResult = MetadataFixer.fixMetadata(tempOutput,
                 fixerConfig);
-        if (fixerResult.getRepairStatus().equals(
-                MetadataFixerResult.RepairStatus.SUCCESS)
-                || fixerResult.getRepairStatus().equals(
-                        MetadataFixerResult.RepairStatus.ID_REMOVED)) {
+        MetadataFixerResult.RepairStatus repairStatus = fixerResult.getRepairStatus();
+        if (repairStatus == SUCCESS
+                || repairStatus == ID_REMOVED) {
             File resFile;
             boolean flag = true;
             while (flag) {
@@ -142,12 +145,13 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
                 }
             }
         }
+        return fixerResult;
     }
 
     private ValidationResult runValidator(
             org.verapdf.model.baselayer.Object root) {
         try {
-            return Validator.validate(this.profile, root, false);
+            return Validator.validate(this.profile, root, settings.isShowPassedRules());
         } catch (ValidationException e) {
 
             this.parent.errorInValidatingOccur(
@@ -162,26 +166,28 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     }
 
     private void writeReports(ValidationResult result,
-            FeaturesCollection collection) {
+                              MetadataFixerResult fixerResult,
+                              FeaturesCollection collection) {
         try {
             xmlReport = File.createTempFile("veraPDF-tempXMLReport", ".xml");
             xmlReport.deleteOnExit();
-            MachineReadableReport report = MachineReadableReport.fromValues(result, this.endTimeOfValidation - this.startTimeOfValidation);
+            MachineReadableReport report = MachineReadableReport.fromValues(result, fixerResult, collection, this.endTimeOfValidation - this.startTimeOfValidation);
             MachineReadableReport.toXml(report, new FileOutputStream(xmlReport), Boolean.TRUE);
-            try {
-                htmlReport = File.createTempFile("veraPDF-tempHTMLReport",
-                        ".html");
-                htmlReport.deleteOnExit();
-                HTMLReport.writeHTMLReport(xmlReport, new FileOutputStream(htmlReport));
+            if (result != null) {
+                try {
+                    htmlReport = File.createTempFile("veraPDF-tempHTMLReport",
+                            ".html");
+                    htmlReport.deleteOnExit();
+                    HTMLReport.writeHTMLReport(xmlReport, new FileOutputStream(htmlReport));
 
-            } catch (IOException | TransformerException e) {
-                JOptionPane.showMessageDialog(this.parent,
-                        GUIConstants.ERROR_IN_SAVING_HTML_REPORT,
-                        GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
-                LOGGER.error("Exception saving the HTML report", e);
-                htmlReport = null;
+                } catch (IOException | TransformerException e) {
+                    JOptionPane.showMessageDialog(this.parent,
+                            GUIConstants.ERROR_IN_SAVING_HTML_REPORT,
+                            GUIConstants.ERROR, JOptionPane.ERROR_MESSAGE);
+                    LOGGER.error("Exception saving the HTML report", e);
+                    htmlReport = null;
+                }
             }
-
         } catch (IOException | JAXBException e) {
             JOptionPane.showMessageDialog(this.parent,
                     GUIConstants.ERROR_IN_SAVING_XML_REPORT,
