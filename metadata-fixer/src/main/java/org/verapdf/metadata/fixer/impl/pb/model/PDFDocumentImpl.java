@@ -125,7 +125,6 @@ public class PDFDocumentImpl implements PDFDocument {
 				result.setRepairStatus(this.getStatus(result));
 			} else {
 				result.setRepairStatus(NO_ACTION);
-				result.addAppliedFix("No action performed.");
 			}
 		} catch (Exception e) {
 			LOGGER.info(e);
