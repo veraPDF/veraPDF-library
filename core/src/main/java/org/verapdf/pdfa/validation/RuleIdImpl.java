@@ -24,7 +24,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 final class RuleIdImpl implements RuleId {
     private static final RuleIdImpl DEFAULT = new RuleIdImpl();
     @XmlAttribute
-    private final Specification specifcation;
+    private final Specification specification;
     @XmlAttribute
     private final String clause;
     @XmlAttribute
@@ -34,10 +34,10 @@ final class RuleIdImpl implements RuleId {
         this(Specification.NO_STANDARD, "clause", 0);
     }
 
-    private RuleIdImpl(final Specification specifcation, final String clause,
+    private RuleIdImpl(final Specification specification, final String clause,
             final int testNumber) {
         super();
-        this.specifcation = specifcation;
+        this.specification = specification;
         this.clause = clause;
         this.testNumber = testNumber;
     }
@@ -46,8 +46,8 @@ final class RuleIdImpl implements RuleId {
      * { @inheritDoc }
      */
     @Override
-    public Specification getSpecfication() {
-        return this.specifcation;
+    public Specification getSpecification() {
+        return this.specification;
     }
 
     /**
@@ -77,7 +77,7 @@ final class RuleIdImpl implements RuleId {
                 + ((this.clause == null) ? 0 : this.clause.hashCode());
         result = prime
                 * result
-                + ((this.specifcation == null) ? 0 : this.specifcation
+                + ((this.specification == null) ? 0 : this.specification
                         .hashCode());
         result = prime * result + this.testNumber;
         return result;
@@ -100,11 +100,9 @@ final class RuleIdImpl implements RuleId {
                 return false;
         } else if (!this.clause.equals(other.getClause()))
             return false;
-        if (this.specifcation != other.getSpecfication())
+        if (this.specification != other.getSpecification())
             return false;
-        if (this.testNumber != other.getTestNumber())
-            return false;
-        return true;
+        return this.testNumber == other.getTestNumber();
     }
 
     /**
@@ -112,7 +110,7 @@ final class RuleIdImpl implements RuleId {
      */
     @Override
     public final String toString() {
-        return "RuleId [specifcation=" + this.specifcation.toString()
+        return "RuleId [specification=" + this.specification.toString()
                 + ", clause=" + this.clause + ", testNumber=" + this.testNumber
                 + "]";
     }
@@ -127,7 +125,7 @@ final class RuleIdImpl implements RuleId {
     }
 
     static RuleIdImpl fromRuleId(final RuleId toConvert) {
-        return fromValues(toConvert.getSpecfication(), toConvert.getClause(),
+        return fromValues(toConvert.getSpecification(), toConvert.getClause(),
                 toConvert.getTestNumber());
     }
 
