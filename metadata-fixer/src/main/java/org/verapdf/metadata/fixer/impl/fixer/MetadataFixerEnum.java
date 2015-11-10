@@ -9,7 +9,7 @@ public enum MetadataFixerEnum {
 
 	BOX_INSTANCE(new PBoxMetadataFixerImpl());
 
-	private final MetadataFixerImpl instance;
+	private final transient MetadataFixerImpl instance;
 
 	MetadataFixerEnum(MetadataFixerImpl instance) {
 		this.instance = instance;
