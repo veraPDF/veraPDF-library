@@ -39,7 +39,6 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
     private final long indirectObjectCount;
     private final float version;
 	private final long headerOffset;
-	private final String header;
 	private final int headerCommentByte1;
 	private final int headerCommentByte2;
 	private final int headerCommentByte3;
@@ -85,7 +84,6 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 		this.indirectObjectCount = cosDocument.getObjects().size();
 		this.version = cosDocument.getVersion();
 		this.headerOffset = cosDocument.getHeaderOffset();
-		this.header = cosDocument.getHeader();
 		this.headerCommentByte1 = cosDocument.getHeaderCommentByte1();
 		this.headerCommentByte2 = cosDocument.getHeaderCommentByte2();
 		this.headerCommentByte3 = cosDocument.getHeaderCommentByte3();
@@ -134,11 +132,6 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 	@Override
 	public Long getheaderOffset() {
 		return Long.valueOf(this.headerOffset);
-	}
-
-	@Override
-	public String getheader() {
-		return this.header;
 	}
 
 	@Override

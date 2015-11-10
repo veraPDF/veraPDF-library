@@ -43,8 +43,4 @@ public class PBCosName extends PBCosObject implements CosName {
         return this.internalRepresentation;
     }
 
-	public Long getorigLength() {
-		return null;
-	}
-
 }
