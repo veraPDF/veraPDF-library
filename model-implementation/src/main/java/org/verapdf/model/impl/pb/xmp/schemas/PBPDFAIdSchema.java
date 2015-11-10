@@ -18,6 +18,11 @@ public class PBPDFAIdSchema extends PBXMPSchema implements PDFAIdSchema {
 
 	private static final String CORR = "corr";
 
+	private final Long part;
+	private final String conformance;
+	private final String amd;
+	private final String corr;
+
 	/**
 	 * Constructs new object
 	 *
@@ -25,6 +30,24 @@ public class PBPDFAIdSchema extends PBXMPSchema implements PDFAIdSchema {
 	 */
 	public PBPDFAIdSchema(PDFAIdentificationSchema xmpSchema) {
 		super(xmpSchema, PDF_AID_SCHEMA_TYPE);
+		this.part = this.getPart(xmpSchema);
+		this.conformance = xmpSchema.getConformance();
+		this.amd = xmpSchema.getAmd();
+		this.corr = this.getCorr(xmpSchema);
+	}
+
+	private Long getPart(PDFAIdentificationSchema xmpSchema) {
+		Integer part = xmpSchema.getPart();
+		return part == null ? null : Long.valueOf(part.longValue());
+	}
+
+	private String getCorr(PDFAIdentificationSchema xmpSchema) {
+		AbstractField corr = xmpSchema.getProperty(CORR);
+
+		if (corr instanceof TextType) {
+			return ((TextType) corr).getStringValue();
+		}
+		return null;
 	}
 
 	/**
@@ -32,8 +55,7 @@ public class PBPDFAIdSchema extends PBXMPSchema implements PDFAIdSchema {
 	 */
 	@Override
 	public Long getpart() {
-		Integer part = ((PDFAIdentificationSchema) getXmpSchema()).getPart();
-		return part == null ? null : Long.valueOf(part.longValue());
+		return this.part;
 	}
 
 	/**
@@ -41,7 +63,7 @@ public class PBPDFAIdSchema extends PBXMPSchema implements PDFAIdSchema {
 	 */
 	@Override
 	public String getconformance() {
-		return ((PDFAIdentificationSchema) this.getXmpSchema()).getConformance();
+		return this.conformance;
 	}
 
 	/**
@@ -49,7 +71,7 @@ public class PBPDFAIdSchema extends PBXMPSchema implements PDFAIdSchema {
 	 */
 	@Override
 	public String getamd() {
-		return ((PDFAIdentificationSchema) this.getXmpSchema()).getAmd();
+		return this.amd;
 	}
 
 	/**
@@ -57,12 +79,7 @@ public class PBPDFAIdSchema extends PBXMPSchema implements PDFAIdSchema {
 	 */
 	@Override
 	public String getcorr() {
-		AbstractField corr = this.getXmpSchema().getProperty(CORR);
-
-		if (corr instanceof TextType) {
-			return ((TextType) corr).getStringValue();
-		}
-		return null;
+		return this.corr;
 	}
 
 }

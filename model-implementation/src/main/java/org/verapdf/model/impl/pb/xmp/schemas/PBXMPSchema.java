@@ -13,7 +13,8 @@ public class PBXMPSchema extends PBXMPObject implements XMPSchema {
 
 	public static final String XMPSCHEMA_TYPE = "XMPSchema";
 
-	private org.apache.xmpbox.schema.XMPSchema xmpSchema;
+	private final String namespace;
+	private final String prefix;
 
 	/**
 	 * Constructs new object
@@ -27,7 +28,8 @@ public class PBXMPSchema extends PBXMPObject implements XMPSchema {
 	protected PBXMPSchema(org.apache.xmpbox.schema.XMPSchema xmpSchema,
 					   final String type) {
 		super(type);
-		this.xmpSchema = xmpSchema;
+		this.namespace = xmpSchema.getNamespace();
+		this.prefix = xmpSchema.getPrefix();
 	}
 
 	/**
@@ -35,7 +37,7 @@ public class PBXMPSchema extends PBXMPObject implements XMPSchema {
 	 */
 	@Override
 	public String geturi() {
-		return this.xmpSchema.getNamespace();
+		return this.namespace;
 	}
 
 	/**
@@ -43,11 +45,7 @@ public class PBXMPSchema extends PBXMPObject implements XMPSchema {
 	 */
 	@Override
 	public String getprefix() {
-		return this.xmpSchema.getPrefix();
-	}
-
-	protected org.apache.xmpbox.schema.XMPSchema getXmpSchema() {
-		return this.xmpSchema;
+		return this.prefix;
 	}
 
 }
