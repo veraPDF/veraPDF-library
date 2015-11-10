@@ -82,6 +82,13 @@ public class FeaturesNode {
 		return new FeaturesNode(qAttributes, qChildren);
 	}
 
+	/**
+	 * Returns a string with replaced all invalid for xml characters together with character '#' by
+	 * the #xYYYYYY symbols where YYYYYY represents symbols unicode code. This is necessary because
+	 * we can obtain some characters from pdf that are not permitted in pdf, but they are permitted in xml.
+	 * <p/>
+	 * This method have to be called for all String values that can be obtained from the PDF content.
+	 */
 	private static String replaceInvalidCharacters(String source) {
 		try (Formatter formatter = new Formatter()) {
 

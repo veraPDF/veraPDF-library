@@ -166,7 +166,9 @@ public final class XMLFeaturesReport {
 	}
 
 	/**
-	 *
+	 * Creates an element with name listName and parent parent and add to it as its children
+	 * elements which represents features nodes of specified type and, if there is an error attribute
+	 * for specified type, adds an error attribute to it with error ids
 	 */
 	private static void makeList(String listName, FeaturesObjectTypesEnum type,
 								 Element parent, FeaturesCollection collection,
@@ -193,6 +195,11 @@ public final class XMLFeaturesReport {
 		}
 	}
 
+	/**
+	 * Creates a xml node from the given FeaturesTreeNode. Every FeatureTreeNode has a map of attributes,
+	 * a name and either a String value or some child nodes. Created xml node has the same structure as FeatureTreeNode
+	 * except for a not custom node with name metadata.
+	 */
 	private static Element makeNode(FeatureTreeNode node,
 									FeaturesCollection collection, Document doc, boolean isCustom) {
 		if (!isCustom && "metadata".equalsIgnoreCase(node.getName())) {
@@ -216,6 +223,12 @@ public final class XMLFeaturesReport {
 		}
 	}
 
+	/**
+	 * For not custom nodes with name metadata its value is a hex String of
+	 * the metadata stream byte array (which must be an xmp package). In this case we need to obtain the byte array
+	 * from the hex string and after that to parse the resulted array as xmp, i.e. to check its header to obtain encoding
+	 * and parse it with the given encoding.
+	 */
 	private static Element parseMetadata(FeatureTreeNode metadataNode,
 										 FeaturesCollection collection, Document doc) {
 		Element metadata = doc.createElement(metadataNode.getName());
@@ -254,6 +267,13 @@ public final class XMLFeaturesReport {
 		return metadata;
 	}
 
+	/**
+	 * Returns a string with replaced all invalid for xml characters together with character '#' by
+	 * the #xYYYYYY symbols where YYYYYY represents symbols unicode code. This is necessary because
+	 * we can obtain some characters from pdf that are not permitted in pdf, but they are permitted in xml.
+	 *
+	 * This method have to be called for all String values that can be obtained from the PDF content.
+	 */
 	private static String replaceInvalidCharacters(String source) {
 		try (Formatter formatter = new Formatter()) {
 
@@ -291,6 +311,11 @@ public final class XMLFeaturesReport {
 		metadata.setAttribute(ErrorsHelper.ERRORID, id);
 	}
 
+	/**
+	 * Creates an imputSource from the given xmp stream byte array. This method finds first byte of the xmp package
+	 * together with package encoding and after that creates InputSource from the founded byte to the end of the array
+	 * with the founded encoding.
+	 */
 	private static InputSource getInputSourceWithEncoding(byte[] array) {
 		if (array != null) {
 			for (int i = 0; i < array.length; ++i) {
@@ -308,6 +333,9 @@ public final class XMLFeaturesReport {
 		return null;
 	}
 
+	/**
+	 * Checks if the given byte array is an xmp package from the given byteOffset and if it is, then returns its encoding.
+	 */
 	private static String getEncodingWithBegin(byte[] bStream, int beginOffset) {
 		if (beginOffset >= 0) {
 			if (matchesFrom(bStream, beginOffset, UTF32BE_METADATA_PREFIX_DQ) ||
@@ -332,6 +360,9 @@ public final class XMLFeaturesReport {
 		return null;
 	}
 
+	/**
+	 * Checks if the given source byte array from the given offset matches to the given match byte array
+	 */
 	private static boolean matchesFrom(byte[] source, int from, byte[] match) {
 		if (match.length > source.length - from) {
 			return false;
