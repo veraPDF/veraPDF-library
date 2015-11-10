@@ -64,7 +64,7 @@ public class PDInheritableResources {
 			}
 		} catch (IOException e) {
 			LOGGER.warn("Problems during color space obtain from current resource dictionary. " +
-					"Trying to find it in page dictionary");
+					"Trying to find it in page dictionary", e);
 		}
 		return this.pageResources.getColorSpace(name);
 	}
