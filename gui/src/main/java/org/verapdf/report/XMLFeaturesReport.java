@@ -1,17 +1,5 @@
 package org.verapdf.report;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Formatter;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.bind.DatatypeConverter;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.log4j.Logger;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.FeaturesReporter;
@@ -23,6 +11,17 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import javax.xml.bind.DatatypeConverter;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Formatter;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Generating XML structure of file for features report
@@ -152,6 +151,10 @@ public final class XMLFeaturesReport {
 		return pdfFeatures;
 	}
 
+	/**
+	 * Takes a list of FeatureTreeNode elements from the collection of specified type and for each of them creates
+	 * a child xml node to the root element. The created child xml node represents obtained feature tree.
+	 */
 	private static void parseElements(FeaturesObjectTypesEnum type,
 									  FeaturesCollection collection,
 									  Element root, Document doc) {
@@ -162,6 +165,9 @@ public final class XMLFeaturesReport {
 		}
 	}
 
+	/**
+	 *
+	 */
 	private static void makeList(String listName, FeaturesObjectTypesEnum type,
 								 Element parent, FeaturesCollection collection,
 								 Document doc) {
@@ -180,7 +186,7 @@ public final class XMLFeaturesReport {
 				StringBuilder builder = new StringBuilder();
 				builder.append(errors.get(0));
 				for (int i = 1; i < errors.size(); ++i) {
-					builder.append(errors.get(i));
+					builder.append(", ").append(errors.get(i));
 				}
 				listElement.setAttribute(ErrorsHelper.ERRORID, builder.toString());
 			}

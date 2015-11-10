@@ -1,12 +1,13 @@
 package org.verapdf.metadata.fixer.entity;
 
-import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
+import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
+import org.verapdf.metadata.fixer.impl.MetadataFixerResultImpl;
 
 import java.io.OutputStream;
 
 /**
  * Current interface provide necessary behavior of pdf document
- * for {@link org.verapdf.metadata.fixer.MetadataFixer}
+ * for {@link MetadataFixerImpl}
  *
  * @author Evgeniy Muravitskiy
  */
@@ -55,7 +56,7 @@ public interface PDFDocument {
 	 * </li>
 	 * </ul>
 	 *
-	 * @param report result of {@code MetadataFixer} handling
+	 * @param report result of {@code MetadataFixerImpl} handling
 	 * @param output output stream for document save
 	 */
 	void saveDocumentIncremental(MetadataFixerResultImpl report, OutputStream output);

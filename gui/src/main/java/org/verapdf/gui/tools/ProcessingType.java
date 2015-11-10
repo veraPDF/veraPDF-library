@@ -5,11 +5,11 @@ package org.verapdf.gui.tools;
  */
 public enum ProcessingType {
 
+	VALIDATING_AND_FEATURES(GUIConstants.VALIDATING_AND_FEATURES),
+
 	VALIDATING(GUIConstants.VALIDATING),
 
-	FEATURES(GUIConstants.FEATURES),
-
-	VALIDATING_AND_FEATURES(GUIConstants.VALIDATING_AND_FEATURES);
+	FEATURES(GUIConstants.FEATURES);
 
 	private final String value;
 

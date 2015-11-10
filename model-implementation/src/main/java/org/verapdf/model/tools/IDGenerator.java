@@ -1,9 +1,12 @@
 package org.verapdf.model.tools;
 
 import org.apache.pdfbox.cos.COSBase;
+import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.font.PDFontLike;
+import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
 
 /**
  * Created by Evgeniy Muravitskiy on 4/27/15.
@@ -61,4 +64,30 @@ public final class IDGenerator {
                 ((COSObjectable) font).getCOSObject().hashCode() : -1;
         return String.valueOf(hashcode) + ' ' + font.getName();
     }
+
+	public static String generateID(PDOutlineItem item) {
+		COSDictionary dictionary = item.getCOSObject();
+		String value = getOutlineID(dictionary, COSName.PREV, COSName.NEXT);
+		return value != null ? value :
+				getOutlineID(dictionary, COSName.PARENT, COSName.FIRST);
+	}
+
+	private static String getOutlineID(COSDictionary dictionary, COSName kind, COSName key) {
+		COSBase base = dictionary.getDictionaryObject(kind);
+		if (base instanceof COSDictionary) {
+			COSBase current = ((COSDictionary) base).getItem(key);
+			String value = IDGenerator.generateID(current);
+			if (value != null) {
+				return "outline " + value;
+			} else {
+			/*
+				TODO : according to specification entries Next, Prev, First and Parent
+				must be indirect objects, but document can fail specification.
+				How we must resolve this situation?
+			 */
+			}
+		}
+		return null;
+	}
+
 }
