@@ -8,6 +8,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.BaseTest;
 import org.verapdf.model.impl.pb.pd.actions.PBoxPDAction;
 import org.verapdf.model.impl.pb.pd.actions.PBoxPDNamedAction;
+import org.verapdf.model.tools.IDGenerator;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -23,11 +24,11 @@ public class PBoxPDOutlineTest extends BaseTest {
 	@BeforeClass
 	public static void setUp() throws URISyntaxException, IOException {
 		expectedType = TYPES.contains(PBoxPDOutline.OUTLINE_TYPE) ? PBoxPDOutline.OUTLINE_TYPE : null;
-		expectedID = null;
+		expectedID = "outline 6 0";
 
 		setUp(FILE_RELATIVE_PATH);
 		PDOutlineItem firstChild = document.getDocumentCatalog().getDocumentOutline().getFirstChild();
-		actual = new PBoxPDOutline(firstChild);
+		actual = new PBoxPDOutline(firstChild, IDGenerator.generateID(firstChild));
 	}
 
 	@Test

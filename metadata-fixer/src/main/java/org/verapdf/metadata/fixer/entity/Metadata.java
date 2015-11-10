@@ -1,6 +1,7 @@
 package org.verapdf.metadata.fixer.entity;
 
-import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
+import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
+import org.verapdf.metadata.fixer.impl.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
@@ -8,7 +9,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**
  * Current interface provide necessary behavior of pdf metadata
- * for {@link org.verapdf.metadata.fixer.MetadataFixer}
+ * for {@link MetadataFixerImpl}
  *
  * @author Evgeniy Muravitskiy
  */
@@ -22,7 +23,7 @@ public interface Metadata {
 	void checkMetadataStream(MetadataFixerResultImpl report);
 
 	/**
-	 * Remove identification schema if {@code MetadataFixer}
+	 * Remove identification schema if {@code MetadataFixerImpl}
 	 * can not repair document to valid PDF/A Document.
 	 *
 	 * @param result report applied changes
@@ -30,7 +31,7 @@ public interface Metadata {
 	void removePDFIdentificationSchema(MetadataFixerResultImpl result, PDFAFlavour flavour);
 
 	/**
-	 * Add PDF/A identification schema if {@code MetadataFixer}
+	 * Add PDF/A identification schema if {@code MetadataFixerImpl}
 	 * be able to repair document to valid PDF/A document.
 	 *
 	 * @param report  report applied changes
