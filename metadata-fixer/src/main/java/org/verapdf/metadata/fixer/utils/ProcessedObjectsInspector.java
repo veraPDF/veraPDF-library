@@ -1,11 +1,5 @@
 package org.verapdf.metadata.fixer.utils;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Set;
-
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.verapdf.metadata.fixer.utils.model.ProcessedObjects;
 import org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser;
 import org.verapdf.metadata.fixer.utils.parser.XMLProcessedObjectsParser;
@@ -14,6 +8,11 @@ import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.Rule;
 import org.verapdf.pdfa.validation.ValidationProfile;
 import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Set;
 
 /**
  * Current class check status of validation according to failed rules,

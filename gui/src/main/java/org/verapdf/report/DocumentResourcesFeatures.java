@@ -4,36 +4,28 @@ import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import java.util.List;
 
 /**
  * @author Maksim Bezrukov
  */
 public class DocumentResourcesFeatures {
 
-	@XmlElementWrapper
-	@XmlElement(name = "graphicsState")
-	private final List<FeaturesNode> graphicsStates;
-	@XmlElementWrapper
-	@XmlElement(name = "colorSpace")
-	private final List<FeaturesNode> colorSpaces;
-	@XmlElementWrapper
-	@XmlElement(name = "pattern")
-	private final List<FeaturesNode> patterns;
-	@XmlElementWrapper
-	@XmlElement(name = "shading")
-	private final List<FeaturesNode> shadings;
+	@XmlElement
+	private final FeaturesNode graphicsStates;
+	@XmlElement
+	private final FeaturesNode colorSpaces;
+	@XmlElement
+	private final FeaturesNode patterns;
+	@XmlElement
+	private final FeaturesNode shadings;
 	@XmlElement
 	private final XObjectFeatures xobjects;
-	@XmlElementWrapper
-	@XmlElement(name = "font")
-	private final List<FeaturesNode> fonts;
-	@XmlElementWrapper
-	@XmlElement(name = "propertiesDict")
-	private final List<FeaturesNode> propertiesDicts;
+	@XmlElement
+	private final FeaturesNode fonts;
+	@XmlElement
+	private final FeaturesNode propertiesDicts;
 
-	private DocumentResourcesFeatures(List<FeaturesNode> propertiesDicts, List<FeaturesNode> fonts, XObjectFeatures xobjects, List<FeaturesNode> shadings, List<FeaturesNode> patterns, List<FeaturesNode> colorSpaces, List<FeaturesNode> graphicsStates) {
+	private DocumentResourcesFeatures(FeaturesNode propertiesDicts, FeaturesNode fonts, XObjectFeatures xobjects, FeaturesNode shadings, FeaturesNode patterns, FeaturesNode colorSpaces, FeaturesNode graphicsStates) {
 		this.propertiesDicts = propertiesDicts;
 		this.fonts = fonts;
 		this.xobjects = xobjects;
@@ -48,12 +40,18 @@ public class DocumentResourcesFeatures {
 	}
 
 	static DocumentResourcesFeatures fromValues(FeaturesCollection collection) {
-		List<FeaturesNode> graphicsStates = FeaturesReport.getListFromType(collection, FeaturesObjectTypesEnum.EXT_G_STATE);
-		List<FeaturesNode> colorSpaces = FeaturesReport.getListFromType(collection, FeaturesObjectTypesEnum.COLORSPACE);
-		List<FeaturesNode> patterns = FeaturesReport.getListFromType(collection, FeaturesObjectTypesEnum.PATTERN);
-		List<FeaturesNode> shadings = FeaturesReport.getListFromType(collection, FeaturesObjectTypesEnum.SHADING);
-		List<FeaturesNode> fonts = FeaturesReport.getListFromType(collection, FeaturesObjectTypesEnum.FONT);
-		List<FeaturesNode> propertiesDicts = FeaturesReport.getListFromType(collection, FeaturesObjectTypesEnum.PROPERTIES);
+		FeaturesNode graphicsStates = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.EXT_G_STATE),
+				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE));
+		FeaturesNode colorSpaces = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.COLORSPACE),
+				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.COLORSPACE));
+		FeaturesNode patterns = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.PATTERN),
+				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN));
+		FeaturesNode shadings = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.SHADING),
+				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.SHADING));
+		FeaturesNode fonts = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.FONT),
+				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FONT));
+		FeaturesNode propertiesDicts = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.PROPERTIES),
+				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROPERTIES));
 		XObjectFeatures xobjects = XObjectFeatures.fromValues(collection);
 		return new DocumentResourcesFeatures(propertiesDicts, fonts, xobjects, shadings, patterns, colorSpaces, graphicsStates);
 	}

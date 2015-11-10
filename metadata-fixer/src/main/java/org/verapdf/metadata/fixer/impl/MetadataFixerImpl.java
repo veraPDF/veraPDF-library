@@ -1,21 +1,26 @@
 package org.verapdf.metadata.fixer.impl;
 
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.INFO_AUTHOR;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.INFO_CREATION_DATE;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.INFO_CREATOR;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.INFO_MODIFICATION_DATE;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.INFO_SUBJECT;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.INFO_TITLE;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.KEYWORDS;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_AUTHOR;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_CREATION_DATE;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_CREATOR;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_MODIFICATION_DATE;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_SUBJECT;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.METADATA_TITLE;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.PDF_DATE_FORMAT_REGEX;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.PRODUCER;
+import org.apache.log4j.Logger;
+import org.verapdf.metadata.fixer.entity.InfoDictionary;
+import org.verapdf.metadata.fixer.entity.Metadata;
+import org.verapdf.metadata.fixer.entity.PDFDocument;
+import org.verapdf.metadata.fixer.schemas.AdobePDF;
+import org.verapdf.metadata.fixer.schemas.BasicSchema;
+import org.verapdf.metadata.fixer.schemas.DublinCore;
+import org.verapdf.metadata.fixer.schemas.XMPBasic;
+import org.verapdf.metadata.fixer.utils.DateConverter;
+import org.verapdf.metadata.fixer.utils.FixerConfig;
+import org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector;
+import org.verapdf.metadata.fixer.utils.ValidationStatus;
+import org.verapdf.pdfa.MetadataFixer;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.validation.ProfileDirectory;
+import org.verapdf.pdfa.validation.Profiles;
+import org.verapdf.pdfa.validation.ValidationProfile;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
@@ -24,27 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.log4j.Logger;
-import org.verapdf.metadata.fixer.entity.InfoDictionary;
-import org.verapdf.metadata.fixer.entity.Metadata;
-import org.verapdf.metadata.fixer.entity.PDFDocument;
-import org.verapdf.metadata.fixer.utils.ValidationStatus;
-import org.verapdf.metadata.fixer.schemas.AdobePDF;
-import org.verapdf.metadata.fixer.schemas.BasicSchema;
-import org.verapdf.metadata.fixer.schemas.DublinCore;
-import org.verapdf.metadata.fixer.schemas.XMPBasic;
-import org.verapdf.metadata.fixer.utils.DateConverter;
-import org.verapdf.metadata.fixer.utils.FixerConfig;
-import org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector;
-import org.verapdf.pdfa.MetadataFixer;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.validation.ProfileDirectory;
-import org.verapdf.pdfa.validation.Profiles;
-import org.verapdf.pdfa.validation.ValidationProfile;
-import org.xml.sax.SAXException;
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.*;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -135,7 +120,7 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 	}
 
 	private void executeInvalidMetadataCase(FixerConfig config,
-												Metadata metadata, MetadataFixerResultImpl result) {
+											Metadata metadata, MetadataFixerResultImpl result) {
 		if (config.isFixIdentification()) {
 			metadata.addPDFIdentificationSchema(result,
 					config.getValidationResult().getPDFAFlavour());
@@ -144,7 +129,7 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 	}
 
 	private void fixMetadata(MetadataFixerResultImpl result,
-									FixerConfig config) {
+							 FixerConfig config) {
 		PDFAFlavour pdfaFlavour = config.getValidationResult().getPDFAFlavour();
 		if (pdfaFlavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
 			fixDublinCoreSchema(result, config);
@@ -154,7 +139,7 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 	}
 
 	private void fixDublinCoreSchema(MetadataFixerResultImpl result,
-											FixerConfig config) {
+									 FixerConfig config) {
 		Metadata metadata = config.getDocument().getMetadata();
 		InfoDictionary info = config.getDocument().getInfoDictionary();
 		DublinCore schema = metadata.getDublinCoreSchema(info);

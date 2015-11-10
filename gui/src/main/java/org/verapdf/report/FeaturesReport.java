@@ -5,8 +5,6 @@ import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,30 +20,24 @@ public class FeaturesReport {
 	private final FeaturesNode documentSecurity;
 	@XmlElement
 	private final FeaturesNode lowLevelInfo;
-	@XmlElementWrapper
-	@XmlElement(name = "embeddedFile")
-	private final List<FeaturesNode> embeddedFiles;
-	@XmlElementWrapper
-	@XmlElement(name = "iccProfile")
-	private final List<FeaturesNode> iccProfiles;
-	@XmlElementWrapper
-	@XmlElement(name = "outputIntent")
-	private final List<FeaturesNode> outputIntents;
+	@XmlElement
+	private final FeaturesNode embeddedFiles;
+	@XmlElement
+	private final FeaturesNode iccProfiles;
+	@XmlElement
+	private final FeaturesNode outputIntents;
 	@XmlElement
 	private final FeaturesNode outlines;
-	@XmlElementWrapper
-	@XmlElement(name = "annotation")
-	private final List<FeaturesNode> annotations;
-	@XmlElementWrapper
-	@XmlElement(name = "page")
-	private final List<FeaturesNode> pages;
+	@XmlElement
+	private final FeaturesNode annotations;
+	@XmlElement
+	private final FeaturesNode pages;
 	@XmlElement
 	private final DocumentResourcesFeatures documentResources;
-	@XmlElementWrapper
-	@XmlElement(name = "error")
-	private final List<FeaturesNode> errors;
+	@XmlElement
+	private final FeaturesNode errors;
 
-	private FeaturesReport(FeaturesNode informationDict, FeaturesNode metadata, FeaturesNode documentSecurity, FeaturesNode lowLevelInfo, List<FeaturesNode> embeddedFiles, List<FeaturesNode> iccProfiles, List<FeaturesNode> outputIntents, FeaturesNode outlines, List<FeaturesNode> annotations, List<FeaturesNode> pages, DocumentResourcesFeatures documentResources, List<FeaturesNode> errors) {
+	private FeaturesReport(FeaturesNode informationDict, FeaturesNode metadata, FeaturesNode documentSecurity, FeaturesNode lowLevelInfo, FeaturesNode embeddedFiles, FeaturesNode iccProfiles, FeaturesNode outputIntents, FeaturesNode outlines, FeaturesNode annotations, FeaturesNode pages, DocumentResourcesFeatures documentResources, FeaturesNode errors) {
 		this.informationDict = informationDict;
 		this.metadata = metadata;
 		this.documentSecurity = documentSecurity;
@@ -70,28 +62,34 @@ public class FeaturesReport {
 		FeaturesNode docSec = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.DOCUMENT_SECURITY);
 		FeaturesNode lowLvl = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.LOW_LEVEL_INFO);
 
-		List<FeaturesNode> embeddedFiles = getListFromType(collection, FeaturesObjectTypesEnum.EMBEDDED_FILE);
-		List<FeaturesNode> iccProfiles = getListFromType(collection, FeaturesObjectTypesEnum.ICCPROFILE);
-		List<FeaturesNode> outputIntents = getListFromType(collection, FeaturesObjectTypesEnum.OUTPUTINTENT);
+		FeaturesNode embeddedFiles = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.EMBEDDED_FILE),
+				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE));
+		FeaturesNode iccProfiles = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.ICCPROFILE),
+				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE));
+		FeaturesNode outputIntents = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.OUTPUTINTENT),
+				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT));
 		FeaturesNode outlines = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.OUTLINES);
-		List<FeaturesNode> annotations = getListFromType(collection, FeaturesObjectTypesEnum.ANNOTATION);
-		List<FeaturesNode> pages = getListFromType(collection, FeaturesObjectTypesEnum.PAGE);
-		List<FeaturesNode> errors = getListFromType(collection, FeaturesObjectTypesEnum.ERROR);
+		FeaturesNode annotations = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.ANNOTATION),
+				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION));
+		FeaturesNode pages = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.PAGE),
+				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE));
+		FeaturesNode errors = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.ERROR),
+				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR));
 		DocumentResourcesFeatures res = DocumentResourcesFeatures.fromValues(collection);
 		return new FeaturesReport(info, metadata, docSec, lowLvl, embeddedFiles, iccProfiles, outputIntents, outlines, annotations, pages, res, errors);
 	}
 
-	static List<FeaturesNode> getListFromType(FeaturesCollection collection, FeaturesObjectTypesEnum type) {
-		List<FeatureTreeNode> featureTreesForType = collection.getFeatureTreesForType(type);
-		if (featureTreesForType.size() == 0) {
-			return null;
-		}
-		List<FeaturesNode> res = new ArrayList<>();
-		for (FeatureTreeNode node : featureTreesForType) {
-			res.add(FeaturesNode.fromValues(node));
-		}
-		return res;
-	}
+//	static List<FeaturesNode> getListFromType(FeaturesCollection collection, FeaturesObjectTypesEnum type) {
+//		List<FeatureTreeNode> featureTreesForType = collection.getFeatureTreesForType(type);
+//		if (featureTreesForType.size() == 0) {
+//			return null;
+//		}
+//		List<FeaturesNode> res = new ArrayList<>();
+//		for (FeatureTreeNode node : featureTreesForType) {
+//			res.add(FeaturesNode.fromValues(node));
+//		}
+//		return res;
+//	}
 
 	static FeaturesNode getFirstNodeFromType(FeaturesCollection collection, FeaturesObjectTypesEnum type) {
 		List<FeatureTreeNode> featureTreesForType = collection.getFeatureTreesForType(type);

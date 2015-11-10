@@ -1,17 +1,15 @@
 package org.verapdf.metadata.fixer.impl.pb;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
 import org.verapdf.metadata.fixer.impl.pb.model.PDFDocumentImpl;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser;
 import org.verapdf.metadata.fixer.utils.parser.XMLProcessedObjectsParser;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Evgeniy Muravitskiy

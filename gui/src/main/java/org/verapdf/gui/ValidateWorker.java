@@ -20,9 +20,6 @@ import org.verapdf.pdfa.validation.Validator;
 import org.verapdf.report.HTMLReport;
 import org.verapdf.report.MachineReadableReport;
 
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.ID_REMOVED;
-
 import javax.swing.*;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
@@ -30,6 +27,9 @@ import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.ID_REMOVED;
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
 
 /**
  * Validates PDF in a new threat.
@@ -121,10 +121,10 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         tempFile.deleteOnExit();
         OutputStream tempOutput = new BufferedOutputStream(
                 new FileOutputStream(tempFile));
-		MetadataFixerImpl fixer = MetadataFixerEnum.BOX_INSTANCE.getInstance();
-		MetadataFixerResult fixerResult = fixer.fixMetadata(tempOutput, fixerConfig);
-        if (fixerResult.getRepairStatus() == SUCCESS ||
-				fixerResult.getRepairStatus() == ID_REMOVED) {
+        MetadataFixerImpl fixer = MetadataFixerEnum.BOX_INSTANCE.getInstance();
+        MetadataFixerResult fixerResult = fixer.fixMetadata(tempOutput, fixerConfig);
+        MetadataFixerResult.RepairStatus repairStatus = fixerResult.getRepairStatus();
+        if (repairStatus == SUCCESS || repairStatus == ID_REMOVED) {
             File resFile;
             boolean flag = true;
             while (flag) {
