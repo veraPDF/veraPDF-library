@@ -5,7 +5,6 @@ import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 
 import javax.xml.bind.DatatypeConverter;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
@@ -137,7 +136,7 @@ public final class TestNodeGenerator {
 	public static FeatureTreeNode getFailedXObject(String id, String errorid) throws FeatureParsingException {
 		FeatureTreeNode root = FeatureTreeNode.newRootInstance("xobject");
 		root.addAttribute(ID, id);
-		root.addAttribute("errorID", errorid);
+		root.addAttribute("errorId", errorid);
 		return root;
 	}
 

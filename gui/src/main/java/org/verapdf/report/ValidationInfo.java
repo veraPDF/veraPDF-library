@@ -1,5 +1,6 @@
 package org.verapdf.report;
 
+import org.verapdf.pdfa.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -17,8 +18,8 @@ public class ValidationInfo {
 	private final Result result;
 
 
-	ValidationInfo() {
-		this("", new Result());
+	private ValidationInfo() {
+		this("", Result.fromValues(null, null));
 	}
 
 	private ValidationInfo(String profile, Result result) {
@@ -26,9 +27,9 @@ public class ValidationInfo {
 		this.result = result;
 	}
 
-	static ValidationInfo fromValues(ValidationResult result) {
+	static ValidationInfo fromValues(ValidationResult result, MetadataFixerResult fixerResult) {
 		String profile = result.getPDFAFlavour().getLevel().getName();
-		Result resultType = Result.fromValues(result.getTestAssertions(), result.isCompliant());
+		Result resultType = Result.fromValues(result, fixerResult);
 		return new ValidationInfo(profile, resultType);
 	}
 }
