@@ -1,4 +1,4 @@
-package org.verapdf.metadata.fixer;
+package org.verapdf.metadata.fixer.impl;
 
 import org.verapdf.pdfa.MetadataFixerResult;
 
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class MetadataFixerResultImpl implements MetadataFixerResult, Iterable<String> {
+public class MetadataFixerResultImpl implements MetadataFixerResult {
 
 	private RepairStatus status;
 	private final List<String> appliedFixes = new ArrayList<>();
