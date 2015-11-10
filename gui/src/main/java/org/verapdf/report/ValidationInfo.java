@@ -18,8 +18,8 @@ public class ValidationInfo {
 	private final Result result;
 
 
-	ValidationInfo() {
-		this("", new Result());
+	private ValidationInfo() {
+		this("", Result.fromValues(null, null));
 	}
 
 	private ValidationInfo(String profile, Result result) {

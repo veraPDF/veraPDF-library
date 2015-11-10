@@ -32,7 +32,7 @@ public class XObjectFeatures {
 		this.xobjects = xobjects;
 	}
 
-	public XObjectFeatures() {
+	private XObjectFeatures() {
 		this(null, null, null, null);
 	}
 

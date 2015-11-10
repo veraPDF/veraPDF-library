@@ -41,11 +41,11 @@ public class MachineReadableReport {
 	@XmlElement
 	private final FeaturesReport pdfFeatures;
 
-	public MachineReadableReport() {
-		this(new ValidationInfo(), "", "", null);
+	private MachineReadableReport() {
+		this(ValidationInfo.fromValues(null, null), "", "", null);
 	}
 
-	public MachineReadableReport(ValidationInfo info, String creationDate, String processingTime, FeaturesReport featuresReport) {
+	private MachineReadableReport(ValidationInfo info, String creationDate, String processingTime, FeaturesReport featuresReport) {
 		this.info = info;
 		this.creationDate = creationDate;
 		this.processingTime = processingTime;

@@ -39,7 +39,7 @@ public class Result {
 		this.details = details;
 	}
 
-	Result() {
+	private Result() {
 		this(false, "", Summary.fromValues(0, 0, 0, 0, null, 0), Details.fromValue(new HashSet<Rule>()));
 	}
 

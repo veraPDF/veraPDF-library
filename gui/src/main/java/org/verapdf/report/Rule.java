@@ -31,7 +31,7 @@ public class Rule {
 	@XmlElement(name = "check")
 	private final Set<Check> checks;
 
-	public Rule(String specification, String clause, String testNumber, TestAssertion.Status status, int checksNumber, String description, Set<Check> checks) {
+	private Rule(String specification, String clause, String testNumber, TestAssertion.Status status, int checksNumber, String description, Set<Check> checks) {
 		this.specification = specification;
 		this.clause = clause;
 		this.testNumber = testNumber;
