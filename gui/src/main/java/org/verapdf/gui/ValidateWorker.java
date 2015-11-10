@@ -7,7 +7,8 @@ import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.gui.tools.ProcessingType;
-import org.verapdf.metadata.fixer.MetadataFixer;
+import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
+import org.verapdf.metadata.fixer.impl.fixer.MetadataFixerEnum;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
@@ -18,6 +19,9 @@ import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validation.Validator;
 import org.verapdf.report.HTMLReport;
 import org.verapdf.report.MachineReadableReport;
+
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.ID_REMOVED;
 
 import javax.swing.*;
 import javax.xml.bind.JAXBException;
@@ -116,12 +120,10 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         tempFile.deleteOnExit();
         OutputStream tempOutput = new BufferedOutputStream(
                 new FileOutputStream(tempFile));
-        MetadataFixerResult fixerResult = MetadataFixer.fixMetadata(tempOutput,
-                fixerConfig);
-        if (fixerResult.getRepairStatus().equals(
-                MetadataFixerResult.RepairStatus.SUCCESS)
-                || fixerResult.getRepairStatus().equals(
-                        MetadataFixerResult.RepairStatus.ID_REMOVED)) {
+		MetadataFixerImpl fixer = MetadataFixerEnum.BOX_INSTANCE.getInstance();
+		MetadataFixerResult fixerResult = fixer.fixMetadata(tempOutput, fixerConfig);
+        if (fixerResult.getRepairStatus() == SUCCESS ||
+				fixerResult.getRepairStatus() == ID_REMOVED) {
             File resFile;
             boolean flag = true;
             while (flag) {

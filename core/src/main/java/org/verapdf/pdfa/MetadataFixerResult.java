@@ -11,7 +11,7 @@ import java.util.List;
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
-public interface MetadataFixerResult {
+public interface MetadataFixerResult extends Iterable<String> {
     /**
      * @return the {@link RepairStatus} for the fix task
      */
