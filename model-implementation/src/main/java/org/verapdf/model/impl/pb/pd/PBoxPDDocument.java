@@ -13,6 +13,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.impl.pb.cos.PBCosDict;
 import org.verapdf.model.pdlayer.*;
+import org.verapdf.model.tools.OutlinesHelper;
 
 import java.io.IOException;
 import java.util.*;
@@ -101,65 +102,24 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 	}
 
 	private List<PDOutline> getOutlines() {
-        List<PDOutlineItem> outlines = this.getOutlinesList();
-		List<PDOutline> result = new ArrayList<>(outlines.size());
-		for (PDOutlineItem outlineItem : outlines) {
-            result.add(new PBoxPDOutline(outlineItem));
-        }
-        outlines.clear();
-        return Collections.unmodifiableList(result);
-    }
+		return OutlinesHelper.getOutlines(this.catalog);
+	}
 
-    private List<PDOutlineItem> getOutlinesList() {
+	private List<PDAction> getOpenAction() {
 		if (this.catalog != null) {
-			PDDocumentOutline documentOutline = this.catalog.getDocumentOutline();
-
-			if (documentOutline != null) {
-				List<PDOutlineItem> result = new ArrayList<>();
-
-				PDOutlineItem firstChild = documentOutline.getFirstChild();
-				Deque<PDOutlineItem> stack = new ArrayDeque<>();
-
-				if (firstChild != null) {
-					stack.push(firstChild);
-				}
-
-				while (!stack.isEmpty()) {
-					PDOutlineItem item = stack.pop();
-					PDOutlineItem nextSibling = item.getNextSibling();
-					firstChild = item.getFirstChild();
-					if (nextSibling != null && !result.contains(nextSibling)) {
-						stack.add(nextSibling);
-					}
-					if (firstChild != null && !result.contains(firstChild)) {
-						stack.add(firstChild);
-					}
-					result.add(item);
-				}
-
-				return result;
-			}
-		}
-
-        return Collections.emptyList();
-    }
-
-    private List<PDAction> getOpenAction() {
-        try {
-			if (this.catalog != null) {
+			try {
 				PDDestinationOrAction openAction = this.catalog.getOpenAction();
 				if (openAction instanceof org.apache.pdfbox.pdmodel.interactive.action.PDAction) {
 					List<PDAction> actions = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-					this.addAction(
-							actions,
+					this.addAction(actions,
 							(org.apache.pdfbox.pdmodel.interactive.action.PDAction) openAction);
 					return Collections.unmodifiableList(actions);
 				}
+			} catch (IOException e) {
+				LOGGER.error(
+						"Problems with open action obtaining. " + e.getMessage(), e);
 			}
-        } catch (IOException e) {
-            LOGGER.error(
-					"Problems with open action obtaining. " + e.getMessage(), e);
-        }
+		}
         return Collections.emptyList();
     }
 
