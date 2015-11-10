@@ -278,23 +278,39 @@ public enum PDFAFlavour {
     }
 
     /**
+     * Looks up a {@link PDFAFlavour} by two letter flavour identifier. The
+     * identifier is a two letter String that identifies a {@link PDFAFlavour},
+     * e.g. 1a, 1b, 2a, 2b, 2u, 3a, 3b, 3u. The match is case insensitive so 1A,
+     * 1B, etc. are also valid flavour ids.
+     * 
      * @param flavourId
-     *            a two letter String that identifies a {@link PDFAFlavour},
-     *            e.g. 1a, 1b, 2a, 2b, 2u, 3a, 3b, 3u
+     *            must be a two character string that exactly matches the
+     *            flavour identifier.
+     * 
      * @return the correct {@link PDFAFlavour} looked up by String id or
      *         {@link PDFAFlavour#NO_FLAVOUR} if id does not match a flavour
      */
     public static PDFAFlavour byFlavourId(final String flavourId) {
-        PDFAFlavour flavour = FLAVOUR_LOOKUP.get(flavourId);
+        PDFAFlavour flavour = FLAVOUR_LOOKUP.get(flavourId.toLowerCase());
         if (flavour == null) {
             flavour = PDFAFlavour.NO_FLAVOUR;
         }
         return flavour;
     }
-    
+
     /**
+     * Performs a lenient parse of the String <code>toParse</code> to determine
+     * whether it contains a valid {@link PDFAFlavour} identifier. Be aware that
+     * the identifiers are only 2 character Strings (see
+     * {@link PDFAFlavour#byFlavourId(String)} so unintended matches are
+     * possible.
+     * 
      * @param toParse
-     * @return
+     *            a String parameter that is parsed to see whether it contains a
+     *            PDFAFlavour identifier.
+     * @return the correct {@link PDFAFlavour} looked up by parsing
+     *         <code>toParse</code> or {@link PDFAFlavour#NO_FLAVOUR} if no
+     *         matching flavour was found.
      */
     public static PDFAFlavour fromString(String toParse) {
         for (String id : getFlavourIds()) {
