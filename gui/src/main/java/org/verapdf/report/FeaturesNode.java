@@ -1,5 +1,6 @@
 package org.verapdf.report;
 
+import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 
 import javax.xml.bind.JAXBElement;
@@ -37,6 +38,26 @@ public class FeaturesNode {
 
 	private FeaturesNode() {
 		this(null, null);
+	}
+
+	static FeaturesNode fromValues(List<String> errors, List<FeatureTreeNode> children) {
+		List<Object> qChildren = new ArrayList<>();
+		if (children != null) {
+			for (FeatureTreeNode entry : children) {
+				qChildren.add(new JAXBElement<FeaturesNode>(new QName(entry.getName()), FeaturesNode.class, FeaturesNode.fromValues(entry)));
+			}
+		}
+
+		Map<QName, Object> attr = new HashMap<>();
+		if (errors != null && !errors.isEmpty()) {
+			StringBuilder builder = new StringBuilder();
+			builder.append(errors.get(0));
+			for (int i = 1; i < errors.size(); ++i) {
+				builder.append(", ").append(errors.get(i));
+			}
+			attr.put(new QName(ErrorsHelper.ERRORID), builder.toString());
+		}
+		return new FeaturesNode(attr, qChildren);
 	}
 
 	static FeaturesNode fromValues(FeatureTreeNode node) {

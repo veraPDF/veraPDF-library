@@ -12,10 +12,10 @@ import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.xml.DomXmpParser;
 import org.apache.xmpbox.xml.XmpParsingException;
-import org.verapdf.metadata.fixer.impl.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
+import org.verapdf.metadata.fixer.impl.MetadataFixerResultImpl;
 
 import java.io.IOException;
 import java.io.OutputStream;

@@ -19,17 +19,17 @@ public class PBoxPDOutline extends PBoxPDObject implements PDOutline {
 
     public static final String ACTION = "A";
 
-	private final String id;
+    private final String id;
 
     public PBoxPDOutline(PDOutlineItem simplePDObject, String id) {
         super(simplePDObject, OUTLINE_TYPE);
-		this.id = id;
+        this.id = id;
     }
 
-	@Override
-	public String getID() {
-		return this.id;
-	}
+    @Override
+    public String getID() {
+        return this.id;
+    }
 
     @Override
     public List<? extends Object> getLinkedObjects(String link) {

@@ -1,9 +1,5 @@
 package org.verapdf.metadata.fixer.impl.pb.model;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Locale;
-
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
@@ -16,9 +12,9 @@ import org.apache.xmpbox.schema.PDFAIdentificationSchema;
 import org.apache.xmpbox.schema.XMPBasicSchema;
 import org.apache.xmpbox.type.BadFieldValueException;
 import org.apache.xmpbox.xml.XmpSerializer;
-import org.verapdf.metadata.fixer.impl.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
+import org.verapdf.metadata.fixer.impl.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.impl.pb.schemas.AdobePDFSchemaImpl;
 import org.verapdf.metadata.fixer.impl.pb.schemas.DublinCoreSchemaImpl;
 import org.verapdf.metadata.fixer.impl.pb.schemas.XMPBasicSchemaImpl;
@@ -26,6 +22,10 @@ import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Locale;
 
 /**
  * @author Evgeniy Muravitskiy
