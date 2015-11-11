@@ -12,7 +12,7 @@ import org.verapdf.pdfa.validation.ValidationProfile;
  *
  * Note that the interface makes no provision for configuration of a validator
  * instance. This is left to the implementer although the veraPDF library API
- * provides a factory (add link later). The interface is designed to allow
+ * provides a {@link ValidatorFactory} interface. This is designed to allow
  * immutable validator instances, meaning there is no methods provided to change
  * the ValidationProfile, or the pre-configured settings.
  *
