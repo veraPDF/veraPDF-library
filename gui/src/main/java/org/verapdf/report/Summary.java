@@ -18,9 +18,9 @@ public class Summary {
 @XmlAttribute
 private final String metadataFixesStatus;
 	@XmlAttribute
-	private final Integer completedMetadataFixes;
+	private final int completedMetadataFixes;
 
-	private Summary(int passedRules, int failedRules, int passedChecks, int failedChecks, String metadataFixesStatus, Integer completedMetadataFixes) {
+	private Summary(int passedRules, int failedRules, int passedChecks, int failedChecks, String metadataFixesStatus, int completedMetadataFixes) {
 //		this.passedRules = passedRules;
 //		this.failedRules = failedRules;
 //		this.passedChecks = passedChecks;
@@ -33,7 +33,7 @@ private final String metadataFixesStatus;
 		this(0, 0, 0, 0, null, 0);
 	}
 
-	static Summary fromValues(int passedRules, int failedRules, int passedChecks, int failedChecks, String metadataFixesStatus, Integer completedMetadataFixes) {
+	static Summary fromValues(int passedRules, int failedRules, int passedChecks, int failedChecks, String metadataFixesStatus, int completedMetadataFixes) {
 		return new Summary(passedRules, failedRules, passedChecks, failedChecks, metadataFixesStatus, completedMetadataFixes);
 	}
 }

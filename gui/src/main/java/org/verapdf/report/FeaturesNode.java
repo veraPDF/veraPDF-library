@@ -44,7 +44,7 @@ public class FeaturesNode {
 		List<Object> qChildren = new ArrayList<>();
 		if (children != null) {
 			for (FeatureTreeNode entry : children) {
-				qChildren.add(new JAXBElement<FeaturesNode>(new QName(entry.getName()), FeaturesNode.class, FeaturesNode.fromValues(entry)));
+				qChildren.add(new JAXBElement<>(new QName(entry.getName()), FeaturesNode.class, FeaturesNode.fromValues(entry)));
 			}
 		}
 
@@ -76,7 +76,7 @@ public class FeaturesNode {
 		}
 		if (node.getChildren() != null) {
 			for (FeatureTreeNode entry : node.getChildren()) {
-				qChildren.add(new JAXBElement<FeaturesNode>(new QName(entry.getName()), FeaturesNode.class, FeaturesNode.fromValues(entry)));
+				qChildren.add(new JAXBElement<>(new QName(entry.getName()), FeaturesNode.class, FeaturesNode.fromValues(entry)));
 			}
 		}
 		return new FeaturesNode(qAttributes, qChildren);
@@ -88,7 +88,7 @@ public class FeaturesNode {
 			for (int i = 0; i < source.length(); ++i) {
 				char curChar = source.charAt(i);
 				if ('#' == curChar) {
-					formatter.format("#x%06X", "#".codePointAt(0));
+					formatter.format("#x%06X", Integer.valueOf("#".codePointAt(0)));
 				} else {
 					int codePoint = source.codePointAt(i);
 					if (Character.isHighSurrogate(curChar)) {
@@ -99,12 +99,12 @@ public class FeaturesNode {
 							(codePoint >= SP && codePoint <= XD7FF) ||
 							(codePoint >= XE000 && codePoint <= XFFFD) ||
 							(codePoint >= X10000 && codePoint <= X10FFFF)) {
-						formatter.format("%c", curChar);
+						formatter.format("%c", Character.valueOf(curChar));
 						if (Character.isHighSurrogate(curChar) && i < source.length()) {
-							formatter.format("%c", source.charAt(i));
+							formatter.format("%c", Character.valueOf(source.charAt(i)));
 						}
 					} else {
-						formatter.format("#x%06X", codePoint);
+						formatter.format("#x%06X", Integer.valueOf(codePoint));
 					}
 				}
 			}

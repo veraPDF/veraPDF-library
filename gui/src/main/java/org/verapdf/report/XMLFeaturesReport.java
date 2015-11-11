@@ -197,23 +197,22 @@ public final class XMLFeaturesReport {
 									FeaturesCollection collection, Document doc, boolean isCustom) {
 		if (!isCustom && "metadata".equalsIgnoreCase(node.getName())) {
 			return parseMetadata(node, collection, doc);
-		} else {
-			Element root = doc.createElement(node.getName());
-			for (Map.Entry<String, String> attr : node.getAttributes().entrySet()) {
-				root.setAttribute(attr.getKey(),
-						replaceInvalidCharacters(attr.getValue()));
-			}
-			if (node.getValue() != null) {
-				root.appendChild(doc.createTextNode(
-						replaceInvalidCharacters(node.getValue())));
-			} else if (node.getChildren() != null) {
-				boolean isCustomChildren = isCustom || FeaturesReporter.CUSTOM_FEATURES_ROOT_NODE_NAME.equals(node.getName());
-				for (FeatureTreeNode child : node.getChildren()) {
-					root.appendChild(makeNode(child, collection, doc, isCustomChildren));
-				}
-			}
-			return root;
 		}
+        Element root = doc.createElement(node.getName());
+        for (Map.Entry<String, String> attr : node.getAttributes().entrySet()) {
+        	root.setAttribute(attr.getKey(),
+        			replaceInvalidCharacters(attr.getValue()));
+        }
+        if (node.getValue() != null) {
+        	root.appendChild(doc.createTextNode(
+        			replaceInvalidCharacters(node.getValue())));
+        } else if (node.getChildren() != null) {
+        	boolean isCustomChildren = isCustom || FeaturesReporter.CUSTOM_FEATURES_ROOT_NODE_NAME.equals(node.getName());
+        	for (FeatureTreeNode child : node.getChildren()) {
+        		root.appendChild(makeNode(child, collection, doc, isCustomChildren));
+        	}
+        }
+        return root;
 	}
 
 	private static Element parseMetadata(FeatureTreeNode metadataNode,
@@ -260,7 +259,7 @@ public final class XMLFeaturesReport {
 			for (int i = 0; i < source.length(); ++i) {
 				char curChar = source.charAt(i);
 				if ('#' == curChar) {
-					formatter.format("#x%06X", "#".codePointAt(0));
+					formatter.format("#x%06X", Integer.valueOf("#".codePointAt(0)));
 				} else {
 					int codePoint = source.codePointAt(i);
 					if (Character.isHighSurrogate(curChar)) {

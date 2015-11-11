@@ -1,5 +1,23 @@
 package org.verapdf.gui;
 
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.ID_REMOVED;
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
+
 import org.apache.log4j.Logger;
 import org.verapdf.core.ValidationException;
 import org.verapdf.features.pb.PBFeatureParser;
@@ -19,17 +37,6 @@ import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validation.Validator;
 import org.verapdf.report.HTMLReport;
 import org.verapdf.report.MachineReadableReport;
-
-import javax.swing.*;
-import javax.xml.bind.JAXBException;
-import javax.xml.transform.TransformerException;
-import java.io.*;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.ID_REMOVED;
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
 
 /**
  * Validates PDF in a new threat.

@@ -35,10 +35,6 @@ public class DocumentResourcesFeatures {
 		this.graphicsStates = graphicsStates;
 	}
 
-	public DocumentResourcesFeatures() {
-		this(null, null, null, null, null, null, null);
-	}
-
 	static DocumentResourcesFeatures fromValues(FeaturesCollection collection) {
 		FeaturesNode graphicsStates = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.EXT_G_STATE),
 				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE));
