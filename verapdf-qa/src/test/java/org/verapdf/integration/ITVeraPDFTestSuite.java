@@ -14,7 +14,7 @@ import java.util.zip.ZipFile;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.verapdf.core.ProfileException;
-import org.verapdf.model.ModelLoader;
+import org.verapdf.model.ModelParser;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
@@ -65,7 +65,7 @@ public class ITVeraPDFTestSuite {
             if (entry.getName().endsWith(".pdf")) {
                 System.out.println();
                 System.out.println("Testing: " + entry.getName());
-                try (ModelLoader loader = new ModelLoader(
+                try (ModelParser loader = new ModelParser(
                         zipIn.getInputStream(entry))) {
                     ValidationResult result = Validator.validate(PROFILE_1B,
                             loader.getRoot(), false);
