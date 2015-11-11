@@ -2,12 +2,19 @@ package org.verapdf.report;
 
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
+import javax.xml.parsers.ParserConfigurationException;
+
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -76,8 +83,14 @@ public class FeaturesNode {
         List<Object> qChildren = new ArrayList<>();
         if (node.getValue() != null) {
             if (node.getName().equals(METADATA_NAME)) {
-                qChildren.add(new JAXBElement<>(new QName(node.getName()),
-                        FeaturesNode.class, FeaturesNode.fromXmp(node.getValue())));
+                try {
+                    qChildren.add(new JAXBElement<>(new QName(node.getName()),
+                            FeaturesNode.class, FeaturesNode.fromXmp(node)));
+                } catch (SAXException | IOException
+                        | ParserConfigurationException excep) {
+                    // TODO Auto-generated catch block
+                    excep.printStackTrace();
+                }
             } else {
                 qChildren.add(replaceInvalidCharacters(node.getValue()));
             }
@@ -126,8 +139,23 @@ public class FeaturesNode {
         }
     }
     
-    public static FeaturesNode fromXmp(final String xmpValue) {
-        return null;
+    public static FeaturesNode fromXmp(final FeatureTreeNode xmpNode) throws SAXException, IOException, ParserConfigurationException {
+        return nodeFromXmlElement(XmpHandler.parseMetadataRootElement(xmpNode));
     }
-    
+
+    public static FeaturesNode nodeFromXmlElement(final Node node) {
+        Map<QName, Object> atts = new HashMap<>();
+        NamedNodeMap nnm = node.getAttributes();
+        for (int index = 0; index < nnm.getLength(); index++) {
+            atts.put(new QName(nnm.item(index).getNodeName()), nnm.item(index).getNodeValue());
+        }
+        List<Object> children = new ArrayList<>();
+        children.add(node.getNodeValue());
+        NodeList nodeList = node.getChildNodes();
+        for (int index = 0; index < nodeList.getLength(); index++) {
+            children.add(nodeList.item(index));
+        }
+        return new FeaturesNode(atts, children);
+    }
+
 }
