@@ -52,8 +52,8 @@ public class Result {
 
 		Set<Rule> rules = getRules(assertions);
 
-		String fixerResultStatus = null;
-		Integer completedFixes = null;
+		String fixerResultStatus = "";
+		int completedFixes = 0;
 
 		if (fixerResult != null) {
 			MetadataFixerResult.RepairStatus repairStatus = fixerResult.getRepairStatus();

@@ -27,7 +27,7 @@ public class Check {
 	}
 
 	TestAssertion.Status getStatus() {
-		return status;
+		return this.status;
 	}
 
 	static Check fromValue(TestAssertion assertion) {

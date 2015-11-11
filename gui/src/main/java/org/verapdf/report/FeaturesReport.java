@@ -52,10 +52,6 @@ public class FeaturesReport {
 		this.errors = errors;
 	}
 
-	private FeaturesReport() {
-		this(null, null, null, null, null, null, null, null, null, null, null, null);
-	}
-
 	static FeaturesReport fromValues(FeaturesCollection collection) {
 		FeaturesNode info = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.INFORMATION_DICTIONARY);
 		FeaturesNode metadata = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.METADATA);
@@ -95,8 +91,7 @@ public class FeaturesReport {
 		List<FeatureTreeNode> featureTreesForType = collection.getFeatureTreesForType(type);
 		if (featureTreesForType.size() == 0) {
 			return null;
-		} else {
-			return FeaturesNode.fromValues(collection.getFeatureTreesForType(type).get(0));
 		}
+        return FeaturesNode.fromValues(collection.getFeatureTreesForType(type).get(0));
 	}
 }
