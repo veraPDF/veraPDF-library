@@ -57,7 +57,7 @@ public class Result {
 
 		if (fixerResult != null) {
 			MetadataFixerResult.RepairStatus repairStatus = fixerResult.getRepairStatus();
-			fixerResultStatus = repairStatus.getReadableName();
+			fixerResultStatus = repairStatus.getName();
 			if (SUCCESS == repairStatus
 					|| ID_REMOVED == repairStatus) {
 				completedFixes = fixerResult.getAppliedFixes().size();

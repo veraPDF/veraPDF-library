@@ -16,7 +16,7 @@ import org.verapdf.pdfa.validation.RuleId;
 @XmlJavaTypeAdapter(TestAssertionImpl.Adapter.class)
 public interface TestAssertion {
     /**
-     * @return the String id for the Rule
+     * @return the String id for the {@link org.verapdf.pdfa.validation.Rule} that this assertion refers to
      */
     public RuleId getRuleId();
 
@@ -33,7 +33,7 @@ public interface TestAssertion {
     public String getMessage();
 
     /**
-     * @return the {@link Location} within the PDF document where the test was
+     * @return the {@link Location} within the PDF document where this test was
      *         asserted.
      */
     public Location getLocation();

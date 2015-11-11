@@ -8,6 +8,9 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 /**
  * A ProfileDirectory provides access to a set of {@link ValidationProfile}s
  * that can be retrieved by String id or {@link PDFAFlavour}.
+ * <p>
+ * This interface provides a simple directory of {@link ValidationProfile}s that is intentionally restricted by the enum type {@ PDFAFlavour}.
+ * </p>
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
