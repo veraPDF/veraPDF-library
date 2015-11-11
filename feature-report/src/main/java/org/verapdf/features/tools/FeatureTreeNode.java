@@ -92,28 +92,28 @@ public final class FeatureTreeNode {
 	 * @return name of the node
 	 */
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	/**
 	 * @return value of the node
 	 */
 	public String getValue() {
-		return value;
+		return this.value;
 	}
 
 	/**
 	 * @return parent node for the curent node
 	 */
 	public FeatureTreeNode getParent() {
-		return parent;
+		return this.parent;
 	}
 
 	/**
 	 * @return list of all children nodes for this node
 	 */
 	public List<FeatureTreeNode> getChildren() {
-		return children == null ? null : Collections.unmodifiableList(children);
+		return this.children == null ? null : Collections.unmodifiableList(this.children);
 	}
 
 	/**
@@ -125,16 +125,16 @@ public final class FeatureTreeNode {
 	public void addChild(FeatureTreeNode child)
 			throws FeatureParsingException {
 		if (child != null) {
-			if (value == null) {
-				if (children == null) {
-					children = new ArrayList<>();
+			if (this.value == null) {
+				if (this.children == null) {
+					this.children = new ArrayList<>();
 				}
-				children.add(child);
+				this.children.add(child);
 				child.parent = this;
 			} else {
 				throw new FeatureParsingException(
 						"You can not add childrens for nodes with defined values. Node name "
-								+ name + ", value: " + value + ".");
+								+ this.name + ", value: " + this.value + ".");
 			}
 		}
 	}
@@ -146,12 +146,12 @@ public final class FeatureTreeNode {
 	 * @throws FeatureParsingException occurs when value adds to the node with childrens
 	 */
 	public void setValue(String value) throws FeatureParsingException {
-		if (children == null) {
+		if (this.children == null) {
 			this.value = value;
 		} else {
 			throw new FeatureParsingException(
 					"You can not add value for nodes with childrens. Node name "
-							+ name + ".");
+							+ this.name + ".");
 		}
 	}
 
@@ -160,7 +160,7 @@ public final class FeatureTreeNode {
 	 * them equals to attributes values
 	 */
 	public Map<String, String> getAttributes() {
-		return Collections.unmodifiableMap(attributes);
+		return Collections.unmodifiableMap(this.attributes);
 	}
 
 	/**
@@ -170,7 +170,7 @@ public final class FeatureTreeNode {
 	 * @param attributeValue value of the attribute
 	 */
 	public void addAttribute(String attributeName, String attributeValue) {
-		attributes.put(attributeName, attributeValue);
+		this.attributes.put(attributeName, attributeValue);
 	}
 
 	@Override
@@ -222,7 +222,18 @@ public final class FeatureTreeNode {
 		return true;
 	}
 
-	private static boolean isChildrenMatch(FeatureTreeNode aThis, FeatureTreeNode other) {
+	
+	/**
+     * { @inheritDoc }
+     */
+    @Override
+    public String toString() {
+        return "FeatureTreeNode [name=" + this.name + ", value=" + this.value
+                + ", parent=" + this.parent + ", attributes=" + this.attributes
+                + "]";
+    }
+
+    private static boolean isChildrenMatch(FeatureTreeNode aThis, FeatureTreeNode other) {
 		return aThis.children == other.children || !(aThis.children == null ^ other.children == null)
 				&& aThis.children.size() == other.children.size() && aThis.children.containsAll(other.children);
 	}

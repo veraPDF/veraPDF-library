@@ -52,10 +52,6 @@ public class FeaturesReport {
 		this.errors = errors;
 	}
 
-	private FeaturesReport() {
-		this(null, null, null, null, null, null, null, null, null, null, null, null);
-	}
-
 	static FeaturesReport fromValues(FeaturesCollection collection) {
 		FeaturesNode info = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.INFORMATION_DICTIONARY);
 		FeaturesNode metadata = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.METADATA);
