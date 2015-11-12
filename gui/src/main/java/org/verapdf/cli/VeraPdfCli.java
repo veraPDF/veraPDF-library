@@ -59,11 +59,15 @@ public final class VeraPdfCli {
         try {
             jCommander.parse(args);
         } catch (Exception e) {
-            logThrowableAndExit(e, "Couldn't parse parameters.", 1);
+            LOGGER.fatal("Couldn't parse parameters.", e);
+			return;
         }
-        messagesFromParser(jCommander, cliArgParser);
-        processPaths(cliArgParser.getPathsToValidate(),
-                profileFromInput(cliArgParser.getProfile()));
+        if (!messagesFromParser(jCommander, cliArgParser)) {
+			ValidationProfile profile = profileFromInput(cliArgParser.getProfile());
+			if (profile != null) {
+				processPaths(cliArgParser.getPathsToValidate(), profile);
+			}
+		}
 
     }
     private static void processPaths(final List<String> paths,
@@ -72,11 +76,11 @@ public final class VeraPdfCli {
             try (InputStream fis = new FileInputStream(pathToValidate)) {
                 ValidationResults.toXml(validate(fis, profile), System.out, Boolean.TRUE);
             } catch (FileNotFoundException e) {
-                logThrowable(e, "Could not find file: " + pathToValidate);
+				LOGGER.fatal("Could not find file: " + pathToValidate, e);
             } catch (IOException e) {
-                logThrowable(e, "Could not read file: " + pathToValidate);
+				LOGGER.fatal("Could not read file: " + pathToValidate, e);
             } catch (ValidationException | JAXBException e) {
-                logThrowable(e, "Exception thrown validating file: " + pathToValidate);
+                LOGGER.fatal("Exception thrown validating file: " + pathToValidate, e);
             }
         }
     }
@@ -105,30 +109,17 @@ public final class VeraPdfCli {
         try (InputStream toParse = new FileInputStream(userInput)) {
             return LegacyProfileConverter.fromLegacyStream(toParse, PDFAFlavour.NO_FLAVOUR);
         } catch (ProfileException | IOException e) {
-            logThrowableAndExit(e, "ProfileException parsing: "
-                    + userInput, 1);
+            LOGGER.fatal("ProfileException parsing: "+ userInput, e);
+			return null;
         }
-        return Profiles.defaultProfile();
     }
 
-    private static void logThrowableAndExit(final Throwable cause,
-            final String message, final int retVal) {
-        logThrowable(cause, message);
-        System.exit(retVal);
-    }
-
-    private static void logThrowable(final Throwable cause,
-            final String message) {
-        LOGGER.fatal(message, cause);
-        return;
-    }
-
-    private static void messagesFromParser(final JCommander jCommander,
+    private static boolean messagesFromParser(final JCommander jCommander,
             final VeraCliArgParser parser) {
         if (parser.isHelp()) {
             showVersionInfo();
             jCommander.usage();
-            System.exit(0);
+            return true;
         }
 
         if (parser.listProfiles()) {
@@ -138,6 +129,7 @@ public final class VeraPdfCli {
         if (parser.showVersion()) {
             showVersionInfo();
         }
+		return false;
     }
 
     private static void listProfiles() {
