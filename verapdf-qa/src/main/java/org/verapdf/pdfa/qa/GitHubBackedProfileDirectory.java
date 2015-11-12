@@ -102,15 +102,13 @@ public enum GitHubBackedProfileDirectory implements ProfileDirectory {
                 URL profileURL = new URL(profileURLString);
                 ValidationProfile profile = LegacyProfileConverter
                         .fromLegacyStream(profileURL.openStream(), flavour);
-                System.out.println("loading from " + profileURLString);
                 profileSet.add(profile);
             } catch (ProfileException | IOException e) {
                 System.err.println("Could not load GitHub profile for "
                         + flavour.getLevel().getName());
-                System.err.println(e.getMessage());;
+                System.err.println(e.getMessage());
             }
         }
-        System.out.println("size:" + profileSet.size());
         return profileSet;
     }
 }
