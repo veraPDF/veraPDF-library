@@ -252,9 +252,9 @@ public final class PBCreateNodeHelper {
 		}
 		FeatureTreeNode node;
 		if (parent == null) {
-			node = FeatureTreeNode.newRootInstance(nodeName);
+			node = FeatureTreeNode.newRootMetadataInstance(nodeName);
 		} else {
-			node = FeatureTreeNode.newChildInstance(nodeName, parent);
+			node = FeatureTreeNode.newChildMetadataInstance(nodeName, parent);
 		}
 		try {
 			byte[] bStream = metadata.getByteArray();

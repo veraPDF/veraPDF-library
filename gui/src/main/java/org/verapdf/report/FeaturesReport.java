@@ -58,40 +58,22 @@ public class FeaturesReport {
 		FeaturesNode docSec = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.DOCUMENT_SECURITY);
 		FeaturesNode lowLvl = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.LOW_LEVEL_INFO);
 
-		FeaturesNode embeddedFiles = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.EMBEDDED_FILE),
-				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EMBEDDED_FILE));
-		FeaturesNode iccProfiles = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.ICCPROFILE),
-				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ICCPROFILE));
-		FeaturesNode outputIntents = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.OUTPUTINTENT),
-				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.OUTPUTINTENT));
+		FeaturesNode embeddedFiles = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.EMBEDDED_FILE);
+		FeaturesNode iccProfiles = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.ICCPROFILE);
+		FeaturesNode outputIntents = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.OUTPUTINTENT);
 		FeaturesNode outlines = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.OUTLINES);
-		FeaturesNode annotations = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.ANNOTATION),
-				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ANNOTATION));
-		FeaturesNode pages = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.PAGE),
-				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE));
-		FeaturesNode errors = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.ERROR),
-				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR));
+		FeaturesNode annotations = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.ANNOTATION);
+		FeaturesNode pages = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.PAGE);
 		DocumentResourcesFeatures res = DocumentResourcesFeatures.fromValues(collection);
+		FeaturesNode errors = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.ERROR);
 		return new FeaturesReport(info, metadata, docSec, lowLvl, embeddedFiles, iccProfiles, outputIntents, outlines, annotations, pages, res, errors);
 	}
 
-//	static List<FeaturesNode> getListFromType(FeaturesCollection collection, FeaturesObjectTypesEnum type) {
-//		List<FeatureTreeNode> featureTreesForType = collection.getFeatureTreesForType(type);
-//		if (featureTreesForType.size() == 0) {
-//			return null;
-//		}
-//		List<FeaturesNode> res = new ArrayList<>();
-//		for (FeatureTreeNode node : featureTreesForType) {
-//			res.add(FeaturesNode.fromValues(node));
-//		}
-//		return res;
-//	}
-
 	static FeaturesNode getFirstNodeFromType(FeaturesCollection collection, FeaturesObjectTypesEnum type) {
 		List<FeatureTreeNode> featureTreesForType = collection.getFeatureTreesForType(type);
-		if (featureTreesForType.size() == 0) {
+		if (featureTreesForType.isEmpty()) {
 			return null;
 		}
-		return FeaturesNode.fromValues(collection.getFeatureTreesForType(type).get(0));
+		return FeaturesNode.fromValues(collection.getFeatureTreesForType(type).get(0), collection);
 	}
 }
