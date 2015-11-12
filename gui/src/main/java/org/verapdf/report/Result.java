@@ -52,12 +52,12 @@ public class Result {
 
 		Set<Rule> rules = getRules(assertions);
 
-		String fixerResultStatus = null;
-		Integer completedFixes = null;
+		String fixerResultStatus = "";
+		int completedFixes = 0;
 
 		if (fixerResult != null) {
 			MetadataFixerResult.RepairStatus repairStatus = fixerResult.getRepairStatus();
-			fixerResultStatus = repairStatus.getReadableName();
+			fixerResultStatus = repairStatus.getName();
 			if (SUCCESS == repairStatus
 					|| ID_REMOVED == repairStatus) {
 				completedFixes = fixerResult.getAppliedFixes().size();

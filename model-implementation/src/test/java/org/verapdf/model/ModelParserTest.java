@@ -13,12 +13,13 @@ import org.junit.Test;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class ModelLoaderTest {
+@SuppressWarnings({"static-method", "javadoc"})
+public class ModelParserTest {
 
-	@Test
+    @Test
 	public void testExistingFile() throws URISyntaxException, IOException {
 		String path = getSystemIndependentPath("/model/impl/pb/pd/Fonts.pdf");
-		try (ModelLoader loader = new ModelLoader(new FileInputStream(path))) {
+		try (ModelParser loader = new ModelParser(new FileInputStream(path))) {
 			Assert.assertNotNull(loader.getPDDocument());
 			Assert.assertNotNull(loader.getRoot());
 		}

@@ -273,17 +273,17 @@ public final class PBCreateNodeHelper {
 		return node;
 	}
 
-	private static void createGray(float[] components, FeatureTreeNode parent) throws FeatureParsingException {
+	private static void createGray(float[] components, FeatureTreeNode parent) {
 		parent.addAttribute("gray", String.valueOf(components[GRAY_COMPONENT_NUMBER]));
 	}
 
-	private static void createRGB(float[] components, FeatureTreeNode parent) throws FeatureParsingException {
+	private static void createRGB(float[] components, FeatureTreeNode parent) {
 		parent.addAttribute("red", String.valueOf(components[RED_COMPONENT_NUMBER]));
 		parent.addAttribute("green", String.valueOf(components[GREEN_COMPONENT_NUMBER]));
 		parent.addAttribute("blue", String.valueOf(components[BLUE_COMPONENT_NUMBER]));
 	}
 
-	private static void createCMYK(float[] components, FeatureTreeNode parent) throws FeatureParsingException {
+	private static void createCMYK(float[] components, FeatureTreeNode parent) {
 		parent.addAttribute("cyan", String.valueOf(components[CYAN_COMPONENT_NUMBER]));
 		parent.addAttribute("magenta", String.valueOf(components[MAGENTA_COMPONENT_NUMBER]));
 		parent.addAttribute("yellow", String.valueOf(components[YELLOW_COMPONENT_NUMBER]));
