@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.ParserConfigurationException;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -48,7 +47,7 @@ public class FeaturesNode {
     }
 
     static FeaturesNode fromValues(List<String> errors,
-            List<FeatureTreeNode> children) {
+                                   List<FeatureTreeNode> children) {
         List<Object> qChildren = new ArrayList<>();
         if (children != null) {
             for (FeatureTreeNode entry : children) {
@@ -138,7 +137,7 @@ public class FeaturesNode {
             return formatter.toString();
         }
     }
-    
+
     public static FeaturesNode fromXmp(final FeatureTreeNode xmpNode) throws SAXException, IOException, ParserConfigurationException {
         return nodeFromXmlElement(XmpHandler.parseMetadataRootElement(xmpNode));
     }

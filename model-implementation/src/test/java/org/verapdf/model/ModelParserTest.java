@@ -1,5 +1,8 @@
 package org.verapdf.model;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -7,16 +10,13 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 /**
  * @author Evgeniy Muravitskiy
  */
 @SuppressWarnings({"static-method", "javadoc"})
 public class ModelParserTest {
 
-    @Test
+	@Test
 	public void testExistingFile() throws URISyntaxException, IOException {
 		String path = getSystemIndependentPath("/model/impl/pb/pd/Fonts.pdf");
 		try (ModelParser loader = new ModelParser(new FileInputStream(path))) {

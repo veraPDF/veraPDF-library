@@ -92,6 +92,6 @@ public class FeaturesReport {
 		if (featureTreesForType.size() == 0) {
 			return null;
 		}
-        return FeaturesNode.fromValues(collection.getFeatureTreesForType(type).get(0));
+		return FeaturesNode.fromValues(collection.getFeatureTreesForType(type).get(0));
 	}
 }

@@ -222,18 +222,18 @@ public final class FeatureTreeNode {
 		return true;
 	}
 
-	
-	/**
-     * { @inheritDoc }
-     */
-    @Override
-    public String toString() {
-        return "FeatureTreeNode [name=" + this.name + ", value=" + this.value
-                + ", parent=" + this.parent + ", attributes=" + this.attributes
-                + "]";
-    }
 
-    private static boolean isChildrenMatch(FeatureTreeNode aThis, FeatureTreeNode other) {
+	/**
+	 * { @inheritDoc }
+	 */
+	@Override
+	public String toString() {
+		return "FeatureTreeNode [name=" + this.name + ", value=" + this.value
+				+ ", parent=" + this.parent + ", attributes=" + this.attributes
+				+ "]";
+	}
+
+	private static boolean isChildrenMatch(FeatureTreeNode aThis, FeatureTreeNode other) {
 		return aThis.children == other.children || !(aThis.children == null ^ other.children == null)
 				&& aThis.children.size() == other.children.size() && aThis.children.containsAll(other.children);
 	}

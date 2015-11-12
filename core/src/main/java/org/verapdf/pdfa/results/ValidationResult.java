@@ -3,11 +3,10 @@
  */
 package org.verapdf.pdfa.results;
 
-import java.util.Set;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.verapdf.pdfa.flavours.PDFAFlavour;
+import java.util.Set;
 
 /**
  * Created as the result of validating a PDF/A document against a
