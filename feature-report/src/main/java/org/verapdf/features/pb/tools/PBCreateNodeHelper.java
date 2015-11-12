@@ -16,7 +16,6 @@ import javax.xml.bind.DatatypeConverter;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -253,9 +252,9 @@ public final class PBCreateNodeHelper {
 		}
 		FeatureTreeNode node;
 		if (parent == null) {
-			node = FeatureTreeNode.newRootInstance(nodeName);
+			node = FeatureTreeNode.newRootMetadataInstance(nodeName);
 		} else {
-			node = FeatureTreeNode.newChildInstance(nodeName, parent);
+			node = FeatureTreeNode.newChildMetadataInstance(nodeName, parent);
 		}
 		try {
 			byte[] bStream = metadata.getByteArray();
@@ -273,17 +272,17 @@ public final class PBCreateNodeHelper {
 		return node;
 	}
 
-	private static void createGray(float[] components, FeatureTreeNode parent) throws FeatureParsingException {
+	private static void createGray(float[] components, FeatureTreeNode parent) {
 		parent.addAttribute("gray", String.valueOf(components[GRAY_COMPONENT_NUMBER]));
 	}
 
-	private static void createRGB(float[] components, FeatureTreeNode parent) throws FeatureParsingException {
+	private static void createRGB(float[] components, FeatureTreeNode parent) {
 		parent.addAttribute("red", String.valueOf(components[RED_COMPONENT_NUMBER]));
 		parent.addAttribute("green", String.valueOf(components[GREEN_COMPONENT_NUMBER]));
 		parent.addAttribute("blue", String.valueOf(components[BLUE_COMPONENT_NUMBER]));
 	}
 
-	private static void createCMYK(float[] components, FeatureTreeNode parent) throws FeatureParsingException {
+	private static void createCMYK(float[] components, FeatureTreeNode parent) {
 		parent.addAttribute("cyan", String.valueOf(components[CYAN_COMPONENT_NUMBER]));
 		parent.addAttribute("magenta", String.valueOf(components[MAGENTA_COMPONENT_NUMBER]));
 		parent.addAttribute("yellow", String.valueOf(components[YELLOW_COMPONENT_NUMBER]));

@@ -3,9 +3,8 @@
  */
 package org.verapdf.pdfa.validation;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.List;
 
 /**
  * Encapsulates the details of an error message, a String message and a

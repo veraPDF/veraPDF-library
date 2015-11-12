@@ -79,6 +79,13 @@ public class MachineReadableReport {
 		return res;
 	}
 
+	/**
+	 * @param result
+	 * @param fixerResult
+	 * @param collection
+	 * @param processingTime
+	 * @return a MachineReadableReport instance initialised from the passed values
+	 */
 	public static MachineReadableReport fromValues(ValidationResult result,
 												   MetadataFixerResult fixerResult,
 												   FeaturesCollection collection,
@@ -102,6 +109,12 @@ public class MachineReadableReport {
 		return new MachineReadableReport(info, creationDate, processingTimeValue, featuresReport);
 	}
 
+	/**
+	 * @param toConvert
+	 * @param stream
+	 * @param prettyXml
+	 * @throws JAXBException
+	 */
 	public static void toXml(final MachineReadableReport toConvert,
 							 final OutputStream stream, Boolean prettyXml) throws JAXBException {
 		Marshaller varMarshaller = getMarshaller(prettyXml);

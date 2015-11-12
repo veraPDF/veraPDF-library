@@ -22,7 +22,7 @@ public interface RuleDirectory {
 
     /**
      * Retrieve an individual Rule by {@link RuleId}.
-     * 
+     *
      * @param id
      *            the {@link RuleId} of the {@link Rule} to get
      * @return the {@link Rule} with {@link RuleId} == id

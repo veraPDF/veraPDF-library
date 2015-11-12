@@ -53,8 +53,8 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     private long endTimeOfValidation;
 
     ValidateWorker(CheckerPanel parent, File pdf, ValidationProfile profile,
-            Config settings, ProcessingType processingType,
-            boolean isFixMetadata) {
+                   Config settings, ProcessingType processingType,
+                   boolean isFixMetadata) {
         if (pdf == null || !pdf.isFile() || !pdf.canRead()) {
             throw new IllegalArgumentException(
                     "PDF file doesn't exist or it can not be read");
@@ -114,7 +114,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     }
 
     private MetadataFixerResult fixMetadata(ValidationResult info,
-            ModelParser parser) throws IOException {
+                                            ModelParser parser) throws IOException {
         FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(
                 parser.getPDDocument(), info);
         Path path = this.settings.getFixMetadataPathFolder();
@@ -173,7 +173,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     }
 
     private void writeReports(ValidationResult result,
-            MetadataFixerResult fixerResult, FeaturesCollection collection) {
+                              MetadataFixerResult fixerResult, FeaturesCollection collection) {
         try {
             this.xmlReport = File.createTempFile("veraPDF-tempXMLReport",
                     ".xml");

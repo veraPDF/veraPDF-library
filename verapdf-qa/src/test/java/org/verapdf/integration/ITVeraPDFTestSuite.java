@@ -1,16 +1,5 @@
 package org.verapdf.integration;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Enumeration;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.verapdf.core.ProfileException;
@@ -21,6 +10,13 @@ import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validation.Validator;
 import org.verapdf.validation.profile.parser.LegacyProfileConverter;
+
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class ITVeraPDFTestSuite {
     private static ValidationProfile PROFILE_1B;

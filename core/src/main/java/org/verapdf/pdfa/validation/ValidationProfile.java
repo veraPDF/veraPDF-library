@@ -1,10 +1,9 @@
 package org.verapdf.pdfa.validation;
 
-import java.util.Set;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.verapdf.pdfa.flavours.PDFAFlavour;
+import java.util.Set;
 
 /**
  * veraPDF ValidationProfiles encapsulate the validation rules and tests that

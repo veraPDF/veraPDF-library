@@ -22,10 +22,9 @@ public final class HTMLReport {
 
 	/**
 	 * Creates html validation report
+	 * @param report
+	 * @param destination 
 	 *
-	 * @param htmlReportPath    path with name of the resulting html report
-	 * @param xmlReport         xml validation report file
-	 * @param validationProfile validation profile file
 	 * @throws TransformerException if an unrecoverable error occurs during the course of the transformation or
 	 * @throws IOException          file system exceptions
 	 * @throws JAXBException 

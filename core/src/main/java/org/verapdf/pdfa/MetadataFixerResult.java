@@ -47,14 +47,14 @@ public interface MetadataFixerResult extends Iterable<String> {
 
 		ID_REMOVED("ID Removed");
 
-		private final String name;
+        private final String name;
 
-		RepairStatus(final String name) {
-			this.name = name;
-		}
+        RepairStatus(final String name) {
+            this.name = name;
+        }
 
-		public String getName() {
-			return this.name;
-		}
-	}
+        public String getName() {
+            return this.name;
+        }
+    }
 }
