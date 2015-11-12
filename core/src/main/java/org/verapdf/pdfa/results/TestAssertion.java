@@ -3,9 +3,9 @@
  */
 package org.verapdf.pdfa.results;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import org.verapdf.pdfa.validation.RuleId;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * A TestAssertion records the result of performing a validation test on a

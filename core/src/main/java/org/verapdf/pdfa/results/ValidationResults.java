@@ -3,20 +3,13 @@
  */
 package org.verapdf.pdfa.results;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.Set;
-
-import javax.xml.bind.JAXBException;
-
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.RuleId;
+
+import javax.xml.bind.JAXBException;
+import java.io.*;
+import java.util.Set;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -69,7 +62,7 @@ public class ValidationResults {
      * static single instance, i.e.
      * <code>ValidationResults.defaultResult() == ValidationResults.defaultResult()</code>
      * is always true.
-     * 
+     *
      * @return the default ValidationResult instance
      */
     public static ValidationResult defaultResult() {
@@ -104,7 +97,7 @@ public class ValidationResults {
      * static single instance, i.e.
      * <code>ValidationResults.defaultAssertion() == ValidationResults.defaultAssertion()</code>
      * is always true.
-     * 
+     *
      * @return the default TestAssertion instance
      */
     public static TestAssertion defaultAssertion() {
@@ -132,7 +125,7 @@ public class ValidationResults {
      * single instance, i.e.
      * <code>ValidationResults.defaultLocation() == ValidationResults.defaultLocation()</code>
      * is always true.
-     * 
+     *
      * @return the default Location instance
      */
     public static Location defaultLocation() {
@@ -160,7 +153,7 @@ public class ValidationResults {
      *             if a problem occurs writing the converted result to a String.
      */
     public static String resultToXml(final ValidationResult toConvert,
-            Boolean prettyXml) throws JAXBException, IOException {
+                                     Boolean prettyXml) throws JAXBException, IOException {
         String retVal = "";
         try (StringWriter writer = new StringWriter()) {
             toXml(toConvert, writer, prettyXml);

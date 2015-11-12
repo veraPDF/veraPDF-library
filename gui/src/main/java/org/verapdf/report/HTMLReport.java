@@ -22,7 +22,7 @@ public final class HTMLReport {
 
 	/**
 	 * Creates html validation report
-	 * @param report 
+	 * @param report
 	 * @param destination 
 	 *
 	 * @throws TransformerException if an unrecoverable error occurs during the course of the transformation or
