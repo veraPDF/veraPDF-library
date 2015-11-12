@@ -3,10 +3,12 @@ package org.verapdf.report;
 import org.verapdf.pdfa.MetadataFixerResult;
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.RuleId;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -40,7 +42,7 @@ public class Result {
 	}
 
 	private Result() {
-		this(false, "", Summary.fromValues(0, 0, 0, 0, null, 0), Details.fromValue(new HashSet<Rule>()));
+		this(false, "", Summary.fromValues(ValidationResults.defaultResult(), null, 0), Details.fromValue(new HashSet<Rule>()));
 	}
 
 	static Result fromValues(ValidationResult info, MetadataFixerResult fixerResult) {
@@ -67,7 +69,7 @@ public class Result {
 		return new Result(
 				compliant,
 				statement,
-				Summary.fromValues(0, 0, 0, 0, fixerResultStatus, completedFixes),
+				Summary.fromValues(info, fixerResultStatus, completedFixes),
 				Details.fromValue(rules));
 	}
 
