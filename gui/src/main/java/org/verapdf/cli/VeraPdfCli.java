@@ -17,13 +17,15 @@ import org.verapdf.cli.commands.VeraCliArgParser;
 import org.verapdf.core.ProfileException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.model.ModelParser;
+import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.ProfileDirectory;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validators.Validator;
+import org.verapdf.pdfa.validators.SimpleValidator;
+import org.verapdf.pdfa.validators.Validators;
 import org.verapdf.validation.profile.parser.LegacyProfileConverter;
 
 import com.beust.jcommander.JCommander;
@@ -86,8 +88,9 @@ public final class VeraPdfCli {
     private static ValidationResult validate(final InputStream toValidate,
             final ValidationProfile profile) throws IOException, ValidationException {
             try (ModelParser parser = new ModelParser(toValidate)) {
-                return Validator.validate(profile,
-                        parser.getRoot(), false);
+                PDFAValidator validator = Validators.validate(profile,
+                        false);
+                return validator.validate(parser);
             }
     }
     

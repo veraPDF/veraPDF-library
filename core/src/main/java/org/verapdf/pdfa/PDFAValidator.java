@@ -1,7 +1,9 @@
 package org.verapdf.pdfa;
 
+import java.io.IOException;
 import java.io.InputStream;
 
+import org.verapdf.core.ValidationException;
 import org.verapdf.pdfa.config.ValidatorConfiguration;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.ValidationProfile;
@@ -41,5 +43,5 @@ public interface PDFAValidator {
      *             if the toValidate parameter is null PDFAValidationException
      *             if the validation process fails
      */
-    public ValidationResult validate(InputStream toValidate);
+    public ValidationResult validate(ValidationModelParser toValidate) throws ValidationException, IOException;
 }

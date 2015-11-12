@@ -15,11 +15,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.verapdf.core.ProfileException;
 import org.verapdf.model.ModelParser;
+import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validators.Validator;
+import org.verapdf.pdfa.validators.Validators;
 import org.verapdf.validation.profile.parser.LegacyProfileConverter;
 
 public class ITVeraPDFTestSuite {
@@ -67,8 +68,9 @@ public class ITVeraPDFTestSuite {
                 System.out.println("Testing: " + entry.getName());
                 try (ModelParser loader = new ModelParser(
                         zipIn.getInputStream(entry))) {
-                    ValidationResult result = Validator.validate(PROFILE_1B,
-                            loader.getRoot(), false);
+                    PDFAValidator validator = Validators.validate(PROFILE_1B,
+                            false);
+                    ValidationResult result = validator.validate(loader);
                     ValidationResults.toXml(result, System.out, Boolean.TRUE);
                     System.out.println();
                 } catch (Exception e) {

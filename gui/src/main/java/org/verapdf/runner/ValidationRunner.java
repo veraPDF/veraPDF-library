@@ -9,10 +9,12 @@ import javax.xml.bind.JAXBException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.model.ModelParser;
+import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.pdfa.validators.Validator;
+import org.verapdf.pdfa.validators.SimpleValidator;
+import org.verapdf.pdfa.validators.Validators;
 
 public class ValidationRunner {
 
@@ -26,19 +28,22 @@ public class ValidationRunner {
      * @param config
      *            validation task configuration
      * @return the validation result
-     * @throws VeraPDFException 
-     * @throws IOException 
+     * @throws VeraPDFException
+     * @throws IOException
      */
-    public static ValidationResult runValidation(InputStream toValidate) throws VeraPDFException, IOException {
+    public static ValidationResult runValidation(InputStream toValidate)
+            throws VeraPDFException, IOException {
         try (ModelParser loader = new ModelParser(toValidate)) {
             org.verapdf.model.baselayer.Object root;
             try {
                 root = loader.getRoot();
             } catch (IOException e) {
-                throw new VeraPDFException("IOException when parsing Validation Model.", e);
+                throw new VeraPDFException(
+                        "IOException when parsing Validation Model.", e);
             }
-            ValidationResult result = Validator.validate(PDFAFlavour.PDFA_1_B,
-                    root, false);
+            PDFAValidator validator = Validators.validate(PDFAFlavour.PDFA_1_B,
+                    false);
+            ValidationResult result = validator.validate(loader);
             ValidationResults.toXml(result, System.out, Boolean.TRUE);
             return result;
             // TODO: Better exception handling, we need a policy and this isn't

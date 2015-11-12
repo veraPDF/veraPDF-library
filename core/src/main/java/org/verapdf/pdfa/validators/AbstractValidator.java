@@ -3,6 +3,7 @@
  */
 package org.verapdf.pdfa.validators;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -19,6 +20,7 @@ import org.mozilla.javascript.ScriptableObject;
 import org.verapdf.core.ValidationException;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.PDFAValidator;
+import org.verapdf.pdfa.ValidationModelParser;
 import org.verapdf.pdfa.results.Location;
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
@@ -58,7 +60,7 @@ public abstract class AbstractValidator implements PDFAValidator {
     }
 
     protected ValidationResult validate(Object root) throws ValidationException {
-        initialize();
+        initialise();
         this.rootType = root.getObjectType();
         this.objectsStack.push(root);
         this.objectsContext.push("root");
@@ -81,7 +83,7 @@ public abstract class AbstractValidator implements PDFAValidator {
         return ValidationResults.resultFromValues(this.profile.getPDFAFlavour(), this.results);
     }
 
-    private void initialize() {
+    protected void initialise() {
         this.context = Context.enter();
         this.context.setOptimizationLevel(OPTIMIZATION_LEVEL);
         this.scope = this.context.initStandardObjects();
@@ -332,16 +334,12 @@ public abstract class AbstractValidator implements PDFAValidator {
      */
     @Override
     public ValidationProfile getProfile() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.profile;
     }
 
-    /* (non-Javadoc)
-     * @see org.verapdf.pdfa.PDFAValidator#validate(java.io.InputStream)
-     */
+
     @Override
-    public ValidationResult validate(InputStream toValidate) {
-        // TODO Auto-generated method stub
-        return null;
+    public ValidationResult validate(ValidationModelParser toValidate) throws ValidationException, IOException {
+        return this.validate(toValidate.getRoot());
     }
 }
