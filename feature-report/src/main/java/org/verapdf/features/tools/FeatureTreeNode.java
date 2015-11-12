@@ -59,7 +59,7 @@ public final class FeatureTreeNode {
 	 * @return a new FeatureTreeNode with no parent
 	 * @throws FeatureParsingException when
 	 */
-	public static FeatureTreeNode newRootInstanceWIthValue(
+	public static FeatureTreeNode newRootInstanceWithValue(
 			final String name, final String value)
 			throws FeatureParsingException {
 		return new FeatureTreeNode(name, value);
