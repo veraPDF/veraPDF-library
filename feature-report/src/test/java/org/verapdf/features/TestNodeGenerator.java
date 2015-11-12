@@ -4,7 +4,6 @@ import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.pb.tools.PBCreateNodeHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
@@ -204,7 +203,7 @@ public final class TestNodeGenerator {
 		FeatureTreeNode.newChildInstanceWithValue("scaling", "75.0", root);
 		FeatureTreeNode thumb = FeatureTreeNode.newChildInstance("thumbnail", root);
 		thumb.addAttribute(ID, "xobjIndir126");
-		FeatureTreeNode.newChildInstanceWithValue("metadata", DatatypeConverter.printHexBinary(getMetadataBytesFromFile("/page1_metadata_bytes.txt")), root);
+		FeatureTreeNode.newChildMetadataInstanceWithValue("metadata", getMetadataBytesFromFile("/page1_metadata_bytes.txt"), root);
 
 		List<String> annotations = new ArrayList<>();
 		annotations.add("annotIndir13");
@@ -452,7 +451,7 @@ public final class TestNodeGenerator {
 		PBCreateNodeHelper.addNotEmptyNode("deviceModel", deviceModel, root);
 		PBCreateNodeHelper.addNotEmptyNode("deviceManufacturer", deviceManufacturer, root);
 		if (metadata != null) {
-			FeatureTreeNode.newChildInstanceWithValue("metadata", DatatypeConverter.printHexBinary(metadata), root);
+			FeatureTreeNode.newChildMetadataInstanceWithValue("metadata", metadata, root);
 		}
 
 		return root;
@@ -511,7 +510,7 @@ public final class TestNodeGenerator {
 	}
 
 	public static FeatureTreeNode getMetadataNode() throws FeatureParsingException, FileNotFoundException, URISyntaxException {
-		return FeatureTreeNode.newRootInstanceWIthValue(METADATA, DatatypeConverter.printHexBinary(getMetadataBytesFromFile("/metadata_bytes.txt")));
+		return FeatureTreeNode.newRootMetadataInstanceWithValue(METADATA, getMetadataBytesFromFile("/metadata_bytes.txt"));
 	}
 
 	public static byte[] getMetadataBytesFromFile(String path) throws URISyntaxException, FileNotFoundException {

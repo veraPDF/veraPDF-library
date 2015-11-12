@@ -3,6 +3,10 @@
  */
 package org.verapdf.pdfa.validation;
 
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
+
+import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -11,19 +15,36 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.xml.bind.JAXBException;
-
-import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
-
 /**
- * TODO: Defensive Checks for all parameters & JavaDoc
- *
+ * Utitlity class that provides helper methods for handling
+ * {@link ValidationProfile}s and associated classes.
+ * <p>
+ * The utility methods generally fall into one of the following categories:
+ * <ul>
+ * <li>default instance creators, <code>defaultTypeName()</code>, used for
+ * testing or when a vanilla instance of a particular type is required.</li>
+ * <li>from values instance creators, <code>typeNameFromValues(...)</code>, used
+ * to create instances from their contained types.</li>
+ * <li>XML helper methods, <code>typeNameToXml(...)</code>, to facilitate XML
+ * serialisation to Strings, OutputStreams and Writers.</li>
+ * <li>XML helper methods, <code>typeNameFromXml(...)</code>, to facilitate XML
+ * deserialisation.</li>
+ * </ul>
+ * Note that XML serialisation and de-serialisation is achieved through JAXB
+ * bindings.
+ * </p>
+ * <p>
+ * TODO: Defensive Checks for all parameters.
+ * </p>
+ * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
 public final class Profiles {
     /**
+     * Returns a {@link ValidationProfile} instance initialised with the passed
+     * values.
+     * 
      * @param flavour
      *            the PDF/A flavour supported by this profile represented as a
      *            {@link PDFAFlavour} instance.
@@ -40,9 +61,10 @@ public final class Profiles {
      *             if any of the passed parameters are null or if any of name,
      *             description or creator are empty.
      */
-    public static ValidationProfile profileFromValues(final PDFAFlavour flavour,
-            final ProfileDetails details, final String hash,
-            final Set<Rule> rules, final Set<Variable> variables) {
+    public static ValidationProfile profileFromValues(
+            final PDFAFlavour flavour, final ProfileDetails details,
+            final String hash, final Set<Rule> rules,
+            final Set<Variable> variables) {
         if (flavour == null)
             throw new IllegalArgumentException(
                     "Parameter flavour can not be null.");
@@ -63,6 +85,11 @@ public final class Profiles {
     }
 
     /**
+     * Returns an immutable default instance of a ValidationProfile. This is a
+     * static single instance, i.e.
+     * <code>Profiles.defaultProfile() == Profiles.defaultProfile()</code> is
+     * always true.
+     * 
      * @return the {@link ValidationProfile} default instance
      */
     public static ValidationProfile defaultProfile() {
@@ -70,18 +97,32 @@ public final class Profiles {
     }
 
     /**
+     * Returns a {@link ProfileDetails} instance initialised using the passed
+     * values.
+     * 
      * @param name
+     *            a String name that identifies the profile
      * @param description
+     *            a short, textual String description of the profile.
      * @param creator
+     *            a String that identifies the creator of the profile
      * @param created
-     * @return
+     *            a {@link Date} instance indicating when the profile was
+     *            created.
+     * @return the ProfileDetails instance initialised from the values
      */
     public static ProfileDetails profileDetailsFromValues(final String name,
             final String description, final String creator, final Date created) {
-        return ProfileDetailsImpl.fromValues(name, description, creator, created);
+        return ProfileDetailsImpl.fromValues(name, description, creator,
+                created);
     }
 
     /**
+     * Returns an immutable default instance of a Reference. This is a static
+     * single instance, i.e.
+     * <code>Profiles.defaultReference() == Profiles.defaultReference()</code>
+     * is always true.
+     *
      * @return the {@link Reference} default instance
      */
     public static Reference defaultReference() {
@@ -89,13 +130,15 @@ public final class Profiles {
     }
 
     /**
+     * Returns a {@link Reference} instance initialised with the passed values.
+     * 
      * @param specification
      *            a String identifying the specification the {@link Reference}
      *            refers to.
      * @param clause
      *            a String identifying the location referred to within the
      *            specification.
-     * @return a new Reference instance
+     * @return an appropriately initialised Reference instance
      * @throws IllegalArgumentException
      *             if any of the parameters are null or the specification is
      *             empty
@@ -115,6 +158,11 @@ public final class Profiles {
     }
 
     /**
+     * Returns an immutable default instance of a RuleId. This is a static
+     * single instance, i.e.
+     * <code>Profiles.defaultRuleId() == Profiles.defaultRuleId()</code> is
+     * always true.
+     *
      * @return the {@link RuleId} default instance
      */
     public static RuleId defaultRuleId() {
@@ -122,6 +170,8 @@ public final class Profiles {
     }
 
     /**
+     * Returns a {@link RuleId} instance initialised with the passed values.
+     * 
      * @param specification
      *            a {@link Specification} instance identifying the PDF/A
      *            specification part the RuleId is derived
@@ -131,7 +181,7 @@ public final class Profiles {
      * @param testNumber
      *            an <code>int</code> that identifies the test number for the
      *            RuleId
-     * @return a new RuleId instance
+     * @return a RuleId instance
      * @throws IllegalArgumentException
      *             if any of the parameters are null or the clause is empty
      */
@@ -150,6 +200,11 @@ public final class Profiles {
     }
 
     /**
+     * Returns an immutable default instance of a Rule. This is a static single
+     * instance, i.e.
+     * <code>Profiles.defaultRule() == Profiles.defaultRule()</code> is always
+     * true.
+     *
      * @return the {@link Rule} default instance
      */
     public static Rule defaultRule() {
@@ -157,6 +212,11 @@ public final class Profiles {
     }
 
     /**
+     * Returns an immutable default instance of ErrorDetails. This is a static
+     * single instance, i.e.
+     * <code>Profiles.defaultError() == Profiles.defaultError()</code> is always
+     * true.
+     *
      * @return the {@link ErrorDetails} default instance
      */
     public static ErrorDetails defaultError() {
@@ -164,11 +224,14 @@ public final class Profiles {
     }
 
     /**
+     * Returns a {@link ErrorDetails} instance initialised with the passed
+     * values.
+     * 
      * @param message
      *            a String message for the {@link ErrorDetails}
      * @param arguments
      *            a List of String arguments for the {@link ErrorDetails}.
-     * @return a new {@link ErrorDetails} instance
+     * @return an {@link ErrorDetails} instance
      * @throws IllegalArgumentException
      *             if any of the parameters are null or message is empty
      */
@@ -187,6 +250,8 @@ public final class Profiles {
     }
 
     /**
+     * Returns a {@link Rule} instance initialised with the passed values.
+     * 
      * @param id
      *            the {@link RuleId} id for the {@link Rule}
      * @param object
@@ -200,7 +265,7 @@ public final class Profiles {
      *            the {@link ErrorDetails} associated with the{@link Rule}.
      * @param references
      *            a list of further {@link Reference}s for this rule
-     * @return a new {@link Rule} instance.
+     * @return a {@link Rule} instance.
      * @throws IllegalArgumentException
      *             if any of the parameters are null or the test, object, or
      *             description is empty
@@ -239,6 +304,11 @@ public final class Profiles {
     }
 
     /**
+     * Returns an immutable default instance of a Variable. This is a static
+     * single instance, i.e.
+     * <code>Profiles.defaultVariable() == Profiles.defaultVariable()</code> is
+     * always true.
+     *
      * @return the {@link Variable} default instance
      */
     public static Variable defaultVariable() {
@@ -246,6 +316,8 @@ public final class Profiles {
     }
 
     /**
+     * Returns a {@link Variable} instance initialised with the passed values.
+     * 
      * @param name
      *            a name for the {@link Variable}
      * @param object
@@ -285,6 +357,8 @@ public final class Profiles {
     }
 
     /**
+     * Convert a {@link ValidationProfile} instance into an XML String.
+     * 
      * @param toConvert
      *            a {@link ValidationProfile} to convert to an XML String
      * @param prettyXml
@@ -300,8 +374,8 @@ public final class Profiles {
      * @throws IllegalArgumentException
      *             if toConvert is null
      */
-    public static String profileToXmlString(final ValidationProfile toConvert,
-            final Boolean prettyXml) throws JAXBException, IOException {
+    public static String profileToXml(final ValidationProfile toConvert,
+                                      final Boolean prettyXml) throws JAXBException, IOException {
         if (toConvert == null)
             throw new IllegalArgumentException(
                     "Parameter toConvert cannot be null");
@@ -309,6 +383,9 @@ public final class Profiles {
     }
 
     /**
+     * Convert a {@link ValidationProfile} instance to XML and serialise to the
+     * {@link OutputStream} <code>forXMLOutput</code>.
+     *
      * @param toConvert
      *            a {@link ValidationProfile} to convert to an XML String
      * @param forXmlOutput
@@ -332,6 +409,9 @@ public final class Profiles {
     }
 
     /**
+     * Attempt to de-serialise and return a {@link ValidationProfile} instance
+     * from an XML representation that can be read from <code>toConvert</code>.
+     *
      * @param toConvert
      *            an InputStream to an XML representation of a profile
      * @return a new {@link ValidationProfile} instance
@@ -350,6 +430,9 @@ public final class Profiles {
     }
 
     /**
+     * Convert a {@link ValidationProfile} instance to XML and serialise to the
+     * {@link Writer} <code>forXMLOutput</code>.
+     *
      * @param toConvert
      *            a {@link ValidationProfile} to convert to an XML String
      * @param forXmlOutput
@@ -372,6 +455,16 @@ public final class Profiles {
     }
 
     /**
+     * Create a {@link ProfileDirectory} from a <code>Set</code> of
+     * {@link ValidationProfile}s. Note that the returned directory uses each
+     * <code>ValidationProfile</code>'s associated {@link PDFAFlavour} as a
+     * directory key. This means that only a single
+     * <code>ValidationProfile</code> can be associated with a particular
+     * <code>PDFAFlavour</code>. If the <code>Set</code> of Profiles passed in
+     * <code>profiles</code> contains multiple <code>ValidationProfile</code>s
+     * with the same <code>PDFAFlavour</code> only one will be contained in the
+     * returned <code>ProfileDirectory</code>. Which one is indeterminate.
+     * 
      * @param profiles
      *            a Set of {@link ValidationProfile}s used to populate the
      *            directory instance
@@ -392,7 +485,19 @@ public final class Profiles {
     }
 
     /**
-     * @return the pre-populated veraPDF ValidationProfile directory 
+     * Returns a {@link ProfileDirectory} instance that has been pre-populated
+     * with the curated {@link ValidationProfile}s supplied with the veraPDF
+     * library.
+     * <p>
+     * While the veraPDF library and associated <code>ValidationProfile</code>s
+     * are under development, there is no guarantee that the profiles supplied
+     * are complete and accurate. Please check the <a
+     * href="https://github.com/veraPDF/veraPDF-validation-profiles">validation
+     * profiles GitHub repo</a> to find out the current status of our
+     * ValidationProfiles.
+     * </p>
+     *
+     * @return the pre-populated veraPDF ValidationProfile directory
      */
     public static ProfileDirectory getVeraProfileDirectory() {
         return ProfileDirectoryImpl.getVeraProfileDirectory();

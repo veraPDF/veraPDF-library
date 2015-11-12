@@ -35,23 +35,13 @@ public class DocumentResourcesFeatures {
 		this.graphicsStates = graphicsStates;
 	}
 
-	public DocumentResourcesFeatures() {
-		this(null, null, null, null, null, null, null);
-	}
-
 	static DocumentResourcesFeatures fromValues(FeaturesCollection collection) {
-		FeaturesNode graphicsStates = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.EXT_G_STATE),
-				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE));
-		FeaturesNode colorSpaces = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.COLORSPACE),
-				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.COLORSPACE));
-		FeaturesNode patterns = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.PATTERN),
-				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN));
-		FeaturesNode shadings = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.SHADING),
-				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.SHADING));
-		FeaturesNode fonts = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.FONT),
-				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FONT));
-		FeaturesNode propertiesDicts = FeaturesNode.fromValues(collection.getErrorsForType(FeaturesObjectTypesEnum.PROPERTIES),
-				collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROPERTIES));
+		FeaturesNode graphicsStates = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.EXT_G_STATE);
+		FeaturesNode colorSpaces = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.COLORSPACE);
+		FeaturesNode patterns = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.PATTERN);
+		FeaturesNode shadings = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.SHADING);
+		FeaturesNode fonts = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.FONT);
+		FeaturesNode propertiesDicts = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.PROPERTIES);
 		XObjectFeatures xobjects = XObjectFeatures.fromValues(collection);
 		return new DocumentResourcesFeatures(propertiesDicts, fonts, xobjects, shadings, patterns, colorSpaces, graphicsStates);
 	}

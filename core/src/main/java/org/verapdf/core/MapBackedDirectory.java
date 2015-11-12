@@ -3,14 +3,11 @@
  */
 package org.verapdf.core;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
+ * A {@link java.util.Map} backed {@link Directory} implementation.
+ 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  * @param <K>
  *            A key or lookup type
@@ -22,10 +19,10 @@ public class MapBackedDirectory<K, V> implements Directory<K, V> {
     protected final Map<K, V> map;
     
     /**
-     * 
+     * Creates an empty directory backed by an empty Map
      */
     public MapBackedDirectory() {
-        this(Collections.EMPTY_MAP);
+        this(Collections.<K, V>emptyMap());
     }
     /**
      * @param map

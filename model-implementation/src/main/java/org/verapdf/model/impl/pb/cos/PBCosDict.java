@@ -44,7 +44,7 @@ public class PBCosDict extends PBCosObject implements CosDict {
      * @param dictionary pdfbox COSDictionary
      * @param type type of child class
      */
-    public PBCosDict(COSDictionary dictionary, final String type) {
+    protected PBCosDict(COSDictionary dictionary, final String type) {
         super(dictionary, type);
         this.size = dictionary.size();
     }

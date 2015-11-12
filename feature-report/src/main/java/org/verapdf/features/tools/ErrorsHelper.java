@@ -50,7 +50,7 @@ public final class ErrorsHelper {
 			if (id == null) {
 				id = "error" + collection.getFeatureTreesForType(
 						FeaturesObjectTypesEnum.ERROR).size();
-				FeatureTreeNode error = FeatureTreeNode.newRootInstanceWIthValue(
+				FeatureTreeNode error = FeatureTreeNode.newRootInstanceWithValue(
 						"error", errorMessage);
 				error.addAttribute(ErrorsHelper.ID, id);
 				collection.addNewFeatureTree(FeaturesObjectTypesEnum.ERROR,

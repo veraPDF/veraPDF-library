@@ -11,8 +11,11 @@ import java.util.Date;
 import java.util.Properties;
 
 /**
+ * Class that encapsulates the release details of the veraPDF validation
+ * library. The class controls instance creation so that only a single,
+ * static and immutable instance is available.
+ * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *
  */
 public final class ReleaseDetails {
     private static final String APPLICATION_PROPERTIES_PATH = "org/verapdf/verapdf.properties";
@@ -138,10 +141,12 @@ public final class ReleaseDetails {
         if (!dateFormat.equals(RAW_DATE_FORMAT)) {
             SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
             try {
-                date = formatter.parse(props.getProperty("verapdf.release.date"));
+                date = formatter.parse(props
+                        .getProperty("verapdf.release.date"));
             } catch (ParseException e) {
                 /**
-                 * Safe to ignore this exception as release simply set to new date.
+                 * Safe to ignore this exception as release simply set to new
+                 * date.
                  */
             }
         }

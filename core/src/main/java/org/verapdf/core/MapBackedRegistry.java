@@ -3,12 +3,14 @@
  */
 package org.verapdf.core;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
+ * A {@link java.util.Map} backed {@link Registry} implementation.
+ * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  * @param <K>
  *            A key or lookup type
@@ -19,14 +21,17 @@ import java.util.Set;
 public class MapBackedRegistry<K, V> extends MapBackedDirectory<K, V> implements
         Registry<K, V> {
     /**
-     * @param map
+     * Creates an empty registry instance, initialised with an empty map
      */
     public MapBackedRegistry() {
-        this(Collections.EMPTY_MAP);
+        this(new HashMap<K, V>());
     }
 
     /**
+     * Creates a registry instance initialise using the passed map
+     * 
      * @param map
+     *            a <code>Map<K, V> instance used to initialise the registry.
      */
     public MapBackedRegistry(final Map<K, V> map) {
         super(map);

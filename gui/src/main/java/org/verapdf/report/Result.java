@@ -52,12 +52,12 @@ public class Result {
 
 		Set<Rule> rules = getRules(assertions);
 
-		String fixerResultStatus = null;
-		Integer completedFixes = null;
+		String fixerResultStatus = "";
+		int completedFixes = 0;
 
 		if (fixerResult != null) {
 			MetadataFixerResult.RepairStatus repairStatus = fixerResult.getRepairStatus();
-			fixerResultStatus = repairStatus.getReadableName();
+			fixerResultStatus = repairStatus.getName();
 			if (SUCCESS == repairStatus
 					|| ID_REMOVED == repairStatus) {
 				completedFixes = fixerResult.getAppliedFixes().size();
@@ -77,7 +77,7 @@ public class Result {
 
 		for (TestAssertion assertion : assertions) {
 			RuleId id = assertion.getRuleId();
-			String ruleId = id.getSpecfication().getId() + id.getClause() + String.valueOf(id.getTestNumber());
+			String ruleId = id.getSpecification().getId() + id.getClause() + String.valueOf(id.getTestNumber());
 
 			Rule rule = rulesMap.get(ruleId);
 			if (rule == null) {

@@ -3,11 +3,13 @@
  */
 package org.verapdf.pdfa.validation;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Date;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 /**
+ * Convenience gathering of a set of properties that help identify and describe
+ * a {@link ValidationProfile}.
+ * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */

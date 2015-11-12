@@ -3,20 +3,13 @@
  */
 package org.verapdf.cli;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-
-import javax.xml.bind.JAXBException;
-
+import com.beust.jcommander.JCommander;
 import org.apache.log4j.Logger;
 import org.verapdf.ReleaseDetails;
 import org.verapdf.cli.commands.VeraCliArgParser;
 import org.verapdf.core.ProfileException;
 import org.verapdf.core.ValidationException;
-import org.verapdf.model.ModelLoader;
+import org.verapdf.model.ModelParser;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
@@ -26,7 +19,12 @@ import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validation.Validator;
 import org.verapdf.validation.profile.parser.LegacyProfileConverter;
 
-import com.beust.jcommander.JCommander;
+import javax.xml.bind.JAXBException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -85,9 +83,9 @@ public final class VeraPdfCli {
 
     private static ValidationResult validate(final InputStream toValidate,
             final ValidationProfile profile) throws IOException, ValidationException {
-            try (ModelLoader loader = new ModelLoader(toValidate)) {
+        try (ModelParser parser = new ModelParser(toValidate)) {
                 return Validator.validate(profile,
-                        loader.getRoot(), false);
+                        parser.getRoot(), false);
             }
     }
     

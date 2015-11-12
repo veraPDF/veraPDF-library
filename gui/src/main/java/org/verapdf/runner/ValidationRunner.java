@@ -1,18 +1,17 @@
 package org.verapdf.runner;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.xml.bind.JAXBException;
-
 import org.verapdf.core.ValidationException;
 import org.verapdf.core.VeraPDFException;
-import org.verapdf.model.ModelLoader;
+import org.verapdf.model.ModelParser;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.Validator;
+
+import javax.xml.bind.JAXBException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ValidationRunner {
 
@@ -30,7 +29,7 @@ public class ValidationRunner {
      * @throws IOException 
      */
     public static ValidationResult runValidation(InputStream toValidate) throws VeraPDFException, IOException {
-        try (ModelLoader loader = new ModelLoader(toValidate)) {
+        try (ModelParser loader = new ModelParser(toValidate)) {
             org.verapdf.model.baselayer.Object root;
             try {
                 root = loader.getRoot();

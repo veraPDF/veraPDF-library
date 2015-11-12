@@ -1,10 +1,9 @@
 package org.verapdf.pdfa.validation;
 
-import java.util.Set;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import org.verapdf.pdfa.flavours.PDFAFlavour;
+import java.util.Set;
 
 /**
  * veraPDF ValidationProfiles encapsulate the validation rules and tests that
@@ -21,7 +20,7 @@ public interface ValidationProfile {
      *         and conformance level tested by this profile.
      */
     public PDFAFlavour getPDFAFlavour();
-    
+
     /**
      * @return the {@link ProfileDetails} for this profile.
      */
@@ -41,12 +40,17 @@ public interface ValidationProfile {
 
     /**
      * @param id
-     * @return
+     *            the {@link RuleId} of the {@link Rule} to be retrieved.
+     * @return the {@link Rule} associated with this id
      */
     public Rule getRuleByRuleId(final RuleId id);
 
     /**
+     * Retrieve the complete Set of validation {@link Rule}s associated with a
+     * PDF object
+     * 
      * @param objectName
+     *            the String name identifier for the object
      * @return the full set of Validation {@link Rule}s that are associated with
      *         object name
      */

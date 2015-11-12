@@ -1,26 +1,22 @@
 package org.verapdf.integration;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.Enumeration;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.verapdf.core.ProfileException;
-import org.verapdf.model.ModelLoader;
+import org.verapdf.model.ModelParser;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validation.Validator;
 import org.verapdf.validation.profile.parser.LegacyProfileConverter;
+
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class ITVeraPDFTestSuite {
     private static ValidationProfile PROFILE_1B;
@@ -65,7 +61,7 @@ public class ITVeraPDFTestSuite {
             if (entry.getName().endsWith(".pdf")) {
                 System.out.println();
                 System.out.println("Testing: " + entry.getName());
-                try (ModelLoader loader = new ModelLoader(
+                try (ModelParser loader = new ModelParser(
                         zipIn.getInputStream(entry))) {
                     ValidationResult result = Validator.validate(PROFILE_1B,
                             loader.getRoot(), false);
