@@ -34,7 +34,7 @@ public final class Validators {
      * @throws ValidationException
      *             when a problem occurs validating the PDF
      */
-    public static PDFAValidator validate(PDFAFlavour flavour, boolean logSuccess) throws ValidationException {
+    public static PDFAValidator validate(PDFAFlavour flavour, boolean logSuccess) {
         if (flavour == null)
             throw new IllegalArgumentException(
                     "Parameter (PDFAFlavour flavour) cannot be null.");
@@ -58,7 +58,7 @@ public final class Validators {
      * @throws ValidationException
      *             when a problem occurs validating the PDF
      */
-    public static PDFAValidator validate(final ValidationProfile profile, boolean logSuccess) throws ValidationException {
+    public static PDFAValidator validate(final ValidationProfile profile, boolean logSuccess) {
         if (profile == null)
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile profile) cannot be null.");

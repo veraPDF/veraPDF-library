@@ -8,6 +8,8 @@ import org.verapdf.pdfa.config.ValidatorConfiguration;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.ValidationProfile;
 
+import java.io.InputStream;
+
 /**
  * A PDFAValidator performs a series of checks on PDF/A documents to verify that
  * the document conforms to a specific PDF/A flavour.

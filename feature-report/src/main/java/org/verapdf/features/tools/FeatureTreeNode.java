@@ -2,6 +2,7 @@ package org.verapdf.features.tools;
 
 import org.verapdf.core.FeatureParsingException;
 
+import javax.xml.bind.DatatypeConverter;
 import java.util.*;
 
 /**
@@ -11,11 +12,14 @@ import java.util.*;
  */
 public final class FeatureTreeNode {
 
+	private static final String CUSTOM_FEATURES_ROOT_NODE_NAME = "customFeatures";
+
 	private String name;
 	private String value;
+	private boolean isMetadataNode = false;
 	private FeatureTreeNode parent;
 	private Map<String, String> attributes = new HashMap<>();
-	private List<FeatureTreeNode> children;
+	private List<FeatureTreeNode> children = new ArrayList<>();
 
 	private FeatureTreeNode(final String name) throws FeatureParsingException {
 		this(name, null, null);
@@ -55,7 +59,7 @@ public final class FeatureTreeNode {
 	 * @return a new FeatureTreeNode with no parent
 	 * @throws FeatureParsingException when
 	 */
-	public static FeatureTreeNode newRootInstanceWIthValue(
+	public static FeatureTreeNode newRootInstanceWithValue(
 			final String name, final String value)
 			throws FeatureParsingException {
 		return new FeatureTreeNode(name, value);
@@ -89,6 +93,61 @@ public final class FeatureTreeNode {
 	}
 
 	/**
+	 * @param name the name of the node
+	 * @return a new FeatureTreeNode with no parent
+	 * @throws FeatureParsingException when
+	 */
+	public static FeatureTreeNode newRootMetadataInstance(String name)
+			throws FeatureParsingException {
+		FeatureTreeNode node = new FeatureTreeNode(name);
+		node.isMetadataNode = true;
+		return node;
+	}
+
+	/**
+	 * @param name  the name of the node
+	 * @param value byte array of the metadata stream
+	 * @return a new FeatureTreeNode with no parent
+	 * @throws FeatureParsingException when
+	 */
+	public static FeatureTreeNode newRootMetadataInstanceWithValue(String name, byte[] value)
+			throws FeatureParsingException {
+		FeatureTreeNode node = new FeatureTreeNode(name, DatatypeConverter.printHexBinary(value));
+		node.isMetadataNode = true;
+		return node;
+	}
+
+	/**
+	 * Creates new Feature Tree Node
+	 *
+	 * @param name   name of the node
+	 * @param parent parent of the node
+	 * @throws FeatureParsingException occurs when parent of the new node has String value
+	 */
+	public static FeatureTreeNode newChildMetadataInstance(String name,
+														   FeatureTreeNode parent) throws FeatureParsingException {
+		FeatureTreeNode node = new FeatureTreeNode(name, parent);
+		node.isMetadataNode = true;
+		return node;
+	}
+
+	/**
+	 * Creates new Feature Tree Node
+	 *
+	 * @param name   name of the node
+	 * @param value  byte array of the metadata stream
+	 * @param parent parent of the node
+	 * @throws FeatureParsingException occurs when parent of the new node has String value
+	 */
+	public static FeatureTreeNode newChildMetadataInstanceWithValue(String name,
+																	byte[] value,
+																	FeatureTreeNode parent) throws FeatureParsingException {
+		FeatureTreeNode node = new FeatureTreeNode(name, DatatypeConverter.printHexBinary(value), parent);
+		node.isMetadataNode = true;
+		return node;
+	}
+
+	/**
 	 * @return name of the node
 	 */
 	public String getName() {
@@ -103,37 +162,33 @@ public final class FeatureTreeNode {
 	}
 
 	/**
-	 * @return parent node for the curent node
-	 */
-	public FeatureTreeNode getParent() {
-		return this.parent;
-	}
-
-	/**
 	 * @return list of all children nodes for this node
 	 */
 	public List<FeatureTreeNode> getChildren() {
-		return this.children == null ? null : Collections.unmodifiableList(this.children);
+		return Collections.unmodifiableList(this.children);
 	}
 
 	/**
 	 * Add a child to the node
 	 *
 	 * @param child new child node for the current node
-	 * @throws FeatureParsingException occurs when child adds to node with value
+	 * @throws FeatureParsingException occurs when child adds to node with value or if the node is a metadata node
 	 */
 	public void addChild(FeatureTreeNode child)
 			throws FeatureParsingException {
+		if (isMetadataNode) {
+			throw new FeatureParsingException(
+					"You can not add a child for metadata nodes. Node name "
+							+ this.name + ", value: " + this.value + ".");
+		}
+
 		if (child != null) {
 			if (this.value == null) {
-				if (this.children == null) {
-					this.children = new ArrayList<>();
-				}
 				this.children.add(child);
 				child.parent = this;
 			} else {
 				throw new FeatureParsingException(
-						"You can not add childrens for nodes with defined values. Node name "
+						"You can not add a child for nodes with defined values. Node name "
 								+ this.name + ", value: " + this.value + ".");
 			}
 		}
@@ -143,16 +198,25 @@ public final class FeatureTreeNode {
 	 * Add value to the node
 	 *
 	 * @param value value
-	 * @throws FeatureParsingException occurs when value adds to the node with childrens
+	 * @throws FeatureParsingException occurs when value adds to the node with childrens or if the object is a metadata
+	 *                                 node and the value is not a hex string
 	 */
 	public void setValue(String value) throws FeatureParsingException {
-		if (this.children == null) {
+		if (isMetadataNode && value != null && !value.matches("\\p{XDigit}*")) {
+			throw new FeatureParsingException("A value for metadata node should be a hex String.");
+		}
+
+		if (this.children.isEmpty()) {
 			this.value = value;
 		} else {
 			throw new FeatureParsingException(
 					"You can not add value for nodes with childrens. Node name "
 							+ this.name + ".");
 		}
+	}
+
+	public boolean isMetadataNode() {
+		return isMetadataNode;
 	}
 
 	/**
@@ -185,6 +249,7 @@ public final class FeatureTreeNode {
 				+ ((this.name == null) ? 0 : this.name.hashCode());
 		result = prime * result
 				+ ((this.value == null) ? 0 : this.value.hashCode());
+		result = prime * result + (isMetadataNode ? 1 : 0);
 		return result;
 	}
 
@@ -197,7 +262,9 @@ public final class FeatureTreeNode {
 		if (getClass() != obj.getClass())
 			return false;
 		FeatureTreeNode other = (FeatureTreeNode) obj;
-		if (this.attributes == null) {
+		if (this.isMetadataNode != other.isMetadataNode) {
+			return false;
+		} else if (this.attributes == null) {
 			if (other.attributes != null)
 				return false;
 		} else if (!this.attributes.equals(other.attributes))
@@ -222,19 +289,19 @@ public final class FeatureTreeNode {
 		return true;
 	}
 
-	
-	/**
-     * { @inheritDoc }
-     */
-    @Override
-    public String toString() {
-        return "FeatureTreeNode [name=" + this.name + ", value=" + this.value
-                + ", parent=" + this.parent + ", attributes=" + this.attributes
-                + "]";
-    }
 
-    private static boolean isChildrenMatch(FeatureTreeNode aThis, FeatureTreeNode other) {
-		return aThis.children == other.children || !(aThis.children == null ^ other.children == null)
+	/**
+	 * { @inheritDoc }
+	 */
+	@Override
+	public String toString() {
+		return "FeatureTreeNode [name=" + this.name + ", value=" + this.value
+				+ ", isMetadataNode=" + this.isMetadataNode + ", parent=" + this.parent
+				+ ", attributes=" + this.attributes + "]";
+	}
+
+	private static boolean isChildrenMatch(FeatureTreeNode aThis, FeatureTreeNode other) {
+		return aThis.children == other.children || ((aThis.children == null) == (other.children == null))
 				&& aThis.children.size() == other.children.size() && aThis.children.containsAll(other.children);
 	}
 }

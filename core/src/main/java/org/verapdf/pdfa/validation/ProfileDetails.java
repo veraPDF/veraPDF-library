@@ -3,9 +3,8 @@
  */
 package org.verapdf.pdfa.validation;
 
-import java.util.Date;
-
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.Date;
 
 /**
  * Convenience gathering of a set of properties that help identify and describe

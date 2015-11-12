@@ -3,6 +3,10 @@
  */
 package org.verapdf.pdfa.validation;
 
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
+
+import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -10,11 +14,6 @@ import java.io.Writer;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
-import javax.xml.bind.JAXBException;
-
-import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 
 /**
  * Utitlity class that provides helper methods for handling
@@ -376,7 +375,7 @@ public final class Profiles {
      *             if toConvert is null
      */
     public static String profileToXml(final ValidationProfile toConvert,
-            final Boolean prettyXml) throws JAXBException, IOException {
+                                      final Boolean prettyXml) throws JAXBException, IOException {
         if (toConvert == null)
             throw new IllegalArgumentException(
                     "Parameter toConvert cannot be null");
@@ -497,7 +496,7 @@ public final class Profiles {
      * profiles GitHub repo</a> to find out the current status of our
      * ValidationProfiles.
      * </p>
-     * 
+     *
      * @return the pre-populated veraPDF ValidationProfile directory
      */
     public static ProfileDirectory getVeraProfileDirectory() {
