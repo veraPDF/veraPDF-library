@@ -1,4 +1,16 @@
-package org.verapdf.pdfa.validation;
+/**
+ * 
+ */
+package org.verapdf.pdfa.validators;
+
+import java.io.InputStream;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
@@ -6,61 +18,46 @@ import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
 import org.verapdf.core.ValidationException;
 import org.verapdf.model.baselayer.Object;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.results.Location;
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
-
-import java.util.*;
+import org.verapdf.pdfa.validation.Rule;
+import org.verapdf.pdfa.validation.RuleId;
+import org.verapdf.pdfa.validation.ValidationProfile;
+import org.verapdf.pdfa.validation.Variable;
 
 /**
- * Validation logic
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
- * @author Maksim Bezrukov
  */
-public class Validator {
+public abstract class AbstractValidator implements PDFAValidator {
 
     private static final int OPTIMIZATION_LEVEL = 9;
-    private static ProfileDirectory PROFILES = Profiles
-            .getVeraProfileDirectory();
-
+    private final ValidationProfile profile;
     private Context context;
     private ScriptableObject scope;
 
     private final Deque<Object> objectsStack = new ArrayDeque<>();
     private final Deque<String> objectsContext = new ArrayDeque<>();
     private final Deque<Set<String>> contextSet = new ArrayDeque<>();
-    private final Set<TestAssertion> results = new HashSet<>();
+    protected final Set<TestAssertion> results = new HashSet<>();
 
     private Map<RuleId, Script> ruleScripts = new HashMap<>();
     private Map<String, Script> variableScripts = new HashMap<>();
 
     private Set<String> idSet = new HashSet<>();
 
-    private String rootType;
-    private ValidationProfile profile;
-    private final boolean logPassedAssertions;
+    protected String rootType;
 
-    /**
-     * Creates new Validator with given validation profile
-     *
-     * @param profile
-     *            validation profile model for validator
-     */
-    private Validator(final PDFAFlavour flavour, final boolean logPassedAssertions) {
-        this(PROFILES.getValidationProfileByFlavour(flavour), logPassedAssertions);
-        
-    }
-
-    private Validator(final ValidationProfile profile, final boolean logPassedAssertions) {
+    protected AbstractValidator(final ValidationProfile profile) {
         super();
         this.profile = profile;
-        this.logPassedAssertions = logPassedAssertions;
     }
 
-    private ValidationResult validate(Object root) throws ValidationException {
+    protected ValidationResult validate(Object root) throws ValidationException {
         initialize();
         this.rootType = root.getObjectType();
         this.objectsStack.push(root);
@@ -112,7 +109,7 @@ public class Validator {
         }
     }
 
-	private boolean checkNext() throws ValidationException {
+    private boolean checkNext() throws ValidationException {
 
         Object checkObject = this.objectsStack.pop();
         String checkContext = this.objectsContext.pop();
@@ -129,34 +126,34 @@ public class Validator {
 
     private void updateVariables(Object object) {
         if (object != null) {
-			updateVariableForObjectWithType(object, object.getObjectType());
+            updateVariableForObjectWithType(object, object.getObjectType());
 
-			for (String parentName : object.getSuperTypes()) {
-				updateVariableForObjectWithType(object, parentName);
-			}
-		}
-	}
+            for (String parentName : object.getSuperTypes()) {
+                updateVariableForObjectWithType(object, parentName);
+            }
+        }
+    }
 
-	private void updateVariableForObjectWithType(Object object, String objectType) {
-		for (Variable var : this.profile
-				.getVariablesByObject(objectType)) {
+    private void updateVariableForObjectWithType(Object object, String objectType) {
+        for (Variable var : this.profile
+                .getVariablesByObject(objectType)) {
 
-			if (var == null)
-				continue;
+            if (var == null)
+                continue;
 
-			java.lang.Object variable = evalVariableResult(var, object);
-			this.scope.put(var.getName(), this.scope, variable);
-		}
-	}
+            java.lang.Object variable = evalVariableResult(var, object);
+            this.scope.put(var.getName(), this.scope, variable);
+        }
+    }
 
     private java.lang.Object evalVariableResult(Variable variable, Object object) {
         Script script;
         if (!this.variableScripts.containsKey(variable.getName())) {
             String source = getStringScript(object, variable.getValue());
             script = this.context.compileString(source, null, 0, null);
-			this.variableScripts.put(variable.getName(), script);
-		} else {
-			script = this.variableScripts.get(variable.getName());
+            this.variableScripts.put(variable.getName(), script);
+        } else {
+            script = this.variableScripts.get(variable.getName());
         }
 
         this.scope.put("obj", this.scope, object);
@@ -170,9 +167,9 @@ public class Validator {
     }
 
     private void addAllLinkedObjects(Object checkObject, String checkContext,
-									 Set<String> checkIDContext) throws ValidationException {
-		List<String> links = checkObject.getLinks();
-		for (int j = links.size() - 1; j >= 0; --j) {
+                                     Set<String> checkIDContext) throws ValidationException {
+        List<String> links = checkObject.getLinks();
+        for (int j = links.size() - 1; j >= 0; --j) {
             String link = links.get(j);
 
             if (link == null) {
@@ -320,78 +317,31 @@ public class Validator {
             scr = this.ruleScripts.get(rule.getRuleId());
         }
 
-		boolean testEvalResult = ((Boolean) scr.exec(this.context, this.scope))
-				.booleanValue();
-		Status assertionStatus = (testEvalResult) ? Status.PASSED
-                : Status.FAILED;
-
-        Location location = ValidationResults.locationFromValues(this.rootType,
-                cntxtForRule);
-        TestAssertion assertion = ValidationResults.assertionFromValues(
-                rule.getRuleId(), assertionStatus,
-				rule.getDescription(), location);
-		if ((assertionStatus == Status.FAILED) || this.logPassedAssertions) {
-			this.results.add(assertion);
-        }
+        boolean testEvalResult = ((Boolean) scr.exec(this.context, this.scope))
+                .booleanValue();
+        
+        this.processAssertionResult(testEvalResult, cntxtForRule, rule);
 
         return testEvalResult;
     }
+    
+    abstract protected void processAssertionResult(final boolean assertionResult, final String locationContext, final Rule rule);
 
-    /**
-     * Generates validation info for objects with root {@code root} and
-     * validation profile structure {@code validationProfile}
-     * <p/>
-     * This method doesn't need to parse validation profile (it works faster
-     * than those ones, which parses profile).
-     * 
-     * @param flavour
-     *
-     * @param root
-     *            the root object for validation
-     * @return validation info structure
-     * @throws ValidationException
-     *             when a problem occurs validating the PDF
+    /* (non-Javadoc)
+     * @see org.verapdf.pdfa.PDFAValidator#getProfile()
      */
-    public static ValidationResult validate(PDFAFlavour flavour, Object root, boolean logSuccess)
-            throws ValidationException {
-        if (root == null)
-            throw new IllegalArgumentException(
-                    "Parameter (Object root) cannot be null.");
-        if (flavour == null)
-            throw new IllegalArgumentException(
-                    "Parameter (PDFAFlavour flavour) cannot be null.");
-        Validator validator = new Validator(flavour, logSuccess);
-        ValidationResult res = validator.validate(root);
-        return res;
+    @Override
+    public ValidationProfile getProfile() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
-    /**
-     * Generates validation info for objects with root {@code root} and
-     * validation profile structure {@code validationProfile}
-     * <p/>
-     * This method doesn't need to parse validation profile (it works faster
-     * than those ones, which parses profile).
-     * 
-     * @param profile
-     *
-     * @param root
-     *            the root object for validation
-     * @param logSuccess 
-     * @return validation info structure
-     * @throws ValidationException
-     *             when a problem occurs validating the PDF
+    /* (non-Javadoc)
+     * @see org.verapdf.pdfa.PDFAValidator#validate(java.io.InputStream)
      */
-    public static ValidationResult validate(final ValidationProfile profile, final Object root, boolean logSuccess)
-            throws ValidationException {
-        if (root == null)
-            throw new IllegalArgumentException(
-                    "Parameter (Object root) cannot be null.");
-        if (profile == null)
-            throw new IllegalArgumentException(
-                    "Parameter (ValidationProfile profile) cannot be null.");
-        Validator validator = new Validator(profile, logSuccess);
-        ValidationResult res = validator.validate(root);
-        return res;
+    @Override
+    public ValidationResult validate(InputStream toValidate) {
+        // TODO Auto-generated method stub
+        return null;
     }
-
 }

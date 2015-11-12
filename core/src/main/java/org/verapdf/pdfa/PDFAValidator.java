@@ -21,25 +21,6 @@ import org.verapdf.pdfa.validation.ValidationProfile;
 public interface PDFAValidator {
 
     /**
-     * Returns the ID of the ValidationProfile used by this instance. The ID
-     * returned as a String value that also clearly identifies the PDF/A flavour
-     * supported by this PDFAValidator as can be seen in the list below:
-     * <ul>
-     * <li>1a</li>
-     * <li>1b</li>
-     * <li>2a</li>
-     * <li>2b</li>
-     * <li>2u</li>
-     * <li>3a</li>
-     * <li>3b</li>
-     * <li>3u</li>
-     * </ul>
-     *
-     * @return the ID of the validating profile as a String
-     */
-    public String getProfileID();
-
-    /**
      * Returns the complete {@link ValidationProfile} enforced by this PDFAValidator.
      *
      * @return this PDFAValidator instance's ValiationProfile
@@ -61,12 +42,4 @@ public interface PDFAValidator {
      *             if the validation process fails
      */
     public ValidationResult validate(InputStream toValidate);
-
-    /**
-     * Returns a {@link ValidatorConfiguration} that holds the configuration of
-     * this Validator instance.
-     *
-     * @return the ValidatorConfiguration for this validator.
-     */
-    public ValidatorConfiguration getConfiguration();
 }

@@ -34,7 +34,7 @@ import org.verapdf.model.ModelParser;
 import org.verapdf.pdfa.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validation.Validator;
+import org.verapdf.pdfa.validators.Validator;
 import org.verapdf.report.HTMLReport;
 import org.verapdf.report.MachineReadableReport;
 

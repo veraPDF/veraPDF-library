@@ -19,7 +19,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validation.Validator;
+import org.verapdf.pdfa.validators.Validator;
 import org.verapdf.validation.profile.parser.LegacyProfileConverter;
 
 public class ITVeraPDFTestSuite {

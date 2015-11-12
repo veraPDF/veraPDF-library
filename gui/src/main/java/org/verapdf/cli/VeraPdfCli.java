@@ -23,7 +23,7 @@ import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.ProfileDirectory;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validation.Validator;
+import org.verapdf.pdfa.validators.Validator;
 import org.verapdf.validation.profile.parser.LegacyProfileConverter;
 
 import com.beust.jcommander.JCommander;
