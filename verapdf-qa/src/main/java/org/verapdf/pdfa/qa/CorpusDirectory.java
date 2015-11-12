@@ -4,8 +4,6 @@
 package org.verapdf.pdfa.qa;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,9 +22,9 @@ import org.verapdf.pdfa.validation.RuleId;
  */
 public class CorpusDirectory implements Directory<CorpusItemId, Path> {
     private final Registry<CorpusItemId, Path> corpusItems = new MapBackedRegistry<>(
-            Collections.EMPTY_MAP);
+            Collections.<CorpusItemId, Path>emptyMap());
     private final Registry<RuleId, Set<CorpusItemId>> ruleLookup = new MapBackedRegistry<>(
-            Collections.EMPTY_MAP);
+            Collections.<RuleId, Set<CorpusItemId>>emptyMap());
     private final PDFAFlavour flavour;
 
     private CorpusDirectory(final File root) {
@@ -38,9 +36,9 @@ public class CorpusDirectory implements Directory<CorpusItemId, Path> {
             this.corpusItems.putdateItem(id, path);
             if (this.ruleLookup.getItem(id.getRuleId()) == null) {
                 this.ruleLookup.registerItem(id.getRuleId(),
-                        Collections.EMPTY_SET);
+                        Collections.<CorpusItemId>emptySet());
             }
-            Set<CorpusItemId> itemIdSet = new HashSet(
+            Set<CorpusItemId> itemIdSet = new HashSet<>(
                     this.ruleLookup.getItem(id.getRuleId()));
             itemIdSet.add(id);
             this.ruleLookup.putdateItem(id.getRuleId(), itemIdSet);
@@ -105,7 +103,7 @@ public class CorpusDirectory implements Directory<CorpusItemId, Path> {
      */
     public Set<CorpusItemId> getCorpusIdForRule(final RuleId id) {
         if (this.ruleLookup.getItem(id) == null)
-            return Collections.EMPTY_SET;
+            return Collections.<CorpusItemId>emptySet();
         return this.ruleLookup.getItem(id);
     }
 
@@ -115,8 +113,7 @@ public class CorpusDirectory implements Directory<CorpusItemId, Path> {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static CorpusDirectory loadFromDir(final File root)
-            throws FileNotFoundException, IOException {
+    public static CorpusDirectory loadFromDir(final File root) {
         return new CorpusDirectory(root);
     }
 
