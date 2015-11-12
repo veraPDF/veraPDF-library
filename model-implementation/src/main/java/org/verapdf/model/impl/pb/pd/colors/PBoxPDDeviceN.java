@@ -63,10 +63,6 @@ public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
 		return false;
 	}
 
-	public Boolean getareColorantsPresent() {
-		return Boolean.valueOf(this.areColorantsPresent);
-	}
-
 	private boolean areColorantsPresent(COSDictionary colorantsDict, COSBase colorantsArray) {
 		Set<COSName> colorantDictionaryEntries = colorantsDict.keySet();
 		for (int i = 0; i < ((COSArray) colorantsArray).size(); i++) {
@@ -77,6 +73,11 @@ public class PBoxPDDeviceN extends PBoxPDColorSpace implements PDDeviceN {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public Boolean getareColorantsPresent() {
+		return Boolean.valueOf(this.areColorantsPresent);
 	}
 
 	@Override
