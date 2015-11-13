@@ -103,7 +103,7 @@ public class ITVeraCorpusTests {
     @Test
     public void performPdf2BValidation() throws IOException {
         PDFAFlavour[] filters = new PDFAFlavour[] { PDFAFlavour.PDFA_2_B };
-        validateFlavour(PDFAFlavour.PDFA_2_B, Arrays.asList(filters));
+        // validateFlavour(PDFAFlavour.PDFA_2_B, Arrays.asList(filters));
     }
 
     /**
@@ -115,7 +115,7 @@ public class ITVeraCorpusTests {
     @Test
     public void performPdf3BValidation() throws IOException {
         PDFAFlavour[] filters = new PDFAFlavour[] { PDFAFlavour.PDFA_3_B };
-        validateFlavour(PDFAFlavour.PDFA_3_B, Arrays.asList(filters));
+        // validateFlavour(PDFAFlavour.PDFA_3_B, Arrays.asList(filters));
     }
 
     /**
@@ -188,6 +188,9 @@ public class ITVeraCorpusTests {
                     // We don't have instance control so this should always be false, useful check against assumptions
                     assertFalse(statefulResult == statelessResult);
                     
+                    // Output result and repeat
+                    ValidationResults.toXml(statelessResult, System.out,
+                            Boolean.TRUE);
                     if (statelessResult.isCompliant() != corpusId
                             .getExpectedResult())
                         System.err.println("Unexpected result:"
@@ -202,6 +205,11 @@ public class ITVeraCorpusTests {
                     System.err.println("Error carrying out validation for "
                             + entry.getName());
                     e.printStackTrace();
+                    System.err.println(e.getMessage());
+                } catch (JAXBException e) {
+                    System.err
+                            .println("Error marshalling validation result for "
+                                    + entry.getName());
                     System.err.println(e.getMessage());
                 }
             }
