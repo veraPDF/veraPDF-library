@@ -56,6 +56,8 @@ public class FeaturesReporter {
 					List<FeatureTreeNode> cust = ext.getFeatures(obj.getData());
 					if (cust != null) {
 						FeatureTreeNode custRoot = FeatureTreeNode.newChildInstance("pluginFeatures", custom);
+						custRoot.addAttribute("pluginId", ext.getID());
+						custRoot.addAttribute("description", ext.getDescription());
 						for (FeatureTreeNode ftn : cust) {
 							if (ftn != null) {
 								custRoot.addChild(ftn);
