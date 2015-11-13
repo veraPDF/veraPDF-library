@@ -30,8 +30,7 @@ public interface RuleId {
     /**
      * @return the
      */
-    public Specification getSpecfication();
-
+    public Specification getSpecification();
     /**
      * @return the specification clause String identifier.
      */

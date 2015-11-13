@@ -18,7 +18,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
  */
 @SuppressWarnings("static-method")
 public class RuleIdImplTest {
-    private final static String DEFAULT_RULE_ID_STRING = "RuleId [specifcation=" + Specification.NO_STANDARD.toString() + ", clause=clause, testNumber=0]";
+    private final static String DEFAULT_RULE_ID_STRING = "RuleId [specification=" + Specification.NO_STANDARD.toString() + ", clause=clause, testNumber=0]";
     /**
      * Test method for {@link org.verapdf.pdfa.validation.RuleIdImpl#equals(java.lang.Object)}.
      */

@@ -71,7 +71,7 @@ public class PBoxICCProfile extends PBoxExternal implements ICCProfile {
      */
     @Override
     public Long getN() {
-        return dictionaryNumberOfColors;
+        return this.dictionaryNumberOfColors;
     }
 
     /**

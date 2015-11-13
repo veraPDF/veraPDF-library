@@ -28,9 +28,6 @@ public final class PBCosNull extends PBCosObject implements CosNull {
      * @return PBCosNull object
      */
 	public static CosNull getInstance() {
-		if (NULL == null) {
-			NULL = new PBCosNull(COSNull.NULL);
-		}
-		return NULL;
+        return NULL == null ? NULL = new PBCosNull(COSNull.NULL) : NULL;
 	}
 }
