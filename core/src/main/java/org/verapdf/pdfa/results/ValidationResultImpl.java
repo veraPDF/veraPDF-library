@@ -40,7 +40,7 @@ final class ValidationResultImpl implements ValidationResult {
     private final boolean isCompliant;
 
     private ValidationResultImpl() {
-        this(PDFAFlavour.NO_FLAVOUR, Collections.EMPTY_SET, false);
+        this(PDFAFlavour.NO_FLAVOUR, Collections.<TestAssertion>emptySet(), false);
     }
 
     private ValidationResultImpl(final PDFAFlavour flavour,

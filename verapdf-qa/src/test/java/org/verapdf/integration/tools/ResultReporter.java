@@ -1,7 +1,7 @@
 package org.verapdf.integration.tools;
 
 import org.apache.log4j.Logger;
-import org.verapdf.integration.ITVeraPDFTestSuite;
+import org.verapdf.integration.ITVeraCorpusTests;
 import org.verapdf.integration.model.reporting.TestEntityReport;
 import org.verapdf.integration.model.reporting.TestSetReport;
 
