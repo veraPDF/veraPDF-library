@@ -111,6 +111,7 @@ public class FeaturesPluginsLoader {
 					try {
 						Object obj = cls.newInstance();
 						FeaturesExtractor extractor = (FeaturesExtractor) obj;
+						((FeaturesExtractor) obj).initialize(jar.getParentFile().toPath());
 						extractors.add(extractor);
 					} catch (InstantiationException | IllegalAccessException e) {
 						LOGGER.error("Some error while creating an instance of class " + cls.getName(), e);
