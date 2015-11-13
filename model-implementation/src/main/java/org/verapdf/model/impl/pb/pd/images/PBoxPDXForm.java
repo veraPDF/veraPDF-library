@@ -82,7 +82,7 @@ public class PBoxPDXForm extends PBoxPDXObject implements PDXForm {
     }
 
     private List<CosDict> getREF() {
-        return getLinkToDictionary(REF);
+        return this.getLinkToDictionary(REF);
     }
 
     private List<PDContentStream> getContentStream() {

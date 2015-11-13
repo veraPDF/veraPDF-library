@@ -38,6 +38,6 @@ public class PBoxICCOutputProfile extends PBoxICCProfile implements
      */
     @Override
     public String getS() {
-        return subtype;
+        return this.subtype;
     }
 }

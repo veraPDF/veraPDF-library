@@ -56,13 +56,12 @@ public class PBoxPDAcroForm extends PBoxPDObject implements PDAcroForm {
 	private List<PDFormField> getFormFields() {
         List<PDField> fields = ((org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm) this.simplePDObject)
                 .getFields();
-        for (PDField field : fields) {
-			List<PDFormField> formFields =
-					new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+		List<PDFormField> formFields =
+				new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+		for (PDField field : fields) {
 			formFields.add(new PBoxPDFormField(field));
-			return Collections.unmodifiableList(formFields);
         }
-        return Collections.emptyList();
+		return Collections.unmodifiableList(formFields);
     }
 
 	private List<CosObject> getXFA() {

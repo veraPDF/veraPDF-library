@@ -16,7 +16,6 @@ import javax.xml.bind.DatatypeConverter;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -253,9 +252,9 @@ public final class PBCreateNodeHelper {
 		}
 		FeatureTreeNode node;
 		if (parent == null) {
-			node = FeatureTreeNode.newRootInstance(nodeName);
+			node = FeatureTreeNode.newRootMetadataInstance(nodeName);
 		} else {
-			node = FeatureTreeNode.newChildInstance(nodeName, parent);
+			node = FeatureTreeNode.newChildMetadataInstance(nodeName, parent);
 		}
 		try {
 			byte[] bStream = metadata.getByteArray();

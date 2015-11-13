@@ -7,10 +7,10 @@
  * reference implementations for the types are JAXB annotated. There are helper
  * methods for serialisation and de-serialisation to and from XML.
  * </p>
- * 
- * @since 0.7
+ *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  * @version 0.7
+ * @since 0.7
  */
 package org.verapdf.pdfa.results;
 

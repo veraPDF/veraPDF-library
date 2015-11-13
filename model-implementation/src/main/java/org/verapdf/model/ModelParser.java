@@ -1,14 +1,14 @@
 package org.verapdf.model;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.verapdf.model.coslayer.CosDocument;
 import org.verapdf.model.impl.pb.cos.PBCosDocument;
 import org.verapdf.pdfa.ValidationModelParser;
+
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Current class is entry point to model implementation.
@@ -27,8 +27,8 @@ public final class ModelParser implements ValidationModelParser, Closeable {
      * @throws IOException
      */
     public ModelParser(InputStream toLoad) throws IOException {
-		this.size = toLoad.available();
-		this.document = PDDocument.load(toLoad, false, true);
+        this.size = toLoad.available();
+        this.document = PDDocument.load(toLoad, false, true);
     }
 
     /**
