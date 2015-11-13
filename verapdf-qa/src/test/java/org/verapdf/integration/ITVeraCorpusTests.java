@@ -103,7 +103,7 @@ public class ITVeraCorpusTests {
     @Test
     public void performPdf2BValidation() throws IOException {
         PDFAFlavour[] filters = new PDFAFlavour[] { PDFAFlavour.PDFA_2_B };
-        // validateFlavour(PDFAFlavour.PDFA_2_B, Arrays.asList(filters));
+        validateFlavour(PDFAFlavour.PDFA_2_B, Arrays.asList(filters));
     }
 
     /**
@@ -115,7 +115,7 @@ public class ITVeraCorpusTests {
     @Test
     public void performPdf3BValidation() throws IOException {
         PDFAFlavour[] filters = new PDFAFlavour[] { PDFAFlavour.PDFA_3_B };
-        // validateFlavour(PDFAFlavour.PDFA_3_B, Arrays.asList(filters));
+        validateFlavour(PDFAFlavour.PDFA_3_B, Arrays.asList(filters));
     }
 
     /**
