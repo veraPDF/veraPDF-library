@@ -18,7 +18,6 @@ public class PBCosStream extends PBCosDict implements CosStream {
 	public static final String F_DECODE_PARMS = "FDecodeParms";
 
 	private final Long length;
-	private final Long originalLength;
 	private final String filters;
 	private final String fileSpec;
 	private final String fFilter;
@@ -34,7 +33,6 @@ public class PBCosStream extends PBCosDict implements CosStream {
 	public PBCosStream(COSStream stream) {
         super(stream, COS_STREAM_TYPE);
         this.length = parseLength(stream);
-        this.originalLength = stream.getOriginLength();
         this.filters = parseFilters(stream.getFilters());
         this.fileSpec = stream.getItem("F") != null ? stream.getItem("F")
                 .toString() : null;
@@ -44,7 +42,7 @@ public class PBCosStream extends PBCosDict implements CosStream {
                 .getItem(F_DECODE_PARMS).toString() : null;
         this.streamKeywordCRLFCompliant = stream.isStreamKeywordCRLFCompliant();
 		this.endstreamKeywordEOLCompliant = stream.isEndstreamKeywordEOLCompliant();
-		this.isLengthCorrect = this.length != null && this.length.equals(this.originalLength);
+		this.isLengthCorrect = this.length != null && this.length.equals(stream.getOriginLength());
     }
 
     /**

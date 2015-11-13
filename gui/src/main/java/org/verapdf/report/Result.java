@@ -79,7 +79,7 @@ public class Result {
 
 		for (TestAssertion assertion : assertions) {
 			RuleId id = assertion.getRuleId();
-			String ruleId = id.getSpecfication().getId() + id.getClause() + String.valueOf(id.getTestNumber());
+			String ruleId = id.getSpecification().getId() + id.getClause() + String.valueOf(id.getTestNumber());
 
 			Rule rule = rulesMap.get(ruleId);
 			if (rule == null) {

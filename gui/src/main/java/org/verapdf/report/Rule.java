@@ -57,7 +57,7 @@ public class Rule {
 		}
 
 		return new Rule(
-				id.getSpecfication().getId(),
+				id.getSpecification().getId(),
 				id.getClause(),
 				String.valueOf(id.getTestNumber()),
 				status,

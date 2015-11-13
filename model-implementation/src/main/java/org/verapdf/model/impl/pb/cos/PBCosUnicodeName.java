@@ -33,6 +33,7 @@ public class PBCosUnicodeName extends PBCosName implements CosUnicodeName {
 	/**
 	 * @return true if name is valid UTF-8 string
 	 */
+	// TODO : check implementation correctness
 	@Override
 	public Boolean getisValidUtf8() {
 		String name = ((COSName) this.baseObject).getName();
@@ -50,6 +51,7 @@ public class PBCosUnicodeName extends PBCosName implements CosUnicodeName {
 	/**
 	 * @return converted to UTF-8 name
 	 */
+	// TODO : check implementation correctness
 	@Override
 	public String getunicodeValue() {
 		String name = ((COSName) this.baseObject).getName();
