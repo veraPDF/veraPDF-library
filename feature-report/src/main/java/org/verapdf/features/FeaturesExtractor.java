@@ -41,11 +41,11 @@ abstract class FeaturesExtractor {
 	/**
 	 * @return ID of the plugin
 	 */
-	abstract String getID();
+	public abstract String getID();
 
 	/**
 	 * @return Description of the plugin
 	 */
-	abstract String getDescription();
+	public abstract String getDescription();
 
 }
