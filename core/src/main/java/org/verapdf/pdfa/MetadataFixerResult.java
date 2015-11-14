@@ -11,7 +11,7 @@ import java.util.List;
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
-public interface MetadataFixerResult {
+public interface MetadataFixerResult extends Iterable<String> {
     /**
      * @return the {@link RepairStatus} for the fix task
      */
@@ -47,14 +47,14 @@ public interface MetadataFixerResult {
 
 		ID_REMOVED("ID Removed");
 
-		private final String readableName;
+        private final String name;
 
-		RepairStatus(String readableName) {
-			this.readableName = readableName;
-		}
+        RepairStatus(final String name) {
+            this.name = name;
+        }
 
-		public String getReadableName() {
-			return this.readableName;
-		}
-	}
+        public String getName() {
+            return this.name;
+        }
+    }
 }

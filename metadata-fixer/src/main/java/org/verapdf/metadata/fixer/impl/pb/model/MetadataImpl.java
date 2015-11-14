@@ -12,16 +12,16 @@ import org.apache.xmpbox.schema.PDFAIdentificationSchema;
 import org.apache.xmpbox.schema.XMPBasicSchema;
 import org.apache.xmpbox.type.BadFieldValueException;
 import org.apache.xmpbox.xml.XmpSerializer;
-import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
+import org.verapdf.metadata.fixer.impl.MetadataFixerResultImpl;
 import org.verapdf.metadata.fixer.impl.pb.schemas.AdobePDFSchemaImpl;
 import org.verapdf.metadata.fixer.impl.pb.schemas.DublinCoreSchemaImpl;
 import org.verapdf.metadata.fixer.impl.pb.schemas.XMPBasicSchemaImpl;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
-import org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.io.IOException;
 import java.io.OutputStream;

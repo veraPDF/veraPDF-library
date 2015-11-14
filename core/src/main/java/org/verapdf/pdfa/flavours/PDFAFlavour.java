@@ -63,18 +63,11 @@ public enum PDFAFlavour {
     /** 3u PDF Version 3 Level U */
     PDFA_3_U(Specification.ISO_19005_3, Level.U);
 
-    private final static Map<String, PDFAFlavour> FLAVOUR_LOOKUP;
+    private final static Map<String, PDFAFlavour> FLAVOUR_LOOKUP = new HashMap<>();
     static {
-        FLAVOUR_LOOKUP = new HashMap<>();
-        FLAVOUR_LOOKUP.put("", PDFAFlavour.NO_FLAVOUR);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_1_A.getId(), PDFAFlavour.PDFA_1_A);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_1_B.getId(), PDFAFlavour.PDFA_1_B);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_A.getId(), PDFAFlavour.PDFA_2_A);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_B.getId(), PDFAFlavour.PDFA_2_B);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_2_U.getId(), PDFAFlavour.PDFA_2_U);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_A.getId(), PDFAFlavour.PDFA_3_A);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_B.getId(), PDFAFlavour.PDFA_3_B);
-        FLAVOUR_LOOKUP.put(PDFAFlavour.PDFA_3_U.getId(), PDFAFlavour.PDFA_3_U);
+        for (PDFAFlavour flavour : PDFAFlavour.values()) {
+            FLAVOUR_LOOKUP.put(flavour.id, flavour);
+        }
     }
 
     private final Specification part;
@@ -88,14 +81,15 @@ public enum PDFAFlavour {
     }
 
     /**
-     * @return an {@link Specification} instance that identifies the Specification Part
+     * @return an {@link Specification} instance that identifies the
+     *         Specification Part
      */
     public final Specification getPart() {
         return this.part;
     }
 
     /**
-     * @return the level
+     * @return the {@link Level} instance for this flavour
      */
     public final Level getLevel() {
         return this.level;
@@ -113,8 +107,6 @@ public enum PDFAFlavour {
      * Enumeration of PDF/A Specification Parts, 1-3 used to provide ids and a
      * standard source of details such as name and description for PDF/A
      * Specifications.
-     *
-     * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>.</p>
      */
     public enum Specification {
         /** PDF/A Version 1 */
@@ -148,8 +140,7 @@ public enum PDFAFlavour {
             this.description = description;
             this.id = this.series.getName()
                     + "-" + this.getPartNumber() + ":" + this.getYear(); //$NON-NLS-1$//$NON-NLS-2$
-            this.name = PDFAFlavours.PDFA_STRING_PREFIX
-                    + this.getPartNumber();
+            this.name = PDFAFlavours.PDFA_STRING_PREFIX + this.getPartNumber();
         }
 
         /**
@@ -188,7 +179,8 @@ public enum PDFAFlavour {
         }
 
         /**
-         * @return the standard series
+         * @return the {@link IsoStandardSeries} instance indicating the
+         *         standard series
          */
         public IsoStandardSeries getSeries() {
             return this.series;
@@ -204,7 +196,6 @@ public enum PDFAFlavour {
      * Enum type that identifies the different PDF/A Conformance Levels A
      * (accessible), B (basic) & U (unicode).
      *
-     * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>.</p>
      */
     public enum Level {
         /** Special identifier for the none case */
@@ -285,14 +276,49 @@ public enum PDFAFlavour {
             return this.getName() + " " + this.getDescription(); //$NON-NLS-1$
         }
     }
+
     /**
+     * Looks up a {@link PDFAFlavour} by two letter flavour identifier. The
+     * identifier is a two letter String that identifies a {@link PDFAFlavour},
+     * e.g. 1a, 1b, 2a, 2b, 2u, 3a, 3b, 3u. The match is case insensitive so 1A,
+     * 1B, etc. are also valid flavour ids.
+     * 
      * @param flavourId
-     *            a two letter String that identifies a {@link PDFAFlavour},
-     *            e.g. 1a, 1b, 2a, 2b, 2u, 3a, 3b, 3u
-     * @return the correct {@link PDFAFlavour} looked up by String id
+     *            must be a two character string that exactly matches the
+     *            flavour identifier.
+     * 
+     * @return the correct {@link PDFAFlavour} looked up by String id or
+     *         {@link PDFAFlavour#NO_FLAVOUR} if id does not match a flavour
      */
     public static PDFAFlavour byFlavourId(final String flavourId) {
-        return FLAVOUR_LOOKUP.get(flavourId);
+        PDFAFlavour flavour = FLAVOUR_LOOKUP.get(flavourId.toLowerCase());
+        if (flavour == null) {
+            flavour = PDFAFlavour.NO_FLAVOUR;
+        }
+        return flavour;
+    }
+
+    /**
+     * Performs a lenient parse of the String <code>toParse</code> to determine
+     * whether it contains a valid {@link PDFAFlavour} identifier. Be aware that
+     * the identifiers are only 2 character Strings (see
+     * {@link PDFAFlavour#byFlavourId(String)} so unintended matches are
+     * possible.
+     * 
+     * @param toParse
+     *            a String parameter that is parsed to see whether it contains a
+     *            PDFAFlavour identifier.
+     * @return the correct {@link PDFAFlavour} looked up by parsing
+     *         <code>toParse</code> or {@link PDFAFlavour#NO_FLAVOUR} if no
+     *         matching flavour was found.
+     */
+    public static PDFAFlavour fromString(String toParse) {
+        for (String id : getFlavourIds()) {
+            if (toParse.toLowerCase().contains(id)) {
+                return byFlavourId(id);
+            }
+        }
+        return PDFAFlavour.NO_FLAVOUR;
     }
 
     /**

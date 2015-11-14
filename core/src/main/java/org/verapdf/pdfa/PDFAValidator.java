@@ -1,8 +1,14 @@
 package org.verapdf.pdfa;
 
+import java.io.IOException;
 import java.io.InputStream;
 
+import org.verapdf.core.ValidationException;
 import org.verapdf.pdfa.config.ValidatorConfiguration;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.validation.ValidationProfile;
+
+import java.io.InputStream;
 
 /**
  * A PDFAValidator performs a series of checks on PDF/A documents to verify that
@@ -10,7 +16,7 @@ import org.verapdf.pdfa.config.ValidatorConfiguration;
  *
  * Note that the interface makes no provision for configuration of a validator
  * instance. This is left to the implementer although the veraPDF library API
- * provides a factory (add link later). The interface is designed to allow
+ * provides a {@link ValidatorFactory} interface. This is designed to allow
  * immutable validator instances, meaning there is no methods provided to change
  * the ValidationProfile, or the pre-configured settings.
  *
@@ -19,26 +25,7 @@ import org.verapdf.pdfa.config.ValidatorConfiguration;
 public interface PDFAValidator {
 
     /**
-     * Returns the ID of the ValidationProfile used by this instance. The ID
-     * returned as a String value that also clearly identifies the PDF/A flavour
-     * supported by this PDFAValidator as can be seen in the list below:
-     * <ul>
-     * <li>1a</li>
-     * <li>1b</li>
-     * <li>2a</li>
-     * <li>2b</li>
-     * <li>2u</li>
-     * <li>3a</li>
-     * <li>3b</li>
-     * <li>3u</li>
-     * </ul>
-     *
-     * @return the ID of the validating profile as a String
-     */
-    public String getProfileID();
-
-    /**
-     * Returns the complete ValidationProfile enforced by this PDFAValidator.
+     * Returns the complete {@link ValidationProfile} enforced by this PDFAValidator.
      *
      * @return this PDFAValidator instance's ValiationProfile
      */
@@ -58,13 +45,5 @@ public interface PDFAValidator {
      *             if the toValidate parameter is null PDFAValidationException
      *             if the validation process fails
      */
-    public ValidationResult validate(InputStream toValidate);
-
-    /**
-     * Returns a {@link ValidatorConfiguration} that holds the configuration of
-     * this Validator instance.
-     *
-     * @return the ValidatorConfiguration for this validator.
-     */
-    public ValidatorConfiguration getConfiguration();
+    public ValidationResult validate(ValidationModelParser toValidate) throws ValidationException, IOException;
 }

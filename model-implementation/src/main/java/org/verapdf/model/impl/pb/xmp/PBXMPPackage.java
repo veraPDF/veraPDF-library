@@ -25,6 +25,8 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 	private XMPMetadata xmpMetadata;
 	private boolean isMetadataValid;
 	private String errorMessage;
+	private final String xPacketBytes;
+	private final String xPacketEncoding;
 
 	/**
 	 * Constructs new object
@@ -43,6 +45,10 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 		this.xmpMetadata = xmpMetadata;
 		this.isMetadataValid = isMetadataValid;
 		this.errorMessage = errorMessage;
+		this.xPacketBytes = xmpMetadata == null ? null :
+				xmpMetadata.getXpacketBytes();
+		this.xPacketEncoding = xmpMetadata == null ? null :
+				xmpMetadata.getXpacketEncoding();
 	}
 
 	/**
@@ -50,12 +56,12 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 	 */
 	@Override
 	public Boolean getisMetadataValid() {
-		return Boolean.valueOf(isMetadataValid);
+		return Boolean.valueOf(this.isMetadataValid);
 	}
 
 	@Override
 	public String geterrorMessage() {
-		return errorMessage;
+		return this.errorMessage;
 	}
 
 	/**
@@ -63,7 +69,7 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 	 */
 	@Override
 	public String getbytes() {
-		return this.xmpMetadata == null ? null : this.xmpMetadata.getXpacketBytes();
+		return this.xPacketBytes;
 	}
 
 	/**
@@ -71,7 +77,7 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 	 */
 	@Override
 	public String getencoding() {
-		return this.xmpMetadata == null ? null : this.xmpMetadata.getXpacketEncoding();
+		return this.xPacketEncoding;
 	}
 
 	/**
@@ -91,19 +97,24 @@ public class PBXMPPackage extends PBXMPObject implements XMPPackage {
 	}
 
 	private List<XMPSchema> getSchemas() {
-		if (this.xmpMetadata != null && this.xmpMetadata.getAllSchemas() != null) {
-			List<XMPSchema> resultSchemas = new ArrayList<>();
-			for (org.apache.xmpbox.schema.XMPSchema pbschema : this.xmpMetadata
-					.getAllSchemas()) {
-				XMPSchema schema = PBSchemaFactory.createSchema(pbschema);
-				if (schema != null) {
-					resultSchemas.add(schema);
-				}
+		if (this.xmpMetadata != null) {
+			List<org.apache.xmpbox.schema.XMPSchema> schemas = this.xmpMetadata.getAllSchemas();
+			if (schemas != null) {
+				return this.getSchemas(schemas);
 			}
-			return Collections.unmodifiableList(resultSchemas);
 		}
-
 		return Collections.emptyList();
+	}
+
+	private List<XMPSchema> getSchemas(List<org.apache.xmpbox.schema.XMPSchema> schemas) {
+		List<XMPSchema> resultSchemas = new ArrayList<>(schemas.size());
+		for (org.apache.xmpbox.schema.XMPSchema pbschema : schemas) {
+			XMPSchema schema = PBSchemaFactory.createSchema(pbschema);
+			if (schema != null) {
+				resultSchemas.add(schema);
+			}
+		}
+		return Collections.unmodifiableList(resultSchemas);
 	}
 
 }

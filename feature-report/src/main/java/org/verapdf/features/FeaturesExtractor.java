@@ -2,6 +2,7 @@ package org.verapdf.features;
 
 import org.verapdf.features.tools.FeatureTreeNode;
 
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -10,6 +11,19 @@ import java.util.List;
  * @author Maksim Bezrukov
  */
 abstract class FeaturesExtractor {
+
+	private Path pluginFolder;
+
+	void initialize(Path pluginFolder) {
+		this.pluginFolder = pluginFolder;
+	}
+
+	/**
+	 * @return path to the plugin folder
+	 */
+	protected Path getFolderPath() {
+		return pluginFolder;
+	}
 
 	/**
 	 * Extract features from features data
@@ -23,5 +37,15 @@ abstract class FeaturesExtractor {
 	 * @return type of object for which this extractor applies
 	 */
 	abstract FeaturesObjectTypesEnum getType();
+
+	/**
+	 * @return ID of the plugin
+	 */
+	public abstract String getID();
+
+	/**
+	 * @return Description of the plugin
+	 */
+	public abstract String getDescription();
 
 }

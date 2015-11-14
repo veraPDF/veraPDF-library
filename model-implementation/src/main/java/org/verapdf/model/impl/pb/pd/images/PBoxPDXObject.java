@@ -1,17 +1,10 @@
 package org.verapdf.model.impl.pb.pd.images;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.cos.COSStream;
-import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.graphics.PDPostScriptXObject;
@@ -22,6 +15,12 @@ import org.verapdf.model.coslayer.CosDict;
 import org.verapdf.model.impl.pb.cos.PBCosDict;
 import org.verapdf.model.impl.pb.pd.PBoxPDResources;
 import org.verapdf.model.pdlayer.PDXObject;
+import org.verapdf.model.tools.resources.PDInheritableResources;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -35,30 +34,28 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
     public static final String OPI = "OPI";
     public static final String S_MASK = "SMask";
 
+	protected final PDInheritableResources resources;
+	private final String subtype;
+
     public PBoxPDXObject(
             org.apache.pdfbox.pdmodel.graphics.PDXObject simplePDObject) {
-        super(simplePDObject, X_OBJECT_TYPE);
+        this(simplePDObject, PDInheritableResources.EMPTY_EXTENDED_RESOURCES, X_OBJECT_TYPE);
     }
 
-	protected PBoxPDXObject(COSObjectable simplePDObject, final String type) {
+	protected PBoxPDXObject(COSObjectable simplePDObject, PDInheritableResources resources, final String type) {
 		super(simplePDObject, type);
+		this.resources = resources;
+		this.subtype = this.getSubtype((org.apache.pdfbox.pdmodel.graphics.PDXObject) this.simplePDObject);
 	}
 
-    @Override
-    public String getSubtype() {
-        COSDictionary dict = ((org.apache.pdfbox.pdmodel.graphics.PDXObject) this.simplePDObject)
-                .getCOSStream();
-        return this.getSubtypeString(dict.getDictionaryObject(COSName.SUBTYPE));
-    }
+	private String getSubtype(org.apache.pdfbox.pdmodel.graphics.PDXObject object) {
+		COSBase base = object.getCOSStream().getDictionaryObject(COSName.SUBTYPE);
+		return base instanceof COSName ? ((COSName) base).getName() : null;
+	}
 
-    protected String getSubtypeString(COSBase item) {
-        if (item instanceof COSString) {
-            return ((COSString) item).getString();
-        } else if (item instanceof COSName) {
-            return ((COSName) item).getName();
-        } else {
-            return null;
-        }
+	@Override
+    public String getSubtype() {
+		return this.subtype;
     }
 
 	@Override
@@ -104,13 +101,17 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
         org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject =
 				org.apache.pdfbox.pdmodel.graphics.PDXObject.createXObject(
 						smaskDictionary, nameAsString, resources);
-        return getTypedPDXObject(pbObject);
+        return getTypedPDXObject(pbObject, this.resources);
     }
 
     public static PDXObject getTypedPDXObject(
-            org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject) {
+            org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject,
+			PDInheritableResources extendedResources) {
         if (pbObject instanceof PDFormXObject) {
-            return new PBoxPDXForm((PDFormXObject) pbObject);
+			PDFormXObject object = (PDFormXObject) pbObject;
+			PDInheritableResources resources = extendedResources
+					.getExtendedResources(object.getResources());
+			return new PBoxPDXForm(object, resources);
         } else if (pbObject instanceof PDImageXObject) {
             return new PBoxPDXImage((PDImageXObject) pbObject);
         } else if (pbObject instanceof PDPostScriptXObject) {
@@ -120,7 +121,7 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
         }
     }
 
-    protected List<CosDict> getOPI() {
+	protected List<CosDict> getOPI() {
         return this.getLinkToDictionary(OPI);
     }
 

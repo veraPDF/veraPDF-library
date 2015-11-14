@@ -1,6 +1,6 @@
 package org.verapdf.features;
 
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -56,6 +56,8 @@ public class FeaturesReporter {
 					List<FeatureTreeNode> cust = ext.getFeatures(obj.getData());
 					if (cust != null) {
 						FeatureTreeNode custRoot = FeatureTreeNode.newChildInstance("pluginFeatures", custom);
+						custRoot.addAttribute("pluginId", ext.getID());
+						custRoot.addAttribute("description", ext.getDescription());
 						for (FeatureTreeNode ftn : cust) {
 							if (ftn != null) {
 								custRoot.addChild(ftn);
@@ -65,7 +67,7 @@ public class FeaturesReporter {
 				}
 			}
 
-		} catch (FeaturesTreeNodeException ignore) {
+		} catch (FeatureParsingException ignore) {
 			// The method logic should ensure this never happens, so if it does
 			// it's catastrophic. We'll throw an IllegalStateException with this
 			// as a cause. The only time it's ignored is when the unthinkable
