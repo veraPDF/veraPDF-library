@@ -1,5 +1,24 @@
 package org.verapdf.gui;
 
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.ID_REMOVED;
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
+
 import org.apache.log4j.Logger;
 import org.verapdf.core.ValidationException;
 import org.verapdf.features.pb.PBFeatureParser;
@@ -14,9 +33,10 @@ import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.model.ModelParser;
 import org.verapdf.pdfa.MetadataFixerResult;
+import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validation.Validator;
+import org.verapdf.pdfa.validators.Validators;
 import org.verapdf.report.HTMLReport;
 import org.verapdf.report.MachineReadableReport;
 
@@ -85,7 +105,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
                 this.pdf.getPath()))) {
 
             if (this.processingType.isValidating()) {
-                info = runValidator(parser.getRoot());
+                info = runValidator(parser);
 
                 if (this.isFixMetadata) {
                     fixerResult = this.fixMetadata(info, parser);
@@ -155,10 +175,11 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     }
 
     private ValidationResult runValidator(
-            org.verapdf.model.baselayer.Object root) {
+            ModelParser toValidate) throws IOException {
         try {
-            return Validator.validate(this.profile, root,
+            PDFAValidator validator = Validators.validate(this.profile,
                     this.settings.isShowPassedRules());
+            return validator.validate(toValidate);
         } catch (ValidationException e) {
 
             this.parent.errorInValidatingOccur(

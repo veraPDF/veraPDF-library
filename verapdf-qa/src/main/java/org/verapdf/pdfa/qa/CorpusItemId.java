@@ -22,6 +22,6 @@ public interface CorpusItemId {
     /**
      * @return the expected result
      */
-    public Status getExpectedStatus();
+    public boolean getExpectedResult();
     
 }

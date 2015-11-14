@@ -19,10 +19,10 @@ public class CorpusItemIdImpl implements CorpusItemId {
     private static final String TEST_FILE_EXT = ".pdf";
     private final RuleId ruleId;
     private final String testCode;
-    private final Status status;
+    private final boolean result;
 
     private CorpusItemIdImpl() {
-        this(Profiles.defaultRuleId(), "testCode", Status.UNKNOWN);
+        this(Profiles.defaultRuleId(), "testCode", false);
     }
 
     /**
@@ -31,11 +31,11 @@ public class CorpusItemIdImpl implements CorpusItemId {
      * @param status
      */
     private CorpusItemIdImpl(final RuleId ruleId, final String testCode,
-            final Status status) {
+            final boolean result) {
         super();
         this.ruleId = ruleId;
         this.testCode = testCode;
-        this.status = status;
+        this.result = result;
     }
 
     /**
@@ -58,27 +58,29 @@ public class CorpusItemIdImpl implements CorpusItemId {
      * { @inheritDoc }
      */
     @Override
-    public Status getExpectedStatus() {
-        return this.status;
+    public boolean getExpectedResult() {
+        return this.result;
     }
 
     
-    /**
-     * { @inheritDoc }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((this.ruleId == null) ? 0 : this.ruleId.hashCode());
-        result = prime * result + ((this.status == null) ? 0 : this.status.hashCode());
+        result = prime * result + (this.result ? 1231 : 1237);
+        result = prime * result
+                + ((this.ruleId == null) ? 0 : this.ruleId.hashCode());
         result = prime * result
                 + ((this.testCode == null) ? 0 : this.testCode.hashCode());
         return result;
     }
 
-    /**
-     * { @inheritDoc }
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
     public boolean equals(Object obj) {
@@ -86,15 +88,15 @@ public class CorpusItemIdImpl implements CorpusItemId {
             return true;
         if (obj == null)
             return false;
-        if (getClass() != obj.getClass())
+        if (!(obj instanceof CorpusItemIdImpl))
             return false;
         CorpusItemIdImpl other = (CorpusItemIdImpl) obj;
+        if (this.result != other.result)
+            return false;
         if (this.ruleId == null) {
             if (other.ruleId != null)
                 return false;
         } else if (!this.ruleId.equals(other.ruleId))
-            return false;
-        if (this.status != other.status)
             return false;
         if (this.testCode == null) {
             if (other.testCode != null)
@@ -104,13 +106,14 @@ public class CorpusItemIdImpl implements CorpusItemId {
         return true;
     }
 
-    /**
-     * { @inheritDoc }
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
      */
     @Override
     public String toString() {
-        return "CorpusItemIdImpl [ruleId=" + this.ruleId + ", testCode=" + this.testCode
-                + ", status=" + this.status + "]";
+        return "CorpusItemIdImpl [ruleId=" + this.ruleId + ", testCode="
+                + this.testCode + ", result=" + this.result + "]";
     }
 
     /**
@@ -127,8 +130,8 @@ public class CorpusItemIdImpl implements CorpusItemId {
      * @return
      */
     public static CorpusItemId fromValues(final RuleId ruleId,
-            final String testCode, final Status status) {
-        return new CorpusItemIdImpl(ruleId, testCode, status);
+            final String testCode, final boolean result) {
+        return new CorpusItemIdImpl(ruleId, testCode, result);
     }
 
     /**
@@ -153,18 +156,18 @@ public class CorpusItemIdImpl implements CorpusItemId {
     public static CorpusItemId fromCode(final Specification specification, final String code) {
         StringBuilder builder = new StringBuilder();
         String separator = "";
-        Status status = Status.UNKNOWN;
+        boolean status = false;
         String testCode = "";
         int testNumber = 0;
         for (String part : code.split(SEPARATOR)) {
             if (part.endsWith(TEST_FILE_EXT)){
                 testCode = part.substring(0, 1);
                 break;
-            } else if (testPassFail(part) != Status.UNKNOWN) {
+            } else if (testPassFail(part)) {
                 status = testPassFail(part);
             } else if (part.startsWith(TEST_PREFIX)) {
                 testNumber = Integer.parseInt(part.substring(1));
-            } else if (status == Status.UNKNOWN){
+            } else {
                 builder.append(separator);
                 builder.append(part);
                 separator = ".";
@@ -174,9 +177,7 @@ public class CorpusItemIdImpl implements CorpusItemId {
         return CorpusItemIdImpl.fromValues(ruleId, testCode, status);
     }
     
-    private static Status testPassFail(final String code) {
-        if (code.equals("fail")) return Status.FAILED;
-        if (code.equals("pass")) return Status.PASSED;
-        return Status.UNKNOWN;
+    private static boolean testPassFail(final String code) {
+        return code.equals("pass");
     }
 }
