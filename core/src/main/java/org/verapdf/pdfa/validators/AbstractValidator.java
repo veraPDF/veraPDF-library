@@ -4,7 +4,6 @@
 package org.verapdf.pdfa.validators;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -21,9 +20,7 @@ import org.verapdf.core.ValidationException;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.ValidationModelParser;
-import org.verapdf.pdfa.results.Location;
 import org.verapdf.pdfa.results.TestAssertion;
-import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.Rule;

@@ -33,7 +33,8 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
             Collections.<RuleId, Rule> emptyMap());
     private final PDFAFlavour flavour;
 
-    private RuleDirectory(final File root) throws FileNotFoundException, ProfileException, IOException {
+    private RuleDirectory(final File root) throws FileNotFoundException,
+            ProfileException, IOException {
         this.flavour = PDFAFlavour.fromString(root.getName());
         Set<Rule> ruleSet = rulesFromDir(root, this.flavour);
         for (Rule rule : ruleSet) {
@@ -42,8 +43,6 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
     }
 
     /**
-     * @param key
-     * @return
      * @see org.verapdf.core.Directory#getItem(java.lang.Object)
      */
     @Override
@@ -52,7 +51,6 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
     }
 
     /**
-     * @return
      * @see org.verapdf.core.Directory#getItems()
      */
     @Override
@@ -61,7 +59,6 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
     }
 
     /**
-     * @return
      * @see org.verapdf.core.Directory#getKeys()
      */
     @Override
@@ -70,7 +67,6 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
     }
 
     /**
-     * @return
      * @see org.verapdf.core.Directory#size()
      */
     @Override
@@ -79,7 +75,6 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
     }
 
     /**
-     * @return
      * @see org.verapdf.core.Directory#isEmpty()
      */
     @Override
@@ -88,24 +83,39 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
     }
 
     /**
-     * @return
+     * @return the {@link PDFAFlavour} associated with the {@code RuleId}.
      */
     public PDFAFlavour getFlavour() {
         return this.flavour;
     }
 
-    public static RuleDirectory loadFromDir(final File root) throws FileNotFoundException, ProfileException, IOException {
+    /**
+     * Load up a {@link Rule} {@code Set} from a root directory
+     * 
+     * @param root
+     *            the {@code File} root directory for the Corpus
+     * @return a new {@link RuleDirectory} instance initialised from
+     *         {@code root}.
+     * @throws NullPointerException
+     *             if {@code root} is null
+     * @throws IllegalArgumentException
+     *             if {@code root} is not an existing directory
+     * @throws ProfileException
+     *             if one of the Rules could not be parsed
+     * @throws IOException
+     *             if there's a problem reading the directory contents
+     */
+    public static RuleDirectory loadFromDir(final File root)
+            throws IOException, ProfileException {
+        if (root == null)
+            throw new NullPointerException("Parameter root should not be null.");
+        if (!root.isDirectory())
+            throw new IllegalArgumentException(
+                    "Parameter root MUST be an existing directory.");
         return new RuleDirectory(root);
     }
 
-    /**
-     * @param dir
-     * @return
-     * @throws FileNotFoundException
-     * @throws IOException
-     * @throws ProfileException
-     */
-    public static Set<Rule> rulesFromDir(final File dir,
+    private static Set<Rule> rulesFromDir(final File dir,
             final PDFAFlavour flavour) throws FileNotFoundException,
             IOException, ProfileException {
         Set<Rule> rules = new HashSet<>();

@@ -22,9 +22,9 @@ import org.verapdf.pdfa.validation.RuleId;
  */
 public class CorpusDirectory implements Directory<CorpusItemId, Path> {
     private final Registry<CorpusItemId, Path> corpusItems = new MapBackedRegistry<>(
-            Collections.<CorpusItemId, Path>emptyMap());
+            Collections.<CorpusItemId, Path> emptyMap());
     private final Registry<RuleId, Set<CorpusItemId>> ruleLookup = new MapBackedRegistry<>(
-            Collections.<RuleId, Set<CorpusItemId>>emptyMap());
+            Collections.<RuleId, Set<CorpusItemId>> emptyMap());
     private final PDFAFlavour flavour;
 
     private CorpusDirectory(final File root) {
@@ -36,7 +36,7 @@ public class CorpusDirectory implements Directory<CorpusItemId, Path> {
             this.corpusItems.putdateItem(id, path);
             if (this.ruleLookup.getItem(id.getRuleId()) == null) {
                 this.ruleLookup.registerItem(id.getRuleId(),
-                        Collections.<CorpusItemId>emptySet());
+                        Collections.<CorpusItemId> emptySet());
             }
             Set<CorpusItemId> itemIdSet = new HashSet<>(
                     this.ruleLookup.getItem(id.getRuleId()));
@@ -46,8 +46,6 @@ public class CorpusDirectory implements Directory<CorpusItemId, Path> {
     }
 
     /**
-     * @param key
-     * @return
      * @see org.verapdf.core.Directory#getItem(java.lang.Object)
      */
     @Override
@@ -56,7 +54,6 @@ public class CorpusDirectory implements Directory<CorpusItemId, Path> {
     }
 
     /**
-     * @return
      * @see org.verapdf.core.Directory#getItems()
      */
     @Override
@@ -65,7 +62,6 @@ public class CorpusDirectory implements Directory<CorpusItemId, Path> {
     }
 
     /**
-     * @return
      * @see org.verapdf.core.Directory#getKeys()
      */
     @Override
@@ -74,7 +70,6 @@ public class CorpusDirectory implements Directory<CorpusItemId, Path> {
     }
 
     /**
-     * @return
      * @see org.verapdf.core.Directory#size()
      */
     @Override
@@ -83,7 +78,6 @@ public class CorpusDirectory implements Directory<CorpusItemId, Path> {
     }
 
     /**
-     * @return
      * @see org.verapdf.core.Directory#isEmpty()
      */
     @Override
@@ -92,36 +86,45 @@ public class CorpusDirectory implements Directory<CorpusItemId, Path> {
     }
 
     /**
-     * @return
+     * @return the {@link PDFAFlavour} associated with the corpus
      */
     public PDFAFlavour getFlavour() {
         return this.flavour;
     }
+
     /**
+     * Returns the {@code Set} of {@link CorpusItemId}s associated with a
+     * particular {@link RuleId}.
+     * 
      * @param id
-     * @return
+     *            the {@code RuleId} to match
+     * @return the {@code Set} of {@link CorpusItemId}s.
      */
     public Set<CorpusItemId> getCorpusIdForRule(final RuleId id) {
         if (this.ruleLookup.getItem(id) == null)
-            return Collections.<CorpusItemId>emptySet();
+            return Collections.<CorpusItemId> emptySet();
         return this.ruleLookup.getItem(id);
     }
 
     /**
      * @param root
-     * @return
-     * @throws FileNotFoundException
-     * @throws IOException
+     *            the {@code File} root directory for the Corpus
+     * @return a {@code CorpusDirectory} with {@code root} directory
+     * @throws NullPointerException
+     *             if {@code root} is null
+     * @throws IllegalArgumentException
+     *             if {@code root} is not an existing directory
      */
     public static CorpusDirectory loadFromDir(final File root) {
+        if (root == null)
+            throw new NullPointerException("Parameter root should not be null.");
+        if (!root.isDirectory())
+            throw new IllegalArgumentException(
+                    "Parameter root MUST be an existing directory.");
         return new CorpusDirectory(root);
     }
 
-    /**
-     * @param dir
-     * @return
-     */
-    public static Set<Path> rulesFromDir(final File dir) {
+    private static Set<Path> rulesFromDir(final File dir) {
         Set<Path> paths = new HashSet<>();
         File[] files = dir.listFiles();
         for (File file : files) {

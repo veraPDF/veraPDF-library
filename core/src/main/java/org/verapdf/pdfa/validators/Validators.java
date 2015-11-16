@@ -4,10 +4,8 @@
 package org.verapdf.pdfa.validators;
 
 import org.verapdf.core.ValidationException;
-import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
 
@@ -17,8 +15,9 @@ import org.verapdf.pdfa.validation.ValidationProfile;
  */
 public final class Validators {
     private Validators() {
-        
+
     }
+
     /**
      * Generates validation info for objects with root {@code root} and
      * validation profile structure {@code validationProfile}
@@ -58,11 +57,13 @@ public final class Validators {
      * @throws ValidationException
      *             when a problem occurs validating the PDF
      */
-    public static PDFAValidator validate(final ValidationProfile profile, boolean logSuccess) {
+    public static PDFAValidator validate(final ValidationProfile profile,
+            boolean logSuccess) {
         if (profile == null)
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile profile) cannot be null.");
-        return (logSuccess) ? new SimpleValidator(profile) : new FailedOnlyValidator(profile);
+        return (logSuccess) ? new SimpleValidator(profile)
+                : new FailedOnlyValidator(profile);
     }
 
 }
