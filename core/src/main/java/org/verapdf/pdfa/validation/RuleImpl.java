@@ -197,10 +197,10 @@ final class RuleImpl implements Rule {
         return RuleImpl.DEFAULT;
     }
 
-    static RuleImpl fromValues(final RuleIdImpl id, final String object,
+    static RuleImpl fromValues(final RuleId id, final String object,
             final String description, final String test,
             final ErrorDetails error, final List<Reference> references) {
-        return new RuleImpl(id, object, description, test, error, references);
+        return new RuleImpl(RuleIdImpl.fromRuleId(id), object, description, test, error, references);
     }
 
     static RuleImpl fromRule(final Rule toConvert) {

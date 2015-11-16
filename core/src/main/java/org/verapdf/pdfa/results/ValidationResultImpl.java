@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
@@ -47,7 +49,7 @@ final class ValidationResultImpl implements ValidationResult {
             final Set<TestAssertion> assertions, final boolean isCompliant) {
         super();
         this.flavour = flavour;
-        this.assertions = Collections.unmodifiableSet(assertions);
+        this.assertions = new HashSet<>(assertions);
         this.isCompliant = isCompliant;
     }
 
@@ -72,7 +74,7 @@ final class ValidationResultImpl implements ValidationResult {
      */
     @Override
     public Set<TestAssertion> getTestAssertions() {
-        return this.assertions;
+        return Collections.unmodifiableSet(this.assertions);
     }
 
     /**
@@ -105,7 +107,9 @@ final class ValidationResultImpl implements ValidationResult {
         if (this.assertions == null) {
             if (other.getTestAssertions() != null)
                 return false;
-        } else if (!this.assertions.equals(other.getTestAssertions()))
+        } else if (other.getTestAssertions() == null)
+            return false;
+        else if (!this.assertions.equals(other.getTestAssertions()))
             return false;
         if (this.flavour != other.getPDFAFlavour())
             return false;
@@ -170,6 +174,13 @@ final class ValidationResultImpl implements ValidationResult {
             throws JAXBException {
         Unmarshaller stringUnmarshaller = getUnmarshaller();
         return (ValidationResultImpl) stringUnmarshaller.unmarshal(toConvert);
+    }
+
+    static ValidationResultImpl fromXml(final String toConvert)
+            throws JAXBException {
+        try (StringReader reader = new StringReader(toConvert)) {
+            return fromXml(reader);
+        }
     }
 
     static class Adapter extends

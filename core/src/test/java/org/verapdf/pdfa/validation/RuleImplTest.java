@@ -31,7 +31,7 @@ import org.junit.Test;
 @SuppressWarnings("static-method")
 public class RuleImplTest {
     private static final String DEFAULT_RULE_STRING = "Rule [id="
-            + RuleIdImpl.defaultInstance()
+            + Profiles.defaultRuleId()
             + ", object=object, description=description, test=test, error=" + ErrorDetailsImpl.defaultInstance() + ", references=[]]";
 
     /**
@@ -48,20 +48,20 @@ public class RuleImplTest {
      */
     @Test
     public final void testToString() {
-        assertTrue(RuleImpl.defaultInstance().toString()
+        assertTrue(Profiles.defaultRule().toString()
                 .equals(DEFAULT_RULE_STRING));
     }
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.RuleImpl#fromValues(RuleIdImpl, String, String, String, ErrorDetails, List)}
+     * {@link org.verapdf.pdfa.validation.RuleImpl#fromValues(RuleId, String, String, String, ErrorDetails, List)}
      * .
      */
     @Test
     public final void testFromValues() {
         // Get an equivalent to the default instance
         RuleImpl rule = RuleImpl
-                .fromValues(RuleIdImpl.defaultInstance(), "object",
+                .fromValues(Profiles.defaultRuleId(), "object",
                         "description", "test", ErrorDetailsImpl.defaultInstance(), Collections.EMPTY_LIST);
         Rule defaultInstance = RuleImpl.defaultInstance();
         // Equivalent is NOT the same object as default instance
