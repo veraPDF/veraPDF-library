@@ -54,8 +54,6 @@ public final class Validators {
      *            the root object for validation
      * @param logSuccess
      * @return validation info structure
-     * @throws ValidationException
-     *             when a problem occurs validating the PDF
      */
     public static PDFAValidator validate(final ValidationProfile profile,
             boolean logSuccess) {
