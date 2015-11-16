@@ -30,9 +30,9 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
  *
  */
 @SuppressWarnings("static-method")
-public class ValidationResultTests {
+public class ValidationResultTest {
     private static final String DEFAULT_RESULT_STRING = "ValidationResult [flavour=" + PDFAFlavour.NO_FLAVOUR
-            + ", assertions=" + Collections.<TestAssertion>emptySet() + ", isCompliant="
+            + ", totalAssertions=" + 0 + ", assertions=" + Collections.<TestAssertion>emptySet() + ", isCompliant="
             + false + "]";
 
     /**
@@ -63,7 +63,7 @@ public class ValidationResultTests {
     }
 
     /**
-     * Test method for {@link org.verapdf.pdfa.results.ValidationResultImpl#fromValues(org.verapdf.pdfa.flavours.PDFAFlavour, java.util.Set, boolean)}.
+     * Test method for {@link org.verapdf.pdfa.results.ValidationResultImpl#fromValues(org.verapdf.pdfa.flavours.PDFAFlavour, java.util.Set, boolean, int)}.
      */
     @Test
     public final void testFromValues() {

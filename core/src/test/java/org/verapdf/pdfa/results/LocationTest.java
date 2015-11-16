@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  */
 @SuppressWarnings("static-method")
-public class LocationTests {
+public class LocationTest {
     private final static String DEFAULT_LOCATION_STRING = "Location [level=level, context=context]";
 
     /**

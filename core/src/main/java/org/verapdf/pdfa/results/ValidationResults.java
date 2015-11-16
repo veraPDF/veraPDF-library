@@ -8,6 +8,7 @@ import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.RuleId;
 
 import javax.xml.bind.JAXBException;
+
 import java.io.*;
 import java.util.Set;
 
@@ -33,8 +34,30 @@ public class ValidationResults {
      */
     public static ValidationResult resultFromValues(final PDFAFlavour flavour,
             final Set<TestAssertion> assertions, final boolean isCompliant) {
+        if (flavour == null) throw new NullPointerException("flavour cannot be null");
+        if (assertions == null) throw new NullPointerException("assertions cannot be null");
         return ValidationResultImpl
-                .fromValues(flavour, assertions, isCompliant);
+                .fromValues(flavour, assertions, isCompliant, assertions.size());
+    }
+
+    /**
+     * @param flavour
+     *            a {@link PDFAFlavour} instance indicating the validation type
+     *            performed
+     * @param assertions
+     *            the Set of TestAssertions reported by during validation
+     * @param isCompliant
+     *            a boolean that indicating whether the validated PDF/A data was
+     *            compliant with the indicated flavour
+     * @param totalAssertions 
+     * @return a new ValidationResult instance populated from the values
+     */
+    public static ValidationResult resultFromValues(final PDFAFlavour flavour,
+            final Set<TestAssertion> assertions, final boolean isCompliant, final int totalAssertions) {
+        if (flavour == null) throw new NullPointerException("flavour cannot be null");
+        if (assertions == null) throw new NullPointerException("assertions cannot be null");
+        return ValidationResultImpl
+                .fromValues(flavour, assertions, isCompliant, totalAssertions);
     }
 
     /**
@@ -47,6 +70,8 @@ public class ValidationResults {
      */
     public static ValidationResult resultFromValues(final PDFAFlavour flavour,
             final Set<TestAssertion> assertions) {
+        if (flavour == null) throw new NullPointerException("flavour cannot be null");
+        if (assertions == null) throw new NullPointerException("assertions cannot be null");
         boolean isCompliant = true;
         for (TestAssertion assertion : assertions) {
             if (assertion.getStatus() == Status.FAILED) {

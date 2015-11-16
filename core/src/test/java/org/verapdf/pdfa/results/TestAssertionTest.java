@@ -16,7 +16,7 @@ import org.verapdf.pdfa.validation.Profiles;
  *
  */
 @SuppressWarnings("static-method")
-public class TestAssertionTests {
+public class TestAssertionTest {
     private static final String DEFAULT_ASSERTION_STRING = "TestAssertion [ruleId=" + Profiles.defaultRuleId() + ", status=" + Status.FAILED
             + ", message=" + "message" + ", location=" + ValidationResults.defaultLocation() + "]";
     /**
