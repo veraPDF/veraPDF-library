@@ -1,7 +1,7 @@
 package org.verapdf.integration;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,8 +11,12 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
@@ -25,8 +29,11 @@ import org.verapdf.core.ValidationException;
 import org.verapdf.model.ModelParser;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.qa.BaselineItem;
+import org.verapdf.pdfa.qa.BaselineItemImpl;
 import org.verapdf.pdfa.qa.CorpusItemId;
 import org.verapdf.pdfa.qa.CorpusItemIdImpl;
+import org.verapdf.pdfa.qa.CorpusItemImpl;
 import org.verapdf.pdfa.qa.GitHubBackedProfileDirectory;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
@@ -41,6 +48,7 @@ public class ITVeraCorpusTests {
     private final static String PDF_SUFFIX = ".pdf";
     // Directory of validation profiles poulated by download from GitHub
     private static final ProfileDirectory PROFILES = GitHubBackedProfileDirectory.INTEGRATION;
+    private static final Map<PDFAFlavour, Set<BaselineItem>> RESULTS = new HashMap<>();
     // Reference to corpus zip temp file
     private static File VERA_CORPUS_ZIP_FILE;
 
@@ -118,6 +126,11 @@ public class ITVeraCorpusTests {
         validateFlavour(PDFAFlavour.PDFA_3_B, Arrays.asList(filters));
     }
 
+    @Test
+    public void outputTestSets() throws IOException, JAXBException {
+        String[] args = new String[0];
+        BaselineItemImpl.main(args);
+    }
     /**
      * Main test loop for a flavour TODO: This is still a little messy, corpus
      * needs a class abstraction to drive the tests
@@ -133,6 +146,7 @@ public class ITVeraCorpusTests {
      */
     private static void validateFlavour(final PDFAFlavour flavour,
             final List<PDFAFlavour> filters) throws ZipException, IOException {
+        if (RESULTS.get(flavour) == null) RESULTS.put(flavour, new HashSet<BaselineItem>());
 
         // Try with resource with the downlodaded corpus zip file
         try (ZipFile zipIn = new ZipFile(VERA_CORPUS_ZIP_FILE);) {
@@ -191,6 +205,7 @@ public class ITVeraCorpusTests {
                     // Output result and repeat
                     ValidationResults.toXml(statelessResult, System.out,
                             Boolean.TRUE);
+                    BaselineItem baselineItem = BaselineItemImpl.fromValues(CorpusItemImpl.fromValues(corpusId, entry.getName()), statelessResult.getTestAssertions());
                     if (statelessResult.isCompliant() != corpusId
                             .getExpectedResult())
                         System.err.println("Unexpected result:"

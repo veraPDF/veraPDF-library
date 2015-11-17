@@ -89,20 +89,20 @@ public class CorpusItemIdImpl implements CorpusItemId {
             return true;
         if (obj == null)
             return false;
-        if (!(obj instanceof CorpusItemIdImpl))
+        if (!(obj instanceof CorpusItemId))
             return false;
-        CorpusItemIdImpl other = (CorpusItemIdImpl) obj;
-        if (this.result != other.result)
+        CorpusItemId other = (CorpusItemId) obj;
+        if (this.result != other.getExpectedResult())
             return false;
         if (this.ruleId == null) {
-            if (other.ruleId != null)
+            if (other.getRuleId() != null)
                 return false;
-        } else if (!this.ruleId.equals(other.ruleId))
+        } else if (!this.ruleId.equals(other.getRuleId()))
             return false;
         if (this.testCode == null) {
-            if (other.testCode != null)
+            if (other.getTestCode() != null)
                 return false;
-        } else if (!this.testCode.equals(other.testCode))
+        } else if (!this.testCode.equals(other.getTestCode()))
             return false;
         return true;
     }
