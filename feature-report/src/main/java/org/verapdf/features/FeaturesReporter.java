@@ -51,16 +51,19 @@ public class FeaturesReporter {
 		try {
 			FeatureTreeNode root = obj.reportFeatures(collection);
 			if (featuresExtractors.get(obj.getType()) != null) {
-				FeatureTreeNode custom = FeatureTreeNode.newChildInstance(CUSTOM_FEATURES_ROOT_NODE_NAME, root);
-				for (FeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
-					List<FeatureTreeNode> cust = ext.getFeatures(obj.getData());
-					if (cust != null) {
-						FeatureTreeNode custRoot = FeatureTreeNode.newChildInstance("pluginFeatures", custom);
-						custRoot.addAttribute("pluginId", ext.getID());
-						custRoot.addAttribute("description", ext.getDescription());
-						for (FeatureTreeNode ftn : cust) {
-							if (ftn != null) {
-								custRoot.addChild(ftn);
+				FeaturesData objData = obj.getData();
+				if (objData != null) {
+					FeatureTreeNode custom = FeatureTreeNode.newChildInstance(CUSTOM_FEATURES_ROOT_NODE_NAME, root);
+					for (FeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
+						List<FeatureTreeNode> cust = ext.getFeatures(objData);
+						if (cust != null) {
+							FeatureTreeNode custRoot = FeatureTreeNode.newChildInstance("pluginFeatures", custom);
+							custRoot.addAttribute("pluginId", ext.getID());
+							custRoot.addAttribute("description", ext.getDescription());
+							for (FeatureTreeNode ftn : cust) {
+								if (ftn != null) {
+									custRoot.addChild(ftn);
+								}
 							}
 						}
 					}
