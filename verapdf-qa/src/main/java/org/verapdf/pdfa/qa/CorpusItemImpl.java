@@ -104,7 +104,7 @@ public class CorpusItemImpl implements CorpusItem {
      */
     @Override
     public String toString() {
-        return "CorpusItemImpl [id=" + this.id + ", path=" + this.path + ", sha1=" + this.sha1
+        return "CorpusItem [id=" + this.id + ", path=" + this.path + ", sha1=" + this.sha1
                 + "]";
     }
 

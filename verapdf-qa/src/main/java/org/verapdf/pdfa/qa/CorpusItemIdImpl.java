@@ -14,6 +14,8 @@ import org.verapdf.pdfa.validation.RuleId;
 public class CorpusItemIdImpl implements CorpusItemId {
     private static final CorpusItemIdImpl DEFAULT = new CorpusItemIdImpl();
     private static final String SEPARATOR = "-";
+    private static final String PASS = "pass";
+    private static final String FAIL = "fail";
     private static final String TEST_PREFIX = "t";
     private static final String TEST_FILE_EXT = ".pdf";
     private final RuleId ruleId;
@@ -114,7 +116,7 @@ public class CorpusItemIdImpl implements CorpusItemId {
      */
     @Override
     public String toString() {
-        return "CorpusItemIdImpl [ruleId=" + this.ruleId + ", testCode="
+        return "CorpusItemId [ruleId=" + this.ruleId + ", testCode="
                 + this.testCode + ", result=" + this.result + "]";
     }
 
@@ -174,8 +176,7 @@ public class CorpusItemIdImpl implements CorpusItemId {
         for (String part : code.split(SEPARATOR)) {
             if (part.endsWith(TEST_FILE_EXT)) {
                 testCode = part.substring(0, 1);
-                break;
-            } else if (testPassFail(part)) {
+            } else if (isTestResult(part)) {
                 status = testPassFail(part);
             } else if (part.startsWith(TEST_PREFIX)) {
                 testNumber = Integer.parseInt(part.substring(1));
@@ -190,7 +191,11 @@ public class CorpusItemIdImpl implements CorpusItemId {
         return CorpusItemIdImpl.fromValues(ruleId, testCode, status);
     }
 
+    private static boolean isTestResult(final String code) {
+        return code.equalsIgnoreCase(PASS) || code.equalsIgnoreCase(FAIL);
+    }
+
     private static boolean testPassFail(final String code) {
-        return code.equals("pass");
+        return code.equalsIgnoreCase(PASS);
     }
 }

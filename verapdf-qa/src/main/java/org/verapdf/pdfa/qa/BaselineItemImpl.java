@@ -121,7 +121,7 @@ public final class BaselineItemImpl implements BaselineItem {
      */
     @Override
     public String toString() {
-        return "BaselineItemImpl [item=" + this.item + ", expectedFailures="
+        return "BaselineItem [item=" + this.item + ", expectedFailures="
                 + this.expectedFailures + "]";
     }
 
