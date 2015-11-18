@@ -72,8 +72,9 @@ public class FeaturesNode {
 					builder.append(errors.get(0));
 					i = 1;
 				}
-				for (; i < errors.size(); ++i) {
+				while (i < errors.size()) {
 					builder.append(", ").append(errors.get(i));
+					++i;
 				}
 			}
 		}
