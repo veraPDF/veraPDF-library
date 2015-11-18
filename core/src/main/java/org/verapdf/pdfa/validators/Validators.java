@@ -3,14 +3,13 @@
  */
 package org.verapdf.pdfa.validators;
 
-import org.verapdf.core.ValidationException;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
 
 /**
- * @author cfw
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
 public final class Validators {
@@ -25,19 +24,16 @@ public final class Validators {
      * This method doesn't need to parse validation profile (it works faster
      * than those ones, which parses profile).
      * 
-     * @param flavour
+     * @param flavour the PDF/A Flavour
+     * @param logSuccess 
+     * @return 
      *
-     * @param root
-     *            the root object for validation
-     * @return validation info structure
-     * @throws ValidationException
-     *             when a problem occurs validating the PDF
      */
-    public static PDFAValidator validate(PDFAFlavour flavour, boolean logSuccess) {
+    public static PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess) {
         if (flavour == null)
             throw new IllegalArgumentException(
                     "Parameter (PDFAFlavour flavour) cannot be null.");
-        return validate(Profiles.getVeraProfileDirectory()
+        return createValidator(Profiles.getVeraProfileDirectory()
                 .getValidationProfileByFlavour(flavour), logSuccess);
     }
 
@@ -55,7 +51,7 @@ public final class Validators {
      * @param logSuccess
      * @return validation info structure
      */
-    public static PDFAValidator validate(final ValidationProfile profile,
+    public static PDFAValidator createValidator(final ValidationProfile profile,
             boolean logSuccess) {
         if (profile == null)
             throw new IllegalArgumentException(

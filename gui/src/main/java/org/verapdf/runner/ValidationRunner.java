@@ -40,7 +40,7 @@ public class ValidationRunner {
                 throw new VeraPDFException(
                         "IOException when parsing Validation Model.", e);
             }
-            PDFAValidator validator = Validators.validate(PDFAFlavour.PDFA_1_B,
+            PDFAValidator validator = Validators.createValidator(PDFAFlavour.PDFA_1_B,
                     false);
             ValidationResult result = validator.validate(loader);
             ValidationResults.toXml(result, System.out, Boolean.TRUE);

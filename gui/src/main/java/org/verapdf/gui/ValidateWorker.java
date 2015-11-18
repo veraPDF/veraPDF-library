@@ -177,7 +177,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     private ValidationResult runValidator(
             ModelParser toValidate) throws IOException {
         try {
-            PDFAValidator validator = Validators.validate(this.profile,
+            PDFAValidator validator = Validators.createValidator(this.profile,
                     this.settings.isShowPassedRules());
             return validator.validate(toValidate);
         } catch (ValidationException e) {

@@ -87,7 +87,7 @@ public final class VeraPdfCli {
     private static ValidationResult validate(final InputStream toValidate,
             final ValidationProfile profile) throws IOException, ValidationException {
             try (ModelParser parser = new ModelParser(toValidate)) {
-                PDFAValidator validator = Validators.validate(profile,
+                PDFAValidator validator = Validators.createValidator(profile,
                         false);
                 return validator.validate(parser);
             }
