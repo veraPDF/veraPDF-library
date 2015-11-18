@@ -34,7 +34,7 @@ import org.verapdf.pdfa.validation.Variable;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
-public class AbstractValidator implements PDFAValidator {
+class BaseValidator implements PDFAValidator {
 
     private static final int OPTIMIZATION_LEVEL = 9;
     private final ValidationProfile profile;
@@ -46,7 +46,9 @@ public class AbstractValidator implements PDFAValidator {
     private final Deque<Set<String>> contextSet = new ArrayDeque<>();
     protected final Set<TestAssertion> results = new HashSet<>();
     private int totalTests = 0;
+    private boolean abortProcessing = false;
     private final boolean logPassedTests;
+    private boolean isCompliant = true;
 
     private Map<RuleId, Script> ruleScripts = new HashMap<>();
     private Map<String, Script> variableScripts = new HashMap<>();
@@ -55,11 +57,11 @@ public class AbstractValidator implements PDFAValidator {
 
     protected String rootType;
 
-    protected AbstractValidator(final ValidationProfile profile) {
+    protected BaseValidator(final ValidationProfile profile) {
         this(profile, false);
     }
 
-    protected AbstractValidator(final ValidationProfile profile,
+    protected BaseValidator(final ValidationProfile profile,
             final boolean logPassedTests) {
         super();
         this.profile = profile;
@@ -81,14 +83,14 @@ public class AbstractValidator implements PDFAValidator {
 
         this.contextSet.push(rootIDContext);
 
-        while (!this.objectsStack.isEmpty()) {
+        while (!this.objectsStack.isEmpty() && !this.abortProcessing) {
             checkNext();
         }
 
         Context.exit();
 
         return ValidationResults.resultFromValues(
-                this.profile.getPDFAFlavour(), this.results);
+                this.profile.getPDFAFlavour(), this.results, this.isCompliant, this.totalTests);
     }
 
     protected void initialise() {
@@ -344,6 +346,8 @@ public class AbstractValidator implements PDFAValidator {
                 .getRuleId(),
                 (assertionResult) ? Status.PASSED : Status.FAILED, rule
                         .getDescription(), location);
+        if (this.isCompliant)
+            this.isCompliant = assertionResult;
         if (!assertionResult || this.logPassedTests)
             this.results.add(assertion);
         this.totalTests++;

@@ -60,7 +60,7 @@ public final class Validators {
         if (profile == null)
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile profile) cannot be null.");
-        return new AbstractValidator(profile, logSuccess);
+        return new BaseValidator(profile, logSuccess);
     }
 
 }
