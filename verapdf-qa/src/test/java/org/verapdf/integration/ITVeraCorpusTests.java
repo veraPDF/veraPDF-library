@@ -6,14 +6,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipException;
 
-import org.junit.AfterClass;
+import javax.xml.bind.JAXBException;
+
 import org.junit.Test;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.qa.GitHubBackedProfileDirectory;
 import org.verapdf.pdfa.qa.ResultSet;
+import org.verapdf.pdfa.qa.ResultSet.Incomplete;
+import org.verapdf.pdfa.qa.ResultSet.Result;
 import org.verapdf.pdfa.qa.ResultSetImpl;
 import org.verapdf.pdfa.qa.TestCorpus;
+import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.ProfileDirectory;
 import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validators.Validators;
@@ -25,15 +29,39 @@ public class ITVeraCorpusTests {
     private static final Map<PDFAFlavour, ResultSet> VERA_RESULTS = new HashMap<>();
     private static final Map<PDFAFlavour, ResultSet> ISARTOR_RESULTS = new HashMap<>();
 
-    @AfterClass
-    public static void outputResults() {
+    // @AfterClass
+    public static void outputResults() throws JAXBException {
         for (ResultSet results : VERA_RESULTS.values()) {
             System.out.println();
-            System.out.println(results);
+            System.out.println(results.getDetails());
+            System.out.println(results.getCorpusDetails());
+            System.out.println("Results");
+            for (Result result : results.getResults()) {
+                System.out.println(result.getCorpusItem().getPath());
+                ValidationResults.toXml(result.getResult(), System.out,
+                        Boolean.TRUE);
+            }
+            System.out.println("Exceptions");
+            for (Incomplete exception : results.getExceptions()) {
+                System.out.println(exception.getCorpusItem().getPath());
+                System.out.println(exception);
+            }
         }
         for (ResultSet results : ISARTOR_RESULTS.values()) {
             System.out.println();
-            System.out.println(results);
+            System.out.println(results.getDetails());
+            System.out.println(results.getCorpusDetails());
+            System.out.println("Results");
+            for (Result result : results.getResults()) {
+                System.out.println(result.getCorpusItem().getPath());
+                ValidationResults.toXml(result.getResult(), System.out,
+                        Boolean.TRUE);
+            }
+            System.out.println("Exceptions");
+            for (Incomplete exception : results.getExceptions()) {
+                System.out.println(exception.getCorpusItem().getPath());
+                System.out.println(exception);
+            }
         }
     }
 
@@ -54,8 +82,9 @@ public class ITVeraCorpusTests {
     public void testVeraPdfCorpus() throws ZipException, IOException {
         TestCorpus veraPDFcorpus = CorpusManager.getVeraCorpus();
         for (ValidationProfile profile : PROFILES.getValidationProfiles()) {
-            PDFAValidator validator = Validators.validate(profile, false);
-            VERA_RESULTS.put(profile.getPDFAFlavour(), ResultSetImpl.validateCorpus(veraPDFcorpus, validator));
+            PDFAValidator validator = Validators.createValidator(profile, false);
+            VERA_RESULTS.put(profile.getPDFAFlavour(),
+                    ResultSetImpl.validateCorpus(veraPDFcorpus, validator));
         }
     }
 
@@ -76,8 +105,9 @@ public class ITVeraCorpusTests {
     public void testIsatorCorpus() throws ZipException, IOException {
         TestCorpus veraPDFcorpus = CorpusManager.getIsartorCorpus();
         for (ValidationProfile profile : PROFILES.getValidationProfiles()) {
-            PDFAValidator validator = Validators.validate(profile, false);
-            ISARTOR_RESULTS.put(profile.getPDFAFlavour(), ResultSetImpl.validateCorpus(veraPDFcorpus, validator));
+            PDFAValidator validator = Validators.createValidator(profile, false);
+            ISARTOR_RESULTS.put(profile.getPDFAFlavour(),
+                    ResultSetImpl.validateCorpus(veraPDFcorpus, validator));
         }
     }
 
