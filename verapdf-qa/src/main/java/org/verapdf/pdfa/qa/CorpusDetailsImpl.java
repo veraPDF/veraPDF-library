@@ -32,6 +32,55 @@ public class CorpusDetailsImpl implements CorpusDetails {
         return this.description;
     }
 
+    
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((this.description == null) ? 0 : this.description.hashCode());
+        result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
+        return result;
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof CorpusDetails))
+            return false;
+        CorpusDetails other = (CorpusDetails) obj;
+        if (this.description == null) {
+            if (other.getDescription() != null)
+                return false;
+        } else if (!this.description.equals(other.getDescription()))
+            return false;
+        if (this.name == null) {
+            if (other.getName() != null)
+                return false;
+        } else if (!this.name.equals(other.getName()))
+            return false;
+        return true;
+    }
+
+    
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public String toString() {
+        return "CorpusDetails [name=" + this.name + ", description="
+                + this.description + "]";
+    }
+
     /**
      * @param name
      *            the name of the TestCorpus

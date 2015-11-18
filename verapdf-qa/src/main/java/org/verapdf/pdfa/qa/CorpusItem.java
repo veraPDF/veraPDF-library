@@ -11,11 +11,6 @@ package org.verapdf.pdfa.qa;
  */
 public interface CorpusItem {
     /**
-     * @return the {@link CorpusItemId} of the instance.
-     */
-    public CorpusItemId getId();
-
-    /**
      * @return the {@code String} path of the item
      */
     public String getPath();

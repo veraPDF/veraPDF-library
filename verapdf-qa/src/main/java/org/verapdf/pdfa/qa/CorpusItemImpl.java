@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -17,27 +16,17 @@ import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
  */
 public class CorpusItemImpl implements CorpusItem {
 
-    private final CorpusItemId id;
     private final String path;
     private final String sha1;
 
-    private CorpusItemImpl(final CorpusItemId id, final String path) {
-        this(id, path, "");
+    private CorpusItemImpl(final String path) {
+        this(path, "");
     }
 
-    private CorpusItemImpl(final CorpusItemId id, final String path,
+    private CorpusItemImpl(final String path,
             final String sha1) {
-        this.id = id;
         this.path = path;
         this.sha1 = sha1;
-    }
-
-    /**
-     * { @inheritDoc }
-     */
-    @Override
-    public CorpusItemId getId() {
-        return this.id;
     }
 
     /**
@@ -63,7 +52,6 @@ public class CorpusItemImpl implements CorpusItem {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
         result = prime * result + ((this.path == null) ? 0 : this.path.hashCode());
         result = prime * result + ((this.sha1 == null) ? 0 : this.sha1.hashCode());
         return result;
@@ -81,11 +69,6 @@ public class CorpusItemImpl implements CorpusItem {
         if (!(obj instanceof CorpusItem))
             return false;
         CorpusItem other = (CorpusItem) obj;
-        if (this.id == null) {
-            if (other.getId() != null)
-                return false;
-        } else if (!this.id.equals(other.getId()))
-            return false;
         if (this.path == null) {
             if (other.getPath() != null)
                 return false;
@@ -104,53 +87,61 @@ public class CorpusItemImpl implements CorpusItem {
      */
     @Override
     public String toString() {
-        return "CorpusItem [id=" + this.id + ", path=" + this.path + ", sha1=" + this.sha1
+        return "CorpusItem [path=" + this.path + ", sha1=" + this.sha1
                 + "]";
     }
 
-    public static CorpusItem fromValues(final CorpusItemId id, final String path) {
-        return fromValues(id, path, "");
+    /**
+     * @param path
+     * @return
+     */
+    public static CorpusItem fromValues(final String path) {
+        return fromValues(path, "");
     }
 
-    public static CorpusItem fromValues(final CorpusItemId id, final String path,
+    /**
+     * @param path
+     * @param sha1
+     * @return
+     */
+    public static CorpusItem fromValues(final String path,
             final String sha1) {
-        if (id == null)
-            throw new NullPointerException("id can not be null.");
         if (path == null)
             throw new NullPointerException("path can not be null.");
         if (path.isEmpty())
             throw new IllegalArgumentException("path can not be empty.");
         if (sha1 == null)
             throw new NullPointerException("sha1 can not be null.");
-        return new CorpusItemImpl(id, path, sha1);
+        return new CorpusItemImpl(path, sha1);
     }
 
-    public static CorpusItem fromFile(final File corpusFile,
-            final Specification specification) {
+    /**
+     * @param corpusFile
+     * @return
+     */
+    public static CorpusItem fromFile(final File corpusFile) {
         if (corpusFile == null)
             throw new NullPointerException("file can not be null.");
         if (!corpusFile.isFile())
             throw new IllegalArgumentException("file must be an existing file.");
-        CorpusItemId id = CorpusItemIdImpl.fromFileName(specification,
-                corpusFile.getName());
         try (FileInputStream fis = new FileInputStream(corpusFile)) {
-            return fromInputStream(fis, id, corpusFile.getPath());
+            return fromInputStream(fis, corpusFile.getPath());
         } catch (IOException e) {
             // Ignore stream close error
-            return fromValues(id, corpusFile.getPath(), "");
+            return fromValues(corpusFile.getPath(), "");
         }
     }
 
-    static CorpusItem fromInputStream(final InputStream corpusStream, final CorpusItemId id, final String path) {
+    static CorpusItem fromInputStream(final InputStream corpusStream, final String path) {
         if (corpusStream == null) throw new NullPointerException("corpusStream can not be null.");
         if (path == null)
             throw new NullPointerException("path can not be null.");
         if (path.isEmpty())
             throw new IllegalArgumentException("path can not be empty.");
         try {
-            return CorpusItemImpl.fromValues(id, path, DigestUtils.sha1Hex(corpusStream));
+            return CorpusItemImpl.fromValues(path, DigestUtils.sha1Hex(corpusStream));
         } catch (IOException e) {
-            return CorpusItemImpl.fromValues(id, path);
+            return CorpusItemImpl.fromValues(path);
         }
     }
 }

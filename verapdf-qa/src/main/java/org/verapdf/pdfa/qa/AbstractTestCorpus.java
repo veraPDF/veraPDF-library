@@ -55,7 +55,7 @@ abstract class AbstractTestCorpus<L> implements TestCorpus {
      */
     @Override
     public Set<String> getItemNamesForFlavour(PDFAFlavour flavour) {
-        // TODO Look at implementing sorting by flavour
+        // TODO Look at implementing filtering by flavour
         return Collections.unmodifiableSet(this.itemMap.keySet());
     }
 
@@ -71,4 +71,43 @@ abstract class AbstractTestCorpus<L> implements TestCorpus {
 
     abstract protected InputStream getStreamFromReference(final L reference)
             throws IOException;
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((this.details == null) ? 0 : this.details.hashCode());
+        result = prime * result + ((this.getItemNames() == null) ? 0 : this.getItemNames().hashCode());
+        return result;
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof TestCorpus))
+            return false;
+        TestCorpus other = (TestCorpus) obj;
+        if (this.details == null) {
+            if (other.getDetails() != null)
+                return false;
+        } else if (!this.details.equals(other.getDetails()))
+            return false;
+        if (this.getItemNames() == null) {
+            if (other.getItemNames() != null)
+                return false;
+        } else if (!this.getItemNames().equals(other.getItemNames()))
+            return false;
+        return true;
+    }
+    
+    
 }
