@@ -21,9 +21,9 @@ public class ZipBackedTestCorpus extends AbstractTestCorpus<ZipEntry> {
     private final static String PDF_SUFFIX = ".pdf";
     private final ZipFile zipSource;
 
-    private ZipBackedTestCorpus(final String name, final String description,
+    private ZipBackedTestCorpus(final CorpusDetails details,
             final File zipSource) throws ZipException, IOException {
-        super(name, description, itemsMapFromZipSource(zipSource));
+        super(details, itemsMapFromZipSource(zipSource));
         this.zipSource = new ZipFile(zipSource);
     }
 
@@ -55,7 +55,15 @@ public class ZipBackedTestCorpus extends AbstractTestCorpus<ZipEntry> {
     public static TestCorpus fromZipSource(final String name,
             final String description, final File zipFile) throws ZipException,
             IOException {
-        return new ZipBackedTestCorpus(name, description, zipFile);
+        if (name == null)
+            throw new NullPointerException("Parameter name can not be null");
+        if (name.isEmpty())
+            throw new NullPointerException("Parameter name can not be empty");
+        if (description == null)
+            throw new NullPointerException(
+                    "Parameter description can not be null");
+        return new ZipBackedTestCorpus(CorpusDetailsImpl.fromValues(name,
+                description), zipFile);
     }
 
     private static final Map<String, ZipEntry> itemsMapFromZipSource(

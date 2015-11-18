@@ -17,30 +17,21 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
  *
  */
 abstract class AbstractTestCorpus<L> implements TestCorpus {
-    private final String name;
-    private final String description;
+    private final CorpusDetails details;
     private final Map<String, L> itemMap;
-    
-    protected AbstractTestCorpus(final String name, final String description, final Map<String, L> itemMap) {
-        this.name = name;
-        this.description = description;
+
+    protected AbstractTestCorpus(final CorpusDetails details,
+            final Map<String, L> itemMap) {
+        this.details = details;
         this.itemMap = new HashMap<>(itemMap);
-    }
-    
-    /**
-     * { @inheritDoc }
-     */
-    @Override
-    public String getName() {
-        return this.name;
     }
 
     /**
      * { @inheritDoc }
      */
     @Override
-    public String getDescription() {
-        return this.description;
+    public CorpusDetails getDetails() {
+        return this.details;
     }
 
     /**
@@ -73,10 +64,11 @@ abstract class AbstractTestCorpus<L> implements TestCorpus {
      */
     @Override
     public InputStream getItemStream(String itemName) throws IOException {
-        // TODO Auto-generated method stub
-        if (!this.itemMap.containsKey(itemName)) throw new IOException("No element found for name=" + itemName);
+        if (!this.itemMap.containsKey(itemName))
+            throw new IOException("No element found for name=" + itemName);
         return getStreamFromReference(this.itemMap.get(itemName));
     }
-    
-    abstract protected InputStream getStreamFromReference(final L reference) throws IOException;
+
+    abstract protected InputStream getStreamFromReference(final L reference)
+            throws IOException;
 }

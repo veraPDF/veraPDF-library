@@ -17,12 +17,7 @@ public interface TestCorpus {
     /**
      * @return the name of the TestCorpus instance
      */
-    public String getName();
-
-    /**
-     * @return a textual description of the TestCorpus instance
-     */
-    public String getDescription();
+    public CorpusDetails getDetails();
 
     /**
      * @return the number of items held in the corpus
