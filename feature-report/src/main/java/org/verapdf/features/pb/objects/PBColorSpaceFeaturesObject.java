@@ -14,7 +14,6 @@ import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import javax.xml.bind.DatatypeConverter;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -162,7 +161,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 		if (index.getCOSObject() instanceof COSArray) {
 			FeatureTreeNode hival = FeatureTreeNode.newChildInstance("hival",
 					root);
-			if (((COSArray) index.getCOSObject()).size() > 3 &&
+			if (((COSArray) index.getCOSObject()).size() >= 3 &&
 					((COSArray) index.getCOSObject()).getObject(2) instanceof COSNumber) {
 				hival.setValue(String.valueOf(((COSNumber) ((COSArray) index.getCOSObject()).getObject(2)).intValue()));
 			} else {
@@ -173,7 +172,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 
 			FeatureTreeNode lookup = FeatureTreeNode.newChildInstance("lookup",
 					root);
-			if (((COSArray) index.getCOSObject()).size() > 4) {
+			if (((COSArray) index.getCOSObject()).size() >= 4) {
 				byte[] lookupData = null;
 				COSBase lookupTable = ((COSArray) index.getCOSObject()).getObject(3);
 				if (lookupTable instanceof COSString) {

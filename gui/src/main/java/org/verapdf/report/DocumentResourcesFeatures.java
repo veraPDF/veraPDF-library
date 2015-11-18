@@ -19,13 +19,13 @@ public class DocumentResourcesFeatures {
 	@XmlElement
 	private final FeaturesNode shadings;
 	@XmlElement
-	private final XObjectFeatures xobjects;
+	private final FeaturesNode xobjects;
 	@XmlElement
 	private final FeaturesNode fonts;
 	@XmlElement
 	private final FeaturesNode propertiesDicts;
 
-	private DocumentResourcesFeatures(FeaturesNode propertiesDicts, FeaturesNode fonts, XObjectFeatures xobjects, FeaturesNode shadings, FeaturesNode patterns, FeaturesNode colorSpaces, FeaturesNode graphicsStates) {
+	private DocumentResourcesFeatures(FeaturesNode propertiesDicts, FeaturesNode fonts, FeaturesNode xobjects, FeaturesNode shadings, FeaturesNode patterns, FeaturesNode colorSpaces, FeaturesNode graphicsStates) {
 		this.propertiesDicts = propertiesDicts;
 		this.fonts = fonts;
 		this.xobjects = xobjects;
@@ -42,7 +42,9 @@ public class DocumentResourcesFeatures {
 		FeaturesNode shadings = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.SHADING);
 		FeaturesNode fonts = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.FONT);
 		FeaturesNode propertiesDicts = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.PROPERTIES);
-		XObjectFeatures xobjects = XObjectFeatures.fromValues(collection);
+		FeaturesNode xobjects = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.IMAGE_XOBJECT,
+				FeaturesObjectTypesEnum.FORM_XOBJECT, FeaturesObjectTypesEnum.POSTSCRIPT_XOBJECT,
+				FeaturesObjectTypesEnum.FAILED_XOBJECT);
 		return new DocumentResourcesFeatures(propertiesDicts, fonts, xobjects, shadings, patterns, colorSpaces, graphicsStates);
 	}
 }

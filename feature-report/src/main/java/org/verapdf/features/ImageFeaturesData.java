@@ -12,9 +12,9 @@ public final class ImageFeaturesData extends FeaturesData {
 	private final byte[] metadata;
 	private final Integer width;
 	private final Integer height;
-	private final List<FilterStructure> filters;
+	private final List<Filter> filters;
 
-	private ImageFeaturesData(byte[] metadata, byte[] stream, Integer width, Integer height, List<FilterStructure> filters) {
+	private ImageFeaturesData(byte[] metadata, byte[] stream, Integer width, Integer height, List<Filter> filters) {
 		super(stream);
 		this.metadata = metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
 		this.width = width;
@@ -23,8 +23,8 @@ public final class ImageFeaturesData extends FeaturesData {
 			this.filters = null;
 		} else {
 			this.filters = new ArrayList<>();
-			for (FilterStructure fs : filters) {
-				this.filters.add(new FilterStructure(fs.name, fs.properties, fs.stream));
+			for (Filter fs : filters) {
+				this.filters.add(new Filter(fs.name, fs.properties, fs.stream));
 			}
 		}
 	}
@@ -38,7 +38,7 @@ public final class ImageFeaturesData extends FeaturesData {
 	 * @param height   parameter Height from the iccprofile dictionary
 	 * @param filters  list of FilterStructures elements. The order of them is the same as in pdf file
 	 */
-	public static ImageFeaturesData newInstance(byte[] metadata, byte[] stream, Integer width, Integer height, List<FilterStructure> filters) {
+	public static ImageFeaturesData newInstance(byte[] metadata, byte[] stream, Integer width, Integer height, List<Filter> filters) {
 		if (stream == null) {
 			throw new IllegalArgumentException("Image stream can not be null");
 		}
@@ -69,7 +69,7 @@ public final class ImageFeaturesData extends FeaturesData {
 	/**
 	 * @return list of FilterStructures elements. The order of them is the same as in pdf files
 	 */
-	public List<FilterStructure> getFilters() {
+	public List<Filter> getFilters() {
 		return filters == null ? null : Collections.unmodifiableList(filters);
 	}
 
@@ -80,32 +80,32 @@ public final class ImageFeaturesData extends FeaturesData {
 	 * params dictionary and this entry's value is a stream, then, if this entry is present, we will have an empty properties
 	 * and not null stream.
 	 */
-	public static class FilterStructure {
+	public static class Filter {
 		private final String name;
 		private final Map<String, String> properties;
 		private final byte[] stream;
 
-		private FilterStructure(String name, Map<String, String> properties, byte[] stream) {
+		private Filter(String name, Map<String, String> properties, byte[] stream) {
 			this.name = name;
 			this.properties = properties == null ? new HashMap<String, String>() : new HashMap<>(properties);
 			this.stream = Arrays.copyOf(stream, stream.length);
 		}
 
 		/**
-		 * Constructs new FilterStructure
+		 * Constructs new Filter
 		 *
 		 * @param name       name of a filter
 		 * @param properties map of properties of a filter
 		 * @param stream     stream which used in filter as its parameter for JBIG2Decode filter
 		 */
-		public static FilterStructure newInstance(String name, Map<String, String> properties, byte[] stream) {
+		public static Filter newInstance(String name, Map<String, String> properties, byte[] stream) {
 			if (name == null) {
 				throw new IllegalArgumentException("Name of a filter can not be null");
 			}
 			if (properties == null) {
 				throw new IllegalArgumentException("Properties can not be null");
 			}
-			return new FilterStructure(name, properties, stream);
+			return new Filter(name, properties, stream);
 		}
 
 		/**

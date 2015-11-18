@@ -95,7 +95,8 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
 	@Override
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (formXObject != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("form");
+			FeatureTreeNode root = FeatureTreeNode.newRootInstance("xobject");
+			root.addAttribute("type", "form");
 			root.addAttribute(ID, id);
 
 			parseParents(root);

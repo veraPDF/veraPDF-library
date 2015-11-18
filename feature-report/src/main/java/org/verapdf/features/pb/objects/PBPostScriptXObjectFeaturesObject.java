@@ -57,8 +57,8 @@ public class PBPostScriptXObjectFeaturesObject implements IFeaturesObject {
 	 */
 	@Override
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
-		FeatureTreeNode root = FeatureTreeNode.newRootInstance("postscript");
-
+		FeatureTreeNode root = FeatureTreeNode.newRootInstance("xobject");
+		root.addAttribute("type", "postscript");
 		root.addAttribute("id", id);
 		parseParents(root);
 

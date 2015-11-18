@@ -52,26 +52,32 @@ public class FeaturesNode {
 	}
 
 	static FeaturesNode fromValues(FeaturesCollection collection,
-								   FeaturesObjectTypesEnum type) {
-		List<FeatureTreeNode> children = collection.getFeatureTreesForType(type);
+								   FeaturesObjectTypesEnum... types) {
 		List<Object> qChildren = new ArrayList<>();
-		if (children != null) {
-			for (FeatureTreeNode entry : children) {
-				qChildren.add(new JAXBElement<>(new QName(entry.getName()),
-						FeaturesNode.class, FeaturesNode.fromValues(entry, collection)));
-			}
-		}
-
-		List<String> errors = collection.getErrorsForType(type);
 		Map<QName, Object> attr = new HashMap<>();
-		if (errors != null && !errors.isEmpty()) {
-			StringBuilder builder = new StringBuilder();
-			builder.append(errors.get(0));
-			for (int i = 1; i < errors.size(); ++i) {
-				builder.append(", ").append(errors.get(i));
+		StringBuilder builder = new StringBuilder();
+		for (FeaturesObjectTypesEnum type : types) {
+			List<FeatureTreeNode> children = collection.getFeatureTreesForType(type);
+			if (children != null) {
+				for (FeatureTreeNode entry : children) {
+					qChildren.add(new JAXBElement<>(new QName(entry.getName()),
+							FeaturesNode.class, FeaturesNode.fromValues(entry, collection)));
+				}
 			}
-			attr.put(new QName(ErrorsHelper.ERRORID), builder.toString());
+
+			List<String> errors = collection.getErrorsForType(type);
+			if (errors != null && !errors.isEmpty()) {
+				int i = 0;
+				if (builder.toString().isEmpty()) {
+					builder.append(errors.get(0));
+					i = 1;
+				}
+				for (; i < errors.size(); ++i) {
+					builder.append(", ").append(errors.get(i));
+				}
+			}
 		}
+		attr.put(new QName(ErrorsHelper.ERRORID), builder.toString());
 		return new FeaturesNode(attr, qChildren);
 	}
 
