@@ -78,8 +78,15 @@ public class FeaturesNode {
 				}
 			}
 		}
-		attr.put(new QName(ErrorsHelper.ERRORID), builder.toString());
-		return new FeaturesNode(attr, qChildren);
+		if (!builder.toString().isEmpty()) {
+			attr.put(new QName(ErrorsHelper.ERRORID), builder.toString());
+		}
+
+		if (qChildren.isEmpty() && attr.isEmpty()) {
+			return null;
+		} else {
+			return new FeaturesNode(attr, qChildren);
+		}
 	}
 
 	static FeaturesNode fromValues(FeatureTreeNode node, FeaturesCollection collection) {
@@ -116,7 +123,11 @@ public class FeaturesNode {
 						FeaturesNode.class, FeaturesNode.fromValues(entry, collection)));
 			}
 		}
-		return new FeaturesNode(qAttributes, qChildren);
+		if (qAttributes.isEmpty() && qChildren.isEmpty()) {
+			return null;
+		} else {
+			return new FeaturesNode(qAttributes, qChildren);
+		}
 	}
 
 	private static String replaceInvalidCharacters(String source) {
