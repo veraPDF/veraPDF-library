@@ -1,5 +1,11 @@
 package org.verapdf.runner;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.xml.bind.JAXBException;
+
 import org.verapdf.core.ValidationException;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.model.ModelParser;
@@ -7,13 +13,7 @@ import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.pdfa.validators.SimpleValidator;
 import org.verapdf.pdfa.validators.Validators;
-
-import javax.xml.bind.JAXBException;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class ValidationRunner {
 

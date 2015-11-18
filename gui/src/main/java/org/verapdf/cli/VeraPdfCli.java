@@ -3,7 +3,14 @@
  */
 package org.verapdf.cli;
 
-import com.beust.jcommander.JCommander;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+import javax.xml.bind.JAXBException;
+
 import org.apache.log4j.Logger;
 import org.verapdf.ReleaseDetails;
 import org.verapdf.cli.commands.VeraCliArgParser;
@@ -17,16 +24,10 @@ import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.ProfileDirectory;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validators.SimpleValidator;
 import org.verapdf.pdfa.validators.Validators;
 import org.verapdf.validation.profile.parser.LegacyProfileConverter;
 
-import javax.xml.bind.JAXBException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
+import com.beust.jcommander.JCommander;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

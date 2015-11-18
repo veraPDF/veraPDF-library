@@ -20,8 +20,6 @@ import org.verapdf.pdfa.validators.Validators;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 public class ITVeraCorpusTests {
-    // Strings for parsting zip entry names
-    private final static String ZIP_SEPARATOR = "/";
     // Directory of validation profiles poulated by download from GitHub
     private static final ProfileDirectory PROFILES = GitHubBackedProfileDirectory.INTEGRATION;
     private static final Map<PDFAFlavour, ResultSet> VERA_RESULTS = new HashMap<>();
