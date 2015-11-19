@@ -130,8 +130,12 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 					FeatureTreeNode alt = FeatureTreeNode.newChildInstance("alternate", root);
 					alt.addAttribute(ID, colorSpaceChild);
 				}
-				if (devN.getColorantNames() != null) {
-					parseStringList(devN.getColorantNames(), FeatureTreeNode.newChildInstance("colorantNames", root));
+				List<String> devNColorantNames = devN.getColorantNames();
+				if (devNColorantNames != null) {
+					FeatureTreeNode colorantNames = FeatureTreeNode.newChildInstance("colorantNames", root);
+					for (String name : devNColorantNames) {
+						PBCreateNodeHelper.addNotEmptyNode("colorantName", name, colorantNames);
+					}
 				}
 			}
 
