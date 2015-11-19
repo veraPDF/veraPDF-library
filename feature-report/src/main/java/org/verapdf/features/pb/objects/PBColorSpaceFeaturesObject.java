@@ -14,7 +14,6 @@ import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
 import javax.xml.bind.DatatypeConverter;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -131,8 +130,12 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 					FeatureTreeNode alt = FeatureTreeNode.newChildInstance("alternate", root);
 					alt.addAttribute(ID, colorSpaceChild);
 				}
-				if (devN.getColorantNames() != null) {
-					parseStringList(devN.getColorantNames(), FeatureTreeNode.newChildInstance("colorantNames", root));
+				List<String> devNColorantNames = devN.getColorantNames();
+				if (devNColorantNames != null) {
+					FeatureTreeNode colorantNames = FeatureTreeNode.newChildInstance("colorantNames", root);
+					for (String name : devNColorantNames) {
+						PBCreateNodeHelper.addNotEmptyNode("colorantName", name, colorantNames);
+					}
 				}
 			}
 
@@ -162,7 +165,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 		if (index.getCOSObject() instanceof COSArray) {
 			FeatureTreeNode hival = FeatureTreeNode.newChildInstance("hival",
 					root);
-			if (((COSArray) index.getCOSObject()).size() > 3 &&
+			if (((COSArray) index.getCOSObject()).size() >= 3 &&
 					((COSArray) index.getCOSObject()).getObject(2) instanceof COSNumber) {
 				hival.setValue(String.valueOf(((COSNumber) ((COSArray) index.getCOSObject()).getObject(2)).intValue()));
 			} else {
@@ -173,7 +176,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 
 			FeatureTreeNode lookup = FeatureTreeNode.newChildInstance("lookup",
 					root);
-			if (((COSArray) index.getCOSObject()).size() > 4) {
+			if (((COSArray) index.getCOSObject()).size() >= 4) {
 				byte[] lookupData = null;
 				COSBase lookupTable = ((COSArray) index.getCOSObject()).getObject(3);
 				if (lookupTable instanceof COSString) {
@@ -222,9 +225,9 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 			PDCalRGB calRGB = (PDCalRGB) cie;
 			FeatureTreeNode gamma = FeatureTreeNode.newChildInstance("gamma", root);
 			PDGamma pdGamma = calRGB.getGamma();
-			FeatureTreeNode.newChildInstanceWithValue("red", String.valueOf(pdGamma.getR()), gamma);
-			FeatureTreeNode.newChildInstanceWithValue("green", String.valueOf(pdGamma.getG()), gamma);
-			FeatureTreeNode.newChildInstanceWithValue("blue", String.valueOf(pdGamma.getB()), gamma);
+			gamma.addAttribute("red", String.valueOf(pdGamma.getR()));
+			gamma.addAttribute("green", String.valueOf(pdGamma.getG()));
+			gamma.addAttribute("blue", String.valueOf(pdGamma.getB()));
 			parseFloatArray(calRGB.getMatrix(), FeatureTreeNode.newChildInstance("matrix", root));
 		} else if (cie instanceof PDLab) {
 			PDLab lab = (PDLab) cie;

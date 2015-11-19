@@ -44,7 +44,7 @@ public class PBFeatureParserTest {
 		assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PAGE).size());
 		assertEquals(4, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.EXT_G_STATE).size());
 		assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PROPERTIES).size());
-		assertEquals(3, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR).size());
+		assertEquals(2, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR).size());
 		assertEquals(2, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.FAILED_XOBJECT).size());
 		assertEquals(1, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.SHADING).size());
 		assertEquals(2, collection.getFeatureTreesForType(FeaturesObjectTypesEnum.PATTERN).size());

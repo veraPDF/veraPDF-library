@@ -108,7 +108,10 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 			if (fontLike instanceof PDFont) {
 				PDFont font = (PDFont) fontLike;
 				PBCreateNodeHelper.addNotEmptyNode("type", font.getSubType(), root);
-				PBCreateNodeHelper.addNotEmptyNode("baseFont", font.getName(), root);
+
+				if (!(font instanceof PDType3Font)) {
+					PBCreateNodeHelper.addNotEmptyNode("baseFont", font.getName(), root);
+				}
 
 				if (font instanceof PDType0Font) {
 					PBCreateNodeHelper.parseIDSet(fontChild, "descendantFont", null, FeatureTreeNode.newChildInstance("descendantFonts", root));
@@ -299,9 +302,9 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 				file = descriptor.getFontFile3();
 			}
 
+			FeatureTreeNode.newChildInstanceWithValue("embedded", String.valueOf(file != null), descriptorNode);
 			if (file != null) {
-				FeatureTreeNode fileNode = FeatureTreeNode.newChildInstance("embeddedFont", descriptorNode);
-				PBCreateNodeHelper.parseMetadata(file.getMetadata(), "metadata", fileNode, collection);
+				PBCreateNodeHelper.parseMetadata(file.getMetadata(), "embeddedFileMetadata", descriptorNode, collection);
 			}
 		}
 	}

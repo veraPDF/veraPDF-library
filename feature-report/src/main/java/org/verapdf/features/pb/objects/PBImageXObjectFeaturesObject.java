@@ -82,7 +82,8 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 	@Override
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (imageXObject != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("image");
+			FeatureTreeNode root = FeatureTreeNode.newRootInstance("xobject");
+			root.addAttribute("type", "image");
 			root.addAttribute(ID, id);
 
 			parseParents(root);
@@ -150,7 +151,7 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 				}
 			}
 
-			List<ImageFeaturesData.FilterStructure> filters = new ArrayList<>();
+			List<ImageFeaturesData.Filter> filters = new ArrayList<>();
 			if (imageXObject.getPDStream().getFilters() != null) {
 				List<String> filtersNames = new ArrayList<>();
 				for (COSName filter : imageXObject.getPDStream().getFilters()) {
@@ -164,29 +165,29 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 					COSDictionary dic = i < decodeList.size() ? decodeList.get(i) : null;
 					switch (filter) {
 						case "LZWDecode":
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLZWOrFlatFiltersMap(dic, true), null));
+							filters.add(ImageFeaturesData.Filter.newInstance(filter, getLZWOrFlatFiltersMap(dic, true), null));
 							break;
 						case "FlateDecode":
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLZWOrFlatFiltersMap(dic, false), null));
+							filters.add(ImageFeaturesData.Filter.newInstance(filter, getLZWOrFlatFiltersMap(dic, false), null));
 							break;
 						case "CCITTFaxDecode":
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getCCITTFaxFiltersMap(dic), null));
+							filters.add(ImageFeaturesData.Filter.newInstance(filter, getCCITTFaxFiltersMap(dic), null));
 							break;
 						case "DCTDecode":
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getDCTFiltersMap(dic), null));
+							filters.add(ImageFeaturesData.Filter.newInstance(filter, getDCTFiltersMap(dic), null));
 							break;
 						case "JBIG2Decode":
 							byte[] global = null;
 							if (dic != null && dic.getDictionaryObject(COSName.JBIG2_GLOBALS) instanceof COSStream) {
 								global = PBCreateNodeHelper.inputStreamToByteArray(((COSStream) dic.getDictionaryObject(COSName.JBIG2_GLOBALS)).getUnfilteredStream());
 							}
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, new HashMap<String, String>(), global));
+							filters.add(ImageFeaturesData.Filter.newInstance(filter, new HashMap<String, String>(), global));
 							break;
 						case "Crypt":
 							LOGGER.error("An Image has a Crypt filter");
 							return null;
 						default:
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, new HashMap<String, String>(), null));
+							filters.add(ImageFeaturesData.Filter.newInstance(filter, new HashMap<String, String>(), null));
 					}
 				}
 			}

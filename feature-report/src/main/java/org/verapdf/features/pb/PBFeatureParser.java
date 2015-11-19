@@ -1417,7 +1417,7 @@ public final class PBFeatureParser {
 			}
 
 			COSBase baseAlt = iccBased.getPDStream().getStream().getItem(COSName.ALTERNATE);
-			String idAlt = getId(baseAlt, COLORSPACE, colorSpaces.size());
+			String idAlt = getId(baseAlt, COLORSPACE_ID, colorSpaces.size());
 
 			try {
 				PDColorSpace altclr = iccBased.getAlternateColorSpace();
@@ -1451,7 +1451,7 @@ public final class PBFeatureParser {
 
 			COSArray array = (COSArray) colorSpace.getCOSObject();
 			COSBase base = array.get(number);
-			String id = getId(base, COLORSPACE, colorSpaces.size());
+			String id = getId(base, COLORSPACE_ID, colorSpaces.size());
 
 			try {
 				PDColorSpace alt;
