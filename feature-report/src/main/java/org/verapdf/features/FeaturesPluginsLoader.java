@@ -5,10 +5,13 @@ import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
@@ -46,31 +49,23 @@ public class FeaturesPluginsLoader {
 	}
 
 	private static List<FeaturesExtractor> getAllExtractors(File dir) {
-		List<FeaturesExtractor> extractors = new ArrayList<>();
-
-		List<File> jars = new ArrayList<>();
-		addAllJars(dir, jars);
-		for (File jar : jars) {
-			try {
-				addAllExtractors(jar, extractors);
-			} catch (IOException e) {
-				LOGGER.error("Can not load extractors from file with path " + jar.getPath(), e);
-			}
-		}
+		List<File> jars = getAllJars(dir);
+		List<FeaturesExtractor> extractors = loadAllExtractors(jars);
 
 		return extractors;
 	}
 
-	private static void addAllJars(File dir, List<File> jars) {
+	private static List<File> getAllJars(File dir) {
+		List<File> jars = new ArrayList<>();
 		File[] files = dir.listFiles();
-		if (files == null) {
-			return;
-		}
-		for (File f : files) {
-			if (f.isDirectory()) {
-				addJar(f, jars);
+		if (files != null) {
+			for (File f : files) {
+				if (f.isDirectory()) {
+					addJar(f, jars);
+				}
 			}
 		}
+		return jars;
 	}
 
 	private static void addJar(File dir, List<File> jars) {
@@ -87,12 +82,25 @@ public class FeaturesPluginsLoader {
 
 	}
 
-	private static void addAllExtractors(File jar, List<FeaturesExtractor> extractors) throws IOException {
+	private static List<FeaturesExtractor> loadAllExtractors(List<File> jars) {
+		List<FeaturesExtractor> extractors = new ArrayList<>();
+		Set<String> extractorsIds = new HashSet<>();
+		for (File jar : jars) {
+			try {
+				List<String> classNames = getAllClassNamesFromJAR(jar);
+				loadAllExtractorsWithUniqueIDsByClassNames(extractors, extractorsIds, jar, classNames);
+			} catch (IOException e) {
+				LOGGER.error("Can not load extractors from file with path " + jar.getPath(), e);
+			}
+		}
+		return extractors;
+	}
+
+	private static List<String> getAllClassNamesFromJAR(File jar) throws IOException {
+		List<String> classNames = new ArrayList<>();
 		JarInputStream jarStream = new JarInputStream(new FileInputStream(jar));
 		JarEntry jarEntry = jarStream.getNextJarEntry();
-		List<String> classNames = new ArrayList<>();
 		while (jarEntry != null) {
-
 			if ((jarEntry.getName().endsWith(".class"))) {
 				String className = jarEntry.getName().replaceAll("/", ".");
 				String myClass = className.substring(0, className.lastIndexOf('.'));
@@ -100,27 +108,35 @@ public class FeaturesPluginsLoader {
 			}
 			jarEntry = jarStream.getNextJarEntry();
 		}
+		return classNames;
+	}
 
+	private static void loadAllExtractorsWithUniqueIDsByClassNames(List<FeaturesExtractor> toAdd,
+																   Set<String> uniqueIds,
+																   File jar,
+																   List<String> classNames) throws MalformedURLException {
+		URL url = jar.toURI().toURL();
+		URL[] urls = new URL[]{url};
+		ClassLoader cl = new URLClassLoader(urls);
 		for (String className : classNames) {
-			URL url = jar.toURI().toURL();
-			URL[] urls = new URL[]{url};
-			ClassLoader cl = new URLClassLoader(urls);
 			try {
 				Class cls = cl.loadClass(className);
 				if (FeaturesExtractor.class.isAssignableFrom(cls)) {
-					try {
-						Object obj = cls.newInstance();
-						FeaturesExtractor extractor = (FeaturesExtractor) obj;
-						((FeaturesExtractor) obj).initialize(jar.getParentFile().toPath());
-						extractors.add(extractor);
-					} catch (InstantiationException | IllegalAccessException e) {
-						LOGGER.error("Some error while creating an instance of class " + cls.getName(), e);
+					Object obj = cls.newInstance();
+					FeaturesExtractor extractor = (FeaturesExtractor) obj;
+					String extractorID = extractor.getID();
+					if (!uniqueIds.contains(extractorID)) {
+						uniqueIds.add(extractorID);
+						extractor.initialize(jar.getParentFile().toPath());
+						toAdd.add(extractor);
+					} else {
+						LOGGER.error("Founded extractor with the same ID as already loaded extractor. Extractor name: "
+								+ className + ", jar file:" + jar.getAbsolutePath());
 					}
 				}
-			} catch (ClassNotFoundException e) {
-				LOGGER.error("Can not load class " + className + " from jar " + jar.getPath(), e);
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+				LOGGER.error("Can not load or create an instance of the class " + className + " from jar " + jar.getPath(), e);
 			}
 		}
-
 	}
 }
