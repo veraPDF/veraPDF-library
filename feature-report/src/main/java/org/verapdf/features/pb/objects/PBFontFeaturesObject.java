@@ -157,8 +157,8 @@ public class PBFontFeaturesObject implements IFeaturesObject {
 				PBCreateNodeHelper.addNotEmptyNode("type", cid.getCOSObject().getNameAsString(COSName.SUBTYPE), root);
 				PBCreateNodeHelper.addNotEmptyNode("baseFont", cid.getBaseFont(), root);
 				COSBase dw = cid.getCOSObject().getDictionaryObject(COSName.DW);
-				if (dw instanceof COSNumber) {
-					FeatureTreeNode.newChildInstanceWithValue("defaultWidth", String.valueOf(((COSNumber) dw).floatValue()), root);
+				if (dw instanceof COSInteger) {
+					FeatureTreeNode.newChildInstanceWithValue("defaultWidth", String.valueOf(((COSNumber) dw).intValue()), root);
 				}
 
 				if (cid.getCIDSystemInfo() != null) {
