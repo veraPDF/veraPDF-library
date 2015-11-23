@@ -24,12 +24,14 @@ public final class Validators {
      * This method doesn't need to parse validation profile (it works faster
      * than those ones, which parses profile).
      * 
-     * @param flavour the PDF/A Flavour
-     * @param logSuccess 
-     * @return 
+     * @param flavour
+     *            the PDF/A Flavour
+     * @param logSuccess
+     * @return
      *
      */
-    public static PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess) {
+    public static PDFAValidator createValidator(PDFAFlavour flavour,
+            boolean logSuccess) {
         if (flavour == null)
             throw new IllegalArgumentException(
                     "Parameter (PDFAFlavour flavour) cannot be null.");
@@ -45,18 +47,35 @@ public final class Validators {
      * than those ones, which parses profile).
      * 
      * @param profile
-     *
-     * @param root
-     *            the root object for validation
      * @param logSuccess
      * @return validation info structure
      */
-    public static PDFAValidator createValidator(final ValidationProfile profile,
-            boolean logSuccess) {
+    public static PDFAValidator createValidator(
+            final ValidationProfile profile, boolean logSuccess) {
         if (profile == null)
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile profile) cannot be null.");
         return new BaseValidator(profile, logSuccess);
     }
 
+    /**
+     * Generates validation info for objects with root {@code root} and
+     * validation profile structure {@code validationProfile}
+     * <p/>
+     * This method doesn't need to parse validation profile (it works faster
+     * than those ones, which parses profile).
+     * 
+     * @param profile
+     * @param logSuccess
+     * @param maxFailures
+     * @return validation info structure
+     */
+    public static PDFAValidator createValidator(
+            final ValidationProfile profile, boolean logSuccess,
+            final int maxFailures) {
+        if (profile == null)
+            throw new IllegalArgumentException(
+                    "Parameter (ValidationProfile profile) cannot be null.");
+        return new FastFailValidator(profile, logSuccess, maxFailures);
+    }
 }

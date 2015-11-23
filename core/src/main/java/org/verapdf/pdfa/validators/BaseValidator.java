@@ -45,10 +45,10 @@ class BaseValidator implements PDFAValidator {
     private final Deque<String> objectsContext = new ArrayDeque<>();
     private final Deque<Set<String>> contextSet = new ArrayDeque<>();
     protected final Set<TestAssertion> results = new HashSet<>();
-    private int totalTests = 0;
-    private boolean abortProcessing = false;
-    private final boolean logPassedTests;
-    private boolean isCompliant = true;
+    protected int testCounter = 0;
+    protected boolean abortProcessing = false;
+    protected final boolean logPassedTests;
+    protected boolean isCompliant = true;
 
     private Map<RuleId, Script> ruleScripts = new HashMap<>();
     private Map<String, Script> variableScripts = new HashMap<>();
@@ -90,7 +90,7 @@ class BaseValidator implements PDFAValidator {
         Context.exit();
 
         return ValidationResults.resultFromValues(
-                this.profile.getPDFAFlavour(), this.results, this.isCompliant, this.totalTests);
+                this.profile.getPDFAFlavour(), this.results, this.isCompliant, this.testCounter);
     }
 
     protected void initialise() {
@@ -102,7 +102,7 @@ class BaseValidator implements PDFAValidator {
         this.contextSet.clear();
         this.results.clear();
         this.idSet.clear();
-        this.totalTests = 0;
+        this.testCounter = 0;
         initializeAllVariables();
     }
 
@@ -340,9 +340,10 @@ class BaseValidator implements PDFAValidator {
 
     protected void processAssertionResult(final boolean assertionResult,
             final String locationContext, final Rule rule) {
+        this.testCounter++;
         Location location = ValidationResults.locationFromValues(this.rootType,
                 locationContext);
-        TestAssertion assertion = ValidationResults.assertionFromValues(rule
+        TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule
                 .getRuleId(),
                 (assertionResult) ? Status.PASSED : Status.FAILED, rule
                         .getDescription(), location);
@@ -350,7 +351,6 @@ class BaseValidator implements PDFAValidator {
             this.isCompliant = assertionResult;
         if (!assertionResult || this.logPassedTests)
             this.results.add(assertion);
-        this.totalTests++;
     }
 
     /*
