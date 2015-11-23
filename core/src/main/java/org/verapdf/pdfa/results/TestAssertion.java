@@ -16,6 +16,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlJavaTypeAdapter(TestAssertionImpl.Adapter.class)
 public interface TestAssertion {
     /**
+     * @return the ordinal for the instance
+     */
+    public int getOrdinal();
+    /**
      * @return the String id for the {@link org.verapdf.pdfa.validation.Rule} that this assertion refers to
      */
     public RuleId getRuleId();

@@ -17,8 +17,15 @@ import org.verapdf.pdfa.validation.Profiles;
  */
 @SuppressWarnings("static-method")
 public class TestAssertionTest {
-    private static final String DEFAULT_ASSERTION_STRING = "TestAssertion [ruleId=" + Profiles.defaultRuleId() + ", status=" + Status.FAILED
-            + ", message=" + "message" + ", location=" + ValidationResults.defaultLocation() + "]";
+    private static final String DEFAULT_ASSERTION_STRING = "TestAssertion [ruleId="
+            + Profiles.defaultRuleId()
+            + ", status="
+            + Status.FAILED
+            + ", message="
+            + "message"
+            + ", location="
+            + ValidationResults.defaultLocation() + "]";
+
     /**
      * Test method for
      * {@link org.verapdf.pdfa.results.TestAssertionImpl#hashCode()}.
@@ -45,21 +52,24 @@ public class TestAssertionTest {
     @Test
     public final void testDefaultInstance() {
         TestAssertion defaultAssertion = ValidationResults.defaultAssertion();
-        assertTrue(defaultAssertion.equals(ValidationResults.defaultAssertion()));
+        assertTrue(defaultAssertion
+                .equals(ValidationResults.defaultAssertion()));
         assertTrue(defaultAssertion == ValidationResults.defaultAssertion());
     }
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.results.TestAssertionImpl#fromValues(org.verapdf.pdfa.validation.RuleId, org.verapdf.pdfa.results.TestAssertion.Status, java.lang.String, org.verapdf.pdfa.results.Location)}
+     * {@link org.verapdf.pdfa.results.TestAssertionImpl#fromValues(int, org.verapdf.pdfa.validation.RuleId, org.verapdf.pdfa.results.TestAssertion.Status, java.lang.String, org.verapdf.pdfa.results.Location)}
      * .
      */
     @Test
     public final void testFromValues() {
-        TestAssertion assertionFromVals = ValidationResults.assertionFromValues(
-                Profiles.defaultRuleId(), Status.FAILED, "message",
-                ValidationResults.defaultLocation());
-        assertTrue(assertionFromVals.equals(ValidationResults.defaultAssertion()));
+        TestAssertion assertionFromVals = ValidationResults
+                .assertionFromValues(0, Profiles.defaultRuleId(),
+                        Status.FAILED, "message",
+                        ValidationResults.defaultLocation());
+        assertTrue(assertionFromVals.equals(ValidationResults
+                .defaultAssertion()));
         assertFalse(assertionFromVals == ValidationResults.defaultAssertion());
     }
 
