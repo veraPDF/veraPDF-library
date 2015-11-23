@@ -50,9 +50,9 @@ public final class ErrorsHelper {
 			if (id == null) {
 				id = "error" + collection.getFeatureTreesForType(
 						FeaturesObjectTypesEnum.ERROR).size();
-				FeatureTreeNode error = FeatureTreeNode.newRootInstanceWithValue(
-						"error", errorMessage);
-				error.addAttribute(ErrorsHelper.ID, id);
+				FeatureTreeNode error = FeatureTreeNode.createRootNode("error");
+				error.setValue(errorMessage);
+				error.setAttribute(ErrorsHelper.ID, id);
 				collection.addNewFeatureTree(FeaturesObjectTypesEnum.ERROR,
 						error);
 			}
@@ -61,7 +61,7 @@ public final class ErrorsHelper {
 				if (element.getAttributes().get(ERRORID) != null) {
 					elementErrorID = element.getAttributes().get(ERRORID) + ", " + elementErrorID;
 				}
-				element.addAttribute(ERRORID, elementErrorID);
+				element.setAttribute(ERRORID, elementErrorID);
 			}
 			return id;
 		} catch (FeatureParsingException ignore) {

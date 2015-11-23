@@ -56,8 +56,8 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
 	@Override
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (outInt != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("outputIntent");
-			root.addAttribute("id", id);
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("outputIntent");
+			root.setAttribute("id", id);
 
 			addSubtype(collection, root);
 
@@ -66,8 +66,8 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
 			PBCreateNodeHelper.addNotEmptyNode("registryName", outInt.getRegistryName(), root);
 			PBCreateNodeHelper.addNotEmptyNode("info", outInt.getInfo(), root);
 
-			FeatureTreeNode destOutInt = FeatureTreeNode.newChildInstance("destOutputIntent", root);
-			destOutInt.addAttribute("id", iccProfileID);
+			FeatureTreeNode destOutInt = FeatureTreeNode.createChildNode("destOutputIntent", root);
+			destOutInt.setAttribute("id", iccProfileID);
 
 			collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTPUTINTENT, root);
 
@@ -95,7 +95,7 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
 			}
 
 			if (baseType != null) {
-				FeatureTreeNode type = FeatureTreeNode.newChildInstance("subtype", root);
+				FeatureTreeNode type = FeatureTreeNode.createChildNode("subtype", root);
 				if (baseType instanceof COSName) {
 					type.setValue(((COSName) baseType).getName());
 				} else {

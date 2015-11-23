@@ -82,42 +82,42 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 	@Override
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (imageXObject != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("xobject");
-			root.addAttribute("type", "image");
-			root.addAttribute(ID, id);
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("xobject");
+			root.setAttribute("type", "image");
+			root.setAttribute(ID, id);
 
 			parseParents(root);
 
-			FeatureTreeNode.newChildInstanceWithValue("width", String.valueOf(imageXObject.getWidth()), root);
-			FeatureTreeNode.newChildInstanceWithValue("height", String.valueOf(imageXObject.getHeight()), root);
+			FeatureTreeNode.createChildNode("width", root).setValue(String.valueOf(imageXObject.getWidth()));
+			FeatureTreeNode.createChildNode("height", root).setValue(String.valueOf(imageXObject.getHeight()));
 
 			if (colorSpaceChild != null) {
-				FeatureTreeNode shading = FeatureTreeNode.newChildInstance("colorSpace", root);
-				shading.addAttribute(ID, colorSpaceChild);
+				FeatureTreeNode shading = FeatureTreeNode.createChildNode("colorSpace", root);
+				shading.setAttribute(ID, colorSpaceChild);
 			}
 
-			FeatureTreeNode.newChildInstanceWithValue("bitsPerComponent", String.valueOf(imageXObject.getBitsPerComponent()), root);
-			FeatureTreeNode.newChildInstanceWithValue("imageMask", String.valueOf(imageXObject.isStencil()), root);
+			FeatureTreeNode.createChildNode("bitsPerComponent", root).setValue(String.valueOf(imageXObject.getBitsPerComponent()));
+			FeatureTreeNode.createChildNode("imageMask", root).setValue(String.valueOf(imageXObject.isStencil()));
 
 			if (maskChild != null) {
-				FeatureTreeNode mask = FeatureTreeNode.newChildInstance("mask", root);
-				mask.addAttribute(ID, maskChild);
+				FeatureTreeNode mask = FeatureTreeNode.createChildNode("mask", root);
+				mask.setAttribute(ID, maskChild);
 			}
 
-			FeatureTreeNode.newChildInstanceWithValue("interpolate", String.valueOf(imageXObject.getInterpolate()), root);
+			FeatureTreeNode.createChildNode("interpolate", root).setValue(String.valueOf(imageXObject.getInterpolate()));
 			PBCreateNodeHelper.parseIDSet(alternatesChild, "alternate", "alternates", root);
 			if (sMaskChild != null) {
-				FeatureTreeNode mask = FeatureTreeNode.newChildInstance("sMask", root);
-				mask.addAttribute(ID, sMaskChild);
+				FeatureTreeNode mask = FeatureTreeNode.createChildNode("sMask", root);
+				mask.setAttribute(ID, sMaskChild);
 			}
 
 			if (imageXObject.getCOSStream().getItem(COSName.STRUCT_PARENT) != null) {
-				FeatureTreeNode.newChildInstanceWithValue("structParent", String.valueOf(imageXObject.getStructParent()), root);
+				FeatureTreeNode.createChildNode("structParent", root).setValue(String.valueOf(imageXObject.getStructParent()));
 			}
 
 			try {
 				if (imageXObject.getStream().getFilters() != null && !imageXObject.getStream().getFilters().isEmpty()) {
-					FeatureTreeNode filters = FeatureTreeNode.newChildInstance("filters", root);
+					FeatureTreeNode filters = FeatureTreeNode.createChildNode("filters", root);
 					for (COSName name : imageXObject.getStream().getFilters()) {
 						PBCreateNodeHelper.addNotEmptyNode("filter", name.getName(), filters);
 					}
@@ -309,7 +309,7 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 				(patternParent != null && !patternParent.isEmpty()) ||
 				(xobjectParent != null && !xobjectParent.isEmpty()) ||
 				(fontParent != null && !fontParent.isEmpty())) {
-			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+			FeatureTreeNode parents = FeatureTreeNode.createChildNode("parents", root);
 
 			PBCreateNodeHelper.parseIDSet(pageParent, "page", null, parents);
 			PBCreateNodeHelper.parseIDSet(patternParent, "pattern", null, parents);

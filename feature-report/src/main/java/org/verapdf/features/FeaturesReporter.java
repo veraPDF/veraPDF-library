@@ -57,13 +57,13 @@ public class FeaturesReporter {
 			if (featuresExtractors.get(obj.getType()) != null) {
 				FeaturesData objData = obj.getData();
 				if (objData != null) {
-					FeatureTreeNode custom = FeatureTreeNode.newChildInstance(CUSTOM_FEATURES_ROOT_NODE_NAME, root);
+					FeatureTreeNode custom = FeatureTreeNode.createChildNode(CUSTOM_FEATURES_ROOT_NODE_NAME, root);
 					for (FeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
 						List<FeatureTreeNode> cust = ext.getFeatures(objData);
 						if (cust != null) {
-							FeatureTreeNode custRoot = FeatureTreeNode.newChildInstance("pluginFeatures", custom);
-							custRoot.addAttribute("pluginId", ext.getID());
-							custRoot.addAttribute("description", ext.getDescription());
+							FeatureTreeNode custRoot = FeatureTreeNode.createChildNode("pluginFeatures", custom);
+							custRoot.setAttribute("pluginId", ext.getID());
+							custRoot.setAttribute("description", ext.getDescription());
 							for (FeatureTreeNode ftn : cust) {
 								if (ftn != null) {
 									custRoot.addChild(ftn);

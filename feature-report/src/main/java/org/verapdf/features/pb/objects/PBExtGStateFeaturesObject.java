@@ -73,22 +73,22 @@ public class PBExtGStateFeaturesObject implements IFeaturesObject {
 	@Override
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (exGState != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("graphicsState");
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("graphicsState");
 
-			root.addAttribute(ID, this.id);
+			root.setAttribute(ID, this.id);
 
 			parseParents(root);
 
-			FeatureTreeNode.newChildInstanceWithValue("transparency", String.valueOf(!exGState.getAlphaSourceFlag()), root);
-			FeatureTreeNode.newChildInstanceWithValue("strokeAdjustment", String.valueOf(exGState.getAutomaticStrokeAdjustment()), root);
-			FeatureTreeNode.newChildInstanceWithValue("overprintForStroke", String.valueOf(exGState.getStrokingOverprintControl()), root);
-			FeatureTreeNode.newChildInstanceWithValue("overprintForFill", String.valueOf(exGState.getNonStrokingOverprintControl()), root);
+			FeatureTreeNode.createChildNode("transparency", root).setValue(String.valueOf(!exGState.getAlphaSourceFlag()));
+			FeatureTreeNode.createChildNode("strokeAdjustment", root).setValue(String.valueOf(exGState.getAutomaticStrokeAdjustment()));
+			FeatureTreeNode.createChildNode("overprintForStroke", root).setValue(String.valueOf(exGState.getStrokingOverprintControl()));
+			FeatureTreeNode.createChildNode("overprintForFill", root).setValue(String.valueOf(exGState.getNonStrokingOverprintControl()));
 
 			if (fontChildID != null) {
-				FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
-				FeatureTreeNode fonts = FeatureTreeNode.newChildInstance("fonts", resources);
-				FeatureTreeNode font = FeatureTreeNode.newChildInstance("font", fonts);
-				font.addAttribute(ID, fontChildID);
+				FeatureTreeNode resources = FeatureTreeNode.createChildNode("resources", root);
+				FeatureTreeNode fonts = FeatureTreeNode.createChildNode("fonts", resources);
+				FeatureTreeNode font = FeatureTreeNode.createChildNode("font", fonts);
+				font.setAttribute(ID, fontChildID);
 			}
 
 			collection.addNewFeatureTree(FeaturesObjectTypesEnum.EXT_G_STATE, root);
@@ -111,7 +111,7 @@ public class PBExtGStateFeaturesObject implements IFeaturesObject {
 				(patternParentsID != null && !patternParentsID.isEmpty()) ||
 				(xobjectParentsID != null && !xobjectParentsID.isEmpty()) ||
 				(fontParentsID != null && !fontParentsID.isEmpty())) {
-			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+			FeatureTreeNode parents = FeatureTreeNode.createChildNode("parents", root);
 
 			PBCreateNodeHelper.parseIDSet(pageParentsID, "page", null, parents);
 			PBCreateNodeHelper.parseIDSet(patternParentsID, "pattern", null, parents);

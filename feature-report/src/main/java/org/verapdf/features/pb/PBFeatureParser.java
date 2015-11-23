@@ -569,8 +569,8 @@ public final class PBFeatureParser {
 	private void generateUnknownAnnotation(String id) {
 		try {
 			FeatureTreeNode annot = FeatureTreeNode
-					.newRootInstance(ANNOTATION);
-			annot.addAttribute(ID, id);
+					.createRootNode(ANNOTATION);
+			annot.setAttribute(ID, id);
 			ErrorsHelper.addErrorIntoCollection(reporter.getCollection(),
 					annot,
 					"Unknown annotation type");
@@ -724,9 +724,9 @@ public final class PBFeatureParser {
 			final boolean isTypeError) {
 		try {
 			if (!isTypeError) {
-				FeatureTreeNode node = FeatureTreeNode.newRootInstance(nodeName);
+				FeatureTreeNode node = FeatureTreeNode.createRootNode(nodeName);
 				if (nodeID != null) {
-					node.addAttribute(ID, nodeID);
+					node.setAttribute(ID, nodeID);
 				}
 				reporter.getCollection().addNewFeatureTree(type, node);
 				ErrorsHelper.addErrorIntoCollection(reporter.getCollection(),

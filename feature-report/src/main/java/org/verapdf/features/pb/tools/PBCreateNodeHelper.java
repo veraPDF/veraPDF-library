@@ -77,7 +77,7 @@ public final class PBCreateNodeHelper {
 		FeatureTreeNode modificationDate = null;
 
 		if (date != null) {
-			modificationDate = FeatureTreeNode.newChildInstance(nodeName, parent);
+			modificationDate = FeatureTreeNode.createChildNode(nodeName, parent);
 			try {
 				modificationDate.setValue(getXMLFormat(date));
 			} catch (DatatypeConfigurationException e) {
@@ -125,11 +125,11 @@ public final class PBCreateNodeHelper {
 		FeatureTreeNode boxNode = null;
 
 		if (box != null) {
-			boxNode = FeatureTreeNode.newChildInstance(name, parent);
-			boxNode.addAttribute(LLX, String.valueOf(box.getLowerLeftX()));
-			boxNode.addAttribute(LLY, String.valueOf(box.getLowerLeftY()));
-			boxNode.addAttribute(URX, String.valueOf(box.getUpperRightX()));
-			boxNode.addAttribute(URY, String.valueOf(box.getUpperRightY()));
+			boxNode = FeatureTreeNode.createChildNode(name, parent);
+			boxNode.setAttribute(LLX, String.valueOf(box.getLowerLeftX()));
+			boxNode.setAttribute(LLY, String.valueOf(box.getLowerLeftY()));
+			boxNode.setAttribute(URX, String.valueOf(box.getUpperRightX()));
+			boxNode.setAttribute(URY, String.valueOf(box.getUpperRightY()));
 		}
 
 		return boxNode;
@@ -146,7 +146,9 @@ public final class PBCreateNodeHelper {
 	 */
 	public static FeatureTreeNode addNotEmptyNode(String name, String value, FeatureTreeNode parent) throws FeatureParsingException {
 		if (name != null && value != null) {
-			return FeatureTreeNode.newChildInstanceWithValue(name, value, parent);
+			FeatureTreeNode node = FeatureTreeNode.createChildNode(name, parent);
+			node.setValue(value);
+			return node;
 		}
 		return null;
 	}
@@ -163,7 +165,7 @@ public final class PBCreateNodeHelper {
 	 */
 	public static FeatureTreeNode addDeviceColorSpaceNode(String name, PDColor color, FeatureTreeNode parent, FeaturesCollection collection) throws FeatureParsingException {
 		if (name != null && color != null) {
-			FeatureTreeNode colorNode = FeatureTreeNode.newChildInstance(name, parent);
+			FeatureTreeNode colorNode = FeatureTreeNode.createChildNode(name, parent);
 
 			float[] numbers = color.getComponents();
 
@@ -205,12 +207,12 @@ public final class PBCreateNodeHelper {
 			if (setName == null) {
 				setNode = root;
 			} else {
-				setNode = FeatureTreeNode.newChildInstance(setName, root);
+				setNode = FeatureTreeNode.createChildNode(setName, root);
 			}
 			for (String entry : set) {
 				if (entry != null) {
-					FeatureTreeNode entryNode = FeatureTreeNode.newChildInstance(elementName, setNode);
-					entryNode.addAttribute("id", entry);
+					FeatureTreeNode entryNode = FeatureTreeNode.createChildNode(elementName, setNode);
+					entryNode.setAttribute("id", entry);
 				}
 			}
 		}
@@ -251,11 +253,7 @@ public final class PBCreateNodeHelper {
 			return null;
 		}
 		FeatureTreeNode node;
-		if (parent == null) {
-			node = FeatureTreeNode.newRootMetadataInstance(nodeName);
-		} else {
-			node = FeatureTreeNode.newChildMetadataInstance(nodeName, parent);
-		}
+		node = FeatureTreeNode.createChildMetadataNode(nodeName, parent);
 		try {
 			byte[] bStream = metadata.getByteArray();
 			if (bStream != null) {
@@ -273,19 +271,19 @@ public final class PBCreateNodeHelper {
 	}
 
 	private static void createGray(float[] components, FeatureTreeNode parent) {
-		parent.addAttribute("gray", String.valueOf(components[GRAY_COMPONENT_NUMBER]));
+		parent.setAttribute("gray", String.valueOf(components[GRAY_COMPONENT_NUMBER]));
 	}
 
 	private static void createRGB(float[] components, FeatureTreeNode parent) {
-		parent.addAttribute("red", String.valueOf(components[RED_COMPONENT_NUMBER]));
-		parent.addAttribute("green", String.valueOf(components[GREEN_COMPONENT_NUMBER]));
-		parent.addAttribute("blue", String.valueOf(components[BLUE_COMPONENT_NUMBER]));
+		parent.setAttribute("red", String.valueOf(components[RED_COMPONENT_NUMBER]));
+		parent.setAttribute("green", String.valueOf(components[GREEN_COMPONENT_NUMBER]));
+		parent.setAttribute("blue", String.valueOf(components[BLUE_COMPONENT_NUMBER]));
 	}
 
 	private static void createCMYK(float[] components, FeatureTreeNode parent) {
-		parent.addAttribute("cyan", String.valueOf(components[CYAN_COMPONENT_NUMBER]));
-		parent.addAttribute("magenta", String.valueOf(components[MAGENTA_COMPONENT_NUMBER]));
-		parent.addAttribute("yellow", String.valueOf(components[YELLOW_COMPONENT_NUMBER]));
-		parent.addAttribute("black", String.valueOf(components[BLACK_COMPONENT_NUMBER]));
+		parent.setAttribute("cyan", String.valueOf(components[CYAN_COMPONENT_NUMBER]));
+		parent.setAttribute("magenta", String.valueOf(components[MAGENTA_COMPONENT_NUMBER]));
+		parent.setAttribute("yellow", String.valueOf(components[YELLOW_COMPONENT_NUMBER]));
+		parent.setAttribute("black", String.valueOf(components[BLACK_COMPONENT_NUMBER]));
 	}
 }

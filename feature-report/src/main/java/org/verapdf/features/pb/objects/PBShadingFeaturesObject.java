@@ -67,21 +67,21 @@ public class PBShadingFeaturesObject implements IFeaturesObject {
 	@Override
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (shading != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("shading");
-			root.addAttribute(ID, id);
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("shading");
+			root.setAttribute(ID, id);
 
 			parseParents(root);
 
-			FeatureTreeNode.newChildInstanceWithValue("shadingType", String.valueOf(shading.getShadingType()), root);
+			FeatureTreeNode.createChildNode("shadingType", root).setValue(String.valueOf(shading.getShadingType()));
 
 			if (colorSpaceChild != null) {
-				FeatureTreeNode shadingClr = FeatureTreeNode.newChildInstance("colorSpace", root);
-				shadingClr.addAttribute(ID, colorSpaceChild);
+				FeatureTreeNode shadingClr = FeatureTreeNode.createChildNode("colorSpace", root);
+				shadingClr.setAttribute(ID, colorSpaceChild);
 			}
 
 			PBCreateNodeHelper.addBoxFeature("bbox", shading.getBBox(), root);
 
-			FeatureTreeNode.newChildInstanceWithValue("antiAlias", String.valueOf(shading.getAntiAlias()), root);
+			FeatureTreeNode.createChildNode("antiAlias", root).setValue(String.valueOf(shading.getAntiAlias()));
 
 			collection.addNewFeatureTree(FeaturesObjectTypesEnum.SHADING, root);
 			return root;
@@ -103,7 +103,7 @@ public class PBShadingFeaturesObject implements IFeaturesObject {
 				(patternParent != null && !patternParent.isEmpty()) ||
 				(xobjectParent != null && !xobjectParent.isEmpty()) ||
 				(fontParent != null && !fontParent.isEmpty())) {
-			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+			FeatureTreeNode parents = FeatureTreeNode.createChildNode("parents", root);
 
 			PBCreateNodeHelper.parseIDSet(pageParent, "page", null, parents);
 			PBCreateNodeHelper.parseIDSet(patternParent, "pattern", null, parents);
