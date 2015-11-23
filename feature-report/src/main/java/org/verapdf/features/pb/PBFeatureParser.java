@@ -28,7 +28,6 @@ import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceEntry;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceStream;
 import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
-import org.verapdf.features.FeaturesPluginsLoader;
 import org.verapdf.features.FeaturesReporter;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
@@ -200,8 +199,6 @@ public final class PBFeatureParser {
 			final PDDocument document) {
 
 		FeaturesReporter reporter = new FeaturesReporter();
-
-		FeaturesPluginsLoader.loadExtractors(reporter);
 
 		if (document != null) {
 			PBFeatureParser parser = new PBFeatureParser(reporter);

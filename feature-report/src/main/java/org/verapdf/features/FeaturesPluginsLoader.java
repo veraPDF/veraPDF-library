@@ -28,17 +28,15 @@ public class FeaturesPluginsLoader {
 
 	/**
 	 * Configurates features reporter
-	 *
-	 * @param reporter features reporter for configurating
 	 */
-	public static void loadExtractors(FeaturesReporter reporter) {
+	static void loadExtractors() {
 		String appHome = System.getProperty("app.home");
 		if (appHome != null) {
 			File dir = new File(appHome, "plugins");
 			if (dir.isDirectory() && dir.canRead()) {
 				List<FeaturesExtractor> extractors = getAllExtractors(dir);
 				for (FeaturesExtractor ext : extractors) {
-					reporter.registerFeaturesExtractor(ext);
+					FeaturesReporter.registerFeaturesExtractor(ext);
 				}
 			} else {
 				LOGGER.error("Plugins folder is not exists or it can not be read.");
@@ -118,24 +116,37 @@ public class FeaturesPluginsLoader {
 		URL url = jar.toURI().toURL();
 		URL[] urls = new URL[]{url};
 		ClassLoader cl = new URLClassLoader(urls);
+		Class extractorClass = null;
 		for (String className : classNames) {
 			try {
 				Class cls = cl.loadClass(className);
 				if (FeaturesExtractor.class.isAssignableFrom(cls)) {
-					Object obj = cls.newInstance();
-					FeaturesExtractor extractor = (FeaturesExtractor) obj;
-					String extractorID = extractor.getID();
-					if (!uniqueIds.contains(extractorID)) {
-						uniqueIds.add(extractorID);
-						extractor.initialize(jar.getParentFile().toPath());
-						toAdd.add(extractor);
+					if (extractorClass == null) {
+						extractorClass = cls;
 					} else {
-						LOGGER.error("Founded extractor with the same ID as already loaded extractor. Extractor name: "
-								+ className + ", jar file:" + jar.getAbsolutePath());
+						LOGGER.error("JAR file " + jar.getAbsolutePath() + " contains more than one extractor.");
+						return;
 					}
 				}
-			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-				LOGGER.error("Can not load or create an instance of the class " + className + " from jar " + jar.getPath(), e);
+			} catch (ClassNotFoundException e) {
+				LOGGER.error("Can not load class " + className + " from jar " + jar.getAbsolutePath(), e);
+			}
+		}
+		if (extractorClass != null) {
+			try {
+				Object obj = extractorClass.newInstance();
+				FeaturesExtractor extractor = (FeaturesExtractor) obj;
+				String extractorID = extractor.getID();
+				if (!uniqueIds.contains(extractorID)) {
+					uniqueIds.add(extractorID);
+					extractor.initialize(jar.getParentFile().toPath());
+					toAdd.add(extractor);
+				} else {
+					LOGGER.error("Founded extractor with the same ID as already loaded extractor. Extractor name: "
+							+ extractorClass.getName() + ", jar file:" + jar.getAbsolutePath());
+				}
+			} catch (InstantiationException | IllegalAccessException e) {
+				LOGGER.error("Can not create an instance of the class " + extractorClass.getName() + " from jar " + jar.getPath(), e);
 			}
 		}
 	}
