@@ -66,11 +66,11 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
 	@Override
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (document != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("lowLevelInfo");
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("lowLevelInfo");
 
 
 			if (document.getObjects() != null) {
-				FeatureTreeNode.newChildInstanceWithValue("indirectObjectsNumber", String.valueOf(document.getObjects().size()), root);
+				FeatureTreeNode.createChildNode("indirectObjectsNumber", root).setValue(String.valueOf(document.getObjects().size()));
 			}
 
 			addDocumentId(root, collection);
@@ -78,12 +78,12 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
 			Set<String> filters = getAllFilters();
 
 			if (!filters.isEmpty()) {
-				FeatureTreeNode filtersNode = FeatureTreeNode.newChildInstance("filters", root);
+				FeatureTreeNode filtersNode = FeatureTreeNode.createChildNode("filters", root);
 
 				for (String filter : filters) {
 					if (filter != null) {
-						FeatureTreeNode filterNode = FeatureTreeNode.newChildInstance("filter", filtersNode);
-						filterNode.addAttribute("name", filter);
+						FeatureTreeNode filterNode = FeatureTreeNode.createChildNode("filter", filtersNode);
+						filterNode.setAttribute("name", filter);
 					}
 				}
 			}
@@ -132,14 +132,14 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
 			String creationId = PBCreateNodeHelper.getStringFromBase(ids.get(0));
 			String modificationId = PBCreateNodeHelper.getStringFromBase(ids.get(1));
 
-			FeatureTreeNode documentId = FeatureTreeNode.newChildInstance("documentId", root);
+			FeatureTreeNode documentId = FeatureTreeNode.createChildNode("documentId", root);
 
 			if (creationId != null || modificationId != null) {
 				if (creationId != null) {
-					documentId.addAttribute("creationId", creationId);
+					documentId.setAttribute("creationId", creationId);
 				}
 				if (modificationId != null) {
-					documentId.addAttribute("modificationId", modificationId);
+					documentId.setAttribute("modificationId", modificationId);
 				}
 			}
 

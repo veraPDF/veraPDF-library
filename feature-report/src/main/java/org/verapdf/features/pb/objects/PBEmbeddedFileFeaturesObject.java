@@ -66,8 +66,8 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 
 		if (embFile != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("embeddedFile");
-			root.addAttribute("id", "file" + index);
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("embeddedFile");
+			root.setAttribute("id", "file" + index);
 
 			PBCreateNodeHelper.addNotEmptyNode("fileName", embFile.getFilename(), root);
 			PBCreateNodeHelper.addNotEmptyNode("description", embFile.getFileDescription(), root);
@@ -82,7 +82,7 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
 					PBCreateNodeHelper.createDateNode(CREATION_DATE, root, ef.getCreationDate(), collection);
 				} catch (IOException e) {
 					LOGGER.debug("PDFBox error obtaining creation date", e);
-					FeatureTreeNode creationDate = FeatureTreeNode.newChildInstance(CREATION_DATE, root);
+					FeatureTreeNode creationDate = FeatureTreeNode.createChildNode(CREATION_DATE, root);
 					ErrorsHelper.addErrorIntoCollection(collection,
 							creationDate,
 							e.getMessage());
@@ -92,7 +92,7 @@ public class PBEmbeddedFileFeaturesObject implements IFeaturesObject {
 					PBCreateNodeHelper.createDateNode(MOD_DATE, root, ef.getModDate(), collection);
 				} catch (IOException e) {
 					LOGGER.debug("PDFBox error obtaining modification date", e);
-					FeatureTreeNode modDate = FeatureTreeNode.newChildInstance(MOD_DATE, root);
+					FeatureTreeNode modDate = FeatureTreeNode.createChildNode(MOD_DATE, root);
 					ErrorsHelper.addErrorIntoCollection(collection,
 							modDate,
 							e.getMessage());

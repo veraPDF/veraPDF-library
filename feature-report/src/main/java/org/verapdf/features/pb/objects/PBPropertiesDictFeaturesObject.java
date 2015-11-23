@@ -62,8 +62,8 @@ public class PBPropertiesDictFeaturesObject implements IFeaturesObject {
 	@Override
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (properties != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("propertiesDict");
-			root.addAttribute("id", id);
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("propertiesDict");
+			root.setAttribute("id", id);
 
 			parseParents(root);
 
@@ -92,7 +92,7 @@ public class PBPropertiesDictFeaturesObject implements IFeaturesObject {
 				(patternParent != null && !patternParent.isEmpty()) ||
 				(xobjectParent != null && !xobjectParent.isEmpty()) ||
 				(fontParent != null && !fontParent.isEmpty())) {
-			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+			FeatureTreeNode parents = FeatureTreeNode.createChildNode("parents", root);
 
 			PBCreateNodeHelper.parseIDSet(pageParent, "page", null, parents);
 			PBCreateNodeHelper.parseIDSet(patternParent, "pattern", null, parents);

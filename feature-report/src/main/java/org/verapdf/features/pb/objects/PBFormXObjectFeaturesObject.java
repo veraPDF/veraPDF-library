@@ -95,34 +95,34 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
 	@Override
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (formXObject != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("xobject");
-			root.addAttribute("type", "form");
-			root.addAttribute(ID, id);
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("xobject");
+			root.setAttribute("type", "form");
+			root.setAttribute(ID, id);
 
 			parseParents(root);
 
 			PBCreateNodeHelper.addBoxFeature("bbox", formXObject.getBBox(), root);
-			parseFloatMatrix(formXObject.getMatrix().getValues(), FeatureTreeNode.newChildInstance("matrix", root));
+			parseFloatMatrix(formXObject.getMatrix().getValues(), FeatureTreeNode.createChildNode("matrix", root));
 
 			if (formXObject.getGroup() != null) {
-				FeatureTreeNode groupNode = FeatureTreeNode.newChildInstance("group", root);
+				FeatureTreeNode groupNode = FeatureTreeNode.createChildNode("group", root);
 				if (formXObject.getGroup().getSubType() != null) {
 					PBCreateNodeHelper.addNotEmptyNode("subtype", formXObject.getGroup().getSubType().getName(), groupNode);
 					if ("Transparency".equals(formXObject.getGroup().getSubType().getName())) {
 						if (groupColorSpaceChild != null) {
-							FeatureTreeNode clr = FeatureTreeNode.newChildInstance("colorSpace", groupNode);
-							clr.addAttribute(ID, groupColorSpaceChild);
+							FeatureTreeNode clr = FeatureTreeNode.createChildNode("colorSpace", groupNode);
+							clr.setAttribute(ID, groupColorSpaceChild);
 						}
 
-						FeatureTreeNode.newChildInstanceWithValue("isolated", String.valueOf(formXObject.getGroup().isIsolated()), groupNode);
-						FeatureTreeNode.newChildInstanceWithValue("knockout", String.valueOf(formXObject.getGroup().isKnockout()), groupNode);
+						FeatureTreeNode.createChildNode("isolated", groupNode).setValue(String.valueOf(formXObject.getGroup().isIsolated()));
+						FeatureTreeNode.createChildNode("knockout", groupNode).setValue(String.valueOf(formXObject.getGroup().isKnockout()));
 					}
 
 				}
 			}
 
 			if (formXObject.getCOSStream().getItem(COSName.STRUCT_PARENTS) != null) {
-				FeatureTreeNode.newChildInstanceWithValue("structParents", String.valueOf(formXObject.getStructParents()), root);
+				FeatureTreeNode.createChildNode("structParents", root).setValue(String.valueOf(formXObject.getStructParents()));
 			}
 
 
@@ -152,10 +152,10 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
 	private static void parseFloatMatrix(float[][] array, FeatureTreeNode parent) throws FeatureParsingException {
 		for (int i = 0; i < array.length; ++i) {
 			for (int j = 0; j < array.length - 1; ++j) {
-				FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
-				element.addAttribute("row", String.valueOf(i + 1));
-				element.addAttribute("column", String.valueOf(j + 1));
-				element.addAttribute("value", String.valueOf(array[i][j]));
+				FeatureTreeNode element = FeatureTreeNode.createChildNode("element", parent);
+				element.setAttribute("row", String.valueOf(i + 1));
+				element.setAttribute("column", String.valueOf(j + 1));
+				element.setAttribute("value", String.valueOf(array[i][j]));
 			}
 		}
 	}
@@ -166,7 +166,7 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
 				(patternParent != null && !patternParent.isEmpty()) ||
 				(xobjectParent != null && !xobjectParent.isEmpty()) ||
 				(fontParent != null && !fontParent.isEmpty())) {
-			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+			FeatureTreeNode parents = FeatureTreeNode.createChildNode("parents", root);
 
 			PBCreateNodeHelper.parseIDSet(pageParent, "page", null, parents);
 			PBCreateNodeHelper.parseIDSet(annotationParent, "annotation", null, parents);
@@ -185,7 +185,7 @@ public class PBFormXObjectFeaturesObject implements IFeaturesObject {
 				(xobjectChild != null && !xobjectChild.isEmpty()) ||
 				(fontChild != null && !fontChild.isEmpty()) ||
 				(propertiesChild != null && !propertiesChild.isEmpty())) {
-			FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
+			FeatureTreeNode resources = FeatureTreeNode.createChildNode("resources", root);
 
 			PBCreateNodeHelper.parseIDSet(extGStateChild, "graphicsState", "graphicsStates", resources);
 			PBCreateNodeHelper.parseIDSet(colorSpaceChild, "colorSpace", "colorSpaces", resources);

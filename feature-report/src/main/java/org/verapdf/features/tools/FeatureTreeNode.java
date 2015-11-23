@@ -2,7 +2,6 @@ package org.verapdf.features.tools;
 
 import org.verapdf.core.FeatureParsingException;
 
-import javax.xml.bind.DatatypeConverter;
 import java.util.*;
 
 /**
@@ -22,22 +21,12 @@ public final class FeatureTreeNode {
 	private List<FeatureTreeNode> children = new ArrayList<>();
 
 	private FeatureTreeNode(final String name) throws FeatureParsingException {
-		this(name, null, null);
-	}
-
-	private FeatureTreeNode(final String name, final String value) throws FeatureParsingException {
-		this(name, value, null);
+		this(name, null);
 	}
 
 	private FeatureTreeNode(String name, FeatureTreeNode parent)
 			throws FeatureParsingException {
-		this(name, null, parent);
-	}
-
-	private FeatureTreeNode(String name, String value, FeatureTreeNode parent)
-			throws FeatureParsingException {
 		this.name = name;
-		this.value = value;
 		this.parent = parent;
 		if (parent != null) {
 			parent.addChild(this);
@@ -49,20 +38,9 @@ public final class FeatureTreeNode {
 	 * @return a new FeatureTreeNode with no parent
 	 * @throws FeatureParsingException when
 	 */
-	public static FeatureTreeNode newRootInstance(String name)
+	public static FeatureTreeNode createRootNode(String name)
 			throws FeatureParsingException {
 		return new FeatureTreeNode(name);
-	}
-
-	/**
-	 * @param name the name of the node
-	 * @return a new FeatureTreeNode with no parent
-	 * @throws FeatureParsingException when
-	 */
-	public static FeatureTreeNode newRootInstanceWithValue(
-			final String name, final String value)
-			throws FeatureParsingException {
-		return new FeatureTreeNode(name, value);
 	}
 
 	/**
@@ -72,24 +50,9 @@ public final class FeatureTreeNode {
 	 * @param parent parent of the node
 	 * @throws FeatureParsingException occurs when parent of the new node has String value
 	 */
-	public static FeatureTreeNode newChildInstance(String name,
-												   FeatureTreeNode parent) throws FeatureParsingException {
+	public static FeatureTreeNode createChildNode(String name,
+												  FeatureTreeNode parent) throws FeatureParsingException {
 		return new FeatureTreeNode(name, parent);
-	}
-
-	/**
-	 * Constructs node with string value
-	 *
-	 * @param name   name of the node
-	 * @param value  value of the node
-	 * @param parent parend of the node
-	 * @return a new feature
-	 * @throws FeatureParsingException occurs when parent of the new node has String value
-	 */
-	public static FeatureTreeNode newChildInstanceWithValue(String name,
-															String value, FeatureTreeNode parent)
-			throws FeatureParsingException {
-		return new FeatureTreeNode(name, value, parent);
 	}
 
 	/**
@@ -97,7 +60,7 @@ public final class FeatureTreeNode {
 	 * @return a new FeatureTreeNode with no parent
 	 * @throws FeatureParsingException when
 	 */
-	public static FeatureTreeNode newRootMetadataInstance(String name)
+	public static FeatureTreeNode createRootMetadataNode(String name)
 			throws FeatureParsingException {
 		FeatureTreeNode node = new FeatureTreeNode(name);
 		node.isMetadataNode = true;
@@ -105,44 +68,15 @@ public final class FeatureTreeNode {
 	}
 
 	/**
-	 * @param name  the name of the node
-	 * @param value byte array of the metadata stream
-	 * @return a new FeatureTreeNode with no parent
-	 * @throws FeatureParsingException when
-	 */
-	public static FeatureTreeNode newRootMetadataInstanceWithValue(String name, byte[] value)
-			throws FeatureParsingException {
-		FeatureTreeNode node = new FeatureTreeNode(name, DatatypeConverter.printHexBinary(value));
-		node.isMetadataNode = true;
-		return node;
-	}
-
-	/**
 	 * Creates new Feature Tree Node
 	 *
 	 * @param name   name of the node
 	 * @param parent parent of the node
 	 * @throws FeatureParsingException occurs when parent of the new node has String value
 	 */
-	public static FeatureTreeNode newChildMetadataInstance(String name,
-														   FeatureTreeNode parent) throws FeatureParsingException {
+	public static FeatureTreeNode createChildMetadataNode(String name,
+														  FeatureTreeNode parent) throws FeatureParsingException {
 		FeatureTreeNode node = new FeatureTreeNode(name, parent);
-		node.isMetadataNode = true;
-		return node;
-	}
-
-	/**
-	 * Creates new Feature Tree Node
-	 *
-	 * @param name   name of the node
-	 * @param value  byte array of the metadata stream
-	 * @param parent parent of the node
-	 * @throws FeatureParsingException occurs when parent of the new node has String value
-	 */
-	public static FeatureTreeNode newChildMetadataInstanceWithValue(String name,
-																	byte[] value,
-																	FeatureTreeNode parent) throws FeatureParsingException {
-		FeatureTreeNode node = new FeatureTreeNode(name, DatatypeConverter.printHexBinary(value), parent);
 		node.isMetadataNode = true;
 		return node;
 	}
@@ -233,7 +167,7 @@ public final class FeatureTreeNode {
 	 * @param attributeName  name of the attribute
 	 * @param attributeValue value of the attribute
 	 */
-	public void addAttribute(String attributeName, String attributeValue) {
+	public void setAttribute(String attributeName, String attributeValue) {
 		this.attributes.put(attributeName, attributeValue);
 	}
 

@@ -95,10 +95,10 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 	@Override
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (colorSpace != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("colorSpace");
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("colorSpace");
 
-			root.addAttribute(ID, id);
-			root.addAttribute("family", colorSpace.getName());
+			root.setAttribute(ID, id);
+			root.setAttribute("family", colorSpace.getName());
 
 			parseParents(root);
 
@@ -107,32 +107,32 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 			} else if (colorSpace instanceof PDICCBased) {
 				PDICCBased icc = (PDICCBased) colorSpace;
 				if (colorSpaceChild != null) {
-					FeatureTreeNode alt = FeatureTreeNode.newChildInstance("alternate", root);
-					alt.addAttribute(ID, colorSpaceChild);
+					FeatureTreeNode alt = FeatureTreeNode.createChildNode("alternate", root);
+					alt.setAttribute(ID, colorSpaceChild);
 				}
-				FeatureTreeNode.newChildInstanceWithValue("components", String.valueOf(icc.getNumberOfComponents()), root);
+				FeatureTreeNode.createChildNode("components", root).setValue(String.valueOf(icc.getNumberOfComponents()));
 				if (iccProfileChild != null) {
-					FeatureTreeNode prof = FeatureTreeNode.newChildInstance("iccProfile", root);
-					prof.addAttribute(ID, iccProfileChild);
+					FeatureTreeNode prof = FeatureTreeNode.createChildNode("iccProfile", root);
+					prof.setAttribute(ID, iccProfileChild);
 				}
 			} else if (colorSpace instanceof PDIndexed) {
 				parseIndexed(root, collection);
 			} else if (colorSpace instanceof PDSeparation) {
 				PDSeparation sep = (PDSeparation) colorSpace;
 				if (colorSpaceChild != null) {
-					FeatureTreeNode alt = FeatureTreeNode.newChildInstance("alternate", root);
-					alt.addAttribute(ID, colorSpaceChild);
+					FeatureTreeNode alt = FeatureTreeNode.createChildNode("alternate", root);
+					alt.setAttribute(ID, colorSpaceChild);
 				}
 				PBCreateNodeHelper.addNotEmptyNode("colorantName", sep.getColorantName(), root);
 			} else if (colorSpace instanceof PDDeviceN) {
 				PDDeviceN devN = (PDDeviceN) colorSpace;
 				if (colorSpaceChild != null) {
-					FeatureTreeNode alt = FeatureTreeNode.newChildInstance("alternate", root);
-					alt.addAttribute(ID, colorSpaceChild);
+					FeatureTreeNode alt = FeatureTreeNode.createChildNode("alternate", root);
+					alt.setAttribute(ID, colorSpaceChild);
 				}
 				List<String> devNColorantNames = devN.getColorantNames();
 				if (devNColorantNames != null) {
-					FeatureTreeNode colorantNames = FeatureTreeNode.newChildInstance("colorantNames", root);
+					FeatureTreeNode colorantNames = FeatureTreeNode.createChildNode("colorantNames", root);
 					for (String name : devNColorantNames) {
 						PBCreateNodeHelper.addNotEmptyNode("colorantName", name, colorantNames);
 					}
@@ -158,12 +158,12 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 		PDIndexed index = (PDIndexed) colorSpace;
 
 		if (colorSpaceChild != null) {
-			FeatureTreeNode alt = FeatureTreeNode.newChildInstance("base", root);
-			alt.addAttribute(ID, colorSpaceChild);
+			FeatureTreeNode alt = FeatureTreeNode.createChildNode("base", root);
+			alt.setAttribute(ID, colorSpaceChild);
 		}
 
 		if (index.getCOSObject() instanceof COSArray) {
-			FeatureTreeNode hival = FeatureTreeNode.newChildInstance("hival",
+			FeatureTreeNode hival = FeatureTreeNode.createChildNode("hival",
 					root);
 			if (((COSArray) index.getCOSObject()).size() >= 3 &&
 					((COSArray) index.getCOSObject()).getObject(2) instanceof COSNumber) {
@@ -174,7 +174,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 						"Indexed color space has no element hival or hival is not a number");
 			}
 
-			FeatureTreeNode lookup = FeatureTreeNode.newChildInstance("lookup",
+			FeatureTreeNode lookup = FeatureTreeNode.createChildNode("lookup",
 					root);
 			if (((COSArray) index.getCOSObject()).size() >= 4) {
 				byte[] lookupData = null;
@@ -215,51 +215,51 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 	private void parseCIEDictionaryBased(FeatureTreeNode root) throws FeatureParsingException {
 		PDCIEDictionaryBasedColorSpace cie = (PDCIEDictionaryBasedColorSpace) colorSpace;
 
-		parseTristimulus(cie.getWhitepoint(), FeatureTreeNode.newChildInstance("whitePoint", root));
-		parseTristimulus(cie.getBlackPoint(), FeatureTreeNode.newChildInstance("blackPoint", root));
+		parseTristimulus(cie.getWhitepoint(), FeatureTreeNode.createChildNode("whitePoint", root));
+		parseTristimulus(cie.getBlackPoint(), FeatureTreeNode.createChildNode("blackPoint", root));
 
 		if (cie instanceof PDCalGray) {
 			PDCalGray calGray = (PDCalGray) cie;
-			FeatureTreeNode.newChildInstanceWithValue("gamma", String.valueOf(calGray.getGamma()), root);
+			FeatureTreeNode.createChildNode("gamma", root).setValue(String.valueOf(calGray.getGamma()));
 		} else if (cie instanceof PDCalRGB) {
 			PDCalRGB calRGB = (PDCalRGB) cie;
-			FeatureTreeNode gamma = FeatureTreeNode.newChildInstance("gamma", root);
+			FeatureTreeNode gamma = FeatureTreeNode.createChildNode("gamma", root);
 			PDGamma pdGamma = calRGB.getGamma();
-			gamma.addAttribute("red", String.valueOf(pdGamma.getR()));
-			gamma.addAttribute("green", String.valueOf(pdGamma.getG()));
-			gamma.addAttribute("blue", String.valueOf(pdGamma.getB()));
-			parseFloatArray(calRGB.getMatrix(), FeatureTreeNode.newChildInstance("matrix", root));
+			gamma.setAttribute("red", String.valueOf(pdGamma.getR()));
+			gamma.setAttribute("green", String.valueOf(pdGamma.getG()));
+			gamma.setAttribute("blue", String.valueOf(pdGamma.getB()));
+			parseFloatArray(calRGB.getMatrix(), FeatureTreeNode.createChildNode("matrix", root));
 		} else if (cie instanceof PDLab) {
 			PDLab lab = (PDLab) cie;
-			FeatureTreeNode range = FeatureTreeNode.newChildInstance("range", root);
-			range.addAttribute("aMin", String.valueOf(lab.getARange().getMin()));
-			range.addAttribute("aMax", String.valueOf(lab.getARange().getMax()));
-			range.addAttribute("bMin", String.valueOf(lab.getBRange().getMin()));
-			range.addAttribute("bMax", String.valueOf(lab.getBRange().getMax()));
+			FeatureTreeNode range = FeatureTreeNode.createChildNode("range", root);
+			range.setAttribute("aMin", String.valueOf(lab.getARange().getMin()));
+			range.setAttribute("aMax", String.valueOf(lab.getARange().getMax()));
+			range.setAttribute("bMin", String.valueOf(lab.getBRange().getMin()));
+			range.setAttribute("bMax", String.valueOf(lab.getBRange().getMax()));
 		}
 
 	}
 
 	private void parseFloatArray(float[] array, FeatureTreeNode parent) throws FeatureParsingException {
 		for (int i = 0; i < array.length; ++i) {
-			FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
-			element.addAttribute("number", String.valueOf(i));
-			element.addAttribute("value", String.valueOf(array[i]));
+			FeatureTreeNode element = FeatureTreeNode.createChildNode("element", parent);
+			element.setAttribute("number", String.valueOf(i));
+			element.setAttribute("value", String.valueOf(array[i]));
 		}
 	}
 
 	private void parseStringList(List<String> array, FeatureTreeNode parent) throws FeatureParsingException {
 		for (int i = 0; i < array.size(); ++i) {
-			FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
-			element.addAttribute("number", String.valueOf(i));
-			element.addAttribute("value", String.valueOf(array.get(i)));
+			FeatureTreeNode element = FeatureTreeNode.createChildNode("element", parent);
+			element.setAttribute("number", String.valueOf(i));
+			element.setAttribute("value", String.valueOf(array.get(i)));
 		}
 	}
 
 	private void parseTristimulus(PDTristimulus tris, FeatureTreeNode curNode) {
-		curNode.addAttribute("x", String.valueOf(tris.getX()));
-		curNode.addAttribute("y", String.valueOf(tris.getY()));
-		curNode.addAttribute("z", String.valueOf(tris.getZ()));
+		curNode.setAttribute("x", String.valueOf(tris.getX()));
+		curNode.setAttribute("y", String.valueOf(tris.getY()));
+		curNode.setAttribute("z", String.valueOf(tris.getZ()));
 	}
 
 	private void parseParents(FeatureTreeNode root) throws FeatureParsingException {
@@ -269,7 +269,7 @@ public class PBColorSpaceFeaturesObject implements IFeaturesObject {
 				(xobjectParents != null && !xobjectParents.isEmpty()) ||
 				(shadingParents != null && !shadingParents.isEmpty()) ||
 				(fontParents != null && !fontParents.isEmpty())) {
-			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+			FeatureTreeNode parents = FeatureTreeNode.createChildNode("parents", root);
 
 			PBCreateNodeHelper.parseIDSet(pageParents, "page", null, parents);
 			PBCreateNodeHelper.parseIDSet(colorSpaceParents, "colorSpace", null, parents);

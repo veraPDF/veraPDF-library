@@ -100,10 +100,10 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 
 		if (profile != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("iccProfile");
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("iccProfile");
 
 			if (id != null) {
-				root.addAttribute(ID, id);
+				root.setAttribute(ID, id);
 			}
 
 			addParents(root);
@@ -177,13 +177,13 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 
 	private void addParents(FeatureTreeNode root) throws FeatureParsingException {
 		if ((outInts != null && !outInts.isEmpty()) || (iccBaseds != null && !iccBaseds.isEmpty())) {
-			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+			FeatureTreeNode parents = FeatureTreeNode.createChildNode("parents", root);
 
 			if (outInts != null) {
 				for (String outInt : outInts) {
 					if (outInt != null) {
-						FeatureTreeNode pageNode = FeatureTreeNode.newChildInstance("outputIntent", parents);
-						pageNode.addAttribute(ID, outInt);
+						FeatureTreeNode pageNode = FeatureTreeNode.createChildNode("outputIntent", parents);
+						pageNode.setAttribute(ID, outInt);
 					}
 				}
 			}
@@ -191,8 +191,8 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 			if (iccBaseds != null) {
 				for (String iccBased : iccBaseds) {
 					if (iccBased != null) {
-						FeatureTreeNode pageNode = FeatureTreeNode.newChildInstance("iccBased", parents);
-						pageNode.addAttribute(ID, iccBased);
+						FeatureTreeNode pageNode = FeatureTreeNode.createChildNode("iccBased", parents);
+						pageNode.setAttribute(ID, iccBased);
 					}
 				}
 			}

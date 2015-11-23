@@ -58,7 +58,7 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection)
 			throws FeatureParsingException {
 		if (outline != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("outlines");
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("outlines");
 
 			if (outline.children() != null) {
 				Set<PDOutlineItem> items = new HashSet<>();
@@ -88,22 +88,22 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
 								   FeaturesCollection collection, Set<PDOutlineItem> items) throws FeatureParsingException {
 		if (item != null) {
 			items.add(item);
-			FeatureTreeNode itemNode = FeatureTreeNode.newChildInstance(
+			FeatureTreeNode itemNode = FeatureTreeNode.createChildNode(
 					"outline", root);
 
 			PBCreateNodeHelper.addNotEmptyNode("title", item.getTitle(),
 					itemNode);
 
 
-			FeatureTreeNode color = FeatureTreeNode.newChildInstance(
+			FeatureTreeNode color = FeatureTreeNode.createChildNode(
 					"color", itemNode);
 
 			PDColor clr = item.getTextColor();
 			float[] rgb = clr.getComponents();
 			if (rgb.length == RGB_COLORS_NUMBER) {
-				color.addAttribute("red", String.valueOf(rgb[RGB_RED_COLOR_NUMBER]));
-				color.addAttribute("green", String.valueOf(rgb[RGB_GREEN_COLOR_NUMBER]));
-				color.addAttribute("blue", String.valueOf(rgb[RGB_BLUE_COLOR_NUMBER]));
+				color.setAttribute("red", String.valueOf(rgb[RGB_RED_COLOR_NUMBER]));
+				color.setAttribute("green", String.valueOf(rgb[RGB_GREEN_COLOR_NUMBER]));
+				color.setAttribute("blue", String.valueOf(rgb[RGB_BLUE_COLOR_NUMBER]));
 			} else {
 				ErrorsHelper.addErrorIntoCollection(collection,
 						color,
@@ -111,9 +111,9 @@ public class PBOutlinesFeaturesObject implements IFeaturesObject {
 			}
 
 
-			FeatureTreeNode style = FeatureTreeNode.newChildInstance("style", itemNode);
-			style.addAttribute("italic", String.valueOf(item.isItalic()));
-			style.addAttribute("bold", String.valueOf(item.isBold()));
+			FeatureTreeNode style = FeatureTreeNode.createChildNode("style", itemNode);
+			style.setAttribute("italic", String.valueOf(item.isItalic()));
+			style.setAttribute("bold", String.valueOf(item.isBold()));
 
 			for (PDOutlineItem child : item.children()) {
 				if (!items.contains(child)) {

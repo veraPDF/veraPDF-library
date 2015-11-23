@@ -70,22 +70,22 @@ public class PBShadingPatternFeaturesObject implements IFeaturesObject {
 	@Override
 	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (shadingPattern != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("pattern");
-			root.addAttribute(ID, id);
-			root.addAttribute("type", "shading");
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("pattern");
+			root.setAttribute(ID, id);
+			root.setAttribute("type", "shading");
 
 			parseParents(root);
 
 			if (shadingChild != null) {
-				FeatureTreeNode shading = FeatureTreeNode.newChildInstance("shading", root);
-				shading.addAttribute(ID, shadingChild);
+				FeatureTreeNode shading = FeatureTreeNode.createChildNode("shading", root);
+				shading.setAttribute(ID, shadingChild);
 			}
 
-			parseFloatMatrix(shadingPattern.getMatrix().getValues(), FeatureTreeNode.newChildInstance("matrix", root));
+			parseFloatMatrix(shadingPattern.getMatrix().getValues(), FeatureTreeNode.createChildNode("matrix", root));
 
 			if (extGStateChild != null) {
-				FeatureTreeNode exGState = FeatureTreeNode.newChildInstance("graphicsState", root);
-				exGState.addAttribute(ID, extGStateChild);
+				FeatureTreeNode exGState = FeatureTreeNode.createChildNode("graphicsState", root);
+				exGState.setAttribute(ID, extGStateChild);
 			}
 
 			collection.addNewFeatureTree(FeaturesObjectTypesEnum.PATTERN, root);
@@ -106,10 +106,10 @@ public class PBShadingPatternFeaturesObject implements IFeaturesObject {
 	private void parseFloatMatrix(float[][] array, FeatureTreeNode parent) throws FeatureParsingException {
 		for (int i = 0; i < array.length; ++i) {
 			for (int j = 0; j < array.length - 1; ++j) {
-				FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
-				element.addAttribute("row", String.valueOf(i + 1));
-				element.addAttribute("column", String.valueOf(j + 1));
-				element.addAttribute("value", String.valueOf(array[i][j]));
+				FeatureTreeNode element = FeatureTreeNode.createChildNode("element", parent);
+				element.setAttribute("row", String.valueOf(i + 1));
+				element.setAttribute("column", String.valueOf(j + 1));
+				element.setAttribute("value", String.valueOf(array[i][j]));
 			}
 		}
 	}
@@ -119,7 +119,7 @@ public class PBShadingPatternFeaturesObject implements IFeaturesObject {
 				(patternParent != null && !patternParent.isEmpty()) ||
 				(xobjectParent != null && !xobjectParent.isEmpty()) ||
 				(fontParent != null && !fontParent.isEmpty())) {
-			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+			FeatureTreeNode parents = FeatureTreeNode.createChildNode("parents", root);
 
 			PBCreateNodeHelper.parseIDSet(pageParent, "page", null, parents);
 			PBCreateNodeHelper.parseIDSet(patternParent, "pattern", null, parents);
