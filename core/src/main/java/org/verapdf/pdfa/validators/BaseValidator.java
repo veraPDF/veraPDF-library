@@ -366,6 +366,10 @@ class BaseValidator implements PDFAValidator {
     @Override
     public ValidationResult validate(ValidationModelParser toValidate)
             throws ValidationException, IOException {
+        try {
         return this.validate(toValidate.getRoot());
+        } catch (RuntimeException e) {
+            throw new ValidationException("Caught unexpected runtime exception during validation", e);
+        }
     }
 }
