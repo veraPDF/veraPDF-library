@@ -113,7 +113,7 @@ public final class LegacyProfileConverter {
         for (String ruleId : toConvert.getAllRulesId()) {
             org.verapdf.validation.profile.model.Rule rule = toConvert
                     .getRuleById(ruleId);
-            rules.add(fromLegacyRule(rule));
+            rules.add(fromLegacyRule(flavour.getPart(), rule));
         }
         Set<Variable> variables = new HashSet<>();
         for (org.verapdf.validation.profile.model.Variable var : toConvert
@@ -135,12 +135,13 @@ public final class LegacyProfileConverter {
     }
 
     /**
+     * @param specification 
      * @param toConvert
      *            a legacy Rule type to convert
      * @return a new validationRule created from the legacy type
      */
-    public static Rule fromLegacyRule(
-            org.verapdf.validation.profile.model.Rule toConvert) {
+    public static Rule fromLegacyRule(final Specification specification,
+            final org.verapdf.validation.profile.model.Rule toConvert) {
         // Get the root reference for the Rule
         org.verapdf.validation.profile.model.Reference rootRef = toConvert
                 .getReference();
@@ -153,7 +154,7 @@ public final class LegacyProfileConverter {
         // Add to other flattened sub references
         flattenedRefs.addAll(flattenSubReferences(rootRef));
         // Get the Id
-        RuleId id = fromLegacyRuleId(toConvert.getAttrID());
+        RuleId id = fromLegacyRuleId(specification, toConvert.getAttrID());
         // check consistency with root
         Rule converted = Profiles.ruleFromValues(id, toConvert.getAttrObject(),
                 toConvert.getDescription().trim().replaceAll(" +", " "),
@@ -166,7 +167,7 @@ public final class LegacyProfileConverter {
      * @param legacyId
      * @return
      */
-    public static RuleId fromLegacyRuleId(final String legacyId) {
+    public static RuleId fromLegacyRuleId(final Specification specification, final String legacyId) {
         String[] parts = legacyId.split("-");
         StringBuilder builder = new StringBuilder();
         String separator = "";
@@ -180,7 +181,7 @@ public final class LegacyProfileConverter {
                 testNumber = Integer.parseInt(part.substring(1));
             }
         }
-        return Profiles.ruleIdFromValues(Specification.ISO_19005_1,
+        return Profiles.ruleIdFromValues(specification,
                 builder.toString(), testNumber);
     }
 
