@@ -8,7 +8,6 @@ import java.util.zip.ZipException;
 
 import javax.xml.bind.JAXBException;
 
-import org.junit.AfterClass;
 import org.junit.Test;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
@@ -30,7 +29,7 @@ public class ITVeraCorpusTests {
     private static final Map<PDFAFlavour, ResultSet> VERA_RESULTS = new HashMap<>();
     private static final Map<PDFAFlavour, ResultSet> ISARTOR_RESULTS = new HashMap<>();
 
-    @AfterClass
+    // @AfterClass
     public static void outputResults() throws JAXBException {
         outputCorpusResults(VERA_RESULTS.get(PDFAFlavour.PDFA_1_B));
         outputCorpusResults(ISARTOR_RESULTS.get(PDFAFlavour.PDFA_1_B));
