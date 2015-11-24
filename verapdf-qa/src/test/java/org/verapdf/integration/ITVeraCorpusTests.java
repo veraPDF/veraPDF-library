@@ -8,6 +8,7 @@ import java.util.zip.ZipException;
 
 import javax.xml.bind.JAXBException;
 
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
@@ -29,40 +30,10 @@ public class ITVeraCorpusTests {
     private static final Map<PDFAFlavour, ResultSet> VERA_RESULTS = new HashMap<>();
     private static final Map<PDFAFlavour, ResultSet> ISARTOR_RESULTS = new HashMap<>();
 
-    // @AfterClass
+    @AfterClass
     public static void outputResults() throws JAXBException {
-        for (ResultSet results : VERA_RESULTS.values()) {
-            System.out.println();
-            System.out.println(results.getDetails());
-            System.out.println(results.getCorpusDetails());
-            System.out.println("Results");
-            for (Result result : results.getResults()) {
-                System.out.println(result.getCorpusItem().getPath());
-                ValidationResults.toXml(result.getResult(), System.out,
-                        Boolean.TRUE);
-            }
-            System.out.println("Exceptions");
-            for (Incomplete exception : results.getExceptions()) {
-                System.out.println(exception.getCorpusItem().getPath());
-                System.out.println(exception);
-            }
-        }
-        for (ResultSet results : ISARTOR_RESULTS.values()) {
-            System.out.println();
-            System.out.println(results.getDetails());
-            System.out.println(results.getCorpusDetails());
-            System.out.println("Results");
-            for (Result result : results.getResults()) {
-                System.out.println(result.getCorpusItem().getPath());
-                ValidationResults.toXml(result.getResult(), System.out,
-                        Boolean.TRUE);
-            }
-            System.out.println("Exceptions");
-            for (Incomplete exception : results.getExceptions()) {
-                System.out.println(exception.getCorpusItem().getPath());
-                System.out.println(exception);
-            }
-        }
+        outputCorpusResults(VERA_RESULTS.get(PDFAFlavour.PDFA_1_B));
+        outputCorpusResults(ISARTOR_RESULTS.get(PDFAFlavour.PDFA_1_B));
     }
 
     /**
@@ -129,5 +100,23 @@ public class ITVeraCorpusTests {
             final List<PDFAFlavour> filters) {
         PDFAFlavour flavour = PDFAFlavour.fromString(parseForMatches);
         return filters.contains(flavour);
+    }
+
+    private static void outputCorpusResults(final ResultSet results) throws JAXBException {
+        System.out.println();
+        System.out.println("Flavour" + results.getValidationProfile().getPDFAFlavour());
+        System.out.println(results.getDetails());
+        System.out.println(results.getCorpusDetails());
+        System.out.println("Results");
+        for (Result result : results.getResults()) {
+            System.out.println(result.getCorpusItem().getPath());
+            ValidationResults.toXml(result.getResult(), System.out,
+                    Boolean.TRUE);
+        }
+        System.out.println("Exceptions");
+        for (Incomplete exception : results.getExceptions()) {
+            System.out.println(exception.getCorpusItem().getPath());
+            System.out.println(exception);
+        }
     }
 }

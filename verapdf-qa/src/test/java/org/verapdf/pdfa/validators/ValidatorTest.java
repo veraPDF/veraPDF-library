@@ -3,7 +3,9 @@
  */
 package org.verapdf.pdfa.validators;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -51,16 +53,15 @@ public class ValidatorTest {
      * .
      * 
      * @throws IOException
-     * @throws ValidationException
      * @throws JAXBException
      */
     @Test
     public final void testValidateValidationConsistency() throws IOException,
-            ValidationException, JAXBException {
-        // Grab a random sample of 10 corpus files
+            JAXBException {
+        // Grab a random sample of 20 corpus files
         TestCorpus veraCorpus = CorpusManager.getVeraCorpus();
-        Set<String> sample = CorpusSampler.randomSample(veraCorpus, 10);
-        /// Cycle through sample
+        Set<String> sample = CorpusSampler.randomSample(veraCorpus, 20);
+        // / Cycle through sample
         for (String itemName : sample) {
             // Try all profiles
             for (ValidationProfile profile : PROFILES.getValidationProfiles()) {
@@ -69,22 +70,87 @@ public class ValidatorTest {
                         false);
                 Set<ValidationResult> results = new HashSet<>();
                 // Validate a fresh model instance and add the result to the set
-                for (int index = 0; index < 5; index++) {
+                for (int index = 0; index < 2; index++) {
                     try (ModelParser parser = new ModelParser(
                             veraCorpus.getItemStream(itemName))) {
-                        results.add(validator.validate(parser));
+                        ValidationResult result = validator.validate(parser);
+                        results.add(result);
+                    } catch (ValidationException e) {
+                        checkValidationException(itemName, e);
                     }
                 }
                 // Set should have only one result IF all results are identical
+                if (results.size() != 1) {
+                    for (ValidationResult result : results) {
+                        ValidationResults.toXml(result, System.out, Boolean.TRUE);
+                    }
+                }
                 assertTrue(results.size() == 1);
             }
         }
-
     }
 
     @SuppressWarnings("javadoc")
     @Test
-    public void testValidatorConsistency() throws IOException,
+    public void testFailFastValidator() throws IOException, JAXBException {
+        // Grab a random sample of 20 corpus files
+        TestCorpus veraCorpus = CorpusManager.getVeraCorpus();
+        Set<String> sample = CorpusSampler.randomSample(veraCorpus, 20);
+        // / Cycle through sample
+        for (String itemName : sample) {
+            // Try all profiles
+            for (ValidationProfile profile : PROFILES.getValidationProfiles()) {
+                // Create a validator for the profile and get a result with no failures
+                PDFAValidator validator = Validators.createValidator(profile,
+                        false);
+                ValidationResult result = ValidationResults.defaultResult();
+                // Validate a fresh model instance and add the result to the set
+                try (ModelParser parser = new ModelParser(
+                        veraCorpus.getItemStream(itemName))) {
+                    result = validator.validate(parser);
+                } catch (ValidationException e) {
+                    checkValidationException(itemName, e);
+                }
+                int failedMax = result.getTestAssertions().size() + 1;
+                // Set up a loop to restrict failures
+                for (int index = failedMax; index > 0; index--) {
+                    PDFAValidator fastFailValidator = Validators.createValidator(
+                            profile, false, index);
+                    ValidationResult failFastResult = ValidationResults
+                            .defaultResult();
+                    try (ModelParser parser = new ModelParser(
+                            veraCorpus.getItemStream(itemName))) {
+                        failFastResult = fastFailValidator.validate(parser);
+                    } catch (ValidationException e) {
+                        checkValidationException(itemName, e);
+                    }
+                    if (index == failedMax) {
+                        assertTrue(
+                                "Failed result, index =" + index + "\n"
+                                        + ValidationResults.resultToXml(
+                                                result, Boolean.TRUE)
+                                        + " != SecondResult:\n"
+                                        + ValidationResults.resultToXml(
+                                                failFastResult, Boolean.TRUE),
+                                result.equals(failFastResult));
+                    } else if (index < failedMax) {
+                        assertFalse(result.equals(failFastResult));
+
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * TODO: Sort the validator consistency issues
+     * 
+     * @throws IOException
+     * @throws ValidationException
+     * @throws JAXBException
+     */
+    // @Test
+    public void testModelConsistency() throws IOException,
             ValidationException, JAXBException {
         // Grab a random sample of 10 corpus files
         TestCorpus veraCorpus = CorpusManager.getVeraCorpus();
@@ -136,4 +202,14 @@ public class ValidatorTest {
         }
     }
 
+    private static boolean checkValidationException(final String itemName, final ValidationException excep) {
+        if (excep.getCause() instanceof NegativeArraySizeException) {
+            System.err.println("Expected Exception" + excep.getMessage() + ", while validating" + itemName);
+        } else {
+            excep.printStackTrace();
+            fail("Exception" + excep.getMessage()
+                    + ", while validating" + itemName);
+        }
+        return true;
+    }
 }
