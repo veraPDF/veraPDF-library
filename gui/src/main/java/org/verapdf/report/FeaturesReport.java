@@ -52,6 +52,10 @@ public class FeaturesReport {
 		this.errors = errors;
 	}
 
+	private FeaturesReport() {
+		this(null, null, null, null, null, null, null, null, null, null, null, null);
+	}
+
 	static FeaturesReport fromValues(FeaturesCollection collection) {
 		if (collection == null) {
 			return null;

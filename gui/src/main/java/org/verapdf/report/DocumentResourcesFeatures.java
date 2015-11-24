@@ -35,6 +35,10 @@ public class DocumentResourcesFeatures {
 		this.graphicsStates = graphicsStates;
 	}
 
+	private DocumentResourcesFeatures() {
+		this(null, null, null, null, null, null, null);
+	}
+
 	static DocumentResourcesFeatures fromValues(FeaturesCollection collection) {
 		FeaturesNode graphicsStates = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.EXT_G_STATE);
 		FeaturesNode colorSpaces = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.COLORSPACE);
