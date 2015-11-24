@@ -1,14 +1,13 @@
 package org.verapdf.report;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.xml.bind.annotation.XmlAttribute;
-
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.RuleId;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Maksim Bezrukov
@@ -26,11 +25,11 @@ public class Summary {
     @XmlAttribute
     private final String metadataFixesStatus;
     @XmlAttribute
-    private final int completedMetadataFixes;
+    private final Integer completedMetadataFixes;
 
     private Summary(int passedRules, int failedRules, int passedChecks,
-            int failedChecks, String metadataFixesStatus,
-            int completedMetadataFixes) {
+                    int failedChecks, String metadataFixesStatus,
+                    Integer completedMetadataFixes) {
         this.passedRules = passedRules;
         this.failedRules = failedRules;
         this.passedChecks = passedChecks;
@@ -44,9 +43,8 @@ public class Summary {
     }
 
     static Summary fromValues(ValidationResult result,
-            String metadataFixesStatus, int completedMetadataFixes) {
+                              String metadataFixesStatus, Integer completedMetadataFixes) {
         int passedChecks = 0;
-        ;
         int failedChecks = 0;
         Set<RuleId> passedRules = new HashSet<>();
         Set<RuleId> failedRules = new HashSet<>();

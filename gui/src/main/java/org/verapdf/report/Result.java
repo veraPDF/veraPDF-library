@@ -8,7 +8,6 @@ import org.verapdf.pdfa.validation.RuleId;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -54,8 +53,8 @@ public class Result {
 
 		Set<Rule> rules = getRules(assertions);
 
-		String fixerResultStatus = "";
-		int completedFixes = 0;
+		String fixerResultStatus = null;
+		Integer completedFixes = null;
 
 		if (fixerResult != null) {
 			MetadataFixerResult.RepairStatus repairStatus = fixerResult.getRepairStatus();
@@ -75,7 +74,6 @@ public class Result {
 
 	private static Set<Rule> getRules(Set<TestAssertion> assertions) {
 		Map<String, Rule> rulesMap = new HashMap<>();
-
 
 		for (TestAssertion assertion : assertions) {
 			RuleId id = assertion.getRuleId();
