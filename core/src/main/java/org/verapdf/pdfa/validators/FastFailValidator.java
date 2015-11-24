@@ -3,10 +3,6 @@
  */
 package org.verapdf.pdfa.validators;
 
-import org.verapdf.pdfa.results.Location;
-import org.verapdf.pdfa.results.TestAssertion;
-import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.Rule;
 import org.verapdf.pdfa.validation.ValidationProfile;
 
@@ -25,7 +21,6 @@ public class FastFailValidator extends BaseValidator {
     protected FastFailValidator(final ValidationProfile profile,
             final boolean logPassedTests) {
         this(profile, logPassedTests, 0);
-        // TODO Auto-generated constructor stub
     }
 
     /**
