@@ -13,7 +13,7 @@ import org.verapdf.pdfa.validation.RuleId;
 /**
  * @author Maksim Bezrukov
  */
-public class Summary {
+public class ValidationSummary {
 
     @XmlAttribute
     private final int passedRules;
@@ -28,9 +28,9 @@ public class Summary {
     @XmlAttribute
     private final int completedMetadataFixes;
 
-    private Summary(int passedRules, int failedRules, int passedChecks,
-            int failedChecks, String metadataFixesStatus,
-            int completedMetadataFixes) {
+    private ValidationSummary(final int passedRules, final int failedRules, final int passedChecks,
+            final int failedChecks, final String metadataFixesStatus,
+            final int completedMetadataFixes) {
         this.passedRules = passedRules;
         this.failedRules = failedRules;
         this.passedChecks = passedChecks;
@@ -39,14 +39,13 @@ public class Summary {
         this.completedMetadataFixes = completedMetadataFixes;
     }
 
-    private Summary() {
-        this(0, 0, 0, 0, null, 0);
+    private ValidationSummary() {
+        this(0, 0, 0, 0, "", 0);
     }
 
-    static Summary fromValues(ValidationResult result,
-            String metadataFixesStatus, int completedMetadataFixes) {
+    static ValidationSummary fromValues(final ValidationResult result,
+            final String metadataFixesStatus, final int completedMetadataFixes) {
         int passedChecks = 0;
-        ;
         int failedChecks = 0;
         Set<RuleId> passedRules = new HashSet<>();
         Set<RuleId> failedRules = new HashSet<>();
@@ -60,7 +59,7 @@ public class Summary {
             }
         }
 
-        return new Summary(passedRules.size(), failedRules.size(),
+        return new ValidationSummary(passedRules.size(), failedRules.size(),
                 passedChecks, failedChecks, metadataFixesStatus,
                 completedMetadataFixes);
     }

@@ -1,58 +1,66 @@
 package org.verapdf.report;
 
-import org.verapdf.pdfa.MetadataFixerResult;
-import org.verapdf.pdfa.results.TestAssertion;
-import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.pdfa.validation.RuleId;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.ID_REMOVED;
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
+import static org.verapdf.pdfa.results.TestAssertion.Status.FAILED;
+import static org.verapdf.pdfa.results.TestAssertion.Status.PASSED;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.ID_REMOVED;
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
-import static org.verapdf.pdfa.results.TestAssertion.Status.FAILED;
-import static org.verapdf.pdfa.results.TestAssertion.Status.PASSED;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.verapdf.pdfa.MetadataFixerResult;
+import org.verapdf.pdfa.results.TestAssertion;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.results.ValidationResults;
+import org.verapdf.pdfa.validation.RuleId;
 
 /**
  * @author Maksim Bezrukov
  */
 @XmlRootElement(name = "result")
 public class Result {
+    private final static String STATEMENT_PREFIX = "PDF file is ";
+    private final static String NOT_INSERT = "not ";
+    private final static String STATEMENT_SUFFIX = "compliant with Validation Profile requirements.";
+    private final static String COMPLIANT_STATEMENT = STATEMENT_PREFIX + STATEMENT_SUFFIX;
+    private final static String NONCOMPLIANT_STATEMENT = STATEMENT_PREFIX + NOT_INSERT + STATEMENT_SUFFIX;
 
 	@XmlElement
 	private final boolean compliant;
 	@XmlElement
 	private final String statement;
 	@XmlElement
-	private final Summary summary;
-	@XmlElement
-	private final Details details;
+	private final ValidationSummary summary;
+    @XmlElementWrapper
+    @XmlElement(name = "rule")
+    private final Set<RuleSummary> rules;
+//  @XmlElementWrapper
+//  @XmlElement(name = "warning")
+//  private final Set<Warning> warnings;
 
-	private Result(boolean compliant, String statement, Summary summary, Details details) {
+	private Result(boolean compliant, String statement, ValidationSummary summary, Set<RuleSummary> rules) {
 		this.compliant = compliant;
 		this.statement = statement;
 		this.summary = summary;
-		this.details = details;
+		this.rules = new HashSet<>(rules);
 	}
 
 	private Result() {
-		this(false, "", Summary.fromValues(ValidationResults.defaultResult(), null, 0), Details.fromValue(new HashSet<Rule>()));
+		this(false, "", ValidationSummary.fromValues(ValidationResults.defaultResult(), null, 0), new HashSet<RuleSummary>());
 	}
 
 	static Result fromValues(ValidationResult info, MetadataFixerResult fixerResult) {
 
 		Set<TestAssertion> assertions = info.getTestAssertions();
-		boolean compliant = info.isCompliant();
-		String statement = compliant ? "PDF file is compliant with Validation Profile requirements" :
-				"PDF file is not compliant with Validation Profile requirements";
+		String statement = getStatement(info.isCompliant());
 
-		Set<Rule> rules = getRules(assertions);
+		Set<RuleSummary> rules = getRules(assertions);
 
 		String fixerResultStatus = "";
 		int completedFixes = 0;
@@ -67,23 +75,23 @@ public class Result {
 		}
 
 		return new Result(
-				compliant,
+		        info.isCompliant(),
 				statement,
-				Summary.fromValues(info, fixerResultStatus, completedFixes),
-				Details.fromValue(rules));
+				ValidationSummary.fromValues(info, fixerResultStatus, completedFixes),
+				rules);
 	}
 
-	private static Set<Rule> getRules(Set<TestAssertion> assertions) {
-		Map<String, Rule> rulesMap = new HashMap<>();
+	private static Set<RuleSummary> getRules(Set<TestAssertion> assertions) {
+		Map<String, RuleSummary> rulesMap = new HashMap<>();
 
 
 		for (TestAssertion assertion : assertions) {
 			RuleId id = assertion.getRuleId();
 			String ruleId = id.getSpecification().getId() + id.getClause() + String.valueOf(id.getTestNumber());
 
-			Rule rule = rulesMap.get(ruleId);
+			RuleSummary rule = rulesMap.get(ruleId);
 			if (rule == null) {
-				rule = Rule.fromValues(id, assertion.getMessage(), PASSED, 0);
+				rule = RuleSummary.fromValues(id, assertion.getMessage(), PASSED, 0);
 				rulesMap.put(ruleId, rule);
 			}
 			rule.addCheck(Check.fromValue(assertion));
@@ -92,8 +100,12 @@ public class Result {
 			}
 		}
 
-		Set<Rule> res = new HashSet<>(rulesMap.values());
+		Set<RuleSummary> res = new HashSet<>(rulesMap.values());
 
 		return res;
+	}
+	
+	private static String getStatement(boolean status) {
+	    return (status) ? COMPLIANT_STATEMENT : NONCOMPLIANT_STATEMENT; 
 	}
 }
