@@ -88,7 +88,7 @@ public final class ImageFeaturesData extends FeaturesData {
 		private Filter(String name, Map<String, String> properties, byte[] stream) {
 			this.name = name;
 			this.properties = properties == null ? new HashMap<String, String>() : new HashMap<>(properties);
-			this.stream = Arrays.copyOf(stream, stream.length);
+			this.stream = stream == null ? null : Arrays.copyOf(stream, stream.length);
 		}
 
 		/**
@@ -126,7 +126,7 @@ public final class ImageFeaturesData extends FeaturesData {
 		 * @return stream which used in filter as its parameter for JBIG2Decode filter
 		 */
 		public byte[] getStream() {
-			return Arrays.copyOf(stream, stream.length);
+			return stream == null ? null : Arrays.copyOf(stream, stream.length);
 		}
 
 	}
