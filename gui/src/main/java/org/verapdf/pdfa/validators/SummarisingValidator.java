@@ -15,6 +15,7 @@ import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.ValidationProfile;
+import org.verapdf.report.ValidationReport;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -43,6 +44,16 @@ public class SummarisingValidator implements PDFAValidator {
         return this.validator.getProfile();
     }
 
+    /**
+     * @param toValidate
+     * @return
+     * @throws ValidationException
+     * @throws IOException
+     */
+    public ValidationReport validateAndReport(final ValidationModelParser toValidate) throws ValidationException, IOException {
+        ValidationResult result = this.validator.validate(toValidate);
+        return ValidationReport.fromValues(result, this.logPassedTests);
+    }
     /**
      * { @inheritDoc }
      */

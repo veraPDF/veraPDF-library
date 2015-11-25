@@ -36,17 +36,19 @@ public class MachineReadableReport {
 	private final String creationDate;
 	@XmlAttribute
 	private final String processingTime;
-	@XmlElement(name = "validationInfo")
-	private final ValidationInfo info;
+    @XmlElement(name = "validationReport")
+    private final ValidationReport info;
+//    @XmlElement(name = "fixerReport")
+//    private final MetadataFixerReport fixerReport;
 	@XmlElement
 	private final FeaturesReport pdfFeatures;
 
 	private MachineReadableReport() {
-		this(ValidationInfo.fromValues(null, null), "", "", null);
+		this(ValidationReport.fromValues(null, null), "", "", null);
 	}
 
-	private MachineReadableReport(ValidationInfo info, String creationDate, String processingTime, FeaturesReport featuresReport) {
-		this.info = info;
+	private MachineReadableReport(ValidationReport report, String creationDate, String processingTime, FeaturesReport featuresReport) {
+		this.info = report;
 		this.creationDate = creationDate;
 		this.processingTime = processingTime;
 		this.pdfFeatures = featuresReport;
@@ -80,19 +82,19 @@ public class MachineReadableReport {
 	}
 
 	/**
-	 * @param result
+	 * @param validationResult
 	 * @param fixerResult
 	 * @param collection
 	 * @param processingTime
 	 * @return a MachineReadableReport instance initialised from the passed values
 	 */
-	public static MachineReadableReport fromValues(ValidationResult result,
+	public static MachineReadableReport fromValues(ValidationResult validationResult,
 												   MetadataFixerResult fixerResult,
 												   FeaturesCollection collection,
 												   long processingTime) {
-		ValidationInfo info = null;
-		if (result != null) {
-			info = ValidationInfo.fromValues(result, fixerResult);
+	    ValidationReport validationReport = null;
+		if (validationResult != null) {
+			validationReport = ValidationReport.fromValues(validationResult, fixerResult);
 		}
 		String creationDate = null;
 		GregorianCalendar gregorianCalendar = new GregorianCalendar();
@@ -106,7 +108,7 @@ public class MachineReadableReport {
 		String processingTimeValue = getProcessingTimeAsString(processingTime);
 
 		FeaturesReport featuresReport = FeaturesReport.fromValues(collection);
-		return new MachineReadableReport(info, creationDate, processingTimeValue, featuresReport);
+		return new MachineReadableReport(validationReport, creationDate, processingTimeValue, featuresReport);
 	}
 
 	/**

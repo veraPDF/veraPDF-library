@@ -63,4 +63,8 @@ public class ValidationSummary {
                 passedChecks, failedChecks, metadataFixesStatus,
                 completedMetadataFixes);
     }
+
+    static ValidationSummary fromValues(final ValidationResult result) {
+        return fromValues(result, "", 0);
+    }
 }
