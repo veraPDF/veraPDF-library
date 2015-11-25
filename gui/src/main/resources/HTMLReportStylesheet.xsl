@@ -102,7 +102,7 @@
                     <xsl:value-of select="/report/@processingTime"/>
                 </td>
             </tr>
-            <!--<tr>
+            <tr>
                 <td width="250">
                     <b>Total rules in profile:</b>
                 </td>
@@ -126,7 +126,7 @@
                 <td>
                     <xsl:value-of select="/report/validationInfo/result/summary/@failedChecks"/>
                 </td>
-            </tr>-->
+            </tr>
             <xsl:apply-templates
                     select="/report/validationInfo/result/summary/@metadataFixesStatus"/>
             <xsl:apply-templates

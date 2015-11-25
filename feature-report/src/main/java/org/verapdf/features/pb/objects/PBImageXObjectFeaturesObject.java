@@ -184,8 +184,10 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 							filters.add(ImageFeaturesData.Filter.newInstance(filter, new HashMap<String, String>(), global));
 							break;
 						case "Crypt":
-							LOGGER.error("An Image has a Crypt filter");
-							return null;
+							if (!(dic != null && COSName.IDENTITY.equals(dic.getCOSName(COSName.NAME)))) {
+								LOGGER.error("An Image has a Crypt filter");
+								return null;
+							}
 						default:
 							filters.add(ImageFeaturesData.Filter.newInstance(filter, new HashMap<String, String>(), null));
 					}

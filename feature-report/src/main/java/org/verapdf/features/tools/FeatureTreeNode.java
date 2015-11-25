@@ -140,7 +140,7 @@ public final class FeatureTreeNode {
 			throw new FeatureParsingException("A value for metadata node should be a hex String.");
 		}
 
-		if (this.children.isEmpty()) {
+		if (value == null || this.children.isEmpty()) {
 			this.value = value;
 		} else {
 			throw new FeatureParsingException(

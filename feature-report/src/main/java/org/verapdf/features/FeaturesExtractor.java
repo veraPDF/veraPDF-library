@@ -14,14 +14,14 @@ abstract class FeaturesExtractor {
 
 	private Path pluginFolder;
 
-	void initialize(Path pluginFolder) {
+	final void initialize(Path pluginFolder) {
 		this.pluginFolder = pluginFolder;
 	}
 
 	/**
 	 * @return path to the plugin folder
 	 */
-	protected Path getFolderPath() {
+	final protected Path getFolderPath() {
 		return pluginFolder;
 	}
 

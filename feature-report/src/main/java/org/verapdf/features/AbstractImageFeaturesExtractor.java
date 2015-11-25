@@ -12,12 +12,12 @@ import java.util.List;
 public abstract class AbstractImageFeaturesExtractor extends FeaturesExtractor {
 
 	@Override
-	List<FeatureTreeNode> getFeatures(FeaturesData data) {
+	final List<FeatureTreeNode> getFeatures(FeaturesData data) {
 		return getImageFeatures((ImageFeaturesData) data);
 	}
 
 	@Override
-	FeaturesObjectTypesEnum getType() {
+	final FeaturesObjectTypesEnum getType() {
 		return FeaturesObjectTypesEnum.IMAGE_XOBJECT;
 	}
 
