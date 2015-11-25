@@ -12,12 +12,12 @@ import java.util.List;
 public abstract class AbstractFontFeaturesExtractor extends FeaturesExtractor {
 
 	@Override
-	List<FeatureTreeNode> getFeatures(FeaturesData data) {
+	final List<FeatureTreeNode> getFeatures(FeaturesData data) {
 		return getFontFeatures((FontFeaturesData) data);
 	}
 
 	@Override
-	FeaturesObjectTypesEnum getType() {
+	final FeaturesObjectTypesEnum getType() {
 		return FeaturesObjectTypesEnum.FONT;
 	}
 
