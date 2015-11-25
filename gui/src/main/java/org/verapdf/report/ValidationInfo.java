@@ -15,21 +15,21 @@ public class ValidationInfo {
 	@XmlElement
 	private final String profile;
 	@XmlElement
-	private final Result result;
+	private final ValidationReport result;
 
 
 	private ValidationInfo() {
-		this("", Result.fromValues(null, null));
+		this("", ValidationReport.fromValues(null, null));
 	}
 
-	private ValidationInfo(String profile, Result result) {
+	private ValidationInfo(String profile, ValidationReport result) {
 		this.profile = profile;
 		this.result = result;
 	}
 
 	static ValidationInfo fromValues(ValidationResult result, MetadataFixerResult fixerResult) {
 		String profile = result.getPDFAFlavour().getLevel().getName();
-		Result resultType = Result.fromValues(result, fixerResult);
+		ValidationReport resultType = ValidationReport.fromValues(result, fixerResult);
 		return new ValidationInfo(profile, resultType);
 	}
 }

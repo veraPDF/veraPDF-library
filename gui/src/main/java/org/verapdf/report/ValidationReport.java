@@ -24,7 +24,7 @@ import org.verapdf.pdfa.validation.RuleId;
  * @author Maksim Bezrukov
  */
 @XmlRootElement(name = "result")
-public class Result {
+public class ValidationReport {
     private final static String STATEMENT_PREFIX = "PDF file is ";
     private final static String NOT_INSERT = "not ";
     private final static String STATEMENT_SUFFIX = "compliant with Validation Profile requirements.";
@@ -44,18 +44,18 @@ public class Result {
 //  @XmlElement(name = "warning")
 //  private final Set<Warning> warnings;
 
-	private Result(boolean compliant, String statement, ValidationSummary summary, Set<RuleSummary> rules) {
+	private ValidationReport(boolean compliant, String statement, ValidationSummary summary, Set<RuleSummary> rules) {
 		this.compliant = compliant;
 		this.statement = statement;
 		this.summary = summary;
 		this.rules = new HashSet<>(rules);
 	}
 
-	private Result() {
+	private ValidationReport() {
 		this(false, "", ValidationSummary.fromValues(ValidationResults.defaultResult(), null, 0), new HashSet<RuleSummary>());
 	}
 
-	static Result fromValues(ValidationResult info, MetadataFixerResult fixerResult) {
+	static ValidationReport fromValues(ValidationResult info, MetadataFixerResult fixerResult) {
 
 		Set<TestAssertion> assertions = info.getTestAssertions();
 		String statement = getStatement(info.isCompliant());
@@ -74,7 +74,7 @@ public class Result {
 			}
 		}
 
-		return new Result(
+		return new ValidationReport(
 		        info.isCompliant(),
 				statement,
 				ValidationSummary.fromValues(info, fixerResultStatus, completedFixes),
