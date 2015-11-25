@@ -16,9 +16,6 @@ public class Details {
 	@XmlElementWrapper
 	@XmlElement(name = "rule")
 	private final Set<Rule> rules;
-//	@XmlElementWrapper
-//	@XmlElement(name = "warning")
-//	private final Set<Warning> warnings;
 
 	private Details(Set<Rule> rules) {
 		this.rules = Collections.unmodifiableSet(rules);
