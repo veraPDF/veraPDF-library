@@ -52,15 +52,26 @@ public interface TestAssertion {
         /**
          * Indicates that a test assertion passed
          */
-        PASSED,
+        PASSED("passed"),
         /**
          * Indicates a test failure
          */
-        FAILED,
+        FAILED("failed"),
         /**
          * 
          */
-        UNKNOWN;
+        UNKNOWN("unknown");
+        
+        private final String description;
+        
+        private Status(final String description) {
+            this.description = description;
+        }
+        
+        @Override
+        public String toString() {
+            return this.description;
+        }
     }
 
 }
