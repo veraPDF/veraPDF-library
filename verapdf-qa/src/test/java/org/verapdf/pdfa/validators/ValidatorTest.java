@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,8 +22,10 @@ import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.qa.CorpusSampler;
 import org.verapdf.pdfa.qa.GitHubBackedProfileDirectory;
 import org.verapdf.pdfa.qa.TestCorpus;
+import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
+import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.ProfileDirectory;
 import org.verapdf.pdfa.validation.ValidationProfile;
 
@@ -62,7 +65,7 @@ public class ValidatorTest {
         TestCorpus veraCorpus = CorpusManager.getVeraCorpus();
         Set<String> sample = CorpusSampler.randomSample(veraCorpus, 20);
         // / Cycle through sample
-        for (String itemName : sample) {
+        for (String itemName : veraCorpus.getItemNames()) {
             // Try all profiles
             for (ValidationProfile profile : PROFILES.getValidationProfiles()) {
                 // Create a validator for profile
@@ -77,15 +80,13 @@ public class ValidatorTest {
                         results.add(result);
                     } catch (ValidationException e) {
                         checkValidationException(itemName, e);
+                        results.add(ValidationResults.defaultResult());
                     }
                 }
-                // Set should have only one result IF all results are identical
-                if (results.size() != 1) {
-                    for (ValidationResult result : results) {
-                        ValidationResults.toXml(result, System.out, Boolean.TRUE);
-                    }
-                }
-                assertTrue(results.size() == 1);
+                assertTrue(
+                        resultsMessage(veraCorpus.getDetails().getName(),
+                                itemName, profile.getPDFAFlavour().toString(),
+                                results), results.size() == 1);
             }
         }
     }
@@ -97,10 +98,11 @@ public class ValidatorTest {
         TestCorpus veraCorpus = CorpusManager.getVeraCorpus();
         Set<String> sample = CorpusSampler.randomSample(veraCorpus, 20);
         // / Cycle through sample
-        for (String itemName : sample) {
+        for (String itemName : veraCorpus.getItemNames()) {
             // Try all profiles
             for (ValidationProfile profile : PROFILES.getValidationProfiles()) {
-                // Create a validator for the profile and get a result with no failures
+                // Create a validator for the profile and get a result with no
+                // failures
                 PDFAValidator validator = Validators.createValidator(profile,
                         false);
                 ValidationResult result = ValidationResults.defaultResult();
@@ -110,12 +112,13 @@ public class ValidatorTest {
                     result = validator.validate(parser);
                 } catch (ValidationException e) {
                     checkValidationException(itemName, e);
+                    continue;
                 }
                 int failedMax = result.getTestAssertions().size() + 1;
                 // Set up a loop to restrict failures
                 for (int index = failedMax; index > 0; index--) {
-                    PDFAValidator fastFailValidator = Validators.createValidator(
-                            profile, false, index);
+                    PDFAValidator fastFailValidator = Validators
+                            .createValidator(profile, false, index);
                     ValidationResult failFastResult = ValidationResults
                             .defaultResult();
                     try (ModelParser parser = new ModelParser(
@@ -123,18 +126,25 @@ public class ValidatorTest {
                         failFastResult = fastFailValidator.validate(parser);
                     } catch (ValidationException e) {
                         checkValidationException(itemName, e);
+                        continue;
                     }
                     if (index == failedMax) {
-                        assertTrue(
-                                "Failed result, index =" + index + "\n"
-                                        + ValidationResults.resultToXml(
-                                                result, Boolean.TRUE)
-                                        + " != SecondResult:\n"
-                                        + ValidationResults.resultToXml(
-                                                failFastResult, Boolean.TRUE),
+                        assertTrue(resultsComparisonMessage(veraCorpus
+                                        .getDetails().getName(), itemName,
+                                        profile.getPDFAFlavour().toString(),
+                                        result, failFastResult),
                                 result.equals(failFastResult));
+                    } else if ((index == (failedMax -1)) && (getMaxFailureOrdinal(result) == result.getTotalAssertions())) {
+                        assertTrue(resultsComparisonMessage(veraCorpus
+                                .getDetails().getName(), itemName,
+                                profile.getPDFAFlavour().toString(),
+                                result, failFastResult),
+                        result.equals(failFastResult));
                     } else if (index < failedMax) {
-                        assertFalse(result.equals(failFastResult));
+                        assertFalse(resultsComparisonMessage(veraCorpus
+                                .getDetails().getName(), itemName,
+                                profile.getPDFAFlavour().toString(),
+                                result, failFastResult), result.equals(failFastResult));
 
                     }
                 }
@@ -150,8 +160,8 @@ public class ValidatorTest {
      * @throws JAXBException
      */
     // @Test
-    public void testModelConsistency() throws IOException,
-            ValidationException, JAXBException {
+    public void testModelConsistency() throws IOException, ValidationException,
+            JAXBException {
         // Grab a random sample of 10 corpus files
         TestCorpus veraCorpus = CorpusManager.getVeraCorpus();
         Set<String> sample = CorpusSampler.randomSample(veraCorpus, 10);
@@ -178,38 +188,80 @@ public class ValidatorTest {
                     // The results of the two separate validators should be the
                     // same (this works)
                     assertTrue(
-                            "Failed checkResult:\n"
-                                    + ValidationResults.resultToXml(
-                                            checkResult, Boolean.TRUE)
-                                    + " != SecondResult:\n"
-                                    + ValidationResults.resultToXml(
-                                            secondResult, Boolean.TRUE),
+                            resultsComparisonMessage(veraCorpus.getDetails()
+                                    .getName(), itemName, profile
+                                    .getPDFAFlavour().toString(), firstResult,
+                                    secondResult),
                             checkResult.equals(secondResult));
                     // The results of the same validator should be the same
                     // (this doesn't)
                     // The act of validation changes something in the
                     // model......
                     assertTrue(
-                            "Failed firstResult:\n"
-                                    + ValidationResults.resultToXml(
-                                            firstResult, Boolean.TRUE)
-                                    + " != SecondResult\n"
-                                    + ValidationResults.resultToXml(
-                                            secondResult, Boolean.TRUE),
+                            resultsComparisonMessage(veraCorpus.getDetails()
+                                    .getName(), itemName, profile
+                                    .getPDFAFlavour().toString(), firstResult,
+                                    secondResult),
                             firstResult.equals(secondResult));
                 }
             }
         }
     }
 
-    private static boolean checkValidationException(final String itemName, final ValidationException excep) {
+    private static boolean checkValidationException(final String itemName,
+            final ValidationException excep) {
         if (excep.getCause() instanceof NegativeArraySizeException) {
-            System.err.println("Expected Exception" + excep.getMessage() + ", while validating" + itemName);
+            System.err.println("Expected Exception" + excep.getMessage()
+                    + ", while validating" + itemName);
         } else {
             excep.printStackTrace();
-            fail("Exception" + excep.getMessage()
-                    + ", while validating" + itemName);
+            fail("Exception" + excep.getMessage() + ", while validating"
+                    + itemName);
         }
         return true;
+    }
+
+    private String testContextMessage(final String corpus,
+            final String itemName, final String profile) {
+        return "corpus=" + corpus + "\nitemName=" + itemName + "\nprofile="
+                + profile + "\n";
+    }
+
+    private String resultsMessage(final String corpus, final String itemName,
+            final String profile, final Set<ValidationResult> results)
+            throws JAXBException {
+        StringWriter writer = new StringWriter();
+        writer.write(testContextMessage(corpus, itemName, profile));
+        writer.write("\nSet<ValidationResults>.size()=" + results.size()
+                + "\nResults:\n");
+
+        if (results.size() > 0) {
+            for (ValidationResult result : results) {
+                ValidationResults.toXml(result, writer, Boolean.TRUE);
+            }
+        }
+        return writer.toString();
+    }
+
+    private String resultsComparisonMessage(final String corpus,
+            final String itemName, final String profile,
+            final ValidationResult firstResult,
+            final ValidationResult secondResult) throws JAXBException {
+        StringWriter writer = new StringWriter();
+        writer.write(testContextMessage(corpus, itemName, profile));
+        writer.write("\nFirstResult:\n");
+        ValidationResults.toXml(firstResult, writer, Boolean.TRUE);
+        writer.write("\nSecondResult:\n");
+        ValidationResults.toXml(secondResult, writer, Boolean.TRUE);
+        return writer.toString();
+    }
+    
+    private int getMaxFailureOrdinal(final ValidationResult result) {
+        int maxOrdinal = 0;
+        for (TestAssertion assertion : result.getTestAssertions()) {
+            if ((assertion.getStatus() == Status.FAILED) && (assertion.getOrdinal() > maxOrdinal))
+                maxOrdinal = assertion.getOrdinal();
+        }
+        return maxOrdinal;
     }
 }
