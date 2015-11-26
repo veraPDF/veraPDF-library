@@ -10,6 +10,7 @@ import org.verapdf.pdfa.validation.RuleId;
 import javax.xml.bind.JAXBException;
 
 import java.io.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -292,5 +293,14 @@ public class ValidationResults {
     public static ValidationResult fromXml(final Reader toConvert)
             throws JAXBException {
         return ValidationResultImpl.fromXml(toConvert);
+    }
+
+    /**
+     * @param toStrip
+     * @return
+     */
+    public static ValidationResult stripPassedTests(ValidationResult toStrip) {
+        if (toStrip == null) throw new NullPointerException("toStrip can not be null.");
+        return ValidationResultImpl.stripPassedTests(toStrip);
     }
 }

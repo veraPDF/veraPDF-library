@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.TestAssertion.Status;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -164,6 +165,11 @@ final class ValidationResultImpl implements ValidationResult {
                 toConvert.getTestAssertions(), toConvert.isCompliant(), toConvert.getTotalAssertions());
     }
 
+    static ValidationResultImpl stripPassedTests(ValidationResult toStrip) {
+        return fromValues(toStrip.getPDFAFlavour(),
+                stripPassedTests(toStrip.getTestAssertions()), toStrip.isCompliant(), toStrip.getTotalAssertions());
+    }
+
     static String toXml(final ValidationResult toConvert, Boolean prettyXml)
             throws JAXBException, IOException {
         String retVal = "";
@@ -233,5 +239,15 @@ final class ValidationResultImpl implements ValidationResult {
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
         return marshaller;
+    }
+
+    static Set<TestAssertion> stripPassedTests(
+            final Set<TestAssertion> toStrip) {
+        Set<TestAssertion> strippedSet = new HashSet<>();
+        for (TestAssertion test : toStrip) {
+            if (test.getStatus() != Status.PASSED)
+                strippedSet.add(test);
+        }
+        return strippedSet;
     }
 }
