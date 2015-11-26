@@ -41,27 +41,83 @@ public class MachineReadableReport {
     @XmlAttribute
     private final String processingTime;
     @XmlElement(name = "validationReport")
-    private final ValidationReport info;
-    // @XmlElement(name = "fixerReport")
-    // private final MetadataFixerReport fixerReport;
+    private final ValidationReport validationReport;
     @XmlElement
-    private final FeaturesReport pdfFeatures;
+    private final FeaturesReport pdfFeaturesReport;
 
     private MachineReadableReport() {
         this(
                 ValidationReport.fromValues(Profiles.defaultProfile(), null,
-                        null), "", "", null);
+                        false), "", "", null);
     }
 
     private MachineReadableReport(ValidationReport report, String creationDate,
             String processingTime, FeaturesReport featuresReport) {
-        this.info = report;
+        this.validationReport = report;
         this.creationDate = creationDate;
         this.processingTime = processingTime;
-        this.pdfFeatures = featuresReport;
+        this.pdfFeaturesReport = featuresReport;
     }
 
-    private static String getProcessingTimeAsString(long processTime) {
+    /**
+     * @param profile 
+     * @param validationResult
+     * @param reportPassedChecks 
+     * @param fixerResult
+     * @param collection
+     * @param processingTime
+     * @return a MachineReadableReport instance initialised from the passed
+     *         values
+     */
+    public static MachineReadableReport fromValues(ValidationProfile profile,
+            ValidationResult validationResult, boolean reportPassedChecks, MetadataFixerResult fixerResult,
+            FeaturesCollection collection, long processingTime) {
+        ValidationReport validationReport = null;
+        if (validationResult != null) {
+            validationReport = ValidationReport.fromValues(profile, validationResult, reportPassedChecks,
+                    fixerResult);
+        }
+        FeaturesReport featuresReport = FeaturesReport.fromValues(collection);
+        return new MachineReadableReport(validationReport, getNowDateString(),
+                getProcessingTime(processingTime), featuresReport);
+    }
+
+    /**
+     * @param toConvert
+     * @param stream
+     * @param prettyXml
+     * @throws JAXBException
+     */
+    public static void toXml(final MachineReadableReport toConvert,
+            final OutputStream stream, Boolean prettyXml) throws JAXBException {
+        Marshaller varMarshaller = getMarshaller(prettyXml);
+        varMarshaller.marshal(toConvert, stream);
+    }
+
+    private static Marshaller getMarshaller(Boolean setPretty)
+            throws JAXBException {
+        JAXBContext context = JAXBContext
+                .newInstance(MachineReadableReport.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
+        return marshaller;
+    }
+    
+    private static String getNowDateString() {
+        String creationDate = "";
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        try {
+            XMLGregorianCalendar now = DatatypeFactory.newInstance()
+                    .newXMLGregorianCalendar(gregorianCalendar);
+            creationDate = now.toXMLFormat();
+        } catch (DatatypeConfigurationException e) {
+            LOGGER.error(e);
+            creationDate = e.getMessage();
+        }
+        return creationDate;
+    }
+
+    private static String getProcessingTime(long processTime) {
         long processingTime = processTime;
 
         Long hours = Long.valueOf(processingTime / MS_IN_HOUR);
@@ -88,56 +144,4 @@ public class MachineReadableReport {
         return res;
     }
 
-    /**
-     * @param validationResult
-     * @param fixerResult
-     * @param collection
-     * @param processingTime
-     * @return a MachineReadableReport instance initialised from the passed
-     *         values
-     */
-    public static MachineReadableReport fromValues(ValidationProfile profile,
-            ValidationResult validationResult, MetadataFixerResult fixerResult,
-            FeaturesCollection collection, long processingTime) {
-        ValidationReport validationReport = null;
-        if (validationResult != null) {
-            validationReport = ValidationReport.fromValues(profile, validationResult,
-                    fixerResult);
-        }
-        String creationDate = null;
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        try {
-            XMLGregorianCalendar now = DatatypeFactory.newInstance()
-                    .newXMLGregorianCalendar(gregorianCalendar);
-            creationDate = now.toXMLFormat();
-        } catch (DatatypeConfigurationException e) {
-            LOGGER.error(e);
-        }
-        String processingTimeValue = getProcessingTimeAsString(processingTime);
-
-        FeaturesReport featuresReport = FeaturesReport.fromValues(collection);
-        return new MachineReadableReport(validationReport, creationDate,
-                processingTimeValue, featuresReport);
-    }
-
-    /**
-     * @param toConvert
-     * @param stream
-     * @param prettyXml
-     * @throws JAXBException
-     */
-    public static void toXml(final MachineReadableReport toConvert,
-            final OutputStream stream, Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, stream);
-    }
-
-    private static Marshaller getMarshaller(Boolean setPretty)
-            throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(MachineReadableReport.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
-        return marshaller;
-    }
 }
