@@ -53,6 +53,9 @@ public class FeaturesReport {
 	}
 
 	static FeaturesReport fromValues(FeaturesCollection collection) {
+	    if (collection == null) {
+	        return null;
+	    }
 		FeaturesNode info = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.INFORMATION_DICTIONARY);
 		FeaturesNode metadata = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.METADATA);
 		FeaturesNode docSec = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.DOCUMENT_SECURITY);
