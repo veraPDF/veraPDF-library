@@ -13,12 +13,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Check {
 
 	@XmlAttribute
-	private final TestAssertion.Status status;
+	private final String status;
 	@XmlElement
 	private final String context;
 
 	private Check(TestAssertion.Status status, String context) {
-		this.status = status;
+		this.status = status.toString();
 		this.context = context;
 	}
 
@@ -26,17 +26,10 @@ public class Check {
 		this(TestAssertion.Status.PASSED, "");
 	}
 
-	TestAssertion.Status getStatus() {
-		return this.status;
-	}
-
 	static Check fromValue(TestAssertion assertion) {
 		if (assertion == null) {
 			throw new IllegalArgumentException("Argument assertion con not be null");
 		}
-		TestAssertion.Status status = assertion.getStatus();
-		String context = assertion.getLocation().getContext();
-
-		return new Check(status, context);
+		return new Check(assertion.getStatus(), assertion.getLocation().getContext());
 	}
 }
