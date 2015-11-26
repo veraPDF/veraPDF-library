@@ -57,13 +57,13 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 	 * @param config configuration for metadata fixer
 	 * @return report of made corrections
 	 */
-	public MetadataFixerResult fixMetadata(OutputStream output, FixerConfig config) {
+	public static MetadataFixerResult fixMetadata(OutputStream output, FixerConfig config) {
 		ValidationResult result = config.getValidationResult();
 		return result != null && result.isCompliant() ? new MetadataFixerResultImpl.Builder().build()
 				: fixAndSaveDocument(output, config);
 	}
 
-	private MetadataFixerResult fixAndSaveDocument(
+	private static MetadataFixerResult fixAndSaveDocument(
 			OutputStream output, FixerConfig config) {
 		Metadata metadata = config.getDocument().getMetadata();
 		if (metadata != null) {
@@ -253,7 +253,7 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 		schema.setNeedToBeUpdated(true);
 	}
 
-	private void updateModificationDate(FixerConfig config,
+	private static void updateModificationDate(FixerConfig config,
 										MetadataFixerResultImpl.Builder resultBuilder) {
 		PDFDocument document = config.getDocument();
 		InfoDictionary info = document.getInfoDictionary();
