@@ -210,10 +210,7 @@ public class ValidatorTest {
 
     private static boolean checkValidationException(final String itemName,
             final ValidationException excep) {
-        if (excep.getCause() instanceof NegativeArraySizeException) {
-            System.err.println("Expected Exception" + excep.getMessage()
-                    + ", while validating" + itemName);
-        } else {
+        if (!(excep.getCause() instanceof NegativeArraySizeException)) {
             excep.printStackTrace();
             fail("Exception" + excep.getMessage() + ", while validating"
                     + itemName);
