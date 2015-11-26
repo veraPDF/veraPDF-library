@@ -42,12 +42,12 @@ public class ValidationReport {
     @XmlAttribute
     private final boolean compliant;
     @XmlElement
-    private final ValidationSummary summary;
-    @XmlElement
     private final String statement;
+    @XmlElement
+    private final ValidationSummary summary;
     @XmlElementWrapper
     @XmlElement(name = "rule")
-    private final Set<RuleSummary> rules;
+    private final Set<RuleSummary> checkAudit;
 
     // @XmlElementWrapper
     // @XmlElement(name = "warning")
@@ -59,7 +59,7 @@ public class ValidationReport {
         this.compliant = compliant;
         this.statement = statement;
         this.summary = summary;
-        this.rules = new HashSet<>(rules);
+        this.checkAudit = new HashSet<>(rules);
     }
 
     private ValidationReport() {
@@ -83,7 +83,7 @@ public class ValidationReport {
             }
         }
 
-        return new ValidationReport(result.getPDFAFlavour().getId(), result.isCompliant(),
+        return new ValidationReport(profile.getDetails().getName(), result.isCompliant(),
                 getStatement(result.isCompliant()), ValidationSummary.fromValues(
                         result, fixerResultStatus, completedFixes), getRules(
                         result.getTestAssertions(), true));
