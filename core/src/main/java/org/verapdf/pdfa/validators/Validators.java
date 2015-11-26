@@ -47,6 +47,20 @@ public final class Validators {
      * than those ones, which parses profile).
      * 
      * @param profile
+     * @return validation info structure
+     */
+    public static PDFAValidator createValidator(final ValidationProfile profile) {
+        return createValidator(profile, false);
+    }
+
+    /**
+     * Generates validation info for objects with root {@code root} and
+     * validation profile structure {@code validationProfile}
+     * <p/>
+     * This method doesn't need to parse validation profile (it works faster
+     * than those ones, which parses profile).
+     * 
+     * @param profile
      * @param logSuccess
      * @return validation info structure
      */
@@ -71,11 +85,30 @@ public final class Validators {
      * @return validation info structure
      */
     public static PDFAValidator createValidator(
+            final ValidationProfile profile, final int maxFailures) {
+        return createValidator(profile, false, maxFailures);
+    }
+
+    /**
+     * Generates validation info for objects with root {@code root} and
+     * validation profile structure {@code validationProfile}
+     * <p/>
+     * This method doesn't need to parse validation profile (it works faster
+     * than those ones, which parses profile).
+     * 
+     * @param profile
+     * @param logSuccess
+     * @param maxFailures
+     * @return validation info structure
+     */
+    public static PDFAValidator createValidator(
             final ValidationProfile profile, boolean logSuccess,
             final int maxFailures) {
         if (profile == null)
             throw new IllegalArgumentException(
                     "Parameter (ValidationProfile profile) cannot be null.");
-        return new FastFailValidator(profile, logSuccess, maxFailures);
+        if (maxFailures > 0)
+            return new FastFailValidator(profile, logSuccess, maxFailures);
+        return createValidator(profile, logSuccess);
     }
 }
