@@ -22,6 +22,7 @@ import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.RuleId;
+import org.verapdf.pdfa.validation.ValidationProfile;
 
 /**
  * @author Maksim Bezrukov
@@ -41,9 +42,9 @@ public class ValidationReport {
     @XmlAttribute
     private final boolean compliant;
     @XmlElement
-    private final String statement;
-    @XmlElement
     private final ValidationSummary summary;
+    @XmlElement
+    private final String statement;
     @XmlElementWrapper
     @XmlElement(name = "rule")
     private final Set<RuleSummary> rules;
@@ -67,7 +68,7 @@ public class ValidationReport {
                 new HashSet<RuleSummary>());
     }
 
-    static ValidationReport fromValues(ValidationResult result,
+    static ValidationReport fromValues(final ValidationProfile profile, ValidationResult result,
             MetadataFixerResult fixerResult) {
 
         String fixerResultStatus = "";
@@ -89,13 +90,14 @@ public class ValidationReport {
     }
 
     /**
+     * @param profile 
      * @param result
      * @param logPassedChecks
      * @return
      */
-    public static ValidationReport fromValues(final ValidationResult result,
+    public static ValidationReport fromValues(final ValidationProfile profile, final ValidationResult result,
             final boolean logPassedChecks) {
-        return new ValidationReport(result.getPDFAFlavour().getId(), result.isCompliant(),
+        return new ValidationReport(profile.getDetails().getName(), result.isCompliant(),
                 getStatement(result.isCompliant()),
                 ValidationSummary.fromValues(result), getRules(
                         result.getTestAssertions(), logPassedChecks));

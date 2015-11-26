@@ -52,7 +52,7 @@ public class SummarisingValidator implements PDFAValidator {
      */
     public ValidationReport validateAndReport(final ValidationModelParser toValidate) throws ValidationException, IOException {
         ValidationResult result = this.validator.validate(toValidate);
-        return ValidationReport.fromValues(result, this.logPassedTests);
+        return ValidationReport.fromValues(this.getProfile(), result, this.logPassedTests);
     }
     /**
      * { @inheritDoc }
