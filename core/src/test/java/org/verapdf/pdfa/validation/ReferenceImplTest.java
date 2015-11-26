@@ -33,7 +33,7 @@ public class ReferenceImplTest {
      */
     @Test
     public final void testToString() {
-        assertTrue(ReferenceImpl.defaultInstance().toString()
+        assertTrue(Profiles.defaultReference().toString()
                 .equals(DEFAULT_REFERENCE_STRING));
     }
 
@@ -43,8 +43,8 @@ public class ReferenceImplTest {
     @Test
     public final void testFromValues() {
         // Get an equivalent to the default instance
-        ReferenceImpl reference = ReferenceImpl.fromValues("specification", "clause");
-        Reference defaultInstance = ReferenceImpl.defaultInstance();
+        Reference reference = Profiles.referenceFromValues("specification", "clause");
+        Reference defaultInstance = Profiles.defaultReference();
         // Equivalent is NOT the same object as default instance
         assertFalse(reference == defaultInstance);
         // But it is equal
@@ -58,7 +58,7 @@ public class ReferenceImplTest {
     public final void testFromReference() {
         // Get an equivalent to the default instance
         Reference reference = ReferenceImpl.fromReference(ReferenceImpl.defaultInstance());
-        Reference defaultInstance = ReferenceImpl.defaultInstance();
+        Reference defaultInstance = Profiles.defaultReference();
         // Equivalent is NOT the same object as default instance
         assertFalse(reference == defaultInstance);
         // But it is equal
@@ -71,7 +71,7 @@ public class ReferenceImplTest {
      */
     @Test
     public final void testToXml() throws JAXBException {
-        Reference defaultInstance = ReferenceImpl.defaultInstance();
+        Reference defaultInstance = Profiles.defaultReference();
         String xmlDefault = ReferenceImpl.toXml(defaultInstance);
         Reference unmarshalledDefault = ReferenceImpl.fromXml(xmlDefault);
         assertFalse(defaultInstance == unmarshalledDefault);

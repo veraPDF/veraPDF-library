@@ -61,29 +61,29 @@
                     <b>Validation Profile:</b>
                 </td>
                 <td>
-                    <xsl:value-of select="/report/validationInfo/profile"/>
+                    <xsl:value-of select="/report/validationReport/@profile"/>
                 </td>
             </tr>
             <tr>
                 <td width="200">
-                    <xsl:if test="/report/validationInfo/result/compliant = 'true'">
+                    <xsl:if test="/report/validationReport/@compliant = 'true'">
                         <font color="green">
                             <b>Compliance status:</b>
                         </font>
                     </xsl:if>
-                    <xsl:if test="/report/validationInfo/result/compliant = 'false'">
+                    <xsl:if test="/report/validationReport/@compliant = 'false'">
                         <font color="red">
                             <b>Compliance status:</b>
                         </font>
                     </xsl:if>
                 </td>
                 <td>
-                    <xsl:if test="/report/validationInfo/result/compliant = 'true'">
+                    <xsl:if test="/report/validationReport/@compliant = 'true'">
                         <font color="green">
                             <b>Passed</b>
                         </font>
                     </xsl:if>
-                    <xsl:if test="/report/validationInfo/result/compliant = 'false'">
+                    <xsl:if test="/report/validationReport/@compliant = 'false'">
                         <font color="red">
                             <b>Failed</b>
                         </font>
@@ -108,7 +108,7 @@
                 </td>
                 <td>
                     <xsl:value-of
-                            select="/report/validationInfo/result/summary/@passedRules + /report/validationInfo/result/summary/@failedRules"/>
+                            select="/report/validationReport/summary/@passedRules + /report/validationReport/summary/@failedRules"/>
                 </td>
             </tr>
             <tr>
@@ -116,7 +116,7 @@
                     <b>Passed Checks:</b>
                 </td>
                 <td>
-                    <xsl:value-of select="/report/validationInfo/result/summary/@passedChecks"/>
+                    <xsl:value-of select="/report/validationReport/summary/@passedChecks"/>
                 </td>
             </tr>
             <tr>
@@ -124,17 +124,17 @@
                     <b>Failed Checks:</b>
                 </td>
                 <td>
-                    <xsl:value-of select="/report/validationInfo/result/summary/@failedChecks"/>
+                    <xsl:value-of select="/report/validationReport/summary/@failedChecks"/>
                 </td>
             </tr>
             <xsl:apply-templates
-                    select="/report/validationInfo/result/summary/@metadataFixesStatus"/>
+                    select="/report/validationReport/summary/@metadataFixesStatus"/>
             <xsl:apply-templates
-                    select="/report/validationInfo/result/summary/@completedMetadataFixes"/>
+                    select="/report/validationReport/summary/@completedMetadataFixes"/>
         </table>
 
 
-        <xsl:if test="/report/validationInfo/result/details/rules/rule">
+        <xsl:if test="/report/validationReport/summary/rule">
             <h2>Detailed information</h2>
 
             <table border="0" id="table3">
@@ -147,7 +147,7 @@
                     </td>
                 </tr>
                 <xsl:apply-templates
-                        select="/report/validationInfo/result/details/rules/rule"/>
+                        select="/report/validationReport/summary/rule"/>
 
             </table>
         </xsl:if>
@@ -155,31 +155,31 @@
     </xsl:template>
 
 
-    <xsl:template match="/report/validationInfo/result/summary/@metadataFixesStatus">
+    <xsl:template match="/report/validationReport/summary/@metadataFixesStatus">
         <tr>
             <td width="250">
                 <b>Metadata Fixes Status:</b>
             </td>
             <td>
-                <xsl:value-of select="/report/validationInfo/result/summary/@metadataFixesStatus"/>
+                <xsl:value-of select="/report/validationReport/summary/@metadataFixesStatus"/>
             </td>
         </tr>
     </xsl:template>
 
-    <xsl:template match="/report/validationInfo/result/summary/@completedMetadataFixes">
+    <xsl:template match="/report/validationReport/summary/@completedMetadataFixes">
         <tr>
             <td width="250">
                 <b>Completed Metadata Fixes:</b>
             </td>
             <td>
                 <xsl:value-of
-                        select="/report/validationInfo/result/summary/@completedMetadataFixes"/>
+                        select="/report/validationReport/summary/@completedMetadataFixes"/>
             </td>
         </tr>
     </xsl:template>
 
     <!-- Detailed Information -->
-    <xsl:template match="/report/validationInfo/result/details/rules/rule">
+    <xsl:template match="/report/validationReport/summary/rule">
 
         <xsl:param name="idWithDots" select="concat(@clause,'t',@testNumber)"/>
         <xsl:param name="id" select="translate($idWithDots, '.', '_')"/>
@@ -202,12 +202,12 @@
             </td>
             <td>
                 <b>
-                    <xsl:if test="@status = 'PASSED'">
+                    <xsl:if test="@status = 'passed'">
                         <font color="green">
                             <b>Passed</b>
                         </font>
                     </xsl:if>
-                    <xsl:if test="@status = 'FAILED'">
+                    <xsl:if test="@status = 'failed'">
                         <font color="red">
                             <b>Failed</b>
                         </font>
@@ -215,14 +215,14 @@
                 </b>
             </td>
         </tr>
-        <xsl:variable name="failedChecksCount" select="count(check[@status = 'FAILED'])"/>
+        <xsl:variable name="failedChecksCount" select="count(check[@status = 'failed'])"/>
         <xsl:if test="$failedChecksCount > 0">
             <tr style="BACKGROUND: #dcdaf6">
                 <td width="800">
                     <xsl:value-of select="$failedChecksCount"/> occurrences
                 </td>
                 <td>
-                    <xsl:if test="@status = 'FAILED'">
+                    <xsl:if test="@status = 'failed'">
                         <a id="lable{$id}" href="#" style="display: none;"
                            class="hide-tr"
                            data-target="hide{$id}"
@@ -232,7 +232,7 @@
                 </td>
             </tr>
         </xsl:if>
-        <xsl:for-each select="check[@status = 'FAILED']">
+        <xsl:for-each select="check[@status = 'failed']">
             <tr class="hideable hide{$id}">
                 <td width="800" style="word-break: break-all">
                     <xsl:value-of select="context"/>

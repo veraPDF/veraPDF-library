@@ -14,7 +14,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -67,11 +66,10 @@ public class ValidationProfileImplTest {
     @Test
     public final void testFromValues() {
         // Get an equivalent to the default instance
-        ValidationProfileImpl rule = ValidationProfileImpl.fromValues(
+        ValidationProfile rule = Profiles.profileFromValues(
                 PDFAFlavour.NO_FLAVOUR, ProfileDetailsImpl.defaultInstance(),
                 "hash", Collections.EMPTY_SET, Collections.EMPTY_SET);
-        ValidationProfile defaultInstance = ValidationProfileImpl
-                .defaultInstance();
+        ValidationProfile defaultInstance = Profiles.defaultProfile();
         // Equivalent is NOT the same object as default instance
         assertFalse(rule == defaultInstance);
         // But it is equal
@@ -88,8 +86,7 @@ public class ValidationProfileImplTest {
         // Get an equivalent to the default instance
         ValidationProfile profile = ValidationProfileImpl
                 .fromValidationProfile(ValidationProfileImpl.defaultInstance());
-        ValidationProfile defaultInstance = ValidationProfileImpl
-                .defaultInstance();
+        ValidationProfile defaultInstance = Profiles.defaultProfile();
         // Equivalent is NOT the same object as default instance
         assertFalse(profile == defaultInstance);
         // But it is equal
@@ -98,7 +95,7 @@ public class ValidationProfileImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.ValidationProfileImpl#toXml(ProfileDetails, Boolean)}
+     * {@link org.verapdf.pdfa.validation.ValidationProfileImpl#toXml(ValidationProfile, Boolean)}
      * .
      * 
      * @throws JAXBException
@@ -108,13 +105,13 @@ public class ValidationProfileImplTest {
     public final void testToXmlString() throws JAXBException, IOException {
         Set<Rule> rules = new HashSet<>();
         Set<Variable> vars = new HashSet<>();
-        rules.add(RuleImpl.defaultInstance());
-        vars.add(VariableImpl.defaultInstance());
-        ValidationProfile profile = ValidationProfileImpl.fromValues(
+        rules.add(Profiles.defaultRule());
+        vars.add(Profiles.defaultVariable());
+        ValidationProfile profile = Profiles.profileFromValues(
                 PDFAFlavour.NO_FLAVOUR, ProfileDetailsImpl.defaultInstance(),
                 "hash", rules, vars);
-        String xmlDefault = ValidationProfileImpl.toXml(profile, Boolean.FALSE);
-        ValidationProfileImpl unmarshalledDefault = ValidationProfileImpl
+        String xmlDefault = Profiles.profileToXml(profile, Boolean.FALSE);
+        ValidationProfile unmarshalledDefault = ValidationProfileImpl
                 .fromXml(xmlDefault);
         assertFalse(profile == unmarshalledDefault);
         assertTrue(profile.equals(unmarshalledDefault));
@@ -122,7 +119,7 @@ public class ValidationProfileImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.ValidationProfileImpl#toXml(ProfileDetails, OutputStream, Boolean)}
+     * {@link org.verapdf.pdfa.validation.ValidationProfileImpl#toXml(ValidationProfile, OutputStream, Boolean)}
      * .
      * 
      * @throws JAXBException
@@ -132,9 +129,9 @@ public class ValidationProfileImplTest {
     public final void testToXmlStream() throws JAXBException, IOException {
         Set<Rule> rules = new HashSet<>();
         Set<Variable> vars = new HashSet<>();
-        rules.add(RuleImpl.defaultInstance());
-        vars.add(VariableImpl.defaultInstance());
-        ValidationProfile profile = ValidationProfileImpl.fromValues(
+        rules.add(Profiles.defaultRule());
+        vars.add(Profiles.defaultVariable());
+        ValidationProfile profile = Profiles.profileFromValues(
                 PDFAFlavour.NO_FLAVOUR, ProfileDetailsImpl.defaultInstance(), "hash", rules, vars);
         File temp = Files.createTempFile("profile", "xml").toFile();
         try (OutputStream forXml = new FileOutputStream(temp)) {

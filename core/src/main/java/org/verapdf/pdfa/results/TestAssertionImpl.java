@@ -18,6 +18,8 @@ import org.verapdf.pdfa.validation.RuleId;
 @XmlRootElement(name="testAssertion")
 final class TestAssertionImpl implements TestAssertion {
     private static final TestAssertionImpl DEFAULT = new TestAssertionImpl();
+    @XmlAttribute
+    private final int ordinal;
     @XmlElement
     private final RuleId ruleId;
     @XmlAttribute
@@ -28,17 +30,26 @@ final class TestAssertionImpl implements TestAssertion {
     private final Location location;
 
     private TestAssertionImpl() {
-        this(Profiles.defaultRuleId(), Status.FAILED, "message", LocationImpl
+        this(0, Profiles.defaultRuleId(), Status.FAILED, "message", LocationImpl
                 .defaultInstance());
     }
 
-    private TestAssertionImpl(final RuleId ruleId, final Status status,
+    private TestAssertionImpl(final int ordinal, final RuleId ruleId, final Status status,
             final String message, final Location location) {
         super();
+        this.ordinal = ordinal;
         this.ruleId = ruleId;
         this.status = status;
         this.message = message;
         this.location = location;
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public int getOrdinal() {
+        return this.ordinal;
     }
 
     /**
@@ -133,9 +144,9 @@ final class TestAssertionImpl implements TestAssertion {
         return DEFAULT;
     }
 
-    static TestAssertionImpl fromValues(final RuleId ruleId, final Status status,
+    static TestAssertionImpl fromValues(final int ordinal, final RuleId ruleId, final Status status,
             final String message, final Location location) {
-        return new TestAssertionImpl(ruleId, status, message, location);
+        return new TestAssertionImpl(ordinal, ruleId, status, message, location);
     }
 
     static class Adapter extends XmlAdapter<TestAssertionImpl, TestAssertion> {

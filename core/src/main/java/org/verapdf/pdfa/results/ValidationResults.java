@@ -8,7 +8,9 @@ import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.RuleId;
 
 import javax.xml.bind.JAXBException;
+
 import java.io.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -33,8 +35,35 @@ public class ValidationResults {
      */
     public static ValidationResult resultFromValues(final PDFAFlavour flavour,
             final Set<TestAssertion> assertions, final boolean isCompliant) {
-        return ValidationResultImpl
-                .fromValues(flavour, assertions, isCompliant);
+        if (flavour == null)
+            throw new NullPointerException("flavour cannot be null");
+        if (assertions == null)
+            throw new NullPointerException("assertions cannot be null");
+        return ValidationResultImpl.fromValues(flavour, assertions,
+                isCompliant, assertions.size());
+    }
+
+    /**
+     * @param flavour
+     *            a {@link PDFAFlavour} instance indicating the validation type
+     *            performed
+     * @param assertions
+     *            the Set of TestAssertions reported by during validation
+     * @param isCompliant
+     *            a boolean that indicating whether the validated PDF/A data was
+     *            compliant with the indicated flavour
+     * @param totalAssertions
+     * @return a new ValidationResult instance populated from the values
+     */
+    public static ValidationResult resultFromValues(final PDFAFlavour flavour,
+            final Set<TestAssertion> assertions, final boolean isCompliant,
+            final int totalAssertions) {
+        if (flavour == null)
+            throw new NullPointerException("flavour cannot be null");
+        if (assertions == null)
+            throw new NullPointerException("assertions cannot be null");
+        return ValidationResultImpl.fromValues(flavour, assertions,
+                isCompliant, totalAssertions);
     }
 
     /**
@@ -47,6 +76,10 @@ public class ValidationResults {
      */
     public static ValidationResult resultFromValues(final PDFAFlavour flavour,
             final Set<TestAssertion> assertions) {
+        if (flavour == null)
+            throw new NullPointerException("flavour cannot be null");
+        if (assertions == null)
+            throw new NullPointerException("assertions cannot be null");
         boolean isCompliant = true;
         for (TestAssertion assertion : assertions) {
             if (assertion.getStatus() == Status.FAILED) {
@@ -73,6 +106,8 @@ public class ValidationResults {
      * Creates an immutable TestAssertion instance from the passed parameter
      * values.
      * 
+     * @param ordinal
+     *            the integer ordinal for the instance
      * @param ruleId
      *            the {@link RuleId} value for
      *            {@link org.verapdf.pdfa.validation.Rule} the assertion refers
@@ -87,9 +122,11 @@ public class ValidationResults {
      * @return an immutable TestAssertion instance initialised using the passed
      *         values
      */
-    public static TestAssertion assertionFromValues(final RuleId ruleId,
-            final Status status, final String message, final Location location) {
-        return TestAssertionImpl.fromValues(ruleId, status, message, location);
+    public static TestAssertion assertionFromValues(final int ordinal,
+            final RuleId ruleId, final Status status, final String message,
+            final Location location) {
+        return TestAssertionImpl.fromValues(ordinal, ruleId, status, message,
+                location);
     }
 
     /**
@@ -153,7 +190,7 @@ public class ValidationResults {
      *             if a problem occurs writing the converted result to a String.
      */
     public static String resultToXml(final ValidationResult toConvert,
-                                     Boolean prettyXml) throws JAXBException, IOException {
+            Boolean prettyXml) throws JAXBException, IOException {
         String retVal = "";
         try (StringWriter writer = new StringWriter()) {
             toXml(toConvert, writer, prettyXml);
@@ -207,9 +244,10 @@ public class ValidationResults {
      * ValidationResult instance.
      * 
      * @param toConvert
-     *            an ImputStream holding an XML serialisation of a ValidationResult.
+     *            an ImputStream holding an XML serialisation of a
+     *            ValidationResult.
      * @return an immutable ValidationResult instance initialised using the
-     *         contents of the passed InputStream <code>toConvert</code>. 
+     *         contents of the passed InputStream <code>toConvert</code>.
      * @throws JAXBException
      *             when there's an error converting the XML
      */
@@ -225,8 +263,8 @@ public class ValidationResults {
      * @param toConvert
      *            a ValidationResult instance to covert to XML
      * @param writer
-     *            an {@link Writer} instance, the destination where the XML representation
-     *            of the ValidationResult will be written.
+     *            an {@link Writer} instance, the destination where the XML
+     *            representation of the ValidationResult will be written.
      * @param prettyXml
      *            controls formatting of the returned XML, {@link Boolean#TRUE}
      *            requests pretty formatting, e.g. new lines and indentation,
@@ -245,14 +283,24 @@ public class ValidationResults {
      * ValidationResult instance.
      * 
      * @param toConvert
-     *            a Reader instance, holding an XML serialisation of a ValidationResult.
+     *            a Reader instance, holding an XML serialisation of a
+     *            ValidationResult.
      * @return an immutable ValidationResult instance initialised using the
-     *         contents of the passed InputStream <code>toConvert</code>. 
+     *         contents of the passed InputStream <code>toConvert</code>.
      * @throws JAXBException
      *             when there's an error converting the XML
      */
     public static ValidationResult fromXml(final Reader toConvert)
             throws JAXBException {
         return ValidationResultImpl.fromXml(toConvert);
+    }
+
+    /**
+     * @param toStrip
+     * @return
+     */
+    public static ValidationResult stripPassedTests(ValidationResult toStrip) {
+        if (toStrip == null) throw new NullPointerException("toStrip can not be null.");
+        return ValidationResultImpl.stripPassedTests(toStrip);
     }
 }

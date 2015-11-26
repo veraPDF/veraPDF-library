@@ -4,7 +4,6 @@
 package org.verapdf.pdfa.validators;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -23,9 +22,9 @@ import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.ValidationModelParser;
 import org.verapdf.pdfa.results.Location;
 import org.verapdf.pdfa.results.TestAssertion;
-import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
+import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.Rule;
 import org.verapdf.pdfa.validation.RuleId;
 import org.verapdf.pdfa.validation.ValidationProfile;
@@ -35,7 +34,7 @@ import org.verapdf.pdfa.validation.Variable;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
-public abstract class AbstractValidator implements PDFAValidator {
+class BaseValidator implements PDFAValidator {
 
     private static final int OPTIMIZATION_LEVEL = 9;
     private final ValidationProfile profile;
@@ -46,6 +45,10 @@ public abstract class AbstractValidator implements PDFAValidator {
     private final Deque<String> objectsContext = new ArrayDeque<>();
     private final Deque<Set<String>> contextSet = new ArrayDeque<>();
     protected final Set<TestAssertion> results = new HashSet<>();
+    protected int testCounter = 0;
+    protected boolean abortProcessing = false;
+    protected final boolean logPassedTests;
+    protected boolean isCompliant = true;
 
     private Map<RuleId, Script> ruleScripts = new HashMap<>();
     private Map<String, Script> variableScripts = new HashMap<>();
@@ -54,9 +57,15 @@ public abstract class AbstractValidator implements PDFAValidator {
 
     protected String rootType;
 
-    protected AbstractValidator(final ValidationProfile profile) {
+    protected BaseValidator(final ValidationProfile profile) {
+        this(profile, false);
+    }
+
+    protected BaseValidator(final ValidationProfile profile,
+            final boolean logPassedTests) {
         super();
         this.profile = profile;
+        this.logPassedTests = logPassedTests;
     }
 
     protected ValidationResult validate(Object root) throws ValidationException {
@@ -74,13 +83,14 @@ public abstract class AbstractValidator implements PDFAValidator {
 
         this.contextSet.push(rootIDContext);
 
-        while (!this.objectsStack.isEmpty()) {
+        while (!this.objectsStack.isEmpty() && !this.abortProcessing) {
             checkNext();
         }
 
         Context.exit();
 
-        return ValidationResults.resultFromValues(this.profile.getPDFAFlavour(), this.results);
+        return ValidationResults.resultFromValues(
+                this.profile.getPDFAFlavour(), this.results, this.isCompliant, this.testCounter);
     }
 
     protected void initialise() {
@@ -92,6 +102,7 @@ public abstract class AbstractValidator implements PDFAValidator {
         this.contextSet.clear();
         this.results.clear();
         this.idSet.clear();
+        this.testCounter = 0;
         initializeAllVariables();
     }
 
@@ -136,9 +147,9 @@ public abstract class AbstractValidator implements PDFAValidator {
         }
     }
 
-    private void updateVariableForObjectWithType(Object object, String objectType) {
-        for (Variable var : this.profile
-                .getVariablesByObject(objectType)) {
+    private void updateVariableForObjectWithType(Object object,
+            String objectType) {
+        for (Variable var : this.profile.getVariablesByObject(objectType)) {
 
             if (var == null)
                 continue;
@@ -169,7 +180,7 @@ public abstract class AbstractValidator implements PDFAValidator {
     }
 
     private void addAllLinkedObjects(Object checkObject, String checkContext,
-                                     Set<String> checkIDContext) throws ValidationException {
+            Set<String> checkIDContext) throws ValidationException {
         List<String> links = checkObject.getLinks();
         for (int j = links.size() - 1; j >= 0; --j) {
             String link = links.get(j);
@@ -238,8 +249,8 @@ public abstract class AbstractValidator implements PDFAValidator {
 
     private boolean checkAllRules(Object checkObject, String checkContext) {
         boolean res = true;
-        Set<Rule> roolsForObject = this.profile.getRulesByObject(
-                        checkObject.getObjectType());
+        Set<Rule> roolsForObject = this.profile.getRulesByObject(checkObject
+                .getObjectType());
         for (Rule rule : roolsForObject) {
             res &= checkObjWithRule(checkObject, checkContext, rule);
         }
@@ -321,15 +332,30 @@ public abstract class AbstractValidator implements PDFAValidator {
 
         boolean testEvalResult = ((Boolean) scr.exec(this.context, this.scope))
                 .booleanValue();
-        
+
         this.processAssertionResult(testEvalResult, cntxtForRule, rule);
 
         return testEvalResult;
     }
-    
-    abstract protected void processAssertionResult(final boolean assertionResult, final String locationContext, final Rule rule);
 
-    /* (non-Javadoc)
+    protected void processAssertionResult(final boolean assertionResult,
+            final String locationContext, final Rule rule) {
+        this.testCounter++;
+        Location location = ValidationResults.locationFromValues(this.rootType,
+                locationContext);
+        TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule
+                .getRuleId(),
+                (assertionResult) ? Status.PASSED : Status.FAILED, rule
+                        .getDescription(), location);
+        if (this.isCompliant)
+            this.isCompliant = assertionResult;
+        if (!assertionResult || this.logPassedTests)
+            this.results.add(assertion);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.verapdf.pdfa.PDFAValidator#getProfile()
      */
     @Override
@@ -337,9 +363,13 @@ public abstract class AbstractValidator implements PDFAValidator {
         return this.profile;
     }
 
-
     @Override
-    public ValidationResult validate(ValidationModelParser toValidate) throws ValidationException, IOException {
+    public ValidationResult validate(ValidationModelParser toValidate)
+            throws ValidationException, IOException {
+        try {
         return this.validate(toValidate.getRoot());
+        } catch (RuntimeException e) {
+            throw new ValidationException("Caught unexpected runtime exception during validation", e);
+        }
     }
 }

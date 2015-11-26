@@ -1,5 +1,13 @@
 package org.verapdf.metadata.fixer.impl.pb.model;
 
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.FIX_ERROR;
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.NO_ACTION;
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
+import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.WONT_FIX;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
@@ -16,11 +24,7 @@ import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
 import org.verapdf.metadata.fixer.impl.MetadataFixerResultImpl;
-
-import java.io.IOException;
-import java.io.OutputStream;
-
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.*;
+import org.verapdf.pdfa.MetadataFixerResult;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -33,6 +37,9 @@ public class PDFDocumentImpl implements PDFDocument {
 	private MetadataImpl metadata;
 	private InfoDictionaryImpl info;
 
+	/**
+	 * @param document
+	 */
 	public PDFDocumentImpl(PDDocument document) {
 		if (document == null) {
 			throw new IllegalArgumentException("Document representation can not be null");
@@ -51,9 +58,8 @@ public class PDFDocumentImpl implements PDFDocument {
 			catalog.getCOSObject().setNeedToBeUpdated(true);
 			XMPMetadata xmp = XMPMetadata.createXMPMetadata();
 			return new MetadataImpl(xmp, stream);
-		} else {
-			return parseMetadata(meta);
 		}
+        return parseMetadata(meta);
 	}
 
 	private MetadataImpl parseMetadata(PDMetadata meta) {
@@ -110,7 +116,8 @@ public class PDFDocumentImpl implements PDFDocument {
 	 * {@inheritDoc} Implemented by Apache PDFBox library.
 	 */
 	@Override
-	public void saveDocumentIncremental(MetadataFixerResultImpl result, OutputStream output) {
+	public MetadataFixerResult saveDocumentIncremental(final MetadataFixerResultImpl.RepairStatus status, OutputStream output) {
+	    MetadataFixerResultImpl.Builder builder = new MetadataFixerResultImpl.Builder();
 		try {
 			PDMetadata meta = this.document.getDocumentCatalog().getMetadata();
 			boolean isMetaPresent = meta != null && this.isNeedToBeUpdated();
@@ -122,19 +129,19 @@ public class PDFDocumentImpl implements PDFDocument {
 				}
 				this.document.saveIncremental(output);
 				output.close();
-				result.setRepairStatus(this.getStatus(result));
+				builder.status(getStatus(status));
 			} else {
-				result.setRepairStatus(NO_ACTION);
+			    builder.status(NO_ACTION);
 			}
 		} catch (Exception e) {
 			LOGGER.info(e);
-			result.setRepairStatus(FIX_ERROR);
-			result.addAppliedFix("Problems with document save. " + e.getMessage());
+			builder.status(FIX_ERROR).addFix("Problems with document save. " + e.getMessage());
 		}
+		return builder.build();
 	}
 
-	private MetadataFixerResultImpl.RepairStatus getStatus(MetadataFixerResultImpl result) {
-		return result.getRepairStatus() != WONT_FIX ? SUCCESS : WONT_FIX;
+	private static MetadataFixerResultImpl.RepairStatus getStatus(final MetadataFixerResultImpl.RepairStatus status) {
+		return status != WONT_FIX ? SUCCESS : WONT_FIX;
 	}
 
 }

@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
@@ -23,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.TestAssertion.Status;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -33,6 +36,8 @@ final class ValidationResultImpl implements ValidationResult {
     private final static ValidationResultImpl DEFAULT = new ValidationResultImpl();
     @XmlAttribute
     private final PDFAFlavour flavour;
+    @XmlAttribute
+    private final int totalAssertions;
     @XmlElementWrapper
     @XmlElement(name = "assertion")
     private final Set<TestAssertion> assertions;
@@ -40,15 +45,23 @@ final class ValidationResultImpl implements ValidationResult {
     private final boolean isCompliant;
 
     private ValidationResultImpl() {
-        this(PDFAFlavour.NO_FLAVOUR, Collections.<TestAssertion>emptySet(), false);
+        this(PDFAFlavour.NO_FLAVOUR, Collections.<TestAssertion> emptySet(),
+                false);
     }
 
     private ValidationResultImpl(final PDFAFlavour flavour,
             final Set<TestAssertion> assertions, final boolean isCompliant) {
+        this(flavour, assertions, isCompliant, assertions.size());
+    }
+
+    private ValidationResultImpl(final PDFAFlavour flavour,
+            final Set<TestAssertion> assertions, final boolean isCompliant,
+            int totalAssertions) {
         super();
         this.flavour = flavour;
-        this.assertions = Collections.unmodifiableSet(assertions);
+        this.assertions = new HashSet<>(assertions);
         this.isCompliant = isCompliant;
+        this.totalAssertions = totalAssertions;
     }
 
     /**
@@ -71,22 +84,30 @@ final class ValidationResultImpl implements ValidationResult {
      * { @inheritDoc }
      */
     @Override
-    public Set<TestAssertion> getTestAssertions() {
-        return this.assertions;
+    public int getTotalAssertions() {
+        return this.totalAssertions;
     }
 
     /**
      * { @inheritDoc }
      */
     @Override
-    public final int hashCode() {
+    public Set<TestAssertion> getTestAssertions() {
+        return Collections.unmodifiableSet(this.assertions);
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result
                 + ((this.assertions == null) ? 0 : this.assertions.hashCode());
-        result = prime * result
-                + ((this.flavour == null) ? 0 : this.flavour.hashCode());
+        result = prime * result + ((this.flavour == null) ? 0 : this.flavour.hashCode());
         result = prime * result + (this.isCompliant ? 1231 : 1237);
+        result = prime * result + this.totalAssertions;
         return result;
     }
 
@@ -94,10 +115,12 @@ final class ValidationResultImpl implements ValidationResult {
      * { @inheritDoc }
      */
     @Override
-    public final boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
             return false;
         if (!(obj instanceof ValidationResult))
             return false;
@@ -105,11 +128,15 @@ final class ValidationResultImpl implements ValidationResult {
         if (this.assertions == null) {
             if (other.getTestAssertions() != null)
                 return false;
-        } else if (!this.assertions.equals(other.getTestAssertions()))
+        } else if (other.getTestAssertions() == null)
+            return false;
+        else if (!this.assertions.equals(other.getTestAssertions()))
             return false;
         if (this.flavour != other.getPDFAFlavour())
             return false;
         if (this.isCompliant != other.isCompliant())
+            return false;
+        if (this.totalAssertions != other.getTotalAssertions())
             return false;
         return true;
     }
@@ -119,8 +146,8 @@ final class ValidationResultImpl implements ValidationResult {
      */
     @Override
     public String toString() {
-        return "ValidationResult [flavour=" + this.flavour
-                + ", assertions=" + this.assertions + ", isCompliant="
+        return "ValidationResult [flavour=" + this.flavour + ", totalAssertions="
+                + this.totalAssertions + ", assertions=" + this.assertions + ", isCompliant="
                 + this.isCompliant + "]";
     }
 
@@ -129,13 +156,18 @@ final class ValidationResultImpl implements ValidationResult {
     }
 
     static ValidationResultImpl fromValues(final PDFAFlavour flavour,
-            final Set<TestAssertion> assertions, final boolean isCompliant) {
-        return new ValidationResultImpl(flavour, assertions, isCompliant);
+            final Set<TestAssertion> assertions, final boolean isCompliant, final int totalChecks) {
+        return new ValidationResultImpl(flavour, assertions, isCompliant, totalChecks);
     }
 
     static ValidationResultImpl fromValidationResult(ValidationResult toConvert) {
         return fromValues(toConvert.getPDFAFlavour(),
-                toConvert.getTestAssertions(), toConvert.isCompliant());
+                toConvert.getTestAssertions(), toConvert.isCompliant(), toConvert.getTotalAssertions());
+    }
+
+    static ValidationResultImpl stripPassedTests(ValidationResult toStrip) {
+        return fromValues(toStrip.getPDFAFlavour(),
+                stripPassedTests(toStrip.getTestAssertions()), toStrip.isCompliant(), toStrip.getTotalAssertions());
     }
 
     static String toXml(final ValidationResult toConvert, Boolean prettyXml)
@@ -160,8 +192,8 @@ final class ValidationResultImpl implements ValidationResult {
         return (ValidationResultImpl) stringUnmarshaller.unmarshal(toConvert);
     }
 
-    static void toXml(final ValidationResult toConvert,
-            final Writer writer, Boolean prettyXml) throws JAXBException {
+    static void toXml(final ValidationResult toConvert, final Writer writer,
+            Boolean prettyXml) throws JAXBException {
         Marshaller varMarshaller = getMarshaller(prettyXml);
         varMarshaller.marshal(toConvert, writer);
     }
@@ -170,6 +202,13 @@ final class ValidationResultImpl implements ValidationResult {
             throws JAXBException {
         Unmarshaller stringUnmarshaller = getUnmarshaller();
         return (ValidationResultImpl) stringUnmarshaller.unmarshal(toConvert);
+    }
+
+    static ValidationResultImpl fromXml(final String toConvert)
+            throws JAXBException {
+        try (StringReader reader = new StringReader(toConvert)) {
+            return fromXml(reader);
+        }
     }
 
     static class Adapter extends
@@ -200,5 +239,15 @@ final class ValidationResultImpl implements ValidationResult {
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
         return marshaller;
+    }
+
+    static Set<TestAssertion> stripPassedTests(
+            final Set<TestAssertion> toStrip) {
+        Set<TestAssertion> strippedSet = new HashSet<>();
+        for (TestAssertion test : toStrip) {
+            if (test.getStatus() != Status.PASSED)
+                strippedSet.add(test);
+        }
+        return strippedSet;
     }
 }
