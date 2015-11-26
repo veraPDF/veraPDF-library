@@ -13,6 +13,7 @@ import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector;
 import org.verapdf.metadata.fixer.utils.ValidationStatus;
 import org.verapdf.pdfa.MetadataFixer;
+import org.verapdf.pdfa.MetadataFixerResult;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.ProfileDirectory;
@@ -21,6 +22,7 @@ import org.verapdf.pdfa.validation.ValidationProfile;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
@@ -55,29 +57,29 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 	 * @param config configuration for metadata fixer
 	 * @return report of made corrections
 	 */
-	public MetadataFixerResultImpl fixMetadata(OutputStream output, FixerConfig config) {
+	public static MetadataFixerResult fixMetadata(OutputStream output, FixerConfig config) {
 		ValidationResult result = config.getValidationResult();
-		return result != null && result.isCompliant() ? new MetadataFixerResultImpl()
+		return result != null && result.isCompliant() ? new MetadataFixerResultImpl.Builder().build()
 				: fixAndSaveDocument(output, config);
 	}
 
-	private MetadataFixerResultImpl fixAndSaveDocument(
+	private static MetadataFixerResult fixAndSaveDocument(
 			OutputStream output, FixerConfig config) {
 		Metadata metadata = config.getDocument().getMetadata();
 		if (metadata != null) {
-			MetadataFixerResultImpl result = new MetadataFixerResultImpl();
+			MetadataFixerResultImpl.Builder resultBuilder = new MetadataFixerResultImpl.Builder();
 			ValidationStatus status = getValidationStatus(config);
 
-			metadata.checkMetadataStream(result);
+			metadata.checkMetadataStream(resultBuilder);
 
 			switch (status) {
 				case INVALID_METADATA:
-					executeInvalidMetadataCase(config, metadata, result);
+					executeInvalidMetadataCase(config, metadata, resultBuilder);
 					break;
 				case INVALID_DOCUMENT:
 				case INVALID_STRUCTURE: {
 					if (config.isFixIdentification()) {
-						metadata.removePDFIdentificationSchema(result,
+						metadata.removePDFIdentificationSchema(resultBuilder,
 								config.getValidationResult().getPDFAFlavour());
 					}
 					break;
@@ -86,20 +88,21 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 					break;
 			}
 
-			updateModificationDate(config, result);
+			updateModificationDate(config, resultBuilder);
 
-			config.getDocument().saveDocumentIncremental(result, output);
-
-			return result;
+			MetadataFixerResult partialResult = config.getDocument().saveDocumentIncremental(resultBuilder.getStatus(), output);
+			resultBuilder.status(partialResult.getRepairStatus());
+			for (String fix : partialResult.getAppliedFixes()) {
+			    resultBuilder.addFix(fix);
+			}
+			return resultBuilder.build();
 		}
-		MetadataFixerResultImpl result = new MetadataFixerResultImpl();
-		MetadataFixerResultImpl.RepairStatus status = MetadataFixerResultImpl.RepairStatus.FIX_ERROR;
-		result.setRepairStatus(status);
-		result.addAppliedFix("Problems with metadata obtain. No possibility to fix metadata.");
-		return result;
+		MetadataFixerResultImpl.Builder resultBuilder = new MetadataFixerResultImpl.Builder();
+		resultBuilder.status(MetadataFixerResultImpl.RepairStatus.FIX_ERROR).addFix("Problems with metadata obtain. No possibility to fix metadata.");
+		return resultBuilder.build();
 	}
 
-	private ValidationStatus getValidationStatus(FixerConfig config) {
+	private static ValidationStatus getValidationStatus(FixerConfig config) {
 		ValidationResult result = config.getValidationResult();
 		ValidationProfile profile = PROFILES
 				.getValidationProfileByFlavour(config.getValidationResult().getPDFAFlavour());
@@ -119,87 +122,87 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 		return ValidationStatus.INVALID_METADATA;
 	}
 
-	private void executeInvalidMetadataCase(FixerConfig config,
-											Metadata metadata, MetadataFixerResultImpl result) {
+	private static void executeInvalidMetadataCase(FixerConfig config,
+											Metadata metadata, MetadataFixerResultImpl.Builder resultBuilder) {
 		if (config.isFixIdentification()) {
-			metadata.addPDFIdentificationSchema(result,
+			metadata.addPDFIdentificationSchema(resultBuilder,
 					config.getValidationResult().getPDFAFlavour());
 		}
-		fixMetadata(result, config);
+		fixMetadata(resultBuilder, config);
 	}
 
-	private void fixMetadata(MetadataFixerResultImpl result,
+	private static void fixMetadata(MetadataFixerResultImpl.Builder resultBuilder,
 							 FixerConfig config) {
 		PDFAFlavour pdfaFlavour = config.getValidationResult().getPDFAFlavour();
 		if (pdfaFlavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
-			fixDublinCoreSchema(result, config);
-			fixAdobePDFSchema(result, config);
-			fixBasicXMLSchema(result, config);
+			fixDublinCoreSchema(resultBuilder, config);
+			fixAdobePDFSchema(resultBuilder, config);
+			fixBasicXMLSchema(resultBuilder, config);
 		}
 	}
 
-	private void fixDublinCoreSchema(MetadataFixerResultImpl result,
+	private static void fixDublinCoreSchema(MetadataFixerResultImpl.Builder resultBuilder,
 									 FixerConfig config) {
 		Metadata metadata = config.getDocument().getMetadata();
 		InfoDictionary info = config.getDocument().getInfoDictionary();
 		DublinCore schema = metadata.getDublinCoreSchema(info);
 		if (schema != null && info != null) {
-			fixProperty(result, schema, info, schema.getTitle(),
+			fixProperty(resultBuilder, schema, info, schema.getTitle(),
 					info.getTitle(), METADATA_TITLE);
-			fixProperty(result, schema, info, schema.getSubject(),
+			fixProperty(resultBuilder, schema, info, schema.getSubject(),
 					info.getSubject(), METADATA_SUBJECT);
-			fixProperty(result, schema, info, schema.getAuthor(),
+			fixProperty(resultBuilder, schema, info, schema.getAuthor(),
 					info.getAuthor(), METADATA_AUTHOR);
 		}
 	}
 
-	private void fixAdobePDFSchema(MetadataFixerResultImpl result,
+	private static void fixAdobePDFSchema(MetadataFixerResultImpl.Builder resultBuilder,
 								   FixerConfig config) {
 		Metadata metadata = config.getDocument().getMetadata();
 		InfoDictionary info = config.getDocument().getInfoDictionary();
 		AdobePDF schema = metadata.getAdobePDFSchema(info);
 		if (schema != null && info != null) {
-			fixProperty(result, schema, info, schema.getProducer(),
+			fixProperty(resultBuilder, schema, info, schema.getProducer(),
 					info.getProducer(), PRODUCER);
-			fixProperty(result, schema, info, schema.getKeywords(),
+			fixProperty(resultBuilder, schema, info, schema.getKeywords(),
 					info.getKeywords(), KEYWORDS);
 		}
 	}
 
-	private void fixBasicXMLSchema(MetadataFixerResultImpl result,
+	private static void fixBasicXMLSchema(MetadataFixerResultImpl.Builder resultBuilder,
 								   FixerConfig config) {
 		Metadata metadata = config.getDocument().getMetadata();
 		InfoDictionary info = config.getDocument().getInfoDictionary();
 		XMPBasic schema = metadata.getXMPBasicSchema(info);
 		if (schema != null && info != null) {
-			fixProperty(result, schema, info, schema.getCreator(),
+			fixProperty(resultBuilder, schema, info, schema.getCreator(),
 					info.getCreator(), METADATA_CREATOR);
-			fixCalendarProperty(result, schema, info, schema.getCreationDate(),
+			fixCalendarProperty(resultBuilder, schema, info, schema.getCreationDate(),
 					info.getCreationDate(), METADATA_CREATION_DATE);
-			fixCalendarProperty(result, schema, info,
+			fixCalendarProperty(resultBuilder, schema, info,
 					schema.getModificationDate(), info.getModificationDate(),
 					METADATA_MODIFICATION_DATE);
 		}
 	}
 
-	private void fixProperty(MetadataFixerResultImpl result,
+	private static void fixProperty(MetadataFixerResultImpl.Builder resultBuilder,
 							 BasicSchema schema, InfoDictionary info, String metaValue,
 							 String infoValue, String attribute) {
 		if (infoValue != null) {
 			String key = attributes.get(attribute);
 			if (metaValue == null) {
 				doSaveAction(schema, attribute, infoValue);
-				result.addAppliedFix("Added '" + key
+				resultBuilder.addFix("Added '" + key
 						+ "' to metadata from info dictionary");
 			} else if (!metaValue.equals(infoValue)) {
 				doSaveAction(info, attribute, metaValue);
-				result.addAppliedFix("Added '" + attribute
+				resultBuilder.addFix("Added '" + attribute
 						+ "' to info dictionary from metadata");
 			}
 		}
 	}
 
-	private void fixCalendarProperty(MetadataFixerResultImpl result,
+	private static void fixCalendarProperty(MetadataFixerResultImpl.Builder resultBuilder,
 									 BasicSchema schema, InfoDictionary info, String metaValue,
 									 String infoValue, String attribute) {
 		if (infoValue != null) {
@@ -207,18 +210,18 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 			String utcInfoValue = DateConverter.toUTCString(infoValue);
 			if (metaValue == null) {
 				doSaveAction(schema, attribute, infoValue);
-				result.addAppliedFix("Added '" + key
+				resultBuilder.addFix("Added '" + key
 						+ "' to metadata from info dictionary");
 			} else if (!metaValue.equals(utcInfoValue)
 					|| !infoValue.matches(PDF_DATE_FORMAT_REGEX)) {
 				doSaveAction(info, attribute, metaValue);
-				result.addAppliedFix("Added '" + attribute
+				resultBuilder.addFix("Added '" + attribute
 						+ "' to info dictionary from metadata");
 			}
 		}
 	}
 
-	private void doSaveAction(BasicSchema schema, String attribute, String value) {
+	private static void doSaveAction(BasicSchema schema, String attribute, String value) {
 		switch (attribute) {
 			case METADATA_TITLE:
 				((DublinCore) schema).setTitle(value);
@@ -250,8 +253,8 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 		schema.setNeedToBeUpdated(true);
 	}
 
-	private void updateModificationDate(FixerConfig config,
-										MetadataFixerResultImpl result) {
+	private static void updateModificationDate(FixerConfig config,
+										MetadataFixerResultImpl.Builder resultBuilder) {
 		PDFDocument document = config.getDocument();
 		InfoDictionary info = document.getInfoDictionary();
 		XMPBasic schema = document.getMetadata().getXMPBasicSchema(info);
@@ -261,12 +264,12 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 			if (schema.getModificationDate() != null) {
 				doSaveAction(schema, METADATA_MODIFICATION_DATE,
 						DateConverter.toUTCString(time));
-				result.addAppliedFix("Set new modification date to metadata");
+				resultBuilder.addFix("Set new modification date to metadata");
 			}
 			if (info != null && info.getModificationDate() != null) {
 				doSaveAction(info, METADATA_MODIFICATION_DATE,
 						DateConverter.toPDFFormat(time));
-				result.addAppliedFix("Set new modification date to info dictionary");
+				resultBuilder.addFix("Set new modification date to info dictionary");
 			}
 		}
 	}

@@ -47,6 +47,11 @@ public interface ValidationResult {
     public PDFAFlavour getPDFAFlavour();
 
     /**
+     * @return the total number of valdiation checks performed 
+     */
+    public int getTotalAssertions();
+
+    /**
      * @return the list of {@link TestAssertion}s made during PDF/A validation
      */
     public Set<TestAssertion> getTestAssertions();

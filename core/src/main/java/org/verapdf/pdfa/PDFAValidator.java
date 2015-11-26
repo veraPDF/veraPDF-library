@@ -1,14 +1,10 @@
 package org.verapdf.pdfa;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.verapdf.core.ValidationException;
-import org.verapdf.pdfa.config.ValidatorConfiguration;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.ValidationProfile;
-
-import java.io.InputStream;
 
 /**
  * A PDFAValidator performs a series of checks on PDF/A documents to verify that
@@ -41,6 +37,8 @@ public interface PDFAValidator {
      * @return a {@link ValidationResult} containing the result of valdiation
      *         and details of failed checks and possibly passed checks,
      *         dependant upon configuration.
+     * @throws ValidationException 
+     * @throws IOException 
      * @throws IllegalArgumentException
      *             if the toValidate parameter is null PDFAValidationException
      *             if the validation process fails

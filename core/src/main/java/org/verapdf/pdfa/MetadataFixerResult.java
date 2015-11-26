@@ -31,15 +31,15 @@ public interface MetadataFixerResult extends Iterable<String> {
         /**
          * Metadata repair was carried out successfully.
          */
-        SUCCESS("Success"),
+        SUCCESS("Repair successful"),
         /**
          * Metadata repair was attempted but failed.
          */
-        FIX_ERROR("Fix Error"),
+        FIX_ERROR("Error during repair"),
         /**
          * The fixer could not determine any action that could repair the PDF/A.
          */
-        WONT_FIX("Won`t Fix"),
+        WONT_FIX("Can`t Fix"),
         /**
          * No action was taken because the file is already valid
          */
@@ -47,14 +47,15 @@ public interface MetadataFixerResult extends Iterable<String> {
 
 		ID_REMOVED("ID Removed");
 
-        private final String name;
+        private final String message;
 
         RepairStatus(final String name) {
-            this.name = name;
+            this.message = name;
         }
 
-        public String getName() {
-            return this.name;
+        @Override
+        public String toString() {
+            return this.message;
         }
     }
 }

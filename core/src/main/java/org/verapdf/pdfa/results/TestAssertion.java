@@ -16,6 +16,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlJavaTypeAdapter(TestAssertionImpl.Adapter.class)
 public interface TestAssertion {
     /**
+     * @return the ordinal for the instance
+     */
+    public int getOrdinal();
+    /**
      * @return the String id for the {@link org.verapdf.pdfa.validation.Rule} that this assertion refers to
      */
     public RuleId getRuleId();
@@ -48,15 +52,26 @@ public interface TestAssertion {
         /**
          * Indicates that a test assertion passed
          */
-        PASSED,
+        PASSED("passed"),
         /**
          * Indicates a test failure
          */
-        FAILED,
+        FAILED("failed"),
         /**
          * 
          */
-        UNKNOWN;
+        UNKNOWN("unknown");
+        
+        private final String description;
+        
+        private Status(final String description) {
+            this.description = description;
+        }
+        
+        @Override
+        public String toString() {
+            return this.description;
+        }
     }
 
 }

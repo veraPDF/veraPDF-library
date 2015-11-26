@@ -32,7 +32,7 @@ public class RuleIdImplTest {
      */
     @Test
     public final void testToString() {
-        assertTrue(RuleIdImpl.defaultInstance().toString()
+        assertTrue(Profiles.defaultRuleId().toString()
                 .equals(DEFAULT_RULE_ID_STRING));
     }
 
@@ -42,8 +42,8 @@ public class RuleIdImplTest {
     @Test
     public final void testFromValues() {
         // Get an equivalent to the default instance
-        RuleIdImpl ruleId = RuleIdImpl.fromValues(Specification.NO_STANDARD, "clause", 0);
-        RuleId defaultInstance = RuleIdImpl.defaultInstance();
+        RuleId ruleId = Profiles.ruleIdFromValues(Specification.NO_STANDARD, "clause", 0);
+        RuleId defaultInstance = Profiles.defaultRuleId();
         // Equivalent is NOT the same object as default instance
         assertFalse(ruleId == defaultInstance);
         // But it is equal
@@ -57,7 +57,7 @@ public class RuleIdImplTest {
     public final void testFromRuleId() {
         // Get an equivalent to the default instance
         RuleId ruleId = RuleIdImpl.fromRuleId(RuleIdImpl.defaultInstance());
-        RuleId defaultInstance = RuleIdImpl.defaultInstance();
+        RuleId defaultInstance = Profiles.defaultRuleId();
         // Equivalent is NOT the same object as default instance
         assertFalse(ruleId == defaultInstance);
         // But it is equal
@@ -70,7 +70,7 @@ public class RuleIdImplTest {
      */
     @Test
     public final void testToXml() throws JAXBException {
-        RuleId defaultInstance = RuleIdImpl.defaultInstance();
+        RuleId defaultInstance = Profiles.defaultRuleId();
         String xmlDefault = RuleIdImpl.toXml(defaultInstance);
         RuleId unmarshalledDefault = RuleIdImpl.fromXml(xmlDefault);
         assertFalse(defaultInstance == unmarshalledDefault);

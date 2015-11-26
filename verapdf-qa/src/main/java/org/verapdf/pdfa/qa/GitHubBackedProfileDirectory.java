@@ -104,9 +104,7 @@ public enum GitHubBackedProfileDirectory implements ProfileDirectory {
                         .fromLegacyStream(profileURL.openStream(), flavour);
                 profileSet.add(profile);
             } catch (ProfileException | IOException e) {
-                System.err.println("Could not load GitHub profile for "
-                        + flavour.getLevel().getName());
-                System.err.println(e.getMessage());
+                // Do nothing
             }
         }
         return profileSet;

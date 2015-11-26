@@ -3,6 +3,9 @@
  */
 package org.verapdf.pdfa.results;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -14,6 +17,9 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 @XmlRootElement(name = "location")
 final class LocationImpl implements Location {
     private static final LocationImpl DEFAULT = new LocationImpl();
+    private static final String DEREF_REGEX = "\\([0-9]{1,} ([a-zA-Z]{4})";
+    private static final String DEREF_REPL = "\\(";
+    private static final Pattern DEREF_PATTERN = Pattern.compile(DEREF_REGEX);
     @XmlElement
     private final String level;
     @XmlElement
@@ -92,8 +98,8 @@ final class LocationImpl implements Location {
      */
     @Override
     public final String toString() {
-        return "Location [level=" + this.level + ", context="
-                + this.context + "]";
+        return "Location [level=" + this.level + ", context=" + this.context
+                + "]";
     }
 
     static LocationImpl defaultInstance() {
@@ -101,7 +107,11 @@ final class LocationImpl implements Location {
     }
 
     static LocationImpl fromValues(final String level, final String context) {
-        return new LocationImpl(level, context);
+        String deRefdContext = context;
+        Matcher matcher = DEREF_PATTERN.matcher(context);
+        if (matcher.find())
+            deRefdContext = matcher.replaceAll(DEREF_REPL + matcher.group(1));
+        return new LocationImpl(level, deRefdContext);
     }
 
     static class Adapter extends XmlAdapter<LocationImpl, Location> {

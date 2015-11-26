@@ -73,8 +73,8 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     private long endTimeOfValidation;
 
     ValidateWorker(CheckerPanel parent, File pdf, ValidationProfile profile,
-                   Config settings, ProcessingType processingType,
-                   boolean isFixMetadata) {
+            Config settings, ProcessingType processingType,
+            boolean isFixMetadata) {
         if (pdf == null || !pdf.isFile() || !pdf.canRead()) {
             throw new IllegalArgumentException(
                     "PDF file doesn't exist or it can not be read");
@@ -95,7 +95,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     protected ValidationResult doInBackground() {
         this.xmlReport = null;
         this.htmlReport = null;
-        ValidationResult info = null;
+        ValidationResult validationResult = null;
         MetadataFixerResult fixerResult = null;
         FeaturesCollection collection = null;
 
@@ -105,10 +105,9 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
                 this.pdf.getPath()))) {
 
             if (this.processingType.isValidating()) {
-                info = runValidator(parser);
-
+                validationResult = runValidator(parser);
                 if (this.isFixMetadata) {
-                    fixerResult = this.fixMetadata(info, parser);
+                    fixerResult = this.fixMetadata(validationResult, parser);
                 }
             }
             if (this.processingType.isFeatures()) {
@@ -124,17 +123,17 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
                 }
             }
             this.endTimeOfValidation = System.currentTimeMillis();
-            writeReports(info, fixerResult, collection);
+            writeReports(validationResult, fixerResult, collection);
         } catch (IOException e) {
             this.parent
                     .errorInValidatingOccur(GUIConstants.ERROR_IN_PARSING, e);
         }
 
-        return info;
+        return validationResult;
     }
 
     private MetadataFixerResult fixMetadata(ValidationResult info,
-                                            ModelParser parser) throws IOException {
+            ModelParser parser) throws IOException {
         FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(
                 parser.getPDDocument(), info);
         Path path = this.settings.getFixMetadataPathFolder();
@@ -174,11 +173,10 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         }
     }
 
-    private ValidationResult runValidator(
-            ModelParser toValidate) throws IOException {
+    private ValidationResult runValidator(ModelParser toValidate)
+            throws IOException {
         try {
-            PDFAValidator validator = Validators.validate(this.profile,
-                    this.settings.isShowPassedRules());
+            PDFAValidator validator = Validators.createValidator(this.profile, true);
             return validator.validate(toValidate);
         } catch (ValidationException e) {
 
@@ -193,15 +191,15 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         this.parent.validationEnded(this.xmlReport, this.htmlReport);
     }
 
-    private void writeReports(ValidationResult result,
-                              MetadataFixerResult fixerResult, FeaturesCollection collection) {
+    private void writeReports(ValidationResult result, MetadataFixerResult fixerResult,
+            FeaturesCollection collection) {
         try {
             this.xmlReport = File.createTempFile("veraPDF-tempXMLReport",
                     ".xml");
             this.xmlReport.deleteOnExit();
             MachineReadableReport report = MachineReadableReport.fromValues(
-                    result, fixerResult, collection, this.endTimeOfValidation
-                            - this.startTimeOfValidation);
+                    this.profile, result, this.settings.isShowPassedRules(), fixerResult, collection,
+                    this.endTimeOfValidation - this.startTimeOfValidation);
             try (OutputStream xmlReportOs = new FileOutputStream(this.xmlReport)) {
                 MachineReadableReport.toXml(report, xmlReportOs, Boolean.TRUE);
             }

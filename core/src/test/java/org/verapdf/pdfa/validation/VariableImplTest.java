@@ -36,7 +36,7 @@ public class VariableImplTest {
      */
     @Test
     public final void testToString() {
-        assertTrue(VariableImpl.defaultInstance().toString()
+        assertTrue(Profiles.defaultVariable().toString()
                 .equals(DEFAULT_VARIABLE_STRING));
     }
 
@@ -50,9 +50,9 @@ public class VariableImplTest {
     @Test
     public final void testFromValues() throws JAXBException {
         // Get an equivalent to the default instance
-        VariableImpl variable = VariableImpl.fromValues("name", "object",
+        Variable variable = Profiles.variableFromValues("name", "object",
                 "defaultValue", "value");
-        Variable defaultInstance = VariableImpl.defaultInstance();
+        Variable defaultInstance = Profiles.defaultVariable();
         // Equivalent is NOT the same object as default instance
         assertFalse(variable == defaultInstance);
         // But it is equal
@@ -71,7 +71,7 @@ public class VariableImplTest {
     public final void testFromVariable() throws JAXBException {
         // Get an equivalent to the default instance
         Variable variable = VariableImpl.fromVariable(VariableImpl.defaultInstance());
-        Variable defaultInstance = VariableImpl.defaultInstance();
+        Variable defaultInstance = Profiles.defaultVariable();
         // Equivalent is NOT the same object as default instance
         assertFalse(variable == defaultInstance);
         // But it is equal
@@ -87,7 +87,7 @@ public class VariableImplTest {
      */
     @Test
     public final void testXmlMarshalling() throws JAXBException {
-        Variable defaultInstance = VariableImpl.defaultInstance();
+        Variable defaultInstance = Profiles.defaultVariable();
         String xmlDefault = VariableImpl.toXml(defaultInstance);
         Variable unmarshalledDefault = VariableImpl.fromXml(xmlDefault);
         assertFalse(defaultInstance == unmarshalledDefault);

@@ -3,7 +3,6 @@
  */
 package org.verapdf.pdfa.qa;
 
-import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.RuleId;
 
 /**
