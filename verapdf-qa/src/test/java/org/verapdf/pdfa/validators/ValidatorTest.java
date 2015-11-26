@@ -65,7 +65,7 @@ public class ValidatorTest {
         TestCorpus veraCorpus = CorpusManager.getVeraCorpus();
         Set<String> sample = CorpusSampler.randomSample(veraCorpus, 20);
         // / Cycle through sample
-        for (String itemName : veraCorpus.getItemNames()) {
+        for (String itemName : sample) {
             // Try all profiles
             for (ValidationProfile profile : PROFILES.getValidationProfiles()) {
                 // Create a validator for profile
@@ -98,7 +98,7 @@ public class ValidatorTest {
         TestCorpus veraCorpus = CorpusManager.getVeraCorpus();
         Set<String> sample = CorpusSampler.randomSample(veraCorpus, 20);
         // / Cycle through sample
-        for (String itemName : veraCorpus.getItemNames()) {
+        for (String itemName : sample) {
             // Try all profiles
             for (ValidationProfile profile : PROFILES.getValidationProfiles()) {
                 // Create a validator for the profile and get a result with no
