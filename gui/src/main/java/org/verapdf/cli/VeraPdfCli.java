@@ -12,6 +12,7 @@ import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
 import org.verapdf.ReleaseDetails;
+import org.verapdf.cli.commands.FormatType;
 import org.verapdf.cli.commands.VeraCliArgParser;
 import org.verapdf.core.ProfileException;
 import org.verapdf.core.ValidationException;
@@ -62,23 +63,25 @@ public final class VeraPdfCli {
         JCommander jCommander = new JCommander(cliArgParser);
         jCommander.setProgramName(APP_NAME);
 
-        if (args.length == 0) {
-            showVersionInfo();
-            jCommander.usage();
-            System.exit(0);
-        }
         try {
             jCommander.parse(args);
         } catch (Exception e) {
             logThrowableAndExit(e, "Couldn't parse parameters.", 1);
         }
-        messagesFromParser(jCommander, cliArgParser);
-        processPaths(profileFromInput(cliArgParser.getProfile()), cliArgParser);
+        if (args.length == 0 || cliArgParser.isHelp()) {
+            showVersionInfo();
+            jCommander.usage();
+            System.exit(0);
+        }
+
+        messagesFromParser(cliArgParser);
+        processPaths(cliArgParser);
     }
 
-    private static void processPaths(final ValidationProfile profile,
+    private static void processPaths(
             final VeraCliArgParser argParser) {
-        if (argParser.isVerbose()) {
+        ValidationProfile profile = profileFromInput(argParser);
+        if (argParser.getFormat() == FormatType.XML) {
             processPathsVerbose(profile, argParser);
         } else {
             processPathsRaw(profile, argParser);
@@ -130,7 +133,10 @@ public final class VeraPdfCli {
                         .fromValues(profile, result, argParser.logPassed(),
                                 null, features, System.currentTimeMillis()
                                         - start);
-                MachineReadableReport.toXml(report, System.out, Boolean.TRUE);
+                if (argParser.getFormat() == FormatType.MRR)
+                    MachineReadableReport.toXml(report, System.out,
+                            Boolean.TRUE);
+
             } catch (FileNotFoundException e) {
                 logThrowable(e, "Could not find file: " + pathToValidate);
             } catch (IOException e) {
@@ -142,25 +148,28 @@ public final class VeraPdfCli {
         }
     }
 
-    private static ValidationProfile profileFromInput(String userInput) {
-        PDFAFlavour flavour = PDFAFlavour.byFlavourId(userInput);
-        if (flavour != PDFAFlavour.NO_FLAVOUR) {
-            return PROFILES.getValidationProfileByFlavour(flavour);
+    private static ValidationProfile profileFromInput(
+            final VeraCliArgParser argParser) {
+        if (argParser.getProfile() == null) {
+            return PROFILES.getValidationProfileByFlavour(argParser
+                    .getFlavour());
         }
         // Try as a file
         try {
-            return Profiles.profileFromXml(new FileInputStream(userInput));
+            return Profiles.profileFromXml(new FileInputStream(argParser
+                    .getProfile()));
         } catch (JAXBException | IOException e) {
             LOGGER.warn(
                     "Couldn't parse profile, trying legacy profile parser.", e);
             // Do nothing as it's a parse error so try from legacy profile nex
         }
 
-        try (InputStream toParse = new FileInputStream(userInput)) {
+        try (InputStream toParse = new FileInputStream(argParser.getProfile())) {
             return LegacyProfileConverter.fromLegacyStream(toParse,
                     PDFAFlavour.NO_FLAVOUR);
         } catch (ProfileException | IOException e) {
-            logThrowableAndExit(e, "ProfileException parsing: " + userInput, 1);
+            logThrowableAndExit(e, "ProfileException parsing: "
+                    + argParser.getProfile().getName(), 1);
         }
         return Profiles.defaultProfile();
     }
@@ -176,13 +185,7 @@ public final class VeraPdfCli {
         return;
     }
 
-    private static void messagesFromParser(final JCommander jCommander,
-            final VeraCliArgParser parser) {
-        if (parser.isHelp()) {
-            showVersionInfo();
-            jCommander.usage();
-            System.exit(0);
-        }
+    private static void messagesFromParser(final VeraCliArgParser parser) {
 
         if (parser.listProfiles()) {
             listProfiles();
@@ -194,8 +197,8 @@ public final class VeraPdfCli {
     }
 
     private static void listProfiles() {
+        System.out.println(FLAVOURS_HEADING);
         for (ValidationProfile profile : PROFILES.getValidationProfiles()) {
-            System.out.println(FLAVOURS_HEADING);
             System.out.println("  " + profile.getPDFAFlavour().getId());
             System.out.println();
         }

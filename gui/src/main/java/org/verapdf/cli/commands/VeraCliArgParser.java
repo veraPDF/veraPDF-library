@@ -1,40 +1,48 @@
 package org.verapdf.cli.commands;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+
+import com.beust.jcommander.IStringConverter;
 import com.beust.jcommander.Parameter;
 
 /**
  * This class holds all command line options used by VeraPDF application.
+ * 
  * @author Timur Kamalov
  */
 public class VeraCliArgParser {
 
-    @Parameter(names = {"--version"}, description = "ouput version information.")
-    private boolean showVersion;
+    @Parameter(names = { "--version" }, description = "Version information.")
+    private boolean showVersion = false;
 
-    @Parameter(names = {"-l", "--list"}, description = "lists all built in validation profiles.")
-    private boolean listProfiles;
+    @Parameter(names = { "-l", "--profiles" }, description = "List built in Validation Profiles.")
+    private boolean listProfiles = false;
 
-    @Parameter(names = {"-v", "--verbose"}, description = "outputs results in verbose format.")
-    private boolean verbose;
+    @Parameter(names = { "--format" }, description = "Choose output format:", converter = FormatConverter.class)
+    private FormatType format = FormatType.XML;
 
-    @Parameter(names = {"-h", "--help"}, description = "shows this message and exit.", help = true)
-    private boolean help;
+    @Parameter(names = { "-h", "--help" }, description = "Shows this message and exits.", help = true)
+    private boolean help = false;
 
-    @Parameter(names = {"--passed"}, description = "logs passed checks.")
-    private boolean passed;
+    @Parameter(names = { "--success", "--passed" }, description = "Logs successful validation checks.")
+    private boolean passed = false;
 
-    @Parameter(names = {"-p", "--profile"}, description = "validation profile code e.g. 1b, 1a, etc. or a path to a validation profile.")
-    private String profile = "1b";
+    @Parameter(names = { "-f", "--flavour" }, description = "Choose built in Validation Profile flavour:", converter = FlavourConverter.class)
+    private PDFAFlavour flavour = PDFAFlavour.PDFA_1_B;
 
-    @Parameter(names = {"-f", "--features"}, description = "report PDF features.")
-    private boolean features;
+    @Parameter(names = { "-p", "--profile" }, description = "Load a Validation Profile from given path and exit if loading fails. This overrides any choice or default implied by the -f / --flavour option.")
+    private File validatioProfile = null;
 
-	@Parameter(description = "FILES")
-	private List<String> filePaths = new ArrayList<>();
-	
+    @Parameter(names = { "-x", "--features", "--report" }, description = "Extract and report PDF features.")
+    private boolean features = false;
+
+    @Parameter(description = "FILES")
+    private List<String> filePaths = new ArrayList<>();
+
     /**
      * @return true if version information requested
      */
@@ -59,8 +67,8 @@ public class VeraCliArgParser {
     /**
      * @return true if verbose output requested
      */
-    public boolean isVerbose() {
-        return this.verbose;
+    public FormatType getFormat() {
+        return this.format;
     }
 
     /**
@@ -80,14 +88,44 @@ public class VeraCliArgParser {
     /**
      * @return the validation flavour string id
      */
-    public String getProfile() {
-        return this.profile;
+    public PDFAFlavour getFlavour() {
+        return this.flavour;
     }
-    
+
+    /**
+     * @return the {@link File} object for the validation profile
+     */
+    public File getProfile() {
+        return this.validatioProfile;
+    }
     /**
      * @return the list of file paths for validation
      */
     public List<String> getPathsToValidate() {
         return this.filePaths;
+    }
+
+    private static final class FormatConverter implements
+            IStringConverter<FormatType> {
+        /**
+         * { @inheritDoc }
+         */
+        @Override
+        public FormatType convert(final String value) {
+            return FormatType.fromOption(value);
+        }
+
+    }
+
+    private static final class FlavourConverter implements
+            IStringConverter<PDFAFlavour> {
+        /**
+         * { @inheritDoc }
+         */
+        @Override
+        public PDFAFlavour convert(final String value) {
+            return PDFAFlavour.byFlavourId(value);
+        }
+
     }
 }
