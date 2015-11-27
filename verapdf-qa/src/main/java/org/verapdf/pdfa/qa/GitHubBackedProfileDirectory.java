@@ -8,6 +8,8 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.bind.JAXBException;
+
 import org.verapdf.core.ProfileException;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.ProfileDirectory;
@@ -108,5 +110,16 @@ public enum GitHubBackedProfileDirectory implements ProfileDirectory {
             }
         }
         return profileSet;
+    }
+    
+    /**
+     * Simple main that simply outputs all loaded from INTEGRATION to System.out.
+     * @param args main args, NOT processed.
+     * @throws JAXBException when converting the profile to XML goes wrong. It shouldn't.
+     */
+    public static void main(final String[] args) throws JAXBException {
+        for (ValidationProfile profile : INTEGRATION.getValidationProfiles()) {
+            Profiles.profileToXml(profile, System.out, Boolean.TRUE);
+        }
     }
 }
