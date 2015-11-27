@@ -103,6 +103,7 @@ class BaseValidator implements PDFAValidator {
         this.results.clear();
         this.idSet.clear();
         this.testCounter = 0;
+        this.isCompliant = true;
         initializeAllVariables();
     }
 
