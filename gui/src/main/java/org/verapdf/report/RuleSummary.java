@@ -1,17 +1,16 @@
 package org.verapdf.report;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.RuleId;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Maksim Bezrukov
@@ -81,7 +80,7 @@ public class RuleSummary {
     }
 
     static RuleSummary fromValues(final RuleId id, final String description,
-            Set<TestAssertion> assertions, boolean logPassedChecks) {
+                                  Set<TestAssertion> assertions, boolean logPassedChecks, int maxNumberOfDisplayedFailedChecks) {
         if (id == null) {
             throw new NullPointerException("Argument id can not be null");
         }
@@ -105,7 +104,9 @@ public class RuleSummary {
             } else {
                 status = assertion.getStatus();
                 failedChecks++;
-                checks.add(Check.fromValue(assertion));
+                if ((maxNumberOfDisplayedFailedChecks == -1) || (failedChecks <= maxNumberOfDisplayedFailedChecks)) {
+                    checks.add(Check.fromValue(assertion));
+                }
             }
         }
         return new RuleSummary(id, status, passedChecks, failedChecks,

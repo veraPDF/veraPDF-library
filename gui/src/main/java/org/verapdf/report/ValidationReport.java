@@ -1,15 +1,14 @@
 package org.verapdf.report;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import org.verapdf.pdfa.MetadataFixerResult;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Maksim Bezrukov
@@ -31,37 +30,20 @@ public class ValidationReport {
     @XmlElement
     private final String statement;
     @XmlElement
-    private final ValidationSummary summary;
+    private final ValidationDetails details;
 
-    // @XmlElementWrapper
-    // @XmlElement(name = "warning")
-    // private final Set<Warning> warnings;
 
     private ValidationReport(final String profile, boolean compliant, String statement,
-            ValidationSummary summary) {
+                             ValidationDetails details) {
         this.profile = profile;
         this.compliant = compliant;
         this.statement = statement;
-        this.summary = summary;
+        this.details = details;
     }
 
     private ValidationReport() {
-        this(PDFAFlavour.NO_FLAVOUR.getId(), false, "", ValidationSummary.fromValues(Profiles.defaultProfile(),
-                ValidationResults.defaultResult(), false));
-    }
-
-    static ValidationReport fromValues(final ValidationProfile profile, final ValidationResult result, final boolean logPassedChecks,
-            final MetadataFixerResult fixerResult) {
-
-        if (fixerResult != null) {
-            return new ValidationReport(profile.getDetails().getName(), result.isCompliant(),
-                    getStatement(result.isCompliant()), ValidationSummary.fromValues(profile,
-                            result, logPassedChecks, fixerResult));
-        }
-
-        return new ValidationReport(profile.getDetails().getName(), result.isCompliant(),
-                getStatement(result.isCompliant()), ValidationSummary.fromValues(profile,
-                        result, logPassedChecks));
+        this(PDFAFlavour.NO_FLAVOUR.getId(), false, "", ValidationDetails.fromValues(Profiles.defaultProfile(),
+                ValidationResults.defaultResult(), false, 0));
     }
 
     /**
@@ -71,10 +53,13 @@ public class ValidationReport {
      * @return
      */
     public static ValidationReport fromValues(final ValidationProfile profile, final ValidationResult result,
-            final boolean logPassedChecks) {
+                                              final boolean logPassedChecks, final int maxNumberOfDisplayedFailedChecks) {
+        if (result == null) {
+            return null;
+        }
         return new ValidationReport(profile.getDetails().getName(), result.isCompliant(),
                 getStatement(result.isCompliant()),
-                ValidationSummary.fromValues(profile, result, logPassedChecks));
+                ValidationDetails.fromValues(profile, result, logPassedChecks, maxNumberOfDisplayedFailedChecks));
     }
 
     private static String getStatement(boolean status) {

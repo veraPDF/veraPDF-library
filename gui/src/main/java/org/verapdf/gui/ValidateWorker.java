@@ -1,24 +1,5 @@
 package org.verapdf.gui;
 
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.ID_REMOVED;
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import javax.swing.JOptionPane;
-import javax.swing.SwingWorker;
-import javax.xml.bind.JAXBException;
-import javax.xml.transform.TransformerException;
-
 import org.apache.log4j.Logger;
 import org.verapdf.core.ValidationException;
 import org.verapdf.features.pb.PBFeatureParser;
@@ -27,7 +8,6 @@ import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.gui.tools.ProcessingType;
 import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
-import org.verapdf.metadata.fixer.impl.fixer.MetadataFixerEnum;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
@@ -174,7 +154,13 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     private ValidationResult runValidator(ModelParser toValidate)
             throws IOException {
         try {
-            PDFAValidator validator = Validators.createValidator(this.profile, true);
+            int max = settings.getMaxNumberOfFailedChecks();
+            PDFAValidator validator;
+            if (max > 0) {
+                validator = Validators.createValidator(this.profile, true, max);
+            } else {
+                validator = Validators.createValidator(this.profile, true);
+            }
             return validator.validate(toValidate);
         } catch (ValidationException e) {
 
@@ -196,7 +182,8 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
                     ".xml");
             this.xmlReport.deleteOnExit();
             MachineReadableReport report = MachineReadableReport.fromValues(
-                    this.profile, result, this.settings.isShowPassedRules(), fixerResult, collection,
+                    this.profile, result, this.settings.isShowPassedRules(),
+                    this.settings.getMaxNumberOfDisplayedFailedChecks(), fixerResult, collection,
                     this.endTimeOfValidation - this.startTimeOfValidation);
             try (OutputStream xmlReportOs = new FileOutputStream(this.xmlReport)) {
                 MachineReadableReport.toXml(report, xmlReportOs, Boolean.TRUE);

@@ -1,8 +1,10 @@
 package org.verapdf.report;
 
-import java.io.OutputStream;
-import java.util.Formatter;
-import java.util.GregorianCalendar;
+import org.apache.log4j.Logger;
+import org.verapdf.features.tools.FeaturesCollection;
+import org.verapdf.pdfa.MetadataFixerResult;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.validation.ValidationProfile;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -13,13 +15,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-
-import org.apache.log4j.Logger;
-import org.verapdf.features.tools.FeaturesCollection;
-import org.verapdf.pdfa.MetadataFixerResult;
-import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.validation.Profiles;
-import org.verapdf.pdfa.validation.ValidationProfile;
+import java.io.OutputStream;
+import java.util.Formatter;
+import java.util.GregorianCalendar;
 
 /**
  * @author Maksim Bezrukov
@@ -40,23 +38,24 @@ public class MachineReadableReport {
     private final String creationDate;
     @XmlAttribute
     private final String processingTime;
-    @XmlElement(name = "validationReport")
+    @XmlElement
     private final ValidationReport validationReport;
+    @XmlElement
+    private final MetadataFixesReport metadataFixesReport;
     @XmlElement
     private final FeaturesReport pdfFeaturesReport;
 
     private MachineReadableReport() {
-        this(
-                ValidationReport.fromValues(Profiles.defaultProfile(), null,
-                        false), "", "", null);
+        this(null, "", "", null, null);
     }
 
     private MachineReadableReport(ValidationReport report, String creationDate,
-            String processingTime, FeaturesReport featuresReport) {
+                                  String processingTime, FeaturesReport featuresReport, MetadataFixesReport metadataFixesReport) {
         this.validationReport = report;
         this.creationDate = creationDate;
         this.processingTime = processingTime;
         this.pdfFeaturesReport = featuresReport;
+        this.metadataFixesReport = metadataFixesReport;
     }
 
     /**
@@ -69,17 +68,15 @@ public class MachineReadableReport {
      * @return a MachineReadableReport instance initialised from the passed
      *         values
      */
-    public static MachineReadableReport fromValues(ValidationProfile profile,
-            ValidationResult validationResult, boolean reportPassedChecks, MetadataFixerResult fixerResult,
-            FeaturesCollection collection, long processingTime) {
-        ValidationReport validationReport = null;
-        if (validationResult != null) {
-            validationReport = ValidationReport.fromValues(profile, validationResult, reportPassedChecks,
-                    fixerResult);
-        }
+    public static MachineReadableReport fromValues(ValidationProfile profile, ValidationResult validationResult,
+                                                   boolean reportPassedChecks, int maxNumberOfDisplayedFailedChecks,
+                                                   MetadataFixerResult fixerResult, FeaturesCollection collection,
+                                                   long processingTime) {
+        ValidationReport validationReport = ValidationReport.fromValues(profile, validationResult, reportPassedChecks, maxNumberOfDisplayedFailedChecks);
+        MetadataFixesReport fixesReport = MetadataFixesReport.fromValues(fixerResult);
         FeaturesReport featuresReport = FeaturesReport.fromValues(collection);
         return new MachineReadableReport(validationReport, getNowDateString(),
-                getProcessingTime(processingTime), featuresReport);
+                getProcessingTime(processingTime), featuresReport, fixesReport);
     }
 
     /**

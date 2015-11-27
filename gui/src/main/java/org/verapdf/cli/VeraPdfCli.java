@@ -3,13 +3,7 @@
  */
 package org.verapdf.cli;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
-import javax.xml.bind.JAXBException;
-
+import com.beust.jcommander.JCommander;
 import org.apache.log4j.Logger;
 import org.verapdf.ReleaseDetails;
 import org.verapdf.cli.commands.VeraCliArgParser;
@@ -30,7 +24,11 @@ import org.verapdf.report.FeaturesReport;
 import org.verapdf.report.MachineReadableReport;
 import org.verapdf.validation.profile.parser.LegacyProfileConverter;
 
-import com.beust.jcommander.JCommander;
+import javax.xml.bind.JAXBException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -127,7 +125,7 @@ public final class VeraPdfCli {
                             .getPDDocument());
                 }
                 MachineReadableReport report = MachineReadableReport
-                        .fromValues(profile, result, argParser.logPassed(),
+                        .fromValues(profile, result, argParser.logPassed(), -1,
                                 null, features, System.currentTimeMillis()
                                         - start);
                 MachineReadableReport.toXml(report, System.out, Boolean.TRUE);
