@@ -126,7 +126,6 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
         for (PDFAFlavour flavour : PDFAFlavour.values()) {
             String profilePath = PROFILE_RESOURCE_ROOT + flavour.getId()
                     + XML_SUFFIX;
-            System.out.println(profilePath);
             try (InputStream is = ValidationProfileImpl.class.getClassLoader()
                     .getResourceAsStream(profilePath)) {
                 if (is != null)
