@@ -62,11 +62,16 @@
       <singlefile src="scripts/verapdf-gui.sh" target="$INSTALL_PATH/verapdf-gui"/>
       <parsable targetfile="$INSTALL_PATH/verapdf-gui" type="shell"/>
       <executable targetfile="$INSTALL_PATH/verapdf-gui"/>
+      <singlefile src="scripts/verapdf.sh" target="$INSTALL_PATH/verapdf"/>
+      <parsable targetfile="$INSTALL_PATH/verapdf" type="shell"/>
+      <executable targetfile="$INSTALL_PATH/verapdf"/>
     </pack>
     <pack name="veraPDF Batch files" required="yes" os="windows">
       <description>Scripts for using the veraPDF software.</description>
       <file targetdir="$INSTALL_PATH" src="scripts/verapdf-gui.bat"/>
       <executable targetfile="$INSTALL_PATH/verapdf-gui.bat"/>
+      <file targetdir="$INSTALL_PATH" src="scripts/verapdf.bat"/>
+      <executable targetfile="$INSTALL_PATH/verapdf.bat"/>
     </pack>
     <pack name="veraPDF Corpus and Validation model" required="no">
       <description>The veraPDF test files and the validation model API.</description>

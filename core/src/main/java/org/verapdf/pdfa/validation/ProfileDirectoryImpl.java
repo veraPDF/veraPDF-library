@@ -23,6 +23,8 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
  *
  */
 final class ProfileDirectoryImpl implements ProfileDirectory {
+    private final static String PROFILE_RESOURCE_ROOT = "org/verapdf/pdfa/validation/pdfa-";
+    private final static String XML_SUFFIX = ".xml";
     private static final ProfileDirectoryImpl DEFAULT = makeVeraProfileDir();
 
     private final Directory<PDFAFlavour, ValidationProfile> profileDir;
@@ -120,16 +122,19 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
 
     private static ProfileDirectoryImpl makeVeraProfileDir() {
         Set<ValidationProfile> profiles = new HashSet<>();
-        profiles.add(getFallBackPDFA1b());
+        for (PDFAFlavour flavour : PDFAFlavour.values()) {
+            String profilePath = PROFILE_RESOURCE_ROOT + flavour.getId()
+                    + XML_SUFFIX;
+            try (InputStream is = ValidationProfileImpl.class.getClassLoader()
+                    .getResourceAsStream(profilePath)) {
+                if (is != null)
+                    profiles.add(ValidationProfileImpl.fromXml(is));
+            } catch (JAXBException | IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
         return ProfileDirectoryImpl.fromProfileSet(profiles);
     }
 
-    private static ValidationProfile getFallBackPDFA1b() {
-        try (InputStream is = ValidationProfileImpl.class.getClassLoader()
-                .getResourceAsStream("org/verapdf/pdfa/validation/pdfa-1b.xml")) {
-            return ValidationProfileImpl.fromXml(is);
-        } catch (JAXBException | IOException e) {
-            throw new IllegalStateException(e);
-        }
-    }
 }
