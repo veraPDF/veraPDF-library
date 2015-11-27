@@ -141,8 +141,8 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         tempFile.deleteOnExit();
         try (OutputStream tempOutput = new BufferedOutputStream(
                 new FileOutputStream(tempFile))) {
-            MetadataFixerResult fixerResult = MetadataFixerImpl.fixMetadata(tempOutput,
-                    fixerConfig);
+            MetadataFixerResult fixerResult = MetadataFixerImpl.fixMetadata(
+                    tempOutput, fixerConfig);
             MetadataFixerResult.RepairStatus repairStatus = fixerResult
                     .getRepairStatus();
             if (repairStatus == SUCCESS || repairStatus == ID_REMOVED) {
@@ -174,7 +174,8 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
     private ValidationResult runValidator(ModelParser toValidate)
             throws IOException {
         try {
-            PDFAValidator validator = Validators.createValidator(this.profile, true);
+            PDFAValidator validator = Validators.createValidator(this.profile,
+                    true);
             return validator.validate(toValidate);
         } catch (ValidationException e) {
 
@@ -189,25 +190,27 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         this.parent.validationEnded(this.xmlReport, this.htmlReport);
     }
 
-    private void writeReports(ValidationResult result, MetadataFixerResult fixerResult,
-            FeaturesCollection collection) {
+    private void writeReports(ValidationResult result,
+            MetadataFixerResult fixerResult, FeaturesCollection collection) {
         try {
             this.xmlReport = File.createTempFile("veraPDF-tempXMLReport",
                     ".xml");
             this.xmlReport.deleteOnExit();
             MachineReadableReport report = MachineReadableReport.fromValues(
-                    this.profile, result, this.settings.isShowPassedRules(), fixerResult, collection,
-                    this.endTimeOfValidation - this.startTimeOfValidation);
+                    this.profile, result, this.settings.isShowPassedRules(),
+                    fixerResult, collection, this.endTimeOfValidation
+                            - this.startTimeOfValidation);
             try (OutputStream xmlReportOs = new FileOutputStream(this.xmlReport)) {
                 MachineReadableReport.toXml(report, xmlReportOs, Boolean.TRUE);
             }
             if (result != null) {
-                try {
-                    this.htmlReport = File.createTempFile(
-                            "veraPDF-tempHTMLReport", ".html");
-                    this.htmlReport.deleteOnExit();
-                    HTMLReport.writeHTMLReport(this.xmlReport,
-                            new FileOutputStream(this.htmlReport));
+                this.htmlReport = File.createTempFile("veraPDF-tempHTMLReport",
+                        ".html");
+                this.htmlReport.deleteOnExit();
+                try (InputStream xmlStream = new FileInputStream(this.xmlReport);
+                        OutputStream htmlStream = new FileOutputStream(
+                                this.htmlReport)) {
+                    HTMLReport.writeHTMLReport(xmlStream, htmlStream);
 
                 } catch (IOException | TransformerException e) {
                     JOptionPane.showMessageDialog(this.parent,
