@@ -59,6 +59,11 @@ public final class VeraPdfCli {
         JCommander jCommander = new JCommander(cliArgParser);
         jCommander.setProgramName(APP_NAME);
 
+        if (args.length == 0) {
+            showVersionInfo();
+            jCommander.usage();
+            System.exit(0);
+        }
         try {
             jCommander.parse(args);
         } catch (Exception e) {
