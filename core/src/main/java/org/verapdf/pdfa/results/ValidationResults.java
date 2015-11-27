@@ -3,15 +3,20 @@
  */
 package org.verapdf.pdfa.results;
 
-import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.results.TestAssertion.Status;
-import org.verapdf.pdfa.validation.RuleId;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 
-import java.io.*;
-import java.util.HashSet;
-import java.util.Set;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.TestAssertion.Status;
+import org.verapdf.pdfa.validation.RuleId;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -296,11 +301,20 @@ public class ValidationResults {
     }
 
     /**
+     * Strips any {@link TestAssertion}s where
+     * {@code assertion.getStatus() == TestAssertion.Status.PASSED} from
+     * {@code toStrip} and returns a new {@link ValidationResult} without the
+     * passed assertions.
+     * 
      * @param toStrip
-     * @return
+     *            a {@code ValidationResult} to clone without passed
+     *            {@code TestAssertion}s
+     * @return a ValidationResult instance identical to {@code toStrip}, but
+     *         without passed {@code TestAssertion}s.
      */
     public static ValidationResult stripPassedTests(ValidationResult toStrip) {
-        if (toStrip == null) throw new NullPointerException("toStrip can not be null.");
+        if (toStrip == null)
+            throw new NullPointerException("toStrip can not be null.");
         return ValidationResultImpl.stripPassedTests(toStrip);
     }
 }

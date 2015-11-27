@@ -10,7 +10,7 @@ import org.verapdf.pdfa.validation.ValidationProfile;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
-public class FastFailValidator extends BaseValidator {
+class FastFailValidator extends BaseValidator {
     private final int maxFailedTests;
     protected int failureCount = 0;
 
