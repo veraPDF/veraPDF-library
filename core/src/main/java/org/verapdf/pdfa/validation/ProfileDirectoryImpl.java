@@ -122,14 +122,13 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
 
     private static ProfileDirectoryImpl makeVeraProfileDir() {
         Set<ValidationProfile> profiles = new HashSet<>();
-        Set<ValidationProfile> profileSet = new HashSet<>();
         for (PDFAFlavour flavour : PDFAFlavour.values()) {
             String profilePath = PROFILE_RESOURCE_ROOT + flavour.getId()
                     + XML_SUFFIX;
             try (InputStream is = ValidationProfileImpl.class.getClassLoader()
                     .getResourceAsStream(profilePath)) {
                 if (is != null)
-                    profileSet.add(ValidationProfileImpl.fromXml(is));
+                    profiles.add(ValidationProfileImpl.fromXml(is));
             } catch (JAXBException | IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
