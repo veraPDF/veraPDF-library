@@ -141,9 +141,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
         tempFile.deleteOnExit();
         try (OutputStream tempOutput = new BufferedOutputStream(
                 new FileOutputStream(tempFile))) {
-            MetadataFixerImpl fixer = MetadataFixerEnum.BOX_INSTANCE
-                    .getInstance();
-            MetadataFixerResult fixerResult = fixer.fixMetadata(tempOutput,
+            MetadataFixerResult fixerResult = MetadataFixerImpl.fixMetadata(tempOutput,
                     fixerConfig);
             MetadataFixerResult.RepairStatus repairStatus = fixerResult
                     .getRepairStatus();

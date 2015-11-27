@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
@@ -16,6 +15,8 @@ import org.verapdf.ReleaseDetails;
 import org.verapdf.cli.commands.VeraCliArgParser;
 import org.verapdf.core.ProfileException;
 import org.verapdf.core.ValidationException;
+import org.verapdf.features.pb.PBFeatureParser;
+import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.model.ModelParser;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
@@ -25,6 +26,8 @@ import org.verapdf.pdfa.validation.ProfileDirectory;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validators.Validators;
+import org.verapdf.report.FeaturesReport;
+import org.verapdf.report.MachineReadableReport;
 import org.verapdf.validation.profile.parser.LegacyProfileConverter;
 
 import com.beust.jcommander.JCommander;
@@ -70,32 +73,73 @@ public final class VeraPdfCli {
             logThrowableAndExit(e, "Couldn't parse parameters.", 1);
         }
         messagesFromParser(jCommander, cliArgParser);
-        processPaths(cliArgParser.getPathsToValidate(),
-                profileFromInput(cliArgParser.getProfile()));
-
+        processPaths(profileFromInput(cliArgParser.getProfile()), cliArgParser);
     }
-    private static void processPaths(final List<String> paths,
-            final ValidationProfile profile) {
-        for (String pathToValidate : paths) {
-            try (InputStream fis = new FileInputStream(pathToValidate)) {
-                ValidationResults.toXml(validate(fis, profile), System.out, Boolean.TRUE);
+
+    private static void processPaths(final ValidationProfile profile,
+            final VeraCliArgParser argParser) {
+        if (argParser.isVerbose()) {
+            processPathsVerbose(profile, argParser);
+        } else {
+            processPathsRaw(profile, argParser);
+        }
+    }
+
+    private static void processPathsRaw(final ValidationProfile profile,
+            final VeraCliArgParser argParser) {
+        PDFAValidator validator = Validators.createValidator(profile,
+                argParser.logPassed());
+        for (String pathToValidate : argParser.getPathsToValidate()) {
+            try (ModelParser parser = new ModelParser(new FileInputStream(
+                    pathToValidate))) {
+                ValidationResult result = validator.validate(parser);
+                if (argParser.extractFeatures()) {
+                    FeaturesCollection features = PBFeatureParser
+                            .getFeaturesCollection(parser.getPDDocument());
+                    FeaturesReport featuresReport = FeaturesReport
+                            .fromValues(features);
+                    FeaturesReport.toXml(featuresReport, System.out,
+                            Boolean.TRUE);
+                }
+                ValidationResults.toXml(result, System.out, Boolean.TRUE);
             } catch (FileNotFoundException e) {
                 logThrowable(e, "Could not find file: " + pathToValidate);
             } catch (IOException e) {
                 logThrowable(e, "Could not read file: " + pathToValidate);
             } catch (ValidationException | JAXBException e) {
-                logThrowable(e, "Exception thrown validating file: " + pathToValidate);
+                logThrowable(e, "Exception thrown validating file: "
+                        + pathToValidate);
             }
         }
     }
 
-    private static ValidationResult validate(final InputStream toValidate,
-            final ValidationProfile profile) throws IOException, ValidationException {
-            try (ModelParser parser = new ModelParser(toValidate)) {
-                PDFAValidator validator = Validators.createValidator(profile,
-                        false);
-                return validator.validate(parser);
+    private static void processPathsVerbose(final ValidationProfile profile,
+            final VeraCliArgParser argParser) {
+        PDFAValidator validator = Validators.createValidator(profile, true);
+        for (String pathToValidate : argParser.getPathsToValidate()) {
+            long start = System.currentTimeMillis();
+            try (ModelParser parser = new ModelParser(new FileInputStream(
+                    pathToValidate))) {
+                ValidationResult result = validator.validate(parser);
+                FeaturesCollection features = null;
+                if (argParser.extractFeatures()) {
+                    features = PBFeatureParser.getFeaturesCollection(parser
+                            .getPDDocument());
+                }
+                MachineReadableReport report = MachineReadableReport
+                        .fromValues(profile, result, argParser.logPassed(),
+                                null, features, System.currentTimeMillis()
+                                        - start);
+                MachineReadableReport.toXml(report, System.out, Boolean.TRUE);
+            } catch (FileNotFoundException e) {
+                logThrowable(e, "Could not find file: " + pathToValidate);
+            } catch (IOException e) {
+                logThrowable(e, "Could not read file: " + pathToValidate);
+            } catch (ValidationException | JAXBException e) {
+                logThrowable(e, "Exception thrown validating file: "
+                        + pathToValidate);
             }
+        }
     }
 
     private static ValidationProfile profileFromInput(String userInput) {
@@ -107,15 +151,16 @@ public final class VeraPdfCli {
         try {
             return Profiles.profileFromXml(new FileInputStream(userInput));
         } catch (JAXBException | IOException e) {
-            LOGGER.warn("Couldn't parse profile, trying legacy profile parser.", e);
+            LOGGER.warn(
+                    "Couldn't parse profile, trying legacy profile parser.", e);
             // Do nothing as it's a parse error so try from legacy profile nex
         }
 
         try (InputStream toParse = new FileInputStream(userInput)) {
-            return LegacyProfileConverter.fromLegacyStream(toParse, PDFAFlavour.NO_FLAVOUR);
+            return LegacyProfileConverter.fromLegacyStream(toParse,
+                    PDFAFlavour.NO_FLAVOUR);
         } catch (ProfileException | IOException e) {
-            logThrowableAndExit(e, "ProfileException parsing: "
-                    + userInput, 1);
+            logThrowableAndExit(e, "ProfileException parsing: " + userInput, 1);
         }
         return Profiles.defaultProfile();
     }
@@ -126,8 +171,7 @@ public final class VeraPdfCli {
         System.exit(retVal);
     }
 
-    private static void logThrowable(final Throwable cause,
-            final String message) {
+    private static void logThrowable(final Throwable cause, final String message) {
         LOGGER.fatal(message, cause);
         return;
     }
