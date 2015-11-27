@@ -103,6 +103,10 @@ public enum PDFAFlavour {
         return this.id;
     }
 
+    @Override
+    public final String toString() {
+        return this.id;
+    }
     /**
      * Enumeration of PDF/A Specification Parts, 1-3 used to provide ids and a
      * standard source of details such as name and description for PDF/A
