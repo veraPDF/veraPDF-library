@@ -1,15 +1,5 @@
 package org.verapdf.report;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-
-import org.verapdf.pdfa.MetadataFixerResult;
-import org.verapdf.pdfa.MetadataFixerResult.RepairStatus;
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
@@ -17,10 +7,17 @@ import org.verapdf.pdfa.validation.Rule;
 import org.verapdf.pdfa.validation.RuleId;
 import org.verapdf.pdfa.validation.ValidationProfile;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author Maksim Bezrukov
  */
-public class ValidationSummary {
+public class ValidationDetails {
 
     @XmlAttribute
     private final int passedRules;
@@ -30,47 +27,26 @@ public class ValidationSummary {
     private final int passedChecks;
     @XmlAttribute
     private final int failedChecks;
-    @XmlAttribute
-    private final String metadataFixesStatus;
-    @XmlAttribute
-    private final int completedMetadataFixes;
     @XmlElement(name = "rule")
     private final Set<RuleSummary> ruleSummaries;
 
-    private ValidationSummary(final int passedRules, final int failedRules,
-            final int passedChecks, final int failedChecks,
-            final Set<RuleSummary> ruleSummaries,
-            final String metadataFixesStatus, final int completedMetadataFixes) {
+    private ValidationDetails(final int passedRules, final int failedRules,
+                              final int passedChecks, final int failedChecks,
+                              final Set<RuleSummary> ruleSummaries) {
         this.passedRules = passedRules;
         this.failedRules = failedRules;
         this.passedChecks = passedChecks;
         this.failedChecks = failedChecks;
         this.ruleSummaries = new HashSet<>(ruleSummaries);
-        this.metadataFixesStatus = metadataFixesStatus;
-        this.completedMetadataFixes = completedMetadataFixes;
     }
 
-    private ValidationSummary() {
-        this(0, 0, 0, 0, new HashSet<RuleSummary>(), "", 0);
+    private ValidationDetails() {
+        this(0, 0, 0, 0, new HashSet<RuleSummary>());
     }
 
-    static ValidationSummary fromValues(final ValidationProfile profile,
-            final ValidationResult result, boolean logPassedChecks,
-            final MetadataFixerResult metadataResult) {
-        return fromValues(profile, result, logPassedChecks, metadataResult
-                .getRepairStatus().toString(), metadataResult.getAppliedFixes()
-                .size());
-    }
-
-    static ValidationSummary fromValues(final ValidationProfile profile,
-            final ValidationResult result, boolean logPassedChecks) {
-        return fromValues(profile, result, logPassedChecks,
-                RepairStatus.NO_ACTION.toString(), 0);
-    }
-
-    static ValidationSummary fromValues(final ValidationProfile profile,
-            final ValidationResult result, boolean logPassedChecks,
-            final String repairStatus, final int fixes) {
+    static ValidationDetails fromValues(final ValidationProfile profile,
+                                        final ValidationResult result, boolean logPassedChecks,
+                                        final int maxNumberOfDisplayedFailedChecks) {
 
         Map<RuleId, Set<TestAssertion>> assertionMap = mapAssertionsByRule(result
                 .getTestAssertions());
@@ -85,7 +61,8 @@ public class ValidationSummary {
             if (assertionMap.containsKey(rule.getRuleId())) {
                 summary = RuleSummary.fromValues(rule.getRuleId(),
                         rule.getDescription(),
-                        assertionMap.get(rule.getRuleId()), logPassedChecks);
+                        assertionMap.get(rule.getRuleId()), logPassedChecks,
+                        maxNumberOfDisplayedFailedChecks);
             }
             passedChecks += summary.getPassedChecks();
             failedChecks += summary.getFailedChecks();
@@ -99,8 +76,8 @@ public class ValidationSummary {
             }
         }
 
-        return new ValidationSummary(passedRules, failedRules, passedChecks,
-                failedChecks, ruleSummaries, repairStatus, fixes);
+        return new ValidationDetails(passedRules, failedRules, passedChecks,
+                failedChecks, ruleSummaries);
     }
 
     private static Map<RuleId, Set<TestAssertion>> mapAssertionsByRule(
