@@ -133,16 +133,38 @@
                     select="/report/metadataFixesReport/@completedMetadataFixes"/>
         </table>
 
+        <xsl:if test="/report/metadataFixesReport/appliedFix">
+            <h2>Metadata fixes information</h2>
+
+            <table border="0" id="table4">
+                <tr style="BACKGROUND: #bcbad6">
+                    <td width="800">
+                        <b>Fixes</b>
+                    </td>
+                    <td width="50">
+                        <a id="lable{fixesId}" href="#" style="display: none;"
+                           class="hide-tr"
+                           data-target="hide{fixesId}"
+                           data-translation-toggle="Hide">Show
+                        </a>
+                    </td>
+                </tr>
+
+                <xsl:apply-templates
+                        select="/report/metadataFixesReport/appliedFix"/>
+
+            </table>
+        </xsl:if>
 
         <xsl:if test="/report/validationReport/details/rule">
-            <h2>Detailed information</h2>
+            <h2>Validation information</h2>
 
             <table border="0" id="table3">
                 <tr style="BACKGROUND: #bcbad6">
                     <td width="800">
                         <b>Rule</b>
                     </td>
-                    <td>
+                    <td width="50">
                         <b>Status</b>
                     </td>
                 </tr>
@@ -178,7 +200,7 @@
         </tr>
     </xsl:template>
 
-    <!-- Detailed Information -->
+    <!-- Validation Information -->
     <xsl:template match="/report/validationReport/details/rule">
 
         <xsl:param name="idWithDots" select="concat(@clause,'t',@testNumber)"/>
@@ -200,7 +222,7 @@
                 <xsl:value-of
                         select="description"/>
             </td>
-            <td>
+            <td width="50">
                 <b>
                     <xsl:if test="@status = 'passed'">
                         <font color="green">
@@ -215,13 +237,12 @@
                 </b>
             </td>
         </tr>
-        <xsl:variable name="failedChecksCount" select="count(check[@status = 'failed'])"/>
         <xsl:if test="@failedChecks > 0">
             <tr style="BACKGROUND: #dcdaf6">
                 <td width="800">
                     <xsl:value-of select="@failedChecks"/> occurrences
                 </td>
-                <td>
+                <td width="50">
                     <xsl:if test="@status = 'failed'">
                         <a id="lable{$id}" href="#" style="display: none;"
                            class="hide-tr"
@@ -249,6 +270,15 @@
             </td>
         </tr>
 
+    </xsl:template>
+
+    <!-- Metadata fixes information -->
+    <xsl:template match="/report/metadataFixesReport/appliedFix">
+        <tr class="hideable hide{fixesId}">
+            <td width="800" style="word-break: break-all">
+                <xsl:value-of select="."/>
+            </td>
+        </tr>
     </xsl:template>
 
 </xsl:stylesheet>
