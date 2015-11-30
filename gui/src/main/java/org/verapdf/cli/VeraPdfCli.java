@@ -12,7 +12,7 @@ import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Logger;
 import org.verapdf.ReleaseDetails;
-import org.verapdf.cli.commands.FormatType;
+import org.verapdf.cli.commands.FormatOption;
 import org.verapdf.cli.commands.VeraCliArgParser;
 import org.verapdf.core.ProfileException;
 import org.verapdf.core.ValidationException;
@@ -81,7 +81,7 @@ public final class VeraPdfCli {
     private static void processPaths(
             final VeraCliArgParser argParser) {
         ValidationProfile profile = profileFromInput(argParser);
-        if (argParser.getFormat() == FormatType.XML) {
+        if (argParser.getFormat() == FormatOption.XML) {
             processPathsVerbose(profile, argParser);
         } else {
             processPathsRaw(profile, argParser);
@@ -92,7 +92,7 @@ public final class VeraPdfCli {
             final VeraCliArgParser argParser) {
         PDFAValidator validator = Validators.createValidator(profile,
                 argParser.logPassed());
-        for (String pathToValidate : argParser.getPathsToValidate()) {
+        for (String pathToValidate : argParser.getPdfPaths()) {
             try (ModelParser parser = new ModelParser(new FileInputStream(
                     pathToValidate))) {
                 ValidationResult result = validator.validate(parser);
@@ -119,7 +119,7 @@ public final class VeraPdfCli {
     private static void processPathsVerbose(final ValidationProfile profile,
             final VeraCliArgParser argParser) {
         PDFAValidator validator = Validators.createValidator(profile, true);
-        for (String pathToValidate : argParser.getPathsToValidate()) {
+        for (String pathToValidate : argParser.getPdfPaths()) {
             long start = System.currentTimeMillis();
             try (ModelParser parser = new ModelParser(new FileInputStream(
                     pathToValidate))) {
@@ -133,7 +133,7 @@ public final class VeraPdfCli {
                         .fromValues(profile, result, argParser.logPassed(),
                                 null, features, System.currentTimeMillis()
                                         - start);
-                if (argParser.getFormat() == FormatType.MRR)
+                if (argParser.getFormat() == FormatOption.MRR)
                     MachineReadableReport.toXml(report, System.out,
                             Boolean.TRUE);
 
@@ -150,26 +150,26 @@ public final class VeraPdfCli {
 
     private static ValidationProfile profileFromInput(
             final VeraCliArgParser argParser) {
-        if (argParser.getProfile() == null) {
+        if (argParser.getProfileFile() == null) {
             return PROFILES.getValidationProfileByFlavour(argParser
                     .getFlavour());
         }
         // Try as a file
         try {
             return Profiles.profileFromXml(new FileInputStream(argParser
-                    .getProfile()));
+                    .getProfileFile()));
         } catch (JAXBException | IOException e) {
             LOGGER.warn(
                     "Couldn't parse profile, trying legacy profile parser.", e);
             // Do nothing as it's a parse error so try from legacy profile nex
         }
 
-        try (InputStream toParse = new FileInputStream(argParser.getProfile())) {
+        try (InputStream toParse = new FileInputStream(argParser.getProfileFile())) {
             return LegacyProfileConverter.fromLegacyStream(toParse,
                     PDFAFlavour.NO_FLAVOUR);
         } catch (ProfileException | IOException e) {
             logThrowableAndExit(e, "ProfileException parsing: "
-                    + argParser.getProfile().getName(), 1);
+                    + argParser.getProfileFile().getName(), 1);
         }
         return Profiles.defaultProfile();
     }

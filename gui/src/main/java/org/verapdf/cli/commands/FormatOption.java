@@ -5,11 +5,13 @@ package org.verapdf.cli.commands;
 
 import org.verapdf.report.MachineReadableReport;
 
+import com.beust.jcommander.ParameterException;
+
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
-public enum FormatType {
+public enum FormatOption {
     /**
      * Output in XML format
      */
@@ -17,7 +19,7 @@ public enum FormatType {
     /**
      * Output in {@link MachineReadableReport} XML format
      */
-    MRR("mmr"),
+    MRR("mrr"),
     /**
      * Output in HTML format
      */
@@ -25,7 +27,7 @@ public enum FormatType {
 
     private final String option;
 
-    private FormatType(final String option) {
+    private FormatOption(final String option) {
         this.option = option;
     }
 
@@ -44,31 +46,18 @@ public enum FormatType {
     /**
      * Performs a match against the parameter {@code String option} of each
      * {@code FormatType}'s option and returns a matching instance. Defaults to
-     * returning {@link FormatType#XML} if no match can be made.
+     * returning {@link FormatOption#XML} if no match can be made.
      * 
      * @param option
      *            the string CLI option to compare
      * @return a matching {@code FormatType} instance or {@code XML} if no match
      *         can be made.
      */
-    public static FormatType fromOption(final String option) {
-        for (FormatType format : FormatType.values()) {
-            if (format.option.startsWith(option.toLowerCase()))
+    public static FormatOption fromOption(final String option) {
+        for (FormatOption format : FormatOption.values()) {
+            if (format.option.equalsIgnoreCase(option))
                 return format;
         }
-        return XML;
-    }
-
-    /**
-     * @return a String comprising a comma separated list of all format options.
-     */
-    public static String listFormatOptions() {
-        StringBuilder builder = new StringBuilder();
-        String separator = "";
-        for (FormatType format : FormatType.values()) {
-            builder.append(separator + format.option);
-            separator = ", ";
-        }
-        return builder.toString();
+        throw new ParameterException("Illegal --format argument:" + option);
     }
 }
