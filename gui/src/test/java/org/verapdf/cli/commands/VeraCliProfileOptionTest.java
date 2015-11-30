@@ -1,0 +1,137 @@
+/**
+ * 
+ */
+package org.verapdf.cli.commands;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.ParameterException;
+
+/**
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *
+ */
+@SuppressWarnings("static-method")
+public class VeraCliProfileOptionTest {
+
+    /**
+     * Test method for
+     * {@link org.verapdf.cli.commands.VeraCliArgParser#getProfileFile()}.
+     */
+    @Test
+    public final void testGetProfileFileDefault() {
+        assertTrue(VeraCliArgParser.DEFAULT_ARGS.getProfileFile() == null);
+
+        // Test empty String[] args doesn't change that
+        VeraCliArgParser parser = new VeraCliArgParser();
+        JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+        jCommander.parse(new String[] {});
+        assertTrue(parser.getProfileFile() == VeraCliArgParser.DEFAULT_ARGS
+                .getProfileFile());
+
+        // Test other flags & options doesn't change that
+        parser = new VeraCliArgParser();
+        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+        jCommander.parse(new String[] { "-l", "--flavour", "1B", "-h" });
+        assertTrue(parser.getProfileFile() == VeraCliArgParser.DEFAULT_ARGS
+                .getProfileFile());
+    }
+
+    /**
+     * Test method for
+     * {@link org.verapdf.cli.commands.VeraCliArgParser#getProfileFile()}.
+     */
+    @Test(expected = ParameterException.class)
+    public final void testGetProfileFileFlagEmpty() {
+        VeraCliArgParser parser = new VeraCliArgParser();
+        JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+
+        // Test flag works
+        parser = new VeraCliArgParser();
+        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+        jCommander.parse(new String[] { "-p" });
+    }
+
+    /**
+     * Test method for
+     * {@link org.verapdf.cli.commands.VeraCliArgParser#getProfileFile()}.
+     */
+    @Test(expected = ParameterException.class)
+    public final void testGetProfileFileOptionEmpty() {
+        VeraCliArgParser parser = new VeraCliArgParser();
+        JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+
+        // Test flag works
+        parser = new VeraCliArgParser();
+        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+        jCommander.parse(new String[] { "--profile" });
+    }
+
+    /**
+     * Test method for
+     * {@link org.verapdf.cli.commands.VeraCliArgParser#getProfileFile()}.
+     */
+    @Test(expected = ParameterException.class)
+    public final void testGetProfileFileOptionEmptyFollowing() {
+        VeraCliArgParser parser = new VeraCliArgParser();
+        JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+
+        // Test flag works
+        parser = new VeraCliArgParser();
+        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+        jCommander.parse(new String[] { "--profile" , "-h"});
+    }
+
+    /**
+     * Test method for
+     * {@link org.verapdf.cli.commands.VeraCliArgParser#getProfileFile()}.
+     */
+    @Test
+    public final void testGetProfileFileFlag() {
+        VeraCliArgParser parser = new VeraCliArgParser();
+        JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+
+        // Test flag works
+        parser = new VeraCliArgParser();
+        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+        jCommander.parse(new String[] { "-p" });
+        assertFalse(parser.getProfileFile() == VeraCliArgParser.DEFAULT_ARGS
+                .getProfileFile());
+
+        // Test flag works with other options & flags
+        parser = new VeraCliArgParser();
+        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+        jCommander.parse(new String[] { "-p", "--format", "html", "-h" });
+        assertFalse(parser.getProfileFile() == VeraCliArgParser.DEFAULT_ARGS
+                .getProfileFile());
+    }
+
+    /**
+     * Test method for
+     * {@link org.verapdf.cli.commands.VeraCliArgParser#getProfileFile()}.
+     */
+    @Test
+    public final void testGetProfileFileOption() {
+        VeraCliArgParser parser = new VeraCliArgParser();
+        JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+
+        // Test flag works
+        parser = new VeraCliArgParser();
+        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+        jCommander.parse(new String[] { "--profile" });
+        assertFalse(parser.getProfileFile() == VeraCliArgParser.DEFAULT_ARGS
+                .getProfileFile());
+
+        // Test flag works with other options & flags
+        parser = new VeraCliArgParser();
+        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+        jCommander
+                .parse(new String[] { "--profile", "--format", "html", "-h" });
+        assertFalse(parser.getProfileFile() == VeraCliArgParser.DEFAULT_ARGS
+                .getProfileFile());
+    }
+
+}
