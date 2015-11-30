@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
+import com.beust.jcommander.IParameterValidator;
 import com.beust.jcommander.IStringConverter;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
@@ -49,7 +50,7 @@ public class VeraCliArgParser {
     @Parameter(names = { LIST_FLAG, LIST }, description = "List built in Validation Profiles.")
     private boolean listProfiles = false;
 
-    @Parameter(names = { LOAD_PROFILE_FLAG, LOAD_PROFILE }, description = "Load a Validation Profile from given path and exit if loading fails. This overrides any choice or default implied by the -f / --flavour option.")
+    @Parameter(names = { LOAD_PROFILE_FLAG, LOAD_PROFILE }, description = "Load a Validation Profile from given path and exit if loading fails. This overrides any choice or default implied by the -f / --flavour option.", validateWith = ProfileFileValidator.class)
     private File profileFile;
 
     @Parameter(names = { EXTRACT_FLAG, EXTRACT }, description = "Extract and report PDF features.")
@@ -162,6 +163,30 @@ public class VeraCliArgParser {
                     return flavour;
             }
             throw new ParameterException("Illegal --flavour argument:" + value);
+        }
+
+    }
+
+    /**
+     * JCommander parameter validator for {@link File}, see
+     * {@link IParameterValidator}. Enforces an existing, readable file.
+     * 
+     * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+     *
+     */
+    public static final class ProfileFileValidator implements
+            IParameterValidator {
+        /**
+         * { @inheritDoc }
+         */
+        @Override
+        public void validate(final String name, final String value)
+                throws ParameterException {
+            File profileFile = new File(value);
+            if (!profileFile.isFile() || !profileFile.canRead()) {
+                throw new ParameterException("Parameter " + name
+                        + " must be the path to an existing, readable file, value=" + value);
+            }
         }
 
     }

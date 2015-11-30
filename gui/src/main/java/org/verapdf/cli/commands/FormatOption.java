@@ -55,7 +55,7 @@ public enum FormatOption {
      */
     public static FormatOption fromOption(final String option) {
         for (FormatOption format : FormatOption.values()) {
-            if (format.option.equalsIgnoreCase(option))
+            if (format.toString().equalsIgnoreCase(option))
                 return format;
         }
         throw new ParameterException("Illegal --format argument:" + option);
