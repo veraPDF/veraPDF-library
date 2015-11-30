@@ -32,6 +32,7 @@ import org.verapdf.report.MachineReadableReport;
 import org.verapdf.validation.profile.parser.LegacyProfileConverter;
 
 import com.beust.jcommander.JCommander;
+import com.beust.jcommander.ParameterException;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -65,6 +66,8 @@ public final class VeraPdfCli {
 
         try {
             jCommander.parse(args);
+        } catch (ParameterException e) {
+            logThrowableAndExit(e, e.getMessage(), 1);
         } catch (Exception e) {
             logThrowableAndExit(e, "Couldn't parse parameters.", 1);
         }
@@ -199,9 +202,9 @@ public final class VeraPdfCli {
     private static void listProfiles() {
         System.out.println(FLAVOURS_HEADING);
         for (ValidationProfile profile : PROFILES.getValidationProfiles()) {
-            System.out.println("  " + profile.getPDFAFlavour().getId());
-            System.out.println();
+            System.out.println("  " + profile.getPDFAFlavour().getId() + " - " + profile.getDetails().getName());
         }
+        System.out.println();
     }
 
     private static void showVersionInfo() {
