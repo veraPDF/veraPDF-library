@@ -297,7 +297,7 @@ public class VeraCliArgParserTest {
         // Test other flags & options doesn't change that
         parser = new VeraCliArgParser();
         jCommander = initialiseJCommander(parser);
-        jCommander.parse(new String[] { "-l", "--profile", "--flavour", "-h" });
+        jCommander.parse(new String[] { "-l", "--flavour", "1a", "-h" });
         assertTrue(parser.extractFeatures() == VeraCliArgParser.DEFAULT_ARGS
                 .extractFeatures());
     }
