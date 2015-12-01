@@ -4,12 +4,22 @@
 package org.verapdf;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
+import javax.xml.bind.JAXBException;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 
@@ -71,4 +81,23 @@ public class ReleaseDetailsTest {
         assertTrue(instance == secondInstance);
     }
 
+    /**
+     * Test method for {@link org.verapdf.ReleaseDetails#toXml(ReleaseDetails, OutputStream, Boolean)} and {@link org.verapdf.ReleaseDetails#fromXml(InputStream)}.
+     * @throws IOException 
+     * @throws JAXBException 
+     */
+    @Test
+    public final void testToAndFromXml() throws IOException, JAXBException {
+        ReleaseDetails details = ReleaseDetails.getInstance();
+        File temp = Files.createTempFile("details", "xml").toFile();
+        try (OutputStream forXml = new FileOutputStream(temp)) {
+            ReleaseDetails.toXml(details, forXml, Boolean.TRUE);
+        }
+        try (InputStream readXml = new FileInputStream(temp)) {
+            ReleaseDetails unmarshalledResult = ReleaseDetails
+                    .fromXml(readXml);
+            assertFalse(details == unmarshalledResult);
+            assertTrue(details.equals(unmarshalledResult));
+        }
+    }
 }

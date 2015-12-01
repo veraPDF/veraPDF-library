@@ -3,6 +3,7 @@
  */
 package org.verapdf.pdfa.flavours;
 
+
 /**
  * Static utility class holding PDF/A Flavour and related specification String
  * constants.
@@ -11,7 +12,7 @@ package org.verapdf.pdfa.flavours;
  *
  */
 final class PDFAFlavours {
-    static final String NONE = "none";
+    static final String NONE = "";
     static final String PDFA_STRING_PREFIX = "PDF/A-"; //$NON-NLS-1$
     static final String ISO = "ISO"; //$NON-NLS-1$
     static final String ISO_PREFIX = ISO + " "; //$NON-NLS-1$

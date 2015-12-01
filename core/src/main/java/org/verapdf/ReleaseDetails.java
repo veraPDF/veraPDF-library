@@ -5,10 +5,19 @@ package org.verapdf;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Class that encapsulates the release details of the veraPDF validation
@@ -17,6 +26,7 @@ import java.util.Properties;
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
+@XmlRootElement(name = "releaseDetails")
 public final class ReleaseDetails {
     private static final String APPLICATION_PROPERTIES_PATH = "org/verapdf/verapdf.properties";
     private static final String RAW_DATE_FORMAT = "${maven.build.timestamp.format}";
@@ -25,12 +35,15 @@ public final class ReleaseDetails {
             + "Released under the GNU General Public License v3.\n";
 
     private static final ReleaseDetails INSTANCE = fromPropertyResource(APPLICATION_PROPERTIES_PATH);
-
+    @XmlAttribute
     private final String version;
+    @XmlAttribute
     private final Date buildDate;
+    @XmlElement
+    private final String rights = RIGHTS;
 
     private ReleaseDetails() {
-        throw new AssertionError("Should never enter JhoveReleaseDetails().");
+        this("version", new Date());
     }
 
     private ReleaseDetails(final String version, final Date buildDate) {
@@ -55,9 +68,8 @@ public final class ReleaseDetails {
     /**
      * @return the veraPDF library rights statement
      */
-    @SuppressWarnings("static-method")
     public String getRights() {
-        return RIGHTS;
+        return this.rights;
     }
 
     /**
@@ -115,6 +127,18 @@ public final class ReleaseDetails {
         return INSTANCE;
     }
 
+    static void toXml(final ReleaseDetails toConvert,
+            final OutputStream stream, Boolean prettyXml) throws JAXBException {
+        Marshaller varMarshaller = getMarshaller(prettyXml);
+        varMarshaller.marshal(toConvert, stream);
+    }
+
+    static ReleaseDetails fromXml(final InputStream toConvert)
+            throws JAXBException {
+        Unmarshaller stringUnmarshaller = getUnmarshaller();
+        return (ReleaseDetails) stringUnmarshaller.unmarshal(toConvert);
+    }
+
     private static ReleaseDetails fromPropertyResource(
             final String propertyResourceName) {
         try (InputStream is = ReleaseDetails.class.getClassLoader()
@@ -152,4 +176,21 @@ public final class ReleaseDetails {
         }
         return new ReleaseDetails(release, date);
     }
+
+    private static Unmarshaller getUnmarshaller() throws JAXBException {
+        JAXBContext context = JAXBContext
+                .newInstance(ReleaseDetails.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        return unmarshaller;
+    }
+
+    private static Marshaller getMarshaller(Boolean setPretty)
+            throws JAXBException {
+        JAXBContext context = JAXBContext
+                .newInstance(ReleaseDetails.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
+        return marshaller;
+    }
+
 }
