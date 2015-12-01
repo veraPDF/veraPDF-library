@@ -48,7 +48,7 @@ public class ValidationResultTest {
      */
     @Test
     public final void testToString() {
-        assertTrue(ValidationResultImpl.defaultInstance().toString()
+        assertTrue(ValidationResults.defaultResult().toString()
                 .equals(DEFAULT_RESULT_STRING));
     }
 
@@ -57,9 +57,9 @@ public class ValidationResultTest {
      */
     @Test
     public final void testDefaultInstance() {
-        ValidationResult defaultResult = ValidationResultImpl.defaultInstance();
-        assertTrue(defaultResult.equals(ValidationResultImpl.defaultInstance()));
-        assertTrue(defaultResult == ValidationResultImpl.defaultInstance());
+        ValidationResult defaultResult = ValidationResults.defaultResult();
+        assertTrue(defaultResult.equals(ValidationResults.defaultResult()));
+        assertTrue(defaultResult == ValidationResults.defaultResult());
     }
 
     /**
