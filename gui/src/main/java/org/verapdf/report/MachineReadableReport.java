@@ -1,8 +1,9 @@
 package org.verapdf.report;
 
+import java.io.File;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.Formatter;
-import java.util.GregorianCalendar;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -10,11 +11,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.apache.log4j.Logger;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.pdfa.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
@@ -27,9 +24,6 @@ import org.verapdf.pdfa.validation.ValidationProfile;
 @XmlRootElement(name = "report")
 public class MachineReadableReport {
 
-    private static final Logger LOGGER = Logger
-            .getLogger(MachineReadableReport.class);
-
     private static final long MS_IN_SEC = 1000L;
     private static final int SEC_IN_MIN = 60;
     private static final long MS_IN_MIN = SEC_IN_MIN * MS_IN_SEC;
@@ -37,51 +31,80 @@ public class MachineReadableReport {
     private static final long MS_IN_HOUR = MS_IN_MIN * MIN_IN_HOUR;
 
     @XmlAttribute
-    private final String creationDate;
+    private final Date creationDate;
     @XmlAttribute
     private final String processingTime;
-    @XmlElement(name = "validationReport")
+    @XmlElement
+    private final ItemDetails itemDetails;
+    @XmlElement
     private final ValidationReport validationReport;
     @XmlElement
     private final FeaturesReport pdfFeaturesReport;
 
     private MachineReadableReport() {
-        this(
-                ValidationReport.fromValues(Profiles.defaultProfile(), null,
-                        false), "", "", null);
+        this(ItemDetails.DEFAULT, ValidationReport.fromValues(
+                Profiles.defaultProfile(), null, false), "", null);
     }
 
-    private MachineReadableReport(ValidationReport report, String creationDate,
-            String processingTime, FeaturesReport featuresReport) {
+    private MachineReadableReport(ItemDetails itemDetails,
+            ValidationReport report, String processingTime,
+            FeaturesReport featuresReport) {
+        this.itemDetails = itemDetails;
         this.validationReport = report;
-        this.creationDate = creationDate;
+        this.creationDate = new Date();
         this.processingTime = processingTime;
         this.pdfFeaturesReport = featuresReport;
     }
 
     /**
-     * @param profile 
+     * @param file 
+     * @param profile
      * @param validationResult
-     * @param reportPassedChecks 
+     * @param reportPassedChecks
      * @param fixerResult
      * @param collection
      * @param processingTime
      * @return a MachineReadableReport instance initialised from the passed
      *         values
      */
-    public static MachineReadableReport fromValues(ValidationProfile profile,
-            ValidationResult validationResult, boolean reportPassedChecks, MetadataFixerResult fixerResult,
-            FeaturesCollection collection, long processingTime) {
+    public static MachineReadableReport fromValues(File file, ValidationProfile profile,
+            ValidationResult validationResult, boolean reportPassedChecks,
+            MetadataFixerResult fixerResult, FeaturesCollection collection,
+            long processingTime) {
         ValidationReport validationReport = null;
         if (validationResult != null) {
-            validationReport = ValidationReport.fromValues(profile, validationResult, reportPassedChecks,
-                    fixerResult);
+            validationReport = ValidationReport.fromValues(profile,
+                    validationResult, reportPassedChecks, fixerResult);
         }
         FeaturesReport featuresReport = FeaturesReport.fromValues(collection);
-        return new MachineReadableReport(validationReport, getNowDateString(),
+        return new MachineReadableReport(ItemDetails.fromFile(file), validationReport,
                 getProcessingTime(processingTime), featuresReport);
     }
 
+    /**
+     * @param name
+     * @param profile
+     * @param validationResult
+     * @param reportPassedChecks
+     * @param fixerResult
+     * @param collection
+     * @param processingTime
+     * @return a MachineReadableReport instance initialised from the passed
+     *         values
+     */
+    public static MachineReadableReport fromValues(String name, ValidationProfile profile,
+            ValidationResult validationResult, boolean reportPassedChecks,
+            MetadataFixerResult fixerResult, FeaturesCollection collection,
+            long processingTime) {
+        ValidationReport validationReport = null;
+        if (validationResult != null) {
+            validationReport = ValidationReport.fromValues(profile,
+                    validationResult, reportPassedChecks, fixerResult);
+        }
+        FeaturesReport featuresReport = FeaturesReport.fromValues(collection);
+        return new MachineReadableReport(ItemDetails.fromValues(name), validationReport,
+                getProcessingTime(processingTime), featuresReport);
+    }
     /**
      * @param toConvert
      * @param stream
@@ -101,20 +124,6 @@ public class MachineReadableReport {
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
         return marshaller;
-    }
-    
-    private static String getNowDateString() {
-        String creationDate = "";
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        try {
-            XMLGregorianCalendar now = DatatypeFactory.newInstance()
-                    .newXMLGregorianCalendar(gregorianCalendar);
-            creationDate = now.toXMLFormat();
-        } catch (DatatypeConfigurationException e) {
-            LOGGER.error(e);
-            creationDate = e.getMessage();
-        }
-        return creationDate;
     }
 
     private static String getProcessingTime(long processTime) {

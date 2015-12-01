@@ -27,7 +27,6 @@ import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.gui.tools.ProcessingType;
 import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
-import org.verapdf.metadata.fixer.impl.fixer.MetadataFixerEnum;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
@@ -39,17 +38,6 @@ import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validators.Validators;
 import org.verapdf.report.HTMLReport;
 import org.verapdf.report.MachineReadableReport;
-
-import javax.swing.*;
-import javax.xml.bind.JAXBException;
-import javax.xml.transform.TransformerException;
-import java.io.*;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.ID_REMOVED;
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
 
 /**
  * Validates PDF in a new threat.
@@ -196,7 +184,7 @@ class ValidateWorker extends SwingWorker<ValidationResult, Integer> {
             this.xmlReport = File.createTempFile("veraPDF-tempXMLReport",
                     ".xml");
             this.xmlReport.deleteOnExit();
-            MachineReadableReport report = MachineReadableReport.fromValues(
+            MachineReadableReport report = MachineReadableReport.fromValues(this.pdf,
                     this.profile, result, this.settings.isShowPassedRules(),
                     fixerResult, collection, this.endTimeOfValidation
                             - this.startTimeOfValidation);
