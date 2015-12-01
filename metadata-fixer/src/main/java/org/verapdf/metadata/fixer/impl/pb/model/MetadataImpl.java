@@ -123,7 +123,7 @@ public class MetadataImpl implements Metadata {
             Integer schemaPart = schema.getPart();
             if (schemaPart != null &&
                     schemaPart.intValue() == part
-                    && conformance.equals(schema.getConformance())) {
+                    && conformance.equalsIgnoreCase(schema.getConformance())) {
                 return;
             }
             this.metadata.removeSchema(schema);
