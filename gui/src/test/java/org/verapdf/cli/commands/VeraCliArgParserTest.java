@@ -3,13 +3,12 @@
  */
 package org.verapdf.cli.commands;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import com.beust.jcommander.JCommander;
-import com.beust.jcommander.ParameterException;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
