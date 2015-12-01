@@ -3,7 +3,7 @@ package org.verapdf.metadata.fixer.impl.fixer;
 import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
 import org.verapdf.metadata.fixer.utils.FixerConfig;
-import org.verapdf.pdfa.MetadataFixerResult;
+import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
 
 import java.io.InputStream;

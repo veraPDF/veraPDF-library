@@ -1,9 +1,11 @@
 /**
  * 
  */
-package org.verapdf.pdfa;
+package org.verapdf.pdfa.results;
 
 import java.util.List;
+
+import org.verapdf.pdfa.MetadataFixer;
 
 /**
  * Holds the result of an attempt to repair PDF/A metadata by a

@@ -24,7 +24,7 @@ import org.verapdf.pdfa.validation.RuleId;
  */
 public class ValidationResults {
     private ValidationResults() {
-        // Disable default constructor
+        throw new AssertionError("Should never enter ValidationResults().");
     }
 
     /**

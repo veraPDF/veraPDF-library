@@ -1,9 +1,10 @@
 package org.verapdf.report;
 
-import org.verapdf.pdfa.MetadataFixerResult;
+import org.verapdf.pdfa.results.MetadataFixerResult;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+
 import java.util.ArrayList;
 import java.util.List;
 

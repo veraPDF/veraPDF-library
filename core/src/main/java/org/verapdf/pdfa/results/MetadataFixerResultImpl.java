@@ -1,11 +1,9 @@
-package org.verapdf.metadata.fixer.impl;
+package org.verapdf.pdfa.results;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import org.verapdf.pdfa.MetadataFixerResult;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -61,8 +59,8 @@ public class MetadataFixerResultImpl implements MetadataFixerResult {
         private final List<String> fixes = new ArrayList<>();
 
         /**
-         * @param status
-         * @return
+         * @param status the {@link org.verapdf.pdfa.results.MetadataFixerResult.RepairStatus} to set for the Builder.
+         * @return the Builder instance.
          */
         public Builder status(final RepairStatus status) {
             this.status = status;
@@ -70,15 +68,15 @@ public class MetadataFixerResultImpl implements MetadataFixerResult {
         }
 
         /**
-         * @return
+         * @return the current status
          */
         public RepairStatus getStatus() {
             return this.status;
         }
 
         /**
-         * @param fix
-         * @return
+         * @param fix a fix to add for the builder
+         * @return the Builder instance
          */
         public Builder addFix(final String fix) {
             this.fixes.add(fix);
@@ -86,7 +84,7 @@ public class MetadataFixerResultImpl implements MetadataFixerResult {
         }
 
         /**
-         * @return
+         * @return a {@link MetadataFixerResult} instance built from the values
          */
         public MetadataFixerResult build() {
             return MetadataFixerResultImpl.fromValues(this.status, this.fixes);

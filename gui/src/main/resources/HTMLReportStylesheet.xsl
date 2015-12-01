@@ -104,7 +104,7 @@
             </tr>
             <tr>
                 <td width="250">
-                    <b>Total rules in profile:</b>
+                    <b>Total rules in Profile:</b>
                 </td>
                 <td>
                     <xsl:value-of
