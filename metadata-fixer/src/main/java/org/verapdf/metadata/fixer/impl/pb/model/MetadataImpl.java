@@ -23,11 +23,10 @@ import org.verapdf.metadata.fixer.schemas.XMPBasic;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.MetadataFixerResultImpl;
 
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Locale;
-
-import javax.xml.transform.TransformerException;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -121,7 +120,9 @@ public class MetadataImpl implements Metadata {
         String conformance = flavour.getLevel().getCode();
 
         if (schema != null) {
-            if (schema.getPart().intValue() == part
+            Integer schemaPart = schema.getPart();
+            if (schemaPart != null &&
+                    schemaPart.intValue() == part
                     && conformance.equals(schema.getConformance())) {
                 return;
             }
@@ -182,7 +183,7 @@ public class MetadataImpl implements Metadata {
         if (!this.stream.isNeedToBeUpdated()) {
             return;
         }
-        try (OutputStream out = this.stream.createUnfilteredStream();) {
+        try (OutputStream out = this.stream.createUnfilteredStream()) {
             new XmpSerializer().serialize(this.metadata, out, true);
         }
     }
