@@ -53,8 +53,6 @@ public class VerCliFlavourTest {
         JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
 
         // Test flag works
-        parser = new VeraCliArgParser();
-        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
         jCommander.parse(new String[] { "-f" });
     }
 
@@ -68,8 +66,6 @@ public class VerCliFlavourTest {
         JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
 
         // Test flag works
-        parser = new VeraCliArgParser();
-        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
         jCommander.parse(new String[] { "-f", "-h" });
     }
 
@@ -83,8 +79,6 @@ public class VerCliFlavourTest {
         JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
 
         // Test flag works
-        parser = new VeraCliArgParser();
-        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
         jCommander.parse(new String[] { "--flavour" });
     }
 
@@ -98,8 +92,6 @@ public class VerCliFlavourTest {
         JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
 
         // Test flag works
-        parser = new VeraCliArgParser();
-        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
         jCommander.parse(new String[] { "--flavour", "--version", "-h" });
     }
 
@@ -113,8 +105,6 @@ public class VerCliFlavourTest {
         JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
 
         // Test flag works
-        parser = new VeraCliArgParser();
-        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
         jCommander.parse(new String[] { "-f", "5t" });
     }
 
@@ -128,8 +118,6 @@ public class VerCliFlavourTest {
         JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
 
         // Test flag works
-        parser = new VeraCliArgParser();
-        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
         jCommander.parse(new String[] { "--flavour", "9u" });
     }
 
@@ -285,8 +273,6 @@ public class VerCliFlavourTest {
         JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
 
         // Test flag works
-        parser = new VeraCliArgParser();
-        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
         jCommander.parse(new String[] { flag, flavour });
         assertTrue(parser.getFlavour() == expected);
 
