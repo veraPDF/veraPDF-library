@@ -40,11 +40,10 @@ import org.verapdf.validation.profile.parser.LegacyProfileConverter;
  *
  */
 final class VeraPdfCliProcessor {
-    private final FormatOption format;
-    private final ValidationProfile profile;
-    private final boolean extractFeatures;
-    private final boolean logPassed;
-    private final PDFAValidator validator;
+    final FormatOption format;
+    final boolean extractFeatures;
+    final boolean logPassed;
+    final PDFAValidator validator;
 
     private VeraPdfCliProcessor() throws ProfileException,
             FileNotFoundException, IOException {
@@ -54,11 +53,11 @@ final class VeraPdfCliProcessor {
     private VeraPdfCliProcessor(final VeraCliArgParser args)
             throws ProfileException, FileNotFoundException, IOException {
         this.format = args.getFormat();
-        this.profile = profileFromArgs(args);
         this.extractFeatures = args.extractFeatures();
         this.logPassed = args.logPassed();
-        this.validator = (this.profile == Profiles.defaultProfile()) ? null
-                : Validators.createValidator(this.profile, logPassed(args));
+        ValidationProfile profile = profileFromArgs(args);
+        this.validator = (profile == Profiles.defaultProfile()) ? null
+                : Validators.createValidator(profile, logPassed(args));
 
     }
 
@@ -66,14 +65,14 @@ final class VeraPdfCliProcessor {
         return (args.getFormat() != FormatOption.XML) || args.logPassed();
     }
 
-    public void processPaths(final List<String> pdfPaths) {
+    void processPaths(final List<String> pdfPaths) {
         for (String pdfPath : pdfPaths) {
             File pdfFile = new File(pdfPath);
             processPath(pdfFile);
         }
     }
 
-    public static VeraPdfCliProcessor createProcessorFromArgs(
+    static VeraPdfCliProcessor createProcessorFromArgs(
             final VeraCliArgParser args) throws ProfileException,
             FileNotFoundException, IOException {
         return new VeraPdfCliProcessor(args);
@@ -113,7 +112,9 @@ final class VeraPdfCliProcessor {
             outputXmlResults(item, validationResult, featuresCollection);
         else {
             MachineReadableReport report = MachineReadableReport.fromValues(
-                    item.getName(), this.profile, validationResult,
+                    item.getName(),
+                    this.validator == null ? Profiles.defaultProfile()
+                            : this.validator.getProfile(), validationResult,
                     this.logPassed, null, featuresCollection,
                     System.currentTimeMillis() - start);
             outputMrr(report, this.format == FormatOption.HTML);
