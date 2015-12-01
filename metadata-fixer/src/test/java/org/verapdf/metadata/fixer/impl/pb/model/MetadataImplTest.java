@@ -32,18 +32,15 @@ public class MetadataImplTest {
 		PDMetadata meta = doc.getDocumentCatalog().getMetadata();
 		DomXmpParser xmpParser = new DomXmpParser();
 		COSStream cosStream = meta.getStream();
-		XMPMetadata xmpCurrent = xmpParser.parse(cosStream.getUnfilteredStream());
-		XMPMetadata xmpCopy = xmpParser.parse(cosStream.getUnfilteredStream());
-
-		MetadataImpl impl = new MetadataImpl(xmpCopy, cosStream);
+		XMPMetadata xmp = xmpParser.parse(cosStream.getUnfilteredStream());
+		MetadataImpl impl = new MetadataImpl(xmp, cosStream);
 		MetadataFixerResultImpl.Builder builder = new MetadataFixerResultImpl.Builder();
 		impl.addPDFIdentificationSchema(builder, PDFAFlavour.PDFA_1_B);
 
-		PDFAIdentificationSchema idCurr = xmpCurrent.getPDFIdentificationSchema();
-		PDFAIdentificationSchema idCopy = xmpCopy.getPDFIdentificationSchema();
+		PDFAIdentificationSchema idCopy = xmp.getPDFIdentificationSchema();
 
-		assertEquals(idCurr.getPart(), idCopy.getPart());
-		assertEquals(idCurr.getConformance(), idCopy.getConformance());
+		assertEquals(Integer.valueOf(1), idCopy.getPart());
+		assertEquals("B", idCopy.getConformance());
 
 	}
 
