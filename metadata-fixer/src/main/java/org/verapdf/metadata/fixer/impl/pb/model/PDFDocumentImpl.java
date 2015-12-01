@@ -1,9 +1,9 @@
 package org.verapdf.metadata.fixer.impl.pb.model;
 
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.FIX_ERROR;
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.NO_ACTION;
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.SUCCESS;
-import static org.verapdf.pdfa.MetadataFixerResult.RepairStatus.WONT_FIX;
+import static org.verapdf.pdfa.results.MetadataFixerResult.RepairStatus.FIX_ERROR;
+import static org.verapdf.pdfa.results.MetadataFixerResult.RepairStatus.NO_ACTION;
+import static org.verapdf.pdfa.results.MetadataFixerResult.RepairStatus.SUCCESS;
+import static org.verapdf.pdfa.results.MetadataFixerResult.RepairStatus.WONT_FIX;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,8 +23,8 @@ import org.apache.xmpbox.xml.XmpParsingException;
 import org.verapdf.metadata.fixer.entity.InfoDictionary;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
-import org.verapdf.metadata.fixer.impl.MetadataFixerResultImpl;
-import org.verapdf.pdfa.MetadataFixerResult;
+import org.verapdf.pdfa.results.MetadataFixerResult;
+import org.verapdf.pdfa.results.MetadataFixerResultImpl;
 
 /**
  * @author Evgeniy Muravitskiy

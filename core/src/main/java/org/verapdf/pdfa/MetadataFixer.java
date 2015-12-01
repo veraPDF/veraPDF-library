@@ -3,6 +3,7 @@ package org.verapdf.pdfa;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
 
 /**
