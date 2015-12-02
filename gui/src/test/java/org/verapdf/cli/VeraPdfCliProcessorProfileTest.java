@@ -95,6 +95,7 @@ public class VeraPdfCliProcessorProfileTest {
     private static void testWithProfileFile(final PDFAFlavour flavour, final File profileFile)
             throws ProfileException, FileNotFoundException, IOException,
             JAXBException {
+        System.out.println("testing" + profileFile.getAbsolutePath());
         String[] argVals = new String[] { "-p", "--profile" };
         VeraCliArgParser parser = new VeraCliArgParser();
         JCommander jCommander = VeraPdfCliProcessorTest
@@ -107,9 +108,14 @@ public class VeraPdfCliProcessorProfileTest {
             try (InputStream is = new FileInputStream(profileFile)) {
                 ValidationProfile profile = Profiles.profileFromXml(is);
                 if (profile.equals(Profiles.defaultProfile())) {
+                    System.out.println("loading old skool");
                     try (InputStream lis = new FileInputStream(profileFile)) {
                         profile = LegacyProfileConverter.fromLegacyStream(lis);
                     }
+                }
+                if (!flavour.equals(proc.validator.getProfile().getPDFAFlavour())) {
+                    Profiles.profileToXml(Profiles.defaultProfile(), System.out, Boolean.TRUE);
+                    Profiles.profileToXml(proc.validator.getProfile(), System.out, Boolean.TRUE);
                 }
                 assertEquals(flavour, proc.validator.getProfile().getPDFAFlavour());
                 assertTrue(profile != proc.validator.getProfile());

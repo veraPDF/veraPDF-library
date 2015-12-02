@@ -56,6 +56,15 @@ final class VeraPdfCliProcessor {
         this.extractFeatures = args.extractFeatures();
         this.logPassed = args.logPassed();
         ValidationProfile profile = profileFromArgs(args);
+        if (profile.getPDFAFlavour() == PDFAFlavour.NO_FLAVOUR) {
+            try {
+                System.out.println("Processor()");
+                Profiles.profileToXml(profile, System.out, Boolean.TRUE);
+            } catch (JAXBException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
         this.validator = (profile == Profiles.defaultProfile()) ? null
                 : Validators.createValidator(profile, logPassed(args));
 

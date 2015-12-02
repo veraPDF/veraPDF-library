@@ -78,7 +78,6 @@ public final class LegacyProfileConverter {
 
     /**
      * @param toParse
-     * @param flavour
      * @return
      * @throws ProfileException
      */
@@ -213,29 +212,6 @@ public final class LegacyProfileConverter {
                 toConvert.getAttrName(), toConvert.getAttrObject(),
                 toConvert.getDefaultValue(), toConvert.getValue());
         return converted;
-    }
-
-    /**
-     * @param specCode
-     * @return
-     */
-    public static PDFAFlavour.Specification partFromSpecCode(
-            final String specCode) {
-        if (specCode.equals(PART_1_LEGACY_CODE)) {
-            return Specification.ISO_19005_1;
-        }
-        return Specification.NO_STANDARD;
-    }
-
-    /**
-     * @param specCode
-     * @return
-     */
-    public static PDFAFlavour flavourFromSpecCode(final String specCode) {
-        if (specCode.equals(PART_1_LEGACY_CODE)) {
-            return PDFAFlavour.PDFA_1_A;
-        }
-        return PDFAFlavour.NO_FLAVOUR;
     }
 
     private static List<Reference> flattenSubReferences(
