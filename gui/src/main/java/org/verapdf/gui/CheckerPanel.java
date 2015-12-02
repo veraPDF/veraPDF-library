@@ -289,7 +289,7 @@ class CheckerPanel extends JPanel {
 		                    .parseFromFilePath(
 									profile.getAbsolutePath(),
 									false);
-					ValidationProfile prof = LegacyProfileConverter.fromLegacyProfile(toConvert, PDFAFlavour.PDFA_1_B);
+					ValidationProfile prof = LegacyProfileConverter.fromLegacyProfile(toConvert);
                     CheckerPanel.this.validateWorker = new ValidateWorker(
                             CheckerPanel.this, CheckerPanel.this.pdfFile, prof,
                             CheckerPanel.this.config, type,

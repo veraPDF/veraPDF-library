@@ -123,9 +123,7 @@ public final class ValidationProfileParser {
 					created = child.getTextContent().trim();
 					break;
 				case HASH:
-					if (isSignCheckOn) {
-						hash = child.getTextContent().trim();
-					}
+					hash = HASH;
 					break;
 				case RULES:
 					parseRules(child, rules);
