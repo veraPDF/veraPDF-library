@@ -60,15 +60,14 @@ public final class LegacyProfileConverter {
         for (String path : args) {
             org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser
                     .parseFromFilePath(path, false);
-            ValidationProfile profile = fromLegacyProfile(toConvert,
-                    PDFAFlavour.PDFA_1_B);
+            ValidationProfile profile = fromLegacyProfile(toConvert);
             Profiles.profileToXml(profile, System.out, Boolean.TRUE);
         }
         if (args.length == 0) {
             ValidationProfile profile = fromLegacyProfile(
                     ValidationProfileParser.parseFromFilePath(
                             "/home/cfw/GitHub/veraPDF/veraPDF-validation-profiles/PDF_A/PDFA-1B.xml",
-                            false), PDFAFlavour.PDFA_1_B);
+                            false));
             Profiles.profileToXml(profile, System.out, Boolean.TRUE);
             try (OutputStream fos = new FileOutputStream(
                     "/home/cfw/test-profile.xml")) {
@@ -83,12 +82,10 @@ public final class LegacyProfileConverter {
      * @return
      * @throws ProfileException
      */
-    public static ValidationProfile fromLegacyStream(final InputStream toParse,
-            final PDFAFlavour flavour) throws ProfileException {
+    public static ValidationProfile fromLegacyStream(final InputStream toParse) throws ProfileException {
         try {
             return LegacyProfileConverter.fromLegacyProfile(
-                    ValidationProfileParser.parseFromStream(toParse, false),
-                    flavour);
+                    ValidationProfileParser.parseFromStream(toParse, false));
         } catch (ParserConfigurationException | SAXException
                 | XMLStreamException e) {
             throw new ProfileException("Exception parsing profile from URL "
@@ -107,20 +104,19 @@ public final class LegacyProfileConverter {
      *         instance
      */
     public static ValidationProfile fromLegacyProfile(
-            org.verapdf.validation.profile.model.ValidationProfile toConvert,
-            final PDFAFlavour flavour) {
+            org.verapdf.validation.profile.model.ValidationProfile toConvert) {
         Set<Rule> rules = new HashSet<>();
         for (String ruleId : toConvert.getAllRulesId()) {
             org.verapdf.validation.profile.model.Rule rule = toConvert
                     .getRuleById(ruleId);
-            rules.add(fromLegacyRule(flavour.getPart(), rule));
+            rules.add(fromLegacyRule(PDFAFlavour.fromString(toConvert.getModel()).getPart(), rule));
         }
         Set<Variable> variables = new HashSet<>();
         for (org.verapdf.validation.profile.model.Variable var : toConvert
                 .getAllVariables()) {
             variables.add(fromLegacyVariable(var));
         }
-        return Profiles.profileFromValues(flavour,
+        return Profiles.profileFromValues(PDFAFlavour.fromString(toConvert.getModel()),
                 parsedFromLegacyProfile(toConvert), "", rules, variables);
     }
 
