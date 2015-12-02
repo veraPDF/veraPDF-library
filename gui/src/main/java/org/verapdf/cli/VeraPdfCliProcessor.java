@@ -185,17 +185,30 @@ final class VeraPdfCliProcessor {
                     .defaultProfile() : Profiles.getVeraProfileDirectory()
                     .getValidationProfileByFlavour(args.getFlavour());
         }
-        // Try as a file
-        try {
-            return Profiles.profileFromXml(new FileInputStream(args
-                    .getProfileFile()));
-        } catch (JAXBException | IOException e) {
-            // Do nothing as it's a parse error so try from legacy profile nex
-        }
+        ValidationProfile profile = profileFromFile(args.getProfileFile());
+        if (profile.equals(Profiles.defaultProfile()))
+            profile = profileFromLegacyFile(args.getProfileFile());
 
-        try (InputStream toParse = new FileInputStream(args.getProfileFile())) {
-            return LegacyProfileConverter.fromLegacyStream(toParse,
-                    PDFAFlavour.NO_FLAVOUR);
+        return profile;
+    }
+
+    private static ValidationProfile profileFromFile(final File profileFile)
+            throws IOException {
+        ValidationProfile profile = Profiles.defaultProfile();
+        try (InputStream is = new FileInputStream(profileFile)) {
+            profile = Profiles.profileFromXml(is);
+        } catch (JAXBException e) {
+            return Profiles.defaultProfile();
         }
+        return profile;
+    }
+
+    private static ValidationProfile profileFromLegacyFile(
+            final File profileFile) throws IOException, ProfileException {
+        ValidationProfile profile = Profiles.defaultProfile();
+        try (InputStream is = new FileInputStream(profileFile)) {
+            profile = LegacyProfileConverter.fromLegacyStream(is);
+        }
+        return profile;
     }
 }
