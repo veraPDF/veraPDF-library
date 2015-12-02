@@ -77,7 +77,7 @@ public class VeraPdfCliProcessorProfileTest {
      * @throws FileNotFoundException
      * @throws ProfileException
      * @throws JAXBException
-     * @throws URISyntaxException 
+     * @throws URISyntaxException
      */
     @Test
     public final void testCreateProcessorFromArgsOldProfile()
@@ -88,14 +88,14 @@ public class VeraPdfCliProcessorProfileTest {
                 .initialiseJCommander(parser);
         jCommander.parse(new String[] {});
         for (File profileFile : getProfiles()) {
-            testWithProfileFile(PDFAFlavour.fromString(profileFile.getName()), profileFile);
+            testWithProfileFile(PDFAFlavour.fromString(profileFile.getName()),
+                    profileFile);
         }
     }
 
-    private static void testWithProfileFile(final PDFAFlavour flavour, final File profileFile)
-            throws ProfileException, FileNotFoundException, IOException,
-            JAXBException {
-        System.out.println("testing" + profileFile.getAbsolutePath());
+    private static void testWithProfileFile(final PDFAFlavour flavour,
+            final File profileFile) throws ProfileException,
+            FileNotFoundException, IOException, JAXBException {
         String[] argVals = new String[] { "-p", "--profile" };
         VeraCliArgParser parser = new VeraCliArgParser();
         JCommander jCommander = VeraPdfCliProcessorTest
@@ -107,25 +107,30 @@ public class VeraPdfCliProcessorProfileTest {
                     .createProcessorFromArgs(parser);
             try (InputStream is = new FileInputStream(profileFile)) {
                 ValidationProfile profile = Profiles.profileFromXml(is);
-                if (profile.equals(Profiles.defaultProfile())) {
-                    System.out.println("loading old skool");
+                if (profile.equals(Profiles.defaultProfile())
+                        || (profile.getHexSha1Digest()
+                                .equals("sha-1 hash code"))) {
                     try (InputStream lis = new FileInputStream(profileFile)) {
                         profile = LegacyProfileConverter.fromLegacyStream(lis);
                     }
                 }
-                if (!flavour.equals(proc.validator.getProfile().getPDFAFlavour())) {
-                    Profiles.profileToXml(Profiles.defaultProfile(), System.out, Boolean.TRUE);
-                    Profiles.profileToXml(proc.validator.getProfile(), System.out, Boolean.TRUE);
-                }
-                assertEquals(flavour, proc.validator.getProfile().getPDFAFlavour());
+                assertEquals(flavour, proc.validator.getProfile()
+                        .getPDFAFlavour());
                 assertTrue(profile != proc.validator.getProfile());
-                assertEquals(Profiles.profileToXml(profile, Boolean.TRUE) + "\n" + Profiles.profileToXml(proc.validator.getProfile(), Boolean.TRUE), profile.getRules(), proc.validator.getProfile().getRules());
+                assertEquals(
+                        Profiles.profileToXml(profile, Boolean.TRUE)
+                                + "\n"
+                                + Profiles.profileToXml(
+                                        proc.validator.getProfile(),
+                                        Boolean.TRUE), profile.getRules(),
+                        proc.validator.getProfile().getRules());
             }
         }
     }
 
     private static File[] getProfiles() throws URISyntaxException {
-        URL resourceUrl = ClassLoader.class.getResource("/org/verapdf/profiles");
+        URL resourceUrl = ClassLoader.class
+                .getResource("/org/verapdf/profiles");
         File file = new File(resourceUrl.toURI());
         return file.listFiles();
     }

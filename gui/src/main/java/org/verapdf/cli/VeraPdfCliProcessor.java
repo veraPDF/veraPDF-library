@@ -45,8 +45,7 @@ final class VeraPdfCliProcessor {
     final boolean logPassed;
     final PDFAValidator validator;
 
-    private VeraPdfCliProcessor() throws ProfileException,
-            FileNotFoundException, IOException {
+    private VeraPdfCliProcessor() throws FileNotFoundException, IOException {
         this(new VeraCliArgParser());
     }
 
@@ -56,15 +55,6 @@ final class VeraPdfCliProcessor {
         this.extractFeatures = args.extractFeatures();
         this.logPassed = args.logPassed();
         ValidationProfile profile = profileFromArgs(args);
-        if (profile.getPDFAFlavour() == PDFAFlavour.NO_FLAVOUR) {
-            try {
-                System.out.println("Processor()");
-                Profiles.profileToXml(profile, System.out, Boolean.TRUE);
-            } catch (JAXBException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
         this.validator = (profile == Profiles.defaultProfile()) ? null
                 : Validators.createValidator(profile, logPassed(args));
 
@@ -82,8 +72,7 @@ final class VeraPdfCliProcessor {
     }
 
     static VeraPdfCliProcessor createProcessorFromArgs(
-            final VeraCliArgParser args) throws ProfileException,
-            FileNotFoundException, IOException {
+            final VeraCliArgParser args) throws FileNotFoundException, IOException {
         return new VeraPdfCliProcessor(args);
     }
 
@@ -195,17 +184,8 @@ final class VeraPdfCliProcessor {
                     .getValidationProfileByFlavour(args.getFlavour());
         }
         ValidationProfile profile = profileFromFile(args.getProfileFile());
-        try {
-            System.out.println("profileFromFile(" + args.getProfileFile().getName() + ")");
-            Profiles.profileToXml(profile, System.out, Boolean.TRUE);
-            if (profile.equals(Profiles.defaultProfile())) {
-                profile = profileFromLegacyFile(args.getProfileFile());
-                System.out.println("profileFromLegacyFile(" + args.getProfileFile().getName() + ")");
-                Profiles.profileToXml(profile, System.out, Boolean.TRUE);
-            }
-        } catch (JAXBException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        if (profile.equals(Profiles.defaultProfile())) {
+            profile = profileFromLegacyFile(args.getProfileFile());
         }
 
         return profile;
@@ -216,6 +196,9 @@ final class VeraPdfCliProcessor {
         ValidationProfile profile = Profiles.defaultProfile();
         try (InputStream is = new FileInputStream(profileFile)) {
             profile = Profiles.profileFromXml(is);
+            if (profile.getHexSha1Digest().equals("sha-1 hash code")) {
+                return Profiles.defaultProfile();
+            }
             return profile;
         } catch (JAXBException e) {
             e.printStackTrace();
