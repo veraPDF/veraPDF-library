@@ -51,7 +51,7 @@ final class VeraPdfCliProcessor {
     }
 
     private VeraPdfCliProcessor(final VeraCliArgParser args)
-            throws ProfileException, FileNotFoundException, IOException {
+            throws FileNotFoundException, IOException {
         this.format = args.getFormat();
         this.extractFeatures = args.extractFeatures();
         this.logPassed = args.logPassed();
@@ -188,15 +188,25 @@ final class VeraPdfCliProcessor {
     }
 
     private static ValidationProfile profileFromArgs(final VeraCliArgParser args)
-            throws ProfileException, FileNotFoundException, IOException {
+            throws FileNotFoundException, IOException {
         if (args.getProfileFile() == null) {
             return (args.getFlavour() == PDFAFlavour.NO_FLAVOUR) ? Profiles
                     .defaultProfile() : Profiles.getVeraProfileDirectory()
                     .getValidationProfileByFlavour(args.getFlavour());
         }
         ValidationProfile profile = profileFromFile(args.getProfileFile());
-        if (profile.equals(Profiles.defaultProfile()))
-            profile = profileFromLegacyFile(args.getProfileFile());
+        try {
+            System.out.println("profileFromFile(" + args.getProfileFile().getName() + ")");
+            Profiles.profileToXml(profile, System.out, Boolean.TRUE);
+            if (profile.equals(Profiles.defaultProfile())) {
+                profile = profileFromLegacyFile(args.getProfileFile());
+                System.out.println("profileFromLegacyFile(" + args.getProfileFile().getName() + ")");
+                Profiles.profileToXml(profile, System.out, Boolean.TRUE);
+            }
+        } catch (JAXBException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         return profile;
     }
@@ -206,18 +216,23 @@ final class VeraPdfCliProcessor {
         ValidationProfile profile = Profiles.defaultProfile();
         try (InputStream is = new FileInputStream(profileFile)) {
             profile = Profiles.profileFromXml(is);
+            return profile;
         } catch (JAXBException e) {
+            e.printStackTrace();
             return Profiles.defaultProfile();
         }
-        return profile;
     }
 
     private static ValidationProfile profileFromLegacyFile(
-            final File profileFile) throws IOException, ProfileException {
+            final File profileFile) throws FileNotFoundException, IOException {
         ValidationProfile profile = Profiles.defaultProfile();
         try (InputStream is = new FileInputStream(profileFile)) {
             profile = LegacyProfileConverter.fromLegacyStream(is);
+            return profile;
+        } catch (ProfileException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return Profiles.defaultProfile();
         }
-        return profile;
     }
 }
