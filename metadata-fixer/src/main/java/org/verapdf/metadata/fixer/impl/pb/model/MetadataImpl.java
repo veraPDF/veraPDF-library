@@ -117,7 +117,7 @@ public class MetadataImpl implements Metadata {
         PDFAIdentificationSchema schema = this.metadata
                 .getPDFIdentificationSchema();
         int part = flavour.getPart().getPartNumber();
-        String conformance = flavour.getLevel().getCode();
+        String conformance = flavour.getLevel().getCode().toUpperCase();
 
         if (schema != null) {
             Integer schemaPart = schema.getPart();
@@ -128,7 +128,6 @@ public class MetadataImpl implements Metadata {
             }
             this.metadata.removeSchema(schema);
         }
-
         schema = this.metadata.createAndAddPFAIdentificationSchema();
 
         try {
