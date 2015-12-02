@@ -52,8 +52,6 @@ public class VeraCliArgParserTest {
         JCommander jCommander = initialiseJCommander(parser);
 
         // Test option works
-        parser = new VeraCliArgParser();
-        jCommander = initialiseJCommander(parser);
         jCommander.parse(new String[] { "--version" });
         assertFalse(parser.showVersion() == VeraCliArgParser.DEFAULT_ARGS
                 .showVersion());
@@ -100,8 +98,6 @@ public class VeraCliArgParserTest {
         JCommander jCommander = initialiseJCommander(parser);
 
         // Test flag works
-        parser = new VeraCliArgParser();
-        jCommander = initialiseJCommander(parser);
         jCommander.parse(new String[] { "-l" });
         assertFalse(parser.listProfiles() == VeraCliArgParser.DEFAULT_ARGS
                 .listProfiles());
@@ -124,8 +120,6 @@ public class VeraCliArgParserTest {
         JCommander jCommander = initialiseJCommander(parser);
 
         // Test option works
-        parser = new VeraCliArgParser();
-        jCommander = initialiseJCommander(parser);
         jCommander.parse(new String[] { "--list" });
         assertFalse(parser.listProfiles() == VeraCliArgParser.DEFAULT_ARGS
                 .listProfiles());
@@ -170,8 +164,6 @@ public class VeraCliArgParserTest {
         JCommander jCommander = initialiseJCommander(parser);
 
         // Test flag works
-        parser = new VeraCliArgParser();
-        jCommander = initialiseJCommander(parser);
         jCommander.parse(new String[] { "-h" });
         assertFalse(parser.isHelp() == VeraCliArgParser.DEFAULT_ARGS.isHelp());
 
@@ -192,8 +184,6 @@ public class VeraCliArgParserTest {
         JCommander jCommander = initialiseJCommander(parser);
 
         // Test option works
-        parser = new VeraCliArgParser();
-        jCommander = initialiseJCommander(parser);
         jCommander.parse(new String[] { "--help" });
         assertFalse(parser.isHelp() == VeraCliArgParser.DEFAULT_ARGS.isHelp());
 
@@ -239,8 +229,6 @@ public class VeraCliArgParserTest {
         JCommander jCommander = initialiseJCommander(parser);
 
         // Test option works
-        parser = new VeraCliArgParser();
-        jCommander = initialiseJCommander(parser);
         jCommander.parse(new String[] { "--passed" });
         assertFalse(parser.logPassed() == VeraCliArgParser.DEFAULT_ARGS
                 .logPassed());
@@ -263,8 +251,6 @@ public class VeraCliArgParserTest {
         JCommander jCommander = initialiseJCommander(parser);
 
         // Test option works
-        parser = new VeraCliArgParser();
-        jCommander = initialiseJCommander(parser);
         jCommander.parse(new String[] { "--success" });
         assertFalse(parser.logPassed() == VeraCliArgParser.DEFAULT_ARGS
                 .logPassed());
@@ -311,8 +297,6 @@ public class VeraCliArgParserTest {
         JCommander jCommander = initialiseJCommander(parser);
 
         // Test flag works
-        parser = new VeraCliArgParser();
-        jCommander = initialiseJCommander(parser);
         jCommander.parse(new String[] { "-x" });
         assertFalse(parser.extractFeatures() == VeraCliArgParser.DEFAULT_ARGS
                 .extractFeatures());
@@ -335,8 +319,6 @@ public class VeraCliArgParserTest {
         JCommander jCommander = initialiseJCommander(parser);
 
         // Test option works
-        parser = new VeraCliArgParser();
-        jCommander = initialiseJCommander(parser);
         jCommander.parse(new String[] { "--extract" });
         assertFalse(parser.extractFeatures() == VeraCliArgParser.DEFAULT_ARGS
                 .extractFeatures());

@@ -145,13 +145,12 @@ public class VeraCliProfileOptionTest {
      */
     @Test
     public final void testGetProfileFileFlag() throws IOException {
-        VeraCliArgParser parser = new VeraCliArgParser();
-        JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
         File testFile = File.createTempFile("test", "xml");
 
+        VeraCliArgParser parser = new VeraCliArgParser();
+        JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
+
         // Test flag works
-        parser = new VeraCliArgParser();
-        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
         jCommander.parse(new String[] { "-p", testFile.getAbsolutePath()});
         assertFalse(parser.getProfileFile() == VeraCliArgParser.DEFAULT_ARGS
                 .getProfileFile());
@@ -172,13 +171,11 @@ public class VeraCliProfileOptionTest {
      */
     @Test
     public final void testGetProfileFileOption() throws IOException {
+        File testFile = File.createTempFile("test", "xml");
         VeraCliArgParser parser = new VeraCliArgParser();
         JCommander jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
-        File testFile = File.createTempFile("test", "xml");
 
         // Test option works
-        parser = new VeraCliArgParser();
-        jCommander = VeraCliArgParserTest.initialiseJCommander(parser);
         jCommander.parse(new String[] { "--profile", testFile.getAbsolutePath()});
         assertFalse(parser.getProfileFile() == VeraCliArgParser.DEFAULT_ARGS
                 .getProfileFile());
