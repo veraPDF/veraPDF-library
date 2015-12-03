@@ -103,7 +103,7 @@ public enum GitHubBackedProfileDirectory implements ProfileDirectory {
             try {
                 URL profileURL = new URL(profileURLString);
                 ValidationProfile profile = LegacyProfileConverter
-                        .fromLegacyStream(profileURL.openStream(), flavour);
+                        .fromLegacyStream(profileURL.openStream());
                 profileSet.add(profile);
             } catch (ProfileException | IOException e) {
                 // Do nothing

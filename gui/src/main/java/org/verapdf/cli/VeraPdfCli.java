@@ -8,7 +8,6 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 import org.verapdf.ReleaseDetails;
 import org.verapdf.cli.commands.VeraCliArgParser;
-import org.verapdf.core.ProfileException;
 import org.verapdf.pdfa.validation.ProfileDirectory;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
@@ -64,7 +63,7 @@ public final class VeraPdfCli {
         try {
             VeraPdfCliProcessor processor = VeraPdfCliProcessor.createProcessorFromArgs(cliArgParser);
             processor.processPaths(cliArgParser.getPdfPaths());
-        } catch (ProfileException | IOException e) {
+        } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

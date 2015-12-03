@@ -34,7 +34,7 @@ public class ValidationProfileParserTest {
 		assertEquals("STR_ID_101", prof.getDescription());
 		assertEquals("User1", prof.getCreator());
 		assertEquals("2015-01-23T17:30:15Z", prof.getCreated());
-		assertNull(prof.getHash());
+		assertEquals("hash", prof.getHash());
 
 		Rule rule1 = prof.getRuleById("rule1");
 
@@ -92,7 +92,7 @@ public class ValidationProfileParserTest {
 		assertEquals("STR_ID_101", prof.getDescription());
 		assertEquals("Какой-то русский человек", prof.getCreator());
 		assertEquals("2015-01-23T17:30:15Z", prof.getCreated());
-		assertNull(prof.getHash());
+		assertEquals("hash", prof.getHash());
 
 		assertNull(prof.getRoolsForObject("PDXObject"));
 

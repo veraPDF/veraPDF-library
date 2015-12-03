@@ -138,7 +138,7 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
     private static Rule getRuleFromLegacyProfile(final InputStream toParse,
             final PDFAFlavour flavour) throws ProfileException {
         ValidationProfile profile = LegacyProfileConverter.fromLegacyStream(
-                toParse, flavour);
+                toParse);
         return profile.getRules().iterator().next();
     }
 }
