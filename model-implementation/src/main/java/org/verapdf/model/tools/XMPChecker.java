@@ -91,8 +91,6 @@ public final class XMPChecker {
                             + e.getMessage(), e);
         } catch (XmpParsingException e) {
             LOGGER.error("Problems with XMP parsing. " + e.getMessage(), e);
-        } catch (ClassCastException e) {
-            LOGGER.error("Problems with properties types. " + e.getMessage(), e);
         }
 
         return Boolean.FALSE;
