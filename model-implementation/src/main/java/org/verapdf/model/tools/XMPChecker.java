@@ -7,8 +7,6 @@ import org.apache.xmpbox.XMPMetadata;
 import org.apache.xmpbox.schema.AdobePDFSchema;
 import org.apache.xmpbox.schema.DublinCoreSchema;
 import org.apache.xmpbox.schema.XMPBasicSchema;
-import org.apache.xmpbox.type.AbstractField;
-import org.apache.xmpbox.type.ArrayProperty;
 import org.apache.xmpbox.xml.DomXmpParser;
 import org.apache.xmpbox.xml.XmpParsingException;
 
@@ -93,6 +91,8 @@ public final class XMPChecker {
                             + e.getMessage(), e);
         } catch (XmpParsingException e) {
             LOGGER.error("Problems with XMP parsing. " + e.getMessage(), e);
+        } catch (ClassCastException e) {
+            LOGGER.error("Problems with properties types. " + e.getMessage(), e);
         }
 
         return Boolean.FALSE;
