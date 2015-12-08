@@ -100,10 +100,10 @@ public class MetadataImpl implements Metadata {
 
     private static boolean schemaContainSameFlavour(
             PDFAIdentificationSchema schema, PDFAFlavour flavour) {
-        if (!schema.getPart().equals(
-                Integer.valueOf(flavour.getPart().getPartNumber()))) {
+        if (!Integer.valueOf(flavour.getPart().getPartNumber()).equals(schema.getPart())) {
             return false;
         }
+        //TODO: check conformance equality
         String schemaConf = schema.getConformance();
         schemaConf = schemaConf != null ? schemaConf.toUpperCase(Locale.US)
                 : null;
