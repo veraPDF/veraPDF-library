@@ -18,6 +18,7 @@ hs_err_pid*
 **/.project
 **/.settings
 **/.classpath
+**/bin
 
 # Maven artefacts
 **/pom.xml.versionsBackup

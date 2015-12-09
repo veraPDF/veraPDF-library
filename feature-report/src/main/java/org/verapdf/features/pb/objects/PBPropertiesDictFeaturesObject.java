@@ -3,7 +3,7 @@ package org.verapdf.features.pb.objects;
 import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -57,13 +57,13 @@ public class PBPropertiesDictFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (properties != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("propertiesDict");
-			root.addAttribute("id", id);
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("propertiesDict");
+			root.setAttribute("id", id);
 
 			parseParents(root);
 
@@ -87,12 +87,12 @@ public class PBPropertiesDictFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private void parseParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void parseParents(FeatureTreeNode root) throws FeatureParsingException {
 		if ((pageParent != null && !pageParent.isEmpty()) ||
 				(patternParent != null && !patternParent.isEmpty()) ||
 				(xobjectParent != null && !xobjectParent.isEmpty()) ||
 				(fontParent != null && !fontParent.isEmpty())) {
-			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+			FeatureTreeNode parents = FeatureTreeNode.createChildNode("parents", root);
 
 			PBCreateNodeHelper.parseIDSet(pageParent, "page", null, parents);
 			PBCreateNodeHelper.parseIDSet(patternParent, "pattern", null, parents);

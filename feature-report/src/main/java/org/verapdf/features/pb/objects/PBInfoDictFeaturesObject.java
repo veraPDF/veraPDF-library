@@ -1,7 +1,7 @@
 package org.verapdf.features.pb.objects;
 
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -49,13 +49,13 @@ public class PBInfoDictFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 
 		if (info != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("informationDict");
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("informationDict");
 
 			addEntry("Title", info.getTitle(), root);
 			addEntry("Author", info.getAuthor(), root);
@@ -66,12 +66,12 @@ public class PBInfoDictFeaturesObject implements IFeaturesObject {
 
 			FeatureTreeNode creationDate = PBCreateNodeHelper.createDateNode(ENTRY, root, info.getCreationDate(), collection);
 			if (creationDate != null) {
-				creationDate.addAttribute(KEY, "CreationDate");
+				creationDate.setAttribute(KEY, "CreationDate");
 			}
 
 			FeatureTreeNode modificationDate = PBCreateNodeHelper.createDateNode(ENTRY, root, info.getModificationDate(), collection);
 			if (modificationDate != null) {
-				modificationDate.addAttribute(KEY, "ModDate");
+				modificationDate.setAttribute(KEY, "ModDate");
 			}
 
 			addEntry("Trapped", info.getTrapped(), root);
@@ -99,10 +99,11 @@ public class PBInfoDictFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private static void addEntry(String name, String value, FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private static void addEntry(String name, String value, FeatureTreeNode root) throws FeatureParsingException {
 		if (name != null && value != null) {
-			FeatureTreeNode entry = FeatureTreeNode.newChildInstanceWithValue(ENTRY, value, root);
-			entry.addAttribute(KEY, name);
+			FeatureTreeNode entry = FeatureTreeNode.createChildNode(ENTRY, root);
+			entry.setValue(value);
+			entry.setAttribute(KEY, name);
 		}
 	}
 }

@@ -7,8 +7,9 @@ import org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern;
 import org.verapdf.model.impl.pb.pd.colors.*;
 import org.verapdf.model.impl.pb.pd.pattern.PBoxPDShadingPattern;
 import org.verapdf.model.impl.pb.pd.pattern.PBoxPDTilingPattern;
-import org.verapdf.model.pdlayer.PDPattern;
 import org.verapdf.model.pdlayer.PDColorSpace;
+import org.verapdf.model.pdlayer.PDPattern;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 /**
  * Factory for transforming PDColorSpace objects of pdfbox to corresponding
@@ -18,54 +19,51 @@ import org.verapdf.model.pdlayer.PDColorSpace;
  */
 public class ColorSpaceFactory {
 
-    public static final String CAL_GRAY = "CalGray";
-    public static final String CAL_RGB = "CalRGB";
-    public static final String DEVICE_CMYK = "DeviceCMYK";
-    public static final String DEVICE_GRB = "DeviceRGB";
-    public static final String DEVICE_GRAY = "DeviceGray";
-    public static final String DEVICE_N = "DeviceN";
-    public static final String ICC_BASED = "ICCBased";
-    public static final String LAB = "Lab";
-    public static final String SEPARATION = "Separation";
-    public static final String INDEXED = "Indexed";
-    public static final String PATTERN = "Pattern";
+	public static final String CAL_GRAY = "CalGray";
+	public static final String CAL_RGB = "CalRGB";
+	public static final String DEVICE_CMYK = "DeviceCMYK";
+	public static final String DEVICE_GRB = "DeviceRGB";
+	public static final String DEVICE_GRAY = "DeviceGray";
+	public static final String DEVICE_N = "DeviceN";
+	public static final String ICC_BASED = "ICCBased";
+	public static final String LAB = "Lab";
+	public static final String SEPARATION = "Separation";
+	public static final String INDEXED = "Indexed";
+	public static final String PATTERN = "Pattern";
 
-    private ColorSpaceFactory() {
+	private ColorSpaceFactory() {
 		// disable default constructor
-    }
+	}
 
-    /**
-     * Transform object of pdfbox to corresponding object of veraPDF-library (
-     * {@link org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace} to
-     * {@link PBoxPDColorSpace}).
-     *
-     * @param colorSpace
-     *            pdfbox color space object
-     * @return {@code <? extends PBoxPDColorSpace>} object or {@code null} if
-     *         {@code colorSpace} argument {@code null} or unsupported type
-     */
-    public static PDColorSpace getColorSpace(
-            org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace) {
-        return getColorSpace(colorSpace, null);
-    }
+	/**
+	 * Transform object of pdfbox to corresponding object of veraPDF-library (
+	 * {@link org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace} to
+	 * {@link PBoxPDColorSpace}).
+	 *
+	 * @param colorSpace pdfbox color space object
+	 * @return {@code <? extends PBoxPDColorSpace>} object or {@code null} if
+	 * {@code colorSpace} argument {@code null} or unsupported type
+	 */
+	public static PDColorSpace getColorSpace(
+			org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace) {
+		return getColorSpace(colorSpace, null, PDInheritableResources.EMPTY_EXTENDED_RESOURCES);
+	}
 
-    /**
-     * Transform object of pdfbox to corresponding object of veraPDF-library (
-     * {@link org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace} to
-     * {@link PBoxPDColorSpace}). If color space is pattern color space, than
-     * transform to Pattern object.
-     *
-     * @param colorSpace
-     *            pdfbox color space object
-     * @param pattern
-     *            pattern of pattern color space
-     * @return {@code <? extends PBoxPDColorSpace>} object or {@code null} if
-     *         {@code colorSpace} argument is {@code null},{@code pattern}
-     *         argument is {@code null} or unsupported type of color space
-     */
+	/**
+	 * Transform object of pdfbox to corresponding object of veraPDF-library (
+	 * {@link org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace} to
+	 * {@link PBoxPDColorSpace}). If color space is pattern color space, than
+	 * transform to Pattern object.
+	 *
+	 * @param colorSpace pdfbox color space object
+	 * @param pattern    pattern of pattern color space
+	 * @return {@code <? extends PBoxPDColorSpace>} object or {@code null} if
+	 * {@code colorSpace} argument is {@code null},{@code pattern}
+	 * argument is {@code null} or unsupported type of color space
+	 */
 	public static PDColorSpace getColorSpace(
 			org.apache.pdfbox.pdmodel.graphics.color.PDColorSpace colorSpace,
-			PDAbstractPattern pattern) {
+			PDAbstractPattern pattern, PDInheritableResources resources) {
 		if (colorSpace == null) {
 			return null;
 		}
@@ -91,32 +89,33 @@ public class ColorSpaceFactory {
 			case INDEXED:
 				return new PBoxPDIndexed((PDIndexed) colorSpace);
 			case PATTERN:
-				return getPattern(pattern);
+				return getPattern(pattern, resources);
 			default:
 				return null;
 		}
 	}
 
-    /**
-     * Transform object of pdfbox to corresponding object of veraPDF-library (
-     * {@link org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern} to
-     * {@link org.verapdf.model.impl.pb.pd.pattern.PBoxPDPattern})
-     *
-     * @param pattern
-     *            pdfbox pattern object
-     * @return {@code <? extends PDPattern>} object or {@code null} if
-     *         {@code pattern} argument is {@code null}
-     */
-    public static PDPattern getPattern(PDAbstractPattern pattern) {
-        if (pattern != null
-                && pattern.getPatternType() == PDAbstractPattern.TYPE_SHADING_PATTERN) {
-            return new PBoxPDShadingPattern((PDShadingPattern) pattern);
-        } else if (pattern != null
-                && pattern.getPatternType() == PDAbstractPattern.TYPE_TILING_PATTERN) {
-            return new PBoxPDTilingPattern((PDTilingPattern) pattern);
-        } else {
-            return null;
-        }
-    }
+	/**
+	 * Transform object of pdfbox to corresponding object of veraPDF-library (
+	 * {@link org.apache.pdfbox.pdmodel.graphics.pattern.PDAbstractPattern} to
+	 * {@link org.verapdf.model.impl.pb.pd.pattern.PBoxPDPattern})
+	 *
+	 * @param pattern   pdfbox pattern object
+	 * @param resources page resources for tiling pattern
+	 * @return {@code <? extends PDPattern>} object or {@code null} if
+	 * {@code pattern} argument is {@code null}
+	 */
+	public static PDPattern getPattern(PDAbstractPattern pattern, PDInheritableResources resources) {
+		if (pattern != null) {
+			if (pattern.getPatternType() == PDAbstractPattern.TYPE_SHADING_PATTERN) {
+				return new PBoxPDShadingPattern((PDShadingPattern) pattern);
+			} else if (pattern.getPatternType() == PDAbstractPattern.TYPE_TILING_PATTERN) {
+				PDTilingPattern tiling = (PDTilingPattern) pattern;
+				PDInheritableResources pdResources = resources.getExtendedResources(tiling.getResources());
+				return new PBoxPDTilingPattern(tiling, pdResources);
+			}
+		}
+		return null;
+	}
 
 }

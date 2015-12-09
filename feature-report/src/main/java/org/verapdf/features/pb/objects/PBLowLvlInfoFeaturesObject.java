@@ -2,7 +2,7 @@ package org.verapdf.features.pb.objects;
 
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -61,16 +61,16 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (document != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("lowLevelInfo");
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("lowLevelInfo");
 
 
 			if (document.getObjects() != null) {
-				FeatureTreeNode.newChildInstanceWithValue("indirectObjectsNumber", String.valueOf(document.getObjects().size()), root);
+				FeatureTreeNode.createChildNode("indirectObjectsNumber", root).setValue(String.valueOf(document.getObjects().size()));
 			}
 
 			addDocumentId(root, collection);
@@ -78,12 +78,12 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
 			Set<String> filters = getAllFilters();
 
 			if (!filters.isEmpty()) {
-				FeatureTreeNode filtersNode = FeatureTreeNode.newChildInstance("filters", root);
+				FeatureTreeNode filtersNode = FeatureTreeNode.createChildNode("filters", root);
 
 				for (String filter : filters) {
 					if (filter != null) {
-						FeatureTreeNode filterNode = FeatureTreeNode.newChildInstance("filter", filtersNode);
-						filterNode.addAttribute("name", filter);
+						FeatureTreeNode filterNode = FeatureTreeNode.createChildNode("filter", filtersNode);
+						filterNode.setAttribute("name", filter);
 					}
 				}
 			}
@@ -126,20 +126,20 @@ public class PBLowLvlInfoFeaturesObject implements IFeaturesObject {
 		return res;
 	}
 
-	private void addDocumentId(FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
+	private void addDocumentId(FeatureTreeNode root, FeaturesCollection collection) throws FeatureParsingException {
 		COSArray ids = document.getDocumentID();
 		if (ids != null) {
 			String creationId = PBCreateNodeHelper.getStringFromBase(ids.get(0));
 			String modificationId = PBCreateNodeHelper.getStringFromBase(ids.get(1));
 
-			FeatureTreeNode documentId = FeatureTreeNode.newChildInstance("documentId", root);
+			FeatureTreeNode documentId = FeatureTreeNode.createChildNode("documentId", root);
 
 			if (creationId != null || modificationId != null) {
 				if (creationId != null) {
-					documentId.addAttribute("creationId", creationId);
+					documentId.setAttribute("creationId", creationId);
 				}
 				if (modificationId != null) {
-					documentId.addAttribute("modificationId", modificationId);
+					documentId.setAttribute("modificationId", modificationId);
 				}
 			}
 

@@ -3,6 +3,7 @@ package org.verapdf.model.impl.pb.pd.images;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.common.COSObjectable;
 import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImage;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
@@ -14,6 +15,7 @@ import org.verapdf.model.impl.pb.cos.PBCosRenderingIntent;
 import org.verapdf.model.impl.pb.external.PBoxJPEG2000;
 import org.verapdf.model.pdlayer.PDColorSpace;
 import org.verapdf.model.pdlayer.PDXImage;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,7 +40,7 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
 	private final boolean interpolate;
 
     public PBoxPDXImage(PDImage simplePDObject) {
-        super(simplePDObject, X_IMAGE_TYPE);
+        super(simplePDObject, PDInheritableResources.EMPTY_EXTENDED_RESOURCES, X_IMAGE_TYPE);
 		this.interpolate = simplePDObject.getInterpolate();
     }
 
@@ -76,24 +78,26 @@ public class PBoxPDXImage extends PBoxPDXObject implements PDXImage {
         return Collections.emptyList();
     }
 
-    private List<PDColorSpace> getImageCS() {
-        try {
-            PDColorSpace buffer = ColorSpaceFactory
-                    .getColorSpace(((PDImage) this.simplePDObject)
-                            .getColorSpace());
-            if (buffer != null) {
-				List<PDColorSpace> colorSpaces =
-						new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-				colorSpaces.add(buffer);
-				return Collections.unmodifiableList(colorSpaces);
-            }
-        } catch (IOException e) {
-            LOGGER.error(
-                    "Problems with color space obtaining from Image XObject. "
-                            + e.getMessage(), e);
-        }
-        return Collections.emptyList();
-    }
+	private List<PDColorSpace> getImageCS() {
+		PDImage image = (PDImage) this.simplePDObject;
+		if (!image.isStencil()) {
+			try {
+				PDColorSpace buffer = ColorSpaceFactory
+						.getColorSpace(image.getColorSpace());
+				if (buffer != null) {
+					List<PDColorSpace> colorSpaces =
+							new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
+					colorSpaces.add(buffer);
+					return Collections.unmodifiableList(colorSpaces);
+				}
+			} catch (IOException e) {
+				LOGGER.error(
+						"Problems with color space obtaining from Image XObject. "
+								+ e.getMessage(), e);
+			}
+		}
+		return Collections.emptyList();
+	}
 
     private List<? extends PDXImage> getAlternates() {
         final List<PDXImage> alternates = new ArrayList<>();

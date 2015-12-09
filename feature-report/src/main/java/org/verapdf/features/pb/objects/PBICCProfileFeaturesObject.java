@@ -3,7 +3,7 @@ package org.verapdf.features.pb.objects;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.ICCProfileFeaturesData;
@@ -94,16 +94,16 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 
 		if (profile != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("iccProfile");
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("iccProfile");
 
 			if (id != null) {
-				root.addAttribute(ID, id);
+				root.setAttribute(ID, id);
 			}
 
 			addParents(root);
@@ -175,15 +175,15 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 		}
 	}
 
-	private void addParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void addParents(FeatureTreeNode root) throws FeatureParsingException {
 		if ((outInts != null && !outInts.isEmpty()) || (iccBaseds != null && !iccBaseds.isEmpty())) {
-			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+			FeatureTreeNode parents = FeatureTreeNode.createChildNode("parents", root);
 
 			if (outInts != null) {
 				for (String outInt : outInts) {
 					if (outInt != null) {
-						FeatureTreeNode pageNode = FeatureTreeNode.newChildInstance("outputIntent", parents);
-						pageNode.addAttribute(ID, outInt);
+						FeatureTreeNode pageNode = FeatureTreeNode.createChildNode("outputIntent", parents);
+						pageNode.setAttribute(ID, outInt);
 					}
 				}
 			}
@@ -191,15 +191,15 @@ public class PBICCProfileFeaturesObject implements IFeaturesObject {
 			if (iccBaseds != null) {
 				for (String iccBased : iccBaseds) {
 					if (iccBased != null) {
-						FeatureTreeNode pageNode = FeatureTreeNode.newChildInstance("iccBased", parents);
-						pageNode.addAttribute(ID, iccBased);
+						FeatureTreeNode pageNode = FeatureTreeNode.createChildNode("iccBased", parents);
+						pageNode.setAttribute(ID, iccBased);
 					}
 				}
 			}
 		}
 	}
 
-	private void parseProfileHeader(FeatureTreeNode root, FeaturesCollection collection) throws FeaturesTreeNodeException {
+	private void parseProfileHeader(FeatureTreeNode root, FeaturesCollection collection) throws FeatureParsingException {
 		try {
 			byte[] profileBytes = PBCreateNodeHelper.inputStreamToByteArray(profile.getUnfilteredStream());
 

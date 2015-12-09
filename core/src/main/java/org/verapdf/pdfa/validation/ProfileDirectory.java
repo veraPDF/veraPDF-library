@@ -1,14 +1,16 @@
 package org.verapdf.pdfa.validation;
 
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+
 import java.util.NoSuchElementException;
 import java.util.Set;
-
-import org.verapdf.pdfa.ValidationProfile;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**
  * A ProfileDirectory provides access to a set of {@link ValidationProfile}s
  * that can be retrieved by String id or {@link PDFAFlavour}.
+ * <p>
+ * This interface provides a simple directory of {@link ValidationProfile}s that is intentionally restricted by the enum type {@link PDFAFlavour}.
+ * </p>
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
@@ -33,7 +35,8 @@ public interface ProfileDirectory {
      * @throws NoSuchElementException
      *             when there is no profile associated with the profileID string
      *             IllegalArgumentException if the profileID parameter is null
-     * @throws IllegalArgumentException if profileID is null
+     * @throws IllegalArgumentException
+     *             if profileID is null
      */
     public ValidationProfile getValidationProfileById(String profileID);
 
@@ -45,7 +48,8 @@ public interface ProfileDirectory {
      * @throws NoSuchElementException
      *             when there is no profile associated with the flavour
      *             IllegalArgumentException if the flavour parameter is null
-     * @throws IllegalArgumentException if flavour is null
+     * @throws IllegalArgumentException
+     *             if flavour is null
      */
     public ValidationProfile getValidationProfileByFlavour(PDFAFlavour flavour);
 

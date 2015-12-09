@@ -6,7 +6,7 @@
   <parent>
     <artifactId>verapdf-library</artifactId>
     <groupId>org.verapdf</groupId>
-    <version>0.6.0</version>
+    <version>0.8.0</version>
   </parent>
 
   <artifactId>core</artifactId>
@@ -14,6 +14,15 @@
   <description>Core classes for the veraPDF Library.</description>
 
   <dependencies>
+    <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>pdf-model</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>rhino</groupId>
+      <artifactId>js</artifactId>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -25,4 +34,12 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
 </project>

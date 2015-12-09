@@ -1,14 +1,15 @@
 package org.verapdf.metadata.fixer.entity;
 
-import org.verapdf.metadata.fixer.MetadataFixerResultImpl;
+import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
-import org.verapdf.metadata.fixer.utils.flavour.PDFAFlavour;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.MetadataFixerResultImpl;
 
 /**
  * Current interface provide necessary behavior of pdf metadata
- * for {@link org.verapdf.metadata.fixer.MetadataFixer}
+ * for {@link MetadataFixerImpl}
  *
  * @author Evgeniy Muravitskiy
  */
@@ -17,26 +18,26 @@ public interface Metadata {
 	/**
 	 * Remove filters from stream and add required fields to stream dictionary
 	 *
-	 * @param report report applied changes
+	 * @param resultBuilder report applied changes
 	 */
-	void checkMetadataStream(MetadataFixerResultImpl report);
+	void checkMetadataStream(MetadataFixerResultImpl.Builder resultBuilder);
 
 	/**
-	 * Remove identification schema if {@code MetadataFixer}
+	 * Remove identification schema if {@code MetadataFixerImpl}
 	 * can not repair document to valid PDF/A Document.
 	 *
-	 * @param result report applied changes
+	 * @param resultBuilder report applied changes
 	 */
-	void removePDFIdentificationSchema(MetadataFixerResultImpl result, PDFAFlavour flavour);
+	void removePDFIdentificationSchema(MetadataFixerResultImpl.Builder resultBuilder, PDFAFlavour flavour);
 
 	/**
-	 * Add PDF/A identification schema if {@code MetadataFixer}
+	 * Add PDF/A identification schema if {@code MetadataFixerImpl}
 	 * be able to repair document to valid PDF/A document.
 	 *
-	 * @param report  report applied changes
+	 * @param resultBuilder  report applied changes
 	 * @param flavour the checked flavour
 	 */
-	void addPDFIdentificationSchema(MetadataFixerResultImpl report, PDFAFlavour flavour);
+	void addPDFIdentificationSchema(MetadataFixerResultImpl.Builder resultBuilder, PDFAFlavour flavour);
 
 	/**
 	 * Get {@code DublinCore} representation. If current schema not presented
@@ -68,8 +69,14 @@ public interface Metadata {
 	 */
 	XMPBasic getXMPBasicSchema(InfoDictionary info);
 
+	/**
+	 * @return
+	 */
 	boolean isNeedToBeUpdated();
 
+	/**
+	 * @param needToBeUpdated
+	 */
 	void setNeedToBeUpdated(boolean needToBeUpdated);
 
 	/**

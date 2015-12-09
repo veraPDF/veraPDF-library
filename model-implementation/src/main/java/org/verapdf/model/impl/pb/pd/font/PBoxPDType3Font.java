@@ -8,6 +8,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.pb.pd.PBoxPDContentStream;
 import org.verapdf.model.pdlayer.PDContentStream;
 import org.verapdf.model.pdlayer.PDType3Font;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,9 +24,12 @@ public class PBoxPDType3Font extends PBoxPDSimpleFont implements PDType3Font {
 
     public static final String CHAR_STRINGS = "charStrings";
 
-    public PBoxPDType3Font(PDFontLike font) {
-        super(font, TYPE3_FONT_TYPE);
-    }
+	private final PDInheritableResources resources;
+
+	public PBoxPDType3Font(PDFontLike font, PDInheritableResources resources) {
+		super(font, TYPE3_FONT_TYPE);
+		this.resources = resources;
+	}
 
 	@Override
 	public Boolean getisStandard() {
@@ -49,7 +53,7 @@ public class PBoxPDType3Font extends PBoxPDSimpleFont implements PDType3Font {
 			for (COSName cosName : keySet) {
 				PDType3CharProc charProc = ((org.apache.pdfbox.pdmodel.font.PDType3Font) this.pdFontLike)
 						.getCharProc(cosName);
-				list.add(new PBoxPDContentStream(charProc));
+				list.add(new PBoxPDContentStream(charProc, this.resources));
 			}
 			return Collections.unmodifiableList(list);
 		}

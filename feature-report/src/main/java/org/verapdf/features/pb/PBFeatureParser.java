@@ -26,9 +26,8 @@ import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceDictionary;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceEntry;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceStream;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
-import org.verapdf.features.FeaturesPluginsLoader;
 import org.verapdf.features.FeaturesReporter;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
@@ -200,8 +199,6 @@ public final class PBFeatureParser {
 			final PDDocument document) {
 
 		FeaturesReporter reporter = new FeaturesReporter();
-
-		FeaturesPluginsLoader.loadExtractors(reporter);
 
 		if (document != null) {
 			PBFeatureParser parser = new PBFeatureParser(reporter);
@@ -572,14 +569,14 @@ public final class PBFeatureParser {
 	private void generateUnknownAnnotation(String id) {
 		try {
 			FeatureTreeNode annot = FeatureTreeNode
-					.newRootInstance(ANNOTATION);
-			annot.addAttribute(ID, id);
+					.createRootNode(ANNOTATION);
+			annot.setAttribute(ID, id);
 			ErrorsHelper.addErrorIntoCollection(reporter.getCollection(),
 					annot,
 					"Unknown annotation type");
 			reporter.getCollection().addNewFeatureTree(FeaturesObjectTypesEnum.ANNOTATION,
 					annot);
-		} catch (FeaturesTreeNodeException e) {
+		} catch (FeatureParsingException e) {
 			// This exception occurs when wrong node creates for feature tree.
 			// The logic of the method guarantees this doesn't occur.
 			String message = "PBFeatureParser.generateUnknownAnnotation logic failure.";
@@ -727,9 +724,9 @@ public final class PBFeatureParser {
 			final boolean isTypeError) {
 		try {
 			if (!isTypeError) {
-				FeatureTreeNode node = FeatureTreeNode.newRootInstance(nodeName);
+				FeatureTreeNode node = FeatureTreeNode.createRootNode(nodeName);
 				if (nodeID != null) {
-					node.addAttribute(ID, nodeID);
+					node.setAttribute(ID, nodeID);
 				}
 				reporter.getCollection().addNewFeatureTree(type, node);
 				ErrorsHelper.addErrorIntoCollection(reporter.getCollection(),
@@ -742,7 +739,7 @@ public final class PBFeatureParser {
 				reporter.getCollection().addNewError(type, id);
 
 			}
-		} catch (FeaturesTreeNodeException e) {
+		} catch (FeatureParsingException e) {
 			// This exception occurs when wrong node creates for feature
 			// tree.
 			// The logic of the method guarantees this doesn't occur.
@@ -1417,7 +1414,7 @@ public final class PBFeatureParser {
 			}
 
 			COSBase baseAlt = iccBased.getPDStream().getStream().getItem(COSName.ALTERNATE);
-			String idAlt = getId(baseAlt, COLORSPACE, colorSpaces.size());
+			String idAlt = getId(baseAlt, COLORSPACE_ID, colorSpaces.size());
 
 			try {
 				PDColorSpace altclr = iccBased.getAlternateColorSpace();
@@ -1451,7 +1448,7 @@ public final class PBFeatureParser {
 
 			COSArray array = (COSArray) colorSpace.getCOSObject();
 			COSBase base = array.get(number);
-			String id = getId(base, COLORSPACE, colorSpaces.size());
+			String id = getId(base, COLORSPACE_ID, colorSpaces.size());
 
 			try {
 				PDColorSpace alt;

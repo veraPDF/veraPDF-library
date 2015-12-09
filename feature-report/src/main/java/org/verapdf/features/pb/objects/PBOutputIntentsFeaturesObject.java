@@ -5,7 +5,7 @@ import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -51,13 +51,13 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (outInt != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("outputIntent");
-			root.addAttribute("id", id);
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("outputIntent");
+			root.setAttribute("id", id);
 
 			addSubtype(collection, root);
 
@@ -66,8 +66,8 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
 			PBCreateNodeHelper.addNotEmptyNode("registryName", outInt.getRegistryName(), root);
 			PBCreateNodeHelper.addNotEmptyNode("info", outInt.getInfo(), root);
 
-			FeatureTreeNode destOutInt = FeatureTreeNode.newChildInstance("destOutputIntent", root);
-			destOutInt.addAttribute("id", iccProfileID);
+			FeatureTreeNode destOutInt = FeatureTreeNode.createChildNode("destOutputIntent", root);
+			destOutInt.setAttribute("id", iccProfileID);
 
 			collection.addNewFeatureTree(FeaturesObjectTypesEnum.OUTPUTINTENT, root);
 
@@ -84,7 +84,7 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private void addSubtype(FeaturesCollection collection, FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void addSubtype(FeaturesCollection collection, FeatureTreeNode root) throws FeatureParsingException {
 		COSBase base = outInt.getCOSObject();
 		if (base instanceof COSDictionary) {
 			COSDictionary dict = (COSDictionary) base;
@@ -95,7 +95,7 @@ public class PBOutputIntentsFeaturesObject implements IFeaturesObject {
 			}
 
 			if (baseType != null) {
-				FeatureTreeNode type = FeatureTreeNode.newChildInstance("subtype", root);
+				FeatureTreeNode type = FeatureTreeNode.createChildNode("subtype", root);
 				if (baseType instanceof COSName) {
 					type.setValue(((COSName) baseType).getName());
 				} else {

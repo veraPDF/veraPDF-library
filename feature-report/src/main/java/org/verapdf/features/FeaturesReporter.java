@@ -1,6 +1,6 @@
 package org.verapdf.features;
 
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -18,15 +18,19 @@ public class FeaturesReporter {
 
 	public static final String CUSTOM_FEATURES_ROOT_NODE_NAME = "customFeatures";
 
+	private static Map<FeaturesObjectTypesEnum, List<FeaturesExtractor>> featuresExtractors = new HashMap<>();
+
 	private final FeaturesCollection collection;
-	private Map<FeaturesObjectTypesEnum, List<FeaturesExtractor>> featuresExtractors;
+
+	static {
+		FeaturesPluginsLoader.loadExtractors();
+	}
 
 	/**
 	 * Creates new FeaturesReporter
 	 */
 	public FeaturesReporter() {
 		collection = new FeaturesCollection();
-		featuresExtractors = new HashMap<>();
 	}
 
 	/**
@@ -34,7 +38,7 @@ public class FeaturesReporter {
 	 *
 	 * @param extractor object for extract custom features
 	 */
-	public void registerFeaturesExtractor(FeaturesExtractor extractor) {
+	static void registerFeaturesExtractor(FeaturesExtractor extractor) {
 		if (featuresExtractors.get(extractor.getType()) == null) {
 			featuresExtractors.put(extractor.getType(), new ArrayList<FeaturesExtractor>());
 		}
@@ -51,21 +55,26 @@ public class FeaturesReporter {
 		try {
 			FeatureTreeNode root = obj.reportFeatures(collection);
 			if (featuresExtractors.get(obj.getType()) != null) {
-				FeatureTreeNode custom = FeatureTreeNode.newChildInstance(CUSTOM_FEATURES_ROOT_NODE_NAME, root);
-				for (FeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
-					List<FeatureTreeNode> cust = ext.getFeatures(obj.getData());
-					if (cust != null) {
-						FeatureTreeNode custRoot = FeatureTreeNode.newChildInstance("pluginFeatures", custom);
-						for (FeatureTreeNode ftn : cust) {
-							if (ftn != null) {
-								custRoot.addChild(ftn);
+				FeaturesData objData = obj.getData();
+				if (objData != null) {
+					FeatureTreeNode custom = FeatureTreeNode.createChildNode(CUSTOM_FEATURES_ROOT_NODE_NAME, root);
+					for (FeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
+						List<FeatureTreeNode> cust = ext.getFeatures(objData);
+						if (cust != null) {
+							FeatureTreeNode custRoot = FeatureTreeNode.createChildNode("pluginFeatures", custom);
+							custRoot.setAttribute("pluginId", ext.getID());
+							custRoot.setAttribute("description", ext.getDescription());
+							for (FeatureTreeNode ftn : cust) {
+								if (ftn != null) {
+									custRoot.addChild(ftn);
+								}
 							}
 						}
 					}
 				}
 			}
 
-		} catch (FeaturesTreeNodeException ignore) {
+		} catch (FeatureParsingException ignore) {
 			// The method logic should ensure this never happens, so if it does
 			// it's catastrophic. We'll throw an IllegalStateException with this
 			// as a cause. The only time it's ignored is when the unthinkable

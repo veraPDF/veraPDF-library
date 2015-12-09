@@ -1,7 +1,7 @@
 package org.verapdf.features.pb.objects;
 
 import org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -80,26 +80,26 @@ public class PBTilingPatternFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (tilingPattern != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("pattern");
-			root.addAttribute(ID, id);
-			root.addAttribute("type", "tiling");
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("pattern");
+			root.setAttribute(ID, id);
+			root.setAttribute("type", "tiling");
 
 			parseParents(root);
 
-			FeatureTreeNode.newChildInstanceWithValue("paintType", String.valueOf(tilingPattern.getPaintType()), root);
-			FeatureTreeNode.newChildInstanceWithValue("tilingType", String.valueOf(tilingPattern.getTilingType()), root);
+			FeatureTreeNode.createChildNode("paintType", root).setValue(String.valueOf(tilingPattern.getPaintType()));
+			FeatureTreeNode.createChildNode("tilingType", root).setValue(String.valueOf(tilingPattern.getTilingType()));
 
 			PBCreateNodeHelper.addBoxFeature("bbox", tilingPattern.getBBox(), root);
 
-			FeatureTreeNode.newChildInstanceWithValue("xStep", String.valueOf(tilingPattern.getXStep()), root);
-			FeatureTreeNode.newChildInstanceWithValue("yStep", String.valueOf(tilingPattern.getYStep()), root);
+			FeatureTreeNode.createChildNode("xStep", root).setValue(String.valueOf(tilingPattern.getXStep()));
+			FeatureTreeNode.createChildNode("yStep", root).setValue(String.valueOf(tilingPattern.getYStep()));
 
-			parseFloatMatrix(tilingPattern.getMatrix().getValues(), FeatureTreeNode.newChildInstance("matrix", root));
+			parseFloatMatrix(tilingPattern.getMatrix().getValues(), FeatureTreeNode.createChildNode("matrix", root));
 
 			parseResources(root);
 
@@ -118,23 +118,23 @@ public class PBTilingPatternFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private void parseFloatMatrix(float[][] array, FeatureTreeNode parent) throws FeaturesTreeNodeException {
+	private void parseFloatMatrix(float[][] array, FeatureTreeNode parent) throws FeatureParsingException {
 		for (int i = 0; i < array.length; ++i) {
 			for (int j = 0; j < array.length - 1; ++j) {
-				FeatureTreeNode element = FeatureTreeNode.newChildInstance("element", parent);
-				element.addAttribute("row", String.valueOf(i + 1));
-				element.addAttribute("column", String.valueOf(j + 1));
-				element.addAttribute("value", String.valueOf(array[i][j]));
+				FeatureTreeNode element = FeatureTreeNode.createChildNode("element", parent);
+				element.setAttribute("row", String.valueOf(i + 1));
+				element.setAttribute("column", String.valueOf(j + 1));
+				element.setAttribute("value", String.valueOf(array[i][j]));
 			}
 		}
 	}
 
-	private void parseParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void parseParents(FeatureTreeNode root) throws FeatureParsingException {
 		if ((pageParent != null && !pageParent.isEmpty()) ||
 				(patternParent != null && !patternParent.isEmpty()) ||
 				(xobjectParent != null && !xobjectParent.isEmpty()) ||
 				(fontParent != null && !fontParent.isEmpty())) {
-			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+			FeatureTreeNode parents = FeatureTreeNode.createChildNode("parents", root);
 
 			PBCreateNodeHelper.parseIDSet(pageParent, "page", null, parents);
 			PBCreateNodeHelper.parseIDSet(patternParent, "pattern", null, parents);
@@ -143,7 +143,7 @@ public class PBTilingPatternFeaturesObject implements IFeaturesObject {
 		}
 	}
 
-	private void parseResources(FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void parseResources(FeatureTreeNode root) throws FeatureParsingException {
 
 		if ((extGStateChild != null && !extGStateChild.isEmpty()) ||
 				(colorSpaceChild != null && !colorSpaceChild.isEmpty()) ||
@@ -152,7 +152,7 @@ public class PBTilingPatternFeaturesObject implements IFeaturesObject {
 				(xobjectChild != null && !xobjectChild.isEmpty()) ||
 				(fontChild != null && !fontChild.isEmpty()) ||
 				(propertiesChild != null && !propertiesChild.isEmpty())) {
-			FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
+			FeatureTreeNode resources = FeatureTreeNode.createChildNode("resources", root);
 
 			PBCreateNodeHelper.parseIDSet(extGStateChild, "graphicsState", "graphicsStates", resources);
 			PBCreateNodeHelper.parseIDSet(colorSpaceChild, "colorSpace", "colorSpaces", resources);

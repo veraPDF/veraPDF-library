@@ -1,7 +1,7 @@
 package org.verapdf.features.pb.objects;
 
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -62,13 +62,13 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (annot != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("annotation");
-			root.addAttribute(ID, id);
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("annotation");
+			root.setAttribute(ID, id);
 
 			addParents(root);
 
@@ -79,18 +79,18 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
 			PBCreateNodeHelper.addNotEmptyNode("modifiedDate", annot.getModifiedDate(), root);
 
 			if (formXObjects != null && !formXObjects.isEmpty()) {
-				FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
+				FeatureTreeNode resources = FeatureTreeNode.createChildNode("resources", root);
 				for (String xObjID : formXObjects) {
 					if (xObjID != null) {
-						FeatureTreeNode xObjNode = FeatureTreeNode.newChildInstance("xobject", resources);
-						xObjNode.addAttribute(ID, xObjID);
+						FeatureTreeNode xObjNode = FeatureTreeNode.createChildNode("xobject", resources);
+						xObjNode.setAttribute(ID, xObjID);
 					}
 				}
 			}
 
 			if (popupId != null) {
-				FeatureTreeNode popup = FeatureTreeNode.newChildInstance("popup", root);
-				popup.addAttribute(ID, popupId);
+				FeatureTreeNode popup = FeatureTreeNode.createChildNode("popup", root);
+				popup.setAttribute(ID, popupId);
 			}
 
 			PBCreateNodeHelper.addDeviceColorSpaceNode("color", annot.getColor(), root, collection);
@@ -122,22 +122,22 @@ public class PBAnnotationFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private void addParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void addParents(FeatureTreeNode root) throws FeatureParsingException {
 		if ((pages != null && !pages.isEmpty()) || annotId != null) {
-			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+			FeatureTreeNode parents = FeatureTreeNode.createChildNode("parents", root);
 
 			if (pages != null) {
 				for (String page : pages) {
 					if (page != null) {
-						FeatureTreeNode pageNode = FeatureTreeNode.newChildInstance("page", parents);
-						pageNode.addAttribute(ID, page);
+						FeatureTreeNode pageNode = FeatureTreeNode.createChildNode("page", parents);
+						pageNode.setAttribute(ID, page);
 					}
 				}
 			}
 
 			if (annotId != null) {
-				FeatureTreeNode annotNode = FeatureTreeNode.newChildInstance("annotation", parents);
-				annotNode.addAttribute(ID, annotId);
+				FeatureTreeNode annotNode = FeatureTreeNode.createChildNode("annotation", parents);
+				annotNode.setAttribute(ID, annotId);
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 package org.verapdf.features.tools;
 
 import org.apache.log4j.Logger;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 
 /**
@@ -13,7 +13,7 @@ public final class ErrorsHelper {
 
 	private static final Logger LOGGER = Logger.getLogger(ErrorsHelper.class);
 
-	public static final String ERRORID = "errorID";
+	public static final String ERRORID = "errorId";
 	public static final String ID = "id";
 
 	private ErrorsHelper() {
@@ -50,9 +50,9 @@ public final class ErrorsHelper {
 			if (id == null) {
 				id = "error" + collection.getFeatureTreesForType(
 						FeaturesObjectTypesEnum.ERROR).size();
-				FeatureTreeNode error = FeatureTreeNode.newRootInstanceWIthValue(
-						"error", errorMessage);
-				error.addAttribute(ErrorsHelper.ID, id);
+				FeatureTreeNode error = FeatureTreeNode.createRootNode("error");
+				error.setValue(errorMessage);
+				error.setAttribute(ErrorsHelper.ID, id);
 				collection.addNewFeatureTree(FeaturesObjectTypesEnum.ERROR,
 						error);
 			}
@@ -61,10 +61,10 @@ public final class ErrorsHelper {
 				if (element.getAttributes().get(ERRORID) != null) {
 					elementErrorID = element.getAttributes().get(ERRORID) + ", " + elementErrorID;
 				}
-				element.addAttribute(ERRORID, elementErrorID);
+				element.setAttribute(ERRORID, elementErrorID);
 			}
 			return id;
-		} catch (FeaturesTreeNodeException ignore) {
+		} catch (FeatureParsingException ignore) {
 			// This exception occurs when wrong node creates for feature tree.
 			// The logic of the method guarantees this doesn't occur.
 			String message = "FeatureTreeNode root instance logic failure";

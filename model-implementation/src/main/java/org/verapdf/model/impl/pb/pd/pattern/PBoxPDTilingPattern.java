@@ -4,6 +4,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.pb.pd.PBoxPDContentStream;
 import org.verapdf.model.pdlayer.PDContentStream;
 import org.verapdf.model.pdlayer.PDTilingPattern;
+import org.verapdf.model.tools.resources.PDInheritableResources;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +18,16 @@ public class PBoxPDTilingPattern extends PBoxPDPattern implements
     public static final String TILING_PATTERN_TYPE = "PDTilingPattern";
 
     public static final String CONTENT_STREAM = "contentStream";
+	private final PDInheritableResources resources;
 
-    public PBoxPDTilingPattern(
-            org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern simplePDObject) {
-        super(simplePDObject, TILING_PATTERN_TYPE);
-    }
+	public PBoxPDTilingPattern(
+			org.apache.pdfbox.pdmodel.graphics.pattern.PDTilingPattern simplePDObject,
+			PDInheritableResources resources) {
+		super(simplePDObject, TILING_PATTERN_TYPE);
+		this.resources = resources;
+	}
 
-    @Override
+	@Override
     public List<? extends Object> getLinkedObjects(String link) {
 
         if (CONTENT_STREAM.equals(link)) {
@@ -35,7 +39,7 @@ public class PBoxPDTilingPattern extends PBoxPDPattern implements
     private List<PDContentStream> getContentStream() {
         List<PDContentStream> contentStreams = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
         contentStreams.add(new PBoxPDContentStream(
-				(org.apache.pdfbox.contentstream.PDContentStream) this.simplePDObject));
+				(org.apache.pdfbox.contentstream.PDContentStream) this.simplePDObject, this.resources));
         return contentStreams;
     }
 }

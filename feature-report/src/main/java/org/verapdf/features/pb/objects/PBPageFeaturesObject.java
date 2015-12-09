@@ -5,7 +5,7 @@ import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSNumber;
 import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -93,15 +93,15 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (page != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("page");
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("page");
 
-			root.addAttribute(ID, id);
-			root.addAttribute("orderNumber", Integer.toString(index));
+			root.setAttribute(ID, id);
+			root.setAttribute("orderNumber", Integer.toString(index));
 
 			PBCreateNodeHelper.addBoxFeature("mediaBox", page.getMediaBox(), root);
 			PBCreateNodeHelper.addBoxFeature("cropBox", page.getCropBox(), root);
@@ -109,11 +109,11 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 			PBCreateNodeHelper.addBoxFeature("bleedBox", page.getBleedBox(), root);
 			PBCreateNodeHelper.addBoxFeature("artBox", page.getArtBox(), root);
 
-			FeatureTreeNode.newChildInstanceWithValue("rotation", Integer.toString(page.getRotation()), root);
+			FeatureTreeNode.createChildNode("rotation", root).setValue(String.valueOf(page.getRotation()));
 
 			COSBase base = page.getCOSObject().getDictionaryObject(COSName.getPDFName("PZ"));
 			if (base != null) {
-				FeatureTreeNode scaling = FeatureTreeNode.newChildInstance("scaling", root);
+				FeatureTreeNode scaling = FeatureTreeNode.createChildNode("scaling", root);
 
 				while (base instanceof COSObject) {
 					base = ((COSObject) base).getObject();
@@ -130,8 +130,8 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 			}
 
 			if (thumb != null) {
-				FeatureTreeNode thumbNode = FeatureTreeNode.newChildInstance("thumbnail", root);
-				thumbNode.addAttribute(ID, thumb);
+				FeatureTreeNode thumbNode = FeatureTreeNode.createChildNode("thumbnail", root);
+				thumbNode.setAttribute(ID, thumb);
 			}
 
 			PBCreateNodeHelper.parseMetadata(page.getMetadata(), "metadata", root, collection);
@@ -156,7 +156,7 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	private void parseResources(FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void parseResources(FeatureTreeNode root) throws FeatureParsingException {
 		if ((extGStateChild != null && !extGStateChild.isEmpty()) ||
 				(colorSpaceChild != null && !colorSpaceChild.isEmpty()) ||
 				(patternChild != null && !patternChild.isEmpty()) ||
@@ -164,7 +164,7 @@ public class PBPageFeaturesObject implements IFeaturesObject {
 				(xobjectChild != null && !xobjectChild.isEmpty()) ||
 				(fontChild != null && !fontChild.isEmpty()) ||
 				(propertiesChild != null && !propertiesChild.isEmpty())) {
-			FeatureTreeNode resources = FeatureTreeNode.newChildInstance("resources", root);
+			FeatureTreeNode resources = FeatureTreeNode.createChildNode("resources", root);
 
 			PBCreateNodeHelper.parseIDSet(extGStateChild, "graphicsState", "graphicsStates", resources);
 			PBCreateNodeHelper.parseIDSet(colorSpaceChild, "colorSpace", "colorSpaces", resources);

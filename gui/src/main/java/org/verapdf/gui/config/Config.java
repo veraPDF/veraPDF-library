@@ -65,7 +65,7 @@ public final class Config {
 		private static final char[] FORBIDDEN_SYMBOLS_IN_FILE_NAME = new char[]{'\\', '/', ':', '*', '?', '\"', '<', '>', '|', '+', '\0', '%'};
 
 		private static final boolean DEFAULT_SHOW_PASSED_RULES = false;
-		private static final int DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS = 100;
+		private static final int DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS = -1;
 		private static final int DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS = 100;
 		private static final String DEFAULT_METADATA_FIXER_PREFIX = MetadataFixerConstants.DEFAULT_PREFIX;
 		private static final Path DEFAULT_FIX_METADATA_PATH_FOLDER = FileSystems.getDefault().getPath("");

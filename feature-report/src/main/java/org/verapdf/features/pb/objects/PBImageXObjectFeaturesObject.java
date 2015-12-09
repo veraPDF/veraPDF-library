@@ -2,7 +2,7 @@ package org.verapdf.features.pb.objects;
 
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import org.verapdf.exceptions.featurereport.FeaturesTreeNodeException;
+import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.IFeaturesObject;
@@ -77,46 +77,47 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 	 *
 	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeaturesTreeNodeException occurs when wrong features tree node constructs
+	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeaturesTreeNodeException {
+	public FeatureTreeNode reportFeatures(FeaturesCollection collection) throws FeatureParsingException {
 		if (imageXObject != null) {
-			FeatureTreeNode root = FeatureTreeNode.newRootInstance("image");
-			root.addAttribute(ID, id);
+			FeatureTreeNode root = FeatureTreeNode.createRootNode("xobject");
+			root.setAttribute("type", "image");
+			root.setAttribute(ID, id);
 
 			parseParents(root);
 
-			FeatureTreeNode.newChildInstanceWithValue("width", String.valueOf(imageXObject.getWidth()), root);
-			FeatureTreeNode.newChildInstanceWithValue("height", String.valueOf(imageXObject.getHeight()), root);
+			FeatureTreeNode.createChildNode("width", root).setValue(String.valueOf(imageXObject.getWidth()));
+			FeatureTreeNode.createChildNode("height", root).setValue(String.valueOf(imageXObject.getHeight()));
 
 			if (colorSpaceChild != null) {
-				FeatureTreeNode shading = FeatureTreeNode.newChildInstance("colorSpace", root);
-				shading.addAttribute(ID, colorSpaceChild);
+				FeatureTreeNode shading = FeatureTreeNode.createChildNode("colorSpace", root);
+				shading.setAttribute(ID, colorSpaceChild);
 			}
 
-			FeatureTreeNode.newChildInstanceWithValue("bitsPerComponent", String.valueOf(imageXObject.getBitsPerComponent()), root);
-			FeatureTreeNode.newChildInstanceWithValue("imageMask", String.valueOf(imageXObject.isStencil()), root);
+			FeatureTreeNode.createChildNode("bitsPerComponent", root).setValue(String.valueOf(imageXObject.getBitsPerComponent()));
+			FeatureTreeNode.createChildNode("imageMask", root).setValue(String.valueOf(imageXObject.isStencil()));
 
 			if (maskChild != null) {
-				FeatureTreeNode mask = FeatureTreeNode.newChildInstance("mask", root);
-				mask.addAttribute(ID, maskChild);
+				FeatureTreeNode mask = FeatureTreeNode.createChildNode("mask", root);
+				mask.setAttribute(ID, maskChild);
 			}
 
-			FeatureTreeNode.newChildInstanceWithValue("interpolate", String.valueOf(imageXObject.getInterpolate()), root);
+			FeatureTreeNode.createChildNode("interpolate", root).setValue(String.valueOf(imageXObject.getInterpolate()));
 			PBCreateNodeHelper.parseIDSet(alternatesChild, "alternate", "alternates", root);
 			if (sMaskChild != null) {
-				FeatureTreeNode mask = FeatureTreeNode.newChildInstance("sMask", root);
-				mask.addAttribute(ID, sMaskChild);
+				FeatureTreeNode mask = FeatureTreeNode.createChildNode("sMask", root);
+				mask.setAttribute(ID, sMaskChild);
 			}
 
 			if (imageXObject.getCOSStream().getItem(COSName.STRUCT_PARENT) != null) {
-				FeatureTreeNode.newChildInstanceWithValue("structParent", String.valueOf(imageXObject.getStructParent()), root);
+				FeatureTreeNode.createChildNode("structParent", root).setValue(String.valueOf(imageXObject.getStructParent()));
 			}
 
 			try {
 				if (imageXObject.getStream().getFilters() != null && !imageXObject.getStream().getFilters().isEmpty()) {
-					FeatureTreeNode filters = FeatureTreeNode.newChildInstance("filters", root);
+					FeatureTreeNode filters = FeatureTreeNode.createChildNode("filters", root);
 					for (COSName name : imageXObject.getStream().getFilters()) {
 						PBCreateNodeHelper.addNotEmptyNode("filter", name.getName(), filters);
 					}
@@ -150,7 +151,7 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 				}
 			}
 
-			List<ImageFeaturesData.FilterStructure> filters = new ArrayList<>();
+			List<ImageFeaturesData.Filter> filters = new ArrayList<>();
 			if (imageXObject.getPDStream().getFilters() != null) {
 				List<String> filtersNames = new ArrayList<>();
 				for (COSName filter : imageXObject.getPDStream().getFilters()) {
@@ -164,29 +165,31 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 					COSDictionary dic = i < decodeList.size() ? decodeList.get(i) : null;
 					switch (filter) {
 						case "LZWDecode":
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLZWOrFlatFiltersMap(dic, true), null));
+							filters.add(ImageFeaturesData.Filter.newInstance(filter, getLZWOrFlatFiltersMap(dic, true), null));
 							break;
 						case "FlateDecode":
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getLZWOrFlatFiltersMap(dic, false), null));
+							filters.add(ImageFeaturesData.Filter.newInstance(filter, getLZWOrFlatFiltersMap(dic, false), null));
 							break;
 						case "CCITTFaxDecode":
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getCCITTFaxFiltersMap(dic), null));
+							filters.add(ImageFeaturesData.Filter.newInstance(filter, getCCITTFaxFiltersMap(dic), null));
 							break;
 						case "DCTDecode":
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, getDCTFiltersMap(dic), null));
+							filters.add(ImageFeaturesData.Filter.newInstance(filter, getDCTFiltersMap(dic), null));
 							break;
 						case "JBIG2Decode":
 							byte[] global = null;
 							if (dic != null && dic.getDictionaryObject(COSName.JBIG2_GLOBALS) instanceof COSStream) {
 								global = PBCreateNodeHelper.inputStreamToByteArray(((COSStream) dic.getDictionaryObject(COSName.JBIG2_GLOBALS)).getUnfilteredStream());
 							}
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, new HashMap<String, String>(), global));
+							filters.add(ImageFeaturesData.Filter.newInstance(filter, new HashMap<String, String>(), global));
 							break;
 						case "Crypt":
-							LOGGER.error("An Image has a Crypt filter");
-							return null;
+							if (!(dic != null && COSName.IDENTITY.equals(dic.getCOSName(COSName.NAME)))) {
+								LOGGER.error("An Image has a Crypt filter");
+								return null;
+							}
 						default:
-							filters.add(ImageFeaturesData.FilterStructure.newInstance(filter, new HashMap<String, String>(), null));
+							filters.add(ImageFeaturesData.Filter.newInstance(filter, new HashMap<String, String>(), null));
 					}
 				}
 			}
@@ -303,12 +306,12 @@ public class PBImageXObjectFeaturesObject implements IFeaturesObject {
 		}
 	}
 
-	private void parseParents(FeatureTreeNode root) throws FeaturesTreeNodeException {
+	private void parseParents(FeatureTreeNode root) throws FeatureParsingException {
 		if ((pageParent != null && !pageParent.isEmpty()) ||
 				(patternParent != null && !patternParent.isEmpty()) ||
 				(xobjectParent != null && !xobjectParent.isEmpty()) ||
 				(fontParent != null && !fontParent.isEmpty())) {
-			FeatureTreeNode parents = FeatureTreeNode.newChildInstance("parents", root);
+			FeatureTreeNode parents = FeatureTreeNode.createChildNode("parents", root);
 
 			PBCreateNodeHelper.parseIDSet(pageParent, "page", null, parents);
 			PBCreateNodeHelper.parseIDSet(patternParent, "pattern", null, parents);

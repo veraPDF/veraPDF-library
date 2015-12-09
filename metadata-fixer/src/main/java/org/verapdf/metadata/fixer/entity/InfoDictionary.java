@@ -1,12 +1,13 @@
 package org.verapdf.metadata.fixer.entity;
 
+import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
 import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
 
 /**
  * Current interface provide necessary behavior of pdf document
- * information dictionary. {@link org.verapdf.metadata.fixer.MetadataFixer}
+ * information dictionary. {@link MetadataFixerImpl}
  * check next entries:
  * <ul>
  *     <li>Title</li>

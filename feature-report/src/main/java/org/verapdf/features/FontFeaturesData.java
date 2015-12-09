@@ -59,7 +59,7 @@ public final class FontFeaturesData extends FeaturesData {
 		this.fontStretch = fontStretch;
 		this.fontWeight = fontWeight;
 		this.flags = flags;
-		this.fontBBox = new ArrayList<>(fontBBox);
+		this.fontBBox = fontBBox == null ? null : new ArrayList<>(fontBBox);
 		this.italicAngle = italicAngle;
 		this.ascent = ascent;
 		this.descent = descent;
@@ -120,7 +120,7 @@ public final class FontFeaturesData extends FeaturesData {
 	 * @return parameter FontBBox from the font descriptor dictionary
 	 */
 	public List<Double> getFontBBox() {
-		return Collections.unmodifiableList(fontBBox);
+		return this.fontBBox == null ? null : Collections.unmodifiableList(fontBBox);
 	}
 
 	/**

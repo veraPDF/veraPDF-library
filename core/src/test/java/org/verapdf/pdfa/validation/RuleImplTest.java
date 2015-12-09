@@ -23,7 +23,6 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
 import org.junit.Test;
-import org.verapdf.pdfa.ValidationProfile;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -32,8 +31,8 @@ import org.verapdf.pdfa.ValidationProfile;
 @SuppressWarnings("static-method")
 public class RuleImplTest {
     private static final String DEFAULT_RULE_STRING = "Rule [id="
-            + RuleIdImpl.defaultInstance()
-            + ", object=object, description=description, test=test, references=[]]";
+            + Profiles.defaultRuleId()
+            + ", object=object, description=description, test=test, error=" + ErrorDetailsImpl.defaultInstance() + ", references=[]]";
 
     /**
      * Test method for
@@ -49,21 +48,21 @@ public class RuleImplTest {
      */
     @Test
     public final void testToString() {
-        assertTrue(RuleImpl.defaultInstance().toString()
+        assertTrue(Profiles.defaultRule().toString()
                 .equals(DEFAULT_RULE_STRING));
     }
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.RuleImpl#fromValues(RuleIdImpl, String, String, String, List)}
+     * {@link org.verapdf.pdfa.validation.RuleImpl#fromValues(RuleId, String, String, String, ErrorDetails, List)}
      * .
      */
     @Test
     public final void testFromValues() {
         // Get an equivalent to the default instance
         RuleImpl rule = RuleImpl
-                .fromValues(RuleIdImpl.defaultInstance(), "object",
-                        "description", "test", Collections.EMPTY_LIST);
+                .fromValues(Profiles.defaultRuleId(), "object",
+                        "description", "test", ErrorDetailsImpl.defaultInstance(), Collections.EMPTY_LIST);
         Rule defaultInstance = RuleImpl.defaultInstance();
         // Equivalent is NOT the same object as default instance
         assertFalse(rule == defaultInstance);
@@ -100,7 +99,7 @@ public class RuleImplTest {
         List<Reference> refs = new ArrayList<>();
         refs.add(ReferenceImpl.defaultInstance());
         Rule rule = RuleImpl.fromValues(RuleIdImpl.defaultInstance(), "object",
-                "description", "test", refs);
+                "description", "test", ErrorDetailsImpl.defaultInstance(), refs);
         String xmlDefault = RuleImpl.toXml(rule, Boolean.FALSE);
         Rule unmarshalledDefault = RuleImpl.fromXml(xmlDefault);
         assertFalse(rule == unmarshalledDefault);

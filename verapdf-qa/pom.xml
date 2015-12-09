@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.verapdf</groupId>
     <artifactId>verapdf-library</artifactId>
-    <version>0.6.0</version>
+    <version>0.8.0</version>
   </parent>
   <artifactId>verapdf-qa</artifactId>
   <name>veraPDF Quality Assurance</name>
@@ -13,7 +13,7 @@
   <dependencies>
     <dependency>
       <groupId>org.verapdf</groupId>
-      <artifactId>vera-cli</artifactId>
+      <artifactId>gui</artifactId>
     </dependency>
     <dependency>
       <groupId>xmlunit</groupId>
@@ -30,6 +30,11 @@
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcprov-jdk15on</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.10</version>
     </dependency>
 
     <!-- TEST DEPENDENCIES -->
