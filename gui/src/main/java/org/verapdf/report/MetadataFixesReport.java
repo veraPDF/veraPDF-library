@@ -36,21 +36,22 @@ public class MetadataFixesReport {
 		if (fixerResult == null) {
 			return null;
 		}
-		String status = fixerResult.getRepairStatus().toString();
+        MetadataFixerResult.RepairStatus repairStatus = fixerResult.getRepairStatus();
         Integer completedFixes = null;
         List<String> fixes = null;
         List<String> errorMessages = null;
-        switch (fixerResult.getRepairStatus()) {
+        List<String> appliedFixes = fixerResult.getAppliedFixes();
+        switch (repairStatus) {
             case SUCCESS:
             case ID_REMOVED:
-                completedFixes = fixes.size();
-                fixes = new ArrayList<>(fixerResult.getAppliedFixes());
+                completedFixes = appliedFixes.size();
+                fixes = new ArrayList<>(appliedFixes);
                 break;
             case FIX_ERROR:
-                errorMessages = new ArrayList<>(fixerResult.getAppliedFixes());
+                errorMessages = new ArrayList<>(appliedFixes);
                 break;
         }
-
+        String status = repairStatus.toString();
         return new MetadataFixesReport(status, completedFixes, fixes, errorMessages);
     }
 }
