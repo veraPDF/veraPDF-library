@@ -1,3 +1,28 @@
+# Version 0.8 (December 22 2015)
+
+This beta release features a command line interface for validation and feature extraction, with supporting install scripts.
+
+## Features
+
+- Refactored plug-in architecture.
+- Re-designed command line interface for PDF/A validation and feature reporting.
+- Updated validation profile syntax.
+- Simplified machine-readable report format.
+- Bug fixes for:
+ - comparison of Info dictionary and XMP metadata (PDF/A-1);
+ - support for missing resources and resource inheritance mechanism (PDF/A-1); and
+ - parsing TrueType fonts with zero-length tables.
+- Synchronization with PDFBox 2.0 RC1 library.
+
+## Infrastructure
+
+- Installer adds command line scripts.
+- Refactored integration tests.
+
+## Test corpus
+
+***
+
 # Version 0.6 (October 30, 2015)
 
 This beta release includes a fully functional, internally-tested implementation for complete PDF/A-1b validation, PDF Feature Report generation, and the Metadata Fixer.
