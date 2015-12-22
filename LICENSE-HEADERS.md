@@ -1,29 +1,39 @@
-Release Process
-===============
+License Headers for Source Code
+===============================
 Introduction
 ------------
 ###Audience
- - veraPDF development staff looking to release a new version;
- - anyone interested in knowing how our release process works; and
- - anyone who wants to change the version number or re-package our software.
+ - veraPDF developers wanting to add a license header to the source code; and
+ - anyone interested in knowing how our release process works.
 
 ###Pre-requisites
-If you're still reading you'll also need an understanding and some experience using [Git](https://git-scm.com) and [Maven](https://maven.apache.org/). A quick brush up on [Semantic Versioning](http://semver.org/) and a typical [Git branching workflow](http://nvie.com/posts/a-successful-git-branching-model/) and we're ready to go.
+If you're still reading you'll also need an understanding and some experience using [Git](https://git-scm.com) and [Maven](https://maven.apache.org/).
 
-Releasing
----------
-The veraPDF software projects use the `MINOR` version number to indicate the development status of a particular version. An even number signifies a release version while an odd numbers are assigned to development prototypes. We increment the `MINOR` version number twice at each release milestone. The first increment is from the current odd numbered development version number to the new even release version.
+License Headers
+---------------
+All veraPDF software is dual-licensed, see:
 
-You should use the latest version of the `integration` branch of the project. In the following example we'll start from scratch and assume:
- - we're releasing `0.6.x` from development version `0.5.x`
+ - [GPLv3+](LICENSE.GPL "GNU General Public License, version 3")
+ - [MPLv2+](LICENSE.MPL "Mozilla Public License, version 2.0")
+
+The Maven license plug-in uses template files that it adds as headers to the source files. For the veraPDF-library these templates are available in the `license/template` sub-folder. There are two header files one for the [GPL version](https://raw.githubusercontent.com/veraPDF/veraPDF-library/master/license/template/GPL-3.txt), and another for the [MPL version](https://raw.githubusercontent.com/veraPDF/veraPDF-library/master/license/template/MPL-2.txt).
+
+The following worked example shows how to add the license headers to the 0.8 release version of the veraPDF-library. Specifically we will use git and Maven to:
+
+ - check out the 0.8 release branch;
+ - create a temporary Git branch with GPL headers;
+ - create a temporary Git branch with MPL headers; and
+ - use Git to create a zip and tar archive of the headed code.
+
+###Getting to the release branch
+You should use the latest version of the `release-0.8` branch of the project. In the following example we'll start from scratch and assume:
  - you're using a bash shell; and
  - the `git remote` name for the repo used is `origin`.
 
-###Getting to integration
 Clone the repo:
 
     git clone git@github.com:veraPDF/veraPDF-library.git
-    cd veraPDF-model-library
+    cd veraPDF-library
 
 If you already have the git repository cloned then from the repo sub-tree:
 
@@ -31,8 +41,8 @@ If you already have the git repository cloned then from the repo sub-tree:
 
 We want to be sure we have the latest changes:
 
-    git checkout -b integration origin/integration
-    git pull origin integration
+    git checkout -b release-0.8 origin/release-0.8
+    git pull origin release-0.8
 
 Finally check that we have no uncommitted local changes, i.e:
 
@@ -40,43 +50,33 @@ Finally check that we have no uncommitted local changes, i.e:
 
 outputs:
 
-    On branch integration
-    Your branch is up-to-date with 'upstream/integration'.
+    On branch release-0.8
+    Your branch is up-to-date with 'origin/release-0.8'.
 
     nothing to commit, working directory clean
 
-###Bumping minor
-We bump the `MINOR` version on integration from `5` to `6` using Maven to set the version:
+###Creating a GPL source headed branch
+From the release-0.8 branch create a new branch for the licensed source files:
 
-    mvn versions:set -DnewVersion=0.6.0
+    git checkout -b release-0.8-gpl origin/release-0.8
 
-Now check this has worked so:
+The Maven POM holds profiles for both of the license headers, we simply invoke with the correct profile for the GPL header, test the changes and update the branch:
 
-    git status
+    mvn license:format -P apply-gpl-header
+    mvn clean install
+    git add .
+    git commit -m "Added GPL source headers."
 
-checks if we've changed anything, there should be some POM files and MANIFEST files that are altered, e.g:
+Now to create the MPL headed branch.
 
-    On branch integration
-    Your branch is up-to-date with 'origin/integration'.
+###Creating an MPL source headed branch
+From the release-0.8 branch create a new branch for the licensed source files:
 
-    Changes not staged for commit:
-    (use "git add <file>..." to update what will be committed)
-    (use "git checkout -- <file>..." to discard changes in working directory)
+    git checkout -b release-0.8-mpl origin/release-0.8
 
-        modified:   core/pom.xml
-        modified:   feature-report/pom.xml
-        modified:   gui/pom.xml
-        modified:   installer/pom.xml
-        modified:   legacy-types/pom.xml
-        modified:   metadata-fixer/pom.xml
-        modified:   model-implementation/pom.xml
-        modified:   pom.xml
-        modified:   verapdf-qa/pom.xml
+Again we invoke Maven, this time with the profile for the MPL header, test the changes and update the branch:
 
-    no changes added to commit (use "git add" and/or "git commit -a")
-
-or issuing:
-
-    cat pom.xml | grep version
-
-will show the version numbers in the POM.
+    mvn license:format -P apply-mpl-header
+    mvn clean install
+    git add .
+    git commit -m "Added MPL source headers."
