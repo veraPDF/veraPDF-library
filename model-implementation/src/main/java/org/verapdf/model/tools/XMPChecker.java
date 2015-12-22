@@ -208,7 +208,9 @@ public final class XMPChecker {
     private static Boolean checkProperty(COSDictionary info,
             Map<String, Object> properties, String checksRule) {
         final COSBase item = info.getItem(checksRule);
-        if (item != null) {
+        if (item == null || item instanceof COSNull) {
+            return Boolean.TRUE;
+        } else {
             if (item instanceof COSString) {
                 return checkCOSStringProperty((COSString) item, properties,
                         checksRule);
@@ -216,8 +218,6 @@ public final class XMPChecker {
                 return deepPropertyCheck((COSObject) item, properties,
                         checksRule);
             }
-        } else {
-            return Boolean.TRUE;
         }
         return Boolean.FALSE;
     }
