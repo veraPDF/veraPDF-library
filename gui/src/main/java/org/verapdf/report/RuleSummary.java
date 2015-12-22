@@ -45,7 +45,7 @@ public class RuleSummary {
         this.status = status.toString();
         this.passedChecks = passedChecks;
         this.failedChecks = failedChecks;
-        this.description = (status != Status.PASSED) ? description : null;
+        this.description = description;
         this.checks = ((checks != null) && !checks.isEmpty()) ? new HashSet<>(checks) : null;
     }
 
