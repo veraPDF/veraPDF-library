@@ -156,6 +156,29 @@
             </table>
         </xsl:if>
 
+        <xsl:if test="/report/metadataFixesReport/errorMessage">
+            <h2>Metadata fixer errors information</h2>
+
+            <table border="0" id="table5">
+                <tr style="BACKGROUND: #bcbad6">
+                    <td width="800">
+                        <b>Fixes</b>
+                    </td>
+                    <td width="50">
+                        <a id="lable{fixererrorsId}" href="#" style="display: none;"
+                           class="hide-tr"
+                           data-target="hide{fixererrorsId}"
+                           data-translation-toggle="Hide">Show
+                        </a>
+                    </td>
+                </tr>
+
+                <xsl:apply-templates
+                        select="/report/metadataFixesReport/errorMessage"/>
+
+            </table>
+        </xsl:if>
+
         <xsl:if test="/report/validationReport/details/rule">
             <h2>Validation information</h2>
 
@@ -275,6 +298,15 @@
     <!-- Metadata fixes information -->
     <xsl:template match="/report/metadataFixesReport/appliedFix">
         <tr class="hideable hide{fixesId}">
+            <td width="800" style="word-break: break-all">
+                <xsl:value-of select="."/>
+            </td>
+        </tr>
+    </xsl:template>
+
+    <!-- Metadata fixer errors information -->
+    <xsl:template match="/report/metadataFixesReport/errorMessage">
+        <tr class="hideable hide{fixererrorsId}">
             <td width="800" style="word-break: break-all">
                 <xsl:value-of select="."/>
             </td>
