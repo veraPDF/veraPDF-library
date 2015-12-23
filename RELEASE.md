@@ -54,7 +54,7 @@ Now check this has worked so:
 
     git status
 
-checks if we've changed anything, there should be some POM files and MANIFEST files that are altered, e.g:
+checks if we've changed anything, there should be some POM that are altered, e.g:
 
     On branch integration
     Your branch is up-to-date with 'origin/integration'.
@@ -80,3 +80,22 @@ or issuing:
     cat pom.xml | grep version
 
 will show the version numbers in the POM.
+
+###Create a release branch
+If the version has been set properly then add the changes to Git and create a release branch:
+
+    git add .
+    git commit -m "Bumped minor version 0.5->0.6 for release."
+    git checkout -b release-0.6
+    git push --set-upstream origin release-0.6
+
+###Bump minor for integration to 0.7
+We now need to move the minor version number on the `integration` branch to 0.7 for future development:
+
+    git checkout integration
+    mvn versions:set -DnewVersion=0.7.0-SNAPSHOT
+    git add .
+    git commit -m "Bumped minor version 0.6->0.7 for development."
+    git push origin
+
+Now we have a new v0.6 release branch `release-0.6` while integration is ready for development on the new 0.7 versioned `integration` branch.
