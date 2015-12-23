@@ -80,3 +80,20 @@ Again we invoke Maven, this time with the profile for the MPL header, test the c
     mvn clean install
     git add .
     git commit -m "Added MPL source headers."
+
+###Creating the source archives
+We can now use Git to create zip or tar source archives from our headed branches. To create a compressed tarball called `veraPDF-0.8-gpl.tar.gz` from our GPL headed branch `release-0.8-gpl` in the local directory:
+
+    git archive --format=tar release-0.8-gpl | gzip > veraPDF-0.8-gpl.tar.gz
+
+or use Git's built in tar.gz archiver:
+
+    git archive --format=tar.gz release-0.8-gpl > veraPDF-0.8-gpl.tar.gz
+
+or allow Git to infer the format:
+
+    git archive --format=tar -o veraPDF-0.8-gpl.tar.gz release-0.8-gpl
+
+To create a zip archive from the MPL headed branch `release-0.8-mpl` in the `/tmp` directory:
+
+    git archive --format=zip release-0.8-mpl > veraPDF-0.8-mpl.zip
