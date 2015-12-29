@@ -9,20 +9,14 @@
 
 package com.adobe.xmp.impl;
 
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.XMPDateTime;
-import com.adobe.xmp.XMPDateTimeFactory;
-import com.adobe.xmp.XMPError;
-import com.adobe.xmp.XMPException;
-import com.adobe.xmp.XMPMetaFactory;
-import com.adobe.xmp.XMPUtils;
+import com.adobe.xmp.*;
 import com.adobe.xmp.impl.xpath.XMPPath;
 import com.adobe.xmp.impl.xpath.XMPPathSegment;
 import com.adobe.xmp.options.AliasOptions;
 import com.adobe.xmp.options.PropertyOptions;
+
+import java.util.GregorianCalendar;
+import java.util.Iterator;
 
 
 /**
@@ -103,7 +97,8 @@ public class XMPNodeUtils implements XMPConst
 		{
 			schemaNode = new XMPNode(namespaceURI, 
 				new PropertyOptions()
-					.setSchemaNode(true));
+					.setSchemaNode(true),
+					null);
 			schemaNode.setImplicit(true);
 			
 			// only previously registered schema namespaces are allowed in the XMP tree.
@@ -170,7 +165,8 @@ public class XMPNodeUtils implements XMPConst
 		if (childNode == null  &&  createNodes)
 		{
 			PropertyOptions options = new PropertyOptions();
-			childNode = new XMPNode(childName, options);
+			childNode = new XMPNode(childName, options,
+					childName == null ? null : childName.substring(0, Math.max(childName.indexOf(":"), 0)));
 			childNode.setImplicit(true);
 			parent.addChild(childNode);
 		}
@@ -541,7 +537,7 @@ public class XMPNodeUtils implements XMPConst
 		
 		if (qualNode == null  &&  createNodes)
 		{
-			qualNode = new XMPNode(qualName, null);
+			qualNode = new XMPNode(qualName, null, null);
 			qualNode.setImplicit(true);
 	
 			parent.addQualifier(qualNode);				
@@ -581,7 +577,7 @@ public class XMPNodeUtils implements XMPConst
 		if (createNodes  &&  index == arrayNode.getChildrenLength() + 1)
 		{
 			// Append a new last + 1 node.
-			XMPNode newItem = new XMPNode(ARRAY_ITEM_NAME, null);
+			XMPNode newItem = new XMPNode(ARRAY_ITEM_NAME, null, null);
 			newItem.setImplicit(true);
 			arrayNode.addChild(newItem);
 		}
@@ -658,8 +654,8 @@ public class XMPNodeUtils implements XMPConst
 			int index = XMPNodeUtils.lookupLanguageItem(arrayNode, qualValue);
 			if (index < 0  &&  (aliasForm & AliasOptions.PROP_ARRAY_ALT_TEXT) > 0)
 			{	
-				XMPNode langNode = new XMPNode(ARRAY_ITEM_NAME, null);
-				XMPNode xdefault = new XMPNode(XML_LANG, X_DEFAULT, null);
+				XMPNode langNode = new XMPNode(ARRAY_ITEM_NAME, null, null);
+				XMPNode xdefault = new XMPNode(XML_LANG, X_DEFAULT, null, null);
 				langNode.addQualifier(xdefault);
 				arrayNode.addChild(1, langNode);
 				return 1;
@@ -777,8 +773,8 @@ public class XMPNodeUtils implements XMPConst
 	static void appendLangItem(XMPNode arrayNode, String itemLang, String itemValue)
 			throws XMPException
 	{
-		XMPNode newItem = new XMPNode(ARRAY_ITEM_NAME, itemValue, null);
-		XMPNode langQual = new XMPNode(XML_LANG, itemLang, null);
+		XMPNode newItem = new XMPNode(ARRAY_ITEM_NAME, itemValue, null, null);
+		XMPNode langQual = new XMPNode(XML_LANG, itemLang, null, null);
 		newItem.addQualifier(langQual);
 	
 		if (!X_DEFAULT.equals(langQual.getValue()))

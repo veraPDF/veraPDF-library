@@ -9,23 +9,16 @@
 
 package com.adobe.xmp.impl;
 
-import java.util.Calendar;
-import java.util.Iterator;
-
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.XMPDateTime;
-import com.adobe.xmp.XMPError;
-import com.adobe.xmp.XMPException;
-import com.adobe.xmp.XMPIterator;
-import com.adobe.xmp.XMPMeta;
-import com.adobe.xmp.XMPPathFactory;
-import com.adobe.xmp.XMPUtils;
+import com.adobe.xmp.*;
 import com.adobe.xmp.impl.xpath.XMPPath;
 import com.adobe.xmp.impl.xpath.XMPPathParser;
 import com.adobe.xmp.options.IteratorOptions;
 import com.adobe.xmp.options.ParseOptions;
 import com.adobe.xmp.options.PropertyOptions;
 import com.adobe.xmp.properties.XMPProperty;
+
+import java.util.Calendar;
+import java.util.Iterator;
 
 
 /**
@@ -1302,7 +1295,7 @@ public class XMPMetaImpl implements XMPMeta, XMPConst
 	private void doSetArrayItem(XMPNode arrayNode, int itemIndex, String itemValue,
 			PropertyOptions itemOptions, boolean insert) throws XMPException
 	{
-		XMPNode itemNode = new XMPNode(ARRAY_ITEM_NAME, null);
+		XMPNode itemNode = new XMPNode(ARRAY_ITEM_NAME, null, null);
 		itemOptions = XMPNodeUtils.verifySetOptions(itemOptions, itemValue);
 
 		// in insert mode the index after the last is allowed,

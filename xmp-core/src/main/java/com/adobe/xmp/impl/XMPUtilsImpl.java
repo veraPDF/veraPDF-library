@@ -11,18 +11,13 @@
 
 package com.adobe.xmp.impl;
 
-import java.util.Iterator;
-
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.XMPError;
-import com.adobe.xmp.XMPException;
-import com.adobe.xmp.XMPMeta;
-import com.adobe.xmp.XMPMetaFactory;
-import com.adobe.xmp.XMPUtils;
+import com.adobe.xmp.*;
 import com.adobe.xmp.impl.xpath.XMPPath;
 import com.adobe.xmp.impl.xpath.XMPPathParser;
 import com.adobe.xmp.options.PropertyOptions;
 import com.adobe.xmp.properties.XMPAliasInfo;
+
+import java.util.Iterator;
 
 
 
@@ -324,7 +319,7 @@ public class XMPUtilsImpl implements XMPConst
 			XMPNode newItem = null;
 			if (foundIndex < 0)
 			{
-				newItem = new XMPNode(ARRAY_ITEM_NAME, itemValue, null);
+				newItem = new XMPNode(ARRAY_ITEM_NAME, itemValue, null, null);
 				arrayNode.addChild(newItem);
 			}			
 		}
@@ -532,7 +527,7 @@ public class XMPUtilsImpl implements XMPConst
 			if (destSchema == null)
 			{
 				destSchema = new XMPNode(sourceSchema.getName(), sourceSchema.getValue(),
-						new PropertyOptions().setSchemaNode(true));
+						new PropertyOptions().setSchemaNode(true), sourceSchema.getOriginalPrefix());
 				dest.getRoot().addChild(destSchema);
 				createdSchema = true;
 			}
@@ -697,7 +692,8 @@ public class XMPUtilsImpl implements XMPConst
 							XMPNode destItem = new XMPNode(
 								sourceItem.getName(), 
 								sourceItem.getValue(), 
-								sourceItem.getOptions());
+								sourceItem.getOptions(),
+									sourceItem.getOriginalPrefix());
 							sourceItem.cloneSubtree(destItem);
 							destNode.addChild(1, destItem);
 						}	

@@ -9,23 +9,17 @@
 
 package com.adobe.xmp.impl;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.XMPDateTime;
-import com.adobe.xmp.XMPError;
-import com.adobe.xmp.XMPException;
-import com.adobe.xmp.XMPMeta;
-import com.adobe.xmp.XMPMetaFactory;
-import com.adobe.xmp.XMPUtils;
+import com.adobe.xmp.*;
 import com.adobe.xmp.impl.xpath.XMPPath;
 import com.adobe.xmp.impl.xpath.XMPPathParser;
 import com.adobe.xmp.options.ParseOptions;
 import com.adobe.xmp.options.PropertyOptions;
 import com.adobe.xmp.properties.XMPAliasInfo;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @since   Aug 18, 2006
@@ -198,7 +192,7 @@ public class XMPNormalizer
 			{	
 				// create a new array and add the current property as child, 
 				// if it was formerly simple 
-				XMPNode newArray = new XMPNode(currProp.getName(), arrayForm);
+				XMPNode newArray = new XMPNode(currProp.getName(), arrayForm, currProp.getOriginalPrefix());
 				currProp.setName(XMPConst.ARRAY_ITEM_NAME);
 				newArray.addChild(currProp);
 				dcSchema.replaceChild(i, newArray);
@@ -206,7 +200,7 @@ public class XMPNormalizer
 				// fix language alternatives
 				if (arrayForm.isArrayAltText()  &&  !currProp.getOptions().getHasLanguage())
 				{
-					XMPNode newLang = new XMPNode(XMPConst.XML_LANG, XMPConst.X_DEFAULT, null);
+					XMPNode newLang = new XMPNode(XMPConst.XML_LANG, XMPConst.X_DEFAULT, null, null);
 					currProp.addQualifier(newLang);
 				}
 			}
@@ -270,7 +264,7 @@ public class XMPNormalizer
 				else
 				{
 					// Add an xml:lang qualifier with the value "x-repair".
-					XMPNode repairLang = new XMPNode(XMPConst.XML_LANG, "x-repair", null);
+					XMPNode repairLang = new XMPNode(XMPConst.XML_LANG, "x-repair", null, null);
 					currChild.addQualifier(repairLang);
 				}
 			}
@@ -347,7 +341,8 @@ public class XMPNormalizer
 							// An alias to an array item, 
 							// create the array and transplant the property.
 							baseNode = new XMPNode(info.getPrefix() + info.getPropName(), info
-									.getAliasForm().toPropertyOptions());
+									.getAliasForm().toPropertyOptions(),
+									info.getPrefix() == null ? null : info.getPrefix().substring(0, Math.max(info.getPrefix().indexOf(":"), 0)));
 							baseSchema.addChild(baseNode);
 							transplantArrayItemAlias (propertyIt, currProp, baseNode);
 						}
@@ -425,7 +420,7 @@ public class XMPNormalizer
 						XMPError.BADXMP);
 			}
 			
-			XMPNode langQual = new XMPNode(XMPConst.XML_LANG, XMPConst.X_DEFAULT, null);
+			XMPNode langQual = new XMPNode(XMPConst.XML_LANG, XMPConst.X_DEFAULT, null, null);
 			childNode.addQualifier(langQual);
 		}
 	
