@@ -1,0 +1,13 @@
+language: java
+
+jdk:
+  - openjdk7
+  - oraclejdk7
+  - oraclejdk8
+
+branches:
+  except:
+    - /^v|d\d+\.\d+\.\d+$/
+
+install:
+  - mvn clean install
