@@ -9,17 +9,12 @@
 
 package com.adobe.xmp.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
 import com.adobe.xmp.XMPConst;
 import com.adobe.xmp.XMPError;
 import com.adobe.xmp.XMPException;
 import com.adobe.xmp.options.PropertyOptions;
+
+import java.util.*;
 
 
 /**
@@ -37,6 +32,10 @@ import com.adobe.xmp.options.PropertyOptions;
  */
 class XMPNode implements Comparable
 {
+	//------------------------------------------------------------------------------ veraPDF: additional field for original prefix
+	/** original prefix of the node*/
+	private String originalPrefix;
+
 	/** name of the node, contains different information depending of the node kind */
 	private String name;
 	/** value of the node, contains different information depending of the node kind */
@@ -60,35 +59,42 @@ class XMPNode implements Comparable
 	private boolean alias;
 	/** flag if the node has an "rdf:value" child node. */
 	private boolean hasValueChild;
-	
-	
-	
+
+
+	//------------------------------------------------------------------------------ veraPDF: added original prefix into constructor
 	/**
 	 * Creates an <code>XMPNode</code> with initial values.
-	 * 
+	 *
 	 * @param name the name of the node
 	 * @param value the value of the node
 	 * @param options the options of the node
 	 */
-	public XMPNode(String name, String value, PropertyOptions options)
+	public XMPNode(String name, String value, PropertyOptions options, String originalPrefix)
 	{
 		this.name = name;
 		this.value = value;
 		this.options = options;
+		this.originalPrefix = originalPrefix;
 	}
 
-	
+
+	//------------------------------------------------------------------------------ veraPDF: added original prefix into constructor
 	/**
 	 * Constructor for the node without value.
-	 * 
+	 *
 	 * @param name the name of the node
 	 * @param options the options of the node
 	 */
-	public XMPNode(String name, PropertyOptions options)
+	public XMPNode(String name, PropertyOptions options, String originalPrefix)
 	{
-		this(name, null, options);
+		this(name, null, options, originalPrefix);
 	}
-	
+
+	//------------------------------------------------------------------------------ veraPDF: getter method for original prefix
+	public String getOriginalPrefix() {
+		return this.originalPrefix;
+	}
+
 
 	/**
 	 * Resets the node.
@@ -432,7 +438,7 @@ class XMPNode implements Comparable
 			newOptions = new PropertyOptions();
 		}
 		
-		XMPNode newNode = new XMPNode(name, value, newOptions);
+		XMPNode newNode = new XMPNode(name, value, newOptions, originalPrefix);
 		cloneSubtree(newNode);
 		
 		return newNode;

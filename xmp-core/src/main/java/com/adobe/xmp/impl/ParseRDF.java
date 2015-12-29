@@ -9,20 +9,15 @@
 
 package com.adobe.xmp.impl;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
-
+import com.adobe.xmp.*;
+import com.adobe.xmp.options.PropertyOptions;
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.XMPError;
-import com.adobe.xmp.XMPException;
-import com.adobe.xmp.XMPMetaFactory;
-import com.adobe.xmp.XMPSchemaRegistry;
-import com.adobe.xmp.options.PropertyOptions;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 /**
@@ -1042,7 +1037,7 @@ public class ParseRDF implements XMPError, XMPConst
 
 		// Create XMP node and so some checks
 		XMPNode newChild = new XMPNode(
-			childName, value, childOptions);
+			childName, value, childOptions, xmlNode.getPrefix());
 		newChild.setAlias(isAlias);
 		
 		// Add the new child to the XMP parent node, a value node first.
@@ -1096,7 +1091,7 @@ public class ParseRDF implements XMPError, XMPConst
 		XMPNode newQual = null;
 
 		// normalize value of language qualifiers
-		newQual = new XMPNode(name, isLang ? Utils.normalizeLangValue(value) : value, null);
+		newQual = new XMPNode(name, isLang ? Utils.normalizeLangValue(value) : value, null, null);
 		xmpParent.addQualifier(newQual);
 		
 		return newQual;
