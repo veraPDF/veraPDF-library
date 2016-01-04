@@ -124,7 +124,7 @@ public class VeraPDFMeta {
         }
     }
 
-    public void setSimpleTextProperty(String namespaceURI, String propertyName, String value) throws XMPException {
+    private void setSimpleTextProperty(String namespaceURI, String propertyName, String value) throws XMPException {
         if (value == null) {
             throw new IllegalArgumentException("Argument value can not be null");
         }
@@ -136,7 +136,7 @@ public class VeraPDFMeta {
         this.update();
     }
 
-    public String getSimpleTextProperty(String namespaceURI, String propertyName) throws XMPException {
+    private String getSimpleTextProperty(String namespaceURI, String propertyName) throws XMPException {
         XMPProperty property = this.meta.getProperty(namespaceURI, propertyName);
         if (property != null && !property.getOptions().isSimple()) {
             throw new XMPException("Requared property is not simple", XMPError.BADVALUE);
