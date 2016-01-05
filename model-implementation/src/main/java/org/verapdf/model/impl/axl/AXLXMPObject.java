@@ -1,4 +1,4 @@
-package org.verapdf.model.impl.pb.xmp;
+package org.verapdf.model.impl.axl;
 
 import org.verapdf.model.GenericModelObject;
 import org.verapdf.model.xmplayer.XMPObject;
@@ -8,9 +8,9 @@ import org.verapdf.model.xmplayer.XMPObject;
  *
  * @author Maksim Bezrukov
  */
-public class PBXMPObject extends GenericModelObject implements XMPObject {
+public class AXLXMPObject extends GenericModelObject implements XMPObject {
 
-	protected PBXMPObject(final String type) {
+	protected AXLXMPObject(final String type) {
 		super(type);
 	}
 

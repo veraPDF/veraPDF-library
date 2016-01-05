@@ -38,6 +38,10 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.verapdf</groupId>
+            <artifactId>verapdf-xmp-core</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
