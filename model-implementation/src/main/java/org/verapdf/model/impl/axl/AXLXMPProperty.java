@@ -2,6 +2,7 @@ package org.verapdf.model.impl.axl;
 
 import com.adobe.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.tools.xmp.SchemasDefinition;
+import org.verapdf.model.tools.xmp.SchemasDefinitionCreator;
 import org.verapdf.model.xmplayer.XMPProperty;
 
 /**
@@ -28,43 +29,47 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
 
     @Override
     public Boolean getisPredefinedForPDFA_1() {
-        //TODO: Implement
-        return null;
+        return SchemasDefinitionCreator.PREDEFINED_SCHEMA_DEFINITION_FOR_PDFA_1.isDefinedProperty(this.xmpNode);
     }
 
     @Override
     public Boolean getisPredefinedForPDFA_2_3() {
-        //TODO: Implement
-        return null;
+        return SchemasDefinitionCreator.PREDEFINED_SCHEMA_DEFINITION_FOR_PDFA_2_3.isDefinedProperty(this.xmpNode);
     }
 
     @Override
     public Boolean getisDefinedInCurrentPackageForPDFA_1() {
-        //TODO: Implement
-        return null;
+        return this.currentSchemasDefinitionPDFA_1.isDefinedProperty(this.xmpNode);
     }
 
     @Override
     public Boolean getisDefinedInCurrentPackageForPDFA_2_3() {
-        //TODO: Implement
-        return null;
+        return this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode);
     }
 
     @Override
     public Boolean getisDefinedInMainPackage() {
-        //TODO: Implement
-        return null;
+        return this.isMainMetadata ? this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode) :
+                this.mainPackageSchemasDefinition.isDefinedProperty(this.xmpNode);
     }
 
     @Override
     public Boolean getisValueTypeCorrectForPDFA_1() {
-        //TODO: Implement
-        return null;
+        if (SchemasDefinitionCreator.PREDEFINED_SCHEMA_DEFINITION_FOR_PDFA_1.isDefinedProperty(this.xmpNode)) {
+            return SchemasDefinitionCreator.PREDEFINED_SCHEMA_DEFINITION_FOR_PDFA_1.isCorrespondsDefinedType(this.xmpNode);
+        } else {
+            return this.currentSchemasDefinitionPDFA_1.isCorrespondsDefinedType(this.xmpNode);
+        }
     }
 
     @Override
     public Boolean getisValueTypeCorrectForPDFA_2_3() {
-        //TODO: Implement
-        return null;
+        if (SchemasDefinitionCreator.PREDEFINED_SCHEMA_DEFINITION_FOR_PDFA_2_3.isDefinedProperty(this.xmpNode)) {
+            return SchemasDefinitionCreator.PREDEFINED_SCHEMA_DEFINITION_FOR_PDFA_2_3.isCorrespondsDefinedType(this.xmpNode);
+        } else if (this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode)) {
+            return this.currentSchemasDefinitionPDFA_2_3.isCorrespondsDefinedType(this.xmpNode);
+        } else {
+            return this.mainPackageSchemasDefinition.isCorrespondsDefinedType(this.xmpNode);
+        }
     }
 }

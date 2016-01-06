@@ -72,6 +72,7 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
                     .getStream();
             if (stream != null) {
                 VeraPDFMeta metadata = VeraPDFMeta.parse(stream.getUnfilteredStream());
+                //TODO: change null schema definition in not main package to extension schema container from main package
                 xmp.add(this.isMainMetadata ? new AXLMainXMPPackage(metadata, true)
                         : new AXLXMPPackage(metadata, true, null));
             }

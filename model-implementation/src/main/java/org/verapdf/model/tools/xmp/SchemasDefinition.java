@@ -2,6 +2,7 @@ package org.verapdf.model.tools.xmp;
 
 import com.adobe.xmp.impl.VeraPDFXMPNode;
 
+import javax.xml.namespace.QName;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,16 +11,24 @@ import java.util.Map;
  */
 public class SchemasDefinition {
 
-    private Map<String, Map<String, String>> properties = new HashMap<>();
+    private Map<QName, String> properties = new HashMap<>();
     private ValidatorsContainer validator;
 
-    public SchemasDefinition(ValidatorsContainer validator) {
+    protected SchemasDefinition() {
+        this(null);
+    }
+
+    protected SchemasDefinition(ValidatorsContainer validator) {
         this.validator = validator;
     }
 
     public boolean isDefinedProperty(VeraPDFXMPNode node) {
-        //TODO: implement this
-        return false;
+        QName name = new QName(node.getNamespaceURI(), node.getName());
+        return isDefinedProperty(name);
+    }
+
+    protected boolean isDefinedProperty(QName name) {
+        return properties.containsKey(name);
     }
 
     /**
@@ -27,11 +36,14 @@ public class SchemasDefinition {
      *
      * @param node node for check
      * @return true if the node type corresponds to defined one, false if it is not,
-     * null if the node is not defined
+     * null if the node is not defined or value type is not defined
      */
     public Boolean isCorrespondsDefinedType(VeraPDFXMPNode node) {
-        //TODO: implement this
-        return null;
+        if (validator == null) {
+            return null;
+        }
+        String type = getType(node);
+        return type == null ? null : validator.validate(node, type);
     }
 
     public ValidatorsContainer getValidatorsContainer() {
@@ -39,14 +51,14 @@ public class SchemasDefinition {
     }
 
     /**
-     * Registers property with value type
+     * Registers property with known value type
      *
      * @param namespaceURI property namespace uri for registration
      * @param propertyName property name for registration
      * @param type         property type for registration
-     * @return true if this type is known by schema and property was registered successfully
+     * @return true if property was registered successfully
      */
-    public boolean registerProperty(String namespaceURI, String propertyName, String type) {
+    protected boolean registerProperty(String namespaceURI, String propertyName, String type) {
         if (namespaceURI == null) {
             throw new IllegalArgumentException("Argument namespaceURI can not be null");
         }
@@ -61,26 +73,17 @@ public class SchemasDefinition {
             return false;
         }
 
-        if (!properties.containsKey(namespaceURI)) {
-            properties.put(namespaceURI, new HashMap<String, String>());
-        }
-        Map<String, String> schemaProperties = properties.get(namespaceURI);
-        if (schemaProperties.containsKey(propertyName)) {
+        QName name = new QName(namespaceURI, propertyName);
+        if (properties.containsKey(name)) {
             return false;
         } else {
-            schemaProperties.put(propertyName, type);
+            properties.put(name, type);
             return true;
         }
     }
 
     private String getType(VeraPDFXMPNode node) {
-        String namespace = node.getNamespaceURI();
-        String name = node.getName();
-        Map<String, String> namespaceMap = properties.get(namespace);
-        if (namespaceMap == null) {
-            return null;
-        } else {
-            return namespaceMap.get(name);
-        }
+        QName name = new QName(node.getNamespaceURI(), node.getName());
+        return properties.get(name);
     }
 }

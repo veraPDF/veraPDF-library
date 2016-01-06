@@ -12,7 +12,7 @@ import java.util.Map;
 public class StructuredTypeValidator implements TypeValidator {
 
     private String childNamespaceURI;
-    private Map<String, String> childrenTypes = new HashMap<>();
+    private Map<String, String> childrenTypes;
     private ValidatorsContainer parentContainer;
 
     private StructuredTypeValidator(String childNamespaceURI, Map<String, String> childrenTypes, ValidatorsContainer parentContainer) {
@@ -41,8 +41,8 @@ public class StructuredTypeValidator implements TypeValidator {
             return false;
         }
         for (VeraPDFXMPNode child : node.getChildren()) {
-            if (!(childrenTypes.containsKey(child.getName()) ||
-                    childNamespaceURI.equals(child.getNamespaceURI()) ||
+            if (!(childrenTypes.containsKey(child.getName()) &&
+                    childNamespaceURI.equals(child.getNamespaceURI()) &&
                     parentContainer.validate(child, childrenTypes.get(child.getName())))) {
                 return false;
             }

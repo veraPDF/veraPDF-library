@@ -5,6 +5,7 @@ import org.verapdf.model.tools.xmp.validators.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * @author Maksim Bezrukov
@@ -33,25 +34,7 @@ public class ValidatorsContainer {
         }
     }
 
-    ValidatorsContainer(ValidatorsContainer from) {
-        this();
-        if (from != null) {
-            this.validators = new HashMap<>(from.validators);
-            this.arrayValidators = new HashMap<>(from.arrayValidators);
-        }
-    }
-
-    public boolean registerStructureValidator(String typeName, String typeNamespaceURI, Map<String, String> childrenTypes) {
-        return registerValidator(typeName, typeNamespaceURI, childrenTypes, false);
-    }
-
-    public void registerOrOverrideStructureValidator(String typeName, String typeNamespaceURI, Map<String, String> childrenTypes) {
-        if (!registerValidator(typeName, typeNamespaceURI, childrenTypes, true)) {
-            throw new IllegalStateException("This method should always return true for call with true isOverride argument");
-        }
-    }
-
-    private boolean registerValidator(String typeName, String typeNamespaceURI, Map<String, String> childrenTypes, boolean isOverride) {
+    boolean registerValidator(String typeName, String typeNamespaceURI, Map<String, String> childrenTypes) {
         if (typeName == null) {
             throw new IllegalArgumentException("Argument typeName can not be null");
         }
@@ -61,11 +44,32 @@ public class ValidatorsContainer {
         if (childrenTypes == null || childrenTypes.isEmpty()) {
             throw new IllegalArgumentException("Argument childrenTypes can not be null or empty");
         }
-        if (!isOverride && validators.containsKey(typeName)) {
+        if (validators.containsKey(typeName)) {
             return false;
         }
 
-        validators.put(typeName, StructuredTypeValidator.fromValues(typeNamespaceURI, new HashMap<>(childrenTypes), this));
+        validators.put(typeName, StructuredTypeValidator.fromValues(typeNamespaceURI, childrenTypes, this));
+        return true;
+    }
+
+    boolean registerClosedChoiceValidator(String typeName, String typeNamespaceURI, Map<String, String> childrenTypes, Map<String, Pattern> childrenClosedTypes) {
+        if (typeName == null) {
+            throw new IllegalArgumentException("Argument typeName can not be null");
+        }
+        if (typeNamespaceURI == null) {
+            throw new IllegalArgumentException("Argument typeNamespaceURI can not be null");
+        }
+        if (childrenTypes == null) {
+            throw new IllegalArgumentException("Argument childrenTypes can not be null or empty");
+        }
+        if (childrenClosedTypes == null) {
+            throw new IllegalArgumentException("Argument childrenClosedTypes can not be null or empty");
+        }
+        if (validators.containsKey(typeName)) {
+            return false;
+        }
+
+        validators.put(typeName, StructuredTypeWithClosedChoiceValidator.fromValues(typeNamespaceURI, childrenTypes, childrenClosedTypes, this));
         return true;
     }
 

@@ -35,7 +35,6 @@ public class SimpleTypeValidator implements TypeValidator {
     public enum SimpleTypeEnum {
 
         BOOLEAN(XMPConstants.BOOLEAN, "^True$|^False$"),
-        CHOICE(XMPConstants.CHOICE, "^.*$"),
         INTEGER(XMPConstants.INTEGER, "^[+-]?\\d+$"),
         LOCALE(XMPConstants.LOCALE, "^([a-zA-Z]{1,8})((-[a-zA-Z]{1,8})*)$"),
         REAL(XMPConstants.REAL, "^[+-]?\\d+\\.?\\d*|[+-]?\\d*\\.?\\d+$"),
