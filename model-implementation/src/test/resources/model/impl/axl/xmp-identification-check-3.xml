@@ -1,0 +1,15 @@
+<?xpacket begin="" id="W5M0MpCehiHzreSzNTczkc9d"?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="" xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/"
+                         xmlns:custom="http://www.aiim.org/pdfa/ns/id/">
+            <custom:part rdf:parseType="Resource">
+                <rdf:value>SomeThing</rdf:value>
+                <pdfaid:some>asd</pdfaid:some>
+            </custom:part>
+            <pdfaid:amd>Some amd</pdfaid:amd>
+            <pdfaid:corr>Some corr</pdfaid:corr>
+        </rdf:Description>
+    </rdf:RDF>
+</x:xmpmeta>
+        <?xpacket end="r"?>
