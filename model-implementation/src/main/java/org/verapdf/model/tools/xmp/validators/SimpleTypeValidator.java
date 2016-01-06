@@ -16,12 +16,11 @@ public class SimpleTypeValidator implements TypeValidator {
         this.pattern = pattern;
     }
 
-    public static SimpleTypeValidator fromValue(String type) {
-        SimpleTypeEnum typeEnum = SimpleTypeEnum.fromString(type);
-        if (typeEnum == null) {
-            throw new IllegalArgumentException("Argument type must conform to one of defined simple types");
+    public static SimpleTypeValidator fromValue(SimpleTypeEnum type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Argument type can not be null");
         }
-        String regexp = typeEnum.getRegexp();
+        String regexp = type.getRegexp();
         return new SimpleTypeValidator(Pattern.compile(regexp));
     }
 

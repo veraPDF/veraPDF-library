@@ -25,7 +25,7 @@ public class SchemasDefinitionCreator {
      * @return created Schemas Definition object
      * @throws IllegalArgumentException occurs in case of wrong node passed to method
      */
-    public static SchemasDefinition createSchemasDefinitionForPDFA_2_3(VeraPDFXMPNode schemas) {
+    public static SchemasDefinition createSchemasDefinitionForPDFA_2_3(VeraPDFXMPNode schemas, SchemasDefinition mainSchemasDefinition) {
         return createSchemasDefinition(schemas, false);
     }
 
@@ -37,21 +37,21 @@ public class SchemasDefinitionCreator {
             throw new IllegalArgumentException("Argument must be schemas property from pdfa extension schema");
         }
         //TODO: implement this with node type check as exception. Differ for pdfa-1 and pdfa-2, 3
-        return new SchemasDefinition();
+        return new SchemasDefinition(null);
     }
 
     public static SchemasDefinition getEmptySchemasDefinition() {
         //TODO: implement this
-        return new SchemasDefinition();
+        return new SchemasDefinition(null);
     }
 
     public static SchemasDefinition getPredefinedPDFA_1SchemasDefinition() {
         //TODO: implement this
-        return new SchemasDefinition();
+        return new SchemasDefinition(null);
     }
 
     public static SchemasDefinition getPredefinedPDFA_2_3SchemasDefinition() {
         //TODO: implement this
-        return new SchemasDefinition();
+        return new SchemasDefinition(null);
     }
 }

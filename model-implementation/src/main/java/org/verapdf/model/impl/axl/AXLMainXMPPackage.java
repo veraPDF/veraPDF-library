@@ -1,8 +1,6 @@
 package org.verapdf.model.impl.axl;
 
 import com.adobe.xmp.impl.VeraPDFMeta;
-import com.adobe.xmp.impl.VeraPDFXMPNode;
-import com.adobe.xmp.impl.XMPSchemaRegistryImpl;
 import org.apache.log4j.Logger;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.xmplayer.MainXMPPackage;
@@ -52,22 +50,6 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
         VeraPDFMeta xmpMetadata = this.getXmpMetadata();
         if (xmpMetadata != null) {
             res.add(new AXLPDFAIdentification(xmpMetadata));
-        }
-        return res;
-    }
-
-    @Override
-    protected List<AXLXMPProperty> getXMPProperties() {
-        if (this.getXmpMetadata() == null) {
-            return new ArrayList<>();
-        }
-        List<VeraPDFXMPNode> properties = this.getXmpMetadata().getProperties();
-        List<AXLXMPProperty> res = new ArrayList<>(properties.size());
-        for (VeraPDFXMPNode node : properties) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_ID.equals(node.getNamespaceURI()) && ("part".equals(node.getName()) || "conformance".equals(node.getName()))) {
-                continue;
-            }
-            res.add(new AXLXMPProperty(node, true, this.getMainPackageSchemasDefinition(), this.getCurrentSchemasDefinitionPDFA_1(), this.getCurrentSchemasDefinitionPDFA_2_3()));
         }
         return res;
     }
