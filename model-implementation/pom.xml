@@ -28,7 +28,8 @@
     </dependency>
     <dependency>
       <groupId>org.verapdf</groupId>
-      <artifactId>pdf-model</artifactId>
+      <artifactId>pdf-model-xmp</artifactId>
+      <version>${verapdf.model.version}</version>
     </dependency>
     <dependency>
       <groupId>org.verapdf</groupId>
