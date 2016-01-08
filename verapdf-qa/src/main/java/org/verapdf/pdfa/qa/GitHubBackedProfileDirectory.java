@@ -8,7 +8,11 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.SchemaOutputResolver;
+import javax.xml.transform.Result;
+import javax.xml.transform.stream.StreamResult;
 
 import org.verapdf.core.ProfileException;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
@@ -111,14 +115,26 @@ public enum GitHubBackedProfileDirectory implements ProfileDirectory {
         }
         return profileSet;
     }
-    
+
     /**
-     * Simple main that simply outputs all loaded from INTEGRATION to System.out.
-     * @param args main args, NOT processed.
-     * @throws JAXBException when converting the profile to XML goes wrong. It shouldn't.
+     * Simple main that simply outputs all loaded from INTEGRATION to
+     * System.out.
+     * 
+     * @param args
+     *            main args, NOT processed.
+     * @throws JAXBException
+     *             when converting the profile to XML goes wrong. It shouldn't.
+     * @throws IOException
      */
-    public static void main(final String[] args) throws JAXBException {
+    public static void main(final String[] args) throws JAXBException,
+            IOException {
+        System.out.println("XSD Schema for Validation Profiles:");
+        System.out.println(Profiles.getValidationProfileSchema());
         for (ValidationProfile profile : INTEGRATION.getValidationProfiles()) {
+            System.out
+                    .println("\n\nValidation Profile:"
+                            + profile.getPDFAFlavour().getId()
+                            + " XML representation.");
             Profiles.profileToXml(profile, System.out, Boolean.TRUE);
         }
     }
