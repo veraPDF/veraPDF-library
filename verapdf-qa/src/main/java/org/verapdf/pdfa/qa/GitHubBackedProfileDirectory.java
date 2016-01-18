@@ -128,7 +128,9 @@ public enum GitHubBackedProfileDirectory implements ProfileDirectory {
      */
     public static void main(final String[] args) throws JAXBException,
             IOException {
-        System.out.println("XSD Schema for Validation Profiles:");
+        System.out.println("XSD Schema for Validation Profile:");
+        System.out.println(Profiles.getValidationProfileSchema());
+        System.out.println("XSD Schema for Validation Result:");
         System.out.println(Profiles.getValidationProfileSchema());
         for (ValidationProfile profile : INTEGRATION.getValidationProfiles()) {
             System.out
