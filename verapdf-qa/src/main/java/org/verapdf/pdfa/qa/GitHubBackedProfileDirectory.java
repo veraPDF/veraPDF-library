@@ -16,6 +16,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.verapdf.core.ProfileException;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.ProfileDirectory;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
@@ -131,7 +132,7 @@ public enum GitHubBackedProfileDirectory implements ProfileDirectory {
         System.out.println("XSD Schema for Validation Profile:");
         System.out.println(Profiles.getValidationProfileSchema());
         System.out.println("XSD Schema for Validation Result:");
-        System.out.println(Profiles.getValidationProfileSchema());
+        System.out.println(ValidationResults.getValidationResultSchema());
         for (ValidationProfile profile : INTEGRATION.getValidationProfiles()) {
             System.out
                     .println("\n\nValidation Profile:"
