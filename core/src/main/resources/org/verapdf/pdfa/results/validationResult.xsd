@@ -1,62 +1,37 @@
 <?xml version="1.0" standalone="yes"?>
 <xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xs:element name="error" type="errorDetails"/>
-
-  <xs:element name="reference" type="reference"/>
-
-  <xs:element name="rule" type="rule"/>
+  <xs:element name="location" type="location"/>
 
   <xs:element name="ruleId" type="ruleId"/>
 
-  <xs:element name="variable" type="variable"/>
+  <xs:element name="testAssertion" type="testAssertion"/>
 
-  <xs:complexType name="validationProfile" final="extension restriction">
+  <xs:element name="validationResult" type="validationResult"/>
+
+  <xs:complexType name="validationResult" final="extension restriction">
     <xs:sequence>
-      <xs:element name="details" type="profileDetails" minOccurs="0"/>
-      <xs:element name="hash" type="xs:string" minOccurs="0"/>
-      <xs:element name="rules" minOccurs="0">
+      <xs:element name="assertions" minOccurs="0">
         <xs:complexType>
           <xs:sequence>
-            <xs:element ref="rule" minOccurs="0" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="variables" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element ref="variable" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="assertion" type="testAssertion" minOccurs="0" maxOccurs="unbounded"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
     <xs:attribute name="flavour" type="pdfaFlavour"/>
+    <xs:attribute name="totalAssertions" type="xs:int" use="required"/>
+    <xs:attribute name="isCompliant" type="xs:boolean" use="required"/>
   </xs:complexType>
 
-  <xs:complexType name="profileDetails" final="extension restriction">
+  <xs:complexType name="testAssertion" final="extension restriction">
     <xs:sequence>
-      <xs:element name="name" type="xs:string" minOccurs="0"/>
-      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element ref="ruleId" minOccurs="0"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+      <xs:element ref="location" minOccurs="0"/>
     </xs:sequence>
-    <xs:attribute name="creator" type="xs:string"/>
-    <xs:attribute name="created" type="xs:dateTime"/>
-  </xs:complexType>
-
-  <xs:complexType name="rule" final="extension restriction">
-    <xs:sequence>
-      <xs:element name="id" type="ruleId" minOccurs="0"/>
-      <xs:element name="description" type="xs:string" minOccurs="0"/>
-      <xs:element name="test" type="xs:string" minOccurs="0"/>
-      <xs:element ref="error" minOccurs="0"/>
-      <xs:element name="references" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element ref="reference" minOccurs="0" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-    <xs:attribute name="object" type="xs:string"/>
+    <xs:attribute name="ordinal" type="xs:int" use="required"/>
+    <xs:attribute name="status" type="status"/>
   </xs:complexType>
 
   <xs:complexType name="ruleId" final="extension restriction">
@@ -66,32 +41,11 @@
     <xs:attribute name="testNumber" type="xs:int" use="required"/>
   </xs:complexType>
 
-  <xs:complexType name="errorDetails" final="extension restriction">
+  <xs:complexType name="location" final="extension restriction">
     <xs:sequence>
-      <xs:element name="message" type="xs:string" minOccurs="0"/>
-      <xs:element name="arguments" minOccurs="0">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="argument" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+      <xs:element name="level" type="xs:string" minOccurs="0"/>
+      <xs:element name="context" type="xs:string" minOccurs="0"/>
     </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="reference" final="extension restriction">
-    <xs:sequence/>
-    <xs:attribute name="specification" type="xs:string"/>
-    <xs:attribute name="clause" type="xs:string"/>
-  </xs:complexType>
-
-  <xs:complexType name="variable" final="extension restriction">
-    <xs:sequence>
-      <xs:element name="defaultValue" type="xs:string" minOccurs="0"/>
-      <xs:element name="value" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-    <xs:attribute name="name" type="xs:string"/>
-    <xs:attribute name="object" type="xs:string"/>
   </xs:complexType>
 
   <xs:simpleType name="pdfaFlavour">
@@ -114,6 +68,14 @@
       <xs:enumeration value="ISO_19005_1"/>
       <xs:enumeration value="ISO_19005_2"/>
       <xs:enumeration value="ISO_19005_3"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="status">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PASSED"/>
+      <xs:enumeration value="FAILED"/>
+      <xs:enumeration value="UNKNOWN"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
