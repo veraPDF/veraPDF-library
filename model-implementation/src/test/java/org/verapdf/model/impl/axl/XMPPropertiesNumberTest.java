@@ -26,9 +26,9 @@ public class XMPPropertiesNumberTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"/model/impl/axl/xmp-properties-number-check-1.xml", 4, 2},
-                {"/model/impl/axl/xmp-properties-number-check-2.xml", 3, 2},
-                {"/model/impl/axl/xmp-properties-number-check-3.xml", 3, 2},
+                {"/model/impl/axl/xmp-properties-number-check-1.xml", 4, 4},
+                {"/model/impl/axl/xmp-properties-number-check-2.xml", 3, 3},
+                {"/model/impl/axl/xmp-properties-number-check-3.xml", 3, 3},
                 {"/model/impl/axl/xmp-properties-number-check-4.xml", 2, 2}
         });
     }

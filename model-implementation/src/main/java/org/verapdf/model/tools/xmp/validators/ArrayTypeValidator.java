@@ -2,39 +2,38 @@ package org.verapdf.model.tools.xmp.validators;
 
 import com.adobe.xmp.impl.VeraPDFXMPNode;
 import com.adobe.xmp.options.PropertyOptions;
+import org.verapdf.model.tools.xmp.ValidatorsContainer;
 import org.verapdf.model.tools.xmp.XMPConstants;
 
 /**
  * @author Maksim Bezrukov
  */
-public class ArrayTypeValidator implements TypeValidator {
+public class ArrayTypeValidator {
 
     private ArrayTypeEnum type;
-    private TypeValidator childValidator;
+    private ValidatorsContainer parentContainer;
 
-    private ArrayTypeValidator(ArrayTypeEnum type, TypeValidator childValidator) {
+    private ArrayTypeValidator(ArrayTypeEnum type, ValidatorsContainer parentContainer) {
         this.type = type;
-        this.childValidator = childValidator;
+        this.parentContainer = parentContainer;
     }
 
-    public static ArrayTypeValidator fromValues(String type, TypeValidator childValidator) {
-        ArrayTypeEnum typeEnum = ArrayTypeEnum.fromString(type);
-        if (typeEnum == null) {
-            throw new IllegalArgumentException("Argument type must conform to one of defined array types");
+    public static ArrayTypeValidator fromValues(ArrayTypeEnum type, ValidatorsContainer parentContainer) {
+        if (parentContainer == null) {
+            throw new IllegalArgumentException("Argument parent container can not be null");
         }
-        if (typeEnum == ArrayTypeEnum.LANG_ALT && childValidator != null) {
-            throw new IllegalArgumentException("For Lang Alt validator argument child Validator must be null.");
+        if (type == null) {
+            throw new IllegalArgumentException("Argument type can not be null");
         }
-        if (typeEnum != ArrayTypeEnum.LANG_ALT && childValidator == null) {
-            throw new IllegalArgumentException("For not Lang Alt validator argument child Validator must not null.");
-        }
-        return new ArrayTypeValidator(typeEnum, childValidator);
+        return new ArrayTypeValidator(type, parentContainer);
     }
 
-    @Override
-    public boolean isCorresponding(VeraPDFXMPNode node) {
+    public boolean isCorresponding(VeraPDFXMPNode node, String childType) {
         if (node == null) {
             throw new IllegalArgumentException("Argument node can not be null");
+        }
+        if (childType == null) {
+            throw new IllegalArgumentException("Argument child type can not be null");
         }
         PropertyOptions options = node.getOptions();
         boolean isValidArrayType;
@@ -48,8 +47,6 @@ public class ArrayTypeValidator implements TypeValidator {
             case BAG:
                 isValidArrayType = (options.isArray() && !(options.isArrayOrdered() || options.isArrayAlternate()));
                 break;
-            case LANG_ALT:
-                return options.isArrayAltText();
             default:
                 throw new IllegalStateException("Array type validator must be created with valid type");
         }
@@ -58,7 +55,7 @@ public class ArrayTypeValidator implements TypeValidator {
             return false;
         } else {
             for (VeraPDFXMPNode child : node.getChildren()) {
-                if (!this.childValidator.isCorresponding(child)) {
+                if (!this.parentContainer.validate(child, childType)) {
                     return false;
                 }
             }
@@ -70,8 +67,7 @@ public class ArrayTypeValidator implements TypeValidator {
 
         BAG(XMPConstants.BAG),
         ALT(XMPConstants.ALT),
-        SEQ(XMPConstants.SEQ),
-        LANG_ALT(XMPConstants.LANG_ALT);
+        SEQ(XMPConstants.SEQ);
 
         private String type;
 

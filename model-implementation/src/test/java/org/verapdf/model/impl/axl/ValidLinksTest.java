@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import static junit.framework.TestCase.assertNotNull;
+
 /**
  * @author Maksim Bezrukov
  */
@@ -21,8 +23,8 @@ public class ValidLinksTest {
                 new AXLMainXMPPackage(null, true),
                 new AXLXMPProperty(null, true, null, null, null),
                 new AXLPDFAIdentification(null),
-                new AXLExtensionSchemasContainer(null),
-                new AXLExtensionSchemaDefinition(null),
+                new AXLExtensionSchemasContainer(null, null, null),
+                new AXLExtensionSchemaDefinition(null, null, null),
                 new AXLExtensionSchemaProperty(null, null, null),
                 new AXLExtensionSchemaValueType(null, null, null),
                 new AXLExtensionSchemaField(null, null, null)
@@ -36,7 +38,7 @@ public class ValidLinksTest {
     public void testLinksOfAXLXMPPackage() {
         List<String> links = object.getLinks();
         for (String link : links) {
-            object.getLinkedObjects(link);
+            assertNotNull(object.getLinkedObjects(link));
         }
     }
 }

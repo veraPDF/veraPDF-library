@@ -2,7 +2,6 @@ package org.verapdf.model.impl.axl;
 
 import com.adobe.xmp.impl.VeraPDFMeta;
 import com.adobe.xmp.impl.VeraPDFXMPNode;
-import org.apache.log4j.Logger;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.tools.xmp.SchemasDefinition;
 import org.verapdf.model.tools.xmp.SchemasDefinitionCreator;
@@ -20,8 +19,6 @@ import java.util.regex.Pattern;
  * @author Maksim Bezrukov
  */
 public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
-    private static final Logger LOGGER = Logger
-            .getLogger(AXLXMPPackage.class);
 
     public static final String XMP_PACKAGE_TYPE = "XMPPackage";
 
@@ -67,11 +64,15 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     }
 
     private List<AXLExtensionSchemasContainer> getExtensionSchemasContainers() {
-        if (this.getXmpMetadata() == null) {
+        if (this.xmpMetadata == null || this.xmpMetadata.getExtensionSchemasNode() == null) {
             return new ArrayList<>();
         }
         List<AXLExtensionSchemasContainer> res = new ArrayList<>(1);
-        res.add(new AXLExtensionSchemasContainer(this.getXmpMetadata().getExtensionSchemasNode()));
+        res.add(new AXLExtensionSchemasContainer(
+                this.getXmpMetadata().getExtensionSchemasNode(),
+                getCurrentSchemasDefinitionPDFA_1().getValidatorsContainer(),
+                getCurrentSchemasDefinitionPDFA_2_3().getValidatorsContainer()
+        ));
         return res;
     }
 
@@ -131,21 +132,29 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
 
     protected SchemasDefinition getMainPackageSchemasDefinition() {
         if (this.mainPackageSchemasDefinition == null) {
-            this.mainPackageSchemasDefinition = SchemasDefinitionCreator.getEmptySchemasDefinition();
+            this.mainPackageSchemasDefinition = SchemasDefinitionCreator.EMPTY_SCHEMAS_DEFINITION;
         }
         return this.mainPackageSchemasDefinition;
     }
 
     protected SchemasDefinition getCurrentSchemasDefinitionPDFA_1() {
         if (this.currentSchemasDefinitionPDFA_1 == null) {
-            this.currentSchemasDefinitionPDFA_1 = SchemasDefinitionCreator.createSchemasDefinitionForPDFA_1(this.xmpMetadata.getExtensionSchemasNode());
+            if (this.xmpMetadata != null && this.xmpMetadata.getExtensionSchemasNode() != null) {
+                this.currentSchemasDefinitionPDFA_1 = SchemasDefinitionCreator.createExtendedSchemasDefinitionForPDFA_1(this.xmpMetadata.getExtensionSchemasNode());
+            } else {
+                this.currentSchemasDefinitionPDFA_1 = SchemasDefinitionCreator.EMPTY_SCHEMAS_DEFINITION;
+            }
         }
         return this.currentSchemasDefinitionPDFA_1;
     }
 
     protected SchemasDefinition getCurrentSchemasDefinitionPDFA_2_3() {
         if (this.currentSchemasDefinitionPDFA_2_3 == null) {
-            this.currentSchemasDefinitionPDFA_2_3 = SchemasDefinitionCreator.createSchemasDefinitionForPDFA_2_3(this.xmpMetadata.getExtensionSchemasNode());
+            if (this.xmpMetadata != null && this.xmpMetadata.getExtensionSchemasNode() != null) {
+                this.currentSchemasDefinitionPDFA_2_3 = SchemasDefinitionCreator.createExtendedSchemasDefinitionForPDFA_2_3(this.xmpMetadata.getExtensionSchemasNode());
+            } else {
+                this.currentSchemasDefinitionPDFA_2_3 = SchemasDefinitionCreator.EMPTY_SCHEMAS_DEFINITION;
+            }
         }
         return this.currentSchemasDefinitionPDFA_2_3;
     }

@@ -16,12 +16,11 @@ public class SimpleTypeValidator implements TypeValidator {
         this.pattern = pattern;
     }
 
-    public static SimpleTypeValidator fromValue(String type) {
-        SimpleTypeEnum typeEnum = SimpleTypeEnum.fromString(type);
-        if (typeEnum == null) {
-            throw new IllegalArgumentException("Argument type must conform to one of defined simple types");
+    public static SimpleTypeValidator fromValue(SimpleTypeEnum type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Argument type can not be null");
         }
-        String regexp = typeEnum.getRegexp();
+        String regexp = type.getRegexp();
         return new SimpleTypeValidator(Pattern.compile(regexp));
     }
 
@@ -36,7 +35,6 @@ public class SimpleTypeValidator implements TypeValidator {
     public enum SimpleTypeEnum {
 
         BOOLEAN(XMPConstants.BOOLEAN, "^True$|^False$"),
-        CHOICE(XMPConstants.CHOICE, "^.*$"),
         INTEGER(XMPConstants.INTEGER, "^[+-]?\\d+$"),
         LOCALE(XMPConstants.LOCALE, "^([a-zA-Z]{1,8})((-[a-zA-Z]{1,8})*)$"),
         REAL(XMPConstants.REAL, "^[+-]?\\d+\\.?\\d*|[+-]?\\d*\\.?\\d+$"),
