@@ -126,9 +126,9 @@ public final class XMPChecker {
     private static void getTitleAuthorSubject(VeraPDFMeta metadata,
                                               Map<String, Object> properties) throws XMPException {
 
-        final List<String> buffer = metadata.getCreator();
         putProperty(properties, TITLE, metadata.getTitle());
         putProperty(properties, SUBJECT, metadata.getDescription());
+        final List<String> buffer = metadata.getCreator();
         if (buffer != null) {
             putProperty(properties, AUTHOR,
                     buffer.toArray(new String[buffer.size()]));
@@ -149,25 +149,9 @@ public final class XMPChecker {
     }
 
     private static void putProperty(Map<String, Object> properties, String key,
-                                    String... values) {
-        if (values != null) {
-            StringBuilder builder = new StringBuilder();
-            for (String value : values) {
-                if (value != null) {
-                    builder.append(value).append(" ");
-                }
-            }
-            if (builder.length() > 0) {
-                // need to discard last space
-                properties.put(key, builder.substring(0, builder.length() - 1));
-            }
-        }
-    }
-
-    private static void putProperty(Map<String, Object> properties, String key,
-                                    Calendar date) {
-        if (date != null) {
-            properties.put(key, date);
+                                    Object value) {
+        if (value != null) {
+            properties.put(key, value);
         }
     }
 
@@ -229,6 +213,9 @@ public final class XMPChecker {
         if (value != null) {
             if (value instanceof String) {
                 return Boolean.valueOf(value.equals(string.getString()));
+            } else if (value instanceof List) {
+                List list = (List) value;
+                return Boolean.valueOf(list.size() == 1 && list.get(0).equals(string.getString()));
             } else if (value instanceof Calendar) {
                 // DateConverter can parse as pdf date format as simple date
                 // format
