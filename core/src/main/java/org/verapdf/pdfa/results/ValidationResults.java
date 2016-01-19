@@ -300,6 +300,21 @@ public class ValidationResults {
         return ValidationResultImpl.fromXml(toConvert);
     }
 
+
+    /**
+     * Returns the JAXB generated XML schema for the ValidationProfileImpl type.
+     * 
+     * @return the String representation of the schema
+     * @throws JAXBException
+     *             if there's a problem marshaling the schema
+     * @throws IOException
+     *             if there's a problem outputting the result
+     */
+    public static String getValidationResultSchema() throws JAXBException,
+            IOException {
+        return ValidationResultImpl.getSchema();
+    }
+
     /**
      * Strips any {@link TestAssertion}s where
      * {@code assertion.getStatus() == TestAssertion.Status.PASSED} from

@@ -19,12 +19,15 @@ import java.util.Set;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.SchemaOutputResolver;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.transform.Result;
+import javax.xml.transform.stream.StreamResult;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
@@ -52,13 +55,13 @@ final class ValidationProfileImpl implements ValidationProfile {
     private final Set<Variable> variables;
 
     private ValidationProfileImpl() {
-        this(PDFAFlavour.NO_FLAVOUR, ProfileDetailsImpl.defaultInstance(), "hash", Collections.EMPTY_SET,
-                Collections.EMPTY_SET);
+        this(PDFAFlavour.NO_FLAVOUR, ProfileDetailsImpl.defaultInstance(),
+                "hash", Collections.EMPTY_SET, Collections.EMPTY_SET);
     }
 
-    private ValidationProfileImpl(final PDFAFlavour flavour, final ProfileDetails details,
-            final String hash, final Set<Rule> rules,
-            final Set<Variable> variables) {
+    private ValidationProfileImpl(final PDFAFlavour flavour,
+            final ProfileDetails details, final String hash,
+            final Set<Rule> rules, final Set<Variable> variables) {
         super();
         this.flavour = flavour;
         this.details = details;
@@ -67,7 +70,6 @@ final class ValidationProfileImpl implements ValidationProfile {
         this.variables = new HashSet<>(variables);
     }
 
-
     /**
      * { @inheritDoc }
      */
@@ -75,7 +77,6 @@ final class ValidationProfileImpl implements ValidationProfile {
     public PDFAFlavour getPDFAFlavour() {
         return this.flavour;
     }
-
 
     /**
      * { @inheritDoc }
@@ -208,8 +209,8 @@ final class ValidationProfileImpl implements ValidationProfile {
     @Override
     public String toString() {
         return "ValidationProfile [flavour=" + this.flavour + ", details="
-                + this.details + ", hash=" + this.hash + ", rules=" + this.rules
-                + ", variables=" + this.variables + "]";
+                + this.details + ", hash=" + this.hash + ", rules="
+                + this.rules + ", variables=" + this.variables + "]";
     }
 
     static ValidationProfileImpl defaultInstance() {
@@ -217,15 +218,17 @@ final class ValidationProfileImpl implements ValidationProfile {
     }
 
     static ValidationProfileImpl fromValues(final PDFAFlavour flavour,
-            final ProfileDetails details, final String hash, final Set<Rule> rules,
-            final Set<Variable> variables) {
-        return new ValidationProfileImpl(flavour, details, hash, rules, variables);
+            final ProfileDetails details, final String hash,
+            final Set<Rule> rules, final Set<Variable> variables) {
+        return new ValidationProfileImpl(flavour, details, hash, rules,
+                variables);
     }
 
     static ValidationProfileImpl fromValidationProfile(
             ValidationProfile toConvert) {
-        return fromValues(toConvert.getPDFAFlavour(), toConvert.getDetails(), toConvert.getHexSha1Digest(),
-                toConvert.getRules(), toConvert.getVariables());
+        return fromValues(toConvert.getPDFAFlavour(), toConvert.getDetails(),
+                toConvert.getHexSha1Digest(), toConvert.getRules(),
+                toConvert.getVariables());
     }
 
     static String toXml(final ValidationProfile toConvert, Boolean prettyXml)
@@ -322,5 +325,37 @@ final class ValidationProfileImpl implements ValidationProfile {
             variablesByObject.get(rule.getObject()).add(rule);
         }
         return variablesByObject;
+    }
+
+    static String getSchema() throws JAXBException, IOException {
+        JAXBContext context = JAXBContext
+                .newInstance(ValidationProfileImpl.class);
+        final StringWriter writer = new StringWriter();
+        context.generateSchema(new WriterSchemaOutputResolver(writer));
+        return writer.toString();
+    }
+
+    private static class WriterSchemaOutputResolver extends SchemaOutputResolver {
+        private final Writer out;
+        /**
+         * @param out a Writer for the generated schema
+         * 
+         */
+        public WriterSchemaOutputResolver(final Writer out) {
+            super();
+            this.out = out;
+        }
+
+        /**
+         * { @inheritDoc }
+         */
+        @Override
+        public Result createOutput(String namespaceUri, String suggestedFileName)
+                throws IOException {
+            final StreamResult result = new StreamResult(this.out);
+            result.setSystemId("no-id");
+            return result;
+        }
+
     }
 }
