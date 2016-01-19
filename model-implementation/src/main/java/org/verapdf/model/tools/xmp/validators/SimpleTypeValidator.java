@@ -24,6 +24,13 @@ public class SimpleTypeValidator implements TypeValidator {
         return new SimpleTypeValidator(Pattern.compile(regexp));
     }
 
+    public static SimpleTypeValidator fromValue(Pattern pattern) {
+        if (pattern == null) {
+            throw new IllegalArgumentException("Argument type can not be null");
+        }
+        return new SimpleTypeValidator(pattern);
+    }
+
     @Override
     public boolean isCorresponding(VeraPDFXMPNode node) {
         if (node == null) {
@@ -42,8 +49,7 @@ public class SimpleTypeValidator implements TypeValidator {
         PROPER_NAME(XMPConstants.PROPER_NAME, "^.*$"),
         TEXT(XMPConstants.TEXT, "^.*$"),
         AGENT_NAME(XMPConstants.AGENT_NAME, "^.*$"),
-        RATIONAL(XMPConstants.RATIONAL, "^\\d+/\\d+$"),
-        GPS_COORDINATE(XMPConstants.GPS_COORDINATE, "^\\d{2},\\d{2}[,\\.]\\d{2}[NSEW]$"),
+        RATIONAL(XMPConstants.RATIONAL, "^.*$"),
         RENDITION_CLASS(XMPConstants.RENDITION_CLASS, "^.*$");
 
         private String type;

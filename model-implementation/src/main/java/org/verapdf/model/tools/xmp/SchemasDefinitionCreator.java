@@ -105,31 +105,31 @@ public class SchemasDefinitionCreator {
 
     private static PredefinedSchemasDefinition createPredefinedPDFA_1SchemasDefinition() {
         PredefinedSchemasDefinition schemas = createBasicSchemasDefinition(ValidatorsContainerCreator.PREDEFINED_CONTAINER_FOR_PDFA_1);
-        registerClosedSimpleChoiceForSchema(XMPConstants.PDFA_IDENTIFICATION_CLOSED_CHOICE_DIFFER_1, schemas);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.PDFA_IDENTIFICATION_RESTRICTED_FIELD_DIFFER_1, schemas);
         registerStructureTypeForSchema(XMPConstants.PHOTOSHOP_DIFFER_1, schemas);
-        registerStructureTypeForSchema(XMPConstants.EXIF_WITHOUT_CLOSED_CHOICE_DIFFER_1, schemas);
-        registerClosedSimpleChoiceForSchema(XMPConstants.EXIF_CLOSED_CHOICE_DIFFER_1, schemas);
+        registerStructureTypeForSchema(XMPConstants.EXIF_WITHOUT_RESTRICTED_FIELD_DIFFER_1, schemas);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.EXIF_RESTRICTED_FIELD_DIFFER_1, schemas);
         return schemas;
     }
 
     private static PredefinedSchemasDefinition createPredefinedPDFA_2_3SchemasDefinition() {
         PredefinedSchemasDefinition schemas = createBasicSchemasDefinition(ValidatorsContainerCreator.PREDEFINED_CONTAINER_FOR_PDFA_2_3);
-        registerClosedSimpleChoiceForSchema(XMPConstants.PDFA_IDENTIFICATION_CLOSED_CHOICE_DIFFER_2_3, schemas);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.PDFA_IDENTIFICATION_RESTRICTED_FIELD_DIFFER_2_3, schemas);
         registerStructureTypeForSchema(XMPConstants.PDFA_IDENTIFICATION_SPECIFIED_2_3, schemas);
         registerStructureTypeForSchema(XMPConstants.XMP_BASIC_SPECIFIED_2_3, schemas);
         registerStructureTypeForSchema(XMPConstants.XMP_PAGED_TEXT_SPECIFIED_2_3, schemas);
-        registerStructureTypeForSchema(XMPConstants.XMP_DYNAMIC_MEDIA_WITHOUT_CLOSED_CHOICE_SPECIFIED_2_3, schemas);
-        registerClosedSimpleChoiceForSchema(XMPConstants.XMP_DYNAMIC_MEDIA_CLOSED_CHOICE_SPECIFIED_2_3, schemas);
+        registerStructureTypeForSchema(XMPConstants.XMP_DYNAMIC_MEDIA_WITHOUT_RESTRICTED_FIELD_SPECIFIED_2_3, schemas);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.XMP_DYNAMIC_MEDIA_RESTRICTED_FIELD_SPECIFIED_2_3, schemas);
         registerStructureTypeForSchema(XMPConstants.PHOTOSHOP_DIFFER_2_3, schemas);
-        registerStructureTypeForSchema(XMPConstants.CAMERA_RAW_WITHOUT_CLOSED_CHOICE_SPECIFIED_2_3, schemas);
-        registerClosedSimpleChoiceForSchema(XMPConstants.CAMERA_RAW_CLOSED_CHOICE_SPECIFIED_2_3, schemas);
-        schemas.registerRestrictedTextProperty(
+        registerStructureTypeForSchema(XMPConstants.CAMERA_RAW_WITHOUT_RESTRICTED_FIELD_SPECIFIED_2_3, schemas);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.CAMERA_RAW_RESTRICTED_FIELD_SPECIFIED_2_3, schemas);
+        schemas.registerRestrictedSeqTextProperty(
                 XMPConstants.CAMERA_RAW_SEQ_OF_POINTS_SPECIFIED_2_3[0],
                 XMPConstants.CAMERA_RAW_SEQ_OF_POINTS_SPECIFIED_2_3[1],
                 Pattern.compile(XMPConstants.CAMERA_RAW_SEQ_OF_POINTS_SPECIFIED_2_3[2])
         );
-        registerStructureTypeForSchema(XMPConstants.EXIF_WITHOUT_CLOSED_CHOICE_DIFFER_2_3, schemas);
-        registerClosedSimpleChoiceForSchema(XMPConstants.EXIF_CLOSED_CHOICE_DIFFER_2_3, schemas);
+        registerStructureTypeForSchema(XMPConstants.EXIF_WITHOUT_RESTRICTED_FIELD_DIFFER_2_3, schemas);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.EXIF_RESTRICTED_FIELD_DIFFER_2_3, schemas);
         registerStructureTypeForSchema(XMPConstants.AUX_SPECIFIED_2_3, schemas);
         return schemas;
     }
@@ -145,14 +145,14 @@ public class SchemasDefinitionCreator {
         registerStructureTypeForSchema(XMPConstants.XMP_PAGED_TEXT_COMMON, schemas);
         registerStructureTypeForSchema(XMPConstants.ADOBE_PDF_COMMON, schemas);
         registerStructureTypeForSchema(XMPConstants.PHOTOSHOP_COMMON, schemas);
-        registerStructureTypeForSchema(XMPConstants.TIFF_WITHOUT_CLOSED_CHOICE_COMMON, schemas);
-        registerClosedSimpleChoiceForSchema(XMPConstants.TIFF_CLOSED_CHOICE_COMMON, schemas);
+        registerStructureTypeForSchema(XMPConstants.TIFF_WITHOUT_RESTRICTED_FIELD_COMMON, schemas);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.TIFF_RESTRICTED_FIELD_COMMON, schemas);
         schemas.registerSeqChoiceProperty(
                 XMPSchemaRegistryImpl.NS_TIFF,
                 "YCbCrSubSampling",
                 XMPConstants.TIFF_YCBCRSUBSAMPLING_SEQ_CHOICE_COMMON);
-        registerStructureTypeForSchema(XMPConstants.EXIF_WITHOUT_CLOSED_CHOICE_COMMON, schemas);
-        registerClosedSimpleChoiceForSchema(XMPConstants.EXIF_CLOSED_CHOICE_COMMON, schemas);
+        registerStructureTypeForSchema(XMPConstants.EXIF_WITHOUT_RESTRICTED_FIELD_COMMON, schemas);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.EXIF_RESTRICTED_FIELD_COMMON, schemas);
         schemas.registerSeqChoiceProperty(
                 XMPSchemaRegistryImpl.NS_EXIF,
                 "ComponentsConfiguration",
@@ -166,9 +166,9 @@ public class SchemasDefinitionCreator {
         }
     }
 
-    private static void registerClosedSimpleChoiceForSchema(String[] structure, PredefinedSchemasDefinition schema) {
+    private static void registerRestrictedSimpleFieldForSchema(String[] structure, PredefinedSchemasDefinition schema) {
         for (int i = 1; i < structure.length; i += 2) {
-            schema.registerSimpleChoiceProperty(structure[0], structure[i], Pattern.compile(structure[i + 1]));
+            schema.registerRestrictedSimpleFieldProperty(structure[0], structure[i], Pattern.compile(structure[i + 1]));
         }
     }
 }

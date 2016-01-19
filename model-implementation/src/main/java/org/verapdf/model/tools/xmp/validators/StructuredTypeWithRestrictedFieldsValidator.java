@@ -10,21 +10,21 @@ import java.util.regex.Pattern;
 /**
  * @author Maksim Bezrukov
  */
-public class StructuredTypeWithClosedChoiceValidator implements TypeValidator {
+public class StructuredTypeWithRestrictedFieldsValidator implements TypeValidator {
 
     private String childNamespaceURI;
     private Map<String, String> childrenTypes;
     private Map<String, Pattern> childrenChoiceTypes;
     private ValidatorsContainer parentContainer;
 
-    public StructuredTypeWithClosedChoiceValidator(String childNamespaceURI, Map<String, String> childrenTypes, Map<String, Pattern> childrenChoiceTypes, ValidatorsContainer parentContainer) {
+    public StructuredTypeWithRestrictedFieldsValidator(String childNamespaceURI, Map<String, String> childrenTypes, Map<String, Pattern> childrenChoiceTypes, ValidatorsContainer parentContainer) {
         this.childNamespaceURI = childNamespaceURI;
         this.childrenTypes = childrenTypes;
         this.childrenChoiceTypes = childrenChoiceTypes;
         this.parentContainer = parentContainer;
     }
 
-    public static StructuredTypeWithClosedChoiceValidator fromValues(String childNamespaceURI, Map<String, String> childrenTypes, Map<String, Pattern> childrenClosedTypes, ValidatorsContainer parentContainer) {
+    public static StructuredTypeWithRestrictedFieldsValidator fromValues(String childNamespaceURI, Map<String, String> childrenTypes, Map<String, Pattern> childrenClosedTypes, ValidatorsContainer parentContainer) {
         if (childNamespaceURI == null) {
             throw new IllegalArgumentException("Argument child namespace URI can not be null");
         }
@@ -38,7 +38,7 @@ public class StructuredTypeWithClosedChoiceValidator implements TypeValidator {
             throw new IllegalArgumentException("Argument parent container can not be null");
         }
 
-        return new StructuredTypeWithClosedChoiceValidator(childNamespaceURI, new HashMap<>(childrenTypes), new HashMap<>(childrenClosedTypes), parentContainer);
+        return new StructuredTypeWithRestrictedFieldsValidator(childNamespaceURI, new HashMap<>(childrenTypes), new HashMap<>(childrenClosedTypes), parentContainer);
     }
 
     public boolean isCorresponding(VeraPDFXMPNode node) {
