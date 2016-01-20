@@ -17,44 +17,47 @@ public class ValidatorsContainerCreator {
     public static final ValidatorsContainer PREDEFINED_CONTAINER_FOR_PDFA_2_3 = createValidatorsContainerPredefinedForPDFA_2_3();
 
     private static ValidatorsContainer createValidatorsContainerPredefinedForPDFA_1() {
-        return createBasicValidatorsContainer();
+        ValidatorsContainer container = createBasicValidatorsContainer();
+        container.registerSimpleValidator(XMPConstants.GPS_COORDINATE, Pattern.compile("^\\d{2},\\d{2}[,\\.]\\d{2}[NSEW]$"));
+        return container;
     }
 
     private static ValidatorsContainer createValidatorsContainerPredefinedForPDFA_2_3() {
         ValidatorsContainer container = createBasicValidatorsContainer();
-        registerStructureTypeWithClosedChoiceForContainer(
+        container.registerSimpleValidator(XMPConstants.GPS_COORDINATE, Pattern.compile("^\\d{1,3},\\d{1,2}(,\\d{1,2}|\\.\\d+)[NSEW]$"));
+        registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.COLORANT,
-                XMPConstants.COLORANT_WITHOUT_CLOSED_CHOICE_STRUCTURE,
-                XMPConstants.COLORANT_CLOSED_CHOICE_STRUCTURE,
+                XMPConstants.COLORANT_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.COLORANT_RESTRICTED_FIELD_STRUCTURE,
                 container);
         registerStructureTypeForContainer(XMPConstants.FONT, XMPConstants.FONT_STRUCTURE, container);
         registerStructureTypeForContainer(XMPConstants.BEAT_SPLICE_STRETCH, XMPConstants.BEAT_SPLICE_STRETCH_STRUCTURE, container);
-        registerStructureTypeWithClosedChoiceForContainer(
+        registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.MARKER,
-                XMPConstants.MARKER_WITHOUT_CLOSED_CHOICE_STRUCTURE,
-                XMPConstants.MARKER_CLOSED_CHOICE_STRUCTURE,
+                XMPConstants.MARKER_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.MARKER_RESTRICTED_FIELD_STRUCTURE,
                 container);
         registerStructureTypeForContainer(XMPConstants.MEDIA, XMPConstants.MEDIA_STRUCTURE, container);
-        registerStructureTypeWithClosedChoiceForContainer(
+        registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.PROJECT_LINK,
-                XMPConstants.PROJECT_LINK_WITHOUT_CLOSED_CHOICE_STRUCTURE,
-                XMPConstants.PROJECT_LINK_CLOSED_CHOICE_STRUCTURE,
+                XMPConstants.PROJECT_LINK_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.PROJECT_LINK_RESTRICTED_FIELD_STRUCTURE,
                 container);
-        registerStructureTypeWithClosedChoiceForContainer(
+        registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.RESAMPLE_STRETCH,
-                XMPConstants.RESAMPLE_STRETCH_WITHOUT_CLOSED_CHOICE_STRUCTURE,
-                XMPConstants.RESAMPLE_STRETCH_CLOSED_CHOICE_STRUCTURE,
+                XMPConstants.RESAMPLE_STRETCH_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.RESAMPLE_STRETCH_RESTRICTED_FIELD_STRUCTURE,
                 container);
         registerStructureTypeForContainer(XMPConstants.TIME, XMPConstants.TIME_STRUCTURE, container);
-        registerStructureTypeWithClosedChoiceForContainer(
+        registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.TIMECODE,
-                XMPConstants.TIMECODE_WITHOUT_CLOSED_CHOICE_STRUCTURE,
-                XMPConstants.TIMECODE_CLOSED_CHOICE_STRUCTURE,
+                XMPConstants.TIMECODE_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.TIMECODE_RESTRICTED_FIELD_STRUCTURE,
                 container);
-        registerStructureTypeWithClosedChoiceForContainer(
+        registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.TIME_SCALE_STRETCH,
-                XMPConstants.TIME_SCALE_STRETCH_WITHOUT_CLOSED_CHOICE_STRUCTURE,
-                XMPConstants.TIME_SCALE_STRETCH_CLOSED_CHOICE_STRUCTURE,
+                XMPConstants.TIME_SCALE_STRETCH_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.TIME_SCALE_STRETCH_RESTRICTED_FIELD_STRUCTURE,
                 container);
         return container;
     }
@@ -62,19 +65,19 @@ public class ValidatorsContainerCreator {
     private static ValidatorsContainer createBasicValidatorsContainer() {
         ValidatorsContainer container = new ValidatorsContainer();
         registerStructureTypeForContainer(XMPConstants.DIMENSIONS, XMPConstants.DIMENSIONS_STRUCTURE, container);
-        registerStructureTypeWithClosedChoiceForContainer(
+        registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.THUMBNAIL,
-                XMPConstants.THUMBNAIL_WITHOUT_CLOSED_CHOICE_STRUCTURE,
-                XMPConstants.THUMBNAIL_CLOSED_CHOICE_STRUCTURE,
+                XMPConstants.THUMBNAIL_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.THUMBNAIL_RESTRICTED_FIELD_STRUCTURE,
                 container);
         registerStructureTypeForContainer(XMPConstants.RESOURCE_EVENT, XMPConstants.RESOURCE_EVENT_STRUCTURE, container);
         registerStructureTypeForContainer(XMPConstants.RESOURCE_REF, XMPConstants.RESOURCE_REF_STRUCTURE, container);
         registerStructureTypeForContainer(XMPConstants.VERSION, XMPConstants.VERSION_STRUCTURE, container);
         registerStructureTypeForContainer(XMPConstants.JOB, XMPConstants.JOB_STRUCTURE, container);
-        registerStructureTypeWithClosedChoiceForContainer(
+        registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.FLASH,
-                XMPConstants.FLASH_WITHOUT_CLOSED_CHOICE_STRUCTURE,
-                XMPConstants.FLASH_CLOSED_CHOICE_STRUCTURE,
+                XMPConstants.FLASH_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.FLASH_RESTRICTED_FIELD_STRUCTURE,
                 container);
         registerStructureTypeForContainer(XMPConstants.OECF_SFR, XMPConstants.OECF_SFR_STRUCTURE, container);
         registerStructureTypeForContainer(XMPConstants.CFA_PATTERN, XMPConstants.CFA_PATTERN_STRUCTURE, container);
@@ -144,7 +147,7 @@ public class ValidatorsContainerCreator {
         }
 
         if (name != null && namespace != null && fields != null && !fields.isEmpty()) {
-            container.registerValidator(name, namespace, fields);
+            container.registerStructuredValidator(name, namespace, fields);
         }
     }
 
@@ -181,10 +184,10 @@ public class ValidatorsContainerCreator {
         for (int i = 1; i < structure.length; i += 2) {
             res.put(structure[i], structure[i + 1]);
         }
-        container.registerValidator(structureType, structure[0], res);
+        container.registerStructuredValidator(structureType, structure[0], res);
     }
 
-    private static void registerStructureTypeWithClosedChoiceForContainer(String structureType, String[] structure, String[] closedStructure, ValidatorsContainer container) {
+    private static void registerStructureTypeWithRestrictedSimpleFieldsForContainer(String structureType, String[] structure, String[] closedStructure, ValidatorsContainer container) {
         Map<String, String> res = new HashMap<>();
         for (int i = 1; i < structure.length; i += 2) {
             res.put(structure[i], structure[i + 1]);
@@ -193,6 +196,6 @@ public class ValidatorsContainerCreator {
         for (int i = 0; i < closedStructure.length; i += 2) {
             closedRes.put(closedStructure[i], Pattern.compile(closedStructure[i + 1]));
         }
-        container.registerClosedChoiceValidator(structureType, structure[0], res, closedRes);
+        container.registerStructuredWithRestrictedFieldsValidator(structureType, structure[0], res, closedRes);
     }
 }

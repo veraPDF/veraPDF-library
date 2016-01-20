@@ -34,7 +34,22 @@ public class ValidatorsContainer {
         }
     }
 
-    boolean registerValidator(String typeName, String typeNamespaceURI, Map<String, String> childrenTypes) {
+    boolean registerSimpleValidator(String typeName, Pattern pattern) {
+        if (typeName == null) {
+            throw new IllegalArgumentException("Argument typeName can not be null");
+        }
+        if (pattern == null) {
+            throw new IllegalArgumentException("Argument pattern can not be null");
+        }
+        if (validators.containsKey(typeName)) {
+            return false;
+        }
+
+        validators.put(typeName, SimpleTypeValidator.fromValue(pattern));
+        return true;
+    }
+
+    boolean registerStructuredValidator(String typeName, String typeNamespaceURI, Map<String, String> childrenTypes) {
         if (typeName == null) {
             throw new IllegalArgumentException("Argument typeName can not be null");
         }
@@ -52,7 +67,7 @@ public class ValidatorsContainer {
         return true;
     }
 
-    boolean registerClosedChoiceValidator(String typeName, String typeNamespaceURI, Map<String, String> childrenTypes, Map<String, Pattern> childrenClosedTypes) {
+    boolean registerStructuredWithRestrictedFieldsValidator(String typeName, String typeNamespaceURI, Map<String, String> childrenTypes, Map<String, Pattern> childrenRestrictedTypes) {
         if (typeName == null) {
             throw new IllegalArgumentException("Argument typeName can not be null");
         }
@@ -62,14 +77,14 @@ public class ValidatorsContainer {
         if (childrenTypes == null) {
             throw new IllegalArgumentException("Argument childrenTypes can not be null or empty");
         }
-        if (childrenClosedTypes == null) {
+        if (childrenRestrictedTypes == null) {
             throw new IllegalArgumentException("Argument childrenClosedTypes can not be null or empty");
         }
         if (validators.containsKey(typeName)) {
             return false;
         }
 
-        validators.put(typeName, StructuredTypeWithClosedChoiceValidator.fromValues(typeNamespaceURI, childrenTypes, childrenClosedTypes, this));
+        validators.put(typeName, StructuredTypeWithRestrictedFieldsValidator.fromValues(typeNamespaceURI, childrenTypes, childrenRestrictedTypes, this));
         return true;
     }
 

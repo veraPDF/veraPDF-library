@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 public class PredefinedSchemasDefinition extends SchemasDefinition {
 
-    private Map<QName, Pattern> closedSimpleChoice = new HashMap<>();
+    private Map<QName, Pattern> restrictedSimpleField = new HashMap<>();
     private Map<QName, Pattern> restrictedSeqText = new HashMap<>();
     private Map<QName, String[][]> closedSeqChoice = new HashMap<>();
 
@@ -26,7 +26,7 @@ public class PredefinedSchemasDefinition extends SchemasDefinition {
 
     @Override
     protected boolean isDefinedProperty(QName name) {
-        return closedSimpleChoice.containsKey(name) ||
+        return restrictedSimpleField.containsKey(name) ||
                 restrictedSeqText.containsKey(name) ||
                 closedSeqChoice.containsKey(name) ||
                 super.isDefinedProperty(name);
@@ -39,8 +39,8 @@ public class PredefinedSchemasDefinition extends SchemasDefinition {
         }
 
         QName name = new QName(node.getNamespaceURI(), node.getName());
-        if (closedSimpleChoice.containsKey(name)) {
-            return isCorrespondsClosedSimpleChoice(node, closedSimpleChoice.get(name));
+        if (restrictedSimpleField.containsKey(name)) {
+            return isCorrespondsClosedSimpleChoice(node, restrictedSimpleField.get(name));
         } else if (restrictedSeqText.containsKey(name)) {
             return isCorrespondsRestrictedSeqText(node, restrictedSeqText.get(name));
         } else if (closedSeqChoice.containsKey(name)) {
@@ -91,11 +91,11 @@ public class PredefinedSchemasDefinition extends SchemasDefinition {
         return true;
     }
 
-    protected boolean registerSimpleChoiceProperty(String namespaceURI, String propertyName, Pattern pattern) {
-        return registerPatternProperty(closedSimpleChoice, namespaceURI, propertyName, pattern);
+    protected boolean registerRestrictedSimpleFieldProperty(String namespaceURI, String propertyName, Pattern pattern) {
+        return registerPatternProperty(restrictedSimpleField, namespaceURI, propertyName, pattern);
     }
 
-    protected boolean registerRestrictedTextProperty(String namespaceURI, String propertyName, Pattern pattern) {
+    protected boolean registerRestrictedSeqTextProperty(String namespaceURI, String propertyName, Pattern pattern) {
         return registerPatternProperty(restrictedSeqText, namespaceURI, propertyName, pattern);
     }
 
