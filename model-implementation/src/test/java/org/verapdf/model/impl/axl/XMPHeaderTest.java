@@ -46,7 +46,7 @@ public class XMPHeaderTest {
     public String encoding;
 
     @Test
-    public void testHeader() throws URISyntaxException, FileNotFoundException, XMPException {
+    public void test() throws URISyntaxException, FileNotFoundException, XMPException {
         FileInputStream in = new FileInputStream(getSystemIndependentPath(filePath));
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
         AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);

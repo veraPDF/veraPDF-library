@@ -13,8 +13,9 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,43 +27,57 @@ public class XMPCustomPropertiesTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {"/model/impl/axl/xmp-custom-structured-property-check-1.xml", false, false, true, true, true, true},
-                {"/model/impl/axl/xmp-custom-structured-property-check-2.xml", false, false, false, false, null, null},
-                {"/model/impl/axl/xmp-custom-structured-property-check-3.xml", false, false, false, true, null, false}
-        });
+        List<Object[]> res = new ArrayList<>();
+        res.add(new Object[]{"/model/impl/axl/xmp-custom-structured-property-check-1.xml", true, true, true, true});
+        res.add(new Object[]{"/model/impl/axl/xmp-custom-structured-property-check-2.xml", false, false, null, null});
+        res.add(new Object[]{"/model/impl/axl/xmp-custom-structured-property-check-3.xml", false, true, null, false});
+
+        for (int i = 1; i <= 25; ++i) {
+            String filePassName = "/model/impl/axl/xmp-types-in-extension-check-" + i + "-pass.xml";
+            res.add(new Object[]{filePassName, true, true, true, true});
+            String fileFailName = "/model/impl/axl/xmp-types-in-extension-check-" + i + "-fail.xml";
+            res.add(new Object[]{fileFailName, true, true, false, false});
+        }
+        for (int i = 26; i <= 35; ++i) {
+            String filePassName = "/model/impl/axl/xmp-types-in-extension-check-" + i + "-pass.xml";
+            res.add(new Object[]{filePassName, false, true, null, true});
+            String fileFailName = "/model/impl/axl/xmp-types-in-extension-check-" + i + "-fail.xml";
+            res.add(new Object[]{fileFailName, false, true, null, false});
+        }
+
+        res.add(new Object[]{"/model/impl/axl/xmp-gps-in-extension-check-2004-pass.xml", true, true, true, true});
+        res.add(new Object[]{"/model/impl/axl/xmp-gps-in-extension-check-2004-fail.xml", true, true, false, false});
+        res.add(new Object[]{"/model/impl/axl/xmp-gps-in-extension-check-2005-pass.xml", true, true, false, true});
+        res.add(new Object[]{"/model/impl/axl/xmp-gps-in-extension-check-2005-fail.xml", true, true, false, false});
+
+        return res;
     }
 
     @Parameterized.Parameter
     public String filePath;
 
     @Parameterized.Parameter(value = 1)
-    public Boolean isPredefinedForPDFA_1;
-
-    @Parameterized.Parameter(value = 2)
-    public Boolean isPredefinedForPDFA_2_3;
-
-    @Parameterized.Parameter(value = 3)
     public Boolean isDefinedInCurrentPackageForPDFA_1;
 
-    @Parameterized.Parameter(value = 4)
+    @Parameterized.Parameter(value = 2)
     public Boolean isDefinedInCurrentPackageForPDFA_2_3;
 
-    @Parameterized.Parameter(value = 5)
+    @Parameterized.Parameter(value = 3)
     public Boolean isValueTypeCorrectForPDFA_1;
 
-    @Parameterized.Parameter(value = 6)
+    @Parameterized.Parameter(value = 4)
     public Boolean isValueTypeCorrectForPDFA_2_3;
 
     @Test
-    public void testIdentification() throws URISyntaxException, FileNotFoundException, XMPException {
+    public void test() throws URISyntaxException, FileNotFoundException, XMPException {
+        System.out.println(filePath);
         FileInputStream in = new FileInputStream(getSystemIndependentPath(filePath));
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
         AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);
         for (Object obj : pack.getLinkedObjects(AXLXMPPackage.PROPERTIES)) {
             XMPProperty prop = (XMPProperty) obj;
-            assertEquals(isPredefinedForPDFA_1, prop.getisPredefinedForPDFA_1());
-            assertEquals(isPredefinedForPDFA_2_3, prop.getisPredefinedForPDFA_2_3());
+            assertEquals(false, prop.getisPredefinedForPDFA_1());
+            assertEquals(false, prop.getisPredefinedForPDFA_2_3());
             assertEquals(isDefinedInCurrentPackageForPDFA_1, prop.getisDefinedInCurrentPackageForPDFA_1());
             assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInCurrentPackageForPDFA_2_3());
             assertEquals(false, prop.getisDefinedInMainPackage());
@@ -72,8 +87,8 @@ public class XMPCustomPropertiesTest {
         AXLMainXMPPackage mainwPack = new AXLMainXMPPackage(meta, true);
         for (Object obj : mainwPack.getLinkedObjects(AXLXMPPackage.PROPERTIES)) {
             XMPProperty prop = (XMPProperty) obj;
-            assertEquals(isPredefinedForPDFA_1, prop.getisPredefinedForPDFA_1());
-            assertEquals(isPredefinedForPDFA_2_3, prop.getisPredefinedForPDFA_2_3());
+            assertEquals(false, prop.getisPredefinedForPDFA_1());
+            assertEquals(false, prop.getisPredefinedForPDFA_2_3());
             assertEquals(isDefinedInCurrentPackageForPDFA_1, prop.getisDefinedInCurrentPackageForPDFA_1());
             assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInCurrentPackageForPDFA_2_3());
             assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInMainPackage());

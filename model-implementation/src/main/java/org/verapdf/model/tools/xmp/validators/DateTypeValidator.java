@@ -19,6 +19,9 @@ public class DateTypeValidator implements TypeValidator {
             throw new IllegalArgumentException("Argument node can not be null.");
         }
         try {
+            if (!node.getOptions().isSimple()) {
+                return false;
+            }
             XMPDateTimeFactory.createFromISO8601(node.getValue());
             return true;
         } catch (XMPException e) {

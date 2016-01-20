@@ -1,0 +1,45 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Version value type</pdfaProperty:description>
+								<pdfaProperty:name>verprop</pdfaProperty:name>
+								<pdfaProperty:valueType>Version</pdfaProperty:valueType>
+							</rdf:li>
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
+					   xmlns:stEvt="http://ns.adobe.com/xap/1.0/sType/ResourceEvent#"
+					   xmlns:stVer="http://ns.adobe.com/xap/1.0/sType/Version#">
+		<fs:verprop rdf:parseType="Resource">
+			<stVer:comments>Some comments</stVer:comments>
+			<stVer:event rdf:parseType="Resource">
+				<stEvt:action>cropped</stEvt:action>
+				<stEvt:instanceID>uuid:13455764-8e98-4663-9e55-e3859d617fa2</stEvt:instanceID>
+				<stEvt:parameters>some description of the action</stEvt:parameters>
+				<stEvt:softwareAgent>Software Agent Name</stEvt:softwareAgent>
+				<stEvt:when>2005-03-13T22:06:10+01:00</stEvt:when>
+			</stVer:event>
+			<stVer:modifyDate>2015-03-13T22:06:10+01:00</stVer:modifyDate>
+			<stVer:modifier>Some modifier</stVer:modifier>
+			<stVer:version>1.7</stVer:version>		
+		</fs:verprop>
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>
