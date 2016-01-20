@@ -20,6 +20,9 @@ public class URITypeValidator implements TypeValidator {
             throw new IllegalArgumentException("Argument node can not be null.");
         }
         try {
+            if (!node.getOptions().isSimple()) {
+                return false;
+            }
             URI uri = new URI(node.getValue());
             return true;
         } catch (URISyntaxException e) {

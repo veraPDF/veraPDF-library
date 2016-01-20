@@ -43,7 +43,6 @@ public class SimpleTypeValidator implements TypeValidator {
 
         BOOLEAN(XMPConstants.BOOLEAN, "^True$|^False$"),
         INTEGER(XMPConstants.INTEGER, "^[+-]?\\d+$"),
-        LOCALE(XMPConstants.LOCALE, "^([a-zA-Z]{1,8})((-[a-zA-Z]{1,8})*)$"),
         REAL(XMPConstants.REAL, "^[+-]?\\d+\\.?\\d*|[+-]?\\d*\\.?\\d+$"),
         MIME_TYPE(XMPConstants.MIME_TYPE, "^[-\\w+\\.]+/[-\\w+\\.]+$"),
         PROPER_NAME(XMPConstants.PROPER_NAME, "^.*$"),

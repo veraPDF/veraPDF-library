@@ -95,10 +95,6 @@
 			<xmpDM:type>audio</xmpDM:type>
 			<xmpDM:path>2004-10-23T12:00:00-06:00</xmpDM:path>
 		</fs:projlinkprop3>
-		<fs:projlinkprop4 rdf:parseType="Resource">
-			<xmpDM:type>custom</xmpDM:type>
-			<xmpDM:path>123.0</xmpDM:path>
-		</fs:projlinkprop4>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

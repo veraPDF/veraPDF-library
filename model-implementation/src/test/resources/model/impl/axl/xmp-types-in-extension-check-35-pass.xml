@@ -26,8 +26,8 @@
 	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
 					   xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
 		<fs:timeprop rdf:parseType="Resource">
-			<xmpDM:name>50</xmpDM:name>
-			<xmpDM:id>1/25</xmpDM:id>
+			<xmpDM:value>50</xmpDM:value>
+			<xmpDM:scale>1/25</xmpDM:scale>
 		</fs:timeprop>
 	</rdf:Description>
   </rdf:RDF>

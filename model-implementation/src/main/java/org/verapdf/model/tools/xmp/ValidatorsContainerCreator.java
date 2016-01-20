@@ -19,12 +19,14 @@ public class ValidatorsContainerCreator {
     private static ValidatorsContainer createValidatorsContainerPredefinedForPDFA_1() {
         ValidatorsContainer container = createBasicValidatorsContainer();
         container.registerSimpleValidator(XMPConstants.GPS_COORDINATE, Pattern.compile("^\\d{2},\\d{2}[,\\.]\\d{2}[NSEW]$"));
+        container.registerSimpleValidator(XMPConstants.LOCALE, Pattern.compile("^([a-zA-Z]{1,8})((-[a-zA-Z]{1,8})*)$"));
         return container;
     }
 
     private static ValidatorsContainer createValidatorsContainerPredefinedForPDFA_2_3() {
         ValidatorsContainer container = createBasicValidatorsContainer();
         container.registerSimpleValidator(XMPConstants.GPS_COORDINATE, Pattern.compile("^\\d{1,3},\\d{1,2}(,\\d{1,2}|\\.\\d+)[NSEW]$"));
+        container.registerSimpleValidator(XMPConstants.LOCALE, Pattern.compile("^([a-zA-Z]{1,8})((-[a-zA-Z0-9]{1,8})*)$"));
         registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.COLORANT,
                 XMPConstants.COLORANT_WITHOUT_RESTRICTED_FIELD_STRUCTURE,

@@ -13,45 +13,31 @@
 						<rdf:Seq>
 							<rdf:li rdf:parseType="Resource">
 								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
-								<pdfaProperty:name>tssprop1</pdfaProperty:name>
-								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
+								<pdfaProperty:description>Desc - OECF/SFR value type</pdfaProperty:description>
+								<pdfaProperty:name>oecfprop</pdfaProperty:name>
+								<pdfaProperty:valueType>OECF/SFR</pdfaProperty:valueType>
 							</rdf:li>
-							<rdf:li rdf:parseType="Resource">
-								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
-								<pdfaProperty:name>tssprop2</pdfaProperty:name>
-								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
-							</rdf:li>
-							<rdf:li rdf:parseType="Resource">
-								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
-								<pdfaProperty:name>tssprop3</pdfaProperty:name>
-								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
-							</rdf:li>							
 						</rdf:Seq>
 					</pdfaSchema:property>
 				</rdf:li>
 			</rdf:Bag>
 		</pdfaExtension:schemas>
 	</rdf:Description>
-	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
-					   xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
-		<fs:tssprop1 rdf:parseType="Resource">
-			<xmpDM:quality>High</xmpDM:quality>
-			<xmpDM:frameSize>123.02</xmpDM:frameSize>
-			<xmpDM:frameOverlappingPercentage>1.0</xmpDM:frameOverlappingPercentage>
-		</fs:tssprop1>
-		<fs:tssprop2 rdf:parseType="Resource">
-			<xmpDM:quality>Medium</xmpDM:quality>
-			<xmpDM:frameSize>-1.0</xmpDM:frameSize>
-			<xmpDM:frameOverlappingPercentage>+51.9</xmpDM:frameOverlappingPercentage>
-		</fs:tssprop2>
-		<fs:tssprop3 rdf:parseType="Resource">
-			<xmpDM:quality>Low</xmpDM:quality>
-			<xmpDM:frameSize>+4.0</xmpDM:frameSize>
-			<xmpDM:frameOverlappingPercentage>-1.0</xmpDM:frameOverlappingPercentage>
-		</fs:tssprop3>		
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/" xmlns:exif="http://ns.adobe.com/exif/1.0/">
+		<fs:oecfprop rdf:parseType="Resource">
+			<exif:Columns>1</exif:Columns>
+			<exif:Names>
+				<rdf:Seq>
+					<rdf:li>Some Name of element</rdf:li>
+				</rdf:Seq>
+			</exif:Names>
+			<exif:Rows>1</exif:Rows>
+			<exif:Values>
+				<rdf:Seq>
+					<rdf:li>2/5</rdf:li>
+				</rdf:Seq>
+			</exif:Values>
+		</fs:oecfprop>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

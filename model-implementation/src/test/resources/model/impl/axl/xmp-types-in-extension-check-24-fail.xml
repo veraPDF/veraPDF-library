@@ -104,7 +104,7 @@
 					<rdf:li xml:lang="x-default">SomeValue</rdf:li>
 				</rdf:Alt>
 			</exif:Settings>
-		</fs:devsetprop6>		
+		</fs:devsetprop6>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

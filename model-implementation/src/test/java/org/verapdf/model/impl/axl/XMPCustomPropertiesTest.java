@@ -32,13 +32,13 @@ public class XMPCustomPropertiesTest {
         res.add(new Object[]{"/model/impl/axl/xmp-custom-structured-property-check-2.xml", false, false, null, null});
         res.add(new Object[]{"/model/impl/axl/xmp-custom-structured-property-check-3.xml", false, true, null, false});
 
-        for (int i = 1; i <= 24; ++i) {
+        for (int i = 1; i <= 25; ++i) {
             String filePassName = "/model/impl/axl/xmp-types-in-extension-check-" + i + "-pass.xml";
             res.add(new Object[]{filePassName, true, true, true, true});
             String fileFailName = "/model/impl/axl/xmp-types-in-extension-check-" + i + "-fail.xml";
             res.add(new Object[]{fileFailName, true, true, false, false});
         }
-        for (int i = 25; i <= 35; ++i) {
+        for (int i = 26; i <= 35; ++i) {
             String filePassName = "/model/impl/axl/xmp-types-in-extension-check-" + i + "-pass.xml";
             res.add(new Object[]{filePassName, false, true, null, true});
             String fileFailName = "/model/impl/axl/xmp-types-in-extension-check-" + i + "-fail.xml";

@@ -54,17 +54,10 @@
 		</pdfaExtension:schemas>
 	</rdf:Description>
 	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
-					   xmlns:vQual="http://ns.adobe.com/xap/1.0/ValueQualifier#">
+	  >
 		<fs:realprop1>SomeRealValues</fs:realprop1>
-		<fs:realprop2>326</fs:realprop2>
 		<fs:realprop3>IEEE754D,L,3A4901F387D31108</fs:realprop3>
 		<fs:realprop4>12,025</fs:realprop4>
-		<fs:realprop5>
-			<rdf:Description>
-				<rdf:value>12653</rdf:value>
-				<vQual:binRep>IEEE754D,L,3A4901F387D31108</vQual:binRep>
-			</rdf:Description>
-		</fs:realprop5>
 		<fs:realprop6>
 			<rdf:Seq>
 				<rdf:li>135.235</rdf:li>

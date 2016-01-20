@@ -13,39 +13,39 @@
 						<rdf:Seq>
 							<rdf:li rdf:parseType="Resource">
 								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - OECF/SFR value type</pdfaProperty:description>
-								<pdfaProperty:name>oecfprop1</pdfaProperty:name>
-								<pdfaProperty:valueType>OECF/SFR</pdfaProperty:valueType>
+								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>tssprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
 							</rdf:li>
 							<rdf:li rdf:parseType="Resource">
 								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - OECF/SFR value type</pdfaProperty:description>
-								<pdfaProperty:name>oecfprop2</pdfaProperty:name>
-								<pdfaProperty:valueType>OECF/SFR</pdfaProperty:valueType>
+								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>tssprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
 							</rdf:li>
 							<rdf:li rdf:parseType="Resource">
 								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - OECF/SFR value type</pdfaProperty:description>
-								<pdfaProperty:name>oecfprop3</pdfaProperty:name>
-								<pdfaProperty:valueType>OECF/SFR</pdfaProperty:valueType>
-							</rdf:li>
+								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>tssprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
+							</rdf:li>	
 							<rdf:li rdf:parseType="Resource">
 								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - OECF/SFR value type</pdfaProperty:description>
-								<pdfaProperty:name>oecfprop4</pdfaProperty:name>
-								<pdfaProperty:valueType>OECF/SFR</pdfaProperty:valueType>
-							</rdf:li>
+								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>tssprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
+							</rdf:li>	
 							<rdf:li rdf:parseType="Resource">
 								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - OECF/SFR value type</pdfaProperty:description>
-								<pdfaProperty:name>oecfprop5</pdfaProperty:name>
-								<pdfaProperty:valueType>OECF/SFR</pdfaProperty:valueType>
-							</rdf:li>
+								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>tssprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
+							</rdf:li>	
 							<rdf:li rdf:parseType="Resource">
 								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - OECF/SFR value type</pdfaProperty:description>
-								<pdfaProperty:name>oecfprop6</pdfaProperty:name>
-								<pdfaProperty:valueType>OECF/SFR</pdfaProperty:valueType>
+								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>tssprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
 							</rdf:li>							
 						</rdf:Seq>
 					</pdfaSchema:property>
@@ -53,84 +53,38 @@
 			</rdf:Bag>
 		</pdfaExtension:schemas>
 	</rdf:Description>
-	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/" xmlns:exif="http://ns.adobe.com/exif/1.0/">
-		<fs:oecfprop1 rdf:parseType="Resource">
-			<exif:Columns>1.0</exif:Columns>
-			<exif:Names>
-				<rdf:Seq>
-					<rdf:li>Some Name of element</rdf:li>
-				</rdf:Seq>
-			</exif:Names>
-			<exif:Rows>1</exif:Rows>
-			<exif:Values>
-				<rdf:Seq>
-					<rdf:li>2/5</rdf:li>
-				</rdf:Seq>
-			</exif:Values>
-		</fs:oecfprop1>
-		<fs:oecfprop2 rdf:parseType="Resource">
-			<exif:Columns>1</exif:Columns>
-			<exif:Names>
-				<rdf:Seq>
-					<rdf:li>Some Name of element</rdf:li>
-				</rdf:Seq>
-			</exif:Names>
-			<exif:Rows>SomeCountOfRows</exif:Rows>
-			<exif:Values>
-				<rdf:Seq>
-					<rdf:li>2/5</rdf:li>
-				</rdf:Seq>
-			</exif:Values>
-		</fs:oecfprop2>
-		<fs:oecfprop3 rdf:parseType="Resource">
-			<exif:Columns>1</exif:Columns>
-			<exif:Names>SomeNameOfElement</exif:Names>
-			<exif:Rows>1</exif:Rows>
-			<exif:Values>
-				<rdf:Seq>
-					<rdf:li>2/5</rdf:li>
-				</rdf:Seq>
-			</exif:Values>
-		</fs:oecfprop3>
-		<fs:oecfprop4 rdf:parseType="Resource">
-			<exif:Columns>1</exif:Columns>
-			<exif:Names>
-				<rdf:Alt>
-					<rdf:li xml:lang="x-default">Some Name of element</rdf:li>
-				</rdf:Alt>
-			</exif:Names>
-			<exif:Rows>1</exif:Rows>
-			<exif:Values>
-				<rdf:Seq>
-					<rdf:li>2/5</rdf:li>
-				</rdf:Seq>
-			</exif:Values>
-		</fs:oecfprop4>
-		<fs:oecfprop5 rdf:parseType="Resource">
-			<exif:Columns>1</exif:Columns>
-			<exif:Names>
-				<rdf:Seq>
-					<rdf:li>Some Name of element</rdf:li>
-				</rdf:Seq>
-			</exif:Names>
-			<exif:Rows>1</exif:Rows>
-			<exif:Values>2/5</exif:Values>
-		</fs:oecfprop5>
-		<fs:oecfprop6 rdf:parseType="Resource">
-			<exif:Columns>1</exif:Columns>
-			<exif:Names>
-				<rdf:Seq>
-					<rdf:li>Some Name of element</rdf:li>
-				</rdf:Seq>
-			</exif:Names>
-			<exif:Rows>1</exif:Rows>
-			<exif:Values>
-				<rdf:Seq>
-					<rdf:li>2/5</rdf:li>
-					<rdf:li>SomeValue</rdf:li>
-				</rdf:Seq>
-			</exif:Values>
-		</fs:oecfprop6>		
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
+					   xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
+		<fs:tssprop1 rdf:parseType="Resource">
+			<xmpDM:quality>HIGH</xmpDM:quality>
+			<xmpDM:frameSize>123.02</xmpDM:frameSize>
+			<xmpDM:frameOverlappingPercentage>1.0</xmpDM:frameOverlappingPercentage>
+		</fs:tssprop1>
+		<fs:tssprop2 rdf:parseType="Resource">
+			<xmpDM:quality>Low 1</xmpDM:quality>
+			<xmpDM:frameSize>-1.0</xmpDM:frameSize>
+			<xmpDM:frameOverlappingPercentage>+51.9</xmpDM:frameOverlappingPercentage>
+		</fs:tssprop2>
+		<fs:tssprop3 rdf:parseType="Resource">
+			<xmpDM:quality>Low</xmpDM:quality>
+			<xmpDM:frameSize>+40</xmpDM:frameSize>
+			<xmpDM:frameOverlappingPercentage>-1.0</xmpDM:frameOverlappingPercentage>
+		</fs:tssprop3>		
+		<fs:tssprop4 rdf:parseType="Resource">
+			<xmpDM:quality>Low</xmpDM:quality>
+			<xmpDM:frameSize>+4/8</xmpDM:frameSize>
+			<xmpDM:frameOverlappingPercentage>-1.0</xmpDM:frameOverlappingPercentage>
+		</fs:tssprop4>
+		<fs:tssprop5 rdf:parseType="Resource">
+			<xmpDM:quality>Low</xmpDM:quality>
+			<xmpDM:frameSize>+4.0</xmpDM:frameSize>
+			<xmpDM:frameOverlappingPercentage>value: -1.0</xmpDM:frameOverlappingPercentage>
+		</fs:tssprop5>
+		<fs:tssprop6 rdf:parseType="Resource">
+			<xmpDM:quality>Low</xmpDM:quality>
+			<xmpDM:frameSize>+4.0</xmpDM:frameSize>
+			<xmpDM:frameOverlappingPercentage>-1.0e</xmpDM:frameOverlappingPercentage>
+		</fs:tssprop6>		
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

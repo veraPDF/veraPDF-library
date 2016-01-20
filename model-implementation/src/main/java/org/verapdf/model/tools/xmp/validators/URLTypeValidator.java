@@ -20,6 +20,9 @@ public class URLTypeValidator implements TypeValidator {
             throw new IllegalArgumentException("Argument node can not be null.");
         }
         try {
+            if (!node.getOptions().isSimple()) {
+                return false;
+            }
             URL url = new URL(node.getValue());
             return true;
         } catch (MalformedURLException e) {

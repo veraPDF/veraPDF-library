@@ -42,7 +42,7 @@ public class ArrayTypeValidator {
                 isValidArrayType = options.isArrayAlternate();
                 break;
             case SEQ:
-                isValidArrayType = options.isArrayOrdered();
+                isValidArrayType = (options.isArrayOrdered() && !options.isArrayAlternate());
                 break;
             case BAG:
                 isValidArrayType = (options.isArray() && !(options.isArrayOrdered() || options.isArrayAlternate()));

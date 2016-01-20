@@ -69,7 +69,7 @@
 					<stEvt:instanceID>
 					<rdf:Bag>
 						<rdf:li>uuid:92255764-8e98-4663-9e55-e3859d617fa2</rdf:li>
-					</rdf:Bag>	
+					</rdf:Bag>
 					</stEvt:instanceID>
 					<stEvt:parameters>some description of the action</stEvt:parameters>
 					<stEvt:softwareAgent>Software Agent Name</stEvt:softwareAgent>
@@ -82,8 +82,8 @@
 					<rdf:Alt>
 						<rdf:li xml:lang="x-default">some description of the action</rdf:li>
 						<rdf:li xml:lang="de-de">some description of the action</rdf:li>
-						<rdf:li xml:lang="fr">some description of the action</rdf:li>						
-					</rdf:Alt>					
+						<rdf:li xml:lang="fr">some description of the action</rdf:li>
+					</rdf:Alt>
 					</stEvt:parameters>
 					<stEvt:softwareAgent>Software Agent Name</stEvt:softwareAgent>
 					<stEvt:when>2009-03-13T22:06:10+01:00</stEvt:when>
@@ -95,18 +95,11 @@
 					<stEvt:softwareAgent rdf:parseType="Resource">
 						  <xapGImg:width>184.0</xapGImg:width>
 						  <xapGImg:height>256</xapGImg:height>
-						  <xapGImg:format>JPEG</xapGImg:format> 
-						  <xapGImg:image>SomeImageData</xapGImg:image>						
+						  <xapGImg:format>JPEG</xapGImg:format>
+						  <xapGImg:image>SomeImageData</xapGImg:image>
 					</stEvt:softwareAgent>
 					<stEvt:when>2009-03-13T22:06:10+01:00</stEvt:when>
 		</fs:resevprop4>
-		<fs:resevprop5 rdf:parseType="Resource">
-					<stEvt:action>version_updated</stEvt:action>
-					<stEvt:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stEvt:instanceID>
-					<stEvt:parameters>some description of the action</stEvt:parameters>
-					<stEvt:softwareAgent>Software Agent Name</stEvt:softwareAgent>
-					<stEvt:when>2009-03-13T2</stEvt:when>
-		</fs:resevprop5>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

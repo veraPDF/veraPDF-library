@@ -83,10 +83,6 @@
 			<xmpDM:type>movie</xmpDM:type>
 			<xmpDM:path>http://www.mysite.com/page?id=1</xmpDM:path>
 		</fs:projlinkprop1>
-		<fs:projlinkprop2 rdf:parseType="Resource">
-			<xmpDM:type>still</xmpDM:type>
-			<xmpDM:path> http://maps.google.com/FortWorthTexas/more+urldata</xmpDM:path>
-		</fs:projlinkprop2>
 		<fs:projlinkprop3 rdf:parseType="Resource">
 			<xmpDM:type>audio</xmpDM:type>
 			<xmpDM:path>http://mysite.com/News2?page=NewsArticleid=5243</xmpDM:path>

@@ -22,6 +22,9 @@ public class XPathTypeValidator implements TypeValidator {
             throw new IllegalArgumentException("Argument node can not be null.");
         }
         try {
+            if (!node.getOptions().isSimple()) {
+                return false;
+            }
             XPathFactory factory = XPathFactory.newInstance();
             XPath xpath = factory.newXPath();
             XPathExpression expr = xpath.compile(node.getValue());

@@ -1,65 +1,91 @@
 <?xpacket begin='' id='W5M0MpCehiHzreSzNTczkc9d'?>
 <x:xmpmeta xmlns:x="adobe:ns:meta/">
-  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
-	>
-		<pdfaExtension:schemas>
-			<rdf:Bag>
-				<rdf:li rdf:parseType="Resource">
-					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
-					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
-					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
-					<pdfaSchema:property>
-						<rdf:Seq>
-							<rdf:li rdf:parseType="Resource">
-								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - ProperName value type</pdfaProperty:description>
-								<pdfaProperty:name>prnmprop1</pdfaProperty:name>
-								<pdfaProperty:valueType>ProperName</pdfaProperty:valueType>
-							</rdf:li>			
-							<rdf:li rdf:parseType="Resource">
-								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - ProperName value type</pdfaProperty:description>
-								<pdfaProperty:name>prnmprop2</pdfaProperty:name>
-								<pdfaProperty:valueType>ProperName</pdfaProperty:valueType>
-							</rdf:li>
-							<rdf:li rdf:parseType="Resource">
-								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - ProperName value type</pdfaProperty:description>
-								<pdfaProperty:name>prnmprop3</pdfaProperty:name>
-								<pdfaProperty:valueType>ProperName</pdfaProperty:valueType>
-							</rdf:li>
-							<rdf:li rdf:parseType="Resource">
-								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - ProperName value type</pdfaProperty:description>
-								<pdfaProperty:name>prnmprop4</pdfaProperty:name>
-								<pdfaProperty:valueType>ProperName</pdfaProperty:valueType>
-							</rdf:li>
-							<rdf:li rdf:parseType="Resource">
-								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - ProperName value type</pdfaProperty:description>
-								<pdfaProperty:name>prnmprop5</pdfaProperty:name>
-								<pdfaProperty:valueType>ProperName</pdfaProperty:valueType>
-							</rdf:li>
-							<rdf:li rdf:parseType="Resource">
-								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - ProperName value type</pdfaProperty:description>
-								<pdfaProperty:name>prnmprop6</pdfaProperty:name>
-								<pdfaProperty:valueType>ProperName</pdfaProperty:valueType>
-							</rdf:li>
-						</rdf:Seq>
-					</pdfaSchema:property>
-				</rdf:li>
-			</rdf:Bag>
-		</pdfaExtension:schemas>
-	</rdf:Description>
-	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
-		<fs:prnmprop1>&#83;&#111;&#109;&#101;&#32;&#83;&#116;&#114;&#105;&#110;&#103;</fs:prnmprop1>
-		<fs:prnmprop2>SomeUnicodeString</fs:prnmprop2>
-		<fs:prnmprop3>1997-07-16T19:20:15+01:00</fs:prnmprop3>
-		<fs:prnmprop4>132546.23</fs:prnmprop4>
-		<fs:prnmprop5>4</fs:prnmprop5>
-	</rdf:Description>
-  </rdf:RDF>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/"
+                         xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#"
+                         xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+        >
+            <pdfaExtension:schemas>
+                <rdf:Bag>
+                    <rdf:li rdf:parseType="Resource">
+                        <pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+                        <pdfaSchema:prefix>fs</pdfaSchema:prefix>
+                        <pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+                        <pdfaSchema:property>
+                            <rdf:Seq>
+                                <rdf:li rdf:parseType="Resource">
+                                    <pdfaProperty:category>internal</pdfaProperty:category>
+                                    <pdfaProperty:description>Desc - ProperName value type</pdfaProperty:description>
+                                    <pdfaProperty:name>prnmprop1</pdfaProperty:name>
+                                    <pdfaProperty:valueType>ProperName</pdfaProperty:valueType>
+                                </rdf:li>
+                                <rdf:li rdf:parseType="Resource">
+                                    <pdfaProperty:category>internal</pdfaProperty:category>
+                                    <pdfaProperty:description>Desc - ProperName value type</pdfaProperty:description>
+                                    <pdfaProperty:name>prnmprop2</pdfaProperty:name>
+                                    <pdfaProperty:valueType>ProperName</pdfaProperty:valueType>
+                                </rdf:li>
+                                <rdf:li rdf:parseType="Resource">
+                                    <pdfaProperty:category>internal</pdfaProperty:category>
+                                    <pdfaProperty:description>Desc - ProperName value type</pdfaProperty:description>
+                                    <pdfaProperty:name>prnmprop3</pdfaProperty:name>
+                                    <pdfaProperty:valueType>ProperName</pdfaProperty:valueType>
+                                </rdf:li>
+                                <rdf:li rdf:parseType="Resource">
+                                    <pdfaProperty:category>internal</pdfaProperty:category>
+                                    <pdfaProperty:description>Desc - ProperName value type</pdfaProperty:description>
+                                    <pdfaProperty:name>prnmprop4</pdfaProperty:name>
+                                    <pdfaProperty:valueType>ProperName</pdfaProperty:valueType>
+                                </rdf:li>
+                                <rdf:li rdf:parseType="Resource">
+                                    <pdfaProperty:category>internal</pdfaProperty:category>
+                                    <pdfaProperty:description>Desc - ProperName value type</pdfaProperty:description>
+                                    <pdfaProperty:name>prnmprop5</pdfaProperty:name>
+                                    <pdfaProperty:valueType>ProperName</pdfaProperty:valueType>
+                                </rdf:li>
+                                <rdf:li rdf:parseType="Resource">
+                                    <pdfaProperty:category>internal</pdfaProperty:category>
+                                    <pdfaProperty:description>Desc - ProperName value type</pdfaProperty:description>
+                                    <pdfaProperty:name>prnmprop6</pdfaProperty:name>
+                                    <pdfaProperty:valueType>ProperName</pdfaProperty:valueType>
+                                </rdf:li>
+                            </rdf:Seq>
+                        </pdfaSchema:property>
+                    </rdf:li>
+                </rdf:Bag>
+            </pdfaExtension:schemas>
+        </rdf:Description>
+        <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
+                         xmlns:stDim="http://ns.adobe.com/xap/1.0/sType/Dimensions#"
+        >
+            <fs:prnmprop1>
+                <rdf:Seq>
+                    <rdf:li>some text</rdf:li>
+                    <rdf:li>some text</rdf:li>
+                    <rdf:li>some text</rdf:li>
+                </rdf:Seq>
+            </fs:prnmprop1>
+            <fs:prnmprop2>
+                <rdf:Alt>
+                    <rdf:li>some text</rdf:li>
+                    <rdf:li>some text</rdf:li>
+                    <rdf:li>some text</rdf:li>
+                </rdf:Alt>
+            </fs:prnmprop2>
+            <fs:prnmprop3>
+                <rdf:Bag>
+                    <rdf:li>some text</rdf:li>
+                    <rdf:li>some text</rdf:li>
+                    <rdf:li>some text</rdf:li>
+                </rdf:Bag>
+            </fs:prnmprop3>
+            <fs:prnmprop4>some text</fs:prnmprop4>
+            <fs:prnmprop5 rdf:parseType="Resource">
+                <stDim:w>256.0</stDim:w>
+                <stDim:h>324.0</stDim:h>
+                <stDim:unit>mm</stDim:unit>
+            </fs:prnmprop5>
+        </rdf:Description>
+    </rdf:RDF>
 </x:xmpmeta>
 <?xpacket end='w'?>

@@ -56,29 +56,29 @@
 	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
 					   xmlns:stDim="http://ns.adobe.com/xap/1.0/sType/Dimensions#"
 					   xmlns:exif="http://ns.adobe.com/exif/1.0/"
-					   xmlns:vQual="http://ns.adobe.com/xap/1.0/ValueQualifier#">
-		<fs:textprop1 rdf:parseType="Resource">
+	  >
+		<fs:textprop1>
 			<rdf:Seq>
 				<rdf:li>some text</rdf:li>
 				<rdf:li>some text</rdf:li>
 				<rdf:li>some text</rdf:li>
 			</rdf:Seq>
 		</fs:textprop1>
-		<fs:textprop2 rdf:parseType="Resource">
+		<fs:textprop2>
 			<rdf:Alt>
 				<rdf:li>some text</rdf:li>
 				<rdf:li>some text</rdf:li>
 				<rdf:li>some text</rdf:li>
 			</rdf:Alt>
 		</fs:textprop2>
-		<fs:textprop3 rdf:parseType="Resource">
+		<fs:textprop3>
 			<rdf:Bag>
 				<rdf:li>some text</rdf:li>
 				<rdf:li>some text</rdf:li>
 				<rdf:li>some text</rdf:li>
 			</rdf:Bag>
 		</fs:textprop3>
-		<fs:textprop4 vQual:binRep="IEEE754S,B,3A4901F387D31108">some text</fs:textprop4>
+		<fs:textprop4>some text</fs:textprop4>
 		<fs:textprop5 rdf:parseType="Resource">
 			<stDim:w>256.0</stDim:w>
 			<stDim:h>324.0</stDim:h>

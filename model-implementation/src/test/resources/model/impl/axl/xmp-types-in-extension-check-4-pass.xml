@@ -44,7 +44,7 @@
 			<stDim:unit>mm</stDim:unit>
 		</fs:dimprop1>
 		<fs:dimprop2 rdf:parseType="Resource">
-			<stDim:w vQual:binRep="IEEE754D,L,3A4901F387D31108">0.1</stDim:w>
+			<stDim:w>0.1</stDim:w>
 			<stDim:h>
 				<rdf:Description>
 					<rdf:value>12</rdf:value>

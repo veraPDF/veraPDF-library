@@ -56,12 +56,12 @@
 	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
 		<fs:uriprop1>ftp://ftp.is.co.za/rfc/rfc1808.txt</fs:uriprop1>
 		<fs:uriprop2>http://www.ietf.org/rfc/rfc2396.txt</fs:uriprop2>
-		<fs:uriprop3>ldap://[2001:db8::7]/c=GB?objectClass?one</fs:uriprop3>		
-		<fs:uriprop4>mailto:John.Doe@example.com</fs:uriprop4>		
-		<fs:uriprop5>news:comp.infosystems.www.servers.unix</fs:uriprop5>	
-		<fs:uriprop6>tel:+1-816-555-1212</fs:uriprop6>		
-		<fs:uriprop7>telnet://192.0.2.16:80/</fs:uriprop7>		
-		<fs:uriprop8>urn:oasis:names:specification:docbook:dtd:xml:4.1.2</fs:uriprop8>		
+		<fs:uriprop3>ldap://[2001:db8::7]/c=GB?objectClass?one</fs:uriprop3>
+		<fs:uriprop4>mailto:John.Doe@example.com</fs:uriprop4>
+		<fs:uriprop5>news:comp.infosystems.www.servers.unix</fs:uriprop5>
+		<fs:uriprop6>tel:+1-816-555-1212</fs:uriprop6>
+		<fs:uriprop7>telnet://192.0.2.16:80/</fs:uriprop7>
+		<fs:uriprop8>urn:oasis:names:specification:docbook:dtd:xml:4.1.2</fs:uriprop8>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

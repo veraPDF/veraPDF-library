@@ -98,7 +98,7 @@
 			</stVer:event>
 			<stVer:modifyDate>2015-03-13T22:06:10+01:00</stVer:modifyDate>
 			<stVer:modifier>Some modifier</stVer:modifier>
-			<stVer:version>1.7</stVer:version>		
+			<stVer:version>1.7</stVer:version>
 		</fs:verprop1>
 		<fs:verprop2 rdf:parseType="Resource">
 			<stVer:comments>Some comments</stVer:comments>
@@ -107,7 +107,7 @@
 					<stEvt:instanceID>
 					<rdf:Bag>
 						<rdf:li>uuid:92255764-8e98-4663-9e55-e3859d617fa2</rdf:li>
-					</rdf:Bag>	
+					</rdf:Bag>
 					</stEvt:instanceID>
 					<stEvt:parameters>some description of the action</stEvt:parameters>
 					<stEvt:softwareAgent>Software Agent Name</stEvt:softwareAgent>
@@ -115,7 +115,7 @@
 			</stVer:event>
 			<stVer:modifyDate>2015-03-13T22:06:10+01:00</stVer:modifyDate>
 			<stVer:modifier>Some modifier</stVer:modifier>
-			<stVer:version>1.7</stVer:version>		
+			<stVer:version>1.7</stVer:version>
 		</fs:verprop2>
 		<fs:verprop3 rdf:parseType="Resource">
 			<stVer:comments>Some comments</stVer:comments>
@@ -126,15 +126,15 @@
 					<rdf:Alt>
 						<rdf:li xml:lang="x-default">some description of the action</rdf:li>
 						<rdf:li xml:lang="de-de">some description of the action</rdf:li>
-						<rdf:li xml:lang="fr">some description of the action</rdf:li>						
-					</rdf:Alt>					
+						<rdf:li xml:lang="fr">some description of the action</rdf:li>
+					</rdf:Alt>
 					</stEvt:parameters>
 					<stEvt:softwareAgent>Software Agent Name</stEvt:softwareAgent>
 					<stEvt:when>2009-03-13T22:06:10+01:00</stEvt:when>
 			</stVer:event>
 			<stVer:modifyDate>2015-03-13T22:06:10+01:00</stVer:modifyDate>
 			<stVer:modifier>Some modifier</stVer:modifier>
-			<stVer:version>1.7</stVer:version>		
+			<stVer:version>1.7</stVer:version>
 		</fs:verprop3>
 		<fs:verprop4 rdf:parseType="Resource">
 			<stVer:comments>Some comments</stVer:comments>
@@ -145,25 +145,12 @@
 					<stEvt:softwareAgent rdf:parseType="Resource">
 						  <xapGImg:width>184.0</xapGImg:width>
 						  <xapGImg:height>256</xapGImg:height>
-						  <xapGImg:format>JPEG</xapGImg:format> 
-						  <xapGImg:image>SomeImageData</xapGImg:image>						
+						  <xapGImg:format>JPEG</xapGImg:format>
+						  <xapGImg:image>SomeImageData</xapGImg:image>
 					</stEvt:softwareAgent>
-					<stEvt:when>2009-03-13T22:06:10+01:00</stEvt:when>	
-			</stVer:event>		
-		</fs:verprop4>
-		<fs:verprop5 rdf:parseType="Resource">
-			<stVer:comments>Some comments</stVer:comments>
-			<stVer:event rdf:parseType="Resource">
-					<stEvt:action>version_updated</stEvt:action>
-					<stEvt:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stEvt:instanceID>
-					<stEvt:parameters>some description of the action</stEvt:parameters>
-					<stEvt:softwareAgent>Software Agent Name</stEvt:softwareAgent>
-					<stEvt:when>2009-03-13T2</stEvt:when>
+					<stEvt:when>2009-03-13T22:06:10+01:00</stEvt:when>
 			</stVer:event>
-			<stVer:modifyDate>2015-03-13T22:06:10+01:00</stVer:modifyDate>
-			<stVer:modifier>Some modifier</stVer:modifier>
-			<stVer:version>1.7</stVer:version>		
-		</fs:verprop5>
+		</fs:verprop4>
 		<fs:verprop6 rdf:parseType="Resource">
 			<stVer:comments>
 				<rdf:Seq>
@@ -180,8 +167,8 @@
 			</stVer:event>
 			<stVer:modifyDate>2015-03-13T22:06:10+01:00</stVer:modifyDate>
 			<stVer:modifier>Some modifier</stVer:modifier>
-			<stVer:version>1.7</stVer:version>		
-		</fs:verprop6>	
+			<stVer:version>1.7</stVer:version>
+		</fs:verprop6>
 		<fs:verprop7 rdf:parseType="Resource">
 			<stVer:comments>Some comments</stVer:comments>
 			<stVer:event rdf:parseType="Resource">
@@ -193,7 +180,7 @@
 			</stVer:event>
 			<stVer:modifyDate>D:20040408091132-05'00'</stVer:modifyDate>
 			<stVer:modifier>Some modifier</stVer:modifier>
-			<stVer:version>1.7</stVer:version>		
+			<stVer:version>1.7</stVer:version>
 		</fs:verprop7>
 		<fs:verprop8 rdf:parseType="Resource">
 			<stVer:comments>Some comments</stVer:comments>
@@ -210,21 +197,8 @@
 					<rdf:li xml:lang="x-default">Some modifier</rdf:li>
 				</rdf:Alt>
 			</stVer:modifier>
-			<stVer:version>1.7</stVer:version>		
+			<stVer:version>1.7</stVer:version>
 		</fs:verprop8>
-		<fs:verprop9 rdf:parseType="Resource">
-			<stVer:comments>Some comments</stVer:comments>
-			<stVer:event rdf:parseType="Resource">
-				<stEvt:action>cropped</stEvt:action>
-				<stEvt:instanceID>uuid:13455764-8e98-4663-9e55-e3859d617fa2</stEvt:instanceID>
-				<stEvt:parameters>some description of the action</stEvt:parameters>
-				<stEvt:softwareAgent>Software Agent Name</stEvt:softwareAgent>
-				<stEvt:when>2005-03-13T22:06:10+01:00</stEvt:when>
-			</stVer:event>
-			<stVer:modifyDate>2015-03-13T22:06:10+01:00</stVer:modifyDate>
-			<stVer:modifier>Some modifier</stVer:modifier>
-			<stVer:version>1.7</stVer:version>		
-		</fs:verprop9>
 		<fs:verprop10 rdf:parseType="Resource">
 			<stVer:comments>Some comments</stVer:comments>
 			<stVer:event rdf:parseType="Resource">
@@ -240,8 +214,8 @@
 				<rdf:Bag>
 					<rdf:li>1.91</rdf:li>
 				</rdf:Bag>
-			</stVer:version>		
-		</fs:verprop10>		
+			</stVer:version>
+		</fs:verprop10>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

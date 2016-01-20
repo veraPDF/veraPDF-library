@@ -66,14 +66,12 @@
 		</pdfaExtension:schemas>
 	</rdf:Description>
 	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
-		<fs:mimeprop1>application</fs:mimeprop1>
 		<fs:mimeprop2>application/atom+xml</fs:mimeprop2>
 		<fs:mimeprop3>application/EDI-X12</fs:mimeprop3>
 		<fs:mimeprop4>application/octet-stream</fs:mimeprop4>
 		<fs:mimeprop5>audio/vnd.rn-realaudio</fs:mimeprop5>
 		<fs:mimeprop6>application/vnd.google-earth.kml+xml</fs:mimeprop6>
 		<fs:mimeprop7>image/vnd.microsoft.icon</fs:mimeprop7>
-		<fs:mimeprop8>image?vnd,microsoft_icon'xml(xmp)q</fs:mimeprop8>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

@@ -51,12 +51,12 @@
 					   xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
 		<fs:markprop1 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
-				<xmpDM:name>50</xmpDM:name>
-				<xmpDM:id>1/25</xmpDM:id>			
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
 			</xmpDM:startTime>
 			<xmpDM:duration rdf:parseType="Resource">
-				<xmpDM:name>50</xmpDM:name>
-				<xmpDM:id>1/25</xmpDM:id>			
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
 			</xmpDM:duration>
 			<xmpDM:comment>Some comment</xmpDM:comment>
 			<xmpDM:name>Chapter 1</xmpDM:name>
@@ -66,12 +66,12 @@
 		</fs:markprop1>
 		<fs:markprop2 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
-				<xmpDM:name>50</xmpDM:name>
-				<xmpDM:id>1/25</xmpDM:id>
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
 			</xmpDM:startTime>
 			<xmpDM:duration rdf:parseType="Resource">
-				<xmpDM:name>50</xmpDM:name>
-				<xmpDM:id>1/25</xmpDM:id>			
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
 			</xmpDM:duration>
 			<xmpDM:comment>Some comment</xmpDM:comment>
 			<xmpDM:name>Chapter 1</xmpDM:name>
@@ -81,12 +81,12 @@
 		</fs:markprop2>
 		<fs:markprop3 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
-				<xmpDM:name>50</xmpDM:name>
-				<xmpDM:id>1/25</xmpDM:id>			
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
 			</xmpDM:startTime>
 			<xmpDM:duration rdf:parseType="Resource">
-				<xmpDM:name>50</xmpDM:name>
-				<xmpDM:id>1/25</xmpDM:id>			
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
 			</xmpDM:duration>
 			<xmpDM:comment>Some comment</xmpDM:comment>
 			<xmpDM:name>Chapter 1</xmpDM:name>
@@ -96,12 +96,12 @@
 		</fs:markprop3>
 		<fs:markprop4 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
-				<xmpDM:name>50</xmpDM:name>
-				<xmpDM:id>1/25</xmpDM:id>			
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
 			</xmpDM:startTime>
 			<xmpDM:duration rdf:parseType="Resource">
-				<xmpDM:name>50</xmpDM:name>
-				<xmpDM:id>1/25</xmpDM:id>			
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
 			</xmpDM:duration>
 			<xmpDM:comment>Some comment</xmpDM:comment>
 			<xmpDM:name>Chapter 1</xmpDM:name>
@@ -111,19 +111,19 @@
 		</fs:markprop4>
 		<fs:markprop5 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
-				<xmpDM:name>50</xmpDM:name>
-				<xmpDM:id>1/25</xmpDM:id>			
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
 			</xmpDM:startTime>
 			<xmpDM:duration rdf:parseType="Resource">
-				<xmpDM:name>50</xmpDM:name>
-				<xmpDM:id>1/25</xmpDM:id>			
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
 			</xmpDM:duration>
 			<xmpDM:comment>Some comment</xmpDM:comment>
 			<xmpDM:name>Chapter 1</xmpDM:name>
 			<xmpDM:location>http://ns.adobe.com/xmp#</xmpDM:location>
 			<xmpDM:target></xmpDM:target>
-			<xmpDM:type>Index</xmpDM:type>		
-		</fs:markprop5>		
+			<xmpDM:type>Index</xmpDM:type>
+		</fs:markprop5>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

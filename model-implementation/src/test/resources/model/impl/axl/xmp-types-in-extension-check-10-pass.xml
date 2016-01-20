@@ -65,7 +65,7 @@
 				<vQual:binRep>IEEE754D,L,3A4901F387D31108</vQual:binRep>
 			</rdf:Description>
 		</fs:realprop5>
-		<fs:realprop6 vQual:binRep="IEEE754S,B,3A4901F387D31108">-0.23556</fs:realprop6>
+		<fs:realprop6>-0.23556</fs:realprop6>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

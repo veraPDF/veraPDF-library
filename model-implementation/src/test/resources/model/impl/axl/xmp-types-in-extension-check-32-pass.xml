@@ -34,13 +34,13 @@
 		<fs:mediaprop1 rdf:parseType="Resource">
 			<xmpDM:path>http://www.mysite.com/page?id=1</xmpDM:path>
 			<xmpDM:track>Some track name</xmpDM:track>
-			<xmpDM:startTime>
-				<xmpDM:name>50</xmpDM:name>
-				<xmpDM:id>1/25</xmpDM:id>
+			<xmpDM:startTime rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
 			</xmpDM:startTime>	
-			<xmpDM:duration>
-				<xmpDM:name>20</xmpDM:name>
-				<xmpDM:id>1/25</xmpDM:id>
+			<xmpDM:duration rdf:parseType="Resource">
+				<xmpDM:value>20</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
 			</xmpDM:duration>		
 			<xmpDM:managed>True</xmpDM:managed>	
 			<xmpDM:webStatement>https://www.somesite.org/1</xmpDM:webStatement>			
@@ -48,13 +48,13 @@
 		<fs:mediaprop2 rdf:parseType="Resource">
 			<xmpDM:path>http://maps.google.com/FortWorthTexas/more+urldata</xmpDM:path>
 			<xmpDM:track>75.0</xmpDM:track>
-			<xmpDM:startTime>
-				<xmpDM:name>50</xmpDM:name>
-				<xmpDM:id>1/25</xmpDM:id>
+			<xmpDM:startTime rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
 			</xmpDM:startTime>	
-			<xmpDM:duration>
-				<xmpDM:name>50</xmpDM:name>
-				<xmpDM:id>10/25</xmpDM:id>
+			<xmpDM:duration rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>10/25</xmpDM:scale>
 			</xmpDM:duration>		
 			<xmpDM:managed>False</xmpDM:managed>	
 			<xmpDM:webStatement>http://mysite.com/News2?page=NewsArticleid=5243</xmpDM:webStatement>			
