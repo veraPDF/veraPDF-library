@@ -1,0 +1,94 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Date value type</pdfaProperty:description>
+								<pdfaProperty:name>dateprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>Date</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Date value type</pdfaProperty:description>
+								<pdfaProperty:name>dateprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>Date</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Date value type</pdfaProperty:description>
+								<pdfaProperty:name>dateprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>Date</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Date value type</pdfaProperty:description>
+								<pdfaProperty:name>dateprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>Date</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Date value type</pdfaProperty:description>
+								<pdfaProperty:name>dateprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>Date</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Date value type</pdfaProperty:description>
+								<pdfaProperty:name>dateprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>Date</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Date value type</pdfaProperty:description>
+								<pdfaProperty:name>dateprop7</pdfaProperty:name>
+								<pdfaProperty:valueType>Date</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Date value type</pdfaProperty:description>
+								<pdfaProperty:name>dateprop8</pdfaProperty:name>
+								<pdfaProperty:valueType>Date</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Date value type</pdfaProperty:description>
+								<pdfaProperty:name>dateprop9</pdfaProperty:name>
+								<pdfaProperty:valueType>Date</pdfaProperty:valueType>
+							</rdf:li>			
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Date value type</pdfaProperty:description>
+								<pdfaProperty:name>dateprop10</pdfaProperty:name>
+								<pdfaProperty:valueType>Date</pdfaProperty:valueType>
+							</rdf:li>								
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
+		<fs:dateprop1>1997-07-16T</fs:dateprop1>
+		<fs:dateprop2>1997-07T18:20</fs:dateprop2>
+		<fs:dateprop3>97-07-16</fs:dateprop3>
+		<fs:dateprop4>1997-07-16T19:20+01</fs:dateprop4>
+		<fs:dateprop5>1997-07-16T25:20:15+01:00</fs:dateprop5>
+		<fs:dateprop6>1997-07T19:20:25.45+01:00</fs:dateprop6>
+		<fs:dateprop7>1997-07-16T19</fs:dateprop7>
+		<fs:dateprop8>1997-07-16T19:20:1</fs:dateprop8>
+		<fs:dateprop9>1997-07-16T19:20:15Z+01:00</fs:dateprop9>
+		<fs:dateprop10>3rd of April 2002</fs:dateprop10>
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

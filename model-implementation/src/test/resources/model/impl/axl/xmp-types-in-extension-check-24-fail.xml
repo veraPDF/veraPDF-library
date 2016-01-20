@@ -1,0 +1,111 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - DeviceSettings value type</pdfaProperty:description>
+								<pdfaProperty:name>devsetprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>DeviceSettings</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - DeviceSettings value type</pdfaProperty:description>
+								<pdfaProperty:name>devsetprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>DeviceSettings</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - DeviceSettings value type</pdfaProperty:description>
+								<pdfaProperty:name>devsetprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>DeviceSettings</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - DeviceSettings value type</pdfaProperty:description>
+								<pdfaProperty:name>devsetprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>DeviceSettings</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - DeviceSettings value type</pdfaProperty:description>
+								<pdfaProperty:name>devsetprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>DeviceSettings</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - DeviceSettings value type</pdfaProperty:description>
+								<pdfaProperty:name>devsetprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>DeviceSettings</pdfaProperty:valueType>
+							</rdf:li>							
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/" xmlns:exif="http://ns.adobe.com/exif/1.0/">
+		<fs:devsetprop1 rdf:parseType="Resource">
+			<exif:Columns>1.0</exif:Columns>
+			<exif:Rows>1</exif:Rows>
+			<exif:Settings>
+				<rdf:Seq>
+					<rdf:li>52</rdf:li>
+				</rdf:Seq>
+			</exif:Settings>
+		</fs:devsetprop1>
+		<fs:devsetprop2 rdf:parseType="Resource">
+			<exif:Columns>1</exif:Columns>
+			<exif:Rows>SomeCountOfRows</exif:Rows>
+			<exif:Settings>
+				<rdf:Seq>
+					<rdf:li>2</rdf:li>
+				</rdf:Seq>
+			</exif:Settings>
+		</fs:devsetprop2>
+		<fs:devsetprop3 rdf:parseType="Resource">
+			<exif:Columns>1</exif:Columns>
+			<exif:Rows>1.0000</exif:Rows>
+			<exif:Settings>
+				<rdf:Seq>
+					<rdf:li>2/5</rdf:li>
+				</rdf:Seq>
+			</exif:Settings>
+		</fs:devsetprop3>
+		<fs:devsetprop4 rdf:parseType="Resource">
+			<exif:Columns>1e263</exif:Columns>
+			<exif:Rows>2</exif:Rows>
+			<exif:Settings>
+				<rdf:Seq>
+					<rdf:li>2/5</rdf:li>
+				</rdf:Seq>
+			</exif:Settings>
+		</fs:devsetprop4>
+		<fs:devsetprop5 rdf:parseType="Resource">
+			<exif:Columns>1</exif:Columns>
+			<exif:Rows>1</exif:Rows>
+			<exif:Settings>4</exif:Settings>
+		</fs:devsetprop5>
+		<fs:devsetprop6 rdf:parseType="Resource">
+			<exif:Columns>1</exif:Columns>
+			<exif:Rows>1</exif:Rows>
+			<exif:Settings>
+				<rdf:Alt>
+					<rdf:li xml:lang="x-default">23</rdf:li>
+					<rdf:li xml:lang="x-default">SomeValue</rdf:li>
+				</rdf:Alt>
+			</exif:Settings>
+		</fs:devsetprop6>		
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

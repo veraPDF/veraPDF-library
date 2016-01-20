@@ -43,7 +43,7 @@ public class XMPExtensionSchemaContainerTest {
     public String prefix;
 
     @Test
-    public void testIdentification() throws URISyntaxException, FileNotFoundException, XMPException {
+    public void test() throws URISyntaxException, FileNotFoundException, XMPException {
         FileInputStream in = new FileInputStream(getSystemIndependentPath(filePath));
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
         AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);

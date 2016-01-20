@@ -1,0 +1,44 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - OECF/SFR value type</pdfaProperty:description>
+								<pdfaProperty:name>oecfprop</pdfaProperty:name>
+								<pdfaProperty:valueType>OECF/SFR</pdfaProperty:valueType>
+							</rdf:li>
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/" xmlns:exif="http://ns.adobe.com/exif/1.0/">
+		<fs:oecfprop rdf:parseType="Resource">
+			<exif:Columns>1</exif:Columns>
+			<exif:Names>
+				<rdf:Seq>
+					<rdf:li>Some Name of element</rdf:li>
+				</rdf:Seq>
+			</exif:Names>
+			<exif:Rows>1</exif:Rows>
+			<exif:Values>
+				<rdf:Seq>
+					<rdf:li>2/5</rdf:li>
+				</rdf:Seq>
+			</exif:Values>
+		</fs:oecfprop>
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>
