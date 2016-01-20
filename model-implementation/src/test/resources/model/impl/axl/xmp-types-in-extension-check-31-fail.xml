@@ -14,7 +14,7 @@
 							<rdf:li rdf:parseType="Resource">
 								<pdfaProperty:category>internal</pdfaProperty:category>
 								<pdfaProperty:description>Desc - Marker value type</pdfaProperty:description>
-								<pdfaProperty:name>markprop1</pdfaProperty:name>
+								<pdfaProperty:name>markprop8</pdfaProperty:name>
 								<pdfaProperty:valueType>Marker</pdfaProperty:valueType>
 							</rdf:li>
 							<rdf:li rdf:parseType="Resource">
@@ -61,21 +61,6 @@
 	</rdf:Description>
 	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
 					   xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
-		<fs:markprop1 rdf:parseType="Resource">
-			<xmpDM:startTime rdf:parseType="Resource">
-				<xmpDM:value>50</xmpDM:value>
-				<xmpDM:scale>125</xmpDM:scale>
-			</xmpDM:startTime>
-			<xmpDM:duration rdf:parseType="Resource">
-				<xmpDM:value>50</xmpDM:value>
-				<xmpDM:scale>1/25</xmpDM:scale>
-			</xmpDM:duration>
-			<xmpDM:comment>Some comment</xmpDM:comment>
-			<xmpDM:name>Chapter 1</xmpDM:name>
-			<xmpDM:location>http://ns.adobe.com/xmp#Start</xmpDM:location>
-			<xmpDM:target>Start</xmpDM:target>
-			<xmpDM:type>Chapter</xmpDM:type>		
-		</fs:markprop1>
 		<fs:markprop2 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
 				<xmpDM:value>50</xmpDM:value>
@@ -89,7 +74,7 @@
 			<xmpDM:name>Chapter 1</xmpDM:name>
 			<xmpDM:location>http://ns.adobe.com/xmp#Start</xmpDM:location>
 			<xmpDM:target>Start</xmpDM:target>
-			<xmpDM:type>Chapter</xmpDM:type>		
+			<xmpDM:type>Chapter</xmpDM:type>
 		</fs:markprop2>
 		<fs:markprop3 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
@@ -101,8 +86,8 @@
 			<xmpDM:name>Chapter 1</xmpDM:name>
 			<xmpDM:location>http://ns.adobe.com/xmp#Start</xmpDM:location>
 			<xmpDM:target>Start</xmpDM:target>
-			<xmpDM:type>Chapter</xmpDM:type>		
-		</fs:markprop3>	
+			<xmpDM:type>Chapter</xmpDM:type>
+		</fs:markprop3>
 		<fs:markprop4 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
 				<xmpDM:value>50</xmpDM:value>
@@ -115,13 +100,13 @@
 			<xmpDM:comment>
 				<rdf:Seq>
 					<rdf:li>some comment</rdf:li>
-				</rdf:Seq>	
+				</rdf:Seq>
 			</xmpDM:comment>
 			<xmpDM:name>Chapter 1</xmpDM:name>
 			<xmpDM:location>http://ns.adobe.com/xmp#Start</xmpDM:location>
 			<xmpDM:target>Start</xmpDM:target>
-			<xmpDM:type>Chapter</xmpDM:type>		
-		</fs:markprop4>	
+			<xmpDM:type>Chapter</xmpDM:type>
+		</fs:markprop4>
 		<fs:markprop5 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
 				<xmpDM:value>50</xmpDM:value>
@@ -139,8 +124,8 @@
 			</xmpDM:name>
 			<xmpDM:location>http://ns.adobe.com/xmp#Start</xmpDM:location>
 			<xmpDM:target>Start</xmpDM:target>
-			<xmpDM:type>Chapter</xmpDM:type>		
-		</fs:markprop5>		
+			<xmpDM:type>Chapter</xmpDM:type>
+		</fs:markprop5>
 		<fs:markprop6 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
 				<xmpDM:value>50</xmpDM:value>
@@ -154,8 +139,8 @@
 			<xmpDM:name>Chapter 1</xmpDM:name>
 			<xmpDM:location>http://  @#$  $% 121 ns.adobe.com/xmp#Start</xmpDM:location>
 			<xmpDM:target>Start</xmpDM:target>
-			<xmpDM:type>Chapter</xmpDM:type>		
-		</fs:markprop6>		
+			<xmpDM:type>Chapter</xmpDM:type>
+		</fs:markprop6>
 		<fs:markprop7 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
 				<xmpDM:value>50</xmpDM:value>
@@ -173,8 +158,8 @@
 					<rdf:li>Start</rdf:li>
 				</rdf:Alt>
 			</xmpDM:target>
-			<xmpDM:type>Chapter</xmpDM:type>		
-		</fs:markprop7>		
+			<xmpDM:type>Chapter</xmpDM:type>
+		</fs:markprop7>
 		<fs:markprop8 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
 				<xmpDM:value>50</xmpDM:value>
@@ -188,8 +173,8 @@
 			<xmpDM:name>Chapter 1</xmpDM:name>
 			<xmpDM:location>http://ns.adobe.com/xmp#Start</xmpDM:location>
 			<xmpDM:target>Start</xmpDM:target>
-			<xmpDM:type>SomeType</xmpDM:type>		
-		</fs:markprop8>		
+			<xmpDM:type>SomeType</xmpDM:type>
+		</fs:markprop8>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

@@ -45,11 +45,11 @@ public class SimpleTypeValidator implements TypeValidator {
         INTEGER(XMPConstants.INTEGER, "^[+-]?\\d+$"),
         REAL(XMPConstants.REAL, "^[+-]?\\d+\\.?\\d*|[+-]?\\d*\\.?\\d+$"),
         MIME_TYPE(XMPConstants.MIME_TYPE, "^[-\\w+\\.]+/[-\\w+\\.]+$"),
-        PROPER_NAME(XMPConstants.PROPER_NAME, "^.*$"),
-        TEXT(XMPConstants.TEXT, "^.*$"),
-        AGENT_NAME(XMPConstants.AGENT_NAME, "^.*$"),
-        RATIONAL(XMPConstants.RATIONAL, "^.*$"),
-        RENDITION_CLASS(XMPConstants.RENDITION_CLASS, "^.*$");
+        PROPER_NAME(XMPConstants.PROPER_NAME, "(?s)(^.*$)"),
+        TEXT(XMPConstants.TEXT, "(?s)(^.*$)"),
+        AGENT_NAME(XMPConstants.AGENT_NAME, "(?s)(^.*$)"),
+        RATIONAL(XMPConstants.RATIONAL, "(?s)(^.*$)"),
+        RENDITION_CLASS(XMPConstants.RENDITION_CLASS, "(?s)(^.*$)");
 
         private String type;
         private String regexp;

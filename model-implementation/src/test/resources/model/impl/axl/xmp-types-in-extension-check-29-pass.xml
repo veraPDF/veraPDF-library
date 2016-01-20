@@ -29,7 +29,7 @@
 			</rdf:Bag>
 		</pdfaExtension:schemas>
 	</rdf:Description>
-	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/" xmlns:stFnt="http:ns.adobe.com/xap/1.0/sType/Font#">
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/" xmlns:stFnt="http://ns.adobe.com/xap/1.0/sType/Font#">
 		<fs:fontprop1 rdf:parseType="Resource">
 			<stFnt:fontName>Some PS font name</stFnt:fontName>
 			<stFnt:fontFamily>Some font family name</stFnt:fontFamily>

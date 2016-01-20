@@ -60,8 +60,6 @@
 		<fs:uriprop4>mailto:John.Doe@example.com</fs:uriprop4>
 		<fs:uriprop5>news:comp.infosystems.www.servers.unix</fs:uriprop5>
 		<fs:uriprop6>tel:+1-816-555-1212</fs:uriprop6>
-		<fs:uriprop7>telnet://192.0.2.16:80/</fs:uriprop7>
-		<fs:uriprop8>urn:oasis:names:specification:docbook:dtd:xml:4.1.2</fs:uriprop8>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

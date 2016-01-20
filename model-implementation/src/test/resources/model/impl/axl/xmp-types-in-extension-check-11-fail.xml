@@ -78,7 +78,6 @@
 				<rdf:li>some text</rdf:li>
 			</rdf:Bag>
 		</fs:textprop3>
-		<fs:textprop4>some text</fs:textprop4>
 		<fs:textprop5 rdf:parseType="Resource">
 			<stDim:w>256.0</stDim:w>
 			<stDim:h>324.0</stDim:h>

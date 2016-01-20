@@ -91,10 +91,6 @@
 			<xmpDM:timeValue>00;00;11;07</xmpDM:timeValue>
 			<xmpDM:timeFormat>2997 DropTimecode</xmpDM:timeFormat>
 		</fs:timecodeprop3>
-		<fs:timecodeprop4 rdf:parseType="Resource">
-			<xmpDM:timeValue>00;00;11;07</xmpDM:timeValue>
-			<xmpDM:timeFormat>2997NonDropTimecode</xmpDM:timeFormat>
-		</fs:timecodeprop4>
 		<fs:timecodeprop5 rdf:parseType="Resource">
 			<xmpDM:timeValue>some time value</xmpDM:timeValue>
 			<xmpDM:timeFormat>30Timecode</xmpDM:timeFormat>
@@ -107,10 +103,6 @@
 			</xmpDM:timeValue>
 			<xmpDM:timeFormat>50Timecode</xmpDM:timeFormat>
 		</fs:timecodeprop6>
-		<fs:timecodeprop7 rdf:parseType="Resource">
-			<xmpDM:timeValue>00:00:00:00</xmpDM:timeValue>
-			<xmpDM:timeFormat>1994DropTimecode</xmpDM:timeFormat>
-		</fs:timecodeprop7>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

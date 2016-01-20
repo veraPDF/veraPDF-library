@@ -75,7 +75,7 @@
 			</xmpDM:duration>
 			<xmpDM:comment>Some comment</xmpDM:comment>
 			<xmpDM:name>Chapter 1</xmpDM:name>
-			<xmpDM:location>http://ns.adobe.com/xmp/some part#Context</xmpDM:location>
+			<xmpDM:location>http://ns.adobe.com/xmp/somepart#Context</xmpDM:location>
 			<xmpDM:target>Context</xmpDM:target>
 			<xmpDM:type>Cue</xmpDM:type>		
 		</fs:markprop2>

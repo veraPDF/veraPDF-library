@@ -65,11 +65,6 @@
 			<xmpDM:frameSize>-1.0</xmpDM:frameSize>
 			<xmpDM:frameOverlappingPercentage>+51.9</xmpDM:frameOverlappingPercentage>
 		</fs:tssprop2>
-		<fs:tssprop3 rdf:parseType="Resource">
-			<xmpDM:quality>Low</xmpDM:quality>
-			<xmpDM:frameSize>+40</xmpDM:frameSize>
-			<xmpDM:frameOverlappingPercentage>-1.0</xmpDM:frameOverlappingPercentage>
-		</fs:tssprop3>		
 		<fs:tssprop4 rdf:parseType="Resource">
 			<xmpDM:quality>Low</xmpDM:quality>
 			<xmpDM:frameSize>+4/8</xmpDM:frameSize>

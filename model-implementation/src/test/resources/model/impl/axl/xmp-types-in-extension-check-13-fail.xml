@@ -54,8 +54,6 @@
 		</pdfaExtension:schemas>
 	</rdf:Description>
 	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
-		<fs:uriprop1>2004-10-23T18:00:00Z</fs:uriprop1>
-		<fs:uriprop2>123456</fs:uriprop2>
 		<fs:uriprop3>
 			<rdf:Seq>
 				<rdf:li>https://www.google.by/search?q=xpathie=utf-8oe=utf-8gws_rd=crei=bj-eVvidI4zXa6b8rVA</rdf:li>

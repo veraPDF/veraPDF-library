@@ -116,21 +116,6 @@
 			<exif:Rows>1</exif:Rows>
 			<exif:Values>2/5</exif:Values>
 		</fs:oecfprop5>
-		<fs:oecfprop6 rdf:parseType="Resource">
-			<exif:Columns>1</exif:Columns>
-			<exif:Names>
-				<rdf:Seq>
-					<rdf:li>Some Name of element</rdf:li>
-				</rdf:Seq>
-			</exif:Names>
-			<exif:Rows>1</exif:Rows>
-			<exif:Values>
-				<rdf:Seq>
-					<rdf:li>2/5</rdf:li>
-					<rdf:li>SomeValue</rdf:li>
-				</rdf:Seq>
-			</exif:Values>
-		</fs:oecfprop6>		
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

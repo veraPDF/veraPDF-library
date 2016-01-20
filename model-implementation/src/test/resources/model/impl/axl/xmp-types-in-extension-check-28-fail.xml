@@ -187,14 +187,6 @@
 			<xapG:yellow>52.365012</xapG:yellow>
 			<xapG:black>52.4562</xapG:black>
 		</fs:colprop1>
-		<fs:colprop2 rdf:parseType="Resource">
-			<xapG:swatchName>Some swatch name RGB</xapG:swatchName>
-			<xapG:mode>RGB</xapG:mode>
-			<xapG:type>SPOT</xapG:type>
-			<xapG:red>234</xapG:red>
-			<xapG:green>128</xapG:green>
-			<xapG:blue>0</xapG:blue>
-		</fs:colprop2>
 		<fs:colprop3 rdf:parseType="Resource">
 			<xapG:swatchName>Some swatch name LAB</xapG:swatchName>
 			<xapG:mode>LAB</xapG:mode>
@@ -220,16 +212,7 @@
 			<xapG:magenta>99.99999901</xapG:magenta>
 			<xapG:yellow>52.365012</xapG:yellow>
 			<xapG:black>52.4562</xapG:black>
-		</fs:colprop5>		
-		<fs:colprop6 rdf:parseType="Resource">
-			<xapG:swatchName>Some name of the swatch</xapG:swatchName>
-			<xapG:mode>CMYK</xapG:mode>
-			<xapG:type>PROCESS</xapG:type>
-			<xapG:cyan>01</xapG:cyan>
-			<xapG:magenta>99.99999901</xapG:magenta>
-			<xapG:yellow>52.365012</xapG:yellow>
-			<xapG:black>52.4562</xapG:black>
-		</fs:colprop6>		
+		</fs:colprop5>
 		<fs:colprop7 rdf:parseType="Resource">
 			<xapG:swatchName>Some name of the swatch</xapG:swatchName>
 			<xapG:mode>CMYK</xapG:mode>
