@@ -62,6 +62,13 @@ public class VeraPDFMeta {
         }
     }
 
+    public static VeraPDFMeta create() {
+        XMPMetaImpl xmpMeta = (XMPMetaImpl) XMPMetaFactory.create();
+        VeraPDFMeta node = new VeraPDFMeta(xmpMeta);
+        node.update();
+        return node;
+    }
+
     public static VeraPDFMeta parse(InputStream in) throws XMPException {
         if (in == null) {
             throw new IllegalArgumentException("Metadata InputStream can not be null");
@@ -122,9 +129,10 @@ public class VeraPDFMeta {
                 }
             }
         }
+        update();
     }
 
-    private void setSimpleTextProperty(String namespaceURI, String propertyName, String value) throws XMPException {
+    private VeraPDFMeta setSimpleTextProperty(String namespaceURI, String propertyName, String value) throws XMPException {
         if (value == null) {
             throw new IllegalArgumentException("Argument value can not be null");
         }
@@ -133,7 +141,8 @@ public class VeraPDFMeta {
             throw new XMPException("Can not set text value to not simple property", XMPError.BADVALUE);
         }
         this.meta.setProperty(namespaceURI, propertyName, value);
-        this.update();
+        update();
+        return this;
     }
 
     private String getSimpleTextProperty(String namespaceURI, String propertyName) throws XMPException {
@@ -149,7 +158,7 @@ public class VeraPDFMeta {
             throw new IllegalArgumentException("Argument defaultValue can not be null");
         }
         this.meta.setLocalizedText(XMPSchemaRegistryImpl.NS_DC, propertyName, "x", XMPConst.X_DEFAULT, defaultValue);
-        this.update();
+        update();
         return this;
     }
 
@@ -196,7 +205,7 @@ public class VeraPDFMeta {
             this.meta.appendArrayItem(XMPSchemaRegistryImpl.NS_DC, "creator", new PropertyOptions().setArrayOrdered(true),
                     entry, new PropertyOptions());
         }
-        this.update();
+        update();
         return this;
     }
 
@@ -213,8 +222,7 @@ public class VeraPDFMeta {
     }
 
     public VeraPDFMeta setKeywords(String keywords) throws XMPException {
-        setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDF, "Keywords", keywords);
-        return this;
+        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDF, "Keywords", keywords);
     }
 
     public String getCreatorTool() throws XMPException {
@@ -222,8 +230,7 @@ public class VeraPDFMeta {
     }
 
     public VeraPDFMeta setCreatorTool(String creatorTool) throws XMPException {
-        setSimpleTextProperty(XMPSchemaRegistryImpl.NS_XMP, "CreatorTool", creatorTool);
-        return this;
+        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_XMP, "CreatorTool", creatorTool);
     }
 
     public String getProducer() throws XMPException {
@@ -231,8 +238,7 @@ public class VeraPDFMeta {
     }
 
     public VeraPDFMeta setProducer(String producer) throws XMPException {
-        setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDF, "Producer", producer);
-        return this;
+        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDF, "Producer", producer);
     }
 
     public Calendar getCreateDate() throws XMPException {
@@ -245,8 +251,7 @@ public class VeraPDFMeta {
             throw new IllegalArgumentException("Argument createDate can not be null");
         }
         XMPDateTime date = XMPDateTimeFactory.createFromCalendar(createDate);
-        setSimpleTextProperty(XMPSchemaRegistryImpl.NS_XMP, "CreateDate", date.getISO8601String());
-        return this;
+        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_XMP, "CreateDate", date.getISO8601String());
     }
 
     public Calendar getModifyDate() throws XMPException {
@@ -259,8 +264,7 @@ public class VeraPDFMeta {
             throw new IllegalArgumentException("Argument modifyDate can not be null");
         }
         XMPDateTime date = XMPDateTimeFactory.createFromCalendar(modifyDate);
-        setSimpleTextProperty(XMPSchemaRegistryImpl.NS_XMP, "CreationDate", date.getISO8601String());
-        return this;
+        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_XMP, "CreationDate", date.getISO8601String());
     }
 
     public Integer getIdentificationPart() throws XMPException {
@@ -274,8 +278,7 @@ public class VeraPDFMeta {
 
     public VeraPDFMeta setIdentificationPart(Integer identificationPart) throws XMPException {
         String value = identificationPart == null ? null : identificationPart.toString();
-        setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, "part", value);
-        return this;
+        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, "part", value);
     }
 
     public String getIdentificationConformance() throws XMPException {
@@ -283,7 +286,6 @@ public class VeraPDFMeta {
     }
 
     public VeraPDFMeta setIdentificationConformance(String identificationConformance) throws XMPException {
-        setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, "conformance", identificationConformance);
-        return this;
+        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, "conformance", identificationConformance);
     }
 }
