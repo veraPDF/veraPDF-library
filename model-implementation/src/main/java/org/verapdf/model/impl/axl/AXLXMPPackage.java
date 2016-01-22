@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 /**
  * Current class is representation of XMPPackage interface from
- * abstract model based on xmpbox from pdfbox.
+ * abstract model based on adobe xmp library
  *
  * @author Maksim Bezrukov
  */

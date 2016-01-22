@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Current class is representation of XMPPackage interface from abstract model based on xmpbox from pdfbox.
+ * Current class is representation of XMPPackage interface from abstract model based on adobe xmp library
  *
  * @author Maksim Bezrukov
  */
