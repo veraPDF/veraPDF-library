@@ -23,10 +23,6 @@
       <artifactId>preflight</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.verapdf.pdfbox</groupId>
-      <artifactId>xmpbox</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.verapdf</groupId>
       <artifactId>pdf-model-xmp</artifactId>
       <version>${verapdf.model.version}</version>

@@ -4,7 +4,7 @@ import org.verapdf.model.GenericModelObject;
 import org.verapdf.model.xmplayer.XMPObject;
 
 /**
- * Current class is representation of XMPObject interface from abstract model based on xmpbox from pdfbox.
+ * Current class is representation of XMPObject interface from abstract model based on adobe xmp library
  *
  * @author Maksim Bezrukov
  */
