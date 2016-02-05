@@ -107,11 +107,13 @@ public enum GitHubBackedProfileDirectory implements ProfileDirectory {
                     + flavour.getId().toUpperCase() + XML_SUFFIX;
             try {
                 URL profileURL = new URL(profileURLString);
-                ValidationProfile profile = LegacyProfileConverter
-                        .fromLegacyStream(profileURL.openStream());
+                ValidationProfile profile = Profiles.profileFromXml(profileURL.openStream());
                 profileSet.add(profile);
-            } catch (ProfileException | IOException e) {
+            } catch (IOException e) {
                 // Do nothing
+            } catch (JAXBException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
         return profileSet;
