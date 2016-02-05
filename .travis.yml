@@ -10,4 +10,4 @@ branches:
     - /^v|d\d+\.\d+\.\d+$/
 
 install:
-  - mvn clean install -q -P clone-test-resources
+  - mvn clean install -q
