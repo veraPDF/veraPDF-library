@@ -90,7 +90,8 @@ public final class XMPChecker {
                     "Problems with document parsing or structure. "
                             + e.getMessage(), e);
         } catch (XmpParsingException e) {
-            LOGGER.error("Problems with XMP parsing. " + e.getMessage(), e);
+            LOGGER.error("Problems with XMP parsing. " + e.getMessage());
+            LOGGER.debug(e);
         }
 
         return Boolean.FALSE;
