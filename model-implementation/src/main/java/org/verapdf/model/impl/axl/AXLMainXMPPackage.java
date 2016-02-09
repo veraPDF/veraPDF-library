@@ -28,7 +28,11 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
      * @param isSerializationValid true if metadata is valid
      */
     public AXLMainXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid) {
-        super(xmpMetadata, isSerializationValid, true, null, MAIN_XMP_PACKAGE_TYPE);
+        super(xmpMetadata, isSerializationValid, true, false, null, MAIN_XMP_PACKAGE_TYPE);
+    }
+
+    public AXLMainXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isClosedChoiceCheck) {
+        super(xmpMetadata, isSerializationValid, true, isClosedChoiceCheck, null, MAIN_XMP_PACKAGE_TYPE);
     }
 
     /**

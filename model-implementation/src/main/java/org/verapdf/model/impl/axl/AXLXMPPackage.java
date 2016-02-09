@@ -31,19 +31,25 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     private final VeraPDFMeta xmpMetadata;
     private final boolean isSerializationValid;
     private final boolean isMainMetadata;
+    private final boolean isClosedChoiceCheck;
     private SchemasDefinition mainPackageSchemasDefinition;
     private SchemasDefinition currentSchemasDefinitionPDFA_1;
     private SchemasDefinition currentSchemasDefinitionPDFA_2_3;
 
-    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, SchemasDefinition mainPackageSchemasDefinition) {
-        this(xmpMetadata, isSerializationValid, false, mainPackageSchemasDefinition, XMP_PACKAGE_TYPE);
+    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition) {
+        this(xmpMetadata, isSerializationValid, false, isClosedChoiceCheck, mainPackageSchemasDefinition, XMP_PACKAGE_TYPE);
     }
 
-    protected AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isMainMetadata, SchemasDefinition mainPackageSchemasDefinition, final String type) {
+    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, SchemasDefinition mainPackageSchemasDefinition) {
+        this(xmpMetadata, isSerializationValid, false, false, mainPackageSchemasDefinition, XMP_PACKAGE_TYPE);
+    }
+
+    protected AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, final String type) {
         super(type);
         this.xmpMetadata = xmpMetadata;
         this.isSerializationValid = isSerializationValid;
         this.isMainMetadata = isMainMetadata;
+        this.isClosedChoiceCheck = isClosedChoiceCheck;
         this.mainPackageSchemasDefinition = mainPackageSchemasDefinition;
     }
 
@@ -83,7 +89,7 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
         List<VeraPDFXMPNode> properties = this.xmpMetadata.getProperties();
         List<AXLXMPProperty> res = new ArrayList<>(properties.size());
         for (VeraPDFXMPNode node : properties) {
-            res.add(new AXLXMPProperty(node, this.isMainMetadata, this.getMainPackageSchemasDefinition(), this.getCurrentSchemasDefinitionPDFA_1(), this.getCurrentSchemasDefinitionPDFA_2_3()));
+            res.add(new AXLXMPProperty(node, this.isMainMetadata, this.isClosedChoiceCheck, this.getMainPackageSchemasDefinition(), this.getCurrentSchemasDefinitionPDFA_1(), this.getCurrentSchemasDefinitionPDFA_2_3()));
         }
         return res;
     }
@@ -140,7 +146,7 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     protected SchemasDefinition getCurrentSchemasDefinitionPDFA_1() {
         if (this.currentSchemasDefinitionPDFA_1 == null) {
             if (this.xmpMetadata != null && this.xmpMetadata.getExtensionSchemasNode() != null) {
-                this.currentSchemasDefinitionPDFA_1 = SchemasDefinitionCreator.createExtendedSchemasDefinitionForPDFA_1(this.xmpMetadata.getExtensionSchemasNode());
+                this.currentSchemasDefinitionPDFA_1 = SchemasDefinitionCreator.createExtendedSchemasDefinitionForPDFA_1(this.xmpMetadata.getExtensionSchemasNode(), this.isClosedChoiceCheck);
             } else {
                 this.currentSchemasDefinitionPDFA_1 = SchemasDefinitionCreator.EMPTY_SCHEMAS_DEFINITION;
             }
@@ -151,7 +157,7 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     protected SchemasDefinition getCurrentSchemasDefinitionPDFA_2_3() {
         if (this.currentSchemasDefinitionPDFA_2_3 == null) {
             if (this.xmpMetadata != null && this.xmpMetadata.getExtensionSchemasNode() != null) {
-                this.currentSchemasDefinitionPDFA_2_3 = SchemasDefinitionCreator.createExtendedSchemasDefinitionForPDFA_2_3(this.xmpMetadata.getExtensionSchemasNode());
+                this.currentSchemasDefinitionPDFA_2_3 = SchemasDefinitionCreator.createExtendedSchemasDefinitionForPDFA_2_3(this.xmpMetadata.getExtensionSchemasNode(), this.isClosedChoiceCheck);
             } else {
                 this.currentSchemasDefinitionPDFA_2_3 = SchemasDefinitionCreator.EMPTY_SCHEMAS_DEFINITION;
             }

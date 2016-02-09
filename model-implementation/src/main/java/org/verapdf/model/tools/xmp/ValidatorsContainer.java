@@ -41,11 +41,13 @@ public class ValidatorsContainer {
         if (pattern == null) {
             throw new IllegalArgumentException("Argument pattern can not be null");
         }
-        if (validators.containsKey(typeName)) {
+
+        String type = getSimplifiedType(typeName);
+        if (validators.containsKey(type)) {
             return false;
         }
 
-        validators.put(typeName, SimpleTypeValidator.fromValue(pattern));
+        validators.put(type, SimpleTypeValidator.fromValue(pattern));
         return true;
     }
 
@@ -59,11 +61,13 @@ public class ValidatorsContainer {
         if (childrenTypes == null || childrenTypes.isEmpty()) {
             throw new IllegalArgumentException("Argument childrenTypes can not be null or empty");
         }
-        if (validators.containsKey(typeName)) {
+
+        String type = getSimplifiedType(typeName);
+        if (validators.containsKey(type)) {
             return false;
         }
 
-        validators.put(typeName, StructuredTypeValidator.fromValues(typeNamespaceURI, childrenTypes, this));
+        validators.put(type, StructuredTypeValidator.fromValues(typeNamespaceURI, childrenTypes, this));
         return true;
     }
 
@@ -80,11 +84,12 @@ public class ValidatorsContainer {
         if (childrenRestrictedTypes == null) {
             throw new IllegalArgumentException("Argument childrenClosedTypes can not be null or empty");
         }
-        if (validators.containsKey(typeName)) {
+        String type = getSimplifiedType(typeName);
+        if (validators.containsKey(type)) {
             return false;
         }
 
-        validators.put(typeName, StructuredTypeWithRestrictedFieldsValidator.fromValues(typeNamespaceURI, childrenTypes, childrenRestrictedTypes, this));
+        validators.put(type, StructuredTypeWithRestrictedFieldsValidator.fromValues(typeNamespaceURI, childrenTypes, childrenRestrictedTypes, this));
         return true;
     }
 
@@ -96,13 +101,14 @@ public class ValidatorsContainer {
      * @return true if the given type is registred and the given node corresponds to it
      */
     public boolean validate(VeraPDFXMPNode node, String typeName) {
+        String type = getSimplifiedType(typeName);
         for (ArrayTypeValidator.ArrayTypeEnum entr : ArrayTypeValidator.ArrayTypeEnum.values()) {
             String prefix = entr.getType() + " ";
-            if (typeName.startsWith(prefix)) {
-                return arrayValidators.get(entr.getType()).isCorresponding(node, typeName.substring(prefix.length()));
+            if (type.startsWith(prefix)) {
+                return arrayValidators.get(entr.getType()).isCorresponding(node, type.substring(prefix.length()));
             }
         }
-        return validators.containsKey(typeName) && validators.get(typeName).isCorresponding(node);
+        return validators.containsKey(type) && validators.get(type).isCorresponding(node);
     }
 
     public boolean isKnownType(String typeName) {
@@ -110,7 +116,8 @@ public class ValidatorsContainer {
             throw new IllegalArgumentException("Argument typeName can not be null");
         }
         boolean needCheck = true;
-        String type = typeName;
+        String type = getSimplifiedType(typeName);
+
         while (needCheck) {
             needCheck = false;
             for (ArrayTypeValidator.ArrayTypeEnum entr : ArrayTypeValidator.ArrayTypeEnum.values()) {
@@ -123,5 +130,22 @@ public class ValidatorsContainer {
             }
         }
         return validators.containsKey(type);
+    }
+
+    private static String getSimplifiedType(String type) {
+        String res = type.toLowerCase().replaceAll("(open |closed )?(choice |choice$)(of )?", "").trim();
+        if (res.isEmpty()) {
+            res = XMPConstants.TEXT;
+        } else {
+            for (ArrayTypeValidator.ArrayTypeEnum entr : ArrayTypeValidator.ArrayTypeEnum.values()) {
+                String prefix = entr.getType();
+                if (res.endsWith(prefix)) {
+                    res += " " + XMPConstants.TEXT;
+                    break;
+                }
+            }
+        }
+
+        return res;
     }
 }
