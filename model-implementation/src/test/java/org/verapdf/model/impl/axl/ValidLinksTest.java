@@ -21,7 +21,7 @@ public class ValidLinksTest {
         return Arrays.asList(new org.verapdf.model.baselayer.Object[]{
                 new AXLXMPPackage(null, true, null),
                 new AXLMainXMPPackage(null, true),
-                new AXLXMPProperty(null, true, null, null, null),
+                new AXLXMPProperty(null, true, false, null, null, null),
                 new AXLPDFAIdentification(null),
                 new AXLExtensionSchemasContainer(null, null, null),
                 new AXLExtensionSchemaDefinition(null, null, null),

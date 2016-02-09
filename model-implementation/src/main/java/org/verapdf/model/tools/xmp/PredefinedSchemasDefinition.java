@@ -92,49 +92,33 @@ public class PredefinedSchemasDefinition extends SchemasDefinition {
     }
 
     protected boolean registerRestrictedSimpleFieldProperty(String namespaceURI, String propertyName, Pattern pattern) {
-        return registerPatternProperty(restrictedSimpleField, namespaceURI, propertyName, pattern);
+        return registerRestrictedPropertyIntoMap(restrictedSimpleField, namespaceURI, propertyName, pattern);
     }
 
     protected boolean registerRestrictedSeqTextProperty(String namespaceURI, String propertyName, Pattern pattern) {
-        return registerPatternProperty(restrictedSeqText, namespaceURI, propertyName, pattern);
-    }
-
-    private boolean registerPatternProperty(Map<QName, Pattern> map, String namespaceURI, String propertyName, Pattern pattern) {
-        if (namespaceURI == null) {
-            throw new IllegalArgumentException("Argument namespaceURI can not be null");
-        }
-        if (propertyName == null) {
-            throw new IllegalArgumentException("Argument property name can not be null");
-        }
-        if (pattern == null) {
-            throw new IllegalArgumentException("Argument pattern can not be null");
-        }
-
-        QName name = new QName(namespaceURI, propertyName);
-        if (isDefinedProperty(name)) {
-            return false;
-        } else {
-            map.put(name, pattern);
-            return true;
-        }
+        return registerRestrictedPropertyIntoMap(restrictedSeqText, namespaceURI, propertyName, pattern);
     }
 
     protected boolean registerSeqChoiceProperty(String namespaceURI, String propertyName, String[][] choices) {
+        return registerRestrictedPropertyIntoMap(closedSeqChoice, namespaceURI, propertyName, choices);
+    }
+
+    private <T> boolean registerRestrictedPropertyIntoMap(Map<QName, T> map, String namespaceURI, String propertyName, T value) {
         if (namespaceURI == null) {
             throw new IllegalArgumentException("Argument namespaceURI can not be null");
         }
         if (propertyName == null) {
             throw new IllegalArgumentException("Argument property name can not be null");
         }
-        if (choices == null) {
-            throw new IllegalArgumentException("Argument choices can not be null");
+        if (value == null) {
+            throw new IllegalArgumentException("Argument value can not be null");
         }
 
         QName name = new QName(namespaceURI, propertyName);
         if (isDefinedProperty(name)) {
             return false;
         } else {
-            closedSeqChoice.put(name, choices);
+            map.put(name, value);
             return true;
         }
     }
