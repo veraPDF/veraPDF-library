@@ -148,15 +148,4 @@ public class ValidatorsContainer {
 
         return res;
     }
-
-    public static void main(String[] args) {
-        System.out.println(getSimplifiedType("   Open choice of Text"));
-        System.out.println(getSimplifiedType("Open choice"));
-        System.out.println(getSimplifiedType("Seq Open choice bag"));
-        System.out.println(getSimplifiedType("choice choice closed choice of choice of seq"));
-        System.out.println(getSimplifiedType("Text"));
-        System.out.println(getSimplifiedType("Seq"));
-        System.out.println(getSimplifiedType("cloSed Choice of Integer"));
-        System.out.println(getSimplifiedType("Seq Seq Seq "));
-    }
 }

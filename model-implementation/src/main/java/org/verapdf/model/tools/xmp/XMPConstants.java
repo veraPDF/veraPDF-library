@@ -32,11 +32,6 @@ public class XMPConstants {
     public static final String URL = "url";
     public static final String XPATH = "xpath";
 
-    // choices
-    public static final String CHOICE = "choice";
-    public static final String OPEN_CHOICE = "open " + CHOICE;
-    public static final String CLOSED_CHOICE = "closed " + CHOICE;
-
     // structured types for all parts of PDF/A
     public static final String DIMENSIONS = "dimensions";
     public static final String THUMBNAIL = "thumbnail";
