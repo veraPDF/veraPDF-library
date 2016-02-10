@@ -70,7 +70,6 @@ public class XMPCustomPropertiesTest {
 
     @Test
     public void test() throws URISyntaxException, FileNotFoundException, XMPException {
-        System.out.println(filePath);
         FileInputStream in = new FileInputStream(getSystemIndependentPath(filePath));
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
         AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);

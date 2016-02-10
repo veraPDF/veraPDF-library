@@ -136,6 +136,8 @@ public class ValidatorsContainer {
         String res = type.toLowerCase().replaceAll("(open |closed )?(choice |choice$)(of )?", "").trim();
         if (res.isEmpty()) {
             res = XMPConstants.TEXT;
+        } else if (res.endsWith(XMPConstants.LANG_ALT)) {
+            return res;
         } else {
             for (ArrayTypeValidator.ArrayTypeEnum entr : ArrayTypeValidator.ArrayTypeEnum.values()) {
                 String prefix = entr.getType();
