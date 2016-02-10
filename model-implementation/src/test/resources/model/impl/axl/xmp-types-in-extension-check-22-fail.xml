@@ -145,48 +145,6 @@
 			<exif:Function>True</exif:Function>
 			<exif:RedEyeMode>TRUE</exif:RedEyeMode>
 		</fs:flashprop7>
-		<fs:flashprop8 rdf:parseType="Resource">
-			<exif:Fired>True</exif:Fired>
-			<exif:Return>2.0</exif:Return>
-			<exif:Mode>3</exif:Mode>
-			<exif:Function>True</exif:Function>
-			<exif:RedEyeMode>True</exif:RedEyeMode>
-		</fs:flashprop8>
-		<fs:flashprop9 rdf:parseType="Resource">
-			<exif:Fired>True</exif:Fired>
-			<exif:Return>-3</exif:Return>
-			<exif:Mode>3</exif:Mode>
-			<exif:Function>True</exif:Function>
-			<exif:RedEyeMode>True</exif:RedEyeMode>
-		</fs:flashprop9>
-		<fs:flashprop10 rdf:parseType="Resource">
-			<exif:Fired>True</exif:Fired>
-			<exif:Return>Two</exif:Return>
-			<exif:Mode>3</exif:Mode>
-			<exif:Function>True</exif:Function>
-			<exif:RedEyeMode>True</exif:RedEyeMode>
-		</fs:flashprop10>
-		<fs:flashprop11 rdf:parseType="Resource">
-			<exif:Fired>True</exif:Fired>
-			<exif:Return>1</exif:Return>
-			<exif:Mode>4</exif:Mode>
-			<exif:Function>True</exif:Function>
-			<exif:RedEyeMode>True</exif:RedEyeMode>
-		</fs:flashprop11>
-		<fs:flashprop12 rdf:parseType="Resource">
-			<exif:Fired>True</exif:Fired>
-			<exif:Return>2</exif:Return>
-			<exif:Mode>6/3</exif:Mode>
-			<exif:Function>True</exif:Function>
-			<exif:RedEyeMode>True</exif:RedEyeMode>
-		</fs:flashprop12>
-		<fs:flashprop13 rdf:parseType="Resource">
-			<exif:Fired>True</exif:Fired>
-			<exif:Return>2</exif:Return>
-			<exif:Mode>0.0</exif:Mode>
-			<exif:Function>True</exif:Function>
-			<exif:RedEyeMode>True</exif:RedEyeMode>
-		</fs:flashprop13>		
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>
