@@ -15,6 +15,7 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
     private final VeraPDFXMPNode xmpNode;
     private final boolean isMainMetadata;
     private final boolean isClosedChoiceCheck;
+    private final boolean isPDFA1Validation = true;
     private final SchemasDefinition mainPackageSchemasDefinition;
     private SchemasDefinition currentSchemasDefinitionPDFA_1;
     private SchemasDefinition currentSchemasDefinitionPDFA_2_3;
@@ -30,12 +31,12 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
     }
 
     @Override
-    public Boolean getisPredefinedForPDFA_1() {
+    public Boolean getisPredefinedInXMP2004() {
         return SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_1(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode);
     }
 
     @Override
-    public Boolean getisPredefinedForPDFA_2_3() {
+    public Boolean getisPredefinedInXMP2005() {
         return SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_2_3(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode);
     }
 
@@ -56,7 +57,15 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
     }
 
     @Override
-    public Boolean getisValueTypeCorrectForPDFA_1() {
+    public Boolean getisValueTypeCorrect() {
+        if (isPDFA1Validation) {
+            return isValueTypeCorrectForPDFA_1();
+        } else {
+            return isValueTypeCorrectForPDFA_2_3();
+        }
+    }
+
+    private Boolean isValueTypeCorrectForPDFA_1() {
         if (SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_1(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode)) {
             return SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_1(this.isClosedChoiceCheck).isCorrespondsDefinedType(this.xmpNode);
         } else {
@@ -64,8 +73,7 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
         }
     }
 
-    @Override
-    public Boolean getisValueTypeCorrectForPDFA_2_3() {
+    private Boolean isValueTypeCorrectForPDFA_2_3() {
         if (SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_2_3(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode)) {
             return SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_2_3(this.isClosedChoiceCheck).isCorrespondsDefinedType(this.xmpNode);
         } else if (this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode)) {

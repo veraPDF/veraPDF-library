@@ -12,14 +12,21 @@ import java.util.List;
 /**
  * @author Maksim Bezrukov
  */
-public class AXLExtensionSchemasContainer extends AXLExtensionSchemaObject implements ExtensionSchemasContainer {
+public class AXLExtensionSchemasContainer extends AXLXMPObject implements ExtensionSchemasContainer {
 
     public static final String EXTENSION_SCHEMAS_CONTAINER = "ExtensionSchemasContainer";
 
     public static final String EXTENSION_SCHEMA_DEFINITIONS = "ExtensionSchemaDefinitions";
 
-    public AXLExtensionSchemasContainer(VeraPDFXMPNode exNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3) {
-        super(EXTENSION_SCHEMAS_CONTAINER, exNode, containerForPDFA_1, containerForPDFA_2_3);
+    protected VeraPDFXMPNode xmpNode;
+    protected final ValidatorsContainer containerForPDFA_1;
+    protected final ValidatorsContainer containerForPDFA_2_3;
+
+    public AXLExtensionSchemasContainer(VeraPDFXMPNode xmpNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3) {
+        super(EXTENSION_SCHEMAS_CONTAINER);
+        this.xmpNode = xmpNode;
+        this.containerForPDFA_1 = containerForPDFA_1;
+        this.containerForPDFA_2_3 = containerForPDFA_2_3;
     }
 
     /**
@@ -47,7 +54,7 @@ public class AXLExtensionSchemasContainer extends AXLExtensionSchemaObject imple
     }
 
     @Override
-    public Boolean getisValueTypeCorrect() {
+    public Boolean getisValidBag() {
         PropertyOptions options = this.xmpNode.getOptions();
         return (options.isArray() && !(options.isArrayOrdered() || options.isArrayAlternate()));
     }
@@ -56,4 +63,5 @@ public class AXLExtensionSchemasContainer extends AXLExtensionSchemaObject imple
     public String getprefix() {
         return this.xmpNode == null ? null : this.xmpNode.getPrefix();
     }
+
 }
