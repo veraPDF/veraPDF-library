@@ -76,24 +76,26 @@ public class XMPCustomPropertiesTest {
         AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);
         for (Object obj : pack.getLinkedObjects(AXLXMPPackage.PROPERTIES)) {
             XMPProperty prop = (XMPProperty) obj;
-            assertEquals(false, prop.getisPredefinedForPDFA_1());
-            assertEquals(false, prop.getisPredefinedForPDFA_2_3());
+            assertEquals(false, prop.getisPredefinedInXMP2004());
+            assertEquals(false, prop.getisPredefinedInXMP2005());
             assertEquals(isDefinedInCurrentPackageForPDFA_1, prop.getisDefinedInCurrentPackageForPDFA_1());
             assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInCurrentPackageForPDFA_2_3());
             assertEquals(false, prop.getisDefinedInMainPackage());
-            assertEquals(isValueTypeCorrectForPDFA_1, prop.getisValueTypeCorrectForPDFA_1());
-            assertEquals(isValueTypeCorrectForPDFA_2_3, prop.getisValueTypeCorrectForPDFA_2_3());
+            //TODO: isValueTypeCorrect different check for pdfa-1 and pdfa-2
+            assertEquals(isValueTypeCorrectForPDFA_1, prop.getisValueTypeCorrect());
+//            assertEquals(isValueTypeCorrectForPDFA_2_3, prop.getisValueTypeCorrectForPDFA_2_3());
         }
         AXLMainXMPPackage mainwPack = new AXLMainXMPPackage(meta, true);
         for (Object obj : mainwPack.getLinkedObjects(AXLXMPPackage.PROPERTIES)) {
             XMPProperty prop = (XMPProperty) obj;
-            assertEquals(false, prop.getisPredefinedForPDFA_1());
-            assertEquals(false, prop.getisPredefinedForPDFA_2_3());
+            assertEquals(false, prop.getisPredefinedInXMP2004());
+            assertEquals(false, prop.getisPredefinedInXMP2005());
             assertEquals(isDefinedInCurrentPackageForPDFA_1, prop.getisDefinedInCurrentPackageForPDFA_1());
             assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInCurrentPackageForPDFA_2_3());
             assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInMainPackage());
-            assertEquals(isValueTypeCorrectForPDFA_1, prop.getisValueTypeCorrectForPDFA_1());
-            assertEquals(isValueTypeCorrectForPDFA_2_3, prop.getisValueTypeCorrectForPDFA_2_3());
+            //TODO: isValueTypeCorrect different check for pdfa-1 and pdfa-2
+            assertEquals(isValueTypeCorrectForPDFA_1, prop.getisValueTypeCorrect());
+//            assertEquals(isValueTypeCorrectForPDFA_2_3, prop.getisValueTypeCorrectForPDFA_2_3());
         }
     }
 

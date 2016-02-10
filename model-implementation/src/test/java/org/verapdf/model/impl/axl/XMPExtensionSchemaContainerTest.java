@@ -48,7 +48,7 @@ public class XMPExtensionSchemaContainerTest {
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
         AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);
         AXLExtensionSchemasContainer container = (AXLExtensionSchemasContainer) pack.getLinkedObjects(AXLXMPPackage.EXTENSION_SCHEMAS_CONTAINERS).get(0);
-        assertEquals(isValidValueType, container.getisValueTypeCorrect());
+        assertEquals(isValidValueType, container.getisValidBag());
         assertEquals(prefix, container.getprefix());
     }
 

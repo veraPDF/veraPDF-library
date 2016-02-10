@@ -21,5 +21,6 @@ public abstract class AXLExtensionSchemaObject extends AXLXMPObject implements E
     }
 
     @Override
-    public abstract Boolean getisValueTypeCorrect();
+    public abstract Boolean getcontainsUndefinedFields();
+
 }
