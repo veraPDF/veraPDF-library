@@ -166,11 +166,11 @@ final class VeraPdfCliProcessor {
     private static boolean checkFileCanBeProcessed(final File file) {
         if (!file.isFile()) {
             System.err.println("Path " + file.getAbsolutePath()
-                    + "is not an existing file.");
+                    + " is not an existing file.");
             return false;
         } else if (!file.canRead()) {
             System.err.println("Path " + file.getAbsolutePath()
-                    + "is not a readable file.");
+                    + " is not a readable file.");
             return false;
         }
         return true;

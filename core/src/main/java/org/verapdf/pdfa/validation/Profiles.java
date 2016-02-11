@@ -375,7 +375,7 @@ public final class Profiles {
      *             if toConvert is null
      */
     public static String profileToXml(final ValidationProfile toConvert,
-                                      final Boolean prettyXml) throws JAXBException, IOException {
+            final Boolean prettyXml) throws JAXBException, IOException {
         if (toConvert == null)
             throw new IllegalArgumentException(
                     "Parameter toConvert cannot be null");
@@ -501,5 +501,19 @@ public final class Profiles {
      */
     public static ProfileDirectory getVeraProfileDirectory() {
         return ProfileDirectoryImpl.getVeraProfileDirectory();
+    }
+
+    /**
+     * Returns the JAXB generated XML schema for the ValidationProfileImpl type.
+     * 
+     * @return the String representation of the schema
+     * @throws JAXBException
+     *             if there's a problem marshaling the schema
+     * @throws IOException
+     *             if there's a problem outputting the result
+     */
+    public static String getValidationProfileSchema() throws JAXBException,
+            IOException {
+        return ValidationProfileImpl.getSchema();
     }
 }

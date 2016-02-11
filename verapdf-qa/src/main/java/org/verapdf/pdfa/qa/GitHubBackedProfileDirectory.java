@@ -8,10 +8,15 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.SchemaOutputResolver;
+import javax.xml.transform.Result;
+import javax.xml.transform.stream.StreamResult;
 
 import org.verapdf.core.ProfileException;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.ProfileDirectory;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
@@ -102,23 +107,39 @@ public enum GitHubBackedProfileDirectory implements ProfileDirectory {
                     + flavour.getId().toUpperCase() + XML_SUFFIX;
             try {
                 URL profileURL = new URL(profileURLString);
-                ValidationProfile profile = LegacyProfileConverter
-                        .fromLegacyStream(profileURL.openStream());
+                ValidationProfile profile = Profiles.profileFromXml(profileURL.openStream());
                 profileSet.add(profile);
-            } catch (ProfileException | IOException e) {
+            } catch (IOException e) {
                 // Do nothing
+            } catch (JAXBException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
         }
         return profileSet;
     }
-    
+
     /**
-     * Simple main that simply outputs all loaded from INTEGRATION to System.out.
-     * @param args main args, NOT processed.
-     * @throws JAXBException when converting the profile to XML goes wrong. It shouldn't.
+     * Simple main that simply outputs all loaded from INTEGRATION to
+     * System.out.
+     * 
+     * @param args
+     *            main args, NOT processed.
+     * @throws JAXBException
+     *             when converting the profile to XML goes wrong. It shouldn't.
+     * @throws IOException
      */
-    public static void main(final String[] args) throws JAXBException {
+    public static void main(final String[] args) throws JAXBException,
+            IOException {
+        System.out.println("XSD Schema for Validation Profile:");
+        System.out.println(Profiles.getValidationProfileSchema());
+        System.out.println("XSD Schema for Validation Result:");
+        System.out.println(ValidationResults.getValidationResultSchema());
         for (ValidationProfile profile : INTEGRATION.getValidationProfiles()) {
+            System.out
+                    .println("\n\nValidation Profile:"
+                            + profile.getPDFAFlavour().getId()
+                            + " XML representation.");
             Profiles.profileToXml(profile, System.out, Boolean.TRUE);
         }
     }
