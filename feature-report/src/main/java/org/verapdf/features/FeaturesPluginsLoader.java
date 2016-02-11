@@ -42,7 +42,7 @@ public class FeaturesPluginsLoader {
 				LOGGER.error("Plugins folder is not exists or it can not be read.");
 			}
 		} else {
-			LOGGER.error("Con not get system property \"app.home\"");
+			LOGGER.error("Can not get system property \"app.home\"");
 		}
 	}
 
