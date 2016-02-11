@@ -64,9 +64,9 @@ public class AXLExtensionSchemaValueType extends AXLExtensionSchemaObject implem
 
     @Override
     public Boolean getcontainsUndefinedFields() {
-        boolean isValid = true;
+        boolean undef = false;
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (isValid && XMPSchemaRegistryImpl.NS_PDFA_TYPE.equals(child.getNamespaceURI())) {
+            if (!undef && XMPSchemaRegistryImpl.NS_PDFA_TYPE.equals(child.getNamespaceURI())) {
                 switch (child.getName()) {
                     case NAMESPACE_URI:
                     case PREFIX:
@@ -75,14 +75,14 @@ public class AXLExtensionSchemaValueType extends AXLExtensionSchemaObject implem
                     case TYPE:
                         break;
                     default:
-                        isValid = false;
+                        undef = true;
                 }
             } else {
-                isValid = false;
+                undef = true;
                 break;
             }
         }
-        return Boolean.valueOf(isValid);
+        return Boolean.valueOf(undef);
     }
 
     @Override

@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -26,10 +27,10 @@ public class XMPIdentificationTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"/model/impl/axl/xmp-identification-check-1.xml", 1L, "B", "pdfaid", "pdfaid", "pdfaid", "pdfaid"},
-                {"/model/impl/axl/xmp-identification-check-2.xml", 2L, "U", "custom", "custom", "custom", "custom"},
-                {"/model/impl/axl/xmp-identification-check-3.xml", null, null, "custom", null, "pdfaid", "pdfaid"},
-                {"/model/impl/axl/xmp-empty-rdf.xml", null, null, null, null, null, null}
+                {"/model/impl/axl/xmp-identification-check-1.xml", 1, 1L, "B", "pdfaid", "pdfaid", "pdfaid", "pdfaid"},
+                {"/model/impl/axl/xmp-identification-check-2.xml", 1, 2L, "U", "custom", "custom", "custom", "custom"},
+                {"/model/impl/axl/xmp-identification-check-3.xml", 1, null, null, "custom", null, "pdfaid", "pdfaid"},
+                {"/model/impl/axl/xmp-empty-rdf.xml", 0, null, null, null, null, null, null}
         });
     }
 
@@ -37,21 +38,24 @@ public class XMPIdentificationTest {
     public String filePath;
 
     @Parameterized.Parameter(value = 1)
-    public Long part;
+    public int identificationSchemaNumber;
 
     @Parameterized.Parameter(value = 2)
-    public String conformance;
+    public Long part;
 
     @Parameterized.Parameter(value = 3)
-    public String partPrefix;
+    public String conformance;
 
     @Parameterized.Parameter(value = 4)
-    public String conformancePrefix;
+    public String partPrefix;
 
     @Parameterized.Parameter(value = 5)
-    public String amdPrefix;
+    public String conformancePrefix;
 
     @Parameterized.Parameter(value = 6)
+    public String amdPrefix;
+
+    @Parameterized.Parameter(value = 7)
     public String corrPrefix;
 
     @Test
@@ -59,13 +63,17 @@ public class XMPIdentificationTest {
         FileInputStream in = new FileInputStream(getSystemIndependentPath(filePath));
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
         AXLMainXMPPackage pack = new AXLMainXMPPackage(meta, true);
-        AXLPDFAIdentification identification = (AXLPDFAIdentification) pack.getLinkedObjects(AXLMainXMPPackage.IDENTIFICATION).get(0);
-        assertEquals(part, identification.getpart());
-        assertEquals(conformance, identification.getconformance());
-        assertEquals(partPrefix, identification.getpartPrefix());
-        assertEquals(conformancePrefix, identification.getconformancePrefix());
-        assertEquals(amdPrefix, identification.getamdPrefix());
-        assertEquals(corrPrefix, identification.getcorrPrefix());
+        List<? extends org.verapdf.model.baselayer.Object> list = pack.getLinkedObjects(AXLMainXMPPackage.IDENTIFICATION);
+        assertEquals(identificationSchemaNumber, list.size());
+        if (list.size() != 0) {
+            AXLPDFAIdentification identification = (AXLPDFAIdentification) list.get(0);
+            assertEquals(part, identification.getpart());
+            assertEquals(conformance, identification.getconformance());
+            assertEquals(partPrefix, identification.getpartPrefix());
+            assertEquals(conformancePrefix, identification.getconformancePrefix());
+            assertEquals(amdPrefix, identification.getamdPrefix());
+            assertEquals(corrPrefix, identification.getcorrPrefix());
+        }
     }
 
     private static String getSystemIndependentPath(String path)

@@ -77,8 +77,9 @@ public class XMPCustomPropertiesTest {
             XMPProperty prop = (XMPProperty) obj;
             assertEquals(false, prop.getisPredefinedInXMP2004());
             assertEquals(false, prop.getisPredefinedInXMP2005());
-            assertEquals(isDefinedInCurrentPackageForPDFA_1, prop.getisDefinedInCurrentPackageForPDFA_1());
-            assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInCurrentPackageForPDFA_2_3());
+            //TODO: isDefinedInCurrentPackage different check for pdfa-1 and pdfa-2
+            assertEquals(isDefinedInCurrentPackageForPDFA_1, prop.getisDefinedInCurrentPackage());
+//            assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInCurrentPackageForPDFA_2_3());
             assertEquals(false, prop.getisDefinedInMainPackage());
             //TODO: isValueTypeCorrect different check for pdfa-1 and pdfa-2
             assertEquals(isValueTypeCorrectForPDFA_1, prop.getisValueTypeCorrect());
@@ -89,8 +90,9 @@ public class XMPCustomPropertiesTest {
             XMPProperty prop = (XMPProperty) obj;
             assertEquals(false, prop.getisPredefinedInXMP2004());
             assertEquals(false, prop.getisPredefinedInXMP2005());
-            assertEquals(isDefinedInCurrentPackageForPDFA_1, prop.getisDefinedInCurrentPackageForPDFA_1());
-            assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInCurrentPackageForPDFA_2_3());
+            //TODO: isDefinedInCurrentPackage different check for pdfa-1 and pdfa-2
+            assertEquals(isDefinedInCurrentPackageForPDFA_1, prop.getisDefinedInCurrentPackage());
+//            assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInCurrentPackageForPDFA_2_3());
             assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInMainPackage());
             //TODO: isValueTypeCorrect different check for pdfa-1 and pdfa-2
             assertEquals(isValueTypeCorrectForPDFA_1, prop.getisValueTypeCorrect());
