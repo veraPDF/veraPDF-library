@@ -8,6 +8,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.xmplayer.MainXMPPackage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -62,6 +63,6 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
                 }
             }
         }
-        return new ArrayList<>(0);
+        return Collections.emptyList();
     }
 }
