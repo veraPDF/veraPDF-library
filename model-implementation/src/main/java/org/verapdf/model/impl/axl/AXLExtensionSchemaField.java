@@ -24,23 +24,23 @@ public class AXLExtensionSchemaField extends AXLExtensionSchemaObject implements
 
     @Override
     public Boolean getcontainsUndefinedFields() {
-        boolean isValid = true;
+        boolean undef = false;
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (isValid && XMPSchemaRegistryImpl.NS_PDFA_FIELD.equals(child.getNamespaceURI())) {
+            if (!undef && XMPSchemaRegistryImpl.NS_PDFA_FIELD.equals(child.getNamespaceURI())) {
                 switch (child.getName()) {
                     case DESCRIPTION:
                     case NAME:
                     case VALUE_TYPE:
                         break;
                     default:
-                        isValid = false;
+                        undef = true;
                 }
             } else {
-                isValid = false;
+                undef = true;
                 break;
             }
         }
-        return Boolean.valueOf(isValid);
+        return Boolean.valueOf(undef);
     }
 
     @Override
