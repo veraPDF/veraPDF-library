@@ -53,7 +53,6 @@
     <module>gui</module>
     <module>feature-report</module>
     <module>metadata-fixer</module>
-    <module>verapdf-qa</module>
     <module>installer</module>
   </modules>
 
@@ -520,6 +519,9 @@
     </profile>
     <profile>
       <id>clone-test-resources</id>
+      <modules>
+        <module>verapdf-qa</module>
+      </modules>
       <build>
         <pluginManagement>
           <plugins>
