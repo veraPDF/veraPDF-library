@@ -41,13 +41,12 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
     }
 
     @Override
-    public Boolean getisDefinedInCurrentPackageForPDFA_1() {
-        return this.currentSchemasDefinitionPDFA_1.isDefinedProperty(this.xmpNode);
-    }
-
-    @Override
-    public Boolean getisDefinedInCurrentPackageForPDFA_2_3() {
-        return this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode);
+    public Boolean getisDefinedInCurrentPackage() {
+        if (isPDFA1Validation) {
+            return this.currentSchemasDefinitionPDFA_1.isDefinedProperty(this.xmpNode);
+        } else {
+            return this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode);
+        }
     }
 
     @Override
