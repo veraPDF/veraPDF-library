@@ -21,7 +21,7 @@ public final class GUIConstants {
 	public static final String FIX_METADATA_FOLDER_CHOOSE_BUTTON = "Choose";
 	public static final String CHOOSE_PROFILE_BUTTON_TEXT = "Choose Profile";
 	public static final String VALIDATION_PROFILE_NOT_CHOSEN = "Validation profile not chosen";
-	public static final String VALIDATE_BUTTON_TEXT = "Validate";
+	public static final String VALIDATE_BUTTON_TEXT = "Execute";
 	public static final String VALIDATION_OK = "PDF file is compliant with Validation Profile requirements";
 	public static final String VALIDATION_FALSE = "PDF file is not compliant with Validation Profile requirements";
 	public static final String SAVE_REPORT_BUTTON_TEXT = "Save XML";
@@ -42,7 +42,7 @@ public final class GUIConstants {
 	public static final String XML = "xml";
 	public static final String HTML = "html";
 	public static final String DOT = ".";
-	public static final String PROCESSING_TYPE = "Generate reports: ";
+	public static final String PROCESSING_TYPE = " Report type: ";
 	public static final String VALIDATING_AND_FEATURES = "Validation & Features";
 	public static final String VALIDATING = "Validation";
 	public static final String FEATURES = "Features";
@@ -108,21 +108,21 @@ public final class GUIConstants {
 	public static final int CHOOSEPROFILE_BUTTON_CONSTRAINT_GRIDHEIGHT = 1;
 
 	public static final int RESULT_LABEL_CONSTRAINT_GRIDX = 0;
-	public static final int RESULT_LABEL_CONSTRAINT_GRIDY = 2;
+	public static final int RESULT_LABEL_CONSTRAINT_GRIDY = 3;
 	public static final int RESULT_LABEL_CONSTRAINT_WEIGHTX = 3;
 	public static final int RESULT_LABEL_CONSTRAINT_WEIGHTY = 1;
 	public static final int RESULT_LABEL_CONSTRAINT_GRIDWIDTH = 3;
 	public static final int RESULT_LABEL_CONSTRAINT_GRIDHEIGHT = 1;
 
 	public static final int PROGRESSBAR_CONSTRAINT_GRIDX = 0;
-	public static final int PROGRESSBAR_CONSTRAINT_GRIDY = 2;
+	public static final int PROGRESSBAR_CONSTRAINT_GRIDY = 3;
 	public static final int PROGRESSBAR_CONSTRAINT_WEIGHTX = 3;
 	public static final int PROGRESSBAR_CONSTRAINT_WEIGHTY = 1;
 	public static final int PROGRESSBAR_CONSTRAINT_GRIDWIDTH = 3;
 	public static final int PROGRESSBAR_CONSTRAINT_GRIDHEIGHT = 1;
 
 	public static final int VALIDATE_BUTTON_CONSTRAINT_GRIDX = 3;
-	public static final int VALIDATE_BUTTON_CONSTRAINT_GRIDY = 2;
+	public static final int VALIDATE_BUTTON_CONSTRAINT_GRIDY = 3;
 	public static final int VALIDATE_BUTTON_CONSTRAINT_WEIGHTX = 0;
 	public static final int VALIDATE_BUTTON_CONSTRAINT_WEIGHTY = 1;
 	public static final int VALIDATE_BUTTON_CONSTRAINT_GRIDWIDTH = 1;
