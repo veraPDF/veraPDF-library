@@ -180,7 +180,7 @@ class CheckerPanel extends JPanel {
 		final JLabel processType = new JLabel(GUIConstants.PROCESSING_TYPE);
 		setGridBagConstraintsParameters(gbc,
 				0,
-				3,
+				2,
 				0,
 				1,
 				1,
@@ -192,7 +192,7 @@ class CheckerPanel extends JPanel {
 		this.processingType = new JComboBox<>(ProcessingType.values());
 		setGridBagConstraintsParameters(gbc,
 				1,
-				3,
+				2,
 				0,
 				1,
 				1,
@@ -205,7 +205,7 @@ class CheckerPanel extends JPanel {
 		this.fixMetadata.setSelected(false);
 		setGridBagConstraintsParameters(gbc,
 				2,
-				3,
+				2,
 				0,
 				1,
 				1,
