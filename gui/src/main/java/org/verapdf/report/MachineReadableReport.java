@@ -1,9 +1,10 @@
 package org.verapdf.report;
 
-import java.io.File;
-import java.io.OutputStream;
-import java.util.Date;
-import java.util.Formatter;
+import org.verapdf.features.tools.FeaturesCollection;
+import org.verapdf.pdfa.results.MetadataFixerResult;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.validation.Profiles;
+import org.verapdf.pdfa.validation.ValidationProfile;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -11,12 +12,10 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.verapdf.features.tools.FeaturesCollection;
-import org.verapdf.pdfa.results.MetadataFixerResult;
-import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.validation.Profiles;
-import org.verapdf.pdfa.validation.ValidationProfile;
+import java.io.File;
+import java.io.OutputStream;
+import java.util.Date;
+import java.util.Formatter;
 
 /**
  * @author Maksim Bezrukov
@@ -122,6 +121,11 @@ public class MachineReadableReport {
             final OutputStream stream, Boolean prettyXml) throws JAXBException {
         Marshaller varMarshaller = getMarshaller(prettyXml);
         varMarshaller.marshal(toConvert, stream);
+    }
+
+    public static String toResultLine(final MachineReadableReport toConvert) {
+        String res = toConvert.validationReport.isCompliant() ? "PASSED" : "FAILED";
+        return res + "    " + toConvert.itemDetails.getName();
     }
 
     private static Marshaller getMarshaller(Boolean setPretty)

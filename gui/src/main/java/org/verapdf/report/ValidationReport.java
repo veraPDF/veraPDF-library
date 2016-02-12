@@ -65,4 +65,8 @@ public class ValidationReport {
     private static String getStatement(boolean status) {
         return (status) ? COMPLIANT_STATEMENT : NONCOMPLIANT_STATEMENT;
     }
+
+    public boolean isCompliant() {
+        return compliant;
+    }
 }
