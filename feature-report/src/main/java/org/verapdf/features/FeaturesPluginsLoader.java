@@ -39,10 +39,10 @@ public class FeaturesPluginsLoader {
 					FeaturesReporter.registerFeaturesExtractor(ext);
 				}
 			} else {
-				LOGGER.error("Plugins folder is not exists or it can not be read.");
+				LOGGER.warn("Plugins folder does not exist.");
 			}
 		} else {
-			LOGGER.error("Can not get system property \"app.home\"");
+			LOGGER.warn("Can not get system property \"app.home\"");
 		}
 	}
 
