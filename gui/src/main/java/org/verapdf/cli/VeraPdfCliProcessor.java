@@ -101,7 +101,12 @@ final class VeraPdfCliProcessor {
                 featuresCollection = PBFeatureParser
                         .getFeaturesCollection(toValidate.getPDDocument());
             }
-        } catch (IOException | ValidationException e) {
+        } catch (IOException e) {
+            System.err.println("Failed to parse pdf file "
+                    + item.getName());
+            //TODO : do we need stacktrace in cli application?
+            //e.printStackTrace();
+        } catch (ValidationException e) {
             System.err.println("Exception raised while validating "
                     + item.getName());
             e.printStackTrace();
