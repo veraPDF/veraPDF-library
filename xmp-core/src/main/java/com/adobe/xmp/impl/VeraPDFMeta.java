@@ -180,7 +180,7 @@ public class VeraPDFMeta {
         if (creator == null) {
             return null;
         }
-        if (creator.getOptions().isArrayOrdered()) {
+        if (!creator.getOptions().isArrayOrdered()) {
             throw new XMPException("Creator property of dublin core schema is not an ordered array", XMPError.BADVALUE);
         }
 
