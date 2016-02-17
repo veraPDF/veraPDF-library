@@ -19,10 +19,6 @@
             <artifactId>pdfbox</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.verapdf.pdfbox</groupId>
-            <artifactId>xmpbox</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.verapdf</groupId>
             <artifactId>core</artifactId>
         </dependency>
