@@ -56,16 +56,18 @@ public class MetadataImpl implements Metadata {
         PDFAFlavour.Specification part = flavour.getPart();
         if (part == PDFAFlavour.Specification.ISO_19005_2 || part == PDFAFlavour.Specification.ISO_19005_3) {
             COSBase filters = this.stream.getFilters();
-            if (filters instanceof COSName
-                    || (filters instanceof COSArray && ((COSArray) filters).size() != 0)) {
-                try {
-                    this.stream.setFilters(COSName.FLATE_DECODE);
-                    this.stream.setNeedToBeUpdated(true);
-                    resultBuilder.addFix("Metadata stream filtered with FlateDecode");
-                } catch (IOException e) {
-                    LOGGER.warn("Problems with unfilter stream.");
-                    LOGGER.warn(e);
-                }
+            if (filters instanceof COSName && COSName.FLATE_DECODE.equals(filters)) {
+                return;
+            } else if (filters instanceof COSArray && ((COSArray) filters).size() == 1 && COSName.FLATE_DECODE.equals(((COSArray) filters).get(0))) {
+                return;
+            }
+            try {
+                this.stream.setFilters(COSName.FLATE_DECODE);
+                this.stream.setNeedToBeUpdated(true);
+                resultBuilder.addFix("Metadata stream filtered with FlateDecode");
+            } catch (IOException e) {
+                LOGGER.warn("Problems with setting filter for stream.");
+                LOGGER.warn(e);
             }
         }
         this.setRequiredDictionaryValue(COSName.METADATA, COSName.TYPE,
