@@ -23,7 +23,6 @@ import org.verapdf.pdfa.validation.ValidationProfile;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
@@ -70,8 +69,6 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 		if (metadata != null) {
 			MetadataFixerResultImpl.Builder resultBuilder = new MetadataFixerResultImpl.Builder();
 			ValidationStatus status = getValidationStatus(config);
-
-			metadata.checkMetadataStream(resultBuilder);
 
 			switch (status) {
 				case INVALID_METADATA:
@@ -125,6 +122,10 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 
 	private static void executeInvalidMetadataCase(FixerConfig config,
 											Metadata metadata, MetadataFixerResultImpl.Builder resultBuilder) {
+		metadata.checkMetadataStream(resultBuilder, config.getValidationResult().getPDFAFlavour());
+		if (config.getValidationResult().getPDFAFlavour().getPart() == PDFAFlavour.Specification.ISO_19005_1) {
+			config.getDocument().removeFiltersForAllMetadataObjects(resultBuilder);
+		}
 		if (config.isFixIdentification()) {
 			metadata.addPDFIdentificationSchema(resultBuilder,
 					config.getValidationResult().getPDFAFlavour());

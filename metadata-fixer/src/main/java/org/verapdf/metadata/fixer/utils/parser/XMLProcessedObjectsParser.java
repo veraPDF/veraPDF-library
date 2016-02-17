@@ -2,6 +2,7 @@ package org.verapdf.metadata.fixer.utils.parser;
 
 import org.verapdf.metadata.fixer.utils.model.ProcessedObjects;
 import org.verapdf.metadata.fixer.utils.model.RuleDescription;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -24,7 +25,8 @@ import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.*;
  */
 public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
 
-	private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY = "processed.objects.path";
+	private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_1 = "processed.objects.path.pdfa_1";
+	private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_2_3 = "processed.objects.path.pdfa_2_3";
 
 	private static ProcessedObjectsParser instance;
 
@@ -33,12 +35,12 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
 	}
 
 	@Override
-	public ProcessedObjects getProcessedObjects() throws IOException, URISyntaxException,
+	public ProcessedObjects getProcessedObjects(PDFAFlavour flavour) throws IOException, URISyntaxException,
 			ParserConfigurationException, SAXException {
 		Properties prop = new Properties();
 		InputStream inputStream = ClassLoader.class.getResourceAsStream(PROCESSED_OBJECTS_PROPERTIES_PATH);
 		prop.load(inputStream);
-		String appliedObjectsPath = prop.getProperty(this.getProcessedObjectsPathProperty());
+		String appliedObjectsPath = prop.getProperty(this.getProcessedObjectsPathProperty(flavour));
 		InputStream xml = ClassLoader.class.getResourceAsStream(appliedObjectsPath);
 		return this.getProcessedObjects(xml);
 	}
@@ -65,8 +67,12 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
 	}
 
 	@Override
-	public String getProcessedObjectsPathProperty() {
-		return XML_PROCESSED_OBJECTS_PATH_PROPERTY;
+	public String getProcessedObjectsPathProperty(PDFAFlavour flavour) {
+		if (flavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
+			return XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_1;
+		} else {
+			return XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_2_3;
+		}
 	}
 
 	private ProcessedObjects parse(Node root) {
@@ -102,7 +108,7 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
 		}
 
 		boolean isValidNode = type != null && !type.trim().isEmpty() &&
-				test != null && !test.trim().isEmpty();
+				(test == null || !test.trim().isEmpty());
 		return isValidNode ? new RuleDescription(test, type) : null;
 	}
 
