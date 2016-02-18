@@ -6,8 +6,7 @@ import com.adobe.xmp.options.PropertyOptions;
 import com.adobe.xmp.options.SerializeOptions;
 import com.adobe.xmp.properties.XMPProperty;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -186,7 +185,7 @@ public class VeraPDFMeta {
 
         int size = this.meta.countArrayItems(XMPSchemaRegistryImpl.NS_DC, "creator");
         List<String> res = new ArrayList<>(size);
-        for (int i = 0; i < size; ++i) {
+        for (int i = 1; i <= size; ++i) {
             XMPProperty item = this.meta.getArrayItem(XMPSchemaRegistryImpl.NS_DC, "creator", i);
             if (item.getOptions().isSimple()) {
                 res.add(item.getValue());
@@ -201,6 +200,7 @@ public class VeraPDFMeta {
         if (creator == null) {
             throw new IllegalArgumentException("Argument creator can not be null");
         }
+        this.meta.deleteProperty(XMPSchemaRegistryImpl.NS_DC, "creator");
         for (String entry : creator) {
             this.meta.appendArrayItem(XMPSchemaRegistryImpl.NS_DC, "creator", new PropertyOptions().setArrayOrdered(true),
                     entry, new PropertyOptions());
