@@ -64,6 +64,9 @@ public class DublinCoreSchemaImpl extends BasicSchemaImpl implements DublinCore 
 	public String getAuthor() {
 		try {
 			List<String> creators = this.meta.getCreator();
+			if (creators == null) {
+				return null;
+			}
 			if (creators.size() > 1) {
 				StringBuilder builder = new StringBuilder();
 				for (String str : creators) {

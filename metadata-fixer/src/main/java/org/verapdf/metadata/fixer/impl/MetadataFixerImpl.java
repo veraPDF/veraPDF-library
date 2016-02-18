@@ -65,38 +65,47 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 
 	private static MetadataFixerResult fixAndSaveDocument(
 			OutputStream output, FixerConfig config) {
-		Metadata metadata = config.getDocument().getMetadata();
-		if (metadata != null) {
-			MetadataFixerResultImpl.Builder resultBuilder = new MetadataFixerResultImpl.Builder();
-			ValidationStatus status = getValidationStatus(config);
+		try {
+			Metadata metadata = config.getDocument().getMetadata();
+			if (metadata != null) {
+				MetadataFixerResultImpl.Builder resultBuilder = new MetadataFixerResultImpl.Builder();
+				ValidationStatus status = getValidationStatus(config);
 
-			switch (status) {
-				case INVALID_METADATA:
-					executeInvalidMetadataCase(config, metadata, resultBuilder);
-					break;
-				case INVALID_DOCUMENT:
-				case INVALID_STRUCTURE: {
-					if (config.isFixIdentification()) {
-						metadata.removePDFIdentificationSchema(resultBuilder,
-								config.getValidationResult().getPDFAFlavour());
+				switch (status) {
+					case INVALID_METADATA:
+						executeInvalidMetadataCase(config, metadata, resultBuilder);
+						break;
+					case INVALID_DOCUMENT:
+					case INVALID_STRUCTURE: {
+						if (config.isFixIdentification()) {
+							metadata.removePDFIdentificationSchema(resultBuilder,
+									config.getValidationResult().getPDFAFlavour());
+						}
+						break;
 					}
-					break;
+					default:
+						break;
 				}
-				default:
-					break;
+
+				updateModificationDate(config, resultBuilder);
+
+				MetadataFixerResult partialResult = config.getDocument().saveDocumentIncremental(resultBuilder.getStatus(), output);
+				resultBuilder.status(partialResult.getRepairStatus());
+				for (String fix : partialResult.getAppliedFixes()) {
+					resultBuilder.addFix(fix);
+				}
+				return resultBuilder.build();
 			}
 
-			updateModificationDate(config, resultBuilder);
-
-			MetadataFixerResult partialResult = config.getDocument().saveDocumentIncremental(resultBuilder.getStatus(), output);
-			resultBuilder.status(partialResult.getRepairStatus());
-			for (String fix : partialResult.getAppliedFixes()) {
-			    resultBuilder.addFix(fix);
-			}
-			return resultBuilder.build();
+			return getErrorResult("Problems with metadata obtain. No possibility to fix metadata.");
+		} catch (Exception e) {
+			return getErrorResult("Error while fixing metadata: " + e.getMessage());
 		}
+	}
+
+	private static MetadataFixerResult getErrorResult(String message) {
 		MetadataFixerResultImpl.Builder resultBuilder = new MetadataFixerResultImpl.Builder();
-		resultBuilder.status(MetadataFixerResultImpl.RepairStatus.FIX_ERROR).addFix("Problems with metadata obtain. No possibility to fix metadata.");
+		resultBuilder.status(MetadataFixerResultImpl.RepairStatus.FIX_ERROR).addFix(message);
 		return resultBuilder.build();
 	}
 

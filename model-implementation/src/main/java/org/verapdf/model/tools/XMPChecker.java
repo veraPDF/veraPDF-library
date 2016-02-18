@@ -130,8 +130,7 @@ public final class XMPChecker {
         putProperty(properties, SUBJECT, metadata.getDescription());
         final List<String> buffer = metadata.getCreator();
         if (buffer != null) {
-            putProperty(properties, AUTHOR,
-                    buffer.toArray(new String[buffer.size()]));
+            putProperty(properties, AUTHOR, buffer);
         }
     }
 
