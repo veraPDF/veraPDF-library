@@ -16,6 +16,7 @@ import org.verapdf.metadata.fixer.schemas.AdobePDF;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 import org.verapdf.metadata.fixer.schemas.XMPBasic;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.MetadataFixerResultImpl;
 
 import javax.xml.transform.TransformerException;
@@ -100,9 +101,12 @@ public class MetadataImpl implements Metadata {
                 }
             }
 
-            this.metadata.deleteIdentificationSchema();
-            this.setNeedToBeUpdated(true);
-            resultBuilder.addFix("Identification schema removed.");
+            boolean isDeleted = this.metadata.deleteIdentificationSchema();
+            if (isDeleted) {
+                this.setNeedToBeUpdated(true);
+                resultBuilder.addFix("Identification schema removed");
+                resultBuilder.status(MetadataFixerResult.RepairStatus.ID_REMOVED);
+            }
 
         } catch (XMPException e) {
             LOGGER.warn("Can not obtain identification part.", e);

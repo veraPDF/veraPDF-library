@@ -77,6 +77,7 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 						break;
 					case INVALID_DOCUMENT:
 					case INVALID_STRUCTURE: {
+						resultBuilder.status(MetadataFixerResult.RepairStatus.WONT_FIX);
 						if (config.isFixIdentification()) {
 							metadata.removePDFIdentificationSchema(resultBuilder,
 									config.getValidationResult().getPDFAFlavour());
@@ -131,15 +132,17 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
 
 	private static void executeInvalidMetadataCase(FixerConfig config,
 											Metadata metadata, MetadataFixerResultImpl.Builder resultBuilder) {
-		metadata.checkMetadataStream(resultBuilder, config.getValidationResult().getPDFAFlavour());
 		if (config.getValidationResult().getPDFAFlavour().getPart() == PDFAFlavour.Specification.ISO_19005_1) {
 			config.getDocument().removeFiltersForAllMetadataObjects(resultBuilder);
 		}
+		fixMetadata(resultBuilder, config);
 		if (config.isFixIdentification()) {
 			metadata.addPDFIdentificationSchema(resultBuilder,
 					config.getValidationResult().getPDFAFlavour());
 		}
-		fixMetadata(resultBuilder, config);
+		if (resultBuilder.getStatus() != MetadataFixerResult.RepairStatus.NO_ACTION) {
+			metadata.checkMetadataStream(resultBuilder, config.getValidationResult().getPDFAFlavour());
+		}
 	}
 
 	private static void fixMetadata(MetadataFixerResultImpl.Builder resultBuilder,

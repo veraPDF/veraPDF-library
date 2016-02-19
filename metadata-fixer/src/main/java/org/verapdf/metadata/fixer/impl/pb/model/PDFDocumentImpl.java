@@ -125,7 +125,7 @@ public class PDFDocumentImpl implements PDFDocument {
                 output.close();
                 builder.status(getStatus(status));
             } else {
-                builder.status(NO_ACTION);
+                builder.status(status);
             }
         } catch (Exception e) {
             LOGGER.info(e);
@@ -174,7 +174,7 @@ public class PDFDocumentImpl implements PDFDocument {
     }
 
     private static MetadataFixerResultImpl.RepairStatus getStatus(final MetadataFixerResultImpl.RepairStatus status) {
-        return status != WONT_FIX ? SUCCESS : WONT_FIX;
+        return status == NO_ACTION ? SUCCESS : status;
     }
 
 }
