@@ -264,7 +264,7 @@ public class VeraPDFMeta {
             throw new IllegalArgumentException("Argument modifyDate can not be null");
         }
         XMPDateTime date = XMPDateTimeFactory.createFromCalendar(modifyDate);
-        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_XMP, "CreationDate", date.getISO8601String());
+        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_XMP, "ModifyDate", date.getISO8601String());
     }
 
     public Integer getIdentificationPart() throws XMPException {
