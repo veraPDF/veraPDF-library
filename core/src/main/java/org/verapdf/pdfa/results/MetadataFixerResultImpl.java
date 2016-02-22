@@ -84,13 +84,6 @@ public class MetadataFixerResultImpl implements MetadataFixerResult {
         }
 
         /**
-         * @return current fixes
-         */
-        public List<String> getFixes() {
-            return Collections.unmodifiableList(this.fixes);
-        }
-
-        /**
          * @return a {@link MetadataFixerResult} instance built from the values
          */
         public MetadataFixerResult build() {
