@@ -83,7 +83,7 @@ public class MetadataImpl implements Metadata {
             this.stream.setItem(key, value);
             this.stream.setNeedToBeUpdated(true);
             resultBuilder.addFix(value.getName() + " value of " + key.getName()
-                    + " key is set " + "to metadata dictionary.");
+                    + " key is set " + "to metadata dictionary");
         }
     }
 
@@ -135,7 +135,7 @@ public class MetadataImpl implements Metadata {
             this.metadata.setIdentificationPart(Integer.valueOf(part));
             this.metadata.setIdentificationConformance(conformance);
             this.setNeedToBeUpdated(true);
-            resultBuilder.addFix("Identification schema added.");
+            resultBuilder.addFix("Identification schema added");
 
         } catch (XMPException e) {
             LOGGER.warn("Can not obtain identification fields.", e);

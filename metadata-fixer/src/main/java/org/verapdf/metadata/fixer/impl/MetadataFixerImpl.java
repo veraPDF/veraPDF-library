@@ -140,7 +140,10 @@ public abstract class MetadataFixerImpl implements MetadataFixer {
             metadata.addPDFIdentificationSchema(resultBuilder,
                     config.getValidationResult().getPDFAFlavour());
         }
-        metadata.checkMetadataStream(resultBuilder, config.getValidationResult().getPDFAFlavour());
+
+        if (metadata.isNeedToBeUpdated()) {
+            metadata.checkMetadataStream(resultBuilder, config.getValidationResult().getPDFAFlavour());
+        }
     }
 
     private static void fixMetadata(MetadataFixerResultImpl.Builder resultBuilder,
