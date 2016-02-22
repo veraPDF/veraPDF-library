@@ -1,10 +1,10 @@
 package org.verapdf.metadata.fixer.entity;
 
-import java.io.OutputStream;
-
 import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.MetadataFixerResultImpl;
+
+import java.io.OutputStream;
 
 /**
  * Current interface provide necessary behavior of pdf document
@@ -64,4 +64,11 @@ public interface PDFDocument {
 	 * @return 
 	 */
 	MetadataFixerResult saveDocumentIncremental(MetadataFixerResult.RepairStatus status, OutputStream output);
+
+	/**
+	 * Removes filters for all metadata objects
+	 *
+	 * @return number of objects for which filters were removed
+	 */
+	int removeFiltersForAllMetadataObjects(MetadataFixerResultImpl.Builder resultBuilder);
 }

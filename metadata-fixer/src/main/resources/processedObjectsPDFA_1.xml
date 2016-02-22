@@ -13,7 +13,10 @@
         <test>metadata_size == 1</test>
     </ruleDescription>
     <ruleDescription>
-        <objectType>XMPMainPackage</objectType>
-        <test>ispdfaidNSPresent</test>
+        <objectType>MainXMPPackage</objectType>
+        <test>Identification_size == 1</test>
+    </ruleDescription>
+    <ruleDescription>
+        <objectType>PDFAIdentification</objectType>
     </ruleDescription>
 </appliedObjects>

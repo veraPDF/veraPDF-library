@@ -40,8 +40,6 @@ public class ProcessedObjectsInspector {
      * profile. {@link ProcessedObjects} obtain from xml file.
      * @param assertions 
      *
-     * @param rules
-     *            list of rules
      * @param profile
      *            validation profile
      * @return validation status
@@ -64,8 +62,6 @@ public class ProcessedObjectsInspector {
      * {@link ProcessedObjectsParser}.
      * @param assertions 
      *
-     * @param rules
-     *            list of rules
      * @param profile
      *            validation profile
      * @param parser
@@ -81,7 +77,7 @@ public class ProcessedObjectsInspector {
             ProcessedObjectsParser parser) throws IOException,
             URISyntaxException, ParserConfigurationException, SAXException {
         return validationStatus(assertions, profile,
-                parser.getProcessedObjects());
+                parser.getProcessedObjects(profile.getPDFAFlavour()));
     }
 
     /**
@@ -89,8 +85,6 @@ public class ProcessedObjectsInspector {
      * and metadata failed rules type
      * @param assertions 
      *
-     * @param rules
-     *            list of rules
      * @param profile
      *            validation profile
      * @param objects
