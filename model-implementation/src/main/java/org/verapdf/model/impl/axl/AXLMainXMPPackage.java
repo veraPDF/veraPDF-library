@@ -27,7 +27,7 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
     /**
      * Constructs new object
      *
-     * @param xmpMetadata          object from xmpbox represented this package
+     * @param xmpMetadata          object that represents this package
      * @param isSerializationValid true if metadata is valid
      */
     public AXLMainXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid) {
