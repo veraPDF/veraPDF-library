@@ -3,24 +3,9 @@
  */
 package org.verapdf.pdfa.validation;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.SchemaOutputResolver;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -28,8 +13,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.transform.Result;
 import javax.xml.transform.stream.StreamResult;
-
-import org.verapdf.pdfa.flavours.PDFAFlavour;
+import java.io.*;
+import java.util.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -67,6 +52,17 @@ final class ValidationProfileImpl implements ValidationProfile {
         this.details = details;
         this.hash = hash;
         this.rules = new HashSet<>(rules);
+        this.variables = new HashSet<>(variables);
+    }
+
+    private ValidationProfileImpl(final PDFAFlavour flavour,
+                                  final ProfileDetails details, final String hash,
+                                  final SortedSet<Rule> rules, final Set<Variable> variables) {
+        super();
+        this.flavour = flavour;
+        this.details = details;
+        this.hash = hash;
+        this.rules = rules;
         this.variables = new HashSet<>(variables);
     }
 
@@ -220,6 +216,13 @@ final class ValidationProfileImpl implements ValidationProfile {
     static ValidationProfileImpl fromValues(final PDFAFlavour flavour,
             final ProfileDetails details, final String hash,
             final Set<Rule> rules, final Set<Variable> variables) {
+        return new ValidationProfileImpl(flavour, details, hash, rules,
+                variables);
+    }
+
+    static ValidationProfileImpl fromSortedValues(final PDFAFlavour flavour,
+                                                  final ProfileDetails details, final String hash,
+                                                  final SortedSet<Rule> rules, final Set<Variable> variables) {
         return new ValidationProfileImpl(flavour, details, hash, rules,
                 variables);
     }

@@ -1,45 +1,42 @@
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.qa;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import org.verapdf.core.Directory;
+import org.verapdf.core.MapBackedRegistry;
+import org.verapdf.core.Registry;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.validation.*;
+
+import javax.xml.bind.JAXBException;
+import java.io.*;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.verapdf.core.Directory;
-import org.verapdf.core.MapBackedRegistry;
-import org.verapdf.core.ProfileException;
-import org.verapdf.core.Registry;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.validation.Rule;
-import org.verapdf.pdfa.validation.RuleId;
-import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.validation.profile.parser.LegacyProfileConverter;
-
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *
  */
 public final class RuleDirectory implements Directory<RuleId, Rule> {
 
     private final Registry<RuleId, Rule> rules = new MapBackedRegistry<>(
-            Collections.<RuleId, Rule> emptyMap());
+            Collections.<RuleId, Rule>emptyMap());
+    private final Set<Variable> variables = new HashSet<>();
     private final PDFAFlavour flavour;
 
     private RuleDirectory(final File root) throws FileNotFoundException,
-            ProfileException, IOException {
+            IOException, JAXBException {
         this.flavour = PDFAFlavour.fromString(root.getName());
         Set<Rule> ruleSet = rulesFromDir(root, this.flavour);
         for (Rule rule : ruleSet) {
             this.rules.putdateItem(rule.getRuleId(), rule);
         }
+    }
+
+    public Set<Variable> getVariables() {
+        return Collections.unmodifiableSet(this.variables);
     }
 
     /**
@@ -91,22 +88,17 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
 
     /**
      * Load up a {@link Rule} {@code Set} from a root directory
-     * 
-     * @param root
-     *            the {@code File} root directory for the Corpus
+     *
+     * @param root the {@code File} root directory for the Corpus
      * @return a new {@link RuleDirectory} instance initialised from
-     *         {@code root}.
-     * @throws NullPointerException
-     *             if {@code root} is null
-     * @throws IllegalArgumentException
-     *             if {@code root} is not an existing directory
-     * @throws ProfileException
-     *             if one of the Rules could not be parsed
-     * @throws IOException
-     *             if there's a problem reading the directory contents
+     * {@code root}.
+     * @throws NullPointerException     if {@code root} is null
+     * @throws IllegalArgumentException if {@code root} is not an existing directory
+     * @throws JAXBException            if one of the Rules could not be parsed
+     * @throws IOException              if there's a problem reading the directory contents
      */
     public static RuleDirectory loadFromDir(final File root)
-            throws IOException, ProfileException {
+            throws IOException, JAXBException {
         if (root == null)
             throw new NullPointerException("Parameter root should not be null.");
         if (!root.isDirectory())
@@ -115,9 +107,9 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
         return new RuleDirectory(root);
     }
 
-    private static Set<Rule> rulesFromDir(final File dir,
-            final PDFAFlavour flavour) throws FileNotFoundException,
-            IOException, ProfileException {
+    private Set<Rule> rulesFromDir(final File dir,
+                                   final PDFAFlavour flavour) throws FileNotFoundException,
+            IOException, JAXBException {
         Set<Rule> rules = new HashSet<>();
         File[] files = dir.listFiles();
         for (File file : files) {
@@ -127,18 +119,19 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
                 rules.addAll(rulesFromDir(file, flavour));
             if (file.isFile() && file.canRead()) {
                 try (InputStream fis = new FileInputStream(file)) {
-                    Rule rule = getRuleFromLegacyProfile(fis, flavour);
-                    rules.add(rule);
+                    Set<Rule> rule = getRuleFromProfile(fis, flavour);
+                    rules.addAll(rule);
                 }
             }
         }
         return rules;
     }
 
-    private static Rule getRuleFromLegacyProfile(final InputStream toParse,
-            final PDFAFlavour flavour) throws ProfileException {
-        ValidationProfile profile = LegacyProfileConverter.fromLegacyStream(
+    private Set<Rule> getRuleFromProfile(final InputStream toParse,
+                                         final PDFAFlavour flavour) throws JAXBException {
+        ValidationProfile profile = Profiles.profileFromXml(
                 toParse);
-        return profile.getRules().iterator().next();
+        this.variables.addAll(profile.getVariables());
+        return profile.getRules();
     }
 }
