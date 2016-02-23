@@ -113,6 +113,9 @@ final class VeraPdfCliProcessor {
         }
         if (this.format == FormatOption.XML)
             outputXmlResults(item, validationResult, featuresCollection);
+        else if (this.format == FormatOption.BRIEF) {
+            System.out.println(item.getName() + ":" + validationResult.isCompliant());
+        }
         else {
             MachineReadableReport report = MachineReadableReport.fromValues(
                     item.getName(),
