@@ -48,9 +48,10 @@ public final class VeraPdfCli {
         try {
             jCommander.parse(args);
         } catch (ParameterException e) {
-            logThrowableAndExit(e, e.getMessage(), 1);
-        } catch (Exception e) {
-            logThrowableAndExit(e, "Couldn't parse parameters.", 1);
+            System.err.println(e.getMessage());
+            showVersionInfo();
+            jCommander.usage();
+            System.exit(0);
         }
         if (args.length == 0 || cliArgParser.isHelp()) {
             showVersionInfo();
