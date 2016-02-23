@@ -135,7 +135,7 @@ final class VeraPdfCliProcessor {
         }
         if (this.format == FormatOption.XML)
             outputXmlResults(item, validationResult, featuresCollection);
-        else if (this.format == FormatOption.BRIEF) {
+        else if (this.format == FormatOption.TEXT) {
             System.out.println(item.getName() + ":"
                     + validationResult.isCompliant());
         } else {

@@ -27,7 +27,7 @@ public enum FormatOption {
     /**
      * Output in brief format
      */
-    BRIEF("b");
+    TEXT("text");
 
     private final String option;
 
