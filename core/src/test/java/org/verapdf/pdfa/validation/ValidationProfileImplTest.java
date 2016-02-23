@@ -68,7 +68,7 @@ public class ValidationProfileImplTest {
         // Get an equivalent to the default instance
         ValidationProfile rule = Profiles.profileFromValues(
                 PDFAFlavour.NO_FLAVOUR, ProfileDetailsImpl.defaultInstance(),
-                "hash", Collections.EMPTY_SET, Collections.EMPTY_SET);
+                "hash", Collections.<Rule> emptySet(), Collections.<Variable> emptySet());
         ValidationProfile defaultInstance = Profiles.defaultProfile();
         // Equivalent is NOT the same object as default instance
         assertFalse(rule == defaultInstance);
