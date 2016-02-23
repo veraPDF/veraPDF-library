@@ -204,7 +204,7 @@ final class VeraPdfCliProcessor {
         ValidationProfile profile = Profiles.defaultProfile();
         try (InputStream is = new FileInputStream(profileFile)) {
             profile = Profiles.profileFromXml(is);
-            if (profile.getHexSha1Digest().equals("sha-1 hash code")) {
+            if ("sha-1 hash code".equals(profile.getHexSha1Digest())) {
                 return Profiles.defaultProfile();
             }
             return profile;
