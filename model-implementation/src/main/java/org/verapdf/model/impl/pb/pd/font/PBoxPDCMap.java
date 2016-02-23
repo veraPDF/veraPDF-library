@@ -1,7 +1,6 @@
 package org.verapdf.model.impl.pb.pd.font;
 
 import org.apache.fontbox.cmap.CMap;
-import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSStream;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.external.CMapFile;
@@ -41,11 +40,9 @@ public class PBoxPDCMap extends PBoxPDObject implements PDCMap {
 
     private List<CMapFile> getEmbeddedFile() {
         if (this.simplePDObject instanceof COSStream) {
-			int parentWMode = ((COSStream) this.simplePDObject).getInt(
-					COSName.getPDFName("WMode"), 0);
 			List<CMapFile> result = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
-			result.add(new PBoxCMapFile((COSStream) this.simplePDObject, parentWMode));
-			return Collections.unmodifiableList(result);
+            result.add(new PBoxCMapFile((COSStream) this.simplePDObject));
+            return Collections.unmodifiableList(result);
         }
 		return Collections.emptyList();
     }

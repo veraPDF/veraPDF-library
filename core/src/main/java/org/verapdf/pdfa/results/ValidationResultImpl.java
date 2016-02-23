@@ -17,12 +17,15 @@ import java.util.Set;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.SchemaOutputResolver;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.transform.Result;
+import javax.xml.transform.stream.StreamResult;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion.Status;
@@ -225,6 +228,14 @@ final class ValidationResultImpl implements ValidationResult {
         }
     }
 
+    static String getSchema() throws JAXBException, IOException {
+        JAXBContext context = JAXBContext
+                .newInstance(ValidationResultImpl.class);
+        final StringWriter writer = new StringWriter();
+        context.generateSchema(new WriterSchemaOutputResolver(writer));
+        return writer.toString();
+    }
+
     private static Unmarshaller getUnmarshaller() throws JAXBException {
         JAXBContext context = JAXBContext
                 .newInstance(ValidationResultImpl.class);
@@ -249,5 +260,29 @@ final class ValidationResultImpl implements ValidationResult {
                 strippedSet.add(test);
         }
         return strippedSet;
+    }
+
+    private static class WriterSchemaOutputResolver extends SchemaOutputResolver {
+        private final Writer out;
+        /**
+         * @param out a Writer for the generated schema
+         * 
+         */
+        public WriterSchemaOutputResolver(final Writer out) {
+            super();
+            this.out = out;
+        }
+
+        /**
+         * { @inheritDoc }
+         */
+        @Override
+        public Result createOutput(String namespaceUri, String suggestedFileName)
+                throws IOException {
+            final StreamResult result = new StreamResult(this.out);
+            result.setSystemId("no-id");
+            return result;
+        }
+
     }
 }
