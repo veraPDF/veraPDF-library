@@ -1,0 +1,86 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>tssprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>tssprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>tssprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>tssprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>tssprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>tssprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
+							</rdf:li>							
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
+					   xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
+		<fs:tssprop1 rdf:parseType="Resource">
+			<xmpDM:quality>HIGH</xmpDM:quality>
+			<xmpDM:frameSize>123.02</xmpDM:frameSize>
+			<xmpDM:frameOverlappingPercentage>1.0</xmpDM:frameOverlappingPercentage>
+		</fs:tssprop1>
+		<fs:tssprop2 rdf:parseType="Resource">
+			<xmpDM:quality>Low 1</xmpDM:quality>
+			<xmpDM:frameSize>-1.0</xmpDM:frameSize>
+			<xmpDM:frameOverlappingPercentage>+51.9</xmpDM:frameOverlappingPercentage>
+		</fs:tssprop2>
+		<fs:tssprop4 rdf:parseType="Resource">
+			<xmpDM:quality>Low</xmpDM:quality>
+			<xmpDM:frameSize>+4/8</xmpDM:frameSize>
+			<xmpDM:frameOverlappingPercentage>-1.0</xmpDM:frameOverlappingPercentage>
+		</fs:tssprop4>
+		<fs:tssprop5 rdf:parseType="Resource">
+			<xmpDM:quality>Low</xmpDM:quality>
+			<xmpDM:frameSize>+4.0</xmpDM:frameSize>
+			<xmpDM:frameOverlappingPercentage>value: -1.0</xmpDM:frameOverlappingPercentage>
+		</fs:tssprop5>
+		<fs:tssprop6 rdf:parseType="Resource">
+			<xmpDM:quality>Low</xmpDM:quality>
+			<xmpDM:frameSize>+4.0</xmpDM:frameSize>
+			<xmpDM:frameOverlappingPercentage>-1.0e</xmpDM:frameOverlappingPercentage>
+		</fs:tssprop6>		
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

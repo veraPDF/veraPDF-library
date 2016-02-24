@@ -1,0 +1,106 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceEvent value type</pdfaProperty:description>
+								<pdfaProperty:name>resevprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceEvent</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceEvent value type</pdfaProperty:description>
+								<pdfaProperty:name>resevprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceEvent</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceEvent value type</pdfaProperty:description>
+								<pdfaProperty:name>resevprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceEvent</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceEvent value type</pdfaProperty:description>
+								<pdfaProperty:name>resevprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceEvent</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceEvent value type</pdfaProperty:description>
+								<pdfaProperty:name>resevprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceEvent</pdfaProperty:valueType>
+							</rdf:li>							
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/" xmlns:xapGImg="http://ns.adobe.com/xap/1.0/g/img/"
+					   xmlns:stEvt="http://ns.adobe.com/xap/1.0/sType/ResourceEvent#"
+	  >
+		<fs:resevprop1 rdf:parseType="Resource">
+					<stEvt:action>
+						<rdf:Seq>
+							<rdf:li>copied</rdf:li>
+							<rdf:li>created</rdf:li>
+							<rdf:li>cropped</rdf:li>
+							<rdf:li>printed</rdf:li>
+						</rdf:Seq>
+					</stEvt:action>
+					<stEvt:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stEvt:instanceID>
+					<stEvt:parameters>some description of the action</stEvt:parameters>
+					<stEvt:softwareAgent>Software Agent Name</stEvt:softwareAgent>
+					<stEvt:when>2009-03-13T22:06:10+01:00</stEvt:when>
+		</fs:resevprop1>
+		<fs:resevprop2 rdf:parseType="Resource">
+					<stEvt:action>version_updated</stEvt:action>
+					<stEvt:instanceID>
+					<rdf:Bag>
+						<rdf:li>uuid:92255764-8e98-4663-9e55-e3859d617fa2</rdf:li>
+					</rdf:Bag>
+					</stEvt:instanceID>
+					<stEvt:parameters>some description of the action</stEvt:parameters>
+					<stEvt:softwareAgent>Software Agent Name</stEvt:softwareAgent>
+					<stEvt:when>2009-03-13T22:06:10+01:00</stEvt:when>
+		</fs:resevprop2>
+		<fs:resevprop3 rdf:parseType="Resource">
+					<stEvt:action>version_updated</stEvt:action>
+					<stEvt:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stEvt:instanceID>
+					<stEvt:parameters>
+					<rdf:Alt>
+						<rdf:li xml:lang="x-default">some description of the action</rdf:li>
+						<rdf:li xml:lang="de-de">some description of the action</rdf:li>
+						<rdf:li xml:lang="fr">some description of the action</rdf:li>
+					</rdf:Alt>
+					</stEvt:parameters>
+					<stEvt:softwareAgent>Software Agent Name</stEvt:softwareAgent>
+					<stEvt:when>2009-03-13T22:06:10+01:00</stEvt:when>
+		</fs:resevprop3>
+		<fs:resevprop4 rdf:parseType="Resource">
+					<stEvt:action>version_updated</stEvt:action>
+					<stEvt:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stEvt:instanceID>
+					<stEvt:parameters>some description of the action</stEvt:parameters>
+					<stEvt:softwareAgent rdf:parseType="Resource">
+						  <xapGImg:width>184.0</xapGImg:width>
+						  <xapGImg:height>256</xapGImg:height>
+						  <xapGImg:format>JPEG</xapGImg:format>
+						  <xapGImg:image>SomeImageData</xapGImg:image>
+					</stEvt:softwareAgent>
+					<stEvt:when>2009-03-13T22:06:10+01:00</stEvt:when>
+		</fs:resevprop4>
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

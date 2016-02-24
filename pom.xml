@@ -113,6 +113,7 @@
     <mvn.source.version>2.4</mvn.source.version>
     <mvn.gpg.plugin.version>1.6</mvn.gpg.plugin.version>
     <verapdf.pdfbox.version>2.0.0-SNAPSHOT</verapdf.pdfbox.version>
+    <verapdf.xmp.version>[0.1.0,0.2.0)</verapdf.xmp.version>
     <verapdf.model.version>[0.9.0,0.10.0)</verapdf.model.version>
   </properties>
 
@@ -218,9 +219,9 @@
       </dependency>
 
       <dependency>
-        <groupId>org.verapdf.pdfbox</groupId>
-        <artifactId>xmpbox</artifactId>
-        <version>${verapdf.pdfbox.version}</version>
+        <groupId>org.verapdf</groupId>
+        <artifactId>verapdf-xmp-core</artifactId>
+        <version>${verapdf.xmp.version}</version>
       </dependency>
 
       <!-- TEST DEPENDENCIES -->

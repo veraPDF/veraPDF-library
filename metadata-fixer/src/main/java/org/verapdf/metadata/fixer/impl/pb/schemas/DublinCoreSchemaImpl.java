@@ -1,96 +1,100 @@
 package org.verapdf.metadata.fixer.impl.pb.schemas;
 
-import org.apache.xmpbox.XmpConstants;
-import org.apache.xmpbox.schema.DublinCoreSchema;
-import org.apache.xmpbox.type.*;
+import com.adobe.xmp.XMPException;
+import com.adobe.xmp.impl.VeraPDFMeta;
+import org.apache.log4j.Logger;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.schemas.DublinCore;
 
-import javax.xml.XMLConstants;
+import java.util.ArrayList;
 import java.util.List;
-
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.*;
 
 /**
  * @author Evgeniy Muravitskiy
  */
 public class DublinCoreSchemaImpl extends BasicSchemaImpl implements DublinCore {
 
-	public DublinCoreSchemaImpl(DublinCoreSchema schema, Metadata metadata) {
-		super(schema, metadata);
+	private static final Logger LOGGER = Logger.getLogger(DublinCoreSchemaImpl.class);
+
+	public DublinCoreSchemaImpl(VeraPDFMeta meta, Metadata metadata) {
+		super(meta, metadata);
 	}
 
 	@Override
 	public String getTitle() {
-		return ((DublinCoreSchema) this.schema).getTitle();
+		try {
+			return this.meta.getTitle();
+		} catch (XMPException e) {
+			LOGGER.error("Can not get title.", e);
+			throw new IllegalStateException(e);
+		}
 	}
 
 	@Override
 	public void setTitle(String title) {
-		this.removeProperty(METADATA_TITLE);
-		((DublinCoreSchema) this.schema).setTitle(title);
+		try {
+			this.meta.setTitle(title);
+		} catch (XMPException e) {
+			LOGGER.error("Can not set title.", e);
+			throw new IllegalStateException(e);
+		}
 	}
 
 	@Override
 	public String getSubject() {
-		return ((DublinCoreSchema) this.schema).getDescription();
+		try {
+			return this.meta.getDescription();
+		} catch (XMPException e) {
+			LOGGER.error("Can not get subject.", e);
+			throw new IllegalStateException(e);
+		}
 	}
 
 	@Override
 	public void setSubject(String description) {
-		ArrayProperty seq = (ArrayProperty) this.schema.getAbstractProperty(METADATA_SUBJECT);
-		ArrayProperty newSeq = this.schema.createArrayProperty(METADATA_SUBJECT, Cardinality.Alt);
-
-		TextType li = this.schema.createTextType(XmpConstants.LIST_NAME, description);
-		li.setAttribute(new Attribute(XMLConstants.XML_NS_URI, XmpConstants.LANG_NAME, XmpConstants.X_DEFAULT));
-		newSeq.addProperty(li);
-
-		int position = this.getPosition(seq);
-		this.copySubArray(seq, newSeq, position);
-		this.schema.addProperty(newSeq);
+		try {
+			this.meta.setDescription(description);
+		} catch (XMPException e) {
+			LOGGER.error("Can not set description.", e);
+			throw new IllegalStateException(e);
+		}
 	}
 
 	@Override
 	public String getAuthor() {
-		List<String> creators = ((DublinCoreSchema) this.schema).getCreators();
-		return creators != null && creators.size() > 0 ? creators.get(0) : null;
+		try {
+			List<String> creators = this.meta.getCreator();
+			if (creators == null) {
+				return null;
+			}
+			if (creators.size() > 1) {
+				StringBuilder builder = new StringBuilder();
+				for (String str : creators) {
+					builder.append(str).append(", ");
+				}
+				List<String> res = new ArrayList<>(1);
+				String s = builder.toString();
+				res.add(s.substring(0, s.length() - 2));
+				this.meta.setCreator(res);
+				return res.get(0);
+			} else {
+				return creators.size() == 0 ? null : creators.get(0);
+			}
+		} catch (XMPException e) {
+			LOGGER.error("Can not get creator.", e);
+			throw new IllegalStateException(e);
+		}
 	}
 
 	@Override
 	public void setAuthor(String creator) {
-		ArrayProperty seq = (ArrayProperty) this.schema.getAbstractProperty(METADATA_AUTHOR);
-		ArrayProperty newSeq = this.schema.createArrayProperty(METADATA_AUTHOR, Cardinality.Seq);
-		TextType li = this.schema.createTextType(XmpConstants.LIST_NAME, creator);
-		newSeq.addProperty(li);
-		this.copySubArray(seq, newSeq, 0);
-		this.schema.addProperty(newSeq);
-	}
-
-	private int getPosition(ArrayProperty seq) {
-		if (seq != null) {
-			List<AbstractField> properties = seq.getContainer().getAllProperties();
-			for (int index = 0; index < properties.size(); index++) {
-				String attributeValue = properties.get(index)
-						.getAttribute(XmpConstants.LANG_NAME).getValue();
-				if (XmpConstants.X_DEFAULT.equals(attributeValue)) {
-					return index;
-				}
-			}
-		}
-
-		return 0;
-	}
-
-	private void copySubArray(ArrayProperty seq, ArrayProperty newSeq, int exceptIndex) {
-		if (seq != null) {
-			List<AbstractField> properties = seq.getContainer().getAllProperties();
-			ComplexPropertyContainer container = newSeq.getContainer();
-			for (int i = 1; i < properties.size(); i++) {
-				if (i != exceptIndex) {
-					container.addProperty(properties.get(i));
-				}
-			}
-			this.schema.removeProperty(seq);
+		try {
+			List<String> res = new ArrayList<>(1);
+			res.add(creator);
+			this.meta.setCreator(res);
+		} catch (XMPException e) {
+			LOGGER.error("Can not set creator.", e);
+			throw new IllegalStateException(e);
 		}
 	}
 
