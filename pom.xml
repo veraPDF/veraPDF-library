@@ -219,12 +219,6 @@
       </dependency>
 
       <dependency>
-        <groupId>org.verapdf.pdfbox</groupId>
-        <artifactId>xmpbox</artifactId>
-        <version>${verapdf.pdfbox.version}</version>
-      </dependency>
-
-      <dependency>
         <groupId>org.verapdf</groupId>
         <artifactId>verapdf-xmp-core</artifactId>
         <version>${verapdf.xmp.version}</version>
