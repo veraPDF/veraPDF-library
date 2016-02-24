@@ -131,7 +131,18 @@ public final class RuleDirectory implements Directory<RuleId, Rule> {
                                          final PDFAFlavour flavour) throws JAXBException {
         ValidationProfile profile = Profiles.profileFromXml(
                 toParse);
-        this.variables.addAll(profile.getVariables());
+        checkAndAddAllVariables(this.variables, profile.getVariables());
         return profile.getRules();
+    }
+
+    static void checkAndAddAllVariables(Set<Variable> toAdd, Set<Variable> fromAdd) {
+        for (Variable var : fromAdd) {
+            for (Variable toVar : toAdd) {
+                if (toVar.getName().equals(var.getName()) && !toVar.equals(var)) {
+                    throw new IllegalArgumentException("Found different variables with the same name.");
+                }
+            }
+            toAdd.add(var);
+        }
     }
 }

@@ -49,8 +49,10 @@ public class ProfilesMerger {
         for (File dir : root) {
             RuleDirectory ruleDir = RuleDirectory.loadFromDir(dir);
             rules.addAll(ruleDir.getItems());
-            variables.addAll(ruleDir.getVariables());
-            flavour = ruleDir.getFlavour();
+            RuleDirectory.checkAndAddAllVariables(variables, ruleDir.getVariables());
+            if (flavour == null) {
+                flavour = ruleDir.getFlavour();
+            }
         }
 
         ProfileDetails det = Profiles.profileDetailsFromValues(name, description, creator, new Date());
