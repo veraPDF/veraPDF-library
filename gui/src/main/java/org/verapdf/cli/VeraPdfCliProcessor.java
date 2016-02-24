@@ -43,6 +43,7 @@ final class VeraPdfCliProcessor {
     final FormatOption format;
     final boolean extractFeatures;
     final boolean logPassed;
+    final boolean recurse;
     final PDFAValidator validator;
 
     private VeraPdfCliProcessor() throws FileNotFoundException, IOException {
@@ -54,6 +55,7 @@ final class VeraPdfCliProcessor {
         this.format = args.getFormat();
         this.extractFeatures = args.extractFeatures();
         this.logPassed = args.logPassed();
+        this.recurse = args.isRecurse();
         ValidationProfile profile = profileFromArgs(args);
         this.validator = (profile == Profiles.defaultProfile()) ? null
                 : Validators.createValidator(profile, logPassed(args));
@@ -66,17 +68,38 @@ final class VeraPdfCliProcessor {
 
     void processPaths(final List<String> pdfPaths) {
         for (String pdfPath : pdfPaths) {
-            File pdfFile = new File(pdfPath);
-            processPath(pdfFile);
+            File file = new File(pdfPath);
+            if (file.isDirectory()) {
+                processDir(file);
+            } else {
+                processFile(file);
+            }
         }
     }
 
     static VeraPdfCliProcessor createProcessorFromArgs(
-            final VeraCliArgParser args) throws FileNotFoundException, IOException {
+            final VeraCliArgParser args) throws FileNotFoundException,
+            IOException {
         return new VeraPdfCliProcessor(args);
     }
 
-    private void processPath(final File pdfFile) {
+    private void processDir(final File dir) {
+        for (File file : dir.listFiles()) {
+            if (file.isFile()) {
+                int extIndex = file.getName().lastIndexOf(".");
+                String ext = file.getName().substring(extIndex + 1);
+                if ("pdf".equalsIgnoreCase(ext)) {
+                    processFile(file);
+                }
+            } else if (file.isDirectory()) {
+                if (this.recurse) {
+                    processDir(file);
+                }
+            }
+        }
+    }
+
+    private void processFile(final File pdfFile) {
         if (checkFileCanBeProcessed(pdfFile)) {
             try (InputStream toProcess = new FileInputStream(pdfFile)) {
                 processStream(ItemDetails.fromFile(pdfFile), toProcess);
@@ -102,10 +125,9 @@ final class VeraPdfCliProcessor {
                         .getFeaturesCollection(toValidate.getPDDocument());
             }
         } catch (IOException e) {
-            System.err.println("Failed to parse pdf file "
-                    + item.getName());
-            //TODO : do we need stacktrace in cli application?
-            //e.printStackTrace();
+            System.err.println("Failed to parse pdf file " + item.getName());
+            // TODO : do we need stacktrace in cli application?
+            // e.printStackTrace();
         } catch (ValidationException e) {
             System.err.println("Exception raised while validating "
                     + item.getName());
@@ -113,7 +135,10 @@ final class VeraPdfCliProcessor {
         }
         if (this.format == FormatOption.XML)
             outputXmlResults(item, validationResult, featuresCollection);
-        else {
+        else if (this.format == FormatOption.TEXT) {
+            System.out.println(item.getName() + ":"
+                    + validationResult.isCompliant());
+        } else {
             MachineReadableReport report = MachineReadableReport.fromValues(
                     item.getName(),
                     this.validator == null ? Profiles.defaultProfile()
@@ -201,7 +226,7 @@ final class VeraPdfCliProcessor {
         ValidationProfile profile = Profiles.defaultProfile();
         try (InputStream is = new FileInputStream(profileFile)) {
             profile = Profiles.profileFromXml(is);
-            if (profile.getHexSha1Digest().equals("sha-1 hash code")) {
+            if ("sha-1 hash code".equals(profile.getHexSha1Digest())) {
                 return Profiles.defaultProfile();
             }
             return profile;

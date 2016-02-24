@@ -5,7 +5,6 @@ package org.verapdf.cli;
 
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
 import org.verapdf.ReleaseDetails;
 import org.verapdf.cli.commands.VeraCliArgParser;
 import org.verapdf.pdfa.validation.ProfileDirectory;
@@ -20,7 +19,6 @@ import com.beust.jcommander.ParameterException;
  *
  */
 public final class VeraPdfCli {
-    private static final Logger LOGGER = Logger.getLogger(VeraPdfCli.class);
     private static final String APP_NAME = "veraPDF";
     private static final ReleaseDetails RELEASE_DETAILS = ReleaseDetails
             .getInstance();
@@ -48,9 +46,10 @@ public final class VeraPdfCli {
         try {
             jCommander.parse(args);
         } catch (ParameterException e) {
-            logThrowableAndExit(e, e.getMessage(), 1);
-        } catch (Exception e) {
-            logThrowableAndExit(e, "Couldn't parse parameters.", 1);
+            System.err.println(e.getMessage());
+            showVersionInfo();
+            jCommander.usage();
+            System.exit(1);
         }
         if (args.length == 0 || cliArgParser.isHelp()) {
             showVersionInfo();
@@ -67,18 +66,6 @@ public final class VeraPdfCli {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
-
-
-    private static void logThrowableAndExit(final Throwable cause,
-            final String message, final int retVal) {
-        logThrowable(cause, message);
-        System.exit(retVal);
-    }
-
-    private static void logThrowable(final Throwable cause, final String message) {
-        LOGGER.fatal(message, cause);
-        return;
     }
 
     private static void messagesFromParser(final VeraCliArgParser parser) {
