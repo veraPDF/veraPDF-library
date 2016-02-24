@@ -145,7 +145,7 @@ public class ProfileDirectoryImplTest {
 
     private static ValidationProfile getPDFA1b() {
         try (InputStream is = ValidationProfileImpl.class.getClassLoader()
-                .getResourceAsStream("org/verapdf/pdfa/validation/pdfa-1b.xml")) {
+                .getResourceAsStream("org/verapdf/pdfa/validation/PDFA-1B.xml")) {
             return Profiles.profileFromXml(is);
         } catch (JAXBException | IOException e) {
             throw new IllegalStateException(e);

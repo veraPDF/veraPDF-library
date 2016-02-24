@@ -23,7 +23,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
  *
  */
 final class ProfileDirectoryImpl implements ProfileDirectory {
-    private final static String PROFILE_RESOURCE_ROOT = "org/verapdf/pdfa/validation/pdfa-";
+    private final static String PROFILE_RESOURCE_ROOT = "org/verapdf/pdfa/validation/PDFA-";
     private final static String XML_SUFFIX = ".xml";
     private static final ProfileDirectoryImpl DEFAULT = makeVeraProfileDir();
 
@@ -123,7 +123,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
     private static ProfileDirectoryImpl makeVeraProfileDir() {
         Set<ValidationProfile> profiles = new HashSet<>();
         for (PDFAFlavour flavour : PDFAFlavour.values()) {
-            String profilePath = PROFILE_RESOURCE_ROOT + flavour.getId()
+            String profilePath = PROFILE_RESOURCE_ROOT + flavour.getId().toUpperCase()
                     + XML_SUFFIX;
             try (InputStream is = ValidationProfileImpl.class.getClassLoader()
                     .getResourceAsStream(profilePath)) {
