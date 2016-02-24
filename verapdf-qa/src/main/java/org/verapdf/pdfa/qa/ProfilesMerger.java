@@ -5,7 +5,6 @@ import org.verapdf.pdfa.validation.*;
 
 import javax.xml.bind.JAXBException;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;
@@ -31,7 +30,7 @@ public class ProfilesMerger {
         }
 
         try {
-            mergeAtomicProfiles(new FileOutputStream(new File("/Users/bezrukov/Documents/Duallab/veraPDF-validation-profiles/PDF_A/new.xml")), directories, args[0], args[1], args[2]);
+            mergeAtomicProfiles(System.out, directories, args[0], args[1], args[2]);
         } catch (IOException | JAXBException e) {
             e.printStackTrace();
         }
