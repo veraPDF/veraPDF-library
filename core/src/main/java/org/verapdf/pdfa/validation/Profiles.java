@@ -14,6 +14,7 @@ import java.io.Writer;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 
 /**
  * Utitlity class that provides helper methods for handling
@@ -81,6 +82,49 @@ public final class Profiles {
             throw new IllegalArgumentException(
                     "Parameter variables can not be null.");
         return ValidationProfileImpl.fromValues(flavour, details, hash, rules,
+                variables);
+    }
+
+    /**
+     * Returns a {@link ValidationProfile} instance initialised with the passed
+     * values.
+     *
+     * @param flavour
+     *            the PDF/A flavour supported by this profile represented as a
+     *            {@link PDFAFlavour} instance.
+     * @param details
+     *            the {@link ProfileDetails} for the profile.
+     * @param hash
+     *            an identifying hash for the profile
+     * @param rules
+     *            the Set of {@link Rule}s for the profile
+     * @param variables
+     *            the Set of {@link Variable}s for the profile
+     * @return a new ValidationProfile instance.
+     * @throws IllegalArgumentException
+     *             if any of the passed parameters are null or if any of name,
+     *             description or creator are empty.
+     */
+    public static ValidationProfile profileFromSortedValues(
+            final PDFAFlavour flavour, final ProfileDetails details,
+            final String hash, final SortedSet<Rule> rules,
+            final Set<Variable> variables) {
+        if (flavour == null)
+            throw new IllegalArgumentException(
+                    "Parameter flavour can not be null.");
+        if (details == null)
+            throw new IllegalArgumentException(
+                    "Parameter name can not be null.");
+        if (hash == null)
+            throw new IllegalArgumentException(
+                    "Parameter hash can not be null.");
+        if (rules == null)
+            throw new IllegalArgumentException(
+                    "Parameter rules can not be null.");
+        if (variables == null)
+            throw new IllegalArgumentException(
+                    "Parameter variables can not be null.");
+        return ValidationProfileImpl.fromSortedValues(flavour, details, hash, rules,
                 variables);
     }
 
