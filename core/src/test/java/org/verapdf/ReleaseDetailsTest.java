@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -64,11 +65,15 @@ public class ReleaseDetailsTest {
 
     /**
      * Test method for {@link org.verapdf.ReleaseDetails#toString()}.
+     * @throws ParseException 
      */
     @Test
-    public final void testToString() {
+    public final void testToString() throws ParseException {
         ReleaseDetails instance = ReleaseDetails.getInstance();
-        assertEquals("ReleaseDetails [version=0.0.0-TEST, buildDate=Sun Jul 31 00:00:00 " + TimeZone.getDefault().getDisplayName(true, TimeZone.SHORT) + " 2011]", instance.toString());
+        String dateFormat = "yyyy-MM-dd";
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+        Date date = formatter.parse("2011-07-31");
+        assertEquals("ReleaseDetails [version=0.0.0-TEST, buildDate=" + date.toString() + "]", instance.toString());
     }
 
     /**

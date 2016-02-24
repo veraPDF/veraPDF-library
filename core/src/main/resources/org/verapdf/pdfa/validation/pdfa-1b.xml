@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:profile xmlns:ns2="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_B">
+<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_B">
     <details creator="veraPDF Consortium" created="2015-11-27T00:14:31.342Z">
         <name>PDF/A-1B validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011</description>
@@ -1112,4 +1112,4 @@
             <value>gOutputProfileIndirect == null ? destOutputProfileIndirect : gOutputProfileIndirect</value>
         </variable>
     </variables>
-</ns2:profile>
+</profile>

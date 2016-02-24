@@ -1,0 +1,221 @@
+<?xpacket begin='' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceRef value type</pdfaProperty:description>
+								<pdfaProperty:name>resrefprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceRef</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceRef value type</pdfaProperty:description>
+								<pdfaProperty:name>resrefprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceRef</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceRef value type</pdfaProperty:description>
+								<pdfaProperty:name>resrefprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceRef</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceRef value type</pdfaProperty:description>
+								<pdfaProperty:name>resrefprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceRef</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceRef value type</pdfaProperty:description>
+								<pdfaProperty:name>resrefprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceRef</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceRef value type</pdfaProperty:description>
+								<pdfaProperty:name>resrefprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceRef</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceRef value type</pdfaProperty:description>
+								<pdfaProperty:name>resrefprop7</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceRef</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceRef value type</pdfaProperty:description>
+								<pdfaProperty:name>resrefprop8</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceRef</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceRef value type</pdfaProperty:description>
+								<pdfaProperty:name>resrefprop9</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceRef</pdfaProperty:valueType>
+							</rdf:li>							
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
+					   xmlns:stDim="http://ns.adobe.com/xap/1.0/sType/Dimensions#"
+					   xmlns:xapGImg="http://ns.adobe.com/xap/1.0/g/img/"
+					   xmlns:stRef="http://ns.adobe.com/xap/1.0/sType/ResourceRef#">
+		<fs:resrefprop1 rdf:parseType="Resource">
+			<stRef:instanceID>
+				<rdf:Seq>
+					<rdf:li>xmp.did:31E5D903DD43E4119B3497CCC3E836F2</rdf:li>
+				</rdf:Seq>
+			</stRef:instanceID>
+			<stRef:documentID>xmp.did:31E5D903DD43E4119B3497CCC3E836F2</stRef:documentID>
+			<stRef:versionID>xmp.did:28F65C036B3DE411897DA7E3AC9CE628</stRef:versionID>
+			<stRef:renditionClass>proof:pdf</stRef:renditionClass>
+			<stRef:renditionParams>Some rendition parameters</stRef:renditionParams>
+			<stRef:manager>Some Agent Name</stRef:manager>
+			<stRef:managerVariant>Some manager Variant</stRef:managerVariant>
+			<stRef:manageTo>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageTo>
+			<stRef:manageUI>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageUI>
+		</fs:resrefprop1>
+		<fs:resrefprop2 rdf:parseType="Resource">
+			<stRef:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stRef:instanceID>
+			<stRef:documentID>
+				<rdf:Alt>
+					<rdf:li>uuid:92255764-8e98-4663-9e55-e3859d617fa2</rdf:li>
+				</rdf:Alt>
+			</stRef:documentID>
+			<stRef:versionID>xmp.did:28F65C036B3DE411897DA7E3AC9CE628</stRef:versionID>
+			<stRef:renditionClass>proof:pdf</stRef:renditionClass>
+			<stRef:renditionParams>Some rendition parameters</stRef:renditionParams>
+			<stRef:manager>Some Agent Name</stRef:manager>
+			<stRef:managerVariant>Some manager Variant</stRef:managerVariant>
+			<stRef:manageTo>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageTo>
+			<stRef:manageUI>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageUI>
+		</fs:resrefprop2>
+		<fs:resrefprop3 rdf:parseType="Resource">
+			<stRef:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stRef:instanceID>
+			<stRef:documentID>xmp.did:31E5D903DD43E4119B3497CCC3E836F2</stRef:documentID>
+			<stRef:versionID>
+				<rdf:Bag>
+					<rdf:li>uuid:92255764-8e98-4663-9e55-e3859d617fa2</rdf:li>
+					<rdf:li>xmp.did:31E5D903DD43E4119B3497CCC3E836F2</rdf:li>
+				</rdf:Bag>
+			</stRef:versionID>
+			<stRef:renditionClass>proof:pdf</stRef:renditionClass>
+			<stRef:renditionParams>Some rendition parameters</stRef:renditionParams>
+			<stRef:manager>Some Agent Name</stRef:manager>
+			<stRef:managerVariant>Some manager Variant</stRef:managerVariant>
+			<stRef:manageTo>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageTo>
+			<stRef:manageUI>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageUI>
+		</fs:resrefprop3>
+		<fs:resrefprop4 rdf:parseType="Resource">
+			<stRef:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stRef:instanceID>
+			<stRef:documentID>xmp.did:31E5D903DD43E4119B3497CCC3E836F2</stRef:documentID>
+			<stRef:versionID>xmp.did:28F65C036B3DE411897DA7E3AC9CE628</stRef:versionID>
+			<stRef:renditionClass rdf:parseType="Resource">
+				  <xapGImg:width>184.0</xapGImg:width>
+                  <xapGImg:height>256.0</xapGImg:height>
+                  <xapGImg:format>JPEG</xapGImg:format> 
+				  <xapGImg:image>SomeImageData</xapGImg:image>			
+			</stRef:renditionClass>
+			<stRef:renditionParams>Some rendition parameters</stRef:renditionParams>
+			<stRef:manager>Some Agent Name</stRef:manager>
+			<stRef:managerVariant>Some manager Variant</stRef:managerVariant>
+			<stRef:manageTo>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageTo>
+			<stRef:manageUI>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageUI>
+		</fs:resrefprop4>
+		<fs:resrefprop5 rdf:parseType="Resource">
+			<stRef:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stRef:instanceID>
+			<stRef:documentID>xmp.did:31E5D903DD43E4119B3497CCC3E836F2</stRef:documentID>
+			<stRef:versionID>xmp.did:28F65C036B3DE411897DA7E3AC9CE628</stRef:versionID>
+			<stRef:renditionClass>proof:pdf</stRef:renditionClass>
+			<stRef:renditionParams>
+				<rdf:Seq>
+					<rdf:li>Some reditions parameters</rdf:li>
+				</rdf:Seq>
+			</stRef:renditionParams>
+			<stRef:manager>Some Agent Name</stRef:manager>
+			<stRef:managerVariant>Some manager Variant</stRef:managerVariant>
+			<stRef:manageTo>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageTo>
+			<stRef:manageUI>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageUI>
+		</fs:resrefprop5>
+		<fs:resrefprop6 rdf:parseType="Resource">
+			<stRef:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stRef:instanceID>
+			<stRef:documentID>xmp.did:31E5D903DD43E4119B3497CCC3E836F2</stRef:documentID>
+			<stRef:versionID>xmp.did:28F65C036B3DE411897DA7E3AC9CE628</stRef:versionID>
+			<stRef:renditionClass>proof:pdf</stRef:renditionClass>
+			<stRef:renditionParams>Some rendition parameters</stRef:renditionParams>
+			<stRef:manager>
+				<rdf:Alt>
+					<rdf:li>First manager</rdf:li>
+					<rdf:li>Second manager</rdf:li>
+				</rdf:Alt>
+			</stRef:manager>
+			<stRef:managerVariant>Some manager Variant</stRef:managerVariant>
+			<stRef:manageTo>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageTo>
+			<stRef:manageUI>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageUI>
+		</fs:resrefprop6>
+		<fs:resrefprop7 rdf:parseType="Resource">
+			<stRef:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stRef:instanceID>
+			<stRef:documentID>xmp.did:31E5D903DD43E4119B3497CCC3E836F2</stRef:documentID>
+			<stRef:versionID>xmp.did:28F65C036B3DE411897DA7E3AC9CE628</stRef:versionID>
+			<stRef:renditionClass>proof:pdf</stRef:renditionClass>
+			<stRef:renditionParams>Some rendition parameters</stRef:renditionParams>
+			<stRef:manager>Some Agent Name</stRef:manager>
+			<stRef:managerVariant>
+				<rdf:Alt>
+					<rdf:li xml:lang="x-default">Some text</rdf:li>
+				</rdf:Alt>
+			</stRef:managerVariant>
+			<stRef:manageTo>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageTo>
+			<stRef:manageUI>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageUI>
+		</fs:resrefprop7>
+		<fs:resrefprop8 rdf:parseType="Resource">
+			<stRef:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stRef:instanceID>
+			<stRef:documentID>xmp.did:31E5D903DD43E4119B3497CCC3E836F2</stRef:documentID>
+			<stRef:versionID>xmp.did:28F65C036B3DE411897DA7E3AC9CE628</stRef:versionID>
+			<stRef:renditionClass>proof:pdf</stRef:renditionClass>
+			<stRef:renditionParams>Some rendition parameters</stRef:renditionParams>
+			<stRef:manager>Some Agent Name</stRef:manager>
+			<stRef:managerVariant>Some manager Variant</stRef:managerVariant>
+			<stRef:manageTo rdf:parseType="Resource">
+				<stDim:w>256.0</stDim:w>
+				<stDim:h>324.0</stDim:h>
+				<stDim:unit>mm</stDim:unit>
+			</stRef:manageTo>
+			<stRef:manageUI>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageUI>
+		</fs:resrefprop8>
+		<fs:resrefprop9 rdf:parseType="Resource">
+			<stRef:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stRef:instanceID>
+			<stRef:documentID>xmp.did:31E5D903DD43E4119B3497CCC3E836F2</stRef:documentID>
+			<stRef:versionID>xmp.did:28F65C036B3DE411897DA7E3AC9CE628</stRef:versionID>
+			<stRef:renditionClass>proof:pdf</stRef:renditionClass>
+			<stRef:renditionParams>Some rendition parameters</stRef:renditionParams>
+			<stRef:manager>Some Agent Name</stRef:manager>
+			<stRef:managerVariant>Some manager Variant</stRef:managerVariant>
+			<stRef:manageTo>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageTo>
+			<stRef:manageUI>
+				<rdf:Alt>
+					<rdf:li xml:lang="x-default">SomeLangText</rdf:li>
+					<rdf:li xml:lang="en-us">SomeLangText</rdf:li>
+					<rdf:li xml:lang="fr-fr">SomeLangText</rdf:li>
+				</rdf:Alt>
+			</stRef:manageUI>
+		</fs:resrefprop9>		
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

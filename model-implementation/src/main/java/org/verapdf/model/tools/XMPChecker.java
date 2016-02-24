@@ -1,14 +1,10 @@
 package org.verapdf.model.tools;
 
+import com.adobe.xmp.XMPException;
+import com.adobe.xmp.impl.VeraPDFMeta;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
 import org.apache.pdfbox.util.DateConverter;
-import org.apache.xmpbox.XMPMetadata;
-import org.apache.xmpbox.schema.AdobePDFSchema;
-import org.apache.xmpbox.schema.DublinCoreSchema;
-import org.apache.xmpbox.schema.XMPBasicSchema;
-import org.apache.xmpbox.xml.DomXmpParser;
-import org.apache.xmpbox.xml.XmpParsingException;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -51,14 +47,13 @@ public final class XMPChecker {
     private static final int MAX_REQUIRED_RECORDS = 8;
 
     private XMPChecker() {
-		// disable default constructor
+        // disable default constructor
     }
 
     /**
      * Matches properties of document information dictionary and xmp metadata.
-     * 
-     * @param document
-     *            which will be tested
+     *
+     * @param document which will be tested
      * @return true if fields of xmp matches with fields of info dictionary
      */
     public static Boolean doesInfoMatchXMP(COSDocument document) {
@@ -70,9 +65,7 @@ public final class XMPChecker {
         try {
             COSStream meta = getMetadataDictionary(document);
             if (meta != null) {
-                DomXmpParser xmpParser = new DomXmpParser();
-                XMPMetadata metadata = xmpParser.parse(meta
-                        .getUnfilteredStream());
+                VeraPDFMeta metadata = VeraPDFMeta.parse(meta.getUnfilteredStream());
 
                 Map<String, Object> properties = new HashMap<>(
                         MAX_REQUIRED_RECORDS);
@@ -89,7 +82,7 @@ public final class XMPChecker {
             LOGGER.error(
                     "Problems with document parsing or structure. "
                             + e.getMessage(), e);
-        } catch (XmpParsingException e) {
+        } catch (XMPException e) {
             LOGGER.error("Problems with XMP parsing. " + e.getMessage(), e);
         }
 
@@ -109,7 +102,7 @@ public final class XMPChecker {
 
     private static COSDictionary getInformationDictionary(COSDocument document) {
         final COSObject info = (COSObject) document.getTrailer().getItem(
-				COSName.INFO);
+                COSName.INFO);
         if (info != null) {
             if (info.getObject() instanceof COSDictionary) {
                 return (COSDictionary) info.getObject();
@@ -130,83 +123,58 @@ public final class XMPChecker {
         }
     }
 
-    private static void getTitleAuthorSubject(XMPMetadata metadata,
-            Map<String, Object> properties) {
-        DublinCoreSchema dc = metadata.getDublinCoreSchema();
-        if (dc != null) {
-            final List<String> buffer = dc.getCreators();
-            putProperty(properties, TITLE, dc.getTitle());
-            putProperty(properties, SUBJECT, dc.getDescription());
-            if (buffer != null) {
-                putProperty(properties, AUTHOR,
-                        buffer.toArray(new String[buffer.size()]));
-            }
+    private static void getTitleAuthorSubject(VeraPDFMeta metadata,
+                                              Map<String, Object> properties) throws XMPException {
+
+        putProperty(properties, TITLE, metadata.getTitle());
+        putProperty(properties, SUBJECT, metadata.getDescription());
+        final List<String> buffer = metadata.getCreator();
+        if (buffer != null) {
+            putProperty(properties, AUTHOR, buffer);
         }
     }
 
-    private static void getProducerKeywords(XMPMetadata metadata,
-            Map<String, Object> properties) {
-        AdobePDFSchema pdf = metadata.getAdobePDFSchema();
-        if (pdf != null) {
-            putProperty(properties, KEYWORDS, pdf.getKeywords());
-            putProperty(properties, PRODUCER, pdf.getProducer());
-        }
+    private static void getProducerKeywords(VeraPDFMeta metadata,
+                                            Map<String, Object> properties) throws XMPException {
+        putProperty(properties, KEYWORDS, metadata.getKeywords());
+        putProperty(properties, PRODUCER, metadata.getProducer());
     }
 
-    private static void getCreatorAndDates(XMPMetadata metadata,
-            Map<String, Object> properties) {
-        XMPBasicSchema basic = metadata.getXMPBasicSchema();
-        if (basic != null) {
-            putProperty(properties, CREATOR, basic.getCreatorTool());
-            putProperty(properties, CREATION_DATE, basic.getCreateDate());
-            putProperty(properties, MODIFICATION_DATE, basic.getModifyDate());
-        }
+    private static void getCreatorAndDates(VeraPDFMeta metadata,
+                                           Map<String, Object> properties) throws XMPException {
+        putProperty(properties, CREATOR, metadata.getCreatorTool());
+        putProperty(properties, CREATION_DATE, metadata.getCreateDate());
+        putProperty(properties, MODIFICATION_DATE, metadata.getModifyDate());
     }
 
     private static void putProperty(Map<String, Object> properties, String key,
-            String... values) {
-        if (values != null) {
-            StringBuilder builder = new StringBuilder();
-            for (String value : values) {
-                if (value != null) {
-                    builder.append(value).append(" ");
-                }
-            }
-            if (builder.length() > 0) {
-                // need to discard last space
-                properties.put(key, builder.substring(0, builder.length() - 1));
-            }
-        }
-    }
-
-    private static void putProperty(Map<String, Object> properties, String key,
-            Calendar date) {
-        if (date != null) {
-            properties.put(key, date);
+                                    Object value) {
+        if (value != null) {
+            properties.put(key, value);
         }
     }
 
     private static Boolean checkMatch(COSDictionary info,
-            Map<String, Object> properties) {
-		boolean isDublinCoreMatch = checkProperty(info, properties, TITLE)
-				&& checkProperty(info, properties, SUBJECT)
-				&& checkProperty(info, properties, AUTHOR);
-		if (!isDublinCoreMatch) {
+                                      Map<String, Object> properties) {
+        boolean isDublinCoreMatch = checkProperty(info, properties, TITLE)
+                && checkProperty(info, properties, SUBJECT)
+                && checkProperty(info, properties, AUTHOR);
+        if (!isDublinCoreMatch) {
             return Boolean.FALSE;
         }
-		boolean isAdobePDFMatch = checkProperty(info, properties, KEYWORDS)
-				&& checkProperty(info, properties, PRODUCER);
-		if (!isAdobePDFMatch) {
-			return Boolean.FALSE;
-		}
-		boolean isXMPBasicMatch = checkProperty(info, properties, CREATOR)
-				&& checkProperty(info, properties, CREATION_DATE)
-				&& checkProperty(info, properties, MODIFICATION_DATE);
-		return Boolean.valueOf(isXMPBasicMatch);
+        boolean isAdobePDFMatch = checkProperty(info, properties, KEYWORDS)
+                && checkProperty(info, properties, PRODUCER);
+        if (!isAdobePDFMatch) {
+            return Boolean.FALSE;
+        }
+        boolean isXMPBasicMatch = checkProperty(info, properties, CREATOR)
+                && checkProperty(info, properties, CREATION_DATE)
+                && checkProperty(info, properties, MODIFICATION_DATE);
+        return Boolean.valueOf(isXMPBasicMatch);
     }
 
     private static Boolean checkProperty(COSDictionary info,
-            Map<String, Object> properties, String checksRule) {
+                                         Map<String, Object> properties, String checksRule) {
         final COSBase item = info.getItem(checksRule);
         if (item == null || item instanceof COSNull) {
             return Boolean.TRUE;
@@ -223,7 +191,7 @@ public final class XMPChecker {
     }
 
     private static Boolean deepPropertyCheck(COSObject item,
-            Map<String, Object> properties, String checksRule) {
+                                             Map<String, Object> properties, String checksRule) {
         final COSBase external = item.getObject();
         if (external == null || external instanceof COSNull) {
             return Boolean.TRUE;
@@ -239,31 +207,34 @@ public final class XMPChecker {
     }
 
     private static Boolean checkCOSStringProperty(COSString string,
-            Map<String, Object> properties, String checksRule) {
+                                                  Map<String, Object> properties, String checksRule) {
         final Object value = properties.get(checksRule);
         if (value != null) {
             if (value instanceof String) {
                 return Boolean.valueOf(value.equals(string.getString()));
+            } else if (value instanceof List) {
+                List list = (List) value;
+                return Boolean.valueOf(list.size() == 1 && list.get(0).equals(string.getString()));
             } else if (value instanceof Calendar) {
                 // DateConverter can parse as pdf date format as simple date
                 // format
                 final String regex = "(D:)?(\\d\\d){2,7}((([+-](\\d\\d[']))(\\d\\d['])?)?|[Z])";
-				String ascii = string.getASCII();
-				if (ascii.matches(regex)) {
+                String ascii = string.getASCII();
+                if (ascii.matches(regex)) {
                     final Calendar valueDate = getCalendar(ascii);
                     return Boolean.valueOf(valueDate != null
                             && valueDate.compareTo((Calendar) value) == 0);
                 } else {
-					LOGGER.warn("Date format in info dictionary is not complies pdf date format");
-				}
+                    LOGGER.warn("Date format in info dictionary is not complies pdf date format");
+                }
             }
         }
         return Boolean.FALSE;
     }
 
-	private static Calendar getCalendar(String date) {
-		Matcher matcher = Pattern
-				.compile("((([+-](\\d\\d[']))(\\d\\d['])?)|[Z])").matcher(date);
-		return DateConverter.toCalendar(date, matcher.find());
-	}
+    private static Calendar getCalendar(String date) {
+        Matcher matcher = Pattern
+                .compile("((([+-](\\d\\d[']))(\\d\\d['])?)|[Z])").matcher(date);
+        return DateConverter.toCalendar(date, matcher.find());
+    }
 }

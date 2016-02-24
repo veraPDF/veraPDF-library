@@ -1,0 +1,43 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ResourceRef value type</pdfaProperty:description>
+								<pdfaProperty:name>resrefprop</pdfaProperty:name>
+								<pdfaProperty:valueType>ResourceRef</pdfaProperty:valueType>
+							</rdf:li>
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
+					   xmlns:stRef="http://ns.adobe.com/xap/1.0/sType/ResourceRef#"
+	  >
+		<fs:resrefprop rdf:parseType="Resource">
+			<stRef:instanceID>uuid:92255764-8e98-4663-9e55-e3859d617fa2</stRef:instanceID>
+			<stRef:documentID>xmp.did:31E5D903DD43E4119B3497CCC3E836F2</stRef:documentID>
+			<stRef:versionID>xmp.did:28F65C036B3DE411897DA7E3AC9CE628</stRef:versionID>
+			<stRef:renditionClass>proof:pdf</stRef:renditionClass>
+			<stRef:renditionParams>Some rendition parameters</stRef:renditionParams>
+			<stRef:manager>Some Agent Name</stRef:manager>
+			<stRef:managerVariant>Some manager Variant</stRef:managerVariant>
+			<stRef:manageTo>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageTo>
+			<stRef:manageUI>xmp.did:99C055B56D05E211A498A60E1CBF664</stRef:manageUI>
+		</fs:resrefprop>
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

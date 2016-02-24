@@ -1,0 +1,119 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="error" type="errorDetails"/>
+
+  <xs:element name="reference" type="reference"/>
+
+  <xs:element name="rule" type="rule"/>
+
+  <xs:element name="ruleId" type="ruleId"/>
+
+  <xs:element name="variable" type="variable"/>
+
+  <xs:complexType name="validationProfile" final="extension restriction">
+    <xs:sequence>
+      <xs:element name="details" type="profileDetails" minOccurs="0"/>
+      <xs:element name="hash" type="xs:string" minOccurs="0"/>
+      <xs:element name="rules" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="rule" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="variables" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="variable" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="flavour" type="pdfaFlavour"/>
+  </xs:complexType>
+
+  <xs:complexType name="profileDetails" final="extension restriction">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="creator" type="xs:string"/>
+    <xs:attribute name="created" type="xs:dateTime"/>
+  </xs:complexType>
+
+  <xs:complexType name="rule" final="extension restriction">
+    <xs:sequence>
+      <xs:element name="id" type="ruleId" minOccurs="0"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="test" type="xs:string" minOccurs="0"/>
+      <xs:element ref="error" minOccurs="0"/>
+      <xs:element name="references" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="reference" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="object" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="ruleId" final="extension restriction">
+    <xs:sequence/>
+    <xs:attribute name="specification" type="specification"/>
+    <xs:attribute name="clause" type="xs:string"/>
+    <xs:attribute name="testNumber" type="xs:int" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="errorDetails" final="extension restriction">
+    <xs:sequence>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+      <xs:element name="arguments" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="argument" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="reference" final="extension restriction">
+    <xs:sequence/>
+    <xs:attribute name="specification" type="xs:string"/>
+    <xs:attribute name="clause" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="variable" final="extension restriction">
+    <xs:sequence>
+      <xs:element name="defaultValue" type="xs:string" minOccurs="0"/>
+      <xs:element name="value" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string"/>
+    <xs:attribute name="object" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:simpleType name="pdfaFlavour">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NO_FLAVOUR"/>
+      <xs:enumeration value="PDFA_1_A"/>
+      <xs:enumeration value="PDFA_1_B"/>
+      <xs:enumeration value="PDFA_2_A"/>
+      <xs:enumeration value="PDFA_2_B"/>
+      <xs:enumeration value="PDFA_2_U"/>
+      <xs:enumeration value="PDFA_3_A"/>
+      <xs:enumeration value="PDFA_3_B"/>
+      <xs:enumeration value="PDFA_3_U"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="specification">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NO_STANDARD"/>
+      <xs:enumeration value="ISO_19005_1"/>
+      <xs:enumeration value="ISO_19005_2"/>
+      <xs:enumeration value="ISO_19005_3"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

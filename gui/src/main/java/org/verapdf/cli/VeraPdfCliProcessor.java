@@ -101,7 +101,12 @@ final class VeraPdfCliProcessor {
                 featuresCollection = PBFeatureParser
                         .getFeaturesCollection(toValidate.getPDDocument());
             }
-        } catch (IOException | ValidationException e) {
+        } catch (IOException e) {
+            System.err.println("Failed to parse pdf file "
+                    + item.getName());
+            //TODO : do we need stacktrace in cli application?
+            //e.printStackTrace();
+        } catch (ValidationException e) {
             System.err.println("Exception raised while validating "
                     + item.getName());
             e.printStackTrace();
@@ -166,11 +171,11 @@ final class VeraPdfCliProcessor {
     private static boolean checkFileCanBeProcessed(final File file) {
         if (!file.isFile()) {
             System.err.println("Path " + file.getAbsolutePath()
-                    + "is not an existing file.");
+                    + " is not an existing file.");
             return false;
         } else if (!file.canRead()) {
             System.err.println("Path " + file.getAbsolutePath()
-                    + "is not a readable file.");
+                    + " is not a readable file.");
             return false;
         }
         return true;

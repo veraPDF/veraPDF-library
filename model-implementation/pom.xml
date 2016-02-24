@@ -6,7 +6,7 @@
   <parent>
     <artifactId>verapdf-library</artifactId>
     <groupId>org.verapdf</groupId>
-    <version>0.8.0</version>
+    <version>0.9.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>model-implementation</artifactId>
@@ -23,12 +23,9 @@
       <artifactId>preflight</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.verapdf.pdfbox</groupId>
-      <artifactId>xmpbox</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.verapdf</groupId>
       <artifactId>pdf-model</artifactId>
+      <version>${verapdf.model.version}</version>
     </dependency>
     <dependency>
       <groupId>org.verapdf</groupId>
@@ -41,6 +38,10 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>verapdf-xmp-core</artifactId>
     </dependency>
   </dependencies>
 </project>

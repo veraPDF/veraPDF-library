@@ -1,26 +1,21 @@
 package org.verapdf.gui;
 
 import org.apache.log4j.Logger;
-import org.verapdf.core.ProfileException;
-import org.verapdf.core.ValidationException;
 import org.verapdf.gui.config.Config;
 import org.verapdf.gui.tools.GUIConstants;
 import org.verapdf.gui.tools.ProcessingType;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.validation.profile.parser.LegacyProfileConverter;
-import org.verapdf.validation.profile.parser.ValidationProfileParser;
-import org.xml.sax.SAXException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
+import javax.xml.bind.JAXBException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -185,7 +180,7 @@ class CheckerPanel extends JPanel {
 		final JLabel processType = new JLabel(GUIConstants.PROCESSING_TYPE);
 		setGridBagConstraintsParameters(gbc,
 				0,
-				3,
+				2,
 				0,
 				1,
 				1,
@@ -197,7 +192,7 @@ class CheckerPanel extends JPanel {
 		this.processingType = new JComboBox<>(ProcessingType.values());
 		setGridBagConstraintsParameters(gbc,
 				1,
-				3,
+				2,
 				0,
 				1,
 				1,
@@ -210,7 +205,7 @@ class CheckerPanel extends JPanel {
 		this.fixMetadata.setSelected(false);
 		setGridBagConstraintsParameters(gbc,
 				2,
-				3,
+				2,
 				0,
 				1,
 				1,
@@ -285,12 +280,8 @@ class CheckerPanel extends JPanel {
 				try {
 					ProcessingType type = (ProcessingType) CheckerPanel.this.processingType.getSelectedItem();
 
-					org.verapdf.validation.profile.model.ValidationProfile toConvert = ValidationProfileParser
-		                    .parseFromFilePath(
-									profile.getAbsolutePath(),
-									false);
-					ValidationProfile prof = LegacyProfileConverter.fromLegacyProfile(toConvert);
-                    CheckerPanel.this.validateWorker = new ValidateWorker(
+					ValidationProfile prof = Profiles.profileFromXml(new FileInputStream(profile));
+					CheckerPanel.this.validateWorker = new ValidateWorker(
                             CheckerPanel.this, CheckerPanel.this.pdfFile, prof,
                             CheckerPanel.this.config, type,
                             CheckerPanel.this.fixMetadata.isSelected());
@@ -305,7 +296,7 @@ class CheckerPanel extends JPanel {
 					CheckerPanel.this.viewHTML.setEnabled(false);
 					CheckerPanel.this.saveHTML.setEnabled(false);
 					CheckerPanel.this.validateWorker.execute();
-				} catch (IllegalArgumentException | ProfileException | ValidationException | ParserConfigurationException | SAXException | IOException | XMLStreamException exep) {
+				} catch (IllegalArgumentException | IOException | JAXBException exep) {
 					JOptionPane.showMessageDialog(CheckerPanel.this, exep.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					LOGGER.error(exep);
 				}
