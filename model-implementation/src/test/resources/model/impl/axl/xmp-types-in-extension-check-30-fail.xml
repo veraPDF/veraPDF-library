@@ -1,0 +1,109 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - beatSpliceStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>bsstimeprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>beatSpliceStretch</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - beatSpliceStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>bsstimeprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>beatSpliceStretch</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - beatSpliceStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>bsstimeprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>beatSpliceStretch</pdfaProperty:valueType>
+							</rdf:li>		
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - beatSpliceStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>bsstimeprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>beatSpliceStretch</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - beatSpliceStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>bsstimeprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>beatSpliceStretch</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - beatSpliceStretch value type</pdfaProperty:description>
+								<pdfaProperty:name>bsstimeprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>beatSpliceStretch</pdfaProperty:valueType>
+							</rdf:li>								
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
+					   xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
+		<fs:bsstimeprop1 rdf:parseType="Resource">
+			<xmpDM:useFileBeatsMarker>TRUE</xmpDM:useFileBeatsMarker>
+			<xmpDM:riseInDecibel>1.0</xmpDM:riseInDecibel>
+			<xmpDM:riseInTimeDuration rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
+			</xmpDM:riseInTimeDuration>
+		</fs:bsstimeprop1>
+		<fs:bsstimeprop2 rdf:parseType="Resource">
+			<xmpDM:useFileBeatsMarker>FALSE</xmpDM:useFileBeatsMarker>
+			<xmpDM:riseInDecibel>-91.052630</xmpDM:riseInDecibel>
+			<xmpDM:riseInTimeDuration rdf:parseType="Resource">
+				<xmpDM:value>100</xmpDM:value>
+				<xmpDM:scale>1/50</xmpDM:scale>
+			</xmpDM:riseInTimeDuration>
+		</fs:bsstimeprop2>
+		<fs:bsstimeprop3 rdf:parseType="Resource">
+			<xmpDM:useFileBeatsMarker>1</xmpDM:useFileBeatsMarker>
+			<xmpDM:riseInDecibel>+1.0</xmpDM:riseInDecibel>
+			<xmpDM:riseInTimeDuration rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
+			</xmpDM:riseInTimeDuration>
+		</fs:bsstimeprop3>
+		<fs:bsstimeprop4 rdf:parseType="Resource">
+			<xmpDM:useFileBeatsMarker>True</xmpDM:useFileBeatsMarker>
+			<xmpDM:riseInDecibel>1⅜</xmpDM:riseInDecibel>
+			<xmpDM:riseInTimeDuration rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
+			</xmpDM:riseInTimeDuration>
+		</fs:bsstimeprop4>		
+		<fs:bsstimeprop5 rdf:parseType="Resource">
+			<xmpDM:useFileBeatsMarker>True</xmpDM:useFileBeatsMarker>
+			<xmpDM:riseInDecibel>1.0</xmpDM:riseInDecibel>
+			<xmpDM:riseInTimeDuration rdf:parseType="Resource">
+				<xmpDM:value>50.000</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
+			</xmpDM:riseInTimeDuration>
+		</fs:bsstimeprop5>
+		<fs:bsstimeprop6 rdf:parseType="Resource">
+			<xmpDM:useFileBeatsMarker>True</xmpDM:useFileBeatsMarker>
+			<xmpDM:riseInDecibel>1⅜</xmpDM:riseInDecibel>
+			<xmpDM:riseInTimeDuration rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>PAL 25fps</xmpDM:scale>
+			</xmpDM:riseInTimeDuration>
+		</fs:bsstimeprop6>		
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

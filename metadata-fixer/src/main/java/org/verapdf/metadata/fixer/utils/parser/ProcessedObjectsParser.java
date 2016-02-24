@@ -1,6 +1,7 @@
 package org.verapdf.metadata.fixer.utils.parser;
 
 import org.verapdf.metadata.fixer.utils.model.ProcessedObjects;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -13,12 +14,12 @@ import java.net.URISyntaxException;
  */
 public interface ProcessedObjectsParser {
 
-	ProcessedObjects getProcessedObjects() throws IOException, URISyntaxException, ParserConfigurationException, SAXException;
+	ProcessedObjects getProcessedObjects(PDFAFlavour flavour) throws IOException, URISyntaxException, ParserConfigurationException, SAXException;
 
 	ProcessedObjects getProcessedObjects(String path) throws IOException, SAXException, ParserConfigurationException;
 
 	ProcessedObjects getProcessedObjects(InputStream file) throws ParserConfigurationException, IOException, SAXException;
 
-	String getProcessedObjectsPathProperty();
+	String getProcessedObjectsPathProperty(PDFAFlavour flavour);
 
 }

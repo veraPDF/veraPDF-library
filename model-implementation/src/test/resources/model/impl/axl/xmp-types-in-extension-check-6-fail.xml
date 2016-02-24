@@ -1,0 +1,74 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Lang Alt value type</pdfaProperty:description>
+								<pdfaProperty:name>langprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>Lang Alt</pdfaProperty:valueType>
+							</rdf:li>		
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Lang Alt value type</pdfaProperty:description>
+								<pdfaProperty:name>langprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>Lang Alt</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Lang Alt value type</pdfaProperty:description>
+								<pdfaProperty:name>langprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>Lang Alt</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Lang Alt value type</pdfaProperty:description>
+								<pdfaProperty:name>langprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>Lang Alt</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Lang Alt value type</pdfaProperty:description>
+								<pdfaProperty:name>langprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>Lang Alt</pdfaProperty:valueType>
+							</rdf:li>								
+						</rdf:Seq>		
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
+		<fs:langprop1 xml:lang="x-default">SomeLangText</fs:langprop1>
+		<fs:langprop2>
+			<rdf:Alt>
+				<rdf:li>SomeLangText</rdf:li>
+			</rdf:Alt>				
+		</fs:langprop2>		
+		<fs:langprop3>
+			<rdf:Seq>
+				<rdf:li xml:lang="de">SomeLangText</rdf:li>
+			</rdf:Seq>				
+		</fs:langprop3>		
+		<fs:langprop4>
+			<rdf:Bag>
+				<rdf:li xml:lang="de">SomeLangText</rdf:li>
+			</rdf:Bag>				
+		</fs:langprop4>		
+		<fs:langprop5 rdf:parseType="Resource">
+			<rdf:something1 xml:lang="de">SomeLangText</rdf:something1>
+			<rdf:something2 xml:lang="fr-fr">SomeLangText</rdf:something2>
+		</fs:langprop5>				
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

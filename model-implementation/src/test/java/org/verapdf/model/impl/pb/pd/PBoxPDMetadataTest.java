@@ -5,8 +5,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.impl.BaseTest;
+import org.verapdf.model.impl.axl.AXLMainXMPPackage;
 import org.verapdf.model.impl.pb.cos.PBCosStream;
-import org.verapdf.model.impl.pb.xmp.PBXMPMainPackage;
 import org.verapdf.model.pdlayer.PDMetadata;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class PBoxPDMetadataTest extends BaseTest {
 				actual.getLinkedObjects(PBoxPDMetadata.XMP_PACKAGE);
 		Assert.assertEquals(1, packages.size());
 		for (Object object : packages) {
-			Assert.assertEquals(PBXMPMainPackage.XMP_MAIN_PACKAGE_TYPE, object.getObjectType());
+			Assert.assertEquals(AXLMainXMPPackage.MAIN_XMP_PACKAGE_TYPE, object.getObjectType());
 		}
 	}
 

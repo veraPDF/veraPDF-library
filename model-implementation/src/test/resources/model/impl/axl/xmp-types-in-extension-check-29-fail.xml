@@ -1,0 +1,206 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Font value type</pdfaProperty:description>
+								<pdfaProperty:name>fontprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>Font</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Font value type</pdfaProperty:description>
+								<pdfaProperty:name>fontprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>Font</pdfaProperty:valueType>
+							</rdf:li>			
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Font value type</pdfaProperty:description>
+								<pdfaProperty:name>fontprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>Font</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Font value type</pdfaProperty:description>
+								<pdfaProperty:name>fontprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>Font</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Font value type</pdfaProperty:description>
+								<pdfaProperty:name>fontprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>Font</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Font value type</pdfaProperty:description>
+								<pdfaProperty:name>fontprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>Font</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Font value type</pdfaProperty:description>
+								<pdfaProperty:name>fontprop7</pdfaProperty:name>
+								<pdfaProperty:valueType>Font</pdfaProperty:valueType>
+							</rdf:li>	
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Font value type</pdfaProperty:description>
+								<pdfaProperty:name>fontprop8</pdfaProperty:name>
+								<pdfaProperty:valueType>Font</pdfaProperty:valueType>
+							</rdf:li>								
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/" xmlns:stFnt="http:ns.adobe.com/xap/1.0/sType/Font#">
+		<fs:fontprop1 rdf:parseType="Resource">
+			<stFnt:fontName>
+				<rdf:Seq>
+					<rdf:li>Some font name</rdf:li>
+				</rdf:Seq>
+			</stFnt:fontName>
+			<stFnt:fontFamily>Some font family name</stFnt:fontFamily>
+			<stFnt:fontFace>Some font face name</stFnt:fontFace>
+			<stFnt:fontType>Open Type</stFnt:fontType>
+			<stFnt:versionString>nameID 5</stFnt:versionString>
+			<stFnt:composite>True</stFnt:composite>
+			<stFnt:fontFileName>Some font file name</stFnt:fontFileName>		
+			<stFnt:childFontFiles>
+				<rdf:Seq>
+					<rdf:li>First file name</rdf:li>
+					<rdf:li>Second file name</rdf:li>
+					<rdf:li>Third file name</rdf:li>
+				</rdf:Seq>
+			</stFnt:childFontFiles>						
+		</fs:fontprop1>
+		<fs:fontprop2 rdf:parseType="Resource">
+			<stFnt:fontName>Some PS font name</stFnt:fontName>
+			<stFnt:fontFamily>
+				<rdf:Bag>
+					<rdf:li>Some font family name</rdf:li>
+				</rdf:Bag>
+			</stFnt:fontFamily>
+			<stFnt:fontFace>Some font face name</stFnt:fontFace>
+			<stFnt:fontType>Type1</stFnt:fontType>
+			<stFnt:versionString>/version</stFnt:versionString>
+			<stFnt:composite>False</stFnt:composite>
+			<stFnt:fontFileName>Some font file name</stFnt:fontFileName>		
+			<stFnt:childFontFiles>
+				<rdf:Seq>
+					<rdf:li>First file name</rdf:li>
+				</rdf:Seq>
+			</stFnt:childFontFiles>						
+		</fs:fontprop2>		
+		<fs:fontprop3 rdf:parseType="Resource">
+			<stFnt:fontName>Some PS font name</stFnt:fontName>
+			<stFnt:fontFamily>Some font family name</stFnt:fontFamily>
+			<stFnt:fontFace>
+				<rdf:Alt>
+					<rdf:li xml:lang="x-default">Some font name</rdf:li>
+				</rdf:Alt>
+			</stFnt:fontFace>
+			<stFnt:fontType>Type1</stFnt:fontType>
+			<stFnt:versionString>/version</stFnt:versionString>
+			<stFnt:composite>False</stFnt:composite>
+			<stFnt:fontFileName>Some font file name</stFnt:fontFileName>		
+			<stFnt:childFontFiles>
+				<rdf:Seq>
+					<rdf:li>First file name</rdf:li>
+				</rdf:Seq>
+			</stFnt:childFontFiles>						
+		</fs:fontprop3>		
+		<fs:fontprop4 rdf:parseType="Resource">
+			<stFnt:fontName>Some PS font name</stFnt:fontName>
+			<stFnt:fontFamily>Some font family name</stFnt:fontFamily>
+			<stFnt:fontFace>Some font face name</stFnt:fontFace>
+			<stFnt:fontType>
+				<rdf:Seq>
+					<rdf:li>Some font Type</rdf:li>
+				</rdf:Seq>
+			</stFnt:fontType>
+			<stFnt:versionString>/version</stFnt:versionString>
+			<stFnt:composite>False</stFnt:composite>
+			<stFnt:fontFileName>Some font file name</stFnt:fontFileName>		
+			<stFnt:childFontFiles>
+				<rdf:Seq>
+					<rdf:li>First file name</rdf:li>
+				</rdf:Seq>
+			</stFnt:childFontFiles>						
+		</fs:fontprop4>		
+		<fs:fontprop5 rdf:parseType="Resource">
+			<stFnt:fontName>Some PS font name</stFnt:fontName>
+			<stFnt:fontFamily>Some font family name</stFnt:fontFamily>
+			<stFnt:fontFace>Some font face name</stFnt:fontFace>
+			<stFnt:fontType>Type1</stFnt:fontType>
+			<stFnt:versionString>
+				<rdf:Alt>
+					<rdf:li>/version</rdf:li>
+				</rdf:Alt>
+			</stFnt:versionString>
+			<stFnt:composite>False</stFnt:composite>
+			<stFnt:fontFileName>Some font file name</stFnt:fontFileName>		
+			<stFnt:childFontFiles>
+				<rdf:Seq>
+					<rdf:li>First file name</rdf:li>
+				</rdf:Seq>
+			</stFnt:childFontFiles>						
+		</fs:fontprop5>		
+		<fs:fontprop6 rdf:parseType="Resource">
+			<stFnt:fontName>Some PS font name</stFnt:fontName>
+			<stFnt:fontFamily>Some font family name</stFnt:fontFamily>
+			<stFnt:fontFace>Some font face name</stFnt:fontFace>
+			<stFnt:fontType>Type1</stFnt:fontType>
+			<stFnt:versionString>/version</stFnt:versionString>
+			<stFnt:composite>0</stFnt:composite>
+			<stFnt:fontFileName>Some font file name</stFnt:fontFileName>		
+			<stFnt:childFontFiles>
+				<rdf:Seq>
+					<rdf:li>First file name</rdf:li>
+				</rdf:Seq>
+			</stFnt:childFontFiles>						
+		</fs:fontprop6>		
+		<fs:fontprop7 rdf:parseType="Resource">
+			<stFnt:fontName>Some PS font name</stFnt:fontName>
+			<stFnt:fontFamily>Some font family name</stFnt:fontFamily>
+			<stFnt:fontFace>Some font face name</stFnt:fontFace>
+			<stFnt:fontType>Type1</stFnt:fontType>
+			<stFnt:versionString>/version</stFnt:versionString>
+			<stFnt:composite>False</stFnt:composite>
+			<stFnt:fontFileName>
+				<rdf:Seq>
+					<rdf:li>Some font file name</rdf:li>
+				</rdf:Seq>
+			</stFnt:fontFileName>		
+			<stFnt:childFontFiles>
+				<rdf:Seq>
+					<rdf:li>First file name</rdf:li>
+				</rdf:Seq>
+			</stFnt:childFontFiles>						
+		</fs:fontprop7>		
+		<fs:fontprop8 rdf:parseType="Resource">
+			<stFnt:fontName>Some PS font name</stFnt:fontName>
+			<stFnt:fontFamily>Some font family name</stFnt:fontFamily>
+			<stFnt:fontFace>Some font face name</stFnt:fontFace>
+			<stFnt:fontType>Type1</stFnt:fontType>
+			<stFnt:versionString>/version</stFnt:versionString>
+			<stFnt:composite>False</stFnt:composite>
+			<stFnt:fontFileName>Some font file name</stFnt:fontFileName>		
+			<stFnt:childFontFiles>First file name</stFnt:childFontFiles>						
+		</fs:fontprop8>				
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

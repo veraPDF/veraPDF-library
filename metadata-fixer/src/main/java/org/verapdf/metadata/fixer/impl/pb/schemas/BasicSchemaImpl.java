@@ -1,7 +1,6 @@
 package org.verapdf.metadata.fixer.impl.pb.schemas;
 
-import org.apache.xmpbox.schema.XMPSchema;
-import org.apache.xmpbox.type.AbstractField;
+import com.adobe.xmp.impl.VeraPDFMeta;
 import org.verapdf.metadata.fixer.entity.Metadata;
 import org.verapdf.metadata.fixer.schemas.BasicSchema;
 
@@ -10,30 +9,23 @@ import org.verapdf.metadata.fixer.schemas.BasicSchema;
  */
 public abstract class BasicSchemaImpl implements BasicSchema {
 
-	protected final XMPSchema schema;
+	protected final VeraPDFMeta meta;
 	protected final Metadata metadata;
 
-	protected BasicSchemaImpl(XMPSchema schema, Metadata metadata) {
-		if (schema == null) {
+	protected BasicSchemaImpl(VeraPDFMeta meta, Metadata metadata) {
+		if (meta == null) {
 			throw new IllegalArgumentException("Schema representation can not be null");
 		}
 		if (metadata == null) {
 			throw new IllegalArgumentException("Metadata representation can not be null");
 		}
-		this.schema = schema;
+		this.meta = meta;
 		this.metadata = metadata;
 	}
 
 	@Override
 	public void setNeedToBeUpdated(boolean needToBeUpdated) {
 		this.metadata.setNeedToBeUpdated(needToBeUpdated);
-	}
-
-	protected void removeProperty(String propertyName) {
-		AbstractField property = this.schema.getProperty(propertyName);
-		if (property != null) {
-			this.schema.removeProperty(property);
-		}
 	}
 
 }

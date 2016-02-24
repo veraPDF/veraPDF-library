@@ -1,12 +1,10 @@
 package org.verapdf.metadata.fixer.impl.pb.model;
 
+import com.adobe.xmp.XMPException;
+import com.adobe.xmp.impl.VeraPDFMeta;
 import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
-import org.apache.xmpbox.XMPMetadata;
-import org.apache.xmpbox.schema.PDFAIdentificationSchema;
-import org.apache.xmpbox.xml.DomXmpParser;
-import org.apache.xmpbox.xml.XmpParsingException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -49,23 +47,19 @@ public class MetadataImplTest {
 
     @Test
     public void addPDFIdentificationSchemaTest() throws URISyntaxException,
-            IOException, XmpParsingException {
+            IOException, XMPException {
         File pdf = new File(getSystemIndependentPath(filePath));
         try (PDDocument doc = PDDocument.load(pdf, false, true)) {
             PDMetadata meta = doc.getDocumentCatalog().getMetadata();
-            DomXmpParser xmpParser = new DomXmpParser();
             try (COSStream cosStream = meta.getStream()) {
-                XMPMetadata xmp = xmpParser.parse(cosStream
+                VeraPDFMeta xmp = VeraPDFMeta.parse(cosStream
                         .getUnfilteredStream());
                 MetadataImpl impl = new MetadataImpl(xmp, cosStream);
                 MetadataFixerResultImpl.Builder builder = new MetadataFixerResultImpl.Builder();
                 impl.addPDFIdentificationSchema(builder, PDFAFlavour.PDFA_1_B);
 
-                PDFAIdentificationSchema idCopy = xmp
-                        .getPDFIdentificationSchema();
-
-                assertEquals(filePart, idCopy.getPart());
-                assertEquals(fileConformance, idCopy.getConformance());
+                assertEquals(filePart, xmp.getIdentificationPart());
+                assertEquals(fileConformance, xmp.getIdentificationConformance());
             }
         }
     }
