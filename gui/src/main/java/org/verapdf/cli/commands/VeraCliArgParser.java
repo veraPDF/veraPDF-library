@@ -34,6 +34,8 @@ public class VeraCliArgParser {
     final static String EXTRACT_FLAG = FLAG_SEP + "x";
     final static String EXTRACT = OPTION_SEP + "extract";
     final static String FORMAT = OPTION_SEP + "format";
+    final static String RECURSE_FLAG = FLAG_SEP + "r";
+    final static String RECURSE = OPTION_SEP + "recurse";
 
     @Parameter(names = { HELP_FLAG, HELP }, description = "Shows this message and exits.", help = true)
     private boolean help = false;
@@ -59,6 +61,9 @@ public class VeraCliArgParser {
     @Parameter(names = { FORMAT }, description = "Choose output format:", converter = FormatConverter.class)
     private FormatOption format = FormatOption.XML;
 
+    @Parameter(names = { RECURSE_FLAG, RECURSE }, description = "Recurse directories, only files with a .pdf extension are processed.")
+    private boolean isRecurse = false;
+
     @Parameter(description = "FILES")
     private List<String> pdfPaths = new ArrayList<>();
 
@@ -74,6 +79,13 @@ public class VeraCliArgParser {
      */
     public boolean listProfiles() {
         return this.listProfiles;
+    }
+
+    /**
+     * @return true if to recursively process sub-dirs
+     */
+    public boolean isRecurse() {
+        return this.isRecurse;
     }
 
     /**
