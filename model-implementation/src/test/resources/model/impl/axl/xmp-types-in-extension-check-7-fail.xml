@@ -1,0 +1,66 @@
+<?xpacket begin='РїВ»С—' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Locale value type</pdfaProperty:description>
+								<pdfaProperty:name>locprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>Locale</pdfaProperty:valueType>
+							</rdf:li>			
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Locale value type</pdfaProperty:description>
+								<pdfaProperty:name>locprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>Locale</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Locale value type</pdfaProperty:description>
+								<pdfaProperty:name>locprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>Locale</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Locale value type</pdfaProperty:description>
+								<pdfaProperty:name>locprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>Locale</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Locale value type</pdfaProperty:description>
+								<pdfaProperty:name>locprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>Locale</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Locale value type</pdfaProperty:description>
+								<pdfaProperty:name>locprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>Locale</pdfaProperty:valueType>
+							</rdf:li>
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
+		<fs:locprop1>Some.LangTag</fs:locprop1>
+		<fs:locprop2>fr fr</fs:locprop2>
+		<fs:locprop3>1.0</fs:locprop3>
+		<fs:locprop4>+16</fs:locprop4>
+		<fs:locprop5>-de</fs:locprop5>
+		<fs:locprop6>1997-07-16T19:20:15+01:00</fs:locprop6>
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

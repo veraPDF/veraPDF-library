@@ -1,18 +1,19 @@
 package org.verapdf.model.impl.pb.pd;
 
+import com.adobe.xmp.XMPException;
+import com.adobe.xmp.impl.VeraPDFMeta;
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSStream;
-import org.apache.xmpbox.XMPMetadata;
-import org.apache.xmpbox.xml.DomXmpParser;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosStream;
+import org.verapdf.model.impl.axl.AXLMainXMPPackage;
+import org.verapdf.model.impl.axl.AXLXMPPackage;
 import org.verapdf.model.impl.pb.cos.PBCosStream;
-import org.verapdf.model.impl.pb.xmp.PBXMPMainPackage;
-import org.verapdf.model.impl.pb.xmp.PBXMPPackage;
 import org.verapdf.model.pdlayer.PDMetadata;
 import org.verapdf.model.xmplayer.XMPPackage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -70,16 +71,15 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
             COSStream stream = ((org.apache.pdfbox.pdmodel.common.PDMetadata) this.simplePDObject)
                     .getStream();
             if (stream != null) {
-                DomXmpParser xmpParser = new DomXmpParser();
-                XMPMetadata metadata = xmpParser.parse(stream
-                        .getUnfilteredStream());
-                xmp.add(this.isMainMetadata ? new PBXMPMainPackage(metadata, true, null)
-                        : new PBXMPPackage(metadata, true, null));
+                VeraPDFMeta metadata = VeraPDFMeta.parse(stream.getUnfilteredStream());
+                //TODO: change null schema definition in not main package to extension schema container from main package
+                xmp.add(this.isMainMetadata ? new AXLMainXMPPackage(metadata, true)
+                        : new AXLXMPPackage(metadata, true, null));
             }
-        } catch (Exception e) {
-            LOGGER.error("Problems with parsing metadata. " + e.getMessage());
+        } catch (XMPException | IOException e) {
+            LOGGER.error("Problems with parsing metadata. " + e.getMessage(), e);
             LOGGER.debug(e);
-            xmp.add(new PBXMPPackage(null, false, e.getMessage()));
+            xmp.add(new AXLXMPPackage(null, false, null));
         }
         return xmp;
     }

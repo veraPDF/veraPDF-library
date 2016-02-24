@@ -19,10 +19,6 @@
             <artifactId>pdfbox</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.verapdf.pdfbox</groupId>
-            <artifactId>xmpbox</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.verapdf</groupId>
             <artifactId>core</artifactId>
         </dependency>
@@ -37,6 +33,10 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.verapdf</groupId>
+            <artifactId>verapdf-xmp-core</artifactId>
         </dependency>
     </dependencies>
 

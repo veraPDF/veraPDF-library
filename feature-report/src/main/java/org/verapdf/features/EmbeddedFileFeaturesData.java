@@ -20,8 +20,8 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 		super(stream);
 		this.size = size;
 		this.checkSum = checkSum;
-		this.modDate = (Calendar) modDate.clone();
-		this.creationDate = (Calendar) creationDate.clone();
+		this.modDate = modDate == null ? null : (Calendar) modDate.clone();
+		this.creationDate = creationDate == null ? null : (Calendar) creationDate.clone();
 		this.subtype = subtype;
 		this.description = description;
 		this.name = name;

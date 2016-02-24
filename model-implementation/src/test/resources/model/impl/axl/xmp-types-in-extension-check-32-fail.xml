@@ -1,0 +1,143 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Media value type</pdfaProperty:description>
+								<pdfaProperty:name>mediaprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>Media</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Media value type</pdfaProperty:description>
+								<pdfaProperty:name>mediaprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>Media</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Media value type</pdfaProperty:description>
+								<pdfaProperty:name>mediaprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>Media</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Media value type</pdfaProperty:description>
+								<pdfaProperty:name>mediaprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>Media</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Media value type</pdfaProperty:description>
+								<pdfaProperty:name>mediaprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>Media</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Media value type</pdfaProperty:description>
+								<pdfaProperty:name>mediaprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>Media</pdfaProperty:valueType>
+							</rdf:li>							
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
+					   xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
+		<fs:mediaprop1 rdf:parseType="Resource">
+			<xmpDM:path>#!@#$ http://www. mysite.com/page?id=1</xmpDM:path>
+			<xmpDM:track>Some track name</xmpDM:track>
+			<xmpDM:startTime rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
+			</xmpDM:startTime>	
+			<xmpDM:duration rdf:parseType="Resource">
+				<xmpDM:value>20</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
+			</xmpDM:duration>		
+			<xmpDM:managed>True</xmpDM:managed>	
+			<xmpDM:webStatement>https://www.somesite.org/1</xmpDM:webStatement>			
+		</fs:mediaprop1>
+		<fs:mediaprop2 rdf:parseType="Resource">
+			<xmpDM:path>http://maps.google.com/FortWorthTexas/more+urldata</xmpDM:path>
+			<xmpDM:track>
+				<rdf:Bag>
+					<rdf:li>75.0</rdf:li>
+				</rdf:Bag>	
+			</xmpDM:track>
+			<xmpDM:startTime rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
+			</xmpDM:startTime>	
+			<xmpDM:duration rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>10/25</xmpDM:scale>
+			</xmpDM:duration>		
+			<xmpDM:managed>False</xmpDM:managed>	
+			<xmpDM:webStatement>http://mysite.com/News2?page=NewsArticleid=5243</xmpDM:webStatement>			
+		</fs:mediaprop2>	
+		<fs:mediaprop3 rdf:parseType="Resource">
+			<xmpDM:path>http://maps.google.com/FortWorthTexas/more+urldata</xmpDM:path>
+			<xmpDM:track>75.0</xmpDM:track>
+			<xmpDM:startTime>Some start time</xmpDM:startTime>	
+			<xmpDM:duration rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>10/25</xmpDM:scale>
+			</xmpDM:duration>		
+			<xmpDM:managed>False</xmpDM:managed>	
+			<xmpDM:webStatement>http://mysite.com/News2?page=NewsArticleid=5243</xmpDM:webStatement>			
+		</fs:mediaprop3>
+		<fs:mediaprop4 rdf:parseType="Resource">
+			<xmpDM:path>http://maps.google.com/FortWorthTexas/more+urldata</xmpDM:path>
+			<xmpDM:track>75.0</xmpDM:track>
+			<xmpDM:startTime rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
+			</xmpDM:startTime>	
+			<xmpDM:duration>Some Time</xmpDM:duration>		
+			<xmpDM:managed>False</xmpDM:managed>	
+			<xmpDM:webStatement>http://mysite.com/News2?page=NewsArticleid=5243</xmpDM:webStatement>			
+		</fs:mediaprop4>
+		<fs:mediaprop5 rdf:parseType="Resource">
+			<xmpDM:path>http://maps.google.com/FortWorthTexas/more+urldata</xmpDM:path>
+			<xmpDM:track>75.0</xmpDM:track>
+			<xmpDM:startTime rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
+			</xmpDM:startTime>	
+			<xmpDM:duration rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>10/25</xmpDM:scale>
+			</xmpDM:duration>		
+			<xmpDM:managed>1.0</xmpDM:managed>	
+			<xmpDM:webStatement>http://mysite.com/News2?page=NewsArticleid=5243</xmpDM:webStatement>			
+		</fs:mediaprop5>
+		<fs:mediaprop6 rdf:parseType="Resource">
+			<xmpDM:path>http://maps.google.com/FortWorthTexas/more+urldata</xmpDM:path>
+			<xmpDM:track>75.0</xmpDM:track>
+			<xmpDM:startTime rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>1/25</xmpDM:scale>
+			</xmpDM:startTime>	
+			<xmpDM:duration rdf:parseType="Resource">
+				<xmpDM:value>50</xmpDM:value>
+				<xmpDM:scale>10/25</xmpDM:scale>
+			</xmpDM:duration>		
+			<xmpDM:managed>False</xmpDM:managed>	
+			<xmpDM:webStatement>http://mysite.com/News2?page=NewsArticleid= 5243 132.0</xmpDM:webStatement>			
+		</fs:mediaprop6>		
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>
