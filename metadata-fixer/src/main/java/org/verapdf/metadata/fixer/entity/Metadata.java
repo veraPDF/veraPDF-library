@@ -16,11 +16,11 @@ import org.verapdf.pdfa.results.MetadataFixerResultImpl;
 public interface Metadata {
 
 	/**
-	 * Remove filters from stream and add required fields to stream dictionary
+	 * Add required fields to stream dictionary and add FlateDecode Filter for part 2 and 3 flavours
 	 *
 	 * @param resultBuilder report applied changes
 	 */
-	void checkMetadataStream(MetadataFixerResultImpl.Builder resultBuilder);
+	void checkMetadataStream(MetadataFixerResultImpl.Builder resultBuilder, PDFAFlavour flavour);
 
 	/**
 	 * Remove identification schema if {@code MetadataFixerImpl}

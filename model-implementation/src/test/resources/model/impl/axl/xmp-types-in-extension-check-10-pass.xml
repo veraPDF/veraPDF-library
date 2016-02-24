@@ -1,0 +1,72 @@
+<?xpacket begin='' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Real value type</pdfaProperty:description>
+								<pdfaProperty:name>realprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>Real</pdfaProperty:valueType>
+							</rdf:li>			
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Real value type</pdfaProperty:description>
+								<pdfaProperty:name>realprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>Real</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Real value type</pdfaProperty:description>
+								<pdfaProperty:name>realprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>Real</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Real value type</pdfaProperty:description>
+								<pdfaProperty:name>realprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>Real</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Real value type</pdfaProperty:description>
+								<pdfaProperty:name>realprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>Real</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - Real value type</pdfaProperty:description>
+								<pdfaProperty:name>realprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>Real</pdfaProperty:valueType>
+							</rdf:li>
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
+					   xmlns:vQual="http://ns.adobe.com/xap/1.0/ValueQualifier#">
+		<fs:realprop1>1.2563</fs:realprop1>
+		<fs:realprop2>.326</fs:realprop2>
+		<fs:realprop3>+25.0</fs:realprop3>
+		<fs:realprop4>-6953.2155000</fs:realprop4>
+		<fs:realprop5>
+			<rdf:Description>
+				<rdf:value>1.2653</rdf:value>
+				<vQual:binRep>IEEE754D,L,3A4901F387D31108</vQual:binRep>
+			</rdf:Description>
+		</fs:realprop5>
+		<fs:realprop6>-0.23556</fs:realprop6>
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>
