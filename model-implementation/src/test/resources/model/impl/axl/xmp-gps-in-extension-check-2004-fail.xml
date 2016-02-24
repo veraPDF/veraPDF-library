@@ -1,0 +1,80 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - GPSCoordinate value type</pdfaProperty:description>
+								<pdfaProperty:name>gpsprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>GPSCoordinate</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - GPSCoordinate value type</pdfaProperty:description>
+								<pdfaProperty:name>gpsprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>GPSCoordinate</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - GPSCoordinate value type</pdfaProperty:description>
+								<pdfaProperty:name>gpsprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>GPSCoordinate</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - GPSCoordinate value type</pdfaProperty:description>
+								<pdfaProperty:name>gpsprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>GPSCoordinate</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - GPSCoordinate value type</pdfaProperty:description>
+								<pdfaProperty:name>gpsprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>GPSCoordinate</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - GPSCoordinate value type</pdfaProperty:description>
+								<pdfaProperty:name>gpsprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>GPSCoordinate</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - GPSCoordinate value type</pdfaProperty:description>
+								<pdfaProperty:name>gpsprop7</pdfaProperty:name>
+								<pdfaProperty:valueType>GPSCoordinate</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - GPSCoordinate value type</pdfaProperty:description>
+								<pdfaProperty:name>gpsprop8</pdfaProperty:name>
+								<pdfaProperty:valueType>GPSCoordinate</pdfaProperty:valueType>
+							</rdf:li>							
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
+		<fs:gpsprop1>36.12,06N</fs:gpsprop1>
+		<fs:gpsprop2>36,12,06</fs:gpsprop2>
+		<fs:gpsprop3>36.12.06E</fs:gpsprop3>
+		<fs:gpsprop4>36.00,12,06W</fs:gpsprop4>
+		<fs:gpsprop5>36,12.06D</fs:gpsprop5>
+		<fs:gpsprop6>36,06S</fs:gpsprop6>
+		<fs:gpsprop7>+36,12.06E</fs:gpsprop7>
+		<fs:gpsprop8>SomeGPSCoordinate: 36,12.06W</fs:gpsprop8>		
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

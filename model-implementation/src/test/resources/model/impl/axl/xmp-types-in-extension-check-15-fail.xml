@@ -1,0 +1,63 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - XPath value type</pdfaProperty:description>
+								<pdfaProperty:name>xpathprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>XPath</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - XPath value type</pdfaProperty:description>
+								<pdfaProperty:name>xpathprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>XPath</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - XPath value type</pdfaProperty:description>
+								<pdfaProperty:name>xpathprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>XPath</pdfaProperty:valueType>
+							</rdf:li>		
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - XPath value type</pdfaProperty:description>
+								<pdfaProperty:name>xpathprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>XPath</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - XPath value type</pdfaProperty:description>
+								<pdfaProperty:name>xpathprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>XPath</pdfaProperty:valueType>
+							</rdf:li>
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
+		<fs:xpathprop1>./au thor</fs:xpathprop1>
+		<fs:xpathprop2>author[[]</fs:xpathprop2>
+		<fs:xpathprop3>
+			<rdf:Seq>
+				<rdf:li>.title</rdf:li>
+			</rdf:Seq>	
+		</fs:xpathprop3>		
+		<fs:xpathprop4>2004-10-23T12:00:00-06:00</fs:xpathprop4>		
+		<fs:xpathprop5>+3.6589</fs:xpathprop5>		
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

@@ -2,7 +2,8 @@ package org.verapdf.metadata.fixer.utils.model;
 
 /**
  * Class represent description of the rule. Each rule must be
- * defined by applied object type and test condition.
+ * defined by applied object type and test condition
+ * or null test (to define all tests for specific object).
  *
  * @author Evgeniy Muravitskiy
  */
@@ -46,6 +47,6 @@ public class RuleDescription {
 	 * @return true if {@code objectType} and {@code test} are match
 	 */
 	public boolean compareTo(String objectType, String test) {
-		return this.objectType.equals(objectType) && this.test.equals(test);
+		return this.objectType.equals(objectType) && (this.test == null || this.test.equals(test));
 	}
 }
