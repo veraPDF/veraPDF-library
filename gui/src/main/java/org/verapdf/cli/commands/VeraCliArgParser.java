@@ -36,6 +36,8 @@ public class VeraCliArgParser {
     final static String FORMAT = OPTION_SEP + "format";
     final static String RECURSE_FLAG = FLAG_SEP + "r";
     final static String RECURSE = OPTION_SEP + "recurse";
+    final static String VERBOSE_FLAG = FLAG_SEP + "v";
+    final static String VERBOSE = OPTION_SEP + "verbose";
 
     @Parameter(names = { HELP_FLAG, HELP }, description = "Shows this message and exits.", help = true)
     private boolean help = false;
@@ -64,6 +66,9 @@ public class VeraCliArgParser {
     @Parameter(names = { RECURSE_FLAG, RECURSE }, description = "Recurse directories, only files with a .pdf extension are processed.")
     private boolean isRecurse = false;
 
+    @Parameter(names = { VERBOSE_FLAG, VERBOSE }, description = "Adds failed test information to text output.")
+    private boolean isVerbose = false;
+
     @Parameter(description = "FILES")
     private List<String> pdfPaths = new ArrayList<>();
 
@@ -79,6 +84,13 @@ public class VeraCliArgParser {
      */
     public boolean listProfiles() {
         return this.listProfiles;
+    }
+
+    /**
+     * @return true if to output failed rules to text output
+     */
+    public boolean isVerbose() {
+        return this.isVerbose;
     }
 
     /**
