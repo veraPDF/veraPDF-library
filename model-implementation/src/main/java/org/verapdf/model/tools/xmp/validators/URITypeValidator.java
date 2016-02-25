@@ -26,7 +26,7 @@ public class URITypeValidator implements TypeValidator {
             URI uri = new URI(node.getValue());
             return true;
         } catch (URISyntaxException e) {
-            LOGGER.error(e);
+            LOGGER.debug(e);
             return false;
         }
     }

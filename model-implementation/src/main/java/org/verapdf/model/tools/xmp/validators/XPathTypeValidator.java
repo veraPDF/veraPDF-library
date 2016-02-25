@@ -30,7 +30,7 @@ public class XPathTypeValidator implements TypeValidator {
             XPathExpression expr = xpath.compile(node.getValue());
             return true;
         } catch (XPathExpressionException e) {
-            LOGGER.error(e);
+            LOGGER.debug(e);
             return false;
         }
     }
