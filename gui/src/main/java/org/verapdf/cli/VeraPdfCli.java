@@ -51,16 +51,17 @@ public final class VeraPdfCli {
             jCommander.usage();
             System.exit(1);
         }
-        if (args.length == 0 || cliArgParser.isHelp()) {
+        if (cliArgParser.isHelp()) {
             showVersionInfo();
             jCommander.usage();
             System.exit(0);
         }
 
         messagesFromParser(cliArgParser);
-        
+
         try {
-            VeraPdfCliProcessor processor = VeraPdfCliProcessor.createProcessorFromArgs(cliArgParser);
+            VeraPdfCliProcessor processor = VeraPdfCliProcessor
+                    .createProcessorFromArgs(cliArgParser);
             processor.processPaths(cliArgParser.getPdfPaths());
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -82,7 +83,8 @@ public final class VeraPdfCli {
     private static void listProfiles() {
         System.out.println(FLAVOURS_HEADING);
         for (ValidationProfile profile : PROFILES.getValidationProfiles()) {
-            System.out.println("  " + profile.getPDFAFlavour().getId() + " - " + profile.getDetails().getName());
+            System.out.println("  " + profile.getPDFAFlavour().getId() + " - "
+                    + profile.getDetails().getName());
         }
         System.out.println();
     }
