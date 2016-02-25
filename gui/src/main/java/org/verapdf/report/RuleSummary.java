@@ -32,12 +32,16 @@ public class RuleSummary {
     private final int failedChecks;
     @XmlElement
     private final String description;
+    @XmlElement
+    private final String object;
+    @XmlElement
+    private final String test;
     @XmlElement(name = "check")
     private final Set<Check> checks;
 
     private RuleSummary(final RuleId ruleId, final Status status,
-            final int passedChecks, final int failedChecks,
-            final String description, final Set<Check> checks) {
+                        final int passedChecks, final int failedChecks,
+                        final String description, final String object, final String test, final Set<Check> checks) {
         this.specification = ruleId.getSpecification().getId();
         this.clause = ruleId.getClause();
         this.testNumber = ruleId.getTestNumber();
@@ -46,16 +50,18 @@ public class RuleSummary {
         this.passedChecks = passedChecks;
         this.failedChecks = failedChecks;
         this.description = description;
+        this.object = object;
+        this.test = test;
         this.checks = ((checks != null) && !checks.isEmpty()) ? new HashSet<>(checks) : null;
     }
 
     private RuleSummary(final RuleId ruleId, final Status status,
-            final String description) {
-        this(ruleId, status, 0, 0, description, Collections.<Check> emptySet());
+                        final String description, final String object, final String test) {
+        this(ruleId, status, 0, 0, description, object, test, Collections.<Check>emptySet());
     }
 
     private RuleSummary() {
-        this(Profiles.defaultRuleId(), Status.UNKNOWN, "description");
+        this(Profiles.defaultRuleId(), Status.UNKNOWN, "", "", "");
     }
     
     /**
@@ -79,7 +85,7 @@ public class RuleSummary {
         return this.failedChecks;
     }
 
-    static RuleSummary fromValues(final RuleId id, final String description,
+    static RuleSummary fromValues(final RuleId id, final String description, final String object, final String test,
                                   Set<TestAssertion> assertions, boolean logPassedChecks, int maxNumberOfDisplayedFailedChecks) {
         if (id == null) {
             throw new NullPointerException("Argument id can not be null");
@@ -110,11 +116,11 @@ public class RuleSummary {
             }
         }
         return new RuleSummary(id, status, passedChecks, failedChecks,
-                description, checks);
+                description, object, test, checks);
     }
 
     static RuleSummary uncheckedInstance(final RuleId id,
-            final String description) {
+                                         final String description, final String object, final String test) {
         if (id == null) {
             throw new NullPointerException("Argument id can not be null");
         }
@@ -122,6 +128,6 @@ public class RuleSummary {
             throw new NullPointerException(
                     "Argument description can not be null");
         }
-        return new RuleSummary(id, Status.PASSED, description);
+        return new RuleSummary(id, Status.PASSED, description, object, test);
     }
 }

@@ -57,10 +57,10 @@ public class ValidationDetails {
         int failedChecks = 0;
         for (Rule rule : profile.getRules()) {
             RuleSummary summary = RuleSummary.uncheckedInstance(
-                    rule.getRuleId(), rule.getDescription());
+                    rule.getRuleId(), rule.getDescription(), rule.getObject(), rule.getTest());
             if (assertionMap.containsKey(rule.getRuleId())) {
                 summary = RuleSummary.fromValues(rule.getRuleId(),
-                        rule.getDescription(),
+                        rule.getDescription(), rule.getObject(), rule.getTest(),
                         assertionMap.get(rule.getRuleId()), logPassedChecks,
                         maxNumberOfDisplayedFailedChecks);
             }
