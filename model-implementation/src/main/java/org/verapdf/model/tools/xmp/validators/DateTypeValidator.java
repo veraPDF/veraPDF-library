@@ -25,7 +25,7 @@ public class DateTypeValidator implements TypeValidator {
             XMPDateTimeFactory.createFromISO8601(node.getValue());
             return true;
         } catch (XMPException e) {
-            LOGGER.error(e);
+            LOGGER.debug(e);
             return false;
         }
     }
