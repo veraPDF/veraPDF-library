@@ -67,6 +67,12 @@ final class VeraPdfCliProcessor {
     }
 
     void processPaths(final List<String> pdfPaths) {
+        // If the path list is empty then
+        if (pdfPaths.isEmpty()) {
+            ItemDetails item = ItemDetails.fromValues("STDIN");
+            processStream(item, System.in);
+        }
+
         for (String pdfPath : pdfPaths) {
             File file = new File(pdfPath);
             if (file.isDirectory()) {
@@ -134,15 +140,15 @@ final class VeraPdfCliProcessor {
             e.printStackTrace();
         }
         if (this.format == FormatOption.XML) {
-            CliReport report = CliReport.fromValues(item, validationResult, FeaturesReport.fromValues(featuresCollection));
+            CliReport report = CliReport.fromValues(item, validationResult,
+                    FeaturesReport.fromValues(featuresCollection));
             try {
                 CliReport.toXml(report, System.out, Boolean.TRUE);
             } catch (JAXBException excep) {
                 // TODO Auto-generated catch block
                 excep.printStackTrace();
             }
-        }
-        else if (this.format == FormatOption.TEXT) {
+        } else if (this.format == FormatOption.TEXT) {
             System.out.println(item.getName() + ":"
                     + validationResult.isCompliant());
         } else {
