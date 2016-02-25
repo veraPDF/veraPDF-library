@@ -25,10 +25,10 @@ import org.verapdf.model.ModelParser;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validators.Validators;
+import org.verapdf.report.CliReport;
 import org.verapdf.report.FeaturesReport;
 import org.verapdf.report.HTMLReport;
 import org.verapdf.report.ItemDetails;
@@ -133,8 +133,15 @@ final class VeraPdfCliProcessor {
                     + item.getName());
             e.printStackTrace();
         }
-        if (this.format == FormatOption.XML)
-            outputXmlResults(item, validationResult, featuresCollection);
+        if (this.format == FormatOption.XML) {
+            CliReport report = CliReport.fromValues(item, validationResult, FeaturesReport.fromValues(featuresCollection));
+            try {
+                CliReport.toXml(report, System.out, Boolean.TRUE);
+            } catch (JAXBException excep) {
+                // TODO Auto-generated catch block
+                excep.printStackTrace();
+            }
+        }
         else if (this.format == FormatOption.TEXT) {
             System.out.println(item.getName() + ":"
                     + validationResult.isCompliant());
@@ -146,25 +153,6 @@ final class VeraPdfCliProcessor {
                     this.logPassed, null, featuresCollection,
                     System.currentTimeMillis() - start);
             outputMrr(report, this.format == FormatOption.HTML);
-        }
-    }
-
-    private static void outputXmlResults(final ItemDetails item,
-            final ValidationResult validationResult,
-            final FeaturesCollection featuresCollection) {
-        try {
-            ItemDetails.toXml(item, System.out, Boolean.TRUE);
-            if (validationResult != null)
-                ValidationResults.toXml(validationResult, System.out,
-                        Boolean.TRUE);
-            if (featuresCollection != null) {
-                FeaturesReport featuresReport = FeaturesReport
-                        .fromValues(featuresCollection);
-                FeaturesReport.toXml(featuresReport, System.out, Boolean.TRUE);
-            }
-        } catch (JAXBException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 
