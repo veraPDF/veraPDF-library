@@ -47,16 +47,25 @@ public class ProfilesMerger {
 
         for (File dir : root) {
             RuleDirectory ruleDir = RuleDirectory.loadFromDir(dir);
-            rules.addAll(ruleDir.getItems());
-            RuleDirectory.checkAndAddAllVariables(variables, ruleDir.getVariables());
             if (flavour == null) {
                 flavour = ruleDir.getFlavour();
             }
+            rules.addAll(updateSpecification(ruleDir.getItems(), flavour));
+            RuleDirectory.checkAndAddAllVariables(variables, ruleDir.getVariables());
         }
 
         ProfileDetails det = Profiles.profileDetailsFromValues(name, description, creator, new Date());
         ValidationProfile mergedProfile = Profiles.profileFromSortedValues(flavour, det, "", rules, variables);
         Profiles.profileToXml(mergedProfile, out, true);
+    }
+
+    private static Set<Rule> updateSpecification(final Collection<Rule> rules, final PDFAFlavour flavour) {
+        Set<Rule> res = new HashSet<>(rules.size());
+        for (Rule r : rules) {
+            RuleId id = Profiles.ruleIdFromValues(flavour.getPart(), r.getRuleId().getClause(), r.getRuleId().getTestNumber());
+            res.add(Profiles.ruleFromValues(id, r.getObject(), r.getDescription(), r.getTest(), r.getError(), r.getReferences()));
+        }
+        return res;
     }
 
     public static class RuleComparatorById implements Comparator<Rule> {
