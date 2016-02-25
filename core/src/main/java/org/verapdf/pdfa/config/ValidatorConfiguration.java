@@ -3,7 +3,6 @@
  */
 package org.verapdf.pdfa.config;
 
-import org.verapdf.pdfa.PDFAValidator;
 
 /**
  * This interface defines the configuration settings applicable to a

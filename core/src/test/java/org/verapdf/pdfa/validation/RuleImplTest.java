@@ -62,7 +62,7 @@ public class RuleImplTest {
         // Get an equivalent to the default instance
         RuleImpl rule = RuleImpl
                 .fromValues(Profiles.defaultRuleId(), "object",
-                        "description", "test", ErrorDetailsImpl.defaultInstance(), Collections.EMPTY_LIST);
+                        "description", "test", ErrorDetailsImpl.defaultInstance(), Collections.<Reference> emptyList());
         Rule defaultInstance = RuleImpl.defaultInstance();
         // Equivalent is NOT the same object as default instance
         assertFalse(rule == defaultInstance);

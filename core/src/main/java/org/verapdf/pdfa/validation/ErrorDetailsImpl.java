@@ -26,7 +26,7 @@ final class ErrorDetailsImpl implements ErrorDetails {
     private final List<String> arguments;
 
     private ErrorDetailsImpl() {
-        this("message", Collections.EMPTY_LIST);
+        this("message", Collections.<String> emptyList());
     }
 
     private ErrorDetailsImpl(final String message, final List<String> arguments) {

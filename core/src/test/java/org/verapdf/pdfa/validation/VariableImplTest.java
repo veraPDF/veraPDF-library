@@ -48,7 +48,7 @@ public class VariableImplTest {
      * @throws JAXBException
      */
     @Test
-    public final void testFromValues() throws JAXBException {
+    public final void testFromValues() {
         // Get an equivalent to the default instance
         Variable variable = Profiles.variableFromValues("name", "object",
                 "defaultValue", "value");
@@ -68,7 +68,7 @@ public class VariableImplTest {
      * @throws JAXBException
      */
     @Test
-    public final void testFromVariable() throws JAXBException {
+    public final void testFromVariable() {
         // Get an equivalent to the default instance
         Variable variable = VariableImpl.fromVariable(VariableImpl.defaultInstance());
         Variable defaultInstance = Profiles.defaultVariable();

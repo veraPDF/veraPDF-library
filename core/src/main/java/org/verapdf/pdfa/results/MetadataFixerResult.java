@@ -5,8 +5,6 @@ package org.verapdf.pdfa.results;
 
 import java.util.List;
 
-import org.verapdf.pdfa.MetadataFixer;
-
 /**
  * Holds the result of an attempt to repair PDF/A metadata by a
  * {@link MetadataFixer}.
@@ -47,7 +45,7 @@ public interface MetadataFixerResult extends Iterable<String> {
          */
         NO_ACTION("No Action"),
 
-		ID_REMOVED("ID Removed");
+        ID_REMOVED("ID Removed");
 
         private final String message;
 
