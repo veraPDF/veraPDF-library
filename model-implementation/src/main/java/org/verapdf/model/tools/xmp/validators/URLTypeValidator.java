@@ -26,7 +26,7 @@ public class URLTypeValidator implements TypeValidator {
             URL url = new URL(node.getValue());
             return true;
         } catch (MalformedURLException e) {
-            LOGGER.error(e);
+            LOGGER.debug(e);
             return false;
         }
     }

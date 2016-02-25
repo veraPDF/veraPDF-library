@@ -30,7 +30,7 @@ public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentific
             Integer part = this.metadata.getIdentificationPart();
             return part == null ? null : Long.valueOf(part);
         } catch (XMPException e) {
-            LOGGER.error("Can not get identification part", e);
+            LOGGER.debug("Can not get identification part", e);
             return null;
         }
     }
@@ -40,7 +40,7 @@ public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentific
         try {
             return this.metadata.getIdentificationConformance();
         } catch (XMPException e) {
-            LOGGER.error("Can not get identification conformance", e);
+            LOGGER.debug("Can not get identification conformance", e);
             return null;
         }
     }

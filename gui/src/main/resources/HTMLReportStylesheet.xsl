@@ -276,15 +276,17 @@
                     </xsl:if>
                 </td>
             </tr>
-            <tr class="hideable hide{$id}">
+            <tr style="BACKGROUND: #eceaf6" class="hideable hide{$id}">
                 <td width="800" style="word-break: break-all">
                     <xsl:value-of select="vera:object"/>
                 </td>
+                <td/>
             </tr>
-            <tr class="hideable hide{$id}">
+            <tr style="BACKGROUND: #eceaf6" class="hideable hide{$id}">
                 <td width="800" style="word-break: break-all">
                     <xsl:value-of select="vera:test"/>
                 </td>
+                <td/>
             </tr>
             <xsl:for-each select="vera:check[@status = 'failed']">
                 <tr class="hideable hide{$id}">
