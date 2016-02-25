@@ -131,7 +131,7 @@ final class VeraPdfCliProcessor {
                         .getFeaturesCollection(toValidate.getPDDocument());
             }
         } catch (IOException e) {
-            System.err.println("Failed to parse pdf file " + item.getName());
+            System.err.println("Error: " + item.getName() + " is not a PDF format file.");
             // TODO : do we need stacktrace in cli application?
             // e.printStackTrace();
         } catch (ValidationException e) {
