@@ -31,7 +31,7 @@ import java.util.Set;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
-@XmlJavaTypeAdapter(TestAssertionImpl.Adapter.class)
+@XmlJavaTypeAdapter(ValidationResultImpl.Adapter.class)
 public interface ValidationResult {
     /**
      * @return true if the PDF/A document complies with the PDF/A specification
