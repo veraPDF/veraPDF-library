@@ -5,8 +5,6 @@ package org.verapdf.pdfa.validation;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
-
 /**
  * A Reference is used to correlate a validation {@link Rule} to a specific
  * clause in a PDF/A Specification Part.

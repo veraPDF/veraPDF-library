@@ -10,7 +10,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
@@ -24,8 +26,11 @@ import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.model.ModelParser;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.TestAssertion;
+import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.Profiles;
+import org.verapdf.pdfa.validation.RuleId;
 import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validators.Validators;
 import org.verapdf.report.CliReport;
@@ -44,6 +49,7 @@ final class VeraPdfCliProcessor {
     final boolean extractFeatures;
     final boolean logPassed;
     final boolean recurse;
+    final boolean verbose;
     final PDFAValidator validator;
 
     private VeraPdfCliProcessor() throws FileNotFoundException, IOException {
@@ -56,6 +62,7 @@ final class VeraPdfCliProcessor {
         this.extractFeatures = args.extractFeatures();
         this.logPassed = args.logPassed();
         this.recurse = args.isRecurse();
+        this.verbose = args.isVerbose();
         ValidationProfile profile = profileFromArgs(args);
         this.validator = (profile == Profiles.defaultProfile()) ? null
                 : Validators.createValidator(profile, logPassed(args));
@@ -67,6 +74,12 @@ final class VeraPdfCliProcessor {
     }
 
     void processPaths(final List<String> pdfPaths) {
+        // If the path list is empty then
+        if (pdfPaths.isEmpty()) {
+            ItemDetails item = ItemDetails.fromValues("STDIN");
+            processStream(item, System.in);
+        }
+
         for (String pdfPath : pdfPaths) {
             File file = new File(pdfPath);
             if (file.isDirectory()) {
@@ -125,7 +138,7 @@ final class VeraPdfCliProcessor {
                         .getFeaturesCollection(toValidate.getPDDocument());
             }
         } catch (IOException e) {
-            System.err.println("Failed to parse pdf file " + item.getName());
+            System.err.println("Error: " + item.getName() + " is not a PDF format file.");
             // TODO : do we need stacktrace in cli application?
             // e.printStackTrace();
         } catch (ValidationException e) {
@@ -134,17 +147,27 @@ final class VeraPdfCliProcessor {
             e.printStackTrace();
         }
         if (this.format == FormatOption.XML) {
-            CliReport report = CliReport.fromValues(item, validationResult, FeaturesReport.fromValues(featuresCollection));
+            CliReport report = CliReport.fromValues(item, validationResult,
+                    FeaturesReport.fromValues(featuresCollection));
             try {
                 CliReport.toXml(report, System.out, Boolean.TRUE);
             } catch (JAXBException excep) {
                 // TODO Auto-generated catch block
                 excep.printStackTrace();
             }
-        }
-        else if (this.format == FormatOption.TEXT) {
-            System.out.println(item.getName() + ":"
-                    + validationResult.isCompliant());
+        } else if ((this.format == FormatOption.TEXT) && (validationResult != null)) {
+            System.out.println((validationResult.isCompliant() ? "PASS " : "FAIL ") + item.getName());
+            if (this.verbose) {
+                Set<RuleId> ruleIds = new HashSet<>();
+                for (TestAssertion assertion : validationResult.getTestAssertions()) {
+                    if (assertion.getStatus() == Status.FAILED) {
+                        ruleIds.add(assertion.getRuleId());
+                    }
+                }
+                for (RuleId id : ruleIds) {
+                    System.out.println(id.getClause() + "-" + id.getTestNumber());
+                }
+            }
         } else {
             MachineReadableReport report = MachineReadableReport.fromValues(
                     item.getName(),

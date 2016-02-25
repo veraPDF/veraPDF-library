@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.transform.Result;
 import javax.xml.transform.stream.StreamResult;
+
 import java.io.*;
 import java.util.*;
 
@@ -41,7 +42,7 @@ final class ValidationProfileImpl implements ValidationProfile {
 
     private ValidationProfileImpl() {
         this(PDFAFlavour.NO_FLAVOUR, ProfileDetailsImpl.defaultInstance(),
-                "hash", Collections.EMPTY_SET, Collections.EMPTY_SET);
+                "hash", Collections.<Rule> emptySet(), Collections.<Variable> emptySet());
     }
 
     private ValidationProfileImpl(final PDFAFlavour flavour,
@@ -115,7 +116,7 @@ final class ValidationProfileImpl implements ValidationProfile {
             OBJECT_RULE_MAP.put(this.flavour, createObjectRuleMap(this.rules));
         }
         Set<Rule> objRules = OBJECT_RULE_MAP.get(this.flavour).get(objectName);
-        return (objRules == null) ? Collections.EMPTY_SET : Collections
+        return (objRules == null) ? Collections.<Rule> emptySet() : Collections
                 .unmodifiableSet(objRules);
     }
 
@@ -130,7 +131,7 @@ final class ValidationProfileImpl implements ValidationProfile {
         }
         Set<Variable> objRules = OBJECT_VARIABLE_MAP.get(this.flavour).get(
                 objectName);
-        return (objRules == null) ? Collections.EMPTY_SET : Collections
+        return (objRules == null) ? Collections.<Variable> emptySet() : Collections
                 .unmodifiableSet(objRules);
     }
 

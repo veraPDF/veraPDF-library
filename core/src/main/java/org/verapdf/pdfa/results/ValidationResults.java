@@ -23,6 +23,9 @@ import org.verapdf.pdfa.validation.RuleId;
  *
  */
 public class ValidationResults {
+    private static final String NOT_NULL_MESSAGE = " cannot be null.";
+    private static final String FLAVOUR_NOT_NULL_MESSAGE = "Flavour " + NOT_NULL_MESSAGE;
+    private static final String ASSERTIONS_NOT_NULL_MESSAGE = "Assertions " + NOT_NULL_MESSAGE;
     private ValidationResults() {
         throw new AssertionError("Should never enter ValidationResults().");
     }
@@ -41,9 +44,9 @@ public class ValidationResults {
     public static ValidationResult resultFromValues(final PDFAFlavour flavour,
             final Set<TestAssertion> assertions, final boolean isCompliant) {
         if (flavour == null)
-            throw new NullPointerException("flavour cannot be null");
+            throw new NullPointerException(FLAVOUR_NOT_NULL_MESSAGE);
         if (assertions == null)
-            throw new NullPointerException("assertions cannot be null");
+            throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
         return ValidationResultImpl.fromValues(flavour, assertions,
                 isCompliant, assertions.size());
     }
@@ -64,9 +67,9 @@ public class ValidationResults {
             final Set<TestAssertion> assertions, final boolean isCompliant,
             final int totalAssertions) {
         if (flavour == null)
-            throw new NullPointerException("flavour cannot be null");
+            throw new NullPointerException(FLAVOUR_NOT_NULL_MESSAGE);
         if (assertions == null)
-            throw new NullPointerException("assertions cannot be null");
+            throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
         return ValidationResultImpl.fromValues(flavour, assertions,
                 isCompliant, totalAssertions);
     }
@@ -82,9 +85,9 @@ public class ValidationResults {
     public static ValidationResult resultFromValues(final PDFAFlavour flavour,
             final Set<TestAssertion> assertions) {
         if (flavour == null)
-            throw new NullPointerException("flavour cannot be null");
+            throw new NullPointerException(FLAVOUR_NOT_NULL_MESSAGE);
         if (assertions == null)
-            throw new NullPointerException("assertions cannot be null");
+            throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
         boolean isCompliant = true;
         for (TestAssertion assertion : assertions) {
             if (assertion.getStatus() == Status.FAILED) {

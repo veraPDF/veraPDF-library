@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validators.Validators;
 
 /**
  * A PDFAValidator performs a series of checks on PDF/A documents to verify that

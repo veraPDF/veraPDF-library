@@ -52,7 +52,7 @@ final class RuleImpl implements Rule {
 
     private RuleImpl() {
         this(RuleIdImpl.defaultInstance(), "object", "description", "test",
-                ErrorDetailsImpl.defaultInstance(), Collections.EMPTY_LIST);
+                ErrorDetailsImpl.defaultInstance(), Collections.<Reference> emptyList());
     }
 
     private RuleImpl(final RuleIdImpl id, final String object,

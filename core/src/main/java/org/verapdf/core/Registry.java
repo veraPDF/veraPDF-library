@@ -4,7 +4,6 @@
 package org.verapdf.core;
 
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
