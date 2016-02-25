@@ -23,10 +23,6 @@
             <artifactId>core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.verapdf</groupId>
-            <artifactId>model-implementation</artifactId>
-        </dependency>
-        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
         </dependency>
