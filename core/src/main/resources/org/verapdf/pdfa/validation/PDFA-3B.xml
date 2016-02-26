@@ -834,7 +834,7 @@
         <rule object="PDAnnot">
             <id specification="ISO_19005_3" clause="6.3.2" testNumber="3"/>
             <description>Text annotations should set the NoZoom and NoRotate flag bits of the F key to 1.</description>
-            <test>Subtype != &quot;Text&quot; || (F != null &amp;&amp; (F &amp; 8) == 1 &amp;&amp; (F &amp; 16) == 1)</test>
+            <test>Subtype != &quot;Text&quot; || (F != null &amp;&amp; (F &amp; 8) == 8 &amp;&amp; (F &amp; 16) == 16)</test>
             <error>
                 <message>Text annotation has one of the flags NoZoom or NoRotate set to 0</message>
                 <arguments/>
