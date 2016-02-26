@@ -10,7 +10,7 @@
             <id specification="ISO_19005_2" clause="6.1.2" testNumber="1"/>
             <description>The file header shall begin at byte zero and shall consist of &quot;%PDF-1.n&quot; followed by a single EOL marker, 
 			where 'n' is a single digit number between 0 (30h) and 7 (37h)</description>
-            <test>headerOffset == 0 &amp;&amp; /%PDF-1\.[0-7]/.test(header)</test>
+            <test>headerOffset == 0 &amp;&amp; /^%PDF-1\.[0-7]$/.test(header)</test>
             <error>
                 <message>File header does not start at byte offset 0 or does not comply with the requirements of PDF/A-2 specification</message>
                 <arguments/>
