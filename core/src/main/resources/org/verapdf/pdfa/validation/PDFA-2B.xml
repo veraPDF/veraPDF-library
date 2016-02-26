@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_2_B">
-    <details creator="veraPDF Consortium" created="2016-02-25T10:25:47.738+03:00">
+    <details creator="veraPDF Consortium" created="2016-02-26T12:54:44.892+03:00">
         <name>PDF/A-2B validation profile</name>
         <description>Validation rules against ISO 19005-2:2011</description>
     </details>
@@ -962,28 +962,252 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDFAIdSchema">
+        <rule object="PDDocument">
+            <id specification="ISO_19005_2" clause="6.6.2.1" testNumber="1"/>
+            <description>The Catalog dictionary of a conforming file shall contain the Metadata key whose value is a
+                metadata stream as defined in ISO 32000-1:2008, 14.3.2.
+            </description>
+            <test>metadata_size == 1</test>
+            <error>
+                <message>The document catalog dictionary doesn't contain metadata key.</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.3.2"/>
+            </references>
+        </rule>
+        <rule object="XMPPackage">
+            <id specification="ISO_19005_2" clause="6.6.2.1" testNumber="2"/>
+            <description>The bytes attribute shall not be used in the header of an XMP packet.</description>
+            <test>bytes == null</test>
+            <error>
+                <message>The XMP Package contains bytes attribute.</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="XMPPackage">
+            <id specification="ISO_19005_2" clause="6.6.2.1" testNumber="3"/>
+            <description>The encoding attribute shall not be used in the header of an XMP packet.</description>
+            <test>encoding == null</test>
+            <error>
+                <message>The XMP Package contains encoding attribute.</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="XMPPackage">
+            <id specification="ISO_19005_2" clause="6.6.2.1" testNumber="4"/>
+            <description>All metadata streams present in the PDF shall conform to the XMP Specification. All content of
+                all XMP packets shall be well-formed,
+                as defined by Extensible Markup Language (XML) 1.0 (Third Edition), 2.1, and the RDF/XML Syntax
+                Specification (Revised).
+            </description>
+            <test>isSerializationValid</test>
+            <error>
+                <message>%1</message>
+                <arguments>
+                    <argument>errorMessage</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="XMP Specification September 2005" clause=""/>
+                <reference specification="Extensible Markup Language (XML) 1.0 (Third Edition), 04 February 2004"
+                           clause="2.1"/>
+                <reference specification="RDF/XML Syntax Specification (Revised), 10 February 2004" clause=""/>
+            </references>
+        </rule>
+        <rule object="ExtensionSchemaObject">
+            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="1"/>
+            <description>Extension schemas shall be specified using the PDF/A extension schema container schema defined
+                in 6.6.2.3.3. All fields described in each
+                of the tables in 6.6.2.3.3 shall be present in any extension schema container schema.
+            </description>
+            <test>containsUndefinedFields == false</test>
+            <error>
+                <message>An extension schema object contains fields not defined by the specification</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="ExtensionSchemasContainer">
+            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="2"/>
+            <description>The extension schema container schema uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/extension/&quot;.
+                The required schema namespace prefix is pdfaExtension. pdfaExtension:schemas - Bag Schema - Description
+                of extension schemas
+            </description>
+            <test>isValidBag == true &amp;&amp; prefix == &quot;pdfaExtension&quot;</test>
+            <error>
+                <message>Invalid syntax of the extension schema container</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="ExtensionSchemaDefinition">
+            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="3"/>
+            <description>The Schema type is an XMP structure containing the definition of an extension schema. The field
+                namespace URI is &quot;http://www.aiim.org/pdfa/ns/schema#&quot;.
+                The required field namespace prefix is pdfaSchema. The Schema type includes the following fields:
+                pdfaSchema:schema (Text), pdfaSchema:namespaceURI (URI), pdfaSchema:prefix (Text),
+                pdfaSchema:property (Seq Property), pdfaSchema:valueType (Seq ValueType).
+            </description>
+            <test>(isSchemaValidText == true &amp;&amp; (schemaPrefix == null || schemaPrefix == &quot;pdfaSchema&quot;)
+                ) &amp;&amp;
+                (isNamespaceURIValidURI == true &amp;&amp; ( (ExtensionSchemaProperties_size == 0 &amp;&amp;
+                namespaceURIPrefix == null) || namespaceURIPrefix == &quot;pdfaSchema&quot; ) ) &amp;&amp;
+                (isPrefixValidText == true &amp;&amp; (prefixPrefix == null || prefixPrefix == &quot;pdfaSchema&quot;) )
+                &amp;&amp;
+                (isPropertyValidSeq == true &amp;&amp; (propertyPrefix == null || propertyPrefix == &quot;pdfaSchema&quot;)
+                ) &amp;&amp;
+                (isValueTypeValidSeq == true &amp;&amp; (valueTypePrefix == null || valueTypePrefix == &quot;pdfaSchema&quot;)
+                )
+            </test>
+            <error>
+                <message>Invalid Extension Schema definition</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="ExtensionSchemaProperty">
+            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="4"/>
+            <description>The Property type defined is an XMP structure containing the definition of a schema property.
+                The
+                field namespace URI is &quot;http://www.aiim.org/pdfa/ns/property#&quot;. The required field namespace
+                prefix is
+                pdfaProperty. The Property type includes the following fields: pdfaProperty:name (Text),
+                pdfaProperty:valueType (Open Choice of Text),
+                pdfaProperty:category (Closed Choice of Text), pdfaProperty:description (Text).
+            </description>
+            <test>(isNameValidText == true &amp;&amp; namePrefix == &quot;pdfaProperty&quot; ) &amp;&amp;
+                (isValueTypeValidText == true &amp;&amp; isValueTypeDefined == true &amp;&amp; valueTypePrefix == &quot;pdfaProperty&quot;
+                ) &amp;&amp;
+                (isCategoryValidText == true &amp;&amp; (category == &quot;external&quot; || category == &quot;internal&quot;)
+                &amp;&amp; categoryPrefix == &quot;pdfaProperty&quot;) &amp;&amp;
+                (isDescriptionValidText == true &amp;&amp; descriptionPrefix == &quot;pdfaProperty&quot; )
+            </test>
+            <error>
+                <message>Invalid extension schema Property type definition</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="ExtensionSchemaValueType">
+            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="5"/>
+            <description>The ValueType type is an XMP structure containing the definition of all property value
+                types used by embedded extension schemas that are not defined in the XMP Specification. The field
+                namespace URI is &quot;http://www.aiim.org/pdfa/ns/type#&quot;.
+                The required field namespace prefix is pdfaType. The ValueType type includes the following fields:
+                pdfaType:type (Text), pdfaType:namespaceURI (URI),
+                pdfaType:prefix (Text), pdfaType:description (Text), pdfaType:field (Seq Field).
+            </description>
+            <test>(isTypeValidText == true &amp;&amp; typePrefix == &quot;pdfaType&quot; ) &amp;&amp;
+                (isNamespaceURIValidURI == true &amp;&amp; namespaceURIPrefix == &quot;pdfaType&quot; ) &amp;&amp;
+                (isPrefixValidText == true &amp;&amp; (prefixPrefix == null || prefixPrefix == &quot;pdfaType&quot;) )
+                &amp;&amp;
+                (isDescriptionValidText == true &amp;&amp; descriptionPrefix == &quot;pdfaType&quot; ) &amp;&amp;
+                (isFieldValidSeq == true &amp;&amp; fieldPrefix == &quot;pdfaType&quot;)
+            </test>
+            <error>
+                <message>Invalid extension schema ValueType type definition</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="ExtensionSchemaField">
+            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="6"/>
+            <description>The Field type defined in Table 6 is an XMP structure containing the definition of a property
+                value type field. The field
+                namespace URI is &quot;http://www.aiim.org/pdfa/ns/field#&quot;. The required field namespace prefix is
+                pdfaField. The Field type contains the following fields:
+                pdfaField:name (Text), pdfaField:valueType (Open Choice of Text), pdfaField:description (Text).
+            </description>
+            <test>(isNameValidText == true &amp;&amp; namePrefix == &quot;pdfaField&quot; ) &amp;&amp;
+                (isValueTypeValidText == true &amp;&amp; isValueTypeDefined == true &amp;&amp; valueTypePrefix == &quot;pdfaField&quot;
+                ) &amp;&amp;
+                (isDescriptionValidText == true &amp;&amp; descriptionPrefix == &quot;pdfaField&quot; )
+            </test>
+            <error>
+                <message>Invalid extension schema Field type definition</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="XMPProperty">
+            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="7"/>
+            <description>All properties specified in XMP form shall use either the predefined schemas defined in the XMP
+                Specification,
+                ISO 19005-1 or this part of ISO 19005, or any extension schemas that comply with 6.6.2.3.2.
+            </description>
+            <test>(isPredefinedInXMP2005 == true || isDefinedInMainPackage == true || isDefinedInCurrentPackage == true)
+                &amp;&amp; isValueTypeCorrect == true
+            </test>
+            <error>
+                <message>%1</message>
+                <arguments>
+                    <argument>errorMessage</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="MainXMPPackage">
+            <id specification="ISO_19005_2" clause="6.6.4" testNumber="1"/>
+            <description>The PDF/A version and conformance level of a file shall be specified using the PDF/A
+                Identification extension schema.
+            </description>
+            <test>Identification_size == 1</test>
+            <error>
+                <message>The document metadata stream doesn't contains PDF/A Identification Schema.</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDFAIdentification">
             <id specification="ISO_19005_2" clause="6.6.4" testNumber="2"/>
-            <description>The value of pdfaid:part shall be the part number of ISO 19005 to which the file conforms. Files prepared in
- 			compliance with this part of ISO 19005 shall use a value of 2.</description>
+            <description>The value of pdfaid:part shall be the part number of ISO 19005 to which the file conforms.
+            </description>
             <test>part == 2</test>
             <error>
-                <message>The &quot;part&quot; property of the PDF/A Identification Schema is not equal to 2 for a PDF/A-2B conforming file.</message>
+                <message>The &quot;part&quot; property of the PDF/A Identification Schema is %1 instead of 2 for PDF/A-2
+                    conforming file.
+                </message>
                 <arguments>
                     <argument>part</argument>
                 </arguments>
             </error>
             <references/>
         </rule>
-        <rule object="PDFAIdSchema">
+        <rule object="PDFAIdentification">
             <id specification="ISO_19005_2" clause="6.6.4" testNumber="3"/>
-            <description>Level B conforming file shall specify the value of pdfaid:conformance as B.</description>
-            <test>conformance == &quot;B&quot;</test>
+            <description>A Level A conforming file shall specify the value of pdfaid:conformance as A. A Level B
+                conforming file shall specify the value of
+                pdfaid:conformance as B. A Level U conforming file shall specify the value of pdfaid:conformance as U.
+            </description>
+            <test>conformance == &quot;B&quot; || conformance == &quot;U&quot; || conformance == &quot;A&quot;</test>
             <error>
-                <message>The &quot;conformance&quot; property of the PDF/A Identification Schema is not equal to &quot;B&quot; for a PDF/A-2B conforming file.</message>
+                <message>The &quot;conformance&quot; property of the PDF/A Identification Schema is %1 instead of &quot;B&quot;
+                    for PDF/A-2b conforming file.
+                </message>
                 <arguments>
                     <argument>conformance</argument>
                 </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDFAIdentification">
+            <id specification="ISO_19005_2" clause="6.6.4" testNumber="4"/>
+            <description>The PDF/A Identification schema defined in Table 8 uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/id/&quot;.
+                The required schema namespace prefix is pdfaid. It contains the following fields: pdfaid:part (Open
+                Choice of Integer),
+                pdfaid:amd (Open Choice of Text), pdfaid:corr (Open Choice of Text), pdfaid:conformance (Open Choice of
+                Text)
+            </description>
+            <test>partPrefix == &quot;pdfaid&quot; &amp;&amp; conformancePrefix == &quot;pdfaid&quot; &amp;&amp;
+                (amdPrefix == null || amdPrefix == &quot;pdfaid&quot;) &amp;&amp;
+                (corrPrefix == null || corrPrefix == &quot;pdfaid&quot;)
+            </test>
+            <error>
+                <message>A property of the PDF/A Identification Schema has an invalid namespace prefix</message>
+                <arguments/>
             </error>
             <references/>
         </rule>
