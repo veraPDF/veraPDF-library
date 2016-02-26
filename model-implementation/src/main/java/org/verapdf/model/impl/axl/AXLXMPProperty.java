@@ -28,6 +28,12 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
         this.mainPackageSchemasDefinition = mainPackageSchemasDefinition;
         this.currentSchemasDefinitionPDFA_1 = currentSchemasDefinitionPDFA_1;
         this.currentSchemasDefinitionPDFA_2_3 = currentSchemasDefinitionPDFA_2_3;
+        this.contextDependent = true;
+    }
+
+    @Override
+    public String getID() {
+        return this.xmpNode.getNamespaceURI() + " - " + this.xmpNode.getPrefix() + ":" + this.xmpNode.getName();
     }
 
     @Override
