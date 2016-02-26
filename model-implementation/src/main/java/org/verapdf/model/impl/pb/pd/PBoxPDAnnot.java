@@ -42,6 +42,8 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 
 	private final PDInheritableResources resources;
 
+	private final boolean isFKeyPresent;
+
 	private final String subtype;
 	private final String ap;
 	private final int annotationFlag;
@@ -56,6 +58,10 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 		this.resources = resources;
 		this.subtype = annot.getSubtype();
 		this.ap = this.getAP(annot);
+
+		COSDictionary annotDict = annot.getCOSObject();
+		this.isFKeyPresent = annotDict.containsKey(COSName.F);
+
 		this.annotationFlag = annot.getAnnotationFlags();
 		this.ca = this.getCA(annot);
 		this.nType = this.getN_type(annot);
@@ -140,7 +146,7 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 
     @Override
     public Long getF() {
-        return Long.valueOf(this.annotationFlag);
+		return isFKeyPresent ? Long.valueOf(this.annotationFlag) : null;
     }
 
     @Override
