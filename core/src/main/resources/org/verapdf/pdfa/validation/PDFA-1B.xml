@@ -686,7 +686,7 @@
             <id specification="ISO_19005_1" clause="6.3.5" testNumber="2"/>
             <description>For all Type 1 font subsets referenced within a conforming file, the font descriptor dictionary shall include a CharSet string
 			listing the character names defined in the font subset, as described in PDF Reference Table 5.18</description>
-            <test>fontName.search(/[A-Z]{6}\+/) != 0 || (CharSet != null &amp;&amp; charSetListsAllGlyphs == true)</test>
+            <test>fontName.search(/[A-Z]{6}\+/) != 0 || CharSet != null</test>
             <error>
                 <message>A Type1 font subset does not define CharSet entry in its Descriptor dictionary</message>
                 <arguments/>
@@ -699,7 +699,7 @@
             <id specification="ISO_19005_1" clause="6.3.5" testNumber="3"/>
             <description>For all CIDFont subsets referenced within a conforming file, the font descriptor dictionary shall include a
 			CIDSet stream identifying which CIDs are present in the embedded CIDFont file, as described in PDF Reference Table 5.20</description>
-            <test>fontName.search(/[A-Z]{6}\+/) != 0 || (CIDSet_size == 1 &amp;&amp; cidSetListsAllGlyphs == true) </test>
+            <test>fontName.search(/[A-Z]{6}\+/) != 0 || CIDSet_size == 1</test>
             <error>
                 <message>A CID Font subset does not define CIDSet entry in its Descriptor dictionary</message>
                 <arguments/>
@@ -1053,7 +1053,7 @@
             <test>(isNameValidText == true &amp;&amp; namePrefix == &quot;pdfaProperty&quot; ) &amp;&amp; 
 			(isValueTypeValidText == true &amp;&amp; isValueTypeDefined == true &amp;&amp; valueTypePrefix == &quot;pdfaProperty&quot; ) &amp;&amp;
 			(isCategoryValidText == true &amp;&amp; (category == &quot;external&quot; || category == &quot;internal&quot;) &amp;&amp; categoryPrefix == &quot;pdfaProperty&quot;) &amp;&amp;
-			(isDescriptionValidText == true &amp;&amp; (descriptionPrefix == null || descriptionPrefix == &quot;pdfaProperty&quot;) )</test>
+			(isDescriptionValidText == true &amp;&amp; descriptionPrefix == &quot;pdfaProperty&quot; )</test>
             <error>
                 <message>Invalid extension schema Property type definition</message>
                 <arguments/>
@@ -1069,7 +1069,7 @@
             <test>(isTypeValidText == true &amp;&amp; typePrefix == &quot;pdfaType&quot; ) &amp;&amp; 
 			(isNamespaceURIValidURI == true &amp;&amp; namespaceURIPrefix == &quot;pdfaType&quot; ) &amp;&amp;
 			(isPrefixValidText == true &amp;&amp; (prefixPrefix == null || prefixPrefix == &quot;pdfaType&quot;) ) &amp;&amp;
-			(isDescriptionValidText == true &amp;&amp; (descriptionPrefix == null || descriptionPrefix == &quot;pdfaType&quot;) ) &amp;&amp;
+			(isDescriptionValidText == true &amp;&amp; descriptionPrefix == &quot;pdfaType&quot; ) &amp;&amp;
 			(isFieldValidSeq == true &amp;&amp; fieldPrefix == &quot;pdfaType&quot;)</test>
             <error>
                 <message>Invalid extension schema ValueType type definition</message>
@@ -1084,7 +1084,7 @@
 		pdfaField:name (Text), pdfaField:valueType (Open Choice of Text), pdfaField:description (Text).</description>
             <test>(isNameValidText == true &amp;&amp; namePrefix == &quot;pdfaField&quot; ) &amp;&amp; 
 			(isValueTypeValidText == true &amp;&amp; isValueTypeDefined == true &amp;&amp; valueTypePrefix == &quot;pdfaField&quot; ) &amp;&amp;
-			(isDescriptionValidText == true &amp;&amp; (descriptionPrefix == null || descriptionPrefix == &quot;pdfaField&quot;) )</test>
+			(isDescriptionValidText == true &amp;&amp; descriptionPrefix == &quot;pdfaField&quot; )</test>
             <error>
                 <message>Invalid extension schema Field type definition</message>
                 <arguments/>
@@ -1156,10 +1156,9 @@
             <id specification="ISO_19005_1" clause="6.7.11" testNumber="4"/>
             <description>The PDF/A Identification schema defined in Table 8 uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/id/&quot;. 
 			The required schema namespace prefix is pdfaid. It contains the following fields: pdfaid:part (Open Choice of Integer), 
-			pdfaid:amd (Open Choice of Text), pdfaid:corr (Open Choice of Text), pdfaid:conformance (Open Choice of Text)</description>
+			pdfaid:amd (Open Choice of Text), pdfaid:conformance (Open Choice of Text)</description>
             <test>partPrefix == &quot;pdfaid&quot; &amp;&amp; conformancePrefix == &quot;pdfaid&quot; &amp;&amp;
-			(amdPrefix == null || amdPrefix == &quot;pdfaid&quot;) &amp;&amp;
-			(corrPrefix == null || corrPrefix == &quot;pdfaid&quot;)</test>
+			(amdPrefix == null || amdPrefix == &quot;pdfaid&quot;)</test>
             <error>
                 <message>A property of the PDF/A Identification Schema has an invalid namespace prefix</message>
                 <arguments/>
