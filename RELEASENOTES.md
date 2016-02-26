@@ -1,3 +1,31 @@
+# Version 0.10 (February )
+
+This beta release features command line interface enhancements
+
+## Features
+- Conformance checker:
+ - new implementation of the XMP validation
+ - proper CharSet / CIDSet validation
+
+- Command line:
+ - processes stdin if no file paths are supplied for use in *nix pipes;
+ - directory and recursive sub-directory processing; and
+ - text mode output with summarised output
+ 
+- Test corpus:
+ - initial set of PDF/A-2 test files
+
+## Fixes
+- Conformance checker:
+ - fixed CMap / WMode validation
+ - minor fixes in PDF/A-2b and PDF/A-3b validation profiles
+
+- Command line fixes:
+ - all CLI output for a single file now in one XML document; and
+ - error output now all to stderr, keeping stdin clean;
+
+***
+
 # Version 0.8 (December 22 2015)
 
 This beta release features a command line interface for validation and feature extraction, with supporting install scripts.
