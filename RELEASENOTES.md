@@ -1,3 +1,22 @@
+# Version 0.10 (February )
+
+This beta release features command line interface enhancements
+
+## Features
+
+- Command line:
+ - processes stdin if no file paths are supplied for use in *nix pipes;
+ - directory and recursive sub-directory processing; and
+ - text mode output with summarised output
+ 
+## Fixes
+
+- Command line fixes:
+ - all CLI output for a single file now in one XML document; and
+ - error output now all to stderr, keeping stdin clean;
+
+***
+
 # Version 0.8 (December 22 2015)
 
 This beta release features a command line interface for validation and feature extraction, with supporting install scripts.
