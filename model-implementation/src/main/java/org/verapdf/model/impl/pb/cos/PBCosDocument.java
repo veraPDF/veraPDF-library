@@ -378,15 +378,15 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 	}
 
 	private boolean getNeedsRenderingValue() {
-		COSName needsRendering = COSName.getPDFName("NeedsRendering");
+		COSName needsRenderingLocal = COSName.getPDFName("NeedsRendering");
 		return this.catalog != null &&
-				this.catalog.getBoolean(needsRendering, false);
+				this.catalog.getBoolean(needsRenderingLocal, false);
 	}
 
 	private COSDictionary getCatalog() {
-		COSBase catalog = ((COSDocument) this.baseObject)
+		COSBase catalogLocal = ((COSDocument) this.baseObject)
 				.getTrailer().getDictionaryObject(COSName.ROOT);
-		return catalog instanceof COSDictionary ? (COSDictionary) catalog : null;
+		return catalogLocal instanceof COSDictionary ? (COSDictionary) catalogLocal : null;
 	}
 
 }

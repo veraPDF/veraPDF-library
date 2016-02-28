@@ -94,13 +94,13 @@ public class PBoxPDXObject extends PBoxPDResources implements PDXObject {
         COSName name = ((COSDictionary) smaskDictionary)
                 .getCOSName(COSName.NAME);
         String nameAsString = name != null ? name.getName() : null;
-        PDResources resources = null;
+        PDResources resourcesLocal = null;
         if (this.simplePDObject instanceof PDFormXObject) {
-            resources = ((PDFormXObject) this.simplePDObject).getResources();
+        	resourcesLocal = ((PDFormXObject) this.simplePDObject).getResources();
         }
         org.apache.pdfbox.pdmodel.graphics.PDXObject pbObject =
 				org.apache.pdfbox.pdmodel.graphics.PDXObject.createXObject(
-						smaskDictionary, nameAsString, resources);
+						smaskDictionary, nameAsString, resourcesLocal);
         return getTypedPDXObject(pbObject, this.resources);
     }
 

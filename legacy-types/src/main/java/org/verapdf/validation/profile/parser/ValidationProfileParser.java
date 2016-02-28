@@ -95,7 +95,7 @@ public final class ValidationProfileParser {
 		String created = null;
 		String hash = null;
 		Map<String, List<Rule>> rules = new HashMap<>();
-		Map<String, List<Variable>> variables = new HashMap<>();
+		Map<String, List<Variable>> variablesLocal = new HashMap<>();
 
 		Node modelNode = root.getAttributes().getNamedItem(MODEL);
 
@@ -129,7 +129,7 @@ public final class ValidationProfileParser {
 					parseRules(child, rules);
 					break;
 				case VARIABLES:
-					parseVariables(child, variables);
+					parseVariables(child, variablesLocal);
 					break;
 				default:
 					// White space node or some another node, which doesn't a part
@@ -139,7 +139,7 @@ public final class ValidationProfileParser {
 		}
 
 		this.profile = new ValidationProfile(model, name, description, creator,
-				created, hash, rules, variables);
+				created, hash, rules, variablesLocal);
 	}
 
 	private void parseImports(File sourceFile, Node imports,
