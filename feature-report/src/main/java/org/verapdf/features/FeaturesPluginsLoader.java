@@ -99,7 +99,7 @@ public class FeaturesPluginsLoader {
 		JarInputStream jarStream = new JarInputStream(new FileInputStream(jar));
 		JarEntry jarEntry = jarStream.getNextJarEntry();
 		while (jarEntry != null) {
-			if ((jarEntry.getName().endsWith(".class"))) {
+			if (jarEntry.getName().endsWith(".class")) {
 				String className = jarEntry.getName().replaceAll("/", ".");
 				String myClass = className.substring(0, className.lastIndexOf('.'));
 				classNames.add(myClass);

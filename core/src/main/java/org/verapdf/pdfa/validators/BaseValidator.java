@@ -346,7 +346,7 @@ class BaseValidator implements PDFAValidator {
                 locationContext);
         TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule
                 .getRuleId(),
-                (assertionResult) ? Status.PASSED : Status.FAILED, rule
+                assertionResult ? Status.PASSED : Status.FAILED, rule
                         .getDescription(), location);
         if (this.isCompliant)
             this.isCompliant = assertionResult;

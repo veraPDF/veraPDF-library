@@ -42,10 +42,10 @@ public class ArrayTypeValidator {
                 isValidArrayType = options.isArrayAlternate();
                 break;
             case SEQ:
-                isValidArrayType = (options.isArrayOrdered() && !options.isArrayAlternate());
+                isValidArrayType = options.isArrayOrdered() && !options.isArrayAlternate();
                 break;
             case BAG:
-                isValidArrayType = (options.isArray() && !(options.isArrayOrdered() || options.isArrayAlternate()));
+                isValidArrayType = options.isArray() && !(options.isArrayOrdered() || options.isArrayAlternate());
                 break;
             default:
                 throw new IllegalStateException("Array type validator must be created with valid type");
