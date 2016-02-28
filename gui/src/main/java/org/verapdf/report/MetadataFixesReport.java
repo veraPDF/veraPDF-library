@@ -50,6 +50,8 @@ public class MetadataFixesReport {
             case FIX_ERROR:
                 errorMessages = new ArrayList<>(appliedFixes);
                 break;
+            default:
+				break;
         }
         String status = repairStatus.toString();
         return new MetadataFixesReport(status, completedFixes, fixes, errorMessages);
