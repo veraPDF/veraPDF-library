@@ -11,7 +11,7 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-library</artifactId>
-  <version>0.9.0-SNAPSHOT</version>
+  <version>0.10.0</version>
   <packaging>pom</packaging>
 
   <name>veraPDF PDF/A Validation Library</name>
@@ -114,7 +114,7 @@
     <mvn.gpg.plugin.version>1.6</mvn.gpg.plugin.version>
     <verapdf.pdfbox.version>2.0.0-SNAPSHOT</verapdf.pdfbox.version>
     <verapdf.xmp.version>[0.1.0,0.2.0)</verapdf.xmp.version>
-    <verapdf.model.version>[0.9.0,0.10.0)</verapdf.model.version>
+    <verapdf.model.version>[0.10.0,0.11.0)</verapdf.model.version>
   </properties>
 
   <dependencyManagement>
