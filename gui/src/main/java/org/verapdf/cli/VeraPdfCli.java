@@ -58,14 +58,15 @@ public final class VeraPdfCli {
         }
 
         messagesFromParser(cliArgParser);
-
-        try {
-            VeraPdfCliProcessor processor = VeraPdfCliProcessor
-                    .createProcessorFromArgs(cliArgParser);
-            processor.processPaths(cliArgParser.getPdfPaths());
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        if (isProcess(cliArgParser)) {
+            try {
+                VeraPdfCliProcessor processor = VeraPdfCliProcessor
+                        .createProcessorFromArgs(cliArgParser);
+                processor.processPaths(cliArgParser.getPdfPaths());
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
 
@@ -94,5 +95,14 @@ public final class VeraPdfCli {
         System.out.println("Built: " + RELEASE_DETAILS.getBuildDate());
         System.out.println(RELEASE_DETAILS.getRights());
         System.out.println();
+    }
+
+    private static boolean isProcess(final VeraCliArgParser parser) {
+        if (parser.getPdfPaths().isEmpty()
+                && (parser.isHelp() || parser.listProfiles() || parser
+                        .showVersion())) {
+            return false;
+        }
+        return true;
     }
 }
