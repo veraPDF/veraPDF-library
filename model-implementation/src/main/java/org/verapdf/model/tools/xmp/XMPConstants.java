@@ -259,7 +259,7 @@ public class XMPConstants {
     };
 
     public static final String[] XMP_BASIC_COMMON = {XMPSchemaRegistryImpl.NS_XMP,
-            "Advisory", BAG + " " + XPATH,
+            "Advisory", BAG + " " + TEXT,
             "BaseURL", URL,
             "CreateDate", DATE,
             "CreatorTool", AGENT_NAME,
