@@ -77,8 +77,7 @@ public class PBoxPDMetadata extends PBoxPDObject implements PDMetadata {
                         : new AXLXMPPackage(metadata, true, null));
             }
         } catch (XMPException | IOException e) {
-            LOGGER.error("Problems with parsing metadata. " + e.getMessage(), e);
-            LOGGER.debug(e);
+            LOGGER.debug("Problems with parsing metadata. " + e.getMessage(), e);
             xmp.add(new AXLXMPPackage(null, false, null));
         }
         return xmp;
