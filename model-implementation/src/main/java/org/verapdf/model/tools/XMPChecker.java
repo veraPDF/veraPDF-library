@@ -79,7 +79,7 @@ public final class XMPChecker {
                 return checkMatch(info, properties);
             }
         } catch (IOException e) {
-            LOGGER.error(
+            LOGGER.debug(
                     "Problems with document parsing or structure. "
                             + e.getMessage(), e);
         } catch (XMPException e) {
