@@ -875,7 +875,8 @@
             <description>For all annotation dictionaries containing an AP key, the appearance dictionary that it defines as its value shall contain only the N key. 
 			If an annotation dictionary’s Subtype key has a value of Widget and its FT key has a value of Btn, the value of the N key shall be an appearance 
 			subdictionary; otherwise the value of the N key shall be an appearance stream.</description>
-            <test>AP == null || ( AP == &quot;N&quot; &amp;&amp; ( N_type == &quot;Stream&quot; || (FT == &quot;Btn&quot; &amp;&amp; N_type == &quot;Dict&quot;) ) )</test>
+            <test>AP == null || ( AP == &quot;N&quot; &amp;&amp; ( ((Subtype != &quot;Widget&quot; || FT != &quot;Btn&quot;) &amp;&amp; N_type == &quot;Stream&quot;)
+			|| (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot; &amp;&amp; N_type == &quot;Dict&quot;) ) )</test>
             <error>
                 <message>Annotation's appearance dictionary contains entries other than N or the N entry has an invalid type</message>
                 <arguments/>
