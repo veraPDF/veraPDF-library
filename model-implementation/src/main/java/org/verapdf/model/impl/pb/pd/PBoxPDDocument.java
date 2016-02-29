@@ -226,7 +226,7 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 			buffer = (COSDictionary) buffer.getDictionaryObject(
 					COSName.NAMES);
 			if (buffer != null) {
-				COSName key = COSName.getPDFName("AlternatePresentations");
+				COSName key = COSName.getPDFName(ALTERNATE_PRESENTATIONS);
 				COSBase base = buffer.getDictionaryObject(key);
 				if (base instanceof COSDictionary) {
 					List<CosDict> presentations = new ArrayList<>();
