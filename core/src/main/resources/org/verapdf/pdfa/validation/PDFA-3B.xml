@@ -1220,16 +1220,6 @@
         <variable name="gOutputProfileIndirect" object="PDOutputIntent">
             <defaultValue>null</defaultValue>
             <value>gOutputProfileIndirect== null ? destOutputProfileIndirect : gOutputProfileIndirect</value>
-        </variable>		
-    </rules>
-    <variables>
-        <variable name="gOutputCS" object="ICCOutputProfile">
-            <defaultValue>null</defaultValue>
-            <value>S == &quot;GTS_PDFA1&quot; ? colorSpace : gOutputCS</value>
-        </variable>
-        <variable name="gOutputProfileIndirect" object="PDOutputIntent">
-            <defaultValue>null</defaultValue>
-            <value>gOutputProfileIndirect== null ? destOutputProfileIndirect : gOutputProfileIndirect</value>
         </variable>
     </variables>
 </profile>
