@@ -1192,7 +1192,7 @@
             <references/>
         </rule>
 		<rule object="PDPage">
-            <id specification="ISO_19005_2" clause="6.10" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.10" testNumber="2"/>
             <description>There shall be no PresSteps entry in any Page dictionary</description>
             <test>PresSteps_size == 0</test>
             <error>
@@ -1202,7 +1202,7 @@
             <references/>
         </rule>		
 		<rule object="CosDocument">
-            <id specification="ISO_19005_2" clause="6.11" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.11" testNumber="1"/>
             <description>The document catalog shall not contain the Requirements key</description>
             <test>Requirements_size == 0</test>
             <error>
