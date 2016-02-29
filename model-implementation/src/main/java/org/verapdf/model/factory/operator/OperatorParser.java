@@ -438,7 +438,7 @@ class OperatorParser {
         try {
             return resources.getXObject(xobject);
         } catch (IOException e) {
-            LOGGER.error(
+            LOGGER.debug(
                     MSG_PROBLEM_OBTAINING_RESOURCE + xobject + ". "
                             + e.getMessage(), e);
             return null;
@@ -453,7 +453,7 @@ class OperatorParser {
         try {
             return resources.getColorSpace(colorSpace);
         } catch (IOException e) {
-            LOGGER.error(
+            LOGGER.debug(
                     MSG_PROBLEM_OBTAINING_RESOURCE + colorSpace + ". "
                             + e.getMessage(), e);
             return null;
@@ -468,7 +468,7 @@ class OperatorParser {
         try {
             return resources.getShading(shading);
         } catch (IOException e) {
-            LOGGER.error(
+            LOGGER.debug(
                     MSG_PROBLEM_OBTAINING_RESOURCE + shading + ". "
                             + e.getMessage(), e);
             return null;
@@ -488,7 +488,7 @@ class OperatorParser {
         try {
             return resources.getFont(font);
         } catch (IOException e) {
-            LOGGER.error(
+            LOGGER.debug(
                     MSG_PROBLEM_OBTAINING_RESOURCE + font + ". "
                             + e.getMessage(), e);
             return null;
@@ -502,7 +502,7 @@ class OperatorParser {
 				try {
 					return RenderingMode.fromInt(((COSInteger) renderingMode).intValue());
 				} catch (ArrayIndexOutOfBoundsException e) {
-					LOGGER.error("Rendering mode value is incorrect : " + renderingMode, e);
+					LOGGER.debug("Rendering mode value is incorrect : " + renderingMode, e);
 				}
 			}
         }
@@ -517,7 +517,7 @@ class OperatorParser {
         try {
             return resources.getPattern(pattern);
         } catch (IOException e) {
-            LOGGER.error(
+            LOGGER.debug(
                     MSG_PROBLEM_OBTAINING_RESOURCE + pattern + ". "
                             + e.getMessage(), e);
             return null;
