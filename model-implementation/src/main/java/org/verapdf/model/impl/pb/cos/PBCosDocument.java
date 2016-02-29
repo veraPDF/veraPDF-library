@@ -358,7 +358,7 @@ public class PBCosDocument extends PBCosObject implements CosDocument {
 
 	private List<CosDict> getRequirements() {
 		if (this.catalog != null) {
-			COSName requirementsName = COSName.getPDFName("Requirements");
+			COSName requirementsName = COSName.getPDFName(REQUIREMENTS);
 			COSBase reqArray = this.catalog.getDictionaryObject(requirementsName);
 			if (reqArray instanceof COSArray) {
 				return this.getRequirementsList(reqArray);

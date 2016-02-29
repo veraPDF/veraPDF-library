@@ -204,7 +204,7 @@ public class PBoxPDPage extends PBoxPDObject implements PDPage {
 
 	private List<CosDict> getPresentationSteps() {
 		COSBase presSteps = ((org.apache.pdfbox.pdmodel.PDPage) this.simplePDObject)
-				.getCOSObject().getDictionaryObject(COSName.getPDFName("PresSteps"));
+				.getCOSObject().getDictionaryObject(COSName.getPDFName(PRESENTATION_STEPS));
 		if (presSteps instanceof COSDictionary) {
 			ArrayList<CosDict> list = new ArrayList<>(MAX_NUMBER_OF_ELEMENTS);
 			list.add(new PBCosDict((COSDictionary) presSteps));
