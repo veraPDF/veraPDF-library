@@ -3,6 +3,7 @@ package org.verapdf.model.impl.pb.cos;
 import org.apache.pdfbox.cos.*;
 import org.junit.*;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.coslayer.CosFilter;
 import org.verapdf.model.coslayer.CosStream;
 import org.verapdf.model.impl.BaseTest;
 
@@ -58,10 +59,15 @@ public class PBCosStreamTest extends BaseTest {
 
     @Test
     public void testGetFiltersMethod() {
-        String[] actualFilters = ((CosStream) actual).getfilters().split(" ");
-        Assert.assertEquals(expectedFiltersArray.length, actualFilters.length);
-        for (int index = 0; index < actualFilters.length; index++) {
-            Assert.assertEquals(expectedFiltersArray[index], actualFilters[index]);
+        List<? extends Object> actualFilters = ((CosStream) actual).getLinkedObjects(PBCosStream.FILTERS);
+        Assert.assertEquals(expectedFiltersArray.length, actualFilters.size());
+        for (int i = 0; i < actualFilters.size(); i++) {
+            Object filter = actualFilters.get(i);
+            if (filter instanceof CosFilter) {
+                Assert.assertEquals(expectedFiltersArray[i], ((CosFilter) filter).getinternalRepresentation());
+            } else {
+                Assert.fail();
+            }
         }
     }
 
