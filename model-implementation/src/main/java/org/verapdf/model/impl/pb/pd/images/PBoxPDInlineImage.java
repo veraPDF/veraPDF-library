@@ -8,8 +8,10 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImage;
 import org.verapdf.model.baselayer.*;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.coslayer.CosDict;
+import org.verapdf.model.coslayer.CosIIFilter;
 import org.verapdf.model.coslayer.CosRenderingIntent;
 import org.verapdf.model.factory.colors.ColorSpaceFactory;
+import org.verapdf.model.impl.pb.cos.PBCosIIFilter;
 import org.verapdf.model.impl.pb.cos.PBCosRenderingIntent;
 import org.verapdf.model.impl.pb.pd.PBoxPDObject;
 import org.verapdf.model.pdlayer.PDColorSpace;
@@ -29,6 +31,8 @@ public class PBoxPDInlineImage extends PBoxPDObject implements PDInlineImage {
 
 	private static final Logger LOGGER = Logger.getLogger(PBoxPDInlineImage.class);
 
+	public static final String F = "F";
+
 	public static final String INLINE_IMAGE_TYPE = "PDInlineImage";
 
 	public PBoxPDInlineImage(org.apache.pdfbox.pdmodel.graphics.image.PDInlineImage simplePDObject) {
@@ -47,21 +51,6 @@ public class PBoxPDInlineImage extends PBoxPDObject implements PDInlineImage {
 	}
 
 	@Override
-	public String getF() {
-		List<String> filters = ((org.apache.pdfbox.pdmodel.graphics.image.PDInlineImage) this.simplePDObject)
-				.getFilters();
-		if (filters != null) {
-			StringBuilder builder = new StringBuilder();
-			for (String filter : filters) {
-				builder.append(filter).append(' ');
-			}
-			// need to discard last white space
-			return builder.substring(0, builder.length() - 1);
-		}
-		return null;
-	}
-
-	@Override
 	public List<? extends Object> getLinkedObjects(String link) {
 		switch (link) {
 			case PBoxPDXImage.INTENT:
@@ -73,9 +62,22 @@ public class PBoxPDInlineImage extends PBoxPDObject implements PDInlineImage {
 			case PBoxPDXImage.ALTERNATES:
 			case PBoxPDXImage.JPX_STREAM:
 				return Collections.emptyList();
+			case F:
+				return getFilters();
 			default:
 				return super.getLinkedObjects(link);
 		}
+	}
+
+	private List<CosIIFilter> getFilters() {
+		List<String> filters = ((org.apache.pdfbox.pdmodel.graphics.image.PDInlineImage) this.simplePDObject).getFilters();
+		List<CosIIFilter> result = new ArrayList<>();
+		if (filters != null) {
+			for (String filter : filters) {
+				result.add(new PBCosIIFilter(filter));
+			}
+		}
+		return result;
 	}
 
 	private List<PDColorSpace> getImageCS() {

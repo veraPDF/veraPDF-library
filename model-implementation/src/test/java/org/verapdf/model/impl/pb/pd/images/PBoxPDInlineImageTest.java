@@ -8,9 +8,16 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.verapdf.model.baselayer.*;
+import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.coslayer.CosFilter;
+import org.verapdf.model.coslayer.CosIIFilter;
+import org.verapdf.model.coslayer.CosStream;
+import org.verapdf.model.impl.pb.cos.PBCosStream;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -43,7 +50,14 @@ public class PBoxPDInlineImageTest extends PBoxPDXImageTest {
 
 	@Test
 	public void testFMethod() {
-		Assert.assertEquals("LZW", ((org.verapdf.model.pdlayer.PDInlineImage) actual).getF());
+		List<? extends Object> actualFilters = ((PBoxPDInlineImage) actual).getLinkedObjects(PBoxPDInlineImage.F);
+		Assert.assertEquals(1, actualFilters.size());
+		Object filter = actualFilters.get(0);
+		if (filter instanceof CosIIFilter) {
+			Assert.assertEquals("LZW", ((CosIIFilter) filter).getinternalRepresentation());
+		} else {
+			Assert.fail();
+		}
 	}
 
 	@AfterClass
