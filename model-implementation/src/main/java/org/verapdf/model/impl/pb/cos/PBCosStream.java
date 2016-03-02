@@ -2,7 +2,16 @@ package org.verapdf.model.impl.pb.cos;
 
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.cos.*;
+import org.verapdf.model.baselayer.*;
+import org.verapdf.model.baselayer.Object;
+import org.verapdf.model.coslayer.CosFilter;
 import org.verapdf.model.coslayer.CosStream;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * PDF Stream type
@@ -13,12 +22,13 @@ public class PBCosStream extends PBCosDict implements CosStream {
 
 	private static final Logger logger = Logger.getLogger(PBCosStream.class);
 
+    public static final String FILTERS = "filters";
+
 	/** Type name for PBCosStream */
 	public static final String COS_STREAM_TYPE = "CosStream";
 	public static final String F_DECODE_PARMS = "FDecodeParms";
 
 	private final Long length;
-	private final String filters;
 	private final String fileSpec;
 	private final String fFilter;
 	private final String fDecodeParams;
@@ -33,7 +43,6 @@ public class PBCosStream extends PBCosDict implements CosStream {
 	public PBCosStream(COSStream stream) {
         super(stream, COS_STREAM_TYPE);
         this.length = parseLength(stream);
-        this.filters = parseFilters(stream.getFilters());
         this.fileSpec = stream.getItem("F") != null ? stream.getItem("F")
                 .toString() : null;
         this.fFilter = parseFilters(stream
@@ -51,14 +60,6 @@ public class PBCosStream extends PBCosDict implements CosStream {
     @Override
     public Long getLength() {
         return this.length;
-    }
-
-    /**
-     * concatenated (white space separated) names of all filters
-     */
-    @Override
-    public String getfilters() {
-        return this.filters;
     }
 
     /**
@@ -106,6 +107,61 @@ public class PBCosStream extends PBCosDict implements CosStream {
     @Override
     public Boolean getisLengthCorrect() {
         return Boolean.valueOf(this.isLengthCorrect);
+    }
+
+    @Override
+    public List<? extends Object> getLinkedObjects(String link) {
+        switch (link) {
+            case FILTERS:
+                return this.getFilters();
+            default:
+                return super.getLinkedObjects(link);
+        }
+    }
+
+    private List<CosFilter> getFilters() {
+        COSBase filters = ((COSStream) this.baseObject).getFilters();
+        if (filters == null) {
+            return Collections.emptyList();
+        } else {
+            List<CosFilter> result = new ArrayList<>();
+            COSBase decodeParms = ((COSStream) this.baseObject).getDictionaryObject(COSName.DECODE_PARMS);
+            if (filters instanceof COSName) {
+                //TODO : check null
+                if (decodeParms instanceof COSArray) {
+                    decodeParms = ((COSArray) decodeParms).get(0);
+                }
+                result.add(createFilter((COSName) filters, decodeParms));
+            } else if (filters instanceof COSArray) {
+                for (int i = 0; i < ((COSArray) filters).size(); i++) {
+                    COSBase filter = ((COSArray) filters).get(i);
+                    if (filter instanceof COSName) {
+                        if (decodeParms == null) {
+                            result.add(createFilter((COSName) filter, null));
+                        } else if (decodeParms instanceof COSArray && ((COSArray) decodeParms).size() < i) {
+                            decodeParms = ((COSArray) decodeParms).get(i);
+                            result.add(createFilter((COSName) filter, decodeParms));
+                        } else {
+                            logger.warn("Invalid decodeParms type. Ignoring decodeParms.");
+                        }
+                    } else {
+                        logger.warn("Invalid value type in filters array. Skipping the filter");
+                    }
+                }
+            }
+            return result;
+        }
+    }
+
+    private static CosFilter createFilter(final COSName filter, final COSBase decodeParms) {
+        if (decodeParms == null) {
+            return new PBCosFilter(filter, null);
+        } else if (decodeParms instanceof COSDictionary) {
+            return new PBCosFilter(filter, (COSDictionary) decodeParms);
+        } else {
+            logger.warn("Invalid decodeParms type. Ignoring decodeParms.");
+            return new PBCosFilter(filter, null);
+        }
     }
 
     private static Long parseLength(final COSStream stream) {
