@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_2_B">
-    <details creator="veraPDF Consortium" created="2016-02-26T12:54:44.892+03:00">
+    <details creator="veraPDF Consortium" created="2016-03-03T09:36:37.300+03:00">
         <name>PDF/A-2B validation profile</name>
         <description>Validation rules against ISO 19005-2:2011</description>
     </details>
@@ -124,10 +124,19 @@
             </error>
             <references/>
         </rule>
-        <rule object="CosStream">
+        <rule object="CosFilter">
             <id specification="ISO_19005_2" clause="6.1.7" testNumber="4"/>
-            <description>All standard stream filters listed in ISO 32000-1:2008, 7.4, Table 6 may be used, with the exception of LZWDecode.</description>
-            <test>filters == null || filters.indexOf(&quot;LZWDecode&quot;) == -1</test>
+            <description>All standard stream filters listed in ISO 32000-1:2008, 7.4, Table 6 may be used, with the exception of
+                LZWDecode. In addition, the Crypt filter shall not be used unless the value of the Name key in the decode
+                parameters dictionary is Identity. Filters that are not listed in ISO 32000-1:2008, 7.4, Table 6 shall not be
+                used.</description>
+            <test>
+                internalRepresentation == &quot;ASCIIHexDecode&quot; ||  internalRepresentation == &quot;ASCII85Decode&quot; ||
+                internalRepresentation == &quot;FlateDecode&quot; ||  internalRepresentation == &quot;RunLengthDecode&quot; ||
+                internalRepresentation == &quot;CCITTFaxDecode&quot; ||  internalRepresentation == &quot;JBIG2Decode&quot; ||
+                internalRepresentation == &quot;DCTDecode&quot; ||  internalRepresentation == &quot;JPXDecode&quot; ||
+                (internalRepresentation == &quot;Crypt&quot; &amp;&amp; decodeParms == &quot;Identity&quot;)
+            </test>
             <error>
                 <message>LZW compression is used</message>
                 <arguments/>
@@ -159,11 +168,18 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDInlineImage">
+        <rule object="CosIIFilter">
             <id specification="ISO_19005_2" clause="6.1.10" testNumber="1"/>
             <description>The value of the F key in the Inline Image dictionary shall not be LZW, LZWDecode, Crypt, a value not listed in ISO 32000-1:2008, Table 6, 
 			or an array containing any such value.</description>
-            <test>F == null || (F.indexOf(&quot;LZW&quot;) == -1 &amp;&amp; F.indexOf(&quot;Crypt&quot;) == -1)</test>
+            <test>
+                internalRepresentation == &quot;ASCIIHexDecode&quot; ||  internalRepresentation == &quot;ASCII85Decode&quot; ||
+                internalRepresentation == &quot;FlateDecode&quot; ||  internalRepresentation == &quot;RunLengthDecode&quot; ||
+                internalRepresentation == &quot;CCITTFaxDecode&quot; || internalRepresentation == &quot;DCTDecode&quot; ||
+                internalRepresentation == &quot;AHx&quot; || internalRepresentation == &quot;A85&quot; ||
+                internalRepresentation == &quot;Fl&quot; || internalRepresentation == &quot;RL&quot; ||
+                internalRepresentation == &quot;CCF&quot; || internalRepresentation == &quot;DCT&quot;
+            </test>
             <error>
                 <message>Inline image uses LZW, Crypt or one of the unknown filters</message>
                 <arguments/>
@@ -1180,7 +1196,7 @@
             </error>
             <references/>
         </rule>
-		<rule object="PDDocument">
+        <rule object="PDDocument">
             <id specification="ISO_19005_2" clause="6.10" testNumber="1"/>
             <description>There shall be no AlternatePresentations entry in the document's name dictionary</description>
             <test>AlternatePresentations_size == 0</test>
@@ -1190,7 +1206,7 @@
             </error>
             <references/>
         </rule>
-		<rule object="PDPage">
+        <rule object="PDPage">
             <id specification="ISO_19005_2" clause="6.10" testNumber="2"/>
             <description>There shall be no PresSteps entry in any Page dictionary</description>
             <test>PresSteps_size == 0</test>
@@ -1199,8 +1215,8 @@
                 <arguments/>
             </error>
             <references/>
-        </rule>		
-		<rule object="CosDocument">
+        </rule>
+        <rule object="CosDocument">
             <id specification="ISO_19005_2" clause="6.11" testNumber="1"/>
             <description>The document catalog shall not contain the Requirements key</description>
             <test>Requirements_size == 0</test>
@@ -1209,7 +1225,7 @@
                 <arguments/>
             </error>
             <references/>
-        </rule>		
+        </rule>
     </rules>
     <variables>
         <variable name="gOutputCS" object="ICCOutputProfile">
