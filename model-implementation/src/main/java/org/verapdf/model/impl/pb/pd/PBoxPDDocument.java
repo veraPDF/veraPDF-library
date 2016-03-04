@@ -49,6 +49,8 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 	public static final String STRUCTURE_TREE_ROOT = "StructTreeRoot";
 	/** Link name for alternate presentation of names tree of document */
 	public static final String ALTERNATE_PRESENTATIONS = "AlternatePresentations";
+	/** Link name for optional content properties of the document */
+	public static final String OC_PROPERTIES = "OCProperties";
 
 	/** Maximal number of additional actions for AA key */
 	public static final int MAX_NUMBER_OF_ACTIONS = 5;
@@ -96,6 +98,8 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 				return this.getStructureTreeRoot();
 			case ALTERNATE_PRESENTATIONS:
 				return this.getAlternatePresentations();
+			case OC_PROPERTIES:
+				return this.getOCProperties();
 			default:
 				return super.getLinkedObjects(link);
 		}
@@ -235,6 +239,11 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 				}
 			}
 		}
+		return Collections.emptyList();
+	}
+
+	private List<PDOCProperties> getOCProperties() {
+		//TODO : implement
 		return Collections.emptyList();
 	}
 
