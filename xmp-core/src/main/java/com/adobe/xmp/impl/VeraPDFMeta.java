@@ -288,4 +288,8 @@ public class VeraPDFMeta {
     public VeraPDFMeta setIdentificationConformance(String identificationConformance) throws XMPException {
         return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, "conformance", identificationConformance);
     }
+
+    public XMPMeta getCloneOfInitialMeta() {
+        return (XMPMeta) meta.clone();
+    }
 }
