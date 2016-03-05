@@ -107,7 +107,8 @@ public class VeraPDFMeta {
         return null;
     }
 
-    public void deleteIdentificationSchema() {
+    public boolean deleteIdentificationSchema() {
+        boolean isDeleted = false;
         XMPNode identificationRoot = null;
         for (Object child : this.meta.getRoot().getUnmodifiableChildren()) {
             XMPNode xmpNode = (XMPNode) child;
@@ -120,15 +121,11 @@ public class VeraPDFMeta {
             for (Object child : identificationRoot.getUnmodifiableChildren()) {
                 XMPNode xmpNode = (XMPNode) child;
                 this.meta.deleteProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, xmpNode.getName());
+                isDeleted = true;
             }
-            for (int i = properties.size() - 1; i >= 0; --i) {
-                VeraPDFXMPNode node = properties.get(i);
-                if (XMPSchemaRegistryImpl.NS_PDFA_ID.equals(node.getNamespaceURI())) {
-                    properties.remove(i);
-                }
-            }
+            update();
         }
-        update();
+        return isDeleted;
     }
 
     private VeraPDFMeta setSimpleTextProperty(String namespaceURI, String propertyName, String value) throws XMPException {
@@ -286,7 +283,7 @@ public class VeraPDFMeta {
     }
 
     public VeraPDFMeta setIdentificationConformance(String identificationConformance) throws XMPException {
-        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, "conformance", identificationConformance);
+        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID,  "conformance", identificationConformance);
     }
 
     public XMPMeta getCloneOfInitialMeta() {
