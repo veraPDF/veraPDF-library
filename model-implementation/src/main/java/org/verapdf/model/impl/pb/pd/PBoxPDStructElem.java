@@ -69,7 +69,7 @@ public class PBoxPDStructElem extends PBoxPDObject implements PDStructElem {
 	}
 
 	private List<PDStructElem> getChildren() {
-		return TaggedPDFHelper.getChildren(((COSDictionary) this.simplePDObject), LOGGER);
+		return TaggedPDFHelper.getChildren((COSDictionary) this.simplePDObject, LOGGER);
 	}
 
 	private List<CosUnicodeName> getStructureType() {

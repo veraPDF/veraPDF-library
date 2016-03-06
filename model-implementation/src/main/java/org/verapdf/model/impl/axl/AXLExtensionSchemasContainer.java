@@ -56,7 +56,7 @@ public class AXLExtensionSchemasContainer extends AXLXMPObject implements Extens
     @Override
     public Boolean getisValidBag() {
         PropertyOptions options = this.xmpNode.getOptions();
-        return (options.isArray() && !(options.isArrayOrdered() || options.isArrayAlternate()));
+        return options.isArray() && !(options.isArrayOrdered() || options.isArrayAlternate());
     }
 
     @Override
