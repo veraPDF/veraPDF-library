@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_B">
-    <details creator="veraPDF Consortium" created="2016-02-25T10:23:53.982+03:00">
+    <details creator="veraPDF Consortium" created="2016-03-03T09:37:33.878+03:00">
         <name>PDF/A-1B validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011</description>
     </details>
@@ -160,20 +160,10 @@
             </error>
             <references/>
         </rule>
-        <rule object="CosStream">
+        <rule object="CosIIFilter">
             <id specification="ISO_19005_1" clause="6.1.10" testNumber="1"/>
             <description>The LZWDecode filter shall not be permitted</description>
-            <test>filters == null || filters.indexOf(&quot;LZWDecode&quot;) == -1</test>
-            <error>
-                <message>LZW compression is used</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
-        <rule object="PDInlineImage">
-            <id specification="ISO_19005_1" clause="6.1.10" testNumber="2"/>
-            <description>The LZWDecode filter shall not be permitted</description>
-            <test>F == null || F.indexOf(&quot;LZW&quot;) == -1</test>
+            <test>internalRepresentation != &quot;LZWDecode&quot; &amp;&amp; internalRepresentation != &quot;LZW&quot;</test>
             <error>
                 <message>LZW compression is used in the inline image</message>
                 <arguments/>
@@ -873,11 +863,11 @@
         <rule object="PDAnnot">
             <id specification="ISO_19005_1" clause="6.5.3" testNumber="4"/>
             <description>For all annotation dictionaries containing an AP key, the appearance dictionary that it defines as its value shall contain only the N key. 
-			If an annotation dictionary’s Subtype key has a value of Widget and its FT key has a value of Btn, the value of the N key shall be an appearance 
+			If an annotation dictionary's Subtype key has a value of Widget and its FT key has a value of Btn, the value of the N key shall be an appearance 
 			subdictionary; otherwise the value of the N key shall be an appearance stream.</description>
             <test>AP == null || ( AP == &quot;N&quot; &amp;&amp; ( ((Subtype != &quot;Widget&quot; || FT != &quot;Btn&quot;) &amp;&amp; N_type == &quot;Stream&quot;)
 			|| (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot; &amp;&amp; N_type == &quot;Dict&quot;) ) )</test>
-			<error>
+            <error>
                 <message>Annotation's appearance dictionary contains entries other than N or the N entry has an invalid type</message>
                 <arguments/>
             </error>
@@ -1134,7 +1124,7 @@
             <description>The value of pdfaid:part shall be the part number of ISO 19005 to which the file conforms.</description>
             <test>part == 1</test>
             <error>
-                <message>The &quot;part&quot; property of the PDF/A Identification Schema is %1 instead of 1 for PDF/A-1b conforming file.</message>
+                <message>The &quot;part&quot; property of the PDF/A Identification Schema is %1 instead of 1 for PDF/A-1 conforming file.</message>
                 <arguments>
                     <argument>part</argument>
                 </arguments>
