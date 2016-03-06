@@ -182,9 +182,9 @@ public class VeraCliArgParser {
          */
         @Override
         public PDFAFlavour convert(final String value) {
-            for (PDFAFlavour flavour : PDFAFlavour.values()) {
-                if (flavour.getId().equalsIgnoreCase(value))
-                    return flavour;
+            for (PDFAFlavour flavourLocal : PDFAFlavour.values()) {
+                if (flavourLocal.getId().equalsIgnoreCase(value))
+                    return flavourLocal;
             }
             throw new ParameterException("Illegal --flavour argument:" + value);
         }
@@ -206,8 +206,8 @@ public class VeraCliArgParser {
         @Override
         public void validate(final String name, final String value)
                 throws ParameterException {
-            File profileFile = new File(value);
-            if (!profileFile.isFile() || !profileFile.canRead()) {
+            File profileFileLocal = new File(value);
+            if (!profileFileLocal.isFile() || !profileFileLocal.canRead()) {
                 throw new ParameterException("Parameter " + name
                         + " must be the path to an existing, readable file, value=" + value);
             }
