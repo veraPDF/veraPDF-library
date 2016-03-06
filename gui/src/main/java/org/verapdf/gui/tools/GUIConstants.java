@@ -35,8 +35,8 @@ public final class GUIConstants {
 	public static final String CONSORTIUM_TEXT = "© 2015 veraPDF Consortium";
 	public static final String PROPERTIES_NAME = "config.properties";
 	public static final String TITLE = "PDF/A Conformance Checker";
-	public static final String ERROR_IN_PARSING = "Failed to parse pdf document.";
-	public static final String ERROR_IN_VALIDATING = "Some error in validating.";
+	public static final String ERROR_IN_PARSING = "Failed to parse pdf document";
+	public static final String ERROR_IN_VALIDATING = "Internal validation error. The PDF document might be corrupted";
 	public static final String ERROR_IN_INCREMETAL_SAVE = "Some error in saving changes";
 	public static final String PDF = "pdf";
 	public static final String XML = "xml";
