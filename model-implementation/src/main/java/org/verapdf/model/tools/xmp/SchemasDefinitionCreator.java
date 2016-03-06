@@ -107,6 +107,8 @@ public class SchemasDefinitionCreator {
                     case "namespaceURI":
                         namespaceURI = child.getValue();
                         break;
+                    default:
+                    	break;
                 }
             }
         }
@@ -135,6 +137,8 @@ public class SchemasDefinitionCreator {
                     case "valueType":
                         valueType = child.getValue();
                         break;
+                    default:
+                    	break;
                 }
             }
         }

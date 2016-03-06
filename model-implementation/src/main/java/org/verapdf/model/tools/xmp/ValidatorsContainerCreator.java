@@ -182,6 +182,8 @@ public class ValidatorsContainerCreator {
                             fields = getStructureMapFromFieldsNode(child);
                         }
                         break;
+                    default:
+                    	break;
                 }
             }
         }
@@ -208,6 +210,8 @@ public class ValidatorsContainerCreator {
                         case "valueType":
                             valueType = child.getValue();
                             break;
+                        default:
+                        	break;
                     }
                 }
             }
