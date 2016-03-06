@@ -114,11 +114,11 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     }
 
     private String getAttributeByRegexp(String regexp) {
-        VeraPDFMeta xmpMetadata = this.getXmpMetadata();
-        if (xmpMetadata == null) {
+        VeraPDFMeta xmpMetadataLocal = this.getXmpMetadata();
+        if (xmpMetadataLocal == null) {
             return null;
         }
-        String packetHeader = xmpMetadata.getPacketHeader();
+        String packetHeader = xmpMetadataLocal.getPacketHeader();
         if (packetHeader == null || packetHeader.isEmpty()) {
             return null;
         }

@@ -71,10 +71,10 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	}
 
 	private String getAP(PDAnnotation annot) {
-		COSBase ap = annot.getCOSObject().getDictionaryObject(COSName.AP);
-		if (ap != null && ap instanceof COSDictionary) {
+		COSBase apLocal = annot.getCOSObject().getDictionaryObject(COSName.AP);
+		if (apLocal != null && apLocal instanceof COSDictionary) {
 			StringBuilder result = new StringBuilder();
-			for (COSName key : ((COSDictionary) ap).keySet()) {
+			for (COSName key : ((COSDictionary) apLocal).keySet()) {
 				result.append(key.getName());
 				result.append(' ');
 			}
@@ -86,9 +86,9 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	}
 
 	private Double getCA(PDAnnotation annot) {
-		COSBase ca = annot.getCOSObject().getDictionaryObject(COSName.CA);
-		return !(ca instanceof COSNumber) ? null :
-				Double.valueOf(((COSNumber) ca).doubleValue());
+		COSBase caLocal = annot.getCOSObject().getDictionaryObject(COSName.CA);
+		return !(caLocal instanceof COSNumber) ? null :
+				Double.valueOf(((COSNumber) caLocal).doubleValue());
 	}
 
 	private String getN_type(PDAnnotation annot) {
@@ -109,8 +109,8 @@ public class PBoxPDAnnot extends PBoxPDObject implements PDAnnot {
 	}
 
 	private String getFT(PDAnnotation annot) {
-		COSBase ft = annot.getCOSObject().getDictionaryObject(COSName.FT);
-		return ft instanceof COSName ? ((COSName) ft).getName() : null;
+		COSBase ftLocal = annot.getCOSObject().getDictionaryObject(COSName.FT);
+		return ftLocal instanceof COSName ? ((COSName) ftLocal).getName() : null;
 	}
 
 	private Double getWidth(PDAnnotation annot) {

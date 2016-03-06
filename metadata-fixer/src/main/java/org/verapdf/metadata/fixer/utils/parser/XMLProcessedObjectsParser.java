@@ -104,6 +104,8 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
 				case TEST_TAG:
 					test = children.getTextContent();
 					break;
+				default:
+					break;
 			}
 		}
 

@@ -65,7 +65,7 @@ public class PBoxPDCIDFont extends PBoxPDFont implements PDCIDFont {
                 //reverse bit order in bit set (convert to big endian)
                 BitSet bitSet = toBitSetBigEndian(cidSetBytes);
 
-                org.apache.pdfbox.pdmodel.font.PDCIDFont cidFont = ((org.apache.pdfbox.pdmodel.font.PDCIDFont) this.pdFontLike);
+                org.apache.pdfbox.pdmodel.font.PDCIDFont cidFont = (org.apache.pdfbox.pdmodel.font.PDCIDFont) this.pdFontLike;
                 for (int i = 1; i < bitSet.size(); i++) {
                     if (bitSet.get(i) && !cidFont.hasGlyph(i)) {
                         return Boolean.FALSE;
@@ -119,7 +119,7 @@ public class PBoxPDCIDFont extends PBoxPDFont implements PDCIDFont {
         for(int j = 0; j < source.length; j++) {
             int b = source[j] >= 0 ? source[j] : 256 + source[j];
             for(int k = 0; k < 8; k++) {
-                bitSet.set(i++, ((b & 0x80) != 0));
+                bitSet.set(i++, (b & 0x80) != 0);
                 b = b << 1;
             }
         }

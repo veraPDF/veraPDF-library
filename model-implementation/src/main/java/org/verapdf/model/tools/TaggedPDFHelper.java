@@ -41,7 +41,7 @@ public class TaggedPDFHelper {
 			list.add(new PBoxPDStructElem((COSDictionary) children));
 			return Collections.unmodifiableList(list);
 		} else if (children instanceof COSArray) {
-			return getChildrenFromArray(((COSArray) children), logger);
+			return getChildrenFromArray((COSArray) children, logger);
 		} else {
 			logger.warn("Children type of Structure Tree Root or Structure Element " +
 					"must be 'COSDictionary' or 'COSArray' but got: "

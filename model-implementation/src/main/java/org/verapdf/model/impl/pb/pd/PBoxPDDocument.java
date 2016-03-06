@@ -156,8 +156,8 @@ public class PBoxPDDocument extends PBoxPDObject implements PDDocument {
 
 	private PDDocumentCatalogAdditionalActions getAdditionalAction() {
 		if (this.catalog != null) {
-			COSDictionary catalog = this.catalog.getCOSObject();
-			COSBase aaDictionary = catalog.getDictionaryObject(COSName.AA);
+			COSDictionary catalogLocal = this.catalog.getCOSObject();
+			COSBase aaDictionary = catalogLocal.getDictionaryObject(COSName.AA);
 			if (aaDictionary instanceof COSDictionary) {
 				return new PDDocumentCatalogAdditionalActions((COSDictionary) aaDictionary);
 			}

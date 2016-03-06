@@ -375,6 +375,8 @@ class CheckerPanel extends JPanel {
 					case 2:
 						CheckerPanel.this.fixMetadata.setEnabled(false);
 						break;
+					default:
+						break;
 				}
 			}
 		});
