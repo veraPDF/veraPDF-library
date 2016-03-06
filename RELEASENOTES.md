@@ -19,6 +19,7 @@ This beta release features command line interface enhancements
 - Conformance checker:
  - fixed CMap / WMode validation
  - minor fixes in PDF/A-2b and PDF/A-3b validation profiles
+ - based on TWG resolution, fixed validation normal appearance object type (Dict vs Stream) for Button widgets
 
 - Command line fixes:
  - all CLI output for a single file now in one XML document; and
