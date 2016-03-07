@@ -1,6 +1,5 @@
 package org.verapdf.metadata.fixer.entity;
 
-import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.MetadataFixerResultImpl;
 
