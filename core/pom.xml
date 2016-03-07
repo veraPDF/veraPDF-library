@@ -17,9 +17,11 @@
     <dependency>
       <groupId>org.verapdf</groupId>
       <artifactId>pdf-model</artifactId>
-      <version>${verapdf.model.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>verapdf-xmp-core</artifactId>
+    </dependency>
     <dependency>
       <groupId>rhino</groupId>
       <artifactId>js</artifactId>
@@ -33,6 +35,10 @@
       <artifactId>equalsverifier</artifactId>
       <version>1.5.1</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
     </dependency>
   </dependencies>
   <build>
