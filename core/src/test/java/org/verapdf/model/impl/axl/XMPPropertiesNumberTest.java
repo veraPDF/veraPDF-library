@@ -21,15 +21,15 @@ import static org.junit.Assert.assertEquals;
  * @author Maksim Bezrukov
  */
 @RunWith(Parameterized.class)
-public class XMPExtensionSchemaContainerTest {
+public class XMPPropertiesNumberTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"/model/impl/axl/xmp-extension-schema-container-type-check-1.xml", true, "pdfaExtension"},
-                {"/model/impl/axl/xmp-extension-schema-container-type-check-2.xml", false, "ext"},
-                {"/model/impl/axl/xmp-extension-schema-container-type-check-3.xml", false, "pdfaExtension"},
-                {"/model/impl/axl/xmp-extension-schema-container-type-check-4.xml", false, "smth"}
+                {"/org/verapdf/model/impl/axl/xmp-properties-number-check-1.xml", 4, 4},
+                {"/org/verapdf/model/impl/axl/xmp-properties-number-check-2.xml", 3, 3},
+                {"/org/verapdf/model/impl/axl/xmp-properties-number-check-3.xml", 3, 3},
+                {"/org/verapdf/model/impl/axl/xmp-properties-number-check-4.xml", 2, 2}
         });
     }
 
@@ -37,19 +37,21 @@ public class XMPExtensionSchemaContainerTest {
     public String filePath;
 
     @Parameterized.Parameter(value = 1)
-    public Boolean isValidValueType;
+    public Integer metadataPropertiesNumber;
 
     @Parameterized.Parameter(value = 2)
-    public String prefix;
+    public Integer mainMetadataPropertiesNumber;
 
     @Test
     public void test() throws URISyntaxException, FileNotFoundException, XMPException {
         FileInputStream in = new FileInputStream(getSystemIndependentPath(filePath));
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
         AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);
-        AXLExtensionSchemasContainer container = (AXLExtensionSchemasContainer) pack.getLinkedObjects(AXLXMPPackage.EXTENSION_SCHEMAS_CONTAINERS).get(0);
-        assertEquals(isValidValueType, container.getisValidBag());
-        assertEquals(prefix, container.getprefix());
+        int packSize = pack.getLinkedObjects(AXLXMPPackage.PROPERTIES).size();
+        assertEquals(metadataPropertiesNumber, Integer.valueOf(packSize));
+        AXLMainXMPPackage mainPack = new AXLMainXMPPackage(meta, true);
+        int mainPackSize = mainPack.getLinkedObjects(AXLXMPPackage.PROPERTIES).size();
+        assertEquals(mainMetadataPropertiesNumber, Integer.valueOf(mainPackSize));
     }
 
     private static String getSystemIndependentPath(String path)

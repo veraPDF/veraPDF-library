@@ -21,15 +21,18 @@ import static org.junit.Assert.assertEquals;
  * @author Maksim Bezrukov
  */
 @RunWith(Parameterized.class)
-public class XMPPropertiesNumberTest {
+public class XMPHeaderTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"/model/impl/axl/xmp-properties-number-check-1.xml", 4, 4},
-                {"/model/impl/axl/xmp-properties-number-check-2.xml", 3, 3},
-                {"/model/impl/axl/xmp-properties-number-check-3.xml", 3, 3},
-                {"/model/impl/axl/xmp-properties-number-check-4.xml", 2, 2}
+                {"/org/verapdf/model/impl/axl/xmp-empty-rdf.xml", null, null},
+                {"/org/verapdf/model/impl/axl/xmp-header-check-1.xml", "234", null},
+                {"/org/verapdf/model/impl/axl/xmp-header-check-2.xml", "234", "UTF8"},
+                {"/org/verapdf/model/impl/axl/xmp-header-check-3.xml", "234", "UTF8"},
+                {"/org/verapdf/model/impl/axl/xmp-header-check-4.xml", null, null},
+                {"/org/verapdf/model/impl/axl/xmp-header-check-5.xml", null, "UTF8"},
+                {"/org/verapdf/model/impl/axl/xmp-header-check-6.xml", "234\"    encoding  =   \"UTF8", null}
         });
     }
 
@@ -37,21 +40,18 @@ public class XMPPropertiesNumberTest {
     public String filePath;
 
     @Parameterized.Parameter(value = 1)
-    public Integer metadataPropertiesNumber;
+    public String bytes;
 
     @Parameterized.Parameter(value = 2)
-    public Integer mainMetadataPropertiesNumber;
+    public String encoding;
 
     @Test
     public void test() throws URISyntaxException, FileNotFoundException, XMPException {
         FileInputStream in = new FileInputStream(getSystemIndependentPath(filePath));
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
         AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);
-        int packSize = pack.getLinkedObjects(AXLXMPPackage.PROPERTIES).size();
-        assertEquals(metadataPropertiesNumber, Integer.valueOf(packSize));
-        AXLMainXMPPackage mainPack = new AXLMainXMPPackage(meta, true);
-        int mainPackSize = mainPack.getLinkedObjects(AXLXMPPackage.PROPERTIES).size();
-        assertEquals(mainMetadataPropertiesNumber, Integer.valueOf(mainPackSize));
+        assertEquals(bytes, pack.getbytes());
+        assertEquals(encoding, pack.getencoding());
     }
 
     private static String getSystemIndependentPath(String path)

@@ -21,18 +21,15 @@ import static org.junit.Assert.assertEquals;
  * @author Maksim Bezrukov
  */
 @RunWith(Parameterized.class)
-public class XMPHeaderTest {
+public class XMPExtensionSchemaContainerTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"/model/impl/axl/xmp-empty-rdf.xml", null, null},
-                {"/model/impl/axl/xmp-header-check-1.xml", "234", null},
-                {"/model/impl/axl/xmp-header-check-2.xml", "234", "UTF8"},
-                {"/model/impl/axl/xmp-header-check-3.xml", "234", "UTF8"},
-                {"/model/impl/axl/xmp-header-check-4.xml", null, null},
-                {"/model/impl/axl/xmp-header-check-5.xml", null, "UTF8"},
-                {"/model/impl/axl/xmp-header-check-6.xml", "234\"    encoding  =   \"UTF8", null}
+                {"/org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-1.xml", true, "pdfaExtension"},
+                {"/org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-2.xml", false, "ext"},
+                {"/org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-3.xml", false, "pdfaExtension"},
+                {"/org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-4.xml", false, "smth"}
         });
     }
 
@@ -40,18 +37,19 @@ public class XMPHeaderTest {
     public String filePath;
 
     @Parameterized.Parameter(value = 1)
-    public String bytes;
+    public Boolean isValidValueType;
 
     @Parameterized.Parameter(value = 2)
-    public String encoding;
+    public String prefix;
 
     @Test
     public void test() throws URISyntaxException, FileNotFoundException, XMPException {
         FileInputStream in = new FileInputStream(getSystemIndependentPath(filePath));
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
         AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);
-        assertEquals(bytes, pack.getbytes());
-        assertEquals(encoding, pack.getencoding());
+        AXLExtensionSchemasContainer container = (AXLExtensionSchemasContainer) pack.getLinkedObjects(AXLXMPPackage.EXTENSION_SCHEMAS_CONTAINERS).get(0);
+        assertEquals(isValidValueType, container.getisValidBag());
+        assertEquals(prefix, container.getprefix());
     }
 
     private static String getSystemIndependentPath(String path)

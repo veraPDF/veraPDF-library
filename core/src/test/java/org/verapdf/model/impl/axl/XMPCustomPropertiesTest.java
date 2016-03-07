@@ -28,27 +28,27 @@ public class XMPCustomPropertiesTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         List<Object[]> res = new ArrayList<>();
-        res.add(new Object[]{"/model/impl/axl/xmp-custom-structured-property-check-1.xml", true, true, true, true});
-        res.add(new Object[]{"/model/impl/axl/xmp-custom-structured-property-check-2.xml", false, false, null, null});
-        res.add(new Object[]{"/model/impl/axl/xmp-custom-structured-property-check-3.xml", false, true, null, false});
+        res.add(new Object[]{"/org/verapdf/model/impl/axl/xmp-custom-structured-property-check-1.xml", true, true, true, true});
+        res.add(new Object[]{"/org/verapdf/model/impl/axl/xmp-custom-structured-property-check-2.xml", false, false, null, null});
+        res.add(new Object[]{"/org/verapdf/model/impl/axl/xmp-custom-structured-property-check-3.xml", false, true, null, false});
 
         for (int i = 1; i <= 25; ++i) {
-            String filePassName = "/model/impl/axl/xmp-types-in-extension-check-" + i + "-pass.xml";
+            String filePassName = "/org/verapdf/model/impl/axl/xmp-types-in-extension-check-" + i + "-pass.xml";
             res.add(new Object[]{filePassName, true, true, true, true});
-            String fileFailName = "/model/impl/axl/xmp-types-in-extension-check-" + i + "-fail.xml";
+            String fileFailName = "/org/verapdf/model/impl/axl/xmp-types-in-extension-check-" + i + "-fail.xml";
             res.add(new Object[]{fileFailName, true, true, false, false});
         }
         for (int i = 26; i <= 35; ++i) {
-            String filePassName = "/model/impl/axl/xmp-types-in-extension-check-" + i + "-pass.xml";
+            String filePassName = "/org/verapdf/model/impl/axl/xmp-types-in-extension-check-" + i + "-pass.xml";
             res.add(new Object[]{filePassName, false, true, null, true});
-            String fileFailName = "/model/impl/axl/xmp-types-in-extension-check-" + i + "-fail.xml";
+            String fileFailName = "/org/verapdf/model/impl/axl/xmp-types-in-extension-check-" + i + "-fail.xml";
             res.add(new Object[]{fileFailName, false, true, null, false});
         }
 
-        res.add(new Object[]{"/model/impl/axl/xmp-gps-in-extension-check-2004-pass.xml", true, true, true, true});
-        res.add(new Object[]{"/model/impl/axl/xmp-gps-in-extension-check-2004-fail.xml", true, true, false, false});
-        res.add(new Object[]{"/model/impl/axl/xmp-gps-in-extension-check-2005-pass.xml", true, true, false, true});
-        res.add(new Object[]{"/model/impl/axl/xmp-gps-in-extension-check-2005-fail.xml", true, true, false, false});
+        res.add(new Object[]{"/org/verapdf/model/impl/axl/xmp-gps-in-extension-check-2004-pass.xml", true, true, true, true});
+        res.add(new Object[]{"/org/verapdf/model/impl/axl/xmp-gps-in-extension-check-2004-fail.xml", true, true, false, false});
+        res.add(new Object[]{"/org/verapdf/model/impl/axl/xmp-gps-in-extension-check-2005-pass.xml", true, true, false, true});
+        res.add(new Object[]{"/org/verapdf/model/impl/axl/xmp-gps-in-extension-check-2005-fail.xml", true, true, false, false});
 
         return res;
     }

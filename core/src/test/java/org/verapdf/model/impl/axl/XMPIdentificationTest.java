@@ -27,10 +27,10 @@ public class XMPIdentificationTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {"/model/impl/axl/xmp-identification-check-1.xml", 1, 1L, "B", "pdfaid", "pdfaid", "pdfaid", "pdfaid"},
-                {"/model/impl/axl/xmp-identification-check-2.xml", 1, 2L, "U", "custom", "custom", "custom", "custom"},
-                {"/model/impl/axl/xmp-identification-check-3.xml", 1, null, null, "custom", null, "pdfaid", "pdfaid"},
-                {"/model/impl/axl/xmp-empty-rdf.xml", 0, null, null, null, null, null, null}
+                {"/org/verapdf/model/impl/axl/xmp-identification-check-1.xml", 1, 1L, "B", "pdfaid", "pdfaid", "pdfaid", "pdfaid"},
+                {"/org/verapdf/model/impl/axl/xmp-identification-check-2.xml", 1, 2L, "U", "custom", "custom", "custom", "custom"},
+                {"/org/verapdf/model/impl/axl/xmp-identification-check-3.xml", 1, null, null, "custom", null, "pdfaid", "pdfaid"},
+                {"/org/verapdf/model/impl/axl/xmp-empty-rdf.xml", 0, null, null, null, null, null, null}
         });
     }
 
