@@ -1,8 +1,0 @@
-language: java
-
-jdk:
-  - oraclejdk7
-  - openjdk7
-
-install:
-  - mvn clean install appassembler:assemble
