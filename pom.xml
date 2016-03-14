@@ -11,11 +11,11 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-library</artifactId>
-  <version>0.11.0-SNAPSHOT</version>
+  <version>0.11.100-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>veraPDF PDF/A Validation Library</name>
-  <description>veraPDF PDF/A Validation API and library.</description>
+  <description>veraPDF PDF/A Validation API and core types.</description>
   <url>https://github.com/veraPDF/veraPDF-library/</url>
   <inceptionYear>2015</inceptionYear>
   <organization>
@@ -98,33 +98,17 @@
     <java.version>1.7</java.version>
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
-    <faster.xml.version>2.6.0-rc4</faster.xml.version>
-    <guava.version>18.0</guava.version>
-    <maven.failsafe.version>2.18.1</maven.failsafe.version>
     <maven.surefire.version>2.18.1</maven.surefire.version>
     <maven.exec.version>1.4.0</maven.exec.version>
     <mvn.javadoc.version>2.10</mvn.javadoc.version>
     <mvn.source.version>2.4</mvn.source.version>
     <mvn.gpg.plugin.version>1.6</mvn.gpg.plugin.version>
-    <verapdf.pdfbox.version>2.0.0-SNAPSHOT</verapdf.pdfbox.version>
-    <verapdf.xmp.version>[0.1.0,0.2.0)</verapdf.xmp.version>
-    <verapdf.model.version>[0.11.0,0.12.0)</verapdf.model.version>
+    <verapdf.xmp.version>[0.11.100,0.12.0)</verapdf.xmp.version>
+    <verapdf.model.version>[0.11.100,0.12.0)</verapdf.model.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
-
-      <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>${guava.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.beust</groupId>
-        <artifactId>jcommander</artifactId>
-        <version>1.48</version>
-      </dependency>
 
       <dependency>
         <groupId>junit</groupId>
@@ -138,23 +122,11 @@
         <version>1.2.17</version>
       </dependency>
 
-      <dependency>
-        <groupId>org.bouncycastle</groupId>
-        <artifactId>bcprov-jdk15on</artifactId>
-        <version>1.52</version>
-      </dependency>
-
       <!-- Mozilla Rhino JavaScript engine -->
       <dependency>
         <groupId>rhino</groupId>
         <artifactId>js</artifactId>
         <version>1.7R2</version>
-      </dependency>
-
-      <dependency>
-        <groupId>xmlunit</groupId>
-        <artifactId>xmlunit</artifactId>
-        <version>1.6</version>
       </dependency>
 
       <!-- veraPDF Project dependencies -->
@@ -166,78 +138,14 @@
 
       <dependency>
         <groupId>org.verapdf</groupId>
-        <artifactId>gui</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>feature-report</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>model-implementation</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>metadata-fixer</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
         <artifactId>pdf-model</artifactId>
         <version>${verapdf.model.version}</version>
       </dependency>
 
       <dependency>
         <groupId>org.verapdf</groupId>
-        <artifactId>validation-report</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf.pdfbox</groupId>
-        <artifactId>pdfbox</artifactId>
-        <version>${verapdf.pdfbox.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf.pdfbox</groupId>
-        <artifactId>preflight</artifactId>
-        <version>${verapdf.pdfbox.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
         <artifactId>verapdf-xmp-core</artifactId>
         <version>${verapdf.xmp.version}</version>
-      </dependency>
-
-      <!-- TEST DEPENDENCIES -->
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-annotations</artifactId>
-        <version>${faster.xml.version}</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-core</artifactId>
-        <version>${faster.xml.version}</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>${faster.xml.version}</version>
-        <scope>test</scope>
       </dependency>
 
       <dependency>
@@ -281,26 +189,6 @@
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-failsafe-plugin</artifactId>
-          <version>${maven.failsafe.version}</version>
-          <executions>
-            <execution>
-              <id>integration-test</id>
-              <goals>
-                <goal>integration-test</goal>
-              </goals>
-            </execution>
-            <execution>
-              <id>verify</id>
-              <goals>
-                <goal>verify</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
           <version>${mvn.gpg.plugin.version}</version>
         </plugin>
@@ -320,12 +208,6 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>${maven.surefire.version}</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>appassembler-maven-plugin</artifactId>
-          <version>1.10</version>
         </plugin>
 
         <plugin>
@@ -505,154 +387,7 @@
         </pluginManagement>
       </build>
     </profile>
-    <profile>
-      <id>clone-test-resources</id>
-      <modules>
-        <module>verapdf-qa</module>
-      </modules>
-      <build>
-        <pluginManagement>
-          <plugins>
 
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>exec-maven-plugin</artifactId>
-              <version>${maven.exec.version}</version>
-              <executions>
-
-                <execution>
-                  <id>download test files</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                    <goal>exec</goal>
-                  </goals>
-                  <configuration>
-                    <executable>git</executable>
-                    <workingDirectory>target/test-classes/test-resources</workingDirectory>
-                    <arguments>
-                      <argument>clone</argument>
-                      <argument>https://github.com/veraPDF/veraPDF-corpus-PDFA-1b</argument>
-                    </arguments>
-                  </configuration>
-                </execution>
-
-                <execution>
-                  <id>download validation profiles</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                    <goal>exec</goal>
-                  </goals>
-                  <configuration>
-                    <executable>git</executable>
-                    <workingDirectory>target/test-classes/test-resources</workingDirectory>
-                    <arguments>
-                      <argument>clone</argument>
-                      <argument>-b</argument>
-                      <argument>integration</argument>
-                      <argument>https://github.com/veraPDF/veraPDF-validation-profiles</argument>
-                    </arguments>
-                  </configuration>
-                </execution>
-
-              </executions>
-            </plugin>
-
-            <plugin>
-              <groupId>com.googlecode.maven-download-plugin</groupId>
-              <artifactId>download-maven-plugin</artifactId>
-              <version>1.2.1</version>
-
-              <executions>
-                <execution>
-                  <id>download isartor test suite</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                    <goal>wget</goal>
-                  </goals>
-                  <configuration>
-                    <url>
-                      http://www.pdfa.org/wp-content/uploads/2011/08/isartor-pdfa-2008-08-13.zip
-                    </url>
-                    <unpack>true</unpack>
-                    <outputDirectory>target/test-classes/test-resources</outputDirectory>
-                    <md5>9f129c834bc6f9f8dabad4491c4c10ec</md5>
-                  </configuration>
-                </execution>
-
-                <execution>
-                  <id>download bavaria test suite</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                    <goal>wget</goal>
-                  </goals>
-                  <configuration>
-                    <url>
-                      http://www.pdflib.com/fileadmin/pdflib/Bavaria/2009-04-03-Bavaria-pdfa.zip
-                    </url>
-                    <unpack>true</unpack>
-                    <outputDirectory>target/test-classes/test-resources</outputDirectory>
-                    <md5>d8fccb2fea540ab49bef237f3579546b</md5>
-                  </configuration>
-                </execution>
-              </executions>
-            </plugin>
-
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-
-    <profile>
-      <id>update-test-resources</id>
-      <build>
-        <pluginManagement>
-          <plugins>
-
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>exec-maven-plugin</artifactId>
-              <version>${maven.exec.version}</version>
-              <executions>
-
-                <execution>
-                  <id>update test files</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                    <goal>exec</goal>
-                  </goals>
-                  <configuration>
-                    <executable>git</executable>
-                    <workingDirectory>
-                      target/test-classes/test-resources/veraPDF-corpus-PDFA-1b
-                    </workingDirectory>
-                    <arguments>
-                      <argument>pull</argument>
-                    </arguments>
-                  </configuration>
-                </execution>
-
-                <execution>
-                  <id>update validation profiles</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                    <goal>exec</goal>
-                  </goals>
-                  <configuration>
-                    <executable>git</executable>
-                    <workingDirectory>
-                      target/test-classes/test-resources/veraPDF-validation-profiles
-                    </workingDirectory>
-                    <arguments>
-                      <argument>pull</argument>
-                    </arguments>
-                  </configuration>
-                </execution>
-              </executions>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
 
     <profile>
       <id>coverage-per-test</id>
