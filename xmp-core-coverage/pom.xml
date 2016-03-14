@@ -6,10 +6,9 @@
   <parent>
     <groupId>org.verapdf</groupId>
     <artifactId>verapdf-xmp</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.11.100-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.verapdf</groupId>
   <artifactId>verapdf-xmp-core-coverage</artifactId>
 
   <name>veraPDF PDF/A XMP Library Core Coverage</name>
