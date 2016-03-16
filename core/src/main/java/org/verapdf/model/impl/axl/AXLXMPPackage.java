@@ -38,21 +38,21 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     private SchemasDefinition currentSchemasDefinitionPDFA_1;
     private SchemasDefinition currentSchemasDefinitionPDFA_2_3;
 
-    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, PDFAFlavour flavour) {
-        this(xmpMetadata, isSerializationValid, false, isClosedChoiceCheck, mainPackageSchemasDefinition, XMP_PACKAGE_TYPE, flavour);
+    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isClosedChoiceCheck, VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
+        this(xmpMetadata, isSerializationValid, false, isClosedChoiceCheck, mainPackageExtensionNode, XMP_PACKAGE_TYPE, flavour);
     }
 
-    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, SchemasDefinition mainPackageSchemasDefinition, PDFAFlavour flavour) {
-        this(xmpMetadata, isSerializationValid, false, false, mainPackageSchemasDefinition, XMP_PACKAGE_TYPE, flavour);
+    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
+        this(xmpMetadata, isSerializationValid, false, false, mainPackageExtensionNode, XMP_PACKAGE_TYPE, flavour);
     }
 
-    protected AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, final String type, PDFAFlavour flavour) {
+    protected AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isMainMetadata, boolean isClosedChoiceCheck, VeraPDFXMPNode mainPackageExtensionNode, final String type, PDFAFlavour flavour) {
         super(type);
         this.xmpMetadata = xmpMetadata;
         this.isSerializationValid = isSerializationValid;
         this.isMainMetadata = isMainMetadata;
         this.isClosedChoiceCheck = isClosedChoiceCheck;
-        this.mainPackageSchemasDefinition = mainPackageSchemasDefinition;
+        this.mainPackageSchemasDefinition = SchemasDefinitionCreator.createExtendedSchemasDefinitionForPDFA_2_3(mainPackageExtensionNode, this.isClosedChoiceCheck);
         this.flavour = flavour;
     }
 
