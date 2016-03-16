@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.verapdf.model.xmplayer.XMPProperty;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -72,31 +73,37 @@ public class XMPCustomPropertiesTest {
     public void test() throws URISyntaxException, FileNotFoundException, XMPException {
         FileInputStream in = new FileInputStream(getSystemIndependentPath(filePath));
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
-        AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);
+        AXLXMPPackage pack = new AXLXMPPackage(meta, true, null, PDFAFlavour.PDFA_1_B);
         for (Object obj : pack.getLinkedObjects(AXLXMPPackage.PROPERTIES)) {
             XMPProperty prop = (XMPProperty) obj;
             assertEquals(false, prop.getisPredefinedInXMP2004());
             assertEquals(false, prop.getisPredefinedInXMP2005());
-            //TODO: isDefinedInCurrentPackage different check for pdfa-1 and pdfa-2
             assertEquals(isDefinedInCurrentPackageForPDFA_1, prop.getisDefinedInCurrentPackage());
-//            assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInCurrentPackageForPDFA_2_3());
             assertEquals(false, prop.getisDefinedInMainPackage());
-            //TODO: isValueTypeCorrect different check for pdfa-1 and pdfa-2
             assertEquals(isValueTypeCorrectForPDFA_1, prop.getisValueTypeCorrect());
-//            assertEquals(isValueTypeCorrectForPDFA_2_3, prop.getisValueTypeCorrectForPDFA_2_3());
         }
-        AXLMainXMPPackage mainwPack = new AXLMainXMPPackage(meta, true);
-        for (Object obj : mainwPack.getLinkedObjects(AXLXMPPackage.PROPERTIES)) {
+        AXLMainXMPPackage mainPack = new AXLMainXMPPackage(meta, true, PDFAFlavour.PDFA_1_B);
+        for (Object obj : mainPack.getLinkedObjects(AXLXMPPackage.PROPERTIES)) {
             XMPProperty prop = (XMPProperty) obj;
             assertEquals(false, prop.getisPredefinedInXMP2004());
             assertEquals(false, prop.getisPredefinedInXMP2005());
-            //TODO: isDefinedInCurrentPackage different check for pdfa-1 and pdfa-2
             assertEquals(isDefinedInCurrentPackageForPDFA_1, prop.getisDefinedInCurrentPackage());
-//            assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInCurrentPackageForPDFA_2_3());
             assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInMainPackage());
-            //TODO: isValueTypeCorrect different check for pdfa-1 and pdfa-2
             assertEquals(isValueTypeCorrectForPDFA_1, prop.getisValueTypeCorrect());
-//            assertEquals(isValueTypeCorrectForPDFA_2_3, prop.getisValueTypeCorrectForPDFA_2_3());
+        }
+        AXLXMPPackage pack2 = new AXLXMPPackage(meta, true, true, null, PDFAFlavour.PDFA_2_B);
+        for (Object obj : pack2.getLinkedObjects(AXLXMPPackage.PROPERTIES)) {
+            XMPProperty prop = (XMPProperty) obj;
+            assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInCurrentPackage());
+            assertEquals(false, prop.getisDefinedInMainPackage());
+            assertEquals(isValueTypeCorrectForPDFA_2_3, prop.getisValueTypeCorrect());
+        }
+        AXLMainXMPPackage mainPack2 = new AXLMainXMPPackage(meta, true, true, PDFAFlavour.PDFA_2_B);
+        for (Object obj : mainPack2.getLinkedObjects(AXLXMPPackage.PROPERTIES)) {
+            XMPProperty prop = (XMPProperty) obj;
+            assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInCurrentPackage());
+            assertEquals(isDefinedInCurrentPackageForPDFA_2_3, prop.getisDefinedInMainPackage());
+            assertEquals(isValueTypeCorrectForPDFA_2_3, prop.getisValueTypeCorrect());
         }
     }
 

@@ -55,16 +55,6 @@
 	</rdf:Description>
 	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
 					   xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
-		<fs:tssprop1 rdf:parseType="Resource">
-			<xmpDM:quality>HIGH</xmpDM:quality>
-			<xmpDM:frameSize>123.02</xmpDM:frameSize>
-			<xmpDM:frameOverlappingPercentage>1.0</xmpDM:frameOverlappingPercentage>
-		</fs:tssprop1>
-		<fs:tssprop2 rdf:parseType="Resource">
-			<xmpDM:quality>Low 1</xmpDM:quality>
-			<xmpDM:frameSize>-1.0</xmpDM:frameSize>
-			<xmpDM:frameOverlappingPercentage>+51.9</xmpDM:frameOverlappingPercentage>
-		</fs:tssprop2>
 		<fs:tssprop4 rdf:parseType="Resource">
 			<xmpDM:quality>Low</xmpDM:quality>
 			<xmpDM:frameSize>+4/8</xmpDM:frameSize>

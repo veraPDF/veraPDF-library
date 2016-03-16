@@ -5,6 +5,7 @@ import com.adobe.xmp.impl.VeraPDFMeta;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -62,7 +63,7 @@ public class XMPIdentificationTest {
     public void test() throws URISyntaxException, FileNotFoundException, XMPException {
         FileInputStream in = new FileInputStream(getSystemIndependentPath(filePath));
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
-        AXLMainXMPPackage pack = new AXLMainXMPPackage(meta, true);
+        AXLMainXMPPackage pack = new AXLMainXMPPackage(meta, true, PDFAFlavour.PDFA_1_B);
         List<? extends org.verapdf.model.baselayer.Object> list = pack.getLinkedObjects(AXLMainXMPPackage.IDENTIFICATION);
         assertEquals(identificationSchemaNumber, list.size());
         if (list.size() != 0) {

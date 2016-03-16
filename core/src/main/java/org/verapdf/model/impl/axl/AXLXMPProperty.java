@@ -4,6 +4,7 @@ import com.adobe.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.tools.xmp.SchemasDefinition;
 import org.verapdf.model.tools.xmp.SchemasDefinitionCreator;
 import org.verapdf.model.xmplayer.XMPProperty;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**
  * @author Maksim Bezrukov
@@ -15,12 +16,12 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
     private final VeraPDFXMPNode xmpNode;
     private final boolean isMainMetadata;
     private final boolean isClosedChoiceCheck;
-    private final boolean isPDFA1Validation = true;
+    private final PDFAFlavour flavour;
     private final SchemasDefinition mainPackageSchemasDefinition;
     private SchemasDefinition currentSchemasDefinitionPDFA_1;
     private SchemasDefinition currentSchemasDefinitionPDFA_2_3;
 
-    public AXLXMPProperty(VeraPDFXMPNode xmpNode, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, SchemasDefinition currentSchemasDefinitionPDFA_1, SchemasDefinition currentSchemasDefinitionPDFA_2_3) {
+    public AXLXMPProperty(VeraPDFXMPNode xmpNode, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, SchemasDefinition currentSchemasDefinitionPDFA_1, SchemasDefinition currentSchemasDefinitionPDFA_2_3, PDFAFlavour flavour) {
         super(XMP_PROPERTY_TYPE);
         this.xmpNode = xmpNode;
         this.isMainMetadata = isMainMetadata;
@@ -29,6 +30,7 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
         this.currentSchemasDefinitionPDFA_1 = currentSchemasDefinitionPDFA_1;
         this.currentSchemasDefinitionPDFA_2_3 = currentSchemasDefinitionPDFA_2_3;
         this.contextDependent = true;
+        this.flavour = flavour;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
 
     @Override
     public Boolean getisDefinedInCurrentPackage() {
-        if (isPDFA1Validation) {
+        if (flavour != null && flavour.getPart() != null && flavour.getPart().getPartNumber() == 1) {
             return this.currentSchemasDefinitionPDFA_1.isDefinedProperty(this.xmpNode);
         } else {
             return this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode);
@@ -63,7 +65,7 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
 
     @Override
     public Boolean getisValueTypeCorrect() {
-        if (isPDFA1Validation) {
+        if (flavour != null && flavour.getPart() != null && flavour.getPart().getPartNumber() == 1) {
             return isValueTypeCorrectForPDFA_1();
         } else {
             return isValueTypeCorrectForPDFA_2_3();

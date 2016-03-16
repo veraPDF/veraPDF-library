@@ -187,32 +187,6 @@
 			<xapG:yellow>52.365012</xapG:yellow>
 			<xapG:black>52.4562</xapG:black>
 		</fs:colprop1>
-		<fs:colprop3 rdf:parseType="Resource">
-			<xapG:swatchName>Some swatch name LAB</xapG:swatchName>
-			<xapG:mode>LAB</xapG:mode>
-			<xapG:type>PROCESS</xapG:type>
-			<xapG:L>-125.0</xapG:L>
-			<xapG:A>127</xapG:A>
-			<xapG:B>0</xapG:B>
-		</fs:colprop3>	
-		<fs:colprop4 rdf:parseType="Resource">
-			<xapG:swatchName>Some name of the swatch</xapG:swatchName>
-			<xapG:mode>CMYB</xapG:mode>
-			<xapG:type>PROCESS</xapG:type>
-			<xapG:cyan>0.001</xapG:cyan>
-			<xapG:magenta>99.99999901</xapG:magenta>
-			<xapG:yellow>52.365012</xapG:yellow>
-			<xapG:black>52.4562</xapG:black>
-		</fs:colprop4>		
-		<fs:colprop5 rdf:parseType="Resource">
-			<xapG:swatchName>Some name of the swatch</xapG:swatchName>
-			<xapG:mode>CMYK</xapG:mode>
-			<xapG:type>PROCES</xapG:type>
-			<xapG:cyan>0.001</xapG:cyan>
-			<xapG:magenta>99.99999901</xapG:magenta>
-			<xapG:yellow>52.365012</xapG:yellow>
-			<xapG:black>52.4562</xapG:black>
-		</fs:colprop5>
 		<fs:colprop7 rdf:parseType="Resource">
 			<xapG:swatchName>Some name of the swatch</xapG:swatchName>
 			<xapG:mode>CMYK</xapG:mode>
@@ -263,15 +237,7 @@
 			<xapG:red>234</xapG:red>
 			<xapG:green>128</xapG:green>
 			<xapG:blue>some value</xapG:blue>
-		</fs:colprop12>		
-		<fs:colprop13 rdf:parseType="Resource">
-			<xapG:swatchName>Some swatch name LAB</xapG:swatchName>
-			<xapG:mode>LAB</xapG:mode>
-			<xapG:type>PROCESS</xapG:type>
-			<xapG:L>-125</xapG:L>
-			<xapG:A>127</xapG:A>
-			<xapG:B>0</xapG:B>
-		</fs:colprop13>	
+		</fs:colprop12>
 		<fs:colprop14 rdf:parseType="Resource">
 			<xapG:swatchName>Some swatch name LAB</xapG:swatchName>
 			<xapG:mode>LAB</xapG:mode>
@@ -287,7 +253,7 @@
 			<xapG:L>-125</xapG:L>
 			<xapG:A>127</xapG:A>
 			<xapG:B>0.356</xapG:B>
-		</fs:colprop15>	
+		</fs:colprop15>
 		<fs:colprop16 rdf:parseType="Resource">
 			<xapG:swatchName>Some name of the swatch</xapG:swatchName>
 			<xapG:mode>CMYK</xapG:mode>
@@ -296,7 +262,7 @@
 			<xapG:magenta>0.9999999901</xapG:magenta>
 			<xapG:yellow>52.0</xapG:yellow>
 			<xapG:black>52.4562</xapG:black>
-		</fs:colprop16>		
+		</fs:colprop16>
 		<fs:colprop17 rdf:parseType="Resource">
 			<xapG:swatchName>Some name of the swatch</xapG:swatchName>
 			<xapG:mode>CMYK</xapG:mode>
@@ -305,7 +271,7 @@
 			<xapG:magenta>0.9999999901</xapG:magenta>
 			<xapG:yellow>52.0</xapG:yellow>
 			<xapG:black>52.4562</xapG:black>
-		</fs:colprop17>	
+		</fs:colprop17>
 		<fs:colprop18 rdf:parseType="Resource">
 			<xapG:swatchName>Some name of the swatch</xapG:swatchName>
 			<xapG:mode>CMYK</xapG:mode>
@@ -314,7 +280,7 @@
 			<xapG:magenta>100.9999999901</xapG:magenta>
 			<xapG:yellow>52.0</xapG:yellow>
 			<xapG:black>52.4562</xapG:black>
-		</fs:colprop18>	
+		</fs:colprop18>
 		<fs:colprop19 rdf:parseType="Resource">
 			<xapG:swatchName>Some name of the swatch</xapG:swatchName>
 			<xapG:mode>CMYK</xapG:mode>
