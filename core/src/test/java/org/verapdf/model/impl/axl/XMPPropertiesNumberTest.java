@@ -5,6 +5,7 @@ import com.adobe.xmp.impl.VeraPDFMeta;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -46,10 +47,10 @@ public class XMPPropertiesNumberTest {
     public void test() throws URISyntaxException, FileNotFoundException, XMPException {
         FileInputStream in = new FileInputStream(getSystemIndependentPath(filePath));
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
-        AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);
+        AXLXMPPackage pack = new AXLXMPPackage(meta, true, null, PDFAFlavour.PDFA_1_B);
         int packSize = pack.getLinkedObjects(AXLXMPPackage.PROPERTIES).size();
         assertEquals(metadataPropertiesNumber, Integer.valueOf(packSize));
-        AXLMainXMPPackage mainPack = new AXLMainXMPPackage(meta, true);
+        AXLMainXMPPackage mainPack = new AXLMainXMPPackage(meta, true, PDFAFlavour.PDFA_1_B);
         int mainPackSize = mainPack.getLinkedObjects(AXLXMPPackage.PROPERTIES).size();
         assertEquals(mainMetadataPropertiesNumber, Integer.valueOf(mainPackSize));
     }

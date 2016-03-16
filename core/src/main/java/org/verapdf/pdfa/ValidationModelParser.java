@@ -21,5 +21,5 @@ public interface ValidationModelParser {
 	 * @throws IOException when there's a problem parsing or establishing the model
 	 *                     root.
 	 */
-	public CosDocument getRoot() throws IOException;
+	public org.verapdf.model.baselayer.Object getRoot() throws IOException;
 }

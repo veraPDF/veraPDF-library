@@ -5,6 +5,7 @@ import com.adobe.xmp.impl.XMPSchemaRegistryImpl;
 import org.verapdf.model.tools.xmp.ValidatorsContainer;
 import org.verapdf.model.tools.xmp.validators.SimpleTypeValidator;
 import org.verapdf.model.xmplayer.ExtensionSchemaField;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**
  * @author Maksim Bezrukov
@@ -16,10 +17,8 @@ public class AXLExtensionSchemaField extends AXLExtensionSchemaObject implements
     private static final String NAME = "name";
     private static final String VALUE_TYPE = "valueType";
 
-    private final boolean isPDFA1Validation = true;
-
-    public AXLExtensionSchemaField(VeraPDFXMPNode xmpNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3) {
-        super(EXTENSION_SCHEMA_FIELD, xmpNode, containerForPDFA_1, containerForPDFA_2_3);
+    public AXLExtensionSchemaField(VeraPDFXMPNode xmpNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3, PDFAFlavour flavour) {
+        super(EXTENSION_SCHEMA_FIELD, xmpNode, containerForPDFA_1, containerForPDFA_2_3, flavour);
     }
 
     @Override
@@ -75,7 +74,7 @@ public class AXLExtensionSchemaField extends AXLExtensionSchemaObject implements
 
     @Override
     public Boolean getisValueTypeDefined() {
-        if (isPDFA1Validation) {
+        if (flavour != null && flavour.getPart() != null && flavour.getPart().getPartNumber() == 1) {
             return isValueTypeValidForPDFA_1();
         } else {
             return isValueTypeValidForPDFA_2_3();

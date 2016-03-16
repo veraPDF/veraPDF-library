@@ -7,6 +7,7 @@ import org.verapdf.model.tools.xmp.ValidatorsContainer;
 import org.verapdf.model.tools.xmp.validators.SimpleTypeValidator;
 import org.verapdf.model.tools.xmp.validators.URITypeValidator;
 import org.verapdf.model.xmplayer.ExtensionSchemaValueType;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,8 @@ public class AXLExtensionSchemaValueType extends AXLExtensionSchemaObject implem
     private static final String DESCRIPTION = "description";
     private static final String TYPE = "type";
 
-    public AXLExtensionSchemaValueType(VeraPDFXMPNode xmpNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3) {
-        super(EXTENSION_SCHEMA_VALUE_TYPE, xmpNode, containerForPDFA_1, containerForPDFA_2_3);
+    public AXLExtensionSchemaValueType(VeraPDFXMPNode xmpNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3, PDFAFlavour flavour) {
+        super(EXTENSION_SCHEMA_VALUE_TYPE, xmpNode, containerForPDFA_1, containerForPDFA_2_3, flavour);
     }
 
     /**
@@ -53,7 +54,7 @@ public class AXLExtensionSchemaValueType extends AXLExtensionSchemaObject implem
             if (XMPSchemaRegistryImpl.NS_PDFA_TYPE.equals(child.getNamespaceURI()) && FIELD.equals(child.getName())) {
                 if (child.getOptions().isArray()) {
                     for (VeraPDFXMPNode node : child.getChildren()) {
-                        res.add(new AXLExtensionSchemaField(node, containerForPDFA_1, containerForPDFA_2_3));
+                        res.add(new AXLExtensionSchemaField(node, containerForPDFA_1, containerForPDFA_2_3, flavour));
                     }
                 }
                 break;

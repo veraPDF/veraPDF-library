@@ -79,22 +79,6 @@
 	</rdf:Description>
 	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
 					   xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
-		<fs:timecodeprop1 rdf:parseType="Resource">
-			<xmpDM:timeValue>00:00:00:00</xmpDM:timeValue>
-			<xmpDM:timeFormat>24Timecode </xmpDM:timeFormat>
-		</fs:timecodeprop1>
-		<fs:timecodeprop2 rdf:parseType="Resource">
-			<xmpDM:timeValue>00:00:00:00</xmpDM:timeValue>
-			<xmpDM:timeFormat>26Timecode</xmpDM:timeFormat>
-		</fs:timecodeprop2>
-		<fs:timecodeprop3 rdf:parseType="Resource">
-			<xmpDM:timeValue>00;00;11;07</xmpDM:timeValue>
-			<xmpDM:timeFormat>2997 DropTimecode</xmpDM:timeFormat>
-		</fs:timecodeprop3>
-		<fs:timecodeprop5 rdf:parseType="Resource">
-			<xmpDM:timeValue>some time value</xmpDM:timeValue>
-			<xmpDM:timeFormat>30Timecode</xmpDM:timeFormat>
-		</fs:timecodeprop5>
 		<fs:timecodeprop6 rdf:parseType="Resource">
 			<xmpDM:timeValue>
 				<rdf:Seq>

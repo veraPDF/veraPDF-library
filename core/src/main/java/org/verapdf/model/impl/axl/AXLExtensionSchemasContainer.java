@@ -5,6 +5,7 @@ import com.adobe.xmp.options.PropertyOptions;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.tools.xmp.ValidatorsContainer;
 import org.verapdf.model.xmplayer.ExtensionSchemasContainer;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +22,14 @@ public class AXLExtensionSchemasContainer extends AXLXMPObject implements Extens
     protected VeraPDFXMPNode xmpNode;
     protected final ValidatorsContainer containerForPDFA_1;
     protected final ValidatorsContainer containerForPDFA_2_3;
+    protected final PDFAFlavour flavour;
 
-    public AXLExtensionSchemasContainer(VeraPDFXMPNode xmpNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3) {
+    public AXLExtensionSchemasContainer(VeraPDFXMPNode xmpNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3, PDFAFlavour flavour) {
         super(EXTENSION_SCHEMAS_CONTAINER);
         this.xmpNode = xmpNode;
         this.containerForPDFA_1 = containerForPDFA_1;
         this.containerForPDFA_2_3 = containerForPDFA_2_3;
+        this.flavour = flavour;
     }
 
     /**
@@ -47,7 +50,7 @@ public class AXLExtensionSchemasContainer extends AXLXMPObject implements Extens
         List<AXLExtensionSchemaDefinition> res = new ArrayList<>();
         if (this.xmpNode != null && this.xmpNode.getOptions().isArray()) {
             for (VeraPDFXMPNode node : this.xmpNode.getChildren()) {
-                res.add(new AXLExtensionSchemaDefinition(node, containerForPDFA_1, containerForPDFA_2_3));
+                res.add(new AXLExtensionSchemaDefinition(node, containerForPDFA_1, containerForPDFA_2_3, flavour));
             }
         }
         return res;

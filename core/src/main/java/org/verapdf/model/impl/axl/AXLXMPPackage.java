@@ -6,6 +6,7 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.tools.xmp.SchemasDefinition;
 import org.verapdf.model.tools.xmp.SchemasDefinitionCreator;
 import org.verapdf.model.xmplayer.XMPPackage;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,26 +32,28 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     private final VeraPDFMeta xmpMetadata;
     private final boolean isSerializationValid;
     private final boolean isMainMetadata;
+    private final PDFAFlavour flavour;
     private final boolean isClosedChoiceCheck;
     private SchemasDefinition mainPackageSchemasDefinition;
     private SchemasDefinition currentSchemasDefinitionPDFA_1;
     private SchemasDefinition currentSchemasDefinitionPDFA_2_3;
 
-    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition) {
-        this(xmpMetadata, isSerializationValid, false, isClosedChoiceCheck, mainPackageSchemasDefinition, XMP_PACKAGE_TYPE);
+    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isClosedChoiceCheck, VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
+        this(xmpMetadata, isSerializationValid, false, isClosedChoiceCheck, mainPackageExtensionNode, XMP_PACKAGE_TYPE, flavour);
     }
 
-    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, SchemasDefinition mainPackageSchemasDefinition) {
-        this(xmpMetadata, isSerializationValid, false, false, mainPackageSchemasDefinition, XMP_PACKAGE_TYPE);
+    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
+        this(xmpMetadata, isSerializationValid, false, false, mainPackageExtensionNode, XMP_PACKAGE_TYPE, flavour);
     }
 
-    protected AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, final String type) {
+    protected AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isMainMetadata, boolean isClosedChoiceCheck, VeraPDFXMPNode mainPackageExtensionNode, final String type, PDFAFlavour flavour) {
         super(type);
         this.xmpMetadata = xmpMetadata;
         this.isSerializationValid = isSerializationValid;
         this.isMainMetadata = isMainMetadata;
         this.isClosedChoiceCheck = isClosedChoiceCheck;
-        this.mainPackageSchemasDefinition = mainPackageSchemasDefinition;
+        this.mainPackageSchemasDefinition = SchemasDefinitionCreator.createExtendedSchemasDefinitionForPDFA_2_3(mainPackageExtensionNode, this.isClosedChoiceCheck);
+        this.flavour = flavour;
     }
 
     /**
@@ -77,7 +80,8 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
         res.add(new AXLExtensionSchemasContainer(
                 this.getXmpMetadata().getExtensionSchemasNode(),
                 getCurrentSchemasDefinitionPDFA_1().getValidatorsContainer(),
-                getCurrentSchemasDefinitionPDFA_2_3().getValidatorsContainer()
+                getCurrentSchemasDefinitionPDFA_2_3().getValidatorsContainer(),
+                this.flavour
         ));
         return res;
     }
@@ -89,7 +93,7 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
         List<VeraPDFXMPNode> properties = this.xmpMetadata.getProperties();
         List<AXLXMPProperty> res = new ArrayList<>(properties.size());
         for (VeraPDFXMPNode node : properties) {
-            res.add(new AXLXMPProperty(node, this.isMainMetadata, this.isClosedChoiceCheck, this.getMainPackageSchemasDefinition(), this.getCurrentSchemasDefinitionPDFA_1(), this.getCurrentSchemasDefinitionPDFA_2_3()));
+            res.add(new AXLXMPProperty(node, this.isMainMetadata, this.isClosedChoiceCheck, this.getMainPackageSchemasDefinition(), this.getCurrentSchemasDefinitionPDFA_1(), this.getCurrentSchemasDefinitionPDFA_2_3(), flavour));
         }
         return res;
     }

@@ -7,6 +7,7 @@ import org.verapdf.model.tools.xmp.ValidatorsContainer;
 import org.verapdf.model.tools.xmp.validators.SimpleTypeValidator;
 import org.verapdf.model.tools.xmp.validators.URITypeValidator;
 import org.verapdf.model.xmplayer.ExtensionSchemaDefinition;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,8 @@ public class AXLExtensionSchemaDefinition extends AXLExtensionSchemaObject imple
     private static final String SCHEMA = "schema";
     private static final String VALUE_TYPE = "valueType";
 
-    public AXLExtensionSchemaDefinition(VeraPDFXMPNode xmpNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3) {
-        super(EXTENSION_SCHEMA_DEFINITION, xmpNode, containerForPDFA_1, containerForPDFA_2_3);
+    public AXLExtensionSchemaDefinition(VeraPDFXMPNode xmpNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3, PDFAFlavour flavour) {
+        super(EXTENSION_SCHEMA_DEFINITION, xmpNode, containerForPDFA_1, containerForPDFA_2_3, flavour);
     }
 
     /**
@@ -55,7 +56,7 @@ public class AXLExtensionSchemaDefinition extends AXLExtensionSchemaObject imple
             if (XMPSchemaRegistryImpl.NS_PDFA_SCHEMA.equals(child.getNamespaceURI()) && VALUE_TYPE.equals(child.getName())) {
                 if (child.getOptions().isArray()) {
                     for (VeraPDFXMPNode node : child.getChildren()) {
-                        res.add(new AXLExtensionSchemaValueType(node, containerForPDFA_1, containerForPDFA_2_3));
+                        res.add(new AXLExtensionSchemaValueType(node, containerForPDFA_1, containerForPDFA_2_3, flavour));
                     }
                 }
                 break;
@@ -73,7 +74,7 @@ public class AXLExtensionSchemaDefinition extends AXLExtensionSchemaObject imple
             if (XMPSchemaRegistryImpl.NS_PDFA_SCHEMA.equals(child.getNamespaceURI()) && PROPERTY.equals(child.getName())) {
                 if (child.getOptions().isArray()) {
                     for (VeraPDFXMPNode node : child.getChildren()) {
-                        res.add(new AXLExtensionSchemaProperty(node, containerForPDFA_1, containerForPDFA_2_3));
+                        res.add(new AXLExtensionSchemaProperty(node, containerForPDFA_1, containerForPDFA_2_3, flavour));
                     }
                 }
                 break;

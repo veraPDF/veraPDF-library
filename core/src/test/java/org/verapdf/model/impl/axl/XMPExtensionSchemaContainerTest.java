@@ -5,6 +5,7 @@ import com.adobe.xmp.impl.VeraPDFMeta;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -46,7 +47,7 @@ public class XMPExtensionSchemaContainerTest {
     public void test() throws URISyntaxException, FileNotFoundException, XMPException {
         FileInputStream in = new FileInputStream(getSystemIndependentPath(filePath));
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
-        AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);
+        AXLXMPPackage pack = new AXLXMPPackage(meta, true, null, PDFAFlavour.PDFA_1_B);
         AXLExtensionSchemasContainer container = (AXLExtensionSchemasContainer) pack.getLinkedObjects(AXLXMPPackage.EXTENSION_SCHEMAS_CONTAINERS).get(0);
         assertEquals(isValidValueType, container.getisValidBag());
         assertEquals(prefix, container.getprefix());
