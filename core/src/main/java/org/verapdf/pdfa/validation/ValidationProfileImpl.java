@@ -343,7 +343,7 @@ final class ValidationProfileImpl implements ValidationProfile {
         private final Writer out;
         /**
          * @param out a Writer for the generated schema
-         * 
+         *
          */
         public WriterSchemaOutputResolver(final Writer out) {
             super();

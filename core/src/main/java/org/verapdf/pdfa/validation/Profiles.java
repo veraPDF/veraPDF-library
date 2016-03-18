@@ -7,10 +7,12 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 
 import javax.xml.bind.JAXBException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -124,8 +126,8 @@ public final class Profiles {
         if (variables == null)
             throw new IllegalArgumentException(
                     "Parameter variables can not be null.");
-        return ValidationProfileImpl.fromSortedValues(flavour, details, hash, rules,
-                variables);
+        return ValidationProfileImpl.fromSortedValues(flavour, details, hash,
+                rules, variables);
     }
 
     /**
@@ -559,5 +561,35 @@ public final class Profiles {
     public static String getValidationProfileSchema() throws JAXBException,
             IOException {
         return ValidationProfileImpl.getSchema();
+    }
+
+    public static class RuleIdComparator implements Comparator<RuleId> {
+        @Override
+        public int compare(RuleId firstId, RuleId secondId) {
+            if (firstId.getClause().equals(secondId.getClause())) {
+                return firstId.getTestNumber() - secondId.getTestNumber();
+            } else {
+                String[] o1StrArr = firstId.getClause().split("\\.");
+                String[] o2StrArr = secondId.getClause().split("\\.");
+                int min = Math.min(o1StrArr.length, o2StrArr.length);
+
+                for (int i = 0; i < min; ++i) {
+                    if (!o1StrArr[i].equals(o2StrArr[i])) {
+                        return Integer.parseInt(o1StrArr[i])
+                                - Integer.parseInt(o2StrArr[i]);
+                    }
+                }
+
+                return o1StrArr.length - o2StrArr.length;
+            }
+        }
+    }
+
+    public static class RuleComparator implements Comparator<Rule> {
+        @Override
+        public int compare(Rule firstRule, Rule secondRule) {
+            return new RuleIdComparator().compare(firstRule.getRuleId(),
+                    secondRule.getRuleId());
+        }
     }
 }
