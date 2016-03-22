@@ -15,7 +15,7 @@ import org.verapdf.pdfa.results.MetadataFixerResultImpl;
 public interface Metadata {
 
 	/**
-	 * Add required fields to stream dictionary and add FlateDecode Filter for part 2 and 3 flavours
+	 * Add required fields to stream dictionary and add FlateDecode Filter for part 2 and 3 flavours or remove filters for part 1 flavour
 	 *
 	 * @param resultBuilder report applied changes
 	 */
