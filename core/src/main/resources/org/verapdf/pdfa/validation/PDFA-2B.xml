@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_2_B">
-    <details creator="veraPDF Consortium" created="2016-03-03T09:36:37.300+03:00">
+    <details creator="veraPDF Consortium" created="2016-03-22T10:14:56.181-03:00">
         <name>PDF/A-2B validation profile</name>
         <description>Validation rules against ISO 19005-2:2011</description>
     </details>
@@ -489,6 +489,58 @@
             </error>
             <references/>
         </rule>
+        <rule object="JPEG2000">
+            <id specification="ISO_19005_2" clause="6.2.8.3" testNumber="1"/>
+            <description>The number of colour channels in the JPEG2000 data shall be 1, 3 or 4.</description>
+            <test>nrColorChannels == 1 || nrColorChannels == 3 || nrColorChannels == 4</test>
+            <error>
+                <message>JPEG2000 image has number of colour channels different from 1, 3 or 4.</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="JPEG2000">
+            <id specification="ISO_19005_2" clause="6.2.8.3" testNumber="2"/>
+            <description>If the number of colour space specifications in the JPEG2000 data is greater than 1, there shall be exactly one colour space 
+			specification that has the value 0x01 in the APPROX field.</description>
+            <test>nrColorSpaceSpecs == 1 || nrColorSpacesWithApproxField == 1</test>
+            <error>
+                <message>The JPEG2000 image contains more than one colour specification with the best colour fidelity (value 0x01 in the APPROX field).</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="JPEG2000">
+            <id specification="ISO_19005_2" clause="6.2.8.3" testNumber="3"/>
+            <description>The value of the METH entry in its 'colr' box shall be 0x01, 0x02 or 0x03. A conforming reader shall use only
+			that colour space and shall ignore all other colour space specifications.</description>
+            <test>colrMethod == 1 || colrMethod == 2 || colrMethod == 3</test>
+            <error>
+                <message>Colour specification of the JPEG2000 image has specification method.</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="JPEG2000">
+            <id specification="ISO_19005_2" clause="6.2.8.3" testNumber="4"/>
+            <description>JPEG2000 enumerated colour space 19 (CIEJab) shall not be used.</description>
+            <test>colrEnumCS == null || colrEnumCS != 19</test>
+            <error>
+                <message>JPEG2000 image uses enumerated colour space 19 (CIEJab), which is not allowed in PDF/A</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="JPEG2000">
+            <id specification="ISO_19005_2" clause="6.2.8.3" testNumber="5"/>
+            <description>The bit-depth of the JPEG2000 data shall have a value in the range 1 to 38. All colour channels in the JPEG2000 data shall have the same bit-depth.</description>
+            <test>bpccBoxPresent == false &amp;&amp; (bitDepth &gt;= 1 &amp;&amp; bitDepth &lt;= 38) </test>
+            <error>
+                <message>JPEG2000 image has invalid bit-depth parameters</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
         <rule object="PDXForm">
             <id specification="ISO_19005_2" clause="6.2.9" testNumber="1"/>
             <description>A form XObject dictionary shall not contain any of the following: - the OPI key; - the Subtype2 key with a value of PS; - the PS key.</description>
@@ -769,8 +821,9 @@
             <id specification="ISO_19005_2" clause="6.2.11.6" testNumber="2"/>
             <description>No non-symbolic TrueType font shall define a Differences array unless all of the glyph names in
 			the Differences array are listed in the Adobe Glyph List and the embedded font program contains at least the
-			Microsoft Unicode (3,1 – Platform ID=3, Encoding ID=1) encoding in the &quot;cmap&quot; table.</description>
-            <test>isSymbolic == true || (Encoding == &quot;MacRomanEncoding&quot; || Encoding == &quot;WinAnsiEncoding&quot;) || (Encoding == &quot;Custom&quot; &amp;&amp; differencesAreUnicodeCompliant == true)</test>
+			Microsoft Unicode (3,1 – Platform ID=3, Encoding ID=1) encoding in the 'cmap' table.</description>
+            <test>isSymbolic == true || (Encoding == &quot;MacRomanEncoding&quot; || Encoding == &quot;WinAnsiEncoding&quot;) || 
+				(Encoding == &quot;Custom&quot; &amp;&amp; differencesAreUnicodeCompliant == true)</test>
             <error>
                 <message>A non-symbolic TrueType font has encoding different from MacRomanEncoding or WinAnsiEncoding, or 
 				the glyphs in the Differences array can not be mapped to the embedded font glyphs via the Adobe Glyph List</message>
@@ -790,7 +843,7 @@
         </rule>
         <rule object="TrueTypeFontProgram">
             <id specification="ISO_19005_2" clause="6.2.11.6" testNumber="4"/>
-            <description>Symbolic TrueType fonts shall not contain an Encoding entry in the font dictionary, and the &quot;cmap&quot; table in the embedded font program
+            <description>Symbolic TrueType fonts shall not contain an Encoding entry in the font dictionary, and the 'cmap' table in the embedded font program
 			shall either contain exactly one encoding or it shall contain, at least, the Microsoft Symbol (3,0 – Platform ID=3, Encoding ID=0) encoding.</description>
             <test>isSymbolic == false || nrCmaps == 1 || cmap30Present == true</test>
             <error>
@@ -1196,10 +1249,53 @@
             </error>
             <references/>
         </rule>
+        <rule object="PDOCConfig">
+            <id specification="ISO_19005_2" clause="6.9" testNumber="1"/>
+            <description>Each optional content configuration dictionary that forms the value of the D key, or that is an element in the array that forms the 
+		value of the Configs key in the OCProperties dictionary, shall contain the Name key.</description>
+            <test>Name != null &amp;&amp; Name.length &gt; 0</test>
+            <error>
+                <message>Missing or empty Name entry of the optional content configuration dictionary</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDOCConfig">
+            <id specification="ISO_19005_2" clause="6.9" testNumber="2"/>
+            <description>Each optional content configuration dictionary shall contain the Name key, whose value shall be unique amongst all optional content configuration 
+			dictionaries within the PDF/A-2 file.</description>
+            <test>hasDuplicateName == false</test>
+            <error>
+                <message>Optional content configuration dictionary has duplicated name</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDOCConfig">
+            <id specification="ISO_19005_2" clause="6.9" testNumber="3"/>
+            <description>If an optional content configuration dictionary contains the Order key, the array which is the value of this Order key shall contain references 
+			to all OCGs in the conforming file.</description>
+            <test>doesOrderContainAllOCGs == true</test>
+            <error>
+                <message>Not all optional content groups are present in the Order entry of the optional content configuration dictionary</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDOCConfig">
+            <id specification="ISO_19005_2" clause="6.9" testNumber="4"/>
+            <description>The AS key shall not appear in any optional content configuration dictionary.</description>
+            <test>AS == null</test>
+            <error>
+                <message>AS key is present in the optional content configuration dictionary</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
         <rule object="PDDocument">
             <id specification="ISO_19005_2" clause="6.10" testNumber="1"/>
             <description>There shall be no AlternatePresentations entry in the document's name dictionary</description>
-            <test>AlternatePresentations_size == 0</test>
+            <test>containsAlternatePresentations == false</test>
             <error>
                 <message>The document's name dictionary contains the AlternatePresentations entry</message>
                 <arguments/>
@@ -1209,7 +1305,7 @@
         <rule object="PDPage">
             <id specification="ISO_19005_2" clause="6.10" testNumber="2"/>
             <description>There shall be no PresSteps entry in any Page dictionary</description>
-            <test>PresSteps_size == 0</test>
+            <test>containsPresSteps == false</test>
             <error>
                 <message>A Page dictionary contains the PresSteps entry</message>
                 <arguments/>
@@ -1219,7 +1315,7 @@
         <rule object="CosDocument">
             <id specification="ISO_19005_2" clause="6.11" testNumber="1"/>
             <description>The document catalog shall not contain the Requirements key</description>
-            <test>Requirements_size == 0</test>
+            <test>Requirements == null</test>
             <error>
                 <message>The document catalog contains the Requirements key</message>
                 <arguments/>

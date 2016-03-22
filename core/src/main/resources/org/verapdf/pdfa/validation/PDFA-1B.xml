@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_B">
-    <details creator="veraPDF Consortium" created="2016-03-03T09:37:33.878+03:00">
+    <details creator="veraPDF Consortium" created="2016-03-22T09:55:10.846-03:00">
         <name>PDF/A-1B validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011</description>
     </details>
@@ -160,8 +160,18 @@
             </error>
             <references/>
         </rule>
-        <rule object="CosIIFilter">
+        <rule object="CosFilter">
             <id specification="ISO_19005_1" clause="6.1.10" testNumber="1"/>
+            <description>The LZWDecode filter shall not be permitted</description>
+            <test>internalRepresentation != &quot;LZWDecode&quot;</test>
+            <error>
+                <message>LZW compression is used</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="CosIIFilter">
+            <id specification="ISO_19005_1" clause="6.1.10" testNumber="2"/>
             <description>The LZWDecode filter shall not be permitted</description>
             <test>internalRepresentation != &quot;LZWDecode&quot; &amp;&amp; internalRepresentation != &quot;LZW&quot;</test>
             <error>
