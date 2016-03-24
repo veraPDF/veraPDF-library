@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_2_B">
-    <details creator="veraPDF Consortium" created="2016-03-22T10:14:56.181-03:00">
+    <details creator="veraPDF Consortium" created="2016-03-24T05:52:37.240-03:00">
         <name>PDF/A-2B validation profile</name>
         <description>Validation rules against ISO 19005-2:2011</description>
     </details>
@@ -226,6 +226,16 @@
             </error>
             <references/>
         </rule>
+        <rule object="CosReal">
+            <id specification="ISO_19005_2" clause="6.1.13" testNumber="5"/>
+            <description>A conforming file shall not contain any real number closer to zero than +/-1.175 x 10^(-38).</description>
+            <test>realValue == 0.0 || (realValue &lt;= -1.175e-38) || (realValue &gt;= 1.175e-38)</test>
+            <error>
+                <message>Non-zero real value is too close to 0.0</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
         <rule object="CosDocument">
             <id specification="ISO_19005_2" clause="6.1.13" testNumber="7"/>
             <description>A conforming file shall not contain more than 8388607 indirect objects</description>
@@ -287,6 +297,19 @@
                 <arguments/>
             </error>
             <references/>
+        </rule>
+        <rule object="PDResource">
+            <id specification="ISO_19005_2" clause="6.2.2" testNumber="2"/>
+            <description>A content stream that references other objects, such as images and fonts that are necessary to fully render or
+			process the stream, shall have an explicitly associated Resources dictionary as described in ISO 32000-1:2008, 7.8.3.</description>
+            <test>isInherited == false</test>
+            <error>
+                <message>A content stream references a named resource that is not defined in an explicitly associated Resources dictionary</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="7.8.3"/>
+            </references>
         </rule>
         <rule object="ICCOutputProfile">
             <id specification="ISO_19005_2" clause="6.2.3" testNumber="1"/>
