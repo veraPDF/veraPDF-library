@@ -64,4 +64,10 @@ public interface PDFDocument {
 	 */
 	MetadataFixerResult saveDocumentIncremental(MetadataFixerResult.RepairStatus status, OutputStream output);
 
+	/**
+	 * Removes filters for all metadata streams in document
+	 *
+	 * @return number of unfiltered streams
+	 */
+	int removeFiltersForAllMetadataObjects();
 }
