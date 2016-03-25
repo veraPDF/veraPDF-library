@@ -101,11 +101,11 @@ public class MachineReadableReport {
     public static MachineReadableReport fromValues(String name, ValidationProfile profile,
             ValidationResult validationResult, boolean reportPassedChecks,
             MetadataFixerResult fixerResult, FeaturesCollection collection,
-            long processingTime) {
+            long processingTime, int maxFailuresDisplayed) {
         ValidationReport validationReport = null;
         if (validationResult != null) {
             validationReport = ValidationReport.fromValues(profile,
-                    validationResult, reportPassedChecks, -1);
+                    validationResult, reportPassedChecks, maxFailuresDisplayed);
         }
         FeaturesReport featuresReport = FeaturesReport.fromValues(collection);
         MetadataFixesReport fixesReport = MetadataFixesReport.fromValues(fixerResult);
