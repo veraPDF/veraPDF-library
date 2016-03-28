@@ -109,6 +109,16 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
+          <failOnError>false</failOnError>
+          <dependencySourceExcludes>
+            <!-- exclude ONLY commons-cli artifacts -->
+            <dependencySourceExclude>junit:*</dependencySourceExclude>
+            <dependencySourceExclude>org.apache:*</dependencySourceExclude>
+            <dependencySourceExclude>org.junit:*</dependencySourceExclude>
+            <dependencySourceExclude>org.hamcrest.*</dependencySourceExclude>
+            <dependencySourceExclude>org.log4j.*</dependencySourceExclude>
+          </dependencySourceExcludes>
+          <includeDependencySources>true</includeDependencySources>
           <show>public</show>
         </configuration>
       </plugin>
