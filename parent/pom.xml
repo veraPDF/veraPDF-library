@@ -1,0 +1,308 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+    <relativePath />
+  </parent>
+
+  <groupId>org.verapdf</groupId>
+  <artifactId>verapdf-parent</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+
+  <name>veraPDF Consortium parent </name>
+  <description>Organisation details and project wide build tools and dependency management.</description>
+
+  <inceptionYear>2015</inceptionYear>
+  <organization>
+    <name>The veraPDF Consortium</name>
+    <url>http://www.verapdf.org/</url>
+  </organization>
+  <licenses>
+    <license>
+      <name>GNU General Public License, version 3 (GPL-3.0)</name>
+      <url>http://opensource.org/licenses/GPL-3.0</url>
+      <distribution>repo</distribution>
+    </license>
+    <license>
+      <name>Mozilla Public License 2.0 (MPL-2.0)</name>
+      <url>http://opensource.org/licenses/MPL-2.0</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <email>maksim.bezrukov@duallab.com</email>
+      <name>Maksim Bezrukov</name>
+      <url>https://github.com/BezrukovM</url>
+      <organization>Dual Lab</organization>
+      <organizationUrl>http://www.duallab.com/</organizationUrl>
+      <id>BezrukovM</id>
+    </developer>
+    <developer>
+      <email>boris.dubrov@duallab.com</email>
+      <name>Boris Dubrov</name>
+      <url>https://github.com/bdoubrov</url>
+      <organization>Dual Lab</organization>
+      <organizationUrl>http://www.duallab.com/</organizationUrl>
+      <id>bdoubrov</id>
+    </developer>
+    <developer>
+      <email>timur.kamalov@duallab.com</email>
+      <name>Timur Kamalov</name>
+      <url>https://github.com/timurkamalov</url>
+      <organization>Dual Lab</organization>
+      <organizationUrl>http://www.duallab.com/</organizationUrl>
+      <id>timurkamalov</id>
+    </developer>
+    <developer>
+      <email>timur.kamalov@duallab.com</email>
+      <name>Timur Kamalov</name>
+      <url>https://github.com/timurkamalov</url>
+      <organization>Dual Lab</organization>
+      <organizationUrl>http://www.duallab.com/</organizationUrl>
+      <id>timurkamalov</id>
+    </developer>
+    <developer>
+      <email>dmitry.remezow@duallab.com</email>
+      <name>Maksim Bezrukov</name>
+      <url>https://github.com/DmitryRemezow</url>
+      <organization>Dual Lab</organization>
+      <organizationUrl>http://www.duallab.com/</organizationUrl>
+      <id>DmitryRemezow</id>
+    </developer>
+    <developer>
+      <email>carl@openpreservation.org</email>
+      <name>Carl Wilson</name>
+      <url>https://github.com/carlwilson</url>
+      <organization>Open Preservation Foundation</organization>
+      <organizationUrl>http://openpreservation.org</organizationUrl>
+      <id>carlwilson</id>
+    </developer>
+  </developers>
+
+  <issueManagement>
+    <url>https://github.com/veraPDF/veraPDF-library/issues/</url>
+    <system>GitHub Issues</system>
+  </issueManagement>
+  <ciManagement>
+    <system>OPF Jenkins</system>
+    <url>http://jenkins.opf-labs.org</url>
+  </ciManagement>
+  <distributionManagement>
+    <repository>
+      <id>OPF Artefactory</id>
+      <name>OPF Artefactory-releases</name>
+      <url>http://artifactory.opf-labs.org/artifactory/vera-dev-local</url>
+    </repository>
+  </distributionManagement>
+
+  <repositories>
+    <repository>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>vera-dev</id>
+      <name>Vera development</name>
+      <url>http://artifactory.opf-labs.org/artifactory/vera-dev</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>vera-dev</id>
+      <name>Vera development</name>
+      <url>http://artifactory.opf-labs.org/artifactory/vera-dev</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.7</java.version>
+    <mvn.assembly.version>2.5.5</mvn.assembly.version>
+    <mvn.compiler.version>3.3</mvn.compiler.version>
+    <mvn.deploy.version>2.8.2</mvn.deploy.version>
+    <mvn.exec.version>1.4.0</mvn.exec.version>
+    <mvn.gpg.plugin.version>1.6</mvn.gpg.plugin.version>
+    <mvn.javadoc.version>2.10</mvn.javadoc.version>
+    <mvn.release.version>2.5.3</mvn.release.version>
+    <mvn.resources.version>2.7</mvn.resources.version>
+    <mvn.site.version>3.4</mvn.site.version>
+    <mvn.source.version>2.4</mvn.source.version>
+    <mvn.surefire.version>2.18.1</mvn.surefire.version>
+    <mvn.versions.version>2.2</mvn.versions.version>
+  </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>${mvn.assembly.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${mvn.compiler.version}</version>
+          <configuration>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+            <encoding>${project.build.sourceEncoding}</encoding>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>${mvn.deploy.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>${mvn.gpg.plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${mvn.javadoc.version}</version>
+          <executions>
+            <execution>
+              <id>attach-javadoc</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+              <configuration>
+                <failOnError>false</failOnError>
+                <dependencySourceExcludes>
+                  <!-- exclude ONLY commons-cli artifacts -->
+                  <dependencySourceExclude>junit:*</dependencySourceExclude>
+                  <dependencySourceExclude>org.apache:*</dependencySourceExclude>
+                  <dependencySourceExclude>org.junit:*</dependencySourceExclude>
+                  <dependencySourceExclude>org.hamcrest.*</dependencySourceExclude>
+                  <dependencySourceExclude>org.log4j.*</dependencySourceExclude>
+                </dependencySourceExcludes>
+                <includeDependencySources>true</includeDependencySources>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>${mvn.release.version}</version>
+          <configuration>
+            <preparationGoals>clean install</preparationGoals>
+            <goals>deploy</goals>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${mvn.resources.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>${mvn.site.version}</version>
+          <configuration>
+            <attach>true</attach>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${mvn.source.version}</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${mvn.surefire.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>${mvn.versions.version}</version>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <dependencyManagement>
+    <dependencies>
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+      </dependency>
+
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.17</version>
+      </dependency>
+
+      <!-- Mozilla Rhino JavaScript engine -->
+      <dependency>
+        <groupId>rhino</groupId>
+        <artifactId>js</artifactId>
+        <version>1.7R2</version>
+      </dependency>
+
+      <!-- veraPDF Project dependencies -->
+      <dependency>
+        <groupId>org.verapdf</groupId>
+        <artifactId>core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.verapdf</groupId>
+        <artifactId>pdf-model</artifactId>
+        <version>${verapdf.model.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.verapdf</groupId>
+        <artifactId>verapdf-xmp-core</artifactId>
+        <version>${verapdf.xmp.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.4</version>
+        <scope>test</scope>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+</project>
