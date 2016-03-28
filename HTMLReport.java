@@ -1,16 +1,14 @@
 package org.verapdf.report;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Generating HTML validation report
@@ -39,7 +37,7 @@ public final class HTMLReport {
      * @throws JAXBException
      */
     public static void writeHTMLReport(InputStream source,
-            OutputStream destination) throws TransformerException, IOException,
+            OutputStream destination, String wikiPath) throws TransformerException, IOException,
             JAXBException {
 
         TransformerFactory factory = TransformerFactory.newInstance();
@@ -47,6 +45,16 @@ public final class HTMLReport {
         Transformer transformer = factory.newTransformer(new StreamSource(
                 HTMLReport.class.getClassLoader().getResourceAsStream(
                         "HTMLReportStylesheet.xsl")));
+
+        String resultPath;
+        if (wikiPath == null) {
+            resultPath = "";
+        } else if (wikiPath.endsWith("/")) {
+            resultPath = wikiPath;
+        } else {
+            resultPath = wikiPath + "/";
+        }
+        transformer.setParameter("wikiPath", resultPath);
 
         transformer.transform(new StreamSource(source), new StreamResult(
                 destination));
