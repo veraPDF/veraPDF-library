@@ -174,7 +174,6 @@
          </goals>
          <configuration>
           <includeDependencySources>true</includeDependencySources>
-          <additionalparam>-Xdoclint:none</additionalparam>
           <show>public</show>
          </configuration>
        </execution>
@@ -261,6 +260,16 @@
  </reporting>
 
  <profiles>
+
+   <profile>
+     <id>Java 1.8</id>
+     <activation>
+       <jdk>1.8</jdk>
+     </activation>
+     <properties>
+       <additionalparam>-Xdoclint:none</additionalparam>
+     </properties>
+   </profile>
 
   <profile>
    <id>release-sign-artifacts</id>
