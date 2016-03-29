@@ -1,310 +1,328 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+ <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <artifactId>oss-parent</artifactId>
-    <groupId>org.sonatype.oss</groupId>
-    <version>7</version>
-  </parent>
+ <parent>
+  <artifactId>oss-parent</artifactId>
+  <groupId>org.sonatype.oss</groupId>
+  <version>7</version>
+ </parent>
 
-  <groupId>org.verapdf</groupId>
-  <artifactId>verapdf-xmp</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+ <groupId>org.verapdf</groupId>
+ <artifactId>verapdf-xmp</artifactId>
+ <version>0.11.100-SNAPSHOT</version>
+ <packaging>pom</packaging>
 
-  <name>veraPDF PDF/A XMP Library</name>
-  <description>veraPDF PDF/A XMP Parsing and Validation library.</description>
+ <name>veraPDF PDF/A XMP Library</name>
+ <description>veraPDF PDF/A XMP Parsing and Validation library.</description>
+ <url>https://github.com/veraPDF/veraPDF-xmp/</url>
+ <inceptionYear>2015</inceptionYear>
+ <organization>
+  <name>The veraPDF Consortium</name>
+  <url>http://www.verapdf.org/</url>
+ </organization>
+ <licenses>
+  <license>
+   <name>BSD 3-Clause License</name>
+   <url>http://opensource.org/licenses/BSD-3-Clause</url>
+   <distribution>repo</distribution>
+  </license>
+ </licenses>
+
+ <modules>
+  <module>xmp-core</module>
+  <module>xmp-core-coverage</module>
+ </modules>
+
+ <scm>
   <url>https://github.com/veraPDF/veraPDF-xmp/</url>
-  <inceptionYear>2015</inceptionYear>
-  <organization>
-    <name>The veraPDF Consortium</name>
-    <url>http://www.verapdf.org/</url>
-  </organization>
-  <licenses>
-    <license>
-      <name>BSD 3-Clause License</name>
-      <url>http://opensource.org/licenses/BSD-3-Clause</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-
-  <developers>
-    <developer>
-      <email>carl@openpreservation.org</email>
-      <name>Carl Wilson</name>
-      <url>https://github.com/carlwilson</url>
-      <organization>Open Preservation Foundation</organization>
-      <organizationUrl>http://openpreservation.org</organizationUrl>
-      <id>carlwilson</id>
-    </developer>
-  </developers>
-
-  <modules>
-    <module>xmp-core</module>
-    <module>xmp-core-coverage</module>
-  </modules>
-
-  <scm>
-    <url>https://github.com/veraPDF/veraPDF-xmp/</url>
-    <connection>scm:git:https://github.com/veraPDF/veraPDF-xmp.git</connection>
-    <developerConnection>scm:git:git@github.com:veraPDF/veraPDF-xmp.git</developerConnection>
-  </scm>
-  <issueManagement>
-    <url>https://github.com/veraPDF/veraPDF-xmp/issues/</url>
-    <system>GitHub Issues</system>
-  </issueManagement>
-  <ciManagement>
-    <system>OPF Jenkins</system>
-    <url>http://jenkins.opf-labs.org</url>
-  </ciManagement>
-  <distributionManagement>
-    <repository>
-      <id>OPF Artefactory</id>
-      <name>OPF Artefactory-releases</name>
-      <url>http://artifactory.opf-labs.org/artifactory/vera-dev-local</url>
-    </repository>
-  </distributionManagement>
+  <connection>scm:git:https://github.com/veraPDF/veraPDF-xmp.git</connection>
+  <developerConnection>scm:git:git@github.com:veraPDF/veraPDF-xmp.git</developerConnection>
+ </scm>
+ <issueManagement>
+  <url>https://github.com/veraPDF/veraPDF-xmp/issues/</url>
+  <system>GitHub Issues</system>
+ </issueManagement>
+ <ciManagement>
+  <system>OPF Jenkins</system>
+  <url>http://jenkins.opf-labs.org</url>
+ </ciManagement>
+ <distributionManagement>
+  <repository>
+   <id>OPF Artefactory</id>
+   <name>OPF Artefactory-releases</name>
+   <url>http://artifactory.opf-labs.org/artifactory/vera-dev-local</url>
+  </repository>
+ </distributionManagement>
 
 
-  <repositories>
-    <repository>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <id>vera-dev</id>
-      <name>Vera development</name>
-      <url>http://artifactory.opf-labs.org/artifactory/vera-dev</url>
-    </repository>
-  </repositories>
+ <repositories>
+  <repository>
+   <snapshots>
+    <enabled>true</enabled>
+   </snapshots>
+   <id>vera-dev</id>
+   <name>Vera development</name>
+   <url>http://artifactory.opf-labs.org/artifactory/vera-dev</url>
+  </repository>
+ </repositories>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>1.7</java.version>
-    <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
-    <sonar.language>java</sonar.language>
-    <maven.failsafe.version>2.18.1</maven.failsafe.version>
-    <maven.surefire.version>2.18.1</maven.surefire.version>
-    <maven.exec.version>1.4.0</maven.exec.version>
-    <mvn.javadoc.version>2.10</mvn.javadoc.version>
-    <mvn.source.version>2.4</mvn.source.version>
-    <mvn.gpg.plugin.version>1.6</mvn.gpg.plugin.version>
-  </properties>
+ <properties>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  <java.version>1.7</java.version>
+  <sonar.language>java</sonar.language>
+  <maven.surefire.version>2.18.1</maven.surefire.version>
+  <maven.exec.version>1.4.0</maven.exec.version>
+  <mvn.javadoc.version>2.10</mvn.javadoc.version>
+  <mvn.source.version>2.4</mvn.source.version>
+  <mvn.gpg.plugin.version>1.6</mvn.gpg.plugin.version>
+ </properties>
 
-  <dependencyManagement>
-    <dependencies>
+ <dependencyManagement>
+  <dependencies>
 
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.12</version>
-      </dependency>
+   <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.12</version>
+   </dependency>
 
-      <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.17</version>
-      </dependency>
-
-    </dependencies>
-  </dependencyManagement>
+  </dependencies>
+ </dependencyManagement>
 
 
-  <build>
-    <pluginManagement>
-      <plugins>
+ <build>
+  <pluginManagement>
+   <plugins>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.3</version>
-        </plugin>
+    <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-compiler-plugin</artifactId>
+     <version>3.3</version>
+     <configuration>
+      <source>${java.version}</source>
+      <target>${java.version}</target>
+      <encoding>${project.build.sourceEncoding}</encoding>
+     </configuration>
+    </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin>
+    <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-deploy-plugin</artifactId>
+     <version>2.8.2</version>
+    </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>2.7</version>
-        </plugin>
+    <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-resources-plugin</artifactId>
+     <version>2.7</version>
+    </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-gpg-plugin</artifactId>
-          <version>${mvn.gpg.plugin.version}</version>
-        </plugin>
+    <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-gpg-plugin</artifactId>
+     <version>${mvn.gpg.plugin.version}</version>
+    </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-release-plugin</artifactId>
-        </plugin>
+    <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-release-plugin</artifactId>
+     <configuration>
+      <preparationGoals>clean install</preparationGoals>
+      <goals>deploy</goals>
+      <autoVersionSubmodules>true</autoVersionSubmodules>
+     </configuration>
+    </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.4</version>
-        </plugin>
+    <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-site-plugin</artifactId>
+     <version>3.4</version>
+    </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${maven.surefire.version}</version>
-        </plugin>
+    <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-surefire-plugin</artifactId>
+     <version>${maven.surefire.version}</version>
+    </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>${mvn.source.version}</version>
-        </plugin>
+    <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-source-plugin</artifactId>
+     <version>${mvn.source.version}</version>
+     <executions>
+       <execution>
+         <id>attach-sources</id>
+         <goals>
+           <goal>jar</goal>
+         </goals>
+       </execution>
+     </executions>
+    </plugin>
 
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>${mvn.javadoc.version}</version>
-        </plugin>
-
-      </plugins>
-    </pluginManagement>
-
-    <plugins>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-          <encoding>${project.build.sourceEncoding}</encoding>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <configuration>
-          <preparationGoals>clean install</preparationGoals>
-          <goals>deploy</goals>
-          <autoVersionSubmodules>true</autoVersionSubmodules>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <configuration>
-          <attach>true</attach>
-        </configuration>
-      </plugin>
-
-    </plugins>
-  </build>
-
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
-          <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-        </configuration>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>index</report>
-              <report>dependencies</report>
-              <report>project-team</report>
-              <report>mailing-list</report>
-              <report>cim</report>
-              <report>issue-tracking</report>
-              <report>license</report>
-              <report>scm</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.3</version>
-        <configuration>
+    <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-javadoc-plugin</artifactId>
+     <version>${mvn.javadoc.version}</version>
+     <executions>
+       <execution>
+         <id>attach-javadoc</id>
+         <goals>
+           <goal>jar</goal>
+         </goals>
+         <configuration>
+          <includeDependencySources>true</includeDependencySources>
           <show>public</show>
-        </configuration>
-      </plugin>
+         </configuration>
+       </execution>
+     </executions>
+    </plugin>
+
+
+    <plugin>
+     <groupId>org.codehaus.mojo</groupId>
+     <artifactId>versions-maven-plugin</artifactId>
+     <version>2.2</version>
+    </plugin>
+
+   </plugins>
+  </pluginManagement>
+
+  <plugins>
+
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+   </plugin>
+
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-release-plugin</artifactId>
+   </plugin>
+
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-source-plugin</artifactId>
+   </plugin>
+
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-javadoc-plugin</artifactId>
+   </plugin>
+
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-site-plugin</artifactId>
+    <configuration>
+     <attach>true</attach>
+    </configuration>
+   </plugin>
+
+  </plugins>
+ </build>
+
+ <reporting>
+  <plugins>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-project-info-reports-plugin</artifactId>
+    <version>2.4</version>
+    <configuration>
+     <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+     <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+    </configuration>
+    <reportSets>
+     <reportSet>
+      <reports>
+       <report>index</report>
+       <report>dependencies</report>
+       <report>project-team</report>
+       <report>mailing-list</report>
+       <report>cim</report>
+       <report>issue-tracking</report>
+       <report>license</report>
+       <report>scm</report>
+      </reports>
+     </reportSet>
+    </reportSets>
+   </plugin>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-javadoc-plugin</artifactId>
+    <version>2.10.3</version>
+    <configuration>
+     <show>public</show>
+    </configuration>
+   </plugin>
+  </plugins>
+ </reporting>
+
+ <profiles>
+
+   <profile>
+     <id>Java 1.8</id>
+     <activation>
+       <jdk>1.8</jdk>
+     </activation>
+     <properties>
+       <additionalparam>-Xdoclint:none</additionalparam>
+     </properties>
+   </profile>
+
+  <profile>
+   <id>release-sign-artifacts</id>
+   <activation>
+    <property>
+     <name>performRelease</name>
+     <value>true</value>
+    </property>
+   </activation>
+
+   <build>
+    <plugins>
+
+     <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-gpg-plugin</artifactId>
+      <executions>
+       <execution>
+        <id>sign-artifacts</id>
+        <phase>verify</phase>
+        <goals>
+         <goal>sign</goal>
+        </goals>
+       </execution>
+      </executions>
+     </plugin>
+
     </plugins>
-  </reporting>
+   </build>
+  </profile>
 
-  <profiles>
+  <profile>
+   <id>jenkins-site</id>
+   <distributionManagement>
+    <site>
+     <id>jenkins.local.site</id>
+     <name>veraPDF Site</name>
+     <url>file:///var/www/projects.verapdf.org/verapdf-xmp</url>
+    </site>
+   </distributionManagement>
+  </profile>
 
-    <profile>
-      <id>release-sign-artifacts</id>
-      <activation>
-        <property>
-          <name>performRelease</name>
-          <value>true</value>
-        </property>
-      </activation>
+  <profile>
+   <id>sonar</id>
+   <activation>
+    <activeByDefault>true</activeByDefault>
+   </activation>
+   <properties>
+    <sonar.host.url>
+     http://sonar.opf-labs.org
+    </sonar.host.url>
+   </properties>
+  </profile>
 
-      <build>
-        <plugins>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>jenkins-site</id>
-      <distributionManagement>
-        <site>
-          <id>jenkins.local.site</id>
-          <name>veraPDF Site</name>
-          <url>file:///var/www/projects.verapdf.org/verapdf-xmp</url>
-        </site>
-      </distributionManagement>
-    </profile>
-
-    <profile>
-      <id>sonar</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <sonar.host.url>
-          http://sonar.opf-labs.org
-        </sonar.host.url>
-      </properties>
-    </profile>
-
-  </profiles>
+ </profiles>
 </project>
