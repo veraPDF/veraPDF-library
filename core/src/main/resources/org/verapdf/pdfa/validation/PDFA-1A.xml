@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_A">
-    <details creator="veraPDF Consortium" created="2016-03-22T10:45:19.265-03:00">
+    <details creator="veraPDF Consortium" created="2016-03-29T09:39:31.544-03:00">
         <name>PDF/A-1A validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011</description>
     </details>
@@ -1228,6 +1228,16 @@
             <test>AA_size == 0</test>
             <error>
                 <message>A Form field dictionary contains the AA entry</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDAnnot">
+            <id specification="ISO_19005_1" clause="6.9" testNumber="4"/>
+            <description>Every form field shall have an appearance dictionary associated with the field's data.</description>
+            <test>Subtype != &quot;Widget&quot; || FT == null || AP != null</test>
+            <error>
+                <message>Form field does not have an appearance dictionary associated with the field's data.</message>
                 <arguments/>
             </error>
             <references/>
