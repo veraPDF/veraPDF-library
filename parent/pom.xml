@@ -189,15 +189,6 @@
                 <goal>jar</goal>
               </goals>
               <configuration>
-                <failOnError>false</failOnError>
-                <dependencySourceExcludes>
-                  <!-- exclude ONLY commons-cli artifacts -->
-                  <dependencySourceExclude>junit:*</dependencySourceExclude>
-                  <dependencySourceExclude>org.apache:*</dependencySourceExclude>
-                  <dependencySourceExclude>org.junit:*</dependencySourceExclude>
-                  <dependencySourceExclude>org.hamcrest.*</dependencySourceExclude>
-                  <dependencySourceExclude>org.log4j.*</dependencySourceExclude>
-                </dependencySourceExcludes>
                 <includeDependencySources>true</includeDependencySources>
               </configuration>
             </execution>
@@ -439,6 +430,26 @@
 
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-release-plugin</artifactId>
+            <configuration>
+              <preparationGoals>clean install</preparationGoals>
+              <goals>deploy</goals>
+              <autoVersionSubmodules>true</autoVersionSubmodules>
+            </configuration>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
             <executions>
               <execution>
@@ -464,6 +475,14 @@
           <url>file:///var/www/projects.verapdf.org/${project.artifactId}</url>
         </site>
       </distributionManagement>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
 
     <profile>
