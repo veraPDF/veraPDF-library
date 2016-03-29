@@ -75,7 +75,6 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
-        <version>${mvn.versions.version}</version>
       </plugin>
     </plugins>
   </build>
@@ -124,6 +123,21 @@
       </plugin>
     </plugins>
   </reporting>
+  
+  <dependencyManagement>
+  <dependencies>
+      <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>pdf-model</artifactId>
+        <version>${verapdf.model.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.verapdf</groupId>
+      <artifactId>verapdf-xmp-core</artifactId>
+        <version>${verapdf.xmp.version}</version>
+    </dependency>
+  </dependencies>
+  </dependencyManagement>
 
   <profiles>
     <profile>
