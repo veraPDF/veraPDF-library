@@ -32,7 +32,8 @@ public final class ReleaseDetails {
     private static final String RAW_DATE_FORMAT = "${maven.build.timestamp.format}";
     private static final String RIGHTS = "Developed and released by the veraPDF Consortium.\n"
             + "Funded by the PREFORMA project.\n"
-            + "Released under the GNU General Public License v3.\n";
+            + "Released under the GNU General Public License v3\n"
+            + "and the Mozilla Public License v2.\n";
 
     private static final ReleaseDetails INSTANCE = fromPropertyResource(APPLICATION_PROPERTIES_PATH);
     @XmlAttribute
