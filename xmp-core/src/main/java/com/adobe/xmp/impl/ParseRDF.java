@@ -237,11 +237,12 @@ public class ParseRDF implements XMPError, XMPConst
 						// the XMP tree name.
 						if (xmpParent.getName() != null && xmpParent.getName().length() > 0)
 						{
-							if (!xmpParent.getName().equals(attribute.getNodeValue()))
-							{
-								throw new XMPException("Mismatched top level rdf:about values",
-										BADXMP);
-							}
+							//------------------------------------------------------------------------------ veraPDF: removed exception in case of different rdf:about elements
+//							if (!xmpParent.getName().equals(attribute.getNodeValue()))
+//							{
+//								throw new XMPException("Mismatched top level rdf:about values",
+//										BADXMP);
+//							}
 						}
 						else
 						{
