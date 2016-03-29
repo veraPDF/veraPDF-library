@@ -37,6 +37,8 @@ public final class ReleaseDetails {
 
     private static final ReleaseDetails INSTANCE = fromPropertyResource(APPLICATION_PROPERTIES_PATH);
     @XmlAttribute
+    private final String id;
+    @XmlAttribute
     private final String version;
     @XmlAttribute
     private final Date buildDate;
@@ -44,12 +46,20 @@ public final class ReleaseDetails {
     private final String rights = RIGHTS;
 
     private ReleaseDetails() {
-        this("version", new Date());
+        this("name", "version", new Date());
     }
 
-    private ReleaseDetails(final String version, final Date buildDate) {
+    private ReleaseDetails(final String id, final String version, final Date buildDate) {
+        this.id = id;
         this.version = version;
         this.buildDate = new Date(buildDate.getTime());
+    }
+
+    /**
+     * @return the id of the release artifact
+     */
+    public String gitId() {
+        return this.id;
     }
 
     /**
@@ -81,6 +91,8 @@ public final class ReleaseDetails {
         final int prime = 31;
         int result = 1;
         result = prime * result
+                + ((this.id == null) ? 0 : this.id.hashCode());
+        result = prime * result
                 + ((this.buildDate == null) ? 0 : this.buildDate.hashCode());
         result = prime * result
                 + ((this.version == null) ? 0 : this.version.hashCode());
@@ -104,6 +116,11 @@ public final class ReleaseDetails {
                 return false;
         } else if (!this.buildDate.equals(other.buildDate))
             return false;
+        if (this.id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!this.id.equals(other.id))
+            return false;
         if (this.version == null) {
             if (other.version != null)
                 return false;
@@ -117,7 +134,7 @@ public final class ReleaseDetails {
      */
     @Override
     public String toString() {
-        return "ReleaseDetails [version=" + this.version + ", buildDate="
+        return "ReleaseDetails [id=" + this.id + ", version=" + this.version + ", buildDate="
                 + this.buildDate + "]";
     }
 
@@ -162,6 +179,7 @@ public final class ReleaseDetails {
     private static ReleaseDetails fromProperties(final Properties props) {
         String release = props.getProperty("verapdf.release.version");
         String dateFormat = props.getProperty("verapdf.date.format");
+        String id = props.getProperty("verapdf.project.id");
         Date date = new Date();
         if (!dateFormat.equals(RAW_DATE_FORMAT)) {
             SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
@@ -175,7 +193,7 @@ public final class ReleaseDetails {
                  */
             }
         }
-        return new ReleaseDetails(release, date);
+        return new ReleaseDetails(id, release, date);
     }
 
     private static Unmarshaller getUnmarshaller() throws JAXBException {
