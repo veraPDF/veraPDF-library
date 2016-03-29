@@ -10,7 +10,7 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-parent</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.2</version>
   <packaging>pom</packaging>
 
   <name>veraPDF Consortium parent </name>
@@ -126,6 +126,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.7</java.version>
+    <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <mvn.assembly.version>2.5.5</mvn.assembly.version>
     <mvn.compiler.version>3.3</mvn.compiler.version>
     <mvn.deploy.version>2.8.2</mvn.deploy.version>
@@ -138,6 +139,10 @@
     <mvn.source.version>2.4</mvn.source.version>
     <mvn.surefire.version>2.18.1</mvn.surefire.version>
     <mvn.versions.version>2.2</mvn.versions.version>
+    <verapdf.library.version>[0.11.100,0.12.0)</verapdf.library.version>
+    <verapdf.model.version>[0.11.100,0.12.0)</verapdf.model.version>
+    <verapdf.timestamp>${maven.build.timestamp}</verapdf.timestamp>
+    <verapdf.xmp.version>[0.11.100,0.12.0)</verapdf.xmp.version>
   </properties>
 
   <build>
@@ -184,15 +189,6 @@
                 <goal>jar</goal>
               </goals>
               <configuration>
-                <failOnError>false</failOnError>
-                <dependencySourceExcludes>
-                  <!-- exclude ONLY commons-cli artifacts -->
-                  <dependencySourceExclude>junit:*</dependencySourceExclude>
-                  <dependencySourceExclude>org.apache:*</dependencySourceExclude>
-                  <dependencySourceExclude>org.junit:*</dependencySourceExclude>
-                  <dependencySourceExclude>org.hamcrest.*</dependencySourceExclude>
-                  <dependencySourceExclude>org.log4j.*</dependencySourceExclude>
-                </dependencySourceExcludes>
                 <includeDependencySources>true</includeDependencySources>
               </configuration>
             </execution>
@@ -262,6 +258,14 @@
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.12</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>nl.jqno.equalsverifier</groupId>
+        <artifactId>equalsverifier</artifactId>
+        <version>1.5.1</version>
+        <scope>test</scope>
       </dependency>
 
       <dependency>
@@ -281,7 +285,7 @@
       <dependency>
         <groupId>org.verapdf</groupId>
         <artifactId>core</artifactId>
-        <version>${project.version}</version>
+        <version>${verapdf.library.version}</version>
       </dependency>
 
       <dependency>
@@ -305,4 +309,193 @@
 
     </dependencies>
   </dependencyManagement>
+
+  <profiles>
+    <profile>
+      <id>apply-mpl-header</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>com.mycila</groupId>
+              <artifactId>license-maven-plugin</artifactId>
+              <version>2.3</version>
+              <configuration>
+                <header>license/template/MPL-2.txt</header>
+                <properties>
+                  <owner>veraPDF Consortium</owner>
+                  <email>info@verapdf.org</email>
+                </properties>
+                <excludes>
+                  <exclude>license/template/**</exclude>
+                  <exclude>src/test/resources/**</exclude>
+                  <exclude>src/main/resources/**</exclude>
+                </excludes>
+              </configuration>
+              <executions>
+                <execution>
+                  <goals>
+                    <goal>check</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+    <profile>
+      <id>apply-gpl-header</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>com.mycila</groupId>
+              <artifactId>license-maven-plugin</artifactId>
+              <version>2.3</version>
+              <configuration>
+                <header>license/template/GPL-3.txt</header>
+                <properties>
+                  <owner>veraPDF Consortium</owner>
+                  <email>info@verapdf.org</email>
+                </properties>
+                <excludes>
+                  <exclude>license/template/**</exclude>
+                  <exclude>src/test/resources/**</exclude>
+                  <exclude>src/main/resources/**</exclude>
+                </excludes>
+              </configuration>
+              <executions>
+                <execution>
+                  <goals>
+                    <goal>check</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+
+
+    <profile>
+      <id>coverage-per-test</id>
+      <build>
+        <plugins>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+
+              <properties>
+                <property>
+                  <name>listener</name>
+                  <value>org.sonar.java.jacoco.JUnitListener</value>
+                </property>
+              </properties>
+
+              <excludes>
+                <exclude>**/*IT.java</exclude>
+              </excludes>
+
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+      <dependencies>
+
+        <dependency>
+          <groupId>org.codehaus.sonar-plugins.java</groupId>
+          <artifactId>sonar-jacoco-listeners</artifactId>
+          <version>1.2</version>
+          <scope>test</scope>
+        </dependency>
+
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+
+      <build>
+        <plugins>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-release-plugin</artifactId>
+            <configuration>
+              <preparationGoals>clean install</preparationGoals>
+              <goals>deploy</goals>
+              <autoVersionSubmodules>true</autoVersionSubmodules>
+            </configuration>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>jenkins-site</id>
+      <distributionManagement>
+        <site>
+          <id>jenkins.local.site</id>
+          <name>veraPDF Site</name>
+          <url>file:///var/www/projects.verapdf.org/${project.artifactId}</url>
+        </site>
+      </distributionManagement>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>sonar</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <sonar.host.url>
+          http://sonar.opf-labs.org
+        </sonar.host.url>
+      </properties>
+    </profile>
+
+  </profiles>
 </project>
