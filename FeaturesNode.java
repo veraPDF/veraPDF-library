@@ -84,9 +84,8 @@ public class FeaturesNode {
 
 		if (qChildren.isEmpty() && attr.isEmpty()) {
 			return null;
-		} else {
-			return new FeaturesNode(attr, qChildren);
 		}
+        return new FeaturesNode(attr, qChildren);
 	}
 
 	static FeaturesNode fromValues(FeatureTreeNode node, FeaturesCollection collection) {
@@ -125,9 +124,8 @@ public class FeaturesNode {
 		}
 		if (qAttributes.isEmpty() && qChildren.isEmpty()) {
 			return null;
-		} else {
-			return new FeaturesNode(qAttributes, qChildren);
 		}
+        return new FeaturesNode(qAttributes, qChildren);
 	}
 
 	private static String replaceInvalidCharacters(String source) {

@@ -29,7 +29,7 @@ public class MetadataFixesReport {
     }
 
 	private MetadataFixesReport() {
-        this("", 0, null, null);
+        this("", Integer.valueOf(0), null, null);
     }
 
 	static MetadataFixesReport fromValues(final MetadataFixerResult fixerResult) {
@@ -44,7 +44,7 @@ public class MetadataFixesReport {
         switch (repairStatus) {
             case SUCCESS:
             case ID_REMOVED:
-                completedFixes = appliedFixes.size();
+                completedFixes = Integer.valueOf(appliedFixes.size());
                 fixes = new ArrayList<>(appliedFixes);
                 break;
             case FIX_ERROR:
