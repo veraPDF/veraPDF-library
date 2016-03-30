@@ -116,8 +116,6 @@ public class FileGenerator {
 			File resultFile = new File(resPath);
 			if (!resultFile.exists()) {
 				return resultFile;
-			} else {
-				index++;
 			}
 		}
 	}

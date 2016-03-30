@@ -1,12 +1,12 @@
 package org.verapdf.model.tools.xmp.validators;
 
-import com.adobe.xmp.impl.VeraPDFXMPNode;
-import org.apache.log4j.Logger;
-
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+
+import org.apache.log4j.Logger;
+
+import com.adobe.xmp.impl.VeraPDFXMPNode;
 
 /**
  * @author Maksim Bezrukov
@@ -27,7 +27,7 @@ public class XPathTypeValidator implements TypeValidator {
             }
             XPathFactory factory = XPathFactory.newInstance();
             XPath xpath = factory.newXPath();
-            XPathExpression expr = xpath.compile(node.getValue());
+            xpath.compile(node.getValue());
             return true;
         } catch (XPathExpressionException e) {
             LOGGER.debug(e);

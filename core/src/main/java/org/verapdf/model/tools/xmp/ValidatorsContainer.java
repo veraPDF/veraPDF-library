@@ -21,16 +21,16 @@ public class ValidatorsContainer {
     ValidatorsContainer() {
         this.arrayValidators = new HashMap<>();
         for (ArrayTypeValidator.ArrayTypeEnum entr : ArrayTypeValidator.ArrayTypeEnum.values()) {
-            arrayValidators.put(entr.getType(), ArrayTypeValidator.fromValues(entr, this));
+            this.arrayValidators.put(entr.getType(), ArrayTypeValidator.fromValues(entr, this));
         }
         this.validators = new HashMap<>();
-        validators.put(XMPConstants.DATE, new DateTypeValidator());
-        validators.put(XMPConstants.LANG_ALT, new LangAltValidator());
-        validators.put(XMPConstants.URI, new URITypeValidator());
-        validators.put(XMPConstants.URL, new URLTypeValidator());
-        validators.put(XMPConstants.XPATH, new XPathTypeValidator());
+        this.validators.put(XMPConstants.DATE, new DateTypeValidator());
+        this.validators.put(XMPConstants.LANG_ALT, new LangAltValidator());
+        this.validators.put(XMPConstants.URI, new URITypeValidator());
+        this.validators.put(XMPConstants.URL, new URLTypeValidator());
+        this.validators.put(XMPConstants.XPATH, new XPathTypeValidator());
         for (SimpleTypeValidator.SimpleTypeEnum entr : SimpleTypeValidator.SimpleTypeEnum.values()) {
-            validators.put(entr.getType(), SimpleTypeValidator.fromValue(entr));
+            this.validators.put(entr.getType(), SimpleTypeValidator.fromValue(entr));
         }
     }
 
@@ -43,11 +43,11 @@ public class ValidatorsContainer {
         }
 
         String type = getSimplifiedType(typeName);
-        if (validators.containsKey(type)) {
+        if (this.validators.containsKey(type)) {
             return false;
         }
 
-        validators.put(type, SimpleTypeValidator.fromValue(pattern));
+        this.validators.put(type, SimpleTypeValidator.fromValue(pattern));
         return true;
     }
 
@@ -63,11 +63,11 @@ public class ValidatorsContainer {
         }
 
         String type = getSimplifiedType(typeName);
-        if (validators.containsKey(type)) {
+        if (this.validators.containsKey(type)) {
             return false;
         }
 
-        validators.put(type, StructuredTypeValidator.fromValues(typeNamespaceURI, childrenTypes, this));
+        this.validators.put(type, StructuredTypeValidator.fromValues(typeNamespaceURI, childrenTypes, this));
         return true;
     }
 
@@ -85,11 +85,11 @@ public class ValidatorsContainer {
             throw new IllegalArgumentException("Argument childrenClosedTypes can not be null or empty");
         }
         String type = getSimplifiedType(typeName);
-        if (validators.containsKey(type)) {
+        if (this.validators.containsKey(type)) {
             return false;
         }
 
-        validators.put(type, StructuredTypeWithRestrictedFieldsValidator.fromValues(typeNamespaceURI, childrenTypes, childrenRestrictedTypes, this));
+        this.validators.put(type, StructuredTypeWithRestrictedFieldsValidator.fromValues(typeNamespaceURI, childrenTypes, childrenRestrictedTypes, this));
         return true;
     }
 
@@ -105,10 +105,10 @@ public class ValidatorsContainer {
         for (ArrayTypeValidator.ArrayTypeEnum entr : ArrayTypeValidator.ArrayTypeEnum.values()) {
             String prefix = entr.getType() + " ";
             if (type.startsWith(prefix)) {
-                return arrayValidators.get(entr.getType()).isCorresponding(node, type.substring(prefix.length()));
+                return this.arrayValidators.get(entr.getType()).isCorresponding(node, type.substring(prefix.length()));
             }
         }
-        return validators.containsKey(type) && validators.get(type).isCorresponding(node);
+        return this.validators.containsKey(type) && this.validators.get(type).isCorresponding(node);
     }
 
     public boolean isKnownType(String typeName) {
@@ -129,7 +129,7 @@ public class ValidatorsContainer {
                 }
             }
         }
-        return validators.containsKey(type);
+        return this.validators.containsKey(type);
     }
 
     private static String getSimplifiedType(String type) {

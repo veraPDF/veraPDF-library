@@ -24,7 +24,7 @@ public class FeaturesData {
 	 * @return byte array represent streams for object
 	 */
 	public byte[] getStream() {
-		return stream == null ? null : Arrays.copyOf(stream, stream.length);
+		return this.stream == null ? null : Arrays.copyOf(this.stream, this.stream.length);
 	}
 
 }

@@ -14,7 +14,8 @@ public final class ImageFeaturesData extends FeaturesData {
 	private final Integer height;
 	private final List<Filter> filters;
 
-	private ImageFeaturesData(byte[] metadata, byte[] stream, Integer width, Integer height, List<Filter> filters) {
+	@SuppressWarnings("synthetic-access")
+    private ImageFeaturesData(byte[] metadata, byte[] stream, Integer width, Integer height, List<Filter> filters) {
 		super(stream);
 		this.metadata = metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
 		this.width = width;
@@ -49,28 +50,28 @@ public final class ImageFeaturesData extends FeaturesData {
 	 * @return byte array represent metadata stream
 	 */
 	public byte[] getMetadata() {
-		return metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
+		return this.metadata == null ? null : Arrays.copyOf(this.metadata, this.metadata.length);
 	}
 
 	/**
 	 * @return parameter Width from the iccprofile dictionary
 	 */
 	public Integer getWidth() {
-		return width;
+		return this.width;
 	}
 
 	/**
 	 * @return parameter Height from the iccprofile dictionary
 	 */
 	public Integer getHeight() {
-		return height;
+		return this.height;
 	}
 
 	/**
 	 * @return list of FilterStructures elements. The order of them is the same as in pdf files
 	 */
 	public List<Filter> getFilters() {
-		return filters == null ? null : Collections.unmodifiableList(filters);
+		return this.filters == null ? null : Collections.unmodifiableList(this.filters);
 	}
 
 
@@ -85,7 +86,7 @@ public final class ImageFeaturesData extends FeaturesData {
 		private final Map<String, String> properties;
 		private final byte[] stream;
 
-		private Filter(String name, Map<String, String> properties, byte[] stream) {
+		Filter(String name, Map<String, String> properties, byte[] stream) {
 			this.name = name;
 			this.properties = properties == null ? new HashMap<String, String>() : new HashMap<>(properties);
 			this.stream = stream == null ? null : Arrays.copyOf(stream, stream.length);
@@ -112,21 +113,21 @@ public final class ImageFeaturesData extends FeaturesData {
 		 * @return name of a filter
 		 */
 		public String getName() {
-			return name;
+			return this.name;
 		}
 
 		/**
 		 * @return map of properties of a filter
 		 */
 		public Map<String, String> getProperties() {
-			return Collections.unmodifiableMap(properties);
+			return Collections.unmodifiableMap(this.properties);
 		}
 
 		/**
 		 * @return stream which used in filter as its parameter for JBIG2Decode filter
 		 */
 		public byte[] getStream() {
-			return stream == null ? null : Arrays.copyOf(stream, stream.length);
+			return this.stream == null ? null : Arrays.copyOf(this.stream, this.stream.length);
 		}
 
 	}

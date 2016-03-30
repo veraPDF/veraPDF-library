@@ -1,10 +1,10 @@
 package org.verapdf.model.tools.xmp;
 
-import com.adobe.xmp.impl.VeraPDFXMPNode;
-import com.adobe.xmp.impl.XMPSchemaRegistryImpl;
-
 import java.util.List;
 import java.util.regex.Pattern;
+
+import com.adobe.xmp.XMPConst;
+import com.adobe.xmp.impl.VeraPDFXMPNode;
 
 /**
  * @author Maksim Bezrukov
@@ -28,12 +28,11 @@ public class SchemasDefinitionCreator {
                 PREDEFINED_SCHEMA_DEFINITION_WITH_CLOSED_CHOICE_FOR_PDFA_1 = createPredefinedPDFA_1SchemasDefinition(true);
             }
             return PREDEFINED_SCHEMA_DEFINITION_WITH_CLOSED_CHOICE_FOR_PDFA_1;
-        } else {
-            if (PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1 == null) {
-                PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1 = createPredefinedPDFA_1SchemasDefinition(false);
-            }
-            return PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1;
         }
+        if (PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1 == null) {
+            PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1 = createPredefinedPDFA_1SchemasDefinition(false);
+        }
+        return PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1;
     }
 
     /**
@@ -47,12 +46,11 @@ public class SchemasDefinitionCreator {
                 PREDEFINED_SCHEMA_DEFINITION_WITH_CLOSED_CHOICE_FOR_PDFA_2_3 = createPredefinedPDFA_2_3SchemasDefinition(true);
             }
             return PREDEFINED_SCHEMA_DEFINITION_WITH_CLOSED_CHOICE_FOR_PDFA_2_3;
-        } else {
-            if (PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3 == null) {
-                PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3 = createPredefinedPDFA_2_3SchemasDefinition(false);
-            }
-            return PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3;
         }
+        if (PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3 == null) {
+            PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3 = createPredefinedPDFA_2_3SchemasDefinition(false);
+        }
+        return PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3;
     }
 
     /**
@@ -79,7 +77,7 @@ public class SchemasDefinitionCreator {
         if (schemas == null) {
             return EMPTY_SCHEMAS_DEFINITION;
         }
-        if (!(XMPSchemaRegistryImpl.NS_PDFA_EXTENSION.equals(schemas.getNamespaceURI()) && "schemas".equals(schemas.getName()) && schemas.getOptions().isArray())) {
+        if (!(XMPConst.NS_PDFA_EXTENSION.equals(schemas.getNamespaceURI()) && "schemas".equals(schemas.getName()) && schemas.getOptions().isArray())) {
             return EMPTY_SCHEMAS_DEFINITION;
         }
         ValidatorsContainer typeContainer = isPDFA_1 ? ValidatorsContainerCreator.createExtendedValidatorsContainerForPDFA_1(schemas, isClosedFieldsCheck) :
@@ -97,7 +95,7 @@ public class SchemasDefinitionCreator {
         VeraPDFXMPNode propertyNode = null;
         String namespaceURI = null;
         for (VeraPDFXMPNode child : schemaChildren) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_SCHEMA.equals(child.getNamespaceURI())) {
+            if (XMPConst.NS_PDFA_SCHEMA.equals(child.getNamespaceURI())) {
                 switch (child.getName()) {
                     case "property":
                         if (child.getOptions().isArray()) {
@@ -129,7 +127,7 @@ public class SchemasDefinitionCreator {
         String valueType = null;
 
         for (VeraPDFXMPNode child : property.getChildren()) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_PROPERTY.equals(child.getNamespaceURI())) {
+            if (XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI())) {
                 switch (child.getName()) {
                     case "name":
                         name = child.getValue();
@@ -203,7 +201,7 @@ public class SchemasDefinitionCreator {
         registerRestrictedSimpleFieldForSchema(XMPConstants.TIFF_RESTRICTED_FIELD_COMMON, schemas, isClosedFieldsCheck);
         registerRestrictedSimpleFieldForSchema(XMPConstants.EXIF_RESTRICTED_FIELD_COMMON, schemas, isClosedFieldsCheck);
         registerSeqChoiceFieldForSchema(
-                XMPSchemaRegistryImpl.NS_TIFF,
+                XMPConst.NS_TIFF,
                 "YCbCrSubSampling",
                 XMPConstants.TIFF_YCBCRSUBSAMPLING_SEQ_CHOICE_COMMON,
                 XMPConstants.SEQ + " " + XMPConstants.INTEGER,
@@ -211,7 +209,7 @@ public class SchemasDefinitionCreator {
                 isClosedFieldsCheck
                 );
         registerSeqChoiceFieldForSchema(
-                XMPSchemaRegistryImpl.NS_EXIF,
+                XMPConst.NS_EXIF,
                 "ComponentsConfiguration",
                 XMPConstants.EXIF_COMPONENTS_CONFIGURATION_CLOSED_SEQ_CHOICE_COMMON,
                 XMPConstants.SEQ + " " + XMPConstants.INTEGER,

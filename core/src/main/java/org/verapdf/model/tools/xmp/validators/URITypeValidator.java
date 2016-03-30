@@ -1,6 +1,7 @@
 package org.verapdf.model.tools.xmp.validators;
 
 import com.adobe.xmp.impl.VeraPDFXMPNode;
+
 import org.apache.log4j.Logger;
 
 import java.net.URI;
@@ -14,6 +15,7 @@ public class URITypeValidator implements TypeValidator {
     private static final Logger LOGGER = Logger
             .getLogger(URITypeValidator.class);
 
+    @SuppressWarnings("unused")
     @Override
     public boolean isCorresponding(VeraPDFXMPNode node) {
         if (node == null) {
@@ -23,7 +25,7 @@ public class URITypeValidator implements TypeValidator {
             if (!node.getOptions().isSimple()) {
                 return false;
             }
-            URI uri = new URI(node.getValue());
+            new URI(node.getValue());
             return true;
         } catch (URISyntaxException e) {
             LOGGER.debug(e);

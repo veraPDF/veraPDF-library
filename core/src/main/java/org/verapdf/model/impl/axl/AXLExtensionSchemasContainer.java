@@ -2,6 +2,7 @@ package org.verapdf.model.impl.axl;
 
 import com.adobe.xmp.impl.VeraPDFXMPNode;
 import com.adobe.xmp.options.PropertyOptions;
+
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.tools.xmp.ValidatorsContainer;
 import org.verapdf.model.xmplayer.ExtensionSchemasContainer;
@@ -50,7 +51,7 @@ public class AXLExtensionSchemasContainer extends AXLXMPObject implements Extens
         List<AXLExtensionSchemaDefinition> res = new ArrayList<>();
         if (this.xmpNode != null && this.xmpNode.getOptions().isArray()) {
             for (VeraPDFXMPNode node : this.xmpNode.getChildren()) {
-                res.add(new AXLExtensionSchemaDefinition(node, containerForPDFA_1, containerForPDFA_2_3, flavour));
+                res.add(new AXLExtensionSchemaDefinition(node, this.containerForPDFA_1, this.containerForPDFA_2_3, this.flavour));
             }
         }
         return res;
@@ -59,7 +60,7 @@ public class AXLExtensionSchemasContainer extends AXLXMPObject implements Extens
     @Override
     public Boolean getisValidBag() {
         PropertyOptions options = this.xmpNode.getOptions();
-        return options.isArray() && !(options.isArrayOrdered() || options.isArrayAlternate());
+        return Boolean.valueOf(options.isArray() && !(options.isArrayOrdered() || options.isArrayAlternate()));
     }
 
     @Override
