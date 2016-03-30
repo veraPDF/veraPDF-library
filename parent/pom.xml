@@ -189,6 +189,15 @@
                 <goal>jar</goal>
               </goals>
               <configuration>
+                <failOnError>false</failOnError>
+                <dependencySourceExcludes>
+                  <!-- exclude ONLY commons-cli artifacts -->
+                  <dependencySourceExclude>junit:*</dependencySourceExclude>
+                  <dependencySourceExclude>org.apache:*</dependencySourceExclude>
+                  <dependencySourceExclude>org.junit:*</dependencySourceExclude>
+                  <dependencySourceExclude>org.hamcrest.*</dependencySourceExclude>
+                  <dependencySourceExclude>org.log4j.*</dependencySourceExclude>
+                </dependencySourceExcludes>
                 <includeDependencySources>true</includeDependencySources>
               </configuration>
             </execution>
