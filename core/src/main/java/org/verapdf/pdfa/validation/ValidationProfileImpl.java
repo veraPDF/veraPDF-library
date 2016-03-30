@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.transform.Result;
 import javax.xml.transform.stream.StreamResult;
-
 import java.io.*;
 import java.util.*;
 
@@ -22,8 +21,8 @@ import java.util.*;
  */
 @XmlRootElement(namespace = "http://www.verapdf.org/ValidationProfile", name = "profile")
 final class ValidationProfileImpl implements ValidationProfile {
-    private final static Map<PDFAFlavour, Map<String, Set<Rule>>> OBJECT_RULE_MAP = new HashMap<>();
-    private final static Map<PDFAFlavour, Map<String, Set<Variable>>> OBJECT_VARIABLE_MAP = new HashMap<>();
+    private Map<String, Set<Rule>> objectRuleMap;
+    private Map<String, Set<Variable>> objectVariableMap;
     private final static Map<RuleId, Rule> RULE_LOOKUP = new HashMap<>();
     private final static ValidationProfileImpl DEFAULT = new ValidationProfileImpl();
 
@@ -112,10 +111,10 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public Set<Rule> getRulesByObject(final String objectName) {
-        if (OBJECT_RULE_MAP.get(this.flavour) == null) {
-            OBJECT_RULE_MAP.put(this.flavour, createObjectRuleMap(this.rules));
+        if (objectRuleMap == null) {
+            objectRuleMap = createObjectRuleMap(this.rules);
         }
-        Set<Rule> objRules = OBJECT_RULE_MAP.get(this.flavour).get(objectName);
+        Set<Rule> objRules = objectRuleMap.get(objectName);
         return (objRules == null) ? Collections.<Rule> emptySet() : Collections
                 .unmodifiableSet(objRules);
     }
@@ -125,12 +124,10 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public Set<Variable> getVariablesByObject(String objectName) {
-        if (OBJECT_VARIABLE_MAP.get(this.flavour) == null) {
-            OBJECT_VARIABLE_MAP.put(this.flavour,
-                    createObjectVariableMap(this.variables));
+        if (objectVariableMap == null) {
+            objectVariableMap = createObjectVariableMap(this.variables);
         }
-        Set<Variable> objRules = OBJECT_VARIABLE_MAP.get(this.flavour).get(
-                objectName);
+        Set<Variable> objRules = objectVariableMap.get(objectName);
         return (objRules == null) ? Collections.<Variable> emptySet() : Collections
                 .unmodifiableSet(objRules);
     }
@@ -140,6 +137,9 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public Rule getRuleByRuleId(RuleId id) {
+        if (RULE_LOOKUP.isEmpty()) {
+            this.objectRuleMap = createObjectRuleMap(this.rules);
+        }
         return RULE_LOOKUP.get(id);
     }
 
@@ -307,6 +307,7 @@ final class ValidationProfileImpl implements ValidationProfile {
 
     private static Map<String, Set<Rule>> createObjectRuleMap(
             final Set<Rule> rules) {
+        RULE_LOOKUP.clear();
         Map<String, Set<Rule>> rulesByObject = new HashMap<>();
         for (Rule rule : rules) {
             RULE_LOOKUP.put(rule.getRuleId(), rule);
