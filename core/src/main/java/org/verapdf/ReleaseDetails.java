@@ -73,7 +73,7 @@ public final class ReleaseDetails {
     /**
      * @return the id of the release artifact
      */
-    public String gitId() {
+    public String getId() {
         return this.id;
     }
 
