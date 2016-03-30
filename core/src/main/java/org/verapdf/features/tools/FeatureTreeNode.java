@@ -1,8 +1,12 @@
 package org.verapdf.features.tools;
 
-import org.verapdf.core.FeatureParsingException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import java.util.*;
+import org.verapdf.core.FeatureParsingException;
 
 /**
  * Feature Tree Node for Feature Reporter
@@ -10,8 +14,6 @@ import java.util.*;
  * @author Maksim Bezrukov
  */
 public final class FeatureTreeNode {
-
-	private static final String CUSTOM_FEATURES_ROOT_NODE_NAME = "customFeatures";
 
 	private String name;
 	private String value;
@@ -110,7 +112,7 @@ public final class FeatureTreeNode {
 	 */
 	public void addChild(FeatureTreeNode child)
 			throws FeatureParsingException {
-		if (isMetadataNode) {
+		if (this.isMetadataNode) {
 			throw new FeatureParsingException(
 					"You can not add a child for metadata nodes. Node name "
 							+ this.name + ", value: " + this.value + ".");
@@ -136,7 +138,7 @@ public final class FeatureTreeNode {
 	 *                                 node and the value is not a hex string
 	 */
 	public void setValue(String value) throws FeatureParsingException {
-		if (isMetadataNode && value != null && !value.matches("\\p{XDigit}*")) {
+		if (this.isMetadataNode && value != null && !value.matches("\\p{XDigit}*")) {
 			throw new FeatureParsingException("A value for metadata node should be a hex String.");
 		}
 
@@ -150,7 +152,7 @@ public final class FeatureTreeNode {
 	}
 
 	public boolean isMetadataNode() {
-		return isMetadataNode;
+		return this.isMetadataNode;
 	}
 
 	/**
@@ -183,7 +185,7 @@ public final class FeatureTreeNode {
 				+ ((this.name == null) ? 0 : this.name.hashCode());
 		result = prime * result
 				+ ((this.value == null) ? 0 : this.value.hashCode());
-		result = prime * result + (isMetadataNode ? 1 : 0);
+		result = prime * result + (this.isMetadataNode ? 1 : 0);
 		return result;
 	}
 

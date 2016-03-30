@@ -16,7 +16,7 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 	private final String checkSum;
 	private final Integer size;
 
-	private EmbeddedFileFeaturesData(byte[] stream, Integer size, String checkSum, Calendar modDate, Calendar creationDate, String subtype, String description, String name) {
+	EmbeddedFileFeaturesData(byte[] stream, Integer size, String checkSum, Calendar modDate, Calendar creationDate, String subtype, String description, String name) {
 		super(stream);
 		this.size = size;
 		this.checkSum = checkSum;
@@ -31,49 +31,49 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 	 * @return name of a file
 	 */
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	/**
 	 * @return description of a file
 	 */
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	/**
 	 * @return subtype of a file
 	 */
 	public String getSubtype() {
-		return subtype;
+		return this.subtype;
 	}
 
 	/**
 	 * @return creation date of a file
 	 */
 	public Calendar getCreationDate() {
-		return (Calendar) creationDate.clone();
+		return (Calendar) this.creationDate.clone();
 	}
 
 	/**
 	 * @return modification date of a file
 	 */
 	public Calendar getModDate() {
-		return (Calendar) modDate.clone();
+		return (Calendar) this.modDate.clone();
 	}
 
 	/**
 	 * @return checksum of a file
 	 */
 	public String getCheckSum() {
-		return checkSum;
+		return this.checkSum;
 	}
 
 	/**
 	 * @return size of a file
 	 */
 	public Integer getSize() {
-		return size;
+		return this.size;
 	}
 
 	public static final class Builder {
@@ -95,46 +95,46 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 			if (this.stream == null) {
 				throw new IllegalArgumentException("Embedded file stream can not be null");
 			}
-			return new EmbeddedFileFeaturesData(stream, size, checkSum, modDate, creationDate, subtype, description, name);
+			return new EmbeddedFileFeaturesData(this.stream, this.size, this.checkSum, this.modDate, this.creationDate, this.subtype, this.description, this.name);
 		}
 
-		public Builder stream(byte[] stream) {
-			this.stream = stream;
+		public Builder stream(byte[] streamBuild) {
+			this.stream = streamBuild;
 			return this;
 		}
 
-		public Builder name(String name) {
-			this.name = name;
+		public Builder name(String nameBuild) {
+			this.name = nameBuild;
 			return this;
 		}
 
-		public Builder description(String description) {
-			this.description = description;
+		public Builder description(String descriptionBuild) {
+			this.description = descriptionBuild;
 			return this;
 		}
 
-		public Builder subtype(String subtype) {
-			this.subtype = subtype;
+		public Builder subtype(String subtypeBuild) {
+			this.subtype = subtypeBuild;
 			return this;
 		}
 
-		public Builder creationDate(Calendar creationDate) {
-			this.creationDate = creationDate;
+		public Builder creationDate(Calendar creationDateBuild) {
+			this.creationDate = creationDateBuild;
 			return this;
 		}
 
-		public Builder modDate(Calendar modDate) {
-			this.modDate = modDate;
+		public Builder modDate(Calendar modDateBuild) {
+			this.modDate = modDateBuild;
 			return this;
 		}
 
-		public Builder checkSum(String checkSum) {
-			this.checkSum = checkSum;
+		public Builder checkSum(String checkSumBuild) {
+			this.checkSum = checkSumBuild;
 			return this;
 		}
 
-		public Builder size(Integer size) {
-			this.size = size;
+		public Builder size(Integer sizeBuild) {
+			this.size = sizeBuild;
 			return this;
 		}
 	}

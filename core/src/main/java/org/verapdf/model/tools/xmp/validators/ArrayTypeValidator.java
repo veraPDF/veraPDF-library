@@ -37,7 +37,7 @@ public class ArrayTypeValidator {
         }
         PropertyOptions options = node.getOptions();
         boolean isValidArrayType;
-        switch (type) {
+        switch (this.type) {
             case ALT:
                 isValidArrayType = options.isArrayAlternate();
                 break;
@@ -53,14 +53,13 @@ public class ArrayTypeValidator {
 
         if (!isValidArrayType) {
             return false;
-        } else {
-            for (VeraPDFXMPNode child : node.getChildren()) {
-                if (!this.parentContainer.validate(child, childType)) {
-                    return false;
-                }
-            }
-            return true;
         }
+        for (VeraPDFXMPNode child : node.getChildren()) {
+            if (!this.parentContainer.validate(child, childType)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public enum ArrayTypeEnum {

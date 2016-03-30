@@ -27,26 +27,26 @@ public class RuleDescription {
 	 * @return applied object type
 	 */
 	public String getObjectType() {
-		return objectType;
+		return this.objectType;
 	}
 
 	/**
 	 * @return test condition for current object type
 	 */
 	public String getTest() {
-		return test;
+		return this.test;
 	}
 
 	/**
 	 * Compare string representation of rule description
 	 * with current rule description
 	 *
-	 * @param objectType passed object type of another rule description
-	 * @param test passed test of another rule description
+	 * @param toCompareType passed object type of another rule description
+	 * @param toCompareTest passed test of another rule description
 	 *
 	 * @return true if {@code objectType} and {@code test} are match
 	 */
-	public boolean compareTo(String objectType, String test) {
-		return this.objectType.equals(objectType) && (this.test == null || this.test.equals(test));
+	public boolean compareTo(String toCompareType, String toCompareTest) {
+		return this.objectType.equals(toCompareType) && (this.test == null || this.test.equals(toCompareTest));
 	}
 }
