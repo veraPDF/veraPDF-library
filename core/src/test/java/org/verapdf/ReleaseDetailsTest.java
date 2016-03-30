@@ -71,7 +71,7 @@ public class ReleaseDetailsTest {
         String dateFormat = "yyyy-MM-dd";
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
         Date date = formatter.parse("2011-07-31");
-        assertEquals("ReleaseDetails [version=0.0.0-TEST, buildDate=" + date.toString() + "]", instance.toString());
+        assertEquals("ReleaseDetails [id=verapdf-test, version=0.0.0-TEST, buildDate=" + date.toString() + "]", instance.toString());
     }
 
     /**

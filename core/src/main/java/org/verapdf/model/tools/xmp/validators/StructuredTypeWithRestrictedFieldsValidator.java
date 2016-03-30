@@ -41,22 +41,23 @@ public class StructuredTypeWithRestrictedFieldsValidator implements TypeValidato
         return new StructuredTypeWithRestrictedFieldsValidator(childNamespaceURI, new HashMap<>(childrenTypes), new HashMap<>(childrenClosedTypes), parentContainer);
     }
 
+    @Override
     public boolean isCorresponding(VeraPDFXMPNode node) {
         if (!node.getOptions().isStruct()) {
             return false;
         }
         for (VeraPDFXMPNode child : node.getChildren()) {
-            if (!childNamespaceURI.equals(child.getNamespaceURI())) {
+            if (!this.childNamespaceURI.equals(child.getNamespaceURI())) {
                 return false;
             }
 
-            if (childrenChoiceTypes.containsKey(child.getName())) {
-                Pattern p = childrenChoiceTypes.get(child.getName());
+            if (this.childrenChoiceTypes.containsKey(child.getName())) {
+                Pattern p = this.childrenChoiceTypes.get(child.getName());
                 if (!p.matcher(child.getValue()).matches()) {
                     return false;
                 }
-            } else if (childrenTypes.containsKey(child.getName())) {
-                if (!parentContainer.validate(child, childrenTypes.get(child.getName()))) {
+            } else if (this.childrenTypes.containsKey(child.getName())) {
+                if (!this.parentContainer.validate(child, this.childrenTypes.get(child.getName()))) {
                     return false;
                 }
             } else {

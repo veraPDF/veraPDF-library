@@ -1,11 +1,12 @@
 package org.verapdf.model.impl.axl;
 
-import com.adobe.xmp.impl.VeraPDFXMPNode;
-import com.adobe.xmp.impl.XMPSchemaRegistryImpl;
 import org.verapdf.model.tools.xmp.ValidatorsContainer;
 import org.verapdf.model.tools.xmp.validators.SimpleTypeValidator;
 import org.verapdf.model.xmplayer.ExtensionSchemaProperty;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+
+import com.adobe.xmp.XMPConst;
+import com.adobe.xmp.impl.VeraPDFXMPNode;
 
 /**
  * @author Maksim Bezrukov
@@ -26,7 +27,7 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
     public Boolean getcontainsUndefinedFields() {
         boolean undef = false;
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (!undef && XMPSchemaRegistryImpl.NS_PDFA_PROPERTY.equals(child.getNamespaceURI())) {
+            if (!undef && XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI())) {
                 switch (child.getName()) {
                     case CATEGORY:
                     case DESCRIPTION:
@@ -47,7 +48,7 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
     @Override
     public String getcategory() {
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && CATEGORY.equals(child.getName())) {
+            if (XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && CATEGORY.equals(child.getName())) {
                 return child.getValue();
             }
         }
@@ -57,7 +58,7 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
     @Override
     public Boolean getisCategoryValidText() {
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && CATEGORY.equals(child.getName())) {
+            if (XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && CATEGORY.equals(child.getName())) {
                 return Boolean.valueOf(SimpleTypeValidator.fromValue(SimpleTypeValidator.SimpleTypeEnum.TEXT).isCorresponding(child));
             }
         }
@@ -67,7 +68,7 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
     @Override
     public Boolean getisDescriptionValidText() {
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && DESCRIPTION.equals(child.getName())) {
+            if (XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && DESCRIPTION.equals(child.getName())) {
                 return Boolean.valueOf(SimpleTypeValidator.fromValue(SimpleTypeValidator.SimpleTypeEnum.TEXT).isCorresponding(child));
             }
         }
@@ -77,7 +78,7 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
     @Override
     public Boolean getisNameValidText() {
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && NAME.equals(child.getName())) {
+            if (XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && NAME.equals(child.getName())) {
                 return Boolean.valueOf(SimpleTypeValidator.fromValue(SimpleTypeValidator.SimpleTypeEnum.TEXT).isCorresponding(child));
             }
         }
@@ -87,7 +88,7 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
     @Override
     public Boolean getisValueTypeValidText() {
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && VALUE_TYPE.equals(child.getName())) {
+            if (XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && VALUE_TYPE.equals(child.getName())) {
                 return Boolean.valueOf(SimpleTypeValidator.fromValue(SimpleTypeValidator.SimpleTypeEnum.TEXT).isCorresponding(child));
             }
         }
@@ -96,17 +97,16 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
 
     @Override
     public Boolean getisValueTypeDefined() {
-        if (flavour != null && flavour.getPart() != null && flavour.getPart().getPartNumber() == 1) {
+        if (this.flavour != null && this.flavour.getPart() != null && this.flavour.getPart().getPartNumber() == 1) {
             return isValueTypeValidForPDFA_1();
-        } else {
-            return isValueTypeValidForPDFA_2_3();
         }
+        return isValueTypeValidForPDFA_2_3();
     }
 
     private Boolean isValueTypeValidForPDFA_1() {
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && VALUE_TYPE.equals(child.getName())) {
-                return containerForPDFA_1.isKnownType(child.getValue());
+            if (XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && VALUE_TYPE.equals(child.getName())) {
+                return Boolean.valueOf(this.containerForPDFA_1.isKnownType(child.getValue()));
             }
         }
         return Boolean.TRUE;
@@ -114,8 +114,8 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
 
     private Boolean isValueTypeValidForPDFA_2_3() {
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && VALUE_TYPE.equals(child.getName())) {
-                return containerForPDFA_2_3.isKnownType(child.getValue());
+            if (XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && VALUE_TYPE.equals(child.getName())) {
+                return Boolean.valueOf(this.containerForPDFA_2_3.isKnownType(child.getValue()));
             }
         }
         return Boolean.TRUE;
@@ -124,7 +124,7 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
     @Override
     public String getcategoryPrefix() {
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && CATEGORY.equals(child.getName())) {
+            if (XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && CATEGORY.equals(child.getName())) {
                 return child.getPrefix();
             }
         }
@@ -134,7 +134,7 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
     @Override
     public String getdescriptionPrefix() {
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && DESCRIPTION.equals(child.getName())) {
+            if (XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && DESCRIPTION.equals(child.getName())) {
                 return child.getPrefix();
             }
         }
@@ -144,7 +144,7 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
     @Override
     public String getnamePrefix() {
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && NAME.equals(child.getName())) {
+            if (XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && NAME.equals(child.getName())) {
                 return child.getPrefix();
             }
         }
@@ -154,7 +154,7 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
     @Override
     public String getvalueTypePrefix() {
         for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && VALUE_TYPE.equals(child.getName())) {
+            if (XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI()) && VALUE_TYPE.equals(child.getName())) {
                 return child.getPrefix();
             }
         }

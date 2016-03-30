@@ -32,7 +32,7 @@ public final class FontFeaturesData extends FeaturesData {
 	private final Double missingWidth;
 	private final String charSet;
 
-	private FontFeaturesData(byte[] metadata,
+	FontFeaturesData(byte[] metadata,
 							 byte[] stream,
 							 String fontName,
 							 String fontFamily,
@@ -78,135 +78,135 @@ public final class FontFeaturesData extends FeaturesData {
 	 * @return byte array represent metadata stream
 	 */
 	public byte[] getMetadata() {
-		return metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
+		return this.metadata == null ? null : Arrays.copyOf(this.metadata, this.metadata.length);
 	}
 
 	/**
 	 * @return parameter FontName from the font descriptor dictionary
 	 */
 	public String getFontName() {
-		return fontName;
+		return this.fontName;
 	}
 
 	/**
 	 * @return parameter FontFamily from the font descriptor dictionary
 	 */
 	public String getFontFamily() {
-		return fontFamily;
+		return this.fontFamily;
 	}
 
 	/**
 	 * @return parameter FontStretch from the font descriptor dictionary
 	 */
 	public String getFontStretch() {
-		return fontStretch;
+		return this.fontStretch;
 	}
 
 	/**
 	 * @return parameter FontWeight from the font descriptor dictionary
 	 */
 	public Double getFontWeight() {
-		return fontWeight;
+		return this.fontWeight;
 	}
 
 	/**
 	 * @return parameter Flags from the font descriptor dictionary
 	 */
 	public Integer getFlags() {
-		return flags;
+		return this.flags;
 	}
 
 	/**
 	 * @return parameter FontBBox from the font descriptor dictionary
 	 */
 	public List<Double> getFontBBox() {
-		return this.fontBBox == null ? null : Collections.unmodifiableList(fontBBox);
+		return this.fontBBox == null ? null : Collections.unmodifiableList(this.fontBBox);
 	}
 
 	/**
 	 * @return parameter ItalicAngle from the font descriptor dictionary
 	 */
 	public Double getItalicAngle() {
-		return italicAngle;
+		return this.italicAngle;
 	}
 
 	/**
 	 * @return parameter Ascent from the font descriptor dictionary
 	 */
 	public Double getAscent() {
-		return ascent;
+		return this.ascent;
 	}
 
 	/**
 	 * @return parameter Descent from the font descriptor dictionary
 	 */
 	public Double getDescent() {
-		return descent;
+		return this.descent;
 	}
 
 	/**
 	 * @return parameter Leading from the font descriptor dictionary
 	 */
 	public Double getLeading() {
-		return leading;
+		return this.leading;
 	}
 
 	/**
 	 * @return parameter CapHeight from the font descriptor dictionary
 	 */
 	public Double getCapHeight() {
-		return capHeight;
+		return this.capHeight;
 	}
 
 	/**
 	 * @return parameter XHeight from the font descriptor dictionary
 	 */
 	public Double getXHeight() {
-		return xHeight;
+		return this.xHeight;
 	}
 
 	/**
 	 * @return parameter StemV from the font descriptor dictionary
 	 */
 	public Double getStemV() {
-		return stemV;
+		return this.stemV;
 	}
 
 	/**
 	 * @return parameter StemH from the font descriptor dictionary
 	 */
 	public Double getStemH() {
-		return stemH;
+		return this.stemH;
 	}
 
 	/**
 	 * @return parameter AvgWidth from the font descriptor dictionary
 	 */
 	public Double getAvgWidth() {
-		return avgWidth;
+		return this.avgWidth;
 	}
 
 	/**
 	 * @return parameter MaxWidth from the font descriptor dictionary
 	 */
 	public Double getMaxWidth() {
-		return maxWidth;
+		return this.maxWidth;
 	}
 
 	/**
 	 * @return parameter MissingWidth from the font descriptor dictionary
 	 */
 	public Double getMissingWidth() {
-		return missingWidth;
+		return this.missingWidth;
 	}
 
 	/**
 	 * @return parameter CharSet from the font descriptor dictionary
 	 */
 	public String getCharSet() {
-		return charSet;
+		return this.charSet;
 	}
-
+	@SuppressWarnings("hiding") 
 	public static final class Builder {
 
 		private byte[] metadata = null;
@@ -220,14 +220,14 @@ public final class FontFeaturesData extends FeaturesData {
 		private Double italicAngle = null;
 		private Double ascent = null;
 		private Double descent = null;
-		private Double leading = 0.;
+		private Double leading = Double.valueOf(0.);
 		private Double capHeight = null;
-		private Double xHeight = 0.;
+		private Double xHeight = Double.valueOf(0.);
 		private Double stemV = null;
-		private Double stemH = 0.;
-		private Double avgWidth = 0.;
-		private Double maxWidth = 0.;
-		private Double missingWidth = 0.;
+		private Double stemH = Double.valueOf(0.);
+		private Double avgWidth = Double.valueOf(0.);
+		private Double maxWidth = Double.valueOf(0.);
+		private Double missingWidth = Double.valueOf(0.);
 		private String charSet = null;
 
 		public Builder(byte[] stream) {
@@ -238,9 +238,9 @@ public final class FontFeaturesData extends FeaturesData {
 			if (this.stream == null) {
 				throw new IllegalArgumentException("Font stream can not be null");
 			}
-			return new FontFeaturesData(metadata, stream, fontName, fontFamily, fontStretch, fontWeight,
-					flags, fontBBox, italicAngle, ascent, descent, leading, capHeight, xHeight, stemV,
-					stemH, avgWidth, maxWidth, missingWidth, charSet);
+			return new FontFeaturesData(this.metadata, this.stream, this.fontName, this.fontFamily, this.fontStretch, this.fontWeight,
+					this.flags, this.fontBBox, this.italicAngle, this.ascent, this.descent, this.leading, this.capHeight, this.xHeight, this.stemV,
+					this.stemH, this.avgWidth, this.maxWidth, this.missingWidth, this.charSet);
 		}
 
 		public Builder metadata(byte[] metadata) {
@@ -302,7 +302,7 @@ public final class FontFeaturesData extends FeaturesData {
 			if (leading != null) {
 				this.leading = leading;
 			} else {
-				this.leading = 0.0;
+				this.leading = Double.valueOf(0.0);
 			}
 			return this;
 		}
@@ -316,7 +316,7 @@ public final class FontFeaturesData extends FeaturesData {
 			if (xHeight != null) {
 				this.xHeight = xHeight;
 			} else {
-				this.xHeight = 0.0;
+				this.xHeight = Double.valueOf(0.0);
 			}
 			return this;
 		}
@@ -330,7 +330,7 @@ public final class FontFeaturesData extends FeaturesData {
 			if (stemH != null) {
 				this.stemH = stemH;
 			} else {
-				this.stemH = 0.0;
+				this.stemH = Double.valueOf(0.0);
 			}
 			return this;
 		}
@@ -339,7 +339,7 @@ public final class FontFeaturesData extends FeaturesData {
 			if (avgWidth != null) {
 				this.avgWidth = avgWidth;
 			} else {
-				this.avgWidth = 0.0;
+				this.avgWidth = Double.valueOf(0.0);
 			}
 			return this;
 		}
@@ -348,7 +348,7 @@ public final class FontFeaturesData extends FeaturesData {
 			if (maxWidth != null) {
 				this.maxWidth = maxWidth;
 			} else {
-				this.maxWidth = 0.0;
+				this.maxWidth = Double.valueOf(0.0);
 			}
 			return this;
 		}
@@ -357,7 +357,7 @@ public final class FontFeaturesData extends FeaturesData {
 			if (missingWidth != null) {
 				this.missingWidth = missingWidth;
 			} else {
-				this.missingWidth = 0.0;
+				this.missingWidth = Double.valueOf(0.0);
 			}
 			return this;
 		}

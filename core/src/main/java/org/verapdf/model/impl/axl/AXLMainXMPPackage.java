@@ -1,16 +1,16 @@
 package org.verapdf.model.impl.axl;
 
-import com.adobe.xmp.impl.VeraPDFMeta;
-import com.adobe.xmp.impl.VeraPDFXMPNode;
-import com.adobe.xmp.impl.XMPSchemaRegistryImpl;
-import org.apache.log4j.Logger;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.xmplayer.MainXMPPackage;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.adobe.xmp.XMPConst;
+import com.adobe.xmp.impl.VeraPDFMeta;
+import com.adobe.xmp.impl.VeraPDFXMPNode;
 
 /**
  * Current class is representation of XMPPackage interface from abstract model based on adobe xmp library
@@ -18,8 +18,6 @@ import java.util.List;
  * @author Maksim Bezrukov
  */
 public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
-    private static final Logger LOGGER = Logger
-            .getLogger(AXLXMPPackage.class);
 
     public static final String MAIN_XMP_PACKAGE_TYPE = "MainXMPPackage";
 
@@ -57,7 +55,7 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
         VeraPDFMeta xmpMetadata = this.getXmpMetadata();
         if (xmpMetadata != null) {
             for (VeraPDFXMPNode node : xmpMetadata.getProperties()) {
-                if (XMPSchemaRegistryImpl.NS_PDFA_ID.equals(node.getNamespaceURI())) {
+                if (XMPConst.NS_PDFA_ID.equals(node.getNamespaceURI())) {
                     List<AXLPDFAIdentification> res = new ArrayList<>(1);
                     res.add(new AXLPDFAIdentification(xmpMetadata));
                     return res;

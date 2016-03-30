@@ -53,6 +53,9 @@ final class ValidationProfileImpl implements ValidationProfile {
         this.hash = hash;
         this.rules = new HashSet<>(rules);
         this.variables = new HashSet<>(variables);
+
+        OBJECT_RULE_MAP.clear();
+        OBJECT_VARIABLE_MAP.clear();
     }
 
     private ValidationProfileImpl(final PDFAFlavour flavour,
@@ -64,6 +67,9 @@ final class ValidationProfileImpl implements ValidationProfile {
         this.hash = hash;
         this.rules = rules;
         this.variables = new HashSet<>(variables);
+
+        OBJECT_RULE_MAP.clear();
+        OBJECT_VARIABLE_MAP.clear();
     }
 
     /**

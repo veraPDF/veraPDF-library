@@ -25,100 +25,109 @@ import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.*;
  */
 public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
 
-	private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_1 = "processed.objects.path.pdfa_1";
-	private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_2_3 = "processed.objects.path.pdfa_2_3";
+    private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_1 = "processed.objects.path.pdfa_1";
+    private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_2_3 = "processed.objects.path.pdfa_2_3";
 
-	private static ProcessedObjectsParser instance;
+    private static ProcessedObjectsParser instance;
 
-	private XMLProcessedObjectsParser() {
-		// hide default constructor
-	}
+    private XMLProcessedObjectsParser() {
+        // hide default constructor
+    }
 
-	@Override
-	public ProcessedObjects getProcessedObjects(PDFAFlavour flavour) throws IOException, URISyntaxException,
-			ParserConfigurationException, SAXException {
-		Properties prop = new Properties();
-		InputStream inputStream = ClassLoader.class.getResourceAsStream(PROCESSED_OBJECTS_PROPERTIES_PATH);
-		prop.load(inputStream);
-		String appliedObjectsPath = prop.getProperty(this.getProcessedObjectsPathProperty(flavour));
-		InputStream xml = ClassLoader.class.getResourceAsStream(appliedObjectsPath);
-		return this.getProcessedObjects(xml);
-	}
+    @Override
+    public ProcessedObjects getProcessedObjects(PDFAFlavour flavour)
+            throws IOException, URISyntaxException,
+            ParserConfigurationException, SAXException {
+        Properties prop = new Properties();
+        try (InputStream inputStream = ClassLoader.class
+                .getResourceAsStream(PROCESSED_OBJECTS_PROPERTIES_PATH)) {
+            prop.load(inputStream);
+        }
+        String appliedObjectsPath = prop.getProperty(this
+                .getProcessedObjectsPathProperty(flavour));
+        try (InputStream xml = ClassLoader.class
+                .getResourceAsStream(appliedObjectsPath)) {
+            return this.getProcessedObjects(xml);
+        }
+    }
 
-	@Override
-	public ProcessedObjects getProcessedObjects(String path) throws IOException, SAXException, ParserConfigurationException {
-		return this.getProcessedObjects(new BufferedInputStream(new FileInputStream(path)));
-	}
+    @Override
+    public ProcessedObjects getProcessedObjects(String path)
+            throws IOException, SAXException, ParserConfigurationException {
+        try (InputStream is = new BufferedInputStream(new FileInputStream(path))) {
+            return this.getProcessedObjects(is);
+        }
+    }
 
-	@Override
-	public ProcessedObjects getProcessedObjects(InputStream xml) throws ParserConfigurationException, IOException, SAXException {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    @Override
+    public ProcessedObjects getProcessedObjects(InputStream xml)
+            throws ParserConfigurationException, IOException, SAXException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-		DocumentBuilder builder = factory.newDocumentBuilder();
+        DocumentBuilder builder = factory.newDocumentBuilder();
 
-		factory.setIgnoringElementContentWhitespace(true);
+        factory.setIgnoringElementContentWhitespace(true);
 
-		Document doc = builder.parse(xml);
+        Document doc = builder.parse(xml);
 
-		Node root = doc.getDocumentElement();
-		root.normalize();
+        Node root = doc.getDocumentElement();
+        root.normalize();
 
-		return this.parse(root);
-	}
+        return XMLProcessedObjectsParser.parse(root);
+    }
 
-	@Override
-	public String getProcessedObjectsPathProperty(PDFAFlavour flavour) {
-		if (flavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
-			return XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_1;
-		} else {
-			return XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_2_3;
-		}
-	}
+    @Override
+    public String getProcessedObjectsPathProperty(PDFAFlavour flavour) {
+        if (flavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
+            return XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_1;
+        }
+        return XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_2_3;
+    }
 
-	private ProcessedObjects parse(Node root) {
-		ProcessedObjects objects = new ProcessedObjects();
-		NodeList child = root.getChildNodes();
-		for (int i = 0; i < child.getLength(); i++) {
-			Node children = child.item(i);
-			if (RULE_DESCRIPTION_TAG.equals(children.getNodeName())) {
-				RuleDescription object = parseCheckObject(children);
-				if (object != null) {
-					objects.addCheckObject(object);
-				}
-			}
-		}
-		return objects;
-	}
+    private static ProcessedObjects parse(Node root) {
+        ProcessedObjects objects = new ProcessedObjects();
+        NodeList child = root.getChildNodes();
+        for (int i = 0; i < child.getLength(); i++) {
+            Node children = child.item(i);
+            if (RULE_DESCRIPTION_TAG.equals(children.getNodeName())) {
+                RuleDescription object = parseCheckObject(children);
+                if (object != null) {
+                    objects.addCheckObject(object);
+                }
+            }
+        }
+        return objects;
+    }
 
-	private RuleDescription parseCheckObject(Node root) {
-		NodeList child = root.getChildNodes();
-		String type = null;
-		String test = null;
+    private static RuleDescription parseCheckObject(Node root) {
+        NodeList child = root.getChildNodes();
+        String type = null;
+        String test = null;
 
-		for (int i = 0; i < child.getLength(); i++) {
-			Node children = child.item(i);
-			switch (children.getNodeName()) {
-				case OBJECT_TYPE_TAG:
-					type = children.getTextContent();
-					break;
-				case TEST_TAG:
-					test = children.getTextContent();
-					break;
-				default:
-					break;
-			}
-		}
+        for (int i = 0; i < child.getLength(); i++) {
+            Node children = child.item(i);
+            switch (children.getNodeName()) {
+            case OBJECT_TYPE_TAG:
+                type = children.getTextContent();
+                break;
+            case TEST_TAG:
+                test = children.getTextContent();
+                break;
+            default:
+                break;
+            }
+        }
 
-		boolean isValidNode = type != null && !type.trim().isEmpty() &&
-				(test == null || !test.trim().isEmpty());
-		return isValidNode ? new RuleDescription(test, type) : null;
-	}
+        boolean isValidNode = type != null && !type.trim().isEmpty()
+                && (test == null || !test.trim().isEmpty());
+        return isValidNode ? new RuleDescription(test, type) : null;
+    }
 
-	public static ProcessedObjectsParser getInstance() {
-		if (instance == null) {
-			instance = new XMLProcessedObjectsParser();
-		}
-		return instance;
-	}
+    public static ProcessedObjectsParser getInstance() {
+        if (instance == null) {
+            instance = new XMLProcessedObjectsParser();
+        }
+        return instance;
+    }
 
 }

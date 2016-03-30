@@ -41,9 +41,9 @@ public class StructuredTypeValidator implements TypeValidator {
             return false;
         }
         for (VeraPDFXMPNode child : node.getChildren()) {
-            if (!(childrenTypes.containsKey(child.getName()) &&
-                    childNamespaceURI.equals(child.getNamespaceURI()) &&
-                    parentContainer.validate(child, childrenTypes.get(child.getName())))) {
+            if (!(this.childrenTypes.containsKey(child.getName()) &&
+                    this.childNamespaceURI.equals(child.getNamespaceURI()) &&
+                    this.parentContainer.validate(child, this.childrenTypes.get(child.getName())))) {
                 return false;
             }
         }

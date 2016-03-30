@@ -36,7 +36,7 @@ public class SimpleTypeValidator implements TypeValidator {
         if (node == null) {
             throw new IllegalArgumentException("Argument node can not be null");
         }
-        return node.getOptions().isSimple() && (pattern == null || pattern.matcher(node.getValue()).matches());
+        return node.getOptions().isSimple() && (this.pattern == null || this.pattern.matcher(node.getValue()).matches());
     }
 
     public enum SimpleTypeEnum {
