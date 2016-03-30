@@ -1,14 +1,9 @@
 package org.verapdf.model.impl.axl;
 
-import com.adobe.xmp.XMPException;
-import com.adobe.xmp.impl.VeraPDFMeta;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
+import static org.junit.Assert.assertEquals;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -16,7 +11,13 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+
+import com.adobe.xmp.XMPException;
+import com.adobe.xmp.impl.VeraPDFMeta;
 
 /**
  * @author Maksim Bezrukov
@@ -47,12 +48,13 @@ public class XMPHeaderTest {
     public String encoding;
 
     @Test
-    public void test() throws URISyntaxException, FileNotFoundException, XMPException {
-        FileInputStream in = new FileInputStream(getSystemIndependentPath(filePath));
+    public void test() throws URISyntaxException, XMPException, IOException {
+        try (FileInputStream in = new FileInputStream(getSystemIndependentPath(this.filePath))) {
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
         AXLXMPPackage pack = new AXLXMPPackage(meta, true, null, PDFAFlavour.PDFA_1_B);
-        assertEquals(bytes, pack.getbytes());
-        assertEquals(encoding, pack.getencoding());
+        assertEquals(this.bytes, pack.getbytes());
+        assertEquals(this.encoding, pack.getencoding());
+        }
     }
 
     private static String getSystemIndependentPath(String path)
