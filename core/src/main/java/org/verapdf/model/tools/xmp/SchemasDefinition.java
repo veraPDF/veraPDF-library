@@ -3,6 +3,7 @@ package org.verapdf.model.tools.xmp;
 import com.adobe.xmp.impl.VeraPDFXMPNode;
 
 import javax.xml.namespace.QName;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class SchemasDefinition {
     }
 
     protected boolean isDefinedProperty(QName name) {
-        return properties.containsKey(name);
+        return this.properties.containsKey(name);
     }
 
     /**
@@ -39,11 +40,11 @@ public class SchemasDefinition {
      * null if the node is not defined or value type is not defined
      */
     public Boolean isCorrespondsDefinedType(VeraPDFXMPNode node) {
-        if (validator == null) {
+        if (this.validator == null) {
             return null;
         }
         String type = getType(node);
-        return type == null ? null : validator.validate(node, type);
+        return type == null ? null : Boolean.valueOf(this.validator.validate(node, type));
     }
 
     public ValidatorsContainer getValidatorsContainer() {
@@ -69,21 +70,20 @@ public class SchemasDefinition {
             throw new IllegalArgumentException("Argument type can not be null");
         }
 
-        if (!validator.isKnownType(type)) {
+        if (!this.validator.isKnownType(type)) {
             return false;
         }
 
         QName name = new QName(namespaceURI, propertyName);
-        if (properties.containsKey(name)) {
+        if (this.properties.containsKey(name)) {
             return false;
-        } else {
-            properties.put(name, type);
-            return true;
         }
+        this.properties.put(name, type);
+        return true;
     }
 
     private String getType(VeraPDFXMPNode node) {
         QName name = new QName(node.getNamespaceURI(), node.getName());
-        return properties.get(name);
+        return this.properties.get(name);
     }
 }

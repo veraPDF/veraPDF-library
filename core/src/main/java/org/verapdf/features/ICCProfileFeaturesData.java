@@ -42,20 +42,20 @@ public final class ICCProfileFeaturesData extends FeaturesData {
 	 * @return byte array represent metadata stream
 	 */
 	public byte[] getMetadata() {
-		return metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
+		return this.metadata == null ? null : Arrays.copyOf(this.metadata, this.metadata.length);
 	}
 
 	/**
 	 * @return parameter N from the iccprofile dictionary
 	 */
 	public Integer getN() {
-		return n;
+		return this.n;
 	}
 
 	/**
 	 * @return parameter Range from the iccprofile dictionary
 	 */
 	public List<Double> getRange() {
-		return range == null ? null : Collections.unmodifiableList(range);
+		return this.range == null ? null : Collections.unmodifiableList(this.range);
 	}
 }

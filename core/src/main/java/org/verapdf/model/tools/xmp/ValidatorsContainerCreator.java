@@ -1,12 +1,12 @@
 package org.verapdf.model.tools.xmp;
 
-import com.adobe.xmp.impl.VeraPDFXMPNode;
-import com.adobe.xmp.impl.XMPSchemaRegistryImpl;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import com.adobe.xmp.XMPConst;
+import com.adobe.xmp.impl.VeraPDFXMPNode;
 
 /**
  * @author Maksim Bezrukov
@@ -24,12 +24,11 @@ public class ValidatorsContainerCreator {
                 PREDEFINED_CONTAINER_WITH_CLOSED_CHOICE_FOR_PDFA_1 = createValidatorsContainerPredefinedForPDFA_1(true);
             }
             return PREDEFINED_CONTAINER_WITH_CLOSED_CHOICE_FOR_PDFA_1;
-        } else {
-            if (PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1 == null) {
-                PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1 = createValidatorsContainerPredefinedForPDFA_1(false);
-            }
-            return PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1;
         }
+        if (PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1 == null) {
+            PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1 = createValidatorsContainerPredefinedForPDFA_1(false);
+        }
+        return PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1;
     }
 
     static ValidatorsContainer getPredefinedContainerForPDFA_2_3(boolean isClosedFieldsCheck) {
@@ -38,12 +37,11 @@ public class ValidatorsContainerCreator {
                 PREDEFINED_CONTAINER_WITH_CLOSED_CHOICE_FOR_PDFA_2_3 = createValidatorsContainerPredefinedForPDFA_2_3(true);
             }
             return PREDEFINED_CONTAINER_WITH_CLOSED_CHOICE_FOR_PDFA_2_3;
-        } else {
-            if (PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3 == null) {
-                PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3 = createValidatorsContainerPredefinedForPDFA_2_3(false);
-            }
-            return PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3;
         }
+        if (PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3 == null) {
+            PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3 = createValidatorsContainerPredefinedForPDFA_2_3(false);
+        }
+        return PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3;
     }
 
     private static ValidatorsContainer createValidatorsContainerPredefinedForPDFA_1(boolean isClosedFieldsCheck) {
@@ -147,7 +145,7 @@ public class ValidatorsContainerCreator {
         List<VeraPDFXMPNode> schemaChildren = schema.getChildren();
         for (int i = schemaChildren.size() - 1; i >= 0; --i) {
             VeraPDFXMPNode child = schemaChildren.get(i);
-            if (XMPSchemaRegistryImpl.NS_PDFA_SCHEMA.equals(child.getNamespaceURI()) && "valueType".equals(child.getName())) {
+            if (XMPConst.NS_PDFA_SCHEMA.equals(child.getNamespaceURI()) && "valueType".equals(child.getName())) {
                 if (child.getOptions().isArray()) {
                     registerAllTypesFromValueTypeArrayNode(child, container);
                 }
@@ -169,7 +167,7 @@ public class ValidatorsContainerCreator {
         Map<String, String> fields = null;
 
         for (VeraPDFXMPNode child : valueType.getChildren()) {
-            if (XMPSchemaRegistryImpl.NS_PDFA_TYPE.equals(child.getNamespaceURI())) {
+            if (XMPConst.NS_PDFA_TYPE.equals(child.getNamespaceURI())) {
                 switch (child.getName()) {
                     case "type":
                         name = child.getValue();
@@ -202,7 +200,7 @@ public class ValidatorsContainerCreator {
             String valueType = null;
 
             for (VeraPDFXMPNode child : field.getChildren()) {
-                if (XMPSchemaRegistryImpl.NS_PDFA_FIELD.equals(child.getNamespaceURI())) {
+                if (XMPConst.NS_PDFA_FIELD.equals(child.getNamespaceURI())) {
                     switch (child.getName()) {
                         case "name":
                             name = child.getValue();

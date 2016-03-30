@@ -26,9 +26,9 @@ public class PredefinedSchemasDefinition extends SchemasDefinition {
 
     @Override
     protected boolean isDefinedProperty(QName name) {
-        return restrictedSimpleField.containsKey(name) ||
-                restrictedSeqText.containsKey(name) ||
-                closedSeqChoice.containsKey(name) ||
+        return this.restrictedSimpleField.containsKey(name) ||
+                this.restrictedSeqText.containsKey(name) ||
+                this.closedSeqChoice.containsKey(name) ||
                 super.isDefinedProperty(name);
     }
 
@@ -39,22 +39,22 @@ public class PredefinedSchemasDefinition extends SchemasDefinition {
         }
 
         QName name = new QName(node.getNamespaceURI(), node.getName());
-        if (restrictedSimpleField.containsKey(name)) {
-            return isCorrespondsClosedSimpleChoice(node, restrictedSimpleField.get(name));
-        } else if (restrictedSeqText.containsKey(name)) {
-            return isCorrespondsRestrictedSeqText(node, restrictedSeqText.get(name));
-        } else if (closedSeqChoice.containsKey(name)) {
-            return isCorrespondsClosedSeqChoice(node, closedSeqChoice.get(name));
+        if (this.restrictedSimpleField.containsKey(name)) {
+            return isCorrespondsClosedSimpleChoice(node, this.restrictedSimpleField.get(name));
+        } else if (this.restrictedSeqText.containsKey(name)) {
+            return isCorrespondsRestrictedSeqText(node, this.restrictedSeqText.get(name));
+        } else if (this.closedSeqChoice.containsKey(name)) {
+            return isCorrespondsClosedSeqChoice(node, this.closedSeqChoice.get(name));
         } else {
             return super.isCorrespondsDefinedType(node);
         }
     }
 
-    private Boolean isCorrespondsClosedSimpleChoice(VeraPDFXMPNode node, Pattern p) {
-        return node.getOptions().isSimple() && p.matcher(node.getValue()).matches();
+    private static Boolean isCorrespondsClosedSimpleChoice(VeraPDFXMPNode node, Pattern p) {
+        return Boolean.valueOf(node.getOptions().isSimple() && p.matcher(node.getValue()).matches());
     }
 
-    private Boolean isCorrespondsRestrictedSeqText(VeraPDFXMPNode node, Pattern p) {
+    private static Boolean isCorrespondsRestrictedSeqText(VeraPDFXMPNode node, Pattern p) {
         if (!node.getOptions().isArrayOrdered()) {
             return Boolean.FALSE;
         }
@@ -66,7 +66,7 @@ public class PredefinedSchemasDefinition extends SchemasDefinition {
         return Boolean.TRUE;
     }
 
-    private Boolean isCorrespondsClosedSeqChoice(VeraPDFXMPNode node, String[][] choices) {
+    private static Boolean isCorrespondsClosedSeqChoice(VeraPDFXMPNode node, String[][] choices) {
         if (!node.getOptions().isArrayOrdered()) {
             return Boolean.FALSE;
         }
@@ -79,7 +79,7 @@ public class PredefinedSchemasDefinition extends SchemasDefinition {
         return Boolean.FALSE;
     }
 
-    private boolean isEqualValues(List<VeraPDFXMPNode> nodes, String[] values) {
+    private static boolean isEqualValues(List<VeraPDFXMPNode> nodes, String[] values) {
         if (nodes.size() != values.length) {
             return false;
         }
@@ -92,15 +92,15 @@ public class PredefinedSchemasDefinition extends SchemasDefinition {
     }
 
     protected boolean registerRestrictedSimpleFieldProperty(String namespaceURI, String propertyName, Pattern pattern) {
-        return registerRestrictedPropertyIntoMap(restrictedSimpleField, namespaceURI, propertyName, pattern);
+        return registerRestrictedPropertyIntoMap(this.restrictedSimpleField, namespaceURI, propertyName, pattern);
     }
 
     protected boolean registerRestrictedSeqTextProperty(String namespaceURI, String propertyName, Pattern pattern) {
-        return registerRestrictedPropertyIntoMap(restrictedSeqText, namespaceURI, propertyName, pattern);
+        return registerRestrictedPropertyIntoMap(this.restrictedSeqText, namespaceURI, propertyName, pattern);
     }
 
     protected boolean registerSeqChoiceProperty(String namespaceURI, String propertyName, String[][] choices) {
-        return registerRestrictedPropertyIntoMap(closedSeqChoice, namespaceURI, propertyName, choices);
+        return registerRestrictedPropertyIntoMap(this.closedSeqChoice, namespaceURI, propertyName, choices);
     }
 
     private <T> boolean registerRestrictedPropertyIntoMap(Map<QName, T> map, String namespaceURI, String propertyName, T value) {
@@ -117,9 +117,8 @@ public class PredefinedSchemasDefinition extends SchemasDefinition {
         QName name = new QName(namespaceURI, propertyName);
         if (isDefinedProperty(name)) {
             return false;
-        } else {
-            map.put(name, value);
-            return true;
         }
+        map.put(name, value);
+        return true;
     }
 }

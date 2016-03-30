@@ -30,7 +30,7 @@ public class FeaturesReporter {
 	 * Creates new FeaturesReporter
 	 */
 	public FeaturesReporter() {
-		collection = new FeaturesCollection();
+		this.collection = new FeaturesCollection();
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class FeaturesReporter {
 	 */
 	public void report(IFeaturesObject obj) {
 		try {
-			FeatureTreeNode root = obj.reportFeatures(collection);
+			FeatureTreeNode root = obj.reportFeatures(this.collection);
 			if (featuresExtractors.get(obj.getType()) != null) {
 				FeaturesData objData = obj.getData();
 				if (objData != null) {
@@ -90,6 +90,6 @@ public class FeaturesReporter {
 	 * @return collection of featurereport
 	 */
 	public FeaturesCollection getCollection() {
-		return collection;
+		return this.collection;
 	}
 }

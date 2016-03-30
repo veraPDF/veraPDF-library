@@ -36,9 +36,9 @@ public class ValidLinksTest {
 
     @Test
     public void testLinksOfAXLXMPPackage() {
-        List<String> links = object.getLinks();
+        List<String> links = this.object.getLinks();
         for (String link : links) {
-            assertNotNull(object.getLinkedObjects(link));
+            assertNotNull(this.object.getLinkedObjects(link));
         }
     }
 }

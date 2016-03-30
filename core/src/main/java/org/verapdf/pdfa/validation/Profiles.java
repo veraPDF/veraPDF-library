@@ -568,20 +568,19 @@ public final class Profiles {
         public int compare(RuleId firstId, RuleId secondId) {
             if (firstId.getClause().equals(secondId.getClause())) {
                 return firstId.getTestNumber() - secondId.getTestNumber();
-            } else {
-                String[] o1StrArr = firstId.getClause().split("\\.");
-                String[] o2StrArr = secondId.getClause().split("\\.");
-                int min = Math.min(o1StrArr.length, o2StrArr.length);
-
-                for (int i = 0; i < min; ++i) {
-                    if (!o1StrArr[i].equals(o2StrArr[i])) {
-                        return Integer.parseInt(o1StrArr[i])
-                                - Integer.parseInt(o2StrArr[i]);
-                    }
-                }
-
-                return o1StrArr.length - o2StrArr.length;
             }
+            String[] o1StrArr = firstId.getClause().split("\\.");
+            String[] o2StrArr = secondId.getClause().split("\\.");
+            int min = Math.min(o1StrArr.length, o2StrArr.length);
+
+            for (int i = 0; i < min; ++i) {
+                if (!o1StrArr[i].equals(o2StrArr[i])) {
+                    return Integer.parseInt(o1StrArr[i])
+                            - Integer.parseInt(o2StrArr[i]);
+                }
+            }
+
+            return o1StrArr.length - o2StrArr.length;
         }
     }
 

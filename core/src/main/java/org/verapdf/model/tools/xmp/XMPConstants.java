@@ -1,6 +1,6 @@
 package org.verapdf.model.tools.xmp;
 
-import com.adobe.xmp.impl.XMPSchemaRegistryImpl;
+import com.adobe.xmp.XMPConst;
 
 /**
  * @author Maksim Bezrukov
@@ -57,7 +57,7 @@ public class XMPConstants {
     public static final String TIME_SCALE_STRETCH = "timescalestretch";
 
     // structured types structures
-    public static final String[] COLORANT_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPSchemaRegistryImpl.TYPE_GRAPHICS,
+    public static final String[] COLORANT_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPConst.TYPE_GRAPHICS,
             "swatchName", TEXT
     };
 
@@ -76,13 +76,13 @@ public class XMPConstants {
             "B", INTEGER, "^([+-]?[0]?[0-9]{1,2}|[+-]?1[01][0-9]|[+-]?12[0-7]|-128)$" // Integer. Range: -128-127
     };
 
-    public static final String[] DIMENSIONS_STRUCTURE = {XMPSchemaRegistryImpl.TYPE_DIMENSIONS,
+    public static final String[] DIMENSIONS_STRUCTURE = {XMPConst.TYPE_DIMENSIONS,
             "w", REAL,
             "h", REAL,
             "unit", TEXT // open Choice
     };
 
-    public static final String[] FONT_STRUCTURE = {XMPSchemaRegistryImpl.TYPE_FONT,
+    public static final String[] FONT_STRUCTURE = {XMPConst.TYPE_FONT,
             "fontName", TEXT,
             "fontFamily", TEXT,
             "fontFace", TEXT,
@@ -93,7 +93,7 @@ public class XMPConstants {
             "childFontFiles", SEQ + " " + TEXT
     };
 
-    public static final String[] THUMBNAIL_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPSchemaRegistryImpl.TYPE_IMAGE,
+    public static final String[] THUMBNAIL_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPConst.TYPE_IMAGE,
             "height", INTEGER,
             "width", INTEGER,
             "image", TEXT
@@ -103,7 +103,7 @@ public class XMPConstants {
             "format", TEXT, "^JPEG$" // closed Choice (JPEG)
     };
 
-    public static final String[] RESOURCE_EVENT_STRUCTURE = {XMPSchemaRegistryImpl.TYPE_RESOURCEEVENT,
+    public static final String[] RESOURCE_EVENT_STRUCTURE = {XMPConst.TYPE_RESOURCEEVENT,
             "action", TEXT, // open Choice
             "instanceID", URI,
             "parameters", TEXT,
@@ -111,7 +111,7 @@ public class XMPConstants {
             "when", DATE
     };
 
-    public static final String[] RESOURCE_REF_STRUCTURE = {XMPSchemaRegistryImpl.TYPE_RESOURCEREF,
+    public static final String[] RESOURCE_REF_STRUCTURE = {XMPConst.TYPE_RESOURCEREF,
             "instanceID", URI,
             "documentID", URI,
             "versionID", TEXT,
@@ -123,7 +123,7 @@ public class XMPConstants {
             "manageUI", URI
     };
 
-    public static final String[] VERSION_STRUCTURE = {XMPSchemaRegistryImpl.TYPE_ST_VERSION,
+    public static final String[] VERSION_STRUCTURE = {XMPConst.TYPE_ST_VERSION,
             "comments", TEXT,
             "event", RESOURCE_EVENT,
             "modifyDate", DATE,
@@ -131,19 +131,19 @@ public class XMPConstants {
             "version", TEXT
     };
 
-    public static final String[] JOB_STRUCTURE = {XMPSchemaRegistryImpl.TYPE_ST_JOB,
+    public static final String[] JOB_STRUCTURE = {XMPConst.TYPE_ST_JOB,
             "name", TEXT,
             "id", TEXT,
             "url", URL
     };
 
-    public static final String[] BEAT_SPLICE_STRETCH_STRUCTURE = {XMPSchemaRegistryImpl.NS_DM,
+    public static final String[] BEAT_SPLICE_STRETCH_STRUCTURE = {XMPConst.NS_DM,
             "useFileBeatsMarker", BOOLEAN,
             "riseInDecibel", REAL,
             "riseInTimeDuration", TIME
     };
 
-    public static final String[] MARKER_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPSchemaRegistryImpl.NS_DM,
+    public static final String[] MARKER_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPConst.NS_DM,
             "startTime", TIME,
             "duration", TIME,
             "comment", TEXT,
@@ -156,7 +156,7 @@ public class XMPConstants {
             "type", TEXT, "^(Chapter|Cue|Beat|Track|Index)$" // closed Choice of Text (Chapter, Cue, Beat, Track, Index)
     };
 
-    public static final String[] MEDIA_STRUCTURE = {XMPSchemaRegistryImpl.NS_DM,
+    public static final String[] MEDIA_STRUCTURE = {XMPConst.NS_DM,
             "path", URI,
             "track", TEXT,
             "startTime", TIME,
@@ -165,7 +165,7 @@ public class XMPConstants {
             "webStatement", URI
     };
 
-    public static final String[] PROJECT_LINK_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPSchemaRegistryImpl.NS_DM,
+    public static final String[] PROJECT_LINK_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPConst.NS_DM,
             "path", URI
     };
 
@@ -173,19 +173,19 @@ public class XMPConstants {
             "type", TEXT, "^(movie|still|audio|custom)$" // closed Choice of Text (movie, still, audio, custom)
     };
 
-    public static final String[] RESAMPLE_STRETCH_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPSchemaRegistryImpl.NS_DM
+    public static final String[] RESAMPLE_STRETCH_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPConst.NS_DM
     };
 
     public static final String[] RESAMPLE_STRETCH_RESTRICTED_FIELD_STRUCTURE = {
             "quality", TEXT, "^(High|Medium|Low)$" // closed Choice of Text (High, Medium, Low)
     };
 
-    public static final String[] TIME_STRUCTURE = {XMPSchemaRegistryImpl.NS_DM,
+    public static final String[] TIME_STRUCTURE = {XMPConst.NS_DM,
             "value", INTEGER,
             "scale", RATIONAL
     };
 
-    public static final String[] TIMECODE_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPSchemaRegistryImpl.NS_DM
+    public static final String[] TIMECODE_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPConst.NS_DM
     };
 
     public static final String[] TIMECODE_RESTRICTED_FIELD_STRUCTURE = {
@@ -195,7 +195,7 @@ public class XMPConstants {
             // 50Timecode, 5994DropTimecode, 5994NonDropTimecode, 60Timecode, 23976Timecode)
     };
 
-    public static final String[] TIME_SCALE_STRETCH_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPSchemaRegistryImpl.NS_DM,
+    public static final String[] TIME_SCALE_STRETCH_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPConst.NS_DM,
             "frameSize", REAL,
             "frameOverlappingPercentage", REAL
     };
@@ -204,7 +204,7 @@ public class XMPConstants {
             "quality", TEXT, "^(High|Medium|Low)$" // closed Choice of Text (High, Medium, Low)
     };
 
-    public static final String[] FLASH_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPSchemaRegistryImpl.NS_EXIF,
+    public static final String[] FLASH_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPConst.NS_EXIF,
             "Fired", BOOLEAN,
             "Function", BOOLEAN,
             "RedEyeMode", BOOLEAN
@@ -215,32 +215,32 @@ public class XMPConstants {
             "Mode", TEXT, "^[0-3]$" // closed Choice (0, 1, 2, 3)
     };
 
-    public static final String[] OECF_SFR_STRUCTURE = {XMPSchemaRegistryImpl.NS_EXIF,
+    public static final String[] OECF_SFR_STRUCTURE = {XMPConst.NS_EXIF,
             "Columns", INTEGER,
             "Rows", INTEGER,
             "Names", SEQ + " " + TEXT,
             "Values", SEQ + " " + RATIONAL
     };
 
-    public static final String[] CFA_PATTERN_STRUCTURE = {XMPSchemaRegistryImpl.NS_EXIF,
+    public static final String[] CFA_PATTERN_STRUCTURE = {XMPConst.NS_EXIF,
             "Columns", INTEGER,
             "Rows", INTEGER,
             "Values", SEQ + " " + INTEGER
     };
 
-    public static final String[] DEVICE_SETTINGS_STRUCTURE = {XMPSchemaRegistryImpl.NS_EXIF,
+    public static final String[] DEVICE_SETTINGS_STRUCTURE = {XMPConst.NS_EXIF,
             "Columns", INTEGER,
             "Rows", INTEGER,
             "Settings", SEQ + " " + TEXT
     };
 
     // Properties common for PDF/A-1 and PDF/A-2, PDF/A-3
-    public static final String[] PDFA_IDENTIFICATION_COMMON = {XMPSchemaRegistryImpl.NS_PDFA_ID,
+    public static final String[] PDFA_IDENTIFICATION_COMMON = {XMPConst.NS_PDFA_ID,
             "part", INTEGER,
             "amd", TEXT
     };
 
-    public static final String[] DUBLIN_CORE_COMMON = {XMPSchemaRegistryImpl.NS_DC,
+    public static final String[] DUBLIN_CORE_COMMON = {XMPConst.NS_DC,
             "contributor", BAG + " " + PROPER_NAME,
             "coverage", TEXT,
             "creator", SEQ + " " + PROPER_NAME,
@@ -258,7 +258,7 @@ public class XMPConstants {
             "type", BAG + " " + TEXT // bag open Choice
     };
 
-    public static final String[] XMP_BASIC_COMMON = {XMPSchemaRegistryImpl.NS_XMP,
+    public static final String[] XMP_BASIC_COMMON = {XMPConst.NS_XMP,
             "Advisory", BAG + " " + TEXT,
             "BaseURL", URL,
             "CreateDate", DATE,
@@ -270,7 +270,7 @@ public class XMPConstants {
             "Thumbnails", ALT + " " + THUMBNAIL
     };
 
-    public static final String[] XMP_RIGHTS_COMMON = {XMPSchemaRegistryImpl.NS_XMP_RIGHTS,
+    public static final String[] XMP_RIGHTS_COMMON = {XMPConst.NS_XMP_RIGHTS,
             "Certificate", URL,
             "Marked", BOOLEAN,
             "Owner", BAG + " " + PROPER_NAME,
@@ -278,7 +278,7 @@ public class XMPConstants {
             "WebStatement", URL
     };
 
-    public static final String[] XMP_MEDIA_MANAGEMENT_COMMON = {XMPSchemaRegistryImpl.NS_XMP_MM,
+    public static final String[] XMP_MEDIA_MANAGEMENT_COMMON = {XMPConst.NS_XMP_MM,
             "DerivedFrom", RESOURCE_REF,
             "DocumentID", URI,
             "History", SEQ + " " + RESOURCE_EVENT,
@@ -297,22 +297,22 @@ public class XMPConstants {
             "SaveID", INTEGER
     };
 
-    public static final String[] XMP_BASIC_JOB_COMMON = {XMPSchemaRegistryImpl.NS_XMP_BJ,
+    public static final String[] XMP_BASIC_JOB_COMMON = {XMPConst.NS_XMP_BJ,
             "JobRef", BAG + " " + JOB
     };
 
-    public static final String[] XMP_PAGED_TEXT_COMMON = {XMPSchemaRegistryImpl.TYPE_PAGEDFILE,
+    public static final String[] XMP_PAGED_TEXT_COMMON = {XMPConst.TYPE_PAGEDFILE,
             "MaxPageSize", DIMENSIONS,
             "NPages", INTEGER
     };
 
-    public static final String[] ADOBE_PDF_COMMON = {XMPSchemaRegistryImpl.NS_PDF,
+    public static final String[] ADOBE_PDF_COMMON = {XMPConst.NS_PDF,
             "Keywords", TEXT,
             "PDFVersion", TEXT,
             "Producer", AGENT_NAME
     };
 
-    public static final String[] PHOTOSHOP_COMMON = {XMPSchemaRegistryImpl.NS_PHOTOSHOP,
+    public static final String[] PHOTOSHOP_COMMON = {XMPConst.NS_PHOTOSHOP,
             "AuthorsPosition", TEXT,
             "CaptionWriter", PROPER_NAME,
             "Category", TEXT,
@@ -328,7 +328,7 @@ public class XMPConstants {
             "Urgency", INTEGER
     };
 
-    public static final String[] TIFF_WITHOUT_RESTRICTED_FIELD_COMMON = {XMPSchemaRegistryImpl.NS_TIFF,
+    public static final String[] TIFF_WITHOUT_RESTRICTED_FIELD_COMMON = {XMPConst.NS_TIFF,
             "ImageWidth", INTEGER,
             "ImageLength", INTEGER,
             "BitsPerSample", SEQ + " " + INTEGER,
@@ -349,7 +349,7 @@ public class XMPConstants {
             "Copyright", LANG_ALT
     };
 
-    public static final String[] TIFF_RESTRICTED_FIELD_COMMON = {XMPSchemaRegistryImpl.NS_TIFF,
+    public static final String[] TIFF_RESTRICTED_FIELD_COMMON = {XMPConst.NS_TIFF,
             "Compression", INTEGER, "^[16]$", // closed Choice of Integer (1, 6)
             "PhotometricInterpretation", INTEGER, "^[26]$", // closed Choice of Integer (2, 6)
             "Orientation", INTEGER, "^[1-8]$", // closed Choice of Integer (1, 2, 3, 4, 5, 6, 7, 8)
@@ -362,7 +362,7 @@ public class XMPConstants {
             {"2","1"}, {"2","2"} // closed Choice of Seq Integer ([2,1], [2,2])
     };
 
-    public static final String[] EXIF_WITHOUT_RESTRICTED_FIELD_COMMON = {XMPSchemaRegistryImpl.NS_EXIF,
+    public static final String[] EXIF_WITHOUT_RESTRICTED_FIELD_COMMON = {XMPConst.NS_EXIF,
             "CompressedBitsPerPixel", RATIONAL,
             "PixelXDimension", INTEGER,
             "PixelYDimension", INTEGER,
@@ -414,7 +414,7 @@ public class XMPConstants {
             "GPSAreaInformation", TEXT
     };
 
-    public static final String[] EXIF_RESTRICTED_FIELD_COMMON = {XMPSchemaRegistryImpl.NS_EXIF,
+    public static final String[] EXIF_RESTRICTED_FIELD_COMMON = {XMPConst.NS_EXIF,
             "ExposureProgram", INTEGER, "^[0-8]$", // closed Choice of Integer (0, 1, 2, 3, 4, 5, 6, 7, 8)
             "MeteringMode", INTEGER, "^([0-6]|255)$", // closed Choice of Integer (0, 1, 2, 3, 4, 5, 6, 255)
             "FocalPlaneResolutionUnit", INTEGER, "^[23]$", // closed Choice of Integer (2, 3)
@@ -446,27 +446,27 @@ public class XMPConstants {
     };
 
     // Properties differ in for PDF/A-1 and PDF/A-2, PDF/A-3
-    public static final String[] PDFA_IDENTIFICATION_RESTRICTED_FIELD_DIFFER_1 = {XMPSchemaRegistryImpl.NS_PDFA_ID,
+    public static final String[] PDFA_IDENTIFICATION_RESTRICTED_FIELD_DIFFER_1 = {XMPConst.NS_PDFA_ID,
             "conformance", TEXT, "^[AB]$" //closed Choice (A, B)
     };
 
-    public static final String[] PDFA_IDENTIFICATION_RESTRICTED_FIELD_DIFFER_2_3 = {XMPSchemaRegistryImpl.NS_PDFA_ID,
+    public static final String[] PDFA_IDENTIFICATION_RESTRICTED_FIELD_DIFFER_2_3 = {XMPConst.NS_PDFA_ID,
             "conformance", TEXT, "^[AUB]$" //closed Choice (A, U, B)
     };
 
-    public static final String[] PHOTOSHOP_DIFFER_1 = {XMPSchemaRegistryImpl.NS_PHOTOSHOP,
+    public static final String[] PHOTOSHOP_DIFFER_1 = {XMPConst.NS_PHOTOSHOP,
             "SupplementalCategories", TEXT
     };
 
-    public static final String[] PHOTOSHOP_DIFFER_2_3 = {XMPSchemaRegistryImpl.NS_PHOTOSHOP,
+    public static final String[] PHOTOSHOP_DIFFER_2_3 = {XMPConst.NS_PHOTOSHOP,
             "SupplementalCategories", BAG + " " + TEXT
     };
 
-    public static final String[] EXIF_WITHOUT_RESTRICTED_FIELD_DIFFER_1 = {XMPSchemaRegistryImpl.NS_EXIF,
+    public static final String[] EXIF_WITHOUT_RESTRICTED_FIELD_DIFFER_1 = {XMPConst.NS_EXIF,
             "MakerNote", TEXT
     };
 
-    public static final String[] EXIF_RESTRICTED_FIELD_DIFFER_1 = {XMPSchemaRegistryImpl.NS_EXIF,
+    public static final String[] EXIF_RESTRICTED_FIELD_DIFFER_1 = {XMPConst.NS_EXIF,
             "ExifVersion", TEXT, "^0210$",  // closed Choice of Text (0210)
             "FlashpixVersion", TEXT, "^0100$",  // closed Choice of Text (0100)
             "ColorSpace", INTEGER, "^1|-32786$", // closed Choice of Integer (1, -32786)
@@ -474,37 +474,37 @@ public class XMPConstants {
             "GPSMeasureMode", INTEGER, "^[23]$" // closed Choice of Integer (2, 3)
     };
 
-    public static final String[] EXIF_WITHOUT_RESTRICTED_FIELD_DIFFER_2_3 = {XMPSchemaRegistryImpl.NS_EXIF,
+    public static final String[] EXIF_WITHOUT_RESTRICTED_FIELD_DIFFER_2_3 = {XMPConst.NS_EXIF,
             "ExifVersion", TEXT,  // closed Choice of Text (EXIF tag 36864, 0x9000. Exif version number.)
             "FlashpixVersion", TEXT,  // closed Choice of Text (EXIF tag 40960, 0xA000. Version of FlashPix.)
             "GPSMeasureMode", TEXT
     };
 
-    public static final String[] EXIF_RESTRICTED_FIELD_DIFFER_2_3 = {XMPSchemaRegistryImpl.NS_EXIF,
+    public static final String[] EXIF_RESTRICTED_FIELD_DIFFER_2_3 = {XMPConst.NS_EXIF,
             "ColorSpace", INTEGER, "^1|65535$", // closed Choice of Integer (1, 65535)
             "LightSource", INTEGER, "^[0-4]|9|1[0-5]|1[7-9]|2[0-4]|255$"
             // closed Choice of Integer (0, 1, 2, 3, 4, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 255)
     };
 
     // Properties specified for PDF/A-2 and PDF/A-3
-    public static final String[] PDFA_IDENTIFICATION_SPECIFIED_2_3 = {XMPSchemaRegistryImpl.NS_PDFA_ID,
+    public static final String[] PDFA_IDENTIFICATION_SPECIFIED_2_3 = {XMPConst.NS_PDFA_ID,
             "corr", TEXT
     };
 
-    public static final String[] XMP_BASIC_SPECIFIED_2_3 = {XMPSchemaRegistryImpl.NS_XMP,
+    public static final String[] XMP_BASIC_SPECIFIED_2_3 = {XMPConst.NS_XMP,
             "Label", TEXT,
             "Rating", INTEGER   // closed Choice of Integer (A number that indicates a document’s status relative to
             // Integer other documents, used to organize documents in a file browser.
             // Values are user-defined within an application- defined range.)
     };
 
-    public static final String[] XMP_PAGED_TEXT_SPECIFIED_2_3 = {XMPSchemaRegistryImpl.TYPE_PAGEDFILE,
+    public static final String[] XMP_PAGED_TEXT_SPECIFIED_2_3 = {XMPConst.TYPE_PAGEDFILE,
             "Fonts", BAG + " " + FONT,
             "Colorants", SEQ + " " + COLORANT,
             "PlateNames", SEQ + " " + TEXT
     };
 
-    public static final String[] XMP_DYNAMIC_MEDIA_WITHOUT_RESTRICTED_FIELD_SPECIFIED_2_3 = {XMPSchemaRegistryImpl.NS_DM,
+    public static final String[] XMP_DYNAMIC_MEDIA_WITHOUT_RESTRICTED_FIELD_SPECIFIED_2_3 = {XMPConst.NS_DM,
             "projectRef", PROJECT_LINK,
             "videoFrameRate", TEXT, // open Choice of Text
             "videoFrameSize", DIMENSIONS,
@@ -552,7 +552,7 @@ public class XMPConstants {
             "beatSpliceParams", BEAT_SPLICE_STRETCH
     };
 
-    public static final String[] XMP_DYNAMIC_MEDIA_RESTRICTED_FIELD_SPECIFIED_2_3 = {XMPSchemaRegistryImpl.NS_DM,
+    public static final String[] XMP_DYNAMIC_MEDIA_RESTRICTED_FIELD_SPECIFIED_2_3 = {XMPConst.NS_DM,
             "videoPixelDepth", TEXT, "^(8Int|16Int|32Int|32Float)$", // closed Choice of Text (8Int, 16Int, 32Int, 32Float)
             "videoColorSpace", TEXT, "^(sRGB|CCIR-601|CCIR-709)$", // closed Choice of Text (sRGB, CCIR-601, CCIR-709)
             "videoAlphaMode", TEXT, "^(straight|pre-multiplied)$", // closed Choice of Text (straight, pre-multiplied)
@@ -568,7 +568,7 @@ public class XMPConstants {
             "scaleType", TEXT, "^(Major|Minor|Both|Neither)$" // closed Choice of Text (Major, Minor, Both, Neither)
     };
 
-    public static final String[] CAMERA_RAW_WITHOUT_RESTRICTED_FIELD_SPECIFIED_2_3 = {XMPSchemaRegistryImpl.NS_CAMERARAW,
+    public static final String[] CAMERA_RAW_WITHOUT_RESTRICTED_FIELD_SPECIFIED_2_3 = {XMPConst.NS_CAMERARAW,
             "AutoBrightness", BOOLEAN,
             "AutoContrast", BOOLEAN,
             "AutoExposure", BOOLEAN,
@@ -610,16 +610,16 @@ public class XMPConstants {
             "VignetteMidpoint", INTEGER
     };
 
-    public static final String[] CAMERA_RAW_RESTRICTED_FIELD_SPECIFIED_2_3 = {XMPSchemaRegistryImpl.NS_CAMERARAW,
+    public static final String[] CAMERA_RAW_RESTRICTED_FIELD_SPECIFIED_2_3 = {XMPConst.NS_CAMERARAW,
             "WhiteBalance", TEXT, "^(As Shot|Auto|Daylight|Cloudy|Shade|Tungsten|Fluorescent|Flash|Custom)$"
             // closed Choice of Text (As Shot, Auto, Daylight, Cloudy, Shade, Tungsten, Fluorescent, Flash, Custom)
     };
 
-    public static final String[] CAMERA_RAW_SEQ_OF_POINTS_SPECIFIED_2_3 = {XMPSchemaRegistryImpl.NS_CAMERARAW,
+    public static final String[] CAMERA_RAW_SEQ_OF_POINTS_SPECIFIED_2_3 = {XMPConst.NS_CAMERARAW,
             "ToneCurve", TEXT, "^\\([+-]?\\d+, [+-]?\\d+\\)$" // Seq of points (Integer, Integer)
     };
 
-    public static final String[] AUX_SPECIFIED_2_3 = {XMPSchemaRegistryImpl.NS_EXIF_AUX,
+    public static final String[] AUX_SPECIFIED_2_3 = {XMPConst.NS_EXIF_AUX,
             "Lens", TEXT,
             "SerialNumber", TEXT
     };

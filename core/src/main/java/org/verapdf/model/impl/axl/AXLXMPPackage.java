@@ -14,8 +14,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Current class is representation of XMPPackage interface from
- * abstract model based on adobe xmp library
+ * Current class is representation of XMPPackage interface from abstract model
+ * based on adobe xmp library
  *
  * @author Maksim Bezrukov
  */
@@ -38,51 +38,63 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     private SchemasDefinition currentSchemasDefinitionPDFA_1;
     private SchemasDefinition currentSchemasDefinitionPDFA_2_3;
 
-    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isClosedChoiceCheck, VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
-        this(xmpMetadata, isSerializationValid, false, isClosedChoiceCheck, mainPackageExtensionNode, XMP_PACKAGE_TYPE, flavour);
+    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid,
+            boolean isClosedChoiceCheck,
+            VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
+        this(xmpMetadata, isSerializationValid, false, isClosedChoiceCheck,
+                mainPackageExtensionNode, XMP_PACKAGE_TYPE, flavour);
     }
 
-    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
-        this(xmpMetadata, isSerializationValid, false, false, mainPackageExtensionNode, XMP_PACKAGE_TYPE, flavour);
+    public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid,
+            VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
+        this(xmpMetadata, isSerializationValid, false, false,
+                mainPackageExtensionNode, XMP_PACKAGE_TYPE, flavour);
     }
 
-    protected AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isMainMetadata, boolean isClosedChoiceCheck, VeraPDFXMPNode mainPackageExtensionNode, final String type, PDFAFlavour flavour) {
+    protected AXLXMPPackage(VeraPDFMeta xmpMetadata,
+            boolean isSerializationValid, boolean isMainMetadata,
+            boolean isClosedChoiceCheck,
+            VeraPDFXMPNode mainPackageExtensionNode, final String type,
+            PDFAFlavour flavour) {
         super(type);
         this.xmpMetadata = xmpMetadata;
         this.isSerializationValid = isSerializationValid;
         this.isMainMetadata = isMainMetadata;
         this.isClosedChoiceCheck = isClosedChoiceCheck;
-        this.mainPackageSchemasDefinition = SchemasDefinitionCreator.createExtendedSchemasDefinitionForPDFA_2_3(mainPackageExtensionNode, this.isClosedChoiceCheck);
+        this.mainPackageSchemasDefinition = SchemasDefinitionCreator
+                .createExtendedSchemasDefinitionForPDFA_2_3(
+                        mainPackageExtensionNode, this.isClosedChoiceCheck);
         this.flavour = flavour;
     }
 
     /**
-     * @param link name of the link
+     * @param link
+     *            name of the link
      * @return List of all objects with link name
      */
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         switch (link) {
-            case PROPERTIES:
-                return this.getXMPProperties();
-            case EXTENSION_SCHEMAS_CONTAINERS:
-                return this.getExtensionSchemasContainers();
-            default:
-                return super.getLinkedObjects(link);
+        case PROPERTIES:
+            return this.getXMPProperties();
+        case EXTENSION_SCHEMAS_CONTAINERS:
+            return this.getExtensionSchemasContainers();
+        default:
+            return super.getLinkedObjects(link);
         }
     }
 
     private List<AXLExtensionSchemasContainer> getExtensionSchemasContainers() {
-        if (this.xmpMetadata == null || this.xmpMetadata.getExtensionSchemasNode() == null) {
+        if (this.xmpMetadata == null
+                || this.xmpMetadata.getExtensionSchemasNode() == null) {
             return new ArrayList<>();
         }
         List<AXLExtensionSchemasContainer> res = new ArrayList<>(1);
-        res.add(new AXLExtensionSchemasContainer(
-                this.getXmpMetadata().getExtensionSchemasNode(),
-                getCurrentSchemasDefinitionPDFA_1().getValidatorsContainer(),
+        res.add(new AXLExtensionSchemasContainer(this.getXmpMetadata()
+                .getExtensionSchemasNode(), getCurrentSchemasDefinitionPDFA_1()
+                .getValidatorsContainer(),
                 getCurrentSchemasDefinitionPDFA_2_3().getValidatorsContainer(),
-                this.flavour
-        ));
+                this.flavour));
         return res;
     }
 
@@ -93,7 +105,12 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
         List<VeraPDFXMPNode> properties = this.xmpMetadata.getProperties();
         List<AXLXMPProperty> res = new ArrayList<>(properties.size());
         for (VeraPDFXMPNode node : properties) {
-            res.add(new AXLXMPProperty(node, this.isMainMetadata, this.isClosedChoiceCheck, this.getMainPackageSchemasDefinition(), this.getCurrentSchemasDefinitionPDFA_1(), this.getCurrentSchemasDefinitionPDFA_2_3(), flavour));
+            res.add(new AXLXMPProperty(node, this.isMainMetadata,
+                    this.isClosedChoiceCheck, this
+                            .getMainPackageSchemasDefinition(), this
+                            .getCurrentSchemasDefinitionPDFA_1(), this
+                            .getCurrentSchemasDefinitionPDFA_2_3(),
+                    this.flavour));
         }
         return res;
     }
@@ -135,9 +152,8 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
             int min = Math.min(sq, dq);
             int index = min == -1 ? Math.max(sq, dq) : min;
             return attr.substring(index + 1, attr.length() - 1);
-        } else {
-            return null;
         }
+        return null;
     }
 
     protected SchemasDefinition getMainPackageSchemasDefinition() {
@@ -149,8 +165,12 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
 
     protected SchemasDefinition getCurrentSchemasDefinitionPDFA_1() {
         if (this.currentSchemasDefinitionPDFA_1 == null) {
-            if (this.xmpMetadata != null && this.xmpMetadata.getExtensionSchemasNode() != null) {
-                this.currentSchemasDefinitionPDFA_1 = SchemasDefinitionCreator.createExtendedSchemasDefinitionForPDFA_1(this.xmpMetadata.getExtensionSchemasNode(), this.isClosedChoiceCheck);
+            if (this.xmpMetadata != null
+                    && this.xmpMetadata.getExtensionSchemasNode() != null) {
+                this.currentSchemasDefinitionPDFA_1 = SchemasDefinitionCreator
+                        .createExtendedSchemasDefinitionForPDFA_1(
+                                this.xmpMetadata.getExtensionSchemasNode(),
+                                this.isClosedChoiceCheck);
             } else {
                 this.currentSchemasDefinitionPDFA_1 = SchemasDefinitionCreator.EMPTY_SCHEMAS_DEFINITION;
             }
@@ -160,8 +180,12 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
 
     protected SchemasDefinition getCurrentSchemasDefinitionPDFA_2_3() {
         if (this.currentSchemasDefinitionPDFA_2_3 == null) {
-            if (this.xmpMetadata != null && this.xmpMetadata.getExtensionSchemasNode() != null) {
-                this.currentSchemasDefinitionPDFA_2_3 = SchemasDefinitionCreator.createExtendedSchemasDefinitionForPDFA_2_3(this.xmpMetadata.getExtensionSchemasNode(), this.isClosedChoiceCheck);
+            if (this.xmpMetadata != null
+                    && this.xmpMetadata.getExtensionSchemasNode() != null) {
+                this.currentSchemasDefinitionPDFA_2_3 = SchemasDefinitionCreator
+                        .createExtendedSchemasDefinitionForPDFA_2_3(
+                                this.xmpMetadata.getExtensionSchemasNode(),
+                                this.isClosedChoiceCheck);
             } else {
                 this.currentSchemasDefinitionPDFA_2_3 = SchemasDefinitionCreator.EMPTY_SCHEMAS_DEFINITION;
             }
