@@ -9,7 +9,10 @@ import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -21,21 +24,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Class that encapsulates the release details of the veraPDF validation
- * library. The class controls instance creation so that only a single,
- * static and immutable instance is available.
+ * library. The class controls instance creation so that only a single, static
+ * and immutable instance is available.
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 @XmlRootElement(name = "releaseDetails")
 public final class ReleaseDetails {
-    private static final String APPLICATION_PROPERTIES_PATH = "org/verapdf/verapdf.properties";
+
+    public static final String APPLICATION_PROPERTIES_ROOT = "org/verapdf/release/";
+    public static final String PROPERTIES_EXT = "properties";
+    public static final String LIBRARY_DETAILS_RESOURCE = APPLICATION_PROPERTIES_ROOT
+            + "library." + PROPERTIES_EXT;
+
     private static final String RAW_DATE_FORMAT = "${maven.build.timestamp.format}";
     private static final String RIGHTS = "Developed and released by the veraPDF Consortium.\n"
             + "Funded by the PREFORMA project.\n"
             + "Released under the GNU General Public License v3\n"
             + "and the Mozilla Public License v2.\n";
 
-    private static final ReleaseDetails INSTANCE = fromPropertyResource(APPLICATION_PROPERTIES_PATH);
+    private static final ReleaseDetails DEFAULT = new ReleaseDetails();
+    private static final Map<String, ReleaseDetails> DETAILS = new HashMap<>();
+    static {
+        ReleaseDetails details = fromResource(LIBRARY_DETAILS_RESOURCE);
+        DETAILS.put(details.id, details);
+    }
+
     @XmlAttribute
     private final String id;
     @XmlAttribute
@@ -49,7 +63,8 @@ public final class ReleaseDetails {
         this("name", "version", new Date());
     }
 
-    private ReleaseDetails(final String id, final String version, final Date buildDate) {
+    private ReleaseDetails(final String id, final String version,
+            final Date buildDate) {
         this.id = id;
         this.version = version;
         this.buildDate = new Date(buildDate.getTime());
@@ -90,8 +105,7 @@ public final class ReleaseDetails {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result
-                + ((this.id == null) ? 0 : this.id.hashCode());
+        result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
         result = prime * result
                 + ((this.buildDate == null) ? 0 : this.buildDate.hashCode());
         result = prime * result
@@ -134,15 +148,56 @@ public final class ReleaseDetails {
      */
     @Override
     public String toString() {
-        return "ReleaseDetails [id=" + this.id + ", version=" + this.version + ", buildDate="
-                + this.buildDate + "]";
+        return "ReleaseDetails [id=" + this.id + ", version=" + this.version
+                + ", buildDate=" + this.buildDate + "]";
+    }
+
+    public static ReleaseDetails defaultInstance() {
+        return DEFAULT;
     }
 
     /**
      * @return the static immutable ReleaseDetails instance
      */
     public static ReleaseDetails getInstance() {
-        return INSTANCE;
+        if (DETAILS.isEmpty()) {
+            return defaultInstance();
+        }
+        return DETAILS.values().toArray(new ReleaseDetails[DETAILS.size()])[0];
+    }
+
+    /**
+     * @return the Set of ReleaseDetails ids as Strings
+     */
+    public static Set<String> getIds() {
+        return DETAILS.keySet();
+    }
+
+    /**
+     * Retrieve ReleaseDetails by id
+     * 
+     * @param id
+     *            the id to lookup
+     * @return the
+     */
+    public static ReleaseDetails byId(final String id) {
+        if (DETAILS.containsKey(id)) {
+            return DETAILS.get(id);
+        }
+        return defaultInstance();
+    }
+
+    /**
+     * Will load a ReleaseDetails instance from the resource found with
+     * resourceName. This should be a properties file with the appropriate
+     * release details properties.
+     * 
+     * @param resourceName
+     *            the name of the resource to load
+     */
+    public static void addDetailsFromResource(final String resourceName) {
+        ReleaseDetails details = fromResource(resourceName);
+        DETAILS.put(details.id, details);
     }
 
     static void toXml(final ReleaseDetails toConvert,
@@ -157,23 +212,25 @@ public final class ReleaseDetails {
         return (ReleaseDetails) stringUnmarshaller.unmarshal(toConvert);
     }
 
-    private static ReleaseDetails fromPropertyResource(
-            final String propertyResourceName) {
+    private static ReleaseDetails fromResource(final String resourceName) {
         try (InputStream is = ReleaseDetails.class.getClassLoader()
-                .getResourceAsStream(propertyResourceName)) {
+                .getResourceAsStream(resourceName)) {
             if (is == null) {
-                throw new IllegalStateException(
-                        "No application properties found: "
-                                + propertyResourceName);
+                return DEFAULT;
             }
-            Properties props = new Properties();
-            props.load(is);
-            return fromProperties(props);
-        } catch (IOException e) {
+            return fromPropertiesStream(is);
+        } catch (IOException excep) {
             throw new IllegalStateException(
-                    "Application properties could not be loaded: "
-                            + propertyResourceName, e);
+                    "Couldn't load ReleaseDetails resource:" + resourceName,
+                    excep);
         }
+    }
+
+    private static ReleaseDetails fromPropertiesStream(final InputStream is)
+            throws IOException {
+        Properties props = new Properties();
+        props.load(is);
+        return fromProperties(props);
     }
 
     private static ReleaseDetails fromProperties(final Properties props) {
@@ -197,16 +254,14 @@ public final class ReleaseDetails {
     }
 
     private static Unmarshaller getUnmarshaller() throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(ReleaseDetails.class);
+        JAXBContext context = JAXBContext.newInstance(ReleaseDetails.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
         return unmarshaller;
     }
 
     private static Marshaller getMarshaller(Boolean setPretty)
             throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(ReleaseDetails.class);
+        JAXBContext context = JAXBContext.newInstance(ReleaseDetails.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
         return marshaller;
