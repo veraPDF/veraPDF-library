@@ -23,7 +23,7 @@ import java.util.*;
 final class ValidationProfileImpl implements ValidationProfile {
     private Map<String, Set<Rule>> objectRuleMap;
     private Map<String, Set<Variable>> objectVariableMap;
-    private final static Map<RuleId, Rule> RULE_LOOKUP = new HashMap<>();
+    private Map<RuleId, Rule> ruleLookup = new HashMap<>();
     private final static ValidationProfileImpl DEFAULT = new ValidationProfileImpl();
 
     @XmlAttribute
@@ -137,10 +137,10 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public Rule getRuleByRuleId(RuleId id) {
-        if (RULE_LOOKUP.isEmpty()) {
+        if (ruleLookup.isEmpty()) {
             this.objectRuleMap = createObjectRuleMap(this.rules);
         }
-        return RULE_LOOKUP.get(id);
+        return ruleLookup.get(id);
     }
 
     /**
@@ -305,12 +305,12 @@ final class ValidationProfileImpl implements ValidationProfile {
         return marshaller;
     }
 
-    private static Map<String, Set<Rule>> createObjectRuleMap(
+    private Map<String, Set<Rule>> createObjectRuleMap(
             final Set<Rule> rules) {
-        RULE_LOOKUP.clear();
+        ruleLookup.clear();
         Map<String, Set<Rule>> rulesByObject = new HashMap<>();
         for (Rule rule : rules) {
-            RULE_LOOKUP.put(rule.getRuleId(), rule);
+            ruleLookup.put(rule.getRuleId(), rule);
             if (!rulesByObject.containsKey(rule.getObject())) {
                 rulesByObject.put(rule.getObject(), new HashSet<Rule>());
             }
