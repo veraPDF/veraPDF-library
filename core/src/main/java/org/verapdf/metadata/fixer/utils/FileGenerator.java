@@ -111,11 +111,14 @@ public class FileGenerator {
 	}
 
 	private static File createOutputFile(String path, String extension, int index) {
+		// TODO: create test for this method
 		while (true) {
 			String resPath = path + (index != 0 ? "(" + index + ")" : "") + extension;
 			File resultFile = new File(resPath);
 			if (!resultFile.exists()) {
 				return resultFile;
+			} else {
+				++index;
 			}
 		}
 	}
