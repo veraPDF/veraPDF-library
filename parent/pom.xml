@@ -10,7 +10,7 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-parent</artifactId>
-  <version>1.0.12</version>
+  <version>1.0.13</version>
   <packaging>pom</packaging>
 
   <name>veraPDF Consortium parent </name>
