@@ -1,4 +1,30 @@
-# Version 0.10 (February )
+# Version 0.12 (March 31, 2016)
+
+This beta release features improved PDF/A-2b and PDF/A-3b validation and the fully featured REST API.
+
+## Features
+- Conformance checker:
+  - PDF/A-2 and PDF-A/3 improvements: implement checks for optional content, JPEG2000 requirements
+  - full compliance with BFO test suite (PDF/A-2b)
+  - PDF/A-1b fix: check for form field appearance
+  - code refactoring to enable PDF model implementation via different PDF parsers
+  - performance and memory optimization
+
+- Test corpus:
+  - full coverage of all predefined XMP properties
+
+- Documentation
+  - first version of wiki on all validation rules availabe at: https://github.com/veraPDF/veraPDF-validation-profiles/wiki
+
+- Command line:
+  - CLI now supports metadata fixing
+
+- Infrastructure
+  - veraPDF-library project refactored into multiple projects.
+  - PDF Box validator implementation in separate project.
+  - Automated source packaging with dependencies.
+
+# Version 0.10 (February 29, 2016)
 
 This beta release features command line interface enhancements
 
@@ -11,7 +37,7 @@ This beta release features command line interface enhancements
  - processes stdin if no file paths are supplied for use in *nix pipes;
  - directory and recursive sub-directory processing; and
  - text mode output with summarised output
- 
+
 - Test corpus:
  - initial set of PDF/A-2 test files
 
