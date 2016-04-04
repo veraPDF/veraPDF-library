@@ -88,7 +88,7 @@ public class MachineReadableReport {
     }
 
     /**
-     * @param name
+     * @param item
      * @param profile
      * @param validationResult
      * @param reportPassedChecks
@@ -98,10 +98,10 @@ public class MachineReadableReport {
      * @return a MachineReadableReport instance initialised from the passed
      *         values
      */
-    public static MachineReadableReport fromValues(String name, ValidationProfile profile,
-            ValidationResult validationResult, boolean reportPassedChecks,
+    public static MachineReadableReport fromValues(ItemDetails item, ValidationProfile profile,
+            ValidationResult validationResult, boolean reportPassedChecks, int maxFailuresDisplayed,
             MetadataFixerResult fixerResult, FeaturesCollection collection,
-            long processingTime, int maxFailuresDisplayed) {
+            long processingTime) {
         ValidationReport validationReport = null;
         if (validationResult != null) {
             validationReport = ValidationReport.fromValues(profile,
@@ -109,7 +109,7 @@ public class MachineReadableReport {
         }
         FeaturesReport featuresReport = FeaturesReport.fromValues(collection);
         MetadataFixesReport fixesReport = MetadataFixesReport.fromValues(fixerResult);
-        return new MachineReadableReport(ItemDetails.fromValues(name), validationReport,
+        return new MachineReadableReport(item, validationReport,
                 getProcessingTime(processingTime), featuresReport, fixesReport);
     }
     /**
