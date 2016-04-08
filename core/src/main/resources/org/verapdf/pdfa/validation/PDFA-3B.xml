@@ -599,7 +599,7 @@
             <description>Only blend modes that are specified in ISO 32000-1:2008 shall be used for the value of the BM key in an extended graphic state dictionary.</description>
             <test>BM == null || BM == &quot;Normal&quot; || BM == &quot;Compatible&quot; || BM == &quot;Multiply&quot; || BM == &quot;Screen&quot; || BM == &quot;Overlay&quot; || BM == &quot;Darken&quot; ||
 			BM == &quot;Lighten&quot; || BM == &quot;ColorDodge&quot; || BM == &quot;ColorBurn&quot; || BM == &quot;HardLight&quot; || BM == &quot;SoftLight&quot; || BM == &quot;Difference&quot; || BM == &quot;Exclusion&quot; ||
-			BM == &quot;Hue&quot; || BM == &quot;Saturation&quot; || BM == &quot;Color&quot; || BM == &quot;Limunosity&quot;</test>
+			BM == &quot;Hue&quot; || BM == &quot;Saturation&quot; || BM == &quot;Color&quot; || BM == &quot;Luminosity&quot;</test>
             <error>
                 <message>The document uses the blend mode not defined in ISO 32000-1:2008</message>
                 <arguments/>
