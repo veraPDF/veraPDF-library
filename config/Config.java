@@ -23,90 +23,91 @@ import java.nio.file.Paths;
  * @author Maksim Bezrukov
  */
 
-class PathAdapter extends XmlAdapter<String, Path> {
-
-	@Override
-	public Path unmarshal(String v) throws Exception {
-		Path path = Paths.get(new URI(v));
-		return path.toAbsolutePath();
-	}
-
-	@Override
-	public String marshal(Path v) throws Exception {
-		return v.toAbsolutePath().toUri().toString();
-	}
-}
-
-class ProcessingTypeAdapter extends XmlAdapter<String, ProcessingType> {
-
-	private final Logger LOGGER = Logger.getLogger(ProcessingTypeAdapter.class);
-	@Override
-	public ProcessingType unmarshal(String v) throws Exception {
-		try {
-			return ProcessingType.fromString(v);
-		}
-		catch(IllegalArgumentException e) {
-			LOGGER.error("Can't construct ProcessingType from string \"" + v + "\", setting ProcessingType to default", e);
-		}
-		return Config.DEFAULT_PROCESSING_TYPE;
-	}
-
-	@Override
-	public String marshal(ProcessingType v) throws Exception {
-		return v.toString();
-	}
-}
-
-class FormatOptionAdapter extends XmlAdapter<String, FormatOption> {
-
-	@Override
-	public FormatOption unmarshal(String v) throws Exception {
-		return FormatOption.fromOption(v);
-	}
-
-	@Override
-	public String marshal(FormatOption v) throws Exception {
-		return v.toString();
-	}
-}
-
-class ValidationProfilePathAdapter extends XmlAdapter<String, Path> {
-
-	@Override
-	public Path unmarshal(String v) throws Exception {
-		if(v == null) {
-			return null;
-		} else {
-			Path path = Paths.get(new URI(v));
-			return path.toAbsolutePath();
-		}
-	}
-
-	@Override
-	public String marshal(Path v) throws Exception {
-		if(v == null) {
-			return null;
-		} else {
-			return v.toAbsolutePath().toUri().toString();
-		}
-	}
-}
-
-class FlavourAdapter extends XmlAdapter<String, PDFAFlavour> {
-
-	@Override
-	public PDFAFlavour unmarshal(String v) throws Exception {
-		return PDFAFlavour.fromString(v);
-	}
-
-	@Override
-	public String marshal(PDFAFlavour v) throws Exception {
-		return v.toString();
-	}
-}
-
 @XmlRootElement(name = "config")
 public final class Config {
+
+	private static class PathAdapter extends XmlAdapter<String, Path> {
+
+		@Override
+		public Path unmarshal(String v) throws Exception {
+			Path path = Paths.get(new URI(v));
+			return v == null? Paths.get("") : path.toAbsolutePath();
+		}
+
+		@Override
+		public String marshal(Path v) throws Exception {
+			return v.toString().equals("") ?
+					null : v.toAbsolutePath().toUri().toString();
+		}
+	}
+
+	private static class ProcessingTypeAdapter extends XmlAdapter<String, ProcessingType> {
+
+		private final Logger LOGGER = Logger.getLogger(ProcessingTypeAdapter.class);
+		@Override
+		public ProcessingType unmarshal(String v) throws Exception {
+			try {
+				return ProcessingType.fromString(v);
+			}
+			catch(IllegalArgumentException e) {
+				LOGGER.error("Can't construct ProcessingType from string \"" + v + "\", setting ProcessingType to default", e);
+			}
+			return Config.DEFAULT_PROCESSING_TYPE;
+		}
+
+		@Override
+		public String marshal(ProcessingType v) throws Exception {
+			return v.toString();
+		}
+	}
+
+	private static class FormatOptionAdapter extends XmlAdapter<String, FormatOption> {
+
+		@Override
+		public FormatOption unmarshal(String v) throws Exception {
+			return FormatOption.fromOption(v);
+		}
+
+		@Override
+		public String marshal(FormatOption v) throws Exception {
+			return v.toString();
+		}
+	}
+
+	/*private static class ValidationProfilePathAdapter extends XmlAdapter<String, Path> {
+
+		@Override
+		public Path unmarshal(String v) throws Exception {
+			if(v == null) {
+				return null;
+			} else {
+				Path path = Paths.get(new URI(v));
+				return path.toAbsolutePath();
+			}
+		}
+
+		@Override
+		public String marshal(Path v) throws Exception {
+			if(v == null) {
+				return null;
+			} else {
+				return v.toAbsolutePath().toUri().toString();
+			}
+		}
+	}*/
+
+	private static class FlavourAdapter extends XmlAdapter<String, PDFAFlavour> {
+
+		@Override
+		public PDFAFlavour unmarshal(String v) throws Exception {
+			return PDFAFlavour.fromString(v);
+		}
+
+		@Override
+		public String marshal(PDFAFlavour v) throws Exception {
+			return v.toString();
+		}
+	}
 
 	private boolean showPassedRules;
 	private int maxNumberOfFailedChecks;
@@ -119,6 +120,7 @@ public final class Config {
 	private FormatOption reportType;
 	private Path validationProfilePath;
 	private PDFAFlavour flavour;
+	private boolean verboseCli;
 
 	private static final char[] FORBIDDEN_SYMBOLS_IN_FILE_NAME = new char[]{'\\', '/', ':', '*', '?', '\"', '<', '>', '|', '+', '\0', '%'};
 
@@ -131,8 +133,9 @@ public final class Config {
 	public static final boolean DEFAULT_IS_FIX_METADATA = true;
 	public static final ProcessingType DEFAULT_PROCESSING_TYPE = ProcessingType.VALIDATING_AND_FEATURES;
 	public static final FormatOption DEFAULT_REPORT_TYPE = FormatOption.MRR;
-	public static final Path DEFAULT_VALIDATION_PROFILE_PATH = null;
-	public static final PDFAFlavour DEFAULT_FLAVOUR = PDFAFlavour.NO_FLAVOUR;
+	public static final Path DEFAULT_VALIDATION_PROFILE_PATH = FileSystems.getDefault().getPath("");
+	public static final PDFAFlavour DEFAULT_FLAVOUR = PDFAFlavour.PDFA_1_B;
+	public static final boolean DEFAULT_VERBOSE_CLI = false;
 
 	@Override
 	public boolean equals(Object o) {
@@ -147,6 +150,7 @@ public final class Config {
 		if (maxNumberOfDisplayedFailedChecks != config.maxNumberOfDisplayedFailedChecks)
 			return false;
 		if (isFixMetadata != config.isFixMetadata) return false;
+		if (verboseCli != config.verboseCli) return false;
 		if (metadataFixerPrefix != null ? !metadataFixerPrefix.equals(config.metadataFixerPrefix) : config.metadataFixerPrefix != null)
 			return false;
 		if (fixMetadataPathFolder != null ? !fixMetadataPathFolder.equals(config.fixMetadataPathFolder) : config.fixMetadataPathFolder != null)
@@ -174,6 +178,7 @@ public final class Config {
 		result = 31 * result + (reportType != null ? reportType.hashCode() : 0);
 		result = 31 * result + (validationProfilePath != null ? validationProfilePath.hashCode() : 0);
 		result = 31 * result + (flavour != null ? flavour.hashCode() : 0);
+		result = 31 * result + (verboseCli ? 1 : 0);
 		return result;
 	}
 
@@ -189,6 +194,7 @@ public final class Config {
 		this.reportType = DEFAULT_REPORT_TYPE;
 		this.validationProfilePath = DEFAULT_VALIDATION_PROFILE_PATH;
 		this.flavour = DEFAULT_FLAVOUR;
+		this.verboseCli = DEFAULT_VERBOSE_CLI;
 	}
 
 	/**
@@ -267,10 +273,8 @@ public final class Config {
 	 * is null, then validation flavour is processed
 	 */
 	@XmlElement
-	@XmlJavaTypeAdapter(ValidationProfilePathAdapter.class)
-	public Path getValidationProfilePath() {
-		return validationProfilePath;
-	}
+	@XmlJavaTypeAdapter(PathAdapter.class)
+	public Path getValidationProfilePath() { return validationProfilePath; }
 
 	/**
 	 * @return validation flavour to be used
@@ -278,6 +282,12 @@ public final class Config {
 	@XmlElement
 	@XmlJavaTypeAdapter(FlavourAdapter.class)
 	public PDFAFlavour getFlavour() { return flavour; }
+
+	/**
+	 * @return true if cli text report will be verbose
+	 */
+	@XmlElement
+	public boolean isVerboseCli() { return verboseCli; }
 
 	/**
 	 *	Converts Config to XML,
@@ -473,9 +483,19 @@ public final class Config {
 		}
 	}
 
-	public void setFlavour(PDFAFlavour flavour) {
-		this.flavour = flavour;
-	}
+	/**
+	 * Changes settings parameters
+	 *
+	 * @param flavour validation flavour to be used
+	 */
+	public void setFlavour(PDFAFlavour flavour) { this.flavour = flavour; }
+
+	/**
+	 * Changes settings parameters
+	 *
+	 * @param verboseCli true if cli text report should be verbose
+	 */
+	public void setVerboseCli(boolean verboseCli) { this.verboseCli = verboseCli; }
 
 	/**
 	 * Checks is the parameter path a valid for saving fixed file
