@@ -76,15 +76,18 @@ public class ProcessorImpl implements Processor {
 			if(config.getProcessingType().isValidating()) {
 				if (validator != null) {
 					validationResult = validator.validate(toValidate);
+					processingResult.setValidationResult(validationResult);
 					if (config.isFixMetadata()) {
 						fixerResult = fixMetadata(validationResult, toValidate,
 								fileDetails.getName(), config);
+						processingResult.setMetadataFixerResult(fixerResult);
 					}
 				}
 			}
 			if (config.getProcessingType().isFeatures()) {
 				featuresCollection = PBFeatureParser
 						.getFeaturesCollection(toValidate.getPDDocument());
+				processingResult.setFeaturesCollection(featuresCollection);
 			}
 		} catch (InvalidPasswordException e) {
 			LOGGER.error("Error: " + fileDetails.getName() + " is an encrypted PDF file.", e);

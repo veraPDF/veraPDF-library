@@ -61,4 +61,16 @@ public class ProcessingResult {
 	public ArrayList<Exception> getExceptionsInProcessing() {
 		return exceptionsInProcessing;
 	}
+
+	void setValidationResult(ValidationResult validationResult) {
+		this.validationResult = validationResult;
+	}
+
+	void setMetadataFixerResult(MetadataFixerResult metadataFixerResult) {
+		this.metadataFixerResult = metadataFixerResult;
+	}
+
+	void setFeaturesCollection(FeaturesCollection featuresCollection) {
+		this.featuresCollection = featuresCollection;
+	}
 }
