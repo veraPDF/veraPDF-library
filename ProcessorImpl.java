@@ -26,10 +26,8 @@ import org.verapdf.report.*;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 import java.io.*;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,7 +39,6 @@ import java.util.Set;
 public class ProcessorImpl implements Processor {
 
 	private static final Logger LOGGER = Logger.getLogger(ProcessorImpl.class);
-	private ArrayList<Exception> exceptionsInProcessing = new ArrayList<>();
 
 	@Override
 	public ProcessingResult validate(InputStream pdfFileStream, ItemDetails fileDetails,
@@ -49,8 +46,7 @@ public class ProcessorImpl implements Processor {
 		ValidationResult validationResult = null;
 		MetadataFixerResult fixerResult = null;
 		FeaturesCollection featuresCollection = null;
-		ProcessingResult processingResult = new ProcessingResult(validationResult,
-				fixerResult, featuresCollection, exceptionsInProcessing);
+		ProcessingResult processingResult = new ProcessingResult(config);
 
 		PDFAValidator validator;
 		ValidationProfile validationProfile;
@@ -59,48 +55,82 @@ public class ProcessorImpl implements Processor {
 			validationProfile = profileFromConfig(config);
 		} catch (JAXBException e) {
 			LOGGER.error("Error in parsing profile XML", e);
-			exceptionsInProcessing.add(e);
-			return processingResult;
+			processingResult.getErrorMessages().add(
+					"Error in parsing profile from XML: " + e.getMessage());
+			processingResult.setErrorInValidation();
+			processingResult.setErrorInMetadataFixer();
+			validationProfile = Profiles.defaultProfile();
 		} catch (IOException e) {
 			LOGGER.error("Error in reading profile from disc", e);
-			exceptionsInProcessing.add(e);
-			return processingResult;
+			processingResult.getErrorMessages().add(
+					"Error in reading profile from disc: " + e.getMessage());
+			processingResult.setErrorInValidation();
+			processingResult.setErrorInMetadataFixer();
+			validationProfile = Profiles.defaultProfile();
 		}
 		validator = (validationProfile == Profiles.defaultProfile())
 				? null : Validators.createValidator(validationProfile,
 				logPassed(config), config.getMaxNumberOfFailedChecks());
 		long startTimeOfValidation = System.currentTimeMillis();
-
 		try (ModelParser toValidate = new ModelParser(pdfFileStream,
 				validationProfile.getPDFAFlavour())) {
+
 			if(config.getProcessingType().isValidating()) {
 				if (validator != null) {
-					validationResult = validator.validate(toValidate);
-					processingResult.setValidationResult(validationResult);
-					if (config.isFixMetadata()) {
-						fixerResult = fixMetadata(validationResult, toValidate,
-								fileDetails.getName(), config);
-						processingResult.setMetadataFixerResult(fixerResult);
+					try {
+						validationResult = validator.validate(toValidate);
+						if (!validationResult.isCompliant()) {
+							processingResult.setValidationSummary(
+									ProcessingResult.ValidationSummary.FILE_NOT_COMPLIANT);
+						}
+					} catch (IOException | ValidationException e) {
+						LOGGER.error("Error in validation", e);
+						processingResult.setErrorInValidation();
+						processingResult.setErrorInMetadataFixer();
+						processingResult.getErrorMessages().add(
+								"Error in validation: " + e.getMessage());
+					}
+
+					if (config.isFixMetadata() && validationResult != null) {
+						try {
+							fixerResult = fixMetadata(validationResult, toValidate,
+									fileDetails.getName(), config);
+						} catch (IOException e) {
+							LOGGER.error("Error in fixing metadata", e);
+							processingResult.setErrorInMetadataFixer();
+							processingResult.getErrorMessages().add(
+									"Error in fixing metadata: " + e.getMessage());
+						}
 					}
 				}
 			}
 			if (config.getProcessingType().isFeatures()) {
-				featuresCollection = PBFeatureParser
-						.getFeaturesCollection(toValidate.getPDDocument());
-				processingResult.setFeaturesCollection(featuresCollection);
+				try {
+					featuresCollection = PBFeatureParser
+							.getFeaturesCollection(toValidate.getPDDocument());
+				} catch (Exception e) {
+					LOGGER.error("Error in extracting features", e);
+					processingResult.setErrorInFeatures();
+					processingResult.getErrorMessages().add("Error in feature extraction: "
+							+ e.getMessage());
+				}
 			}
 		} catch (InvalidPasswordException e) {
 			LOGGER.error("Error: " + fileDetails.getName() + " is an encrypted PDF file.", e);
-			exceptionsInProcessing.add(e);
-			return processingResult;
+			processingResult.setErrorInValidation();
+			processingResult.setErrorInMetadataFixer();
+			processingResult.setErrorInFeatures();
+			processingResult.getErrorMessages().add(
+					"Invalid password for reading encrypted PDF file: " + e.getMessage());
+			return processingResult;	//TODO: do we return here?
 		} catch (IOException e) {
 			LOGGER.error("Error: " + fileDetails.getName() + " is not a PDF format file.", e);
-			exceptionsInProcessing.add(e);
-			return processingResult;
-		} catch (ValidationException e) {
-			LOGGER.error("Exception raised while validating " + fileDetails.getName(), e);
-			exceptionsInProcessing.add(e);
-			return processingResult;
+			processingResult.setErrorInValidation();
+			processingResult.setErrorInMetadataFixer();
+			processingResult.setErrorInFeatures();
+			processingResult.getErrorMessages().add(
+					"Error in reading PDF file: " + e.getMessage());
+			return processingResult; 	//TODO: do we return here?
 		}
 		long endTimeOfValidation = System.currentTimeMillis();
 
@@ -157,21 +187,26 @@ public class ProcessorImpl implements Processor {
 					CliReport.toXml(report, reportOutputStream, Boolean.TRUE);
 					break;
 				default:
-					exceptionsInProcessing.add(new IllegalArgumentException("Invalid report type"));
-					return processingResult;
+					//TODO: do we need to do something here?
 			}
 		} catch (IOException e) {
 			LOGGER.error("Exception raised while writing report to file", e);
-			exceptionsInProcessing.add(e);
-			return processingResult;
+			processingResult.setReportSummary(
+					ProcessingResult.ReportSummary.ERROR_IN_REPORT);
+			processingResult.getErrorMessages().add(
+					"Error in writing report to file: " + e.getMessage());
 		} catch (JAXBException e) {
 			LOGGER.error("Exception raised while converting report to XML file", e);
-			exceptionsInProcessing.add(e);
-			return processingResult;
+			processingResult.setReportSummary(
+					ProcessingResult.ReportSummary.ERROR_IN_REPORT);
+			processingResult.getErrorMessages().add(
+					"Error in generating XML report file: " + e.getMessage());
 		} catch (TransformerException e) {
 			LOGGER.error("Exception raised while converting MRR report into HTML", e);
-			exceptionsInProcessing.add(e);
-			return processingResult;
+			processingResult.setReportSummary(
+					ProcessingResult.ReportSummary.ERROR_IN_REPORT);
+			processingResult.getErrorMessages().add(
+					"Error in converting MRR report to HTML:" + e.getMessage());
 		}
 		return processingResult;
 	}
@@ -196,12 +231,13 @@ public class ProcessorImpl implements Processor {
 	private static ValidationProfile profileFromFile(final File profileFile)
 			throws JAXBException, IOException {
 		ValidationProfile profile = Profiles.defaultProfile();
-			InputStream is = new FileInputStream(profileFile);
-			profile = Profiles.profileFromXml(is);
-			if ("sha-1 hash code".equals(profile.getHexSha1Digest())) {
-				return Profiles.defaultProfile();
-			}
-			return profile;
+		InputStream is = new FileInputStream(profileFile);
+		profile = Profiles.profileFromXml(is);
+		if ("sha-1 hash code".equals(profile.getHexSha1Digest())) {
+			return Profiles.defaultProfile();
+		}
+		is.close();
+		return profile;
 	}
 
 	private MetadataFixerResult fixMetadata(ValidationResult info,
@@ -230,14 +266,8 @@ public class ProcessorImpl implements Processor {
 						resFile = FileGenerator.createOutputFile(new File(fileName),
 								config.getMetadataFixerPrefix());
 					}
-
-					try {
-						Files.copy(tempFile.toPath(), resFile.toPath());
-						flag = false;
-					} catch (FileAlreadyExistsException e) {
-						LOGGER.error("Exception in copying temp file, file already exists", e);
-						exceptionsInProcessing.add(e);
-					}
+					Files.copy(tempFile.toPath(), resFile.toPath());
+					flag = false;
 				}
 			}
 			return fixerResult;

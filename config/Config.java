@@ -3,7 +3,6 @@ package org.verapdf.processor.config;
 import org.apache.log4j.Logger;
 import org.verapdf.metadata.fixer.utils.MetadataFixerConstants;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.validation.ValidationProfile;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -25,76 +24,6 @@ import java.nio.file.Paths;
 
 @XmlRootElement(name = "config")
 public final class Config {
-
-	private static class PathAdapter extends XmlAdapter<String, Path> {
-
-		@Override
-		public Path unmarshal(String v) throws Exception {
-			Path path = Paths.get(new URI(v));
-			return v == null? Paths.get("") : path.toAbsolutePath();
-		}
-
-		@Override
-		public String marshal(Path v) throws Exception {
-			return v.toString().equals("") ?
-					null : v.toAbsolutePath().toUri().toString();
-		}
-	}
-
-	private static class ProcessingTypeAdapter extends XmlAdapter<String, ProcessingType> {
-
-		private final Logger LOGGER = Logger.getLogger(ProcessingTypeAdapter.class);
-		@Override
-		public ProcessingType unmarshal(String v) throws Exception {
-			try {
-				return ProcessingType.fromString(v);
-			}
-			catch(IllegalArgumentException e) {
-				LOGGER.error("Can't construct ProcessingType from string \"" + v + "\", setting ProcessingType to default", e);
-			}
-			return Config.DEFAULT_PROCESSING_TYPE;
-		}
-
-		@Override
-		public String marshal(ProcessingType v) throws Exception {
-			return v.toString();
-		}
-	}
-
-	private static class FormatOptionAdapter extends XmlAdapter<String, FormatOption> {
-
-		@Override
-		public FormatOption unmarshal(String v) throws Exception {
-			return FormatOption.fromOption(v);
-		}
-
-		@Override
-		public String marshal(FormatOption v) throws Exception {
-			return v.toString();
-		}
-	}
-
-	/*private static class ValidationProfilePathAdapter extends XmlAdapter<String, Path> {
-
-		@Override
-		public Path unmarshal(String v) throws Exception {
-			if(v == null) {
-				return null;
-			} else {
-				Path path = Paths.get(new URI(v));
-				return path.toAbsolutePath();
-			}
-		}
-
-		@Override
-		public String marshal(Path v) throws Exception {
-			if(v == null) {
-				return null;
-			} else {
-				return v.toAbsolutePath().toUri().toString();
-			}
-		}
-	}*/
 
 	private static class FlavourAdapter extends XmlAdapter<String, PDFAFlavour> {
 
@@ -522,7 +451,7 @@ public final class Config {
 			return true;	// If we chose some path and then decided to use flavour
 		}
 		File f = path.toFile();
-		return path.toString().isEmpty() || (f.isFile() && f.canRead());	// TODO : Haven't I forgot something?
+		return path.toString().isEmpty() || (f.isFile() && f.canRead());
 	}
 
 	/**
@@ -538,5 +467,53 @@ public final class Config {
 			}
 		}
 		return true;
+	}
+
+	private static class PathAdapter extends XmlAdapter<String, Path> {
+
+		@Override
+		public Path unmarshal(String v) throws Exception {
+			Path path = Paths.get(new URI(v));
+			return v == null? Paths.get("") : path.toAbsolutePath();
+		}
+
+		@Override
+		public String marshal(Path v) throws Exception {
+			return v.toString().equals("") ?
+					null : v.toAbsolutePath().toUri().toString();
+		}
+	}
+
+	private static class ProcessingTypeAdapter extends XmlAdapter<String, ProcessingType> {
+
+		private final Logger LOGGER = Logger.getLogger(ProcessingTypeAdapter.class);
+		@Override
+		public ProcessingType unmarshal(String v) throws Exception {
+			try {
+				return ProcessingType.fromString(v);
+			}
+			catch(IllegalArgumentException e) {
+				LOGGER.error("Can't construct ProcessingType from string \"" + v + "\", setting ProcessingType to default", e);
+			}
+			return Config.DEFAULT_PROCESSING_TYPE;
+		}
+
+		@Override
+		public String marshal(ProcessingType v) throws Exception {
+			return v.toString();
+		}
+	}
+
+	private static class FormatOptionAdapter extends XmlAdapter<String, FormatOption> {
+
+		@Override
+		public FormatOption unmarshal(String v) throws Exception {
+			return FormatOption.fromOption(v);
+		}
+
+		@Override
+		public String marshal(FormatOption v) throws Exception {
+			return v.toString();
+		}
 	}
 }
