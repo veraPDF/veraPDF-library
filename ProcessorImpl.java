@@ -40,54 +40,91 @@ public class ProcessorImpl implements Processor {
 
 	private static final Logger LOGGER = Logger.getLogger(ProcessorImpl.class);
 
+	private ProcessingResult processingResult;
+	
+	void setUnsuccessfulValidation() {
+		if(this.processingResult.getValidationSummary() !=
+				ProcessingResult.ValidationSummary.VALIDATION_DISABLED) {
+			this.processingResult.setValidationSummary(
+					ProcessingResult.ValidationSummary.ERROR_IN_VALIDATION);
+		}
+	}
+
+	void setUnsuccessfulMetadataFixing() {
+		if(this.processingResult.getMetadataFixerSummary() !=
+				ProcessingResult.MetadataFixingSummary.FIXING_DISABLED) {
+			this.processingResult.setMetadataFixerSummary(
+					ProcessingResult.MetadataFixingSummary.ERROR_IN_FIXING);
+		}
+	}
+
+	void setUnsuccessfulFeatureExtracting() {
+		if(this.processingResult.getFeaturesSummary() !=
+				ProcessingResult.FeaturesSummary.FEATURES_DISABLED) {
+			this.processingResult.setFeaturesSummary(
+					ProcessingResult.FeaturesSummary.ERROR_IN_FEATURES
+			);
+		}
+	}
+	
 	@Override
 	public ProcessingResult validate(InputStream pdfFileStream, ItemDetails fileDetails,
 						 Config config, OutputStream reportOutputStream) {
 		ValidationResult validationResult = null;
 		MetadataFixerResult fixerResult = null;
 		FeaturesCollection featuresCollection = null;
-		ProcessingResult processingResult = new ProcessingResult(config);
-
+		this.processingResult = new ProcessingResult(config);
 		PDFAValidator validator;
 		ValidationProfile validationProfile;
 
-		try {
-			validationProfile = profileFromConfig(config);
-		} catch (JAXBException e) {
-			LOGGER.error("Error in parsing profile XML", e);
-			processingResult.getErrorMessages().add(
-					"Error in parsing profile from XML: " + e.getMessage());
-			processingResult.setErrorInValidation();
-			processingResult.setErrorInMetadataFixer();
-			validationProfile = Profiles.defaultProfile();
-		} catch (IOException e) {
-			LOGGER.error("Error in reading profile from disc", e);
-			processingResult.getErrorMessages().add(
-					"Error in reading profile from disc: " + e.getMessage());
-			processingResult.setErrorInValidation();
-			processingResult.setErrorInMetadataFixer();
-			validationProfile = Profiles.defaultProfile();
+		long startTimeOfProcessing = System.currentTimeMillis();
+		if(config.getProcessingType().isValidating()) {
+			try {
+				validationProfile = profileFromConfig(config);
+			} catch (JAXBException e) {
+				LOGGER.error("Error in parsing profile XML", e);
+				this.processingResult.addErrorMessage(
+						"Error in parsing profile from XML: " + e.getMessage());
+				setUnsuccessfulValidation();
+				if(config.isFixMetadata()) {
+					setUnsuccessfulMetadataFixing();
+				}
+				validationProfile = Profiles.defaultProfile();
+			} catch (IOException e) {
+				LOGGER.error("Error in reading profile from disc", e);
+				this.processingResult.addErrorMessage(
+						"Error in reading profile from disc: " + e.getMessage());
+				setUnsuccessfulValidation();
+				if(config.isFixMetadata()) {
+					setUnsuccessfulMetadataFixing();
+				}
+				validationProfile = Profiles.defaultProfile();
+			}
+			validator = (validationProfile.equals(Profiles.defaultProfile()))
+					? null : Validators.createValidator(validationProfile,
+					logPassed(config), config.getMaxNumberOfFailedChecks());
+		} else {
+			validationProfile = null;
+			validator = null;
 		}
-		validator = (validationProfile == Profiles.defaultProfile())
-				? null : Validators.createValidator(validationProfile,
-				logPassed(config), config.getMaxNumberOfFailedChecks());
-		long startTimeOfValidation = System.currentTimeMillis();
+
 		try (ModelParser toValidate = new ModelParser(pdfFileStream,
 				validationProfile.getPDFAFlavour())) {
-
 			if(config.getProcessingType().isValidating()) {
 				if (validator != null) {
 					try {
 						validationResult = validator.validate(toValidate);
 						if (!validationResult.isCompliant()) {
-							processingResult.setValidationSummary(
-									ProcessingResult.ValidationSummary.FILE_NOT_COMPLIANT);
+							this.processingResult.setValidationSummary(
+									ProcessingResult.ValidationSummary.FILE_NOT_VALID);
 						}
 					} catch (IOException | ValidationException e) {
 						LOGGER.error("Error in validation", e);
-						processingResult.setErrorInValidation();
-						processingResult.setErrorInMetadataFixer();
-						processingResult.getErrorMessages().add(
+						setUnsuccessfulValidation();
+						if(config.isFixMetadata()) {
+							setUnsuccessfulMetadataFixing();
+						}
+						this.processingResult.addErrorMessage(
 								"Error in validation: " + e.getMessage());
 					}
 
@@ -97,10 +134,20 @@ public class ProcessorImpl implements Processor {
 									fileDetails.getName(), config);
 						} catch (IOException e) {
 							LOGGER.error("Error in fixing metadata", e);
-							processingResult.setErrorInMetadataFixer();
-							processingResult.getErrorMessages().add(
+							if(config.isFixMetadata()) {
+								setUnsuccessfulMetadataFixing();
+							}
+							this.processingResult.addErrorMessage(
 									"Error in fixing metadata: " + e.getMessage());
 						}
+					}
+				} else {
+					LOGGER.error("Error in creating validation profile");
+					this.processingResult.addErrorMessage(
+							"Error in creating validation profile");
+					setUnsuccessfulValidation();
+					if(config.isFixMetadata()) {
+						setUnsuccessfulMetadataFixing();
 					}
 				}
 			}
@@ -110,29 +157,29 @@ public class ProcessorImpl implements Processor {
 							.getFeaturesCollection(toValidate.getPDDocument());
 				} catch (Exception e) {
 					LOGGER.error("Error in extracting features", e);
-					processingResult.setErrorInFeatures();
-					processingResult.getErrorMessages().add("Error in feature extraction: "
+					setUnsuccessfulFeatureExtracting();
+					this.processingResult.addErrorMessage("Error in feature extraction: "
 							+ e.getMessage());
 				}
 			}
 		} catch (InvalidPasswordException e) {
 			LOGGER.error("Error: " + fileDetails.getName() + " is an encrypted PDF file.", e);
-			processingResult.setErrorInValidation();
-			processingResult.setErrorInMetadataFixer();
-			processingResult.setErrorInFeatures();
-			processingResult.getErrorMessages().add(
+			setUnsuccessfulValidation();
+			setUnsuccessfulMetadataFixing();
+			setUnsuccessfulFeatureExtracting();
+			this.processingResult.addErrorMessage(
 					"Invalid password for reading encrypted PDF file: " + e.getMessage());
-			return processingResult;	//TODO: do we return here?
+			return this.processingResult;
 		} catch (IOException e) {
 			LOGGER.error("Error: " + fileDetails.getName() + " is not a PDF format file.", e);
-			processingResult.setErrorInValidation();
-			processingResult.setErrorInMetadataFixer();
-			processingResult.setErrorInFeatures();
-			processingResult.getErrorMessages().add(
+			setUnsuccessfulValidation();
+			setUnsuccessfulMetadataFixing();
+			setUnsuccessfulFeatureExtracting();
+			this.processingResult.addErrorMessage(
 					"Error in reading PDF file: " + e.getMessage());
-			return processingResult; 	//TODO: do we return here?
+			return this.processingResult;
 		}
-		long endTimeOfValidation = System.currentTimeMillis();
+			long endTimeOfProcessing = System.currentTimeMillis();
 
 		try {
 			switch (config.getReportType()) {
@@ -164,7 +211,7 @@ public class ProcessorImpl implements Processor {
 							config.isShowPassedRules(),
 							config.getMaxNumberOfDisplayedFailedChecks(),
 							fixerResult, featuresCollection,
-							endTimeOfValidation - startTimeOfValidation);
+							endTimeOfProcessing - startTimeOfProcessing);
 					if (config.getReportType() == FormatOption.MRR) {
 						MachineReadableReport.toXml(machineReadableReport,
 								reportOutputStream, Boolean.TRUE);
@@ -187,28 +234,28 @@ public class ProcessorImpl implements Processor {
 					CliReport.toXml(report, reportOutputStream, Boolean.TRUE);
 					break;
 				default:
-					//TODO: do we need to do something here?
+					throw new IllegalStateException("Wrong or unknown report type.");
 			}
 		} catch (IOException e) {
 			LOGGER.error("Exception raised while writing report to file", e);
-			processingResult.setReportSummary(
+			this.processingResult.setReportSummary(
 					ProcessingResult.ReportSummary.ERROR_IN_REPORT);
-			processingResult.getErrorMessages().add(
+			this.processingResult.addErrorMessage(
 					"Error in writing report to file: " + e.getMessage());
 		} catch (JAXBException e) {
 			LOGGER.error("Exception raised while converting report to XML file", e);
-			processingResult.setReportSummary(
+			this.processingResult.setReportSummary(
 					ProcessingResult.ReportSummary.ERROR_IN_REPORT);
-			processingResult.getErrorMessages().add(
+			this.processingResult.addErrorMessage(
 					"Error in generating XML report file: " + e.getMessage());
 		} catch (TransformerException e) {
 			LOGGER.error("Exception raised while converting MRR report into HTML", e);
-			processingResult.setReportSummary(
+			this.processingResult.setReportSummary(
 					ProcessingResult.ReportSummary.ERROR_IN_REPORT);
-			processingResult.getErrorMessages().add(
+			this.processingResult.addErrorMessage(
 					"Error in converting MRR report to HTML:" + e.getMessage());
 		}
-		return processingResult;
+		return this.processingResult;
 	}
 
 	private static boolean logPassed(final Config config) {
@@ -218,13 +265,13 @@ public class ProcessorImpl implements Processor {
 
 	private static ValidationProfile profileFromConfig(final Config config)
 			throws JAXBException, IOException {
-		if (config.getValidationProfilePath() == null) {
+		if (config.getValidationProfile() == null) {
 			return (config.getFlavour() == PDFAFlavour.NO_FLAVOUR) ? Profiles
 					.defaultProfile() : Profiles.getVeraProfileDirectory()
 					.getValidationProfileByFlavour(config.getFlavour());
 		}
 		ValidationProfile profile = profileFromFile(
-				config.getValidationProfilePath().toFile());
+				config.getValidationProfile().toFile());
 		return profile;
 	}
 
@@ -246,7 +293,7 @@ public class ProcessorImpl implements Processor {
 											Config config) throws IOException {
 		FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(
 				parser.getPDDocument(), info);
-		Path path = config.getFixMetadataPathFolder();
+		Path path = config.getFixMetadataFolder();
 		File tempFile = File.createTempFile("fixedTempFile", ".pdf");
 		tempFile.deleteOnExit();
 		try (OutputStream tempOutput = new BufferedOutputStream(
@@ -260,7 +307,7 @@ public class ProcessorImpl implements Processor {
 				boolean flag = true;
 				while (flag) {
 					if (!path.toString().trim().isEmpty()) {
-						resFile = FileGenerator.createOutputFile(config.getFixMetadataPathFolder().toFile(),
+						resFile = FileGenerator.createOutputFile(config.getFixMetadataFolder().toFile(),
 								fileName, config.getMetadataFixerPrefix());
 					} else {
 						resFile = FileGenerator.createOutputFile(new File(fileName),

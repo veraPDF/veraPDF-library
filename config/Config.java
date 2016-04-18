@@ -25,18 +25,7 @@ import java.nio.file.Paths;
 @XmlRootElement(name = "config")
 public final class Config {
 
-	private static class FlavourAdapter extends XmlAdapter<String, PDFAFlavour> {
 
-		@Override
-		public PDFAFlavour unmarshal(String v) throws Exception {
-			return PDFAFlavour.fromString(v);
-		}
-
-		@Override
-		public String marshal(PDFAFlavour v) throws Exception {
-			return v.toString();
-		}
-	}
 
 	private boolean showPassedRules;
 	private int maxNumberOfFailedChecks;
@@ -158,12 +147,17 @@ public final class Config {
 		return metadataFixerPrefix;
 	}
 
+	@XmlElement
+	@XmlJavaTypeAdapter(PathAdapter.class)
+	private Path getFixMetadataPathFolder() {
+		return fixMetadataPathFolder.toString().equals("") ?
+				null : fixMetadataPathFolder;
+	}
+
 	/**
 	 * @return path to the folder in which fixed file will be placed
 	 */
-	@XmlElement
-	@XmlJavaTypeAdapter(PathAdapter.class)
-	public Path getFixMetadataPathFolder() {
+	public Path getFixMetadataFolder() {
 		return fixMetadataPathFolder;
 	}
 
@@ -197,13 +191,21 @@ public final class Config {
 		return reportType;
 	}
 
+
+	@XmlElement
+	@XmlJavaTypeAdapter(PathAdapter.class)
+	private Path getValidationProfilePath() {
+		return validationProfilePath.toString().equals("") ?
+				null : validationProfilePath;
+	}
+
 	/**
 	 * @return path to validation profile to be used. If returned value
 	 * is null, then validation flavour is processed
 	 */
-	@XmlElement
-	@XmlJavaTypeAdapter(PathAdapter.class)
-	public Path getValidationProfilePath() { return validationProfilePath; }
+	public Path getValidationProfile() {
+		return validationProfilePath;
+	}
 
 	/**
 	 * @return validation flavour to be used
@@ -474,13 +476,12 @@ public final class Config {
 		@Override
 		public Path unmarshal(String v) throws Exception {
 			Path path = Paths.get(new URI(v));
-			return v == null? Paths.get("") : path.toAbsolutePath();
+			return path.toAbsolutePath();
 		}
 
 		@Override
 		public String marshal(Path v) throws Exception {
-			return v.toString().equals("") ?
-					null : v.toAbsolutePath().toUri().toString();
+			return v.toAbsolutePath().toUri().toString();
 		}
 	}
 
@@ -513,6 +514,19 @@ public final class Config {
 
 		@Override
 		public String marshal(FormatOption v) throws Exception {
+			return v.toString();
+		}
+	}
+
+	private static class FlavourAdapter extends XmlAdapter<String, PDFAFlavour> {
+
+		@Override
+		public PDFAFlavour unmarshal(String v) throws Exception {
+			return PDFAFlavour.fromString(v);
+		}
+
+		@Override
+		public String marshal(PDFAFlavour v) throws Exception {
 			return v.toString();
 		}
 	}

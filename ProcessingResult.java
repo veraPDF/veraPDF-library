@@ -23,11 +23,11 @@ public class ProcessingResult {
 
 	ProcessingResult(Config config) {
 		this.validationSummary = config.getProcessingType().isValidating() ?
-				ValidationSummary.VALIDATION_SUCCEED : ValidationSummary.NO_VALIDATION;
+				ValidationSummary.FILE_VALID : ValidationSummary.VALIDATION_DISABLED;
 		this.metadataFixerSummary = config.isFixMetadata() ?
-				MetadataFixingSummary.FIXING_SUCCEED : MetadataFixingSummary.NO_FIXING;
+				MetadataFixingSummary.FIXING_SUCCEED : MetadataFixingSummary.FIXING_DISABLED;
 		this.featuresSummary = config.getProcessingType().isFeatures() ?
-				FeaturesSummary.FEATURES_SUCCEED : FeaturesSummary.NO_FEATURES;
+				FeaturesSummary.FEATURES_SUCCEED : FeaturesSummary.FEATURES_DISABLED;
 		this.reportSummary = ReportSummary.REPORT_SECCEED;
 		this.errorMessages = new ArrayList<>();
 	}
@@ -76,41 +76,35 @@ public class ProcessingResult {
 		this.reportSummary = reportSummary;
 	}
 
-	void setErrorInValidation() {
-		if(validationSummary != ValidationSummary.NO_VALIDATION) {
-			validationSummary = ValidationSummary.ERROR_IN_VALIDATION;
-		}
+	void setMetadataFixerSummary(MetadataFixingSummary metadataFixerSummary) {
+		this.metadataFixerSummary = metadataFixerSummary;
 	}
 
-	void setErrorInMetadataFixer() {
-		if(metadataFixerSummary != MetadataFixingSummary.NO_FIXING) {
-			metadataFixerSummary = MetadataFixingSummary.ERROR_IN_FIXING;
-		}
+	void setFeaturesSummary(FeaturesSummary featuresSummary) {
+		this.featuresSummary = featuresSummary;
 	}
 
-	void setErrorInFeatures() {
-		if(featuresSummary != FeaturesSummary.NO_FEATURES) {
-			featuresSummary = FeaturesSummary.ERROR_IN_FEATURES;
-		}
+	void addErrorMessage(String message) {
+		errorMessages.add(message);
 	}
 
 	public enum ValidationSummary {
-		VALIDATION_SUCCEED,
-		FILE_NOT_COMPLIANT,
+		FILE_VALID,
+		FILE_NOT_VALID,
 		ERROR_IN_VALIDATION,
-		NO_VALIDATION
+		VALIDATION_DISABLED
 	}
 
 	public enum MetadataFixingSummary {
 		FIXING_SUCCEED,
 		ERROR_IN_FIXING,
-		NO_FIXING
+		FIXING_DISABLED
 	}
 
 	public enum FeaturesSummary {
 		FEATURES_SUCCEED,
 		ERROR_IN_FEATURES,
-		NO_FEATURES
+		FEATURES_DISABLED
 	}
 
 	public enum ReportSummary {
