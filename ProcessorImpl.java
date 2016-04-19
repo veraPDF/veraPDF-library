@@ -265,7 +265,7 @@ public class ProcessorImpl implements Processor {
 
 	private static ValidationProfile profileFromConfig(final Config config)
 			throws JAXBException, IOException {
-		if (config.getValidationProfile() == null) {
+		if (config.getValidationProfile().toAbsolutePath().toString().equals("")) {
 			return (config.getFlavour() == PDFAFlavour.NO_FLAVOUR) ? Profiles
 					.defaultProfile() : Profiles.getVeraProfileDirectory()
 					.getValidationProfileByFlavour(config.getFlavour());
