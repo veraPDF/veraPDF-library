@@ -28,7 +28,7 @@ public class ProcessingResult {
 				MetadataFixingSummary.FIXING_SUCCEED : MetadataFixingSummary.FIXING_DISABLED;
 		this.featuresSummary = config.getProcessingType().isFeatures() ?
 				FeaturesSummary.FEATURES_SUCCEED : FeaturesSummary.FEATURES_DISABLED;
-		this.reportSummary = ReportSummary.REPORT_SECCEED;
+		this.reportSummary = ReportSummary.REPORT_SUCCEED;
 		this.errorMessages = new ArrayList<>();
 	}
 
@@ -108,7 +108,7 @@ public class ProcessingResult {
 	}
 
 	public enum ReportSummary {
-		REPORT_SECCEED,
+		REPORT_SUCCEED,
 		ERROR_IN_REPORT
 	}
 }
