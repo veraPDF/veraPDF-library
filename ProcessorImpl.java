@@ -42,31 +42,6 @@ public class ProcessorImpl implements Processor {
 
 	private ProcessingResult processingResult;
 	
-	void setUnsuccessfulValidation() {
-		if(this.processingResult.getValidationSummary() !=
-				ProcessingResult.ValidationSummary.VALIDATION_DISABLED) {
-			this.processingResult.setValidationSummary(
-					ProcessingResult.ValidationSummary.ERROR_IN_VALIDATION);
-		}
-	}
-
-	void setUnsuccessfulMetadataFixing() {
-		if(this.processingResult.getMetadataFixerSummary() !=
-				ProcessingResult.MetadataFixingSummary.FIXING_DISABLED) {
-			this.processingResult.setMetadataFixerSummary(
-					ProcessingResult.MetadataFixingSummary.ERROR_IN_FIXING);
-		}
-	}
-
-	void setUnsuccessfulFeatureExtracting() {
-		if(this.processingResult.getFeaturesSummary() !=
-				ProcessingResult.FeaturesSummary.FEATURES_DISABLED) {
-			this.processingResult.setFeaturesSummary(
-					ProcessingResult.FeaturesSummary.ERROR_IN_FEATURES
-			);
-		}
-	}
-	
 	@Override
 	public ProcessingResult validate(InputStream pdfFileStream, ItemDetails fileDetails,
 						 Config config, OutputStream reportOutputStream) {
@@ -86,25 +61,21 @@ public class ProcessorImpl implements Processor {
 				this.processingResult.addErrorMessage(
 						"Error in parsing profile from XML: " + e.getMessage());
 				setUnsuccessfulValidation();
-				if(config.isFixMetadata()) {
-					setUnsuccessfulMetadataFixing();
-				}
+				setUnsuccessfulMetadataFixing();
 				validationProfile = Profiles.defaultProfile();
 			} catch (IOException e) {
 				LOGGER.error("Error in reading profile from disc", e);
 				this.processingResult.addErrorMessage(
 						"Error in reading profile from disc: " + e.getMessage());
 				setUnsuccessfulValidation();
-				if(config.isFixMetadata()) {
-					setUnsuccessfulMetadataFixing();
-				}
+				setUnsuccessfulMetadataFixing();
 				validationProfile = Profiles.defaultProfile();
 			}
 			validator = (validationProfile.equals(Profiles.defaultProfile()))
 					? null : Validators.createValidator(validationProfile,
 					logPassed(config), config.getMaxNumberOfFailedChecks());
 		} else {
-			validationProfile = null;
+			validationProfile = Profiles.defaultProfile();
 			validator = null;
 		}
 
@@ -121,9 +92,7 @@ public class ProcessorImpl implements Processor {
 					} catch (IOException | ValidationException e) {
 						LOGGER.error("Error in validation", e);
 						setUnsuccessfulValidation();
-						if(config.isFixMetadata()) {
-							setUnsuccessfulMetadataFixing();
-						}
+						setUnsuccessfulMetadataFixing();
 						this.processingResult.addErrorMessage(
 								"Error in validation: " + e.getMessage());
 					}
@@ -134,9 +103,7 @@ public class ProcessorImpl implements Processor {
 									fileDetails.getName(), config);
 						} catch (IOException e) {
 							LOGGER.error("Error in fixing metadata", e);
-							if(config.isFixMetadata()) {
-								setUnsuccessfulMetadataFixing();
-							}
+							setUnsuccessfulMetadataFixing();
 							this.processingResult.addErrorMessage(
 									"Error in fixing metadata: " + e.getMessage());
 						}
@@ -146,9 +113,7 @@ public class ProcessorImpl implements Processor {
 					this.processingResult.addErrorMessage(
 							"Error in creating validation profile");
 					setUnsuccessfulValidation();
-					if(config.isFixMetadata()) {
-						setUnsuccessfulMetadataFixing();
-					}
+					setUnsuccessfulMetadataFixing();
 				}
 			}
 			if (config.getProcessingType().isFeatures()) {
@@ -263,9 +228,17 @@ public class ProcessorImpl implements Processor {
 				|| config.isShowPassedRules();
 	}
 
-	private static ValidationProfile profileFromConfig(final Config config)
+	/**
+	 * Constructs {@link org.verapdf.pdfa.validation.ValidationProfile} from
+	 * given {@link org.verapdf.processor.config.Config}.
+	 * @param config
+	 * @return
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	public static ValidationProfile profileFromConfig(final Config config)
 			throws JAXBException, IOException {
-		if (config.getValidationProfile().toAbsolutePath().toString().equals("")) {
+		if (config.getValidationProfile().toString().equals("")) {
 			return (config.getFlavour() == PDFAFlavour.NO_FLAVOUR) ? Profiles
 					.defaultProfile() : Profiles.getVeraProfileDirectory()
 					.getValidationProfileByFlavour(config.getFlavour());
@@ -280,10 +253,10 @@ public class ProcessorImpl implements Processor {
 		ValidationProfile profile = Profiles.defaultProfile();
 		InputStream is = new FileInputStream(profileFile);
 		profile = Profiles.profileFromXml(is);
+		is.close();
 		if ("sha-1 hash code".equals(profile.getHexSha1Digest())) {
 			return Profiles.defaultProfile();
 		}
-		is.close();
 		return profile;
 	}
 
@@ -318,6 +291,31 @@ public class ProcessorImpl implements Processor {
 				}
 			}
 			return fixerResult;
+		}
+	}
+
+	void setUnsuccessfulValidation() {
+		if(this.processingResult.getValidationSummary() !=
+				ProcessingResult.ValidationSummary.VALIDATION_DISABLED) {
+			this.processingResult.setValidationSummary(
+					ProcessingResult.ValidationSummary.ERROR_IN_VALIDATION);
+		}
+	}
+
+	void setUnsuccessfulMetadataFixing() {
+		if(this.processingResult.getMetadataFixerSummary() !=
+				ProcessingResult.MetadataFixingSummary.FIXING_DISABLED) {
+			this.processingResult.setMetadataFixerSummary(
+					ProcessingResult.MetadataFixingSummary.ERROR_IN_FIXING);
+		}
+	}
+
+	void setUnsuccessfulFeatureExtracting() {
+		if(this.processingResult.getFeaturesSummary() !=
+				ProcessingResult.FeaturesSummary.FEATURES_DISABLED) {
+			this.processingResult.setFeaturesSummary(
+					ProcessingResult.FeaturesSummary.ERROR_IN_FEATURES
+			);
 		}
 	}
 }
