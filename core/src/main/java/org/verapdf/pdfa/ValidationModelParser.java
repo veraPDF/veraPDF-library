@@ -4,6 +4,7 @@
 package org.verapdf.pdfa;
 
 import org.verapdf.model.coslayer.CosDocument;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.io.IOException;
 
@@ -22,4 +23,9 @@ public interface ValidationModelParser {
 	 *                     root.
 	 */
 	public org.verapdf.model.baselayer.Object getRoot() throws IOException;
+
+	/**
+	 * @return flavour for which model has been parsed
+	 */
+	public PDFAFlavour getFlavour();
 }
