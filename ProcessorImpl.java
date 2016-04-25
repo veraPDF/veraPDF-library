@@ -29,6 +29,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
@@ -44,13 +45,15 @@ public class ProcessorImpl implements Processor {
 	
 	@Override
 	public ProcessingResult validate(InputStream pdfFileStream, ItemDetails fileDetails,
-						 Config config, OutputStream reportOutputStream) {
+									 Config config, OutputStream reportOutputStream) {
+		checkArguments(pdfFileStream, fileDetails, config, reportOutputStream);
+
 		ValidationResult validationResult = null;
 		MetadataFixerResult fixerResult = null;
 		FeaturesCollection featuresCollection = null;
 		this.processingResult = new ProcessingResult(config);
 		PDFAValidator validator;
-		ValidationProfile validationProfile;
+		ValidationProfile validationProfile = null;
 
 		long startTimeOfProcessing = System.currentTimeMillis();
 		if(config.getProcessingType().isValidating()) {
@@ -71,55 +74,56 @@ public class ProcessorImpl implements Processor {
 				setUnsuccessfulMetadataFixing();
 				validationProfile = Profiles.defaultProfile();
 			}
-			validator = (validationProfile.equals(Profiles.defaultProfile()))
-					? null : Validators.createValidator(validationProfile,
-					logPassed(config), config.getMaxNumberOfFailedChecks());
-		} else {
-			validationProfile = Profiles.defaultProfile();
-			validator = null;
 		}
 
-		try (ModelParser toValidate = new ModelParser(pdfFileStream,
-				validationProfile.getPDFAFlavour())) {
-			if(config.getProcessingType().isValidating()) {
-				if (validator != null) {
-					try {
-						validationResult = validator.validate(toValidate);
-						if (!validationResult.isCompliant()) {
-							this.processingResult.setValidationSummary(
-									ProcessingResult.ValidationSummary.FILE_NOT_VALID);
-						}
-					} catch (IOException | ValidationException e) {
-						LOGGER.error("Error in validation", e);
-						setUnsuccessfulValidation();
-						setUnsuccessfulMetadataFixing();
-						this.processingResult.addErrorMessage(
-								"Error in validation: " + e.getMessage());
-					}
+		PDFAFlavour currentFlavour = validationProfile == null ?
+				config.getFlavour() : validationProfile.getPDFAFlavour();
+		try (ModelParser parser = ModelParser.createModelWithFlavour(pdfFileStream,
+				currentFlavour)) {
 
-					if (config.isFixMetadata() && validationResult != null) {
-						try {
-							fixerResult = fixMetadata(validationResult, toValidate,
-									fileDetails.getName(), config);
-						} catch (IOException e) {
-							LOGGER.error("Error in fixing metadata", e);
-							setUnsuccessfulMetadataFixing();
-							this.processingResult.addErrorMessage(
-									"Error in fixing metadata: " + e.getMessage());
-						}
+			if (validationProfile == null) {
+				validationProfile = profileFromFlavour(parser.getFlavour());
+			}
+
+			validator = Validators.createValidator(validationProfile,
+					logPassed(config), config.getMaxNumberOfFailedChecks());
+			if(config.getProcessingType().isValidating()) {
+				try {
+					validationResult = validator.validate(parser);
+					if (!validationResult.isCompliant()) {
+						this.processingResult.setValidationSummary(
+								ProcessingResult.ValidationSummary.FILE_NOT_VALID);
 					}
-				} else {
-					LOGGER.error("Error in creating validation profile");
-					this.processingResult.addErrorMessage(
-							"Error in creating validation profile");
+				} catch (IOException | ValidationException e) {
+					LOGGER.error("Error in validation", e);
 					setUnsuccessfulValidation();
 					setUnsuccessfulMetadataFixing();
+					this.processingResult.addErrorMessage(
+							"Error in validation: " + e.getMessage());
+				}
+
+				if (config.isFixMetadata() && validationResult != null) {
+					try {
+						fixerResult = fixMetadata(validationResult, parser,
+								fileDetails.getName(), config);
+					} catch (IOException e) {
+						LOGGER.error("Error in fixing metadata", e);
+						setUnsuccessfulMetadataFixing();
+						this.processingResult.addErrorMessage(
+								"Error in fixing metadata: " + e.getMessage());
+					}
 				}
 			}
 			if (config.getProcessingType().isFeatures()) {
 				try {
+					String appHome = System.getProperty("app.home");
+					Path pluginsPath = null;
+					if (appHome != null) {
+						pluginsPath = new File(appHome, "plugins").toPath();
+					}
 					featuresCollection = PBFeatureParser
-							.getFeaturesCollection(toValidate.getPDDocument());
+							.getFeaturesCollection(parser.getPDDocument(),
+									config.isPluginsEnabled(), pluginsPath);
 				} catch (Exception e) {
 					LOGGER.error("Error in extracting features", e);
 					setUnsuccessfulFeatureExtracting();
@@ -129,17 +133,13 @@ public class ProcessorImpl implements Processor {
 			}
 		} catch (InvalidPasswordException e) {
 			LOGGER.error("Error: " + fileDetails.getName() + " is an encrypted PDF file.", e);
-			setUnsuccessfulValidation();
-			setUnsuccessfulMetadataFixing();
-			setUnsuccessfulFeatureExtracting();
+			setUnsuccessfulProcessing();
 			this.processingResult.addErrorMessage(
 					"Invalid password for reading encrypted PDF file: " + e.getMessage());
 			return this.processingResult;
 		} catch (IOException e) {
 			LOGGER.error("Error: " + fileDetails.getName() + " is not a PDF format file.", e);
-			setUnsuccessfulValidation();
-			setUnsuccessfulMetadataFixing();
-			setUnsuccessfulFeatureExtracting();
+			setUnsuccessfulProcessing();
 			this.processingResult.addErrorMessage(
 					"Error in reading PDF file: " + e.getMessage());
 			return this.processingResult;
@@ -170,9 +170,7 @@ public class ProcessorImpl implements Processor {
 				case MRR:
 				case HTML:
 					MachineReadableReport machineReadableReport = MachineReadableReport.fromValues(
-							fileDetails,
-							validator == null ? Profiles.defaultProfile()
-									: validator.getProfile(), validationResult,
+							fileDetails, validator.getProfile(), validationResult,
 							config.isShowPassedRules(),
 							config.getMaxNumberOfDisplayedFailedChecks(),
 							fixerResult, featuresCollection,
@@ -230,18 +228,17 @@ public class ProcessorImpl implements Processor {
 
 	/**
 	 * Constructs {@link org.verapdf.pdfa.validation.ValidationProfile} from
-	 * given {@link org.verapdf.processor.config.Config}.
+	 * given {@link Config}. If profile in config is passed using
+	 * {@link PDFAFlavour}, method returns null.
 	 * @param config
 	 * @return
 	 * @throws JAXBException
 	 * @throws IOException
 	 */
-	public static ValidationProfile profileFromConfig(final Config config)
+	static ValidationProfile profileFromConfig(final Config config)
 			throws JAXBException, IOException {
 		if (config.getValidationProfile().toString().equals("")) {
-			return (config.getFlavour() == PDFAFlavour.NO_FLAVOUR) ? Profiles
-					.defaultProfile() : Profiles.getVeraProfileDirectory()
-					.getValidationProfileByFlavour(config.getFlavour());
+			return null;
 		}
 		ValidationProfile profile = profileFromFile(
 				config.getValidationProfile().toFile());
@@ -294,7 +291,47 @@ public class ProcessorImpl implements Processor {
 		}
 	}
 
-	void setUnsuccessfulValidation() {
+	private ValidationProfile profileFromFlavour(PDFAFlavour flavour) {
+		ValidationProfile validationProfile = null;
+		try {
+			validationProfile = Profiles.getVeraProfileDirectory().
+					getValidationProfileByFlavour(flavour);
+		} catch (NoSuchElementException re) {
+			//TODO: remove/update next two if statements when we will cover not only B conformance for 2 and 3 parts
+			if (flavour.getPart() == PDFAFlavour.Specification.ISO_19005_2) {
+				validationProfile = Profiles.getVeraProfileDirectory().
+						getValidationProfileByFlavour(PDFAFlavour.PDFA_2_B);
+			} else if (flavour.getPart() == PDFAFlavour.Specification.ISO_19005_3) {
+				validationProfile = Profiles.getVeraProfileDirectory().
+						getValidationProfileByFlavour(PDFAFlavour.PDFA_3_B);
+			}
+			LOGGER.warn(re);
+		}
+		return validationProfile;
+	}
+
+	private void checkArguments(InputStream pdfFileStream, ItemDetails fileDetails,
+								Config config, OutputStream reportOutputStream) {
+		if(pdfFileStream == null) {
+			throw new IllegalArgumentException("PDF file stream cannot be null");
+		}
+		if(config == null) {
+			throw new IllegalArgumentException("Config cannot be null");
+		}
+		if(reportOutputStream == null) {
+			throw new IllegalArgumentException("Output stream for report cannot be null");
+		}
+		if(config.getFlavour() == PDFAFlavour.NO_FLAVOUR &&
+				config.getValidationProfile().toString().equals("") &&
+				config.getProcessingType().isValidating()) {
+			throw new IllegalArgumentException("Validation cannot be started with no chosen validation profile");
+		}
+		if(fileDetails == null) {
+			throw new IllegalArgumentException("Item details cannot be null");
+		}
+	}
+
+	private void setUnsuccessfulValidation() {
 		if(this.processingResult.getValidationSummary() !=
 				ProcessingResult.ValidationSummary.VALIDATION_DISABLED) {
 			this.processingResult.setValidationSummary(
@@ -302,7 +339,7 @@ public class ProcessorImpl implements Processor {
 		}
 	}
 
-	void setUnsuccessfulMetadataFixing() {
+	private void setUnsuccessfulMetadataFixing() {
 		if(this.processingResult.getMetadataFixerSummary() !=
 				ProcessingResult.MetadataFixingSummary.FIXING_DISABLED) {
 			this.processingResult.setMetadataFixerSummary(
@@ -310,12 +347,18 @@ public class ProcessorImpl implements Processor {
 		}
 	}
 
-	void setUnsuccessfulFeatureExtracting() {
+	private void setUnsuccessfulFeatureExtracting() {
 		if(this.processingResult.getFeaturesSummary() !=
 				ProcessingResult.FeaturesSummary.FEATURES_DISABLED) {
 			this.processingResult.setFeaturesSummary(
 					ProcessingResult.FeaturesSummary.ERROR_IN_FEATURES
 			);
 		}
+	}
+
+	private void setUnsuccessfulProcessing() {
+		setUnsuccessfulValidation();
+		setUnsuccessfulMetadataFixing();
+		setUnsuccessfulFeatureExtracting();
 	}
 }

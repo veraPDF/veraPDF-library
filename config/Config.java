@@ -25,21 +25,6 @@ import java.nio.file.Paths;
 @XmlRootElement(name = "config")
 public final class Config {
 
-
-
-	private boolean showPassedRules;
-	private int maxNumberOfFailedChecks;
-	private int maxNumberOfDisplayedFailedChecks;
-	private String metadataFixerPrefix;
-	private Path fixMetadataPathFolder;
-	private String profileWikiPath;
-	private ProcessingType processingType;
-	private boolean isFixMetadata;
-	private FormatOption reportType;
-	private Path validationProfilePath;
-	private PDFAFlavour flavour;
-	private boolean verboseCli;
-
 	private static final char[] FORBIDDEN_SYMBOLS_IN_FILE_NAME = new char[]{'\\', '/', ':', '*', '?', '\"', '<', '>', '|', '+', '\0', '%'};
 
 	public static final int DEFAULT_MAX_NUMBER_OF_FAILED_CHECKS = -1;
@@ -54,6 +39,21 @@ public final class Config {
 	public static final Path DEFAULT_VALIDATION_PROFILE_PATH = FileSystems.getDefault().getPath("");
 	public static final PDFAFlavour DEFAULT_FLAVOUR = PDFAFlavour.PDFA_1_B;
 	public static final boolean DEFAULT_VERBOSE_CLI = false;
+	public static final boolean DEFAULT_PLUGINS_ENABLED = false;
+
+	private boolean showPassedRules;
+	private int maxNumberOfFailedChecks;
+	private int maxNumberOfDisplayedFailedChecks;
+	private String metadataFixerPrefix;
+	private Path fixMetadataPathFolder;
+	private String profileWikiPath;
+	private ProcessingType processingType;
+	private boolean isFixMetadata;
+	private FormatOption reportType;
+	private Path validationProfilePath;
+	private PDFAFlavour flavour;
+	private boolean verboseCli;
+	private boolean pluginsEnabled;
 
 	@Override
 	public boolean equals(Object o) {
@@ -113,6 +113,7 @@ public final class Config {
 		this.validationProfilePath = DEFAULT_VALIDATION_PROFILE_PATH;
 		this.flavour = DEFAULT_FLAVOUR;
 		this.verboseCli = DEFAULT_VERBOSE_CLI;
+		this.pluginsEnabled = DEFAULT_PLUGINS_ENABLED;
 	}
 
 	/**
@@ -219,6 +220,12 @@ public final class Config {
 	 */
 	@XmlElement
 	public boolean isVerboseCli() { return verboseCli; }
+
+	/**
+	 * @return true if plugins should be used in feature extracting
+	 */
+	@XmlElement
+	public boolean isPluginsEnabled() { return pluginsEnabled; }
 
 	/**
 	 *	Converts Config to XML,
@@ -427,6 +434,15 @@ public final class Config {
 	 * @param verboseCli true if cli text report should be verbose
 	 */
 	public void setVerboseCli(boolean verboseCli) { this.verboseCli = verboseCli; }
+
+	/**
+	 * Changes settings parameters
+	 *
+	 * @param pluginsEnabled true if plugins should be used in feature extracting
+	 */
+	public void setPluginsEnabled(boolean pluginsEnabled) {
+		this.pluginsEnabled = pluginsEnabled;
+	}
 
 	/**
 	 * Checks is the parameter path a valid for saving fixed file
