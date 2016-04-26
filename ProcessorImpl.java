@@ -57,50 +57,21 @@ public class ProcessorImpl implements Processor {
 
 		long startTimeOfProcessing = System.currentTimeMillis();
 		if(config.getProcessingType().isValidating()) {
-			try {
 				validationProfile = profileFromConfig(config);
-			} catch (JAXBException e) {
-				LOGGER.error("Error in parsing profile XML", e);
-				this.processingResult.addErrorMessage(
-						"Error in parsing profile from XML: " + e.getMessage());
-				setUnsuccessfulValidation();
-				setUnsuccessfulMetadataFixing();
-				validationProfile = Profiles.defaultProfile();
-			} catch (IOException e) {
-				LOGGER.error("Error in reading profile from disc", e);
-				this.processingResult.addErrorMessage(
-						"Error in reading profile from disc: " + e.getMessage());
-				setUnsuccessfulValidation();
-				setUnsuccessfulMetadataFixing();
-				validationProfile = Profiles.defaultProfile();
-			}
 		}
-
 		PDFAFlavour currentFlavour = validationProfile == null ?
 				config.getFlavour() : validationProfile.getPDFAFlavour();
+
 		try (ModelParser parser = ModelParser.createModelWithFlavour(pdfFileStream,
 				currentFlavour)) {
-
 			if (validationProfile == null) {
 				validationProfile = profileFromFlavour(parser.getFlavour());
 			}
-
 			validator = Validators.createValidator(validationProfile,
 					logPassed(config), config.getMaxNumberOfFailedChecks());
+
 			if(config.getProcessingType().isValidating()) {
-				try {
-					validationResult = validator.validate(parser);
-					if (!validationResult.isCompliant()) {
-						this.processingResult.setValidationSummary(
-								ProcessingResult.ValidationSummary.FILE_NOT_VALID);
-					}
-				} catch (IOException | ValidationException e) {
-					LOGGER.error("Error in validation", e);
-					setUnsuccessfulValidation();
-					setUnsuccessfulMetadataFixing();
-					this.processingResult.addErrorMessage(
-							"Error in validation: " + e.getMessage());
-				}
+				validationResult = validate(validator, parser);
 
 				if (config.isFixMetadata() && validationResult != null) {
 					try {
@@ -115,21 +86,7 @@ public class ProcessorImpl implements Processor {
 				}
 			}
 			if (config.getProcessingType().isFeatures()) {
-				try {
-					String appHome = System.getProperty("app.home");
-					Path pluginsPath = null;
-					if (appHome != null) {
-						pluginsPath = new File(appHome, "plugins").toPath();
-					}
-					featuresCollection = PBFeatureParser
-							.getFeaturesCollection(parser.getPDDocument(),
-									config.isPluginsEnabled(), pluginsPath);
-				} catch (Exception e) {
-					LOGGER.error("Error in extracting features", e);
-					setUnsuccessfulFeatureExtracting();
-					this.processingResult.addErrorMessage("Error in feature extraction: "
-							+ e.getMessage());
-				}
+				extractFeatures(parser, config);
 			}
 		} catch (InvalidPasswordException e) {
 			LOGGER.error("Error: " + fileDetails.getName() + " is an encrypted PDF file.", e);
@@ -144,81 +101,34 @@ public class ProcessorImpl implements Processor {
 					"Error in reading PDF file: " + e.getMessage());
 			return this.processingResult;
 		}
-			long endTimeOfProcessing = System.currentTimeMillis();
 
-		try {
-			switch (config.getReportType()) {
-				case TEXT:
-					if (validationResult != null) {
-						String reportSummary = (validationResult.isCompliant() ?
-								"PASS " : "FAIL ") + fileDetails.getName();
-						reportOutputStream.write(reportSummary.getBytes());
-						if (config.isVerboseCli()) {
-							Set<RuleId> ruleIds = new HashSet<>();
-							for (TestAssertion assertion : validationResult.getTestAssertions()) {
-								if (assertion.getStatus() == TestAssertion.Status.FAILED) {
-									ruleIds.add(assertion.getRuleId());
-								}
-							}
-							for (RuleId id : ruleIds) {
-								String reportRuleSummary = id.getClause() + "-" + id.getTestNumber();
-								reportOutputStream.write(reportRuleSummary.getBytes());
-							}
-						}
-					}
-					break;
-				case MRR:
-				case HTML:
-					MachineReadableReport machineReadableReport = MachineReadableReport.fromValues(
-							fileDetails, validator.getProfile(), validationResult,
-							config.isShowPassedRules(),
-							config.getMaxNumberOfDisplayedFailedChecks(),
-							fixerResult, featuresCollection,
-							endTimeOfProcessing - startTimeOfProcessing);
-					if (config.getReportType() == FormatOption.MRR) {
-						MachineReadableReport.toXml(machineReadableReport,
-								reportOutputStream, Boolean.TRUE);
-					} else if (config.getReportType() == FormatOption.HTML) {
-						File tmp = File.createTempFile("verpdf", "xml");
-						tmp.deleteOnExit();
-						try (OutputStream os = new FileOutputStream(tmp)) {
-							MachineReadableReport.toXml(
-									machineReadableReport, os, Boolean.FALSE);
-						}
-						try (InputStream is = new FileInputStream(tmp)) {
-							HTMLReport.writeHTMLReport(is,
-									reportOutputStream, config.getProfileWikiPath());
-						}
-					}
-					break;
-				case XML:
-					CliReport report = CliReport.fromValues(fileDetails, validationResult,
-							FeaturesReport.fromValues(featuresCollection));
-					CliReport.toXml(report, reportOutputStream, Boolean.TRUE);
-					break;
-				default:
-					throw new IllegalStateException("Wrong or unknown report type.");
-			}
-		} catch (IOException e) {
-			LOGGER.error("Exception raised while writing report to file", e);
-			this.processingResult.setReportSummary(
-					ProcessingResult.ReportSummary.ERROR_IN_REPORT);
-			this.processingResult.addErrorMessage(
-					"Error in writing report to file: " + e.getMessage());
-		} catch (JAXBException e) {
-			LOGGER.error("Exception raised while converting report to XML file", e);
-			this.processingResult.setReportSummary(
-					ProcessingResult.ReportSummary.ERROR_IN_REPORT);
-			this.processingResult.addErrorMessage(
-					"Error in generating XML report file: " + e.getMessage());
-		} catch (TransformerException e) {
-			LOGGER.error("Exception raised while converting MRR report into HTML", e);
-			this.processingResult.setReportSummary(
-					ProcessingResult.ReportSummary.ERROR_IN_REPORT);
-			this.processingResult.addErrorMessage(
-					"Error in converting MRR report to HTML:" + e.getMessage());
-		}
+		long endTimeOfProcessing = System.currentTimeMillis();
+		writeReport(config, validationResult, fileDetails, reportOutputStream,
+				validator, fixerResult, featuresCollection, startTimeOfProcessing,
+				endTimeOfProcessing);
+
 		return this.processingResult;
+	}
+
+	private void checkArguments(InputStream pdfFileStream, ItemDetails fileDetails,
+								Config config, OutputStream reportOutputStream) {
+		if(pdfFileStream == null) {
+			throw new IllegalArgumentException("PDF file stream cannot be null");
+		}
+		if(config == null) {
+			throw new IllegalArgumentException("Config cannot be null");
+		}
+		if(reportOutputStream == null) {
+			throw new IllegalArgumentException("Output stream for report cannot be null");
+		}
+		if(config.getFlavour() == PDFAFlavour.NO_FLAVOUR &&
+				config.getValidationProfile().toString().equals("") &&
+				config.getProcessingType().isValidating()) {
+			throw new IllegalArgumentException("Validation cannot be started with no chosen validation profile");
+		}
+		if(fileDetails == null) {
+			throw new IllegalArgumentException("Item details cannot be null");
+		}
 	}
 
 	private static boolean logPassed(final Config config) {
@@ -226,23 +136,29 @@ public class ProcessorImpl implements Processor {
 				|| config.isShowPassedRules();
 	}
 
-	/**
-	 * Constructs {@link org.verapdf.pdfa.validation.ValidationProfile} from
-	 * given {@link Config}. If profile in config is passed using
-	 * {@link PDFAFlavour}, method returns null.
-	 * @param config
-	 * @return
-	 * @throws JAXBException
-	 * @throws IOException
-	 */
-	static ValidationProfile profileFromConfig(final Config config)
-			throws JAXBException, IOException {
-		if (config.getValidationProfile().toString().equals("")) {
-			return null;
+	ValidationProfile profileFromConfig(final Config config) {
+		try {
+			if (config.getValidationProfile().toString().equals("")) {
+				return null;
+			}
+			ValidationProfile profile = profileFromFile(
+					config.getValidationProfile().toFile());
+			return profile;
+		} catch (JAXBException e) {
+			LOGGER.error("Error in parsing profile XML", e);
+			this.processingResult.addErrorMessage(
+					"Error in parsing profile from XML: " + e.getMessage());
+			setUnsuccessfulValidation();
+			setUnsuccessfulMetadataFixing();
+			return Profiles.defaultProfile();
+		} catch (IOException e) {
+			LOGGER.error("Error in reading profile from disc", e);
+			this.processingResult.addErrorMessage(
+					"Error in reading profile from disc: " + e.getMessage());
+			setUnsuccessfulValidation();
+			setUnsuccessfulMetadataFixing();
+			return Profiles.defaultProfile();
 		}
-		ValidationProfile profile = profileFromFile(
-				config.getValidationProfile().toFile());
-		return profile;
 	}
 
 	private static ValidationProfile profileFromFile(final File profileFile)
@@ -291,6 +207,26 @@ public class ProcessorImpl implements Processor {
 		}
 	}
 
+	private FeaturesCollection extractFeatures(ModelParser parser, Config config) {
+		FeaturesCollection featuresCollection = null;
+		try {
+			String appHome = System.getProperty("app.home");
+			Path pluginsPath = null;
+			if (appHome != null) {
+				pluginsPath = new File(appHome, "plugins").toPath();
+			}
+			featuresCollection = PBFeatureParser
+					.getFeaturesCollection(parser.getPDDocument(),
+							config.isPluginsEnabled(), pluginsPath);
+		} catch (Exception e) {
+			LOGGER.error("Error in extracting features", e);
+			setUnsuccessfulFeatureExtracting();
+			this.processingResult.addErrorMessage("Error in feature extraction: "
+					+ e.getMessage());
+		}
+		return featuresCollection;
+	}
+
 	private ValidationProfile profileFromFlavour(PDFAFlavour flavour) {
 		ValidationProfile validationProfile = null;
 		try {
@@ -310,24 +246,119 @@ public class ProcessorImpl implements Processor {
 		return validationProfile;
 	}
 
-	private void checkArguments(InputStream pdfFileStream, ItemDetails fileDetails,
-								Config config, OutputStream reportOutputStream) {
-		if(pdfFileStream == null) {
-			throw new IllegalArgumentException("PDF file stream cannot be null");
+	private ValidationResult validate(PDFAValidator validator, ModelParser parser) {
+		ValidationResult validationResult = null;
+		try {
+			validationResult = validator.validate(parser);
+			if (!validationResult.isCompliant()) {
+				this.processingResult.setValidationSummary(
+						ProcessingResult.ValidationSummary.FILE_NOT_VALID);
+			}
+		} catch (IOException | ValidationException e) {
+			LOGGER.error("Error in validation", e);
+			setUnsuccessfulValidation();
+			setUnsuccessfulMetadataFixing();
+			this.processingResult.addErrorMessage(
+					"Error in validation: " + e.getMessage());
 		}
-		if(config == null) {
-			throw new IllegalArgumentException("Config cannot be null");
+		return validationResult;
+	}
+
+	private void writeReport(Config config, ValidationResult validationResult,
+							 ItemDetails fileDetails, OutputStream reportOutputStream,
+							 PDFAValidator validator, MetadataFixerResult fixerResult,
+							 FeaturesCollection featuresCollection, long startTimeOfProcessing,
+							 long endTimeOfProcessing) {
+		try {
+			switch (config.getReportType()) {
+				case TEXT:
+					writeTextReport(validationResult, fileDetails,
+							reportOutputStream, config);
+					break;
+				case MRR:
+				case HTML:
+					writeMRR(fileDetails, validator, validationResult, config,
+							fixerResult, featuresCollection, startTimeOfProcessing,
+							endTimeOfProcessing, reportOutputStream);
+					break;
+				case XML:
+					CliReport report = CliReport.fromValues(fileDetails, validationResult,
+							FeaturesReport.fromValues(featuresCollection));
+					CliReport.toXml(report, reportOutputStream, Boolean.TRUE);
+					break;
+				default:
+					throw new IllegalStateException("Wrong or unknown report type.");
+			}
+		} catch (IOException e) {
+			LOGGER.error("Exception raised while writing report to file", e);
+			this.processingResult.setReportSummary(
+					ProcessingResult.ReportSummary.ERROR_IN_REPORT);
+			this.processingResult.addErrorMessage(
+					"Error in writing report to file: " + e.getMessage());
+		} catch (JAXBException e) {
+			LOGGER.error("Exception raised while converting report to XML file", e);
+			this.processingResult.setReportSummary(
+					ProcessingResult.ReportSummary.ERROR_IN_REPORT);
+			this.processingResult.addErrorMessage(
+					"Error in generating XML report file: " + e.getMessage());
+		} catch (TransformerException e) {
+			LOGGER.error("Exception raised while converting MRR report into HTML", e);
+			this.processingResult.setReportSummary(
+					ProcessingResult.ReportSummary.ERROR_IN_REPORT);
+			this.processingResult.addErrorMessage(
+					"Error in converting MRR report to HTML:" + e.getMessage());
 		}
-		if(reportOutputStream == null) {
-			throw new IllegalArgumentException("Output stream for report cannot be null");
+	}
+
+	private void writeTextReport(ValidationResult validationResult,
+								 ItemDetails fileDetails,
+								 OutputStream reportOutputStream,
+								 Config config) throws IOException {
+		if (validationResult != null) {
+			String reportSummary = (validationResult.isCompliant() ?
+					"PASS " : "FAIL ") + fileDetails.getName();
+			reportOutputStream.write(reportSummary.getBytes());
+			if (config.isVerboseCli()) {
+				Set<RuleId> ruleIds = new HashSet<>();
+				for (TestAssertion assertion : validationResult.getTestAssertions()) {
+					if (assertion.getStatus() == TestAssertion.Status.FAILED) {
+						ruleIds.add(assertion.getRuleId());
+					}
+				}
+				for (RuleId id : ruleIds) {
+					String reportRuleSummary = id.getClause() + "-" + id.getTestNumber();
+					reportOutputStream.write(reportRuleSummary.getBytes());
+				}
+			}
 		}
-		if(config.getFlavour() == PDFAFlavour.NO_FLAVOUR &&
-				config.getValidationProfile().toString().equals("") &&
-				config.getProcessingType().isValidating()) {
-			throw new IllegalArgumentException("Validation cannot be started with no chosen validation profile");
-		}
-		if(fileDetails == null) {
-			throw new IllegalArgumentException("Item details cannot be null");
+	}
+
+	private void writeMRR(ItemDetails fileDetails, PDFAValidator validator,
+						 ValidationResult validationResult, Config config,
+						 MetadataFixerResult fixerResult, FeaturesCollection featuresCollection,
+						 long startTimeOfProcessing, long endTimeOfProcessing,
+						 OutputStream reportOutputStream) throws JAXBException,
+						 IOException, TransformerException{
+		MachineReadableReport machineReadableReport = MachineReadableReport.fromValues(
+				fileDetails, validator.getProfile(), validationResult,
+				config.isShowPassedRules(),
+				config.getMaxNumberOfDisplayedFailedChecks(),
+				fixerResult, featuresCollection,
+				endTimeOfProcessing - startTimeOfProcessing);
+		if (config.getReportType() == FormatOption.MRR) {
+			MachineReadableReport.toXml(machineReadableReport,
+					reportOutputStream, Boolean.TRUE);
+		} else if (config.getReportType() == FormatOption.HTML) {
+			File tmp = File.createTempFile("verpdf", "xml");
+			tmp.deleteOnExit();
+			try (OutputStream os = new FileOutputStream(tmp)) {
+				MachineReadableReport.toXml(
+						machineReadableReport, os, Boolean.FALSE);
+			}
+			try (InputStream is = new FileInputStream(tmp)) {
+				HTMLReport.writeHTMLReport(is,
+						reportOutputStream, config.getProfileWikiPath());
+			}
 		}
 	}
 
