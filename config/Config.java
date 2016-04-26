@@ -69,6 +69,7 @@ public final class Config {
 			return false;
 		if (isFixMetadata != config.isFixMetadata) return false;
 		if (verboseCli != config.verboseCli) return false;
+		if (pluginsEnabled != config.pluginsEnabled) return false;
 		if (metadataFixerPrefix != null ? !metadataFixerPrefix.equals(config.metadataFixerPrefix) : config.metadataFixerPrefix != null)
 			return false;
 		if (fixMetadataPathFolder != null ? !fixMetadataPathFolder.equals(config.fixMetadataPathFolder) : config.fixMetadataPathFolder != null)
@@ -97,6 +98,7 @@ public final class Config {
 		result = 31 * result + (validationProfilePath != null ? validationProfilePath.hashCode() : 0);
 		result = 31 * result + (flavour != null ? flavour.hashCode() : 0);
 		result = 31 * result + (verboseCli ? 1 : 0);
+		result = 31 * result + (pluginsEnabled ? 1 : 0);
 		return result;
 	}
 
