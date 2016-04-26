@@ -19,6 +19,20 @@ public enum ProcessingType {
 		this.text = text;
 	}
 
+	public static ProcessingType getType(boolean isValidation, boolean isFeatures) {
+		if (isValidation) {
+			if (isFeatures) {
+				return VALIDATING_AND_FEATURES;
+			} else {
+				return VALIDATING;
+			}
+		} else if (isFeatures) {
+			return FEATURES;
+		} else {
+			throw new IllegalArgumentException("Processing type should contain at least one process");
+		}
+	}
+
 	public boolean isValidating() {
 		return this == VALIDATING || this == VALIDATING_AND_FEATURES;
 	}

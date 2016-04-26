@@ -6,6 +6,8 @@ import org.verapdf.report.ItemDetails;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Instance of this class contains result of
@@ -15,11 +17,13 @@ import java.util.ArrayList;
  * @author Sergey Shemyakov
  */
 public class ProcessingResult {
+
 	private ProcessingResult.ValidationSummary validationSummary;
 	private ProcessingResult.MetadataFixingSummary metadataFixerSummary;
 	private ProcessingResult.FeaturesSummary featuresSummary;
 	private ProcessingResult.ReportSummary reportSummary;
-	private ArrayList<String> errorMessages;
+
+	private List<String> errorMessages = new ArrayList<>();
 
 	ProcessingResult(Config config) {
 		this.validationSummary = config.getProcessingType().isValidating() ?
@@ -29,7 +33,6 @@ public class ProcessingResult {
 		this.featuresSummary = config.getProcessingType().isFeatures() ?
 				FeaturesSummary.FEATURES_SUCCEED : FeaturesSummary.FEATURES_DISABLED;
 		this.reportSummary = ReportSummary.REPORT_SUCCEED;
-		this.errorMessages = new ArrayList<>();
 	}
 
 	/**
@@ -61,11 +64,11 @@ public class ProcessingResult {
 	}
 
 	/**
-	 * @return ArrayList of messages of exceptions that occurred during
+	 * @return List of messages of exceptions that occurred during
 	 * {@link org.verapdf.processor.ProcessorImpl#validate(InputStream, ItemDetails, Config, OutputStream)}
 	 */
-	public ArrayList<String> getErrorMessages() {
-		return errorMessages;
+	public List<String> getErrorMessages() {
+		return Collections.unmodifiableList(errorMessages);
 	}
 
 	void setValidationSummary(ValidationSummary validationSummary) {
