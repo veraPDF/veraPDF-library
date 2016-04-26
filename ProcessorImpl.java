@@ -61,6 +61,15 @@ public class ProcessorImpl implements Processor {
 		try (ModelParser parser = ModelParser.createModelWithFlavour(pdfFileStream,
 				currentFlavour)) {
 			if (processingType.isValidating()) {
+				if (validationProfile == null) {
+					validationProfile = profileFromFlavour(parser.getFlavour());
+				}
+				if(validationProfile == null) {
+					setUnsuccessfulValidation();
+					setUnsuccessfulMetadataFixing();
+					LOGGER.error("validationProfile can not be null.");
+					this.processingResult.addErrorMessage("validationProfile can not be null.");
+				}
 				validationResult = startValidation(validationProfile, parser, config, fileDetails);
 				if (config.isFixMetadata() && validationResult != null) {
 					fixerResult = fixMetadata(validationResult, parser,
@@ -156,9 +165,6 @@ public class ProcessorImpl implements Processor {
 	}
 
 	private ValidationResult startValidation(ValidationProfile validationProfile, ModelParser parser, Config config, ItemDetails fileDetails) {
-		if (validationProfile == null) {
-			validationProfile = profileFromFlavour(parser.getFlavour());
-		}
 		PDFAValidator validator = Validators.createValidator(validationProfile,
 				logPassed(config), config.getMaxNumberOfFailedChecks());
 		ValidationResult validationResult = validate(validator, parser);
@@ -337,6 +343,7 @@ public class ProcessorImpl implements Processor {
 						  MetadataFixerResult fixerResult, FeaturesCollection featuresCollection,
 						  long processingTime, OutputStream reportOutputStream) throws JAXBException,
 			IOException, TransformerException {
+
 		MachineReadableReport machineReadableReport = MachineReadableReport.fromValues(
 				fileDetails, validationProfile, validationResult,
 				config.isShowPassedRules(),
