@@ -37,8 +37,7 @@ public final class HTMLReport {
      * @throws JAXBException
      */
     public static void writeHTMLReport(InputStream source,
-            OutputStream destination, String wikiPath) throws TransformerException, IOException,
-            JAXBException {
+            OutputStream destination, String wikiPath) throws TransformerException, IOException{
 
         TransformerFactory factory = TransformerFactory.newInstance();
 
