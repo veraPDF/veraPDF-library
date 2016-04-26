@@ -21,6 +21,7 @@ import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validators.Validators;
 import org.verapdf.processor.config.Config;
 import org.verapdf.processor.config.FormatOption;
+import org.verapdf.processor.config.ProcessingType;
 import org.verapdf.report.*;
 
 import javax.xml.bind.JAXBException;
@@ -33,60 +34,41 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
- * 	Class is implementation of {@link Processor} interface
+ * Class is implementation of {@link Processor} interface
  *
- *  @author Sergey Shemyakov
+ * @author Sergey Shemyakov
  */
 public class ProcessorImpl implements Processor {
 
 	private static final Logger LOGGER = Logger.getLogger(ProcessorImpl.class);
 
 	private ProcessingResult processingResult;
-	
+
 	@Override
 	public ProcessingResult validate(InputStream pdfFileStream, ItemDetails fileDetails,
 									 Config config, OutputStream reportOutputStream) {
+		long startTimeOfProcessing = System.currentTimeMillis();
 		checkArguments(pdfFileStream, fileDetails, config, reportOutputStream);
-
 		ValidationResult validationResult = null;
 		MetadataFixerResult fixerResult = null;
 		FeaturesCollection featuresCollection = null;
 		this.processingResult = new ProcessingResult(config);
-		PDFAValidator validator;
-		ValidationProfile validationProfile = null;
-
-		long startTimeOfProcessing = System.currentTimeMillis();
-		if(config.getProcessingType().isValidating()) {
-				validationProfile = profileFromConfig(config);
-		}
+		ValidationProfile validationProfile = profileFromConfig(config);
 		PDFAFlavour currentFlavour = validationProfile == null ?
 				config.getFlavour() : validationProfile.getPDFAFlavour();
 
+		ProcessingType processingType = config.getProcessingType();
 		try (ModelParser parser = ModelParser.createModelWithFlavour(pdfFileStream,
 				currentFlavour)) {
-			if (validationProfile == null) {
-				validationProfile = profileFromFlavour(parser.getFlavour());
-			}
-			validator = Validators.createValidator(validationProfile,
-					logPassed(config), config.getMaxNumberOfFailedChecks());
-
-			if(config.getProcessingType().isValidating()) {
-				validationResult = validate(validator, parser);
-
+			if (processingType.isValidating()) {
+				validationResult = startValidation(validationProfile, parser, config, fileDetails);
 				if (config.isFixMetadata() && validationResult != null) {
-					try {
-						fixerResult = fixMetadata(validationResult, parser,
-								fileDetails.getName(), config);
-					} catch (IOException e) {
-						LOGGER.error("Error in fixing metadata", e);
-						setUnsuccessfulMetadataFixing();
-						this.processingResult.addErrorMessage(
-								"Error in fixing metadata: " + e.getMessage());
-					}
+					fixerResult = fixMetadata(validationResult, parser,
+							fileDetails.getName(), config);
 				}
 			}
-			if (config.getProcessingType().isFeatures()) {
-				extractFeatures(parser, config);
+			if (processingType.isFeatures()) {
+				featuresCollection = extractFeatures(parser, config);
 			}
 		} catch (InvalidPasswordException e) {
 			LOGGER.error("Error: " + fileDetails.getName() + " is an encrypted PDF file.", e);
@@ -104,29 +86,28 @@ public class ProcessorImpl implements Processor {
 
 		long endTimeOfProcessing = System.currentTimeMillis();
 		writeReport(config, validationResult, fileDetails, reportOutputStream,
-				validator, fixerResult, featuresCollection, startTimeOfProcessing,
-				endTimeOfProcessing);
+				validationProfile, fixerResult, featuresCollection, endTimeOfProcessing - startTimeOfProcessing);
 
 		return this.processingResult;
 	}
 
 	private void checkArguments(InputStream pdfFileStream, ItemDetails fileDetails,
 								Config config, OutputStream reportOutputStream) {
-		if(pdfFileStream == null) {
+		if (pdfFileStream == null) {
 			throw new IllegalArgumentException("PDF file stream cannot be null");
 		}
-		if(config == null) {
+		if (config == null) {
 			throw new IllegalArgumentException("Config cannot be null");
 		}
-		if(reportOutputStream == null) {
+		if (reportOutputStream == null) {
 			throw new IllegalArgumentException("Output stream for report cannot be null");
 		}
-		if(config.getFlavour() == PDFAFlavour.NO_FLAVOUR &&
-				config.getValidationProfile().toString().equals("") &&
-				config.getProcessingType().isValidating()) {
+		if (config.getProcessingType().isValidating()
+				&& config.getFlavour() == PDFAFlavour.NO_FLAVOUR
+				&& config.getValidationProfile().toString().equals("")) {
 			throw new IllegalArgumentException("Validation cannot be started with no chosen validation profile");
 		}
-		if(fileDetails == null) {
+		if (fileDetails == null) {
 			throw new IllegalArgumentException("Item details cannot be null");
 		}
 	}
@@ -167,49 +148,69 @@ public class ProcessorImpl implements Processor {
 		InputStream is = new FileInputStream(profileFile);
 		profile = Profiles.profileFromXml(is);
 		is.close();
+		// TODO: why should we check this?
 		if ("sha-1 hash code".equals(profile.getHexSha1Digest())) {
 			return Profiles.defaultProfile();
 		}
 		return profile;
 	}
 
+	private ValidationResult startValidation(ValidationProfile validationProfile, ModelParser parser, Config config, ItemDetails fileDetails) {
+		if (validationProfile == null) {
+			validationProfile = profileFromFlavour(parser.getFlavour());
+		}
+		PDFAValidator validator = Validators.createValidator(validationProfile,
+				logPassed(config), config.getMaxNumberOfFailedChecks());
+		ValidationResult validationResult = validate(validator, parser);
+		return validationResult;
+	}
+
 	private MetadataFixerResult fixMetadata(ValidationResult info,
 											ModelParser parser,
 											String fileName,
-											Config config) throws IOException {
-		FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(
-				parser.getPDDocument(), info);
-		Path path = config.getFixMetadataFolder();
-		File tempFile = File.createTempFile("fixedTempFile", ".pdf");
-		tempFile.deleteOnExit();
-		try (OutputStream tempOutput = new BufferedOutputStream(
-				new FileOutputStream(tempFile))) {
-			MetadataFixerResult fixerResult = MetadataFixerImpl.fixMetadata(
-					tempOutput, fixerConfig);
-			MetadataFixerResult.RepairStatus repairStatus = fixerResult
-					.getRepairStatus();
-			if (repairStatus == MetadataFixerResult.RepairStatus.SUCCESS || repairStatus == MetadataFixerResult.RepairStatus.ID_REMOVED) {
-				File resFile;
-				boolean flag = true;
-				while (flag) {
-					if (!path.toString().trim().isEmpty()) {
-						resFile = FileGenerator.createOutputFile(config.getFixMetadataFolder().toFile(),
-								fileName, config.getMetadataFixerPrefix());
-					} else {
-						resFile = FileGenerator.createOutputFile(new File(fileName),
-								config.getMetadataFixerPrefix());
+											Config config) {
+		try {
+			FixerConfig fixerConfig = FixerConfigImpl.getFixerConfig(
+					parser.getPDDocument(), info);
+			Path path = config.getFixMetadataFolder();
+			File tempFile = File.createTempFile("fixedTempFile", ".pdf");
+			tempFile.deleteOnExit();
+			try (OutputStream tempOutput = new BufferedOutputStream(
+					new FileOutputStream(tempFile))) {
+				MetadataFixerResult fixerResult = MetadataFixerImpl.fixMetadata(
+						tempOutput, fixerConfig);
+				MetadataFixerResult.RepairStatus repairStatus = fixerResult
+						.getRepairStatus();
+				if (repairStatus == MetadataFixerResult.RepairStatus.SUCCESS || repairStatus == MetadataFixerResult.RepairStatus.ID_REMOVED) {
+					File resFile;
+					boolean flag = true;
+					while (flag) {
+						if (!path.toString().trim().isEmpty()) {
+							resFile = FileGenerator.createOutputFile(config.getFixMetadataFolder().toFile(),
+									fileName, config.getMetadataFixerPrefix());
+						} else {
+							resFile = FileGenerator.createOutputFile(new File(fileName),
+									config.getMetadataFixerPrefix());
+						}
+						Files.copy(tempFile.toPath(), resFile.toPath());
+						flag = false;
 					}
-					Files.copy(tempFile.toPath(), resFile.toPath());
-					flag = false;
 				}
+				return fixerResult;
 			}
-			return fixerResult;
+		} catch (IOException e) {
+			LOGGER.error("Error in fixing metadata", e);
+			setUnsuccessfulMetadataFixing();
+			this.processingResult.addErrorMessage(
+					"Error in fixing metadata: " + e.getMessage());
+			return null;
 		}
 	}
 
 	private FeaturesCollection extractFeatures(ModelParser parser, Config config) {
 		FeaturesCollection featuresCollection = null;
 		try {
+			// TODO: should we make a plugins folder path as a additional setting in the Config and let user to change it?
 			String appHome = System.getProperty("app.home");
 			Path pluginsPath = null;
 			if (appHome != null) {
@@ -266,9 +267,8 @@ public class ProcessorImpl implements Processor {
 
 	private void writeReport(Config config, ValidationResult validationResult,
 							 ItemDetails fileDetails, OutputStream reportOutputStream,
-							 PDFAValidator validator, MetadataFixerResult fixerResult,
-							 FeaturesCollection featuresCollection, long startTimeOfProcessing,
-							 long endTimeOfProcessing) {
+							 ValidationProfile validationProfile, MetadataFixerResult fixerResult,
+							 FeaturesCollection featuresCollection, long processingTime) {
 		try {
 			switch (config.getReportType()) {
 				case TEXT:
@@ -277,9 +277,8 @@ public class ProcessorImpl implements Processor {
 					break;
 				case MRR:
 				case HTML:
-					writeMRR(fileDetails, validator, validationResult, config,
-							fixerResult, featuresCollection, startTimeOfProcessing,
-							endTimeOfProcessing, reportOutputStream);
+					writeMRR(fileDetails, validationProfile, validationResult, config,
+							fixerResult, featuresCollection, processingTime, reportOutputStream);
 					break;
 				case XML:
 					CliReport report = CliReport.fromValues(fileDetails, validationResult,
@@ -333,18 +332,17 @@ public class ProcessorImpl implements Processor {
 		}
 	}
 
-	private void writeMRR(ItemDetails fileDetails, PDFAValidator validator,
-						 ValidationResult validationResult, Config config,
-						 MetadataFixerResult fixerResult, FeaturesCollection featuresCollection,
-						 long startTimeOfProcessing, long endTimeOfProcessing,
-						 OutputStream reportOutputStream) throws JAXBException,
-						 IOException, TransformerException{
+	private void writeMRR(ItemDetails fileDetails, ValidationProfile validationProfile,
+						  ValidationResult validationResult, Config config,
+						  MetadataFixerResult fixerResult, FeaturesCollection featuresCollection,
+						  long processingTime, OutputStream reportOutputStream) throws JAXBException,
+			IOException, TransformerException {
 		MachineReadableReport machineReadableReport = MachineReadableReport.fromValues(
-				fileDetails, validator.getProfile(), validationResult,
+				fileDetails, validationProfile, validationResult,
 				config.isShowPassedRules(),
 				config.getMaxNumberOfDisplayedFailedChecks(),
 				fixerResult, featuresCollection,
-				endTimeOfProcessing - startTimeOfProcessing);
+				processingTime);
 		if (config.getReportType() == FormatOption.MRR) {
 			MachineReadableReport.toXml(machineReadableReport,
 					reportOutputStream, Boolean.TRUE);
@@ -359,11 +357,13 @@ public class ProcessorImpl implements Processor {
 				HTMLReport.writeHTMLReport(is,
 						reportOutputStream, config.getProfileWikiPath());
 			}
+		} else {
+			throw new IllegalStateException("This method should be used only for MRR or HTML reports");
 		}
 	}
 
 	private void setUnsuccessfulValidation() {
-		if(this.processingResult.getValidationSummary() !=
+		if (this.processingResult.getValidationSummary() !=
 				ProcessingResult.ValidationSummary.VALIDATION_DISABLED) {
 			this.processingResult.setValidationSummary(
 					ProcessingResult.ValidationSummary.ERROR_IN_VALIDATION);
@@ -371,7 +371,7 @@ public class ProcessorImpl implements Processor {
 	}
 
 	private void setUnsuccessfulMetadataFixing() {
-		if(this.processingResult.getMetadataFixerSummary() !=
+		if (this.processingResult.getMetadataFixerSummary() !=
 				ProcessingResult.MetadataFixingSummary.FIXING_DISABLED) {
 			this.processingResult.setMetadataFixerSummary(
 					ProcessingResult.MetadataFixingSummary.ERROR_IN_FIXING);
@@ -379,7 +379,7 @@ public class ProcessorImpl implements Processor {
 	}
 
 	private void setUnsuccessfulFeatureExtracting() {
-		if(this.processingResult.getFeaturesSummary() !=
+		if (this.processingResult.getFeaturesSummary() !=
 				ProcessingResult.FeaturesSummary.FEATURES_DISABLED) {
 			this.processingResult.setFeaturesSummary(
 					ProcessingResult.FeaturesSummary.ERROR_IN_FEATURES
