@@ -64,12 +64,6 @@ public class ProcessorImpl implements Processor {
 				if (validationProfile == null) {
 					validationProfile = profileFromFlavour(parser.getFlavour());
 				}
-				if(validationProfile == null) {
-					setUnsuccessfulValidation();
-					setUnsuccessfulMetadataFixing();
-					LOGGER.error("validationProfile can not be null.");
-					this.processingResult.addErrorMessage("validationProfile can not be null.");
-				}
 				validationResult = startValidation(validationProfile, parser, config, fileDetails);
 				if (config.isFixMetadata() && validationResult != null) {
 					fixerResult = fixMetadata(validationResult, parser,
