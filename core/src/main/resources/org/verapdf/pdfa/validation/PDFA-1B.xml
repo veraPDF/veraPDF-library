@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_B">
-    <details creator="veraPDF Consortium" created="2016-03-30T05:22:28.940-03:00">
+    <details creator="veraPDF Consortium" created="2016-04-28T09:49:33.028-03:00">
         <name>PDF/A-1B validation profile</name>
-        <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011</description>
+        <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011, Level B</description>
     </details>
     <hash></hash>
     <rules>
@@ -674,8 +674,9 @@
         </rule>
         <rule object="Glyph">
             <id specification="ISO_19005_1" clause="6.3.5" testNumber="1"/>
-            <description>Embedded font programs shall define all font glyphs referenced for rendering with a conforming file</description>
-            <test>isGlyphPresent == true</test>
+            <description>The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8, 
+			except when the fonts are used exclusively with text rendering mode 3.</description>
+            <test>renderingMode == 3 || isGlyphPresent == true</test>
             <error>
                 <message>Not all glyphs referenced for rendering are present in the embedded font program</message>
                 <arguments/>
@@ -710,14 +711,16 @@
         </rule>
         <rule object="Glyph">
             <id specification="ISO_19005_1" clause="6.3.6" testNumber="1"/>
-            <description>For every font embedded in a conforming file, the glyph width information stored in the Widths entry of the 
-			font dictionary and in the embedded font program shall be consistent</description>
-            <test>isWidthConsistent == true</test>
+            <description>For every font embedded in a conforming file and used for rendering, the glyph width information in the font dictionary and 
+			in the embedded font program shall be consistent.</description>
+            <test>renderingMode == 3 || isWidthConsistent == true</test>
             <error>
                 <message>Glyph width information in the embedded font program is not consistent with the Widths entry of the font dictionary</message>
                 <arguments/>
             </error>
-            <references/>
+            <references>
+                <reference specification="ISO 19005-1:2005/Cor.2:2011" clause="6.3.6"/>
+            </references>
         </rule>
         <rule object="PDTrueTypeFont">
             <id specification="ISO_19005_1" clause="6.3.7" testNumber="1"/>

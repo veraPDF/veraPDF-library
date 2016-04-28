@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_B">
-    <details creator="veraPDF Consortium" created="2016-04-28T09:49:52.143-03:00">
-        <name>PDF/A-3B validation profile</name>
-        <description>Validation rules against ISO 19005-3:2012, Level B</description>
+<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_U">
+    <details creator="veraPDF Consortium" created="2016-04-28T09:46:23.151-03:00">
+        <name>PDF/A-3U validation profile</name>
+        <description>Validation rules against ISO 19005-3:2012, Level U</description>
     </details>
     <hash></hash>
     <rules>
@@ -886,6 +886,16 @@
             <test>isSymbolic == false || nrCmaps == 1 || cmap30Present == true</test>
             <error>
                 <message>The embedded font program for a symbolic TrueType font contains more than one cmap subtable</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="Glyph">
+            <id specification="ISO_19005_3" clause="6.2.11.7" testNumber="1"/>
+            <description>The Unicode values specified in the ToUnicode CMap shall all be greater than zero (0), but not equal to either U+FEFF or U+FFFE.</description>
+            <test>toUnicode != null &amp;&amp; toUnicode.indexOf(&quot;\u0000&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFFFE&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFEFF&quot;)  == -1</test>
+            <error>
+                <message>The font does not define Unicode character map or some glyphs have invalid Unicode value</message>
                 <arguments/>
             </error>
             <references/>
