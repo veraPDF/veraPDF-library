@@ -187,7 +187,7 @@ public class ProcessorImpl implements Processor {
 					while (flag) {
 						if (!path.toString().trim().isEmpty()) {
 							resFile = FileGenerator.createOutputFile(config.getFixMetadataFolder().toFile(),
-									fileName, config.getMetadataFixerPrefix());
+									new File(fileName).getName(), config.getMetadataFixerPrefix());
 						} else {
 							resFile = FileGenerator.createOutputFile(new File(fileName),
 									config.getMetadataFixerPrefix());
