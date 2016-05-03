@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_2_U">
-    <details creator="veraPDF Consortium" created="2016-05-03T12:21:32.383-03:00">
-        <name>PDF/A-2U validation profile</name>
-        <description>Validation rules against ISO 19005-2:2011, Level U</description>
+<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_A">
+    <details creator="veraPDF Consortium" created="2016-05-03T12:24:16.830-03:00">
+        <name>PDF/A-3A validation profile</name>
+        <description>Validation rules against ISO 19005-3:2012, Level A</description>
     </details>
     <hash></hash>
     <rules>
         <rule object="CosDocument">
-            <id specification="ISO_19005_2" clause="6.1.2" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.1.2" testNumber="1"/>
             <description>The file header shall begin at byte zero and shall consist of &quot;%PDF-1.n&quot; followed by a single EOL marker, 
 			where 'n' is a single digit number between 0 (30h) and 7 (37h)</description>
             <test>headerOffset == 0 &amp;&amp; /^%PDF-1\.[0-7]$/.test(header)</test>
@@ -18,7 +18,7 @@
             <references/>
         </rule>
         <rule object="CosDocument">
-            <id specification="ISO_19005_2" clause="6.1.2" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.1.2" testNumber="2"/>
             <description>The aforementioned EOL marker shall be immediately followed by a % (25h) character followed by at least four bytes, each of whose encoded 
 			byte values shall have a decimal value greater than 127</description>
             <test>headerByte1 &gt; 127 &amp;&amp; headerByte2 &gt; 127 &amp;&amp; headerByte3 &gt; 127 &amp;&amp; headerByte4 &gt; 127</test>
@@ -29,7 +29,7 @@
             <references/>
         </rule>
         <rule object="CosDocument">
-            <id specification="ISO_19005_2" clause="6.1.3" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.1.3" testNumber="1"/>
             <description>The file trailer dictionary shall contain the ID keyword whose value shall be File Identifiers as defined in ISO 32000-1:2008, 14.4</description>
             <test>lastID != null</test>
             <error>
@@ -41,7 +41,7 @@
             </references>
         </rule>
         <rule object="CosTrailer">
-            <id specification="ISO_19005_2" clause="6.1.3" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.1.3" testNumber="2"/>
             <description>The keyword Encrypt shall not be used in the trailer dictionary</description>
             <test>isEncrypted != true</test>
             <error>
@@ -51,7 +51,7 @@
             <references/>
         </rule>
         <rule object="CosDocument">
-            <id specification="ISO_19005_2" clause="6.1.3" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.1.3" testNumber="3"/>
             <description>No data can follow the last end-of-file marker except a single optional end-of-line marker as described in ISO 32000-1:2008, 7.5.5.</description>
             <test>postEOFDataSize == 0</test>
             <error>
@@ -63,7 +63,7 @@
             </references>
         </rule>
         <rule object="CosXRef">
-            <id specification="ISO_19005_2" clause="6.1.4" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.1.4" testNumber="2"/>
             <description>The xref keyword and the cross-reference subsection header shall be separated by a single EOL marker</description>
             <test>xrefEOLMarkersComplyPDFA</test>
             <error>
@@ -73,7 +73,7 @@
             <references/>
         </rule>
         <rule object="CosString">
-            <id specification="ISO_19005_2" clause="6.1.6" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.1.6" testNumber="1"/>
             <description>Hexadecimal strings shall contain an even number of non-white-space characters</description>
             <test>(isHex != true) || hexCount % 2 == 0</test>
             <error>
@@ -83,7 +83,7 @@
             <references/>
         </rule>
         <rule object="CosString">
-            <id specification="ISO_19005_2" clause="6.1.6" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.1.6" testNumber="2"/>
             <description>A hexadecimal string is written as a sequence of hexadecimal digits (0–9 and either A–F or a–f)</description>
             <test>(isHex != true) || containsOnlyHex</test>
             <error>
@@ -93,7 +93,7 @@
             <references/>
         </rule>
         <rule object="CosStream">
-            <id specification="ISO_19005_2" clause="6.1.7" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.1.7" testNumber="1"/>
             <description>The value of the Length key specified in the stream dictionary shall match the number of bytes in the file following the LINE FEED (0Ah) character
 			after the stream keyword and preceding the EOL marker before the endstream keyword.</description>
             <test>isLengthCorrect</test>
@@ -104,7 +104,7 @@
             <references/>
         </rule>
         <rule object="CosStream">
-            <id specification="ISO_19005_2" clause="6.1.7" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.1.7" testNumber="2"/>
             <description>The stream keyword shall be followed either by a CARRIAGE RETURN (0Dh) and LINE FEED (0Ah) character sequence or by a single LINE FEED (0Ah) 
 			character. The endstream keyword shall be preceded by an EOL marker.</description>
             <test>streamKeywordCRLFCompliant &amp;&amp; endstreamKeywordEOLCompliant</test>
@@ -115,7 +115,7 @@
             <references/>
         </rule>
         <rule object="CosStream">
-            <id specification="ISO_19005_2" clause="6.1.7" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.1.7" testNumber="3"/>
             <description>A stream dictionary shall not contain the F, FFilter, or FDecodeParams keys</description>
             <test>F == null &amp;&amp; FFilter == null &amp;&amp; FDecodeParms == null</test>
             <error>
@@ -125,7 +125,7 @@
             <references/>
         </rule>
         <rule object="CosFilter">
-            <id specification="ISO_19005_2" clause="6.1.7" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.1.7" testNumber="4"/>
             <description>All standard stream filters listed in ISO 32000-1:2008, 7.4, Table 6 may be used, with the exception of
                 LZWDecode. In addition, the Crypt filter shall not be used unless the value of the Name key in the decode
                 parameters dictionary is Identity. Filters that are not listed in ISO 32000-1:2008, 7.4, Table 6 shall not be
@@ -144,7 +144,7 @@
             <references/>
         </rule>
         <rule object="CosUnicodeName">
-            <id specification="ISO_19005_2" clause="6.1.8" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.1.8" testNumber="1"/>
             <description>Font names, names of colourants in Separation and DeviceN colour spaces, and structure type names, after expansion of character sequences escaped with 
 			a NUMBER SIGN (23h), if any, shall be valid UTF-8 character sequences.</description>
             <test>isValidUtf8 == true</test>
@@ -157,7 +157,7 @@
             </references>
         </rule>
         <rule object="CosIndirect">
-            <id specification="ISO_19005_2" clause="6.1.9" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.1.9" testNumber="1"/>
             <description>The object number and generation number shall be separated by a single white-space character. The generation number and obj keyword shall be 
 			separated by a single white-space character. The object number and endobj keyword shall each be preceded by an EOL marker. The obj and endobj
 			keywords shall each be followed by an EOL marker.</description>
@@ -169,7 +169,7 @@
             <references/>
         </rule>
         <rule object="CosIIFilter">
-            <id specification="ISO_19005_2" clause="6.1.10" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.1.10" testNumber="1"/>
             <description>The value of the F key in the Inline Image dictionary shall not be LZW, LZWDecode, Crypt, a value not listed in ISO 32000-1:2008, Table 6, 
 			or an array containing any such value.</description>
             <test>
@@ -187,7 +187,7 @@
             <references/>
         </rule>
         <rule object="CosInteger">
-            <id specification="ISO_19005_2" clause="6.1.13" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.1.13" testNumber="1"/>
             <description>A conforming file shall not contain any integer greater than 2147483647. A conforming file shall not contain any integer less than -2147483648.</description>
             <test>(intValue &lt;= 2147483647) &amp;&amp; (intValue &gt;= -2147483648)</test>
             <error>
@@ -197,7 +197,7 @@
             <references/>
         </rule>
         <rule object="CosReal">
-            <id specification="ISO_19005_2" clause="6.1.13" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.1.13" testNumber="2"/>
             <description>A conforming file shall not contain any real number outside the range of +/-3.403 x 10^38</description>
             <test>(realValue &gt;= -3.403e+38) &amp;&amp; (realValue &lt;= 3.403e+38)</test>
             <error>
@@ -207,7 +207,7 @@
             <references/>
         </rule>
         <rule object="CosString">
-            <id specification="ISO_19005_2" clause="6.1.13" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.1.13" testNumber="3"/>
             <description>A conforming file shall not contain any string longer than 32767 bytes.</description>
             <test>value.length() &lt; 32767</test>
             <error>
@@ -217,7 +217,7 @@
             <references/>
         </rule>
         <rule object="CosName">
-            <id specification="ISO_19005_2" clause="6.1.13" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.1.13" testNumber="4"/>
             <description>A conforming file shall not contain any name longer than 127 bytes.</description>
             <test>internalRepresentation.length() &lt;= 127</test>
             <error>
@@ -227,7 +227,7 @@
             <references/>
         </rule>
         <rule object="CosReal">
-            <id specification="ISO_19005_2" clause="6.1.13" testNumber="5"/>
+            <id specification="ISO_19005_3" clause="6.1.13" testNumber="5"/>
             <description>A conforming file shall not contain any real number closer to zero than +/-1.175 x 10^(-38).</description>
             <test>realValue == 0.0 || (realValue &lt;= -1.175e-38) || (realValue &gt;= 1.175e-38)</test>
             <error>
@@ -237,7 +237,7 @@
             <references/>
         </rule>
         <rule object="CosDocument">
-            <id specification="ISO_19005_2" clause="6.1.13" testNumber="7"/>
+            <id specification="ISO_19005_3" clause="6.1.13" testNumber="7"/>
             <description>A conforming file shall not contain more than 8388607 indirect objects</description>
             <test>nrIndirects &lt;= 8388607</test>
             <error>
@@ -247,7 +247,7 @@
             <references/>
         </rule>
         <rule object="Op_q_gsave">
-            <id specification="ISO_19005_2" clause="6.1.13" testNumber="8"/>
+            <id specification="ISO_19005_3" clause="6.1.13" testNumber="8"/>
             <description>A conforming file shall not nest q/Q pairs by more than 28 nesting levels</description>
             <test>nestingLevel &lt;= 28</test>
             <error>
@@ -257,7 +257,7 @@
             <references/>
         </rule>
         <rule object="PDDeviceN">
-            <id specification="ISO_19005_2" clause="6.1.13" testNumber="9"/>
+            <id specification="ISO_19005_3" clause="6.1.13" testNumber="9"/>
             <description>A conforming file shall not contain a DeviceN colour space with more than 32 colourants.</description>
             <test>nrComponents &lt;= 32</test>
             <error>
@@ -267,7 +267,7 @@
             <references/>
         </rule>
         <rule object="CIDGlyph">
-            <id specification="ISO_19005_2" clause="6.1.13" testNumber="10"/>
+            <id specification="ISO_19005_3" clause="6.1.13" testNumber="10"/>
             <description>A conforming file shall not contain a CID value greater than 65535.</description>
             <test>CID &lt;= 65535</test>
             <error>
@@ -277,7 +277,7 @@
             <references/>
         </rule>
         <rule object="CosBBox">
-            <id specification="ISO_19005_2" clause="6.1.13" testNumber="11"/>
+            <id specification="ISO_19005_3" clause="6.1.13" testNumber="11"/>
             <description>The size of any of the page boundaries described in ISO 32000-1:2008, 14.11.2 shall not be less than 3 units
 			in either direction, nor shall it be greater than 14 400 units in either direction.</description>
             <test>top - bottom &gt;= 3 &amp;&amp; top - bottom &lt;= 14400 &amp;&amp; right - left &gt;= 3 &amp;&amp; right - left &lt;= 14400</test>
@@ -288,7 +288,7 @@
             <references/>
         </rule>
         <rule object="Op_Undefined">
-            <id specification="ISO_19005_2" clause="6.2.2" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.2" testNumber="1"/>
             <description>Content streams shall not contain any operators not defined in ISO 32000-1 even if such operators are bracketed 
 			by the BX/EX compatibility operators.</description>
             <test>false</test>
@@ -299,7 +299,7 @@
             <references/>
         </rule>
         <rule object="PDResource">
-            <id specification="ISO_19005_2" clause="6.2.2" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.2" testNumber="2"/>
             <description>A content stream that references other objects, such as images and fonts that are necessary to fully render or
 			process the stream, shall have an explicitly associated Resources dictionary as described in ISO 32000-1:2008, 7.8.3.</description>
             <test>isInherited == false</test>
@@ -312,7 +312,7 @@
             </references>
         </rule>
         <rule object="ICCOutputProfile">
-            <id specification="ISO_19005_2" clause="6.2.3" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.3" testNumber="1"/>
             <description>The profile stream that is the value of the DestOutputProfile key shall either be an output profile (Device Class = &quot;prtr&quot;) or a monitor profile 
 			(Device Class = &quot;mntr&quot;). The profiles shall have a colour space of either &quot;GRAY&quot;, &quot;RGB&quot;, or &quot;CMYK&quot;.</description>
             <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot;) &amp;&amp; (colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot;) &amp;&amp; version &lt; 5.0</test>
@@ -325,7 +325,7 @@
             </references>
         </rule>
         <rule object="PDOutputIntent">
-            <id specification="ISO_19005_2" clause="6.2.3" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.3" testNumber="2"/>
             <description>If a file's OutputIntents array contains more than one entry, as might be the case where a file is compliant
 			with this part of ISO 19005 and at the same time with PDF/X-4 or PDF/E-1, then all entries that contain a
 			DestOutputProfile key shall have as the value of that key the same indirect object, which shall be a valid ICC
@@ -338,7 +338,7 @@
             <references/>
         </rule>
         <rule object="PDOutputIntent">
-            <id specification="ISO_19005_2" clause="6.2.3" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.2.3" testNumber="3"/>
             <description>In addition, the DestOutputProfileRef key, as defined in ISO 15930-7:2010, Annex A, shall not be present in any PDF/X OutputIntent.</description>
             <test>DestOutputProfileRef_size == 0</test>
             <error>
@@ -350,7 +350,7 @@
             </references>
         </rule>
         <rule object="ICCInputProfile">
-            <id specification="ISO_19005_2" clause="6.2.4.2" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.4.2" testNumber="1"/>
             <description>The profile that forms the stream of an ICCBased colour space shall conform to ICC.1:1998-09, ICC.1:2001-12, ICC.1:2003-09 or ISO 15076-1.</description>
             <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot; || deviceClass == &quot;scnr&quot; || deviceClass == &quot;spac&quot;) &amp;&amp; 
 			(colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot; || colorSpace == &quot;LAB &quot;) &amp;&amp; version &lt; 5.0</test>
@@ -363,7 +363,7 @@
             </references>
         </rule>
         <rule object="PDICCBasedCMYK">
-            <id specification="ISO_19005_2" clause="6.2.4.2" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.4.2" testNumber="2"/>
             <description>Overprint mode (as set by the OPM value in an ExtGState dictionary) shall not be one (1) when an ICCBased CMYK colour space is used and 
 			when overprinting for stroke or fill or both is set to true.</description>
             <test>overprintFlag == false || OPM == 0</test>
@@ -376,7 +376,7 @@
             </references>
         </rule>
         <rule object="PDDeviceRGB">
-            <id specification="ISO_19005_2" clause="6.2.4.3" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.4.3" testNumber="2"/>
             <description>DeviceRGB shall only be used if a device independent DefaultRGB colour space has been set when the DeviceRGB colour space is used,
 			or if the file has a PDF/A OutputIntent that contains an RGB destination profile.</description>
             <test>gOutputCS != null &amp;&amp; gOutputCS == &quot;RGB &quot;</test>
@@ -387,7 +387,7 @@
             <references/>
         </rule>
         <rule object="PDDeviceCMYK">
-            <id specification="ISO_19005_2" clause="6.2.4.3" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.2.4.3" testNumber="3"/>
             <description>DeviceCMYK shall only be used if a device independent DefaultCMYK colour space has been set or if a DeviceN-based DefaultCMYK colour space
 			has been set when the DeviceCMYK colour space is used or the file has a PDF/A OutputIntent that contains a CMYK destination profile.</description>
             <test>gOutputCS != null &amp;&amp; gOutputCS == &quot;CMYK&quot;</test>
@@ -398,7 +398,7 @@
             <references/>
         </rule>
         <rule object="PDDeviceGray">
-            <id specification="ISO_19005_2" clause="6.2.4.3" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.2.4.3" testNumber="4"/>
             <description>DeviceGray shall only be used if a device independent DefaultGray colour space has been set when the DeviceGray colour space is used,
 			or if a PDF/A OutputIntent is present.</description>
             <test>gOutputCS != null</test>
@@ -409,7 +409,7 @@
             <references/>
         </rule>
         <rule object="PDDeviceN">
-            <id specification="ISO_19005_2" clause="6.2.4.4" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.4.4" testNumber="1"/>
             <description>For any spot colour used in a DeviceN or NChannel colour space, an entry in the Colorants dictionary shall be present.</description>
             <test>areColorantsPresent == true</test>
             <error>
@@ -421,7 +421,7 @@
             </references>
         </rule>
         <rule object="PDSeparation">
-            <id specification="ISO_19005_2" clause="6.2.4.4" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.4.4" testNumber="2"/>
             <description>All Separation arrays within a single PDF/A-2 file (including those in Colorants dictionaries) that have the
 			same name shall have the same tintTransform and alternateSpace. In evaluating equivalence, the PDF
 			objects shall be compared, rather than the computational result of the use of those PDF objects. Compression
@@ -434,7 +434,7 @@
             <references/>
         </rule>
         <rule object="PDExtGState">
-            <id specification="ISO_19005_2" clause="6.2.5" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.5" testNumber="1"/>
             <description>An ExtGState dictionary shall not contain the TR key</description>
             <test>TR == null</test>
             <error>
@@ -444,7 +444,7 @@
             <references/>
         </rule>
         <rule object="PDExtGState">
-            <id specification="ISO_19005_2" clause="6.2.5" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.5" testNumber="2"/>
             <description>An ExtGState dictionary shall not contain the TR2 key with a value other than Default</description>
             <test>TR2 == null || TR2 == &quot;Default&quot;</test>
             <error>
@@ -454,7 +454,7 @@
             <references/>
         </rule>
         <rule object="PDExtGState">
-            <id specification="ISO_19005_2" clause="6.2.5" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.2.5" testNumber="3"/>
             <description>An ExtGState dictionary shall not contain the HTP key</description>
             <test>HTP_size == 0</test>
             <error>
@@ -464,7 +464,7 @@
             <references/>
         </rule>
         <rule object="PDHalftone">
-            <id specification="ISO_19005_2" clause="6.2.5" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.2.5" testNumber="4"/>
             <description>All halftones in a conforming PDF/A-2 file shall have the value 1 or 5 for the HalftoneType key.</description>
             <test>HalftoneType != null &amp;&amp; (HalftoneType == 1 || HalftoneType == 5)</test>
             <error>
@@ -474,7 +474,7 @@
             <references/>
         </rule>
         <rule object="PDHalftone">
-            <id specification="ISO_19005_2" clause="6.2.5" testNumber="5"/>
+            <id specification="ISO_19005_3" clause="6.2.5" testNumber="5"/>
             <description>Halftones in a conforming PDF/A-2 file shall not contain a HalftoneName key.</description>
             <test>HalftoneName == null</test>
             <error>
@@ -484,7 +484,7 @@
             <references/>
         </rule>
         <rule object="CosRenderingIntent">
-            <id specification="ISO_19005_2" clause="6.2.6" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.6" testNumber="1"/>
             <description>Where a rendering intent is specified, its value shall be one of the four values defined in ISO 32000-1:2008,
 			Table 70: RelativeColorimetric, AbsoluteColorimetric, Perceptual or Saturation.</description>
             <test>internalRepresentation == &quot;RelativeColorimetric&quot; || internalRepresentation == &quot;AbsoluteColorimetric&quot; || internalRepresentation == &quot;Perceptual&quot; || internalRepresentation == &quot;Saturation&quot;</test>
@@ -495,7 +495,7 @@
             <references/>
         </rule>
         <rule object="PDXImage">
-            <id specification="ISO_19005_2" clause="6.2.8" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.8" testNumber="1"/>
             <description>An Image dictionary shall not contain the Alternates key</description>
             <test>Alternates_size == 0</test>
             <error>
@@ -505,7 +505,7 @@
             <references/>
         </rule>
         <rule object="PDXImage">
-            <id specification="ISO_19005_2" clause="6.2.8" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.8" testNumber="2"/>
             <description>An Image dictionary shall not contain the OPI key</description>
             <test>OPI_size == 0</test>
             <error>
@@ -515,7 +515,7 @@
             <references/>
         </rule>
         <rule object="PDXImage">
-            <id specification="ISO_19005_2" clause="6.2.8" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.2.8" testNumber="3"/>
             <description>If an Image dictionary contains the Interpolate key, its value shall be false. 
 			For an inline image, the I key shall have a value of false.</description>
             <test>Interpolate == false</test>
@@ -526,7 +526,7 @@
             <references/>
         </rule>
         <rule object="JPEG2000">
-            <id specification="ISO_19005_2" clause="6.2.8.3" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.8.3" testNumber="1"/>
             <description>The number of colour channels in the JPEG2000 data shall be 1, 3 or 4.</description>
             <test>nrColorChannels == 1 || nrColorChannels == 3 || nrColorChannels == 4</test>
             <error>
@@ -536,7 +536,7 @@
             <references/>
         </rule>
         <rule object="JPEG2000">
-            <id specification="ISO_19005_2" clause="6.2.8.3" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.8.3" testNumber="2"/>
             <description>If the number of colour space specifications in the JPEG2000 data is greater than 1, there shall be exactly one colour space 
 			specification that has the value 0x01 in the APPROX field.</description>
             <test>nrColorSpaceSpecs == 1 || nrColorSpacesWithApproxField == 1</test>
@@ -547,7 +547,7 @@
             <references/>
         </rule>
         <rule object="JPEG2000">
-            <id specification="ISO_19005_2" clause="6.2.8.3" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.2.8.3" testNumber="3"/>
             <description>The value of the METH entry in its 'colr' box shall be 0x01, 0x02 or 0x03. A conforming reader shall use only
 			that colour space and shall ignore all other colour space specifications.</description>
             <test>colrMethod == 1 || colrMethod == 2 || colrMethod == 3</test>
@@ -558,7 +558,7 @@
             <references/>
         </rule>
         <rule object="JPEG2000">
-            <id specification="ISO_19005_2" clause="6.2.8.3" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.2.8.3" testNumber="4"/>
             <description>JPEG2000 enumerated colour space 19 (CIEJab) shall not be used.</description>
             <test>colrEnumCS == null || colrEnumCS != 19</test>
             <error>
@@ -568,7 +568,7 @@
             <references/>
         </rule>
         <rule object="JPEG2000">
-            <id specification="ISO_19005_2" clause="6.2.8.3" testNumber="5"/>
+            <id specification="ISO_19005_3" clause="6.2.8.3" testNumber="5"/>
             <description>The bit-depth of the JPEG2000 data shall have a value in the range 1 to 38. All colour channels in the JPEG2000 data shall have the same bit-depth.</description>
             <test>bpccBoxPresent == false &amp;&amp; (bitDepth &gt;= 1 &amp;&amp; bitDepth &lt;= 38) </test>
             <error>
@@ -578,7 +578,7 @@
             <references/>
         </rule>
         <rule object="PDXForm">
-            <id specification="ISO_19005_2" clause="6.2.9" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.9" testNumber="1"/>
             <description>A form XObject dictionary shall not contain any of the following: - the OPI key; - the Subtype2 key with a value of PS; - the PS key.</description>
             <test>(Subtype2 == null || Subtype2 != &quot;PS&quot;) &amp;&amp; PS_size == 0 &amp;&amp; OPI_size == 0</test>
             <error>
@@ -588,7 +588,7 @@
             <references/>
         </rule>
         <rule object="PDXForm">
-            <id specification="ISO_19005_2" clause="6.2.9" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.9" testNumber="2"/>
             <description>A conforming file shall not contain any reference XObjects</description>
             <test>Ref_size == 0</test>
             <error>
@@ -598,7 +598,7 @@
             <references/>
         </rule>
         <rule object="PDXObject">
-            <id specification="ISO_19005_2" clause="6.2.9" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.2.9" testNumber="3"/>
             <description>A conforming file shall not contain any PostScript XObjects</description>
             <test>Subtype != &quot;PS&quot;</test>
             <error>
@@ -608,7 +608,7 @@
             <references/>
         </rule>
         <rule object="PDExtGState">
-            <id specification="ISO_19005_2" clause="6.2.10" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.10" testNumber="1"/>
             <description>Only blend modes that are specified in ISO 32000-1:2008 shall be used for the value of the BM key in an extended graphic state dictionary.</description>
             <test>BM == null || BM == &quot;Normal&quot; || BM == &quot;Compatible&quot; || BM == &quot;Multiply&quot; || BM == &quot;Screen&quot; || BM == &quot;Overlay&quot; || BM == &quot;Darken&quot; ||
 			BM == &quot;Lighten&quot; || BM == &quot;ColorDodge&quot; || BM == &quot;ColorBurn&quot; || BM == &quot;HardLight&quot; || BM == &quot;SoftLight&quot; || BM == &quot;Difference&quot; || BM == &quot;Exclusion&quot; ||
@@ -622,7 +622,7 @@
             </references>
         </rule>
         <rule object="PDPage">
-            <id specification="ISO_19005_2" clause="6.2.10" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.10" testNumber="2"/>
             <description>If the document does not contain a PDF/A OutputIntent, then all Page objects
 			that contain transparency shall include the Group key, and the attribute dictionary that forms the value of that
 			Group key shall include a CS entry whose value shall be used as the default blending colour space.</description>
@@ -636,7 +636,7 @@
             </references>
         </rule>
         <rule object="PDFont">
-            <id specification="ISO_19005_2" clause="6.2.11.2" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.11.2" testNumber="1"/>
             <description>All fonts and font programs used in a conforming file, regardless of rendering mode usage, shall conform to
 			the provisions in ISO 32000-1:2008, 9.6 and 9.7, as well as to the font specifications referenced by these provisions.
 			Type - name - (Required) The type of PDF object that this dictionary describes; must be Font for a font dictionary</description>
@@ -653,7 +653,7 @@
             </references>
         </rule>
         <rule object="PDFont">
-            <id specification="ISO_19005_2" clause="6.2.11.2" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.11.2" testNumber="2"/>
             <description>All fonts and font programs used in a conforming file, regardless of rendering mode usage, shall conform to the provisions
 			in ISO 32000-1:2008, 9.6 and 9.7, as well as to the font specifications referenced by these provisions.
 			Subtype - name - (Required) The type of font; must be &quot;Type1&quot; for Type 1 fonts, &quot;MMType1&quot; for multiple master fonts, &quot;TrueType&quot; for TrueType fonts
@@ -674,7 +674,7 @@
             </references>
         </rule>
         <rule object="PDFont">
-            <id specification="ISO_19005_2" clause="6.2.11.2" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.2.11.2" testNumber="3"/>
             <description>All fonts and font programs used in a conforming file, regardless of rendering mode usage, shall conform to the provisions
 			in ISO 32000-1:2008, 9.6 and 9.7, as well as to the font specifications referenced by these provisions. 
 			BaseFont - name - (Required) The PostScript name of the font</description>
@@ -690,7 +690,7 @@
             </references>
         </rule>
         <rule object="PDSimpleFont">
-            <id specification="ISO_19005_2" clause="6.2.11.2" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.2.11.2" testNumber="4"/>
             <description>All fonts and font programs used in a conforming file, regardless of rendering mode usage, shall conform to the provisions
 			in ISO 32000-1:2008, 9.6 and 9.7, as well as to the font specifications referenced by these provisions.
 			FirstChar - integer - (Required except for the standard 14 fonts) The first character code defined in the font's Widths array</description>
@@ -705,7 +705,7 @@
             </references>
         </rule>
         <rule object="PDSimpleFont">
-            <id specification="ISO_19005_2" clause="6.2.11.2" testNumber="5"/>
+            <id specification="ISO_19005_3" clause="6.2.11.2" testNumber="5"/>
             <description>All fonts and font programs used in a conforming file, regardless of rendering mode usage, shall conform to the provisions
 			in ISO 32000-1:2008, 9.6 and 9.7, as well as to the font specifications referenced by these provisions.
 			FirstChar - integer - (Required except for the standard 14 fonts) The first character code defined in the font's Widths array</description>
@@ -720,7 +720,7 @@
             </references>
         </rule>
         <rule object="PDSimpleFont">
-            <id specification="ISO_19005_2" clause="6.2.11.2" testNumber="6"/>
+            <id specification="ISO_19005_3" clause="6.2.11.2" testNumber="6"/>
             <description>All fonts and font programs used in a conforming file, regardless of rendering mode usage, shall conform to the provisions
 			in ISO 32000-1:2008, 9.6 and 9.7, as well as to the font specifications referenced by these provisions.
 			Widths - array - (Required except for the standard 14 fonts; indirect reference preferred) An array of (LastChar − FirstChar + 1) widths</description>
@@ -735,7 +735,7 @@
             </references>
         </rule>
         <rule object="PDType0Font">
-            <id specification="ISO_19005_2" clause="6.2.11.3" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.11.3" testNumber="1"/>
             <description>For any given composite (Type 0) font within a conforming file, the CIDSystemInfo entry in its CIDFont dictionary and its Encoding dictionary 
 			shall have the following relationship: 
 			- If the Encoding key in the Type 0 font dictionary is Identity-H or Identity-V, any values of Registry, Ordering, 
@@ -750,7 +750,7 @@
             <references/>
         </rule>
         <rule object="PDCIDFont">
-            <id specification="ISO_19005_2" clause="6.2.11.3" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.11.3" testNumber="2"/>
             <description>ISO 32000-1:2008, 9.7.4, Table 117 requires that all embedded Type 2 CIDFonts in the CIDFont dictionary shall contain a 
 			CIDToGIDMap entry that shall be a stream mapping from CIDs to glyph indices or the name Identity, as described in ISO 32000-1:2008, 9.7.4, Table 117.</description>
             <test>Subtype != &quot;CIDFontType2&quot; || CIDToGIDMap != null</test>
@@ -763,7 +763,7 @@
             </references>
         </rule>
         <rule object="PDCMap">
-            <id specification="ISO_19005_2" clause="6.2.11.3" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.2.11.3" testNumber="3"/>
             <description>All CMaps used within a PDF/A-2 file, except those listed in ISO 32000-1:2008, 9.7.5.2, Table 118, shall be embedded in that file as described 
 			in ISO 32000-1:2008, 9.7.5.</description>
             <test>CMapName == &quot;Identity-H&quot; || CMapName == &quot;Identity-V&quot; || CMapName == &quot;GB-EUC-H&quot; || CMapName == &quot;GB-EUC-V&quot; ||
@@ -791,7 +791,7 @@
             </references>
         </rule>
         <rule object="CMapFile">
-            <id specification="ISO_19005_2" clause="6.2.11.3" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.2.11.3" testNumber="4"/>
             <description>For those CMaps that are embedded, the integer value of the WMode entry in the CMap dictionary shall be identical to the WMode value
 			in the embedded CMap stream.</description>
             <test>WMode == dictWMode</test>
@@ -802,7 +802,7 @@
             <references/>
         </rule>
         <rule object="PDFont">
-            <id specification="ISO_19005_2" clause="6.2.11.4" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="1"/>
             <description>The font programs for all fonts used for rendering within a conforming file shall be embedded within that file, as defined in ISO 32000-1:2008, 9.9.</description>
             <test>Subtype == &quot;Type3&quot; || Subtype == &quot;Type0&quot; || fontFile_size == 1</test>
             <error>
@@ -814,7 +814,7 @@
             </references>
         </rule>
         <rule object="Glyph">
-            <id specification="ISO_19005_2" clause="6.2.11.4" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="2"/>
             <description>Embedded fonts shall define all glyphs referenced for rendering within the conforming file. A font referenced for use solely 
 			in rendering mode 3 is therefore not rendered and is thus exempt from the embedding requirement.</description>
             <test>renderingMode == 3 || isGlyphPresent == true</test>
@@ -825,7 +825,7 @@
             <references/>
         </rule>
         <rule object="PDType1Font">
-            <id specification="ISO_19005_2" clause="6.2.11.4" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="3"/>
             <description>If the FontDescriptor dictionary of an embedded Type 1 font contains a CharSet string, then it shall list the character names of all glyphs
 			present in the font program, regardless of whether a glyph in the font is referenced or used by the PDF or not.</description>
             <test>CharSet == null || charSetListsAllGlyphs == true</test>
@@ -836,7 +836,7 @@
             <references/>
         </rule>
         <rule object="PDCIDFont">
-            <id specification="ISO_19005_2" clause="6.2.11.4" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="4"/>
             <description>If the FontDescriptor dictionary of an embedded CID font contains a CIDSet stream, then it shall identify all CIDs which are present in the font program,
 			regardless of whether a CID in the font is referenced or used by the PDF or not.</description>
             <test>CIDSet_size == 0 || cidSetListsAllGlyphs == true</test>
@@ -847,7 +847,7 @@
             <references/>
         </rule>
         <rule object="Glyph">
-            <id specification="ISO_19005_2" clause="6.2.11.5" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.11.5" testNumber="1"/>
             <description>For every font embedded in a conforming file and used for rendering, the glyph width information in the font dictionary and in the embedded 
 			font program shall be consistent.</description>
             <test>renderingMode == 3 || isWidthConsistent == true</test>
@@ -858,7 +858,7 @@
             <references/>
         </rule>
         <rule object="TrueTypeFontProgram">
-            <id specification="ISO_19005_2" clause="6.2.11.6" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.11.6" testNumber="1"/>
             <description>For all non-symbolic TrueType fonts used for rendering, the embedded TrueType font program shall contain one or several non-symbolic 
 			cmap entries such that all necessary glyph lookups can be carried out.</description>
             <test>isSymbolic == true || nrCmaps &gt;= 1</test>
@@ -869,7 +869,7 @@
             <references/>
         </rule>
         <rule object="PDTrueTypeFont">
-            <id specification="ISO_19005_2" clause="6.2.11.6" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.11.6" testNumber="2"/>
             <description>No non-symbolic TrueType font shall define a Differences array unless all of the glyph names in
 			the Differences array are listed in the Adobe Glyph List and the embedded font program contains at least the
 			Microsoft Unicode (3,1 – Platform ID=3, Encoding ID=1) encoding in the 'cmap' table.</description>
@@ -883,7 +883,7 @@
             <references/>
         </rule>
         <rule object="PDTrueTypeFont">
-            <id specification="ISO_19005_2" clause="6.2.11.6" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.2.11.6" testNumber="3"/>
             <description>Symbolic TrueType fonts shall not contain an Encoding entry in the font dictionary</description>
             <test>isSymbolic == false || Encoding == null</test>
             <error>
@@ -893,7 +893,7 @@
             <references/>
         </rule>
         <rule object="TrueTypeFontProgram">
-            <id specification="ISO_19005_2" clause="6.2.11.6" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.2.11.6" testNumber="4"/>
             <description>Symbolic TrueType fonts shall not contain an Encoding entry in the font dictionary, and the 'cmap' table in the embedded font program
 			shall either contain exactly one encoding or it shall contain, at least, the Microsoft Symbol (3,0 – Platform ID=3, Encoding ID=0) encoding.</description>
             <test>isSymbolic == false || nrCmaps == 1 || cmap30Present == true</test>
@@ -904,7 +904,7 @@
             <references/>
         </rule>
         <rule object="Glyph">
-            <id specification="ISO_19005_2" clause="6.2.11.7" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.11.7" testNumber="1"/>
             <description>The Unicode values specified in the ToUnicode CMap shall all be greater than zero (0), but not equal to either U+FEFF or U+FFFE.</description>
             <test>toUnicode != null &amp;&amp; toUnicode.indexOf(&quot;\u0000&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFFFE&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFEFF&quot;)  == -1</test>
             <error>
@@ -914,7 +914,7 @@
             <references/>
         </rule>
         <rule object="Glyph">
-            <id specification="ISO_19005_2" clause="6.2.11.8" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.11.8" testNumber="1"/>
             <description>A PDF/A-2 compliant document shall not contain a reference to the .notdef glyph from any of the text showing
 			operators, regardless of text rendering mode, in any content stream.</description>
             <test>name != &quot;.notdef&quot;</test>
@@ -925,7 +925,7 @@
             <references/>
         </rule>
         <rule object="PDAnnot">
-            <id specification="ISO_19005_2" clause="6.3.1" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.3.1" testNumber="1"/>
             <description>Annotation types not defined in ISO 32000-1 shall not be permitted. Additionally, the 3D, Sound, Screen and Movie types shall not be permitted.</description>
             <test>Subtype == &quot;Text&quot; || Subtype == &quot;Link&quot; || Subtype == &quot;FreeText&quot; || Subtype == &quot;Line&quot; || 
 			Subtype == &quot;Square&quot; || Subtype == &quot;Circle&quot; || Subtype == &quot;Polygon&quot; || Subtype == &quot;PolyLine&quot; ||
@@ -942,7 +942,7 @@
             </references>
         </rule>
         <rule object="PDAnnot">
-            <id specification="ISO_19005_2" clause="6.3.2" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.3.2" testNumber="1"/>
             <description>Except for annotation dictionaries whose Subtype value is Popup, all annotation dictionaries shall contain the F key.</description>
             <test>Subtype == &quot;Popup&quot; || F != null</test>
             <error>
@@ -952,7 +952,7 @@
             <references/>
         </rule>
         <rule object="PDAnnot">
-            <id specification="ISO_19005_2" clause="6.3.2" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.3.2" testNumber="2"/>
             <description>If present, the F key's Print flag bit shall be set to 1 and its Hidden, Invisible, ToggleNoView, and NoView flag bits shall be set to 0.</description>
             <test>F == null || ((F &amp; 1) == 0 &amp;&amp; (F &amp; 2) == 0 &amp;&amp; (F &amp; 4) == 4 &amp;&amp; (F &amp; 32) == 0 &amp;&amp; (F &amp; 256) == 0)</test>
             <error>
@@ -962,7 +962,7 @@
             <references/>
         </rule>
         <rule object="PDAnnot">
-            <id specification="ISO_19005_2" clause="6.3.2" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.3.2" testNumber="3"/>
             <description>Text annotations should set the NoZoom and NoRotate flag bits of the F key to 1.</description>
             <test>Subtype != &quot;Text&quot; || (F != null &amp;&amp; (F &amp; 8) == 8 &amp;&amp; (F &amp; 16) == 16)</test>
             <error>
@@ -972,7 +972,7 @@
             <references/>
         </rule>
         <rule object="PDAnnot">
-            <id specification="ISO_19005_2" clause="6.3.3" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.3.3" testNumber="1"/>
             <description>Every annotation (including those whose Subtype value is Widget, as used for form fields), except for the two cases listed below,
 			shall have at least one appearance dictionary:
 			- annotations where the value of the Rect key consists of an array where value 1 is equal to value 3 and value 2 is equal to value 4;
@@ -985,7 +985,7 @@
             <references/>
         </rule>
         <rule object="PDAnnot">
-            <id specification="ISO_19005_2" clause="6.3.3" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.3.3" testNumber="2"/>
             <description>For all annotation dictionaries containing an AP key, the appearance dictionary that it defines as its value shall
 			contain only the N key. If an annotation dictionary's Subtype key has a value of Widget and its FT key has a
 			value of Btn, the value of the N key shall be an appearance subdictionary, otherwise the value of the N key shall be an appearance stream.</description>
@@ -998,7 +998,7 @@
             <references/>
         </rule>
         <rule object="PDAnnot">
-            <id specification="ISO_19005_2" clause="6.4.1" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.4.1" testNumber="1"/>
             <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys.</description>
             <test>Subtype != &quot;Widget&quot; || (A_size == 0 &amp;&amp; AA_size == 0)</test>
             <error>
@@ -1008,7 +1008,7 @@
             <references/>
         </rule>
         <rule object="PDFormField">
-            <id specification="ISO_19005_2" clause="6.4.1" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.4.1" testNumber="2"/>
             <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys.</description>
             <test>AA_size == 0</test>
             <error>
@@ -1018,7 +1018,7 @@
             <references/>
         </rule>
         <rule object="PDAcroForm">
-            <id specification="ISO_19005_2" clause="6.4.1" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.4.1" testNumber="3"/>
             <description>The NeedAppearances flag of the interactive form dictionary shall either not be present or shall be false.</description>
             <test>NeedAppearances == null || NeedAppearances == false</test>
             <error>
@@ -1028,7 +1028,7 @@
             <references/>
         </rule>
         <rule object="PDAcroForm">
-            <id specification="ISO_19005_2" clause="6.4.2" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.4.2" testNumber="1"/>
             <description>The document's interactive form dictionary that forms the value of the AcroForm key in the document's Catalog of a PDF/A-2 file, 
 			if present, shall not contain the XFA key.</description>
             <test>XFA_size == 0</test>
@@ -1039,7 +1039,7 @@
             <references/>
         </rule>
         <rule object="CosDocument">
-            <id specification="ISO_19005_2" clause="6.4.2" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.4.2" testNumber="2"/>
             <description>A document's Catalog shall not contain the NeedsRendering key.</description>
             <test>NeedsRendering == false</test>
             <error>
@@ -1049,7 +1049,7 @@
             <references/>
         </rule>
         <rule object="PDAction">
-            <id specification="ISO_19005_2" clause="6.5.1" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.5.1" testNumber="1"/>
             <description>The Launch, Sound, Movie, ResetForm, ImportData, Hide, SetOCGState, Rendition, Trans, GoTo3DView and JavaScript actions shall not be permitted. 
 			Additionally, the deprecated set-state and noop actions shall not be permitted.</description>
             <test>S == &quot;GoTo&quot; || S == &quot;GoToR&quot; || S == &quot;GotToE&quot; || S == &quot;Thread&quot; || S == &quot;URI&quot; || S == &quot;Named&quot; || S == &quot;SubmitForm&quot;</test>
@@ -1062,7 +1062,7 @@
             </references>
         </rule>
         <rule object="PDNamedAction">
-            <id specification="ISO_19005_2" clause="6.5.1" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.5.1" testNumber="2"/>
             <description>Named actions other than NextPage, PrevPage, FirstPage, and LastPage shall not be permitted.</description>
             <test>N == &quot;NextPage&quot; || N == &quot;PrevPage&quot; || N == &quot;FirstPage&quot; || N == &quot;LastPage&quot;</test>
             <error>
@@ -1074,7 +1074,7 @@
             </references>
         </rule>
         <rule object="PDDocument">
-            <id specification="ISO_19005_2" clause="6.5.2" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.5.2" testNumber="1"/>
             <description>The document's Catalog shall not include an AA entry for an additional-actions dictionary.</description>
             <test>AA_size == 0</test>
             <error>
@@ -1084,7 +1084,7 @@
             <references/>
         </rule>
         <rule object="PDPage">
-            <id specification="ISO_19005_2" clause="6.5.2" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.5.2" testNumber="2"/>
             <description>The Page dictionary shall not include an AA entry for an additional-actions dictionary.</description>
             <test>AA_size == 0</test>
             <error>
@@ -1094,7 +1094,7 @@
             <references/>
         </rule>
         <rule object="PDDocument">
-            <id specification="ISO_19005_2" clause="6.6.2.1" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.6.2.1" testNumber="1"/>
             <description>The Catalog dictionary of a conforming file shall contain the Metadata key whose value is a metadata stream as defined in ISO 32000-1:2008, 14.3.2.</description>
             <test>metadata_size == 1</test>
             <error>
@@ -1106,7 +1106,7 @@
             </references>
         </rule>
         <rule object="XMPPackage">
-            <id specification="ISO_19005_2" clause="6.6.2.1" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.6.2.1" testNumber="2"/>
             <description>The bytes attribute shall not be used in the header of an XMP packet.</description>
             <test>bytes == null</test>
             <error>
@@ -1116,7 +1116,7 @@
             <references/>
         </rule>
         <rule object="XMPPackage">
-            <id specification="ISO_19005_2" clause="6.6.2.1" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.6.2.1" testNumber="3"/>
             <description>The encoding attribute shall not be used in the header of an XMP packet.</description>
             <test>encoding == null</test>
             <error>
@@ -1126,7 +1126,7 @@
             <references/>
         </rule>
         <rule object="XMPPackage">
-            <id specification="ISO_19005_2" clause="6.6.2.1" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.6.2.1" testNumber="4"/>
             <description>All metadata streams present in the PDF shall conform to the XMP Specification. All content of all XMP packets shall be well-formed, 
 			as defined by Extensible Markup Language (XML) 1.0 (Third Edition), 2.1, and the RDF/XML Syntax Specification (Revised).</description>
             <test>isSerializationValid</test>
@@ -1143,7 +1143,7 @@
             </references>
         </rule>
         <rule object="ExtensionSchemaObject">
-            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="1"/>
             <description>Extension schemas shall be specified using the PDF/A extension schema container schema defined in 6.6.2.3.3. All fields described in each 
 			of the tables in 6.6.2.3.3 shall be present in any extension schema container schema.</description>
             <test>containsUndefinedFields == false</test>
@@ -1154,7 +1154,7 @@
             <references/>
         </rule>
         <rule object="ExtensionSchemasContainer">
-            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="2"/>
             <description>The extension schema container schema uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/extension/&quot;. 
 			The required schema namespace prefix is pdfaExtension. pdfaExtension:schemas - Bag Schema - Description of extension schemas</description>
             <test>isValidBag == true &amp;&amp; prefix == &quot;pdfaExtension&quot;</test>
@@ -1165,7 +1165,7 @@
             <references/>
         </rule>
         <rule object="ExtensionSchemaDefinition">
-            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="3"/>
             <description>The Schema type is an XMP structure containing the definition of an extension schema. The field namespace URI is &quot;http://www.aiim.org/pdfa/ns/schema#&quot;. 
 			The required field namespace prefix is pdfaSchema. The Schema type includes the following fields: pdfaSchema:schema (Text), pdfaSchema:namespaceURI (URI), pdfaSchema:prefix (Text), 
 			pdfaSchema:property (Seq Property), pdfaSchema:valueType (Seq ValueType).</description>
@@ -1181,7 +1181,7 @@
             <references/>
         </rule>
         <rule object="ExtensionSchemaProperty">
-            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="4"/>
             <description>The Property type defined is an XMP structure containing the definition of a schema property. The
 		field namespace URI is &quot;http://www.aiim.org/pdfa/ns/property#&quot;. The required field namespace prefix is
 		pdfaProperty. The Property type includes the following fields: pdfaProperty:name (Text), pdfaProperty:valueType (Open Choice of Text), 
@@ -1197,7 +1197,7 @@
             <references/>
         </rule>
         <rule object="ExtensionSchemaValueType">
-            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="5"/>
+            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="5"/>
             <description>The ValueType type is an XMP structure containing the definition of all property value
 		types used by embedded extension schemas that are not defined in the XMP Specification. The field namespace URI is &quot;http://www.aiim.org/pdfa/ns/type#&quot;. 
 		The required field namespace prefix is pdfaType. The ValueType type includes the following fields: pdfaType:type (Text), pdfaType:namespaceURI (URI), 
@@ -1214,7 +1214,7 @@
             <references/>
         </rule>
         <rule object="ExtensionSchemaField">
-            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="6"/>
+            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="6"/>
             <description>The Field type defined in Table 6 is an XMP structure containing the definition of a property value type field. The field 
 		namespace URI is &quot;http://www.aiim.org/pdfa/ns/field#&quot;. The required field namespace prefix is pdfaField. The Field type contains the following fields:
 		pdfaField:name (Text), pdfaField:valueType (Open Choice of Text), pdfaField:description (Text).</description>
@@ -1228,7 +1228,7 @@
             <references/>
         </rule>
         <rule object="XMPProperty">
-            <id specification="ISO_19005_2" clause="6.6.2.3" testNumber="7"/>
+            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="7"/>
             <description>All properties specified in XMP form shall use either the predefined schemas defined in the XMP Specification,
 			ISO 19005-1 or this part of ISO 19005, or any extension schemas that comply with 6.6.2.3.2.</description>
             <test>(isPredefinedInXMP2005 == true || isDefinedInMainPackage == true || isDefinedInCurrentPackage == true) &amp;&amp; isValueTypeCorrect == true</test>
@@ -1241,7 +1241,7 @@
             <references/>
         </rule>
         <rule object="MainXMPPackage">
-            <id specification="ISO_19005_2" clause="6.6.4" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.6.4" testNumber="1"/>
             <description>The PDF/A version and conformance level of a file shall be specified using the PDF/A Identification extension schema.</description>
             <test>Identification_size == 1</test>
             <error>
@@ -1251,11 +1251,11 @@
             <references/>
         </rule>
         <rule object="PDFAIdentification">
-            <id specification="ISO_19005_2" clause="6.6.4" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.6.4" testNumber="2"/>
             <description>The value of pdfaid:part shall be the part number of ISO 19005 to which the file conforms.</description>
-            <test>part == 2</test>
+            <test>part == 3</test>
             <error>
-                <message>The &quot;part&quot; property of the PDF/A Identification Schema is %1 instead of 2 for PDF/A-2 conforming file.</message>
+                <message>The &quot;part&quot; property of the PDF/A Identification Schema is %1 instead of 3 for PDF/A-3 conforming file.</message>
                 <arguments>
                     <argument>part</argument>
                 </arguments>
@@ -1263,12 +1263,12 @@
             <references/>
         </rule>
         <rule object="PDFAIdentification">
-            <id specification="ISO_19005_2" clause="6.6.4" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.6.4" testNumber="3"/>
             <description>A Level A conforming file shall specify the value of pdfaid:conformance as A. A Level B conforming file shall specify the value of 
 			pdfaid:conformance as B. A Level U conforming file shall specify the value of pdfaid:conformance as U.</description>
-            <test>conformance == &quot;U&quot; || conformance == &quot;A&quot;</test>
+            <test>conformance == &quot;A&quot;</test>
             <error>
-                <message>The &quot;conformance&quot; property of the PDF/A Identification Schema is %1 instead of &quot;U&quot; for PDF/A-2U conforming file.</message>
+                <message>The &quot;conformance&quot; property of the PDF/A Identification Schema is %1 instead of &quot;A&quot; for PDF/A-3A conforming file.</message>
                 <arguments>
                     <argument>conformance</argument>
                 </arguments>
@@ -1276,7 +1276,7 @@
             <references/>
         </rule>
         <rule object="PDFAIdentification">
-            <id specification="ISO_19005_2" clause="6.6.4" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.6.4" testNumber="4"/>
             <description>The PDF/A Identification schema defined in Table 8 uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/id/&quot;. 
 			The required schema namespace prefix is pdfaid. It contains the following fields: pdfaid:part (Open Choice of Integer), 
 			pdfaid:amd (Open Choice of Text), pdfaid:corr (Open Choice of Text), pdfaid:conformance (Open Choice of Text)</description>
@@ -1289,19 +1289,56 @@
             </error>
             <references/>
         </rule>
-        <rule object="EmbeddedFile">
-            <id specification="ISO_19005_2" clause="6.8" testNumber="1"/>
-            <description>A file specification dictionary, as defined in ISO 32000-1:2008, 7.11.3, may contain the EF key, provided that the embedded file is
-			compliant with either ISO 19005-1 or this part of ISO 19005.</description>
-            <test>isValidPDFA12 == true</test>
+        <rule object="CosDocument">
+            <id specification="ISO_19005_3" clause="6.7.2" testNumber="1"/>
+            <description>The document catalog dictionary shall include a MarkInfo dictionary containing an entry, Marked, whose value shall be true.</description>
+            <test>Marked == true</test>
             <error>
-                <message>An embedded file does not comply to either ISO 19005-1 or ISO 19005-2</message>
+                <message>/Marked entry of the MarkInfo dictionary is not present in the document catalog or is set to false</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.7.1"/>
+            </references>
+        </rule>
+        <rule object="PDDocument">
+            <id specification="ISO_19005_3" clause="6.7.3" testNumber="1"/>
+            <description>The logical structure of the conforming file shall be described by a structure hierarchy rooted in the StructTreeRoot entry 
+			of the document's Catalog dictionary, as described in ISO 32000-1:2008, 14.7.</description>
+            <test>StructTreeRoot_size == 1</test>
+            <error>
+                <message>StructTreeRoot entry is not present in the document catalog</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="14.7"/>
+            </references>
+        </rule>
+        <rule object="PDStructElem">
+            <id specification="ISO_19005_3" clause="6.7.3" testNumber="2"/>
+            <description>Each structure element dictionary in the structure hierarchy shall have a Type entry with the name value of StructElem</description>
+            <test>Type == &quot;StructElem&quot;</test>
+            <error>
+                <message>Missing or invalid Type entry in the structure element dictionary</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="PDF 1.4 Reference" clause="9.6.1"/>
+            </references>
+        </rule>
+        <rule object="EmbeddedFile">
+            <id specification="ISO_19005_3" clause="6.8" testNumber="1"/>
+            <description>The MIME type of an embedded file, or a subset of a file, shall be specified using the Subtype key of the file specification dictionary.
+			If the MIME type is not known, the &quot;application/octet-stream&quot; shall be used.</description>
+            <test>Subtype != null</test>
+            <error>
+                <message>An embedded file dictionary doe snot contain the MIME type information (Subtype entry)</message>
                 <arguments/>
             </error>
             <references/>
         </rule>
         <rule object="CosFileSpecification">
-            <id specification="ISO_19005_2" clause="6.8" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.8" testNumber="2"/>
             <description>The file specification dictionary for an embedded file shall contain the F and UF keys</description>
             <test>EF_size == 0 || (F != null &amp;&amp; UF != null)</test>
             <error>
@@ -1310,8 +1347,19 @@
             </error>
             <references/>
         </rule>
+        <rule object="CosFileSpecification">
+            <id specification="ISO_19005_3" clause="6.8" testNumber="3"/>
+            <description>In order to enable identification of the relationship between the file specification dictionary and the content that is referring to it,
+			a new (required) key has been defined and its presence (in the dictionary) is required.</description>
+            <test>AFRelationship != null</test>
+            <error>
+                <message>The file specification dictionary for an embedded file does not contain the AFRelationship key</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
         <rule object="PDOCConfig">
-            <id specification="ISO_19005_2" clause="6.9" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.9" testNumber="1"/>
             <description>Each optional content configuration dictionary that forms the value of the D key, or that is an element in the array that forms the 
 		value of the Configs key in the OCProperties dictionary, shall contain the Name key.</description>
             <test>Name != null &amp;&amp; Name.length() &gt; 0</test>
@@ -1322,7 +1370,7 @@
             <references/>
         </rule>
         <rule object="PDOCConfig">
-            <id specification="ISO_19005_2" clause="6.9" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.9" testNumber="2"/>
             <description>Each optional content configuration dictionary shall contain the Name key, whose value shall be unique amongst all optional content configuration 
 			dictionaries within the PDF/A-2 file.</description>
             <test>hasDuplicateName == false</test>
@@ -1333,7 +1381,7 @@
             <references/>
         </rule>
         <rule object="PDOCConfig">
-            <id specification="ISO_19005_2" clause="6.9" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.9" testNumber="3"/>
             <description>If an optional content configuration dictionary contains the Order key, the array which is the value of this Order key shall contain references 
 			to all OCGs in the conforming file.</description>
             <test>doesOrderContainAllOCGs == true</test>
@@ -1344,7 +1392,7 @@
             <references/>
         </rule>
         <rule object="PDOCConfig">
-            <id specification="ISO_19005_2" clause="6.9" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.9" testNumber="4"/>
             <description>The AS key shall not appear in any optional content configuration dictionary.</description>
             <test>AS == null</test>
             <error>
@@ -1354,7 +1402,7 @@
             <references/>
         </rule>
         <rule object="PDDocument">
-            <id specification="ISO_19005_2" clause="6.10" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.10" testNumber="1"/>
             <description>There shall be no AlternatePresentations entry in the document's name dictionary</description>
             <test>containsAlternatePresentations == false</test>
             <error>
@@ -1364,7 +1412,7 @@
             <references/>
         </rule>
         <rule object="PDPage">
-            <id specification="ISO_19005_2" clause="6.10" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.10" testNumber="2"/>
             <description>There shall be no PresSteps entry in any Page dictionary</description>
             <test>containsPresSteps == false</test>
             <error>
@@ -1374,7 +1422,7 @@
             <references/>
         </rule>
         <rule object="CosDocument">
-            <id specification="ISO_19005_2" clause="6.11" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.11" testNumber="1"/>
             <description>The document catalog shall not contain the Requirements key</description>
             <test>Requirements == null</test>
             <error>

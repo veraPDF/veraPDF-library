@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_2_U">
-    <details creator="veraPDF Consortium" created="2016-05-03T12:21:32.383-03:00">
-        <name>PDF/A-2U validation profile</name>
-        <description>Validation rules against ISO 19005-2:2011, Level U</description>
+<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_2_A">
+    <details creator="veraPDF Consortium" created="2016-05-03T12:21:28.188-03:00">
+        <name>PDF/A-2A validation profile</name>
+        <description>Validation rules against ISO 19005-2:2011, Level A</description>
     </details>
     <hash></hash>
     <rules>
@@ -1266,9 +1266,9 @@
             <id specification="ISO_19005_2" clause="6.6.4" testNumber="3"/>
             <description>A Level A conforming file shall specify the value of pdfaid:conformance as A. A Level B conforming file shall specify the value of 
 			pdfaid:conformance as B. A Level U conforming file shall specify the value of pdfaid:conformance as U.</description>
-            <test>conformance == &quot;U&quot; || conformance == &quot;A&quot;</test>
+            <test>conformance == &quot;A&quot;</test>
             <error>
-                <message>The &quot;conformance&quot; property of the PDF/A Identification Schema is %1 instead of &quot;U&quot; for PDF/A-2U conforming file.</message>
+                <message>The &quot;conformance&quot; property of the PDF/A Identification Schema is %1 instead of &quot;B&quot; for PDF/A-2b conforming file.</message>
                 <arguments>
                     <argument>conformance</argument>
                 </arguments>
@@ -1288,6 +1288,43 @@
                 <arguments/>
             </error>
             <references/>
+        </rule>
+        <rule object="CosDocument">
+            <id specification="ISO_19005_2" clause="6.7.2" testNumber="1"/>
+            <description>The document catalog dictionary shall include a MarkInfo dictionary containing an entry, Marked, whose value shall be true.</description>
+            <test>Marked == true</test>
+            <error>
+                <message>/Marked entry of the MarkInfo dictionary is not present in the document catalog or is set to false</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.7.1"/>
+            </references>
+        </rule>
+        <rule object="PDDocument">
+            <id specification="ISO_19005_2" clause="6.7.3" testNumber="1"/>
+            <description>The logical structure of the conforming file shall be described by a structure hierarchy rooted in the StructTreeRoot entry 
+			of the document's Catalog dictionary, as described in ISO 32000-1:2008, 14.7.</description>
+            <test>StructTreeRoot_size == 1</test>
+            <error>
+                <message>StructTreeRoot entry is not present in the document catalog</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="14.7"/>
+            </references>
+        </rule>
+        <rule object="PDStructElem">
+            <id specification="ISO_19005_2" clause="6.7.3" testNumber="2"/>
+            <description>Each structure element dictionary in the structure hierarchy shall have a Type entry with the name value of StructElem</description>
+            <test>Type == &quot;StructElem&quot;</test>
+            <error>
+                <message>Missing or invalid Type entry in the structure element dictionary</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="PDF 1.4 Reference" clause="9.6.1"/>
+            </references>
         </rule>
         <rule object="EmbeddedFile">
             <id specification="ISO_19005_2" clause="6.8" testNumber="1"/>
