@@ -186,7 +186,7 @@ public class ProcessorImpl implements Processor {
 					boolean flag = true;
 					while (flag) {
 						if (!path.toString().trim().isEmpty()) {
-							resFile = FileGenerator.createOutputFile(config.getFixMetadataFolder().toFile(),
+							resFile = FileGenerator.createOutputFile(path.toFile(),
 									new File(fileName).getName(), config.getMetadataFixerPrefix());
 						} else {
 							resFile = FileGenerator.createOutputFile(new File(fileName),
@@ -234,14 +234,6 @@ public class ProcessorImpl implements Processor {
 			validationProfile = Profiles.getVeraProfileDirectory().
 					getValidationProfileByFlavour(flavour);
 		} catch (NoSuchElementException re) {
-			//TODO: remove/update next two if statements when we will cover not only B conformance for 2 and 3 parts
-			if (flavour.getPart() == PDFAFlavour.Specification.ISO_19005_2) {
-				validationProfile = Profiles.getVeraProfileDirectory().
-						getValidationProfileByFlavour(PDFAFlavour.PDFA_2_B);
-			} else if (flavour.getPart() == PDFAFlavour.Specification.ISO_19005_3) {
-				validationProfile = Profiles.getVeraProfileDirectory().
-						getValidationProfileByFlavour(PDFAFlavour.PDFA_3_B);
-			}
 			LOGGER.warn(re);
 		}
 		return validationProfile;
