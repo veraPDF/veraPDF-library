@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_2_B">
-    <details creator="veraPDF Consortium" created="2016-05-03T10:28:21.025-03:00">
+    <details creator="veraPDF Consortium" created="2016-05-03T11:39:32.168-03:00">
         <name>PDF/A-2B validation profile</name>
         <description>Validation rules against ISO 19005-2:2011, Level B</description>
     </details>
@@ -298,13 +298,13 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDContentStream">
+        <rule object="PDResource">
             <id specification="ISO_19005_2" clause="6.2.2" testNumber="2"/>
             <description>A content stream that references other objects, such as images and fonts that are necessary to fully render or
 			process the stream, shall have an explicitly associated Resources dictionary as described in ISO 32000-1:2008, 7.8.3.</description>
-            <test>hasExplicitResources == true</test>
+            <test>isInherited == false</test>
             <error>
-                <message>A content stream does not have an explicitly associated Resources dictionary</message>
+                <message>A content stream refers to resources not defined in an explicitly associated Resources dictionary</message>
                 <arguments/>
             </error>
             <references>
@@ -350,7 +350,7 @@
             </references>
         </rule>
         <rule object="ICCInputProfile">
-            <id specification="ISO_19005_2" clause="6.2.4" testNumber="1"/>
+            <id specification="ISO_19005_2" clause="6.2.4.2" testNumber="1"/>
             <description>The profile that forms the stream of an ICCBased colour space shall conform to ICC.1:1998-09, ICC.1:2001-12, ICC.1:2003-09 or ISO 15076-1.</description>
             <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot; || deviceClass == &quot;scnr&quot; || deviceClass == &quot;spac&quot;) &amp;&amp; 
 			(colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot; || colorSpace == &quot;LAB &quot;) &amp;&amp; version &lt; 5.0</test>
@@ -363,7 +363,7 @@
             </references>
         </rule>
         <rule object="PDICCBasedCMYK">
-            <id specification="ISO_19005_2" clause="6.2.4" testNumber="2"/>
+            <id specification="ISO_19005_2" clause="6.2.4.2" testNumber="2"/>
             <description>Overprint mode (as set by the OPM value in an ExtGState dictionary) shall not be one (1) when an ICCBased CMYK colour space is used and 
 			when overprinting for stroke or fill or both is set to true.</description>
             <test>overprintFlag == false || OPM == 0</test>
@@ -375,8 +375,19 @@
                 <reference specification="ISO 32000-1:2008" clause="8.6.7"/>
             </references>
         </rule>
+        <rule object="PDDeviceRGB">
+            <id specification="ISO_19005_2" clause="6.2.4.3" testNumber="2"/>
+            <description>DeviceRGB shall only be used if a device independent DefaultRGB colour space has been set when the DeviceRGB colour space is used,
+			or if the file has a PDF/A OutputIntent that contains an RGB destination profile.</description>
+            <test>gOutputCS != null &amp;&amp; gOutputCS == &quot;RGB &quot;</test>
+            <error>
+                <message>DeviceRGB colour space is used without RGB output intent profile</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
         <rule object="PDDeviceCMYK">
-            <id specification="ISO_19005_2" clause="6.2.4" testNumber="3"/>
+            <id specification="ISO_19005_2" clause="6.2.4.3" testNumber="3"/>
             <description>DeviceCMYK shall only be used if a device independent DefaultCMYK colour space has been set or if a DeviceN-based DefaultCMYK colour space
 			has been set when the DeviceCMYK colour space is used or the file has a PDF/A OutputIntent that contains a CMYK destination profile.</description>
             <test>gOutputCS != null &amp;&amp; gOutputCS == &quot;CMYK&quot;</test>
@@ -387,7 +398,7 @@
             <references/>
         </rule>
         <rule object="PDDeviceGray">
-            <id specification="ISO_19005_2" clause="6.2.4" testNumber="4"/>
+            <id specification="ISO_19005_2" clause="6.2.4.3" testNumber="4"/>
             <description>DeviceGray shall only be used if a device independent DefaultGray colour space has been set when the DeviceGray colour space is used,
 			or if a PDF/A OutputIntent is present.</description>
             <test>gOutputCS != null</test>
@@ -398,7 +409,7 @@
             <references/>
         </rule>
         <rule object="PDDeviceN">
-            <id specification="ISO_19005_2" clause="6.2.4" testNumber="5"/>
+            <id specification="ISO_19005_2" clause="6.2.4.4" testNumber="1"/>
             <description>For any spot colour used in a DeviceN or NChannel colour space, an entry in the Colorants dictionary shall be present.</description>
             <test>areColorantsPresent == true</test>
             <error>
@@ -410,7 +421,7 @@
             </references>
         </rule>
         <rule object="PDSeparation">
-            <id specification="ISO_19005_2" clause="6.2.4" testNumber="6"/>
+            <id specification="ISO_19005_2" clause="6.2.4.4" testNumber="2"/>
             <description>All Separation arrays within a single PDF/A-2 file (including those in Colorants dictionaries) that have the
 			same name shall have the same tintTransform and alternateSpace. In evaluating equivalence, the PDF
 			objects shall be compared, rather than the computational result of the use of those PDF objects. Compression
