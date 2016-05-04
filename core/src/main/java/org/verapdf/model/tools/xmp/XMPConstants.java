@@ -510,6 +510,7 @@ public class XMPConstants {
             "videoFrameSize", DIMENSIONS,
             "videoPixelAspectRatio", RATIONAL,
             "videoAlphaUnityIsTransparent", BOOLEAN,
+            "videoAlphaPremultipleColor", COLORANT,
             "videoCompressor", TEXT,
             "audioSampleRate", INTEGER,
             "audioCompressor", TEXT,
