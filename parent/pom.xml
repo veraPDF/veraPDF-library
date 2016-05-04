@@ -60,20 +60,20 @@
       <id>timurkamalov</id>
     </developer>
     <developer>
-      <email>timur.kamalov@duallab.com</email>
-      <name>Timur Kamalov</name>
-      <url>https://github.com/timurkamalov</url>
-      <organization>Dual Lab</organization>
-      <organizationUrl>http://www.duallab.com/</organizationUrl>
-      <id>timurkamalov</id>
-    </developer>
-    <developer>
       <email>dmitry.remezow@duallab.com</email>
-      <name>Maksim Bezrukov</name>
+      <name>Dmitry Remezow</name>
       <url>https://github.com/DmitryRemezow</url>
       <organization>Dual Lab</organization>
       <organizationUrl>http://www.duallab.com/</organizationUrl>
       <id>DmitryRemezow</id>
+    </developer>
+    <developer>
+      <email>sergey.shemyakov@duallab.com</email>
+      <name>Sergey Shemyakov</name>
+      <url>https://github.com/shem-sergey</url>
+      <organization>Dual Lab</organization>
+      <organizationUrl>http://www.duallab.com/</organizationUrl>
+      <id>shem-sergey</id>
     </developer>
     <developer>
       <email>carl@openpreservation.org</email>
