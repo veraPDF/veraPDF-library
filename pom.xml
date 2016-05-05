@@ -6,7 +6,7 @@
   <parent>
     <artifactId>verapdf-parent</artifactId>
     <groupId>org.verapdf</groupId>
-    <version>1.0.13</version>
+    <version>1.0.15</version>
     <relativePath>parent/pom.xml</relativePath>
   </parent>
 
@@ -29,6 +29,8 @@
   </scm>
 
   <properties>
+    <verapdf.model.version>[0.15.0,0.16.0)</verapdf.model.version>
+    <verapdf.xmp.version>[0.11.100,0.12.0)</verapdf.xmp.version>
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
   </properties>
@@ -51,6 +53,58 @@
       </plugin>
     </plugins>
   </build>
+
+  <dependencyManagement>
+    <dependencies>
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>nl.jqno.equalsverifier</groupId>
+        <artifactId>equalsverifier</artifactId>
+        <version>1.5.1</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.17</version>
+      </dependency>
+
+      <!-- Mozilla Rhino JavaScript engine -->
+      <dependency>
+        <groupId>rhino</groupId>
+        <artifactId>js</artifactId>
+        <version>1.7R2</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.verapdf</groupId>
+        <artifactId>pdf-model</artifactId>
+        <version>${verapdf.model.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.verapdf</groupId>
+        <artifactId>verapdf-xmp-core</artifactId>
+        <version>${verapdf.xmp.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.4</version>
+        <scope>test</scope>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
 
   <reporting>
     <plugins>

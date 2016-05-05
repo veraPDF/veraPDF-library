@@ -10,7 +10,7 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-parent</artifactId>
-  <version>1.0.13</version>
+  <version>1.0.15</version>
   <packaging>pom</packaging>
 
   <name>veraPDF Consortium parent </name>
@@ -128,6 +128,7 @@
     <java.version>1.7</java.version>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <mvn.assembly.version>2.5.5</mvn.assembly.version>
+    <mvn.clean.version>3.0.0</mvn.clean.version>
     <mvn.compiler.version>3.3</mvn.compiler.version>
     <mvn.deploy.version>2.8.2</mvn.deploy.version>
     <mvn.exec.version>1.4.0</mvn.exec.version>
@@ -139,12 +140,7 @@
     <mvn.source.version>2.4</mvn.source.version>
     <mvn.surefire.version>2.18.1</mvn.surefire.version>
     <mvn.versions.version>2.2</mvn.versions.version>
-    <verapdf.library.version>[0.15.0,0.16.0)</verapdf.library.version>
-    <verapdf.model.version>[0.15.0,0.16.0)</verapdf.model.version>
-    <verapdf.model.syntax.version>[0.12.0,0.13.0)</verapdf.model.syntax.version>
     <verapdf.timestamp>${maven.build.timestamp}</verapdf.timestamp>
-    <verapdf.xmp.version>[0.11.100,0.12.0)</verapdf.xmp.version>
-    <xtext.version>2.8.3</xtext.version>
   </properties>
 
   <build>
@@ -155,6 +151,12 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
           <version>${mvn.assembly.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>${mvn.clean.version}</version>
         </plugin>
 
         <plugin>
@@ -261,65 +263,6 @@
       </plugins>
     </pluginManagement>
   </build>
-
-  <dependencyManagement>
-    <dependencies>
-
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.12</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>nl.jqno.equalsverifier</groupId>
-        <artifactId>equalsverifier</artifactId>
-        <version>1.5.1</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.17</version>
-      </dependency>
-
-      <!-- Mozilla Rhino JavaScript engine -->
-      <dependency>
-        <groupId>rhino</groupId>
-        <artifactId>js</artifactId>
-        <version>1.7R2</version>
-      </dependency>
-
-      <!-- veraPDF Project dependencies -->
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>core</artifactId>
-        <version>${verapdf.library.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>pdf-model</artifactId>
-        <version>${verapdf.model.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>verapdf-xmp-core</artifactId>
-        <version>${verapdf.xmp.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>commons-io</groupId>
-        <artifactId>commons-io</artifactId>
-        <version>2.4</version>
-        <scope>test</scope>
-      </dependency>
-
-    </dependencies>
-  </dependencyManagement>
 
   <profiles>
     <profile>
