@@ -1,3 +1,24 @@
+# Version 0.14 (May 5, 2016)
+
+This beta release features Transparency and Unicode character map validation in
+PDF/A-2 levels B and U.
+
+## Features
+- Conformance checker:
+  - added all transparency-related validation rules in PDF/A-2 and PDF/A-3
+  - added full Level U support in PDF/A-2 and PDF/A-3
+    code refactoring to synchronize GUI, API and CLI interfaces
+  - PDF/A-1B fix: check both Tiling patterns used as different fill and stroke
+    colour spaces in the same drawing operations
+  - added initial versions of PDF/A-2U, PDF/A-2A, PDF/A-3U, PDF/A-3A validation
+    profiles. We now have initial validation for all PDF/A flavours.
+
+## Test corpus:
+  - added a further 65 atomic test files for PDF/A-2 specific requirements
+
+## Infrastructure:
+  - a demo of the REST interface is available at http://demo.verapdf.org
+
 # Version 0.12 (March 31, 2016)
 
 This beta release features improved PDF/A-2b and PDF/A-3b validation and the fully featured REST API.
