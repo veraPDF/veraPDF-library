@@ -307,7 +307,7 @@ public class ProcessorImpl implements Processor {
 								 Config config) throws IOException {
 		if (validationResult != null) {
 			String reportSummary = (validationResult.isCompliant() ?
-					"PASS " : "FAIL ") + fileDetails.getName();
+					"PASS " : "FAIL ") + fileDetails.getName() + "\n";
 			reportOutputStream.write(reportSummary.getBytes());
 			if (config.isVerboseCli()) {
 				Set<RuleId> ruleIds = new HashSet<>();
@@ -317,7 +317,7 @@ public class ProcessorImpl implements Processor {
 					}
 				}
 				for (RuleId id : ruleIds) {
-					String reportRuleSummary = id.getClause() + "-" + id.getTestNumber();
+					String reportRuleSummary = id.getClause() + "-" + id.getTestNumber() + "\n";
 					reportOutputStream.write(reportRuleSummary.getBytes());
 				}
 			}
