@@ -1,10 +1,10 @@
 package org.verapdf.model.tools.xmp;
 
-import java.util.List;
-import java.util.regex.Pattern;
-
 import com.adobe.xmp.XMPConst;
 import com.adobe.xmp.impl.VeraPDFXMPNode;
+
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @author Maksim Bezrukov
@@ -150,10 +150,10 @@ public class SchemasDefinitionCreator {
                 ValidatorsContainerCreator.getPredefinedContainerForPDFA_1(isClosedFieldsCheck),
                 isClosedFieldsCheck
         );
-        registerStructureTypeForSchema(XMPConstants.PHOTOSHOP_DIFFER_1, schemas);
-        registerStructureTypeForSchema(XMPConstants.EXIF_WITHOUT_RESTRICTED_FIELD_DIFFER_1, schemas);
-        registerRestrictedSimpleFieldForSchema(XMPConstants.PDFA_IDENTIFICATION_RESTRICTED_FIELD_DIFFER_1, schemas, isClosedFieldsCheck);
-        registerRestrictedSimpleFieldForSchema(XMPConstants.EXIF_RESTRICTED_FIELD_DIFFER_1, schemas, isClosedFieldsCheck);
+        registerStructureTypeForSchema(XMPConstants.getPhotoshopDiffer1(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getExifWithoutRestrictedFieldDiffer1(), schemas);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.getPdfaIdentificationRestrictedFieldDiffer1(), schemas, isClosedFieldsCheck);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.getExifRestrictedFieldDiffer1(), schemas, isClosedFieldsCheck);
         return schemas;
     }
 
@@ -162,22 +162,23 @@ public class SchemasDefinitionCreator {
                 ValidatorsContainerCreator.getPredefinedContainerForPDFA_2_3(isClosedFieldsCheck),
                 isClosedFieldsCheck
         );
-        registerStructureTypeForSchema(XMPConstants.PDFA_IDENTIFICATION_SPECIFIED_2_3, schemas);
-        registerStructureTypeForSchema(XMPConstants.XMP_BASIC_SPECIFIED_2_3, schemas);
-        registerStructureTypeForSchema(XMPConstants.XMP_PAGED_TEXT_SPECIFIED_2_3, schemas);
-        registerStructureTypeForSchema(XMPConstants.XMP_DYNAMIC_MEDIA_WITHOUT_RESTRICTED_FIELD_SPECIFIED_2_3, schemas);
-        registerStructureTypeForSchema(XMPConstants.PHOTOSHOP_DIFFER_2_3, schemas);
-        registerStructureTypeForSchema(XMPConstants.CAMERA_RAW_WITHOUT_RESTRICTED_FIELD_SPECIFIED_2_3, schemas);
-        registerStructureTypeForSchema(XMPConstants.EXIF_WITHOUT_RESTRICTED_FIELD_DIFFER_2_3, schemas);
-        registerStructureTypeForSchema(XMPConstants.AUX_SPECIFIED_2_3, schemas);
-        registerRestrictedSimpleFieldForSchema(XMPConstants.PDFA_IDENTIFICATION_RESTRICTED_FIELD_DIFFER_2_3, schemas, isClosedFieldsCheck);
-        registerRestrictedSimpleFieldForSchema(XMPConstants.XMP_DYNAMIC_MEDIA_RESTRICTED_FIELD_SPECIFIED_2_3, schemas, isClosedFieldsCheck);
-        registerRestrictedSimpleFieldForSchema(XMPConstants.CAMERA_RAW_RESTRICTED_FIELD_SPECIFIED_2_3, schemas, isClosedFieldsCheck);
-        registerRestrictedSimpleFieldForSchema(XMPConstants.EXIF_RESTRICTED_FIELD_DIFFER_2_3, schemas, isClosedFieldsCheck);
+        registerStructureTypeForSchema(XMPConstants.getPdfaIdentificationSpecified23(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getXmpBasicSpecified23(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getXmpPagedTextSpecified23(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getXmpDynamicMediaWithoutRestrictedFieldSpecified23(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getPhotoshopDiffer23(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getCameraRawWithoutRestrictedFieldSpecified23(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getExifWithoutRestrictedFieldDiffer23(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getAuxSpecified23(), schemas);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.getPdfaIdentificationRestrictedFieldDiffer23(), schemas, isClosedFieldsCheck);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.getXmpDynamicMediaRestrictedFieldSpecified23(), schemas, isClosedFieldsCheck);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.getCameraRawRestrictedFieldSpecified23(), schemas, isClosedFieldsCheck);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.getExifRestrictedFieldDiffer23(), schemas, isClosedFieldsCheck);
+        String[] cameraRawSeqOfPointsSpecified23 = XMPConstants.getCameraRawSeqOfPointsSpecified23();
         registerRestrictedSeqTextFieldForSchema(
-                XMPConstants.CAMERA_RAW_SEQ_OF_POINTS_SPECIFIED_2_3[0],
-                XMPConstants.CAMERA_RAW_SEQ_OF_POINTS_SPECIFIED_2_3[1],
-                XMPConstants.CAMERA_RAW_SEQ_OF_POINTS_SPECIFIED_2_3[2],
+                cameraRawSeqOfPointsSpecified23[0],
+                cameraRawSeqOfPointsSpecified23[1],
+                cameraRawSeqOfPointsSpecified23[2],
                 XMPConstants.SEQ + " " + XMPConstants.TEXT,
                 schemas,
                 isClosedFieldsCheck
@@ -187,23 +188,23 @@ public class SchemasDefinitionCreator {
 
     private static PredefinedSchemasDefinition createBasicSchemasDefinition(ValidatorsContainer typeContainer, boolean isClosedFieldsCheck) {
         PredefinedSchemasDefinition schemas = new PredefinedSchemasDefinition(typeContainer);
-        registerStructureTypeForSchema(XMPConstants.PDFA_IDENTIFICATION_COMMON, schemas);
-        registerStructureTypeForSchema(XMPConstants.DUBLIN_CORE_COMMON, schemas);
-        registerStructureTypeForSchema(XMPConstants.XMP_BASIC_COMMON, schemas);
-        registerStructureTypeForSchema(XMPConstants.XMP_RIGHTS_COMMON, schemas);
-        registerStructureTypeForSchema(XMPConstants.XMP_MEDIA_MANAGEMENT_COMMON, schemas);
-        registerStructureTypeForSchema(XMPConstants.XMP_BASIC_JOB_COMMON, schemas);
-        registerStructureTypeForSchema(XMPConstants.XMP_PAGED_TEXT_COMMON, schemas);
-        registerStructureTypeForSchema(XMPConstants.ADOBE_PDF_COMMON, schemas);
-        registerStructureTypeForSchema(XMPConstants.PHOTOSHOP_COMMON, schemas);
-        registerStructureTypeForSchema(XMPConstants.TIFF_WITHOUT_RESTRICTED_FIELD_COMMON, schemas);
-        registerStructureTypeForSchema(XMPConstants.EXIF_WITHOUT_RESTRICTED_FIELD_COMMON, schemas);
-        registerRestrictedSimpleFieldForSchema(XMPConstants.TIFF_RESTRICTED_FIELD_COMMON, schemas, isClosedFieldsCheck);
-        registerRestrictedSimpleFieldForSchema(XMPConstants.EXIF_RESTRICTED_FIELD_COMMON, schemas, isClosedFieldsCheck);
+        registerStructureTypeForSchema(XMPConstants.getPdfaIdentificationCommon(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getDublinCoreCommon(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getXmpBasicCommon(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getXmpRightsCommon(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getXmpMediaManagementCommon(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getXmpBasicJobCommon(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getXmpPagedTextCommon(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getAdobePdfCommon(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getPhotoshopCommon(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getTiffWithoutRestrictedFieldCommon(), schemas);
+        registerStructureTypeForSchema(XMPConstants.getExifWithoutRestrictedFieldCommon(), schemas);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.getTiffRestrictedFieldCommon(), schemas, isClosedFieldsCheck);
+        registerRestrictedSimpleFieldForSchema(XMPConstants.getExifRestrictedFieldCommon(), schemas, isClosedFieldsCheck);
         registerSeqChoiceFieldForSchema(
                 XMPConst.NS_TIFF,
                 "YCbCrSubSampling",
-                XMPConstants.TIFF_YCBCRSUBSAMPLING_SEQ_CHOICE_COMMON,
+                XMPConstants.getTiffYcbcrsubsamplingSeqChoiceCommon(),
                 XMPConstants.SEQ + " " + XMPConstants.INTEGER,
                 schemas,
                 isClosedFieldsCheck
@@ -211,7 +212,7 @@ public class SchemasDefinitionCreator {
         registerSeqChoiceFieldForSchema(
                 XMPConst.NS_EXIF,
                 "ComponentsConfiguration",
-                XMPConstants.EXIF_COMPONENTS_CONFIGURATION_CLOSED_SEQ_CHOICE_COMMON,
+                XMPConstants.getExifComponentsConfigurationClosedSeqChoiceCommon(),
                 XMPConstants.SEQ + " " + XMPConstants.INTEGER,
                 schemas,
                 isClosedFieldsCheck
