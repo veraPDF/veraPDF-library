@@ -1,12 +1,12 @@
 package org.verapdf.model.tools.xmp;
 
+import com.adobe.xmp.XMPConst;
+import com.adobe.xmp.impl.VeraPDFXMPNode;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.impl.VeraPDFXMPNode;
 
 /**
  * @author Maksim Bezrukov
@@ -58,68 +58,68 @@ public class ValidatorsContainerCreator {
         registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.COLORANT,
                 isClosedFieldsCheck,
-                XMPConstants.COLORANT_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
-                XMPConstants.COLORANT_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.getColorantWithoutRestrictedFieldStructure(),
+                XMPConstants.getColorantRestrictedFieldStructure(),
                 container);
-        registerStructureTypeForContainer(XMPConstants.FONT, XMPConstants.FONT_STRUCTURE, container);
-        registerStructureTypeForContainer(XMPConstants.BEAT_SPLICE_STRETCH, XMPConstants.BEAT_SPLICE_STRETCH_STRUCTURE, container);
+        registerStructureTypeForContainer(XMPConstants.FONT, XMPConstants.getFontStructure(), container);
+        registerStructureTypeForContainer(XMPConstants.BEAT_SPLICE_STRETCH, XMPConstants.getBeatSpliceStretchStructure(), container);
         registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.MARKER,
                 isClosedFieldsCheck,
-                XMPConstants.MARKER_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
-                XMPConstants.MARKER_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.getMarkerWithoutRestrictedFieldStructure(),
+                XMPConstants.getMarkerRestrictedFieldStructure(),
                 container);
-        registerStructureTypeForContainer(XMPConstants.MEDIA, XMPConstants.MEDIA_STRUCTURE, container);
+        registerStructureTypeForContainer(XMPConstants.MEDIA, XMPConstants.getMediaStructure(), container);
         registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.PROJECT_LINK,
                 isClosedFieldsCheck,
-                XMPConstants.PROJECT_LINK_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
-                XMPConstants.PROJECT_LINK_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.getProjectLinkWithoutRestrictedFieldStructure(),
+                XMPConstants.getProjectLinkRestrictedFieldStructure(),
                 container);
         registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.RESAMPLE_STRETCH,
                 isClosedFieldsCheck,
-                XMPConstants.RESAMPLE_STRETCH_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
-                XMPConstants.RESAMPLE_STRETCH_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.getResampleStretchWithoutRestrictedFieldStructure(),
+                XMPConstants.getResampleStretchRestrictedFieldStructure(),
                 container);
-        registerStructureTypeForContainer(XMPConstants.TIME, XMPConstants.TIME_STRUCTURE, container);
+        registerStructureTypeForContainer(XMPConstants.TIME, XMPConstants.getTimeStructure(), container);
         registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.TIMECODE,
                 isClosedFieldsCheck,
-                XMPConstants.TIMECODE_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
-                XMPConstants.TIMECODE_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.getTimecodeWithoutRestrictedFieldStructure(),
+                XMPConstants.getTimecodeRestrictedFieldStructure(),
                 container);
         registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.TIME_SCALE_STRETCH,
                 isClosedFieldsCheck,
-                XMPConstants.TIME_SCALE_STRETCH_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
-                XMPConstants.TIME_SCALE_STRETCH_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.getTimeScaleStretchWithoutRestrictedFieldStructure(),
+                XMPConstants.getTimeScaleStretchRestrictedFieldStructure(),
                 container);
         return container;
     }
 
     private static ValidatorsContainer createBasicValidatorsContainer(boolean isClosedFieldsCheck) {
         ValidatorsContainer container = new ValidatorsContainer();
-        registerStructureTypeForContainer(XMPConstants.DIMENSIONS, XMPConstants.DIMENSIONS_STRUCTURE, container);
+        registerStructureTypeForContainer(XMPConstants.DIMENSIONS, XMPConstants.getDimensionsStructure(), container);
         registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.THUMBNAIL,
                 isClosedFieldsCheck,
-                XMPConstants.THUMBNAIL_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
-                XMPConstants.THUMBNAIL_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.getThumbnailWithoutRestrictedFieldStructure(),
+                XMPConstants.getThumbnailRestrictedFieldStructure(),
                 container);
-        registerStructureTypeForContainer(XMPConstants.RESOURCE_EVENT, XMPConstants.RESOURCE_EVENT_STRUCTURE, container);
-        registerStructureTypeForContainer(XMPConstants.RESOURCE_REF, XMPConstants.RESOURCE_REF_STRUCTURE, container);
-        registerStructureTypeForContainer(XMPConstants.VERSION, XMPConstants.VERSION_STRUCTURE, container);
-        registerStructureTypeForContainer(XMPConstants.JOB, XMPConstants.JOB_STRUCTURE, container);
+        registerStructureTypeForContainer(XMPConstants.RESOURCE_EVENT, XMPConstants.getResourceEventStructure(), container);
+        registerStructureTypeForContainer(XMPConstants.RESOURCE_REF, XMPConstants.getResourceRefStructure(), container);
+        registerStructureTypeForContainer(XMPConstants.VERSION, XMPConstants.getVersionStructure(), container);
+        registerStructureTypeForContainer(XMPConstants.JOB, XMPConstants.getJobStructure(), container);
         registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.FLASH,
                 isClosedFieldsCheck,
-                XMPConstants.FLASH_WITHOUT_RESTRICTED_FIELD_STRUCTURE,
-                XMPConstants.FLASH_RESTRICTED_FIELD_STRUCTURE,
+                XMPConstants.getFlashWithoutRestrictedFieldStructure(),
+                XMPConstants.getFlashRestrictedFieldStructure(),
                 container);
-        registerStructureTypeForContainer(XMPConstants.OECF_SFR, XMPConstants.OECF_SFR_STRUCTURE, container);
-        registerStructureTypeForContainer(XMPConstants.CFA_PATTERN, XMPConstants.CFA_PATTERN_STRUCTURE, container);
-        registerStructureTypeForContainer(XMPConstants.DEVICE_SETTINGS, XMPConstants.DEVICE_SETTINGS_STRUCTURE, container);
+        registerStructureTypeForContainer(XMPConstants.OECF_SFR, XMPConstants.getOecfSfrStructure(), container);
+        registerStructureTypeForContainer(XMPConstants.CFA_PATTERN, XMPConstants.getCfaPatternStructure(), container);
+        registerStructureTypeForContainer(XMPConstants.DEVICE_SETTINGS, XMPConstants.getDeviceSettingsStructure(), container);
         return container;
     }
 
