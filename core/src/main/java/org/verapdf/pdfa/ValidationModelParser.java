@@ -3,10 +3,9 @@
  */
 package org.verapdf.pdfa;
 
+import org.verapdf.core.ModelParsingException;
 import org.verapdf.model.coslayer.CosDocument;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-
-import java.io.IOException;
 
 /**
  * Simple interface that needs a little more work. This abstracts the parsing of
@@ -19,10 +18,10 @@ public interface ValidationModelParser {
 	/**
 	 * @return the {@link CosDocument} element that is the root object of the
 	 * validation model instance.
-	 * @throws IOException when there's a problem parsing or establishing the model
+	 * @throws ModelParsingException when there's a problem establishing the model
 	 *                     root.
 	 */
-	public org.verapdf.model.baselayer.Object getRoot() throws IOException;
+	public org.verapdf.model.baselayer.Object getRoot() throws ModelParsingException;
 
 	/**
 	 * @return flavour for which model has been parsed

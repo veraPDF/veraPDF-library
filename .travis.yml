@@ -1,13 +1,14 @@
 language: java
+sudo: required
+dist: trusty
 
 jdk:
   - openjdk7
+  - openjdk8
   - oraclejdk7
   - oraclejdk8
 
 branches:
   except:
     - /^v|d\d+\.\d+\.\d+$/
-
-install:
-  - mvn clean install -q
+    - /^jenkins-veraPDF-library-v|d\\d+\\.\\d+\\.\\d+$/

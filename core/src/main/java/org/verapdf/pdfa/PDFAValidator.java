@@ -2,6 +2,7 @@ package org.verapdf.pdfa;
 
 import java.io.IOException;
 
+import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.ValidationProfile;
@@ -38,10 +39,10 @@ public interface PDFAValidator {
      *         and details of failed checks and possibly passed checks,
      *         dependant upon configuration.
      * @throws ValidationException 
-     * @throws IOException 
+     * @throws ModelParsingException 
      * @throws IllegalArgumentException
      *             if the toValidate parameter is null PDFAValidationException
      *             if the validation process fails
      */
-    public ValidationResult validate(ValidationModelParser toValidate) throws ValidationException, IOException;
+    public ValidationResult validate(ValidationModelParser toValidate) throws ValidationException, ModelParsingException;
 }
