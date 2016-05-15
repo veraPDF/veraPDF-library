@@ -3,7 +3,6 @@
  */
 package org.verapdf.pdfa.validators;
 
-import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -16,15 +15,16 @@ import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
+import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.ValidationModelParser;
 import org.verapdf.pdfa.results.Location;
 import org.verapdf.pdfa.results.TestAssertion;
+import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.Rule;
 import org.verapdf.pdfa.validation.RuleId;
 import org.verapdf.pdfa.validation.ValidationProfile;
@@ -366,9 +366,9 @@ class BaseValidator implements PDFAValidator {
 
     @Override
     public ValidationResult validate(ValidationModelParser toValidate)
-            throws ValidationException, IOException {
+            throws ValidationException, ModelParsingException {
         try {
-        return this.validate(toValidate.getRoot());
+            return this.validate(toValidate.getRoot());
         } catch (RuntimeException e) {
             throw new ValidationException("Caught unexpected runtime exception during validation", e);
         }
