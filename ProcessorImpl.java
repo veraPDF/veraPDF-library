@@ -2,6 +2,7 @@ package org.verapdf.processor;
 
 import org.apache.log4j.Logger;
 import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
+import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.features.pb.PBFeatureParser;
 import org.verapdf.features.tools.FeaturesCollection;
@@ -26,6 +27,7 @@ import org.verapdf.report.*;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -247,7 +249,7 @@ public class ProcessorImpl implements Processor {
 				this.processingResult.setValidationSummary(
 						ProcessingResult.ValidationSummary.FILE_NOT_VALID);
 			}
-		} catch (IOException | ValidationException e) {
+		} catch (ModelParsingException | ValidationException e) {
 			LOGGER.error("Error in validation", e);
 			setUnsuccessfulValidation();
 			setUnsuccessfulMetadataFixing();
