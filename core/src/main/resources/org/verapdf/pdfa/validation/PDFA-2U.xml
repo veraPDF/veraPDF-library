@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_2_U">
-    <details creator="veraPDF Consortium" created="2016-05-03T12:21:32.383-03:00">
+    <details creator="veraPDF Consortium" created="2016-05-20T05:42:25.602-03:00">
         <name>PDF/A-2U validation profile</name>
         <description>Validation rules against ISO 19005-2:2011, Level U</description>
     </details>
@@ -107,7 +107,7 @@
             <id specification="ISO_19005_2" clause="6.1.7" testNumber="2"/>
             <description>The stream keyword shall be followed either by a CARRIAGE RETURN (0Dh) and LINE FEED (0Ah) character sequence or by a single LINE FEED (0Ah) 
 			character. The endstream keyword shall be preceded by an EOL marker.</description>
-            <test>streamKeywordCRLFCompliant &amp;&amp; endstreamKeywordEOLCompliant</test>
+            <test>streamKeywordCRLFCompliant == true &amp;&amp; endstreamKeywordEOLCompliant == true</test>
             <error>
                 <message>Spacings of keywords 'stream' and 'endstream' do not comply PDF/A specification</message>
                 <arguments/>
