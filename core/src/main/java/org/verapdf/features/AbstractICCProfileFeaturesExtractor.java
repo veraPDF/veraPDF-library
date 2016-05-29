@@ -11,14 +11,13 @@ import java.util.List;
  */
 public abstract class AbstractICCProfileFeaturesExtractor extends FeaturesExtractor {
 
-	@Override
-	final List<FeatureTreeNode> getFeatures(FeaturesData data) {
-		return getICCProfileFeatures((ICCProfileFeaturesData) data);
+	public AbstractICCProfileFeaturesExtractor(final String id, final String description) {
+		super(FeaturesObjectTypesEnum.ICCPROFILE, id, description);
 	}
 
 	@Override
-	final FeaturesObjectTypesEnum getType() {
-		return FeaturesObjectTypesEnum.ICCPROFILE;
+	final List<FeatureTreeNode> getFeatures(FeaturesData data) {
+		return getICCProfileFeatures((ICCProfileFeaturesData) data);
 	}
 
 	/**
