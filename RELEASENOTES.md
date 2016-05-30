@@ -1,3 +1,21 @@
+# Version 0.16 (May 31, 2016)
+
+This beta release features the full support of all PDF/A-2 and PDF/A-3 requirements (all levels). Together with earlier support of PDF/A-1 validation, it represents the first full support for all PDF/A parts and conformance levels.
+
+## Features
+- Conformance checker
+  - added validation of digital signature requirements
+  - added extraction of color space info from JPEG2000 images
+  - added validation of permissions dictionary (Parts 2 and 3)
+  - PDF/A-2B fix: correct implementation of CIDSystemInfo entry requrements
+
+## Test corpus:
+  - Added further 112 atomic test files for parts 2 and 3
+
+## Infrastructure:
+  - added support for all parts and conformance levels at http://demo.verapdf.org
+
+
 # Version 0.14 (May 5, 2016)
 
 This beta release features Transparency and Unicode character map validation in
@@ -7,7 +25,7 @@ PDF/A-2 levels B and U.
 - Conformance checker:
   - added all transparency-related validation rules in PDF/A-2 and PDF/A-3
   - added full Level U support in PDF/A-2 and PDF/A-3
-    code refactoring to synchronize GUI, API and CLI interfaces
+  - code refactoring to synchronize GUI, API and CLI interfaces
   - PDF/A-1B fix: check both Tiling patterns used as different fill and stroke
     colour spaces in the same drawing operations
   - added initial versions of PDF/A-2U, PDF/A-2A, PDF/A-3U, PDF/A-3A validation
