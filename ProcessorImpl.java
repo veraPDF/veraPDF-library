@@ -78,6 +78,14 @@ public class ProcessorImpl implements Processor {
                 featuresCollection = extractFeatures(parser, config);
             }
         } catch (ModelParsingException e) {
+            if(e.getCause() instanceof InvalidPasswordException) {
+                LOGGER.error("Error: " + fileDetails.getName()
+                        + " is an encrypted PDF file.", e);
+                setUnsuccessfulProcessing();
+                this.processingResult.addErrorMessage("Error in reading PDF file: "
+                        + e.getCause().getMessage());
+                return this.processingResult;
+            }
             LOGGER.error("Error: " + fileDetails.getName()
                     + " is not a PDF format file.", e);
             setUnsuccessfulProcessing();
