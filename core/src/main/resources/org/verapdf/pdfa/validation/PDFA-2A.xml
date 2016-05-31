@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_2_A">
-    <details creator="veraPDF Consortium" created="2016-05-20T05:42:36.635-03:00">
+    <details creator="veraPDF Consortium" created="2016-05-30T12:23:06.481-03:00">
         <name>PDF/A-2A validation profile</name>
         <description>Validation rules against ISO 19005-2:2011, Level A</description>
     </details>
@@ -31,7 +31,7 @@
         <rule object="CosDocument">
             <id specification="ISO_19005_2" clause="6.1.3" testNumber="1"/>
             <description>The file trailer dictionary shall contain the ID keyword whose value shall be File Identifiers as defined in ISO 32000-1:2008, 14.4</description>
-            <test>lastID != null</test>
+            <test>lastID != null &amp;&amp; lastID.length() &gt; 0</test>
             <error>
                 <message>Missing ID in the document trailer</message>
                 <arguments/>
@@ -1047,6 +1047,36 @@
                 <arguments/>
             </error>
             <references/>
+        </rule>
+        <rule object="PDSignature">
+            <id specification="ISO_19005_2" clause="6.4.3" testNumber="1"/>
+            <description>When computing the digest for the file, it shall be computed over the entire file, including the signature
+			dictionary but excluding the PDF Signature itself.</description>
+            <test>doesByteRangeCoverEntireDocument == true</test>
+            <error>
+                <message>ByteRanbe array of the digital signature does not cover the entire file (excluding the PDF Signature itself)</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 19005-2:2011" clause="Annex B"/>
+                <reference specification="ISO 32000-1:2008" clause="12.8.1"/>
+            </references>
+        </rule>
+        <rule object="PKCSDataObject">
+            <id specification="ISO_19005_2" clause="6.4.3" testNumber="2"/>
+            <description>The PDF Signature (a DER-encoded PKCS#7 binary data object) shall be placed into the Contents entry of
+			the signature dictionary. The PKCS#7 object shall conform to the PKCS#7 specification in RFC 2315. At
+			minimum, it shall include the signer's X.509 signing certificate and there shall only be a single signer (e.g.
+			a single &quot;SignerInfo&quot; structure) in the PDF Signature.</description>
+            <test>signingCertificatePresent == true &amp;&amp; SignerInfoCount == 1</test>
+            <error>
+                <message>The DER-encoded PKCS#7 binary data object representing a PDF Signature does not conform to PDF/A-2 requirements</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 19005-2:2011" clause="Annex B"/>
+                <reference specification="RFC 2315" clause=""/>
+            </references>
         </rule>
         <rule object="PDAction">
             <id specification="ISO_19005_2" clause="6.5.1" testNumber="1"/>
