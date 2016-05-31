@@ -11,14 +11,13 @@ import java.util.List;
  */
 public abstract class AbstractEmbeddedFileFeaturesExtractor extends FeaturesExtractor {
 
-	@Override
-	final List<FeatureTreeNode> getFeatures(FeaturesData data) {
-		return getEmbeddedFileFeatures((EmbeddedFileFeaturesData) data);
+	public AbstractEmbeddedFileFeaturesExtractor(final String id, final String description) {
+		super(FeaturesObjectTypesEnum.EMBEDDED_FILE, id, description);
 	}
 
 	@Override
-	final FeaturesObjectTypesEnum getType() {
-		return FeaturesObjectTypesEnum.EMBEDDED_FILE;
+	final List<FeatureTreeNode> getFeatures(FeaturesData data) {
+		return getEmbeddedFileFeatures((EmbeddedFileFeaturesData) data);
 	}
 
 	/**

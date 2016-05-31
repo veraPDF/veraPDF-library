@@ -9,14 +9,14 @@ import java.util.List;
  */
 public abstract class AbstractMetadataFeaturesExtractor extends FeaturesExtractor {
 
-    @Override
-    List<FeatureTreeNode> getFeatures(FeaturesData data) {
-        return getMetadataFeatures((MetadataFeaturesData) data);
+
+    public AbstractMetadataFeaturesExtractor(final String id, final String description) {
+        super(FeaturesObjectTypesEnum.METADATA, id, description);
     }
 
     @Override
-    FeaturesObjectTypesEnum getType() {
-        return FeaturesObjectTypesEnum.METADATA;
+    List<FeatureTreeNode> getFeatures(FeaturesData data) {
+        return getMetadataFeatures((MetadataFeaturesData) data);
     }
 
     /**

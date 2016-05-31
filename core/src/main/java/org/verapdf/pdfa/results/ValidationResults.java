@@ -199,11 +199,9 @@ public class ValidationResults {
      */
     public static String resultToXml(final ValidationResult toConvert,
             Boolean prettyXml) throws JAXBException, IOException {
-        String retVal = "";
         try (StringWriter writer = new StringWriter()) {
             toXml(toConvert, writer, prettyXml);
-            retVal = writer.toString();
-            return retVal;
+            return writer.toString();
         }
     }
 
