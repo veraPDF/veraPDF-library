@@ -1,11 +1,7 @@
 package org.verapdf.report;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -38,13 +34,6 @@ public final class HTMLReport {
      */
     public static void writeHTMLReport(InputStream source,
             OutputStream destination, String wikiPath) throws TransformerException, IOException{
-
-        TransformerFactory factory = TransformerFactory.newInstance();
-
-        Transformer transformer = factory.newTransformer(new StreamSource(
-                HTMLReport.class.getClassLoader().getResourceAsStream(
-                        "HTMLReportStylesheet.xsl")));
-
         String resultPath;
         if (wikiPath == null) {
             resultPath = "";
@@ -53,10 +42,9 @@ public final class HTMLReport {
         } else {
             resultPath = wikiPath + "/";
         }
-        transformer.setParameter("wikiPath", resultPath);
 
-        transformer.transform(new StreamSource(source), new StreamResult(
-                destination));
+        XsltTransformer.transform(source, HTMLReport.class.getClassLoader().getResourceAsStream(
+                "HTMLReportStylesheet.xsl"), destination, resultPath);
     }
 
 }
