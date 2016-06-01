@@ -40,6 +40,7 @@ public final class Config {
 	public static final PDFAFlavour DEFAULT_FLAVOUR = PDFAFlavour.PDFA_1_B;
 	public static final boolean DEFAULT_VERBOSE_CLI = false;
 	public static final boolean DEFAULT_PLUGINS_ENABLED = false;
+	public static final Path DEFAULT_POLICY_PROFILE = FileSystems.getDefault().getPath("");
 
 	private boolean showPassedRules;
 	private int maxNumberOfFailedChecks;
@@ -54,6 +55,7 @@ public final class Config {
 	private PDFAFlavour flavour;
 	private boolean verboseCli;
 	private boolean pluginsEnabled;
+	private Path policyProfilePath;
 
 	@Override
 	public boolean equals(Object o) {
@@ -63,10 +65,8 @@ public final class Config {
 		Config config = (Config) o;
 
 		if (showPassedRules != config.showPassedRules) return false;
-		if (maxNumberOfFailedChecks != config.maxNumberOfFailedChecks)
-			return false;
-		if (maxNumberOfDisplayedFailedChecks != config.maxNumberOfDisplayedFailedChecks)
-			return false;
+		if (maxNumberOfFailedChecks != config.maxNumberOfFailedChecks) return false;
+		if (maxNumberOfDisplayedFailedChecks != config.maxNumberOfDisplayedFailedChecks) return false;
 		if (isFixMetadata != config.isFixMetadata) return false;
 		if (verboseCli != config.verboseCli) return false;
 		if (pluginsEnabled != config.pluginsEnabled) return false;
@@ -80,7 +80,8 @@ public final class Config {
 		if (reportType != config.reportType) return false;
 		if (validationProfilePath != null ? !validationProfilePath.equals(config.validationProfilePath) : config.validationProfilePath != null)
 			return false;
-		return flavour == config.flavour;
+		if (flavour != config.flavour) return false;
+		return policyProfilePath != null ? policyProfilePath.equals(config.policyProfilePath) : config.policyProfilePath == null;
 
 	}
 
@@ -99,6 +100,7 @@ public final class Config {
 		result = 31 * result + (flavour != null ? flavour.hashCode() : 0);
 		result = 31 * result + (verboseCli ? 1 : 0);
 		result = 31 * result + (pluginsEnabled ? 1 : 0);
+		result = 31 * result + (policyProfilePath != null ? policyProfilePath.hashCode() : 0);
 		return result;
 	}
 
@@ -116,6 +118,7 @@ public final class Config {
 		this.flavour = DEFAULT_FLAVOUR;
 		this.verboseCli = DEFAULT_VERBOSE_CLI;
 		this.pluginsEnabled = DEFAULT_PLUGINS_ENABLED;
+		this.policyProfilePath = DEFAULT_POLICY_PROFILE;
 	}
 
 	/**
@@ -200,6 +203,20 @@ public final class Config {
 	private Path getValidationProfilePath() {
 		return validationProfilePath.toString().equals("") ?
 				null : validationProfilePath;
+	}
+
+	@XmlElement
+	@XmlJavaTypeAdapter(PathAdapter.class)
+	private Path getPolicyProfilePath() {
+		return policyProfilePath.toString().equals("") ?
+				null : policyProfilePath;
+	}
+
+	/**
+	 * @return path to the policy profile
+	 */
+	public Path getPolicyProfile() {
+		return policyProfilePath;
 	}
 
 	/**
@@ -418,6 +435,20 @@ public final class Config {
 	public void setValidationProfilePath(Path validationProfilePath) {
 		if(isValidProfilePath(validationProfilePath)) {
 			this.validationProfilePath = validationProfilePath;
+		} else {
+			throw new IllegalArgumentException("Path should be path to an existing and read acceptable file");
+		}
+	}
+
+	/**
+	 * Changes settings parameters
+	 *
+	 * @param policyProfilePath a path to the policy profile to be used in policy checks
+	 * @throws IllegalArgumentException parameter should be an empty path or a path to an existing and write acceptable file
+	 */
+	public void setPolicyProfilePath(Path policyProfilePath) {
+		if(isValidProfilePath(policyProfilePath)) {
+			this.policyProfilePath = policyProfilePath;
 		} else {
 			throw new IllegalArgumentException("Path should be path to an existing and read acceptable file");
 		}
