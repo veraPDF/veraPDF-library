@@ -5,6 +5,8 @@ import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Generating HTML validation report
@@ -42,9 +44,11 @@ public final class HTMLReport {
         } else {
             resultPath = wikiPath + "/";
         }
+        Map<String, String> arguments = new HashMap<>();
+        arguments.put("wikiPath", wikiPath);
 
         XsltTransformer.transform(source, HTMLReport.class.getClassLoader().getResourceAsStream(
-                "HTMLReportStylesheet.xsl"), destination, resultPath);
+                "HTMLReportStylesheet.xsl"), destination, arguments);
     }
 
 }

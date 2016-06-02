@@ -5,9 +5,8 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.Map;
 
 /**
  * @author Maksim Bezrukov
@@ -33,13 +32,17 @@ public final class XsltTransformer {
 	 *             file system exceptions
 	 */
 	public static void transform(InputStream source,
-								 InputStream xslt, OutputStream destination, String argument) throws TransformerException, IOException{
+								 InputStream xslt, OutputStream destination, Map<String, String> arguments) throws TransformerException, IOException{
 
 		TransformerFactory factory = TransformerFactory.newInstance();
 		Transformer transformer = factory.newTransformer(new StreamSource(xslt));
 
-		if (argument != null) {
-			transformer.setParameter("argument", argument);
+		if (arguments != null) {
+			for (Map.Entry<String, String> entry : arguments.entrySet()) {
+				if (entry.getKey() != null && entry.getValue() != null) {
+					transformer.setParameter(entry.getKey(), entry.getValue());
+				}
+			}
 		}
 
 		transformer.transform(new StreamSource(source), new StreamResult(
