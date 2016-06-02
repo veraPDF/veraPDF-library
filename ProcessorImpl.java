@@ -30,9 +30,7 @@ import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Class is implementation of {@link Processor} interface
@@ -382,8 +380,10 @@ public class ProcessorImpl implements Processor {
 			}
 			if (policyProfile != null) {
 				try (InputStream is = new FileInputStream(tmp)) {
+					Map<String, String> arguments = new HashMap<>();
+					arguments.put("policyProfilePath", policyProfile);
 					XsltTransformer.transform(is, ProcessorImpl.class.getClassLoader().getResourceAsStream(
-							"policy-example.xsl"),reportOutputStream, policyProfile);
+							"policy-example.xsl"),reportOutputStream, arguments);
 				}
 			} else if (config.getReportType() == FormatOption.HTML) {
 				try (InputStream is = new FileInputStream(tmp)) {
