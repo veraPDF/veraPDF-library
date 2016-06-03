@@ -5,11 +5,11 @@ package org.verapdf.processor.config;
  */
 public enum ProcessingType {
 
-	VALIDATING_AND_FEATURES(Constants.VALIDATING_AND_FEATURES, Constants.TEXT_VALIDATING_AND_FEATURES),
-
 	VALIDATING(Constants.VALIDATING, Constants.TEXT_VALIDATING),
 
-	FEATURES(Constants.FEATURES, Constants.TEXT_FEATURES);
+	FEATURES(Constants.FEATURES, Constants.TEXT_FEATURES),
+
+	VALIDATING_AND_FEATURES(Constants.VALIDATING_AND_FEATURES, Constants.TEXT_VALIDATING_AND_FEATURES);
 
 	private final String value;
 	private final String text;
