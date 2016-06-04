@@ -35,7 +35,7 @@ public final class HTMLReport {
      * @throws JAXBException
      */
     public static void writeHTMLReport(InputStream source,
-            OutputStream destination, String wikiPath) throws TransformerException, IOException{
+            OutputStream destination, String wikiPath, boolean isFullHTML) throws TransformerException, IOException{
         String resultPath;
         if (wikiPath == null) {
             resultPath = "";
@@ -46,6 +46,7 @@ public final class HTMLReport {
         }
         Map<String, String> arguments = new HashMap<>();
         arguments.put("wikiPath", wikiPath);
+        arguments.put("isFullHTML", Boolean.toString(isFullHTML));
 
         XsltTransformer.transform(source, HTMLReport.class.getClassLoader().getResourceAsStream(
                 "HTMLReportStylesheet.xsl"), destination, arguments);
