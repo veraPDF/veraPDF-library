@@ -114,7 +114,7 @@ public class ProcessorImpl implements Processor {
 		}
 		if (config.getProcessingType().isValidating()
 				&& config.getFlavour() == PDFAFlavour.NO_FLAVOUR
-				&& config.getValidationProfile().toString().equals("")) {
+				&& config.getValidationProfile().toString().isEmpty()) {
 			throw new IllegalArgumentException(
 					"Validation cannot be started with no chosen validation profile");
 		}
@@ -130,7 +130,7 @@ public class ProcessorImpl implements Processor {
 
 	ValidationProfile profileFromConfig(final Config config) {
 		try {
-			if (config.getValidationProfile().toString().equals("")) {
+			if (config.getValidationProfile().toString().isEmpty()) {
 				return null;
 			}
 			ValidationProfile profile = profileFromFile(config
