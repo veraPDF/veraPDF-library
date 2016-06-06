@@ -388,7 +388,7 @@ public class ProcessorImpl implements Processor {
 			} else if (config.getReportType() == FormatOption.HTML) {
 				try (InputStream is = new FileInputStream(tmp)) {
 					HTMLReport.writeHTMLReport(is, reportOutputStream,
-							config.getProfileWikiPath());
+							config.getProfileWikiPath(), true);
 				}
 			} else {
 				throw new IllegalStateException(
