@@ -1,4 +1,4 @@
-# Version 0.16 (May 31, 2016)
+# Version 0.16 (June 3, 2016)
 
 This beta release features the full support of all PDF/A-2 and PDF/A-3 requirements (all levels). Together with earlier support of PDF/A-1 validation, it represents the first full support for all PDF/A parts and conformance levels.
 
@@ -8,6 +8,11 @@ This beta release features the full support of all PDF/A-2 and PDF/A-3 requireme
   - added extraction of color space info from JPEG2000 images
   - added validation of permissions dictionary (Parts 2 and 3)
   - PDF/A-2B fix: correct implementation of CIDSystemInfo entry requrements
+  - command line support for plugin execution to extend feature extraction
+
+## veraPDF characterisation plugins
+  - first set of example pure java plugins available
+  - optional sample plugin pack available through installer
 
 ## Test corpus:
   - Added further 112 atomic test files for parts 2 and 3
