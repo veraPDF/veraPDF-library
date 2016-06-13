@@ -40,6 +40,8 @@ public final class Config {
 	public static final PDFAFlavour DEFAULT_FLAVOUR = PDFAFlavour.PDFA_1_B;
 	public static final boolean DEFAULT_VERBOSE_CLI = false;
 	public static final boolean DEFAULT_PLUGINS_ENABLED = false;
+	public static final String DEFAULT_REPORT_FOLDER_PATH = "";
+	public static final String DEFAULT_REPORT_FILE_PATH = "";
 
 	private boolean showPassedRules;
 	private int maxNumberOfFailedChecks;
@@ -54,6 +56,8 @@ public final class Config {
 	private PDFAFlavour flavour;
 	private boolean verboseCli;
 	private boolean pluginsEnabled;
+	private String reportFolderPath;
+	private String reportFilePath;
 
 	@Override
 	public boolean equals(Object o) {
@@ -80,6 +84,11 @@ public final class Config {
 		if (reportType != config.reportType) return false;
 		if (validationProfilePath != null ? !validationProfilePath.equals(config.validationProfilePath) : config.validationProfilePath != null)
 			return false;
+		if (reportFolderPath != null ? !reportFolderPath.equals(config.reportFolderPath) : config.reportFolderPath != null)
+		    return false;
+		if (reportFilePath != null ? !reportFilePath.equals(config.reportFilePath) : config.reportFilePath != null)
+		    return false;
+                
 		return flavour == config.flavour;
 
 	}
@@ -99,6 +108,8 @@ public final class Config {
 		result = 31 * result + (flavour != null ? flavour.hashCode() : 0);
 		result = 31 * result + (verboseCli ? 1 : 0);
 		result = 31 * result + (pluginsEnabled ? 1 : 0);
+		result = 31 * result + (reportFolderPath != null ? reportFolderPath.hashCode() : 0);
+		result = 31 * result + (reportFilePath != null ? reportFilePath.hashCode() : 0);
 		return result;
 	}
 
@@ -116,6 +127,8 @@ public final class Config {
 		this.flavour = DEFAULT_FLAVOUR;
 		this.verboseCli = DEFAULT_VERBOSE_CLI;
 		this.pluginsEnabled = DEFAULT_PLUGINS_ENABLED;
+		this.reportFolderPath = DEFAULT_REPORT_FOLDER_PATH;
+		this.reportFilePath = DEFAULT_REPORT_FILE_PATH;
 	}
 
 	/**
@@ -201,7 +214,7 @@ public final class Config {
 		return validationProfilePath.toString().equals("") ?
 				null : validationProfilePath;
 	}
-
+        
 	/**
 	 * @return path to validation profile to be used. If returned value
 	 * is null, then validation flavour is processed
@@ -228,6 +241,24 @@ public final class Config {
 	 */
 	@XmlElement
 	public boolean isPluginsEnabled() { return pluginsEnabled; }
+        
+	/**
+     * @author: Martin.Mancuska@gonitrom.com
+     * @return path to folder for reports
+     */
+	@XmlElement
+	public String getReportFolder() {
+	    return reportFolderPath;
+	}
+
+	/** 
+     * @author: Martin.Mancuska@gonitrom.com
+	 * @return path for report file
+	 */
+	@XmlElement
+	public String getReportFile() {
+	    return reportFilePath;
+	}
 
 	/**
 	 *	Converts Config to XML,
@@ -444,6 +475,43 @@ public final class Config {
 	 */
 	public void setPluginsEnabled(boolean pluginsEnabled) {
 		this.pluginsEnabled = pluginsEnabled;
+	}
+        
+	/**
+	 * Changes settings parameters
+	 * 
+     * @author: Martin.Mancuska@gonitrom.com
+	 * @param reportFolder path to folder where results will be saved
+	 */
+	public void setReportFolderPath(String reportFolder) {
+        if (reportFolder.isEmpty())
+            this.reportFolderPath = reportFolder;
+        else {
+            File dir = new File(reportFolder);
+
+            if (dir.exists()) {
+                this.reportFolderPath = reportFolder;
+            }
+            else {
+                try {
+                    dir.mkdir();
+                    this.reportFolderPath = reportFolder;
+                }
+                catch (SecurityException ex) {
+                    this.reportFolderPath = "";
+                }
+            }    
+        }
+    }
+
+	/**
+	 * Changes settings parameters
+	 * 
+     * @author: Martin.Mancuska@gonitrom.com
+	 * @param reportFile path to report file
+	 */
+	public void setReportFilePath(String reportFile) {
+	    this.reportFilePath = reportFile;
 	}
 
 	/**
