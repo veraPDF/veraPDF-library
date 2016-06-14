@@ -15,7 +15,7 @@ public abstract class AbstractMetadataFeaturesExtractor extends FeaturesExtracto
     }
 
     @Override
-    List<FeatureTreeNode> getFeatures(FeaturesData data) {
+    final List<FeatureTreeNode> getFeatures(FeaturesData data) {
         return getMetadataFeatures((MetadataFeaturesData) data);
     }
 

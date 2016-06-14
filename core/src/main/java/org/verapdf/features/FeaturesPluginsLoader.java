@@ -143,6 +143,7 @@ public class FeaturesPluginsLoader {
 				String extractorID = extractor.getID();
 				if (!uniqueIds.contains(extractorID)) {
 					uniqueIds.add(extractorID);
+					extractor.initialize(jar.getParentFile().toPath());
 					toAdd.add(extractor);
 				} else {
 					LOGGER.error("Founded extractor with the same ID as already loaded extractor. Extractor name: "
