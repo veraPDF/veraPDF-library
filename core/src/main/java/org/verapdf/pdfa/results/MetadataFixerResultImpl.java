@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author Evgeniy Muravitskiy
  */
-public class MetadataFixerResultImpl implements MetadataFixerResult {
+public final class MetadataFixerResultImpl implements MetadataFixerResult {
 
     private final RepairStatus status;
     private final List<String> appliedFixes;
@@ -47,6 +47,25 @@ public class MetadataFixerResultImpl implements MetadataFixerResult {
     public static MetadataFixerResult fromValues(final RepairStatus status,
             final List<String> fixes) {
         return new MetadataFixerResultImpl(status, fixes);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MetadataFixerResultImpl)) return false;
+
+        MetadataFixerResultImpl strings = (MetadataFixerResultImpl) o;
+
+        if (status != strings.status) return false;
+        return appliedFixes != null ? appliedFixes.equals(strings.appliedFixes) : strings.appliedFixes == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = status != null ? status.hashCode() : 0;
+        result = 31 * result + (appliedFixes != null ? appliedFixes.hashCode() : 0);
+        return result;
     }
 
     /**
