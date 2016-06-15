@@ -49,6 +49,25 @@ public class MetadataFixerResultImpl implements MetadataFixerResult {
         return new MetadataFixerResultImpl(status, fixes);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MetadataFixerResultImpl strings = (MetadataFixerResultImpl) o;
+
+        if (status != strings.status) return false;
+        return appliedFixes != null ? appliedFixes.equals(strings.appliedFixes) : strings.appliedFixes == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = status != null ? status.hashCode() : 0;
+        result = 31 * result + (appliedFixes != null ? appliedFixes.hashCode() : 0);
+        return result;
+    }
+
     /**
      * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
      *

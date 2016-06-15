@@ -89,4 +89,24 @@ public class FeaturesCollection {
 			this.errors = null;
 		}
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		FeaturesCollection that = (FeaturesCollection) o;
+
+		return collection != null ? collection.equals(that.collection) : that.collection == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		return collection != null ? collection.hashCode() : 0;
+	}
 }
