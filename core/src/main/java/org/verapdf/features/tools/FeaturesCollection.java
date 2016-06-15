@@ -9,9 +9,9 @@ import java.util.*;
  *
  * @author Maksim Bezrukov
  */
-public class FeaturesCollection {
+public final class FeaturesCollection {
 
-	private Map<FeaturesObjectTypesEnum, FeaturesStructure> collection;
+	private final Map<FeaturesObjectTypesEnum, FeaturesStructure> collection;
 
 	/**
 	 * Constructs new object
@@ -92,12 +92,8 @@ public class FeaturesCollection {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
+		if (this == o) return true;
+		if (!(o instanceof FeaturesCollection)) return false;
 
 		FeaturesCollection that = (FeaturesCollection) o;
 
