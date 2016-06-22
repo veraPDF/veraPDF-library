@@ -9,7 +9,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import java.io.OutputStream;
 import java.util.List;
 
@@ -19,6 +18,10 @@ import java.util.List;
 @XmlRootElement(name="featuresReport")
 public class FeaturesReport {
 
+	private final static String ERROR_STATUS = "Could not finish features collecting due to unexpected error.";
+
+	@XmlElement
+	private final String status;
 	@XmlElement
 	private final FeaturesNode informationDict;
 	@XmlElement
@@ -44,7 +47,12 @@ public class FeaturesReport {
 	@XmlElement
 	private final FeaturesNode errors;
 
-	private FeaturesReport(FeaturesNode informationDict, FeaturesNode metadata, FeaturesNode documentSecurity, FeaturesNode lowLevelInfo, FeaturesNode embeddedFiles, FeaturesNode iccProfiles, FeaturesNode outputIntents, FeaturesNode outlines, FeaturesNode annotations, FeaturesNode pages, DocumentResourcesFeatures documentResources, FeaturesNode errors) {
+	private FeaturesReport(FeaturesNode informationDict, FeaturesNode metadata,
+						   FeaturesNode documentSecurity, FeaturesNode lowLevelInfo,
+						   FeaturesNode embeddedFiles, FeaturesNode iccProfiles,
+						   FeaturesNode outputIntents, FeaturesNode outlines,
+						   FeaturesNode annotations, FeaturesNode pages,
+						   DocumentResourcesFeatures documentResources, FeaturesNode errors, String status) {
 		this.informationDict = informationDict;
 		this.metadata = metadata;
 		this.documentSecurity = documentSecurity;
@@ -57,10 +65,15 @@ public class FeaturesReport {
 		this.pages = pages;
 		this.documentResources = documentResources;
 		this.errors = errors;
+		this.status = status;
 	}
 
 	private FeaturesReport() {
-		this(null, null, null, null, null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null, null, null, null, null, null);
+	}
+
+	static FeaturesReport createErrorReport() {
+		return new FeaturesReport(null, null, null, null, null, null, null, null, null, null, null, null, ERROR_STATUS);
 	}
 
 	/**
@@ -84,7 +97,7 @@ public class FeaturesReport {
 		FeaturesNode pages = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.PAGE);
 		DocumentResourcesFeatures res = DocumentResourcesFeatures.fromValues(collection);
 		FeaturesNode errors = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.ERROR);
-		return new FeaturesReport(info, metadata, docSec, lowLvl, embeddedFiles, iccProfiles, outputIntents, outlines, annotations, pages, res, errors);
+		return new FeaturesReport(info, metadata, docSec, lowLvl, embeddedFiles, iccProfiles, outputIntents, outlines, annotations, pages, res, errors, null);
 	}
 
 	static FeaturesNode getFirstNodeFromType(FeaturesCollection collection, FeaturesObjectTypesEnum type) {

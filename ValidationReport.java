@@ -22,18 +22,19 @@ public class ValidationReport {
             + STATEMENT_SUFFIX;
     private final static String NONCOMPLIANT_STATEMENT = STATEMENT_PREFIX
             + NOT_INSERT + STATEMENT_SUFFIX;
+    private final static String ERROR_STATEMENT = "Could not finish validation due to unexpected error.";
 
     @XmlAttribute
     private final String profile;
     @XmlAttribute
-    private final boolean compliant;
+    private final Boolean compliant;
     @XmlElement
     private final String statement;
     @XmlElement
     private final ValidationDetails details;
 
 
-    private ValidationReport(final String profile, boolean compliant, String statement,
+    private ValidationReport(final String profile, Boolean compliant, String statement,
                              ValidationDetails details) {
         this.profile = profile;
         this.compliant = compliant;
@@ -46,13 +47,17 @@ public class ValidationReport {
                 ValidationResults.defaultResult(), false, 0));
     }
 
+    static ValidationReport createErrorReport() {
+        return new ValidationReport(null, null, ERROR_STATEMENT, null);
+    }
+
     /**
      * @param profile 
      * @param result
      * @param logPassedChecks
      * @return
      */
-    public static ValidationReport fromValues(final ValidationProfile profile, final ValidationResult result,
+    static ValidationReport fromValues(final ValidationProfile profile, final ValidationResult result,
                                               final boolean logPassedChecks, final int maxNumberOfDisplayedFailedChecks) {
         if (result == null) {
             return null;

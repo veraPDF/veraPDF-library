@@ -12,6 +12,8 @@ import java.util.List;
  */
 public class MetadataFixesReport {
 
+	private final static String ERROR_STATUS = "Could not finish metadata fixing due to unexpected error.";
+
 	@XmlAttribute
 	private final String status;
 	@XmlAttribute
@@ -31,6 +33,10 @@ public class MetadataFixesReport {
 	private MetadataFixesReport() {
         this("", Integer.valueOf(0), null, null);
     }
+
+	static MetadataFixesReport createErrorReport() {
+		return new MetadataFixesReport(ERROR_STATUS, null, null, null);
+	}
 
 	static MetadataFixesReport fromValues(final MetadataFixerResult fixerResult) {
 		if (fixerResult == null) {
