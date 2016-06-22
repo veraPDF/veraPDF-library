@@ -5,9 +5,9 @@ package org.verapdf.processor.config;
  */
 public enum ProcessingType {
 
-	VALIDATING_AND_FEATURES(Constants.VALIDATING_AND_FEATURES, Constants.TEXT_VALIDATING_AND_FEATURES),
+	VALIDATION_AND_FEATURES(Constants.VALIDATION_AND_FEATURES, Constants.TEXT_VALIDATION_AND_FEATURES),
 
-	VALIDATING(Constants.VALIDATING, Constants.TEXT_VALIDATING),
+	VALIDATION(Constants.VALIDATION, Constants.TEXT_VALIDATION),
 
 	FEATURES(Constants.FEATURES, Constants.TEXT_FEATURES);
 
@@ -22,9 +22,9 @@ public enum ProcessingType {
 	public static ProcessingType getType(boolean isValidation, boolean isFeatures) {
 		if (isValidation) {
 			if (isFeatures) {
-				return VALIDATING_AND_FEATURES;
+				return VALIDATION_AND_FEATURES;
 			} else {
-				return VALIDATING;
+				return VALIDATION;
 			}
 		} else if (isFeatures) {
 			return FEATURES;
@@ -34,11 +34,11 @@ public enum ProcessingType {
 	}
 
 	public boolean isValidating() {
-		return this == VALIDATING || this == VALIDATING_AND_FEATURES;
+		return this == VALIDATION || this == VALIDATION_AND_FEATURES;
 	}
 
 	public boolean isFeatures() {
-		return this == FEATURES || this == VALIDATING_AND_FEATURES;
+		return this == FEATURES || this == VALIDATION_AND_FEATURES;
 	}
 
 	public static ProcessingType fromString(final String toParse) {
@@ -59,11 +59,11 @@ public enum ProcessingType {
 	}
 
 	public static class Constants {
-		public static final String TEXT_VALIDATING_AND_FEATURES = "Validation & Features";
-		public static final String TEXT_VALIDATING = "Validation";
+		public static final String TEXT_VALIDATION_AND_FEATURES = "Validation & Features";
+		public static final String TEXT_VALIDATION = "Validation";
 		public static final String TEXT_FEATURES = "Features";
-		public static final String VALIDATING_AND_FEATURES = "validationAndFeatures";
-		public static final String VALIDATING = "validation";
+		public static final String VALIDATION_AND_FEATURES = "validationAndFeatures";
+		public static final String VALIDATION = "validation";
 		public static final String FEATURES = "features";
 	}
 

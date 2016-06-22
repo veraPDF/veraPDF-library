@@ -1,7 +1,6 @@
 package org.verapdf.processor;
 
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.features.pb.PBFeatureParser;
@@ -27,7 +26,6 @@ import org.verapdf.report.*;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -49,7 +47,7 @@ public class ProcessorImpl implements Processor {
     @Override
     public ProcessingResult validate(InputStream pdfFileStream,
             ItemDetails fileDetails, Config config,
-            OutputStream reportOutputStream) {
+            OutputStream reportOutputStream) throws ModelParsingException {
         long startTimeOfProcessing = System.currentTimeMillis();
         checkArguments(pdfFileStream, fileDetails, config, reportOutputStream);
         ValidationResult validationResult = null;
@@ -61,38 +59,37 @@ public class ProcessorImpl implements Processor {
                 .getFlavour() : validationProfile.getPDFAFlavour();
 
         ProcessingType processingType = config.getProcessingType();
-        try (ModelParser parser = ModelParser.createModelWithFlavour(
-                pdfFileStream, currentFlavour)) {
+        ModelParser parser = ModelParser.createModelWithFlavour(pdfFileStream, currentFlavour);
             if (processingType.isValidating()) {
-                if (validationProfile == null) {
-                    validationProfile = profileFromFlavour(parser.getFlavour());
+                try {
+                    validationResult = startValidation(validationProfile, parser,
+                            config, fileDetails);
+                } catch (Exception e) {
+                    LOGGER.error("Error in validation", e);
+                    setUnsuccessfulValidation();
+                    this.processingResult.addErrorMessage(e.getMessage());
                 }
-                validationResult = startValidation(validationProfile, parser,
-                        config, fileDetails);
                 if (config.isFixMetadata() && validationResult != null) {
-                    fixerResult = fixMetadata(validationResult, parser,
-                            fileDetails.getName(), config);
+                    try {
+                        fixerResult = fixMetadata(validationResult, parser,
+                                fileDetails.getName(), config);
+                    } catch (Exception e) {
+                        LOGGER.error("Error in metadata fixing", e);
+                        setUnsuccessfulMetadataFixing();
+                        this.processingResult.addErrorMessage(e.getMessage());
+                    }
                 }
             }
             if (processingType.isFeatures()) {
-                featuresCollection = extractFeatures(parser, config);
+                try {
+                    featuresCollection = extractFeatures(parser, config);
+                } catch (Exception e) {
+                    LOGGER.error("Error in features collecting", e);
+                    setUnsuccessfulFeatureExtracting();
+                    this.processingResult.addErrorMessage(e.getMessage());
+                }
             }
-        } catch (ModelParsingException e) {
-            if(e.getCause() instanceof InvalidPasswordException) {
-                LOGGER.error("Error: " + fileDetails.getName()
-                        + " is an encrypted PDF file.", e);
-                setUnsuccessfulProcessing();
-                this.processingResult.addErrorMessage("Error in reading PDF file: "
-                        + e.getCause().getMessage());
-                return this.processingResult;
-            }
-            LOGGER.error("Error: " + fileDetails.getName()
-                    + " is not a PDF format file.", e);
-            setUnsuccessfulProcessing();
-            this.processingResult.addErrorMessage("Error in reading PDF file: "
-                    + e.getMessage());
-            return this.processingResult;
-        }
+        parser.close();
 
         long endTimeOfProcessing = System.currentTimeMillis();
         writeReport(config, validationResult, fileDetails, reportOutputStream,
@@ -174,6 +171,9 @@ public class ProcessorImpl implements Processor {
     private ValidationResult startValidation(
             ValidationProfile validationProfile, ModelParser parser,
             Config config, ItemDetails fileDetails) {
+        if (validationProfile == null) {
+            validationProfile = profileFromFlavour(parser.getFlavour());
+        }
         PDFAValidator validator = Validators.createValidator(validationProfile,
                 logPassed(config), config.getMaxNumberOfFailedChecks());
         ValidationResult validationResult = validate(validator, parser);
@@ -365,6 +365,15 @@ public class ProcessorImpl implements Processor {
                         config.isShowPassedRules(),
                         config.getMaxNumberOfDisplayedFailedChecks(),
                         fixerResult, featuresCollection, processingTime);
+        if (this.processingResult.getValidationSummary() == ProcessingResult.ValidationSummary.ERROR_IN_VALIDATION) {
+            machineReadableReport.setErrorInValidationReport();
+        }
+        if (this.processingResult.getMetadataFixerSummary() == ProcessingResult.MetadataFixingSummary.ERROR_IN_FIXING) {
+            machineReadableReport.setErrorInMetadataFixerReport();
+        }
+        if (this.processingResult.getFeaturesSummary() == ProcessingResult.FeaturesSummary.ERROR_IN_FEATURES) {
+            machineReadableReport.setErrorInFeaturesReport();
+        }
         if (config.getReportType() == FormatOption.MRR) {
             MachineReadableReport.toXml(machineReadableReport,
                     reportOutputStream, Boolean.TRUE);

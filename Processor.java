@@ -1,5 +1,6 @@
 package org.verapdf.processor;
 
+import org.verapdf.core.ModelParsingException;
 import org.verapdf.processor.config.Config;
 import org.verapdf.report.ItemDetails;
 
@@ -23,6 +24,6 @@ public interface Processor {
 	 * @param report output stream, in which report will be written
 	 */
 	ProcessingResult validate(InputStream pdfFile, ItemDetails fileDetails,
-									 Config config, OutputStream report);
+									 Config config, OutputStream report) throws ModelParsingException;
 
 }
