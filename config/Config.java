@@ -494,7 +494,7 @@ public final class Config {
             }
             else {
                 try {
-                    dir.mkdir();
+                    dir.mkdirs();
                     this.reportFolderPath = reportFolder;
                 }
                 catch (SecurityException ex) {
