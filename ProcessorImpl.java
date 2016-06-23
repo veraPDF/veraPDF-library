@@ -1,7 +1,6 @@
 package org.verapdf.processor;
 
 import org.apache.log4j.Logger;
-import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.features.pb.PBFeatureParser;
@@ -27,7 +26,6 @@ import org.verapdf.report.*;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -363,7 +361,7 @@ public class ProcessorImpl implements Processor {
             ValidationResult validationResult, Config config,
             MetadataFixerResult fixerResult,
             FeaturesCollection featuresCollection, long processingTime,
-            OutputStream reportOutputStream) throws JAXBException, IOException,
+            String policyProfile, OutputStream reportOutputStream) throws JAXBException, IOException,
             TransformerException {
 
 		MachineReadableReport machineReadableReport = MachineReadableReport
@@ -428,11 +426,5 @@ public class ProcessorImpl implements Processor {
             this.processingResult
                     .setFeaturesSummary(ProcessingResult.FeaturesSummary.ERROR_IN_FEATURES);
         }
-    }
-
-    private void setUnsuccessfulProcessing() {
-        setUnsuccessfulValidation();
-        setUnsuccessfulMetadataFixing();
-        setUnsuccessfulFeatureExtracting();
     }
 }
