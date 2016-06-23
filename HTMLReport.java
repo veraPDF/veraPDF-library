@@ -1,14 +1,12 @@
 package org.verapdf.report;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Generating HTML validation report
@@ -37,14 +35,7 @@ public final class HTMLReport {
      * @throws JAXBException
      */
     public static void writeHTMLReport(InputStream source,
-            OutputStream destination, String wikiPath) throws TransformerException, IOException{
-
-        TransformerFactory factory = TransformerFactory.newInstance();
-
-        Transformer transformer = factory.newTransformer(new StreamSource(
-                HTMLReport.class.getClassLoader().getResourceAsStream(
-                        "HTMLReportStylesheet.xsl")));
-
+            OutputStream destination, String wikiPath, boolean isFullHTML) throws TransformerException, IOException{
         String resultPath;
         if (wikiPath == null) {
             resultPath = "";
@@ -53,10 +44,12 @@ public final class HTMLReport {
         } else {
             resultPath = wikiPath + "/";
         }
-        transformer.setParameter("wikiPath", resultPath);
+        Map<String, String> arguments = new HashMap<>();
+        arguments.put("wikiPath", wikiPath);
+        arguments.put("isFullHTML", Boolean.toString(isFullHTML));
 
-        transformer.transform(new StreamSource(source), new StreamResult(
-                destination));
+        XsltTransformer.transform(source, HTMLReport.class.getClassLoader().getResourceAsStream(
+                "HTMLReportStylesheet.xsl"), destination, arguments);
     }
 
 }
