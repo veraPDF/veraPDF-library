@@ -1,6 +1,7 @@
 package org.verapdf.processor;
 
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.features.pb.PBFeatureParser;
@@ -26,12 +27,11 @@ import org.verapdf.report.*;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Class is implementation of {@link Processor} interface
@@ -40,9 +40,9 @@ import java.util.Set;
  */
 public class ProcessorImpl implements Processor {
 
-    private static final Logger LOGGER = Logger.getLogger(ProcessorImpl.class);
+	private static final Logger LOGGER = Logger.getLogger(ProcessorImpl.class);
 
-    private ProcessingResult processingResult;
+	private ProcessingResult processingResult;
 
     @Override
     public ProcessingResult validate(InputStream pdfFileStream,
@@ -276,57 +276,63 @@ public class ProcessorImpl implements Processor {
         return validationResult;
     }
 
-    private void writeReport(Config config, ValidationResult validationResult,
-            ItemDetails fileDetails, OutputStream reportOutputStream,
-            ValidationProfile validationProfile,
-            MetadataFixerResult fixerResult,
-            FeaturesCollection featuresCollection, long processingTime) {
-        try {
-            switch (config.getReportType()) {
-            case TEXT:
-                writeTextReport(validationResult, fileDetails,
-                        reportOutputStream, config);
-                break;
-            case MRR:
-            case HTML:
-                writeMRR(fileDetails, validationProfile, validationResult,
-                        config, fixerResult, featuresCollection,
-                        processingTime, reportOutputStream);
-                break;
-            case XML:
-                CliReport report = CliReport.fromValues(fileDetails,
-                        validationResult,
-                        FeaturesReport.fromValues(featuresCollection));
-                CliReport.toXml(report, reportOutputStream, Boolean.TRUE);
-                break;
-            default:
-                throw new IllegalStateException("Wrong or unknown report type.");
-            }
-        } catch (IOException e) {
-            LOGGER.error("Exception raised while writing report to file", e);
-            this.processingResult
-                    .setReportSummary(ProcessingResult.ReportSummary.ERROR_IN_REPORT);
-            this.processingResult
-                    .addErrorMessage("Error in writing report to file: "
-                            + e.getMessage());
-        } catch (JAXBException e) {
-            LOGGER.error(
-                    "Exception raised while converting report to XML file", e);
-            this.processingResult
-                    .setReportSummary(ProcessingResult.ReportSummary.ERROR_IN_REPORT);
-            this.processingResult
-                    .addErrorMessage("Error in generating XML report file: "
-                            + e.getMessage());
-        } catch (TransformerException e) {
-            LOGGER.error(
-                    "Exception raised while converting MRR report into HTML", e);
-            this.processingResult
-                    .setReportSummary(ProcessingResult.ReportSummary.ERROR_IN_REPORT);
-            this.processingResult
-                    .addErrorMessage("Error in converting MRR report to HTML:"
-                            + e.getMessage());
-        }
-    }
+	private void writeReport(Config config, ValidationResult validationResult,
+							 ItemDetails fileDetails, OutputStream reportOutputStream,
+							 ValidationProfile validationProfile,
+							 MetadataFixerResult fixerResult,
+							 FeaturesCollection featuresCollection, long processingTime) {
+		try {
+			if (config.getPolicyProfile().toString().equals("")) {
+				switch (config.getReportType()) {
+					case TEXT:
+						writeTextReport(validationResult, fileDetails,
+								reportOutputStream, config);
+						break;
+					case MRR:
+					case HTML:
+						writeMRR(fileDetails, validationProfile, validationResult,
+								config, fixerResult, featuresCollection,
+								processingTime, null, reportOutputStream);
+						break;
+					case XML:
+						CliReport report = CliReport.fromValues(fileDetails,
+								validationResult,
+								FeaturesReport.fromValues(featuresCollection));
+						CliReport.toXml(report, reportOutputStream, Boolean.TRUE);
+						break;
+					default:
+						throw new IllegalStateException("Wrong or unknown report type.");
+				}
+			} else {
+				writeMRR(fileDetails, validationProfile, validationResult,
+						config, fixerResult, featuresCollection,
+						processingTime, config.getPolicyProfile().toAbsolutePath().toString(), reportOutputStream);
+			}
+		} catch (IOException e) {
+			LOGGER.error("Exception raised while writing report to file", e);
+			this.processingResult
+					.setReportSummary(ProcessingResult.ReportSummary.ERROR_IN_REPORT);
+			this.processingResult
+					.addErrorMessage("Error in writing report to file: "
+							+ e.getMessage());
+		} catch (JAXBException e) {
+			LOGGER.error(
+					"Exception raised while converting report to XML file", e);
+			this.processingResult
+					.setReportSummary(ProcessingResult.ReportSummary.ERROR_IN_REPORT);
+			this.processingResult
+					.addErrorMessage("Error in generating XML report file: "
+							+ e.getMessage());
+		} catch (TransformerException e) {
+			LOGGER.error(
+					"Exception raised while converting MRR report into HTML", e);
+			this.processingResult
+					.setReportSummary(ProcessingResult.ReportSummary.ERROR_IN_REPORT);
+			this.processingResult
+					.addErrorMessage("Error in converting MRR report to HTML:"
+							+ e.getMessage());
+		}
+	}
 
     private void writeTextReport(ValidationResult validationResult,
             ItemDetails fileDetails, OutputStream reportOutputStream,
@@ -360,11 +366,11 @@ public class ProcessorImpl implements Processor {
             OutputStream reportOutputStream) throws JAXBException, IOException,
             TransformerException {
 
-        MachineReadableReport machineReadableReport = MachineReadableReport
-                .fromValues(fileDetails, validationProfile, validationResult,
-                        config.isShowPassedRules(),
-                        config.getMaxNumberOfDisplayedFailedChecks(),
-                        fixerResult, featuresCollection, processingTime);
+		MachineReadableReport machineReadableReport = MachineReadableReport
+				.fromValues(fileDetails, validationProfile, validationResult,
+						config.isShowPassedRules(),
+						config.getMaxNumberOfDisplayedFailedChecks(),
+						fixerResult, featuresCollection, processingTime);
         if (this.processingResult.getValidationSummary() == ProcessingResult.ValidationSummary.ERROR_IN_VALIDATION) {
             machineReadableReport.setErrorInValidationReport();
         }
@@ -374,25 +380,34 @@ public class ProcessorImpl implements Processor {
         if (this.processingResult.getFeaturesSummary() == ProcessingResult.FeaturesSummary.ERROR_IN_FEATURES) {
             machineReadableReport.setErrorInFeaturesReport();
         }
-        if (config.getReportType() == FormatOption.MRR) {
-            MachineReadableReport.toXml(machineReadableReport,
-                    reportOutputStream, Boolean.TRUE);
-        } else if (config.getReportType() == FormatOption.HTML) {
-            File tmp = File.createTempFile("verpdf", "xml");
-            tmp.deleteOnExit();
-            try (OutputStream os = new FileOutputStream(tmp)) {
-                MachineReadableReport.toXml(machineReadableReport, os,
-                        Boolean.FALSE);
-            }
-            try (InputStream is = new FileInputStream(tmp)) {
-                HTMLReport.writeHTMLReport(is, reportOutputStream,
-                        config.getProfileWikiPath());
-            }
-        } else {
-            throw new IllegalStateException(
-                    "This method should be used only for MRR or HTML reports");
-        }
-    }
+        if (policyProfile == null && config.getReportType() == FormatOption.MRR) {
+			MachineReadableReport.toXml(machineReadableReport,
+					reportOutputStream, Boolean.TRUE);
+		} else {
+			File tmp = File.createTempFile("verpdf", "xml");
+			tmp.deleteOnExit();
+			try (OutputStream os = new FileOutputStream(tmp)) {
+				MachineReadableReport.toXml(machineReadableReport, os,
+						Boolean.FALSE);
+			}
+			if (policyProfile != null) {
+				try (InputStream is = new FileInputStream(tmp)) {
+					Map<String, String> arguments = new HashMap<>();
+					arguments.put("policyProfilePath", policyProfile);
+					XsltTransformer.transform(is, ProcessorImpl.class.getClassLoader().getResourceAsStream(
+							"policy-example.xsl"),reportOutputStream, arguments);
+				}
+			} else if (config.getReportType() == FormatOption.HTML) {
+				try (InputStream is = new FileInputStream(tmp)) {
+					HTMLReport.writeHTMLReport(is, reportOutputStream,
+							config.getProfileWikiPath(), true);
+				}
+			} else {
+				throw new IllegalStateException(
+						"This method should be used only for MRR or HTML reports");
+			}
+		}
+	}
 
     private void setUnsuccessfulValidation() {
         if (this.processingResult.getValidationSummary() != ProcessingResult.ValidationSummary.VALIDATION_DISABLED) {
