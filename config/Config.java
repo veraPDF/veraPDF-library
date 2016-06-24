@@ -37,7 +37,7 @@ public final class Config {
 	public static final ProcessingType DEFAULT_PROCESSING_TYPE = ProcessingType.VALIDATION;
 	public static final FormatOption DEFAULT_REPORT_TYPE = FormatOption.MRR;
 	public static final Path DEFAULT_VALIDATION_PROFILE_PATH = FileSystems.getDefault().getPath("");
-	public static final PDFAFlavour DEFAULT_FLAVOUR = PDFAFlavour.PDFA_1_B;
+	public static final PDFAFlavour DEFAULT_FLAVOUR = PDFAFlavour.AUTO;
 	public static final boolean DEFAULT_VERBOSE_CLI = false;
 	public static final boolean DEFAULT_PLUGINS_ENABLED = false;
 	public static final Path DEFAULT_POLICY_PROFILE = FileSystems.getDefault().getPath("");
