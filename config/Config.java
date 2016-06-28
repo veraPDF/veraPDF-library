@@ -39,8 +39,8 @@ public final class Config {
 	public static final Path DEFAULT_VALIDATION_PROFILE_PATH = FileSystems.getDefault().getPath("");
 	public static final PDFAFlavour DEFAULT_FLAVOUR = PDFAFlavour.AUTO;
 	public static final boolean DEFAULT_VERBOSE_CLI = false;
-	public static final boolean DEFAULT_PLUGINS_ENABLED = false;
 	public static final Path DEFAULT_POLICY_PROFILE = FileSystems.getDefault().getPath("");
+	public static final Path DEFAULT_PLUGINS_CONFIG_PATH = FileSystems.getDefault().getPath("");
 
 	private boolean showPassedRules;
 	private int maxNumberOfFailedChecks;
@@ -54,13 +54,13 @@ public final class Config {
 	private Path validationProfilePath;
 	private PDFAFlavour flavour;
 	private boolean verboseCli;
-	private boolean pluginsEnabled;
 	private Path policyProfilePath;
+	private Path pluginsConfigPath;
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (!(o instanceof Config)) return false;
 
 		Config config = (Config) o;
 
@@ -69,7 +69,6 @@ public final class Config {
 		if (maxNumberOfDisplayedFailedChecks != config.maxNumberOfDisplayedFailedChecks) return false;
 		if (isFixMetadata != config.isFixMetadata) return false;
 		if (verboseCli != config.verboseCli) return false;
-		if (pluginsEnabled != config.pluginsEnabled) return false;
 		if (metadataFixerPrefix != null ? !metadataFixerPrefix.equals(config.metadataFixerPrefix) : config.metadataFixerPrefix != null)
 			return false;
 		if (fixMetadataPathFolder != null ? !fixMetadataPathFolder.equals(config.fixMetadataPathFolder) : config.fixMetadataPathFolder != null)
@@ -81,7 +80,9 @@ public final class Config {
 		if (validationProfilePath != null ? !validationProfilePath.equals(config.validationProfilePath) : config.validationProfilePath != null)
 			return false;
 		if (flavour != config.flavour) return false;
-		return policyProfilePath != null ? policyProfilePath.equals(config.policyProfilePath) : config.policyProfilePath == null;
+		if (policyProfilePath != null ? !policyProfilePath.equals(config.policyProfilePath) : config.policyProfilePath != null)
+			return false;
+		return pluginsConfigPath != null ? pluginsConfigPath.equals(config.pluginsConfigPath) : config.pluginsConfigPath == null;
 
 	}
 
@@ -99,8 +100,8 @@ public final class Config {
 		result = 31 * result + (validationProfilePath != null ? validationProfilePath.hashCode() : 0);
 		result = 31 * result + (flavour != null ? flavour.hashCode() : 0);
 		result = 31 * result + (verboseCli ? 1 : 0);
-		result = 31 * result + (pluginsEnabled ? 1 : 0);
 		result = 31 * result + (policyProfilePath != null ? policyProfilePath.hashCode() : 0);
+		result = 31 * result + (pluginsConfigPath != null ? pluginsConfigPath.hashCode() : 0);
 		return result;
 	}
 
@@ -117,8 +118,8 @@ public final class Config {
 		this.validationProfilePath = DEFAULT_VALIDATION_PROFILE_PATH;
 		this.flavour = DEFAULT_FLAVOUR;
 		this.verboseCli = DEFAULT_VERBOSE_CLI;
-		this.pluginsEnabled = DEFAULT_PLUGINS_ENABLED;
 		this.policyProfilePath = DEFAULT_POLICY_PROFILE;
+		this.pluginsConfigPath = DEFAULT_PLUGINS_CONFIG_PATH;
 	}
 
 	/**
@@ -172,13 +173,17 @@ public final class Config {
 	 */
 	@XmlElement
 	@XmlJavaTypeAdapter(ProcessingTypeAdapter.class)
-	public ProcessingType getProcessingType() { return processingType; }
+	public ProcessingType getProcessingType() {
+		return processingType;
+	}
 
 	/**
 	 * @return true if metadata fixes are to be performed
 	 */
 	@XmlElement
-	public boolean isFixMetadata() { return isFixMetadata; }
+	public boolean isFixMetadata() {
+		return isFixMetadata;
+	}
 
 	/**
 	 * @return path to the profiles wiki
@@ -232,23 +237,36 @@ public final class Config {
 	 */
 	@XmlElement
 	@XmlJavaTypeAdapter(FlavourAdapter.class)
-	public PDFAFlavour getFlavour() { return flavour; }
+	public PDFAFlavour getFlavour() {
+		return flavour;
+	}
 
 	/**
 	 * @return true if cli text report will be verbose
 	 */
 	@XmlElement
-	public boolean isVerboseCli() { return verboseCli; }
+	public boolean isVerboseCli() {
+		return verboseCli;
+	}
 
-	/**
-	 * @return true if plugins should be used in feature extracting
-	 */
 	@XmlElement
-	public boolean isPluginsEnabled() { return pluginsEnabled; }
+	@XmlJavaTypeAdapter(PathAdapter.class)
+	private Path getPluginsConfigPath() {
+		return pluginsConfigPath.toString().equals("") ?
+				null : pluginsConfigPath;
+	}
 
 	/**
-	 *	Converts Config to XML,
-	 *	@see javax.xml.bind.JAXB for more details
+	 * @return path to the plugins config file
+	 */
+	public Path getPluginsConfigFilePath() {
+		return pluginsConfigPath;
+	}
+
+	/**
+	 * Converts Config to XML,
+	 *
+	 * @see javax.xml.bind.JAXB for more details
 	 */
 	public static String toXml(final Config toConvert, Boolean prettyXml)
 			throws JAXBException, IOException {
@@ -261,8 +279,9 @@ public final class Config {
 	}
 
 	/**
-	 *	Converts XML file to Config,
-	 *	@see javax.xml.bind.JAXB for more details
+	 * Converts XML file to Config,
+	 *
+	 * @see javax.xml.bind.JAXB for more details
 	 */
 	public static Config fromXml(final String toConvert)
 			throws JAXBException {
@@ -272,8 +291,9 @@ public final class Config {
 	}
 
 	/**
-	 *	Converts Config to XML,
-	 *	@see javax.xml.bind.JAXB for more details
+	 * Converts Config to XML,
+	 *
+	 * @see javax.xml.bind.JAXB for more details
 	 */
 	public static void toXml(final Config toConvert,
 							 final OutputStream stream, Boolean prettyXml) throws JAXBException {
@@ -282,8 +302,9 @@ public final class Config {
 	}
 
 	/**
-	 *	Converts XML file to Config,
-	 *	@see javax.xml.bind.JAXB for more details
+	 * Converts XML file to Config,
+	 *
+	 * @see javax.xml.bind.JAXB for more details
 	 */
 	public static Config fromXml(final InputStream toConvert)
 			throws JAXBException {
@@ -433,7 +454,7 @@ public final class Config {
 	 * @throws IllegalArgumentException parameter should be an empty path or a path to an existing and write acceptable file
 	 */
 	public void setValidationProfilePath(Path validationProfilePath) {
-		if(isValidProfilePath(validationProfilePath)) {
+		if (isValidProfilePath(validationProfilePath)) {
 			this.validationProfilePath = validationProfilePath;
 		} else {
 			throw new IllegalArgumentException("Path should be path to an existing and read acceptable file");
@@ -447,7 +468,7 @@ public final class Config {
 	 * @throws IllegalArgumentException parameter should be an empty path or a path to an existing and write acceptable file
 	 */
 	public void setPolicyProfilePath(Path policyProfilePath) {
-		if(isValidProfilePath(policyProfilePath)) {
+		if (isValidProfilePath(policyProfilePath)) {
 			this.policyProfilePath = policyProfilePath;
 		} else {
 			throw new IllegalArgumentException("Path should be path to an existing and read acceptable file");
@@ -457,24 +478,29 @@ public final class Config {
 	/**
 	 * Changes settings parameters
 	 *
+	 * @param pluginsConfigPath a path to the plugins config file
+	 * @throws IllegalArgumentException parameter should be an empty path or a path to an existing and write acceptable file
+	 */
+	public void setPluginsConfigPath(Path pluginsConfigPath) {
+		this.pluginsConfigPath = pluginsConfigPath;
+	}
+
+	/**
+	 * Changes settings parameters
+	 *
 	 * @param flavour validation flavour to be used
 	 */
-	public void setFlavour(PDFAFlavour flavour) { this.flavour = flavour; }
+	public void setFlavour(PDFAFlavour flavour) {
+		this.flavour = flavour;
+	}
 
 	/**
 	 * Changes settings parameters
 	 *
 	 * @param verboseCli true if cli text report should be verbose
 	 */
-	public void setVerboseCli(boolean verboseCli) { this.verboseCli = verboseCli; }
-
-	/**
-	 * Changes settings parameters
-	 *
-	 * @param pluginsEnabled true if plugins should be used in feature extracting
-	 */
-	public void setPluginsEnabled(boolean pluginsEnabled) {
-		this.pluginsEnabled = pluginsEnabled;
+	public void setVerboseCli(boolean verboseCli) {
+		this.verboseCli = verboseCli;
 	}
 
 	/**
@@ -499,7 +525,7 @@ public final class Config {
 	 */
 	public static boolean isValidProfilePath(Path path) {
 		if (path == null) {
-			return true;	// If we chose some path and then decided to use flavour
+			return true;    // If we chose some path and then decided to use flavour
 		}
 		File f = path.toFile();
 		return path.toString().isEmpty() || (f.isFile() && f.canRead());
@@ -537,12 +563,12 @@ public final class Config {
 	private static class ProcessingTypeAdapter extends XmlAdapter<String, ProcessingType> {
 
 		private final Logger LOGGER = Logger.getLogger(ProcessingTypeAdapter.class);
+
 		@Override
 		public ProcessingType unmarshal(String v) throws Exception {
 			try {
 				return ProcessingType.fromString(v);
-			}
-			catch(IllegalArgumentException e) {
+			} catch (IllegalArgumentException e) {
 				LOGGER.error("Can't construct ProcessingType from string \"" + v + "\", setting ProcessingType to default", e);
 			}
 			return Config.DEFAULT_PROCESSING_TYPE;

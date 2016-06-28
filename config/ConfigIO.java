@@ -25,7 +25,7 @@ public class ConfigIO {
 			File f = new File(user, "config");
 			if (f.exists() || f.mkdir()) {
 				configPath =
-						FileSystems.getDefault().getPath(f.getAbsolutePath(), "config.xml");
+						FileSystems.getDefault().getPath(f.getAbsolutePath(), "app.xml");
 			}
 		}
 	}
@@ -40,23 +40,24 @@ public class ConfigIO {
 		if(configPath.equals(FileSystems.getDefault().getPath(""))) {
 			return new Config();
 		}
+		Config config;
 		File configFile = configPath.toFile();
-		if(!configFile.exists()) {
-			return new Config();
-		} else if(!configFile.canRead()) {
-			throw new IllegalArgumentException("Path should specify read accessible file");
+		if(!configFile.exists() || !configFile.canRead()) {
+			config = new Config();
+			File configParent = configFile.getParentFile();
+			File pluginsConfig = new File(configParent, "plugins.xml");
+			config.setPluginsConfigPath(pluginsConfig.toPath());
 		} else {
 			FileInputStream inputStream = new FileInputStream(configFile);
-			return Config.fromXml(inputStream);
+			config = Config.fromXml(inputStream);
 		}
+		return config;
 	}
 
 	public static boolean writeConfig(Config config) {
 		if(!configPath.equals(FileSystems.getDefault().getPath("")))
 			try {
-				FileOutputStream outputStream =
-						new FileOutputStream(configPath.toFile());
-				Config.toXml(config, outputStream, true);
+				writeConfig(config, configPath);
 				return true;
 			}
 			catch (IOException e1) {
@@ -88,9 +89,6 @@ public class ConfigIO {
 			throw new IllegalArgumentException("Path should specify a file");
 		}
 		File configFile = configPath.toFile();
-		if(!configFile.exists() || !configFile.canRead()) {
-			throw new IllegalArgumentException("Path should specify existing read accessible file");
-		}
 		FileOutputStream outputStream =
 				new FileOutputStream(configFile);
 		Config.toXml(config, outputStream, true);

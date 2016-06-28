@@ -3,7 +3,7 @@ package org.verapdf.processor;
 import org.apache.log4j.Logger;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
-import org.verapdf.features.pb.PBFeatureParser;
+import org.verapdf.features.FeaturesExtractor;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.metadata.fixer.impl.MetadataFixerImpl;
 import org.verapdf.metadata.fixer.impl.pb.FixerConfigImpl;
@@ -224,16 +224,8 @@ public class ProcessorImpl implements Processor {
     private FeaturesCollection extractFeatures(ModelParser parser, Config config) {
         FeaturesCollection featuresCollection = null;
         try {
-            // TODO: should we make a plugins folder path as a additional
-            // setting in the Config and let user to change it?
-            String appHome = System.getProperty("app.home");
-            Path pluginsPath = null;
-            if (appHome != null) {
-                pluginsPath = new File(appHome, "plugins").toPath();
-            }
-            featuresCollection = PBFeatureParser.getFeaturesCollection(
-                    parser.getPDDocument(), config.isPluginsEnabled(),
-                    pluginsPath);
+			List<FeaturesExtractor> extractors = FeaturesPluginsLoader.loadExtractors(config.getPluginsConfigFilePath(), this.processingResult);
+            featuresCollection = parser.getFeatures(extractors);
         } catch (Exception e) {
             LOGGER.error("Error in extracting features", e);
             setUnsuccessfulFeatureExtracting();
