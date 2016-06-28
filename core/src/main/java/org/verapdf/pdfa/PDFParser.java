@@ -33,6 +33,11 @@ public interface PDFParser {
 	public PDFAFlavour getFlavour();
 
 	/**
+	 * @return features collection of the document
+	 */
+	public FeaturesCollection getFeatures();
+
+	/**
 	 * @param extractors extractors for features reporting
 	 * @return features collection of the document
 	 */
