@@ -60,8 +60,11 @@ public class ProcessorImpl implements Processor {
         ModelParser parser = ModelParser.createModelWithFlavour(pdfFileStream, currentFlavour);
             if (processingType.isValidating()) {
                 try {
+					if (validationProfile == null) {
+						validationProfile = profileFromFlavour(parser.getFlavour());
+					}
                     validationResult = startValidation(validationProfile, parser,
-                            config, fileDetails);
+                            config);
                 } catch (Exception e) {
                     LOGGER.error("Error in validation", e);
                     setUnsuccessfulValidation();
@@ -168,10 +171,7 @@ public class ProcessorImpl implements Processor {
 
     private ValidationResult startValidation(
             ValidationProfile validationProfile, ModelParser parser,
-            Config config, ItemDetails fileDetails) {
-        if (validationProfile == null) {
-            validationProfile = profileFromFlavour(parser.getFlavour());
-        }
+            Config config) {
         PDFAValidator validator = Validators.createValidator(validationProfile,
                 logPassed(config), config.getMaxNumberOfFailedChecks());
         ValidationResult validationResult = validate(validator, parser);
