@@ -11,8 +11,8 @@ import java.util.List;
  */
 public abstract class AbstractEmbeddedFileFeaturesExtractor extends FeaturesExtractor {
 
-	public AbstractEmbeddedFileFeaturesExtractor(final String id, final String description) {
-		super(FeaturesObjectTypesEnum.EMBEDDED_FILE, id, description);
+	public AbstractEmbeddedFileFeaturesExtractor() {
+		super(FeaturesObjectTypesEnum.EMBEDDED_FILE);
 	}
 
 	@Override

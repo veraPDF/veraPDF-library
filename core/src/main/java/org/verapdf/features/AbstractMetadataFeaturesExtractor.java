@@ -10,8 +10,8 @@ import java.util.List;
 public abstract class AbstractMetadataFeaturesExtractor extends FeaturesExtractor {
 
 
-    public AbstractMetadataFeaturesExtractor(final String id, final String description) {
-        super(FeaturesObjectTypesEnum.METADATA, id, description);
+    public AbstractMetadataFeaturesExtractor() {
+        super(FeaturesObjectTypesEnum.METADATA);
     }
 
     @Override

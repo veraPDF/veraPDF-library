@@ -11,8 +11,8 @@ import java.util.List;
  */
 public abstract class AbstractImageFeaturesExtractor extends FeaturesExtractor {
 
-	public AbstractImageFeaturesExtractor(final String id, final String description) {
-		super(FeaturesObjectTypesEnum.IMAGE_XOBJECT, id, description);
+	public AbstractImageFeaturesExtractor() {
+		super(FeaturesObjectTypesEnum.IMAGE_XOBJECT);
 	}
 
 	@Override

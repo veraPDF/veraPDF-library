@@ -1,7 +1,7 @@
 package org.verapdf.core;
 
 /**
- * Exception type for ValidationModelParser problems.
+ * Exception type for PDFParser problems.
  *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */

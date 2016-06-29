@@ -4,11 +4,7 @@ import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Features reporter
@@ -20,23 +16,24 @@ public class FeaturesReporter {
 	public static final String CUSTOM_FEATURES_ROOT_NODE_NAME = "customFeatures";
 
 	private static Map<FeaturesObjectTypesEnum, List<FeaturesExtractor>> featuresExtractors = new HashMap<>();
-	private static Path pluginsFolder = null;
 
 	private final FeaturesCollection collection;
-	private boolean isPluginsEnabled;
 
 	/**
 	 * Creates new FeaturesReporter
 	 */
-	public FeaturesReporter(boolean isPluginsEnabled, Path pluginsFolder) {
-		this.collection = new FeaturesCollection();
-		this.isPluginsEnabled = isPluginsEnabled;
-
-		if (this.isPluginsEnabled && (FeaturesReporter.pluginsFolder == null || !FeaturesReporter.pluginsFolder.equals(pluginsFolder))) {
-			FeaturesReporter.pluginsFolder = pluginsFolder;
-			featuresExtractors.clear();
-			FeaturesPluginsLoader.loadExtractors(FeaturesReporter.pluginsFolder);
+	public FeaturesReporter(List<FeaturesExtractor> extractors) {
+		if (extractors == null) {
+			throw new IllegalArgumentException("Extractors argument shall not be null");
 		}
+		this.collection = new FeaturesCollection();
+		for (FeaturesExtractor extractor : extractors) {
+			registerFeaturesExtractor(extractor);
+		}
+	}
+
+	public FeaturesReporter() {
+		this(Collections.<FeaturesExtractor>emptyList());
 	}
 
 	/**
@@ -66,10 +63,18 @@ public class FeaturesReporter {
 					FeatureTreeNode custom = FeatureTreeNode.createChildNode(CUSTOM_FEATURES_ROOT_NODE_NAME, root);
 					for (FeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
 						List<FeatureTreeNode> cust = ext.getFeatures(objData);
-						if (cust != null) {
+						if (cust != null && !cust.isEmpty()) {
 							FeatureTreeNode custRoot = FeatureTreeNode.createChildNode("pluginFeatures", custom);
-							custRoot.setAttribute("pluginId", ext.getID());
-							custRoot.setAttribute("description", ext.getDescription());
+							FeaturesExtractor.ExtractorDetails details = ext.getDetails();
+							if (!details.getName().isEmpty()) {
+								custRoot.setAttribute("name", details.getName());
+							}
+							if (!details.getVersion().isEmpty()) {
+								custRoot.setAttribute("version", details.getVersion());
+							}
+							if (!details.getDescription().isEmpty()) {
+								custRoot.setAttribute("description", details.getDescription());
+							}
 							for (FeatureTreeNode ftn : cust) {
 								if (ftn != null) {
 									custRoot.addChild(ftn);
