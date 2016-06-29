@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_A">
-    <details creator="veraPDF Consortium" created="2016-05-30T12:23:13.196-03:00">
+    <details creator="veraPDF Consortium" created="2016-06-29T11:13:11.938-03:00">
         <name>PDF/A-3A validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level A</description>
     </details>
@@ -185,6 +185,31 @@
                 <arguments/>
             </error>
             <references/>
+        </rule>
+        <rule object="PDPerms">
+            <id specification="ISO_19005_3" clause="6.1.12" testNumber="1"/>
+            <description>No keys other than UR3 and DocMDP shall be present in a permissions dictionary (ISO 32000-1:2008, 12.8.4, Table 258).</description>
+            <test>containsOtherEntries == false</test>
+            <error>
+                <message>The document permissions dictionary contains keys other than UR3 and DocMDP</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="12.8.4"/>
+            </references>
+        </rule>
+        <rule object="PDSigRef">
+            <id specification="ISO_19005_3" clause="6.1.12" testNumber="2"/>
+            <description>If DocMDP is present, then the Signature References dictionary (ISO 32000-1:2008, 12.8.1, Table 253)
+			shall not contain the keys DigestLocation, DigestMethod, and DigestValue.</description>
+            <test>permsContainDocMDP == false || containsDigestEntries == false</test>
+            <error>
+                <message>The Signature References dictionary contains one of the keys DigestLocation, DigestMethod, or DigestValue in presence of DocMDP entry in the permissions dictionary.</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="12.8.1"/>
+            </references>
         </rule>
         <rule object="CosInteger">
             <id specification="ISO_19005_3" clause="6.1.13" testNumber="1"/>
@@ -1342,6 +1367,19 @@
             </error>
             <references>
                 <reference specification="ISO 32000-1:2008" clause="14.7"/>
+            </references>
+        </rule>
+        <rule object="PDStructElem">
+            <id specification="ISO_19005_3" clause="6.7.3" testNumber="2"/>
+            <description>All non-standard structure types shall be mapped to the nearest functionally equivalent standard type, as
+            defined in ISO 32000-1:2008, 14.8.4, in the role map dictionary of the structure tree root.</description>
+            <test>standardType != null</test>
+            <error>
+                <message>Non-standard structure type is not mapped to a standard type</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4"/>
             </references>
         </rule>
         <rule object="EmbeddedFile">
