@@ -88,6 +88,25 @@ public final class FeaturesCollection {
 			this.list = null;
 			this.errors = null;
 		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (!(o instanceof FeaturesStructure)) return false;
+
+			FeaturesStructure that = (FeaturesStructure) o;
+
+			if (list != null ? !list.equals(that.list) : that.list != null) return false;
+			return errors != null ? errors.equals(that.errors) : that.errors == null;
+
+		}
+
+		@Override
+		public int hashCode() {
+			int result = list != null ? list.hashCode() : 0;
+			result = 31 * result + (errors != null ? errors.hashCode() : 0);
+			return result;
+		}
 	}
 
 	@Override
