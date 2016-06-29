@@ -2,38 +2,39 @@ package org.verapdf.features;
 
 import org.verapdf.features.tools.FeatureTreeNode;
 
-import java.nio.file.Path;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class for features extractors
  *
  * @author Maksim Bezrukov
  */
-abstract class FeaturesExtractor {
-	public final String DEFAULT_ID = FeaturesExtractor.class.getName();
-	public final String DEFAULT_DESCRIPTION = "description";
-
+public abstract class FeaturesExtractor {
 	private final FeaturesObjectTypesEnum type;
-	private final String id;
-	private final String description;
+	private ExtractorDetails details = new ExtractorDetails();
+	private Map<String, String> attributes = new HashMap<>();
 
-	private Path pluginFolderPath;
-
-	FeaturesExtractor(final FeaturesObjectTypesEnum type, final String id, final String description) {
+	FeaturesExtractor(final FeaturesObjectTypesEnum type) {
 		this.type = type;
-		this.id = id;
-		this.description = description;
 	}
 
-	final void initialize(Path pluginFolderPath) {
-		this.pluginFolderPath = pluginFolderPath;
+	public final void initialize(ExtractorDetails details) {
+		initialize(details, Collections.<String, String>emptyMap());
 	}
 
-	final protected Path getFolderPath() {
-		return this.pluginFolderPath;
+	public final void initialize(ExtractorDetails details, Map<String, String> attributes) {
+		if (details == null) {
+			throw new IllegalArgumentException("Argument details shall not be null");
+		}
+		if (attributes == null) {
+			throw new IllegalArgumentException("Argument attributes shall not be null");
+		}
+		this.details = details;
+		this.attributes = new HashMap<>(attributes);
 	}
-
 
 	/**
 	 * Extract features from features data
@@ -51,17 +52,62 @@ abstract class FeaturesExtractor {
 	}
 
 	/**
-	 * @return ID of the plugin
+	 * @return extractor details
 	 */
-	public final String getID() {
-		return this.id;
+	public ExtractorDetails getDetails() {
+		return details;
 	}
 
 	/**
-	 * @return Description of the plugin
+	 * @return a map of attributes
 	 */
-	public final String getDescription() {
-		return this.description;
+	public Map<String, String> getAttributes() {
+		return Collections.unmodifiableMap(this.attributes);
+	}
+
+	/**
+	 * Extractor details
+	 */
+	public static final class ExtractorDetails {
+		private final String name;
+		private final String version;
+		private final String description;
+
+		/**
+		 * @param name        the name of the extractor
+		 * @param version     the version of the extractor
+		 * @param description the description of the extractor
+		 */
+		public ExtractorDetails(String name, String version, String description) {
+			this.name = name;
+			this.version = version;
+			this.description = description;
+		}
+
+		public ExtractorDetails() {
+			this("", "", "");
+		}
+
+		/**
+		 * @return the name of the extractor
+		 */
+		public String getName() {
+			return name;
+		}
+
+		/**
+		 * @return the version of the extractor
+		 */
+		public String getVersion() {
+			return version;
+		}
+
+		/**
+		 * @return the description of the extractor
+		 */
+		public String getDescription() {
+			return description;
+		}
 	}
 
 }

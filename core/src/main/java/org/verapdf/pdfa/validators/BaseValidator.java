@@ -3,14 +3,6 @@
  */
 package org.verapdf.pdfa.validators;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.Script;
@@ -19,7 +11,7 @@ import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.PDFAValidator;
-import org.verapdf.pdfa.ValidationModelParser;
+import org.verapdf.pdfa.PDFParser;
 import org.verapdf.pdfa.results.Location;
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
@@ -29,6 +21,8 @@ import org.verapdf.pdfa.validation.Rule;
 import org.verapdf.pdfa.validation.RuleId;
 import org.verapdf.pdfa.validation.ValidationProfile;
 import org.verapdf.pdfa.validation.Variable;
+
+import java.util.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -365,7 +359,7 @@ class BaseValidator implements PDFAValidator {
     }
 
     @Override
-    public ValidationResult validate(ValidationModelParser toValidate)
+    public ValidationResult validate(PDFParser toValidate)
             throws ValidationException, ModelParsingException {
         try {
             return this.validate(toValidate.getRoot());
