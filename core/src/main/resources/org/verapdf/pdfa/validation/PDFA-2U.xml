@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_2_U">
-    <details creator="veraPDF Consortium" created="2016-06-29T11:12:48.957-03:00">
+    <details creator="veraPDF Consortium" created="2016-06-30T08:40:45.228-03:00">
         <name>PDF/A-2U validation profile</name>
         <description>Validation rules against ISO 19005-2:2011, Level U</description>
     </details>
@@ -305,7 +305,7 @@
             <id specification="ISO_19005_2" clause="6.1.13" testNumber="11"/>
             <description>The size of any of the page boundaries described in ISO 32000-1:2008, 14.11.2 shall not be less than 3 units
 			in either direction, nor shall it be greater than 14 400 units in either direction.</description>
-            <test>top - bottom &gt;= 3 &amp;&amp; top - bottom &lt;= 14400 &amp;&amp; right - left &gt;= 3 &amp;&amp; right - left &lt;= 14400</test>
+            <test>Math.abs(top - bottom) &gt;= 3 &amp;&amp; Math.abs(top - bottom) &lt;= 14400 &amp;&amp; Math.abs(right - left) &gt;= 3 &amp;&amp; Math.abs(right - left) &lt;= 14400</test>
             <error>
                 <message>One of the bage boundaries is out of range (3-14400) in one of the directions</message>
                 <arguments/>
