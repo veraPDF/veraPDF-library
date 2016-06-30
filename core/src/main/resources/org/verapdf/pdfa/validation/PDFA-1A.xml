@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_A">
-    <details creator="veraPDF Consortium" created="2016-05-20T05:48:52.642-03:00">
+    <details creator="veraPDF Consortium" created="2016-06-29T09:52:28.737-03:00">
         <name>PDF/A-1A validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011, Level A</description>
     </details>
@@ -1191,6 +1191,19 @@
             </error>
             <references>
                 <reference specification="PDF 1.4 Reference" clause="9.6.1"/>
+            </references>
+        </rule>
+        <rule object="PDStructElem">
+            <id specification="ISO_19005_1" clause="6.8.3" testNumber="2"/>
+            <description>All non-standard structure types shall be mapped to the nearest functionally equivalent standard type, as
+			defined in PDF Reference 9.7.4, in the role map dictionary of the structure tree root.</description>
+            <test>standardType != null</test>
+            <error>
+                <message>Non-standard structure type is not mapped to a standard type</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="PDF 1.4 Reference" clause="9.7.4"/>
             </references>
         </rule>
         <rule object="PDAcroForm">
