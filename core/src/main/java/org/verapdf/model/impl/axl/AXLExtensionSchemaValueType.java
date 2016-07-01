@@ -1,8 +1,7 @@
 package org.verapdf.model.impl.axl;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.adobe.xmp.XMPConst;
+import com.adobe.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.tools.xmp.ValidatorsContainer;
 import org.verapdf.model.tools.xmp.validators.SimpleTypeValidator;
@@ -10,8 +9,9 @@ import org.verapdf.model.tools.xmp.validators.URITypeValidator;
 import org.verapdf.model.xmplayer.ExtensionSchemaValueType;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Maksim Bezrukov
@@ -47,21 +47,21 @@ public class AXLExtensionSchemaValueType extends AXLExtensionSchemaObject implem
     }
 
     private List<AXLExtensionSchemaField> getExtensionSchemaFields() {
-        List<AXLExtensionSchemaField> res = new ArrayList<>();
-        if (this.xmpNode == null) {
-            return res;
-        }
-        for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (XMPConst.NS_PDFA_TYPE.equals(child.getNamespaceURI()) && FIELD.equals(child.getName())) {
-                if (child.getOptions().isArray()) {
-                    for (VeraPDFXMPNode node : child.getChildren()) {
-                        res.add(new AXLExtensionSchemaField(node, this.containerForPDFA_1, this.containerForPDFA_2_3, this.flavour));
+        if (this.xmpNode != null) {
+            List<AXLExtensionSchemaField> res = new ArrayList<>();
+            for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
+                if (XMPConst.NS_PDFA_TYPE.equals(child.getNamespaceURI()) && FIELD.equals(child.getName())) {
+                    if (child.getOptions().isArray()) {
+                        for (VeraPDFXMPNode node : child.getChildren()) {
+                            res.add(new AXLExtensionSchemaField(node, this.containerForPDFA_1, this.containerForPDFA_2_3, this.flavour));
+                        }
                     }
+                    break;
                 }
-                break;
             }
+            return Collections.unmodifiableList(res);
         }
-        return res;
+        return Collections.emptyList();
     }
 
     @Override

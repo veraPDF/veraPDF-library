@@ -2,13 +2,13 @@ package org.verapdf.model.impl.axl;
 
 import com.adobe.xmp.impl.VeraPDFXMPNode;
 import com.adobe.xmp.options.PropertyOptions;
-
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.tools.xmp.ValidatorsContainer;
 import org.verapdf.model.xmplayer.ExtensionSchemasContainer;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -48,13 +48,14 @@ public class AXLExtensionSchemasContainer extends AXLXMPObject implements Extens
     }
 
     private List<AXLExtensionSchemaDefinition> getExtensionSchemaDefinitions() {
-        List<AXLExtensionSchemaDefinition> res = new ArrayList<>();
         if (this.xmpNode != null && this.xmpNode.getOptions().isArray()) {
+            List<AXLExtensionSchemaDefinition> res = new ArrayList<>();
             for (VeraPDFXMPNode node : this.xmpNode.getChildren()) {
                 res.add(new AXLExtensionSchemaDefinition(node, this.containerForPDFA_1, this.containerForPDFA_2_3, this.flavour));
             }
+            return Collections.unmodifiableList(res);
         }
-        return res;
+        return Collections.emptyList();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.verapdf.model.impl.axl;
 
+import com.adobe.xmp.XMPConst;
 import com.adobe.xmp.impl.VeraPDFMeta;
 import com.adobe.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.baselayer.Object;
@@ -9,6 +10,7 @@ import org.verapdf.model.xmplayer.XMPPackage;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -85,34 +87,50 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     }
 
     private List<AXLExtensionSchemasContainer> getExtensionSchemasContainers() {
-        if (this.xmpMetadata == null
-                || this.xmpMetadata.getExtensionSchemasNode() == null) {
-            return new ArrayList<>();
+        if (this.xmpMetadata != null
+                && this.xmpMetadata.getExtensionSchemasNode() != null) {
+            List<AXLExtensionSchemasContainer> res = new ArrayList<>(1);
+            res.add(new AXLExtensionSchemasContainer(this.getXmpMetadata()
+                    .getExtensionSchemasNode(), getCurrentSchemasDefinitionPDFA_1()
+                    .getValidatorsContainer(),
+                    getCurrentSchemasDefinitionPDFA_2_3().getValidatorsContainer(),
+                    this.flavour));
+            return Collections.unmodifiableList(res);
         }
-        List<AXLExtensionSchemasContainer> res = new ArrayList<>(1);
-        res.add(new AXLExtensionSchemasContainer(this.getXmpMetadata()
-                .getExtensionSchemasNode(), getCurrentSchemasDefinitionPDFA_1()
-                .getValidatorsContainer(),
-                getCurrentSchemasDefinitionPDFA_2_3().getValidatorsContainer(),
-                this.flavour));
-        return res;
+
+        return Collections.emptyList();
     }
 
     protected List<AXLXMPProperty> getXMPProperties() {
-        if (this.getXmpMetadata() == null) {
-            return new ArrayList<>();
+        if (this.getXmpMetadata() != null) {
+            List<VeraPDFXMPNode> properties = this.xmpMetadata.getProperties();
+            List<AXLXMPProperty> res = new ArrayList<>(properties.size());
+            for (VeraPDFXMPNode node : properties) {
+                res.add(createProperty(node));
+            }
+            return Collections.unmodifiableList(res);
         }
-        List<VeraPDFXMPNode> properties = this.xmpMetadata.getProperties();
-        List<AXLXMPProperty> res = new ArrayList<>(properties.size());
-        for (VeraPDFXMPNode node : properties) {
-            res.add(new AXLXMPProperty(node, this.isMainMetadata,
+
+        return Collections.emptyList();
+    }
+
+    private AXLXMPProperty createProperty(VeraPDFXMPNode node) {
+        if (XMPConst.NS_XMP_MM.equals(node.getNamespaceURI())
+                && "History".equals(node.getName())) {
+            return new AXLXMPMMHistoryProperty(node, this.isMainMetadata,
                     this.isClosedChoiceCheck, this
-                            .getMainPackageSchemasDefinition(), this
-                            .getCurrentSchemasDefinitionPDFA_1(), this
-                            .getCurrentSchemasDefinitionPDFA_2_3(),
-                    this.flavour));
+                    .getMainPackageSchemasDefinition(), this
+                    .getCurrentSchemasDefinitionPDFA_1(), this
+                    .getCurrentSchemasDefinitionPDFA_2_3(),
+                    this.flavour);
+        } else {
+            return new AXLXMPProperty(node, this.isMainMetadata,
+                    this.isClosedChoiceCheck, this
+                    .getMainPackageSchemasDefinition(), this
+                    .getCurrentSchemasDefinitionPDFA_1(), this
+                    .getCurrentSchemasDefinitionPDFA_2_3(),
+                    this.flavour);
         }
-        return res;
     }
 
     protected VeraPDFMeta getXmpMetadata() {
