@@ -90,8 +90,4 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
             return this.mainPackageSchemasDefinition.isCorrespondsDefinedType(this.xmpNode);
         }
     }
-
-    protected PDFAFlavour getFlavour() {
-        return this.flavour;
-    }
 }

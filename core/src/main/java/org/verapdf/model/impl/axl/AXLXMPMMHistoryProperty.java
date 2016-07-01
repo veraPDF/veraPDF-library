@@ -40,8 +40,7 @@ public class AXLXMPMMHistoryProperty extends AXLXMPProperty implements XMPMMHist
 	}
 
 	private List<XMPMMHistoryResourceEvent> getResourceEvents() {
-		PDFAFlavour flavour = this.getFlavour();
-		if (flavour != null && flavour.getPart() != null && flavour.getPart().getPartNumber() != 1 && this.getisValueTypeCorrect()) {
+		if (this.getisValueTypeCorrect()) {
 			List<VeraPDFXMPNode> children = this.xmpNode.getChildren();
 			List<XMPMMHistoryResourceEvent> res = new ArrayList<>(children.size());
 			for (VeraPDFXMPNode node : children) {
