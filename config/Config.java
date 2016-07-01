@@ -41,6 +41,8 @@ public final class Config {
 	public static final boolean DEFAULT_VERBOSE_CLI = false;
 	public static final Path DEFAULT_POLICY_PROFILE = FileSystems.getDefault().getPath("");
 	public static final Path DEFAULT_PLUGINS_CONFIG_PATH = FileSystems.getDefault().getPath("");
+	public static final String DEFAULT_REPORT_FOLDER_PATH = "";
+	public static final String DEFAULT_REPORT_FILE_PATH = "";
 
 	private boolean showPassedRules;
 	private int maxNumberOfFailedChecks;
@@ -56,6 +58,8 @@ public final class Config {
 	private boolean verboseCli;
 	private Path policyProfilePath;
 	private Path pluginsConfigPath;
+	private String reportFolderPath;
+	private String reportFilePath;
 
 	@Override
 	public boolean equals(Object o) {
@@ -82,8 +86,11 @@ public final class Config {
 		if (flavour != config.flavour) return false;
 		if (policyProfilePath != null ? !policyProfilePath.equals(config.policyProfilePath) : config.policyProfilePath != null)
 			return false;
+		if (reportFolderPath != null ? !reportFolderPath.equals(config.reportFolderPath) : config.reportFolderPath != null)
+		    return false;
+		if (reportFilePath != null ? !reportFilePath.equals(config.reportFilePath) : config.reportFilePath != null)
+		    return false;
 		return pluginsConfigPath != null ? pluginsConfigPath.equals(config.pluginsConfigPath) : config.pluginsConfigPath == null;
-
 	}
 
 	@Override
@@ -102,6 +109,8 @@ public final class Config {
 		result = 31 * result + (verboseCli ? 1 : 0);
 		result = 31 * result + (policyProfilePath != null ? policyProfilePath.hashCode() : 0);
 		result = 31 * result + (pluginsConfigPath != null ? pluginsConfigPath.hashCode() : 0);
+		result = 31 * result + (reportFolderPath != null ? reportFolderPath.hashCode() : 0);
+		result = 31 * result + (reportFilePath != null ? reportFilePath.hashCode() : 0);
 		return result;
 	}
 
@@ -120,6 +129,8 @@ public final class Config {
 		this.verboseCli = DEFAULT_VERBOSE_CLI;
 		this.policyProfilePath = DEFAULT_POLICY_PROFILE;
 		this.pluginsConfigPath = DEFAULT_PLUGINS_CONFIG_PATH;
+		this.reportFolderPath = DEFAULT_REPORT_FOLDER_PATH;
+		this.reportFilePath = DEFAULT_REPORT_FILE_PATH;
 	}
 
 	/**
@@ -209,7 +220,6 @@ public final class Config {
 		return validationProfilePath.toString().equals("") ?
 				null : validationProfilePath;
 	}
-
 	@XmlElement
 	@XmlJavaTypeAdapter(PathAdapter.class)
 	private Path getPolicyProfilePath() {
@@ -261,6 +271,24 @@ public final class Config {
 	 */
 	public Path getPluginsConfigFilePath() {
 		return pluginsConfigPath;
+	}
+
+	/**
+     * @author: Martin.Mancuska@gonitrom.com
+     * @return path to folder for reports
+     */
+	@XmlElement
+	public String getReportFolder() {
+	    return reportFolderPath;
+	}
+
+	/**
+     * @author: Martin.Mancuska@gonitrom.com
+	 * @return path for report file
+	 */
+	@XmlElement
+	public String getReportFile() {
+	    return reportFilePath;
 	}
 
 	/**
@@ -501,6 +529,43 @@ public final class Config {
 	 */
 	public void setVerboseCli(boolean verboseCli) {
 		this.verboseCli = verboseCli;
+	}
+
+	/**
+	 * Changes settings parameters
+	 *
+     * @author: Martin.Mancuska@gonitrom.com
+	 * @param reportFolder path to folder where results will be saved
+	 */
+	public void setReportFolderPath(String reportFolder) {
+        if (reportFolder.isEmpty())
+            this.reportFolderPath = reportFolder;
+        else {
+            File dir = new File(reportFolder);
+
+            if (dir.exists()) {
+                this.reportFolderPath = reportFolder;
+            }
+            else {
+                try {
+                    dir.mkdirs();
+                    this.reportFolderPath = reportFolder;
+                }
+                catch (SecurityException ex) {
+                    this.reportFolderPath = "";
+                }
+            }
+        }
+    }
+
+	/**
+	 * Changes settings parameters
+	 *
+     * @author: Martin.Mancuska@gonitrom.com
+	 * @param reportFile path to report file
+	 */
+	public void setReportFilePath(String reportFile) {
+	    this.reportFilePath = reportFile;
 	}
 
 	/**
