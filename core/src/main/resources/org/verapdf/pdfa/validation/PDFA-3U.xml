@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_B">
+<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_U">
     <details creator="veraPDF Consortium" created="2016-06-30T08:41:01.337-03:00">
         <name>PDF/A-3U validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level U</description>
