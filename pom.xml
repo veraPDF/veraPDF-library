@@ -6,7 +6,7 @@
   <parent>
     <artifactId>verapdf-parent</artifactId>
     <groupId>org.verapdf</groupId>
-    <version>1.0.15</version>
+    <version>1.0.16</version>
     <relativePath>parent/pom.xml</relativePath>
   </parent>
 
