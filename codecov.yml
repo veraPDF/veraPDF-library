@@ -1,0 +1,8 @@
+codecov:
+  token: 66999ab7-48e5-436e-b279-c050983cf78d
+  branch: integration
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
