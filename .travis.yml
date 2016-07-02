@@ -11,3 +11,26 @@ branches:
 
 install:
   - mvn clean install
+
+notifications:
+  slack:
+    secure: WgsTp3dk8wNWNJkESk1Hg317W1gNtksHPf8XFv2dzLN6ncv718CNwBg/wcFglLVSQk0AViOtpwdWtf1RO67TlvQV2WZHW2E7NLnJjozTCbXpeheywApou24QbW+i+CJaGVwsP1kFRw0hom3EjhF6o0g+tWJE0W4wVy5yX5u7+GYTfMKkRTRVf42AI/vvD6130AmGRQ8eMWGTyw2NU35q6Q6UGRSqpwx+w5dNWW+SXuL9eI5ZedHRu/mEteh7/jMylxM7W14BkZysXO0TmnfklpshjbOsicdIhdhIQ4SffBPSXdkGoE0XCLtLsEi4b+zTKlRTH/4qzJEiXdO7SwFzFt7uGXPx6gLIpnCGoSciikVMpr06ujz2vukR+tFmwLK6W6+R5PpgNVlfeP4WNHfZHGNbr6alp3loYZEA33BjbTOXKFtv68pPuIQ8LCinPL/J8EGyeIVh8xrxgdiswvO51CxpsuY/G6gm9BxcKbZE14GaZjrOhyPMBylZaBdzbOFkzbrgE7O8tYVt/asItUFQGysfBEQZLvb3eBeMK0p6SVmn0YZ5mqh6o5REr68cy4pK2jwcGQegj5vU61TjCIism+tRGxIanTRkUUfOpobpVa3k2saMTglY7/tnuqQsxYKl6eEg2cPeftr/b+M4o2nOtTBJYik93mTKJo9PmhCGZJ4=
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   # via the "travis encrypt" command using the project repo's public key
+   - secure: "Q0yZgpCkrDq4uifgjYDPYhC8LiWBn+1MqLURUT+WW3lFPuQ1WDYRkE1oHj1q9AiQNv1X8zwMgmkiHmTj9QlsyrZ5hth0pX7JAMY+R4u2huCRvQqpNoId0JfKHZ1aeipNIbWUSFV1Ae/vQ930uBg16MIS7iLeI/dArHShT3YIu1Nu68sPBt9z5ypp+QlcV6eg6ViCHmlvcJIdaGCJXukDFmqQaiGWjIm7dXHbql0xl9f4xao6+dK4RZ6tseFvWVtFPDK8ejqr1/tZVVdrc2WkyZ8JeTV+r2xicqdJ8XBX3jDA5mrbf3pMz8Iktr5E43lBxz0vqw9rD2z+6xBigFUdTtsJDM3hktEYL79xKKvv8COkwt8i/9phsmIXY37tadGr+beMBaLPvKDzIFP8lkZBX/WdzegFS7/nR8GLhyUxReHDhIH1pSLv3/UgimAiSKQYAqyBIaHon21VFRq/DVXe0DHWniox8H1TjJC+0nNnxTfkKeWG67NyGyk1yR2hdmSVLKY2E04fFFHAmMbrc+yGpt5U21VSqVROSMMQlhgwOqYE01B07zhHx2HpUpi+SZROl/87fDPP6DXFqDUCLzto8E0rHtQONWuJiQFpwuEY6+UCV8MQuZTVywGGk3phekngJZAQZ4LayrTZrTcxbLMaoIJ0UNkDfNYM79sHh8/I33k="
+
+addons:
+  coverity_scan:
+    project:
+      name: "veraPDF/veraPDF-xmp"
+      description: "verPDF fork of Adobe's XMP Java library"
+    notification_email: carl@openpreservation.org
+    build_command_prepend: "mvn clean"
+    build_command:   "mvn -DskipTests=true compile"
+    branch_pattern: integration
+
+after_success:
+- bash <(curl -s https://codecov.io/bash)
