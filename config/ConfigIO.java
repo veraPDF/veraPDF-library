@@ -35,6 +35,14 @@ public class ConfigIO {
 
 	private static final Logger LOGGER = Logger.getLogger(ConfigIO.class);
 
+	public static Path getConfigFolderPath() {
+		if (!configPath.toString().isEmpty()) {
+			return configPath.getParent();
+		} else {
+			return configPath;
+		}
+	}
+
 	public static Config readConfig()
 			throws IOException, JAXBException, IllegalArgumentException {
 		if(configPath.equals(FileSystems.getDefault().getPath(""))) {
