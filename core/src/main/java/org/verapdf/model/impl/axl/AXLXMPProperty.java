@@ -68,6 +68,9 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
 
     @Override
     public Boolean getisValueTypeCorrect() {
+        if (this.xmpNode == null) {
+            return Boolean.FALSE;
+        }
         if (this.flavour != null && this.flavour.getPart() != null && this.flavour.getPart().getPartNumber() == 1) {
             return isValueTypeCorrectForPDFA_1();
         }

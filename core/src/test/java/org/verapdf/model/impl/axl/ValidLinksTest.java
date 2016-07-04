@@ -27,7 +27,9 @@ public class ValidLinksTest {
                 new AXLExtensionSchemaDefinition(null, null, null, null),
                 new AXLExtensionSchemaProperty(null, null, null, null),
                 new AXLExtensionSchemaValueType(null, null, null, null),
-                new AXLExtensionSchemaField(null, null, null, null)
+                new AXLExtensionSchemaField(null, null, null, null),
+                new AXLXMPMMHistoryProperty(null, true, false, null, null, null, null),
+                new AXLXMPMMHistoryResourceEvent(null)
         });
     }
 
