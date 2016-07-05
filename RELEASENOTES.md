@@ -1,3 +1,31 @@
+# Version 0.18 (June 5, 2016)
+
+This beta release provides fixes for PDF/A Validation, enhanced functionality & usability fixes for the application, and additions to the test corpus. It also marks the launch of our beta documentation site.
+
+## Application enhancements:
+- suppress all PDFBox warnings in the CLI interface when parsing PDF documents
+- generate error report instead of the exception in case of broken PDF documents
+- added a new CLI option to save XML report to a separate file in recursive PDF processing
+
+## veraPDF characterisation plugins
+  - enhancements to example pure java plugins available
+  - plugins now configurable through dedicated config file
+
+## Conformance checker fixes:
+- ignore DeviceGray color space in soft mask images
+- treat glyph with GID 0 as “.notdef” in case of Type0 fonts
+- fixed validation of role map for non-standard structure elements (Level A)
+- fixed validation of page size implementation limits in case of negative width or height
+- fixed validation of non-standard embedded CMaps referenced from other CMaps
+
+## Test corpus:
+- added 180 new test files for parts 2 and 3
+
+## Infrastructure
+- test coverage now monitered by Codecov online service
+- integration tests for 2u and 3b validation profiles added
+- using codacy and covertiy online code QA services 
+
 # Version 0.16 (June 3, 2016)
 
 This beta release features the full support of all PDF/A-2 and PDF/A-3 requirements (all levels). Together with earlier support of PDF/A-1 validation, it represents the first full support for all PDF/A parts and conformance levels.
