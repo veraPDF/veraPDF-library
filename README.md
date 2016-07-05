@@ -15,9 +15,9 @@ CI Status
 
 - [![Build Status](https://travis-ci.org/veraPDF/veraPDF-library.svg?branch=integration)](https://travis-ci.org/veraPDF/veraPDF-library "veraPDF-library Travis-CI integration build") Travis-CI: `integration`
 
-- [![Build Status](http://jenkins.opf-labs.org/buildStatus/icon?job=veraPDF-library-0.8)](http://jenkins.opf-labs.org/job/veraPDF-library-0.8/) OPF Jenkins: `release-0.8`
+- [![Build Status](http://jenkins.opf-labs.org/buildStatus/icon?job=veraPDF-library-rel)](http://jenkins.opf-labs.org/job/veraPDF-library-rel/) OPF Jenkins: `release`
 
-- [![Build Status](http://jenkins.opf-labs.org/buildStatus/icon?job=veraPDF-library-0.9-mvn)](http://jenkins.opf-labs.org/job/veraPDF-library-0.9-mvn/) OPF Jenkins: `integration`
+- [![Build Status](http://jenkins.opf-labs.org/buildStatus/icon?job=veraPDF-library-dev)](http://jenkins.opf-labs.org/job/veraPDF-library-dev/) OPF Jenkins: `development`
 
 Getting veraPDF software
 ------------------------
