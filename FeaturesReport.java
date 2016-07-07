@@ -29,6 +29,8 @@ public class FeaturesReport {
 	@XmlElement
 	private final FeaturesNode documentSecurity;
 	@XmlElement
+	private final FeaturesNode signatures;
+	@XmlElement
 	private final FeaturesNode lowLevelInfo;
 	@XmlElement
 	private final FeaturesNode embeddedFiles;
@@ -48,14 +50,17 @@ public class FeaturesReport {
 	private final FeaturesNode errors;
 
 	private FeaturesReport(FeaturesNode informationDict, FeaturesNode metadata,
-						   FeaturesNode documentSecurity, FeaturesNode lowLevelInfo,
+						   FeaturesNode documentSecurity, FeaturesNode signatures,
+						   FeaturesNode lowLevelInfo,
 						   FeaturesNode embeddedFiles, FeaturesNode iccProfiles,
 						   FeaturesNode outputIntents, FeaturesNode outlines,
 						   FeaturesNode annotations, FeaturesNode pages,
-						   DocumentResourcesFeatures documentResources, FeaturesNode errors, String status) {
+						   DocumentResourcesFeatures documentResources,
+						   FeaturesNode errors, String status) {
 		this.informationDict = informationDict;
 		this.metadata = metadata;
 		this.documentSecurity = documentSecurity;
+		this.signatures = signatures;
 		this.lowLevelInfo = lowLevelInfo;
 		this.embeddedFiles = embeddedFiles;
 		this.iccProfiles = iccProfiles;
@@ -69,11 +74,11 @@ public class FeaturesReport {
 	}
 
 	private FeaturesReport() {
-		this(null, null, null, null, null, null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 	}
 
 	static FeaturesReport createErrorReport() {
-		return new FeaturesReport(null, null, null, null, null, null, null, null, null, null, null, null, ERROR_STATUS);
+		return new FeaturesReport(null, null, null, null, null, null, null, null, null, null, null, null, null, ERROR_STATUS);
 	}
 
 	/**
@@ -87,8 +92,8 @@ public class FeaturesReport {
 		FeaturesNode info = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.INFORMATION_DICTIONARY);
 		FeaturesNode metadata = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.METADATA);
 		FeaturesNode docSec = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.DOCUMENT_SECURITY);
+		FeaturesNode sig = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.SIGNATURE);
 		FeaturesNode lowLvl = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.LOW_LEVEL_INFO);
-
 		FeaturesNode embeddedFiles = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.EMBEDDED_FILE);
 		FeaturesNode iccProfiles = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.ICCPROFILE);
 		FeaturesNode outputIntents = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.OUTPUTINTENT);
@@ -97,7 +102,7 @@ public class FeaturesReport {
 		FeaturesNode pages = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.PAGE);
 		DocumentResourcesFeatures res = DocumentResourcesFeatures.fromValues(collection);
 		FeaturesNode errors = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.ERROR);
-		return new FeaturesReport(info, metadata, docSec, lowLvl, embeddedFiles, iccProfiles, outputIntents, outlines, annotations, pages, res, errors, null);
+		return new FeaturesReport(info, metadata, docSec, sig, lowLvl, embeddedFiles, iccProfiles, outputIntents, outlines, annotations, pages, res, errors, null);
 	}
 
 	static FeaturesNode getFirstNodeFromType(FeaturesCollection collection, FeaturesObjectTypesEnum type) {
