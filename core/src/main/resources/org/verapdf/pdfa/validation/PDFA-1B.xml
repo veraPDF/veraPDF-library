@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_B">
-    <details creator="veraPDF Consortium" created="2016-05-20T05:48:48.541-03:00">
+    <details creator="veraPDF Consortium" created="2016-07-08T10:25:18.605-03:00">
         <name>PDF/A-1B validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011, Level B</description>
     </details>
@@ -626,15 +626,16 @@
         </rule>
         <rule object="PDCIDFont">
             <id specification="ISO_19005_1" clause="6.3.3" testNumber="2"/>
-            <description>For all Type 2 CIDFonts, the CIDFont dictionary shall contain a CIDToGIDMap entry that shall be a stream mapping 
+            <description>For all Type 2 CIDFonts that are used for rendering, the CIDFont dictionary shall contain a CIDToGIDMap entry that shall be a stream mapping 
 			from CIDs to glyph indices or the name Identity, as described in PDF Reference Table 5.13</description>
-            <test>Subtype != &quot;CIDFontType2&quot; || CIDToGIDMap != null</test>
+            <test>Subtype != &quot;CIDFontType2&quot; || CIDToGIDMap != null || renderingMode == 3</test>
             <error>
                 <message>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</message>
                 <arguments/>
             </error>
             <references>
                 <reference specification="PDF 1.4 Reference" clause="5.6.3 - Table 5.13"/>
+                <reference specification="ISO 19005-1:2005/Cor.2:2011" clause="6.3.3"/>
             </references>
         </rule>
         <rule object="PDCMap">
@@ -663,7 +664,7 @@
             <id specification="ISO_19005_1" clause="6.3.4" testNumber="1"/>
             <description>The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8, 
 			except when the fonts are used exclusively with text rendering mode 3</description>
-            <test>Subtype == &quot;Type3&quot; || Subtype == &quot;Type0&quot; || fontFile_size == 1</test>
+            <test>Subtype == &quot;Type3&quot; || Subtype == &quot;Type0&quot; || renderingMode == 3 || fontFile_size == 1</test>
             <error>
                 <message>The font program is not embedded</message>
                 <arguments/>
@@ -1004,6 +1005,19 @@
                 <arguments/>
             </error>
             <references/>
+        </rule>
+        <rule object="XMPMMHistoryResourceEvent">
+            <id specification="ISO_19005_1" clause="6.7.7" testNumber="1"/>
+            <description>In order to describe all high-level user actions taken to create, transform or otherwise instantiate a conforming file, each of those actions should be 
+			recorded in the xmpMM:History property. For each action that is recorded the action, parameters and when fields shall be specified.</description>
+            <test>(action != null) &amp;&amp; (parameters != null) &amp;&amp; (when != null)</test>
+            <error>
+                <message>One of the required properties (action, parameters, when) is missing in the xmpMM:History ResourceEvent</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="XMP Specification January 2004" clause=""/>
+            </references>
         </rule>
         <rule object="ExtensionSchemaObject">
             <id specification="ISO_19005_1" clause="6.7.8" testNumber="1"/>
