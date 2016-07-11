@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_B">
-    <details creator="veraPDF Consortium" created="2016-06-30T08:40:55.405-03:00">
+    <details creator="veraPDF Consortium" created="2016-07-08T10:25:43.806-03:00">
         <name>PDF/A-3B validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level B</description>
     </details>
@@ -829,7 +829,7 @@
         <rule object="PDFont">
             <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="1"/>
             <description>The font programs for all fonts used for rendering within a conforming file shall be embedded within that file, as defined in ISO 32000-1:2008, 9.9.</description>
-            <test>Subtype == &quot;Type3&quot; || Subtype == &quot;Type0&quot; || fontFile_size == 1</test>
+            <test>Subtype == &quot;Type3&quot; || Subtype == &quot;Type0&quot; || renderingMode == 3 || fontFile_size == 1</test>
             <error>
                 <message>The font program is not embedded</message>
                 <arguments/>
@@ -853,7 +853,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="3"/>
             <description>If the FontDescriptor dictionary of an embedded Type 1 font contains a CharSet string, then it shall list the character names of all glyphs
 			present in the font program, regardless of whether a glyph in the font is referenced or used by the PDF or not.</description>
-            <test>CharSet == null || charSetListsAllGlyphs == true</test>
+            <test>fontFile_size == 0 || CharSet == null || charSetListsAllGlyphs == true</test>
             <error>
                 <message>A CharSet entry in the Descriptor dictionary of a Type1 font incorrectly lists glyphs present in the font program</message>
                 <arguments/>
@@ -864,7 +864,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="4"/>
             <description>If the FontDescriptor dictionary of an embedded CID font contains a CIDSet stream, then it shall identify all CIDs which are present in the font program,
 			regardless of whether a CID in the font is referenced or used by the PDF or not.</description>
-            <test>CIDSet_size == 0 || cidSetListsAllGlyphs == true</test>
+            <test>fontFile_size == 0 || CIDSet_size == 0 || cidSetListsAllGlyphs == true</test>
             <error>
                 <message>A CID Font subset does not define CIDSet entry in its Descriptor dictionary</message>
                 <arguments/>
@@ -886,7 +886,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.6" testNumber="1"/>
             <description>For all non-symbolic TrueType fonts used for rendering, the embedded TrueType font program shall contain one or several non-symbolic 
 			cmap entries such that all necessary glyph lookups can be carried out.</description>
-            <test>isSymbolic == true || nrCmaps &gt;= 1</test>
+            <test>isSymbolic == true || nrCmaps &gt;= 1 || renderingMode == 3</test>
             <error>
                 <message>The embedded font program for a non-symbolic TrueType font does not contain any cmap subtables</message>
                 <arguments/>
@@ -1333,6 +1333,19 @@
                 <arguments/>
             </error>
             <references/>
+        </rule>
+        <rule object="XMPMMHistoryResourceEvent">
+            <id specification="ISO_19005_3" clause="6.6.6" testNumber="1"/>
+            <description>In order to describe all high-level user actions taken to create, transform or otherwise instantiate a conforming file, each of those actions should be 
+			recorded in the xmpMM:History property. For each action that is recorded the action, parameters and when fields shall be specified.</description>
+            <test>(action != null) &amp;&amp; (parameters != null) &amp;&amp; (when != null)</test>
+            <error>
+                <message>One of the required properties (action, parameters, when) is missing in the xmpMM:History ResourceEvent</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="XMP Specification September 2005" clause=""/>
+            </references>
         </rule>
         <rule object="EmbeddedFile">
             <id specification="ISO_19005_3" clause="6.8" testNumber="1"/>
