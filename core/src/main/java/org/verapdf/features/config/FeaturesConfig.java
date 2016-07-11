@@ -1,5 +1,7 @@
 package org.verapdf.features.config;
 
+import org.verapdf.features.FeaturesObjectTypesEnum;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -80,9 +82,55 @@ public class FeaturesConfig {
 		this.propertiesDicts = propertiesDicts;
 	}
 
-	public FeaturesConfig() {
+	private FeaturesConfig() {
 		this(false, false, false, false, false, false, false, false, false,
 				false, false, false, false, false, false, false, false, false);
+	}
+
+	public boolean isFeaturesEnabledForType(FeaturesObjectTypesEnum type) {
+		switch (type) {
+			case INFORMATION_DICTIONARY:
+				return isInformationDictEnabled();
+			case METADATA:
+				return isMetadataEnabled();
+			case DOCUMENT_SECURITY:
+				return isDocumentSecurityEnabled();
+			case SIGNATURE:
+				return isSignaturesEnabled();
+			case LOW_LEVEL_INFO:
+				return isLowLevelInfoEnabled();
+			case EMBEDDED_FILE:
+				return isEmbeddedFilesEnabled();
+			case ICCPROFILE:
+				return isIccProfilesEnabled();
+			case OUTPUTINTENT:
+				return isOutputIntentsEnabled();
+			case OUTLINES:
+				return isOutlinesEnabled();
+			case ANNOTATION:
+				return isAnnotationsEnabled();
+			case PAGE:
+				return isPagesEnabled();
+			case EXT_G_STATE:
+				return isGraphicsStatesEnabled();
+			case COLORSPACE:
+				return isColorSpacesEnabled();
+			case PATTERN:
+				return isPatternsEnabled();
+			case SHADING:
+				return isShadingsEnabled();
+			case FORM_XOBJECT:
+			case IMAGE_XOBJECT:
+			case POSTSCRIPT_XOBJECT:
+			case FAILED_XOBJECT:
+				return isXobjectsEnabled();
+			case FONT:
+				return isFontsEnabled();
+			case PROPERTIES:
+				return isPropertiesDictsEnabled();
+			default:
+				return false;
+		}
 	}
 
 	public boolean isFeaturesEnabled() {
