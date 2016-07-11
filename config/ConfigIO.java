@@ -55,6 +55,8 @@ public class ConfigIO {
 			File configParent = configFile.getParentFile();
 			File pluginsConfig = new File(configParent, "plugins.xml");
 			config.setPluginsConfigPath(pluginsConfig.toPath());
+			File featuresConfig = new File(configParent, "features.xml");
+			config.setFeaturesConfigPath(featuresConfig.toPath());
 		} else {
 			FileInputStream inputStream = new FileInputStream(configFile);
 			config = Config.fromXml(inputStream);

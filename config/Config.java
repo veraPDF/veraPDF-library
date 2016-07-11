@@ -41,6 +41,7 @@ public final class Config {
 	public static final boolean DEFAULT_VERBOSE_CLI = false;
 	public static final Path DEFAULT_POLICY_PROFILE = FileSystems.getDefault().getPath("");
 	public static final Path DEFAULT_PLUGINS_CONFIG_PATH = FileSystems.getDefault().getPath("");
+	public static final Path DEFAULT_FEATURES_CONFIG_PATH = FileSystems.getDefault().getPath("");
 	public static final String DEFAULT_REPORT_FOLDER_PATH = "";
 	public static final String DEFAULT_REPORT_FILE_PATH = "";
 
@@ -58,6 +59,7 @@ public final class Config {
 	private boolean verboseCli;
 	private Path policyProfilePath;
 	private Path pluginsConfigPath;
+	private Path featuresConfigPath;
 	private String reportFolderPath;
 	private String reportFilePath;
 
@@ -86,11 +88,14 @@ public final class Config {
 		if (flavour != config.flavour) return false;
 		if (policyProfilePath != null ? !policyProfilePath.equals(config.policyProfilePath) : config.policyProfilePath != null)
 			return false;
+		if (pluginsConfigPath != null ? !pluginsConfigPath.equals(config.pluginsConfigPath) : config.pluginsConfigPath != null)
+			return false;
+		if (featuresConfigPath != null ? !featuresConfigPath.equals(config.featuresConfigPath) : config.featuresConfigPath != null)
+			return false;
 		if (reportFolderPath != null ? !reportFolderPath.equals(config.reportFolderPath) : config.reportFolderPath != null)
-		    return false;
-		if (reportFilePath != null ? !reportFilePath.equals(config.reportFilePath) : config.reportFilePath != null)
-		    return false;
-		return pluginsConfigPath != null ? pluginsConfigPath.equals(config.pluginsConfigPath) : config.pluginsConfigPath == null;
+			return false;
+		return reportFilePath != null ? reportFilePath.equals(config.reportFilePath) : config.reportFilePath == null;
+
 	}
 
 	@Override
@@ -109,6 +114,7 @@ public final class Config {
 		result = 31 * result + (verboseCli ? 1 : 0);
 		result = 31 * result + (policyProfilePath != null ? policyProfilePath.hashCode() : 0);
 		result = 31 * result + (pluginsConfigPath != null ? pluginsConfigPath.hashCode() : 0);
+		result = 31 * result + (featuresConfigPath != null ? featuresConfigPath.hashCode() : 0);
 		result = 31 * result + (reportFolderPath != null ? reportFolderPath.hashCode() : 0);
 		result = 31 * result + (reportFilePath != null ? reportFilePath.hashCode() : 0);
 		return result;
@@ -129,6 +135,7 @@ public final class Config {
 		this.verboseCli = DEFAULT_VERBOSE_CLI;
 		this.policyProfilePath = DEFAULT_POLICY_PROFILE;
 		this.pluginsConfigPath = DEFAULT_PLUGINS_CONFIG_PATH;
+		this.featuresConfigPath = DEFAULT_FEATURES_CONFIG_PATH;
 		this.reportFolderPath = DEFAULT_REPORT_FOLDER_PATH;
 		this.reportFilePath = DEFAULT_REPORT_FILE_PATH;
 	}
@@ -271,6 +278,20 @@ public final class Config {
 	 */
 	public Path getPluginsConfigFilePath() {
 		return pluginsConfigPath;
+	}
+
+	@XmlElement
+	@XmlJavaTypeAdapter(PathAdapter.class)
+	private Path getFeaturesConfigPath() {
+		return featuresConfigPath.toString().equals("") ?
+				null : featuresConfigPath;
+	}
+
+	/**
+	 * @return path to the features config file
+	 */
+	public Path getFeaturesConfigFilePath() {
+		return featuresConfigPath;
 	}
 
 	/**
@@ -507,10 +528,18 @@ public final class Config {
 	 * Changes settings parameters
 	 *
 	 * @param pluginsConfigPath a path to the plugins config file
-	 * @throws IllegalArgumentException parameter should be an empty path or a path to an existing and write acceptable file
 	 */
 	public void setPluginsConfigPath(Path pluginsConfigPath) {
 		this.pluginsConfigPath = pluginsConfigPath;
+	}
+
+	/**
+	 * Changes settings parameters
+	 *
+	 * @param featuresConfigPath a path to the features config file
+	 */
+	public void setFeaturesConfigPath(Path featuresConfigPath) {
+		this.featuresConfigPath = featuresConfigPath;
 	}
 
 	/**
