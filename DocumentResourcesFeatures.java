@@ -49,6 +49,16 @@ public class DocumentResourcesFeatures {
 		FeaturesNode xobjects = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.IMAGE_XOBJECT,
 				FeaturesObjectTypesEnum.FORM_XOBJECT, FeaturesObjectTypesEnum.POSTSCRIPT_XOBJECT,
 				FeaturesObjectTypesEnum.FAILED_XOBJECT);
-		return new DocumentResourcesFeatures(propertiesDicts, fonts, xobjects, shadings, patterns, colorSpaces, graphicsStates);
+		if (graphicsStates == null
+				&& colorSpaces == null
+				&& patterns == null
+				&& shadings == null
+				&& fonts == null
+				&& propertiesDicts == null
+				&& xobjects == null) {
+			return null;
+		} else {
+			return new DocumentResourcesFeatures(propertiesDicts, fonts, xobjects, shadings, patterns, colorSpaces, graphicsStates);
+		}
 	}
 }
