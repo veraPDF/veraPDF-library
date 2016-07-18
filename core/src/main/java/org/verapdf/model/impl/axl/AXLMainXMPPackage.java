@@ -1,16 +1,15 @@
 package org.verapdf.model.impl.axl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import com.adobe.xmp.XMPConst;
+import com.adobe.xmp.impl.VeraPDFMeta;
+import com.adobe.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.xmplayer.MainXMPPackage;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.impl.VeraPDFMeta;
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Current class is representation of XMPPackage interface from abstract model based on adobe xmp library
@@ -58,7 +57,7 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
                 if (XMPConst.NS_PDFA_ID.equals(node.getNamespaceURI())) {
                     List<AXLPDFAIdentification> res = new ArrayList<>(1);
                     res.add(new AXLPDFAIdentification(xmpMetadata));
-                    return res;
+                    return Collections.unmodifiableList(res);
                 }
             }
         }

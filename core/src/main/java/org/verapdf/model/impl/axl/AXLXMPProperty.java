@@ -1,7 +1,6 @@
 package org.verapdf.model.impl.axl;
 
 import com.adobe.xmp.impl.VeraPDFXMPNode;
-
 import org.verapdf.model.tools.xmp.SchemasDefinition;
 import org.verapdf.model.tools.xmp.SchemasDefinitionCreator;
 import org.verapdf.model.xmplayer.XMPProperty;
@@ -14,7 +13,7 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
 
     public static final String XMP_PROPERTY_TYPE = "XMPProperty";
 
-    private final VeraPDFXMPNode xmpNode;
+    protected final VeraPDFXMPNode xmpNode;
     private final boolean isMainMetadata;
     private final boolean isClosedChoiceCheck;
     private final PDFAFlavour flavour;
@@ -23,7 +22,11 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
     private SchemasDefinition currentSchemasDefinitionPDFA_2_3;
 
     public AXLXMPProperty(VeraPDFXMPNode xmpNode, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, SchemasDefinition currentSchemasDefinitionPDFA_1, SchemasDefinition currentSchemasDefinitionPDFA_2_3, PDFAFlavour flavour) {
-        super(XMP_PROPERTY_TYPE);
+        this(xmpNode, XMP_PROPERTY_TYPE, isMainMetadata, isClosedChoiceCheck, mainPackageSchemasDefinition, currentSchemasDefinitionPDFA_1, currentSchemasDefinitionPDFA_2_3, flavour);
+    }
+
+    protected AXLXMPProperty(VeraPDFXMPNode xmpNode, String type, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, SchemasDefinition currentSchemasDefinitionPDFA_1, SchemasDefinition currentSchemasDefinitionPDFA_2_3, PDFAFlavour flavour) {
+        super(type);
         this.xmpNode = xmpNode;
         this.isMainMetadata = isMainMetadata;
         this.isClosedChoiceCheck = isClosedChoiceCheck;
@@ -65,6 +68,9 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
 
     @Override
     public Boolean getisValueTypeCorrect() {
+        if (this.xmpNode == null) {
+            return Boolean.FALSE;
+        }
         if (this.flavour != null && this.flavour.getPart() != null && this.flavour.getPart().getPartNumber() == 1) {
             return isValueTypeCorrectForPDFA_1();
         }
