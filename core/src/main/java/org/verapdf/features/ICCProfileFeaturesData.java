@@ -1,7 +1,7 @@
 package org.verapdf.features;
 
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,13 +12,13 @@ import java.util.List;
  */
 public final class ICCProfileFeaturesData extends FeaturesData {
 
-	private final byte[] metadata;
+	private final InputStream metadata;
 	private final Integer n;
 	private final List<Double> range;
 
-	private ICCProfileFeaturesData(byte[] metadata, byte[] stream, Integer n, List<Double> range) {
+	private ICCProfileFeaturesData(InputStream metadata, InputStream stream, Integer n, List<Double> range) {
 		super(stream);
-		this.metadata = metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
+		this.metadata = metadata;
 		this.n = n;
 		this.range = range == null ? null : new ArrayList<>(range);
 	}
@@ -26,12 +26,12 @@ public final class ICCProfileFeaturesData extends FeaturesData {
 	/**
 	 * Creates ICCProfileFeaturesData
 	 *
-	 * @param metadata byte array represents metadata stream
-	 * @param stream   byte array represents object stream
+	 * @param metadata metadata stream
+	 * @param stream   object stream
 	 * @param n        parameter N from the iccprofile dictionary
 	 * @param range    parameter Range from the iccprofile dictionary
 	 */
-	public static ICCProfileFeaturesData newInstance(byte[] metadata, byte[] stream, Integer n, List<Double> range) {
+	public static ICCProfileFeaturesData newInstance(InputStream metadata, InputStream stream, Integer n, List<Double> range) {
 		if (stream == null) {
 			throw new IllegalArgumentException("ICCProfile stream can not be null");
 		}
@@ -39,10 +39,10 @@ public final class ICCProfileFeaturesData extends FeaturesData {
 	}
 
 	/**
-	 * @return byte array represent metadata stream
+	 * @return metadata stream
 	 */
-	public byte[] getMetadata() {
-		return this.metadata == null ? null : Arrays.copyOf(this.metadata, this.metadata.length);
+	public InputStream getMetadata() {
+		return this.metadata;
 	}
 
 	/**

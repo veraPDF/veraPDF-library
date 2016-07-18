@@ -1,6 +1,6 @@
 package org.verapdf.features;
 
-import java.util.Arrays;
+import java.io.InputStream;
 
 /**
  * Features data of an object for feature extractor
@@ -9,22 +9,22 @@ import java.util.Arrays;
  */
 public class FeaturesData {
 
-	private final byte[] stream;
+	private final InputStream stream;
 
 	/**
 	 * Constructs new FeaturesData
 	 *
-	 * @param stream     byte array represents object stream
+	 * @param stream     object stream
 	 */
-	protected FeaturesData(byte[] stream) {
-		this.stream = stream == null ? null : Arrays.copyOf(stream, stream.length);
+	protected FeaturesData(InputStream stream) {
+		this.stream = stream;
 	}
 
 	/**
-	 * @return byte array represent streams for object
+	 * @return stream of object
 	 */
-	public byte[] getStream() {
-		return this.stream == null ? null : Arrays.copyOf(this.stream, this.stream.length);
+	public InputStream getStream() {
+		return this.stream;
 	}
 
 }
