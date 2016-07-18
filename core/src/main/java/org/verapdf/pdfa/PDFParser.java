@@ -5,6 +5,7 @@ package org.verapdf.pdfa;
 
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.features.FeaturesExtractor;
+import org.verapdf.features.config.FeaturesConfig;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.model.coslayer.CosDocument;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
@@ -35,11 +36,11 @@ public interface PDFParser {
 	/**
 	 * @return features collection of the document
 	 */
-	public FeaturesCollection getFeatures();
+	public FeaturesCollection getFeatures(FeaturesConfig config);
 
 	/**
 	 * @param extractors extractors for features reporting
 	 * @return features collection of the document
 	 */
-	public FeaturesCollection getFeatures(List<FeaturesExtractor> extractors);
+	public FeaturesCollection getFeatures(FeaturesConfig config, List<FeaturesExtractor> extractors);
 }

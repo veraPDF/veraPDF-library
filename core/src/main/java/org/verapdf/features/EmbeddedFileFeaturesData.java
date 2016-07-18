@@ -1,5 +1,6 @@
 package org.verapdf.features;
 
+import java.io.InputStream;
 import java.util.Calendar;
 
 /**
@@ -16,7 +17,7 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 	private final String checkSum;
 	private final Integer size;
 
-	EmbeddedFileFeaturesData(byte[] stream, Integer size, String checkSum, Calendar modDate, Calendar creationDate, String subtype, String description, String name) {
+	EmbeddedFileFeaturesData(InputStream stream, Integer size, String checkSum, Calendar modDate, Calendar creationDate, String subtype, String description, String name) {
 		super(stream);
 		this.size = size;
 		this.checkSum = checkSum;
@@ -78,7 +79,7 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 
 	public static final class Builder {
 
-		private byte[] stream = null;
+		private InputStream stream = null;
 		private String name = null;
 		private String description = null;
 		private String subtype = null;
@@ -87,7 +88,7 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 		private String checkSum = null;
 		private Integer size = null;
 
-		public Builder(byte[] stream) {
+		public Builder(InputStream stream) {
 			this.stream = stream;
 		}
 
@@ -98,7 +99,7 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 			return new EmbeddedFileFeaturesData(this.stream, this.size, this.checkSum, this.modDate, this.creationDate, this.subtype, this.description, this.name);
 		}
 
-		public Builder stream(byte[] streamBuild) {
+		public Builder stream(InputStream streamBuild) {
 			this.stream = streamBuild;
 			return this;
 		}

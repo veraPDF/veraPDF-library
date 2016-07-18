@@ -1,5 +1,6 @@
 package org.verapdf.features;
 
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -9,15 +10,15 @@ import java.util.*;
  */
 public final class ImageFeaturesData extends FeaturesData {
 
-	private final byte[] metadata;
+	private final InputStream metadata;
 	private final Integer width;
 	private final Integer height;
 	private final List<Filter> filters;
 
 	@SuppressWarnings("synthetic-access")
-    private ImageFeaturesData(byte[] metadata, byte[] stream, Integer width, Integer height, List<Filter> filters) {
+	private ImageFeaturesData(InputStream metadata, InputStream stream, Integer width, Integer height, List<Filter> filters) {
 		super(stream);
-		this.metadata = metadata == null ? null : Arrays.copyOf(metadata, metadata.length);
+		this.metadata = metadata;
 		this.width = width;
 		this.height = height;
 		if (filters == null) {
@@ -33,13 +34,13 @@ public final class ImageFeaturesData extends FeaturesData {
 	/**
 	 * Creates ICCProfileFeaturesData
 	 *
-	 * @param metadata byte array represents metadata stream
-	 * @param stream   byte array represents object stream
+	 * @param metadata metadata stream
+	 * @param stream   object stream
 	 * @param width    parameter Width from the iccprofile dictionary
 	 * @param height   parameter Height from the iccprofile dictionary
 	 * @param filters  list of FilterStructures elements. The order of them is the same as in pdf file
 	 */
-	public static ImageFeaturesData newInstance(byte[] metadata, byte[] stream, Integer width, Integer height, List<Filter> filters) {
+	public static ImageFeaturesData newInstance(InputStream metadata, InputStream stream, Integer width, Integer height, List<Filter> filters) {
 		if (stream == null) {
 			throw new IllegalArgumentException("Image stream can not be null");
 		}
@@ -47,10 +48,10 @@ public final class ImageFeaturesData extends FeaturesData {
 	}
 
 	/**
-	 * @return byte array represent metadata stream
+	 * @return metadata stream
 	 */
-	public byte[] getMetadata() {
-		return this.metadata == null ? null : Arrays.copyOf(this.metadata, this.metadata.length);
+	public InputStream getMetadata() {
+		return this.metadata;
 	}
 
 	/**
@@ -84,12 +85,12 @@ public final class ImageFeaturesData extends FeaturesData {
 	public static class Filter {
 		private final String name;
 		private final Map<String, String> properties;
-		private final byte[] stream;
+		private final InputStream stream;
 
-		Filter(String name, Map<String, String> properties, byte[] stream) {
+		Filter(String name, Map<String, String> properties, InputStream stream) {
 			this.name = name;
 			this.properties = properties == null ? new HashMap<String, String>() : new HashMap<>(properties);
-			this.stream = stream == null ? null : Arrays.copyOf(stream, stream.length);
+			this.stream = stream;
 		}
 
 		/**
@@ -99,7 +100,7 @@ public final class ImageFeaturesData extends FeaturesData {
 		 * @param properties map of properties of a filter
 		 * @param stream     stream which used in filter as its parameter for JBIG2Decode filter
 		 */
-		public static Filter newInstance(String name, Map<String, String> properties, byte[] stream) {
+		public static Filter newInstance(String name, Map<String, String> properties, InputStream stream) {
 			if (name == null) {
 				throw new IllegalArgumentException("Name of a filter can not be null");
 			}
@@ -126,8 +127,8 @@ public final class ImageFeaturesData extends FeaturesData {
 		/**
 		 * @return stream which used in filter as its parameter for JBIG2Decode filter
 		 */
-		public byte[] getStream() {
-			return this.stream == null ? null : Arrays.copyOf(this.stream, this.stream.length);
+		public InputStream getStream() {
+			return this.stream;
 		}
 
 	}
