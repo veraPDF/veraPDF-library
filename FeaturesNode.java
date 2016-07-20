@@ -27,6 +27,8 @@ public class FeaturesNode {
 
 	private static final Logger LOGGER = Logger.getLogger(FeaturesNode.class);
 
+	private static final String NAMESPACE = "http://www.verapdf.org/MachineReadableReport";
+
 	private static final int XD7FF = 0xD7FF;
 	private static final int XE000 = 0xE000;
 	private static final int XFFFD = 0xFFFD;
@@ -60,7 +62,7 @@ public class FeaturesNode {
 			List<FeatureTreeNode> children = collection.getFeatureTreesForType(type);
 			if (children != null) {
 				for (FeatureTreeNode entry : children) {
-					qChildren.add(new JAXBElement<>(new QName(entry.getName()),
+					qChildren.add(new JAXBElement<>(new QName(NAMESPACE, entry.getName()),
 							FeaturesNode.class, FeaturesNode.fromValues(entry, collection)));
 				}
 			}
@@ -79,7 +81,7 @@ public class FeaturesNode {
 			}
 		}
 		if (!builder.toString().isEmpty()) {
-			attr.put(new QName(ErrorsHelper.ERRORID), builder.toString());
+			attr.put(new QName(NAMESPACE, ErrorsHelper.ERRORID), builder.toString());
 		}
 
 		if (qChildren.isEmpty() && attr.isEmpty()) {
@@ -95,7 +97,7 @@ public class FeaturesNode {
 
 		Map<QName, Object> qAttributes = new HashMap<>();
 		for (Map.Entry<String, String> entry : node.getAttributes().entrySet()) {
-			qAttributes.put(new QName(entry.getKey()),
+			qAttributes.put(new QName(NAMESPACE, entry.getKey()),
 					replaceInvalidCharacters(entry.getValue()));
 		}
 
@@ -109,7 +111,7 @@ public class FeaturesNode {
 						| ParserConfigurationException e) {
 					LOGGER.error(e);
 					String errorId = ErrorsHelper.addErrorIntoCollection(collection, null, e.getMessage());
-					qAttributes.put(new QName(ErrorsHelper.ERRORID), errorId);
+					qAttributes.put(new QName(NAMESPACE, ErrorsHelper.ERRORID), errorId);
 				}
 			} else {
 				qChildren.add(replaceInvalidCharacters(node.getValue()));
@@ -118,7 +120,7 @@ public class FeaturesNode {
 		}
 		if (!node.getChildren().isEmpty()) {
 			for (FeatureTreeNode entry : node.getChildren()) {
-				qChildren.add(new JAXBElement<>(new QName(entry.getName()),
+				qChildren.add(new JAXBElement<>(new QName(NAMESPACE, entry.getName()),
 						FeaturesNode.class, FeaturesNode.fromValues(entry, collection)));
 			}
 		}
