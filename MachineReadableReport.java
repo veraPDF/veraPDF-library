@@ -71,6 +71,18 @@ public class MachineReadableReport {
         this.pdfFeaturesReport = FeaturesReport.createErrorReport();
     }
 
+    public void setErrorInValidationReport(String errorMessage) {
+        this.validationReport = ValidationReport.createErrorReport(errorMessage);
+    }
+
+    public void setErrorInMetadataFixerReport(String errorMessage) {
+        this.metadataFixesReport = MetadataFixesReport.createErrorReport(errorMessage);
+    }
+
+    public void setErrorInFeaturesReport(String errorMessage) {
+        this.pdfFeaturesReport = FeaturesReport.createErrorReport(errorMessage);
+    }
+
     /**
      * @param file 
      * @param profile
