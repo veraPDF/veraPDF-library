@@ -1,6 +1,7 @@
 package org.verapdf.processor;
 
 import org.apache.log4j.Logger;
+import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.features.FeaturesExtractor;
@@ -42,56 +43,70 @@ public class ProcessorImpl implements Processor {
 	private static final Logger LOGGER = Logger.getLogger(ProcessorImpl.class);
 
 	private ProcessingResult processingResult;
+	private String parsingErrorMessage;
 
 	@Override
 	public ProcessingResult validate(InputStream pdfFileStream,
 									 ItemDetails fileDetails, Config config,
-									 OutputStream reportOutputStream) throws ModelParsingException {
+									 OutputStream reportOutputStream) {
 		long startTimeOfProcessing = System.currentTimeMillis();
 		checkArguments(pdfFileStream, fileDetails, config, reportOutputStream);
 		ValidationResult validationResult = null;
 		MetadataFixerResult fixerResult = null;
 		FeaturesCollection featuresCollection = null;
 		this.processingResult = new ProcessingResult(config);
+		this.parsingErrorMessage = null;
 		ValidationProfile validationProfile = profileFromConfig(config);
 		PDFAFlavour currentFlavour = validationProfile == null ? config
 				.getFlavour() : validationProfile.getPDFAFlavour();
 
 		ProcessingType processingType = config.getProcessingType();
-		ModelParser parser = ModelParser.createModelWithFlavour(pdfFileStream, currentFlavour);
-		if (processingType.isValidating()) {
-			try {
-				if (validationProfile == null) {
-					validationProfile = profileFromFlavour(parser.getFlavour());
-				}
-				validationResult = startValidation(validationProfile, parser,
-						config);
-			} catch (Exception e) {
-				LOGGER.error("Error in validation", e);
-				setUnsuccessfulValidation();
-				this.processingResult.addErrorMessage(e.getMessage());
-			}
-			if (config.isFixMetadata() && validationResult != null) {
+		try (ModelParser parser = ModelParser.createModelWithFlavour(pdfFileStream, currentFlavour)) {
+			if (processingType.isValidating()) {
 				try {
-					fixerResult = fixMetadata(validationResult, parser,
-							fileDetails.getName(), config);
+					if (validationProfile == null) {
+						validationProfile = profileFromFlavour(parser.getFlavour());
+					}
+					validationResult = startValidation(validationProfile, parser,
+							config);
 				} catch (Exception e) {
-					LOGGER.error("Error in metadata fixing", e);
-					setUnsuccessfulMetadataFixing();
+					LOGGER.debug("Error in validation", e);
+					setUnsuccessfulValidation();
+					this.processingResult.addErrorMessage(e.getMessage());
+				}
+				if (config.isFixMetadata() && validationResult != null) {
+					try {
+						fixerResult = fixMetadata(validationResult, parser,
+								fileDetails.getName(), config);
+					} catch (Exception e) {
+						LOGGER.debug("Error in metadata fixing", e);
+						setUnsuccessfulMetadataFixing();
+						this.processingResult.addErrorMessage(e.getMessage());
+					}
+				}
+			}
+			if (processingType.isFeatures()) {
+				try {
+					featuresCollection = extractFeatures(parser, config);
+				} catch (Exception e) {
+					LOGGER.debug("Error in features collecting", e);
+					setUnsuccessfulFeatureExtracting();
 					this.processingResult.addErrorMessage(e.getMessage());
 				}
 			}
-		}
-		if (processingType.isFeatures()) {
-			try {
-				featuresCollection = extractFeatures(parser, config);
-			} catch (Exception e) {
-				LOGGER.error("Error in features collecting", e);
-				setUnsuccessfulFeatureExtracting();
-				this.processingResult.addErrorMessage(e.getMessage());
+		} catch (ModelParsingException e) {
+			if(e.getCause() instanceof InvalidPasswordException) {
+				this.parsingErrorMessage = "Error: " + fileDetails.getName()
+						+ " is an encrypted PDF file.";
+			} else {
+				this.parsingErrorMessage = "Error: " + fileDetails.getName()
+						+ " is not a PDF format file.";
 			}
+			LOGGER.debug(this.parsingErrorMessage, e);
+			setUnsuccessfulValidation();
+			setUnsuccessfulMetadataFixing();
+			setUnsuccessfulFeatureExtracting();
 		}
-		parser.close();
 
 		long endTimeOfProcessing = System.currentTimeMillis();
 		writeReport(config, validationResult, fileDetails, reportOutputStream,
@@ -139,7 +154,7 @@ public class ProcessorImpl implements Processor {
 					.getValidationProfile().toFile());
 			return profile;
 		} catch (JAXBException e) {
-			LOGGER.error("Error in parsing profile XML", e);
+			LOGGER.debug("Error in parsing profile XML", e);
 			this.processingResult
 					.addErrorMessage("Error in parsing profile from XML: "
 							+ e.getMessage());
@@ -147,7 +162,7 @@ public class ProcessorImpl implements Processor {
 			setUnsuccessfulMetadataFixing();
 			return Profiles.defaultProfile();
 		} catch (IOException e) {
-			LOGGER.error("Error in reading profile from disc", e);
+			LOGGER.debug("Error in reading profile from disc", e);
 			this.processingResult
 					.addErrorMessage("Error in reading profile from disc: "
 							+ e.getMessage());
@@ -214,7 +229,7 @@ public class ProcessorImpl implements Processor {
 				return fixerResult;
 			}
 		} catch (IOException e) {
-			LOGGER.error("Error in fixing metadata", e);
+			LOGGER.debug("Error in fixing metadata", e);
 			setUnsuccessfulMetadataFixing();
 			this.processingResult.addErrorMessage("Error in fixing metadata: "
 					+ e.getMessage());
@@ -229,7 +244,7 @@ public class ProcessorImpl implements Processor {
 			FeaturesCollection featuresCollection = parser.getFeatures(featuresConfig, extractors);
 			return featuresCollection;
 		} catch (Exception e) {
-			LOGGER.error("Error in extracting features", e);
+			LOGGER.debug("Error in extracting features", e);
 			setUnsuccessfulFeatureExtracting();
 			this.processingResult
 					.addErrorMessage("Error in feature extraction: "
@@ -272,7 +287,7 @@ public class ProcessorImpl implements Processor {
 						.setValidationSummary(ProcessingResult.ValidationSummary.FILE_NOT_VALID);
 			}
 		} catch (ModelParsingException | ValidationException e) {
-			LOGGER.error("Error in validation", e);
+			LOGGER.debug("Error in validation", e);
 			setUnsuccessfulValidation();
 			setUnsuccessfulMetadataFixing();
 			this.processingResult.addErrorMessage("Error in validation: "
@@ -377,13 +392,25 @@ public class ProcessorImpl implements Processor {
 						config.getMaxNumberOfDisplayedFailedChecks(),
 						fixerResult, featuresCollection, processingTime);
 		if (this.processingResult.getValidationSummary() == ProcessingResult.ValidationSummary.ERROR_IN_VALIDATION) {
-			machineReadableReport.setErrorInValidationReport();
+			if (this.parsingErrorMessage != null) {
+				machineReadableReport.setErrorInValidationReport("Could not finish validation. " + this.parsingErrorMessage);
+			} else {
+				machineReadableReport.setErrorInValidationReport();
+			}
 		}
 		if (this.processingResult.getMetadataFixerSummary() == ProcessingResult.MetadataFixingSummary.ERROR_IN_FIXING) {
-			machineReadableReport.setErrorInMetadataFixerReport();
+			if (this.parsingErrorMessage != null) {
+				machineReadableReport.setErrorInMetadataFixerReport("Could not finish metadata fixing. " + this.parsingErrorMessage);
+			} else {
+				machineReadableReport.setErrorInMetadataFixerReport();
+			}
 		}
 		if (this.processingResult.getFeaturesSummary() == ProcessingResult.FeaturesSummary.ERROR_IN_FEATURES) {
-			machineReadableReport.setErrorInFeaturesReport();
+			if (this.parsingErrorMessage != null) {
+				machineReadableReport.setErrorInFeaturesReport("Could not finish features collecting. " + this.parsingErrorMessage);
+			} else {
+				machineReadableReport.setErrorInFeaturesReport();
+			}
 		}
 		if (policyProfile == null && config.getReportType() == FormatOption.MRR) {
 			MachineReadableReport.toXml(machineReadableReport,
