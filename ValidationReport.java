@@ -48,7 +48,11 @@ public class ValidationReport {
     }
 
     static ValidationReport createErrorReport() {
-        return new ValidationReport(null, null, ERROR_STATEMENT, null);
+        return createErrorReport(ERROR_STATEMENT);
+    }
+
+    static ValidationReport createErrorReport(String errorMessage) {
+        return new ValidationReport(null, null, errorMessage, null);
     }
 
     /**

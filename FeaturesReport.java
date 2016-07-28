@@ -78,7 +78,11 @@ public class FeaturesReport {
 	}
 
 	static FeaturesReport createErrorReport() {
-		return new FeaturesReport(null, null, null, null, null, null, null, null, null, null, null, null, null, ERROR_STATUS);
+		return createErrorReport(ERROR_STATUS);
+	}
+
+	static FeaturesReport createErrorReport(String errorMessage) {
+		return new FeaturesReport(null, null, null, null, null, null, null, null, null, null, null, null, null, errorMessage);
 	}
 
 	/**

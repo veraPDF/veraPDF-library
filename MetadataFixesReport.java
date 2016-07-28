@@ -35,7 +35,11 @@ public class MetadataFixesReport {
     }
 
 	static MetadataFixesReport createErrorReport() {
-		return new MetadataFixesReport(ERROR_STATUS, null, null, null);
+		return createErrorReport(ERROR_STATUS);
+	}
+
+	static MetadataFixesReport createErrorReport(String errorMessage) {
+		return new MetadataFixesReport(errorMessage, null, null, null);
 	}
 
 	static MetadataFixesReport fromValues(final MetadataFixerResult fixerResult) {
