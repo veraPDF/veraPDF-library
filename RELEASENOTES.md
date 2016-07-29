@@ -1,4 +1,17 @@
-# Version 0.18 (June 5, 2016)
+# Version 0.20 (August 1, 2016)
+
+## Application enhancements:
+- added signature types to features report;
+- depth of feature reporting now configurable; and
+- altered log level of some validation methods.
+
+## Conformance checker fixes:
+- fix for ICC Profile mluc tag.
+
+## Test corpus:
+- 34 new test files for PDF/A-2b.
+
+# Version 0.18 (July 5, 2016)
 
 This beta release provides fixes for PDF/A Validation, enhanced functionality & usability fixes for the application, and additions to the test corpus. It also marks the launch of our beta documentation site.
 
@@ -24,7 +37,7 @@ This beta release provides fixes for PDF/A Validation, enhanced functionality & 
 ## Infrastructure
 - test coverage now monitered by Codecov online service
 - integration tests for 2u and 3b validation profiles added
-- using codacy and covertiy online code QA services 
+- using codacy and covertiy online code QA services
 
 # Version 0.16 (June 3, 2016)
 
