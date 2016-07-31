@@ -6,6 +6,7 @@
 - altered log level of some validation methods.
 
 ## Conformance checker fixes:
+- fix for validation of character encoding requirements of invisible fonts; and
 - fix for ICC Profile mluc tag.
 
 ## Test corpus:
