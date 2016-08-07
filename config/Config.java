@@ -44,7 +44,8 @@ public final class Config {
 	public static final Path DEFAULT_FEATURES_CONFIG_PATH = FileSystems.getDefault().getPath("");
 	public static final String DEFAULT_REPORT_FOLDER_PATH = "";
 	public static final String DEFAULT_REPORT_FILE_PATH = "";
-
+	public static final boolean DEFAULT_IS_OVERWRITE_REPORT_FILE = false;
+	
 	private boolean showPassedRules;
 	private int maxNumberOfFailedChecks;
 	private int maxNumberOfDisplayedFailedChecks;
@@ -62,7 +63,8 @@ public final class Config {
 	private Path featuresConfigPath;
 	private String reportFolderPath;
 	private String reportFilePath;
-
+	private boolean isOverwriteReportFile;
+	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -75,6 +77,7 @@ public final class Config {
 		if (maxNumberOfDisplayedFailedChecks != config.maxNumberOfDisplayedFailedChecks) return false;
 		if (isFixMetadata != config.isFixMetadata) return false;
 		if (verboseCli != config.verboseCli) return false;
+		if (isOverwriteReportFile != config.isOverwriteReportFile) return false;
 		if (metadataFixerPrefix != null ? !metadataFixerPrefix.equals(config.metadataFixerPrefix) : config.metadataFixerPrefix != null)
 			return false;
 		if (fixMetadataPathFolder != null ? !fixMetadataPathFolder.equals(config.fixMetadataPathFolder) : config.fixMetadataPathFolder != null)
@@ -95,7 +98,7 @@ public final class Config {
 		if (reportFolderPath != null ? !reportFolderPath.equals(config.reportFolderPath) : config.reportFolderPath != null)
 			return false;
 		return reportFilePath != null ? reportFilePath.equals(config.reportFilePath) : config.reportFilePath == null;
-
+		
 	}
 
 	@Override
@@ -117,6 +120,7 @@ public final class Config {
 		result = 31 * result + (featuresConfigPath != null ? featuresConfigPath.hashCode() : 0);
 		result = 31 * result + (reportFolderPath != null ? reportFolderPath.hashCode() : 0);
 		result = 31 * result + (reportFilePath != null ? reportFilePath.hashCode() : 0);
+		result = 31 * result + (isOverwriteReportFile ? 1 : 0);
 		return result;
 	}
 
@@ -138,6 +142,7 @@ public final class Config {
 		this.featuresConfigPath = DEFAULT_FEATURES_CONFIG_PATH;
 		this.reportFolderPath = DEFAULT_REPORT_FOLDER_PATH;
 		this.reportFilePath = DEFAULT_REPORT_FILE_PATH;
+		this.isOverwriteReportFile = DEFAULT_IS_OVERWRITE_REPORT_FILE;
 	}
 
 	/**
@@ -295,7 +300,7 @@ public final class Config {
 	}
 
 	/**
-     * @author: Martin.Mancuska@gonitrom.com
+     * @author: mancuska@digitaldocuments.org
      * @return path to folder for reports
      */
 	@XmlElement
@@ -304,12 +309,21 @@ public final class Config {
 	}
 
 	/**
-     * @author: Martin.Mancuska@gonitrom.com
+     * @author: mancuska@digitaldocuments.org
 	 * @return path for report file
 	 */
 	@XmlElement
 	public String getReportFile() {
 	    return reportFilePath;
+	}
+	
+	/**
+	 * @author: mancuska@digitaldocuments.org
+	 * @return: true if existing report file must be overwritten
+	 */
+	@XmlElement
+	public boolean isOverwriteReportFile() {
+		return isOverwriteReportFile;
 	}
 
 	/**
@@ -563,7 +577,7 @@ public final class Config {
 	/**
 	 * Changes settings parameters
 	 *
-     * @author: Martin.Mancuska@gonitrom.com
+     * @author: mancuska@digitaldocuments.org
 	 * @param reportFolder path to folder where results will be saved
 	 */
 	public void setReportFolderPath(String reportFolder) {
@@ -590,11 +604,21 @@ public final class Config {
 	/**
 	 * Changes settings parameters
 	 *
-     * @author: Martin.Mancuska@gonitrom.com
+     * @author: mancuska@digitaldocuments.org
 	 * @param reportFile path to report file
 	 */
 	public void setReportFilePath(String reportFile) {
 	    this.reportFilePath = reportFile;
+	}
+	
+	/**
+	 * Changes settings parameters
+	 *
+     * @author: mancuska@digitaldocuments.org
+	 * @param overwriteReportFile report file overwriting flag
+	 */
+	public void setOverwriteReportFile(boolean overwriteReportFile) {
+		this.isOverwriteReportFile = overwriteReportFile;
 	}
 
 	/**
