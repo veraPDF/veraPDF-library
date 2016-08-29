@@ -292,7 +292,7 @@ public class FeaturesConfig {
 
 	public static final class Builder {
 
-		private Boolean informationDict = Boolean.FALSE;
+		private Boolean informationDict = Boolean.TRUE;
 		private Boolean metadata = Boolean.FALSE;
 		private Boolean documentSecurity = Boolean.FALSE;
 		private Boolean signatures = Boolean.FALSE;
