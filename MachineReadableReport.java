@@ -1,5 +1,6 @@
 package org.verapdf.report;
 
+import org.verapdf.ReleaseDetails;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
@@ -33,6 +34,10 @@ public class MachineReadableReport {
     private final Date creationDate;
     @XmlAttribute
     private final String processingTime;
+	@XmlAttribute
+	private final String version;
+	@XmlAttribute
+	private final Date buildDate;
     @XmlElement
     private final ItemDetails itemDetails;
     @XmlElement
@@ -48,7 +53,7 @@ public class MachineReadableReport {
                 Profiles.defaultProfile(), null, false, 0), "", null, null);
     }
 
-        private MachineReadableReport(ItemDetails itemDetails,
+	private MachineReadableReport(ItemDetails itemDetails,
             ValidationReport report, String processingTime,
             FeaturesReport featuresReport, MetadataFixesReport metadataFixesReport) {
         this.itemDetails = itemDetails;
@@ -57,6 +62,10 @@ public class MachineReadableReport {
         this.processingTime = processingTime;
         this.pdfFeaturesReport = featuresReport;
         this.metadataFixesReport = metadataFixesReport;
+
+		ReleaseDetails releaseDetails = ReleaseDetails.byId("gui");
+		this.version = releaseDetails.getVersion();
+		this.buildDate = releaseDetails.getBuildDate();
     }
 
     public void setErrorInValidationReport() {
@@ -84,11 +93,11 @@ public class MachineReadableReport {
     }
 
     /**
-     * @param file 
+     * @param file
      * @param profile
      * @param validationResult
      * @param reportPassedChecks
-     * @param maxFailuresDisplayed 
+     * @param maxFailuresDisplayed
      * @param fixerResult
      * @param collection
      * @param processingTime
