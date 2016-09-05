@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_A">
-    <details creator="veraPDF Consortium" created="2016-07-08T10:25:22.689-03:00">
+    <details creator="veraPDF Consortium" created="2016-09-05T09:44:50.062-03:00">
         <name>PDF/A-1A validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011, Level A</description>
     </details>
@@ -1005,19 +1005,6 @@
                 <arguments/>
             </error>
             <references/>
-        </rule>
-        <rule object="XMPMMHistoryResourceEvent">
-            <id specification="ISO_19005_1" clause="6.7.7" testNumber="1"/>
-            <description>In order to describe all high-level user actions taken to create, transform or otherwise instantiate a conforming file, each of those actions should be 
-			recorded in the xmpMM:History property. For each action that is recorded the action, parameters and when fields shall be specified.</description>
-            <test>(action != null) &amp;&amp; (parameters != null) &amp;&amp; (when != null)</test>
-            <error>
-                <message>One of the required properties (action, parameters, when) is missing in the xmpMM:History ResourceEvent</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="XMP Specification January 2004" clause=""/>
-            </references>
         </rule>
         <rule object="ExtensionSchemaObject">
             <id specification="ISO_19005_1" clause="6.7.8" testNumber="1"/>

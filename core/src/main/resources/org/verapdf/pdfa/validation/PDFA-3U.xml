@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_U">
-    <details creator="veraPDF Consortium" created="2016-07-08T10:25:47.335-03:00">
+    <details creator="veraPDF Consortium" created="2016-09-05T09:45:15.322-03:00">
         <name>PDF/A-3U validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level U</description>
     </details>
@@ -1343,19 +1343,6 @@
                 <arguments/>
             </error>
             <references/>
-        </rule>
-        <rule object="XMPMMHistoryResourceEvent">
-            <id specification="ISO_19005_3" clause="6.6.6" testNumber="1"/>
-            <description>In order to describe all high-level user actions taken to create, transform or otherwise instantiate a conforming file, each of those actions should be 
-			recorded in the xmpMM:History property. For each action that is recorded the action, parameters and when fields shall be specified.</description>
-            <test>(action != null) &amp;&amp; (parameters != null) &amp;&amp; (when != null)</test>
-            <error>
-                <message>One of the required properties (action, parameters, when) is missing in the xmpMM:History ResourceEvent</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="XMP Specification September 2005" clause=""/>
-            </references>
         </rule>
         <rule object="EmbeddedFile">
             <id specification="ISO_19005_3" clause="6.8" testNumber="1"/>
