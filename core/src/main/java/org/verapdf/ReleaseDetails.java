@@ -41,7 +41,7 @@ public final class ReleaseDetails {
     private static final String RIGHTS = "Developed and released by the veraPDF Consortium.\n"
             + "Funded by the PREFORMA project.\n"
             + "Released under the GNU General Public License v3\n"
-            + "and the Mozilla Public License v2.\n";
+            + "and the Mozilla Public License v2 or later.\n";
 
     private static final ReleaseDetails DEFAULT = new ReleaseDetails();
     private static final Map<String, ReleaseDetails> DETAILS = new HashMap<>();
