@@ -63,6 +63,10 @@ public class MachineReadableReport {
         this.pdfFeaturesReport = featuresReport;
         this.metadataFixesReport = metadataFixesReport;
 
+        if (!ReleaseDetails.getIds().contains("gui")) {
+            ReleaseDetails.addDetailsFromResource(
+                    ReleaseDetails.APPLICATION_PROPERTIES_ROOT + "app." + ReleaseDetails.PROPERTIES_EXT);
+        }
 		ReleaseDetails releaseDetails = ReleaseDetails.byId("gui");
 		this.version = releaseDetails.getVersion();
 		this.buildDate = releaseDetails.getBuildDate();
