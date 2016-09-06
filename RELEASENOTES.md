@@ -1,3 +1,17 @@
+# Version 0.22 (September 7, 2016)
+
+## Application enhancements:
+- changed default feature generation to document level features
+- added a new GUI dialog for managing feature generation options
+- added a user-friendly management of Java OutOfMemoryError
+- synchronized the Web demo validation report with the CLI and GUI report styles
+
+## Conformance checker fixes:
+- removed the rules for validating file provenance information (based on veraPDF TWG discussion)
+
+## Test corpus:
+- converted all 'fail' test cases on file provenance information to 'pass' tests
+
 # Version 0.20 (August 1, 2016)
 
 ## Application enhancements:
