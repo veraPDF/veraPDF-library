@@ -3,12 +3,14 @@
 ## Application enhancements:
 - changed default feature generation to document level features
 - added a new GUI dialog for managing feature generation options
-- added a user-friendly management of Java OutOfMemoryError
+- added a user-friendly Java OutOfMemoryError with suggestions for reconfiguration
+- CLI can now overwrite report files
+- added help message when CLI processes STDIN stream
 - synchronized the Web demo validation report with the CLI and GUI report styles
 
 ## Conformance checker fixes:
 - removed the rules for validating file provenance information (based on veraPDF TWG discussion)
-- fixed an issue with structure type mapping in Level A validation 
+- fixed an issue with structure type mapping in Level A validation
 - implemented resource caching for memory optimization
 
 ## Test corpus:
