@@ -8,6 +8,8 @@
 
 ## Conformance checker fixes:
 - removed the rules for validating file provenance information (based on veraPDF TWG discussion)
+- fixed an issue with structure type mapping in Level A validation 
+- implemented resource caching for memory optimization
 
 ## Test corpus:
 - converted all 'fail' test cases on file provenance information to 'pass' tests
