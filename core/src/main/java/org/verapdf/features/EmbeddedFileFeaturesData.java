@@ -11,13 +11,14 @@ import java.util.Calendar;
 public class EmbeddedFileFeaturesData extends FeaturesData {
 	private final String name;
 	private final String description;
+	private final String afRelationship;
 	private final String subtype;
 	private final Calendar creationDate;
 	private final Calendar modDate;
 	private final String checkSum;
 	private final Integer size;
 
-	EmbeddedFileFeaturesData(InputStream stream, Integer size, String checkSum, Calendar modDate, Calendar creationDate, String subtype, String description, String name) {
+	EmbeddedFileFeaturesData(InputStream stream, Integer size, String checkSum, Calendar modDate, Calendar creationDate, String subtype, String description, String name, String afRelationship) {
 		super(stream);
 		this.size = size;
 		this.checkSum = checkSum;
@@ -26,6 +27,7 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 		this.subtype = subtype;
 		this.description = description;
 		this.name = name;
+		this.afRelationship = afRelationship;
 	}
 
 	/**
@@ -77,11 +79,19 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 		return this.size;
 	}
 
+	/**
+	 * @return AFRelationship value
+	 */
+	public String getAFRelationship() {
+		return this.afRelationship;
+	}
+
 	public static final class Builder {
 
 		private InputStream stream = null;
 		private String name = null;
 		private String description = null;
+		private String afRelationship;
 		private String subtype = null;
 		private Calendar creationDate = null;
 		private Calendar modDate = null;
@@ -96,7 +106,7 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 			if (this.stream == null) {
 				throw new IllegalArgumentException("Embedded file stream can not be null");
 			}
-			return new EmbeddedFileFeaturesData(this.stream, this.size, this.checkSum, this.modDate, this.creationDate, this.subtype, this.description, this.name);
+			return new EmbeddedFileFeaturesData(this.stream, this.size, this.checkSum, this.modDate, this.creationDate, this.subtype, this.description, this.name, this.afRelationship);
 		}
 
 		public Builder stream(InputStream streamBuild) {
@@ -111,6 +121,11 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 
 		public Builder description(String descriptionBuild) {
 			this.description = descriptionBuild;
+			return this;
+		}
+
+		public Builder afRelationship(String afRelationship) {
+			this.afRelationship = afRelationship;
 			return this;
 		}
 
