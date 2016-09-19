@@ -1,6 +1,8 @@
 package org.verapdf.model.impl.axl;
 
-import org.apache.log4j.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.verapdf.model.xmplayer.PDFAIdentification;
 
 import com.adobe.xmp.XMPConst;
@@ -14,7 +16,7 @@ import com.adobe.xmp.impl.VeraPDFXMPNode;
 public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentification {
 
     private static final Logger LOGGER = Logger
-            .getLogger(AXLPDFAIdentification.class);
+            .getLogger(AXLPDFAIdentification.class.getName());
 
     public static final String PDFA_IDENTIFICATION = "PDFAIdentification";
 
@@ -31,7 +33,7 @@ public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentific
             Integer part = this.metadata.getIdentificationPart();
             return part == null ? null : Long.valueOf(part.longValue());
         } catch (XMPException e) {
-            LOGGER.debug("Can not get identification part", e);
+            LOGGER.log(Level.FINE, "Can not get identification part", e);
             return null;
         }
     }
@@ -41,7 +43,7 @@ public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentific
         try {
             return this.metadata.getIdentificationConformance();
         } catch (XMPException e) {
-            LOGGER.debug("Can not get identification conformance", e);
+            LOGGER.log(Level.FINE, "Can not get identification conformance", e);
             return null;
         }
     }

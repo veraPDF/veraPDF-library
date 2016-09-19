@@ -1,10 +1,11 @@
 package org.verapdf.model.tools.xmp.validators;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
-import org.apache.log4j.Logger;
 
 import com.adobe.xmp.impl.VeraPDFXMPNode;
 
@@ -14,7 +15,7 @@ import com.adobe.xmp.impl.VeraPDFXMPNode;
 public class XPathTypeValidator implements TypeValidator {
 
     private static final Logger LOGGER = Logger
-            .getLogger(XPathTypeValidator.class);
+            .getLogger(XPathTypeValidator.class.getName());
 
     @Override
     public boolean isCorresponding(VeraPDFXMPNode node) {
@@ -30,7 +31,7 @@ public class XPathTypeValidator implements TypeValidator {
             xpath.compile(node.getValue());
             return true;
         } catch (XPathExpressionException e) {
-            LOGGER.debug(e);
+            LOGGER.log(Level.FINE, "Node value: " + node.getValue() + " is not a valid XPath", e);
             return false;
         }
     }
