@@ -9,7 +9,7 @@ import org.verapdf.features.config.FeaturesConfig;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.model.coslayer.CosDocument;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-
+import org.verapdf.model.baselayer.Object;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ public interface PDFParser {
 	 * @throws ModelParsingException when there's a problem establishing the model
 	 *                     root.
 	 */
-	public org.verapdf.model.baselayer.Object getRoot() throws ModelParsingException;
+	public Object getRoot() throws ModelParsingException;
 
 	/**
 	 * @return flavour for which model has been parsed
