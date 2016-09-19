@@ -1,11 +1,11 @@
 package org.verapdf.model.tools.xmp.validators;
 
-import com.adobe.xmp.impl.VeraPDFXMPNode;
-
-import org.apache.log4j.Logger;
-
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.adobe.xmp.impl.VeraPDFXMPNode;
 
 /**
  * @author Maksim Bezrukov
@@ -13,7 +13,7 @@ import java.net.URISyntaxException;
 public class URITypeValidator implements TypeValidator {
 
     private static final Logger LOGGER = Logger
-            .getLogger(URITypeValidator.class);
+            .getLogger(URITypeValidator.class.getName());
 
     @SuppressWarnings("unused")
     @Override
@@ -28,7 +28,7 @@ public class URITypeValidator implements TypeValidator {
             new URI(node.getValue());
             return true;
         } catch (URISyntaxException e) {
-            LOGGER.debug(e);
+            LOGGER.log(Level.FINE, "Node value not a URI: " + node.getValue(), e);
             return false;
         }
     }

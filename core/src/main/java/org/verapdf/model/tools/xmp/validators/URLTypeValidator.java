@@ -1,11 +1,11 @@
 package org.verapdf.model.tools.xmp.validators;
 
-import com.adobe.xmp.impl.VeraPDFXMPNode;
-
-import org.apache.log4j.Logger;
-
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.adobe.xmp.impl.VeraPDFXMPNode;
 
 /**
  * @author Maksim Bezrukov
@@ -13,7 +13,7 @@ import java.net.URL;
 public class URLTypeValidator implements TypeValidator {
 
     private static final Logger LOGGER = Logger
-            .getLogger(URLTypeValidator.class);
+            .getLogger(URLTypeValidator.class.getName());
 
     @SuppressWarnings("unused")
     @Override
@@ -28,7 +28,7 @@ public class URLTypeValidator implements TypeValidator {
             new URL(node.getValue());
             return true;
         } catch (MalformedURLException e) {
-            LOGGER.debug(e);
+            LOGGER.log(Level.FINE,  "Node value not a valid URL: " + node.getValue(), e);
             return false;
         }
     }
