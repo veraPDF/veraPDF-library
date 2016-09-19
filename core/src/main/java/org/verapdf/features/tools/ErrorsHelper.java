@@ -1,6 +1,8 @@
 package org.verapdf.features.tools;
 
-import org.apache.log4j.Logger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeaturesObjectTypesEnum;
 
@@ -11,7 +13,7 @@ import org.verapdf.features.FeaturesObjectTypesEnum;
  */
 public final class ErrorsHelper {
 
-	private static final Logger LOGGER = Logger.getLogger(ErrorsHelper.class);
+	private static final Logger LOGGER = Logger.getLogger(ErrorsHelper.class.getName());
 
 	public static final String ERRORID = "errorId";
 	public static final String ID = "id";
@@ -23,14 +25,16 @@ public final class ErrorsHelper {
 	/**
 	 * Adds an error to a {@link FeaturesCollection}
 	 *
-	 * @param collection      the {@link FeaturesCollection} to add the error to
-	 * @param element         element which contains error
-	 * @param errorMessageArg the error message
+	 * @param collection
+	 *            the {@link FeaturesCollection} to add the error to
+	 * @param element
+	 *            element which contains error
+	 * @param errorMessageArg
+	 *            the error message
 	 * @return id of the generated error node as String
 	 */
-	public static String addErrorIntoCollection(FeaturesCollection collection,
-												FeatureTreeNode element,
-												String errorMessageArg) {
+	public static String addErrorIntoCollection(FeaturesCollection collection, FeatureTreeNode element,
+			String errorMessageArg) {
 		if (collection == null) {
 			throw new IllegalArgumentException("Collection can not be null");
 		}
@@ -40,21 +44,18 @@ public final class ErrorsHelper {
 		}
 		try {
 			String id = null;
-			for (FeatureTreeNode errNode : collection.getFeatureTreesForType(
-					FeaturesObjectTypesEnum.ERROR)) {
+			for (FeatureTreeNode errNode : collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR)) {
 				if (errorMessage.equals(errNode.getValue())) {
 					id = errNode.getAttributes().get(ID);
 					break;
 				}
 			}
 			if (id == null) {
-				id = "error" + collection.getFeatureTreesForType(
-						FeaturesObjectTypesEnum.ERROR).size();
+				id = "error" + collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR).size();
 				FeatureTreeNode error = FeatureTreeNode.createRootNode("error");
 				error.setValue(errorMessage);
 				error.setAttribute(ErrorsHelper.ID, id);
-				collection.addNewFeatureTree(FeaturesObjectTypesEnum.ERROR,
-						error);
+				collection.addNewFeatureTree(FeaturesObjectTypesEnum.ERROR, error);
 			}
 			if (element != null) {
 				String elementErrorID = id;
@@ -68,7 +69,7 @@ public final class ErrorsHelper {
 			// This exception occurs when wrong node creates for feature tree.
 			// The logic of the method guarantees this doesn't occur.
 			String message = "FeatureTreeNode root instance logic failure";
-			LOGGER.fatal(message, ignore);
+			LOGGER.log(Level.SEVERE, message, ignore);
 			throw new IllegalStateException(message, ignore);
 		}
 	}
