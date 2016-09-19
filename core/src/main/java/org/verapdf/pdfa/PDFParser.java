@@ -3,14 +3,14 @@
  */
 package org.verapdf.pdfa;
 
+import java.util.List;
+
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.features.FeaturesExtractor;
 import org.verapdf.features.config.FeaturesConfig;
 import org.verapdf.features.tools.FeaturesCollection;
-import org.verapdf.model.coslayer.CosDocument;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.model.baselayer.Object;
-import java.util.List;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**
  * Simple interface that needs a little more work. This abstracts the parsing of

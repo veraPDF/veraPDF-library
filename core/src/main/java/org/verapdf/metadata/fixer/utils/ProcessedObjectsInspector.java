@@ -97,8 +97,7 @@ public class ProcessedObjectsInspector {
      */
     public static ValidationStatus validationStatus(
             Set<TestAssertion> assertions, ValidationProfile profile,
-            ProcessedObjects objects) throws IOException, URISyntaxException,
-            ParserConfigurationException, SAXException {
+            ProcessedObjects objects) {
         ValidationStatus status = ValidationStatus.VALID;
 
         for (TestAssertion assertion : assertions) {
