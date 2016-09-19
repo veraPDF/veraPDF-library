@@ -40,7 +40,7 @@ public class XMPExtensionSchemaTest {
                                 Boolean.FALSE, "pdfaExtension" ,  Integer.valueOf(1)},
                         {
                                 "/org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-4.xml",
-                                Boolean.FALSE, "smth" ,  Integer.valueOf(1)} });
+                                Boolean.FALSE, "smth" ,  Integer.valueOf(0)} });
     }
 
     @Parameterized.Parameter
@@ -75,12 +75,12 @@ public class XMPExtensionSchemaTest {
             if (linkedObjects.size() != 0) {
                 AXLExtensionSchemaDefinition definition = (AXLExtensionSchemaDefinition) linkedObjects.get(0);
 
-                assertFalse(definition.getcontainsUndefinedFields() == Boolean.FALSE);
-                assertTrue(definition.getisNamespaceURIValidURI() == Boolean.TRUE);
-                assertTrue(definition.getisPrefixValidText() == Boolean.TRUE);
-                assertTrue(definition.getisPropertyValidSeq() == Boolean.TRUE);
-                assertTrue(definition.getisSchemaValidText() == Boolean.TRUE);
-                assertTrue(definition.getisValueTypeValidSeq() == Boolean.TRUE);
+                assertFalse(definition.getcontainsUndefinedFields().booleanValue());
+                assertTrue(definition.getisNamespaceURIValidURI().booleanValue());
+                assertTrue(definition.getisPrefixValidText().booleanValue());
+                assertTrue(definition.getisPropertyValidSeq().booleanValue());
+                assertTrue(definition.getisSchemaValidText().booleanValue());
+                assertTrue(definition.getisValueTypeValidSeq().booleanValue());
 
                 assertEquals("pdfaSchema", definition.getnamespaceURIPrefix());
                 assertEquals("pdfaSchema", definition.getprefixPrefix());
@@ -98,13 +98,13 @@ public class XMPExtensionSchemaTest {
 
                 if (properties.size() != 0) {
                     AXLExtensionSchemaProperty property = (AXLExtensionSchemaProperty) properties.get(0);
-                    assertFalse(property.getcontainsUndefinedFields() == Boolean.FALSE);
+                    assertFalse(property.getcontainsUndefinedFields().booleanValue());
                     assertEquals("external", property.getcategory());
-                    assertTrue(property.getisCategoryValidText() == Boolean.TRUE);
-                    assertTrue(property.getisDescriptionValidText() == Boolean.TRUE);
-                    assertTrue(property.getisNameValidText() == Boolean.TRUE);
-                    assertTrue(property.getisValueTypeValidText() == Boolean.TRUE);
-                    assertTrue(property.getisValueTypeDefined() == Boolean.TRUE);
+                    assertTrue(property.getisCategoryValidText().booleanValue());
+                    assertTrue(property.getisDescriptionValidText().booleanValue());
+                    assertTrue(property.getisNameValidText().booleanValue());
+                    assertTrue(property.getisValueTypeValidText().booleanValue());
+                    assertTrue(property.getisValueTypeDefined().booleanValue());
 
                     assertEquals("pdfaProperty", property.getcategoryPrefix());
                     assertEquals("pdfaProperty", property.getvalueTypePrefix());
