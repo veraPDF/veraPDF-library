@@ -1,13 +1,10 @@
 package org.verapdf.processor;
 
-import org.verapdf.processor.config.Config;
-import org.verapdf.report.ItemDetails;
-
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.verapdf.processor.config.Config;
 
 /**
  * Instance of this class contains result of

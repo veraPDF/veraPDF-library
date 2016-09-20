@@ -4,7 +4,6 @@
 package org.verapdf.processor.config;
 
 import com.beust.jcommander.ParameterException;
-import org.verapdf.report.MachineReadableReport;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -32,7 +31,7 @@ public enum FormatOption {
 
     private FormatOption(final String option) {
         this.option = option;
-    }
+    }	
 
     /**
      * @return the option string for the {@code FormatType} instance.

@@ -38,9 +38,8 @@ public class ConfigIO {
 	public static Path getConfigFolderPath() {
 		if (!configPath.toString().isEmpty()) {
 			return configPath.getParent();
-		} else {
-			return configPath;
 		}
+		return configPath;
 	}
 
 	public static Config readConfig()
@@ -58,8 +57,9 @@ public class ConfigIO {
 			File featuresConfig = new File(configParent, "features.xml");
 			config.setFeaturesConfigPath(featuresConfig.toPath());
 		} else {
-			FileInputStream inputStream = new FileInputStream(configFile);
-			config = Config.fromXml(inputStream);
+			try (FileInputStream inputStream = new FileInputStream(configFile)) {
+				config = Config.fromXml(inputStream);
+			}
 		}
 		return config;
 	}
@@ -79,28 +79,29 @@ public class ConfigIO {
 		return false;
 	}
 
-	public static Config readConfig(Path configPath)
+	public static Config readConfig(Path pathToRead)
 		throws IOException, JAXBException, IllegalArgumentException {
-		if(configPath == null) {
+		if(pathToRead == null) {
 			throw new IllegalArgumentException("Path should specify a file");
 		}
-		File configFile = configPath.toFile();
+		File configFile = pathToRead.toFile();
 		if(!configFile.exists() || !configFile.canRead()) {
 			throw new IllegalArgumentException("Path should specify existing read accessible file");
-		} else {
-			FileInputStream inputStream = new FileInputStream(configFile);
+		}
+		try (FileInputStream inputStream = new FileInputStream(configFile)) {
 			return Config.fromXml(inputStream);
 		}
 	}
 
-	public static void writeConfig(Config config, Path configPath)
+	public static void writeConfig(Config config, Path pathToWrite)
 			throws IOException, JAXBException, IllegalArgumentException{
-		if(configPath == null) {
+		if(pathToWrite == null) {
 			throw new IllegalArgumentException("Path should specify a file");
 		}
-		File configFile = configPath.toFile();
-		FileOutputStream outputStream =
-				new FileOutputStream(configFile);
-		Config.toXml(config, outputStream, true);
+		File configFile = pathToWrite.toFile();
+		try (FileOutputStream outputStream =
+				new FileOutputStream(configFile)) {
+			Config.toXml(config, outputStream, Boolean.TRUE);
+		}
 	}
 }

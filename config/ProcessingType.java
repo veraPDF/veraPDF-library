@@ -23,9 +23,8 @@ public enum ProcessingType {
 		if (isValidation) {
 			if (isFeatures) {
 				return VALIDATION_AND_FEATURES;
-			} else {
-				return VALIDATION;
 			}
+			return VALIDATION;
 		} else if (isFeatures) {
 			return FEATURES;
 		} else {

@@ -1,23 +1,27 @@
 package org.verapdf.processor;
 
-import org.apache.log4j.Logger;
-import org.verapdf.features.FeaturesExtractor;
-import org.verapdf.processor.plugins.Attribute;
-import org.verapdf.processor.plugins.PluginConfig;
-import org.verapdf.processor.plugins.PluginsCollectionConfig;
-
-import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
+
+import javax.xml.bind.JAXBException;
+
+import org.apache.log4j.Logger;
+import org.verapdf.features.FeaturesExtractor;
+import org.verapdf.processor.plugins.Attribute;
+import org.verapdf.processor.plugins.PluginConfig;
+import org.verapdf.processor.plugins.PluginsCollectionConfig;
 
 /**
  * @author Maksim Bezrukov
@@ -35,11 +39,11 @@ public class FeaturesPluginsLoader {
 	public static List<FeaturesExtractor> loadExtractors(Path pluginsConfigPath, ProcessingResult result) {
 		File pluginsConfigFile = pluginsConfigPath.toFile();
 		if (pluginsConfigFile.exists() && pluginsConfigFile.canRead()) {
-			try {
+			try (FileInputStream fis = new FileInputStream(pluginsConfigFile)) {
 				PluginsCollectionConfig pluginsCollectionConfig =
-						PluginsCollectionConfig.fromXml(new FileInputStream(pluginsConfigFile));
+						PluginsCollectionConfig.fromXml(fis);
 				return getAllExtractors(pluginsCollectionConfig, result);
-			} catch (FileNotFoundException | JAXBException e) {
+			} catch (IOException | JAXBException e) {
 				LOGGER.error(e);
 				result.addErrorMessage(e.getMessage());
 			}
