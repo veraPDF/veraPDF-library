@@ -123,14 +123,13 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
                     .getCurrentSchemasDefinitionPDFA_1(), this
                     .getCurrentSchemasDefinitionPDFA_2_3(),
                     this.flavour);
-        } else {
-            return new AXLXMPProperty(node, this.isMainMetadata,
-                    this.isClosedChoiceCheck, this
-                    .getMainPackageSchemasDefinition(), this
-                    .getCurrentSchemasDefinitionPDFA_1(), this
-                    .getCurrentSchemasDefinitionPDFA_2_3(),
-                    this.flavour);
         }
+        return new AXLXMPProperty(node, this.isMainMetadata,
+                this.isClosedChoiceCheck, this
+                .getMainPackageSchemasDefinition(), this
+                .getCurrentSchemasDefinitionPDFA_1(), this
+                .getCurrentSchemasDefinitionPDFA_2_3(),
+                this.flavour);
     }
 
     protected VeraPDFMeta getXmpMetadata() {

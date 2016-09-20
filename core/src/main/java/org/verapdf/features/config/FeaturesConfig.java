@@ -83,8 +83,8 @@ public class FeaturesConfig {
 	}
 
 	private FeaturesConfig() {
-		this(false, false, false, false, false, false, false, false, false,
-				false, false, false, false, false, false, false, false, false);
+		this(Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE,
+				Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE);
 	}
 
 	public boolean isFeaturesEnabledForType(FeaturesObjectTypesEnum type) {

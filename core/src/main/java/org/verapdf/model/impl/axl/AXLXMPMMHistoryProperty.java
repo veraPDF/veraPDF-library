@@ -40,7 +40,7 @@ public class AXLXMPMMHistoryProperty extends AXLXMPProperty implements XMPMMHist
 	}
 
 	private List<XMPMMHistoryResourceEvent> getResourceEvents() {
-		if (this.getisValueTypeCorrect()) {
+		if (this.getisValueTypeCorrect() == Boolean.TRUE) {
 			List<VeraPDFXMPNode> children = this.xmpNode.getChildren();
 			List<XMPMMHistoryResourceEvent> res = new ArrayList<>(children.size());
 			for (VeraPDFXMPNode node : children) {

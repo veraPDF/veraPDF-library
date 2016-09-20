@@ -1,7 +1,5 @@
 package org.verapdf.metadata.fixer.utils;
 
-import java.io.OutputStream;
-
 /**
  * Current enum describe validation state according to
  * validity of separated parts. This parts can separated

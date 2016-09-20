@@ -1,9 +1,8 @@
 package org.verapdf.metadata.fixer.entity;
 
-import org.verapdf.pdfa.results.MetadataFixerResult;
-import org.verapdf.pdfa.results.MetadataFixerResultImpl;
-
 import java.io.OutputStream;
+
+import org.verapdf.pdfa.results.MetadataFixerResult;
 
 /**
  * Current interface provide necessary behavior of pdf document

@@ -35,11 +35,11 @@ public class XMPMMHistoryTest {
 				Object obj = list.get(0);
 				assertTrue(obj instanceof AXLXMPMMHistoryProperty);
 				AXLXMPMMHistoryProperty historyProperty = (AXLXMPMMHistoryProperty) obj;
-				assertTrue(historyProperty.getisValueTypeCorrect());
-				assertTrue(historyProperty.getisPredefinedInXMP2004());
-				assertTrue(historyProperty.getisPredefinedInXMP2005());
-				assertFalse(historyProperty.getisDefinedInCurrentPackage());
-				assertFalse(historyProperty.getisDefinedInMainPackage());
+				assertTrue(historyProperty.getisValueTypeCorrect().booleanValue());
+				assertTrue(historyProperty.getisPredefinedInXMP2004().booleanValue());
+				assertTrue(historyProperty.getisPredefinedInXMP2005().booleanValue());
+				assertFalse(historyProperty.getisDefinedInCurrentPackage().booleanValue());
+				assertFalse(historyProperty.getisDefinedInMainPackage().booleanValue());
 
 				List<? extends Object> resList = historyProperty
 						.getLinkedObjects(AXLXMPMMHistoryProperty.RESOURCE_EVENTS);
