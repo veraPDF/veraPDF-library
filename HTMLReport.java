@@ -1,12 +1,11 @@
 package org.verapdf.report;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.transform.TransformerException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.transform.TransformerException;
 
 /**
  * Generating HTML validation report
@@ -35,15 +34,7 @@ public final class HTMLReport {
      * @throws JAXBException
      */
     public static void writeHTMLReport(InputStream source,
-            OutputStream destination, String wikiPath, boolean isFullHTML) throws TransformerException, IOException{
-        String resultPath;
-        if (wikiPath == null) {
-            resultPath = "";
-        } else if (wikiPath.endsWith("/")) {
-            resultPath = wikiPath;
-        } else {
-            resultPath = wikiPath + "/";
-        }
+            OutputStream destination, String wikiPath, boolean isFullHTML) throws TransformerException{
         Map<String, String> arguments = new HashMap<>();
         arguments.put("wikiPath", wikiPath);
         arguments.put("isFullHTML", Boolean.toString(isFullHTML));

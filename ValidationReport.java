@@ -43,7 +43,7 @@ public class ValidationReport {
     }
 
     private ValidationReport() {
-        this(PDFAFlavour.NO_FLAVOUR.getId(), false, "", ValidationDetails.fromValues(Profiles.defaultProfile(),
+        this(PDFAFlavour.NO_FLAVOUR.getId(), Boolean.FALSE, "", ValidationDetails.fromValues(Profiles.defaultProfile(),
                 ValidationResults.defaultResult(), false, 0));
     }
 
@@ -66,7 +66,7 @@ public class ValidationReport {
         if (result == null) {
             return null;
         }
-        return new ValidationReport(profile.getDetails().getName(), result.isCompliant(),
+        return new ValidationReport(profile.getDetails().getName(), Boolean.valueOf(result.isCompliant()),
                 getStatement(result.isCompliant()),
                 ValidationDetails.fromValues(profile, result, logPassedChecks, maxNumberOfDisplayedFailedChecks));
     }

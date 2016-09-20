@@ -57,8 +57,7 @@ public class DocumentResourcesFeatures {
 				&& propertiesDicts == null
 				&& xobjects == null) {
 			return null;
-		} else {
-			return new DocumentResourcesFeatures(propertiesDicts, fonts, xobjects, shadings, patterns, colorSpaces, graphicsStates);
 		}
+		return new DocumentResourcesFeatures(propertiesDicts, fonts, xobjects, shadings, patterns, colorSpaces, graphicsStates);
 	}
 }

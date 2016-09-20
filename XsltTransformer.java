@@ -24,15 +24,14 @@ public final class XsltTransformer {
 	 *            Readable Report.
 	 * @param destination
 	 *            an {@link OutputStream} to write the HTML report to.
-	 *
 	 * @throws TransformerException
 	 *             if an unrecoverable error occurs during the course of the
 	 *             transformation
 	 * @throws IOException
 	 *             file system exceptions
 	 */
-	public static void transform(InputStream source,
-								 InputStream xslt, OutputStream destination, Map<String, String> arguments) throws TransformerException, IOException{
+	public static void transform(InputStream source, InputStream xslt, OutputStream destination,
+			Map<String, String> arguments) throws TransformerException {
 
 		TransformerFactory factory = TransformerFactory.newInstance();
 		Transformer transformer = factory.newTransformer(new StreamSource(xslt));
@@ -45,7 +44,6 @@ public final class XsltTransformer {
 			}
 		}
 
-		transformer.transform(new StreamSource(source), new StreamResult(
-				destination));
+		transformer.transform(new StreamSource(source), new StreamResult(destination));
 	}
 }
