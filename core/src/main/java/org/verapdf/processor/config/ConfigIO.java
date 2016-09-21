@@ -1,14 +1,15 @@
 package org.verapdf.processor.config;
 
-import org.apache.log4j.Logger;
-
-import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.xml.bind.JAXBException;
 
 /**
  * @author Sergey Shemyakov
@@ -33,7 +34,7 @@ public class ConfigIO {
 	private ConfigIO() {
 	}
 
-	private static final Logger LOGGER = Logger.getLogger(ConfigIO.class);
+	private static final Logger LOGGER = Logger.getLogger(ConfigIO.class.getName());
 
 	public static Path getConfigFolderPath() {
 		if (!configPath.toString().isEmpty()) {
@@ -71,10 +72,10 @@ public class ConfigIO {
 				return true;
 			}
 			catch (IOException e1) {
-				LOGGER.error("Can not save config", e1);
+				LOGGER.log(Level.WARNING, "Can not save config", e1);
 			}
 			catch (JAXBException e1) {
-				LOGGER.error("Can not convert config to XML", e1);
+				LOGGER.log(Level.WARNING, "Can not convert config to XML", e1);
 			}
 		return false;
 	}

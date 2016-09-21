@@ -1,6 +1,21 @@
 package org.verapdf.report;
 
-import org.apache.log4j.Logger;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.annotation.XmlAnyAttribute;
+import javax.xml.bind.annotation.XmlMixed;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.namespace.QName;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.verapdf.features.FeaturesObjectTypesEnum;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
@@ -10,22 +25,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlAnyAttribute;
-import javax.xml.bind.annotation.XmlMixed;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.namespace.QName;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.util.*;
-
 /**
  * @author Maksim Bezrukov
  */
 @XmlRootElement
 public class FeaturesNode {
 
-	private static final Logger LOGGER = Logger.getLogger(FeaturesNode.class);
+	private static final Logger LOGGER = Logger.getLogger(FeaturesNode.class.getName());
 
 	private static final String NAMESPACE = "http://www.verapdf.org/MachineReadableReport";
 
@@ -109,7 +115,7 @@ public class FeaturesNode {
 					qChildren.add(metadata);
 				} catch (SAXException | IOException
 						| ParserConfigurationException e) {
-					LOGGER.error(e);
+					LOGGER.log(Level.INFO, e.getMessage(), e);
 					String errorId = ErrorsHelper.addErrorIntoCollection(collection, null, e.getMessage());
 					qAttributes.put(new QName(NAMESPACE, ErrorsHelper.ERRORID), errorId);
 				}

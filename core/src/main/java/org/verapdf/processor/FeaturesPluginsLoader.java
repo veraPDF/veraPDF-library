@@ -14,10 +14,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBException;
 
-import org.apache.log4j.Logger;
 import org.verapdf.features.FeaturesExtractor;
 import org.verapdf.processor.plugins.Attribute;
 import org.verapdf.processor.plugins.PluginConfig;
@@ -28,7 +29,7 @@ import org.verapdf.processor.plugins.PluginsCollectionConfig;
  */
 public class FeaturesPluginsLoader {
 	private static final Logger LOGGER = Logger
-			.getLogger(FeaturesPluginsLoader.class);
+			.getLogger(FeaturesPluginsLoader.class.getName());
 
 	private FeaturesPluginsLoader() {
 	}
@@ -44,7 +45,7 @@ public class FeaturesPluginsLoader {
 						PluginsCollectionConfig.fromXml(fis);
 				return getAllExtractors(pluginsCollectionConfig, result);
 			} catch (IOException | JAXBException e) {
-				LOGGER.error(e);
+				LOGGER.log(Level.WARNING, "Problem loading Feature Extraction plugins from: " + pluginsConfigFile, e);
 				result.addErrorMessage(e.getMessage());
 			}
 		}
@@ -111,7 +112,7 @@ public class FeaturesPluginsLoader {
 			List<String> classNames = getAllClassNamesFromJAR(jar);
 			return loadExtractorByClassNames(jar, classNames, result);
 		} catch (IOException e) {
-			LOGGER.error("Can not load extractors from file with path "
+			LOGGER.log(Level.WARNING, "Can not load extractors from file with path "
 					+ jar.getPath(), e);
 			result.addErrorMessage("Can not load extractors from file with path "
 					+ jar.getPath());
@@ -151,7 +152,7 @@ public class FeaturesPluginsLoader {
 					if (extractorClass == null) {
 						extractorClass = cls;
 					} else {
-						LOGGER.error("JAR file " + jar.getAbsolutePath()
+						LOGGER.log(Level.WARNING, "JAR file " + jar.getAbsolutePath()
 								+ " contains more than one extractor.");
 						result.addErrorMessage("JAR file " + jar.getAbsolutePath()
 								+ " contains more than one extractor.");
@@ -159,7 +160,7 @@ public class FeaturesPluginsLoader {
 					}
 				}
 			} catch (ClassNotFoundException e) {
-				LOGGER.error("Can not load class " + className + " from jar "
+				LOGGER.log(Level.WARNING, "Can not load class " + className + " from jar "
 						+ jar.getAbsolutePath(), e);
 			}
 		}
@@ -169,7 +170,7 @@ public class FeaturesPluginsLoader {
 				FeaturesExtractor extractor = (FeaturesExtractor) obj;
 				return extractor;
 			} catch (InstantiationException | IllegalAccessException e) {
-				LOGGER.error(
+				LOGGER.log(Level.WARNING, 
 						"Can not create an instance of the class "
 								+ extractorClass.getName() + " from jar "
 								+ jar.getPath(), e);

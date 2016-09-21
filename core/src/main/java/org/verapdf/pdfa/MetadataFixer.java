@@ -28,4 +28,7 @@ public interface MetadataFixer {
      */
     public MetadataFixerResult fixMetadata(InputStream toFix,
             OutputStream outputRepaired, ValidationResult result);
+
+    public MetadataFixerResult fixMetadata(PDFParser parser,
+            OutputStream outputRepaired, ValidationResult result);
 }

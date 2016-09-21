@@ -1,8 +1,19 @@
 package org.verapdf.processor.config;
 
-import org.apache.log4j.Logger;
-import org.verapdf.metadata.fixer.utils.MetadataFixerConstants;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.net.URI;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -12,11 +23,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.io.*;
-import java.net.URI;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
+import org.verapdf.metadata.fixer.utils.MetadataFixerConstants;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**
  * @author Maksim Bezrukov
@@ -680,14 +689,14 @@ public final class Config {
 
 	private static class ProcessingTypeAdapter extends XmlAdapter<String, ProcessingType> {
 
-		private final Logger LOGGER = Logger.getLogger(ProcessingTypeAdapter.class);
+		private final Logger LOGGER = Logger.getLogger(ProcessingTypeAdapter.class.getName());
 
 		@Override
 		public ProcessingType unmarshal(String v) throws Exception {
 			try {
 				return ProcessingType.fromString(v);
 			} catch (IllegalArgumentException e) {
-				LOGGER.error("Can't construct ProcessingType from string \"" + v + "\", setting ProcessingType to default", e);
+				LOGGER.log(Level.WARNING, "Can't construct ProcessingType from string \"" + v + "\", setting ProcessingType to default", e);
 			}
 			return Config.DEFAULT_PROCESSING_TYPE;
 		}
@@ -701,12 +710,12 @@ public final class Config {
 	private static class FormatOptionAdapter extends XmlAdapter<String, FormatOption> {
 
 		@Override
-		public FormatOption unmarshal(String v) throws Exception {
+		public FormatOption unmarshal(String v) {
 			return FormatOption.fromOption(v);
 		}
 
 		@Override
-		public String marshal(FormatOption v) throws Exception {
+		public String marshal(FormatOption v) {
 			return v.toString();
 		}
 	}
@@ -714,12 +723,12 @@ public final class Config {
 	private static class FlavourAdapter extends XmlAdapter<String, PDFAFlavour> {
 
 		@Override
-		public PDFAFlavour unmarshal(String v) throws Exception {
+		public PDFAFlavour unmarshal(String v) {
 			return PDFAFlavour.fromString(v);
 		}
 
 		@Override
-		public String marshal(PDFAFlavour v) throws Exception {
+		public String marshal(PDFAFlavour v) {
 			return v.toString();
 		}
 	}

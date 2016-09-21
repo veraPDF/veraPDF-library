@@ -3,7 +3,7 @@
  */
 package org.verapdf.processor.config;
 
-import com.beust.jcommander.ParameterException;
+import java.util.NoSuchElementException;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -60,6 +60,6 @@ public enum FormatOption {
             if (format.toString().equalsIgnoreCase(option))
                 return format;
         }
-        throw new ParameterException("Illegal --format argument:" + option);
+        throw new NoSuchElementException("No FormatOption with option value: " + option + " found.");
     }
 }
