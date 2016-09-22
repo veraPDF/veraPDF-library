@@ -3,6 +3,7 @@
  */
 package org.verapdf.pdfa.validators;
 
+import org.verapdf.pdfa.BatchValidator;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.Profiles;

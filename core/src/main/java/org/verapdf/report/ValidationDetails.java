@@ -3,6 +3,7 @@ package org.verapdf.report;
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.Rule;
 import org.verapdf.pdfa.validation.RuleId;
 import org.verapdf.pdfa.validation.ValidationProfile;
@@ -44,10 +45,17 @@ public class ValidationDetails {
         this(0, 0, 0, 0, new HashSet<RuleSummary>());
     }
 
-    static ValidationDetails fromValues(final ValidationProfile profile,
-                                        final ValidationResult result, boolean logPassedChecks,
+    public int getPassedChecks() {
+    	return this.passedChecks;
+    }
+    
+    public int getFailedChecks() {
+    	return this.failedChecks;
+    }
+    
+    static ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks,
                                         final int maxNumberOfDisplayedFailedChecks) {
-
+    	ValidationProfile profile = Profiles.getVeraProfileDirectory().getValidationProfileByFlavour(result.getPDFAFlavour());
         Map<RuleId, Set<TestAssertion>> assertionMap = mapAssertionsByRule(result
                 .getTestAssertions());
         Set<RuleSummary> ruleSummaries = new HashSet<>();

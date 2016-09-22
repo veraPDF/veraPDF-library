@@ -24,12 +24,6 @@ import java.util.Formatter;
 @XmlRootElement(name = "report")
 public class MachineReadableReport {
 
-    private static final long MS_IN_SEC = 1000L;
-    private static final int SEC_IN_MIN = 60;
-    private static final long MS_IN_MIN = SEC_IN_MIN * MS_IN_SEC;
-    private static final int MIN_IN_HOUR = 60;
-    private static final long MS_IN_HOUR = MS_IN_MIN * MIN_IN_HOUR;
-
     @XmlAttribute
     private final Date creationDate;
     @XmlAttribute
@@ -111,11 +105,11 @@ public class MachineReadableReport {
     public static MachineReadableReport fromValues(File file, ValidationProfile profile,
             ValidationResult validationResult, boolean reportPassedChecks, int maxFailuresDisplayed,
             MetadataFixerResult fixerResult, FeaturesCollection collection,
-            long processingTime) {
+            TaskDetails taskDetails) {
         return fromValues(ItemDetails.fromFile(file), profile,
                 validationResult, reportPassedChecks,
                 maxFailuresDisplayed, fixerResult,
-                collection, processingTime);
+                collection, taskDetails);
     }
 
     /**
@@ -131,8 +125,7 @@ public class MachineReadableReport {
      */
     public static MachineReadableReport fromValues(ItemDetails item, ValidationProfile profile,
             ValidationResult validationResult, boolean reportPassedChecks, int maxFailuresDisplayed,
-            MetadataFixerResult fixerResult, FeaturesCollection collection,
-            long processingTime) {
+            MetadataFixerResult fixerResult, FeaturesCollection collection, TaskDetails taskDetails) {
         ValidationReport validationReport = null;
         if (validationResult != null) {
             validationReport = ValidationReport.fromValues(profile,
@@ -141,7 +134,7 @@ public class MachineReadableReport {
         FeaturesReport featuresReport = FeaturesReport.fromValues(collection);
         MetadataFixesReport fixesReport = MetadataFixesReport.fromValues(fixerResult);
         return new MachineReadableReport(item, validationReport,
-                getProcessingTime(processingTime), featuresReport, fixesReport);
+                taskDetails.getDuration(), featuresReport, fixesReport);
     }
     /**
      * @param toConvert
@@ -162,33 +155,6 @@ public class MachineReadableReport {
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
         return marshaller;
-    }
-
-    private static String getProcessingTime(long processTime) {
-        long processingTime = processTime;
-
-        Long hours = Long.valueOf(processingTime / MS_IN_HOUR);
-        processingTime %= MS_IN_HOUR;
-
-        Long mins = Long.valueOf(processingTime / MS_IN_MIN);
-        processingTime %= MS_IN_MIN;
-
-        Long sec = Long.valueOf(processingTime / MS_IN_SEC);
-        processingTime %= MS_IN_SEC;
-
-        Long ms = Long.valueOf(processingTime);
-
-        String res;
-
-        try (Formatter formatter = new Formatter()) {
-            formatter.format("%02d:", hours);
-            formatter.format("%02d:", mins);
-            formatter.format("%02d.", sec);
-            formatter.format("%03d", ms);
-            res = formatter.toString();
-        }
-
-        return res;
     }
 
 }

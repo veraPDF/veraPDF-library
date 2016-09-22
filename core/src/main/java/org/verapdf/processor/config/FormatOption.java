@@ -25,7 +25,8 @@ public enum FormatOption {
     /**
      * Output in brief format
      */
-    TEXT("text");
+    TEXT("text"),
+    BATCH("batch");
 
     private final String option;
 

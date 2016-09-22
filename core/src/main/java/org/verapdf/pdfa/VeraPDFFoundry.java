@@ -3,6 +3,7 @@
  */
 package org.verapdf.pdfa;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.verapdf.core.EncryptedPdfException;
@@ -14,8 +15,7 @@ import org.verapdf.pdfa.results.ValidationResult;
 
 /**
  * The veraPDFFoundry interface provides methods for creating implementations of
- * the core API classes. Note that the library doesn't include implementations
- * for many of these interfaces, including this one.
+ * the classes provided by a PDF Parser and Metadata Fixer implementations.
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
@@ -23,27 +23,46 @@ import org.verapdf.pdfa.results.ValidationResult;
  */
 public interface VeraPDFFoundry {
 	/**
+	 * Method that returns a PDFParser instance, parsing the passed
+	 * {@link pdfStream} parameter. The parser or parser provider will detect
+	 * the flavour of the PDF document stream and provide an appropriate parser.
+	 * 
 	 * @param pdfStream
-	 * @return
+	 *            {@link java.io.InputStream} for the PDF document to be parsed.
+	 * @return a {@link PDFParser} instance created from the supplied
+	 *         InputStream.
 	 * @throws ModelParsingException
+	 *             when there's a problem parsing the PDF file
 	 * @throws EncryptedPdfException
+	 *             if the PDF to be parsed is encrypted
 	 */
 	public PDFParser newPdfParser(InputStream pdfStream) throws ModelParsingException, EncryptedPdfException;
 
 	/**
+	 * Method that returns a PDFParser instance, parsing the passed
+	 * {@link pdfStream} parameter. The caller must explicitly state
+	 * the flavour of the PDF document stream.
+	 *
 	 * @param pdfStream
+	 *            {@link java.io.InputStream} for the PDF document to be parsed.
 	 * @param flavour
-	 * @return
+	 *            a {@link PDFAFlavour} instance indicating parser configuration
+	 *            (PDF/A part and conformance level) to be assumed when parsing
+	 *            the document.
+	 * @return a {@link PDFParser} instance created from the supplied
+	 *         InputStream.
 	 * @throws ModelParsingException
+	 *             when there's a problem parsing the PDF file
 	 * @throws EncryptedPdfException
+	 *             if the PDF to be parsed is encrypted
 	 */
 	public PDFParser newPdfParser(InputStream pdfStream, PDFAFlavour flavour)
 			throws ModelParsingException, EncryptedPdfException;
 
 	public MetadataFixer newMetadataFixer(FixerConfig config);
-	
+
 	public FixerConfig newFixerConfig(PDFDocument pdfDocument, ValidationResult validationResult);
-	
+
 	public PDFDocument newPdfDocument(InputStream pdfStream, PDFAFlavour flavour)
-			throws ModelParsingException, EncryptedPdfException;
+			throws ModelParsingException, EncryptedPdfException, IOException;
 }

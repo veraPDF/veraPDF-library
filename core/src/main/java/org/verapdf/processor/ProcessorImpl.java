@@ -50,6 +50,7 @@ import org.verapdf.report.FeaturesReport;
 import org.verapdf.report.HTMLReport;
 import org.verapdf.report.ItemDetails;
 import org.verapdf.report.MachineReadableReport;
+import org.verapdf.report.TaskDetails;
 import org.verapdf.report.XsltTransformer;
 
 /**
@@ -60,7 +61,7 @@ import org.verapdf.report.XsltTransformer;
 public class ProcessorImpl implements Processor {
 
 	private static final Logger LOGGER = Logger.getLogger(ProcessorImpl.class.getName());
-	private static VeraPDFFoundry FOUNDRY;
+	private static VeraPDFFoundry FOUNDRY = null;
 
 	private ProcessingResult processingResult;
 	private String parsingErrorMessage;
@@ -68,10 +69,14 @@ public class ProcessorImpl implements Processor {
 	private Throwable metadataFixingExeption;
 	private Throwable featuresExeption;
 
+	public static void initialise(VeraPDFFoundry foundry) {
+		if (FOUNDRY == null) FOUNDRY = foundry;
+	}
+
 	@Override
 	public ProcessingResult validate(InputStream pdfFileStream, ItemDetails fileDetails, Config config,
 			OutputStream reportOutputStream) {
-		long startTimeOfProcessing = System.currentTimeMillis();
+		TaskDetails.TimedFactory taskTimer = new TaskDetails.TimedFactory("PDF/A Validation");
 		checkArguments(pdfFileStream, fileDetails, config, reportOutputStream);
 		ValidationResult validationResult = null;
 		MetadataFixerResult fixerResult = null;
@@ -124,9 +129,8 @@ public class ProcessorImpl implements Processor {
 			LOGGER.log(Level.FINE, "Problem closing PDF Stream", excep);
 		}
 
-		long endTimeOfProcessing = System.currentTimeMillis();
 		writeReport(config, validationResult, fileDetails, reportOutputStream, validationProfile, fixerResult,
-				featuresCollection, endTimeOfProcessing - startTimeOfProcessing);
+				featuresCollection, taskTimer.stop());
 
 		return this.processingResult;
 	}
@@ -288,7 +292,7 @@ public class ProcessorImpl implements Processor {
 
 	private void writeReport(Config config, ValidationResult validationResult, ItemDetails fileDetails,
 			OutputStream reportOutputStream, ValidationProfile validationProfile, MetadataFixerResult fixerResult,
-			FeaturesCollection featuresCollection, long processingTime) {
+			FeaturesCollection featuresCollection, TaskDetails taskDetails) {
 		try {
 			if (config.getPolicyProfile().toString().equals("")) {
 				switch (config.getReportType()) {
@@ -298,7 +302,7 @@ public class ProcessorImpl implements Processor {
 				case MRR:
 				case HTML:
 					writeMRR(fileDetails, validationProfile, validationResult, config, fixerResult, featuresCollection,
-							processingTime, null, reportOutputStream);
+							taskDetails, null, reportOutputStream);
 					break;
 				case XML:
 					CliReport report = CliReport.fromValues(fileDetails, validationResult,
@@ -310,7 +314,7 @@ public class ProcessorImpl implements Processor {
 				}
 			} else {
 				writeMRR(fileDetails, validationProfile, validationResult, config, fixerResult, featuresCollection,
-						processingTime, config.getPolicyProfile().toAbsolutePath().toString(), reportOutputStream);
+						taskDetails, config.getPolicyProfile().toAbsolutePath().toString(), reportOutputStream);
 			}
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, "Exception raised while writing report to file", e);
@@ -354,12 +358,12 @@ public class ProcessorImpl implements Processor {
 
 	private void writeMRR(ItemDetails fileDetails, ValidationProfile validationProfile,
 			ValidationResult validationResult, Config config, MetadataFixerResult fixerResult,
-			FeaturesCollection featuresCollection, long processingTime, String policyProfile,
+			FeaturesCollection featuresCollection, TaskDetails taskDetails, String policyProfile,
 			OutputStream reportOutputStream) throws JAXBException, IOException, TransformerException {
 
 		MachineReadableReport machineReadableReport = MachineReadableReport.fromValues(fileDetails, validationProfile,
 				validationResult, config.isShowPassedRules(), config.getMaxNumberOfDisplayedFailedChecks(), fixerResult,
-				featuresCollection, processingTime);
+				featuresCollection, taskDetails);
 		if (this.processingResult.getValidationSummary() == ProcessingResult.ValidationSummary.ERROR_IN_VALIDATION) {
 			if (this.parsingErrorMessage != null) {
 				machineReadableReport

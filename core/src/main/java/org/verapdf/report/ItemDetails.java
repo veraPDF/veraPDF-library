@@ -44,7 +44,14 @@ public class ItemDetails {
     public String getName() {
         return this.name;
     }
-    
+
+    /**
+     * @return the size of the item in bytes
+     */
+    public long getSize() {
+    	return this.size;
+    }
+
     /**
      * @param file
      *            the {@link File} to extract details from
