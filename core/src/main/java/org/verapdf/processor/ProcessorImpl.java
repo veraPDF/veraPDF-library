@@ -201,13 +201,12 @@ public class ProcessorImpl implements Processor {
 
 	private MetadataFixerResult fixMetadata(ValidationResult info, PDFParser parser, String fileName, Config config) {
 		try {
-			FixerConfig fixerConfig = FOUNDRY.newFixerConfig(parser.getPDFDocument(), info);
 			Path path = config.getFixMetadataFolder();
 			File tempFile = File.createTempFile("fixedTempFile", ".pdf");
 			tempFile.deleteOnExit();
 			try (OutputStream tempOutput = new BufferedOutputStream(new FileOutputStream(tempFile))) {
-				MetadataFixer fixer = FOUNDRY.newMetadataFixer(fixerConfig);
-				MetadataFixerResult fixerResult = fixer.fixMetadata(parser, tempOutput, fixerConfig.getValidationResult());
+				MetadataFixer fixer = FOUNDRY.newMetadataFixer();
+				MetadataFixerResult fixerResult = fixer.fixMetadata(parser, tempOutput, info);
 				MetadataFixerResult.RepairStatus repairStatus = fixerResult.getRepairStatus();
 				if (repairStatus == MetadataFixerResult.RepairStatus.SUCCESS
 						|| repairStatus == MetadataFixerResult.RepairStatus.ID_REMOVED) {

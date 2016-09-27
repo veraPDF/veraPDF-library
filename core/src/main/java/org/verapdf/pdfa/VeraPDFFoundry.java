@@ -59,10 +59,5 @@ public interface VeraPDFFoundry {
 	public PDFParser newPdfParser(InputStream pdfStream, PDFAFlavour flavour)
 			throws ModelParsingException, EncryptedPdfException;
 
-	public MetadataFixer newMetadataFixer(FixerConfig config);
-
-	public FixerConfig newFixerConfig(PDFDocument pdfDocument, ValidationResult validationResult);
-
-	public PDFDocument newPdfDocument(InputStream pdfStream, PDFAFlavour flavour)
-			throws ModelParsingException, EncryptedPdfException, IOException;
+	public MetadataFixer newMetadataFixer();
 }
