@@ -1,11 +1,10 @@
 package org.verapdf.report;
 
+import javax.xml.transform.TransformerException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.xml.transform.TransformerException;
 
 /**
  * Generating HTML validation report
@@ -40,7 +39,7 @@ public final class HTMLReport {
         arguments.put("isFullHTML", Boolean.toString(isFullHTML));
 
         XsltTransformer.transform(source, HTMLReport.class.getClassLoader().getResourceAsStream(
-                "HTMLReportStylesheet.xsl"), destination, arguments);
+                "org/verapdf/report/HTMLReportStylesheet.xsl"), destination, arguments);
     }
 
 }

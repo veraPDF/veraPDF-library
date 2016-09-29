@@ -3,6 +3,17 @@
  */
 package org.verapdf.pdfa.validators;
 
+import org.verapdf.pdfa.BatchValidator;
+import org.verapdf.pdfa.PDFAValidator;
+import org.verapdf.pdfa.PDFParser;
+import org.verapdf.pdfa.VeraPDFFoundry;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.report.ItemDetails;
+import org.verapdf.report.TaskDetails;
+import org.verapdf.report.ValidationBatchReport;
+import org.verapdf.report.ValidationSummary;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,19 +22,6 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
-
-import org.verapdf.pdfa.BatchValidator;
-import org.verapdf.pdfa.PDFAValidator;
-import org.verapdf.pdfa.PDFParser;
-import org.verapdf.pdfa.VeraPDFFoundry;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.report.ItemDetails;
-import org.verapdf.report.TaskDetails;
-import org.verapdf.report.ValidationBatchReport;
-import org.verapdf.report.ValidationSummary;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -36,7 +34,7 @@ public class ReferenceBatchValidator implements BatchValidator {
 	private final PDFAFlavour flavour;
 	private final boolean recurse;
 	private ValidationBatchReport.Builder batchBuilder;
-	private final PDFAValidator validator;
+	private PDFAValidator validator;
 	private final String name;
 
 	public ReferenceBatchValidator(PDFAFlavour flavour, boolean recurse) {
@@ -47,7 +45,6 @@ public class ReferenceBatchValidator implements BatchValidator {
 		this.name = name;
 		this.flavour = flavour;
 		this.recurse = recurse;
-		this.validator = Validators.createValidator(flavour, false, 0);
 	}
 
 	@Override
@@ -125,6 +122,9 @@ public class ReferenceBatchValidator implements BatchValidator {
 
 	private void processStream(final ItemDetails item, final InputStream toProcess) {
 		try (PDFParser parser = FOUNDRY.newPdfParser(toProcess, this.flavour)) {
+			if (this.validator == null || this.validator.getProfile().getPDFAFlavour() != parser.getFlavour()) {
+				this.validator = Validators.createValidator(parser.getFlavour(), false, 0);
+			}
 			TaskDetails.TimedFactory timer = new TaskDetails.TimedFactory("PDF/A Validation");
 			ValidationResult validationResult = this.validator.validate(parser);
 			ValidationSummary summary = new ValidationSummary(item, validationResult, timer.stop());
