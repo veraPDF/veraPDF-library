@@ -1,27 +1,5 @@
 package org.verapdf.processor;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.xml.bind.JAXBException;
-import javax.xml.transform.TransformerException;
-
 import org.verapdf.core.EncryptedPdfException;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
@@ -29,7 +7,6 @@ import org.verapdf.features.FeaturesExtractor;
 import org.verapdf.features.config.FeaturesConfig;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
-import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.pdfa.MetadataFixer;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.PDFParser;
@@ -45,13 +22,16 @@ import org.verapdf.pdfa.validators.Validators;
 import org.verapdf.processor.config.Config;
 import org.verapdf.processor.config.FormatOption;
 import org.verapdf.processor.config.ProcessingType;
-import org.verapdf.report.CliReport;
-import org.verapdf.report.FeaturesReport;
-import org.verapdf.report.HTMLReport;
-import org.verapdf.report.ItemDetails;
-import org.verapdf.report.MachineReadableReport;
-import org.verapdf.report.TaskDetails;
-import org.verapdf.report.XsltTransformer;
+import org.verapdf.report.*;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class is implementation of {@link Processor} interface
@@ -410,7 +390,7 @@ public class ProcessorImpl implements Processor {
 					Map<String, String> arguments = new HashMap<>();
 					arguments.put("policyProfilePath", policyProfile);
 					XsltTransformer.transform(is,
-							ProcessorImpl.class.getClassLoader().getResourceAsStream("policy-example.xsl"),
+							ProcessorImpl.class.getClassLoader().getResourceAsStream("org/verapdf/report/policy-example.xsl"),
 							reportOutputStream, arguments);
 				}
 			} else if (config.getReportType() == FormatOption.HTML) {
