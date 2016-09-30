@@ -34,4 +34,20 @@ public class BatchSummary {
 		this.validItems = validItems;
 		this.invalidItems = invalidItems;
 	}
+
+	public TaskDetails getTaskDetails() {
+		return taskDetails;
+	}
+
+	public int getItemsProcessed() {
+		return itemsProcessed;
+	}
+
+	public int getValidItems() {
+		return validItems;
+	}
+
+	public int getInvalidItems() {
+		return invalidItems;
+	}
 }
