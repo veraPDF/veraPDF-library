@@ -3,17 +3,6 @@
  */
 package org.verapdf.report;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -21,6 +10,10 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -48,7 +41,15 @@ public class ValidationBatchReport {
 		return new ValidationBatchReport(batchSummary, taskSummaries);
 	}
 
-    static String toXml(final ValidationBatchReport toConvert, Boolean prettyXml)
+	public BatchSummary getBatchSummary() {
+		return batchSummary;
+	}
+
+	public List<ValidationSummary> getTasks() {
+		return Collections.unmodifiableList(tasks);
+	}
+
+	static String toXml(final ValidationBatchReport toConvert, Boolean prettyXml)
             throws JAXBException, IOException {
         String retVal = "";
         try (StringWriter writer = new StringWriter()) {
