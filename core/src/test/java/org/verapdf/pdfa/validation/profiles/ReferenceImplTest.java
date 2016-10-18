@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf.pdfa.validation;
+package org.verapdf.pdfa.validation.profiles;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -11,6 +11,9 @@ import javax.xml.bind.JAXBException;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
+import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.Reference;
+import org.verapdf.pdfa.validation.profiles.ReferenceImpl;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

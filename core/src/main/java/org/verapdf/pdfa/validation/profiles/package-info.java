@@ -11,7 +11,7 @@
  * @since 0.7
  */
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.verapdf.org/ValidationProfile", xmlns = {@XmlNs(prefix = "", namespaceURI = "http://www.verapdf.org/ValidationProfile")}, elementFormDefault = XmlNsForm.QUALIFIED)
-package org.verapdf.pdfa.validation;
+package org.verapdf.pdfa.validation.profiles;
 
 import javax.xml.bind.annotation.XmlNs;
 import javax.xml.bind.annotation.XmlNsForm;

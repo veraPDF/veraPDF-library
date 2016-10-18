@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf.pdfa.validation;
+package org.verapdf.pdfa.validation.profiles;
 
 import static org.junit.Assert.*;
 
@@ -11,6 +11,9 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
+import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.RuleId;
+import org.verapdf.pdfa.validation.profiles.RuleIdImpl;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

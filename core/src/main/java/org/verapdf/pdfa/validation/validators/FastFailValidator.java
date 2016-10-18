@@ -1,10 +1,10 @@
 /**
  * 
  */
-package org.verapdf.pdfa.validators;
+package org.verapdf.pdfa.validation.validators;
 
-import org.verapdf.pdfa.validation.Rule;
-import org.verapdf.pdfa.validation.ValidationProfile;
+import org.verapdf.pdfa.validation.profiles.Rule;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

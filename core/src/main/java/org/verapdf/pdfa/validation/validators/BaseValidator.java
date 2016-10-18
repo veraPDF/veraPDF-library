@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf.pdfa.validators;
+package org.verapdf.pdfa.validation.validators;
 
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
@@ -15,12 +15,12 @@ import org.verapdf.pdfa.PDFParser;
 import org.verapdf.pdfa.results.Location;
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
+import org.verapdf.pdfa.validation.profiles.Rule;
+import org.verapdf.pdfa.validation.profiles.RuleId;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
+import org.verapdf.pdfa.validation.profiles.Variable;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.pdfa.validation.Rule;
-import org.verapdf.pdfa.validation.RuleId;
-import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validation.Variable;
 
 import java.util.*;
 

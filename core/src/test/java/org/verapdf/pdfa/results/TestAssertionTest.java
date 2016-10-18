@@ -9,7 +9,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 import org.verapdf.pdfa.results.TestAssertion.Status;
-import org.verapdf.pdfa.validation.Profiles;
+import org.verapdf.pdfa.validation.profiles.Profiles;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

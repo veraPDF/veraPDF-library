@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.verapdf.pdfa.validation;
+package org.verapdf.pdfa.validation.profiles;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -24,6 +24,12 @@ import nl.jqno.equalsverifier.Warning;
 
 import org.junit.Test;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.validation.profiles.ProfileDetailsImpl;
+import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.Rule;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
+import org.verapdf.pdfa.validation.profiles.ValidationProfileImpl;
+import org.verapdf.pdfa.validation.profiles.Variable;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

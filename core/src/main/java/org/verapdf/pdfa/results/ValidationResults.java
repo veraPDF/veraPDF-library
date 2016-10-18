@@ -16,7 +16,7 @@ import javax.xml.bind.JAXBException;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion.Status;
-import org.verapdf.pdfa.validation.RuleId;
+import org.verapdf.pdfa.validation.profiles.RuleId;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

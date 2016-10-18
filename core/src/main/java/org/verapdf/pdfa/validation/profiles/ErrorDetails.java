@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf.pdfa.validation;
+package org.verapdf.pdfa.validation.profiles;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.List;

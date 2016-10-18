@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.verapdf.pdfa.validation;
+package org.verapdf.pdfa.validation.profiles;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 

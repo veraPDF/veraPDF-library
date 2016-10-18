@@ -1,13 +1,13 @@
 /**
  * 
  */
-package org.verapdf.pdfa.validators;
+package org.verapdf.pdfa.validation.validators;
 
 import org.verapdf.pdfa.BatchValidator;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.validation.Profiles;
-import org.verapdf.pdfa.validation.ValidationProfile;
+import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 /**
  * Static utility class that fills in for a factory for {@link PDFAValidator}s.

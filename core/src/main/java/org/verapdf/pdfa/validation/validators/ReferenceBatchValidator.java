@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf.pdfa.validators;
+package org.verapdf.pdfa.validation.validators;
 
 import org.verapdf.pdfa.BatchValidator;
 import org.verapdf.pdfa.PDFAValidator;

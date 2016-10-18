@@ -2,11 +2,11 @@ package org.verapdf.report;
 
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
+import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.Rule;
+import org.verapdf.pdfa.validation.profiles.RuleId;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.validation.Profiles;
-import org.verapdf.pdfa.validation.Rule;
-import org.verapdf.pdfa.validation.RuleId;
-import org.verapdf.pdfa.validation.ValidationProfile;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
