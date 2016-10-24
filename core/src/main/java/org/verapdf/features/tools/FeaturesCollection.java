@@ -1,6 +1,6 @@
 package org.verapdf.features.tools;
 
-import org.verapdf.features.FeaturesObjectTypesEnum;
+import org.verapdf.features.FeatureObjectType;
 
 import java.util.*;
 
@@ -11,13 +11,13 @@ import java.util.*;
  */
 public final class FeaturesCollection {
 
-	private final Map<FeaturesObjectTypesEnum, FeaturesStructure> collection;
+	private final Map<FeatureObjectType, FeaturesStructure> collection;
 
 	/**
 	 * Constructs new object
 	 */
 	public FeaturesCollection() {
-		this.collection = new EnumMap<>(FeaturesObjectTypesEnum.class);
+		this.collection = new EnumMap<>(FeatureObjectType.class);
 	}
 
 	/**
@@ -26,7 +26,7 @@ public final class FeaturesCollection {
 	 * @param type type of feature object
 	 * @param root root element of a feature tree
 	 */
-	public void addNewFeatureTree(FeaturesObjectTypesEnum type, FeatureTreeNode root) {
+	public void addNewFeatureTree(FeatureObjectType type, FeatureTreeNode root) {
 		FeaturesStructure list = this.collection.get(type);
 
 		if (list == null) {
@@ -45,7 +45,7 @@ public final class FeaturesCollection {
 	 * @param type type of the feature object
 	 * @return list of feature trees for the given type
 	 */
-	public List<FeatureTreeNode> getFeatureTreesForType(FeaturesObjectTypesEnum type) {
+	public List<FeatureTreeNode> getFeatureTreesForType(FeatureObjectType type) {
 		FeaturesStructure list = this.collection.get(type);
 		return (list == null || list.list == null) ? Collections.<FeatureTreeNode>emptyList() : list.list;
 	}
@@ -56,7 +56,7 @@ public final class FeaturesCollection {
 	 * @param type    type of feature object
 	 * @param errorID errorID
 	 */
-	public void addNewError(FeaturesObjectTypesEnum type, String errorID) {
+	public void addNewError(FeatureObjectType type, String errorID) {
 		FeaturesStructure list = this.collection.get(type);
 
 		if (list == null) {
@@ -75,7 +75,7 @@ public final class FeaturesCollection {
 	 * @param type type of the feature object
 	 * @return list of errorss for the given type
 	 */
-	public List<String> getErrorsForType(FeaturesObjectTypesEnum type) {
+	public List<String> getErrorsForType(FeatureObjectType type) {
 		FeaturesStructure list = this.collection.get(type);
 		return (list == null || list.errors == null) ? Collections.<String>emptyList() : list.errors;
 	}

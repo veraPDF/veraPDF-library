@@ -225,7 +225,7 @@ public class ProcessorImpl implements Processor {
 
 	private static FeaturesConfig getFeaturesConfig(Config config) throws FileNotFoundException, JAXBException {
 		Path featuresConfigFilePath = config.getFeaturesConfigFilePath();
-		FeaturesConfig featuresConfig = new FeaturesConfig.Builder().build();
+		FeaturesConfig featuresConfig = FeaturesConfig.defaultInstance();
 		if (!featuresConfigFilePath.toString().isEmpty()) {
 			File featuresConfigFile = featuresConfigFilePath.toFile();
 			if (!featuresConfigFile.isFile()) throw new FileNotFoundException("File: " + featuresConfigFilePath + " could not be found.");

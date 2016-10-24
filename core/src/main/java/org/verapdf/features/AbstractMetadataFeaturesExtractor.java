@@ -11,7 +11,7 @@ public abstract class AbstractMetadataFeaturesExtractor extends FeaturesExtracto
 
 
     public AbstractMetadataFeaturesExtractor() {
-        super(FeaturesObjectTypesEnum.METADATA);
+        super(FeatureObjectType.METADATA);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package org.verapdf.report;
 
-import org.verapdf.features.FeaturesObjectTypesEnum;
+import org.verapdf.features.FeatureObjectType;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -93,23 +93,23 @@ public class FeaturesReport {
 		if (collection == null) {
 			return null;
 		}
-		FeaturesNode info = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.INFORMATION_DICTIONARY);
-		FeaturesNode metadata = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.METADATA);
-		FeaturesNode docSec = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.DOCUMENT_SECURITY);
-		FeaturesNode sig = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.SIGNATURE);
-		FeaturesNode lowLvl = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.LOW_LEVEL_INFO);
-		FeaturesNode embeddedFiles = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.EMBEDDED_FILE);
-		FeaturesNode iccProfiles = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.ICCPROFILE);
-		FeaturesNode outputIntents = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.OUTPUTINTENT);
-		FeaturesNode outlines = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.OUTLINES);
-		FeaturesNode annotations = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.ANNOTATION);
-		FeaturesNode pages = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.PAGE);
+		FeaturesNode info = getFirstNodeFromType(collection, FeatureObjectType.INFORMATION_DICTIONARY);
+		FeaturesNode metadata = getFirstNodeFromType(collection, FeatureObjectType.METADATA);
+		FeaturesNode docSec = getFirstNodeFromType(collection, FeatureObjectType.DOCUMENT_SECURITY);
+		FeaturesNode sig = FeaturesNode.fromValues(collection, FeatureObjectType.SIGNATURE);
+		FeaturesNode lowLvl = getFirstNodeFromType(collection, FeatureObjectType.LOW_LEVEL_INFO);
+		FeaturesNode embeddedFiles = FeaturesNode.fromValues(collection, FeatureObjectType.EMBEDDED_FILE);
+		FeaturesNode iccProfiles = FeaturesNode.fromValues(collection, FeatureObjectType.ICCPROFILE);
+		FeaturesNode outputIntents = FeaturesNode.fromValues(collection, FeatureObjectType.OUTPUTINTENT);
+		FeaturesNode outlines = getFirstNodeFromType(collection, FeatureObjectType.OUTLINES);
+		FeaturesNode annotations = FeaturesNode.fromValues(collection, FeatureObjectType.ANNOTATION);
+		FeaturesNode pages = FeaturesNode.fromValues(collection, FeatureObjectType.PAGE);
 		DocumentResourcesFeatures res = DocumentResourcesFeatures.fromValues(collection);
-		FeaturesNode errors = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.ERROR);
+		FeaturesNode errors = FeaturesNode.fromValues(collection, FeatureObjectType.ERROR);
 		return new FeaturesReport(info, metadata, docSec, sig, lowLvl, embeddedFiles, iccProfiles, outputIntents, outlines, annotations, pages, res, errors, null);
 	}
 
-	static FeaturesNode getFirstNodeFromType(FeaturesCollection collection, FeaturesObjectTypesEnum type) {
+	static FeaturesNode getFirstNodeFromType(FeaturesCollection collection, FeatureObjectType type) {
 		List<FeatureTreeNode> featureTreesForType = collection.getFeatureTreesForType(type);
 		if (featureTreesForType.isEmpty()) {
 			return null;

@@ -4,7 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.verapdf.core.FeatureParsingException;
-import org.verapdf.features.FeaturesObjectTypesEnum;
+import org.verapdf.features.FeatureObjectType;
 
 /**
  * Static class with constants for feature error ids and messages
@@ -12,7 +12,7 @@ import org.verapdf.features.FeaturesObjectTypesEnum;
  * @author Maksim Bezrukov
  */
 public final class ErrorsHelper {
-
+	private static final FeatureObjectType TYPE = FeatureObjectType.ERROR;
 	private static final Logger LOGGER = Logger.getLogger(ErrorsHelper.class.getName());
 
 	public static final String ERRORID = "errorId";
@@ -44,18 +44,18 @@ public final class ErrorsHelper {
 		}
 		try {
 			String id = null;
-			for (FeatureTreeNode errNode : collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR)) {
+			for (FeatureTreeNode errNode : collection.getFeatureTreesForType(TYPE)) {
 				if (errorMessage.equals(errNode.getValue())) {
 					id = errNode.getAttributes().get(ID);
 					break;
 				}
 			}
 			if (id == null) {
-				id = "error" + collection.getFeatureTreesForType(FeaturesObjectTypesEnum.ERROR).size();
-				FeatureTreeNode error = FeatureTreeNode.createRootNode("error");
+				id = TYPE.getNodeName() + collection.getFeatureTreesForType(TYPE).size();
+				FeatureTreeNode error = FeatureTreeNode.createRootNode(TYPE.getNodeName());
 				error.setValue(errorMessage);
 				error.setAttribute(ErrorsHelper.ID, id);
-				collection.addNewFeatureTree(FeaturesObjectTypesEnum.ERROR, error);
+				collection.addNewFeatureTree(TYPE, error);
 			}
 			if (element != null) {
 				String elementErrorID = id;

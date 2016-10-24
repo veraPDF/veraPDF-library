@@ -13,11 +13,11 @@ import java.util.Map;
  * @author Maksim Bezrukov
  */
 public abstract class FeaturesExtractor {
-	private final FeaturesObjectTypesEnum type;
+	private final FeatureObjectType type;
 	private ExtractorDetails details = new ExtractorDetails();
 	private Map<String, String> attributes = new HashMap<>();
 
-	FeaturesExtractor(final FeaturesObjectTypesEnum type) {
+	FeaturesExtractor(final FeatureObjectType type) {
 		this.type = type;
 	}
 
@@ -47,7 +47,7 @@ public abstract class FeaturesExtractor {
 	/**
 	 * @return type of object for which this extractor applies
 	 */
-	public final FeaturesObjectTypesEnum getType() {
+	public final FeatureObjectType getType() {
 		return this.type;
 	}
 

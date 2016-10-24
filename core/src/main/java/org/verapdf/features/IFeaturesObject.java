@@ -14,7 +14,7 @@ public interface IFeaturesObject {
 	/**
 	 * @return enum type of the current feature object
 	 */
-	FeaturesObjectTypesEnum getType();
+	FeatureObjectType getType();
 
 	/**
 	 * Reports all features from the object into the collection

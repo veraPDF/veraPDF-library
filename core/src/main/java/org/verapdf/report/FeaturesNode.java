@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.verapdf.features.FeaturesObjectTypesEnum;
+import org.verapdf.features.FeatureObjectType;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
@@ -60,11 +60,11 @@ public class FeaturesNode {
 	}
 
 	static FeaturesNode fromValues(FeaturesCollection collection,
-								   FeaturesObjectTypesEnum... types) {
+			FeatureObjectType... types) {
 		List<Object> qChildren = new ArrayList<>();
 		Map<QName, Object> attr = new HashMap<>();
 		StringBuilder builder = new StringBuilder();
-		for (FeaturesObjectTypesEnum type : types) {
+		for (FeatureObjectType type : types) {
 			List<FeatureTreeNode> children = collection.getFeatureTreesForType(type);
 			if (children != null) {
 				for (FeatureTreeNode entry : children) {
