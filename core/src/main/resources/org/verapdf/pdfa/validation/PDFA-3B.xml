@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_B">
-    <details creator="veraPDF Consortium" created="2016-09-05T09:45:11.041-03:00">
+    <details creator="veraPDF Consortium" created="2016-10-20T06:37:08.478-03:00">
         <name>PDF/A-3B validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level B</description>
     </details>
@@ -842,7 +842,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="2"/>
             <description>Embedded fonts shall define all glyphs referenced for rendering within the conforming file. A font referenced for use solely 
 			in rendering mode 3 is therefore not rendered and is thus exempt from the embedding requirement.</description>
-            <test>renderingMode == 3 || isGlyphPresent == true</test>
+            <test>renderingMode == 3 || isGlyphPresent == null || isGlyphPresent == true</test>
             <error>
                 <message>Not all glyphs referenced for rendering are present in the embedded font program</message>
                 <arguments/>
@@ -875,7 +875,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.5" testNumber="1"/>
             <description>For every font embedded in a conforming file and used for rendering, the glyph width information in the font dictionary and in the embedded 
 			font program shall be consistent.</description>
-            <test>renderingMode == 3 || isWidthConsistent == true</test>
+            <test>renderingMode == 3 || isWidthConsistent == null || isWidthConsistent == true</test>
             <error>
                 <message>Glyph width information in the embedded font program is not consistent with the Widths entry of the font dictionary</message>
                 <arguments/>
