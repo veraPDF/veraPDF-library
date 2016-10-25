@@ -3,15 +3,11 @@
  */
 package org.verapdf.pdfa;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import org.verapdf.core.EncryptedPdfException;
 import org.verapdf.core.ModelParsingException;
-import org.verapdf.metadata.fixer.entity.PDFDocument;
-import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.results.ValidationResult;
 
 /**
  * The veraPDFFoundry interface provides methods for creating implementations of

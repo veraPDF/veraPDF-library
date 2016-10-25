@@ -1,11 +1,8 @@
 package org.verapdf.report;
 
-import org.verapdf.ReleaseDetails;
-import org.verapdf.features.tools.FeaturesCollection;
-import org.verapdf.pdfa.results.MetadataFixerResult;
-import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.validation.profiles.Profiles;
-import org.verapdf.pdfa.validation.profiles.ValidationProfile;
+import java.io.File;
+import java.io.OutputStream;
+import java.util.Date;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -13,10 +10,13 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.File;
-import java.io.OutputStream;
-import java.util.Date;
-import java.util.Formatter;
+
+import org.verapdf.ReleaseDetails;
+import org.verapdf.features.tools.FeaturesCollection;
+import org.verapdf.pdfa.results.MetadataFixerResult;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 /**
  * @author Maksim Bezrukov

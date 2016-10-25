@@ -5,7 +5,6 @@ package org.verapdf.pdfa;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.zip.ZipException;
 
 import org.verapdf.report.ValidationBatchReport;

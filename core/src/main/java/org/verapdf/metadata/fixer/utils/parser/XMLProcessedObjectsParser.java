@@ -1,5 +1,20 @@
 package org.verapdf.metadata.fixer.utils.parser;
 
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.OBJECT_TYPE_TAG;
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.PROCESSED_OBJECTS_PROPERTIES_PATH;
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.RULE_DESCRIPTION_TAG;
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.TEST_TAG;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.verapdf.metadata.fixer.utils.model.ProcessedObjects;
 import org.verapdf.metadata.fixer.utils.model.RuleDescription;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
@@ -7,18 +22,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.util.Properties;
-
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.*;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -36,8 +39,7 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
 
     @Override
     public ProcessedObjects getProcessedObjects(PDFAFlavour flavour)
-            throws IOException, URISyntaxException,
-            ParserConfigurationException, SAXException {
+            throws IOException, ParserConfigurationException, SAXException {
         Properties prop = new Properties();
         try (InputStream inputStream = ClassLoader.class
                 .getResourceAsStream(PROCESSED_OBJECTS_PROPERTIES_PATH)) {

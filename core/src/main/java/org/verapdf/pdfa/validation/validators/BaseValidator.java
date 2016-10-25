@@ -234,8 +234,7 @@ class BaseValidator implements PDFAValidator {
 
         if (obj.getID() == null) {
             return true;
-        } else if (obj.isContextDependent() == null
-                || obj.isContextDependent().booleanValue()) {
+        } else if (obj.isContextDependent()) {
             return !checkIDContext.contains(obj.getID());
         } else {
             return !this.idSet.contains(obj.getID());
