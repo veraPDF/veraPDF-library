@@ -3,15 +3,12 @@
  */
 package org.verapdf.pdfa;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import org.verapdf.core.EncryptedPdfException;
 import org.verapdf.core.ModelParsingException;
-import org.verapdf.metadata.fixer.entity.PDFDocument;
-import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.validation.ValidationProfile;
 
 /**
  * The veraPDFFoundry interface provides methods for creating implementations of
@@ -58,6 +55,12 @@ public interface VeraPDFFoundry {
 	 */
 	public PDFParser newPdfParser(InputStream pdfStream, PDFAFlavour flavour)
 			throws ModelParsingException, EncryptedPdfException;
+
+	public PDFAValidator newValidator(PDFAFlavour flavour, boolean logSuccess);
+	public PDFAValidator newValidator(ValidationProfile profile, boolean logSuccess);
+	public PDFAValidator newFailFastValidator(PDFAFlavour flavour, int maxFailures);
+	public PDFAValidator newFailFastValidator(ValidationProfile profile, int maxFailures);
+
 
 	public MetadataFixer newMetadataFixer();
 }

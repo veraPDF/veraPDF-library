@@ -7,6 +7,7 @@ import org.verapdf.features.FeaturesExtractor;
 import org.verapdf.features.config.FeaturesConfig;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
+import org.verapdf.pdfa.Foundries;
 import org.verapdf.pdfa.MetadataFixer;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.PDFParser;
@@ -18,7 +19,7 @@ import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.Profiles;
 import org.verapdf.pdfa.validation.RuleId;
 import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validators.Validators;
+import org.verapdf.pdfa.validators.ValidatorFactory;
 import org.verapdf.processor.config.Config;
 import org.verapdf.processor.config.FormatOption;
 import org.verapdf.processor.config.ProcessingType;
@@ -41,17 +42,13 @@ import java.util.logging.Logger;
 public class ProcessorImpl implements Processor {
 
 	private static final Logger LOGGER = Logger.getLogger(ProcessorImpl.class.getName());
-	private static VeraPDFFoundry FOUNDRY = null;
+	private static VeraPDFFoundry FOUNDRY = Foundries.defaultInstance();
 
 	private ProcessingResult processingResult;
 	private String parsingErrorMessage;
 	private Throwable validationExeption;
 	private Throwable metadataFixingExeption;
 	private Throwable featuresExeption;
-
-	public static void initialise(VeraPDFFoundry foundry) {
-		if (FOUNDRY == null) FOUNDRY = foundry;
-	}
 
 	@Override
 	public ProcessingResult validate(InputStream pdfFileStream, ItemDetails fileDetails, Config config,
@@ -173,7 +170,7 @@ public class ProcessorImpl implements Processor {
 	}
 
 	private ValidationResult startValidation(ValidationProfile validationProfile, PDFParser parser, Config config) {
-		PDFAValidator validator = Validators.createValidator(validationProfile, logPassed(config),
+		PDFAValidator validator = ValidatorFactory.createValidator(validationProfile, logPassed(config),
 				config.getMaxNumberOfFailedChecks());
 		ValidationResult validationResult = validate(validator, parser);
 		return validationResult;

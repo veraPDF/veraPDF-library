@@ -3,7 +3,6 @@
  */
 package org.verapdf.pdfa.validators;
 
-import org.verapdf.pdfa.BatchValidator;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.Profiles;
@@ -15,8 +14,8 @@ import org.verapdf.pdfa.validation.ValidationProfile;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
-public final class Validators {
-    private Validators() {
+public final class ValidatorFactory {
+    private ValidatorFactory() {
 
     }
 
@@ -137,6 +136,28 @@ public final class Validators {
     public static PDFAValidator createValidator(
             final ValidationProfile profile, final int maxFailures) {
         return createValidator(profile, false, maxFailures);
+    }
+
+    /**
+     * Creates a new {@link PDFAValidator} initialised with the passed profile,
+     * requested fast failing behaviour and configured NOT to log passed checks.
+     * 
+     * @param flavour
+     *            the {@link PDFAFlavour} that's associated with the
+     *            {@code ValidationProfile} to used to initialise the
+     *            {@code PDFAValidator}.
+     * @param maxFailures
+     *            an {@code int} value that configures the {@code PDFAValidator}
+     *            to abort validation after {@code maxFailures} failed tests. If
+     *            {@code maxFailures} is less than 1 then the
+     *            {@code PDFAValidator} will complete the full validation
+     *            process.
+     * @return a {@link PDFAValidator} instance initialised from the passed
+     *         parameters
+     */
+    public static PDFAValidator createValidator(
+            final PDFAFlavour flavour, final int maxFailures) {
+        return createValidator(flavour, false, maxFailures);
     }
 
     /**
