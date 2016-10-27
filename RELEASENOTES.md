@@ -1,3 +1,17 @@
+# Version 0.24 (October 11, 2016)
+
+## Conformance checker
+- added extraction of the AFRelationship key for embedded files as a part of veraPDF feature extraction.
+
+## Application enhancements
+- implemented prototype of batch validation from CLI and GUI;
+- implemented robust handling of run-time exceptions during batch processing; and
+- added error info on the run-time exceptions to the validation report.
+
+## Code Quality
+- moved feature extraction and metadata fixing code to library; and
+- tidied various compiler warnings.
+
 # Version 0.22 (September 7, 2016)
 
 ## Application enhancements:
