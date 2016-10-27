@@ -5,6 +5,8 @@ package org.verapdf.component;
 
 import java.net.URI;
 
+import org.verapdf.ReleaseDetails;
+
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
@@ -19,6 +21,14 @@ public final class Components {
 		return ComponentDetailsImpl.defaultInstance();
 	}
 
+	public static ComponentDetails detailsFromValues(final URI id, final String name) {
+		return detailsFromValues(id, name, ReleaseDetails.getInstance().getVersion());
+	}
+	
+	public static ComponentDetails detailsFromValues(final URI id, final String name, final String version) {
+		return detailsFromValues(id, name, version, "The veraPDF Consortium", ReleaseDetails.getInstance().getRights());
+	}
+	
 	public static ComponentDetails detailsFromValues(final URI id, final String name, final String version,
 			final String provider, final String description) {
 		if (id == null) throw new NullPointerException(nullMessage("id"));

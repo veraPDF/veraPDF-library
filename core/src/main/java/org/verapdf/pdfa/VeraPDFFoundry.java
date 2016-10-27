@@ -5,6 +5,7 @@ package org.verapdf.pdfa;
 
 import java.io.InputStream;
 
+import org.verapdf.component.Component;
 import org.verapdf.core.EncryptedPdfException;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
@@ -18,7 +19,7 @@ import org.verapdf.pdfa.validation.ValidationProfile;
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
  * @version 0.1 Created 21 Sep 2016:12:37:55
  */
-public interface VeraPDFFoundry {
+public interface VeraPDFFoundry extends Component {
 	/**
 	 * Method that returns a PDFParser instance, parsing the passed
 	 * {@link pdfStream} parameter. The parser or parser provider will detect
