@@ -4,8 +4,8 @@
 package org.verapdf.pdfa;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validators.ValidatorFactory;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
+import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

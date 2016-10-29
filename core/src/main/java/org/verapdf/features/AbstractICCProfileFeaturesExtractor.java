@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class AbstractICCProfileFeaturesExtractor extends FeaturesExtractor {
 
 	public AbstractICCProfileFeaturesExtractor() {
-		super(FeaturesObjectTypesEnum.ICCPROFILE);
+		super(FeatureObjectType.ICCPROFILE);
 	}
 
 	@Override

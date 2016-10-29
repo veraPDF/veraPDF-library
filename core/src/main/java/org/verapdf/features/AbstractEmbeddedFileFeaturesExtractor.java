@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class AbstractEmbeddedFileFeaturesExtractor extends FeaturesExtractor {
 
 	public AbstractEmbeddedFileFeaturesExtractor() {
-		super(FeaturesObjectTypesEnum.EMBEDDED_FILE);
+		super(FeatureObjectType.EMBEDDED_FILE);
 	}
 
 	@Override

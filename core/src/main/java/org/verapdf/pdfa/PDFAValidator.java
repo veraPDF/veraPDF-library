@@ -3,7 +3,7 @@ package org.verapdf.pdfa;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.validation.ValidationProfile;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 /**
  * A PDFAValidator performs a series of checks on PDF/A documents to verify that

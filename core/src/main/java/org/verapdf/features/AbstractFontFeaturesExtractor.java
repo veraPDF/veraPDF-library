@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class AbstractFontFeaturesExtractor extends FeaturesExtractor {
 
 	public AbstractFontFeaturesExtractor() {
-		super(FeaturesObjectTypesEnum.FONT);
+		super(FeatureObjectType.FONT);
 	}
 
 	@Override

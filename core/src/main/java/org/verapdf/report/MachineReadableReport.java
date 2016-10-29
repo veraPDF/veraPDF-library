@@ -4,8 +4,8 @@ import org.verapdf.ReleaseDetails;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.validation.Profiles;
-import org.verapdf.pdfa.validation.ValidationProfile;
+import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

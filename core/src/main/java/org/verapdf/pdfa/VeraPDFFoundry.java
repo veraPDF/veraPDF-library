@@ -9,7 +9,7 @@ import org.verapdf.component.Component;
 import org.verapdf.core.EncryptedPdfException;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.validation.ValidationProfile;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 /**
  * The veraPDFFoundry interface provides methods for creating implementations of

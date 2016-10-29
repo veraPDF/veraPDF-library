@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class AbstractSignatureFeaturesExtractor extends FeaturesExtractor {
 
     public AbstractSignatureFeaturesExtractor() {
-        super(FeaturesObjectTypesEnum.SIGNATURE);
+        super(FeatureObjectType.SIGNATURE);
     }
 
     @Override

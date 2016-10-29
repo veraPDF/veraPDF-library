@@ -8,8 +8,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import org.verapdf.pdfa.validation.Profiles;
-import org.verapdf.pdfa.validation.RuleId;
+import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.RuleId;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

@@ -16,10 +16,10 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.validation.Profiles;
-import org.verapdf.pdfa.validation.RuleId;
-import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validators.ValidatorFactory;
+import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.RuleId;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
+import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 import org.verapdf.processor.config.Config;
 import org.verapdf.processor.config.FormatOption;
 import org.verapdf.processor.config.ProcessingType;
@@ -97,7 +97,9 @@ public class ProcessorImpl implements Processor {
 				}
 			}
 		} catch (EncryptedPdfException | ModelParsingException e) {
-			this.parsingErrorMessage = (e instanceof EncryptedPdfException) ? "ERROR: " + fileDetails.getName() + " is an encrypted PDF file." : "ERROR: " + fileDetails.getName() + " is not a PDF format file.";
+			this.parsingErrorMessage = (e instanceof EncryptedPdfException)
+					? "ERROR: " + fileDetails.getName() + " is an encrypted PDF file."
+					: "ERROR: " + fileDetails.getName() + " is not a PDF format file.";
 			LOGGER.log(Level.INFO, this.parsingErrorMessage, e);
 			setUnsuccessfulValidation(e);
 			setUnsuccessfulMetadataFixing(e);
@@ -222,10 +224,11 @@ public class ProcessorImpl implements Processor {
 
 	private static FeaturesConfig getFeaturesConfig(Config config) throws FileNotFoundException, JAXBException {
 		Path featuresConfigFilePath = config.getFeaturesConfigFilePath();
-		FeaturesConfig featuresConfig = new FeaturesConfig.Builder().build();
+		FeaturesConfig featuresConfig = FeaturesConfig.defaultInstance();
 		if (!featuresConfigFilePath.toString().isEmpty()) {
 			File featuresConfigFile = featuresConfigFilePath.toFile();
-			if (!featuresConfigFile.isFile()) throw new FileNotFoundException("File: " + featuresConfigFilePath + " could not be found.");
+			if (!featuresConfigFile.isFile())
+				throw new FileNotFoundException("File: " + featuresConfigFilePath + " could not be found.");
 			if (featuresConfigFile.exists() && featuresConfigFile.canRead()) {
 				try (FileInputStream fis = new FileInputStream(featuresConfigFile)) {
 					featuresConfig = FeaturesConfig.fromXml(fis);
@@ -386,9 +389,8 @@ public class ProcessorImpl implements Processor {
 				try (InputStream is = new FileInputStream(tmp)) {
 					Map<String, String> arguments = new HashMap<>();
 					arguments.put("policyProfilePath", policyProfile);
-					XsltTransformer.transform(is,
-							ProcessorImpl.class.getClassLoader().getResourceAsStream("org/verapdf/report/policy-example.xsl"),
-							reportOutputStream, arguments);
+					XsltTransformer.transform(is, ProcessorImpl.class.getClassLoader().getResourceAsStream(
+							"org/verapdf/report/policy-example.xsl"), reportOutputStream, arguments);
 				}
 			} else if (config.getReportType() == FormatOption.HTML) {
 				try (InputStream is = new FileInputStream(tmp)) {
