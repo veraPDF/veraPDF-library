@@ -1,4 +1,4 @@
-package org.verapdf.features.config;
+package org.verapdf.features;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -9,18 +9,19 @@ import java.util.EnumSet;
 import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
+import org.verapdf.features.FeatureExtractorConfig;
 import org.verapdf.features.FeatureObjectType;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 
-public class FeaturesConfigTest {
+public class FeatureExtractorConfigTest {
 
     /**
      * Test method for {@link org.verapdf.ReleaseDetails#hashCode()}.
      */
     @Test
     public final void testHashCodeAndEquals() {
-        EqualsVerifier.forClass(FeaturesConfig.class).verify();
+        EqualsVerifier.forClass(FeatureExtractorConfigImpl.class).verify();
     }
 
 
@@ -29,7 +30,7 @@ public class FeaturesConfigTest {
 		for (FeatureObjectType disabledType : FeatureObjectType.values()) {
 			EnumSet<FeatureObjectType> allBarOneSet = EnumSet.allOf(FeatureObjectType.class);
 			allBarOneSet.remove(disabledType);
-			FeaturesConfig allBarOneConfig = FeaturesConfig.fromFeatureSet(allBarOneSet);
+			FeatureExtractorConfig allBarOneConfig = FeatureExtractorConfigImpl.fromFeatureSet(allBarOneSet);
 			assertFalse(allBarOneConfig.isFeatureEnabled(disabledType));
 			for (FeatureObjectType enabledType : allBarOneSet) {
 				assertTrue(allBarOneConfig.isFeatureEnabled(enabledType));
@@ -41,14 +42,14 @@ public class FeaturesConfigTest {
 	public void testIsAnyFeatureEnabled() {
 		EnumSet<FeatureObjectType> enabledFeaturesSet = EnumSet.noneOf(FeatureObjectType.class);
 		EnumSet<FeatureObjectType> disabledFeaturesSet = EnumSet.allOf(FeatureObjectType.class);
-		FeaturesConfig testConfig = FeaturesConfig.fromFeatureSet(enabledFeaturesSet);
+		FeatureExtractorConfig testConfig = FeatureExtractorConfigImpl.fromFeatureSet(enabledFeaturesSet);
 		assertTrue(testConfig.getEnabledFeatures().size() == 0);
 		assertFalse(testConfig.isAnyFeatureEnabled(enabledFeaturesSet));
 		assertFalse(testConfig.isAnyFeatureEnabled(disabledFeaturesSet));
 		for (FeatureObjectType type : FeatureObjectType.values()) {
 			enabledFeaturesSet.add(type);
 			disabledFeaturesSet.remove(type);
-			testConfig = FeaturesConfig.fromFeatureSet(enabledFeaturesSet);
+			testConfig = FeatureExtractorConfigImpl.fromFeatureSet(enabledFeaturesSet);
 			assertTrue(testConfig.isAnyFeatureEnabled(enabledFeaturesSet));
 			for (FeatureObjectType enabledType : enabledFeaturesSet) {
 				EnumSet<FeatureObjectType> testSet = EnumSet.copyOf(disabledFeaturesSet);
@@ -63,26 +64,26 @@ public class FeaturesConfigTest {
 
 	@Test
 	public void testDefaultInstance() {
-		assertTrue(FeaturesConfig.defaultInstance() == FeaturesConfig.defaultInstance());
-		assertTrue(FeaturesConfig.defaultInstance().equals(FeaturesConfig.defaultInstance()));
+		assertTrue(FeatureExtractorConfigImpl.defaultInstance() == FeatureExtractorConfigImpl.defaultInstance());
+		assertTrue(FeatureExtractorConfigImpl.defaultInstance().equals(FeatureExtractorConfigImpl.defaultInstance()));
 		for (FeatureObjectType type : FeatureObjectType.values()) {
 			if (type != FeatureObjectType.INFORMATION_DICTIONARY)
-				assertFalse(FeaturesConfig.defaultInstance().isFeatureEnabled(type));
+				assertFalse(FeatureExtractorConfigImpl.defaultInstance().isFeatureEnabled(type));
 		}
-		assertTrue(FeaturesConfig.defaultInstance().isFeatureEnabled(FeatureObjectType.INFORMATION_DICTIONARY));
+		assertTrue(FeatureExtractorConfigImpl.defaultInstance().isFeatureEnabled(FeatureObjectType.INFORMATION_DICTIONARY));
 	}
 
 	@Test
 	public void testXmlSerialisation() throws JAXBException, IOException {
 		EnumSet<FeatureObjectType> enabledFeaturesSet = EnumSet.noneOf(FeatureObjectType.class);
 		EnumSet<FeatureObjectType> disabledFeaturesSet = EnumSet.allOf(FeatureObjectType.class);
-		FeaturesConfig testConfig = FeaturesConfig.fromFeatureSet(enabledFeaturesSet);
-		assertTrue(testConfig.equals(FeaturesConfig.fromXml(FeaturesConfig.toXml(testConfig, Boolean.FALSE))));
+		FeatureExtractorConfig testConfig = FeatureExtractorConfigImpl.fromFeatureSet(enabledFeaturesSet);
+		assertTrue(testConfig.equals(FeatureExtractorConfigImpl.fromXml(FeatureExtractorConfigImpl.toXml(testConfig, Boolean.FALSE))));
 		for (FeatureObjectType type : FeatureObjectType.values()) {
 			enabledFeaturesSet.add(type);
 			disabledFeaturesSet.remove(type);
-			testConfig = FeaturesConfig.fromFeatureSet(enabledFeaturesSet);
-			assertTrue(testConfig.equals(FeaturesConfig.fromXml(FeaturesConfig.toXml(testConfig, Boolean.FALSE))));
+			testConfig = FeatureExtractorConfigImpl.fromFeatureSet(enabledFeaturesSet);
+			assertTrue(testConfig.equals(FeatureExtractorConfigImpl.fromXml(FeatureExtractorConfigImpl.toXml(testConfig, Boolean.FALSE))));
 		}
 	}
 }

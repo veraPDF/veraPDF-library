@@ -1,7 +1,6 @@
 package org.verapdf.features;
 
 import org.verapdf.core.FeatureParsingException;
-import org.verapdf.features.config.FeaturesConfig;
 import org.verapdf.features.tools.FeatureTreeNode;
 import org.verapdf.features.tools.FeaturesCollection;
 
@@ -19,12 +18,12 @@ public class FeaturesReporter {
 	private static Map<FeatureObjectType, List<FeaturesExtractor>> featuresExtractors = new HashMap<>();
 
 	private final FeaturesCollection collection;
-	private final FeaturesConfig config;
+	private final FeatureExtractorConfig config;
 
 	/**
 	 * Creates new FeaturesReporter
 	 */
-	public FeaturesReporter(FeaturesConfig config, List<FeaturesExtractor> extractors) {
+	public FeaturesReporter(FeatureExtractorConfig config, List<FeaturesExtractor> extractors) {
 		if (extractors == null) {
 			throw new IllegalArgumentException(nullMessage("extractors"));
 		}
@@ -38,7 +37,7 @@ public class FeaturesReporter {
 		}
 	}
 
-	public FeaturesReporter(FeaturesConfig config) {
+	public FeaturesReporter(FeatureExtractorConfig config) {
 		this(config, Collections.<FeaturesExtractor>emptyList());
 	}
 

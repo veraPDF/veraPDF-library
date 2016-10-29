@@ -3,10 +3,10 @@
  */
 package org.verapdf.pdfa.validation.validators;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.verapdf.features.config.FeaturesConfig;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 
@@ -33,8 +33,8 @@ public class ValdidatorConfigTest {
 	 */
 	@Test
 	public final void testDefaultInstance() {
-		ValidatorConfig defaultInstance = ValidatorFactory.defaultValidatorConfig();
-		assertTrue(defaultInstance == ValidatorFactory.defaultValidatorConfig());
+		ValidatorConfig defaultInstance = ValidatorFactory.defaultConfig();
+		assertTrue(defaultInstance == ValidatorFactory.defaultConfig());
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class ValdidatorConfigTest {
 	 */
 	@Test
 	public final void testFromValues() {
-		ValidatorConfig defaultInstance = ValidatorFactory.defaultValidatorConfig();
+		ValidatorConfig defaultInstance = ValidatorFactory.defaultConfig();
 		ValidatorConfig fromVals = ValidatorFactory.createValidatorConfig(defaultInstance.getFlavour(),
 				defaultInstance.isRecordPasses(), defaultInstance.getMaxFails(), defaultInstance.getMaxFailsPerRule());
 		assertTrue(fromVals.equals(defaultInstance));

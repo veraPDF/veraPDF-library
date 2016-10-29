@@ -24,8 +24,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.verapdf.features.FeatureExtractorConfig;
+import org.verapdf.features.FeatureFactory;
+import org.verapdf.metadata.fixer.FixerFactory;
+import org.verapdf.metadata.fixer.MetadataFixerConfig;
 import org.verapdf.metadata.fixer.utils.MetadataFixerConstants;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.validation.validators.ValidatorConfig;
+import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 
 /**
  * @author Maksim Bezrukov
@@ -33,17 +39,11 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 @XmlRootElement(name = "config")
 public final class Config {
-
-//	private static final char[] FORBIDDEN_SYMBOLS_IN_FILE_NAME = new char[]{'\\', '/', ':', '*', '?', '\"', '<', '>', '|', '+', '\0', '%'};
-
-	public static final String DEFAULT_METADATA_FIXER_PREFIX = MetadataFixerConstants.DEFAULT_PREFIX;
-	public static final Path DEFAULT_FIX_METADATA_PATH_FOLDER = FileSystems.getDefault().getPath("");
 	public static final String DEFAULT_PROFILES_WIKI_PATH = "https://github.com/veraPDF/veraPDF-validation-profiles/wiki";
-	public static final boolean DEFAULT_IS_FIX_METADATA = false;
 	public static final ProcessingType DEFAULT_PROCESSING_TYPE = ProcessingType.VALIDATION;
 	public static final FormatOption DEFAULT_REPORT_TYPE = FormatOption.MRR;
 	public static final Path DEFAULT_VALIDATION_PROFILE_PATH = FileSystems.getDefault().getPath("");
-	public static final PDFAFlavour DEFAULT_FLAVOUR = PDFAFlavour.AUTO;
+	public static final PDFAFlavour DEFAULT_FLAVOUR = PDFAFlavour.NO_FLAVOUR;
 	public static final boolean DEFAULT_VERBOSE_CLI = false;
 	public static final Path DEFAULT_POLICY_PROFILE = FileSystems.getDefault().getPath("");
 	public static final Path DEFAULT_PLUGINS_CONFIG_PATH = FileSystems.getDefault().getPath("");
@@ -51,95 +51,56 @@ public final class Config {
 	public static final String DEFAULT_REPORT_FOLDER_PATH = "";
 	public static final String DEFAULT_REPORT_FILE_PATH = "";
 	public static final boolean DEFAULT_IS_OVERWRITE_REPORT_FILE = false;
-	
-	private int maxNumberOfDisplayedFailedChecks;
-	private String metadataFixerPrefix;
-	private Path fixMetadataPathFolder;
-	private String profileWikiPath;
-	private ProcessingType processingType;
-	private boolean isFixMetadata;
-	private FormatOption reportType;
-	private Path validationProfilePath;
-	private boolean verboseCli;
-	private Path policyProfilePath;
+
+	private final ValidatorConfig validatorConfig;
+	private final FeatureExtractorConfig featureConfig;
+	private final MetadataFixerConfig fixerConfig;
+
 	private Path pluginsConfigPath;
-	private Path featuresConfigPath;
+
+	private int maxNumberOfDisplayedFailedChecks;
+	private String profileWikiPath;
 	private String reportFolderPath;
 	private String reportFilePath;
 	private boolean isOverwriteReportFile;
-	
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof Config)) return false;
+	private ProcessingType processingType;
+	private FormatOption reportType;
 
-		Config config = (Config) o;
+	private Path validationProfilePath;
 
-		if (maxNumberOfDisplayedFailedChecks != config.maxNumberOfDisplayedFailedChecks) return false;
-		if (isFixMetadata != config.isFixMetadata) return false;
-		if (verboseCli != config.verboseCli) return false;
-		if (isOverwriteReportFile != config.isOverwriteReportFile) return false;
-		if (metadataFixerPrefix != null ? !metadataFixerPrefix.equals(config.metadataFixerPrefix) : config.metadataFixerPrefix != null)
-			return false;
-		if (fixMetadataPathFolder != null ? !fixMetadataPathFolder.equals(config.fixMetadataPathFolder) : config.fixMetadataPathFolder != null)
-			return false;
-		if (profileWikiPath != null ? !profileWikiPath.equals(config.profileWikiPath) : config.profileWikiPath != null)
-			return false;
-		if (processingType != config.processingType) return false;
-		if (reportType != config.reportType) return false;
-		if (validationProfilePath != null ? !validationProfilePath.equals(config.validationProfilePath) : config.validationProfilePath != null)
-			return false;
-		if (policyProfilePath != null ? !policyProfilePath.equals(config.policyProfilePath) : config.policyProfilePath != null)
-			return false;
-		if (pluginsConfigPath != null ? !pluginsConfigPath.equals(config.pluginsConfigPath) : config.pluginsConfigPath != null)
-			return false;
-		if (featuresConfigPath != null ? !featuresConfigPath.equals(config.featuresConfigPath) : config.featuresConfigPath != null)
-			return false;
-		if (reportFolderPath != null ? !reportFolderPath.equals(config.reportFolderPath) : config.reportFolderPath != null)
-			return false;
-		return reportFilePath != null ? reportFilePath.equals(config.reportFilePath) : config.reportFilePath == null;
-		
-	}
+	private boolean verboseCli;
 
-	@Override
-	public int hashCode() {
-		int result = 31 * maxNumberOfDisplayedFailedChecks;
-		result = 31 * result + (metadataFixerPrefix != null ? metadataFixerPrefix.hashCode() : 0);
-		result = 31 * result + (fixMetadataPathFolder != null ? fixMetadataPathFolder.hashCode() : 0);
-		result = 31 * result + (profileWikiPath != null ? profileWikiPath.hashCode() : 0);
-		result = 31 * result + (processingType != null ? processingType.hashCode() : 0);
-		result = 31 * result + (isFixMetadata ? 1 : 0);
-		result = 31 * result + (reportType != null ? reportType.hashCode() : 0);
-		result = 31 * result + (validationProfilePath != null ? validationProfilePath.hashCode() : 0);
-		result = 31 * result + (verboseCli ? 1 : 0);
-		result = 31 * result + (policyProfilePath != null ? policyProfilePath.hashCode() : 0);
-		result = 31 * result + (pluginsConfigPath != null ? pluginsConfigPath.hashCode() : 0);
-		result = 31 * result + (featuresConfigPath != null ? featuresConfigPath.hashCode() : 0);
-		result = 31 * result + (reportFolderPath != null ? reportFolderPath.hashCode() : 0);
-		result = 31 * result + (reportFilePath != null ? reportFilePath.hashCode() : 0);
-		result = 31 * result + (isOverwriteReportFile ? 1 : 0);
-		return result;
-	}
+	private Path policyProfilePath;
+
 
 	public Config() {
-		this.metadataFixerPrefix = DEFAULT_METADATA_FIXER_PREFIX;
-		this.fixMetadataPathFolder = DEFAULT_FIX_METADATA_PATH_FOLDER;
+		this(ValidatorFactory.defaultConfig(), FeatureFactory.defaultConfig(), FixerFactory.defaultConfig());
+	}
+
+	private Config(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig) {
+		super();
+		this.validatorConfig = config;
+		this.featureConfig = featureConfig;
+		this.fixerConfig = fixerConfig;
 		this.profileWikiPath = DEFAULT_PROFILES_WIKI_PATH;
-		this.isFixMetadata = DEFAULT_IS_FIX_METADATA;
 		this.processingType = DEFAULT_PROCESSING_TYPE;
 		this.reportType = DEFAULT_REPORT_TYPE;
 		this.validationProfilePath = DEFAULT_VALIDATION_PROFILE_PATH;
 		this.verboseCli = DEFAULT_VERBOSE_CLI;
 		this.policyProfilePath = DEFAULT_POLICY_PROFILE;
 		this.pluginsConfigPath = DEFAULT_PLUGINS_CONFIG_PATH;
-		this.featuresConfigPath = DEFAULT_FEATURES_CONFIG_PATH;
 		this.reportFolderPath = DEFAULT_REPORT_FOLDER_PATH;
 		this.reportFilePath = DEFAULT_REPORT_FILE_PATH;
 		this.isOverwriteReportFile = DEFAULT_IS_OVERWRITE_REPORT_FILE;
 	}
 
+	public boolean isFixMetadata() {
+		return (this.fixerConfig == FixerFactory.defaultConfig());
+	}
 	/**
-	 * @return selected number for maximum displayed fail checks for a rule. If not selected returns -1
+	 * @return selected number for maximum displayed fail checks for a rule. If
+	 *         not selected returns -1
 	 */
 	@XmlElement
 	public int getMaxNumberOfDisplayedFailedChecks() {
@@ -147,42 +108,13 @@ public final class Config {
 	}
 
 	/**
-	 * @return String representation of prefix for fixed files
-	 */
-	@XmlElement
-	public String getMetadataFixerPrefix() {
-		return metadataFixerPrefix;
-	}
-
-	@XmlElement
-	@XmlJavaTypeAdapter(PathAdapter.class)
-	private Path getFixMetadataPathFolder() {
-		return fixMetadataPathFolder.toString().equals("") ?
-				null : fixMetadataPathFolder;
-	}
-
-	/**
-	 * @return path to the folder in which fixed file will be placed
-	 */
-	public Path getFixMetadataFolder() {
-		return fixMetadataPathFolder;
-	}
-
-	/**
-	 * @return type of operation to be performed, e. g. validation & feature describing
+	 * @return type of operation to be performed, e. g. validation & feature
+	 *         describing
 	 */
 	@XmlElement
 	@XmlJavaTypeAdapter(ProcessingTypeAdapter.class)
 	public ProcessingType getProcessingType() {
 		return processingType;
-	}
-
-	/**
-	 * @return true if metadata fixes are to be performed
-	 */
-	@XmlElement
-	public boolean isFixMetadata() {
-		return isFixMetadata;
 	}
 
 	/**
@@ -202,18 +134,16 @@ public final class Config {
 		return reportType;
 	}
 
-
 	@XmlElement
 	@XmlJavaTypeAdapter(PathAdapter.class)
 	private Path getValidationProfilePath() {
-		return validationProfilePath.toString().equals("") ?
-				null : validationProfilePath;
+		return validationProfilePath.toString().equals("") ? null : validationProfilePath;
 	}
+
 	@XmlElement
 	@XmlJavaTypeAdapter(PathAdapter.class)
 	private Path getPolicyProfilePath() {
-		return policyProfilePath.toString().equals("") ?
-				null : policyProfilePath;
+		return policyProfilePath.toString().equals("") ? null : policyProfilePath;
 	}
 
 	/**
@@ -224,8 +154,8 @@ public final class Config {
 	}
 
 	/**
-	 * @return path to validation profile to be used. If returned value
-	 * is null, then validation flavour is processed
+	 * @return path to validation profile to be used. If returned value is null,
+	 *         then validation flavour is processed
 	 */
 	public Path getValidationProfile() {
 		return validationProfilePath;
@@ -242,8 +172,7 @@ public final class Config {
 	@XmlElement
 	@XmlJavaTypeAdapter(PathAdapter.class)
 	private Path getPluginsConfigPath() {
-		return pluginsConfigPath.toString().equals("") ?
-				null : pluginsConfigPath;
+		return pluginsConfigPath.toString().equals("") ? null : pluginsConfigPath;
 	}
 
 	/**
@@ -253,38 +182,35 @@ public final class Config {
 		return pluginsConfigPath;
 	}
 
-	@XmlElement
-	@XmlJavaTypeAdapter(PathAdapter.class)
-	private Path getFeaturesConfigPath() {
-		return featuresConfigPath.toString().equals("") ?
-				null : featuresConfigPath;
+	public ValidatorConfig getValidatorConfig() {
+		return this.validatorConfig;
 	}
 
+	public FeatureExtractorConfig getFeatureConfig() {
+		return this.featureConfig;
+	}
+
+	public MetadataFixerConfig getFixerConfig() {
+		return this.fixerConfig;
+	}
 	/**
-	 * @return path to the features config file
+	 * @author: mancuska@digitaldocuments.org
+	 * @return path to folder for reports
 	 */
-	public Path getFeaturesConfigFilePath() {
-		return featuresConfigPath;
-	}
-
-	/**
-     * @author: mancuska@digitaldocuments.org
-     * @return path to folder for reports
-     */
 	@XmlElement
 	public String getReportFolder() {
-	    return reportFolderPath;
+		return reportFolderPath;
 	}
 
 	/**
-     * @author: mancuska@digitaldocuments.org
+	 * @author: mancuska@digitaldocuments.org
 	 * @return path for report file
 	 */
 	@XmlElement
 	public String getReportFile() {
-	    return reportFilePath;
+		return reportFilePath;
 	}
-	
+
 	/**
 	 * @author: mancuska@digitaldocuments.org
 	 * @return: true if existing report file must be overwritten
@@ -299,8 +225,7 @@ public final class Config {
 	 *
 	 * @see javax.xml.bind.JAXB for more details
 	 */
-	public static String toXml(final Config toConvert, Boolean prettyXml)
-			throws JAXBException, IOException {
+	public static String toXml(final Config toConvert, Boolean prettyXml) throws JAXBException, IOException {
 		String retVal = "";
 		try (StringWriter writer = new StringWriter()) {
 			toXml(toConvert, writer, prettyXml);
@@ -314,8 +239,7 @@ public final class Config {
 	 *
 	 * @see javax.xml.bind.JAXB for more details
 	 */
-	public static Config fromXml(final String toConvert)
-			throws JAXBException {
+	public static Config fromXml(final String toConvert) throws JAXBException {
 		try (StringReader reader = new StringReader(toConvert)) {
 			return fromXml(reader);
 		}
@@ -326,8 +250,8 @@ public final class Config {
 	 *
 	 * @see javax.xml.bind.JAXB for more details
 	 */
-	public static void toXml(final Config toConvert,
-							 final OutputStream stream, Boolean prettyXml) throws JAXBException {
+	public static void toXml(final Config toConvert, final OutputStream stream, Boolean prettyXml)
+			throws JAXBException {
 		Marshaller varMarshaller = getMarshaller(prettyXml);
 		varMarshaller.marshal(toConvert, stream);
 	}
@@ -337,35 +261,29 @@ public final class Config {
 	 *
 	 * @see javax.xml.bind.JAXB for more details
 	 */
-	public static Config fromXml(final InputStream toConvert)
-			throws JAXBException {
+	public static Config fromXml(final InputStream toConvert) throws JAXBException {
 		Unmarshaller stringUnmarshaller = getUnmarshaller();
 		return (Config) stringUnmarshaller.unmarshal(toConvert);
 	}
 
-	static void toXml(final Config toConvert, final Writer writer,
-					  Boolean prettyXml) throws JAXBException {
+	static void toXml(final Config toConvert, final Writer writer, Boolean prettyXml) throws JAXBException {
 		Marshaller varMarshaller = getMarshaller(prettyXml);
 		varMarshaller.marshal(toConvert, writer);
 	}
 
-	static Config fromXml(final Reader toConvert)
-			throws JAXBException {
+	static Config fromXml(final Reader toConvert) throws JAXBException {
 		Unmarshaller stringUnmarshaller = getUnmarshaller();
 		return (Config) stringUnmarshaller.unmarshal(toConvert);
 	}
 
 	private static Unmarshaller getUnmarshaller() throws JAXBException {
-		JAXBContext context = JAXBContext
-				.newInstance(Config.class);
+		JAXBContext context = JAXBContext.newInstance(Config.class);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		return unmarshaller;
 	}
 
-	private static Marshaller getMarshaller(Boolean setPretty)
-			throws JAXBException {
-		JAXBContext context = JAXBContext
-				.newInstance(Config.class);
+	private static Marshaller getMarshaller(Boolean setPretty) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(Config.class);
 		Marshaller marshaller = context.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
 		return marshaller;
@@ -374,7 +292,8 @@ public final class Config {
 	/**
 	 * Checks is the parameter path a valid for saving fixed file
 	 *
-	 * @param path path for check
+	 * @param path
+	 *            path for check
 	 * @return true if it is valid
 	 */
 	public static boolean isValidFolderPath(Path path) {
@@ -388,12 +307,14 @@ public final class Config {
 	/**
 	 * Checks is the parameter path a valid validation profile
 	 *
-	 * @param path path for check
+	 * @param path
+	 *            path for check
 	 * @return true if it is valid
 	 */
 	public static boolean isValidProfilePath(Path path) {
 		if (path == null) {
-			return true;    // If we chose some path and then decided to use flavour
+			return true; // If we chose some path and then decided to use
+							// flavour
 		}
 		File f = path.toFile();
 		return path.toString().isEmpty() || (f.isFile() && f.canRead());
@@ -422,7 +343,9 @@ public final class Config {
 			try {
 				return ProcessingType.fromString(v);
 			} catch (IllegalArgumentException e) {
-				LOGGER.log(Level.WARNING, "Can't construct ProcessingType from string \"" + v + "\", setting ProcessingType to default", e);
+				LOGGER.log(Level.WARNING,
+						"Can't construct ProcessingType from string \"" + v + "\", setting ProcessingType to default",
+						e);
 			}
 			return Config.DEFAULT_PROCESSING_TYPE;
 		}
@@ -458,4 +381,117 @@ public final class Config {
 			return v.toString();
 		}
 	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.featureConfig == null) ? 0 : this.featureConfig.hashCode());
+		result = prime * result + (this.isOverwriteReportFile ? 1231 : 1237);
+		result = prime * result + this.maxNumberOfDisplayedFailedChecks;
+		result = prime * result + ((this.pluginsConfigPath == null) ? 0 : this.pluginsConfigPath.hashCode());
+		result = prime * result + ((this.policyProfilePath == null) ? 0 : this.policyProfilePath.hashCode());
+		result = prime * result + ((this.processingType == null) ? 0 : this.processingType.hashCode());
+		result = prime * result + ((this.profileWikiPath == null) ? 0 : this.profileWikiPath.hashCode());
+		result = prime * result + ((this.reportFilePath == null) ? 0 : this.reportFilePath.hashCode());
+		result = prime * result + ((this.reportFolderPath == null) ? 0 : this.reportFolderPath.hashCode());
+		result = prime * result + ((this.reportType == null) ? 0 : this.reportType.hashCode());
+		result = prime * result + ((this.validationProfilePath == null) ? 0 : this.validationProfilePath.hashCode());
+		result = prime * result + ((this.validatorConfig == null) ? 0 : this.validatorConfig.hashCode());
+		result = prime * result + (this.verboseCli ? 1231 : 1237);
+		return result;
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof Config)) {
+			return false;
+		}
+		Config other = (Config) obj;
+		if (this.featureConfig == null) {
+			if (other.featureConfig != null) {
+				return false;
+			}
+		} else if (!this.featureConfig.equals(other.featureConfig)) {
+			return false;
+		}
+		if (this.isOverwriteReportFile != other.isOverwriteReportFile) {
+			return false;
+		}
+		if (this.maxNumberOfDisplayedFailedChecks != other.maxNumberOfDisplayedFailedChecks) {
+			return false;
+		}
+		if (this.pluginsConfigPath == null) {
+			if (other.pluginsConfigPath != null) {
+				return false;
+			}
+		} else if (!this.pluginsConfigPath.equals(other.pluginsConfigPath)) {
+			return false;
+		}
+		if (this.policyProfilePath == null) {
+			if (other.policyProfilePath != null) {
+				return false;
+			}
+		} else if (!this.policyProfilePath.equals(other.policyProfilePath)) {
+			return false;
+		}
+		if (this.processingType != other.processingType) {
+			return false;
+		}
+		if (this.profileWikiPath == null) {
+			if (other.profileWikiPath != null) {
+				return false;
+			}
+		} else if (!this.profileWikiPath.equals(other.profileWikiPath)) {
+			return false;
+		}
+		if (this.reportFilePath == null) {
+			if (other.reportFilePath != null) {
+				return false;
+			}
+		} else if (!this.reportFilePath.equals(other.reportFilePath)) {
+			return false;
+		}
+		if (this.reportFolderPath == null) {
+			if (other.reportFolderPath != null) {
+				return false;
+			}
+		} else if (!this.reportFolderPath.equals(other.reportFolderPath)) {
+			return false;
+		}
+		if (this.reportType != other.reportType) {
+			return false;
+		}
+		if (this.validationProfilePath == null) {
+			if (other.validationProfilePath != null) {
+				return false;
+			}
+		} else if (!this.validationProfilePath.equals(other.validationProfilePath)) {
+			return false;
+		}
+		if (this.validatorConfig == null) {
+			if (other.validatorConfig != null) {
+				return false;
+			}
+		} else if (!this.validatorConfig.equals(other.validatorConfig)) {
+			return false;
+		}
+		if (this.verboseCli != other.verboseCli) {
+			return false;
+		}
+		return true;
+	}
+
 }

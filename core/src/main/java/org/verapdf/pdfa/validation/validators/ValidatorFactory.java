@@ -178,7 +178,7 @@ public final class ValidatorFactory {
 		return createValidator(profile, logPassedChecks);
 	}
 
-	public static ValidatorConfig defaultValidatorConfig() {
+	public static ValidatorConfig defaultConfig() {
 		return ValidatorConfigImpl.defaultInstance();
 	}
 

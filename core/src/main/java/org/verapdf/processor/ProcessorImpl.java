@@ -1,10 +1,33 @@
 package org.verapdf.processor;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
+
 import org.verapdf.core.EncryptedPdfException;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
+import org.verapdf.features.FeatureExtractorConfig;
+import org.verapdf.features.FeatureFactory;
 import org.verapdf.features.FeaturesExtractor;
-import org.verapdf.features.config.FeaturesConfig;
 import org.verapdf.features.tools.FeaturesCollection;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.pdfa.Foundries;
@@ -23,16 +46,13 @@ import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 import org.verapdf.processor.config.Config;
 import org.verapdf.processor.config.FormatOption;
 import org.verapdf.processor.config.ProcessingType;
-import org.verapdf.report.*;
-
-import javax.xml.bind.JAXBException;
-import javax.xml.transform.TransformerException;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.verapdf.report.CliReport;
+import org.verapdf.report.FeaturesReport;
+import org.verapdf.report.HTMLReport;
+import org.verapdf.report.ItemDetails;
+import org.verapdf.report.MachineReadableReport;
+import org.verapdf.report.TaskDetails;
+import org.verapdf.report.XsltTransformer;
 
 /**
  * Class is implementation of {@link Processor} interface
@@ -61,7 +81,7 @@ public class ProcessorImpl implements Processor {
 		this.processingResult = new ProcessingResult(config);
 		this.parsingErrorMessage = null;
 		ValidationProfile validationProfile = profileFromConfig(config);
-		PDFAFlavour currentFlavour = validationProfile == null ? config.getFlavour()
+		PDFAFlavour currentFlavour = validationProfile == null ? config.getValidatorConfig().getFlavour()
 				: validationProfile.getPDFAFlavour();
 
 		ProcessingType processingType = config.getProcessingType();
@@ -125,7 +145,7 @@ public class ProcessorImpl implements Processor {
 		if (reportOutputStream == null) {
 			throw new IllegalArgumentException("Output stream for report cannot be null");
 		}
-		if (config.getProcessingType().isValidating() && config.getFlavour() == PDFAFlavour.NO_FLAVOUR
+		if (config.getProcessingType().isValidating() && config.getValidatorConfig().getFlavour() == PDFAFlavour.NO_FLAVOUR
 				&& config.getValidationProfile().toString().equals("")) {
 			throw new IllegalArgumentException("Validation cannot be started with no chosen validation profile");
 		}
@@ -135,7 +155,7 @@ public class ProcessorImpl implements Processor {
 	}
 
 	private static boolean logPassed(final Config config) {
-		return (config.getReportType() != FormatOption.XML) || config.isShowPassedRules();
+		return (config.getReportType() != FormatOption.XML) || config.getValidatorConfig().isRecordPasses();
 	}
 
 	ValidationProfile profileFromConfig(final Config config) {
@@ -173,14 +193,14 @@ public class ProcessorImpl implements Processor {
 
 	private ValidationResult startValidation(ValidationProfile validationProfile, PDFParser parser, Config config) {
 		PDFAValidator validator = ValidatorFactory.createValidator(validationProfile, logPassed(config),
-				config.getMaxNumberOfFailedChecks());
+				config.getValidatorConfig().getMaxFails());
 		ValidationResult validationResult = validate(validator, parser);
 		return validationResult;
 	}
 
 	private MetadataFixerResult fixMetadata(ValidationResult info, PDFParser parser, String fileName, Config config) {
 		try {
-			Path path = config.getFixMetadataFolder();
+			Path path = config.getFixerConfig().getFixesFolder();
 			File tempFile = File.createTempFile("fixedTempFile", ".pdf");
 			tempFile.deleteOnExit();
 			try (OutputStream tempOutput = new BufferedOutputStream(new FileOutputStream(tempFile))) {
@@ -194,10 +214,10 @@ public class ProcessorImpl implements Processor {
 					while (flag) {
 						if (!path.toString().trim().isEmpty()) {
 							resFile = FileGenerator.createOutputFile(path.toFile(), new File(fileName).getName(),
-									config.getMetadataFixerPrefix());
+									config.getFixerConfig().getFixesPrefix());
 						} else {
 							resFile = FileGenerator.createOutputFile(new File(fileName),
-									config.getMetadataFixerPrefix());
+									config.getFixerConfig().getFixesPrefix());
 						}
 						Files.copy(tempFile.toPath(), resFile.toPath());
 						flag = false;
@@ -215,31 +235,11 @@ public class ProcessorImpl implements Processor {
 
 	private FeaturesCollection extractFeatures(PDFParser parser, Config config)
 			throws FileNotFoundException, JAXBException {
-		FeaturesConfig featuresConfig = getFeaturesConfig(config);
+		FeatureExtractorConfig featuresConfig = config.getFeatureConfig();
 		List<FeaturesExtractor> extractors = FeaturesPluginsLoader.loadExtractors(config.getPluginsConfigFilePath(),
 				this.processingResult);
 		FeaturesCollection featuresCollection = parser.getFeatures(featuresConfig, extractors);
 		return featuresCollection;
-	}
-
-	private static FeaturesConfig getFeaturesConfig(Config config) throws FileNotFoundException, JAXBException {
-		Path featuresConfigFilePath = config.getFeaturesConfigFilePath();
-		FeaturesConfig featuresConfig = FeaturesConfig.defaultInstance();
-		if (!featuresConfigFilePath.toString().isEmpty()) {
-			File featuresConfigFile = featuresConfigFilePath.toFile();
-			if (!featuresConfigFile.isFile())
-				throw new FileNotFoundException("File: " + featuresConfigFilePath + " could not be found.");
-			if (featuresConfigFile.exists() && featuresConfigFile.canRead()) {
-				try (FileInputStream fis = new FileInputStream(featuresConfigFile)) {
-					featuresConfig = FeaturesConfig.fromXml(fis);
-					return featuresConfig;
-				} catch (IOException excep) {
-					LOGGER.log(Level.WARNING, "Problem when closing config file: " + featuresConfigFilePath, excep);
-				}
-			}
-		}
-
-		return featuresConfig;
 	}
 
 	private static ValidationProfile profileFromFlavour(PDFAFlavour flavour) {
@@ -341,7 +341,7 @@ public class ProcessorImpl implements Processor {
 			OutputStream reportOutputStream) throws JAXBException, IOException, TransformerException {
 
 		MachineReadableReport machineReadableReport = MachineReadableReport.fromValues(fileDetails, validationProfile,
-				validationResult, config.isShowPassedRules(), config.getMaxNumberOfDisplayedFailedChecks(), fixerResult,
+				validationResult, config.getValidatorConfig().isRecordPasses(), config.getMaxNumberOfDisplayedFailedChecks(), fixerResult,
 				featuresCollection, taskDetails);
 		if (this.processingResult.getValidationSummary() == ProcessingResult.ValidationSummary.ERROR_IN_VALIDATION) {
 			if (this.parsingErrorMessage != null) {
