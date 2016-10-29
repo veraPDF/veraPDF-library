@@ -15,22 +15,26 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
  */
 @XmlRootElement(name = "validatorConfig")
 class ValidatorConfigImpl implements ValidatorConfig {
-	private final static ValidatorConfigImpl DEFAULT = new ValidatorConfigImpl();
+	private final static ValidatorConfigImpl defaultConfig = new ValidatorConfigImpl();
+	@XmlAttribute
+	private final PDFAFlavour flavour;
 	@XmlAttribute
 	private final boolean recordPasses;
 	@XmlAttribute
 	private final int maxFails;
 	@XmlAttribute
 	private final int maxFailsPerRule;
-	@XmlAttribute
-	private final PDFAFlavour flavour;
 
 	private ValidatorConfigImpl() {
-		this(false, -1, 100, PDFAFlavour.NO_FLAVOUR);
+		this(PDFAFlavour.NO_FLAVOUR);
 	}
 
-	private ValidatorConfigImpl(final boolean recordPasses, final int maxFails, final int maxFailsPerRule,
-			final PDFAFlavour flavour) {
+	private ValidatorConfigImpl(final PDFAFlavour flavour) {
+		this(flavour, false, -1, 100);
+	}
+
+	private ValidatorConfigImpl(final PDFAFlavour flavour, final boolean recordPasses, final int maxFails,
+			final int maxFailsPerRule) {
 		super();
 		this.recordPasses = recordPasses;
 		this.maxFails = maxFails;
@@ -124,11 +128,10 @@ class ValidatorConfigImpl implements ValidatorConfig {
 	}
 
 	static ValidatorConfigImpl defaultInstance() {
-		return DEFAULT;
+		return defaultConfig;
 	}
 
-	static ValidatorConfigImpl fromValues(final boolean recordPasses, final int maxFails, final int maxFailsPerRule,
-			final PDFAFlavour flavour) {
-		return new ValidatorConfigImpl(recordPasses, maxFails, maxFailsPerRule, flavour);
+	static ValidatorConfigImpl fromValues(final PDFAFlavour flavour, final boolean recordPasses, final int maxFails, final int maxFailsPerRule) {
+		return new ValidatorConfigImpl(flavour, recordPasses, maxFails, maxFailsPerRule);
 	}
 }
