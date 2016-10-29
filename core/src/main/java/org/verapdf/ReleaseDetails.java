@@ -195,9 +195,10 @@ public final class ReleaseDetails {
      * @param resourceName
      *            the name of the resource to load
      */
-    public static void addDetailsFromResource(final String resourceName) {
+    public static ReleaseDetails addDetailsFromResource(final String resourceName) {
         ReleaseDetails details = fromResource(resourceName);
         DETAILS.put(details.id, details);
+        return details;
     }
 
     static void toXml(final ReleaseDetails toConvert,
@@ -243,7 +244,7 @@ public final class ReleaseDetails {
             try {
                 date = formatter.parse(props
                         .getProperty("verapdf.release.date"));
-            } catch (ParseException e) {
+            } catch (@SuppressWarnings("unused") ParseException e) {
                 /**
                  * Safe to ignore this exception as release simply set to new
                  * date.
