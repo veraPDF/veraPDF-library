@@ -46,8 +46,6 @@ import java.util.Set;
 public enum PDFAFlavour {
     /** Special ID for the none case */
     NO_FLAVOUR(Specification.NO_STANDARD, Level.NO_LEVEL),
-    /** Special ID for the automatic detection case */
-    AUTO("auto", Specification.NO_STANDARD, Level.NO_LEVEL),
     /** 1a PDF Version 1 Level A */
     PDFA_1_A(Specification.ISO_19005_1, Level.A),
     /** 1b PDF Version 1 Level B */
