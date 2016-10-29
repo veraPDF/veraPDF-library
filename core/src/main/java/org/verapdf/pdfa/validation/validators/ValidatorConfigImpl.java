@@ -14,7 +14,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
  * @version 0.1 Created 26 Oct 2016:00:11:25
  */
 @XmlRootElement(name = "validatorConfig")
-class ValidatorConfigImpl implements ValidatorConfig {
+final class ValidatorConfigImpl implements ValidatorConfig {
 	private final static ValidatorConfigImpl defaultConfig = new ValidatorConfigImpl();
 	@XmlAttribute
 	private final PDFAFlavour flavour;

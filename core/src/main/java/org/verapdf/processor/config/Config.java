@@ -26,6 +26,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.verapdf.metadata.fixer.utils.MetadataFixerConstants;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.validation.validators.ValidatorConfig;
+import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 
 /**
  * @author Maksim Bezrukov
@@ -43,7 +45,7 @@ public final class Config {
 	public static final ProcessingType DEFAULT_PROCESSING_TYPE = ProcessingType.VALIDATION;
 	public static final FormatOption DEFAULT_REPORT_TYPE = FormatOption.MRR;
 	public static final Path DEFAULT_VALIDATION_PROFILE_PATH = FileSystems.getDefault().getPath("");
-	public static final PDFAFlavour DEFAULT_FLAVOUR = PDFAFlavour.AUTO;
+	public static final PDFAFlavour DEFAULT_FLAVOUR = PDFAFlavour.NO_FLAVOUR;
 	public static final boolean DEFAULT_VERBOSE_CLI = false;
 	public static final Path DEFAULT_POLICY_PROFILE = FileSystems.getDefault().getPath("");
 	public static final Path DEFAULT_PLUGINS_CONFIG_PATH = FileSystems.getDefault().getPath("");
@@ -51,7 +53,8 @@ public final class Config {
 	public static final String DEFAULT_REPORT_FOLDER_PATH = "";
 	public static final String DEFAULT_REPORT_FILE_PATH = "";
 	public static final boolean DEFAULT_IS_OVERWRITE_REPORT_FILE = false;
-	
+
+	private final ValidatorConfig validatorConfig;
 	private int maxNumberOfDisplayedFailedChecks;
 	private String metadataFixerPrefix;
 	private Path fixMetadataPathFolder;
@@ -122,6 +125,12 @@ public final class Config {
 	}
 
 	public Config() {
+		this(ValidatorFactory.defaultValidatorConfig());
+	}
+	
+	private Config(final ValidatorConfig config) {
+		super();
+		this.validatorConfig = config;
 		this.metadataFixerPrefix = DEFAULT_METADATA_FIXER_PREFIX;
 		this.fixMetadataPathFolder = DEFAULT_FIX_METADATA_PATH_FOLDER;
 		this.profileWikiPath = DEFAULT_PROFILES_WIKI_PATH;
@@ -251,6 +260,10 @@ public final class Config {
 	 */
 	public Path getPluginsConfigFilePath() {
 		return pluginsConfigPath;
+	}
+	
+	public ValidatorConfig getValidatorConfig() {
+		return this.validatorConfig;
 	}
 
 	@XmlElement

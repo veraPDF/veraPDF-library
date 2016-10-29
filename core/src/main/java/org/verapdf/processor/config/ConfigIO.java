@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBException;
 
+import org.verapdf.pdfa.validation.validators.ValidatorConfig;
+
 /**
  * @author Sergey Shemyakov
  */
@@ -54,9 +56,9 @@ public class ConfigIO {
 			config = new Config();
 			File configParent = configFile.getParentFile();
 			File pluginsConfig = new File(configParent, "plugins.xml");
-			config.setPluginsConfigPath(pluginsConfig.toPath());
+//			config.setPluginsConfigPath(pluginsConfig.toPath());
 			File featuresConfig = new File(configParent, "features.xml");
-			config.setFeaturesConfigPath(featuresConfig.toPath());
+//			config.setFeaturesConfigPath(featuresConfig.toPath());
 		} else {
 			try (FileInputStream inputStream = new FileInputStream(configFile)) {
 				config = Config.fromXml(inputStream);
