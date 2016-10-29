@@ -1,14 +1,13 @@
 package org.verapdf.report;
 
-import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.pdfa.validation.profiles.Profiles;
-import org.verapdf.pdfa.validation.profiles.ValidationProfile;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.results.ValidationResults;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 /**
  * @author Maksim Bezrukov

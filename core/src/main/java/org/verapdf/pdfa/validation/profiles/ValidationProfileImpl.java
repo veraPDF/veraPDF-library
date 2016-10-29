@@ -306,10 +306,10 @@ final class ValidationProfileImpl implements ValidationProfile {
     }
 
     private Map<String, Set<Rule>> createObjectRuleMap(
-            final Set<Rule> rules) {
+            final Set<Rule> rulesToSet) {
         ruleLookup.clear();
         Map<String, Set<Rule>> rulesByObject = new HashMap<>();
-        for (Rule rule : rules) {
+        for (Rule rule : rulesToSet) {
             ruleLookup.put(rule.getRuleId(), rule);
             if (!rulesByObject.containsKey(rule.getObject())) {
                 rulesByObject.put(rule.getObject(), new HashSet<Rule>());
@@ -355,8 +355,7 @@ final class ValidationProfileImpl implements ValidationProfile {
          * { @inheritDoc }
          */
         @Override
-        public Result createOutput(String namespaceUri, String suggestedFileName)
-                throws IOException {
+        public Result createOutput(String namespaceUri, String suggestedFileName) {
             final StreamResult result = new StreamResult(this.out);
             result.setSystemId("no-id");
             return result;

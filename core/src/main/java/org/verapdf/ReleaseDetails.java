@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -31,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "releaseDetails")
 public final class ReleaseDetails {
-
+	private static final Logger LOGGER = Logger.getLogger(ReleaseDetails.class.getCanonicalName());
     public static final String APPLICATION_PROPERTIES_ROOT = "org/verapdf/release/";
     public static final String PROPERTIES_EXT = "properties";
     public static final String LIBRARY_DETAILS_RESOURCE = APPLICATION_PROPERTIES_ROOT
@@ -249,6 +251,7 @@ public final class ReleaseDetails {
                  * Safe to ignore this exception as release simply set to new
                  * date.
                  */
+            	LOGGER.log(Level.FINEST, "No parsable release date found, setting release date to:" + date, e);
             }
         }
         return new ReleaseDetails(id, release, date);

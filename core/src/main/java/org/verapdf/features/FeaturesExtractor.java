@@ -21,19 +21,19 @@ public abstract class FeaturesExtractor {
 		this.type = type;
 	}
 
-	public final void initialize(ExtractorDetails details) {
-		initialize(details, Collections.<String, String>emptyMap());
+	public final void initialize(ExtractorDetails initialDetails) {
+		initialize(initialDetails, Collections.<String, String>emptyMap());
 	}
 
-	public final void initialize(ExtractorDetails details, Map<String, String> attributes) {
-		if (details == null) {
+	public final void initialize(ExtractorDetails initialDetails, Map<String, String> initialAttributes) {
+		if (initialDetails == null) {
 			throw new IllegalArgumentException("Argument details shall not be null");
 		}
-		if (attributes == null) {
+		if (initialAttributes == null) {
 			throw new IllegalArgumentException("Argument attributes shall not be null");
 		}
-		this.details = details;
-		this.attributes = new HashMap<>(attributes);
+		this.details = initialDetails;
+		this.attributes = new HashMap<>(initialAttributes);
 	}
 
 	/**

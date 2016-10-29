@@ -277,8 +277,7 @@ final class ValidationResultImpl implements ValidationResult {
          * { @inheritDoc }
          */
         @Override
-        public Result createOutput(String namespaceUri, String suggestedFileName)
-                throws IOException {
+        public Result createOutput(String namespaceUri, String suggestedFileName) {
             final StreamResult result = new StreamResult(this.out);
             result.setSystemId("no-id");
             return result;

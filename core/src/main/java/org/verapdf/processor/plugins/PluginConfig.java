@@ -85,7 +85,7 @@ public class PluginConfig {
 		}
 
 		@Override
-		public String marshal(Path v) throws Exception {
+		public String marshal(Path v) {
 			return v.toAbsolutePath().toUri().toString();
 		}
 	}
