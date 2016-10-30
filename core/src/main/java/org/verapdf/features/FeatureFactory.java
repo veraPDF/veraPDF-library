@@ -3,11 +3,12 @@
  */
 package org.verapdf.features;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.EnumSet;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -31,12 +32,20 @@ public final class FeatureFactory {
 	}
 
 	/**
-	 *	Converts XML file to PluginsCollectionConfig,
-	 *	@see javax.xml.bind.JAXB for more details
+	 * Converts XML file to PluginsCollectionConfig,
+	 * 
+	 * @see javax.xml.bind.JAXB for more details
 	 */
-	public static FeatureExtractorConfig fromXml(final InputStream toConvert)
-			throws JAXBException {
+	public static FeatureExtractorConfig createConfig(final InputStream toConvert) throws JAXBException {
 		return FeatureExtractorConfigImpl.fromXml(toConvert);
 	}
 
+	public static String configToXml(final FeatureExtractorConfig toConvert) throws JAXBException, IOException {
+		return FeatureExtractorConfigImpl.toXml(toConvert, Boolean.TRUE);
+	}
+
+	public static void configToXml(final FeatureExtractorConfig toConvert, OutputStream dest)
+			throws JAXBException {
+		FeatureExtractorConfigImpl.toXml(toConvert, dest, Boolean.TRUE);
+	}
 }

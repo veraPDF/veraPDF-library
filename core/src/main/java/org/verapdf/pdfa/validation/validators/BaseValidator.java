@@ -234,7 +234,7 @@ class BaseValidator implements PDFAValidator {
 
         if (obj.getID() == null) {
             return true;
-        } else if (obj.isContextDependent()) {
+        } else if (obj.isContextDependent().booleanValue()) {
             return !checkIDContext.contains(obj.getID());
         } else {
             return !this.idSet.contains(obj.getID());
@@ -359,11 +359,13 @@ class BaseValidator implements PDFAValidator {
 
     @Override
     public ValidationResult validate(PDFParser toValidate)
-            throws ValidationException, ModelParsingException {
+            throws ValidationException {
         try {
             return this.validate(toValidate.getRoot());
         } catch (RuntimeException e) {
             throw new ValidationException("Caught unexpected runtime exception during validation", e);
-        }
+        } catch (ModelParsingException excep) {
+        	throw new ValidationException("Parsing problem trying to validate.", excep);
+		}
     }
 }

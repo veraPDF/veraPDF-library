@@ -1,8 +1,8 @@
 package org.verapdf.report;
 
+import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.features.FeatureObjectType;
 import org.verapdf.features.tools.FeatureTreeNode;
-import org.verapdf.features.tools.FeaturesCollection;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -89,7 +89,7 @@ public class FeaturesReport {
 	 * @param collection
 	 * @return
 	 */
-	public static FeaturesReport fromValues(FeaturesCollection collection) {
+	public static FeaturesReport fromValues(FeatureExtractionResult collection) {
 		if (collection == null) {
 			return null;
 		}
@@ -109,7 +109,7 @@ public class FeaturesReport {
 		return new FeaturesReport(info, metadata, docSec, sig, lowLvl, embeddedFiles, iccProfiles, outputIntents, outlines, annotations, pages, res, errors, null);
 	}
 
-	static FeaturesNode getFirstNodeFromType(FeaturesCollection collection, FeatureObjectType type) {
+	static FeaturesNode getFirstNodeFromType(FeatureExtractionResult collection, FeatureObjectType type) {
 		List<FeatureTreeNode> featureTreesForType = collection.getFeatureTreesForType(type);
 		if (featureTreesForType.isEmpty()) {
 			return null;

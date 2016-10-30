@@ -1,6 +1,5 @@
 package org.verapdf.pdfa;
 
-import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
@@ -42,5 +41,5 @@ public interface PDFAValidator {
      *             if the toValidate parameter is null PDFAValidationException
      *             if the validation process fails
      */
-    public ValidationResult validate(PDFParser toValidate) throws ValidationException, ModelParsingException;
+    public ValidationResult validate(PDFParser toValidate) throws ValidationException;
 }

@@ -1,22 +1,22 @@
-package org.verapdf.features.tools;
-
-import org.verapdf.features.FeatureObjectType;
+package org.verapdf.features;
 
 import java.util.*;
+
+import org.verapdf.features.tools.FeatureTreeNode;
 
 /**
  * Features Collection
  *
  * @author Maksim Bezrukov
  */
-public final class FeaturesCollection {
+public final class FeatureExtractionResult {
 
 	private final Map<FeatureObjectType, FeaturesStructure> collection;
 
 	/**
 	 * Constructs new object
 	 */
-	public FeaturesCollection() {
+	public FeatureExtractionResult() {
 		this.collection = new EnumMap<>(FeatureObjectType.class);
 	}
 
@@ -112,9 +112,9 @@ public final class FeaturesCollection {
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
-		if (!(o instanceof FeaturesCollection)) return false;
+		if (!(o instanceof FeatureExtractionResult)) return false;
 
-		FeaturesCollection that = (FeaturesCollection) o;
+		FeatureExtractionResult that = (FeatureExtractionResult) o;
 
 		return collection != null ? collection.equals(that.collection) : that.collection == null;
 

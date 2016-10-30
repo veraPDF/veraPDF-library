@@ -2,7 +2,6 @@ package org.verapdf.features;
 
 import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.tools.FeatureTreeNode;
-import org.verapdf.features.tools.FeaturesCollection;
 
 import java.util.*;
 
@@ -15,15 +14,15 @@ public class FeaturesReporter {
 	public static final String CUSTOM_FEATURES_NAME = "customFeatures";
 	public static final String PLUGIN_FEATURES_NAME = "pluginFeatures";
 
-	private static Map<FeatureObjectType, List<FeaturesExtractor>> featuresExtractors = new HashMap<>();
+	private static Map<FeatureObjectType, List<AbstractFeaturesExtractor>> featuresExtractors = new HashMap<>();
 
-	private final FeaturesCollection collection;
+	private final FeatureExtractionResult collection;
 	private final FeatureExtractorConfig config;
 
 	/**
 	 * Creates new FeaturesReporter
 	 */
-	public FeaturesReporter(FeatureExtractorConfig config, List<FeaturesExtractor> extractors) {
+	public FeaturesReporter(FeatureExtractorConfig config, List<AbstractFeaturesExtractor> extractors) {
 		if (extractors == null) {
 			throw new IllegalArgumentException(nullMessage("extractors"));
 		}
@@ -31,14 +30,14 @@ public class FeaturesReporter {
 			throw new IllegalArgumentException(nullMessage("config"));
 		}
 		this.config = config;
-		this.collection = new FeaturesCollection();
-		for (FeaturesExtractor extractor : extractors) {
+		this.collection = new FeatureExtractionResult();
+		for (AbstractFeaturesExtractor extractor : extractors) {
 			registerFeaturesExtractor(extractor);
 		}
 	}
 
 	public FeaturesReporter(FeatureExtractorConfig config) {
-		this(config, Collections.<FeaturesExtractor>emptyList());
+		this(config, Collections.<AbstractFeaturesExtractor>emptyList());
 	}
 
 	/**
@@ -46,9 +45,9 @@ public class FeaturesReporter {
 	 *
 	 * @param extractor object for extract custom features
 	 */
-	static void registerFeaturesExtractor(FeaturesExtractor extractor) {
+	static void registerFeaturesExtractor(AbstractFeaturesExtractor extractor) {
 		if (featuresExtractors.get(extractor.getType()) == null) {
-			featuresExtractors.put(extractor.getType(), new ArrayList<FeaturesExtractor>());
+			featuresExtractors.put(extractor.getType(), new ArrayList<AbstractFeaturesExtractor>());
 		}
 
 		featuresExtractors.get(extractor.getType()).add(extractor);
@@ -69,11 +68,11 @@ public class FeaturesReporter {
 				FeaturesData objData = obj.getData();
 				if (objData != null) {
 					FeatureTreeNode custom = root.addChild(CUSTOM_FEATURES_NAME);
-					for (FeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
+					for (AbstractFeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
 						List<FeatureTreeNode> cust = ext.getFeatures(objData);
 						if (cust != null && !cust.isEmpty()) {
 							FeatureTreeNode custRoot = custom.addChild(PLUGIN_FEATURES_NAME);
-							FeaturesExtractor.ExtractorDetails details = ext.getDetails();
+							AbstractFeaturesExtractor.ExtractorDetails details = ext.getDetails();
 							if (!details.getName().isEmpty()) {
 								custRoot.setAttribute("name", details.getName());
 							}
@@ -108,7 +107,7 @@ public class FeaturesReporter {
 	/**
 	 * @return collection of featurereport
 	 */
-	public FeaturesCollection getCollection() {
+	public FeatureExtractionResult getCollection() {
 		return this.collection;
 	}
 

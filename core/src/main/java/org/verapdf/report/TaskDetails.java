@@ -52,12 +52,12 @@ public final class TaskDetails {
 	
 	@XmlAttribute
 	public String getStart() {
-		return new Date(startMillisecs).toString();
+		return new Date(this.startMillisecs).toString();
 	}
 	
 	@XmlAttribute
 	public String getFinish() {
-		return new Date(finishMillisecs).toString();
+		return new Date(this.finishMillisecs).toString();
 	}
 	
 	@XmlAttribute

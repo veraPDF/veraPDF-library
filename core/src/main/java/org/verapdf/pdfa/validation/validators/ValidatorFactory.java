@@ -3,6 +3,13 @@
  */
 package org.verapdf.pdfa.validation.validators;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.NoSuchElementException;
+
+import javax.xml.bind.JAXBException;
+
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.profiles.Profiles;
@@ -182,8 +189,25 @@ public final class ValidatorFactory {
 		return ValidatorConfigImpl.defaultInstance();
 	}
 
-	public static ValidatorConfig createValidatorConfig(final PDFAFlavour flavour, final boolean recordPasses,
+	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final boolean recordPasses,
 			final int maxFails, final int maxFailsPerRule) {
-		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails, maxFailsPerRule);
+		try {
+			ValidationProfile profile = Profiles.getVeraProfileDirectory().getValidationProfileByFlavour(flavour);
+			return ValidatorConfigImpl.fromValues(profile, recordPasses, maxFails, maxFailsPerRule);
+		} catch (NoSuchElementException excep) {
+			return ValidatorConfigImpl.fromValues(Profiles.defaultProfile(), recordPasses, maxFails, maxFailsPerRule);
+		}
+	}
+
+	public static ValidatorConfig createConfig(final InputStream toConvert) throws JAXBException {
+		return ValidatorConfigImpl.fromXml(toConvert);
+	}
+
+	public static String configToXml(final ValidatorConfig toConvert) throws JAXBException, IOException {
+		return ValidatorConfigImpl.toXml(toConvert, Boolean.TRUE);
+	}
+
+	public static void configToXml(final ValidatorConfig toConvert, final OutputStream stream) throws JAXBException {
+		ValidatorConfigImpl.toXml(toConvert, stream, Boolean.TRUE);
 	}
 }

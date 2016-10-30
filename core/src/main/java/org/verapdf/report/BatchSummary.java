@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "batchSummary")
 public class BatchSummary {
+	private final BatchSummary defaultInstance = new BatchSummary();
 	@XmlElement
 	private final TaskDetails taskDetails;
 	@XmlAttribute
@@ -26,7 +27,7 @@ public class BatchSummary {
 	private BatchSummary() {
 		this(null, 0, 0, 0);
 	}
-	
+
 	public BatchSummary(final TaskDetails taskDetails, final int itemsProcessed, final int validItems,
 			final int invalidItems) {
 		this.taskDetails = taskDetails;
@@ -49,5 +50,9 @@ public class BatchSummary {
 
 	public int getInvalidItems() {
 		return invalidItems;
+	}
+
+	public BatchSummary defaultInstance() {
+		return defaultInstance;
 	}
 }

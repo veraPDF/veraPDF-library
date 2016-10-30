@@ -2,8 +2,8 @@ package org.verapdf.report;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.features.FeatureObjectType;
-import org.verapdf.features.tools.FeaturesCollection;
 
 /**
  * @author Maksim Bezrukov
@@ -39,7 +39,7 @@ public class DocumentResourcesFeatures {
 		this(null, null, null, null, null, null, null);
 	}
 
-	static DocumentResourcesFeatures fromValues(FeaturesCollection collection) {
+	static DocumentResourcesFeatures fromValues(FeatureExtractionResult collection) {
 		FeaturesNode graphicsStates = FeaturesNode.fromValues(collection, FeatureObjectType.EXT_G_STATE);
 		FeaturesNode colorSpaces = FeaturesNode.fromValues(collection, FeatureObjectType.COLORSPACE);
 		FeaturesNode patterns = FeaturesNode.fromValues(collection, FeatureObjectType.PATTERN);

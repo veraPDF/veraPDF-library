@@ -42,11 +42,11 @@ public class ValidationBatchReport {
 	}
 
 	public BatchSummary getBatchSummary() {
-		return batchSummary;
+		return this.batchSummary;
 	}
 
 	public List<ValidationSummary> getTasks() {
-		return Collections.unmodifiableList(tasks);
+		return Collections.unmodifiableList(this.tasks);
 	}
 
 	static String toXml(final ValidationBatchReport toConvert, Boolean prettyXml)

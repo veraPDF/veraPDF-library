@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Maksim Bezrukov
  */
-public abstract class AbstractImageFeaturesExtractor extends FeaturesExtractor {
+public abstract class AbstractImageFeaturesExtractor extends AbstractFeaturesExtractor {
 
 	public AbstractImageFeaturesExtractor() {
 		super(FeatureObjectType.IMAGE_XOBJECT);
