@@ -61,7 +61,7 @@ public class ProcessorImpl implements Processor {
 		this.processingResult = new ProcessingResult(config);
 		this.parsingErrorMessage = null;
 		ValidationProfile validationProfile = profileFromConfig(config);
-		PDFAFlavour currentFlavour = validationProfile == null ? config.getFlavour()
+		PDFAFlavour currentFlavour = validationProfile == null ? config.getValidatorConfig().getFlavour()
 				: validationProfile.getPDFAFlavour();
 
 		ProcessingType processingType = config.getProcessingType();
@@ -125,7 +125,7 @@ public class ProcessorImpl implements Processor {
 		if (reportOutputStream == null) {
 			throw new IllegalArgumentException("Output stream for report cannot be null");
 		}
-		if (config.getProcessingType().isValidating() && config.getFlavour() == PDFAFlavour.NO_FLAVOUR
+		if (config.getProcessingType().isValidating() && config.getValidatorConfig().getFlavour() == PDFAFlavour.NO_FLAVOUR
 				&& config.getValidationProfile().toString().equals("")) {
 			throw new IllegalArgumentException("Validation cannot be started with no chosen validation profile");
 		}
@@ -135,7 +135,7 @@ public class ProcessorImpl implements Processor {
 	}
 
 	private static boolean logPassed(final Config config) {
-		return (config.getReportType() != FormatOption.XML) || config.isShowPassedRules();
+		return (config.getReportType() != FormatOption.XML) || config.getValidatorConfig().isRecordPasses();
 	}
 
 	ValidationProfile profileFromConfig(final Config config) {
@@ -173,7 +173,7 @@ public class ProcessorImpl implements Processor {
 
 	private ValidationResult startValidation(ValidationProfile validationProfile, PDFParser parser, Config config) {
 		PDFAValidator validator = ValidatorFactory.createValidator(validationProfile, logPassed(config),
-				config.getMaxNumberOfFailedChecks());
+				config.getValidatorConfig().getMaxFails());
 		ValidationResult validationResult = validate(validator, parser);
 		return validationResult;
 	}
@@ -341,7 +341,7 @@ public class ProcessorImpl implements Processor {
 			OutputStream reportOutputStream) throws JAXBException, IOException, TransformerException {
 
 		MachineReadableReport machineReadableReport = MachineReadableReport.fromValues(fileDetails, validationProfile,
-				validationResult, config.isShowPassedRules(), config.getMaxNumberOfDisplayedFailedChecks(), fixerResult,
+				validationResult, config.getValidatorConfig().isRecordPasses(), config.getMaxNumberOfDisplayedFailedChecks(), fixerResult,
 				featuresCollection, taskDetails);
 		if (this.processingResult.getValidationSummary() == ProcessingResult.ValidationSummary.ERROR_IN_VALIDATION) {
 			if (this.parsingErrorMessage != null) {
