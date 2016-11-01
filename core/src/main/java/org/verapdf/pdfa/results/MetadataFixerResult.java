@@ -5,12 +5,15 @@ package org.verapdf.pdfa.results;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 /**
  * Holds the result of an attempt to repair PDF/A metadata by a
  * {@link MetadataFixer}.
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
+@XmlJavaTypeAdapter(MetadataFixerResultImpl.Adapter.class)
 public interface MetadataFixerResult extends Iterable<String> {
     /**
      * @return the {@link RepairStatus} for the fix task

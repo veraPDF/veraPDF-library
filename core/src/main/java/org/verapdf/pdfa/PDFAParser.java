@@ -21,7 +21,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
  *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
-public interface PDFParser extends Closeable {
+public interface PDFAParser extends Closeable {
 	/**
 	 * @return the {@link CosDocument} element that is the root object of the
 	 *         validation model instance.

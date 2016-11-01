@@ -16,6 +16,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * @author Maksim Bezrukov
@@ -160,4 +161,16 @@ final class FeatureExtractorConfigImpl implements FeatureExtractorConfig {
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
 		return marshaller;
 	}
+	static class Adapter extends XmlAdapter<FeatureExtractorConfigImpl, FeatureExtractorConfig> {
+		@Override
+		public FeatureExtractorConfig unmarshal(FeatureExtractorConfigImpl validationConfigImpl) {
+			return validationConfigImpl;
+		}
+
+		@Override
+		public FeatureExtractorConfigImpl marshal(FeatureExtractorConfig validationResult) {
+			return (FeatureExtractorConfigImpl) validationResult;
+		}
+	}
+
 }

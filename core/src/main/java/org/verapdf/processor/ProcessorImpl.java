@@ -2,6 +2,7 @@ package org.verapdf.processor;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +13,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,11 +27,12 @@ import org.verapdf.core.ValidationException;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.features.FeatureExtractorConfig;
+import org.verapdf.metadata.fixer.MetadataFixerConfig;
 import org.verapdf.metadata.fixer.utils.FileGenerator;
 import org.verapdf.pdfa.Foundries;
 import org.verapdf.pdfa.MetadataFixer;
+import org.verapdf.pdfa.PDFAParser;
 import org.verapdf.pdfa.PDFAValidator;
-import org.verapdf.pdfa.PDFParser;
 import org.verapdf.pdfa.VeraPDFFoundry;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.MetadataFixerResult;
@@ -36,8 +40,9 @@ import org.verapdf.pdfa.results.MetadataFixerResultImpl;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.profiles.Profiles;
-import org.verapdf.pdfa.validation.profiles.ValidationProfile;
+import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 import org.verapdf.report.ItemDetails;
+import org.verapdf.report.MachineReadableReport;
 
 /**
  * Class is implementation of {@link Processor} interface
@@ -54,12 +59,10 @@ class ProcessorImpl implements VeraProcessor {
 	private final ComponentDetails details;
 
 	private final List<String> errors = new ArrayList<>();
-	private final EnumMap<TaskType, TaskResult> results = new EnumMap<>(TaskType.class);
+	private final EnumMap<TaskType, TaskResult> taskResults = new EnumMap<>(TaskType.class);
 	private ValidationResult validationResult = ValidationResults.defaultResult();
 	private FeatureExtractionResult featureResult = new FeatureExtractionResult();
 	private MetadataFixerResult fixerResult = new MetadataFixerResultImpl.Builder().build();
-
-	private String parsingErrorMessage;
 
 	private ProcessorImpl(final ProcessorConfig config) {
 		this(config, defaultDetails);
@@ -83,30 +86,45 @@ class ProcessorImpl implements VeraProcessor {
 
 	private void initialise() {
 		this.errors.clear();
-		this.results.clear();
+		this.taskResults.clear();
 		this.validationResult = ValidationResults.defaultResult();
 		this.featureResult = new FeatureExtractionResult();
 		this.fixerResult = new MetadataFixerResultImpl.Builder().build();
+	}
+
+
+	@Override
+	public MachineReadableReport processBatch(Set<File> toProcess) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<ProcessorResult> process(Set<File> toProcess) {
+		if (toProcess == null)
+			throw new NullPointerException();
+		Set<ProcessorResult> results = new HashSet<>();
+		for (File item : toProcess) {
+			try (InputStream fis = new FileInputStream(item)) {
+				results.add(process(ItemDetails.fromFile(item), fis));
+			} catch (IOException excep) {
+				logger.log(Level.WARNING, "Problem processing file:" + item, excep);
+				excep.printStackTrace();
+			}
+		}
+		return results;
 	}
 
 	@Override
 	public ProcessorResult process(ItemDetails fileDetails, InputStream pdfFileStream) {
 		this.initialise();
 		checkArguments(pdfFileStream, fileDetails, this.processorConfig);
-		this.parsingErrorMessage = null;
-		ValidationProfile profile = Profiles.getVeraProfileDirectory()
-				.getValidationProfileByFlavour(this.processorConfig.getValidatorConfig().getFlavour());
-		PDFAFlavour currentFlavour = profile == Profiles.defaultProfile()
-				? this.processorConfig.getValidatorConfig().getFlavour() : profile.getPDFAFlavour();
-
-		try (PDFParser parser = foundry.createParser(pdfFileStream, currentFlavour)) {
-			if (profile == Profiles.defaultProfile()) {
-				profile = Profiles.getVeraProfileDirectory().getValidationProfileByFlavour(parser.getFlavour());
-			}
+		try (PDFAParser parser = this.isAuto() ? foundry.createParser(pdfFileStream)
+				: foundry.createParser(pdfFileStream, this.valConf().getFlavour())) {
 			for (TaskType task : this.getConfig().getTasks()) {
 				switch (task) {
 				case VALIDATE:
-					validate(parser, profile);
+					validate(parser);
 					break;
 				case FIX_METADATA:
 					fixMetadata(parser, fileDetails.getName());
@@ -119,16 +137,22 @@ class ProcessorImpl implements VeraProcessor {
 
 				}
 			}
-		} catch (EncryptedPdfException | ModelParsingException e) {
-			this.parsingErrorMessage = (e instanceof EncryptedPdfException)
-					? "ERROR: " + fileDetails.getName() + " is an encrypted PDF file."
-					: "ERROR: " + fileDetails.getName() + " is not a PDF format file.";
-			logger.log(Level.INFO, this.parsingErrorMessage, e);
+		} catch (EncryptedPdfException e) {
+			logger.log(Level.WARNING, fileDetails.getName() + " appears to be an encrypted PDF.", e);
+			return ProcessorResultImpl.encryptedResult();
+		} catch (ModelParsingException e) {
+			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF.", e);
+			return ProcessorResultImpl.invalidPdfResult();
 		} catch (IOException excep) {
-			logger.log(Level.FINE, "Problem closing PDF Stream", excep);
+			logger.log(Level.FINER, "Problem closing PDF Stream", excep);
 		}
 
-		return ProcessorResultImpl.fromValues(this.results, this.validationResult, this.featureResult, this.fixerResult);
+		return ProcessorResultImpl.fromValues(this.taskResults, this.validationResult, this.featureResult,
+				this.fixerResult);
+	}
+
+	private boolean isAuto() {
+		return this.valConf().getFlavour() == PDFAFlavour.NO_FLAVOUR;
 	}
 
 	private static void checkArguments(InputStream pdfFileStream, ItemDetails fileDetails, ProcessorConfig config) {
@@ -138,8 +162,9 @@ class ProcessorImpl implements VeraProcessor {
 		if (config == null) {
 			throw new IllegalArgumentException("Config cannot be null");
 		}
+		// FIXME FAST
 		if (config.hasTask(TaskType.VALIDATE) && config.getValidatorConfig().getFlavour() == PDFAFlavour.NO_FLAVOUR
-				&& config.getValidatorConfig().getProfile().toString().equals("")) {
+				&& config.getValidatorConfig().toString().equals("")) {
 			throw new IllegalArgumentException("Validation cannot be started with no chosen validation profile");
 		}
 		if (fileDetails == null) {
@@ -147,27 +172,43 @@ class ProcessorImpl implements VeraProcessor {
 		}
 	}
 
-	private void validate(final PDFParser parser, final ValidationProfile profile) {
+	private void validate(final PDFAParser parser) {
+		TaskType type = TaskType.VALIDATE;
 		Components.Timer timer = Components.Timer.start();
-		PDFAValidator validator = foundry.createFailFastValidator(profile,
-				this.processorConfig.getValidatorConfig().getMaxFails());
+		PDFAValidator validator = this.isAuto() ? validator(parser.getFlavour()) : validator();
 		try {
 			this.validationResult = validator.validate(parser);
-			this.results.put(TaskType.VALIDATE, TaskResultImpl.fromValues(timer.stop()));
+			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop()));
 		} catch (ValidationException excep) {
-			this.results.put(TaskType.VALIDATE, TaskResultImpl.fromValues(timer.stop(), excep));
+			logger.log(Level.WARNING, "Exception caught when validaing item", excep);
+			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), excep));
 		}
 	}
 
-	private void fixMetadata(final PDFParser parser, final String fileName) {
+	private PDFAValidator validator() {
+		return validator(this.valConf().getFlavour());
+	}
+
+	private PDFAValidator validator(PDFAFlavour flavour) {
+		if (this.hasCustomProfile())
+			return foundry.createValidator(this.valConf(), this.processorConfig.getCustomProfile());
+		return foundry.createValidator(this.valConf(), flavour);
+	}
+
+	private boolean hasCustomProfile() {
+		return this.processorConfig.getCustomProfile() != Profiles.defaultProfile();
+	}
+
+	private void fixMetadata(final PDFAParser parser, final String fileName) {
+		TaskType type = TaskType.FIX_METADATA;
 		Components.Timer timer = Components.Timer.start();
 		try {
 			Path path = FileSystems.getDefault().getPath("");
-			String prefix = this.getConfig().getFixerConfig().getFixesPrefix();
+			String prefix = this.fixConf().getFixesPrefix();
 			File tempFile = File.createTempFile("fixedTempFile", ".pdf");
 			tempFile.deleteOnExit();
 			try (OutputStream tempOutput = new BufferedOutputStream(new FileOutputStream(tempFile))) {
-				MetadataFixer fixer = foundry.newMetadataFixer();
+				MetadataFixer fixer = foundry.createMetadataFixer();
 				this.fixerResult = fixer.fixMetadata(parser, tempOutput, this.validationResult);
 				MetadataFixerResult.RepairStatus repairStatus = this.fixerResult.getRepairStatus();
 				if (repairStatus == MetadataFixerResult.RepairStatus.SUCCESS
@@ -186,20 +227,19 @@ class ProcessorImpl implements VeraProcessor {
 					}
 				}
 			}
-			this.results.put(TaskType.FIX_METADATA, TaskResultImpl.fromValues(timer.stop()));
+			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop()));
 		} catch (IOException excep) {
-			this.results.put(TaskType.FIX_METADATA, TaskResultImpl.fromValues(timer.stop(),
+			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(),
 					new VeraPDFException("Processing exception in metadata fixer", excep)));
 		}
 	}
 
-	private void extractFeatures(PDFParser parser) {
+	private void extractFeatures(PDFAParser parser) {
 		Components.Timer timer = Components.Timer.start();
-		FeatureExtractorConfig featuresConfig = this.getConfig().getFeatureConfig();
-		this.featureResult = parser.getFeatures(featuresConfig);
-		this.results.put(TaskType.EXTRACT_FEATURES, TaskResultImpl.fromValues(timer.stop()));
+		this.featureResult = parser.getFeatures(this.featConf());
+		this.taskResults.put(TaskType.EXTRACT_FEATURES,
+				TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop()));
 	}
-
 
 	static VeraProcessor newProcessor(final ProcessorConfig config) {
 		return new ProcessorImpl(config);
@@ -207,5 +247,17 @@ class ProcessorImpl implements VeraProcessor {
 
 	static VeraProcessor newProcessor(final ProcessorConfig config, final ComponentDetails details) {
 		return new ProcessorImpl(config, details);
+	}
+
+	private ValidatorConfig valConf() {
+		return this.processorConfig.getValidatorConfig();
+	}
+
+	private MetadataFixerConfig fixConf() {
+		return this.processorConfig.getFixerConfig();
+	}
+
+	private FeatureExtractorConfig featConf() {
+		return this.processorConfig.getFeatureConfig();
 	}
 }

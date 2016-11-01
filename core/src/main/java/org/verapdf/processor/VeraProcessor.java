@@ -1,9 +1,12 @@
 package org.verapdf.processor;
 
+import java.io.File;
 import java.io.InputStream;
+import java.util.Set;
 
 import org.verapdf.component.Component;
 import org.verapdf.report.ItemDetails;
+import org.verapdf.report.MachineReadableReport;
 
 /**
  * Processor encapsulates all validation processes: validation, metadata fixes
@@ -26,6 +29,10 @@ public interface VeraProcessor extends Component {
 	 *            output stream, in which report will be written
 	 */
 	public ProcessorResult process(ItemDetails fileDetails, InputStream toProcess);
+
+	public Set<ProcessorResult> process(Set<File> toProcess);
+	
+	public MachineReadableReport processBatch(Set<File> toProcess); 
 
 	public ProcessorConfig getConfig();
 }

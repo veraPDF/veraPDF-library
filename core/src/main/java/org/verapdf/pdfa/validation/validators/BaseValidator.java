@@ -3,33 +3,44 @@
  */
 package org.verapdf.pdfa.validation.validators;
 
+import java.net.URI;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
+import org.verapdf.component.ComponentDetails;
+import org.verapdf.component.Components;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.pdfa.PDFAParser;
 import org.verapdf.pdfa.PDFAValidator;
-import org.verapdf.pdfa.PDFParser;
 import org.verapdf.pdfa.results.Location;
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.profiles.Rule;
 import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.profiles.Variable;
-import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.results.ValidationResults;
-
-import java.util.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
 class BaseValidator implements PDFAValidator {
-
+	private static final URI componentId = URI.create("http://pdfa.verapdf.org/validators#default");
+	private static final String componentName = "veraPDF PDF/A Validator";
+	private static final ComponentDetails componentDetails = Components.libraryDetails(componentId, componentName);
     private static final int OPTIMIZATION_LEVEL = 9;
     private final ValidationProfile profile;
     private Context context;
@@ -62,6 +73,33 @@ class BaseValidator implements PDFAValidator {
         this.logPassedTests = logPassedTests;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.verapdf.pdfa.PDFAValidator#getProfile()
+     */
+    @Override
+    public ValidationProfile getProfile() {
+        return this.profile;
+    }
+
+    @Override
+    public ValidationResult validate(PDFAParser toValidate)
+            throws ValidationException {
+        try {
+            return this.validate(toValidate.getRoot());
+        } catch (RuntimeException e) {
+            throw new ValidationException("Caught unexpected runtime exception during validation", e);
+        } catch (ModelParsingException excep) {
+        	throw new ValidationException("Parsing problem trying to validate.", excep);
+		}
+    }
+
+    @Override
+    public ComponentDetails getDetails() {
+    	return componentDetails;
+    }
+
     protected ValidationResult validate(Object root) throws ValidationException {
         initialise();
         this.rootType = root.getObjectType();
@@ -83,8 +121,9 @@ class BaseValidator implements PDFAValidator {
 
         Context.exit();
 
-        return ValidationResults.resultFromValues(
+        ValidationResult res = ValidationResults.resultFromValues(
                 this.profile.getPDFAFlavour(), this.results, this.isCompliant, this.testCounter);
+        return res;
     }
 
     protected void initialise() {
@@ -345,27 +384,5 @@ class BaseValidator implements PDFAValidator {
             this.isCompliant = assertionResult;
         if (!assertionResult || this.logPassedTests)
             this.results.add(assertion);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.verapdf.pdfa.PDFAValidator#getProfile()
-     */
-    @Override
-    public ValidationProfile getProfile() {
-        return this.profile;
-    }
-
-    @Override
-    public ValidationResult validate(PDFParser toValidate)
-            throws ValidationException {
-        try {
-            return this.validate(toValidate.getRoot());
-        } catch (RuntimeException e) {
-            throw new ValidationException("Caught unexpected runtime exception during validation", e);
-        } catch (ModelParsingException excep) {
-        	throw new ValidationException("Parsing problem trying to validate.", excep);
-		}
     }
 }

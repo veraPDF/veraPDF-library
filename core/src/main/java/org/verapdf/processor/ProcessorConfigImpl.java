@@ -13,12 +13,15 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.verapdf.features.FeatureExtractorConfig;
 import org.verapdf.features.FeatureFactory;
 import org.verapdf.metadata.fixer.FixerFactory;
 import org.verapdf.metadata.fixer.MetadataFixerConfig;
+import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 
@@ -29,25 +32,35 @@ import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 @XmlRootElement(name = "processorConfig")
 final class ProcessorConfigImpl implements ProcessorConfig {
 	private static final ProcessorConfig defaultInstance = new ProcessorConfigImpl();
-
+	@XmlElement
 	private final EnumSet<TaskType> tasks;
+	@XmlElement
 	private final ValidatorConfig validatorConfig;
+	@XmlElement
 	private final FeatureExtractorConfig featureConfig;
+	@XmlElement
 	private final MetadataFixerConfig fixerConfig;
+	@XmlElement
+	private final ValidationProfile customProfile;
 
 	private ProcessorConfigImpl() {
 		this(ValidatorFactory.defaultConfig(), FeatureFactory.defaultConfig(), FixerFactory.defaultConfig(),
 				EnumSet.noneOf(TaskType.class));
 	}
 
-	private ProcessorConfigImpl(final ValidatorConfig config,
-			final FeatureExtractorConfig featureConfig, final MetadataFixerConfig fixerConfig,
-			final EnumSet<TaskType> tasks) {
+	private ProcessorConfigImpl(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks) {
+		this(config, featureConfig, fixerConfig, tasks, Profiles.defaultProfile());
+	}
+
+	private ProcessorConfigImpl(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, ValidationProfile customProfile) {
 		super();
 		this.tasks = EnumSet.copyOf(tasks);
 		this.validatorConfig = config;
 		this.featureConfig = featureConfig;
 		this.fixerConfig = fixerConfig;
+		this.customProfile = customProfile;
 	}
 
 	public boolean isFixMetadata() {
@@ -70,6 +83,11 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	}
 
 	@Override
+	public ValidationProfile getCustomProfile() {
+		return this.customProfile;
+	}
+
+	@Override
 	public EnumSet<TaskType> getTasks() {
 		return EnumSet.copyOf(this.tasks);
 	}
@@ -79,7 +97,6 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 		return this.tasks.contains(toCheck);
 	}
 
-	
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -143,19 +160,23 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	static ProcessorConfig defaultInstance() {
 		return defaultInstance;
 	}
-	
-	static ProcessorConfig fromValues(final ValidatorConfig config,
-			final FeatureExtractorConfig featureConfig, final MetadataFixerConfig fixerConfig,
-			final EnumSet<TaskType> tasks) {
+
+	static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks) {
 		return new ProcessorConfigImpl(config, featureConfig, fixerConfig, tasks);
 	}
+
+	static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final ValidationProfile profile) {
+		return new ProcessorConfigImpl(config, featureConfig, fixerConfig, tasks, profile);
+	}
+
 	/**
 	 * Converts Config to XML,
 	 *
 	 * @see javax.xml.bind.JAXB for more details
 	 */
-	static String toXml(final ProcessorConfig toConvert, Boolean prettyXml)
-			throws JAXBException, IOException {
+	static String toXml(final ProcessorConfig toConvert, Boolean prettyXml) throws JAXBException, IOException {
 		String retVal = "";
 		try (StringWriter writer = new StringWriter()) {
 			toXml(toConvert, writer, prettyXml);
@@ -196,8 +217,7 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 		return (ProcessorConfig) stringUnmarshaller.unmarshal(toConvert);
 	}
 
-	static void toXml(final ProcessorConfig toConvert, final Writer writer, Boolean prettyXml)
-			throws JAXBException {
+	static void toXml(final ProcessorConfig toConvert, final Writer writer, Boolean prettyXml) throws JAXBException {
 		Marshaller varMarshaller = getMarshaller(prettyXml);
 		varMarshaller.marshal(toConvert, writer);
 	}
@@ -219,5 +239,4 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
 		return marshaller;
 	}
-
 }

@@ -6,7 +6,6 @@ package org.verapdf.pdfa.validation.validators;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.NoSuchElementException;
 
 import javax.xml.bind.JAXBException;
 
@@ -190,13 +189,8 @@ public final class ValidatorFactory {
 	}
 
 	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final boolean recordPasses,
-			final int maxFails, final int maxFailsPerRule) {
-		try {
-			ValidationProfile profile = Profiles.getVeraProfileDirectory().getValidationProfileByFlavour(flavour);
-			return ValidatorConfigImpl.fromValues(profile, recordPasses, maxFails, maxFailsPerRule);
-		} catch (NoSuchElementException excep) {
-			return ValidatorConfigImpl.fromValues(Profiles.defaultProfile(), recordPasses, maxFails, maxFailsPerRule);
-		}
+			final int maxFails) {
+		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails);
 	}
 
 	public static ValidatorConfig createConfig(final InputStream toConvert) throws JAXBException {

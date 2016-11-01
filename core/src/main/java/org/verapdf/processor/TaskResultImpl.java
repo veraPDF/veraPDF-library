@@ -3,7 +3,17 @@
  */
 package org.verapdf.processor;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.verapdf.component.AuditDuration;
 import org.verapdf.component.Components;
@@ -17,32 +27,45 @@ import org.verapdf.core.VeraPDFException;
 @XmlRootElement(name = "taskResult")
 class TaskResultImpl implements TaskResult {
 	private static final VeraPDFException notExecutedExcept = new VeraPDFException("Not Executed");
-	private static final VeraPDFException executedExcept = new VeraPDFException("Executed");
 	private static final TaskResult defaultInstance = new TaskResultImpl();
+	@XmlAttribute
+	private final TaskType type;
+	@XmlAttribute
 	private final boolean isExecuted;
+	@XmlAttribute
 	private final boolean isSuccess;
+	@XmlElement
 	private final AuditDuration duration;
+	@XmlElement
 	private final VeraPDFException exception;
 
 	private TaskResultImpl() {
-		this(false, false, Components.defaultDuration(), notExecutedExcept);
-	}
-	
-	private TaskResultImpl(final AuditDuration duration) {
-		this(true, true, duration, executedExcept);
+		this(TaskType.NONE, false, false, Components.defaultDuration(), notExecutedExcept);
 	}
 
-	private TaskResultImpl(final AuditDuration duration, final VeraPDFException exception) {
-		this(true, false, duration, exception);
+	private TaskResultImpl(final TaskType type, final AuditDuration duration) {
+		this(type, true, true, duration, null);
 	}
 
-	private TaskResultImpl(final boolean isExecuted, final boolean isSuccess, final AuditDuration duration,
+	private TaskResultImpl(final TaskType type, final AuditDuration duration, final VeraPDFException exception) {
+		this(type, true, false, duration, exception);
+	}
+
+	private TaskResultImpl(final TaskType type, final boolean isExecuted, final boolean isSuccess, final AuditDuration duration,
 			final VeraPDFException exception) {
 		super();
+		this.type = type;
 		this.isExecuted = isExecuted;
 		this.isSuccess = isSuccess;
 		this.duration = duration;
 		this.exception = exception;
+	}
+
+
+	@Override
+	public TaskType getType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -116,16 +139,53 @@ class TaskResultImpl implements TaskResult {
 		}
 		return true;
 	}
-	
+
 	static TaskResult defaultInstance() {
 		return defaultInstance;
 	}
-	
-	static TaskResult fromValues(final AuditDuration duration) {
-		return new TaskResultImpl(duration);
+
+	static TaskResult fromValues(final TaskType type, final AuditDuration duration) {
+		return new TaskResultImpl(type, duration);
 	}
 
-	static TaskResult fromValues(final AuditDuration duration, VeraPDFException exception) {
-		return new TaskResultImpl(duration, exception);
+	static TaskResult fromValues(final TaskType type, final AuditDuration duration, VeraPDFException exception) {
+		return new TaskResultImpl(type, duration, exception);
+	}
+
+    static void toXml(final TaskResult toConvert,
+            final OutputStream stream, Boolean prettyXml) throws JAXBException {
+        Marshaller varMarshaller = getMarshaller(prettyXml);
+        varMarshaller.marshal(toConvert, stream);
+    }
+
+    static TaskResult fromXml(final InputStream toConvert)
+            throws JAXBException {
+        Unmarshaller stringUnmarshaller = getUnmarshaller();
+        return (TaskResultImpl) stringUnmarshaller.unmarshal(toConvert);
+    }
+
+	static class Adapter extends XmlAdapter<TaskResultImpl, TaskResult> {
+		@Override
+		public TaskResult unmarshal(TaskResultImpl procResultImpl) {
+			return procResultImpl;
+		}
+
+		@Override
+		public TaskResultImpl marshal(TaskResult procResult) {
+			return (TaskResultImpl) procResult;
+		}
+	}
+
+	private static Unmarshaller getUnmarshaller() throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(TaskResultImpl.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		return unmarshaller;
+	}
+
+	private static Marshaller getMarshaller(Boolean setPretty) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(TaskResultImpl.class);
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
+		return marshaller;
 	}
 }

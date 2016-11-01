@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import org.verapdf.features.FeatureExtractorConfig;
 import org.verapdf.metadata.fixer.MetadataFixerConfig;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 
 /**
@@ -12,6 +13,7 @@ import org.verapdf.pdfa.validation.validators.ValidatorConfig;
  * @version 0.1 Created 30 Oct 2016:22:13:34
  */
 public interface ProcessorConfig {
+	public ValidationProfile getCustomProfile();
 	/**
 	 * @return
 	 */

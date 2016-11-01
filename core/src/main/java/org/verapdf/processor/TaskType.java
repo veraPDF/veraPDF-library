@@ -4,6 +4,7 @@ package org.verapdf.processor;
  * @author Evgeniy Muravitskiy
  */
 public enum TaskType {
+	NONE("NONE"),
 	PARSE("parsing"),
 	VALIDATE("validation"),
 	EXTRACT_FEATURES("features"),

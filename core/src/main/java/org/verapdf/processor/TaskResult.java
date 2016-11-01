@@ -3,6 +3,8 @@
  */
 package org.verapdf.processor;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import org.verapdf.component.AuditDuration;
 import org.verapdf.core.VeraPDFException;
 
@@ -14,10 +16,11 @@ import org.verapdf.core.VeraPDFException;
  * 
  * Created 30 Oct 2016:13:42:47
  */
-
+@XmlJavaTypeAdapter(TaskResultImpl.Adapter.class)
 public interface TaskResult {
 	public boolean isExecuted();
 	public boolean isSuccess();
+	public TaskType getType();
 	public VeraPDFException getException();
 	public AuditDuration getDuration();
 }
