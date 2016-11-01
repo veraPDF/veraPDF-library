@@ -111,10 +111,10 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public Set<Rule> getRulesByObject(final String objectName) {
-        if (objectRuleMap == null) {
-            objectRuleMap = createObjectRuleMap(this.rules);
+        if (this.objectRuleMap == null) {
+            this.objectRuleMap = createObjectRuleMap(this.rules);
         }
-        Set<Rule> objRules = objectRuleMap.get(objectName);
+        Set<Rule> objRules = this.objectRuleMap.get(objectName);
         return (objRules == null) ? Collections.<Rule> emptySet() : Collections
                 .unmodifiableSet(objRules);
     }
@@ -124,10 +124,10 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public Set<Variable> getVariablesByObject(String objectName) {
-        if (objectVariableMap == null) {
-            objectVariableMap = createObjectVariableMap(this.variables);
+        if (this.objectVariableMap == null) {
+            this.objectVariableMap = createObjectVariableMap(this.variables);
         }
-        Set<Variable> objRules = objectVariableMap.get(objectName);
+        Set<Variable> objRules = this.objectVariableMap.get(objectName);
         return (objRules == null) ? Collections.<Variable> emptySet() : Collections
                 .unmodifiableSet(objRules);
     }
@@ -137,10 +137,10 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public Rule getRuleByRuleId(RuleId id) {
-        if (ruleLookup.isEmpty()) {
+        if (this.ruleLookup.isEmpty()) {
             this.objectRuleMap = createObjectRuleMap(this.rules);
         }
-        return ruleLookup.get(id);
+        return this.ruleLookup.get(id);
     }
 
     /**
@@ -307,10 +307,10 @@ final class ValidationProfileImpl implements ValidationProfile {
 
     private Map<String, Set<Rule>> createObjectRuleMap(
             final Set<Rule> rulesToSet) {
-        ruleLookup.clear();
+        this.ruleLookup.clear();
         Map<String, Set<Rule>> rulesByObject = new HashMap<>();
         for (Rule rule : rulesToSet) {
-            ruleLookup.put(rule.getRuleId(), rule);
+            this.ruleLookup.put(rule.getRuleId(), rule);
             if (!rulesByObject.containsKey(rule.getObject())) {
                 rulesByObject.put(rule.getObject(), new HashSet<Rule>());
             }

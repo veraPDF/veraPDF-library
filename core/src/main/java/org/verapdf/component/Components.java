@@ -51,6 +51,10 @@ public final class Components {
 			throw new IllegalArgumentException(emptyMessage("description"));
 		return ComponentDetailsImpl.fromValues(id, name, version, provider, description);
 	}
+	
+	public static AuditDuration defaultDuration() {
+		return AuditDurationImpl.defaultInstance();
+	}
 
 	private static String nullMessage(final String name) {
 		return makeMessage(name, "null");

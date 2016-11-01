@@ -1,23 +1,23 @@
 package org.verapdf.features;
 
-import org.verapdf.features.tools.FeatureTreeNode;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.verapdf.features.tools.FeatureTreeNode;
 
 /**
  * Class for features extractors
  *
  * @author Maksim Bezrukov
  */
-public abstract class FeaturesExtractor {
+public abstract class AbstractFeaturesExtractor {
 	private final FeatureObjectType type;
 	private ExtractorDetails details = new ExtractorDetails();
 	private Map<String, String> attributes = new HashMap<>();
 
-	FeaturesExtractor(final FeatureObjectType type) {
+	AbstractFeaturesExtractor(final FeatureObjectType type) {
 		this.type = type;
 	}
 

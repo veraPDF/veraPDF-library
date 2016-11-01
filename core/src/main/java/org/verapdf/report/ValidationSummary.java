@@ -21,7 +21,7 @@ import org.verapdf.pdfa.results.ValidationResults;
  */
 @XmlRootElement(name="validationSummary")
 public class ValidationSummary {
-//	static final ValidationSummary DEFAULT = new ValidationSummary();
+	static final ValidationSummary DEFAULT = new ValidationSummary();
 
 	@XmlElement
 	private final ItemDetails item;

@@ -1,5 +1,6 @@
 package org.verapdf.pdfa;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -27,7 +28,7 @@ public interface MetadataFixer {
      *         records any fixes applied.
      */
     public MetadataFixerResult fixMetadata(InputStream toFix,
-            OutputStream outputRepaired, ValidationResult result);
+            OutputStream outputRepaired, ValidationResult result) throws IOException;
 
     public MetadataFixerResult fixMetadata(PDFParser parser,
             OutputStream outputRepaired, ValidationResult result);

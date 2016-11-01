@@ -7,9 +7,9 @@ import java.io.Closeable;
 import java.util.List;
 
 import org.verapdf.core.ModelParsingException;
-import org.verapdf.features.FeaturesExtractor;
-import org.verapdf.features.config.FeaturesConfig;
-import org.verapdf.features.tools.FeaturesCollection;
+import org.verapdf.features.FeatureExtractorConfig;
+import org.verapdf.features.AbstractFeaturesExtractor;
+import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.metadata.fixer.entity.PDFDocument;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
@@ -43,12 +43,12 @@ public interface PDFParser extends Closeable {
 	/**
 	 * @return features collection of the document
 	 */
-	public FeaturesCollection getFeatures(FeaturesConfig config);
+	public FeatureExtractionResult getFeatures(FeatureExtractorConfig config);
 
 	/**
 	 * @param extractors
 	 *            extractors for features reporting
 	 * @return features collection of the document
 	 */
-	public FeaturesCollection getFeatures(FeaturesConfig config, List<FeaturesExtractor> extractors);
+	public FeatureExtractionResult getFeatures(FeatureExtractorConfig config, List<AbstractFeaturesExtractor> extractors);
 }

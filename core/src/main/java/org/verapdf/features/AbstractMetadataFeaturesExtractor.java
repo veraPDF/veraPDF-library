@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author Maksim Bezrukov
  */
-public abstract class AbstractMetadataFeaturesExtractor extends FeaturesExtractor {
+public abstract class AbstractMetadataFeaturesExtractor extends AbstractFeaturesExtractor {
 
 
     public AbstractMetadataFeaturesExtractor() {

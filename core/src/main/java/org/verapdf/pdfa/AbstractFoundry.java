@@ -16,22 +16,22 @@ import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 abstract class AbstractFoundry implements VeraPDFFoundry {
 
 	@Override
-	public PDFAValidator newValidator(PDFAFlavour flavour, boolean logSuccess) {
+	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess) {
 		return ValidatorFactory.createValidator(flavour, logSuccess);
 	}
 
 	@Override
-	public PDFAValidator newValidator(ValidationProfile profile, boolean logSuccess) {
+	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess) {
 		return ValidatorFactory.createValidator(profile, logSuccess);
 	}
 
 	@Override
-	public PDFAValidator newFailFastValidator(PDFAFlavour flavour, int maxFailures) {
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures) {
 		return ValidatorFactory.createValidator(flavour, maxFailures);
 	}
 
 	@Override
-	public PDFAValidator newFailFastValidator(ValidationProfile profile, int maxFailures) {
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures) {
 		return ValidatorFactory.createValidator(profile, maxFailures);
 	}
 }

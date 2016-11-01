@@ -16,10 +16,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.features.FeatureObjectType;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
-import org.verapdf.features.tools.FeaturesCollection;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -59,7 +59,7 @@ public class FeaturesNode {
 		this(null, null);
 	}
 
-	static FeaturesNode fromValues(FeaturesCollection collection,
+	static FeaturesNode fromValues(FeatureExtractionResult collection,
 			FeatureObjectType... types) {
 		List<Object> qChildren = new ArrayList<>();
 		Map<QName, Object> attr = new HashMap<>();
@@ -96,7 +96,7 @@ public class FeaturesNode {
         return new FeaturesNode(attr, qChildren);
 	}
 
-	static FeaturesNode fromValues(FeatureTreeNode node, FeaturesCollection collection) {
+	static FeaturesNode fromValues(FeatureTreeNode node, FeatureExtractionResult collection) {
 		if (node == null) {
 			throw new IllegalArgumentException("Argument node cannot be null");
 		}

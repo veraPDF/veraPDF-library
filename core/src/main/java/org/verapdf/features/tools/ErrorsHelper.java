@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.verapdf.core.FeatureParsingException;
+import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.features.FeatureObjectType;
 
 /**
@@ -33,7 +34,7 @@ public final class ErrorsHelper {
 	 *            the error message
 	 * @return id of the generated error node as String
 	 */
-	public static String addErrorIntoCollection(FeaturesCollection collection, FeatureTreeNode element,
+	public static String addErrorIntoCollection(FeatureExtractionResult collection, FeatureTreeNode element,
 			String errorMessageArg) {
 		if (collection == null) {
 			throw new IllegalArgumentException("Collection can not be null");

@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBException;
 
-import org.verapdf.features.FeaturesExtractor;
+import org.verapdf.features.AbstractFeaturesExtractor;
 import org.verapdf.processor.plugins.Attribute;
 import org.verapdf.processor.plugins.PluginConfig;
 import org.verapdf.processor.plugins.PluginsCollectionConfig;
@@ -37,28 +37,28 @@ public class FeaturesPluginsLoader {
 	/**
 	 * Configurates features reporter
 	 */
-	public static List<FeaturesExtractor> loadExtractors(Path pluginsConfigPath, ProcessingResult result) {
+	public static List<AbstractFeaturesExtractor> loadExtractors(final Path pluginsConfigPath, final List<String> errors) {
 		File pluginsConfigFile = pluginsConfigPath.toFile();
 		if (pluginsConfigFile.exists() && pluginsConfigFile.canRead()) {
 			try (FileInputStream fis = new FileInputStream(pluginsConfigFile)) {
 				PluginsCollectionConfig pluginsCollectionConfig =
 						PluginsCollectionConfig.fromXml(fis);
-				return getAllExtractors(pluginsCollectionConfig, result);
+				return getAllExtractors(pluginsCollectionConfig, errors);
 			} catch (IOException | JAXBException e) {
 				LOGGER.log(Level.WARNING, "Problem loading Feature Extraction plugins from: " + pluginsConfigFile, e);
-				result.addErrorMessage(e.getMessage());
+				errors.add(e.getMessage());
 			}
 		}
 		return Collections.emptyList();
 	}
 
-	private static List<FeaturesExtractor> getAllExtractors(PluginsCollectionConfig pluginsCollectionConfig, ProcessingResult result) {
-		List<FeaturesExtractor> extractors = new ArrayList<>();
+	private static List<AbstractFeaturesExtractor> getAllExtractors(PluginsCollectionConfig pluginsCollectionConfig, List<String> errors) {
+		List<AbstractFeaturesExtractor> extractors = new ArrayList<>();
 		List<PluginConfig> plugins = pluginsCollectionConfig.getPlugins();
 		if (plugins != null) {
 			for (PluginConfig config : plugins) {
 				if (config.isEnabled()) {
-					FeaturesExtractor extractor = getExtractorFromConfig(config, result);
+					AbstractFeaturesExtractor extractor = getExtractorFromConfig(config, errors);
 					if (extractor != null) {
 						extractors.add(extractor);
 					}
@@ -68,28 +68,28 @@ public class FeaturesPluginsLoader {
 		return extractors;
 	}
 
-	private static FeaturesExtractor getExtractorFromConfig(PluginConfig config, ProcessingResult result) {
+	private static AbstractFeaturesExtractor getExtractorFromConfig(PluginConfig config, List<String> errors) {
 		Path pluginJar = config.getPluginJar();
 		if (pluginJar == null) {
-			result.addErrorMessage("Plugins config file contains an enabled plugin with empty path");
+			errors.add("Plugins config file contains an enabled plugin with empty path");
 			return null;
 		}
 		File pluginJarFile = pluginJar.toFile();
 		if (pluginJarFile == null || !pluginJarFile.isFile()) {
-			result.addErrorMessage("Plugins config file contains wrong path");
+			errors.add("Plugins config file contains wrong path");
 			return null;
 		}
 
-		FeaturesExtractor extractor = loadExtractor(pluginJarFile, result);
+		AbstractFeaturesExtractor extractor = loadExtractor(pluginJarFile, errors);
 		initializeExtractor(extractor, config);
 		return extractor;
 	}
 
-	private static void initializeExtractor(FeaturesExtractor extractor, PluginConfig config) {
+	private static void initializeExtractor(AbstractFeaturesExtractor extractor, PluginConfig config) {
 		String name = getNonNullString(config.getName());
 		String version = getNonNullString(config.getVersion());
 		String description = getNonNullString(config.getDescription());
-		FeaturesExtractor.ExtractorDetails details = new FeaturesExtractor.ExtractorDetails(name, version, description);
+		AbstractFeaturesExtractor.ExtractorDetails details = new AbstractFeaturesExtractor.ExtractorDetails(name, version, description);
 
 		Map<String, String> attributes = new HashMap<>();
 		List<Attribute> attributesList = config.getAttributes();
@@ -107,14 +107,14 @@ public class FeaturesPluginsLoader {
 		return original == null ? "" : original;
 	}
 
-	private static FeaturesExtractor loadExtractor(File jar, ProcessingResult result) {
+	private static AbstractFeaturesExtractor loadExtractor(File jar, List<String> errors) {
 		try {
 			List<String> classNames = getAllClassNamesFromJAR(jar);
-			return loadExtractorByClassNames(jar, classNames, result);
+			return loadExtractorByClassNames(jar, classNames, errors);
 		} catch (IOException e) {
 			LOGGER.log(Level.WARNING, "Can not load extractors from file with path "
 					+ jar.getPath(), e);
-			result.addErrorMessage("Can not load extractors from file with path "
+			errors.add("Can not load extractors from file with path "
 					+ jar.getPath());
 		}
 		return null;
@@ -139,7 +139,7 @@ public class FeaturesPluginsLoader {
 		return classNames;
 	}
 
-	private static FeaturesExtractor loadExtractorByClassNames(File jar, List<String> classNames, ProcessingResult result) throws MalformedURLException {
+	private static AbstractFeaturesExtractor loadExtractorByClassNames(File jar, List<String> classNames, List<String> errors) throws MalformedURLException {
 		URL url = jar.toURI().toURL();
 		URL[] urls = new URL[]{url};
 		@SuppressWarnings("resource")
@@ -148,13 +148,13 @@ public class FeaturesPluginsLoader {
 		for (String className : classNames) {
 			try {
 				Class<?> cls = cl.loadClass(className);
-				if (FeaturesExtractor.class.isAssignableFrom(cls)) {
+				if (AbstractFeaturesExtractor.class.isAssignableFrom(cls)) {
 					if (extractorClass == null) {
 						extractorClass = cls;
 					} else {
 						LOGGER.log(Level.WARNING, "JAR file " + jar.getAbsolutePath()
 								+ " contains more than one extractor.");
-						result.addErrorMessage("JAR file " + jar.getAbsolutePath()
+						errors.add("JAR file " + jar.getAbsolutePath()
 								+ " contains more than one extractor.");
 						return null;
 					}
@@ -167,14 +167,14 @@ public class FeaturesPluginsLoader {
 		if (extractorClass != null) {
 			try {
 				Object obj = extractorClass.newInstance();
-				FeaturesExtractor extractor = (FeaturesExtractor) obj;
+				AbstractFeaturesExtractor extractor = (AbstractFeaturesExtractor) obj;
 				return extractor;
 			} catch (InstantiationException | IllegalAccessException e) {
 				LOGGER.log(Level.WARNING, 
 						"Can not create an instance of the class "
 								+ extractorClass.getName() + " from jar "
 								+ jar.getPath(), e);
-				result.addErrorMessage("Can not create an instance of the class "
+				errors.add("Can not create an instance of the class "
 						+ extractorClass.getName() + " from jar "
 						+ jar.getPath());
 			}

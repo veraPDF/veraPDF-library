@@ -34,7 +34,7 @@ public interface VeraPDFFoundry extends Component {
 	 * @throws EncryptedPdfException
 	 *             if the PDF to be parsed is encrypted
 	 */
-	public PDFParser newPdfParser(InputStream pdfStream) throws ModelParsingException, EncryptedPdfException;
+	public PDFParser createParser(InputStream pdfStream) throws ModelParsingException, EncryptedPdfException;
 
 	/**
 	 * Method that returns a PDFParser instance, parsing the passed
@@ -54,13 +54,13 @@ public interface VeraPDFFoundry extends Component {
 	 * @throws EncryptedPdfException
 	 *             if the PDF to be parsed is encrypted
 	 */
-	public PDFParser newPdfParser(InputStream pdfStream, PDFAFlavour flavour)
+	public PDFParser createParser(InputStream pdfStream, PDFAFlavour flavour)
 			throws ModelParsingException, EncryptedPdfException;
 
-	public PDFAValidator newValidator(PDFAFlavour flavour, boolean logSuccess);
-	public PDFAValidator newValidator(ValidationProfile profile, boolean logSuccess);
-	public PDFAValidator newFailFastValidator(PDFAFlavour flavour, int maxFailures);
-	public PDFAValidator newFailFastValidator(ValidationProfile profile, int maxFailures);
+	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess);
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures);
+	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess);
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures);
 
 
 	public MetadataFixer newMetadataFixer();

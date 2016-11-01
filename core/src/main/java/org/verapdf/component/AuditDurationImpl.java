@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlValue;
  */
 @XmlRootElement(name = "duration")
 final class AuditDurationImpl implements AuditDuration {
+	private static final AuditDuration defaultInstance = new AuditDurationImpl();
 	private static final long msInSec = 1000L;
 	private static final int secInMin = 60;
 	private static final long msInMin = secInMin * msInSec;
@@ -111,6 +112,10 @@ final class AuditDurationImpl implements AuditDuration {
 	public String toString() {
 		return "AuditDurationImpl [start=" + this.start + ", finish=" + this.finish + ", getDifference()="
 				+ this.getDifference() + ", getDuration()=" + this.getDuration() + "]";
+	}
+
+	static AuditDuration defaultInstance() {
+		return defaultInstance;
 	}
 
 	static AuditDuration fromValues(final long start, final long finish) {

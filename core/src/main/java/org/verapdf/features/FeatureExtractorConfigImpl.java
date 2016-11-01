@@ -1,4 +1,4 @@
-package org.verapdf.features.config;
+package org.verapdf.features;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,30 +17,30 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.verapdf.features.FeatureObjectType;
-
 /**
  * @author Maksim Bezrukov
  */
 @XmlRootElement(name = "featuresConfig")
-public final class FeaturesConfig {
-	private static final FeaturesConfig DEFAULT = new FeaturesConfig(EnumSet.of(FeatureObjectType.INFORMATION_DICTIONARY));
+final class FeatureExtractorConfigImpl implements FeatureExtractorConfig {
+	private static final FeatureExtractorConfig DEFAULT = new FeatureExtractorConfigImpl(EnumSet.of(FeatureObjectType.INFORMATION_DICTIONARY));
 	@XmlElementWrapper(name="enabledFeatures")
 	@XmlElement(name="feature")
 	private final EnumSet<FeatureObjectType> enabledFeatures;
 
-	private FeaturesConfig() {
+	private FeatureExtractorConfigImpl() {
 		this(EnumSet.noneOf(FeatureObjectType.class));
 	}
-	private FeaturesConfig(EnumSet<FeatureObjectType> enabledFeatures) {
+	private FeatureExtractorConfigImpl(EnumSet<FeatureObjectType> enabledFeatures) {
 		super();
 		this.enabledFeatures = EnumSet.copyOf(enabledFeatures);
 	}
 
+	@Override
 	public boolean isFeatureEnabled(FeatureObjectType type) {
 		return this.enabledFeatures.contains(type);
 	}
 
+	@Override
 	public boolean isAnyFeatureEnabled(EnumSet<FeatureObjectType> types) {
 		for (FeatureObjectType type : types) {
 			if (this.enabledFeatures.contains(type)) {
@@ -50,16 +50,17 @@ public final class FeaturesConfig {
 		return false;
 	}
 
+	@Override
 	public EnumSet<FeatureObjectType> getEnabledFeatures() {
 		return this.enabledFeatures;
 	}
 
-	public static FeaturesConfig defaultInstance() {
+	static FeatureExtractorConfig defaultInstance() {
 		return DEFAULT;
 	}
 	
-	public static FeaturesConfig fromFeatureSet(EnumSet<FeatureObjectType> enabledFeatures) {
-		return new FeaturesConfig(enabledFeatures);
+	static FeatureExtractorConfig fromFeatureSet(final EnumSet<FeatureObjectType> enabledFeatures) {
+		return new FeatureExtractorConfigImpl(enabledFeatures);
 	}
 
 	@Override
@@ -78,7 +79,7 @@ public final class FeaturesConfig {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		FeaturesConfig other = (FeaturesConfig) obj;
+		FeatureExtractorConfigImpl other = (FeatureExtractorConfigImpl) obj;
 		if (this.enabledFeatures == null) {
 			if (other.enabledFeatures != null)
 				return false;
@@ -91,7 +92,7 @@ public final class FeaturesConfig {
 	 *	Converts PluginsCollectionConfig to XML,
 	 *	@see javax.xml.bind.JAXB for more details
 	 */
-	public static String toXml(final FeaturesConfig toConvert, Boolean prettyXml)
+	static String toXml(final FeatureExtractorConfig toConvert, Boolean prettyXml)
 			throws JAXBException, IOException {
 		String retVal = "";
 		try (StringWriter writer = new StringWriter()) {
@@ -105,7 +106,7 @@ public final class FeaturesConfig {
 	 *	Converts XML file to PluginsCollectionConfig,
 	 *	@see javax.xml.bind.JAXB for more details
 	 */
-	public static FeaturesConfig fromXml(final String toConvert)
+	static FeatureExtractorConfig fromXml(final String toConvert)
 			throws JAXBException {
 		try (StringReader reader = new StringReader(toConvert)) {
 			return fromXml(reader);
@@ -116,7 +117,7 @@ public final class FeaturesConfig {
 	 *	Converts PluginsCollectionConfig to XML,
 	 *	@see javax.xml.bind.JAXB for more details
 	 */
-	public static void toXml(final FeaturesConfig toConvert,
+	static void toXml(final FeatureExtractorConfig toConvert,
 							 final OutputStream stream, Boolean prettyXml) throws JAXBException {
 		Marshaller varMarshaller = getMarshaller(prettyXml);
 		varMarshaller.marshal(toConvert, stream);
@@ -126,27 +127,27 @@ public final class FeaturesConfig {
 	 *	Converts XML file to PluginsCollectionConfig,
 	 *	@see javax.xml.bind.JAXB for more details
 	 */
-	public static FeaturesConfig fromXml(final InputStream toConvert)
+	static FeatureExtractorConfig fromXml(final InputStream toConvert)
 			throws JAXBException {
 		Unmarshaller stringUnmarshaller = getUnmarshaller();
-		return (FeaturesConfig) stringUnmarshaller.unmarshal(toConvert);
+		return (FeatureExtractorConfig) stringUnmarshaller.unmarshal(toConvert);
 	}
 
-	static void toXml(final FeaturesConfig toConvert, final Writer writer,
+	static void toXml(final FeatureExtractorConfig toConvert, final Writer writer,
 					  Boolean prettyXml) throws JAXBException {
 		Marshaller varMarshaller = getMarshaller(prettyXml);
 		varMarshaller.marshal(toConvert, writer);
 	}
 
-	static FeaturesConfig fromXml(final Reader toConvert)
+	static FeatureExtractorConfig fromXml(final Reader toConvert)
 			throws JAXBException {
 		Unmarshaller stringUnmarshaller = getUnmarshaller();
-		return (FeaturesConfig) stringUnmarshaller.unmarshal(toConvert);
+		return (FeatureExtractorConfig) stringUnmarshaller.unmarshal(toConvert);
 	}
 
 	private static Unmarshaller getUnmarshaller() throws JAXBException {
 		JAXBContext context = JAXBContext
-				.newInstance(FeaturesConfig.class);
+				.newInstance(FeatureExtractorConfigImpl.class);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		return unmarshaller;
 	}
@@ -154,7 +155,7 @@ public final class FeaturesConfig {
 	private static Marshaller getMarshaller(Boolean setPretty)
 			throws JAXBException {
 		JAXBContext context = JAXBContext
-				.newInstance(FeaturesConfig.class);
+				.newInstance(FeatureExtractorConfigImpl.class);
 		Marshaller marshaller = context.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
 		return marshaller;

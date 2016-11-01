@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Maksim Bezrukov
  */
-public abstract class AbstractFontFeaturesExtractor extends FeaturesExtractor {
+public abstract class AbstractFontFeaturesExtractor extends AbstractFeaturesExtractor {
 
 	public AbstractFontFeaturesExtractor() {
 		super(FeatureObjectType.FONT);

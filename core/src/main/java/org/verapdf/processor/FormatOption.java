@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf.processor.config;
+package org.verapdf.processor;
 
 import java.util.NoSuchElementException;
 
@@ -19,14 +19,9 @@ public enum FormatOption {
      */
     MRR("mrr"),
     /**
-     * Output in HTML format
-     */
-    HTML("html"),
-    /**
      * Output in brief format
      */
-    TEXT("text"),
-    BATCH("batch");
+    TEXT("text");
 
     private final String option;
 
