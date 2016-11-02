@@ -9,6 +9,9 @@ import java.io.OutputStream;
 
 import javax.xml.bind.JAXBException;
 
+import org.verapdf.pdfa.results.MetadataFixerResult;
+import org.verapdf.pdfa.results.MetadataFixerResultImpl;
+
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
@@ -16,6 +19,7 @@ import javax.xml.bind.JAXBException;
  */
 
 public final class FixerFactory {
+	private static final MetadataFixerResult defaultResult = new MetadataFixerResultImpl.Builder().build();
 	private FixerFactory() {
 
 	}
@@ -45,5 +49,9 @@ public final class FixerFactory {
 	public static MetadataFixerConfig createConfig(final String toConvert)
 			throws JAXBException {
 		return FixerConfigImpl.fromXml(toConvert);
+	}
+	
+	public static MetadataFixerResult defaultResult() {
+		return defaultResult;
 	}
 }

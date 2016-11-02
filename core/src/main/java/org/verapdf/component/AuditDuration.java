@@ -1,5 +1,8 @@
 package org.verapdf.component;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+@XmlJavaTypeAdapter(AuditDurationImpl.Adapter.class)
 public interface AuditDuration {
 
 	/**

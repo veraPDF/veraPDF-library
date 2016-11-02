@@ -1,3 +1,4 @@
+
 /**
  * 
  */
@@ -23,8 +24,6 @@ import javax.xml.transform.Result;
 import javax.xml.transform.stream.StreamResult;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.validation.profiles.Profiles;
-import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -36,26 +35,20 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	private final static ValidatorConfigImpl defaultConfig = new ValidatorConfigImpl();
 	@XmlAttribute
 	private final PDFAFlavour flavour;
-	private final ValidationProfile profile;
 	@XmlAttribute
 	private final boolean recordPasses;
 	@XmlAttribute
 	private final int maxFails;
-	@XmlAttribute
-	private final int maxFailsPerRule;
 
 	private ValidatorConfigImpl() {
-		this(Profiles.defaultProfile(), false, -1, 100);
+		this(PDFAFlavour.NO_FLAVOUR, false, -1);
 	}
 
-	private ValidatorConfigImpl(final ValidationProfile profile, final boolean recordPasses, final int maxFails,
-			final int maxFailsPerRule) {
+	private ValidatorConfigImpl(final PDFAFlavour flavour, final boolean recordPasses, final int maxFails) {
 		super();
-		this.flavour = profile.getPDFAFlavour();
-		this.profile = profile;
+		this.flavour = flavour;
 		this.recordPasses = recordPasses;
 		this.maxFails = maxFails;
-		this.maxFailsPerRule = maxFailsPerRule;
 	}
 
 	/**
@@ -75,27 +68,11 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	}
 
 	/**
-	 * @see org.verapdf.pdfa.validation.validators.ValidatorConfig#getMaxFailsPerRule()
-	 */
-	@Override
-	public int getMaxFailsPerRule() {
-		return this.maxFailsPerRule;
-	}
-
-	/**
 	 * @see org.verapdf.pdfa.validation.validators.ValidatorConfig#getFlavour()
 	 */
 	@Override
 	public PDFAFlavour getFlavour() {
 		return this.flavour;
-	}
-
-	/**
-	 * @see org.verapdf.pdfa.validation.validators.ValidatorConfig#getProfile()
-	 */
-	@Override
-	public ValidationProfile getProfile() {
-		return this.profile;
 	}
 
 	/**
@@ -107,7 +84,6 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		int result = 1;
 		result = prime * result + ((this.flavour == null) ? 0 : this.flavour.hashCode());
 		result = prime * result + this.maxFails;
-		result = prime * result + this.maxFailsPerRule;
 		result = prime * result + (this.recordPasses ? 1231 : 1237);
 		return result;
 	}
@@ -133,9 +109,6 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		if (this.maxFails != other.maxFails) {
 			return false;
 		}
-		if (this.maxFailsPerRule != other.maxFailsPerRule) {
-			return false;
-		}
 		if (this.recordPasses != other.recordPasses) {
 			return false;
 		}
@@ -147,117 +120,106 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	 */
 	@Override
 	public String toString() {
-		return "ValidatorConfigImpl [recordPasses=" + this.recordPasses + ", maxFails=" + this.maxFails
-				+ ", maxFailsPerRule=" + this.maxFailsPerRule + ", flavour=" + this.flavour + "]";
+		return "ValidatorConfigImpl [recordPasses=" + this.recordPasses + ", maxFails=" + this.maxFails + ", flavour="
+				+ this.flavour + "]";
 	}
 
 	static ValidatorConfig defaultInstance() {
 		return defaultConfig;
 	}
 
-	static ValidatorConfig fromValues(final ValidationProfile profile, final boolean recordPasses, final int maxFails,
-			final int maxFailsPerRule) {
-		return new ValidatorConfigImpl(profile, recordPasses, maxFails, maxFailsPerRule);
+	static ValidatorConfig fromValues(final PDFAFlavour flavour, final boolean recordPasses, final int maxFails) {
+		return new ValidatorConfigImpl(flavour, recordPasses, maxFails);
 	}
 
-    static String toXml(final ValidatorConfig toConvert, Boolean prettyXml)
-            throws JAXBException, IOException {
-        String retVal = "";
-        try (StringWriter writer = new StringWriter()) {
-            toXml(toConvert, writer, prettyXml);
-            retVal = writer.toString();
-            return retVal;
-        }
-    }
+	static String toXml(final ValidatorConfig toConvert, Boolean prettyXml) throws JAXBException, IOException {
+		String retVal = "";
+		try (StringWriter writer = new StringWriter()) {
+			toXml(toConvert, writer, prettyXml);
+			retVal = writer.toString();
+			return retVal;
+		}
+	}
 
-    static void toXml(final ValidatorConfig toConvert,
-            final OutputStream stream, Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, stream);
-    }
+	static void toXml(final ValidatorConfig toConvert, final OutputStream stream, Boolean prettyXml)
+			throws JAXBException {
+		Marshaller varMarshaller = getMarshaller(prettyXml);
+		varMarshaller.marshal(toConvert, stream);
+	}
 
-    static ValidatorConfigImpl fromXml(final InputStream toConvert)
-            throws JAXBException {
-        Unmarshaller stringUnmarshaller = getUnmarshaller();
-        return (ValidatorConfigImpl) stringUnmarshaller.unmarshal(toConvert);
-    }
+	static ValidatorConfigImpl fromXml(final InputStream toConvert) throws JAXBException {
+		Unmarshaller stringUnmarshaller = getUnmarshaller();
+		return (ValidatorConfigImpl) stringUnmarshaller.unmarshal(toConvert);
+	}
 
-    static void toXml(final ValidatorConfig toConvert, final Writer writer,
-            Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, writer);
-    }
+	static void toXml(final ValidatorConfig toConvert, final Writer writer, Boolean prettyXml) throws JAXBException {
+		Marshaller varMarshaller = getMarshaller(prettyXml);
+		varMarshaller.marshal(toConvert, writer);
+	}
 
-    static ValidatorConfigImpl fromXml(final Reader toConvert)
-            throws JAXBException {
-        Unmarshaller stringUnmarshaller = getUnmarshaller();
-        return (ValidatorConfigImpl) stringUnmarshaller.unmarshal(toConvert);
-    }
+	static ValidatorConfigImpl fromXml(final Reader toConvert) throws JAXBException {
+		Unmarshaller stringUnmarshaller = getUnmarshaller();
+		return (ValidatorConfigImpl) stringUnmarshaller.unmarshal(toConvert);
+	}
 
-    static ValidatorConfigImpl fromXml(final String toConvert)
-            throws JAXBException {
-        try (StringReader reader = new StringReader(toConvert)) {
-            return fromXml(reader);
-        }
-    }
+	static ValidatorConfigImpl fromXml(final String toConvert) throws JAXBException {
+		try (StringReader reader = new StringReader(toConvert)) {
+			return fromXml(reader);
+		}
+	}
 
-    static class Adapter extends
-            XmlAdapter<ValidatorConfigImpl, ValidatorConfig> {
-        @Override
-        public ValidatorConfig unmarshal(
-        		ValidatorConfigImpl validationConfigImpl) {
-            return validationConfigImpl;
-        }
+	static class Adapter extends XmlAdapter<ValidatorConfigImpl, ValidatorConfig> {
+		@Override
+		public ValidatorConfig unmarshal(ValidatorConfigImpl validationConfigImpl) {
+			return validationConfigImpl;
+		}
 
-        @Override
-        public ValidatorConfigImpl marshal(ValidatorConfig validationResult) {
-            return (ValidatorConfigImpl) validationResult;
-        }
-    }
+		@Override
+		public ValidatorConfigImpl marshal(ValidatorConfig validationResult) {
+			return (ValidatorConfigImpl) validationResult;
+		}
+	}
 
-    static String getSchema() throws JAXBException, IOException {
-        JAXBContext context = JAXBContext
-                .newInstance(ValidatorConfigImpl.class);
-        final StringWriter writer = new StringWriter();
-        context.generateSchema(new WriterSchemaOutputResolver(writer));
-        return writer.toString();
-    }
+	static String getSchema() throws JAXBException, IOException {
+		JAXBContext context = JAXBContext.newInstance(ValidatorConfigImpl.class);
+		final StringWriter writer = new StringWriter();
+		context.generateSchema(new WriterSchemaOutputResolver(writer));
+		return writer.toString();
+	}
 
-    private static Unmarshaller getUnmarshaller() throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(ValidatorConfigImpl.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        return unmarshaller;
-    }
+	private static Unmarshaller getUnmarshaller() throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(ValidatorConfigImpl.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		return unmarshaller;
+	}
 
-    private static Marshaller getMarshaller(Boolean setPretty)
-            throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(ValidatorConfigImpl.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
-        return marshaller;
-    }
+	private static Marshaller getMarshaller(Boolean setPretty) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(ValidatorConfigImpl.class);
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
+		return marshaller;
+	}
 
-    private static class WriterSchemaOutputResolver extends SchemaOutputResolver {
-        private final Writer out;
-        /**
-         * @param out a Writer for the generated schema
-         * 
-         */
-        public WriterSchemaOutputResolver(final Writer out) {
-            super();
-            this.out = out;
-        }
+	private static class WriterSchemaOutputResolver extends SchemaOutputResolver {
+		private final Writer out;
 
-        /**
-         * { @inheritDoc }
-         */
-        @Override
-        public Result createOutput(String namespaceUri, String suggestedFileName) {
-            final StreamResult result = new StreamResult(this.out);
-            result.setSystemId("no-id");
-            return result;
-        }
-    }
+		/**
+		 * @param out
+		 *            a Writer for the generated schema
+		 */
+		public WriterSchemaOutputResolver(final Writer out) {
+			super();
+			this.out = out;
+		}
+
+		/**
+		 * { @inheritDoc }
+		 */
+		@Override
+		public Result createOutput(String namespaceUri, String suggestedFileName) {
+			final StreamResult result = new StreamResult(this.out);
+			result.setSystemId("no-id");
+			return result;
+		}
+	}
 }

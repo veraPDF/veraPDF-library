@@ -8,6 +8,7 @@ import java.util.Formatter;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -149,6 +150,18 @@ final class AuditDurationImpl implements AuditDuration {
 		}
 
 		return res;
+	}
+
+	static class Adapter extends XmlAdapter<AuditDurationImpl, AuditDuration> {
+		@Override
+		public AuditDuration unmarshal(AuditDurationImpl procResultImpl) {
+			return procResultImpl;
+		}
+
+		@Override
+		public AuditDurationImpl marshal(AuditDuration procResult) {
+			return (AuditDurationImpl) procResult;
+		}
 	}
 
 }

@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.verapdf.ReleaseDetails;
+import org.verapdf.component.AuditDuration;
 import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
@@ -237,11 +238,11 @@ public class MachineReadableReport {
     public static MachineReadableReport fromValues(File file, ValidationProfile profile,
             ValidationResult validationResult, boolean reportPassedChecks, int maxFailuresDisplayed,
             MetadataFixerResult fixerResult, FeatureExtractionResult collection,
-            TaskDetails taskDetails) {
+            AuditDuration duration) {
         return fromValues(ItemDetails.fromFile(file), profile,
                 validationResult, reportPassedChecks,
                 maxFailuresDisplayed, fixerResult,
-                collection, taskDetails);
+                collection, duration);
     }
 
     /**
@@ -257,7 +258,7 @@ public class MachineReadableReport {
      */
     public static MachineReadableReport fromValues(ItemDetails item, ValidationProfile profile,
             ValidationResult validationResult, boolean reportPassedChecks, int maxFailuresDisplayed,
-            MetadataFixerResult fixerResult, FeatureExtractionResult collection, TaskDetails taskDetails) {
+            MetadataFixerResult fixerResult, FeatureExtractionResult collection, AuditDuration duration) {
         ValidationReport validationReport = null;
         if (validationResult != null) {
             validationReport = ValidationReport.fromValues(profile,
@@ -266,7 +267,7 @@ public class MachineReadableReport {
         FeaturesReport featuresReport = FeaturesReport.fromValues(collection);
         MetadataFixesReport fixesReport = MetadataFixesReport.fromValues(fixerResult);
         return new MachineReadableReport(item, validationReport,
-                taskDetails.getDuration(), featuresReport, fixesReport);
+        		duration.getDuration(), featuresReport, fixesReport);
     }
     /**
      * @param toConvert

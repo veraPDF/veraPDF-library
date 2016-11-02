@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.verapdf.component.Component;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
 
@@ -12,7 +13,7 @@ import org.verapdf.pdfa.results.ValidationResult;
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
-public interface MetadataFixer {
+public interface MetadataFixer extends Component {
 
     /**
      * @param toFix
@@ -30,6 +31,6 @@ public interface MetadataFixer {
     public MetadataFixerResult fixMetadata(InputStream toFix,
             OutputStream outputRepaired, ValidationResult result) throws IOException;
 
-    public MetadataFixerResult fixMetadata(PDFParser parser,
+    public MetadataFixerResult fixMetadata(PDFAParser parser,
             OutputStream outputRepaired, ValidationResult result);
 }
