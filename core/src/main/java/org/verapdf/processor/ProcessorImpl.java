@@ -3,6 +3,7 @@ package org.verapdf.processor;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,13 +13,13 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.verapdf.ReleaseDetails;
 import org.verapdf.component.ComponentDetails;
 import org.verapdf.component.Components;
 import org.verapdf.core.EncryptedPdfException;
@@ -42,14 +43,13 @@ import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.profiles.Profiles;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 import org.verapdf.report.ItemDetails;
-import org.verapdf.report.MachineReadableReport;
 
 /**
  * Class is implementation of {@link Processor} interface
  *
  * @author Sergey Shemyakov
  */
-class ProcessorImpl implements VeraProcessor {
+final class ProcessorImpl implements ItemProcessor {
 	private static final ComponentDetails defaultDetails = Components
 			.libraryDetails(URI.create("http://pdfa.verapdf.org/processors#default"), "VeraPDF Processor");
 	private static final Logger logger = Logger.getLogger(ProcessorImpl.class.getName());
@@ -92,27 +92,17 @@ class ProcessorImpl implements VeraProcessor {
 		this.fixerResult = new MetadataFixerResultImpl.Builder().build();
 	}
 
-
 	@Override
-	public MachineReadableReport processBatch(Set<File> toProcess) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<ProcessorResult> process(Set<File> toProcess) {
-		if (toProcess == null)
-			throw new NullPointerException();
-		Set<ProcessorResult> results = new HashSet<>();
-		for (File item : toProcess) {
-			try (InputStream fis = new FileInputStream(item)) {
-				results.add(process(ItemDetails.fromFile(item), fis));
-			} catch (IOException excep) {
-				logger.log(Level.WARNING, "Problem processing file:" + item, excep);
-				excep.printStackTrace();
-			}
+	public ProcessorResult process(File toProcess) throws FileNotFoundException {
+		ProcessorResult retVal = ProcessorResultImpl.defaultInstance();
+		try (InputStream fis = new FileInputStream(toProcess)) {
+			retVal = this.process(ItemDetails.fromFile(toProcess), fis);
+		} catch (FileNotFoundException excep) {
+			throw excep;
+		} catch (IOException excep) {
+			logger.log(Level.INFO, "Problem closing file:" + toProcess, excep);
 		}
-		return results;
+		return retVal;
 	}
 
 	@Override
@@ -121,21 +111,26 @@ class ProcessorImpl implements VeraProcessor {
 		checkArguments(pdfFileStream, fileDetails, this.processorConfig);
 		try (PDFAParser parser = this.isAuto() ? foundry.createParser(pdfFileStream)
 				: foundry.createParser(pdfFileStream, this.valConf().getFlavour())) {
-			for (TaskType task : this.getConfig().getTasks()) {
-				switch (task) {
-				case VALIDATE:
-					validate(parser);
-					break;
-				case FIX_METADATA:
-					fixMetadata(parser, fileDetails.getName());
-					break;
-				case EXTRACT_FEATURES:
-					extractFeatures(parser);
-					break;
-				default:
-					break;
+			if (!isAuto() || parser.getFlavour() != PDFAFlavour.NO_FLAVOUR) {
+				for (TaskType task : this.getConfig().getTasks()) {
+					switch (task) {
+					case VALIDATE:
+						validate(parser);
+						break;
+					case FIX_METADATA:
+						fixMetadata(parser, fileDetails.getName());
+						break;
+					case EXTRACT_FEATURES:
+						extractFeatures(parser);
+						break;
+					default:
+						break;
 
+					}
 				}
+			} else {
+				// DEAL WITH AUTO CASE WHEN PARSER RETURNS NO FLAVOUR
+				logger.log(Level.SEVERE, "Item:" + fileDetails.getName() + " does not appear to be a valid PDF/A.");
 			}
 		} catch (EncryptedPdfException e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " appears to be an encrypted PDF.", e);
@@ -241,11 +236,11 @@ class ProcessorImpl implements VeraProcessor {
 				TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop()));
 	}
 
-	static VeraProcessor newProcessor(final ProcessorConfig config) {
+	static ItemProcessor newProcessor(final ProcessorConfig config) {
 		return new ProcessorImpl(config);
 	}
 
-	static VeraProcessor newProcessor(final ProcessorConfig config, final ComponentDetails details) {
+	static ItemProcessor newProcessor(final ProcessorConfig config, final ComponentDetails details) {
 		return new ProcessorImpl(config, details);
 	}
 
@@ -259,5 +254,11 @@ class ProcessorImpl implements VeraProcessor {
 
 	private FeatureExtractorConfig featConf() {
 		return this.processorConfig.getFeatureConfig();
+	}
+
+	@Override
+	public Collection<ReleaseDetails> getDependencies() {
+		// TODO Auto-generated method stub
+		return ReleaseDetails.getDetails();
 	}
 }
