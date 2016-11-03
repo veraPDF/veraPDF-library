@@ -32,39 +32,40 @@ public final class ProcessorFactory {
 			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks) {
 		return ProcessorConfigImpl.fromValues(config, featureConfig, fixerConfig, tasks);
 	}
-	
-    public static void configToXml(final ProcessorConfig toConvert,
-            final OutputStream stream, Boolean prettyXml) throws JAXBException {
-    	ProcessorConfigImpl.toXml(toConvert, stream, prettyXml);
-    }
 
-    public static ProcessorConfig configFromXml(final InputStream toConvert)
-            throws JAXBException {
-    	return ProcessorConfigImpl.fromXml(toConvert);
-    }
+	public static void configToXml(final ProcessorConfig toConvert, final OutputStream stream, Boolean prettyXml)
+			throws JAXBException {
+		ProcessorConfigImpl.toXml(toConvert, stream, prettyXml);
+	}
 
-	public static final VeraProcessor createProcessor(final ProcessorConfig config) {
+	public static ProcessorConfig configFromXml(final InputStream toConvert) throws JAXBException {
+		return ProcessorConfigImpl.fromXml(toConvert);
+	}
+
+	public static final ItemProcessor createProcessor(final ProcessorConfig config) {
 		return ProcessorImpl.newProcessor(config);
 	}
-	
-    public static void resultToXml(final ProcessorResult toConvert,
-            final OutputStream stream, Boolean prettyXml) throws JAXBException {
-    	ProcessorResultImpl.toXml(toConvert, stream, prettyXml);
-    }
 
-    public static ProcessorResult resultFromXml(final InputStream toConvert)
-            throws JAXBException {
-    	return ProcessorResultImpl.fromXml(toConvert);
-    }
+	public static final StreamingProcessor createStreamingProcessor(final ProcessorConfig config) throws JAXBException {
+		return StreamingProcessorImpl.newInstance(createProcessor(config));
+	}
 
-    public static void taskResultToXml(final TaskResult toConvert,
-            final OutputStream stream, Boolean prettyXml) throws JAXBException {
-    	TaskResultImpl.toXml(toConvert, stream, prettyXml);
-    }
+	public static void resultToXml(final ProcessorResult toConvert, final OutputStream stream, Boolean prettyXml)
+			throws JAXBException {
+		ProcessorResultImpl.toXml(toConvert, stream, prettyXml);
+	}
 
-    public static TaskResult taskResultfromXml(final InputStream toConvert)
-            throws JAXBException {
-    	return TaskResultImpl.fromXml(toConvert);
-    }
+	public static ProcessorResult resultFromXml(final InputStream toConvert) throws JAXBException {
+		return ProcessorResultImpl.fromXml(toConvert);
+	}
+
+	public static void taskResultToXml(final TaskResult toConvert, final OutputStream stream, Boolean prettyXml)
+			throws JAXBException {
+		TaskResultImpl.toXml(toConvert, stream, prettyXml);
+	}
+
+	public static TaskResult taskResultfromXml(final InputStream toConvert) throws JAXBException {
+		return TaskResultImpl.fromXml(toConvert);
+	}
 
 }
