@@ -3,13 +3,6 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import java.io.StringReader;
-import java.io.StringWriter;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -113,33 +106,13 @@ final class ReferenceImpl implements Reference {
                 + this.clause + "]";
     }
 
-    static ReferenceImpl defaultInstance() {
+    static Reference defaultInstance() {
         return ReferenceImpl.DEFAULT;
     }
 
-    static ReferenceImpl fromValues(final String specification,
+    static Reference fromValues(final String specification,
             final String clause) {
         return new ReferenceImpl(specification, clause);
-    }
-
-    static ReferenceImpl fromReference(final Reference toConvert) {
-        return new ReferenceImpl(toConvert.getSpecification(), toConvert.getClause());
-    }
-
-    static String toXml(final Reference toConvert) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(ReferenceImpl.class);
-        Marshaller varMarshaller = context.createMarshaller();
-        varMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        StringWriter writer = new StringWriter();
-        varMarshaller.marshal(toConvert, writer);
-        return writer.toString();
-    }
-    
-    static ReferenceImpl fromXml(final String toConvert) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(ReferenceImpl.class);
-        Unmarshaller stringUnmarshaller = context.createUnmarshaller();
-        StringReader reader = new StringReader(toConvert);
-        return (ReferenceImpl) stringUnmarshaller.unmarshal(reader);
     }
 
     static class Adapter extends XmlAdapter<ReferenceImpl, Reference> {

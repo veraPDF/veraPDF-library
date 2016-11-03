@@ -23,6 +23,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 
 import org.junit.Test;
+import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.validation.profiles.ErrorDetailsImpl;
 import org.verapdf.pdfa.validation.profiles.Profiles;
 import org.verapdf.pdfa.validation.profiles.Reference;
@@ -102,13 +103,13 @@ public class RuleImplTest {
      * @throws IOException
      */
     @Test
-    public final void testToXmlString() throws JAXBException, IOException {
+    public final void testToXmlString() throws JAXBException {
         List<Reference> refs = new ArrayList<>();
         refs.add(ReferenceImpl.defaultInstance());
         Rule rule = RuleImpl.fromValues(RuleIdImpl.defaultInstance(), "object",
                 "description", "test", ErrorDetailsImpl.defaultInstance(), refs);
-        String xmlDefault = RuleImpl.toXml(rule, Boolean.FALSE);
-        Rule unmarshalledDefault = RuleImpl.fromXml(xmlDefault);
+        String xmlDefault = XmlSerialiser.toXml(rule, true, true);
+        Rule unmarshalledDefault = XmlSerialiser.typeFromXml(RuleImpl.class, xmlDefault);
         assertFalse(rule == unmarshalledDefault);
         assertTrue(rule.equals(unmarshalledDefault));
     }
@@ -126,10 +127,10 @@ public class RuleImplTest {
         Rule rule = RuleImpl.defaultInstance();
         File temp = Files.createTempFile("profile", "xml").toFile();
         try (OutputStream forXml = new FileOutputStream(temp)) {
-            RuleImpl.toXml(rule, forXml, Boolean.TRUE);
+            XmlSerialiser.toXml(rule, forXml, true, true);
         }
         try (InputStream readXml = new FileInputStream(temp)) {
-            Rule unmarshalledDefault = RuleImpl.fromXml(readXml);
+            Rule unmarshalledDefault = XmlSerialiser.typeFromXml(RuleImpl.class, readXml);
             assertFalse(rule == unmarshalledDefault);
             assertTrue(rule.equals(unmarshalledDefault));
         }

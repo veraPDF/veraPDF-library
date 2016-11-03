@@ -1,24 +1,3 @@
-/*
- * Copyright (c) 2013, Arno Moonen <info@arnom.nl>
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package org.verapdf.core;
 
 import java.io.File;
@@ -48,6 +27,14 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+/**
+ * Acknowledgements to <a href="https://gist.github.com/itavero/5858958">Arno
+ * Moonen's gist</a> which got me going.
+ * 
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1 Created 3 Nov 2016:15:17:10
+ */
 public final class XmlSerialiser {
 	private static final String NOID = "no-id"; //$NON-NLS-1$
 
@@ -58,125 +45,126 @@ public final class XmlSerialiser {
 	/**
 	 * Convert a string to an object of a given class.
 	 *
-	 * @param clz
+	 * @param type
 	 *            Type of object
 	 * @param source
 	 *            Input string
 	 * @return Object of the given type
 	 * @throws JAXBException
 	 */
-	public static <T> T typeFromXml(Class<T> clz, String source) throws JAXBException {
-		return typeFromXml(clz, new StringReader(source));
+	public static <T, C> C typeFromXml(Class<T> type, String source) throws JAXBException {
+		return typeFromXml(type, new StringReader(source));
 	}
 
 	/**
 	 * Convert the contents of a file to an object of a given class.
 	 *
-	 * @param clz
+	 * @param type
 	 *            Type of object
 	 * @param source
 	 *            File to be read
 	 * @return Object of the given type
 	 * @throws JAXBException
 	 */
-	public static <T> T typeFromXml(Class<T> clz, File source) throws JAXBException {
-		return typeFromXml(clz, new StreamSource(source));
+	public static <T, C> C typeFromXml(Class<T> type, File source) throws JAXBException {
+		return typeFromXml(type, new StreamSource(source));
 	}
 
 	/**
 	 * Convert the contents of a Reader to an object of a given class.
 	 *
-	 * @param clz
+	 * @param type
 	 *            Type of object
 	 * @param source
 	 *            Reader to be read
 	 * @return Object of the given type
 	 * @throws JAXBException
 	 */
-	public static <T> T typeFromXml(Class<T> clz, Reader source) throws JAXBException {
-		return typeFromXml(clz, new StreamSource(source));
+	public static <T, C> C typeFromXml(Class<T> type, Reader source) throws JAXBException {
+		return typeFromXml(type, new StreamSource(source));
 	}
 
 	/**
 	 * Convert the contents of an InputStream to an object of a given class.
 	 *
-	 * @param clz
+	 * @param type
 	 *            Type of object
 	 * @param source
 	 *            InputStream to be read
 	 * @return Object of the given type
 	 * @throws JAXBException
 	 */
-	public static <T> T typeFromXml(Class<T> clz, InputStream source) throws JAXBException {
-		return typeFromXml(clz, new StreamSource(source));
+	public static <T, C> C typeFromXml(Class<T> type, InputStream source) throws JAXBException {
+		return typeFromXml(type, new StreamSource(source));
 	}
 
 	/**
 	 * Convert the contents of a Source to an object of a given class.
 	 *
-	 * @param clz
+	 * @param type
 	 *            Type of object
 	 * @param source
 	 *            Source to be used
 	 * @return Object of the given type
 	 * @throws JAXBException
 	 */
-	public static <T> T typeFromXml(Class<T> clz, Source source) throws JAXBException {
-		JAXBContext ctx = JAXBContext.newInstance(clz);
+	@SuppressWarnings("unchecked")
+	public static <T, C> C typeFromXml(Class<T> type, Source source) throws JAXBException {
+		JAXBContext ctx = JAXBContext.newInstance(type);
 		Unmarshaller u = ctx.createUnmarshaller();
-		return u.unmarshal(source, clz).getValue();
+		return (C) u.unmarshal(source, type).getValue();
 	}
 
 	/**
 	 * Converts the contents of the string to a List with objects of the given
 	 * class.
 	 *
-	 * @param clz
+	 * @param type
 	 *            Type to be used
 	 * @param source
 	 *            Input string
 	 * @return List with objects of the given type
 	 * @throws JAXBException
 	 */
-	public static <T> List<T> collectionFromXml(Class<T> clz, String source) throws JAXBException {
-		return collectionFromXml(clz, new StringReader(source));
+	public static <T> List<T> collectionFromXml(Class<T> type, String source) throws JAXBException {
+		return collectionFromXml(type, new StringReader(source));
 	}
 
 	/**
 	 * Converts the contents of the Reader to a List with objects of the given
 	 * class.
 	 *
-	 * @param clz
+	 * @param type
 	 *            Type to be used
 	 * @param source
 	 *            Input
 	 * @return List with objects of the given type
 	 * @throws JAXBException
 	 */
-	public static <T> List<T> collectionFromXml(Class<T> clz, Reader source) throws JAXBException {
-		return collectionFromXml(clz, new StreamSource(source));
+	public static <T> List<T> collectionFromXml(Class<T> type, Reader source) throws JAXBException {
+		return collectionFromXml(type, new StreamSource(source));
 	}
 
 	/**
 	 * Converts the contents of the InputStream to a List with objects of the
 	 * given class.
 	 *
-	 * @param clz
+	 * @param type
 	 *            Type to be used
 	 * @param source
 	 *            Input
 	 * @return List with objects of the given type
 	 * @throws JAXBException
 	 */
-	public static <T> List<T> collectionFromXml(Class<T> clz, InputStream source) throws JAXBException {
-		return collectionFromXml(clz, new StreamSource(source));
+	public static <T> List<T> collectionFromXml(Class<T> type, InputStream source) throws JAXBException {
+		return collectionFromXml(type, new StreamSource(source));
 	}
 
 	/**
 	 * Converts the contents of the Source to a List with objects of the given
 	 * class.
 	 *
-	 * @param clz
+	 * @param type
 	 *            Type to be used
 	 * @param source
 	 *            Input
@@ -184,8 +172,8 @@ public final class XmlSerialiser {
 	 * @throws JAXBException
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> List<T> collectionFromXml(Class<T> clz, Source source) throws JAXBException {
-		JAXBContext ctx = JAXBContext.newInstance(JAXBCollection.class, clz);
+	public static <T> List<T> collectionFromXml(Class<T> type, Source source) throws JAXBException {
+		JAXBContext ctx = JAXBContext.newInstance(JAXBCollection.class, type);
 		Unmarshaller u = ctx.createUnmarshaller();
 		JAXBCollection<T> collection = u.unmarshal(source, JAXBCollection.class).getValue();
 		return collection.getItems();

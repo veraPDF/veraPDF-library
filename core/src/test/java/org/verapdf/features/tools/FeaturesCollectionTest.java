@@ -8,6 +8,7 @@ import org.verapdf.features.FeatureExtractionResult;
 /**
  * @author Maksim Bezrukov
  */
+@SuppressWarnings("static-method")
 public class FeaturesCollectionTest {
 
 	/**

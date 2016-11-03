@@ -7,6 +7,7 @@ import org.junit.Test;
 /**
  * @author Maksim Bezrukov
  */
+@SuppressWarnings("static-method")
 public class MetadataFixerResultTest {
 
 	/**

@@ -3,12 +3,12 @@
  */
 package org.verapdf.metadata.fixer;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.xml.bind.JAXBException;
 
+import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.MetadataFixerResultImpl;
 
@@ -28,29 +28,18 @@ public final class FixerFactory {
 		return FixerConfigImpl.defaultInstance();
 	}
 
-	public static MetadataFixerConfig fromValues(final String fixesPrefix, boolean fixId) {
+	public static MetadataFixerConfig configFromValues(final String fixesPrefix, boolean fixId) {
 		return FixerConfigImpl.fromValues(fixesPrefix, fixId);
 	}
 
-	public static MetadataFixerConfig createConfig(final InputStream source) throws JAXBException {
-		return FixerConfigImpl.fromXml(source);
-	}
-
-	public static void configToXml(final MetadataFixerConfig config, final OutputStream dest)
-			throws JAXBException {
-		FixerConfigImpl.toXml(config, dest, Boolean.TRUE);
-	}
-
-	public static String configToXml(final MetadataFixerConfig config, final Boolean prettyXml)
-			throws JAXBException, IOException {
-		return FixerConfigImpl.toXml(config, prettyXml);
-	}
-
-	public static MetadataFixerConfig createConfig(final String toConvert)
-			throws JAXBException {
-		return FixerConfigImpl.fromXml(toConvert);
+	public static MetadataFixerConfig configFromXml(final InputStream source) throws JAXBException {
+		return XmlSerialiser.typeFromXml(FixerConfigImpl.class, source);
 	}
 	
+	public static void configToXml(MetadataFixerConfig config, final OutputStream dest) throws JAXBException {
+		XmlSerialiser.toXml(config, dest, true, false);
+	}
+
 	public static MetadataFixerResult defaultResult() {
 		return defaultResult;
 	}

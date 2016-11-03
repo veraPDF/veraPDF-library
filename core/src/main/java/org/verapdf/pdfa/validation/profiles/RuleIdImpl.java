@@ -3,13 +3,6 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import java.io.StringReader;
-import java.io.StringWriter;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -115,35 +108,18 @@ final class RuleIdImpl implements RuleId {
                 + "]";
     }
 
-    static RuleIdImpl defaultInstance() {
+    static RuleId defaultInstance() {
         return RuleIdImpl.DEFAULT;
     }
 
-    static RuleIdImpl fromValues(final Specification specifcation,
+    static RuleId fromValues(final Specification specifcation,
             final String clause, final int testNumber) {
         return new RuleIdImpl(specifcation, clause, testNumber);
     }
 
-    static RuleIdImpl fromRuleId(final RuleId toConvert) {
+    static RuleId fromRuleId(final RuleId toConvert) {
         return fromValues(toConvert.getSpecification(), toConvert.getClause(),
                 toConvert.getTestNumber());
-    }
-
-    static String toXml(final RuleId toConvert) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(RuleIdImpl.class);
-        Marshaller varMarshaller = context.createMarshaller();
-        varMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-                Boolean.TRUE);
-        StringWriter writer = new StringWriter();
-        varMarshaller.marshal(toConvert, writer);
-        return writer.toString();
-    }
-
-    static RuleIdImpl fromXml(final String toConvert) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(RuleIdImpl.class);
-        Unmarshaller stringUnmarshaller = context.createUnmarshaller();
-        StringReader reader = new StringReader(toConvert);
-        return (RuleIdImpl) stringUnmarshaller.unmarshal(reader);
     }
 
     static class Adapter extends XmlAdapter<RuleIdImpl, RuleId> {

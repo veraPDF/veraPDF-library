@@ -42,7 +42,7 @@ public class FeaturesPluginsLoader {
 		if (pluginsConfigFile.exists() && pluginsConfigFile.canRead()) {
 			try (FileInputStream fis = new FileInputStream(pluginsConfigFile)) {
 				PluginsCollectionConfig pluginsCollectionConfig =
-						PluginsCollectionConfig.fromXml(fis);
+						PluginsCollectionConfig.create(fis);
 				return getAllExtractors(pluginsCollectionConfig, errors);
 			} catch (IOException | JAXBException e) {
 				LOGGER.log(Level.WARNING, "Problem loading Feature Extraction plugins from: " + pluginsConfigFile, e);

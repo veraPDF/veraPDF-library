@@ -11,6 +11,7 @@ import javax.xml.bind.JAXBException;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
+import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.validation.profiles.Profiles;
 import org.verapdf.pdfa.validation.profiles.Variable;
 import org.verapdf.pdfa.validation.profiles.VariableImpl;
@@ -91,8 +92,8 @@ public class VariableImplTest {
     @Test
     public final void testXmlMarshalling() throws JAXBException {
         Variable defaultInstance = Profiles.defaultVariable();
-        String xmlDefault = VariableImpl.toXml(defaultInstance);
-        Variable unmarshalledDefault = VariableImpl.fromXml(xmlDefault);
+        String xmlDefault = XmlSerialiser.toXml(defaultInstance, false, false);
+        Variable unmarshalledDefault = XmlSerialiser.typeFromXml(VariableImpl.class, xmlDefault);
         assertFalse(defaultInstance == unmarshalledDefault);
         assertTrue(defaultInstance == VariableImpl.defaultInstance());
         assertTrue(defaultInstance.equals(unmarshalledDefault));

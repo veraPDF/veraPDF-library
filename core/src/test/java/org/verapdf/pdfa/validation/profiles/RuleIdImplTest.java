@@ -3,17 +3,13 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import static org.junit.Assert.*;
-
-import javax.xml.bind.JAXBException;
-
-import nl.jqno.equalsverifier.EqualsVerifier;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
-import org.verapdf.pdfa.validation.profiles.Profiles;
-import org.verapdf.pdfa.validation.profiles.RuleId;
-import org.verapdf.pdfa.validation.profiles.RuleIdImpl;
+
+import nl.jqno.equalsverifier.EqualsVerifier;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -66,19 +62,4 @@ public class RuleIdImplTest {
         // But it is equal
         assertTrue(ruleId.equals(defaultInstance));
     }
-
-    /**
-     * Test method for {@link org.verapdf.pdfa.validation.RuleIdImpl#toXml(org.verapdf.pdfa.validation.RuleId)}.
-     * @throws JAXBException 
-     */
-    @Test
-    public final void testToXml() throws JAXBException {
-        RuleId defaultInstance = Profiles.defaultRuleId();
-        String xmlDefault = RuleIdImpl.toXml(defaultInstance);
-        RuleId unmarshalledDefault = RuleIdImpl.fromXml(xmlDefault);
-        assertFalse(defaultInstance == unmarshalledDefault);
-        assertTrue(defaultInstance == RuleIdImpl.defaultInstance());
-        assertTrue(defaultInstance.equals(unmarshalledDefault));
-    }
-
 }

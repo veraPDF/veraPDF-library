@@ -5,7 +5,6 @@ package org.verapdf;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -17,10 +16,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -202,17 +197,6 @@ public final class ReleaseDetails {
 		return details;
 	}
 
-	static void toXml(final ReleaseDetails toConvert, final OutputStream stream, Boolean prettyXml)
-			throws JAXBException {
-		Marshaller varMarshaller = getMarshaller(prettyXml);
-		varMarshaller.marshal(toConvert, stream);
-	}
-
-	static ReleaseDetails fromXml(final InputStream toConvert) throws JAXBException {
-		Unmarshaller stringUnmarshaller = getUnmarshaller();
-		return (ReleaseDetails) stringUnmarshaller.unmarshal(toConvert);
-	}
-
 	private static ReleaseDetails fromResource(final String resourceName) {
 		try (InputStream is = ReleaseDetails.class.getClassLoader().getResourceAsStream(resourceName)) {
 			if (is == null) {
@@ -249,18 +233,4 @@ public final class ReleaseDetails {
 		}
 		return new ReleaseDetails(id, release, date);
 	}
-
-	private static Unmarshaller getUnmarshaller() throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(ReleaseDetails.class);
-		Unmarshaller unmarshaller = context.createUnmarshaller();
-		return unmarshaller;
-	}
-
-	private static Marshaller getMarshaller(Boolean setPretty) throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(ReleaseDetails.class);
-		Marshaller marshaller = context.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
-		return marshaller;
-	}
-
 }

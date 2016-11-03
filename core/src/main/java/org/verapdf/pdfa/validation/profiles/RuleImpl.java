@@ -3,21 +3,10 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -37,7 +26,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 final class RuleImpl implements Rule {
     private final static RuleImpl DEFAULT = new RuleImpl();
     @XmlElement
-    private final RuleIdImpl id;
+    private final RuleId id;
     @XmlAttribute
     private final String object;
     @XmlElement
@@ -55,7 +44,7 @@ final class RuleImpl implements Rule {
                 ErrorDetailsImpl.defaultInstance(), Collections.<Reference> emptyList());
     }
 
-    private RuleImpl(final RuleIdImpl id, final String object,
+    private RuleImpl(final RuleId id, final String object,
             final String description, final String test,
             final ErrorDetails error, final List<Reference> references) {
         super();
@@ -211,44 +200,6 @@ final class RuleImpl implements Rule {
                 toConvert.getReferences());
     }
 
-    static String toXml(final Rule toConvert, Boolean prettyXml)
-            throws JAXBException, IOException {
-        String retVal = "";
-        try (StringWriter writer = new StringWriter()) {
-            toXml(toConvert, writer, prettyXml);
-            retVal = writer.toString();
-            return retVal;
-        }
-    }
-
-    static RuleImpl fromXml(final String toConvert) throws JAXBException {
-        try (StringReader reader = new StringReader(toConvert)) {
-            return fromXml(reader);
-        }
-    }
-
-    static void toXml(final Rule toConvert, OutputStream stream,
-            Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, stream);
-    }
-
-    static RuleImpl fromXml(final InputStream toConvert) throws JAXBException {
-        Unmarshaller stringUnmarshaller = getUnmarshaller();
-        return (RuleImpl) stringUnmarshaller.unmarshal(toConvert);
-    }
-
-    static void toXml(final Rule toConvert, Writer writer, Boolean prettyXml)
-            throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, writer);
-    }
-
-    static RuleImpl fromXml(final Reader toConvert) throws JAXBException {
-        Unmarshaller stringUnmarshaller = getUnmarshaller();
-        return (RuleImpl) stringUnmarshaller.unmarshal(toConvert);
-    }
-
     static class Adapter extends XmlAdapter<RuleImpl, Rule> {
         @Override
         public Rule unmarshal(RuleImpl ruleImpl) {
@@ -260,19 +211,4 @@ final class RuleImpl implements Rule {
             return (RuleImpl) rule;
         }
     }
-
-    private static Unmarshaller getUnmarshaller() throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(RuleImpl.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        return unmarshaller;
-    }
-
-    private static Marshaller getMarshaller(Boolean setPretty)
-            throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(RuleImpl.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
-        return marshaller;
-    }
-
 }
