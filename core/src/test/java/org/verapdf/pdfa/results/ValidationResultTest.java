@@ -92,8 +92,8 @@ public class ValidationResultTest {
         Set<TestAssertion> assertions = new HashSet<>();
         assertions.add(ValidationResults.defaultAssertion());
         ValidationResult result = ValidationResults.resultFromValues(PDFAFlavour.PDFA_1_A, assertions);
-        String xmlRawResult = ValidationResults.resultToXml(result, Boolean.FALSE);
-        String xmlPrettyResult = ValidationResults.resultToXml(result, Boolean.TRUE);
+        String xmlRawResult = ValidationResults.resultToXml(result, false);
+        String xmlPrettyResult = ValidationResults.resultToXml(result, true);
         assertFalse(xmlRawResult.equals(xmlPrettyResult));
         ValidationResult fromRawXml = ValidationResults.fromXml(xmlRawResult);
         ValidationResult fromPrettyXml = ValidationResults.fromXml(xmlPrettyResult);
@@ -113,7 +113,7 @@ public class ValidationResultTest {
         ValidationResult result = ValidationResults.resultFromValues(PDFAFlavour.PDFA_1_A, assertions);
         File temp = Files.createTempFile("profile", "xml").toFile();
         try (OutputStream forXml = new FileOutputStream(temp)) {
-            ValidationResults.toXml(result, forXml, Boolean.TRUE);
+            ValidationResults.toXml(result, forXml, true, true);
         }
         try (InputStream readXml = new FileInputStream(temp)) {
             ValidationResult unmarshalledResult = ValidationResults
