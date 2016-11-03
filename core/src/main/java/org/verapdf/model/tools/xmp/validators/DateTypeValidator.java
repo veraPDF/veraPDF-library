@@ -27,7 +27,8 @@ public class DateTypeValidator implements TypeValidator {
             XMPDateTimeFactory.createFromISO8601(node.getValue());
             return true;
         } catch (XMPException e) {
-            LOGGER.log(Level.WARNING, "Node value: " + node.getValue() + " is not a valid ISO8601 date value", e);
+            LOGGER.log(Level.WARNING, "Node:" + node.getName() + " with value:" + node.getValue() + " is not a valid ISO8601 date value");
+            LOGGER.log(Level.FINE, "XMP Exception is", e);
             return false;
         }
     }
