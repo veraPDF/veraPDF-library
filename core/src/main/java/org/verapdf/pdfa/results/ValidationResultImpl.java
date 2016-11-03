@@ -32,256 +32,244 @@ import org.verapdf.pdfa.results.TestAssertion.Status;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *
  */
 @XmlRootElement(name = "validationResult")
 final class ValidationResultImpl implements ValidationResult {
-    private final static ValidationResultImpl DEFAULT = new ValidationResultImpl();
-    @XmlAttribute
-    private final PDFAFlavour flavour;
-    @XmlAttribute
-    private final int totalAssertions;
-    @XmlElementWrapper
-    @XmlElement(name = "assertion")
-    private final Set<TestAssertion> assertions;
-    @XmlAttribute
-    private final boolean isCompliant;
+	private final static ValidationResultImpl DEFAULT = new ValidationResultImpl();
+	@XmlAttribute
+	private final PDFAFlavour flavour;
+	@XmlAttribute
+	private final int totalAssertions;
+	@XmlElementWrapper
+	@XmlElement(name = "assertion")
+	private final Set<TestAssertion> assertions;
+	@XmlAttribute
+	private final boolean isCompliant;
 
-    private ValidationResultImpl() {
-        this(PDFAFlavour.NO_FLAVOUR, Collections.<TestAssertion> emptySet(),
-                false);
-    }
+	private ValidationResultImpl() {
+		this(PDFAFlavour.NO_FLAVOUR, Collections.<TestAssertion>emptySet(), false);
+	}
 
-    private ValidationResultImpl(final PDFAFlavour flavour,
-            final Set<TestAssertion> assertions, final boolean isCompliant) {
-        this(flavour, assertions, isCompliant, assertions.size());
-    }
+	private ValidationResultImpl(final PDFAFlavour flavour, final Set<TestAssertion> assertions,
+			final boolean isCompliant) {
+		this(flavour, assertions, isCompliant, assertions.size());
+	}
 
-    private ValidationResultImpl(final PDFAFlavour flavour,
-            final Set<TestAssertion> assertions, final boolean isCompliant,
-            int totalAssertions) {
-        super();
-        this.flavour = flavour;
-        this.assertions = new HashSet<>(assertions);
-        this.isCompliant = isCompliant;
-        this.totalAssertions = totalAssertions;
-    }
+	private ValidationResultImpl(final PDFAFlavour flavour, final Set<TestAssertion> assertions,
+			final boolean isCompliant, int totalAssertions) {
+		super();
+		this.flavour = flavour;
+		this.assertions = new HashSet<>(assertions);
+		this.isCompliant = isCompliant;
+		this.totalAssertions = totalAssertions;
+	}
 
-    /**
-     * { @inheritDoc }
-     */
-    @Override
-    public boolean isCompliant() {
-        return this.isCompliant;
-    }
+	/**
+	 * { @inheritDoc }
+	 */
+	@Override
+	public boolean isCompliant() {
+		return this.isCompliant;
+	}
 
-    /**
-     * { @inheritDoc }
-     */
-    @Override
-    public PDFAFlavour getPDFAFlavour() {
-        return this.flavour;
-    }
+	/**
+	 * { @inheritDoc }
+	 */
+	@Override
+	public PDFAFlavour getPDFAFlavour() {
+		return this.flavour;
+	}
 
-    /**
-     * { @inheritDoc }
-     */
-    @Override
-    public int getTotalAssertions() {
-        return this.totalAssertions;
-    }
+	/**
+	 * { @inheritDoc }
+	 */
+	@Override
+	public int getTotalAssertions() {
+		return this.totalAssertions;
+	}
 
-    /**
-     * { @inheritDoc }
-     */
-    @Override
-    public Set<TestAssertion> getTestAssertions() {
-        return Collections.unmodifiableSet(this.assertions);
-    }
+	/**
+	 * { @inheritDoc }
+	 */
+	@Override
+	public Set<TestAssertion> getTestAssertions() {
+		return Collections.unmodifiableSet(this.assertions);
+	}
 
-    /**
-     * { @inheritDoc }
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result
-                + ((this.assertions == null) ? 0 : this.assertions.hashCode());
-        result = prime * result + ((this.flavour == null) ? 0 : this.flavour.hashCode());
-        result = prime * result + (this.isCompliant ? 1231 : 1237);
-        result = prime * result + this.totalAssertions;
-        return result;
-    }
+	/**
+	 * { @inheritDoc }
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((this.assertions == null) ? 0 : this.assertions.hashCode());
+		result = prime * result + ((this.flavour == null) ? 0 : this.flavour.hashCode());
+		result = prime * result + (this.isCompliant ? 1231 : 1237);
+		result = prime * result + this.totalAssertions;
+		return result;
+	}
 
-    /**
-     * { @inheritDoc }
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        if (!(obj instanceof ValidationResult))
-            return false;
-        ValidationResult other = (ValidationResult) obj;
-        if (this.assertions == null) {
-            if (other.getTestAssertions() != null)
-                return false;
-        } else if (other.getTestAssertions() == null)
-            return false;
-        else if (!this.assertions.equals(other.getTestAssertions()))
-            return false;
-        if (this.flavour != other.getPDFAFlavour())
-            return false;
-        if (this.isCompliant != other.isCompliant())
-            return false;
-        if (this.totalAssertions != other.getTotalAssertions())
-            return false;
-        return true;
-    }
+	/**
+	 * { @inheritDoc }
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		if (!(obj instanceof ValidationResult))
+			return false;
+		ValidationResult other = (ValidationResult) obj;
+		if (this.assertions == null) {
+			if (other.getTestAssertions() != null)
+				return false;
+		} else if (other.getTestAssertions() == null)
+			return false;
+		else if (!this.assertions.equals(other.getTestAssertions()))
+			return false;
+		if (this.flavour != other.getPDFAFlavour())
+			return false;
+		if (this.isCompliant != other.isCompliant())
+			return false;
+		if (this.totalAssertions != other.getTotalAssertions())
+			return false;
+		return true;
+	}
 
-    /**
-     * { @inheritDoc }
-     */
-    @Override
-    public String toString() {
-        return "ValidationResult [flavour=" + this.flavour + ", totalAssertions="
-                + this.totalAssertions + ", assertions=" + this.assertions + ", isCompliant="
-                + this.isCompliant + "]";
-    }
+	/**
+	 * { @inheritDoc }
+	 */
+	@Override
+	public String toString() {
+		return "ValidationResult [flavour=" + this.flavour + ", totalAssertions=" + this.totalAssertions
+				+ ", assertions=" + this.assertions + ", isCompliant=" + this.isCompliant + "]";
+	}
 
-    static ValidationResultImpl defaultInstance() {
-        return DEFAULT;
-    }
+	static ValidationResultImpl defaultInstance() {
+		return DEFAULT;
+	}
 
-    static ValidationResultImpl fromValues(final PDFAFlavour flavour,
-            final Set<TestAssertion> assertions, final boolean isCompliant, final int totalChecks) {
-        return new ValidationResultImpl(flavour, assertions, isCompliant, totalChecks);
-    }
+	static ValidationResultImpl fromValues(final PDFAFlavour flavour, final Set<TestAssertion> assertions,
+			final boolean isCompliant, final int totalChecks) {
+		return new ValidationResultImpl(flavour, assertions, isCompliant, totalChecks);
+	}
 
-    static ValidationResultImpl fromValidationResult(ValidationResult toConvert) {
-        return fromValues(toConvert.getPDFAFlavour(),
-                toConvert.getTestAssertions(), toConvert.isCompliant(), toConvert.getTotalAssertions());
-    }
+	static ValidationResultImpl fromValidationResult(ValidationResult toConvert) {
+		return fromValues(toConvert.getPDFAFlavour(), toConvert.getTestAssertions(), toConvert.isCompliant(),
+				toConvert.getTotalAssertions());
+	}
 
-    static ValidationResultImpl stripPassedTests(ValidationResult toStrip) {
-        return fromValues(toStrip.getPDFAFlavour(),
-                stripPassedTests(toStrip.getTestAssertions()), toStrip.isCompliant(), toStrip.getTotalAssertions());
-    }
+	static ValidationResultImpl stripPassedTests(ValidationResult toStrip) {
+		return fromValues(toStrip.getPDFAFlavour(), stripPassedTests(toStrip.getTestAssertions()),
+				toStrip.isCompliant(), toStrip.getTotalAssertions());
+	}
 
-    static String toXml(final ValidationResult toConvert, Boolean prettyXml)
-            throws JAXBException, IOException {
-        String retVal = "";
-        try (StringWriter writer = new StringWriter()) {
-            toXml(toConvert, writer, prettyXml);
-            retVal = writer.toString();
-            return retVal;
-        }
-    }
+	static String toXml(final ValidationResult toConvert, boolean prettyXml) throws JAXBException, IOException {
+		String retVal = "";
+		try (StringWriter writer = new StringWriter()) {
+			toXml(toConvert, writer, prettyXml, true);
+			retVal = writer.toString();
+			return retVal;
+		}
+	}
 
-    static void toXml(final ValidationResult toConvert,
-            final OutputStream stream, Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, stream);
-    }
+	static void toXml(final ValidationResult toConvert, final OutputStream stream, boolean prettyXml, boolean fragment)
+			throws JAXBException {
+		Marshaller varMarshaller = getMarshaller(prettyXml, fragment);
+		varMarshaller.marshal(toConvert, stream);
+	}
 
-    static ValidationResultImpl fromXml(final InputStream toConvert)
-            throws JAXBException {
-        Unmarshaller stringUnmarshaller = getUnmarshaller();
-        return (ValidationResultImpl) stringUnmarshaller.unmarshal(toConvert);
-    }
+	static ValidationResultImpl fromXml(final InputStream toConvert) throws JAXBException {
+		Unmarshaller stringUnmarshaller = getUnmarshaller();
+		return (ValidationResultImpl) stringUnmarshaller.unmarshal(toConvert);
+	}
 
-    static void toXml(final ValidationResult toConvert, final Writer writer,
-            Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, writer);
-    }
+	static void toXml(final ValidationResult toConvert, final Writer writer, boolean prettyXml, boolean fragment)
+			throws JAXBException {
+		Marshaller varMarshaller = getMarshaller(prettyXml, fragment);
+		varMarshaller.marshal(toConvert, writer);
+	}
 
-    static ValidationResultImpl fromXml(final Reader toConvert)
-            throws JAXBException {
-        Unmarshaller stringUnmarshaller = getUnmarshaller();
-        return (ValidationResultImpl) stringUnmarshaller.unmarshal(toConvert);
-    }
+	static ValidationResultImpl fromXml(final Reader toConvert) throws JAXBException {
+		Unmarshaller stringUnmarshaller = getUnmarshaller();
+		return (ValidationResultImpl) stringUnmarshaller.unmarshal(toConvert);
+	}
 
-    static ValidationResultImpl fromXml(final String toConvert)
-            throws JAXBException {
-        try (StringReader reader = new StringReader(toConvert)) {
-            return fromXml(reader);
-        }
-    }
+	static ValidationResultImpl fromXml(final String toConvert) throws JAXBException {
+		try (StringReader reader = new StringReader(toConvert)) {
+			return fromXml(reader);
+		}
+	}
 
-    static class Adapter extends
-            XmlAdapter<ValidationResultImpl, ValidationResult> {
-        @Override
-        public ValidationResult unmarshal(
-                ValidationResultImpl validationResultImpl) {
-            return validationResultImpl;
-        }
+	static class Adapter extends XmlAdapter<ValidationResultImpl, ValidationResult> {
+		@Override
+		public ValidationResult unmarshal(ValidationResultImpl validationResultImpl) {
+			return validationResultImpl;
+		}
 
-        @Override
-        public ValidationResultImpl marshal(ValidationResult validationResult) {
-            return (ValidationResultImpl) validationResult;
-        }
-    }
+		@Override
+		public ValidationResultImpl marshal(ValidationResult validationResult) {
+			return (ValidationResultImpl) validationResult;
+		}
+	}
 
-    static String getSchema() throws JAXBException, IOException {
-        JAXBContext context = JAXBContext
-                .newInstance(ValidationResultImpl.class);
-        final StringWriter writer = new StringWriter();
-        context.generateSchema(new WriterSchemaOutputResolver(writer));
-        return writer.toString();
-    }
+	static String getSchema() throws JAXBException, IOException {
+		JAXBContext context = JAXBContext.newInstance(ValidationResultImpl.class);
+		final StringWriter writer = new StringWriter();
+		context.generateSchema(new WriterSchemaOutputResolver(writer));
+		return writer.toString();
+	}
 
-    private static Unmarshaller getUnmarshaller() throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(ValidationResultImpl.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        return unmarshaller;
-    }
+	private static Unmarshaller getUnmarshaller() throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(ValidationResultImpl.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+		return unmarshaller;
+	}
 
-    private static Marshaller getMarshaller(Boolean setPretty)
-            throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(ValidationResultImpl.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
-        return marshaller;
-    }
+	private static Marshaller getMarshaller(boolean prettyXml, boolean fragment) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(ValidationResultImpl.class);
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.valueOf(prettyXml));
+		if (fragment) {
+			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+		}
+		return marshaller;
+	}
 
-    static Set<TestAssertion> stripPassedTests(
-            final Set<TestAssertion> toStrip) {
-        Set<TestAssertion> strippedSet = new HashSet<>();
-        for (TestAssertion test : toStrip) {
-            if (test.getStatus() != Status.PASSED)
-                strippedSet.add(test);
-        }
-        return strippedSet;
-    }
+	static Set<TestAssertion> stripPassedTests(final Set<TestAssertion> toStrip) {
+		Set<TestAssertion> strippedSet = new HashSet<>();
+		for (TestAssertion test : toStrip) {
+			if (test.getStatus() != Status.PASSED)
+				strippedSet.add(test);
+		}
+		return strippedSet;
+	}
 
-    private static class WriterSchemaOutputResolver extends SchemaOutputResolver {
-        private final Writer out;
-        /**
-         * @param out a Writer for the generated schema
-         * 
-         */
-        public WriterSchemaOutputResolver(final Writer out) {
-            super();
-            this.out = out;
-        }
+	private static class WriterSchemaOutputResolver extends SchemaOutputResolver {
+		private final Writer out;
 
-        /**
-         * { @inheritDoc }
-         */
-        @Override
-        public Result createOutput(String namespaceUri, String suggestedFileName) {
-            final StreamResult result = new StreamResult(this.out);
-            result.setSystemId("no-id");
-            return result;
-        }
+		/**
+		 * @param out
+		 *            a Writer for the generated schema
+		 */
+		public WriterSchemaOutputResolver(final Writer out) {
+			super();
+			this.out = out;
+		}
 
-    }
+		/**
+		 * { @inheritDoc }
+		 */
+		@Override
+		public Result createOutput(String namespaceUri, String suggestedFileName) {
+			final StreamResult result = new StreamResult(this.out);
+			result.setSystemId("no-id");
+			return result;
+		}
+
+	}
 }
