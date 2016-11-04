@@ -128,7 +128,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
             try (InputStream is = ValidationProfileImpl.class.getClassLoader()
                     .getResourceAsStream(profilePath)) {
                 if (is != null)
-                    profiles.add(ValidationProfileImpl.fromXml(is));
+                    profiles.add(Profiles.profileFromXml(is));
             } catch (JAXBException | IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

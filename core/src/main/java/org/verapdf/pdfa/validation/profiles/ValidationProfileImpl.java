@@ -3,18 +3,20 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import org.verapdf.pdfa.flavours.PDFAFlavour;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 
-import javax.xml.bind.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import javax.xml.transform.Result;
-import javax.xml.transform.stream.StreamResult;
-import java.io.*;
-import java.util.*;
+
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -210,70 +212,22 @@ final class ValidationProfileImpl implements ValidationProfile {
                 + this.rules + ", variables=" + this.variables + "]";
     }
 
-    static ValidationProfileImpl defaultInstance() {
+    static ValidationProfile defaultInstance() {
         return ValidationProfileImpl.DEFAULT;
     }
 
-    static ValidationProfileImpl fromValues(final PDFAFlavour flavour,
+    static ValidationProfile fromValues(final PDFAFlavour flavour,
             final ProfileDetails details, final String hash,
             final Set<Rule> rules, final Set<Variable> variables) {
         return new ValidationProfileImpl(flavour, details, hash, rules,
                 variables);
     }
 
-    static ValidationProfileImpl fromSortedValues(final PDFAFlavour flavour,
+    static ValidationProfile fromSortedValues(final PDFAFlavour flavour,
                                                   final ProfileDetails details, final String hash,
                                                   final SortedSet<Rule> rules, final Set<Variable> variables) {
         return new ValidationProfileImpl(flavour, details, hash, rules,
                 variables);
-    }
-
-    static ValidationProfileImpl fromValidationProfile(
-            ValidationProfile toConvert) {
-        return fromValues(toConvert.getPDFAFlavour(), toConvert.getDetails(),
-                toConvert.getHexSha1Digest(), toConvert.getRules(),
-                toConvert.getVariables());
-    }
-
-    static String toXml(final ValidationProfile toConvert, Boolean prettyXml)
-            throws JAXBException, IOException {
-        String retVal = "";
-        try (StringWriter writer = new StringWriter()) {
-            toXml(toConvert, writer, prettyXml);
-            retVal = writer.toString();
-            return retVal;
-        }
-    }
-
-    static ValidationProfileImpl fromXml(final String toConvert)
-            throws JAXBException {
-        try (StringReader reader = new StringReader(toConvert)) {
-            return fromXml(reader);
-        }
-    }
-
-    static void toXml(final ValidationProfile toConvert,
-            final OutputStream stream, Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, stream);
-    }
-
-    static ValidationProfileImpl fromXml(final InputStream toConvert)
-            throws JAXBException {
-        Unmarshaller stringUnmarshaller = getUnmarshaller();
-        return (ValidationProfileImpl) stringUnmarshaller.unmarshal(toConvert);
-    }
-
-    static void toXml(final ValidationProfile toConvert, final Writer writer,
-            Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, writer);
-    }
-
-    static ValidationProfileImpl fromXml(final Reader toConvert)
-            throws JAXBException {
-        Unmarshaller stringUnmarshaller = getUnmarshaller();
-        return (ValidationProfileImpl) stringUnmarshaller.unmarshal(toConvert);
     }
 
     static class Adapter extends
@@ -287,22 +241,6 @@ final class ValidationProfileImpl implements ValidationProfile {
         public ValidationProfileImpl marshal(ValidationProfile profile) {
             return (ValidationProfileImpl) profile;
         }
-    }
-
-    private static Unmarshaller getUnmarshaller() throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(ValidationProfileImpl.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        return unmarshaller;
-    }
-
-    private static Marshaller getMarshaller(Boolean setPretty)
-            throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(ValidationProfileImpl.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
-        return marshaller;
     }
 
     private Map<String, Set<Rule>> createObjectRuleMap(
@@ -330,36 +268,5 @@ final class ValidationProfileImpl implements ValidationProfile {
             variablesByObject.get(rule.getObject()).add(rule);
         }
         return variablesByObject;
-    }
-
-    static String getSchema() throws JAXBException, IOException {
-        JAXBContext context = JAXBContext
-                .newInstance(ValidationProfileImpl.class);
-        final StringWriter writer = new StringWriter();
-        context.generateSchema(new WriterSchemaOutputResolver(writer));
-        return writer.toString();
-    }
-
-    private static class WriterSchemaOutputResolver extends SchemaOutputResolver {
-        private final Writer out;
-        /**
-         * @param out a Writer for the generated schema
-         *
-         */
-        public WriterSchemaOutputResolver(final Writer out) {
-            super();
-            this.out = out;
-        }
-
-        /**
-         * { @inheritDoc }
-         */
-        @Override
-        public Result createOutput(String namespaceUri, String suggestedFileName) {
-            final StreamResult result = new StreamResult(this.out);
-            result.setSystemId("no-id");
-            return result;
-        }
-
     }
 }

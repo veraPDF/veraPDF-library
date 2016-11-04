@@ -3,23 +3,22 @@ package org.verapdf.features;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
 import java.util.EnumSet;
 
 import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
-import org.verapdf.features.FeatureExtractorConfig;
-import org.verapdf.features.FeatureObjectType;
+import org.verapdf.core.XmlSerialiser;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 
+@SuppressWarnings("static-method")
 public class FeatureExtractorConfigTest {
 
     /**
      * Test method for {@link org.verapdf.ReleaseDetails#hashCode()}.
      */
-    @Test
+	@Test
     public final void testHashCodeAndEquals() {
         EqualsVerifier.forClass(FeatureExtractorConfigImpl.class).verify();
     }
@@ -74,16 +73,16 @@ public class FeatureExtractorConfigTest {
 	}
 
 	@Test
-	public void testXmlSerialisation() throws JAXBException, IOException {
+	public void testXmlSerialisation() throws JAXBException {
 		EnumSet<FeatureObjectType> enabledFeaturesSet = EnumSet.noneOf(FeatureObjectType.class);
 		EnumSet<FeatureObjectType> disabledFeaturesSet = EnumSet.allOf(FeatureObjectType.class);
 		FeatureExtractorConfig testConfig = FeatureExtractorConfigImpl.fromFeatureSet(enabledFeaturesSet);
-		assertTrue(testConfig.equals(FeatureExtractorConfigImpl.fromXml(FeatureExtractorConfigImpl.toXml(testConfig, Boolean.FALSE))));
+		assertTrue(testConfig.equals(XmlSerialiser.typeFromXml(FeatureExtractorConfigImpl.class, XmlSerialiser.toXml(testConfig, true, true))));
 		for (FeatureObjectType type : FeatureObjectType.values()) {
 			enabledFeaturesSet.add(type);
 			disabledFeaturesSet.remove(type);
 			testConfig = FeatureExtractorConfigImpl.fromFeatureSet(enabledFeaturesSet);
-			assertTrue(testConfig.equals(FeatureExtractorConfigImpl.fromXml(FeatureExtractorConfigImpl.toXml(testConfig, Boolean.FALSE))));
+			assertTrue(testConfig.equals(XmlSerialiser.typeFromXml(FeatureExtractorConfigImpl.class, XmlSerialiser.toXml(testConfig, true, true))));
 		}
 	}
 }

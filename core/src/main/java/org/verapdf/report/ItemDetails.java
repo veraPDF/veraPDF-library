@@ -4,11 +4,7 @@
 package org.verapdf.report;
 
 import java.io.File;
-import java.io.OutputStream;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -85,26 +81,4 @@ public class ItemDetails {
             throw new NullPointerException("Parameter name can not be null.");
         return new ItemDetails(name, size);
     }
-
-    /**
-     * @param toConvert
-     * @param stream
-     * @param prettyXml
-     * @throws JAXBException
-     */
-    public static void toXml(final ItemDetails toConvert,
-            final OutputStream stream, Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, stream);
-    }
-
-    private static Marshaller getMarshaller(Boolean setPretty)
-            throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(ItemDetails.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
-        return marshaller;
-    }
-
 }

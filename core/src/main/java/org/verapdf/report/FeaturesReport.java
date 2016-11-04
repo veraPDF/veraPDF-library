@@ -1,16 +1,13 @@
 package org.verapdf.report;
 
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.features.FeatureObjectType;
 import org.verapdf.features.tools.FeatureTreeNode;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.OutputStream;
-import java.util.List;
 
 /**
  * @author Maksim Bezrukov
@@ -116,27 +113,4 @@ public class FeaturesReport {
 		}
 		return FeaturesNode.fromValues(collection.getFeatureTreesForType(type).get(0), collection);
 	}
-
-
-    /**
-     * @param toConvert
-     * @param stream
-     * @param prettyXml
-     * @throws JAXBException
-     */
-    public static void toXml(final FeaturesReport toConvert,
-            final OutputStream stream, Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, stream);
-    }
-
-    private static Marshaller getMarshaller(Boolean setPretty)
-            throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(FeaturesReport.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
-        return marshaller;
-    }
-    
 }

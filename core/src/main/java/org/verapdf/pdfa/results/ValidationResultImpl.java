@@ -3,29 +3,15 @@
  */
 package org.verapdf.pdfa.results;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.SchemaOutputResolver;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import javax.xml.transform.Result;
-import javax.xml.transform.stream.StreamResult;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion.Status;
@@ -145,8 +131,8 @@ final class ValidationResultImpl implements ValidationResult {
 	 */
 	@Override
 	public String toString() {
-		return "ValidationResult [flavour=" + this.flavour + ", totalAssertions=" + this.totalAssertions
-				+ ", assertions=" + this.assertions + ", isCompliant=" + this.isCompliant + "]";
+		return "ValidationResult [flavour=" + this.flavour + ", totalAssertions=" + this.totalAssertions //$NON-NLS-1$ //$NON-NLS-2$
+				+ ", assertions=" + this.assertions + ", isCompliant=" + this.isCompliant + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	static ValidationResultImpl defaultInstance() {
@@ -159,50 +145,15 @@ final class ValidationResultImpl implements ValidationResult {
 	}
 
 	static ValidationResultImpl fromValidationResult(ValidationResult toConvert) {
-		return fromValues(toConvert.getPDFAFlavour(), toConvert.getTestAssertions(), toConvert.isCompliant(),
+		Set<TestAssertion> assertions = toConvert.getTestAssertions();
+		return fromValues(toConvert.getPDFAFlavour(), assertions, toConvert.isCompliant(),
 				toConvert.getTotalAssertions());
 	}
 
 	static ValidationResultImpl stripPassedTests(ValidationResult toStrip) {
-		return fromValues(toStrip.getPDFAFlavour(), stripPassedTests(toStrip.getTestAssertions()),
+		Set<TestAssertion> assertions = toStrip.getTestAssertions();
+		return fromValues(toStrip.getPDFAFlavour(), stripPassedTests(assertions),
 				toStrip.isCompliant(), toStrip.getTotalAssertions());
-	}
-
-	static String toXml(final ValidationResult toConvert, boolean prettyXml) throws JAXBException, IOException {
-		String retVal = "";
-		try (StringWriter writer = new StringWriter()) {
-			toXml(toConvert, writer, prettyXml, true);
-			retVal = writer.toString();
-			return retVal;
-		}
-	}
-
-	static void toXml(final ValidationResult toConvert, final OutputStream stream, boolean prettyXml, boolean fragment)
-			throws JAXBException {
-		Marshaller varMarshaller = getMarshaller(prettyXml, fragment);
-		varMarshaller.marshal(toConvert, stream);
-	}
-
-	static ValidationResultImpl fromXml(final InputStream toConvert) throws JAXBException {
-		Unmarshaller stringUnmarshaller = getUnmarshaller();
-		return (ValidationResultImpl) stringUnmarshaller.unmarshal(toConvert);
-	}
-
-	static void toXml(final ValidationResult toConvert, final Writer writer, boolean prettyXml, boolean fragment)
-			throws JAXBException {
-		Marshaller varMarshaller = getMarshaller(prettyXml, fragment);
-		varMarshaller.marshal(toConvert, writer);
-	}
-
-	static ValidationResultImpl fromXml(final Reader toConvert) throws JAXBException {
-		Unmarshaller stringUnmarshaller = getUnmarshaller();
-		return (ValidationResultImpl) stringUnmarshaller.unmarshal(toConvert);
-	}
-
-	static ValidationResultImpl fromXml(final String toConvert) throws JAXBException {
-		try (StringReader reader = new StringReader(toConvert)) {
-			return fromXml(reader);
-		}
 	}
 
 	static class Adapter extends XmlAdapter<ValidationResultImpl, ValidationResult> {
@@ -217,29 +168,6 @@ final class ValidationResultImpl implements ValidationResult {
 		}
 	}
 
-	static String getSchema() throws JAXBException, IOException {
-		JAXBContext context = JAXBContext.newInstance(ValidationResultImpl.class);
-		final StringWriter writer = new StringWriter();
-		context.generateSchema(new WriterSchemaOutputResolver(writer));
-		return writer.toString();
-	}
-
-	private static Unmarshaller getUnmarshaller() throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(ValidationResultImpl.class);
-		Unmarshaller unmarshaller = context.createUnmarshaller();
-		return unmarshaller;
-	}
-
-	private static Marshaller getMarshaller(boolean prettyXml, boolean fragment) throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(ValidationResultImpl.class);
-		Marshaller marshaller = context.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.valueOf(prettyXml));
-		if (fragment) {
-			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
-		}
-		return marshaller;
-	}
-
 	static Set<TestAssertion> stripPassedTests(final Set<TestAssertion> toStrip) {
 		Set<TestAssertion> strippedSet = new HashSet<>();
 		for (TestAssertion test : toStrip) {
@@ -247,29 +175,5 @@ final class ValidationResultImpl implements ValidationResult {
 				strippedSet.add(test);
 		}
 		return strippedSet;
-	}
-
-	private static class WriterSchemaOutputResolver extends SchemaOutputResolver {
-		private final Writer out;
-
-		/**
-		 * @param out
-		 *            a Writer for the generated schema
-		 */
-		public WriterSchemaOutputResolver(final Writer out) {
-			super();
-			this.out = out;
-		}
-
-		/**
-		 * { @inheritDoc }
-		 */
-		@Override
-		public Result createOutput(String namespaceUri, String suggestedFileName) {
-			final StreamResult result = new StreamResult(this.out);
-			result.setSystemId("no-id");
-			return result;
-		}
-
 	}
 }

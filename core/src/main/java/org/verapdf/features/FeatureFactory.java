@@ -3,12 +3,13 @@
  */
 package org.verapdf.features;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.EnumSet;
 
 import javax.xml.bind.JAXBException;
+
+import org.verapdf.core.XmlSerialiser;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -25,7 +26,7 @@ public final class FeatureFactory {
 		return FeatureExtractorConfigImpl.defaultInstance();
 	}
 
-	public static FeatureExtractorConfig createConfig(final EnumSet<FeatureObjectType> enabledFeatures) {
+	public static FeatureExtractorConfig configFromValues(final EnumSet<FeatureObjectType> enabledFeatures) {
 		if (enabledFeatures == null)
 			throw new NullPointerException("Arg enabledFeatures can not be null");
 		return FeatureExtractorConfigImpl.fromFeatureSet(enabledFeatures);
@@ -36,16 +37,17 @@ public final class FeatureFactory {
 	 * 
 	 * @see javax.xml.bind.JAXB for more details
 	 */
-	public static FeatureExtractorConfig createConfig(final InputStream toConvert) throws JAXBException {
-		return FeatureExtractorConfigImpl.fromXml(toConvert);
+	public static FeatureExtractorConfig configFromXml(final InputStream source) throws JAXBException {
+		if (source == null)
+			throw new NullPointerException("Arg source can not be null");
+		return XmlSerialiser.typeFromXml(FeatureExtractorConfigImpl.class, source);
 	}
 
-	public static String configToXml(final FeatureExtractorConfig toConvert) throws JAXBException, IOException {
-		return FeatureExtractorConfigImpl.toXml(toConvert, Boolean.TRUE);
-	}
-
-	public static void configToXml(final FeatureExtractorConfig toConvert, OutputStream dest)
-			throws JAXBException {
-		FeatureExtractorConfigImpl.toXml(toConvert, dest, Boolean.TRUE);
+	public static void configToXml(final FeatureExtractorConfig config, final OutputStream dest) throws JAXBException {
+		if (config == null)
+			throw new NullPointerException("Arg config can not be null");
+		if (dest == null)
+			throw new NullPointerException("Arg dest can not be null");
+		XmlSerialiser.toXml(config, true, false);
 	}
 }

@@ -1,20 +1,9 @@
 package org.verapdf.processor;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.EnumSet;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -152,47 +141,6 @@ class ProcessorResultImpl implements ProcessorResult {
 		return this.isEncryptedPdf;
 	}
 
-    static String toXml(final ProcessorResult toConvert, Boolean prettyXml)
-            throws JAXBException, IOException {
-        String retVal = "";
-        try (StringWriter writer = new StringWriter()) {
-            toXml(toConvert, writer, prettyXml);
-            retVal = writer.toString();
-            return retVal;
-        }
-    }
-
-    static void toXml(final ProcessorResult toConvert,
-            final OutputStream stream, Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, stream);
-    }
-
-    static ProcessorResult fromXml(final InputStream toConvert)
-            throws JAXBException {
-        Unmarshaller stringUnmarshaller = getUnmarshaller();
-        return (ProcessorResultImpl) stringUnmarshaller.unmarshal(toConvert);
-    }
-
-    static void toXml(final ProcessorResult toConvert, final Writer writer,
-            Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, writer);
-    }
-
-    static ProcessorResult fromXml(final Reader toConvert)
-            throws JAXBException {
-        Unmarshaller stringUnmarshaller = getUnmarshaller();
-        return (ProcessorResultImpl) stringUnmarshaller.unmarshal(toConvert);
-    }
-
-    static ProcessorResult fromXml(final String toConvert)
-            throws JAXBException {
-        try (StringReader reader = new StringReader(toConvert)) {
-            return fromXml(reader);
-        }
-    }
-
     static class Adapter extends
             XmlAdapter<ProcessorResultImpl, ProcessorResult> {
         @Override
@@ -205,21 +153,5 @@ class ProcessorResultImpl implements ProcessorResult {
         public ProcessorResultImpl marshal(ProcessorResult procResult) {
             return (ProcessorResultImpl) procResult;
         }
-    }
-
-    private static Unmarshaller getUnmarshaller() throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(ProcessorResultImpl.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        return unmarshaller;
-    }
-
-    private static Marshaller getMarshaller(Boolean setPretty)
-            throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(ProcessorResultImpl.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
-        return marshaller;
     }
 }

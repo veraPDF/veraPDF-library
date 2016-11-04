@@ -16,6 +16,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
  * @version 0.1 Created 30 Oct 2016:00:46:37
  */
 
+@SuppressWarnings("static-method")
 public class ValdidatorConfigTest {
 
 	/**

@@ -1,18 +1,7 @@
 package org.verapdf.processor;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.EnumSet;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -169,74 +158,5 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
 			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final ValidationProfile profile) {
 		return new ProcessorConfigImpl(config, featureConfig, fixerConfig, tasks, profile);
-	}
-
-	/**
-	 * Converts Config to XML,
-	 *
-	 * @see javax.xml.bind.JAXB for more details
-	 */
-	static String toXml(final ProcessorConfig toConvert, Boolean prettyXml) throws JAXBException, IOException {
-		String retVal = "";
-		try (StringWriter writer = new StringWriter()) {
-			toXml(toConvert, writer, prettyXml);
-			retVal = writer.toString();
-			return retVal;
-		}
-	}
-
-	/**
-	 * Converts XML file to Config,
-	 *
-	 * @see javax.xml.bind.JAXB for more details
-	 */
-	static ProcessorConfig fromXml(final String toConvert) throws JAXBException {
-		try (StringReader reader = new StringReader(toConvert)) {
-			return fromXml(reader);
-		}
-	}
-
-	/**
-	 * Converts Config to XML,
-	 *
-	 * @see javax.xml.bind.JAXB for more details
-	 */
-	static void toXml(final ProcessorConfig toConvert, final OutputStream stream, Boolean prettyXml)
-			throws JAXBException {
-		Marshaller varMarshaller = getMarshaller(prettyXml);
-		varMarshaller.marshal(toConvert, stream);
-	}
-
-	/**
-	 * Converts XML file to Config,
-	 *
-	 * @see javax.xml.bind.JAXB for more details
-	 */
-	static ProcessorConfig fromXml(final InputStream toConvert) throws JAXBException {
-		Unmarshaller stringUnmarshaller = getUnmarshaller();
-		return (ProcessorConfig) stringUnmarshaller.unmarshal(toConvert);
-	}
-
-	static void toXml(final ProcessorConfig toConvert, final Writer writer, Boolean prettyXml) throws JAXBException {
-		Marshaller varMarshaller = getMarshaller(prettyXml);
-		varMarshaller.marshal(toConvert, writer);
-	}
-
-	static ProcessorConfig fromXml(final Reader toConvert) throws JAXBException {
-		Unmarshaller stringUnmarshaller = getUnmarshaller();
-		return (ProcessorConfig) stringUnmarshaller.unmarshal(toConvert);
-	}
-
-	private static Unmarshaller getUnmarshaller() throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(ProcessorConfigImpl.class);
-		Unmarshaller unmarshaller = context.createUnmarshaller();
-		return unmarshaller;
-	}
-
-	private static Marshaller getMarshaller(Boolean setPretty) throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(ProcessorConfigImpl.class);
-		Marshaller marshaller = context.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
-		return marshaller;
 	}
 }

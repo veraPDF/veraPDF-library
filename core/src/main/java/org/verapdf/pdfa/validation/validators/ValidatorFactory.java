@@ -3,12 +3,12 @@
  */
 package org.verapdf.pdfa.validation.validators;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.xml.bind.JAXBException;
 
+import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.profiles.Profiles;
@@ -193,15 +193,15 @@ public final class ValidatorFactory {
 		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails);
 	}
 
-	public static ValidatorConfig createConfig(final InputStream toConvert) throws JAXBException {
-		return ValidatorConfigImpl.fromXml(toConvert);
+	public static ValidatorConfig createConfig(final InputStream source) throws JAXBException {
+		return XmlSerialiser.typeFromXml(ValidatorConfigImpl.class, source);
 	}
 
-	public static String configToXml(final ValidatorConfig toConvert) throws JAXBException, IOException {
-		return ValidatorConfigImpl.toXml(toConvert, Boolean.TRUE);
+	public static String configToXml(final ValidatorConfig source) throws JAXBException {
+		return XmlSerialiser.toXml(source, true, false);
 	}
 
-	public static void configToXml(final ValidatorConfig toConvert, final OutputStream stream) throws JAXBException {
-		ValidatorConfigImpl.toXml(toConvert, stream, Boolean.TRUE);
+	public static void configToXml(final ValidatorConfig source, final OutputStream dest) throws JAXBException {
+		XmlSerialiser.toXml(source, dest, true, false);
 	}
 }

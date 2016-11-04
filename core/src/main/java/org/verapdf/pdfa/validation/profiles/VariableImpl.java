@@ -3,13 +3,6 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import java.io.StringReader;
-import java.io.StringWriter;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -164,23 +157,6 @@ final class VariableImpl implements Variable {
     static VariableImpl fromVariable(final Variable toConvert) {
         return new VariableImpl(toConvert.getName(), toConvert.getObject(),
                 toConvert.getDefaultValue(), toConvert.getValue());
-    }
-
-    static String toXml(final Variable toConvert) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(VariableImpl.class);
-        Marshaller varMarshaller = context.createMarshaller();
-        varMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-                Boolean.TRUE);
-        StringWriter writer = new StringWriter();
-        varMarshaller.marshal(toConvert, writer);
-        return writer.toString();
-    }
-
-    static VariableImpl fromXml(final String toConvert) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(VariableImpl.class);
-        Unmarshaller stringUnmarshaller = context.createUnmarshaller();
-        StringReader reader = new StringReader(toConvert);
-        return (VariableImpl) stringUnmarshaller.unmarshal(reader);
     }
 
     static class Adapter extends XmlAdapter<VariableImpl, Variable> {

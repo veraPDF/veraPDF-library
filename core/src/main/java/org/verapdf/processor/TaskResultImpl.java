@@ -3,13 +3,6 @@
  */
 package org.verapdf.processor;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -152,18 +145,6 @@ class TaskResultImpl implements TaskResult {
 		return new TaskResultImpl(type, duration, exception);
 	}
 
-    static void toXml(final TaskResult toConvert,
-            final OutputStream stream, Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, stream);
-    }
-
-    static TaskResult fromXml(final InputStream toConvert)
-            throws JAXBException {
-        Unmarshaller stringUnmarshaller = getUnmarshaller();
-        return (TaskResultImpl) stringUnmarshaller.unmarshal(toConvert);
-    }
-
 	static class Adapter extends XmlAdapter<TaskResultImpl, TaskResult> {
 		@Override
 		public TaskResult unmarshal(TaskResultImpl procResultImpl) {
@@ -174,18 +155,5 @@ class TaskResultImpl implements TaskResult {
 		public TaskResultImpl marshal(TaskResult procResult) {
 			return (TaskResultImpl) procResult;
 		}
-	}
-
-	private static Unmarshaller getUnmarshaller() throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(TaskResultImpl.class);
-		Unmarshaller unmarshaller = context.createUnmarshaller();
-		return unmarshaller;
-	}
-
-	private static Marshaller getMarshaller(Boolean setPretty) throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(TaskResultImpl.class);
-		Marshaller marshaller = context.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
-		return marshaller;
 	}
 }
