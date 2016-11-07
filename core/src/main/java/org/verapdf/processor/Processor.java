@@ -16,7 +16,6 @@ import org.verapdf.component.Component;
  * 
  * Created 2 Nov 2016:11:22:06
  */
-
 public interface Processor extends Component {
 	public ProcessorConfig getConfig();
 	public Collection<ReleaseDetails> getDependencies();

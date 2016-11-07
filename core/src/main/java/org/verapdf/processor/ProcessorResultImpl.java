@@ -32,6 +32,8 @@ class ProcessorResultImpl implements ProcessorResult {
 	private final boolean isValidPdf;
 	@XmlAttribute
 	private final boolean isEncryptedPdf;
+	@XmlElement
+	private final ItemDetails itemDetails;
 	private final EnumMap<TaskType, TaskResult> taskResults;
 	@XmlElement
 	private final ValidationResult validationResult;
@@ -40,24 +42,29 @@ class ProcessorResultImpl implements ProcessorResult {
 	private final MetadataFixerResult fixerResult;
 
 	private ProcessorResultImpl() {
-		this(false, false);
+		this(ItemDetails.defaultInstance());
+	}
+	
+	private ProcessorResultImpl(final ItemDetails details) {
+		this(details, false, false);
 	}
 
-	private ProcessorResultImpl(boolean isValidPdf, boolean isEncrypted) {
-		this(isValidPdf, isEncrypted, new EnumMap<TaskType, TaskResult>(TaskType.class),
+	private ProcessorResultImpl(final ItemDetails details, boolean isValidPdf, boolean isEncrypted) {
+		this(details, isValidPdf, isEncrypted, new EnumMap<TaskType, TaskResult>(TaskType.class),
 				ValidationResults.defaultResult(), new FeatureExtractionResult(),
 				FixerFactory.defaultResult());
 	}
 
-	private ProcessorResultImpl(final EnumMap<TaskType, TaskResult> results, final ValidationResult validationResult,
+	private ProcessorResultImpl(final ItemDetails details, final EnumMap<TaskType, TaskResult> results, final ValidationResult validationResult,
 			final FeatureExtractionResult featuresResult, final MetadataFixerResult fixerResult) {
-		this(true, true, results, validationResult, featuresResult, fixerResult);
+		this(details, true, true, results, validationResult, featuresResult, fixerResult);
 	}
 
-	private ProcessorResultImpl(boolean isValidPdf, boolean isEncrypted, final EnumMap<TaskType, TaskResult> results,
+	private ProcessorResultImpl(final ItemDetails details, final boolean isValidPdf, final boolean isEncrypted, final EnumMap<TaskType, TaskResult> results,
 			final ValidationResult validationResult, final FeatureExtractionResult featuresResult,
 			final MetadataFixerResult fixerResult) {
 		super();
+		this.itemDetails = details;
 		this.isValidPdf = isValidPdf;
 		this.isEncryptedPdf = isEncrypted;
 		this.taskResults = results;
@@ -83,8 +90,7 @@ class ProcessorResultImpl implements ProcessorResult {
 
 	@Override
 	public ItemDetails getProcessedItem() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.itemDetails;
 	}
 
 	@Override
@@ -96,18 +102,18 @@ class ProcessorResultImpl implements ProcessorResult {
 		return defaultInstance;
 	}
 
-	static ProcessorResult fromValues(final EnumMap<TaskType, TaskResult> results,
+	static ProcessorResult fromValues(final ItemDetails details, final EnumMap<TaskType, TaskResult> results,
 			final ValidationResult validationResult, final FeatureExtractionResult featuresResult,
 			final MetadataFixerResult fixerResult) {
-		return new ProcessorResultImpl(true, true, results, validationResult, featuresResult, fixerResult);
+		return new ProcessorResultImpl(details, true, true, results, validationResult, featuresResult, fixerResult);
 	}
 
-	static ProcessorResult invalidPdfResult() {
-		return new ProcessorResultImpl();
+	static ProcessorResult invalidPdfResult(final ItemDetails details) {
+		return new ProcessorResultImpl(details);
 	}
 
-	static ProcessorResult encryptedResult() {
-		return new ProcessorResultImpl(true, false);
+	static ProcessorResult encryptedResult(final ItemDetails details) {
+		return new ProcessorResultImpl(details, true, false);
 	}
 
 	@Override

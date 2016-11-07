@@ -12,6 +12,7 @@ import javax.xml.bind.JAXBException;
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.features.FeatureExtractorConfig;
 import org.verapdf.metadata.fixer.MetadataFixerConfig;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 
 /**
@@ -32,6 +33,11 @@ public final class ProcessorFactory {
 	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
 			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks) {
 		return ProcessorConfigImpl.fromValues(config, featureConfig, fixerConfig, tasks);
+	}
+
+	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, ValidationProfile customProfile) {
+		return ProcessorConfigImpl.fromValues(config, featureConfig, fixerConfig, tasks, customProfile);
 	}
 
 	public static void configToXml(final ProcessorConfig toConvert, final OutputStream stream, boolean format)
