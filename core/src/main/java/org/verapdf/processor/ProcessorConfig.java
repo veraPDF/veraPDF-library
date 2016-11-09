@@ -13,10 +13,12 @@ import org.verapdf.pdfa.validation.validators.ValidatorConfig;
  * @version 0.1 Created 30 Oct 2016:22:13:34
  */
 public interface ProcessorConfig {
+
 	/**
 	 * @return
 	 */
 	public ValidationProfile getCustomProfile();
+
 	/**
 	 * @return
 	 */
