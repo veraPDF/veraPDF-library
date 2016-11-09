@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_A">
-    <details creator="veraPDF Consortium" created="2016-10-20T06:37:27.796-03:00">
+    <details creator="veraPDF Consortium" created="2016-11-09T09:31:25.804-03:00">
         <name>PDF/A-3A validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level A</description>
     </details>
@@ -1410,6 +1410,17 @@
             <test>AFRelationship != null</test>
             <error>
                 <message>The file specification dictionary for an embedded file does not contain the AFRelationship key</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="CosFileSpecification">
+            <id specification="ISO_19005_3" clause="6.8" testNumber="4"/>
+            <description>The additional information provided for associated files as well as the usage requirements for associated files indicate the relationship
+		between the embedded file and the PDF document or the part of the PDF document with which it is associated.</description>
+            <test>isAssociatedFile == true</test>
+            <error>
+                <message>The file specification dictionary for an embedded file is not associated with the PDF document or any of its parts</message>
                 <arguments/>
             </error>
             <references/>
