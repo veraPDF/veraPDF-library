@@ -8,8 +8,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
+import org.verapdf.core.VeraPDFException;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -18,13 +17,11 @@ import javax.xml.stream.XMLStreamException;
  */
 
 public interface StreamingProcessor extends Processor {
-	public BatchSummary process(List<? extends File> toProcess, OutputStream dest) throws XMLStreamException, JAXBException;
+	public BatchSummary process(List<? extends File> toProcess, OutputStream dest) throws VeraPDFException;
 
-	public BatchSummary processDirectory(File toProcess, OutputStream dest, boolean recurse)
-			throws XMLStreamException, JAXBException;
+	public BatchSummary processDirectory(File toProcess, OutputStream dest, boolean recurse) throws VeraPDFException;
 
-	public BatchSummary process(List<? extends File> toProcess, Writer dest) throws XMLStreamException, JAXBException;
+	public BatchSummary process(List<? extends File> toProcess, Writer dest) throws VeraPDFException;
 
-	public BatchSummary processDirectory(File toProcess, Writer dest, boolean recurse)
-			throws XMLStreamException, JAXBException;
+	public BatchSummary processDirectory(File toProcess, Writer dest, boolean recurse) throws VeraPDFException;
 }

@@ -56,4 +56,9 @@ abstract class AbstractFoundry implements VeraPDFFoundry {
 	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures) {
 		return ValidatorFactory.createValidator(profile, maxFailures);
 	}
+
+	@Override
+	public void close() {
+
+	}
 }

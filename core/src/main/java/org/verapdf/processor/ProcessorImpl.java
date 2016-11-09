@@ -52,7 +52,7 @@ import org.verapdf.report.ItemDetails;
 final class ProcessorImpl implements ItemProcessor {
 	private static final ComponentDetails defaultDetails = Components
 			.libraryDetails(URI.create("http://pdfa.verapdf.org/processors#default"), "VeraPDF Processor");
-	private static final Logger logger = Logger.getLogger(ProcessorImpl.class.getName());
+	private static final Logger logger = Logger.getLogger(ProcessorImpl.class.getCanonicalName());
 	private static VeraPDFFoundry foundry = Foundries.defaultInstance();
 
 	private final ProcessorConfig processorConfig;
@@ -109,8 +109,10 @@ final class ProcessorImpl implements ItemProcessor {
 	public ProcessorResult process(ItemDetails fileDetails, InputStream pdfFileStream) {
 		this.initialise();
 		checkArguments(pdfFileStream, fileDetails, this.processorConfig);
-		try (PDFAParser parser = this.isAuto() ? foundry.createParser(pdfFileStream)
-				: foundry.createParser(pdfFileStream, this.valConf().getFlavour())) {
+		try (PDFAParser parser = this.hasCustomProfile()
+				? foundry.createParser(pdfFileStream, this.processorConfig.getCustomProfile().getPDFAFlavour())
+				: this.isAuto() ? foundry.createParser(pdfFileStream)
+						: foundry.createParser(pdfFileStream, this.valConf().getFlavour())) {
 			if (!isAuto() || parser.getFlavour() != PDFAFlavour.NO_FLAVOUR) {
 				for (TaskType task : this.getConfig().getTasks()) {
 					switch (task) {
@@ -134,20 +136,20 @@ final class ProcessorImpl implements ItemProcessor {
 			}
 		} catch (EncryptedPdfException e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " appears to be an encrypted PDF.", e);
-			return ProcessorResultImpl.encryptedResult();
+			return ProcessorResultImpl.encryptedResult(fileDetails);
 		} catch (ModelParsingException e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF.", e);
-			return ProcessorResultImpl.invalidPdfResult();
+			return ProcessorResultImpl.invalidPdfResult(fileDetails);
 		} catch (IOException excep) {
 			logger.log(Level.FINER, "Problem closing PDF Stream", excep);
 		}
 
-		return ProcessorResultImpl.fromValues(this.taskResults, this.validationResult, this.featureResult,
+		return ProcessorResultImpl.fromValues(fileDetails, this.taskResults, this.validationResult, this.featureResult,
 				this.fixerResult);
 	}
 
 	private boolean isAuto() {
-		return this.valConf().getFlavour() == PDFAFlavour.NO_FLAVOUR;
+		return (this.valConf().getFlavour() == PDFAFlavour.NO_FLAVOUR) && (this.processorConfig.getCustomProfile() == Profiles.defaultProfile());
 	}
 
 	private static void checkArguments(InputStream pdfFileStream, ItemDetails fileDetails, ProcessorConfig config) {
@@ -170,13 +172,15 @@ final class ProcessorImpl implements ItemProcessor {
 	private void validate(final PDFAParser parser) {
 		TaskType type = TaskType.VALIDATE;
 		Components.Timer timer = Components.Timer.start();
-		PDFAValidator validator = this.isAuto() ? validator(parser.getFlavour()) : validator();
-		try {
+
+		try (PDFAValidator validator = this.isAuto() ? validator(parser.getFlavour()) : validator()) {
 			this.validationResult = validator.validate(parser);
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop()));
 		} catch (ValidationException excep) {
 			logger.log(Level.WARNING, "Exception caught when validaing item", excep);
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), excep));
+		} catch (IOException excep) {
+			logger.log(Level.INFO, "IOException closing validator.", excep);
 		}
 	}
 
@@ -258,7 +262,13 @@ final class ProcessorImpl implements ItemProcessor {
 
 	@Override
 	public Collection<ReleaseDetails> getDependencies() {
-		// TODO Auto-generated method stub
 		return ReleaseDetails.getDetails();
+	}
+
+	@Override
+	public void close() {
+		/**
+		 * Empty
+		 */
 	}
 }
