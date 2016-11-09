@@ -48,6 +48,6 @@ public final class FeatureFactory {
 			throw new NullPointerException("Arg config can not be null");
 		if (dest == null)
 			throw new NullPointerException("Arg dest can not be null");
-		XmlSerialiser.toXml(config, true, false);
+		XmlSerialiser.toXml(config, dest, true, false);
 	}
 }
