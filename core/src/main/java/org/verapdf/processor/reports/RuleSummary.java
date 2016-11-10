@@ -5,6 +5,8 @@ package org.verapdf.processor.reports;
 
 import java.util.Set;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import org.verapdf.pdfa.results.TestAssertion.Status;
 
 /**
@@ -15,7 +17,7 @@ import org.verapdf.pdfa.results.TestAssertion.Status;
  * 
  * Created 10 Nov 2016:08:22:27
  */
-
+@XmlJavaTypeAdapter(RuleSummaryImpl.Adapter.class)
 public interface RuleSummary {
     public String getSpecification();
     public String getClause();

@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.verapdf.pdfa.results.MetadataFixerResult;
 
@@ -76,13 +77,25 @@ final class FixerReportImpl implements MetadataFixerReport {
 		return this.errors;
 	}
 
+	static class Adapter extends XmlAdapter<FixerReportImpl, MetadataFixerReport> {
+		@Override
+		public MetadataFixerReport unmarshal(FixerReportImpl report) {
+			return report;
+		}
 
-	static MetadataFixerReport fromValues(final String status, final int fixCount, final List<String> fixes,
+		@Override
+		public FixerReportImpl marshal(MetadataFixerReport report) {
+			return (FixerReportImpl) report;
+		}
+	}
+
+
+	static final MetadataFixerReport fromValues(final String status, final int fixCount, final List<String> fixes,
 			final List<String> errors) {
 		return new FixerReportImpl(status, fixCount, fixes, errors);
 	}
 	
-	static MetadataFixerReport fromValues(final MetadataFixerResult fixerResult) {
+	static final MetadataFixerReport fromValues(final MetadataFixerResult fixerResult) {
         int fixCount = 0;
         List<String> fixes = new ArrayList<>();
         List<String> errors = new ArrayList<>();

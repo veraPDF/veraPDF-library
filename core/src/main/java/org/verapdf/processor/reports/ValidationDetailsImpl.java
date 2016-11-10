@@ -3,6 +3,7 @@
  */
 package org.verapdf.processor.reports;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -10,10 +11,11 @@ import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.verapdf.pdfa.results.TestAssertion;
-import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.TestAssertion.Status;
+import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.profiles.Profiles;
 import org.verapdf.pdfa.validation.profiles.Rule;
 import org.verapdf.pdfa.validation.profiles.RuleId;
@@ -24,8 +26,8 @@ import org.verapdf.pdfa.validation.profiles.ValidationProfile;
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
  * @version 0.1 Created 10 Nov 2016:08:34:32
  */
-
 final class ValidationDetailsImpl implements ValidationDetails {
+	private final static ValidationDetailsImpl defaultInstance = new ValidationDetailsImpl();
 	@XmlAttribute
 	private final int passedRules;
 	@XmlAttribute
@@ -37,6 +39,10 @@ final class ValidationDetailsImpl implements ValidationDetails {
 	@XmlElement(name = "rule")
 	private final Set<RuleSummary> ruleSummaries;
 
+	private ValidationDetailsImpl() {
+		this(0, 0, 0, 0, Collections.<RuleSummary>emptySet());
+	}
+	
 	private ValidationDetailsImpl(final int passedRules, final int failedRules, final int passedChecks,
 			final int failedChecks, final Set<RuleSummary> ruleSummaries) {
 		this.passedRules = passedRules;
@@ -44,10 +50,6 @@ final class ValidationDetailsImpl implements ValidationDetails {
 		this.passedChecks = passedChecks;
 		this.failedChecks = failedChecks;
 		this.ruleSummaries = new HashSet<>(ruleSummaries);
-	}
-
-	private ValidationDetailsImpl() {
-		this(0, 0, 0, 0, new HashSet<RuleSummary>());
 	}
 
 	/**
@@ -90,8 +92,25 @@ final class ValidationDetailsImpl implements ValidationDetails {
 		return this.ruleSummaries;
 	}
 
+
+	static class Adapter extends XmlAdapter<ValidationDetailsImpl, ValidationDetails> {
+		@Override
+		public ValidationDetails unmarshal(ValidationDetailsImpl details) {
+			return details;
+		}
+
+		@Override
+		public ValidationDetailsImpl marshal(ValidationDetails details) {
+			return (ValidationDetailsImpl) details;
+		}
+	}
+
+	static final ValidationDetails defaultInstance() {
+		return defaultInstance;
+	}
+
 	static ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks,
-			final int maxNumberOfDisplayedFailedChecks) {
+			final int maxFailedChecks) {
 		ValidationProfile profile = Profiles.getVeraProfileDirectory()
 				.getValidationProfileByFlavour(result.getPDFAFlavour());
 		Map<RuleId, Set<TestAssertion>> assertionMap = mapAssertionsByRule(result.getTestAssertions());
@@ -106,7 +125,7 @@ final class ValidationDetailsImpl implements ValidationDetails {
 			if (assertionMap.containsKey(rule.getRuleId())) {
 				summary = RuleSummaryImpl.fromValues(rule.getRuleId(), rule.getDescription(), rule.getObject(),
 						rule.getTest(), assertionMap.get(rule.getRuleId()), logPassedChecks,
-						maxNumberOfDisplayedFailedChecks);
+						maxFailedChecks);
 			}
 			passedChecks += summary.getPassedChecks();
 			failedChecks += summary.getFailedChecks();

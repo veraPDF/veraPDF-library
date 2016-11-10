@@ -61,40 +61,39 @@ public final class ProcessorFactory {
 	}
 
 	public static final BatchProcessingHandler rawResultHandler() throws VeraPDFException {
-		return new RawResultHandler();
+		return rawResultHandler(new PrintWriter(System.out));
 	}
 
 	public static final BatchProcessingHandler rawResultHandler(final Writer dest) throws VeraPDFException {
-		return new RawResultHandler(dest);
+		return RawResultHandler.newInstance(dest);
 	}
 
-	public static final BatchProcessingHandler rawResultHandler(final Writer dest, final int indentSize) throws VeraPDFException {
-		return new RawResultHandler(dest, indentSize);
+	public static final BatchProcessingHandler rawResultHandler(final Writer dest, final int indentSize)
+			throws VeraPDFException {
+		return RawResultHandler.newInstance(dest, indentSize);
 	}
 
-	public static final BatchProcessingHandler getHandler(FormatOption option,
-                                                          boolean isVerbose, OutputStream reportStream) throws VeraPDFException {
+	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose)
+			throws VeraPDFException {
+		return getHandler(option, isVerbose, System.out);
+	}
+
+	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose,
+			OutputStream reportStream) throws VeraPDFException {
+		if (option == null)
+			throw new IllegalArgumentException("Arg option can not be null");
+		if (reportStream == null)
+			throw new IllegalArgumentException("Arg reportStream can not be null");
+
 		switch (option) {
-			case TEXT:
-			    if (reportStream == null) {
-                    return new SingleLineResultHandler(isVerbose);
-                } else {
-                    return new SingleLineResultHandler(reportStream, isVerbose);
-                }
-            case XML:
-                if (reportStream == null) {
-                    return rawResultHandler();
-                } else {
-                    return rawResultHandler(new PrintWriter(reportStream));
-                }
-            case MRR:
-                if (reportStream == null) {
-                    return new MrrHandler();
-                } else {
-                    return new MrrHandler(new PrintWriter(reportStream));
-                }
-            default:    // should not be reached
-               throw new VeraPDFException("Unknown report format option: " + option);
+		case TEXT:
+			return SingleLineResultHandler.newInstance(reportStream, isVerbose);
+		case XML:
+			return rawResultHandler(new PrintWriter(reportStream));
+		case MRR:
+			return MrrHandler.newInstance(new PrintWriter(reportStream));
+		default: // should not be reached
+			throw new VeraPDFException("Unknown report format option: " + option);
 		}
 	}
 

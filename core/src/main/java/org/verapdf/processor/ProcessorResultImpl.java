@@ -95,7 +95,7 @@ class ProcessorResultImpl implements ProcessorResult {
 
 	@Override
 	public EnumSet<TaskType> getTaskTypes() {
-		return EnumSet.copyOf(this.taskResults.keySet());
+		return this.taskResults.isEmpty() ? EnumSet.noneOf(TaskType.class) : EnumSet.copyOf(this.taskResults.keySet());
 	}
 
 	static ProcessorResult defaultInstance() {

@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
@@ -156,7 +157,19 @@ final class RuleSummaryImpl implements RuleSummary {
 		return this.checks;
 	}
 
-	static RuleSummary fromValues(final RuleId id, final String description, final String object, final String test,
+	static class Adapter extends XmlAdapter<RuleSummaryImpl, RuleSummary> {
+		@Override
+		public RuleSummary unmarshal(RuleSummaryImpl summary) {
+			return summary;
+		}
+
+		@Override
+		public RuleSummaryImpl marshal(RuleSummary summary) {
+			return (RuleSummaryImpl) summary;
+		}
+	}
+
+	static final RuleSummary fromValues(final RuleId id, final String description, final String object, final String test,
 			Set<TestAssertion> assertions, boolean logPassedChecks, int maxNumberOfDisplayedFailedChecks) {
 		if (id == null) {
 			throw new NullPointerException("Argument id can not be null");
@@ -187,7 +200,7 @@ final class RuleSummaryImpl implements RuleSummary {
 		return new RuleSummaryImpl(id, status, passedChecks, failedChecks, description, object, test, checks);
 	}
 
-	static RuleSummary uncheckedInstance(final RuleId id, final String description, final String object,
+	static final RuleSummary uncheckedInstance(final RuleId id, final String description, final String object,
 			final String test) {
 		if (id == null) {
 			throw new NullPointerException("Argument id can not be null");

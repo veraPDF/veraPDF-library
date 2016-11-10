@@ -5,6 +5,7 @@ package org.verapdf.processor.reports;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.verapdf.pdfa.results.TestAssertion;
 
@@ -23,7 +24,7 @@ final class CheckImpl implements Check {
 	@XmlElement
 	private final String context;
 
-	private CheckImpl(TestAssertion.Status status, String context) {
+	private CheckImpl(final TestAssertion.Status status, final String context) {
 		this.status = status.toString();
 		this.context = context;
 	}
@@ -48,7 +49,20 @@ final class CheckImpl implements Check {
 		return this.context;
 	}
 
-	static Check fromValue(TestAssertion assertion) {
+	static class Adapter extends XmlAdapter<CheckImpl, Check> {
+		@Override
+		public Check unmarshal(CheckImpl check) {
+			return check;
+		}
+
+		@Override
+		public CheckImpl marshal(Check check) {
+			return (CheckImpl) check;
+		}
+	}
+
+
+	static final Check fromValue(final TestAssertion assertion) {
 		if (assertion == null) {
 			throw new IllegalArgumentException("Argument assertion con not be null");
 		}

@@ -3,11 +3,11 @@
  */
 package org.verapdf.processor;
 
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -15,17 +15,15 @@ import javax.xml.stream.XMLStreamWriter;
 import org.verapdf.core.VeraPDFException;
 
 /**
- * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *          <a href="https://github.com/carlwilson">carlwilson AT github</a>
- *
- * @version 0.1
- * 
- * Created 09 Nov 2016:00:32:49
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1 Created 09 Nov 2016:00:32:49
  */
 
-public abstract class AbstractXmlHandler implements BatchProcessingHandler {
+public abstract class AbstractXmlHandler extends AbstractBatchHandler {
 	private static final Logger logger = Logger.getLogger(AbstractXmlHandler.class.getCanonicalName());
 	protected final static String strmExcpMessTmpl = "XmlStreamException caught when %s output writer.";
+	protected final static String unmarshalErrMessage = "Unmarshalling exception when streaming %s.";
 	private final static String encoding = "utf-8";
 	private final static String xmlVersion = "1.0";
 	private final static String lineSepProp = "line.separator";
@@ -35,18 +33,15 @@ public abstract class AbstractXmlHandler implements BatchProcessingHandler {
 	protected XMLStreamWriter writer;
 	private final int indentSize;
 	private int indent = 0;
-	
-	public AbstractXmlHandler() throws VeraPDFException {
-		this(new PrintWriter(System.out));
-	}
 
-	public AbstractXmlHandler(final Writer dest) throws VeraPDFException {
+	protected AbstractXmlHandler(final Writer dest) throws VeraPDFException {
 		this(dest, 2);
 	}
+
 	/**
 	 * 
 	 */
-	public AbstractXmlHandler(final Writer dest, final int indentSize) throws VeraPDFException {
+	protected AbstractXmlHandler(final Writer dest, final int indentSize) throws VeraPDFException {
 		super();
 		this.indentSize = indentSize;
 		try {
@@ -100,7 +95,11 @@ public abstract class AbstractXmlHandler implements BatchProcessingHandler {
 	protected static VeraPDFException wrapStreamException(final XMLStreamException excep, final String verbPart) {
 		return new VeraPDFException(String.format(strmExcpMessTmpl, verbPart), excep);
 	}
-	
+
+	protected static final VeraPDFException wrapMarshallException(final JAXBException excep, final String typePart) {
+		return new VeraPDFException(String.format(unmarshalErrMessage, typePart), excep);
+	}
+
 	@Override
 	public void close() {
 		try {

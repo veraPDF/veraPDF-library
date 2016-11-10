@@ -69,6 +69,7 @@ public abstract class AbstractBatchProcessor implements BatchProcessor {
 	public BatchSummary process(final File toProcess, final boolean recurse, final BatchProcessingHandler resultHandler)
 			throws VeraPDFException {
 		this.initialise(resultHandler);
+		this.handler.handleBatchStart(this.processor.getConfig());
 		this.processContainer(toProcess, recurse);
 		return finishBatch();
 	}
@@ -80,8 +81,9 @@ public abstract class AbstractBatchProcessor implements BatchProcessor {
 		this.processList(toProcess);
 		return finishBatch();
 	}
-	
+
 	protected abstract void processContainer(final File container, final boolean recurse) throws VeraPDFException;
+
 	protected abstract void processList(final List<? extends File> toProcess) throws VeraPDFException;
 
 	private void initialise(final BatchProcessingHandler resultHandler) {
@@ -93,7 +95,7 @@ public abstract class AbstractBatchProcessor implements BatchProcessor {
 		this.summariser.addProcessingResult(result);
 		this.handler.handleResult(result);
 	}
-	
+
 	private BatchSummary finishBatch() throws VeraPDFException {
 		BatchSummary summary = this.summariser.summarise();
 		this.handler.handleBatchEnd(summary);

@@ -15,33 +15,50 @@ import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 public interface ProcessorConfig {
 
 	/**
-	 * @return
+	 * @return the custom {@link ValidationProfile} or a
+	 *         {@link Profiles#defaultProfile()} instance if no custom profile
+	 *         is assigned.
 	 */
 	public ValidationProfile getCustomProfile();
 
 	/**
-	 * @return
+	 * @return true if this configuration has been assigned a custom
+	 *         {@link ValidationProfile}
+	 */
+	public boolean hasCustomProfile();
+
+	/**
+	 * @return the {@link ValidatorConfig} assigned to this configuration, or
+	 *         {@link ValidatorFactory#defaultConfig()} if no validation task
+	 *         has been assigned.
 	 */
 	public ValidatorConfig getValidatorConfig();
 
 	/**
-	 * @return
+	 * @return the {@link FeatureExtractorConfig} assigned to this configuration
+	 *         or {@link FeatureFactory#defaultConfig()} if no feature
+	 *         extraction task has been assigned.
 	 */
 	public FeatureExtractorConfig getFeatureConfig();
 
 	/**
-	 * @return
+	 * @return the {@link MetadataFixerConfig} assigned to this configuration or
+	 *         {@link FixerFactory#defaultConfig()} if no MetadataFixer task has
+	 *         been assigned.
 	 */
 	public MetadataFixerConfig getFixerConfig();
 
 	/**
-	 * @return
+	 * @return the full {@link EnumSet} of {@link TaskType}s assigned in this
+	 *         configuration.
 	 */
 	public EnumSet<TaskType> getTasks();
 
 	/**
 	 * @param toCheck
-	 * @return
+	 *            the {@link TaskType} to check
+	 * @return true if this configuration has been assigned a task of
+	 *         {@link TaskType} toCheck.
 	 */
 	public boolean hasTask(TaskType toCheck);
 
