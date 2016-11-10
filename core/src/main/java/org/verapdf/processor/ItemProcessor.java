@@ -1,9 +1,9 @@
 package org.verapdf.processor;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import org.verapdf.core.VeraPDFException;
 import org.verapdf.report.ItemDetails;
 
 /**
@@ -28,5 +28,5 @@ public interface ItemProcessor extends Processor {
 	 */
 	public ProcessorResult process(ItemDetails fileDetails, InputStream toProcess);
 
-	public ProcessorResult process(File toProcess) throws FileNotFoundException;
+	public ProcessorResult process(File toProcess) throws VeraPDFException;
 }

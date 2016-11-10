@@ -1,4 +1,4 @@
-package org.verapdf.processor;
+package org.verapdf.processor.reports;
 
 import org.verapdf.component.AuditDuration;
 
