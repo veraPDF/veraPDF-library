@@ -1,11 +1,9 @@
 /**
- * 
+ *
  */
 package org.verapdf.processor;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Writer;
+import java.io.*;
 import java.util.EnumSet;
 
 import javax.xml.bind.JAXBException;
@@ -74,6 +72,32 @@ public final class ProcessorFactory {
 		return new RawResultHandler(dest, indentSize);
 	}
 
+	public static final BatchProcessingHandler getHandler(FormatOption option,
+                                                          boolean isVerbose, OutputStream reportStream) throws VeraPDFException {
+		switch (option) {
+			case TEXT:
+			    if (reportStream == null) {
+                    return new SingleLineResultHandler(isVerbose);
+                } else {
+                    return new SingleLineResultHandler(reportStream, isVerbose);
+                }
+            case XML:
+                if (reportStream == null) {
+                    return rawResultHandler();
+                } else {
+                    return rawResultHandler(new PrintWriter(reportStream));
+                }
+            case MRR:
+                if (reportStream == null) {
+                    return new MrrHandler();
+                } else {
+                    return new MrrHandler(new PrintWriter(reportStream));
+                }
+            default:    // should not be reached
+               throw new VeraPDFException("Unknown report format option: " + option);
+		}
+	}
+
 	public static void resultToXml(final ProcessorResult toConvert, final OutputStream stream, boolean prettyXml)
 			throws JAXBException {
 		XmlSerialiser.toXml(toConvert, stream, prettyXml, false);
@@ -96,14 +120,14 @@ public final class ProcessorFactory {
 		private int jobs = 0;
 		private int failedJobs = 0;
 		private Components.Timer timer = Components.Timer.start();
-		
+
 		public void addProcessingResult(ProcessorResult result) {
 			this.jobs++;
 			if (!result.isValidPdf() || result.isEncryptedPdf()) {
 				this.failedJobs++;
 			}
 		}
-		
+
 		public BatchSummary summarise() {
 			return Reports.createBatchSummary(timer, jobs, failedJobs);
 		}
