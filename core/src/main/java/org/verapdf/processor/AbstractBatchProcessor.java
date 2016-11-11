@@ -78,6 +78,7 @@ public abstract class AbstractBatchProcessor implements BatchProcessor {
 	public BatchSummary process(final List<? extends File> toProcess, final BatchProcessingHandler resultHandler)
 			throws VeraPDFException {
 		this.initialise(resultHandler);
+		this.handler.handleBatchStart(this.processor.getConfig());
 		this.processList(toProcess);
 		return finishBatch();
 	}

@@ -57,7 +57,7 @@ class ProcessorResultImpl implements ProcessorResult {
 
 	private ProcessorResultImpl(final ItemDetails details, final EnumMap<TaskType, TaskResult> results, final ValidationResult validationResult,
 			final FeatureExtractionResult featuresResult, final MetadataFixerResult fixerResult) {
-		this(details, true, true, results, validationResult, featuresResult, fixerResult);
+		this(details, true, false, results, validationResult, featuresResult, fixerResult);
 	}
 
 	private ProcessorResultImpl(final ItemDetails details, final boolean isValidPdf, final boolean isEncrypted, final EnumMap<TaskType, TaskResult> results,
@@ -105,7 +105,7 @@ class ProcessorResultImpl implements ProcessorResult {
 	static ProcessorResult fromValues(final ItemDetails details, final EnumMap<TaskType, TaskResult> results,
 			final ValidationResult validationResult, final FeatureExtractionResult featuresResult,
 			final MetadataFixerResult fixerResult) {
-		return new ProcessorResultImpl(details, true, true, results, validationResult, featuresResult, fixerResult);
+		return new ProcessorResultImpl(details, true, false, results, validationResult, featuresResult, fixerResult);
 	}
 
 	static ProcessorResult invalidPdfResult(final ItemDetails details) {
