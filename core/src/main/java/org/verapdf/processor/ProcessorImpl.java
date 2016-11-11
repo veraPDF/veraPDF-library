@@ -93,12 +93,12 @@ final class ProcessorImpl implements ItemProcessor {
 	}
 
 	@Override
-	public ProcessorResult process(File toProcess) throws FileNotFoundException {
+	public ProcessorResult process(File toProcess) throws VeraPDFException {
 		ProcessorResult retVal = ProcessorResultImpl.defaultInstance();
 		try (InputStream fis = new FileInputStream(toProcess)) {
 			retVal = this.process(ItemDetails.fromFile(toProcess), fis);
 		} catch (FileNotFoundException excep) {
-			throw excep;
+			throw new VeraPDFException("Couldn't find file: " + toProcess.getPath() + " to process.", excep);
 		} catch (IOException excep) {
 			logger.log(Level.INFO, "Problem closing file:" + toProcess, excep);
 		}

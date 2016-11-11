@@ -1,12 +1,15 @@
 /**
  * 
  */
-package org.verapdf.processor;
+package org.verapdf.processor.reports;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.verapdf.component.AuditDuration;
+import org.verapdf.component.Components;
 
 /**
  * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -16,7 +19,7 @@ import org.verapdf.component.AuditDuration;
  * 
  * Created 2 Nov 2016:11:43:50
  */
-
+@XmlRootElement(name="summary")
 final class BatchSummaryImpl implements BatchSummary {
 	@XmlElement
 	private final AuditDuration duration;
@@ -25,6 +28,9 @@ final class BatchSummaryImpl implements BatchSummary {
 	@XmlAttribute
 	private final int failedJobs;
 
+	private BatchSummaryImpl() {
+		this(Components.defaultDuration(), 0, 0);
+	}
 	/**
 	 * @param duration
 	 * @param jobs
@@ -59,5 +65,21 @@ final class BatchSummaryImpl implements BatchSummary {
 	@Override
 	public int getFailedJobs() {
 		return this.failedJobs;
+	}
+	
+	static class Adapter extends XmlAdapter<BatchSummaryImpl, BatchSummary> {
+		@Override
+		public BatchSummary unmarshal(BatchSummaryImpl summary) {
+			return summary;
+		}
+
+		@Override
+		public BatchSummaryImpl marshal(BatchSummary summary) {
+			return (BatchSummaryImpl) summary;
+		}
+	}
+
+	static BatchSummary fromValues(final AuditDuration duration, final int jobs, final int failedJobs) {
+		return new BatchSummaryImpl(duration, jobs, failedJobs);
 	}
 }

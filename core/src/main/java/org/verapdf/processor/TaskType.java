@@ -4,17 +4,19 @@ package org.verapdf.processor;
  * @author Evgeniy Muravitskiy
  */
 public enum TaskType {
-	NONE("NONE"),
-	PARSE("parsing"),
-	VALIDATE("validation"),
-	EXTRACT_FEATURES("features"),
-	FIX_METADATA("metadata");
+	NONE("NONE"), PARSE("parsing", "PDF Parsing"), VALIDATE("validation", "PDF/A Validation"), EXTRACT_FEATURES(
+			"features", "Feature Extraction"), FIX_METADATA("metadata", "Metadata Repair");
 
 	private final String value;
-	
+	private final String fullName;
 
-	TaskType(String value) {
+	TaskType(final String value) {
+		this(value, value);
+	}
+
+	TaskType(final String value, final String fullName) {
 		this.value = value;
+		this.fullName = fullName;
 	}
 
 	public static TaskType fromString(final String toParse) {
@@ -28,6 +30,11 @@ public enum TaskType {
 	public String getValue() {
 		return this.value;
 	}
+
+	public String fullName() {
+		return this.fullName;
+	}
+
 	@Override
 	public String toString() {
 		return this.value;

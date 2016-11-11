@@ -1,7 +1,9 @@
-package org.verapdf.processor;
+package org.verapdf.processor.reports;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.verapdf.component.AuditDuration;
-
+@XmlJavaTypeAdapter(BatchSummaryImpl.Adapter.class)
 public interface BatchSummary {
 
 	/**

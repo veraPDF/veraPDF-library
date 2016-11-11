@@ -77,6 +77,10 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	}
 
 	@Override
+	public boolean hasCustomProfile() {
+		return this.customProfile.equals(Profiles.defaultProfile());
+	}
+	@Override
 	public EnumSet<TaskType> getTasks() {
 		return EnumSet.copyOf(this.tasks);
 	}
