@@ -46,8 +46,6 @@ import java.util.Set;
 public enum PDFAFlavour {
     /** Special ID for the none case */
     NO_FLAVOUR(Specification.NO_STANDARD, Level.NO_LEVEL),
-    /** Special ID for the automatic detection case */
-    AUTO(Specification.AUTO, Level.NO_LEVEL),
     /** 1a PDF Version 1 Level A */
     PDFA_1_A(Specification.ISO_19005_1, Level.A),
     /** 1b PDF Version 1 Level B */
@@ -77,9 +75,13 @@ public enum PDFAFlavour {
     private final String id;
 
     private PDFAFlavour(final Specification standard, final Level level) {
+    	this(standard.getPartNumber() + level.getCode(), standard, level);
+    }
+
+    private PDFAFlavour(final String id, final Specification standard, final Level level) {
         this.part = standard;
         this.level = level;
-        this.id = this.part == Specification.AUTO ? "auto" : this.part.getPartNumber() + this.level.getCode();
+        this.id = id;
     }
 
     /**
@@ -117,8 +119,6 @@ public enum PDFAFlavour {
     public enum Specification {
         /** PDF/A Version 1 */
         NO_STANDARD(IsoStandardSeries.NO_SERIES, PDFAFlavours.NONE_ID,
-                PDFAFlavours.NONE, PDFAFlavours.NONE),
-        AUTO(IsoStandardSeries.NO_SERIES, PDFAFlavours.NONE_ID,
                 PDFAFlavours.NONE, PDFAFlavours.NONE),
         /** PDF/A Version 1 */
         ISO_19005_1(IsoStandardSeries.ISO_19005, PDFAFlavours.ISO_19005_1_PART,

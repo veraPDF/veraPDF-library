@@ -9,10 +9,10 @@ import java.util.List;
  *
  * @author Maksim Bezrukov
  */
-public abstract class AbstractEmbeddedFileFeaturesExtractor extends FeaturesExtractor {
+public abstract class AbstractEmbeddedFileFeaturesExtractor extends AbstractFeaturesExtractor {
 
 	public AbstractEmbeddedFileFeaturesExtractor() {
-		super(FeaturesObjectTypesEnum.EMBEDDED_FILE);
+		super(FeatureObjectType.EMBEDDED_FILE);
 	}
 
 	@Override

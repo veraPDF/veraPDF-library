@@ -124,8 +124,8 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 			return this;
 		}
 
-		public Builder afRelationship(String afRelationship) {
-			this.afRelationship = afRelationship;
+		public Builder afRelationship(String afRelationshipBuild) {
+			this.afRelationship = afRelationshipBuild;
 			return this;
 		}
 

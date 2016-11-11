@@ -1,28 +1,22 @@
+/**
+ * 
+ */
 package org.verapdf.processor;
 
-import org.verapdf.processor.config.Config;
-import org.verapdf.report.ItemDetails;
+import java.util.Collection;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import org.verapdf.ReleaseDetails;
+import org.verapdf.component.Component;
 
 /**
- * Processor encapsulates all validation processes: validation, metadata
- * fixes and feature extracting.
+ * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *          <a href="https://github.com/carlwilson">carlwilson AT github</a>
  *
- *  @author Sergey Shemyakov
+ * @version 0.1
+ * 
+ * Created 2 Nov 2016:11:22:06
  */
-public interface Processor {
-
-	/**
-	 * Method performs pdf validation with given options
-	 *
-	 * @param pdfFile input stream, containing file to be validated
-	 * @param fileDetails details about file to be validated
-	 * @param config settings used in validation
-	 * @param report output stream, in which report will be written
-	 */
-	ProcessingResult validate(InputStream pdfFile, ItemDetails fileDetails,
-									 Config config, OutputStream report);
-
+public interface Processor extends Component {
+	public ProcessorConfig getConfig();
+	public Collection<ReleaseDetails> getDependencies();
 }

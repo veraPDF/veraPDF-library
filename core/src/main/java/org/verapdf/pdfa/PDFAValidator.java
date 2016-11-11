@@ -1,9 +1,9 @@
 package org.verapdf.pdfa;
 
-import org.verapdf.core.ModelParsingException;
+import org.verapdf.component.Component;
 import org.verapdf.core.ValidationException;
 import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.validation.ValidationProfile;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 /**
  * A PDFAValidator performs a series of checks on PDF/A documents to verify that
@@ -17,7 +17,7 @@ import org.verapdf.pdfa.validation.ValidationProfile;
  *
  * @author Maksim Bezrukov
  */
-public interface PDFAValidator {
+public interface PDFAValidator extends Component {
 
     /**
      * Returns the complete {@link ValidationProfile} enforced by this PDFAValidator.
@@ -42,5 +42,5 @@ public interface PDFAValidator {
      *             if the toValidate parameter is null PDFAValidationException
      *             if the validation process fails
      */
-    public ValidationResult validate(PDFParser toValidate) throws ValidationException, ModelParsingException;
+    public ValidationResult validate(PDFAParser toValidate) throws ValidationException;
 }

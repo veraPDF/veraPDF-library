@@ -1,9 +1,9 @@
 package org.verapdf.report;
 
-import org.verapdf.features.FeaturesObjectTypesEnum;
-import org.verapdf.features.tools.FeaturesCollection;
-
 import javax.xml.bind.annotation.XmlElement;
+
+import org.verapdf.features.FeatureExtractionResult;
+import org.verapdf.features.FeatureObjectType;
 
 /**
  * @author Maksim Bezrukov
@@ -39,16 +39,16 @@ public class DocumentResourcesFeatures {
 		this(null, null, null, null, null, null, null);
 	}
 
-	static DocumentResourcesFeatures fromValues(FeaturesCollection collection) {
-		FeaturesNode graphicsStates = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.EXT_G_STATE);
-		FeaturesNode colorSpaces = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.COLORSPACE);
-		FeaturesNode patterns = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.PATTERN);
-		FeaturesNode shadings = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.SHADING);
-		FeaturesNode fonts = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.FONT);
-		FeaturesNode propertiesDicts = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.PROPERTIES);
-		FeaturesNode xobjects = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.IMAGE_XOBJECT,
-				FeaturesObjectTypesEnum.FORM_XOBJECT, FeaturesObjectTypesEnum.POSTSCRIPT_XOBJECT,
-				FeaturesObjectTypesEnum.FAILED_XOBJECT);
+	static DocumentResourcesFeatures fromValues(FeatureExtractionResult collection) {
+		FeaturesNode graphicsStates = FeaturesNode.fromValues(collection, FeatureObjectType.EXT_G_STATE);
+		FeaturesNode colorSpaces = FeaturesNode.fromValues(collection, FeatureObjectType.COLORSPACE);
+		FeaturesNode patterns = FeaturesNode.fromValues(collection, FeatureObjectType.PATTERN);
+		FeaturesNode shadings = FeaturesNode.fromValues(collection, FeatureObjectType.SHADING);
+		FeaturesNode fonts = FeaturesNode.fromValues(collection, FeatureObjectType.FONT);
+		FeaturesNode propertiesDicts = FeaturesNode.fromValues(collection, FeatureObjectType.PROPERTIES);
+		FeaturesNode xobjects = FeaturesNode.fromValues(collection, FeatureObjectType.IMAGE_XOBJECT,
+				FeatureObjectType.FORM_XOBJECT, FeatureObjectType.POSTSCRIPT_XOBJECT,
+				FeatureObjectType.FAILED_XOBJECT);
 		if (graphicsStates == null
 				&& colorSpaces == null
 				&& patterns == null

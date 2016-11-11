@@ -3,15 +3,14 @@
  */
 package org.verapdf.pdfa;
 
-import java.io.IOException;
 import java.io.InputStream;
 
+import org.verapdf.component.Component;
 import org.verapdf.core.EncryptedPdfException;
 import org.verapdf.core.ModelParsingException;
-import org.verapdf.metadata.fixer.entity.PDFDocument;
-import org.verapdf.metadata.fixer.utils.FixerConfig;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
+import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 
 /**
  * The veraPDFFoundry interface provides methods for creating implementations of
@@ -21,7 +20,7 @@ import org.verapdf.pdfa.results.ValidationResult;
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
  * @version 0.1 Created 21 Sep 2016:12:37:55
  */
-public interface VeraPDFFoundry {
+public interface VeraPDFFoundry extends Component {
 	/**
 	 * Method that returns a PDFParser instance, parsing the passed
 	 * {@link pdfStream} parameter. The parser or parser provider will detect
@@ -36,7 +35,7 @@ public interface VeraPDFFoundry {
 	 * @throws EncryptedPdfException
 	 *             if the PDF to be parsed is encrypted
 	 */
-	public PDFParser newPdfParser(InputStream pdfStream) throws ModelParsingException, EncryptedPdfException;
+	public PDFAParser createParser(InputStream pdfStream) throws ModelParsingException, EncryptedPdfException;
 
 	/**
 	 * Method that returns a PDFParser instance, parsing the passed
@@ -56,8 +55,19 @@ public interface VeraPDFFoundry {
 	 * @throws EncryptedPdfException
 	 *             if the PDF to be parsed is encrypted
 	 */
-	public PDFParser newPdfParser(InputStream pdfStream, PDFAFlavour flavour)
+	public PDFAParser createParser(InputStream pdfStream, PDFAFlavour flavour)
 			throws ModelParsingException, EncryptedPdfException;
 
-	public MetadataFixer newMetadataFixer();
+	public PDFAValidator createValidator(ValidatorConfig config);
+	public PDFAValidator createValidator(ValidatorConfig config, ValidationProfile profile);
+	public PDFAValidator createValidator(ValidatorConfig config, PDFAFlavour flavour);
+	
+	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess);
+	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess);
+
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures);
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures);
+
+
+	public MetadataFixer createMetadataFixer();
 }

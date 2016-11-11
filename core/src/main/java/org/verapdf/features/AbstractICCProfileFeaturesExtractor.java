@@ -9,10 +9,10 @@ import java.util.List;
  *
  * @author Maksim Bezrukov
  */
-public abstract class AbstractICCProfileFeaturesExtractor extends FeaturesExtractor {
+public abstract class AbstractICCProfileFeaturesExtractor extends AbstractFeaturesExtractor {
 
 	public AbstractICCProfileFeaturesExtractor() {
-		super(FeaturesObjectTypesEnum.ICCPROFILE);
+		super(FeatureObjectType.ICCPROFILE);
 	}
 
 	@Override

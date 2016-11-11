@@ -1,16 +1,13 @@
 package org.verapdf.report;
 
-import org.verapdf.features.FeaturesObjectTypesEnum;
-import org.verapdf.features.tools.FeatureTreeNode;
-import org.verapdf.features.tools.FeaturesCollection;
+import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.OutputStream;
-import java.util.List;
+
+import org.verapdf.features.FeatureExtractionResult;
+import org.verapdf.features.FeatureObjectType;
+import org.verapdf.features.tools.FeatureTreeNode;
 
 /**
  * @author Maksim Bezrukov
@@ -89,54 +86,31 @@ public class FeaturesReport {
 	 * @param collection
 	 * @return
 	 */
-	public static FeaturesReport fromValues(FeaturesCollection collection) {
+	public static FeaturesReport fromValues(FeatureExtractionResult collection) {
 		if (collection == null) {
 			return null;
 		}
-		FeaturesNode info = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.INFORMATION_DICTIONARY);
-		FeaturesNode metadata = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.METADATA);
-		FeaturesNode docSec = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.DOCUMENT_SECURITY);
-		FeaturesNode sig = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.SIGNATURE);
-		FeaturesNode lowLvl = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.LOW_LEVEL_INFO);
-		FeaturesNode embeddedFiles = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.EMBEDDED_FILE);
-		FeaturesNode iccProfiles = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.ICCPROFILE);
-		FeaturesNode outputIntents = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.OUTPUTINTENT);
-		FeaturesNode outlines = getFirstNodeFromType(collection, FeaturesObjectTypesEnum.OUTLINES);
-		FeaturesNode annotations = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.ANNOTATION);
-		FeaturesNode pages = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.PAGE);
+		FeaturesNode info = getFirstNodeFromType(collection, FeatureObjectType.INFORMATION_DICTIONARY);
+		FeaturesNode metadata = getFirstNodeFromType(collection, FeatureObjectType.METADATA);
+		FeaturesNode docSec = getFirstNodeFromType(collection, FeatureObjectType.DOCUMENT_SECURITY);
+		FeaturesNode sig = FeaturesNode.fromValues(collection, FeatureObjectType.SIGNATURE);
+		FeaturesNode lowLvl = getFirstNodeFromType(collection, FeatureObjectType.LOW_LEVEL_INFO);
+		FeaturesNode embeddedFiles = FeaturesNode.fromValues(collection, FeatureObjectType.EMBEDDED_FILE);
+		FeaturesNode iccProfiles = FeaturesNode.fromValues(collection, FeatureObjectType.ICCPROFILE);
+		FeaturesNode outputIntents = FeaturesNode.fromValues(collection, FeatureObjectType.OUTPUTINTENT);
+		FeaturesNode outlines = getFirstNodeFromType(collection, FeatureObjectType.OUTLINES);
+		FeaturesNode annotations = FeaturesNode.fromValues(collection, FeatureObjectType.ANNOTATION);
+		FeaturesNode pages = FeaturesNode.fromValues(collection, FeatureObjectType.PAGE);
 		DocumentResourcesFeatures res = DocumentResourcesFeatures.fromValues(collection);
-		FeaturesNode errors = FeaturesNode.fromValues(collection, FeaturesObjectTypesEnum.ERROR);
+		FeaturesNode errors = FeaturesNode.fromValues(collection, FeatureObjectType.ERROR);
 		return new FeaturesReport(info, metadata, docSec, sig, lowLvl, embeddedFiles, iccProfiles, outputIntents, outlines, annotations, pages, res, errors, null);
 	}
 
-	static FeaturesNode getFirstNodeFromType(FeaturesCollection collection, FeaturesObjectTypesEnum type) {
+	static FeaturesNode getFirstNodeFromType(FeatureExtractionResult collection, FeatureObjectType type) {
 		List<FeatureTreeNode> featureTreesForType = collection.getFeatureTreesForType(type);
 		if (featureTreesForType.isEmpty()) {
 			return null;
 		}
 		return FeaturesNode.fromValues(collection.getFeatureTreesForType(type).get(0), collection);
 	}
-
-
-    /**
-     * @param toConvert
-     * @param stream
-     * @param prettyXml
-     * @throws JAXBException
-     */
-    public static void toXml(final FeaturesReport toConvert,
-            final OutputStream stream, Boolean prettyXml) throws JAXBException {
-        Marshaller varMarshaller = getMarshaller(prettyXml);
-        varMarshaller.marshal(toConvert, stream);
-    }
-
-    private static Marshaller getMarshaller(Boolean setPretty)
-            throws JAXBException {
-        JAXBContext context = JAXBContext
-                .newInstance(FeaturesReport.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, setPretty);
-        return marshaller;
-    }
-    
 }

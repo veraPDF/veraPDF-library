@@ -9,10 +9,10 @@ import java.util.List;
  *
  * @author Maksim Bezrukov
  */
-public abstract class AbstractImageFeaturesExtractor extends FeaturesExtractor {
+public abstract class AbstractImageFeaturesExtractor extends AbstractFeaturesExtractor {
 
 	public AbstractImageFeaturesExtractor() {
-		super(FeaturesObjectTypesEnum.IMAGE_XOBJECT);
+		super(FeatureObjectType.IMAGE_XOBJECT);
 	}
 
 	@Override
@@ -27,7 +27,6 @@ public abstract class AbstractImageFeaturesExtractor extends FeaturesExtractor {
 	 * @return list of roots for extracted data tree
 	 */
 	public abstract List<FeatureTreeNode> getImageFeatures(ImageFeaturesData data);
-
 }
 
 

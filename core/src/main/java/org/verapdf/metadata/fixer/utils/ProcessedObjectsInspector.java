@@ -5,8 +5,8 @@ import org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser;
 import org.verapdf.metadata.fixer.utils.parser.XMLProcessedObjectsParser;
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
-import org.verapdf.pdfa.validation.Rule;
-import org.verapdf.pdfa.validation.ValidationProfile;
+import org.verapdf.pdfa.validation.profiles.Rule;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;

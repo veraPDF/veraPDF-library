@@ -53,27 +53,27 @@ public class PluginConfig {
 	}
 
 	public boolean isEnabled() {
-		return enabled;
+		return this.enabled;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public String getVersion() {
-		return version;
+		return this.version;
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	public Path getPluginJar() {
-		return pluginJar;
+		return this.pluginJar;
 	}
 
 	public List<Attribute> getAttributes() {
-		return attributes == null ? Collections.<Attribute>emptyList() : Collections.unmodifiableList(attributes);
+		return this.attributes == null ? Collections.<Attribute>emptyList() : Collections.unmodifiableList(this.attributes);
 	}
 
 	private static class PathAdapter extends XmlAdapter<String, Path> {
@@ -85,7 +85,7 @@ public class PluginConfig {
 		}
 
 		@Override
-		public String marshal(Path v) throws Exception {
+		public String marshal(Path v) {
 			return v.toAbsolutePath().toUri().toString();
 		}
 	}
