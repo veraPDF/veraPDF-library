@@ -3,23 +3,19 @@
  */
 package org.verapdf.processor;
 
-import java.io.Writer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
-
+import org.verapdf.ReleaseDetails;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.processor.reports.BatchSummary;
-import org.verapdf.processor.reports.MetadataFixerReport;
-import org.verapdf.processor.reports.Reports;
-import org.verapdf.processor.reports.ValidationDetails;
-import org.verapdf.processor.reports.ValidationReport;
+import org.verapdf.processor.reports.*;
 import org.verapdf.report.FeaturesReport;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLStreamException;
+import java.io.Writer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -39,6 +35,8 @@ final class MrrHandler extends AbstractXmlHandler {
 	private final static String report = "report";
 	private final static String job = "job";
 	private final static String jobs = job + "s";
+
+	private final static String buildInformation = "buildInformation";
 
 	private final boolean logSuccess;
 	private final int maxFailedChecks;
@@ -74,18 +72,36 @@ final class MrrHandler extends AbstractXmlHandler {
 		try {
 			startDoc(this.writer);
 			indentElement(report);
+			addReleaseDetails();
 			indentElement(jobs);
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
 		}
 	}
 
+	private void addReleaseDetails() throws XMLStreamException, VeraPDFException {
+		indentElement(buildInformation);
+		for (ReleaseDetails details : ReleaseDetails.getDetails()) {
+			try {
+				XmlSerialiser.toXml(details, this.writer, true, true);
+			} catch (JAXBException excep) {
+				logger.log(Level.WARNING, String.format(unmarshalErrMessage, "releaseDetails"), excep);
+				throw wrapMarshallException(excep, "releaseDetails");
+			}
+		}
+		outdentElement();
+	}
+
 	@Override
 	void resultStart(ProcessorResult result) throws VeraPDFException {
 		try {
 			indentElement(job);
+			XmlSerialiser.toXml(result.getProcessedItem(), this.writer, true, true);
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
+		} catch (JAXBException excep) {
+			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "itemDetails"), excep);
+			throw wrapMarshallException(excep, "itemDetails");
 		}
 	}
 

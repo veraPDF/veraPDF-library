@@ -3,16 +3,15 @@
  */
 package org.verapdf.processor;
 
-import java.io.Writer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.verapdf.core.VeraPDFException;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-
-import org.verapdf.core.VeraPDFException;
+import java.io.Writer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -72,6 +71,10 @@ public abstract class AbstractXmlHandler extends AbstractBatchHandler {
 	protected void indentElement(String eleName) throws XMLStreamException {
 		newLine(this.writer, this.indent());
 		this.writer.writeStartElement(eleName);
+	}
+
+	protected void addAttribute(String name, String value) throws XMLStreamException {
+		this.writer.writeAttribute(name, value);
 	}
 
 	protected void outdentElement() throws XMLStreamException {
