@@ -119,7 +119,7 @@
                         <b>Version:</b>
                     </td>
                     <td>
-                        <xsl:value-of select="/report/buildInformation/releaseDetails[@id ='gui']/@version"/>
+                        <xsl:value-of select="/report/buildInformation/releaseDetails[1]/@version"/>
                     </td>
                 </tr>
                 <tr>
@@ -127,7 +127,7 @@
                         <b>Build Date:</b>
                     </td>
                     <td>
-                        <xsl:value-of select="/report/buildInformation/releaseDetails[@id='gui']/@buildDate"/>
+                        <xsl:value-of select="/report/buildInformation/releaseDetails[1]/@buildDate"/>
                     </td>
                 </tr>
                 <!--<tr>-->
