@@ -3,20 +3,24 @@
  */
 package org.verapdf.processor;
 
-import java.io.*;
-import java.util.EnumSet;
-
-import javax.xml.bind.JAXBException;
-
 import org.verapdf.component.Components;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.features.FeatureExtractorConfig;
 import org.verapdf.metadata.fixer.MetadataFixerConfig;
+import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 import org.verapdf.processor.reports.BatchSummary;
 import org.verapdf.processor.reports.Reports;
+
+import javax.xml.bind.JAXBException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.util.EnumMap;
+import java.util.EnumSet;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -118,6 +122,11 @@ public final class ProcessorFactory {
 	public static final class BatchSummariser {
 		private int jobs = 0;
 		private int failedJobs = 0;
+		private int validPDFAJobs = 0;
+		private int invalidPDFAJobs = 0;
+		private int exceptionDuringValidationJobs = 0;
+		private int featuresSuccessJobs = 0;
+		private int featuresExceptionJobs = 0;
 		private Components.Timer timer = Components.Timer.start();
 
 		public void addProcessingResult(ProcessorResult result) {
@@ -125,10 +134,35 @@ public final class ProcessorFactory {
 			if (!result.isValidPdf() || result.isEncryptedPdf()) {
 				this.failedJobs++;
 			}
+
+			EnumMap<TaskType, TaskResult> taskResults = result.getResults();
+
+			TaskResult validateTaskResult = taskResults.get(TaskType.VALIDATE);
+			if (validateTaskResult != null && validateTaskResult.isExecuted()) {
+				if (validateTaskResult.isSuccess()) {
+					ValidationResult validationResult = result.getValidationResult();
+					if (validationResult != null && validationResult.isCompliant()) {
+						this.validPDFAJobs++;
+					} else {
+						this.invalidPDFAJobs++;
+					}
+				} else {
+					this.exceptionDuringValidationJobs++;
+				}
+			}
+
+			TaskResult featuresTaskResult = taskResults.get(TaskType.EXTRACT_FEATURES);
+			if (featuresTaskResult != null && featuresTaskResult.isExecuted()) {
+				if (featuresTaskResult.isSuccess()) {
+					this.featuresSuccessJobs++;
+				} else {
+					this.featuresExceptionJobs++;
+				}
+			}
 		}
 
 		public BatchSummary summarise() {
-			return Reports.createBatchSummary(timer, jobs, failedJobs);
+			return Reports.createBatchSummary(timer, jobs, failedJobs, validPDFAJobs, invalidPDFAJobs, exceptionDuringValidationJobs, featuresSuccessJobs, featuresExceptionJobs);
 		}
 	}
 }

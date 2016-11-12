@@ -3,11 +3,11 @@
  */
 package org.verapdf.processor.reports;
 
-import java.util.List;
-
 import org.verapdf.component.Components;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
+
+import java.util.List;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -21,8 +21,10 @@ public final class Reports {
 	}
 
 	public static final BatchSummary createBatchSummary(final Components.Timer timer, final int jobs,
-			final int failedJobs) {
-		return BatchSummaryImpl.fromValues(timer.stop(), jobs, failedJobs);
+			final int failedJobs, int validPDFAJobs, int invalidPDFAJobs,
+														int exceptionDuringValidationJobs,
+														int featuresSuccessJobs, int featuresExceptionJobs) {
+		return BatchSummaryImpl.fromValues(timer.stop(), jobs, failedJobs, validPDFAJobs, invalidPDFAJobs, exceptionDuringValidationJobs, featuresSuccessJobs, featuresExceptionJobs);
 	}
 
 	public static final ValidationReport createValidationReport(final ValidationDetails details,
