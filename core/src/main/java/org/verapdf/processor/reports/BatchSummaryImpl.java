@@ -12,14 +12,11 @@ import org.verapdf.component.AuditDuration;
 import org.verapdf.component.Components;
 
 /**
- * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *          <a href="https://github.com/carlwilson">carlwilson AT github</a>
- *
- * @version 0.1
- * 
- * Created 2 Nov 2016:11:43:50
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1 Created 2 Nov 2016:11:43:50
  */
-@XmlRootElement(name="summary")
+@XmlRootElement(name = "summary")
 final class BatchSummaryImpl implements BatchSummary {
 	@XmlElement
 	private final AuditDuration duration;
@@ -27,20 +24,34 @@ final class BatchSummaryImpl implements BatchSummary {
 	private final int jobs;
 	@XmlAttribute
 	private final int failedJobs;
+	@XmlAttribute
+	private final int valid;
+	@XmlAttribute
+	private final int inValid;
+	@XmlAttribute
+	private final int validExcep;
+	@XmlAttribute
+	private final int features;
 
 	private BatchSummaryImpl() {
-		this(Components.defaultDuration(), 0, 0);
+		this(Components.defaultDuration(), 0, 0, 0, 0, 0, 0);
 	}
+
 	/**
 	 * @param duration
 	 * @param jobs
 	 * @param failedJobs
 	 */
-	private BatchSummaryImpl(AuditDuration duration, int jobs, int failedJobs) {
+	private BatchSummaryImpl(final AuditDuration duration, final int jobs, final int failedJobs, final int valid,
+			final int inValid, final int validExcep, final int features) {
 		super();
 		this.duration = duration;
 		this.jobs = jobs;
 		this.failedJobs = failedJobs;
+		this.valid = valid;
+		this.inValid = inValid;
+		this.validExcep = validExcep;
+		this.features = features;
 	}
 
 	/**
@@ -66,7 +77,7 @@ final class BatchSummaryImpl implements BatchSummary {
 	public int getFailedJobs() {
 		return this.failedJobs;
 	}
-	
+
 	static class Adapter extends XmlAdapter<BatchSummaryImpl, BatchSummary> {
 		@Override
 		public BatchSummary unmarshal(BatchSummaryImpl summary) {
@@ -79,7 +90,28 @@ final class BatchSummaryImpl implements BatchSummary {
 		}
 	}
 
-	static BatchSummary fromValues(final AuditDuration duration, final int jobs, final int failedJobs) {
-		return new BatchSummaryImpl(duration, jobs, failedJobs);
+	static BatchSummary fromValues(final AuditDuration duration, final int jobs, final int failedJobs, final int valid,
+			final int inValid, final int validExcep, final int features) {
+		return new BatchSummaryImpl(duration, jobs, failedJobs, valid, inValid, validExcep, features);
+	}
+
+	@Override
+	public int getValidPdfaCount() {
+		return this.valid;
+	}
+
+	@Override
+	public int getInvalidPdfaCount() {
+		return this.inValid;
+	}
+
+	@Override
+	public int getValidationExceptionCount() {
+		return this.validExcep;
+	}
+
+	@Override
+	public int getFeatureCount() {
+		return this.features;
 	}
 }

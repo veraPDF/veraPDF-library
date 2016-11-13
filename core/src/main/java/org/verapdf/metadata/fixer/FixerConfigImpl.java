@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 @XmlRootElement(name = "fixerConfig")
 final class FixerConfigImpl implements MetadataFixerConfig {
+	public final static String DEFAULT_PREFIX = "veraFixMd_";  //$NON-NLS-1$
 	private final static MetadataFixerConfig defaultInstance = new FixerConfigImpl();
 	@XmlAttribute
 	private final boolean fixId;
@@ -16,7 +17,11 @@ final class FixerConfigImpl implements MetadataFixerConfig {
 	private final String fixesPrefix;
 
 	private FixerConfigImpl() {
-		this("veraFixMd_", true); //$NON-NLS-1$
+		this(true);
+	}
+
+	private FixerConfigImpl(final boolean fixId) {
+		this(DEFAULT_PREFIX, fixId); //$NON-NLS-1$
 	}
 
 	private FixerConfigImpl(final String fixesPrefix, boolean fixId) {

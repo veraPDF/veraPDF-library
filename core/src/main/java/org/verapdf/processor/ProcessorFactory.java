@@ -118,17 +118,35 @@ public final class ProcessorFactory {
 	public static final class BatchSummariser {
 		private int jobs = 0;
 		private int failedJobs = 0;
+		private int valid = 0;
+		private int invalid = 0;
+		private int validExcep = 0;
+		private int features = 0;
 		private Components.Timer timer = Components.Timer.start();
 
 		public void addProcessingResult(ProcessorResult result) {
 			this.jobs++;
 			if (!result.isValidPdf() || result.isEncryptedPdf()) {
 				this.failedJobs++;
+				return;
+			}
+			if (result.getTaskTypes().contains(TaskType.VALIDATE) && result.getResultForTask(TaskType.VALIDATE).isExecuted()) {
+				if (!result.getResultForTask(TaskType.VALIDATE).isSuccess())
+					this.validExcep++;
+				if (result.getValidationResult().isCompliant())
+					this.valid++;
+				else
+					this.invalid++;
+			}
+			if (result.getTaskTypes().contains(TaskType.EXTRACT_FEATURES) && result.getResultForTask(TaskType.EXTRACT_FEATURES).isExecuted()
+					&& result.getResultForTask(TaskType.EXTRACT_FEATURES).isSuccess()) {
+				this.features++;
 			}
 		}
 
 		public BatchSummary summarise() {
-			return Reports.createBatchSummary(timer, jobs, failedJobs);
+			return Reports.createBatchSummary(this.timer, this.jobs, this.failedJobs, this.valid, this.invalid,
+					this.validExcep, this.features);
 		}
 	}
 }

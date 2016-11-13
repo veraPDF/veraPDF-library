@@ -20,5 +20,10 @@ public interface BatchSummary {
 	 * @return the failedJobs
 	 */
 	int getFailedJobs();
+	
+	int getValidPdfaCount();
+	int getInvalidPdfaCount();
 
+	int getValidationExceptionCount();
+	int getFeatureCount();
 }

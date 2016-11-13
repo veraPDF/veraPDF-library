@@ -11,12 +11,9 @@ import java.util.logging.Logger;
 import org.verapdf.core.VeraPDFException;
 
 /**
- * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *          <a href="https://github.com/carlwilson">carlwilson AT github</a>
- *
- * @version 0.1
- * 
- * Created 8 Nov 2016:23:45:29
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1 Created 8 Nov 2016:23:45:29
  */
 
 public final class BatchFileProcessor extends AbstractBatchProcessor {
@@ -30,7 +27,8 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 	}
 
 	/**
-	 * @see org.verapdf.processor.AbstractBatchProcessor#processContainer(java.io.File, boolean)
+	 * @see org.verapdf.processor.AbstractBatchProcessor#processContainer(java.io.File,
+	 *      boolean)
 	 */
 	@Override
 	protected void processContainer(File container, boolean recurse) throws VeraPDFException {
@@ -57,16 +55,25 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 
 	private void processDir(final File toProcess, final boolean recurse) throws VeraPDFException {
 		for (File item : toProcess.listFiles()) {
-			if (item.isDirectory() && !item.isHidden() && item.canRead()) {
+			if (item.isHidden() || !item.canRead())
+				continue;
+			if (item.isDirectory()) {
 				processDir(item, recurse);
-			} else {
+			} else if (item.isFile() && isPdf(item.getName())) {
 				processItem(item);
 			}
 		}
 	}
 
+	private static boolean isPdf(final String name) {
+		if (!name.endsWith(".pdf"))
+			return name.endsWith(".PDF");
+		return true;
+	}
+
 	private void processItem(final File item) throws VeraPDFException {
-		this.processResult(this.processor.process(item));
+		ProcessorResult result = this.processor.process(item);
+		this.processResult(result);
 	}
 
 	private static String badItemMessage(final File item, final boolean isDir) {

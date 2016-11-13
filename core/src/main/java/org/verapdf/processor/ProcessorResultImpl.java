@@ -25,7 +25,7 @@ import org.verapdf.report.ItemDetails;
  *
  * @author Sergey Shemyakov
  */
-@XmlRootElement(name="processorResult")
+@XmlRootElement(name = "processorResult")
 class ProcessorResultImpl implements ProcessorResult {
 	private final static ProcessorResult defaultInstance = new ProcessorResultImpl();
 	@XmlAttribute
@@ -42,27 +42,32 @@ class ProcessorResultImpl implements ProcessorResult {
 	private final MetadataFixerResult fixerResult;
 
 	private ProcessorResultImpl() {
-		this(ItemDetails.defaultInstance());
-	}
-	
-	private ProcessorResultImpl(final ItemDetails details) {
-		this(details, false, false);
+		this(ItemDetails.defaultInstance(), TaskResultImpl.defaultInstance());
 	}
 
-	private ProcessorResultImpl(final ItemDetails details, boolean isValidPdf, boolean isEncrypted) {
-		this(details, isValidPdf, isEncrypted, new EnumMap<TaskType, TaskResult>(TaskType.class),
-				ValidationResults.defaultResult(), new FeatureExtractionResult(),
-				FixerFactory.defaultResult());
+	private ProcessorResultImpl(final ItemDetails details, final TaskResult result) {
+		this(details, false, false, result);
 	}
 
-	private ProcessorResultImpl(final ItemDetails details, final EnumMap<TaskType, TaskResult> results, final ValidationResult validationResult,
-			final FeatureExtractionResult featuresResult, final MetadataFixerResult fixerResult) {
-		this(details, true, true, results, validationResult, featuresResult, fixerResult);
+	private ProcessorResultImpl(final ItemDetails details, boolean isEncrypted, final TaskResult result) {
+		this(details, true, isEncrypted, result);
 	}
 
-	private ProcessorResultImpl(final ItemDetails details, final boolean isValidPdf, final boolean isEncrypted, final EnumMap<TaskType, TaskResult> results,
+	private ProcessorResultImpl(final ItemDetails details, boolean isValidPdf, boolean isEncrypted,
+			final TaskResult result) {
+		this(details, isValidPdf, isEncrypted, resMap(result), ValidationResults.defaultResult(),
+				new FeatureExtractionResult(), FixerFactory.defaultResult());
+	}
+
+	private ProcessorResultImpl(final ItemDetails details, final EnumMap<TaskType, TaskResult> results,
 			final ValidationResult validationResult, final FeatureExtractionResult featuresResult,
 			final MetadataFixerResult fixerResult) {
+		this(details, true, false, results, validationResult, featuresResult, fixerResult);
+	}
+
+	private ProcessorResultImpl(final ItemDetails details, final boolean isValidPdf, final boolean isEncrypted,
+			final EnumMap<TaskType, TaskResult> results, final ValidationResult validationResult,
+			final FeatureExtractionResult featuresResult, final MetadataFixerResult fixerResult) {
 		super();
 		this.itemDetails = details;
 		this.isValidPdf = isValidPdf;
@@ -82,8 +87,8 @@ class ProcessorResultImpl implements ProcessorResult {
 	}
 
 	@Override
-	@XmlElementWrapper(name="taskResult")
-	@XmlElement(name="taskResult")
+	@XmlElementWrapper(name = "taskResult")
+	@XmlElement(name = "taskResult")
 	public Collection<TaskResult> getResultSet() {
 		return this.taskResults.values();
 	}
@@ -105,15 +110,15 @@ class ProcessorResultImpl implements ProcessorResult {
 	static ProcessorResult fromValues(final ItemDetails details, final EnumMap<TaskType, TaskResult> results,
 			final ValidationResult validationResult, final FeatureExtractionResult featuresResult,
 			final MetadataFixerResult fixerResult) {
-		return new ProcessorResultImpl(details, true, true, results, validationResult, featuresResult, fixerResult);
+		return new ProcessorResultImpl(details, true, false, results, validationResult, featuresResult, fixerResult);
 	}
 
-	static ProcessorResult invalidPdfResult(final ItemDetails details) {
-		return new ProcessorResultImpl(details);
+	static ProcessorResult invalidPdfResult(final ItemDetails details, final TaskResult res) {
+		return new ProcessorResultImpl(details, res);
 	}
 
-	static ProcessorResult encryptedResult(final ItemDetails details) {
-		return new ProcessorResultImpl(details, true, false);
+	static ProcessorResult encryptedResult(final ItemDetails details, final TaskResult res) {
+		return new ProcessorResultImpl(details, true, true, res);
 	}
 
 	@Override
@@ -147,17 +152,22 @@ class ProcessorResultImpl implements ProcessorResult {
 		return this.isEncryptedPdf;
 	}
 
-    static class Adapter extends
-            XmlAdapter<ProcessorResultImpl, ProcessorResult> {
-        @Override
-        public ProcessorResult unmarshal(
-        		ProcessorResultImpl procResultImpl) {
-            return procResultImpl;
-        }
+	static class Adapter extends XmlAdapter<ProcessorResultImpl, ProcessorResult> {
+		@Override
+		public ProcessorResult unmarshal(ProcessorResultImpl procResultImpl) {
+			return procResultImpl;
+		}
 
-        @Override
-        public ProcessorResultImpl marshal(ProcessorResult procResult) {
-            return (ProcessorResultImpl) procResult;
-        }
-    }
+		@Override
+		public ProcessorResultImpl marshal(ProcessorResult procResult) {
+			return (ProcessorResultImpl) procResult;
+		}
+	}
+
+	private static EnumMap<TaskType, TaskResult> resMap(TaskResult result) {
+		EnumMap<TaskType, TaskResult> resultMap = new EnumMap<>(TaskType.class);
+		if (result != null && result.getType() != null)
+			resultMap.put(result.getType(), result);
+		return resultMap;
+	}
 }

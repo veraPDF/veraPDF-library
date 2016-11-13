@@ -15,7 +15,7 @@ import org.verapdf.pdfa.validation.validators.ValidatorFactory;
  */
 
 abstract class AbstractFoundry implements VeraPDFFoundry {
-
+	static PDFAFlavour defaultFlavour = PDFAFlavour.PDFA_1_B;
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config) {
 		if (config.getMaxFails() > 0)
@@ -55,6 +55,11 @@ abstract class AbstractFoundry implements VeraPDFFoundry {
 	@Override
 	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures) {
 		return ValidatorFactory.createValidator(profile, maxFailures);
+	}
+
+	@Override
+	public PDFAFlavour defaultFlavour() {
+		return defaultFlavour;
 	}
 
 	@Override

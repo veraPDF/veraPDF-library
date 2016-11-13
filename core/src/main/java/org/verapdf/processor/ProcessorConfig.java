@@ -48,6 +48,8 @@ public interface ProcessorConfig {
 	 */
 	public MetadataFixerConfig getFixerConfig();
 
+	public String getMetadataFolder();
+
 	/**
 	 * @return the full {@link EnumSet} of {@link TaskType}s assigned in this
 	 *         configuration.
