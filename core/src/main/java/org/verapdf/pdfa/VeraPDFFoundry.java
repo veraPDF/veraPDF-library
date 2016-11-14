@@ -39,8 +39,8 @@ public interface VeraPDFFoundry extends Component {
 
 	/**
 	 * Method that returns a PDFParser instance, parsing the passed
-	 * {@link pdfStream} parameter. The caller must explicitly state
-	 * the flavour of the PDF document stream.
+	 * {@link pdfStream} parameter. The caller must explicitly state the flavour
+	 * of the PDF document stream.
 	 *
 	 * @param pdfStream
 	 *            {@link java.io.InputStream} for the PDF document to be parsed.
@@ -59,15 +59,20 @@ public interface VeraPDFFoundry extends Component {
 			throws ModelParsingException, EncryptedPdfException;
 
 	public PDFAValidator createValidator(ValidatorConfig config);
+
 	public PDFAValidator createValidator(ValidatorConfig config, ValidationProfile profile);
+
 	public PDFAValidator createValidator(ValidatorConfig config, PDFAFlavour flavour);
-	
+
 	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess);
+
 	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess);
 
 	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures);
+
 	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures);
 
-
 	public MetadataFixer createMetadataFixer();
+
+	public PDFAFlavour defaultFlavour();
 }

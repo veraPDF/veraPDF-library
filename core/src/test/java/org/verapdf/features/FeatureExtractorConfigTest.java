@@ -15,14 +15,13 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 @SuppressWarnings("static-method")
 public class FeatureExtractorConfigTest {
 
-    /**
-     * Test method for {@link org.verapdf.ReleaseDetails#hashCode()}.
-     */
+	/**
+	 * Test method for {@link org.verapdf.ReleaseDetails#hashCode()}.
+	 */
 	@Test
-    public final void testHashCodeAndEquals() {
-        EqualsVerifier.forClass(FeatureExtractorConfigImpl.class).verify();
-    }
-
+	public final void testHashCodeAndEquals() {
+		EqualsVerifier.forClass(FeatureExtractorConfigImpl.class).verify();
+	}
 
 	@Test
 	public void testIsFeatureEnabled() {
@@ -69,7 +68,8 @@ public class FeatureExtractorConfigTest {
 			if (type != FeatureObjectType.INFORMATION_DICTIONARY)
 				assertFalse(FeatureExtractorConfigImpl.defaultInstance().isFeatureEnabled(type));
 		}
-		assertTrue(FeatureExtractorConfigImpl.defaultInstance().isFeatureEnabled(FeatureObjectType.INFORMATION_DICTIONARY));
+		assertTrue(FeatureExtractorConfigImpl.defaultInstance()
+				.isFeatureEnabled(FeatureObjectType.INFORMATION_DICTIONARY));
 	}
 
 	@Test
@@ -77,12 +77,14 @@ public class FeatureExtractorConfigTest {
 		EnumSet<FeatureObjectType> enabledFeaturesSet = EnumSet.noneOf(FeatureObjectType.class);
 		EnumSet<FeatureObjectType> disabledFeaturesSet = EnumSet.allOf(FeatureObjectType.class);
 		FeatureExtractorConfig testConfig = FeatureExtractorConfigImpl.fromFeatureSet(enabledFeaturesSet);
-		assertTrue(testConfig.equals(XmlSerialiser.typeFromXml(FeatureExtractorConfigImpl.class, XmlSerialiser.toXml(testConfig, true, true))));
+		assertTrue(testConfig.equals(XmlSerialiser.typeFromXml(FeatureExtractorConfigImpl.class,
+				XmlSerialiser.toXml(testConfig, true, true))));
 		for (FeatureObjectType type : FeatureObjectType.values()) {
 			enabledFeaturesSet.add(type);
 			disabledFeaturesSet.remove(type);
 			testConfig = FeatureExtractorConfigImpl.fromFeatureSet(enabledFeaturesSet);
-			assertTrue(testConfig.equals(XmlSerialiser.typeFromXml(FeatureExtractorConfigImpl.class, XmlSerialiser.toXml(testConfig, true, true))));
+			assertTrue(testConfig.equals(XmlSerialiser.typeFromXml(FeatureExtractorConfigImpl.class,
+					XmlSerialiser.toXml(testConfig, true, true))));
 		}
 	}
 }

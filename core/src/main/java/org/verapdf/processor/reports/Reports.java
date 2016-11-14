@@ -21,8 +21,9 @@ public final class Reports {
 	}
 
 	public static final BatchSummary createBatchSummary(final Components.Timer timer, final int jobs,
-			final int failedJobs) {
-		return BatchSummaryImpl.fromValues(timer.stop(), jobs, failedJobs);
+			final int failedJobs, final int valid,
+			final int inValid, final int validExcep, final int features) {
+		return BatchSummaryImpl.fromValues(timer.stop(), jobs, failedJobs, valid, inValid, validExcep, features);
 	}
 
 	public static final ValidationReport createValidationReport(final ValidationDetails details,

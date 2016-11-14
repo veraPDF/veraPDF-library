@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
@@ -45,5 +47,10 @@ public class Foundries {
 
 	public static Set<URI> getProviderIds() {
 		return Collections.unmodifiableSet(providers.keySet());
+	}
+
+	public void setDefaultFlavour(PDFAFlavour defaultFlavour) {
+		if (defaultFlavour != PDFAFlavour.NO_FLAVOUR)
+			AbstractFoundry.defaultFlavour = defaultFlavour;
 	}
 }

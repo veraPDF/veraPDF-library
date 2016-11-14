@@ -2,6 +2,7 @@ package org.verapdf.processor;
 
 import java.util.EnumSet;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -20,6 +21,7 @@ import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 
 @XmlRootElement(name = "processorConfig")
 final class ProcessorConfigImpl implements ProcessorConfig {
+	private static final String defaultMdFolder = ".";
 	private static final ProcessorConfig defaultInstance = new ProcessorConfigImpl();
 	@XmlElement
 	private final EnumSet<TaskType> tasks;
@@ -31,6 +33,8 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	private final MetadataFixerConfig fixerConfig;
 	@XmlElement
 	private final ValidationProfile customProfile;
+	@XmlAttribute
+	private final String mdFolder;
 
 	private ProcessorConfigImpl() {
 		this(ValidatorFactory.defaultConfig(), FeatureFactory.defaultConfig(), FixerFactory.defaultConfig(),
@@ -43,13 +47,21 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	}
 
 	private ProcessorConfigImpl(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
-			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, ValidationProfile customProfile) {
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks,
+			final ValidationProfile customProfile) {
+		this(config, featureConfig, fixerConfig, tasks, customProfile, defaultMdFolder);
+	}
+
+	private ProcessorConfigImpl(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final ValidationProfile customProfile,
+			final String mdFolder) {
 		super();
 		this.tasks = EnumSet.copyOf(tasks);
 		this.validatorConfig = config;
 		this.featureConfig = featureConfig;
 		this.fixerConfig = fixerConfig;
 		this.customProfile = customProfile;
+		this.mdFolder = mdFolder;
 	}
 
 	public boolean isFixMetadata() {
@@ -72,6 +84,16 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	}
 
 	@Override
+	public EnumSet<TaskType> getTasks() {
+		return EnumSet.copyOf(this.tasks);
+	}
+
+	@Override
+	public boolean hasTask(TaskType toCheck) {
+		return this.tasks.contains(toCheck);
+	}
+
+	@Override
 	public ValidationProfile getCustomProfile() {
 		return this.customProfile;
 	}
@@ -80,14 +102,10 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	public boolean hasCustomProfile() {
 		return this.customProfile.equals(Profiles.defaultProfile());
 	}
-	@Override
-	public EnumSet<TaskType> getTasks() {
-		return EnumSet.copyOf(this.tasks);
-	}
 
 	@Override
-	public boolean hasTask(TaskType toCheck) {
-		return this.tasks.contains(toCheck);
+	public String getMetadataFolder() {
+		return this.mdFolder;
 	}
 
 	/**

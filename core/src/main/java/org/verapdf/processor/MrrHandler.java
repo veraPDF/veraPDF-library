@@ -84,8 +84,12 @@ final class MrrHandler extends AbstractXmlHandler {
 	void resultStart(ProcessorResult result) throws VeraPDFException {
 		try {
 			indentElement(job);
+			XmlSerialiser.toXml(result.getProcessedItem(), this.writer, true, true);
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
+		} catch (JAXBException excep) {
+			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "item"), excep);
+			throw wrapMarshallException(excep, "item");
 		}
 	}
 
@@ -195,11 +199,16 @@ final class MrrHandler extends AbstractXmlHandler {
 		try {
 			// closes jobs element
 			outdentElement();
+			XmlSerialiser.toXml(summary,  this.writer,  true, true);
+			newLine(this.writer);
 			// closes report element
 			outdentElement();
 			endDoc(this.writer);
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
+		} catch (JAXBException excep) {
+			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "batchSummary"), excep);
+			throw wrapMarshallException(excep, "batchSummary");
 		}
 		try {
 			this.writer.close();
