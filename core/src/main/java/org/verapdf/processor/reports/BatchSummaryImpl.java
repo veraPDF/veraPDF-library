@@ -3,13 +3,13 @@
  */
 package org.verapdf.processor.reports;
 
+import org.verapdf.component.AuditDuration;
+import org.verapdf.component.Components;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-
-import org.verapdf.component.AuditDuration;
-import org.verapdf.component.Components;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

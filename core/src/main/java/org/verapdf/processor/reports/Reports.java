@@ -3,11 +3,11 @@
  */
 package org.verapdf.processor.reports;
 
-import java.util.List;
-
 import org.verapdf.component.Components;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
+
+import java.util.List;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

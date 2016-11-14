@@ -3,16 +3,16 @@
  */
 package org.verapdf.processor;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-
 import org.verapdf.ReleaseDetails;
 import org.verapdf.component.ComponentDetails;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.processor.ProcessorFactory.BatchSummariser;
 import org.verapdf.processor.reports.BatchSummary;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
