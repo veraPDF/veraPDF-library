@@ -44,7 +44,7 @@
     </xsl:template>
 
     <!-- Validation Report header -->
-    <xsl:template match="vera:report">
+    <xsl:template match="report">
         <div>
             <style>
                 <xsl:text>div{font-family: sans-serif;}</xsl:text>
@@ -70,32 +70,40 @@
             <table border="0" id="table1">
                 <tr>
                     <td width="200">
-                        <b>Validation Profile:</b>
+                        <b>File:</b>
                     </td>
                     <td>
-                        <xsl:value-of select="/vera:report/vera:validationReport/@profile"/>
+                        <xsl:value-of select="/report/jobs/job/vera:item/vera:name"/>
                     </td>
                 </tr>
                 <tr>
                     <td width="200">
-                        <xsl:if test="/vera:report/vera:validationReport/@compliant = 'true'">
+                        <b>Validation Profile:</b>
+                    </td>
+                    <td>
+                        <xsl:value-of select="/report/jobs/job/validationReport/@profileName"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="200">
+                        <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'true'">
                             <font color="green">
                                 <b>Compliance status:</b>
                             </font>
                         </xsl:if>
-                        <xsl:if test="/vera:report/vera:validationReport/@compliant = 'false'">
+                        <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'false'">
                             <font color="red">
                                 <b>Compliance status:</b>
                             </font>
                         </xsl:if>
                     </td>
                     <td>
-                        <xsl:if test="/vera:report/vera:validationReport/@compliant = 'true'">
+                        <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'true'">
                             <font color="green">
                                 <b>Passed</b>
                             </font>
                         </xsl:if>
-                        <xsl:if test="/vera:report/vera:validationReport/@compliant = 'false'">
+                        <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'false'">
                             <font color="red">
                                 <b>Failed</b>
                             </font>
@@ -111,7 +119,7 @@
                         <b>Version:</b>
                     </td>
                     <td>
-                        <xsl:value-of select="/vera:report/@version"/>
+                        <xsl:value-of select="/report/buildInformation/releaseDetails[1]/@version"/>
                     </td>
                 </tr>
                 <tr>
@@ -119,24 +127,24 @@
                         <b>Build Date:</b>
                     </td>
                     <td>
-                        <xsl:value-of select="/vera:report/@buildDate"/>
+                        <xsl:value-of select="/report/buildInformation/releaseDetails[1]/@buildDate"/>
                     </td>
                 </tr>
-                <tr>
-                    <td width="250">
-                        <b>Processing time:</b>
-                    </td>
-                    <td>
-                        <xsl:value-of select="/vera:report/@processingTime"/>
-                    </td>
-                </tr>
+                <!--<tr>-->
+                    <!--<td width="250">-->
+                        <!--<b>Processing time:</b>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<xsl:value-of select="/report/@processingTime"/>-->
+                    <!--</td>-->
+                <!--</tr>-->
                 <tr>
                     <td width="250">
                         <b>Total rules in Profile:</b>
                     </td>
                     <td>
                         <xsl:value-of
-                                select="/vera:report/vera:validationReport/vera:details/@passedRules + /vera:report/vera:validationReport/vera:details/@failedRules"/>
+                                select="/report/jobs/job/validationReport/details/@passedRules + /report/jobs/job/validationReport/details/@failedRules"/>
                     </td>
                 </tr>
                 <tr>
@@ -144,7 +152,7 @@
                         <b>Passed Checks:</b>
                     </td>
                     <td>
-                        <xsl:value-of select="/vera:report/vera:validationReport/vera:details/@passedChecks"/>
+                        <xsl:value-of select="/report/jobs/job/validationReport/details/@passedChecks"/>
                     </td>
                 </tr>
                 <tr>
@@ -152,16 +160,16 @@
                         <b>Failed Checks:</b>
                     </td>
                     <td>
-                        <xsl:value-of select="/vera:report/vera:validationReport/vera:details/@failedChecks"/>
+                        <xsl:value-of select="/report/jobs/job/validationReport/details/@failedChecks"/>
                     </td>
                 </tr>
                 <xsl:apply-templates
-                        select="/vera:report/vera:metadataFixesReport/@status"/>
+                        select="/report/jobs/job/metadataRepairReport/@status"/>
                 <xsl:apply-templates
-                        select="/vera:report/vera:metadataFixesReport/@completedMetadataFixes"/>
+                        select="/report/jobs/job/metadataRepairReport/@fixCount"/>
             </table>
 
-            <xsl:if test="/vera:report/vera:metadataFixesReport/vera:appliedFix">
+            <xsl:if test="/report/jobs/job/metadataRepairReport/fixes/fix">
                 <h2>Metadata fixes information</h2>
 
                 <table border="0" id="table4">
@@ -179,12 +187,12 @@
                     </tr>
 
                     <xsl:apply-templates
-                            select="/vera:report/vera:metadataFixesReport/vera:appliedFix"/>
+                            select="/report/jobs/job/metadataRepairReport/fixes/fix"/>
 
                 </table>
             </xsl:if>
 
-            <xsl:if test="/vera:report/vera:metadataFixesReport/vera:errorMessage">
+            <xsl:if test="/report/jobs/job/metadataRepairReport/errors/error">
                 <h2>Metadata fixer errors information</h2>
 
                 <table border="0" id="table5">
@@ -202,12 +210,12 @@
                     </tr>
 
                     <xsl:apply-templates
-                            select="/vera:report/vera:metadataFixesReport/vera:errorMessage"/>
+                            select="/report/jobs/job/metadataFixesReport/error"/>
 
                 </table>
             </xsl:if>
 
-            <xsl:if test="/vera:report/vera:validationReport/vera:details/vera:rule">
+            <xsl:if test="/report/jobs/job/validationReport/details/rule">
                 <h2>Validation information</h2>
 
                 <table border="0" id="table3">
@@ -220,7 +228,7 @@
                         </td>
                     </tr>
                     <xsl:apply-templates
-                            select="/vera:report/vera:validationReport/vera:details/vera:rule"/>
+                            select="/report/jobs/job/validationReport/details/rule"/>
 
                 </table>
             </xsl:if>
@@ -228,31 +236,31 @@
     </xsl:template>
 
 
-    <xsl:template match="/vera:report/vera:metadataFixesReport/@status">
+    <xsl:template match="/report/jobs/job/metadataRepairReport/@status">
         <tr>
             <td width="250">
                 <b>Metadata Fixes Status:</b>
             </td>
             <td>
-                <xsl:value-of select="/vera:report/vera:metadataFixesReport/@status"/>
+                <xsl:value-of select="/report/jobs/job/metadataRepairReport/@status"/>
             </td>
         </tr>
     </xsl:template>
 
-    <xsl:template match="/vera:report/vera:metadataFixesReport/@completedMetadataFixes">
+    <xsl:template match="/report/jobs/job/metadataRepairReport/@fixCount">
         <tr>
             <td width="250">
                 <b>Completed Metadata Fixes:</b>
             </td>
             <td>
                 <xsl:value-of
-                        select="/vera:report/vera:metadataFixesReport/@completedMetadataFixes"/>
+                        select="/report/jobs/job/metadataRepairReport/@fixCount"/>
             </td>
         </tr>
     </xsl:template>
 
     <!-- Validation Information -->
-    <xsl:template match="/vera:report/vera:validationReport/vera:details/vera:rule">
+    <xsl:template match="/report/jobs/job/validationReport/details/rule">
 
         <xsl:param name="idWithDots" select="concat(@clause,'t',@testNumber)"/>
         <xsl:param name="id" select="translate($idWithDots, '.', '_')"/>
@@ -319,7 +327,7 @@
         <tr style="BACKGROUND: #dcdaf6">
             <td width="800">
                 <xsl:value-of
-                        select="vera:description"/>
+                        select="description"/>
             </td>
             <td width="50">
                 <b>
@@ -353,20 +361,20 @@
             </tr>
             <tr style="BACKGROUND: #eceaf6" class="hideable hide{$id}">
                 <td width="800" style="word-break: break-all">
-                    <xsl:value-of select="vera:object"/>
+                    <xsl:value-of select="object"/>
                 </td>
                 <td/>
             </tr>
             <tr style="BACKGROUND: #eceaf6" class="hideable hide{$id}">
                 <td width="800" style="word-break: break-all">
-                    <xsl:value-of select="vera:test"/>
+                    <xsl:value-of select="test"/>
                 </td>
                 <td/>
             </tr>
-            <xsl:for-each select="vera:check[@status = 'failed']">
+            <xsl:for-each select="check[@status = 'failed']">
                 <tr class="hideable hide{$id}">
                     <td width="800" style="word-break: break-all">
-                        <xsl:value-of select="vera:context"/>
+                        <xsl:value-of select="context"/>
                     </td>
                 </tr>
             </xsl:for-each>
@@ -384,7 +392,7 @@
     </xsl:template>
 
     <!-- Metadata fixes information -->
-    <xsl:template match="/vera:report/vera:metadataFixesReport/vera:appliedFix">
+    <xsl:template match="/report/jobs/job/metadataRepairReport/fixes/fix">
         <tr class="hideable hide{fixesId}">
             <td width="800" style="word-break: break-all">
                 <xsl:value-of select="."/>
@@ -393,7 +401,7 @@
     </xsl:template>
 
     <!-- Metadata fixer errors information -->
-    <xsl:template match="/vera:report/vera:metadataFixesReport/vera:errorMessage">
+    <xsl:template match="/report/jobs/job/metadataRepairReport/errors/error">
         <tr class="hideable hide{fixererrorsId}">
             <td width="800" style="word-break: break-all">
                 <xsl:value-of select="."/>
