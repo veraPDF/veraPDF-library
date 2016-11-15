@@ -140,7 +140,7 @@ final class MrrHandler extends AbstractXmlHandler {
 	@Override
 	void validationSuccess(TaskResult taskResult, ValidationResult result) throws VeraPDFException {
 		ValidationDetails details = Reports.fromValues(result, this.logSuccess, this.maxFailedChecks);
-		ValidationReport valRep = Reports.createValidationReport(details, "LOGIC TO DO", getStatement(result.isCompliant()), result.isCompliant());
+		ValidationReport valRep = Reports.createValidationReport(details, result.getProfileDetails().getName(), getStatement(result.isCompliant()), result.isCompliant());
 		try {
 			XmlSerialiser.toXml(valRep, this.writer, true, true);
 		} catch (JAXBException excep) {

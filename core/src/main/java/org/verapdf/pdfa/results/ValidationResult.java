@@ -3,10 +3,12 @@
  */
 package org.verapdf.pdfa.results;
 
-import org.verapdf.pdfa.flavours.PDFAFlavour;
+import java.util.Set;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.util.Set;
+
+import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.validation.profiles.ProfileDetails;
 
 /**
  * Created as the result of validating a PDF/A document against a
@@ -45,6 +47,11 @@ public interface ValidationResult {
      *         produced this result.
      */
     public PDFAFlavour getPDFAFlavour();
+
+    /**
+     * @return the {@link ProfileDetails} identifying the validation profile used
+     */
+    public ProfileDetails getProfileDetails();
 
     /**
      * @return the total number of valdiation checks performed 

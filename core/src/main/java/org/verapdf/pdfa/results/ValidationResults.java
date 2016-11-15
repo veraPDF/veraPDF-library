@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion.Status;
+import org.verapdf.pdfa.validation.profiles.ProfileDetails;
 import org.verapdf.pdfa.validation.profiles.RuleId;
 
 /**
@@ -32,13 +33,13 @@ public class ValidationResults {
 	 *            compliant with the indicated flavour
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final PDFAFlavour flavour, final Set<TestAssertion> assertions,
+	public static ValidationResult resultFromValues(final PDFAFlavour flavour, final ProfileDetails profileDetails, final Set<TestAssertion> assertions,
 			final boolean isCompliant) {
 		if (flavour == null)
 			throw new NullPointerException(FLAVOUR_NOT_NULL_MESSAGE);
 		if (assertions == null)
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
-		return ValidationResultImpl.fromValues(flavour, assertions, isCompliant, assertions.size());
+		return ValidationResultImpl.fromValues(flavour, profileDetails, assertions, isCompliant, assertions.size());
 	}
 
 	/**
@@ -53,13 +54,13 @@ public class ValidationResults {
 	 * @param totalAssertions
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final PDFAFlavour flavour, final Set<TestAssertion> assertions,
+	public static ValidationResult resultFromValues(final PDFAFlavour flavour, final ProfileDetails profileDetails, final Set<TestAssertion> assertions,
 			final boolean isCompliant, final int totalAssertions) {
 		if (flavour == null)
 			throw new NullPointerException(FLAVOUR_NOT_NULL_MESSAGE);
 		if (assertions == null)
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
-		return ValidationResultImpl.fromValues(flavour, assertions, isCompliant, totalAssertions);
+		return ValidationResultImpl.fromValues(flavour, profileDetails, assertions, isCompliant, totalAssertions);
 	}
 
 	/**
@@ -70,7 +71,7 @@ public class ValidationResults {
 	 *            the Set of TestAssertions reported by during validation
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final PDFAFlavour flavour, final Set<TestAssertion> assertions) {
+	public static ValidationResult resultFromValues(final PDFAFlavour flavour, final ProfileDetails profileDetails, final Set<TestAssertion> assertions) {
 		if (flavour == null)
 			throw new NullPointerException(FLAVOUR_NOT_NULL_MESSAGE);
 		if (assertions == null)
@@ -82,7 +83,7 @@ public class ValidationResults {
 				break;
 			}
 		}
-		return resultFromValues(flavour, assertions, isCompliant);
+		return resultFromValues(flavour, profileDetails, assertions, isCompliant);
 	}
 
 	/**

@@ -22,11 +22,11 @@ public final class Components {
 	}
 
 	public static ComponentDetails libraryDetails(final URI id, final String name) {
-		return veraDetails(id, name, ReleaseDetails.getInstance().getVersion());
+		return veraDetails(id, name, ReleaseDetails.getInstance().getVersion(), "Core veraPDF library component.");
 	}
 
-	public static ComponentDetails veraDetails(final URI id, final String name, final String version) {
-		return detailsFromValues(id, name, version, "The veraPDF Consortium", ReleaseDetails.getInstance().getRights());
+	public static ComponentDetails veraDetails(final URI id, final String name, final String version, final String description) {
+		return detailsFromValues(id, name, version, "The veraPDF Consortium.", description);
 	}
 
 	public static ComponentDetails detailsFromValues(final URI id, final String name, final String version,
