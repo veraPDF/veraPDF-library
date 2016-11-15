@@ -240,7 +240,7 @@ final class MrrHandler extends AbstractXmlHandler {
 		}
 	}
 
-	private Collection<AuditDuration> getDurations(ProcessorResult result) {
+	private static Collection<AuditDuration> getDurations(ProcessorResult result) {
 		EnumMap<TaskType, TaskResult> results = result.getResults();
 		if(results != null) {
 			Collection<AuditDuration> res = new ArrayList<>();
