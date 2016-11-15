@@ -4,6 +4,8 @@
 package org.verapdf.processor;
 
 import org.verapdf.ReleaseDetails;
+import org.verapdf.component.AuditDuration;
+import org.verapdf.component.AuditDurationImpl;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.results.MetadataFixerResult;
@@ -14,6 +16,10 @@ import org.verapdf.report.FeaturesReport;
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,6 +41,7 @@ final class MrrHandler extends AbstractXmlHandler {
 	private final static String report = "report";
 	private final static String job = "job";
 	private final static String jobs = job + "s";
+	private final static String processingTime = "processingTime";
 
 	private final static String buildInformation = "buildInformation";
 
@@ -197,6 +204,10 @@ final class MrrHandler extends AbstractXmlHandler {
 	void resultEnd(ProcessorResult result) throws VeraPDFException {
 		try {
 			// End job element
+			indentElement(processingTime);
+			long resTime = AuditDurationImpl.sumDuration(getDurations(result));
+			writer.writeCharacters(AuditDurationImpl.getStringDuration(resTime));
+			outdentElement();
 			outdentElement();
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
@@ -227,6 +238,20 @@ final class MrrHandler extends AbstractXmlHandler {
 		} catch (XMLStreamException excep) {
 			logger.log(Level.INFO, String.format(strmExcpMessTmpl, "closing"), excep);
 		}
+	}
+
+	private static Collection<AuditDuration> getDurations(ProcessorResult result) {
+		EnumMap<TaskType, TaskResult> results = result.getResults();
+		if(results != null) {
+			Collection<AuditDuration> res = new ArrayList<>();
+			for (TaskType type : results.keySet()) {
+				if (results.get(type).getDuration() != null) {
+					res.add(results.get(type).getDuration());
+				}
+			}
+			return res;
+		}
+		return Collections.emptyList();
 	}
 
 	protected static VeraPDFException wrapStreamException(final JAXBException excep, final String typePart) {

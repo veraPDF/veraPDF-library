@@ -41,7 +41,11 @@ final class FixerReportImpl implements MetadataFixerReport {
 		this.fixes = Collections.unmodifiableList(fixes);
 		this.errors = Collections.unmodifiableList(errors);
 	}
-	
+
+	private FixerReportImpl() {
+		this("", 0, Collections.<String>emptyList(), Collections.<String>emptyList());
+	}
+
 	/**
 	 * @return the status
 	 */

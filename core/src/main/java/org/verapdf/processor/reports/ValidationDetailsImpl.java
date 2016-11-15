@@ -127,7 +127,6 @@ final class ValidationDetailsImpl implements ValidationDetails {
 						rule.getTest(), assertionMap.get(rule.getRuleId()), logPassedChecks,
 						maxFailedChecks);
 			}
-			passedChecks += summary.getPassedChecks();
 			failedChecks += summary.getFailedChecks();
 			if (summary.getRuleStatus() == Status.PASSED) {
 				passedRules++;
@@ -138,6 +137,7 @@ final class ValidationDetailsImpl implements ValidationDetails {
 				ruleSummaries.add(summary);
 			}
 		}
+		passedChecks = result.getTotalAssertions() - failedChecks;
 
 		return new ValidationDetailsImpl(passedRules, failedRules, passedChecks, failedChecks, ruleSummaries);
 	}
