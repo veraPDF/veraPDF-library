@@ -3,6 +3,8 @@
  */
 package org.verapdf.component;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Formatter;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -16,7 +18,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  * @version 0.1 Created 27 Oct 2016:13:03:27
  */
 @XmlRootElement(name = "duration")
-final class AuditDurationImpl implements AuditDuration {
+public final class AuditDurationImpl implements AuditDuration {
 	private static final AuditDuration defaultInstance = new AuditDurationImpl();
 	private static final long msInSec = 1000L;
 	private static final int secInMin = 60;
@@ -129,7 +131,7 @@ final class AuditDurationImpl implements AuditDuration {
 		return new AuditDurationImpl(start, finish);
 	}
 
-	private static String getStringDuration(final long difference) {
+	public static String getStringDuration(final long difference) {
 		long diff = difference;
 		Long hours = Long.valueOf(diff / msInHour);
 		diff %= msInHour;
@@ -149,6 +151,16 @@ final class AuditDurationImpl implements AuditDuration {
 			res = formatter.toString();
 		}
 
+		return res;
+	}
+
+	public static long sumDuration(Collection<AuditDuration> durations) {
+		long res = 0;
+		if (durations != null) {
+			for (AuditDuration duration : durations) {
+				res += duration.getDifference();
+			}
+		}
 		return res;
 	}
 
