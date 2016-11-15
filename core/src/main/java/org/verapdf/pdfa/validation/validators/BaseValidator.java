@@ -118,7 +118,7 @@ class BaseValidator implements PDFAValidator {
 
 		Context.exit();
 
-		ValidationResult res = ValidationResults.resultFromValues(this.profile.getPDFAFlavour(), this.results,
+		ValidationResult res = ValidationResults.resultFromValues(this.profile.getPDFAFlavour(), this.profile.getDetails(), this.results,
 				this.isCompliant, this.testCounter);
 		return res;
 	}
