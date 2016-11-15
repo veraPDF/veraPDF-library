@@ -43,7 +43,7 @@ public class FileOutputMappers {
 	 * @return a new FileOutputMapper
 	 */
 	public static final FileOutputMapper sibFiles(final String prefix) {
-		return sibFiles(prefix, AbstractFileOutputMapper.defaultPrefix);
+		return sibFiles(prefix, AbstractFileOutputMapper.defaultSuffix);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class FileOutputMappers {
 	 * @return a new FileOutputMapper
 	 */
 	public static final FileOutputMapper verSibFiles(final String prefix) {
-		return verSibFiles(prefix, AbstractFileOutputMapper.defaultPrefix);
+		return verSibFiles(prefix, AbstractFileOutputMapper.defaultSuffix);
 	}
 
 	/**
