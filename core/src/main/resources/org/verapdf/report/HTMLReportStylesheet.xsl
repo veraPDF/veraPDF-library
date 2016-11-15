@@ -130,14 +130,14 @@
                         <xsl:value-of select="/report/buildInformation/releaseDetails[1]/@buildDate"/>
                     </td>
                 </tr>
-                <!--<tr>-->
-                    <!--<td width="250">-->
-                        <!--<b>Processing time:</b>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--<xsl:value-of select="/report/@processingTime"/>-->
-                    <!--</td>-->
-                <!--</tr>-->
+                <tr>
+                    <td width="250">
+                        <b>Processing time:</b>
+                    </td>
+                    <td>
+                        <xsl:value-of select="/report/jobs/job/processingTime"/>
+                    </td>
+                </tr>
                 <tr>
                     <td width="250">
                         <b>Total rules in Profile:</b>
