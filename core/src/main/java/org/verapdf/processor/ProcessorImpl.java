@@ -49,7 +49,7 @@ import org.verapdf.report.ItemDetails;
  */
 final class ProcessorImpl implements ItemProcessor {
 	private static final FileOutputMapper defautMdFixMapper = FileOutputMappers
-			.sibFiles(FixerFactory.defaultConfig().getFixesPrefix());
+			.verSibFiles(FixerFactory.defaultConfig().getFixesPrefix());
 	private static final ComponentDetails defaultDetails = Components
 			.libraryDetails(URI.create("http://pdfa.verapdf.org/processors#default"), "VeraPDF Processor"); //$NON-NLS-1$//$NON-NLS-2$
 	private static final Logger logger = Logger.getLogger(ProcessorImpl.class.getCanonicalName());
@@ -259,9 +259,12 @@ final class ProcessorImpl implements ItemProcessor {
 	}
 
 	static ItemProcessor newProcessor(final ProcessorConfig config, final ComponentDetails details) {
-		if (config.getMetadataFolder().equals(ProcessorConfigImpl.defaultInstance().getMetadataFolder()))
-			return newProcessor(config, details, defautMdFixMapper);
-		FileOutputMapper mapper = FileOutputMappers.subFold(config.getMetadataFolder(), config.getFixerConfig().getFixesPrefix());
+		FileOutputMapper mapper = defautMdFixMapper;
+		if (config.getMetadataFolder().equals(ProcessorConfigImpl.defaultInstance().getMetadataFolder())) {
+			mapper = FileOutputMappers.verSibFiles(config.getFixerConfig().getFixesPrefix());
+		} else {
+		    mapper = FileOutputMappers.verFold(config.getMetadataFolder(), config.getFixerConfig().getFixesPrefix());
+		}
 		return newProcessor(config, details, mapper);
 	}
 

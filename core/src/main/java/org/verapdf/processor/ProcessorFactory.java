@@ -42,8 +42,18 @@ public final class ProcessorFactory {
 	}
 
 	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final String mdFolder) {
+		return ProcessorConfigImpl.fromValues(config, featureConfig, fixerConfig, tasks, mdFolder);
+	}
+
+	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
 			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, ValidationProfile customProfile) {
 		return ProcessorConfigImpl.fromValues(config, featureConfig, fixerConfig, tasks, customProfile);
+	}
+
+	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, ValidationProfile customProfile, final String mdFolder) {
+		return ProcessorConfigImpl.fromValues(config, featureConfig, fixerConfig, tasks, customProfile, mdFolder);
 	}
 
 	public static void configToXml(final ProcessorConfig toConvert, final OutputStream stream, boolean format)

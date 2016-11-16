@@ -56,8 +56,10 @@ final class RawResultHandler extends AbstractXmlHandler {
 	@Override
 	public void handleBatchStart(ProcessorConfig config) throws VeraPDFException {
 		try {
+			startDoc(this.writer);
 			indentElement(raw);
 			XmlSerialiser.toXml(config, this.writer, this.format, this.fragment);
+			this.writer.flush();
 		} catch (JAXBException excep) {
 			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "config"), excep);
 			throw wrapMarshallException(excep, "config");
@@ -71,9 +73,13 @@ final class RawResultHandler extends AbstractXmlHandler {
 	void resultStart(ProcessorResult result) throws VeraPDFException {
 		try {
 			XmlSerialiser.toXml(result.getProcessedItem(), this.writer, this.format, this.fragment);
+			this.writer.flush();
 		} catch (JAXBException excep) {
 			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "item"), excep);
 			throw wrapMarshallException(excep, "item");
+		} catch (XMLStreamException excep) {
+			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, "writing"), excep);
+			throw wrapStreamException(excep, "config");
 		}
 	}
 
@@ -97,9 +103,13 @@ final class RawResultHandler extends AbstractXmlHandler {
 			throws VeraPDFException {
 		try {
 			XmlSerialiser.toXml(validationResult, this.writer, this.format, this.fragment);
+			this.writer.flush();
 		} catch (JAXBException excep) {
 			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "validationResult"), excep);
 			throw wrapMarshallException(excep, "validationResult");
+		} catch (XMLStreamException excep) {
+			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, "writing"), excep);
+			throw wrapStreamException(excep, "config");
 		}
 	}
 
@@ -113,9 +123,13 @@ final class RawResultHandler extends AbstractXmlHandler {
 			throws VeraPDFException {
 		try {
 			XmlSerialiser.toXml(featuresReport, this.writer, this.format, this.fragment);
+			this.writer.flush();
 		} catch (JAXBException excep) {
 			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "featuresReport"), excep);
 			throw wrapMarshallException(excep, "featuresReport");
+		} catch (XMLStreamException excep) {
+			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, "writing"), excep);
+			throw wrapStreamException(excep, "config");
 		}
 	}
 
@@ -129,9 +143,13 @@ final class RawResultHandler extends AbstractXmlHandler {
 			throws VeraPDFException {
 		try {
 			XmlSerialiser.toXml(fixerResult, this.writer, this.format, this.fragment);
+			this.writer.flush();
 		} catch (JAXBException excep) {
 			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "fixerResult"), excep);
 			throw wrapMarshallException(excep, "fixerResult");
+		} catch (XMLStreamException excep) {
+			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, "writing"), excep);
+			throw wrapStreamException(excep, "config");
 		}
 	}
 
@@ -153,6 +171,8 @@ final class RawResultHandler extends AbstractXmlHandler {
 		try {
 			XmlSerialiser.toXml(summary, this.writer, this.format, this.fragment);
 			outdentElement();
+			this.writer.flush();
+			endDoc(this.writer);
 		} catch (JAXBException excep) {
 			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "summary"), excep);
 			throw wrapMarshallException(excep, "summary");
@@ -165,9 +185,13 @@ final class RawResultHandler extends AbstractXmlHandler {
 	private void outputTask(TaskResult taskResult) throws VeraPDFException {
 		try {
 			XmlSerialiser.toXml(taskResult, this.writer, this.format, this.fragment);
+			this.writer.flush();
 		} catch (JAXBException excep) {
 			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "taskResult"), excep);
 			throw wrapMarshallException(excep, "taskResult");
+		} catch (XMLStreamException excep) {
+			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, "writing"), excep);
+			throw wrapStreamException(excep, "config");
 		}
 	}
 
