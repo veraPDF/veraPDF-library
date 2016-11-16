@@ -81,6 +81,7 @@ final class MrrHandler extends AbstractXmlHandler {
 			indentElement(report);
 			addReleaseDetails();
 			indentElement(jobs);
+			this.writer.flush();
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
 		}
@@ -91,6 +92,7 @@ final class MrrHandler extends AbstractXmlHandler {
 		for (ReleaseDetails details : ReleaseDetails.getDetails()) {
 			try {
 				XmlSerialiser.toXml(details, this.writer, true, true);
+				this.writer.flush();
 			} catch (JAXBException excep) {
 				logger.log(Level.WARNING, String.format(unmarshalErrMessage, "releaseDetails"), excep);
 				throw wrapMarshallException(excep, "releaseDetails");
@@ -104,6 +106,7 @@ final class MrrHandler extends AbstractXmlHandler {
 		try {
 			indentElement(job);
 			XmlSerialiser.toXml(result.getProcessedItem(), this.writer, true, true);
+			this.writer.flush();
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
 		} catch (JAXBException excep) {
@@ -143,9 +146,12 @@ final class MrrHandler extends AbstractXmlHandler {
 		ValidationReport valRep = Reports.createValidationReport(details, result.getProfileDetails().getName(), getStatement(result.isCompliant()), result.isCompliant());
 		try {
 			XmlSerialiser.toXml(valRep, this.writer, true, true);
+			this.writer.flush();
 		} catch (JAXBException excep) {
 			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "validationReport"), excep);
 			throw wrapMarshallException(excep, "validationReport");
+		} catch (XMLStreamException excep) {
+			throw wrapStreamException(excep);
 		}
 	}
 
@@ -163,9 +169,12 @@ final class MrrHandler extends AbstractXmlHandler {
 	void featureSuccess(TaskResult taskResult, FeaturesReport featuresReport) throws VeraPDFException {
 		try {
 			XmlSerialiser.toXml(featuresReport, this.writer, true, true);
+			this.writer.flush();
 		} catch (JAXBException excep) {
 			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "featuresReport"), excep);
 			throw wrapMarshallException(excep, "featuresReport");
+		} catch (XMLStreamException excep) {
+			throw wrapStreamException(excep);
 		}
 	}
 
@@ -206,9 +215,10 @@ final class MrrHandler extends AbstractXmlHandler {
 			// End job element
 			indentElement(processingTime);
 			long resTime = AuditDurationImpl.sumDuration(getDurations(result));
-			writer.writeCharacters(AuditDurationImpl.getStringDuration(resTime));
+			this.writer.writeCharacters(AuditDurationImpl.getStringDuration(resTime));
 			outdentElement();
 			outdentElement();
+			this.writer.flush();
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
 		}
@@ -226,6 +236,7 @@ final class MrrHandler extends AbstractXmlHandler {
 			newLine(this.writer);
 			// closes report element
 			outdentElement();
+			this.writer.flush();
 			endDoc(this.writer);
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
