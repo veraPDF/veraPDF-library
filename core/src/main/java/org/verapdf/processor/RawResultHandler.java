@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLStreamException;
 
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.core.XmlSerialiser;
@@ -24,6 +25,7 @@ import org.verapdf.report.FeaturesReport;
 
 final class RawResultHandler extends AbstractXmlHandler {
 	private static final Logger logger = Logger.getLogger(RawResultHandler.class.getCanonicalName());
+	private static final String raw = "rawResults";
 	private final boolean format;
 	private final boolean fragment;
 	/**
@@ -34,7 +36,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 	private RawResultHandler(final Writer dest) throws VeraPDFException {
 		super(dest);
 		this.format = true;
-		this.fragment = false;
+		this.fragment = true;
 	}
 
 	/**
@@ -54,10 +56,14 @@ final class RawResultHandler extends AbstractXmlHandler {
 	@Override
 	public void handleBatchStart(ProcessorConfig config) throws VeraPDFException {
 		try {
+			indentElement(raw);
 			XmlSerialiser.toXml(config, this.writer, this.format, this.fragment);
 		} catch (JAXBException excep) {
 			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "config"), excep);
 			throw wrapMarshallException(excep, "config");
+		} catch (XMLStreamException excep) {
+			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, "writing"), excep);
+			throw wrapStreamException(excep, "config");
 		}
 	}
 
@@ -146,9 +152,13 @@ final class RawResultHandler extends AbstractXmlHandler {
 	public void handleBatchEnd(BatchSummary summary) throws VeraPDFException {
 		try {
 			XmlSerialiser.toXml(summary, this.writer, this.format, this.fragment);
+			outdentElement();
 		} catch (JAXBException excep) {
 			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "summary"), excep);
 			throw wrapMarshallException(excep, "summary");
+		} catch (XMLStreamException excep) {
+			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, "writing"), excep);
+			throw wrapStreamException(excep, "summary");
 		}
 	}
 
