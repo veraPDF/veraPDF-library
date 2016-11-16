@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.verapdf.processor;
 
@@ -23,7 +23,10 @@ class TaskResultImpl implements TaskResult {
 	private static final TaskResult defaultInstance = new TaskResultImpl();
 	private static final String EXCEPTION = "Exception: ";
 	private static final String CAUSED_BY = " caused by exception: ";
-	@XmlAttribute
+
+    private final VeraPDFException exception;
+
+    @XmlAttribute
 	private final TaskType type;
 	@XmlAttribute
 	private final boolean isExecuted;
@@ -31,8 +34,6 @@ class TaskResultImpl implements TaskResult {
 	private final boolean isSuccess;
 	@XmlElement
 	private final AuditDuration duration;
-//	@XmlElement
-	private final VeraPDFException exception;
 	@XmlElement
 	public String getExceptionMessage() {
 		Throwable e = this.exception;
