@@ -108,35 +108,37 @@ final class ProcessorImpl implements ItemProcessor {
 	public ProcessorResult process(ItemDetails fileDetails, InputStream pdfFileStream) {
 		this.initialise();
 		checkArguments(pdfFileStream, fileDetails, this.processorConfig);
-		Components.Timer parseTimer = Components.Timer.start(); 
+		Components.Timer parseTimer = Components.Timer.start();
 		try (PDFAParser parser = this.hasCustomProfile()
 				? foundry.createParser(pdfFileStream, this.processorConfig.getCustomProfile().getPDFAFlavour())
 				: this.isAuto() ? foundry.createParser(pdfFileStream)
 						: foundry.createParser(pdfFileStream, this.valConf().getFlavour())) {
-				for (TaskType task : this.getConfig().getTasks()) {
-					switch (task) {
-					case VALIDATE:
-						validate(parser);
-						break;
-					case FIX_METADATA:
-						fixMetadata(parser, fileDetails.getName());
-						break;
-					case EXTRACT_FEATURES:
-						extractFeatures(parser);
-						break;
-					default:
-						break;
+			for (TaskType task : this.getConfig().getTasks()) {
+				switch (task) {
+				case VALIDATE:
+					validate(parser);
+					break;
+				case FIX_METADATA:
+					fixMetadata(parser, fileDetails.getName());
+					break;
+				case EXTRACT_FEATURES:
+					extractFeatures(parser);
+					break;
+				default:
+					break;
 
-					}
 				}
+			}
 		} catch (EncryptedPdfException e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " appears to be an encrypted PDF."); //$NON-NLS-1$
 			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
-			return ProcessorResultImpl.encryptedResult(fileDetails, TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
+			return ProcessorResultImpl.encryptedResult(fileDetails,
+					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
 		} catch (ModelParsingException e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
 			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
-			return ProcessorResultImpl.invalidPdfResult(fileDetails, TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
+			return ProcessorResultImpl.invalidPdfResult(fileDetails,
+					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
 		} catch (IOException excep) {
 			logger.log(Level.FINER, "Problem closing PDF Stream", excep); //$NON-NLS-1$
 		}
@@ -186,7 +188,7 @@ final class ProcessorImpl implements ItemProcessor {
 	}
 
 	private PDFAValidator validator(PDFAFlavour parsedFlavour) {
-		PDFAFlavour flavour = Foundries.defaultInstance().defaultFlavour(); 
+		PDFAFlavour flavour = Foundries.defaultInstance().defaultFlavour();
 		if (this.isAuto()) {
 			if (parsedFlavour != PDFAFlavour.NO_FLAVOUR)
 				flavour = parsedFlavour;
@@ -213,8 +215,8 @@ final class ProcessorImpl implements ItemProcessor {
 		try {
 			fxfl = this.mdFixMapper.mapFile(orig);
 		} catch (VeraPDFException excep) {
-			 this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), excep));
-			 return;
+			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), excep));
+			return;
 		}
 		MetadataFixerResult.RepairStatus rpStat = MetadataFixerResult.RepairStatus.NO_ACTION;
 		try (OutputStream fxos = new BufferedOutputStream(new FileOutputStream(fxfl))) {
@@ -227,8 +229,8 @@ final class ProcessorImpl implements ItemProcessor {
 			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), veraExcep));
 		} catch (IOException excep) {
-			 this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(),
-			 new VeraPDFException("Processing exception in metadata fixer", excep))); //$NON-NLS-1$
+			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(),
+					new VeraPDFException("Processing exception in metadata fixer", excep))); //$NON-NLS-1$
 		}
 
 		if (rpStat != MetadataFixerResult.RepairStatus.SUCCESS
@@ -250,7 +252,8 @@ final class ProcessorImpl implements ItemProcessor {
 		} catch (OutOfMemoryError excep) {
 			logger.log(Level.WARNING, "OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
 			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
-			this.taskResults.put(TaskType.EXTRACT_FEATURES, TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop(), veraExcep));
+			this.taskResults.put(TaskType.EXTRACT_FEATURES,
+					TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop(), veraExcep));
 		}
 	}
 
@@ -260,10 +263,11 @@ final class ProcessorImpl implements ItemProcessor {
 
 	static ItemProcessor newProcessor(final ProcessorConfig config, final ComponentDetails details) {
 		FileOutputMapper mapper = defautMdFixMapper;
-		if (config.getMetadataFolder().equals(ProcessorConfigImpl.defaultInstance().getMetadataFolder())) {
+		// FIXME: this is hacky
+		if (isMdFolder(config.getMetadataFolder())) {
 			mapper = FileOutputMappers.verSibFiles(config.getFixerConfig().getFixesPrefix());
 		} else {
-		    mapper = FileOutputMappers.verFold(config.getMetadataFolder(), config.getFixerConfig().getFixesPrefix());
+			mapper = FileOutputMappers.verFold(config.getMetadataFolder(), config.getFixerConfig().getFixesPrefix());
 		}
 		return newProcessor(config, details, mapper);
 	}
@@ -286,6 +290,11 @@ final class ProcessorImpl implements ItemProcessor {
 		return ReleaseDetails.getDetails();
 	}
 
+	static private boolean isMdFolder(final String mdFolder) {
+		if (mdFolder == null) return false;
+		if (mdFolder.isEmpty()) return false;
+		return ! mdFolder.equals(ProcessorConfigImpl.defaultInstance().getMetadataFolder());
+	}
 	@Override
 	public void close() {
 		/**
