@@ -265,9 +265,9 @@ final class ProcessorImpl implements ItemProcessor {
 		FileOutputMapper mapper = defautMdFixMapper;
 		// FIXME: this is hacky
 		if (isMdFolder(config.getMetadataFolder())) {
-			mapper = FileOutputMappers.verSibFiles(config.getFixerConfig().getFixesPrefix());
-		} else {
 			mapper = FileOutputMappers.verFold(config.getMetadataFolder(), config.getFixerConfig().getFixesPrefix());
+		} else {
+			mapper = FileOutputMappers.verSibFiles(config.getFixerConfig().getFixesPrefix());
 		}
 		return newProcessor(config, details, mapper);
 	}
