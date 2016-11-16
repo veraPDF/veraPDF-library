@@ -47,6 +47,11 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	}
 
 	private ProcessorConfigImpl(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final String mdFolder) {
+		this(config, featureConfig, fixerConfig, tasks, Profiles.defaultProfile(), mdFolder);
+	}
+
+	private ProcessorConfigImpl(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
 			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks,
 			final ValidationProfile customProfile) {
 		this(config, featureConfig, fixerConfig, tasks, customProfile, defaultMdFolder);
@@ -178,7 +183,18 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	}
 
 	static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final String mdFolder) {
+		return new ProcessorConfigImpl(config, featureConfig, fixerConfig, tasks, mdFolder);
+	}
+
+	static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
 			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final ValidationProfile profile) {
 		return new ProcessorConfigImpl(config, featureConfig, fixerConfig, tasks, profile);
+	}
+
+	static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final ValidationProfile profile,
+			final String mdFolder) {
+		return new ProcessorConfigImpl(config, featureConfig, fixerConfig, tasks, profile, mdFolder);
 	}
 }

@@ -1,5 +1,6 @@
 package org.verapdf.core.utils;
 
+import java.io.File;
 import java.nio.file.Path;
 
 /**
@@ -198,5 +199,84 @@ public class FileOutputMappers {
 		if (suffix == null)
 			throw new NullPointerException("Arg suffix can not be null");
 		return RelativeRootMapper.fromValues(src, dest, prefix, suffix);
+	}
+
+	public static final FileOutputMapper fold(final String path) {
+		return fold(path, AbstractFileOutputMapper.defaultPrefix);
+	}
+
+	public static final FileOutputMapper verFold(final String path) {
+		return verFold(path, AbstractFileOutputMapper.defaultPrefix);
+	}
+
+	public static final FileOutputMapper fold(final String path, final String prefix) {
+		return fold(path, prefix, AbstractFileOutputMapper.defaultSuffix);
+	}
+
+	public static final FileOutputMapper verFold(final String path, final String prefix) {
+		return verFold(path, prefix, AbstractFileOutputMapper.defaultSuffix);
+	}
+
+	/**
+	 * Maps to a relative subfolder of the original with no prefix or suffix
+	 * 
+	 * @param relativePath
+	 *            the relative path to the results folder from the orignal
+	 *            source file location
+	 * @param prefix
+	 *            the prefix for generated files, can not be null or empty
+	 * @return a new FileOutputMapper
+	 */
+	public static final FileOutputMapper fold(final String path, final String prefix, final String suffix) {
+		if (path == null)
+			throw new NullPointerException("Arg path can not be null");
+		if (path.isEmpty())
+			throw new IllegalArgumentException("Arg path can not be an empty string");
+		if (prefix == null)
+			throw new NullPointerException("Arg prefix can not be null");
+		if (suffix == null)
+			throw new NullPointerException("Arg suffix can not be null");
+		File outputDir = new File(path);
+		if (!outputDir.exists()) {
+			if (!outputDir.mkdirs())
+				throw new IllegalArgumentException("Can't create writeable output directory:" + path);
+		}
+		if (!outputDir.isDirectory() || !outputDir.canWrite()) {
+			if (!outputDir.mkdirs())
+				throw new IllegalArgumentException(path + " is not a writeable output directory.");
+		}
+		return SingleOutputDirMapper.fromValues(outputDir, prefix, suffix);
+	}
+
+	/**
+	 * Maps to a relative subfolder of the original with no prefix or suffix
+	 * 
+	 * @param relativePath
+	 *            the relative path to the results folder from the orignal
+	 *            source file location
+	 * @param prefix
+	 *            the prefix for generated files, can not be null or empty
+	 * @return a new FileOutputMapper
+	 */
+	public static final FileOutputMapper verFold(final String path, final String prefix, final String suffix) {
+		if (path == null)
+			throw new NullPointerException("Arg path can not be null");
+		if (path.isEmpty())
+			throw new IllegalArgumentException("Arg path can not be an empty string");
+		if (prefix == null)
+			throw new NullPointerException("Arg prefix can not be null");
+		if (suffix == null)
+			throw new NullPointerException("Arg suffix can not be null");
+		File outputDir = new File(path);
+		if (!outputDir.exists()) {
+			if (!outputDir.mkdirs())
+				throw new IllegalArgumentException("Can't create writeable output directory:" + path);
+		}
+		if (!outputDir.isDirectory() || !outputDir.canWrite()) {
+			if (!outputDir.mkdirs())
+				throw new IllegalArgumentException(path + " is not a writeable output directory.");
+		}
+
+		return VersioningMapper.newInstance(SingleOutputDirMapper.fromValues(outputDir, prefix, suffix));
 	}
 }
