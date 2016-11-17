@@ -4,7 +4,6 @@
 package org.verapdf.component;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Formatter;
 
 import javax.xml.bind.annotation.XmlAttribute;

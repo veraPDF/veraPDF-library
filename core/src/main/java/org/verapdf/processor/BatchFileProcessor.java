@@ -66,8 +66,8 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 	}
 
 	private static boolean isPdf(final String name) {
-		if (!name.endsWith(".pdf"))
-			return name.endsWith(".PDF");
+		if (!name.endsWith(".pdf")) //$NON-NLS-1$
+			return name.endsWith(".PDF"); //$NON-NLS-1$
 		return true;
 	}
 
@@ -77,11 +77,11 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 	}
 
 	private static String badItemMessage(final File item, final boolean isDir) {
-		String itemType = isDir ? "directory" : "file";
+		String itemType = isDir ? "directory" : "file"; //$NON-NLS-1$ //$NON-NLS-2$
 		if (item == null)
-			return "Null " + itemType + " item passed for processing.";
-		final String rootMessage = "Couldn't process: " + item.getAbsolutePath() + " is not a ";
-		final String messageTrail = (item.canRead()) ? itemType + "." : "readable " + itemType + ".";
+			return "Null " + itemType + " item passed for processing."; //$NON-NLS-1$ //$NON-NLS-2$
+		final String rootMessage = "Couldn't process: " + item.getAbsolutePath() + " is not a "; //$NON-NLS-1$ //$NON-NLS-2$
+		final String messageTrail = (item.canRead()) ? itemType + "." : "readable " + itemType + "."; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		return rootMessage + messageTrail;
 	}
 }

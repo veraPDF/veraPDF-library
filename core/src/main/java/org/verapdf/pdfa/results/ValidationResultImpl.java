@@ -15,6 +15,8 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion.Status;
+import org.verapdf.pdfa.validation.profiles.ProfileDetails;
+import org.verapdf.pdfa.validation.profiles.Profiles;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -24,6 +26,8 @@ final class ValidationResultImpl implements ValidationResult {
 	private final static ValidationResultImpl DEFAULT = new ValidationResultImpl();
 	@XmlAttribute
 	private final PDFAFlavour flavour;
+	@XmlElement
+	private final ProfileDetails profileDetails;
 	@XmlAttribute
 	private final int totalAssertions;
 	@XmlElementWrapper
@@ -33,21 +37,23 @@ final class ValidationResultImpl implements ValidationResult {
 	private final boolean isCompliant;
 
 	private ValidationResultImpl() {
-		this(PDFAFlavour.NO_FLAVOUR, Collections.<TestAssertion>emptySet(), false);
+		this(PDFAFlavour.NO_FLAVOUR, Profiles.defaultProfile().getDetails(), Collections.<TestAssertion>emptySet(),
+				false);
 	}
 
-	private ValidationResultImpl(final PDFAFlavour flavour, final Set<TestAssertion> assertions,
-			final boolean isCompliant) {
-		this(flavour, assertions, isCompliant, assertions.size());
+	private ValidationResultImpl(final PDFAFlavour flavour, final ProfileDetails profileDetails,
+			final Set<TestAssertion> assertions, final boolean isCompliant) {
+		this(flavour, profileDetails, assertions, isCompliant, assertions.size());
 	}
 
-	private ValidationResultImpl(final PDFAFlavour flavour, final Set<TestAssertion> assertions,
-			final boolean isCompliant, int totalAssertions) {
+	private ValidationResultImpl(final PDFAFlavour flavour, final ProfileDetails profileDetails,
+			final Set<TestAssertion> assertions, final boolean isCompliant, int totalAssertions) {
 		super();
 		this.flavour = flavour;
 		this.assertions = new HashSet<>(assertions);
 		this.isCompliant = isCompliant;
 		this.totalAssertions = totalAssertions;
+		this.profileDetails = profileDetails;
 	}
 
 	/**
@@ -64,6 +70,14 @@ final class ValidationResultImpl implements ValidationResult {
 	@Override
 	public PDFAFlavour getPDFAFlavour() {
 		return this.flavour;
+	}
+
+	/**
+	 * { @inheritDoc }
+	 */
+	@Override
+	public ProfileDetails getProfileDetails() {
+		return this.profileDetails;
 	}
 
 	/**
@@ -139,20 +153,20 @@ final class ValidationResultImpl implements ValidationResult {
 		return DEFAULT;
 	}
 
-	static ValidationResultImpl fromValues(final PDFAFlavour flavour, final Set<TestAssertion> assertions,
-			final boolean isCompliant, final int totalChecks) {
-		return new ValidationResultImpl(flavour, assertions, isCompliant, totalChecks);
+	static ValidationResultImpl fromValues(final PDFAFlavour flavour, final ProfileDetails profileDetails,
+			final Set<TestAssertion> assertions, final boolean isCompliant, final int totalChecks) {
+		return new ValidationResultImpl(flavour, profileDetails, assertions, isCompliant, totalChecks);
 	}
 
 	static ValidationResultImpl fromValidationResult(ValidationResult toConvert) {
 		Set<TestAssertion> assertions = toConvert.getTestAssertions();
-		return fromValues(toConvert.getPDFAFlavour(), assertions, toConvert.isCompliant(),
-				toConvert.getTotalAssertions());
+		return fromValues(toConvert.getPDFAFlavour(), toConvert.getProfileDetails(), assertions,
+				toConvert.isCompliant(), toConvert.getTotalAssertions());
 	}
 
 	static ValidationResultImpl stripPassedTests(ValidationResult toStrip) {
 		Set<TestAssertion> assertions = toStrip.getTestAssertions();
-		return fromValues(toStrip.getPDFAFlavour(), stripPassedTests(assertions),
+		return fromValues(toStrip.getPDFAFlavour(), toStrip.getProfileDetails(), stripPassedTests(assertions),
 				toStrip.isCompliant(), toStrip.getTotalAssertions());
 	}
 

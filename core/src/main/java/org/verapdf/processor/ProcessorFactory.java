@@ -3,24 +3,23 @@
  */
 package org.verapdf.processor;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.util.EnumSet;
+
+import javax.xml.bind.JAXBException;
+
 import org.verapdf.component.Components;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.features.FeatureExtractorConfig;
 import org.verapdf.metadata.fixer.MetadataFixerConfig;
-import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 import org.verapdf.processor.reports.BatchSummary;
 import org.verapdf.processor.reports.Reports;
-
-import javax.xml.bind.JAXBException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.util.EnumMap;
-import java.util.EnumSet;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -43,8 +42,18 @@ public final class ProcessorFactory {
 	}
 
 	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final String mdFolder) {
+		return ProcessorConfigImpl.fromValues(config, featureConfig, fixerConfig, tasks, mdFolder);
+	}
+
+	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
 			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, ValidationProfile customProfile) {
 		return ProcessorConfigImpl.fromValues(config, featureConfig, fixerConfig, tasks, customProfile);
+	}
+
+	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, ValidationProfile customProfile, final String mdFolder) {
+		return ProcessorConfigImpl.fromValues(config, featureConfig, fixerConfig, tasks, customProfile, mdFolder);
 	}
 
 	public static void configToXml(final ProcessorConfig toConvert, final OutputStream stream, boolean format)

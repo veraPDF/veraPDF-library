@@ -1,12 +1,8 @@
 package org.verapdf.features.tools;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.verapdf.core.FeatureParsingException;
+
+import java.util.*;
 
 /**
  * Feature Tree Node for Feature Reporter
@@ -75,7 +71,7 @@ public final class FeatureTreeNode {
 	 *             metadata node
 	 */
 	public FeatureTreeNode addMetadataChild(String nodeName) throws FeatureParsingException {
-		FeatureTreeNode node = new FeatureTreeNode(nodeName);
+		FeatureTreeNode node = new FeatureTreeNode(nodeName, true);
 		return this.addChild(node);
 	}
 

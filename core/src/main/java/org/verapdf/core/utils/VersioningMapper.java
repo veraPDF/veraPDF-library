@@ -89,7 +89,7 @@ final class VersioningMapper implements FileOutputMapper {
 	static String verEnd(final File orig) {
 		final String origName = orig.getName();
 		final String verEnd = (origName.lastIndexOf(".") < 1) ? verPrefixClose //$NON-NLS-1$
-				: origName.substring(origName.lastIndexOf(".")) + verPrefixClose; //$NON-NLS-1$
+				: verPrefixClose + origName.substring(origName.lastIndexOf(".")); //$NON-NLS-1$
 		return verEnd;
 	}
 

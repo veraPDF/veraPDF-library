@@ -49,7 +49,7 @@ import org.verapdf.report.ItemDetails;
  */
 final class ProcessorImpl implements ItemProcessor {
 	private static final FileOutputMapper defautMdFixMapper = FileOutputMappers
-			.sibFiles(FixerFactory.defaultConfig().getFixesPrefix());
+			.verSibFiles(FixerFactory.defaultConfig().getFixesPrefix());
 	private static final ComponentDetails defaultDetails = Components
 			.libraryDetails(URI.create("http://pdfa.verapdf.org/processors#default"), "VeraPDF Processor"); //$NON-NLS-1$//$NON-NLS-2$
 	private static final Logger logger = Logger.getLogger(ProcessorImpl.class.getCanonicalName());
@@ -97,9 +97,9 @@ final class ProcessorImpl implements ItemProcessor {
 		try (InputStream fis = new FileInputStream(toProcess)) {
 			retVal = this.process(ItemDetails.fromFile(toProcess), fis);
 		} catch (FileNotFoundException excep) {
-			throw new VeraPDFException("Couldn't find file: " + toProcess.getPath() + " to process.", excep);
+			throw new VeraPDFException("Couldn't find file: " + toProcess.getPath() + " to process.", excep); //$NON-NLS-1$ //$NON-NLS-2$
 		} catch (IOException excep) {
-			logger.log(Level.INFO, "Problem closing file:" + toProcess, excep);
+			logger.log(Level.INFO, "Problem closing file:" + toProcess, excep); //$NON-NLS-1$
 		}
 		return retVal;
 	}
@@ -108,37 +108,39 @@ final class ProcessorImpl implements ItemProcessor {
 	public ProcessorResult process(ItemDetails fileDetails, InputStream pdfFileStream) {
 		this.initialise();
 		checkArguments(pdfFileStream, fileDetails, this.processorConfig);
-		Components.Timer parseTimer = Components.Timer.start(); 
+		Components.Timer parseTimer = Components.Timer.start();
 		try (PDFAParser parser = this.hasCustomProfile()
 				? foundry.createParser(pdfFileStream, this.processorConfig.getCustomProfile().getPDFAFlavour())
 				: this.isAuto() ? foundry.createParser(pdfFileStream)
 						: foundry.createParser(pdfFileStream, this.valConf().getFlavour())) {
-				for (TaskType task : this.getConfig().getTasks()) {
-					switch (task) {
-					case VALIDATE:
-						validate(parser);
-						break;
-					case FIX_METADATA:
-						fixMetadata(parser, fileDetails.getName());
-						break;
-					case EXTRACT_FEATURES:
-						extractFeatures(parser);
-						break;
-					default:
-						break;
+			for (TaskType task : this.getConfig().getTasks()) {
+				switch (task) {
+				case VALIDATE:
+					validate(parser);
+					break;
+				case FIX_METADATA:
+					fixMetadata(parser, fileDetails.getName());
+					break;
+				case EXTRACT_FEATURES:
+					extractFeatures(parser);
+					break;
+				default:
+					break;
 
-					}
 				}
+			}
 		} catch (EncryptedPdfException e) {
-			logger.log(Level.WARNING, fileDetails.getName() + " appears to be an encrypted PDF.");
-			logger.log(Level.FINE, "Exception details:", e);
-			return ProcessorResultImpl.encryptedResult(fileDetails, TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
+			logger.log(Level.WARNING, fileDetails.getName() + " appears to be an encrypted PDF."); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			return ProcessorResultImpl.encryptedResult(fileDetails,
+					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
 		} catch (ModelParsingException e) {
-			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF.");
-			logger.log(Level.FINE, "Exception details:", e);
-			return ProcessorResultImpl.invalidPdfResult(fileDetails, TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
+			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			return ProcessorResultImpl.invalidPdfResult(fileDetails,
+					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
 		} catch (IOException excep) {
-			logger.log(Level.FINER, "Problem closing PDF Stream", excep);
+			logger.log(Level.FINER, "Problem closing PDF Stream", excep); //$NON-NLS-1$
 		}
 		return ProcessorResultImpl.fromValues(fileDetails, this.taskResults, this.validationResult, this.featureResult,
 				this.fixerResult);
@@ -151,18 +153,18 @@ final class ProcessorImpl implements ItemProcessor {
 
 	private static void checkArguments(InputStream pdfFileStream, ItemDetails fileDetails, ProcessorConfig config) {
 		if (pdfFileStream == null) {
-			throw new IllegalArgumentException("PDF file stream cannot be null");
+			throw new IllegalArgumentException("PDF file stream cannot be null"); //$NON-NLS-1$
 		}
 		if (config == null) {
-			throw new IllegalArgumentException("Config cannot be null");
+			throw new IllegalArgumentException("Config cannot be null"); //$NON-NLS-1$
 		}
 		// FIXME FAST
 		if (config.hasTask(TaskType.VALIDATE) && config.getValidatorConfig().getFlavour() == PDFAFlavour.NO_FLAVOUR
-				&& config.getValidatorConfig().toString().equals("")) {
-			throw new IllegalArgumentException("Validation cannot be started with no chosen validation profile");
+				&& config.getValidatorConfig().toString().equals("")) { //$NON-NLS-1$
+			throw new IllegalArgumentException("Validation cannot be started with no chosen validation profile"); //$NON-NLS-1$
 		}
 		if (fileDetails == null) {
-			throw new IllegalArgumentException("Item details cannot be null");
+			throw new IllegalArgumentException("Item details cannot be null"); //$NON-NLS-1$
 		}
 	}
 
@@ -174,19 +176,19 @@ final class ProcessorImpl implements ItemProcessor {
 			this.validationResult = validator.validate(parser);
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop()));
 		} catch (ValidationException excep) {
-			logger.log(Level.WARNING, "Exception caught when validaing item", excep);
+			logger.log(Level.WARNING, "Exception caught when validaing item", excep); //$NON-NLS-1$
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), excep));
 		} catch (OutOfMemoryError excep) {
-			logger.log(Level.WARNING, "OutOfMemory caught when validaing item", excep);
-			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validaing item", excep);
+			logger.log(Level.WARNING, "OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
+			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), veraExcep));
 		} catch (IOException excep) {
-			logger.log(Level.INFO, "IOException closing validator.", excep);
+			logger.log(Level.INFO, "IOException closing validator.", excep); //$NON-NLS-1$
 		}
 	}
 
 	private PDFAValidator validator(PDFAFlavour parsedFlavour) {
-		PDFAFlavour flavour = Foundries.defaultInstance().defaultFlavour(); 
+		PDFAFlavour flavour = Foundries.defaultInstance().defaultFlavour();
 		if (this.isAuto()) {
 			if (parsedFlavour != PDFAFlavour.NO_FLAVOUR)
 				flavour = parsedFlavour;
@@ -213,8 +215,8 @@ final class ProcessorImpl implements ItemProcessor {
 		try {
 			fxfl = this.mdFixMapper.mapFile(orig);
 		} catch (VeraPDFException excep) {
-			 this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), excep));
-			 return;
+			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), excep));
+			return;
 		}
 		MetadataFixerResult.RepairStatus rpStat = MetadataFixerResult.RepairStatus.NO_ACTION;
 		try (OutputStream fxos = new BufferedOutputStream(new FileOutputStream(fxfl))) {
@@ -223,12 +225,12 @@ final class ProcessorImpl implements ItemProcessor {
 			rpStat = this.fixerResult.getRepairStatus();
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop()));
 		} catch (OutOfMemoryError excep) {
-			logger.log(Level.WARNING, "OutOfMemory caught when validaing item", excep);
-			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validaing item", excep);
+			logger.log(Level.WARNING, "OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
+			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), veraExcep));
 		} catch (IOException excep) {
-			 this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(),
-			 new VeraPDFException("Processing exception in metadata fixer", excep)));
+			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(),
+					new VeraPDFException("Processing exception in metadata fixer", excep))); //$NON-NLS-1$
 		}
 
 		if (rpStat != MetadataFixerResult.RepairStatus.SUCCESS
@@ -248,9 +250,10 @@ final class ProcessorImpl implements ItemProcessor {
 			this.taskResults.put(TaskType.EXTRACT_FEATURES,
 					TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop()));
 		} catch (OutOfMemoryError excep) {
-			logger.log(Level.WARNING, "OutOfMemory caught when validaing item", excep);
-			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validaing item", excep);
-			this.taskResults.put(TaskType.EXTRACT_FEATURES, TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop(), veraExcep));
+			logger.log(Level.WARNING, "OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
+			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
+			this.taskResults.put(TaskType.EXTRACT_FEATURES,
+					TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop(), veraExcep));
 		}
 	}
 
@@ -259,9 +262,13 @@ final class ProcessorImpl implements ItemProcessor {
 	}
 
 	static ItemProcessor newProcessor(final ProcessorConfig config, final ComponentDetails details) {
-		if (config.getMetadataFolder().equals(ProcessorConfigImpl.defaultInstance().getMetadataFolder()))
-			return newProcessor(config, details, defautMdFixMapper);
-		FileOutputMapper mapper = FileOutputMappers.subFold(config.getMetadataFolder(), config.getFixerConfig().getFixesPrefix());
+		FileOutputMapper mapper = defautMdFixMapper;
+		// FIXME: this is hacky
+		if (isMdFolder(config.getMetadataFolder())) {
+			mapper = FileOutputMappers.verFold(config.getMetadataFolder(), config.getFixerConfig().getFixesPrefix());
+		} else {
+			mapper = FileOutputMappers.verSibFiles(config.getFixerConfig().getFixesPrefix());
+		}
 		return newProcessor(config, details, mapper);
 	}
 
@@ -283,6 +290,11 @@ final class ProcessorImpl implements ItemProcessor {
 		return ReleaseDetails.getDetails();
 	}
 
+	static private boolean isMdFolder(final String mdFolder) {
+		if (mdFolder == null) return false;
+		if (mdFolder.isEmpty()) return false;
+		return ! mdFolder.equals(ProcessorConfigImpl.defaultInstance().getMetadataFolder());
+	}
 	@Override
 	public void close() {
 		/**

@@ -17,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -30,9 +29,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "releaseDetails")
 public final class ReleaseDetails {
 	private static final Logger LOGGER = Logger.getLogger(ReleaseDetails.class.getCanonicalName());
-	public static final String APPLICATION_PROPERTIES_ROOT = "org/verapdf/release/";
-	public static final String PROPERTIES_EXT = "properties";
-	public static final String LIBRARY_DETAILS_RESOURCE = APPLICATION_PROPERTIES_ROOT + "library." + PROPERTIES_EXT;
+	public static final String APPLICATION_PROPERTIES_ROOT = "org/verapdf/release/"; //$NON-NLS-1$
+	public static final String PROPERTIES_EXT = "properties"; //$NON-NLS-1$
+	public static final String LIBRARY_DETAILS_RESOURCE = APPLICATION_PROPERTIES_ROOT + "library." + PROPERTIES_EXT; //$NON-NLS-1$
 
 	private static final String RAW_DATE_FORMAT = "${maven.build.timestamp.format}";
 	private static final String RIGHTS = "Developed and released by the veraPDF Consortium.\n"
@@ -40,11 +39,7 @@ public final class ReleaseDetails {
 			+ "and the Mozilla Public License v2 or later.\n";
 
 	private static final ReleaseDetails DEFAULT = new ReleaseDetails();
-	private static final Map<String, ReleaseDetails> DETAILS = new HashMap<>();
-	static {
-		ReleaseDetails details = fromResource(LIBRARY_DETAILS_RESOURCE);
-		DETAILS.put(details.id, details);
-	}
+	private static final Map<String, ReleaseDetails> DETAILS = initDetailsMap();
 
 	@XmlAttribute
 	private final String id;
@@ -52,11 +47,9 @@ public final class ReleaseDetails {
 	private final String version;
 	@XmlAttribute
 	private final Date buildDate;
-	@XmlElement
-	private final String rights = RIGHTS;
 
 	private ReleaseDetails() {
-		this("name", "version", new Date());
+		this("name", "version", new Date()); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private ReleaseDetails(final String id, final String version, final Date buildDate) {
@@ -84,13 +77,6 @@ public final class ReleaseDetails {
 	 */
 	public Date getBuildDate() {
 		return new Date(this.buildDate.getTime());
-	}
-
-	/**
-	 * @return the veraPDF library rights statement
-	 */
-	public String getRights() {
-		return this.rights;
 	}
 
 	/**
@@ -141,13 +127,19 @@ public final class ReleaseDetails {
 	 */
 	@Override
 	public String toString() {
-		return "ReleaseDetails [id=" + this.id + ", version=" + this.version + ", buildDate=" + this.buildDate + "]";
+		return "ReleaseDetails [id=" + this.id + ", version=" + this.version + ", buildDate=" + this.buildDate + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	}
 
 	public static ReleaseDetails defaultInstance() {
 		return DEFAULT;
 	}
 
+	/**
+	 * @return the rights statement for the veraPDF software
+	 */
+	public static String rightsStatement() {
+		return RIGHTS;
+	}
 	/**
 	 * @return the static immutable ReleaseDetails instance
 	 */
@@ -204,7 +196,7 @@ public final class ReleaseDetails {
 			}
 			return fromPropertiesStream(is);
 		} catch (IOException excep) {
-			throw new IllegalStateException("Couldn't load ReleaseDetails resource:" + resourceName, excep);
+			throw new IllegalStateException("Couldn't load ReleaseDetails resource:" + resourceName, excep); //$NON-NLS-1$
 		}
 	}
 
@@ -215,22 +207,30 @@ public final class ReleaseDetails {
 	}
 
 	private static ReleaseDetails fromProperties(final Properties props) {
-		String release = props.getProperty("verapdf.release.version");
-		String dateFormat = props.getProperty("verapdf.date.format");
-		String id = props.getProperty("verapdf.project.id");
+		String release = props.getProperty("verapdf.release.version"); //$NON-NLS-1$
+		String dateFormat = props.getProperty("verapdf.date.format"); //$NON-NLS-1$
+		String id = props.getProperty("verapdf.project.id"); //$NON-NLS-1$
 		Date date = new Date();
 		if (!dateFormat.equals(RAW_DATE_FORMAT)) {
 			SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
 			try {
-				date = formatter.parse(props.getProperty("verapdf.release.date"));
-			} catch (@SuppressWarnings("unused") ParseException e) {
+				date = formatter.parse(props.getProperty("verapdf.release.date")); //$NON-NLS-1$
+			} catch (ParseException e) {
 				/**
 				 * Safe to ignore this exception as release simply set to new
 				 * date.
 				 */
-				LOGGER.log(Level.FINEST, "No parsable release date found, setting release date to:" + date, e);
+				LOGGER.log(Level.FINEST, "No parsable release date found, setting release date to:" + date, e); //$NON-NLS-1$
 			}
 		}
 		return new ReleaseDetails(id, release, date);
 	}
+
+	private static Map<String, ReleaseDetails> initDetailsMap() {
+		Map<String, ReleaseDetails> details = new HashMap<>();
+		ReleaseDetails libDetails = fromResource(LIBRARY_DETAILS_RESOURCE);
+		details.put(libDetails.id, libDetails);
+		return details;
+	}
+
 }
