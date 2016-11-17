@@ -1,14 +1,15 @@
 # Version 0.26 (November 16, 2016)
+We've made two downloads available for out 0.26 release. There's the ususal version, based on Apache PDFBox and downloadable from: http://downloads.verapdf.org/rel/verapdf-installer.zip. For 0.26 we've also prepared the first beta release of our purpose built PDF parser and validation model, also known as the greenfield validator. This is downloadable from: http://downloads.verapdf.org/gf/verapdf-gf-installer.zip. It's not functionally complete yet as it only supports PDF/A validation. Full details of the release features are listed below.
 
 ## Conformance checker
 - added the new rule for embedded files to be associated with the document or its parts (PDF/A-3 only).
 
 ## Application enhancements
 - first beta release of greenfield PDF/A validation available as a limited functionality app;
-- refactoring of sub component and application configuration for reproducible execution;
+- refactoring of sub-component and application configuration for reproducible execution;
 - new BatchProcessor producing multi-item reports;
 - batch processing is stream/event driven with event handlers for processing results; and
-- report structures altered to accomodate batch processing.
+- report structures altered to accommodate batch processing.
 
 ## Code Quality
 - publication of integration tests for Greenfield components;
@@ -19,14 +20,14 @@
 - added 7 new test files to cover the new rule in PDF/A-3 validation profile
 
 ## Disabled functionality
-In order to accomodate batch reporting for this release we've had to sacrifice
+In order to accommodate batch reporting for this release we've had to sacrifice
 redirecting output to user files. This isn't permanent and will be re-instated for the next release. The following functionality has been temporarily disabled:
 
 ### Standard release
 - HTML report from CLI, HTML reporting will be a function of the dedicated reporter in the next release. HTML reports are still available from the GUI;
 - the -pw option that allows the user to override the profiles wiki, this was only used to generate the HTML report so is not required;
 - the -c load config option, config is automatically loaded from the app area and we're adding user config to the next release;
-- the --reportfile, --reportfolder, and --overwriteReportFile as these need a rethink to accomodate batch processing.
+- the --reportfile, --reportfolder, and --overwriteReportFile as these need a rethink to accommodate batch processing.
 
 ### Greenfield release
 The Greenfield release is missing all of the above plus:
