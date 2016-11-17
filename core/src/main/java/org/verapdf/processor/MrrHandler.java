@@ -45,30 +45,30 @@ final class MrrHandler extends AbstractXmlHandler {
 
 	private final static String buildInformation = "buildInformation";
 
-	private final boolean logSuccess;
 	private final int maxFailedChecks;
-	/**
-	 * @param indentSize
-	 * @param dest
-	 * @throws VeraPDFException
-	 */
-	private MrrHandler(Writer dest) throws VeraPDFException {
-		this(dest, 2);
-	}
+	private final boolean logPassed;
 
 	/**
 	 * @param indentSize
 	 * @param dest
 	 * @throws VeraPDFException
 	 */
-	private MrrHandler(Writer dest, int indentSize) throws VeraPDFException {
-		this(dest, indentSize, 100, false);
+	private MrrHandler(Writer dest) throws VeraPDFException {
+		this(dest, 100, false);
+	}
+
+	/**
+	 * @param dest
+	 * @throws VeraPDFException
+	 */
+	private MrrHandler(Writer dest, int maxFailedChecks, boolean logPassed) throws VeraPDFException {
+		this(dest, 2, maxFailedChecks, logPassed);
 	}
 	
-	private MrrHandler(Writer dest, int indentSize, int maxFailedChecks, boolean logSuccess) throws VeraPDFException {
+	private MrrHandler(Writer dest, int indentSize, int maxFailedChecks, boolean logPassed) throws VeraPDFException {
 		super(dest, indentSize);
 		this.maxFailedChecks = maxFailedChecks;
-		this.logSuccess = logSuccess;
+		this.logPassed = logPassed;
 	}
 
 	/**
@@ -142,7 +142,7 @@ final class MrrHandler extends AbstractXmlHandler {
 
 	@Override
 	void validationSuccess(TaskResult taskResult, ValidationResult result) throws VeraPDFException {
-		ValidationDetails details = Reports.fromValues(result, this.logSuccess, this.maxFailedChecks);
+		ValidationDetails details = Reports.fromValues(result, this.logPassed, this.maxFailedChecks);
 		ValidationReport valRep = Reports.createValidationReport(details, result.getProfileDetails().getName(), getStatement(result.isCompliant()), result.isCompliant());
 		try {
 			XmlSerialiser.toXml(valRep, this.writer, true, true);
@@ -269,12 +269,12 @@ final class MrrHandler extends AbstractXmlHandler {
 		return new VeraPDFException(String.format(unmarshalErrMessage, typePart), excep);
 	}
 
-	static BatchProcessingHandler newInstance(final Writer dest) throws VeraPDFException {
-		return new MrrHandler(dest);
+	static BatchProcessingHandler newInstance(final Writer dest, final boolean logPassed, final int maxFailedChecks) throws VeraPDFException {
+		return new MrrHandler(dest, maxFailedChecks, logPassed);
 	}
 
-	static BatchProcessingHandler newInstance(final Writer dest, final int indent) throws VeraPDFException {
-		return new MrrHandler(dest, indent);
+	static BatchProcessingHandler newInstance(final Writer dest, final int indent, final boolean logPassed, final int maxFailedChecks) throws VeraPDFException {
+		return new MrrHandler(dest, indent, maxFailedChecks, logPassed);
 	}
 	
     private static String getStatement(boolean status) {
