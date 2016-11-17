@@ -3,14 +3,6 @@
  */
 package org.verapdf.processor;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.util.EnumSet;
-
-import javax.xml.bind.JAXBException;
-
 import org.verapdf.component.Components;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.core.XmlSerialiser;
@@ -20,6 +12,13 @@ import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 import org.verapdf.processor.reports.BatchSummary;
 import org.verapdf.processor.reports.Reports;
+
+import javax.xml.bind.JAXBException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.util.EnumSet;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -86,13 +85,13 @@ public final class ProcessorFactory {
 		return RawResultHandler.newInstance(dest, indentSize);
 	}
 
-	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose)
+	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose, int maxFailedChecksPerRule, boolean logPassed)
 			throws VeraPDFException {
-		return getHandler(option, isVerbose, System.out);
+		return getHandler(option, isVerbose, System.out, maxFailedChecksPerRule, logPassed);
 	}
 
 	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose,
-			OutputStream reportStream) throws VeraPDFException {
+			OutputStream reportStream, int maxFailedChecksPerRule, boolean logPassed) throws VeraPDFException {
 		if (option == null)
 			throw new IllegalArgumentException("Arg option can not be null");
 		if (reportStream == null)
@@ -104,7 +103,7 @@ public final class ProcessorFactory {
 		case XML:
 			return rawResultHandler(new PrintWriter(reportStream));
 		case MRR:
-			return MrrHandler.newInstance(new PrintWriter(reportStream));
+			return MrrHandler.newInstance(new PrintWriter(reportStream), logPassed, maxFailedChecksPerRule);
 		default: // should not be reached
 			throw new VeraPDFException("Unknown report format option: " + option);
 		}
