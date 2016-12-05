@@ -1,21 +1,22 @@
 package org.verapdf.processor;
 
-import org.verapdf.features.FeatureExtractionResult;
-import org.verapdf.metadata.fixer.FixerFactory;
-import org.verapdf.pdfa.results.MetadataFixerResult;
-import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.report.FeaturesReport;
-import org.verapdf.report.ItemDetails;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.EnumSet;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.util.Collection;
-import java.util.EnumMap;
-import java.util.EnumSet;
+
+import org.verapdf.features.FeatureExtractionResult;
+import org.verapdf.metadata.fixer.FixerFactory;
+import org.verapdf.pdfa.results.MetadataFixerResult;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.results.ValidationResults;
+import org.verapdf.processor.reports.ItemDetails;
+import org.verapdf.report.FeaturesReport;
 
 /**
  * Instance of this class contains result of

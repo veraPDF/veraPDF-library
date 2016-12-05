@@ -1,17 +1,20 @@
 package org.verapdf.report;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Map;
+
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
-import java.util.Map;
 
 /**
  * @author Maksim Bezrukov
  */
 public final class XsltTransformer {
+	private static final TransformerFactory factory = TransformerFactory.newInstance();
 
 	private XsltTransformer() {
 	}
@@ -33,7 +36,6 @@ public final class XsltTransformer {
 	public static void transform(InputStream source, InputStream xslt, OutputStream destination,
 			Map<String, String> arguments) throws TransformerException {
 
-		TransformerFactory factory = TransformerFactory.newInstance();
 		Transformer transformer = factory.newTransformer(new StreamSource(xslt));
 
 		if (arguments != null) {

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf.report;
+package org.verapdf.processor.reports;
 
 import java.io.File;
 

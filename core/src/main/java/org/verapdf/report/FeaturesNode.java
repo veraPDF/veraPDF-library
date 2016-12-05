@@ -33,8 +33,6 @@ public class FeaturesNode {
 
 	private static final Logger LOGGER = Logger.getLogger(FeaturesNode.class.getName());
 
-	private static final String NAMESPACE = "http://www.verapdf.org/MachineReadableReport";
-
 	private static final int XD7FF = 0xD7FF;
 	private static final int XE000 = 0xE000;
 	private static final int XFFFD = 0xFFFD;
@@ -68,7 +66,7 @@ public class FeaturesNode {
 			List<FeatureTreeNode> children = collection.getFeatureTreesForType(type);
 			if (children != null) {
 				for (FeatureTreeNode entry : children) {
-					qChildren.add(new JAXBElement<>(new QName(NAMESPACE, entry.getName()),
+					qChildren.add(new JAXBElement<>(new QName(entry.getName()),
 							FeaturesNode.class, FeaturesNode.fromValues(entry, collection)));
 				}
 			}
@@ -81,13 +79,13 @@ public class FeaturesNode {
 					i = 1;
 				}
 				while (i < errors.size()) {
-					builder.append(", ").append(errors.get(i));
+					builder.append(", ").append(errors.get(i)); //$NON-NLS-1$
 					++i;
 				}
 			}
 		}
 		if (!builder.toString().isEmpty()) {
-			attr.put(new QName(NAMESPACE, ErrorsHelper.ERRORID), builder.toString());
+			attr.put(new QName(ErrorsHelper.ERRORID), builder.toString());
 		}
 
 		if (qChildren.isEmpty() && attr.isEmpty()) {
@@ -103,7 +101,7 @@ public class FeaturesNode {
 
 		Map<QName, Object> qAttributes = new HashMap<>();
 		for (Map.Entry<String, String> entry : node.getAttributes().entrySet()) {
-			qAttributes.put(new QName(NAMESPACE, entry.getKey()),
+			qAttributes.put(new QName(entry.getKey()),
 					replaceInvalidCharacters(entry.getValue()));
 		}
 
@@ -117,7 +115,7 @@ public class FeaturesNode {
 						| ParserConfigurationException e) {
 					LOGGER.log(Level.INFO, e.getMessage(), e);
 					String errorId = ErrorsHelper.addErrorIntoCollection(collection, null, e.getMessage());
-					qAttributes.put(new QName(NAMESPACE, ErrorsHelper.ERRORID), errorId);
+					qAttributes.put(new QName(ErrorsHelper.ERRORID), errorId);
 				}
 			} else {
 				qChildren.add(replaceInvalidCharacters(node.getValue()));
@@ -126,7 +124,7 @@ public class FeaturesNode {
 		}
 		if (!node.getChildren().isEmpty()) {
 			for (FeatureTreeNode entry : node.getChildren()) {
-				qChildren.add(new JAXBElement<>(new QName(NAMESPACE, entry.getName()),
+				qChildren.add(new JAXBElement<>(new QName(entry.getName()),
 						FeaturesNode.class, FeaturesNode.fromValues(entry, collection)));
 			}
 		}
@@ -142,8 +140,8 @@ public class FeaturesNode {
 			for (int i = 0; i < source.length(); ++i) {
 				char curChar = source.charAt(i);
 				if ('#' == curChar) {
-					formatter.format("#x%06X",
-							Integer.valueOf("#".codePointAt(0)));
+					formatter.format("#x%06X", //$NON-NLS-1$
+							Integer.valueOf("#".codePointAt(0))); //$NON-NLS-1$
 				} else {
 					int codePoint = source.codePointAt(i);
 					if (Character.isHighSurrogate(curChar)) {
@@ -154,14 +152,14 @@ public class FeaturesNode {
 							|| (codePoint >= SP && codePoint <= XD7FF)
 							|| (codePoint >= XE000 && codePoint <= XFFFD)
 							|| (codePoint >= X10000 && codePoint <= X10FFFF)) {
-						formatter.format("%c", Character.valueOf(curChar));
+						formatter.format("%c", Character.valueOf(curChar)); //$NON-NLS-1$
 						if (Character.isHighSurrogate(curChar)
 								&& i < source.length()) {
-							formatter.format("%c",
+							formatter.format("%c", //$NON-NLS-1$
 									Character.valueOf(source.charAt(i)));
 						}
 					} else {
-						formatter.format("#x%06X", Integer.valueOf(codePoint));
+						formatter.format("#x%06X", Integer.valueOf(codePoint)); //$NON-NLS-1$
 					}
 				}
 			}
