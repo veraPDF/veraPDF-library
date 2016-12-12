@@ -71,8 +71,7 @@ class TaskResultImpl implements TaskResult {
 
 	@Override
 	public TaskType getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return type;
 	}
 
 	@Override
