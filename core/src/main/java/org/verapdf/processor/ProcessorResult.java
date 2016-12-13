@@ -8,8 +8,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.processor.reports.ItemDetails;
 import org.verapdf.report.FeaturesReport;
-import org.verapdf.report.ItemDetails;
 
 @XmlJavaTypeAdapter(ProcessorResultImpl.Adapter.class)
 public interface ProcessorResult {

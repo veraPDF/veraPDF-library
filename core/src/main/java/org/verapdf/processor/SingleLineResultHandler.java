@@ -11,8 +11,8 @@ import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.processor.reports.BatchSummary;
+import org.verapdf.processor.reports.ItemDetails;
 import org.verapdf.report.FeaturesReport;
-import org.verapdf.report.ItemDetails;
 
 /**
  * This result handler outputs validation summaries for documents in single line

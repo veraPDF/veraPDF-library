@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import org.verapdf.core.VeraPDFException;
-import org.verapdf.report.ItemDetails;
+import org.verapdf.processor.reports.ItemDetails;
 
 /**
  * Processor encapsulates all validation processes: validation, metadata fixes

@@ -40,7 +40,7 @@ import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.profiles.Profiles;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
-import org.verapdf.report.ItemDetails;
+import org.verapdf.processor.reports.ItemDetails;
 
 /**
  * Class is implementation of {@link Processor} interface
