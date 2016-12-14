@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_A">
-    <details creator="veraPDF Consortium" created="2016-10-20T06:36:04.322-03:00">
+    <details creator="veraPDF Consortium" created="2016-11-30T21:00:19.719-03:00">
         <name>PDF/A-1A validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011, Level A</description>
     </details>
@@ -760,6 +760,20 @@
             <references>
                 <reference specification="ISO19005-1:2005/Cor.2:2011" clause="6.3.7"/>
             </references>
+        </rule>
+        <rule object="Glyph">
+            <id specification="ISO_19005_1" clause="6.3.8" testNumber="1"/>
+            <description>The font dictionary shall include a ToUnicode entry whose value is a CMap stream object that maps character codes to Unicode values, 
+			as described in PDF Reference 5.9, unless the font meets any of the following three conditions:
+			(*) fonts that use the predefined encodings MacRomanEncoding, MacExpertEncoding or WinAnsiEncoding, or that use the predefined Identity-H or Identity-V CMaps;
+			(*) Type 1 fonts whose character names are taken from the Adobe standard Latin character set or the set of named characters in the Symbol font, as defined in PDF Reference Appendix D;
+			(*) Type 0 fonts whose descendant CIDFont uses the Adobe-GB1, Adobe-CNS1, Adobe-Japan1 orAdobe-Korea1 character collections.</description>
+            <test>toUnicode != null</test>
+            <error>
+                <message>The font does not define Unicode character map</message>
+                <arguments/>
+            </error>
+            <references/>
         </rule>
         <rule object="PDExtGState">
             <id specification="ISO_19005_1" clause="6.4" testNumber="1"/>
