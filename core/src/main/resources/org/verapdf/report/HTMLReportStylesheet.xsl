@@ -8,7 +8,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:vera="http://www.verapdf.org/MachineReadableReport">
 
-    <xsl:output method="html"/>
+    <xsl:output indent="yes" method="html"/>
 
     <xsl:param name="wikiPath"/>
     <xsl:param name="isFullHTML"/>

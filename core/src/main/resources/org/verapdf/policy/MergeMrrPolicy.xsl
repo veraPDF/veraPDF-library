@@ -2,6 +2,8 @@
                 xmlns:vera="http://www.verapdf.org/MachineReadableReport">
   <xsl:output indent="yes" method="xml"/>
 
+  <xsl:param name="policyResultPath" select="'policyResult.xml'" />
+
   <xsl:template match="@*|node()">
       <xsl:copy>
           <xsl:apply-templates select="@*|node()"/>
