@@ -254,6 +254,11 @@ final class ProcessorImpl implements ItemProcessor {
 			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
 			this.taskResults.put(TaskType.EXTRACT_FEATURES,
 					TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop(), veraExcep));
+		} catch (Throwable e) {
+			logger.log(Level.WARNING, "Exception caught when extracting features of item", e); //$NON-NLS-1$
+			VeraPDFException veraExcep = new VeraPDFException("Exception caught when extracting features of item", e); //$NON-NLS-1$
+			this.taskResults.put(TaskType.EXTRACT_FEATURES,
+					TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop(), veraExcep));
 		}
 	}
 
