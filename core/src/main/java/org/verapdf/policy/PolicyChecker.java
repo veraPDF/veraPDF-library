@@ -48,9 +48,9 @@ public final class PolicyChecker {
 	public static void insertPolicyReport(final File policyReport, final File mrrReport,
 			final OutputStream mergedReport) throws VeraPDFException {
 		try {
-	        Map<String, String> arguments = new HashMap<>();
-	        arguments.put("policyResultPath", policyReport.getAbsolutePath()); //$NON-NLS-1$
-			cachedMergeXsl.newTransformer().transform(new StreamSource(mrrReport), new StreamResult(mergedReport));
+			Transformer transformer = cachedMergeXsl.newTransformer();
+			transformer.setParameter("policyResultPath", policyReport.getAbsolutePath()); //$NON-NLS-1$
+			transformer.transform(new StreamSource(mrrReport), new StreamResult(mergedReport));
 			return;
 		} catch (TransformerException excep) {
 			throw new VeraPDFException("Problem merging XML files.", excep);
