@@ -117,7 +117,7 @@ public class PolicyCheckerTests {
 		mrrFile.delete();
 	}
 
-	private void copyStreamToFile(final InputStream in, final OutputStream out) throws IOException {
+	private static void copyStreamToFile(final InputStream in, final OutputStream out) throws IOException {
 		byte[] buffer = new byte[1024];
 		int len = in.read(buffer);
 		while (len != -1) {

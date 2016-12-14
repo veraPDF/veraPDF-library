@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
@@ -45,15 +47,14 @@ public final class PolicyChecker {
 
 	public static void insertPolicyReport(final File policyReport, final File mrrReport,
 			final OutputStream mergedReport) throws VeraPDFException {
-//		if (policyReport.getParentFile().compareTo(mrrReport.getParentFile()) == 0) {
-			try {
-				cachedMergeXsl.newTransformer().transform(new StreamSource(mrrReport), new StreamResult(mergedReport));
-				return;
-			} catch (TransformerException excep) {
-				throw new VeraPDFException("Problem merging XML files.", excep);
-			}
-//		}
-//		throw new VeraPDFException("Both XML files should be in the same directory.");
+		try {
+	        Map<String, String> arguments = new HashMap<>();
+	        arguments.put("policyResultPath", policyReport.getAbsolutePath()); //$NON-NLS-1$
+			cachedMergeXsl.newTransformer().transform(new StreamSource(mrrReport), new StreamResult(mergedReport));
+			return;
+		} catch (TransformerException excep) {
+			throw new VeraPDFException("Problem merging XML files.", excep);
+		}
 	}
 
 	public static void applyPolicy(final File policy, final InputStream xmlReport, final OutputStream policyReport)
