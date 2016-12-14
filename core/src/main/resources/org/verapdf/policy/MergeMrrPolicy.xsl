@@ -13,7 +13,7 @@
   <xsl:template match="report">
       <xsl:copy>
           <xsl:apply-templates select="@*|node()"/>
-          <xsl:for-each select="document('policyResult.xml')/*">
+          <xsl:for-each select="document($policyResultPath)/*">
               <xsl:copy>
                   <xsl:apply-templates select="@*|node()"/>
               </xsl:copy>
