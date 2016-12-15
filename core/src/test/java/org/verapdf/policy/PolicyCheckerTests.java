@@ -90,28 +90,20 @@ public class PolicyCheckerTests {
 
 	@Test
 	public void testInsertPolicyReport() throws IOException, VeraPDFException {
-		File policyReport = new File(new File("."), "policyResult.xml"); //$NON-NLS-1$ //$NON-NLS-2$
-		if (policyReport.isFile()) {
-			policyReport.delete();
-		}
-		policyReport.createNewFile();
+		File policyReport = File.createTempFile("policyReport", "veraPDF"); //$NON-NLS-1$ //$NON-NLS-2$
 		assertTrue(policyReport.length() == 0);
 		try (InputStream policyIs = PolicyCheckerTests.class.getResourceAsStream(fontChecksStylesheet);
 				InputStream mrrIs = PolicyCheckerTests.class.getResourceAsStream(fontChecksMrr);
 				FileOutputStream fosPolicyResult = new FileOutputStream(policyReport)) {
 			PolicyChecker.applyPolicy(policyIs, mrrIs, fosPolicyResult, true);
 		}
-		File mrrFile = new File(policyReport.getParentFile(), "mrr.xml"); //$NON-NLS-1$
-		if (mrrFile.isFile()) {
-			mrrFile.delete();
-		}
-		mrrFile.createNewFile();
+		File mrrFile = File.createTempFile("mrr", "veraPDF"); //$NON-NLS-1$ //$NON-NLS-2$
 		try (OutputStream fos = new FileOutputStream(mrrFile)) {
 			copyStreamToFile(PolicyCheckerTests.class.getResourceAsStream(fontChecksMrr), fos);
 		}
 		File tempResult = File.createTempFile("veraPDF", "mergeTest"); //$NON-NLS-1$ //$NON-NLS-2$
 		try (OutputStream fos = new FileOutputStream(tempResult)) {
-			PolicyChecker.insertPolicyReport(tempResult, mrrFile, fos);
+			PolicyChecker.insertPolicyReport(policyReport, mrrFile, fos);
 		}
 		policyReport.delete();
 		mrrFile.delete();
