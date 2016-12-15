@@ -1,9 +1,9 @@
 package org.verapdf.report;
 
-import javax.xml.bind.annotation.XmlElement;
-
 import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.features.FeatureObjectType;
+
+import javax.xml.bind.annotation.XmlElement;
 
 /**
  * @author Maksim Bezrukov
@@ -47,8 +47,7 @@ public class DocumentResourcesFeatures {
 		FeaturesNode fonts = FeaturesNode.fromValues(collection, FeatureObjectType.FONT);
 		FeaturesNode propertiesDicts = FeaturesNode.fromValues(collection, FeatureObjectType.PROPERTIES);
 		FeaturesNode xobjects = FeaturesNode.fromValues(collection, FeatureObjectType.IMAGE_XOBJECT,
-				FeatureObjectType.FORM_XOBJECT, FeatureObjectType.POSTSCRIPT_XOBJECT,
-				FeatureObjectType.FAILED_XOBJECT);
+				FeatureObjectType.FORM_XOBJECT, FeatureObjectType.POSTSCRIPT_XOBJECT);
 		if (graphicsStates == null
 				&& colorSpaces == null
 				&& patterns == null
