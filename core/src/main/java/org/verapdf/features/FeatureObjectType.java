@@ -26,7 +26,6 @@ public enum FeatureObjectType {
 	PROPERTIES("properties", "Properties Dictionaries", "prop"),
 	SHADING("shading", "Shadings", "shdng"),
 	SIGNATURE("signature", "Signatures"),
-	FAILED_XOBJECT("xobject", "Failed XObjects", "xobj"),
 	ERROR("error", "Errors");
 	
 	private final String nodeName;
