@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public final class HTMLReport {
 	private static final String resourceRoot = "org/verapdf/report/"; //$NON-NLS-1$
-	private static final String xslExt = ".xls"; //$NON-NLS-1$
+	private static final String xslExt = ".xsl"; //$NON-NLS-1$
 	private static final String detailedReport = resourceRoot + "DetailedHtmlReport" + xslExt; //$NON-NLS-1$
 	private static final String summaryReport = resourceRoot + "SummaryHtmlReport" + xslExt; //$NON-NLS-1$
 
