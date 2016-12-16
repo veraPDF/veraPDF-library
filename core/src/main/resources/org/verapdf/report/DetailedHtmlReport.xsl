@@ -233,6 +233,19 @@
                 </table>
             </xsl:if>
         </div>
+       <xsl:if test="/report/jobs/job/featuresReport">
+            <h2>Features information</h2>
+
+            <table border="0" id="table4">
+                <tr style="BACKGROUND: #bcbad6">
+                    <td width="800">
+                        <b>Feature</b>
+                    </td>
+                </tr>
+                <xsl:apply-templates
+                        select="/report/jobs/job/featuresReport/*"/>
+            </table>
+       </xsl:if>
     </xsl:template>
 
 
@@ -390,7 +403,55 @@
         </tr>
 
     </xsl:template>
+    <!-- Features Information -->
+    <xsl:template match="/report/jobs/job/featuresReport/*">
 
+        <tr style="BACKGROUND: #dcdaf6">
+            <td width="800">
+                <a >
+                  <xsl:choose>
+                    <xsl:when test="local-name()='informationDict'">
+                        Information dictionary
+                    </xsl:when>
+                    <xsl:when test="local-name()='documentResources'">
+                        Document resources
+                    </xsl:when>
+                    <xsl:when test="local-name()='outlines'">
+                        Outlines
+                    </xsl:when>
+                    <xsl:when test="local-name()='lowLevelInfo'">
+                        Low level info
+                    </xsl:when>
+                    <xsl:when test="local-name()='metadata'">
+                        Metadata
+                    </xsl:when>
+                    <xsl:when test="local-name()='signatures'">
+                        Signatures
+                    </xsl:when>
+                    <xsl:when test="local-name()='embeddedFiles'">
+                        Embedded files
+                    </xsl:when>
+                    <xsl:when test="local-name()='iccProfiles'">
+                        ICC profiles
+                    </xsl:when>
+                    <xsl:when test="local-name()='outputIntents'">
+                        Output intents
+                    </xsl:when>
+                    <xsl:when test="local-name()='annotations'">
+                        Annotations
+                    </xsl:when>
+                    <xsl:when test="local-name()='pages'">
+                        Pages
+                    </xsl:when>
+                    <xsl:when test="local-name()='errors'">
+                        Errors  
+                    </xsl:when>
+                  </xsl:choose>
+                </a>
+            </td>
+        </tr>
+
+    </xsl:template>
     <!-- Metadata fixes information -->
     <xsl:template match="/report/jobs/job/metadataRepairReport/fixes/fix">
         <tr class="hideable hide{fixesId}">
