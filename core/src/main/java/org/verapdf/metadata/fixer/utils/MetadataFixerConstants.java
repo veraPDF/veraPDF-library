@@ -22,7 +22,7 @@ public class MetadataFixerConstants {
 	public static final String INFO_CREATION_DATE = "CreationDate";
 	public static final String INFO_MODIFICATION_DATE = "ModDate";
 
-	public static final String PROCESSED_OBJECTS_PROPERTIES_PATH = "/processed-objects.properties";
+	public static final String PROCESSED_OBJECTS_PROPERTIES_PATH = "/org/verapdf/metadata/fixer/processed-objects.properties";
 	public static final String RULE_DESCRIPTION_TAG = "ruleDescription";
 	public static final String OBJECT_TYPE_TAG = "objectType";
 	public static final String TEST_TAG = "test";
