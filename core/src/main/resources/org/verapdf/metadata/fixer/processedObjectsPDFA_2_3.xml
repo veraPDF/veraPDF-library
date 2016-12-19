@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<appliedObjects>
+    <ruleDescription>
+        <objectType>PDDocument</objectType>
+        <test>metadata_size == 1</test>
+    </ruleDescription>
+    <ruleDescription>
+        <objectType>MainXMPPackage</objectType>
+        <test>Identification_size == 1</test>
+    </ruleDescription>
+    <ruleDescription>
+        <objectType>PDFAIdentification</objectType>
+    </ruleDescription>
+</appliedObjects>
