@@ -63,7 +63,7 @@
               }
               table, th, td {
                 border: 1px solid black;
-                text-align: left;
+                text-align: center;
               }
               tr:nth-child(even) {
                 background-color: #f2f2f2
@@ -73,8 +73,11 @@
                 font-weight: bold;
               }
               .valid {
-                  color: green;
-                  font-weight: bold;
+                color: green;
+                font-weight: bold;
+              }
+              .lefted {
+                text-align: left;
               }
             </style>
             <!-- These scripts used to hide and show the hidden details -->
@@ -108,18 +111,18 @@
       <h2>Build Information</h2>
       <table border="0" id="table2">
           <tr>
-              <td width="250">
+              <td class="lefted" width="250">
                   <b>Version:</b>
               </td>
-              <td>
+              <td class="lefted">
                   <xsl:value-of select="releaseDetails[1]/@version"/>
               </td>
           </tr>
           <tr>
-              <td width="250">
+              <td class="lefted" width="250">
                   <b>Build Date:</b>
               </td>
-              <td>
+              <td class="lefted">
                   <xsl:value-of select="releaseDetails[1]/@buildDate"/>
               </td>
           </tr>
@@ -212,7 +215,7 @@
               </xsl:choose>
           </xsl:variable>
           <tr>
-            <td>
+            <td class="lefted">
               <xsl:value-of select="item/name" />
             </td>
             <td>
