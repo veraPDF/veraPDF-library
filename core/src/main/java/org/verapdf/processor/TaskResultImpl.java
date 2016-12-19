@@ -24,9 +24,9 @@ class TaskResultImpl implements TaskResult {
 	private static final String EXCEPTION = "Exception: ";
 	private static final String CAUSED_BY = " caused by exception: ";
 
-    private final VeraPDFException exception;
+	private final VeraPDFException exception;
 
-    @XmlAttribute
+	@XmlAttribute
 	private final TaskType type;
 	@XmlAttribute
 	private final boolean isExecuted;
@@ -34,8 +34,12 @@ class TaskResultImpl implements TaskResult {
 	private final boolean isSuccess;
 	@XmlElement
 	private final AuditDuration duration;
+
 	@XmlElement
 	public String getExceptionMessage() {
+		if (this.exception == null)
+			return null;
+
 		Throwable e = this.exception;
 		String res = EXCEPTION + e.getMessage();
 		e = e.getCause();
@@ -58,8 +62,8 @@ class TaskResultImpl implements TaskResult {
 		this(type, true, false, duration, exception);
 	}
 
-	private TaskResultImpl(final TaskType type, final boolean isExecuted, final boolean isSuccess, final AuditDuration duration,
-			final VeraPDFException exception) {
+	private TaskResultImpl(final TaskType type, final boolean isExecuted, final boolean isSuccess,
+			final AuditDuration duration, final VeraPDFException exception) {
 		super();
 		this.type = type;
 		this.isExecuted = isExecuted;
@@ -68,10 +72,9 @@ class TaskResultImpl implements TaskResult {
 		this.exception = exception;
 	}
 
-
 	@Override
 	public TaskType getType() {
-		return type;
+		return this.type;
 	}
 
 	@Override

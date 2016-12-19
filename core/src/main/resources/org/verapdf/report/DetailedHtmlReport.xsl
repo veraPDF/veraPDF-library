@@ -5,8 +5,7 @@
     Version: 1.0
 -->
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:vera="http://www.verapdf.org/MachineReadableReport">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
     <xsl:output indent="yes" method="html"/>
 
@@ -73,7 +72,7 @@
                         <b>File:</b>
                     </td>
                     <td>
-                        <xsl:value-of select="/report/jobs/job/vera:item/vera:name"/>
+                        <xsl:value-of select="/report/jobs/job/item/name"/>
                     </td>
                 </tr>
                 <tr>
