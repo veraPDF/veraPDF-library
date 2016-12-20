@@ -9,8 +9,11 @@
 
     <xsl:output indent="yes" method="html"/>
 
-    <xsl:param name="wikiPath"/>
-    <xsl:param name="isFullHTML"/>
+    <!-- Parameter to select a full HTML document (true) or a fragment within div (false) -->
+    <xsl:param name="isFullHTML" select="'true'" />
+    <!-- Prameter to set the base path to the Wiki instance -->
+    <xsl:param name="wikiPath" select="'https://github.com/veraPDF/veraPDF-validation-profiles/wiki/'"/>
+    <xsl:strip-space elements="*"/>
 
     <!-- HTML header and body wrapper -->
     <xsl:template match="/">
@@ -46,7 +49,23 @@
     <xsl:template match="report">
         <div>
             <style>
-                <xsl:text>div{font-family: sans-serif;}</xsl:text>
+                div {
+                  font-family: sans-serif;
+                }
+                .invalid {
+                  color: red;
+                  font-weight: bold;
+                }
+                .valid {
+                  color: green;
+                  font-weight: bold;
+                }
+                th {
+                  text-align: left;
+                }
+                .policy th, .policy td {
+                  padding: 5px;
+                }
             </style>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
             <script type="text/javascript">
@@ -65,6 +84,16 @@
                 }
             </script>
 
+            <xsl:variable name="validClass">
+              <xsl:choose>
+                <xsl:when test="validationReport/@isCompliant = 'true'">
+                  <xsl:value-of select="'valid'" />
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="'invalid'" />
+                  </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <!-- General information -->
             <table border="0" id="table1">
                 <tr>
@@ -84,31 +113,32 @@
                     </td>
                 </tr>
                 <tr>
-                    <td width="200">
-                        <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'true'">
-                            <font color="green">
-                                <b>Compliance status:</b>
-                            </font>
-                        </xsl:if>
-                        <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'false'">
-                            <font color="red">
-                                <b>Compliance status:</b>
-                            </font>
-                        </xsl:if>
+                    <td width="200" class="{$validClass}">
+                      Compliance status:
                     </td>
-                    <td>
-                        <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'true'">
-                            <font color="green">
-                                <b>Passed</b>
-                            </font>
-                        </xsl:if>
-                        <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'false'">
-                            <font color="red">
-                                <b>Failed</b>
-                            </font>
-                        </xsl:if>
+                    <td class="{$validClass}">
+                      <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'true'">
+                        Passed
+                      </xsl:if>
+                      <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'false'">
+                        Failed
+                      </xsl:if>
                     </td>
                 </tr>
+                <xsl:if test="/report/jobs/job/policyReport">
+                  <tr>
+                      <xsl:choose>
+                        <xsl:when test="validationReport/@failedChecks > 0">
+                          <td class="invalid">Policy status:</td>
+                          <td class="invalid">Failed</td>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <td class="valid">Policy status:</td>
+                          <td class="valid">Passed</td>
+                        </xsl:otherwise>
+                      </xsl:choose>
+                  </tr>
+                </xsl:if>
             </table>
 
             <h2>Statistics</h2>
@@ -162,12 +192,29 @@
                         <xsl:value-of select="/report/jobs/job/validationReport/details/@failedChecks"/>
                     </td>
                 </tr>
+                <xsl:if test="/report/jobs/job/policyReport">
+                  <tr>
+                      <td width="250">
+                          <b>Passed Policy Checks:</b>
+                      </td>
+                      <td>
+                          <xsl:value-of select="/report/jobs/job/policyReport/@passedChecks"/>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td width="250">
+                          <b>Failed Policy Checks:</b>
+                      </td>
+                      <td>
+                          <xsl:value-of select="/report/jobs/job/policyReport/@failedChecks"/>
+                      </td>
+                  </tr>
+                </xsl:if>
                 <xsl:apply-templates
                         select="/report/jobs/job/metadataRepairReport/@status"/>
                 <xsl:apply-templates
                         select="/report/jobs/job/metadataRepairReport/@fixCount"/>
             </table>
-
             <xsl:if test="/report/jobs/job/metadataRepairReport/fixes/fix">
                 <h2>Metadata fixes information</h2>
 
@@ -215,22 +262,13 @@
             </xsl:if>
 
             <xsl:if test="/report/jobs/job/validationReport/details/rule">
-                <h2>Validation information</h2>
-
-                <table border="0" id="table3">
-                    <tr style="BACKGROUND: #bcbad6">
-                        <td width="800">
-                            <b>Rule</b>
-                        </td>
-                        <td width="50">
-                            <b>Status</b>
-                        </td>
-                    </tr>
-                    <xsl:apply-templates
-                            select="/report/jobs/job/validationReport/details/rule"/>
-
-                </table>
+              <xsl:apply-templates select="/report/jobs/job/validationReport/details/rule"/>
             </xsl:if>
+
+            <xsl:if test="/report/jobs/job/policyReport">
+              <xsl:apply-templates select="/report/jobs/job/policyReport"/>
+            </xsl:if>
+
         </div>
        <xsl:if test="/report/jobs/job/featuresReport">
             <h2>Features information</h2>
@@ -277,6 +315,18 @@
         <xsl:param name="idWithDots" select="concat(@clause,'t',@testNumber)"/>
         <xsl:param name="id" select="translate($idWithDots, '.', '_')"/>
 
+        <h2>Validation information</h2>
+
+        <table border="0" id="table3">
+            <tr style="BACKGROUND: #bcbad6">
+                <td width="800">
+                    <b>Rule</b>
+                </td>
+                <td width="50">
+                    <b>Status</b>
+                </td>
+            </tr>
+
         <xsl:variable name="part-1-rules">
             <xsl:choose>
                 <xsl:when test="'/' = substring($wikiPath, string-length($wikiPath))">
@@ -301,7 +351,7 @@
             </xsl:choose>
         </xsl:variable>
 
-        <xsl:param name="tempWikiLink">
+        <xsl:variable name="tempWikiLink">
             <xsl:choose>
                 <xsl:when test="starts-with(@specification, 'ISO 19005-1')">
                     <xsl:value-of select="$part-1-rules"/>
@@ -310,8 +360,8 @@
                     <xsl:value-of select="$part-2-rules"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:param>
-        <xsl:param name="wikiLink">
+        </xsl:variable>
+        <xsl:variable name="wikiLink">
             <xsl:choose>
                 <xsl:when test="not(starts-with($tempWikiLink, 'http'))">
                     <xsl:value-of select="concat($tempWikiLink, '.html')"/>
@@ -320,8 +370,8 @@
                     <xsl:value-of select="$tempWikiLink"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:param>
-        <xsl:param name="ruleLink" select="concat($wikiLink, '#rule-', translate(@clause, '.', ''), '-', @testNumber)"/>
+        </xsl:variable>
+        <xsl:variable name="ruleLink" select="concat($wikiLink, '#rule-', translate(@clause, '.', ''), '-', @testNumber)"/>
 
         <tr style="BACKGROUND: #dcdaf6">
             <td width="800">
@@ -400,6 +450,7 @@
                 <br/>
             </td>
         </tr>
+      </table>
 
     </xsl:template>
     <!-- Features Information -->
@@ -443,7 +494,7 @@
                         Pages
                     </xsl:when>
                     <xsl:when test="local-name()='errors'">
-                        Errors  
+                        Errors
                     </xsl:when>
                   </xsl:choose>
                 </a>
@@ -467,6 +518,34 @@
                 <xsl:value-of select="."/>
             </td>
         </tr>
+    </xsl:template>
+
+    <xsl:template match="/report/jobs/job/policyReport">
+      <h2>Policy information</h2>
+      <table class="policy">
+        <tr style="background: #bcbad6">
+          <th class="le">Message</th>
+          <th>Status</th>
+          <th>Location</th>
+        </tr>
+        <xsl:for-each select="*/check">
+          <xsl:variable name="validClass">
+            <xsl:choose>
+              <xsl:when test="@status = 'passed'">
+                <xsl:value-of select="'valid'" />
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="'invalid'" />
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+          <tr style="background: #dcdaf6">
+            <td><xsl:value-of select="message" /></td>
+            <td class="{$validClass}"><xsl:value-of select="@status" /></td>
+            <td><xsl:value-of select="@location" /></td>
+          </tr>
+        </xsl:for-each>
+      </table>
     </xsl:template>
 
 </xsl:stylesheet>
