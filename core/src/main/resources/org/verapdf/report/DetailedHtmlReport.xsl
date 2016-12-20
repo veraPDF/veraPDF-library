@@ -128,7 +128,7 @@
                 <xsl:if test="/report/jobs/job/policyReport">
                   <tr>
                       <xsl:choose>
-                        <xsl:when test="validationReport/@failedChecks > 0">
+                        <xsl:when test="/report/jobs/job/policyReport/@failedChecks > 0">
                           <td class="invalid">Policy status:</td>
                           <td class="invalid">Failed</td>
                         </xsl:when>
@@ -262,7 +262,19 @@
             </xsl:if>
 
             <xsl:if test="/report/jobs/job/validationReport/details/rule">
+              <h2>Validation information</h2>
+
+              <table border="0" id="table3">
+                <tr style="BACKGROUND: #bcbad6">
+                  <td width="800">
+                    <b>Rule</b>
+                    </td>
+                    <td width="50">
+                      <b>Status</b>
+                    </td>
+                </tr>
               <xsl:apply-templates select="/report/jobs/job/validationReport/details/rule"/>
+              </table>
             </xsl:if>
 
             <xsl:if test="/report/jobs/job/policyReport">
@@ -314,18 +326,6 @@
 
         <xsl:param name="idWithDots" select="concat(@clause,'t',@testNumber)"/>
         <xsl:param name="id" select="translate($idWithDots, '.', '_')"/>
-
-        <h2>Validation information</h2>
-
-        <table border="0" id="table3">
-            <tr style="BACKGROUND: #bcbad6">
-                <td width="800">
-                    <b>Rule</b>
-                </td>
-                <td width="50">
-                    <b>Status</b>
-                </td>
-            </tr>
 
         <xsl:variable name="part-1-rules">
             <xsl:choose>
@@ -450,7 +450,6 @@
                 <br/>
             </td>
         </tr>
-      </table>
 
     </xsl:template>
     <!-- Features Information -->
