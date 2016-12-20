@@ -164,10 +164,10 @@
               </td>
               <xsl:if test="$isPolicy">
                 <td>
-                  <xsl:value-of select="count(/report/jobs/job/policyReport[@failedChecks = '0'])"/>
+                  <xsl:value-of select="count(/report/jobs/job/policyReport[@failedChecks = 0])"/>
                 </td>
                 <td>
-                  <xsl:value-of select="count(/report/jobs/jobpolicyReport[@failedChecks != '0'])"/>
+                  <xsl:value-of select="count(/report/jobs/job/policyReport[@failedChecks > 0])"/>
                 </td>
               </xsl:if>
           </tr>
