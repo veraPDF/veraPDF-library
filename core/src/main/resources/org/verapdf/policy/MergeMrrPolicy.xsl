@@ -1,5 +1,6 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:vera="http://www.verapdf.org/MachineReadableReport" xmlns:svrl="http://purl.oclc.org/dsdl/svrl" exclude-result-prefixes="svrl">
+                xmlns:vera="http://www.verapdf.org/MachineReadableReport"
+                 xmlns:svrl="http://purl.oclc.org/dsdl/svrl" exclude-result-prefixes="svrl">
   <xsl:output indent="yes" method="xml"/>
   <xsl:strip-space elements="*"/>
 
@@ -13,8 +14,18 @@
 
   <xsl:template match="report/jobs">
     <xsl:copy select=".">
+      <xsl:variable name="jobCount" select="count(/report/jobs/job)" />
       <xsl:for-each select="job">
-        <xsl:variable name="jobPos" select="concat('job[', position(), ']')"/>
+        <xsl:variable name="jobPos">
+          <xsl:choose>
+              <xsl:when test="$jobCount > 1">
+                  <xsl:value-of select="concat('job[', position(), ']')" />
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:text>job</xsl:text>
+              </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
         <xsl:variable name="failedChecks" select="count(document($policyResultPath)//svrl:failed-assert[contains(@location, $jobPos)])"/>
         <xsl:variable name="passedChecks" select="count(document($policyResultPath)//svrl:successful-report[contains(@location, $jobPos)])"/>
         <xsl:copy>
