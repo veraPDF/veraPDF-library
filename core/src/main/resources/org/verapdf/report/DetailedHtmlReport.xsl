@@ -86,7 +86,7 @@
 
             <xsl:variable name="validClass">
               <xsl:choose>
-                <xsl:when test="validationReport/@isCompliant = 'true'">
+                <xsl:when test="/report/jobs/job/validationReport/@isCompliant = 'true'">
                   <xsl:value-of select="'valid'" />
                   </xsl:when>
                   <xsl:otherwise>
