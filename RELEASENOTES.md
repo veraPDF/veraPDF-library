@@ -1,3 +1,23 @@
+# Version 0.28 (December 20, 2016)
+Last pre-version 1.0 release. PDFBox version downloadable from http://downloads.verapdf.org/rel/verapdf-installer.zip. Greenfield version downloadable from: http://downloads.verapdf.org/gf/verapdf-gf-installer.zip.
+
+## Application Enhancements
+- schematron based policy checker implementation:
+  * Example policy schemas on GitHub https://github.com/veraPDF/veraPDF-policy-docs/tree/master/Schemas; and
+  * policy functionality available in CLI and GUI;
+- greenfield implementation of feature extraction;
+- greenfield implementation of metadata fixer;
+- GUI now supports checking multiple files or a directory;
+- HTML summary report for multiple file results;
+- single file detailed report containing policy and feature information; and
+- stability improvements and performance optimization of the Greenfield parser.
+
+## Conformance checker
+- fixed glyph width checks in case of exactly 1/1000 point difference;
+- fixed default color space processing for Indexed color spaces;
+- fixed Order array support for OCG checks in PDF/A-2; and
+- fixed Unicode character maps support for PDF/A-1 Level A.
+
 # Version 0.26 (November 16, 2016)
 We've made two downloads available for out 0.26 release. There's the ususal version, based on Apache PDFBox and downloadable from: http://downloads.verapdf.org/rel/verapdf-installer.zip. For 0.26 we've also prepared the first beta release of our purpose built PDF parser and validation model, also known as the greenfield validator. This is downloadable from: http://downloads.verapdf.org/gf/verapdf-gf-installer.zip. It's not functionally complete yet as it only supports PDF/A validation. Full details of the release features are listed below.
 
