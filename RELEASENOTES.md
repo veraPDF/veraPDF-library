@@ -1,3 +1,17 @@
+# Version 1.0 (January 9, 2017)
+PDFBox version downloadable from http://downloads.verapdf.org/rel/verapdf-installer.zip. Greenfield version downloadable from: http://downloads.verapdf.org/gf/verapdf-gf-installer.zip.
+
+## Application enhancements:
+- fixed default values for extracted PDF features; and
+- fixed removal of temporary files.
+
+## Conformance checker:
+- fixed cmap table parsing in TrueType fonts.
+
+## Test corpus:
+- changed Metadata File provenance test files from fail to pass (as discussed at the validation technical working group); and
+- fixed xref table in test case 6-3-3-t01-pass-a.
+
 # Version 0.28 (December 20, 2016)
 Last pre-version 1.0 release. PDFBox version downloadable from http://downloads.verapdf.org/rel/verapdf-installer.zip. Greenfield version downloadable from: http://downloads.verapdf.org/gf/verapdf-gf-installer.zip.
 
