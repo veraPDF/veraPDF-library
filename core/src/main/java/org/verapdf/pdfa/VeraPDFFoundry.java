@@ -3,6 +3,7 @@
  */
 package org.verapdf.pdfa;
 
+import java.io.File;
 import java.io.InputStream;
 
 import org.verapdf.component.Component;
@@ -28,7 +29,7 @@ public interface VeraPDFFoundry extends Component {
 	 * 
 	 * @param pdfStream
 	 *            {@link java.io.InputStream} for the PDF document to be parsed.
-	 * @return a {@link PDFParser} instance created from the supplied
+	 * @return a {@link PDFAParser} instance created from the supplied
 	 *         InputStream.
 	 * @throws ModelParsingException
 	 *             when there's a problem parsing the PDF file
@@ -48,7 +49,7 @@ public interface VeraPDFFoundry extends Component {
 	 *            a {@link PDFAFlavour} instance indicating parser configuration
 	 *            (PDF/A part and conformance level) to be assumed when parsing
 	 *            the document.
-	 * @return a {@link PDFParser} instance created from the supplied
+	 * @return a {@link PDFAParser} instance created from the supplied
 	 *         InputStream.
 	 * @throws ModelParsingException
 	 *             when there's a problem parsing the PDF file
@@ -56,6 +57,23 @@ public interface VeraPDFFoundry extends Component {
 	 *             if the PDF to be parsed is encrypted
 	 */
 	public PDFAParser createParser(InputStream pdfStream, PDFAFlavour flavour)
+			throws ModelParsingException, EncryptedPdfException;
+
+	/**
+	 * Method that returns a PDFParser instance, parsing file passed as
+	 * {@link pdfFile} parameter. The caller must explicitly state the flavour
+	 * of the PDF document stream.
+	 *
+	 * @param pdfFile {@link File} with PDF document to be parsed.
+	 * @param flavour a {@link PDFAFlavour} instance indicating parser configuration
+	 *                (PDF/A part and conformance level) to be assumed when parsing
+	 *                the document.
+	 * @return a {@link PDFAParser} instance created from the supplied
+	 * InputStream.
+	 * @throws ModelParsingException when there's a problem parsing the PDF file
+	 * @throws EncryptedPdfException if the PDF to be parsed is encrypted
+	 */
+	public PDFAParser createParser(File pdfFile, PDFAFlavour flavour)
 			throws ModelParsingException, EncryptedPdfException;
 
 	public PDFAValidator createValidator(ValidatorConfig config);
