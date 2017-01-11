@@ -93,15 +93,47 @@ final class ProcessorImpl implements ItemProcessor {
 
 	@Override
 	public ProcessorResult process(File toProcess) throws VeraPDFException {
-		ProcessorResult retVal = ProcessorResultImpl.defaultInstance();
-		try (InputStream fis = new FileInputStream(toProcess)) {
-			retVal = this.process(ItemDetails.fromFile(toProcess), fis);
-		} catch (FileNotFoundException excep) {
-			throw new VeraPDFException("Couldn't find file: " + toProcess.getPath() + " to process.", excep); //$NON-NLS-1$ //$NON-NLS-2$
-		} catch (IOException excep) {
-			logger.log(Level.INFO, "Problem closing file:" + toProcess, excep); //$NON-NLS-1$
+		this.initialise();
+		ItemDetails fileDetails = ItemDetails.fromFile(toProcess);
+		if (toProcess == null) {
+			throw new IllegalArgumentException("PDF file cannot be null");
 		}
-		return retVal;
+		Components.Timer parseTimer = Components.Timer.start();
+		try (PDFAParser parser = this.hasCustomProfile()
+				? foundry.createParser(toProcess, this.processorConfig.getCustomProfile().getPDFAFlavour())
+				: this.isAuto() ? foundry.createParser(toProcess)
+				: foundry.createParser(toProcess, this.valConf().getFlavour())) {
+			for (TaskType task : this.getConfig().getTasks()) {
+				switch (task) {
+					case VALIDATE:
+						validate(parser);
+						break;
+					case FIX_METADATA:
+						fixMetadata(parser, fileDetails.getName());
+						break;
+					case EXTRACT_FEATURES:
+						extractFeatures(parser);
+						break;
+					default:
+						break;
+
+				}
+			}
+		} catch (EncryptedPdfException e) {
+			logger.log(Level.WARNING, fileDetails.getName() + " appears to be an encrypted PDF."); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			return ProcessorResultImpl.encryptedResult(fileDetails,
+					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
+		} catch (ModelParsingException e) {
+			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			return ProcessorResultImpl.invalidPdfResult(fileDetails,
+					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
+		} catch (IOException excep) {
+			logger.log(Level.FINER, "Problem closing PDF Stream", excep); //$NON-NLS-1$
+		}
+		return ProcessorResultImpl.fromValues(fileDetails, this.taskResults, this.validationResult, this.featureResult,
+				this.fixerResult);
 	}
 
 	@Override
