@@ -34,7 +34,7 @@
         * Add command line parameter 'terminate' which will terminate on first failed 
         assert and (optionally) successful report.   
     2009-03-18
-    	* Fix atrribute with space "see " which generates wrong name in some processors
+    	* Fix attribute with space "see " which generates wrong name in some processors
     2008-08-11
    		* RJ Fix attribute/@select which saxon allows  in XSLT 1
    2008-08-07
@@ -59,7 +59,7 @@
     2007-04-03 
     	* Add option generate-fired-rule (RG)
     2007-02-07
-    	* Prefer true|false for parameters. But allow yes|no on some old for compatability
+    	* Prefer true|false for parameters. But allow yes|no on some old for compatibility
     	* DP Diagnostics output to svrl:text. Diagnosis put out after assertion text.
       	* Removed non-SVRL elements and attributes: better handled as an extra layer that invokes this one
       	* Add more formal parameters
