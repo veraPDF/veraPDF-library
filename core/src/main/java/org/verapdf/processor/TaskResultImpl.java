@@ -23,14 +23,14 @@
  */
 package org.verapdf.processor;
 
+import org.verapdf.component.AuditDuration;
+import org.verapdf.component.Components;
+import org.verapdf.core.VeraPDFException;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-
-import org.verapdf.component.AuditDuration;
-import org.verapdf.component.Components;
-import org.verapdf.core.VeraPDFException;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -124,6 +124,7 @@ class TaskResultImpl implements TaskResult {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((this.type == null) ? 0 : this.type.hashCode());
 		result = prime * result + ((this.duration == null) ? 0 : this.duration.hashCode());
 		result = prime * result + ((this.exception == null) ? 0 : this.exception.hashCode());
 		result = prime * result + (this.isExecuted ? 1231 : 1237);
@@ -146,6 +147,9 @@ class TaskResultImpl implements TaskResult {
 			return false;
 		}
 		TaskResultImpl other = (TaskResultImpl) obj;
+		if (this.type  != other.type) {
+			return false;
+		}
 		if (this.duration == null) {
 			if (other.duration != null) {
 				return false;
