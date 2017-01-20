@@ -20,22 +20,6 @@
  */
 package org.verapdf.processor;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.verapdf.ReleaseDetails;
 import org.verapdf.component.ComponentDetails;
 import org.verapdf.component.Components;
@@ -45,14 +29,11 @@ import org.verapdf.core.ValidationException;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.core.utils.FileOutputMapper;
 import org.verapdf.core.utils.FileOutputMappers;
+import org.verapdf.features.AbstractFeaturesExtractor;
 import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.features.FeatureExtractorConfig;
 import org.verapdf.metadata.fixer.FixerFactory;
-import org.verapdf.pdfa.Foundries;
-import org.verapdf.pdfa.MetadataFixer;
-import org.verapdf.pdfa.PDFAParser;
-import org.verapdf.pdfa.PDFAValidator;
-import org.verapdf.pdfa.VeraPDFFoundry;
+import org.verapdf.pdfa.*;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.MetadataFixerResultImpl;
@@ -60,7 +41,17 @@ import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.profiles.Profiles;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
+import org.verapdf.processor.plugins.PluginsCollectionConfig;
 import org.verapdf.processor.reports.ItemDetails;
+
+import java.io.*;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class is implementation of {@link Processor} interface
@@ -260,13 +251,11 @@ final class ProcessorImpl implements ItemProcessor {
 			}
 		}
 	}
-	// } catch (IOException excep) {
-	// }
 
 	private void extractFeatures(PDFAParser parser) {
 		Components.Timer timer = Components.Timer.start();
 		try {
-			this.featureResult = parser.getFeatures(this.featConf());
+			this.featureResult = parser.getFeatures(this.featConf(), this.getPlugins());
 			this.taskResults.put(TaskType.EXTRACT_FEATURES,
 					TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop()));
 		} catch (OutOfMemoryError excep) {
@@ -280,6 +269,11 @@ final class ProcessorImpl implements ItemProcessor {
 			this.taskResults.put(TaskType.EXTRACT_FEATURES,
 					TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop(), veraExcep));
 		}
+	}
+
+	private List<AbstractFeaturesExtractor> getPlugins() {
+		PluginsCollectionConfig pluginsCollectionConfig = this.processorConfig.getPluginsCollectionConfig();
+		return FeaturesPluginsLoader.loadExtractors(pluginsCollectionConfig);
 	}
 
 	static ItemProcessor newProcessor(final ProcessorConfig config) {

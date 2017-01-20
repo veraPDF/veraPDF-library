@@ -2,16 +2,16 @@
  * This file is part of veraPDF Library core, a module of the veraPDF project.
  * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
- *
+ * <p>
  * veraPDF Library core is free software: you can redistribute it and/or modify
  * it under the terms of either:
- *
+ * <p>
  * The GNU General public license GPLv3+.
  * You should have received a copy of the GNU General Public License
  * along with veraPDF Library core as the LICENSE.GPL file in the root of the source
  * tree.  If not, see http://www.gnu.org/licenses/ or
  * https://www.gnu.org/licenses/gpl-3.0.en.html.
- *
+ * <p>
  * The Mozilla Public License MPLv2+.
  * You should have received a copy of the Mozilla Public License along with
  * veraPDF Library core as the LICENSE.MPL file in the root of the source tree.
@@ -19,12 +19,6 @@
  * http://mozilla.org/MPL/2.0/.
  */
 package org.verapdf.processor;
-
-import java.util.EnumSet;
-
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import org.verapdf.features.FeatureExtractorConfig;
 import org.verapdf.features.FeatureFactory;
@@ -34,6 +28,12 @@ import org.verapdf.pdfa.validation.profiles.Profiles;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 import org.verapdf.pdfa.validation.validators.ValidatorFactory;
+import org.verapdf.processor.plugins.PluginsCollectionConfig;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.EnumSet;
 
 /**
  * @author Maksim Bezrukov
@@ -50,6 +50,8 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	@XmlElement
 	private final FeatureExtractorConfig featureConfig;
 	@XmlElement
+	private final PluginsCollectionConfig pluginsCollectionConfig;
+	@XmlElement
 	private final MetadataFixerConfig fixerConfig;
 	@XmlElement
 	private final ValidationProfile customProfile;
@@ -57,33 +59,39 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	private final String mdFolder;
 
 	private ProcessorConfigImpl() {
-		this(ValidatorFactory.defaultConfig(), FeatureFactory.defaultConfig(), FixerFactory.defaultConfig(),
+		this(ValidatorFactory.defaultConfig(), FeatureFactory.defaultConfig(),
+				PluginsCollectionConfig.defaultConfig(), FixerFactory.defaultConfig(),
 				EnumSet.noneOf(TaskType.class));
 	}
 
 	private ProcessorConfigImpl(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
-			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks) {
-		this(config, featureConfig, fixerConfig, tasks, Profiles.defaultProfile());
+								final PluginsCollectionConfig pluginsCollectionConfig,
+								final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks) {
+		this(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks, Profiles.defaultProfile());
 	}
 
 	private ProcessorConfigImpl(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
-			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final String mdFolder) {
-		this(config, featureConfig, fixerConfig, tasks, Profiles.defaultProfile(), mdFolder);
+								final PluginsCollectionConfig pluginsCollectionConfig,
+								final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final String mdFolder) {
+		this(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks, Profiles.defaultProfile(), mdFolder);
 	}
 
 	private ProcessorConfigImpl(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
-			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks,
-			final ValidationProfile customProfile) {
-		this(config, featureConfig, fixerConfig, tasks, customProfile, defaultMdFolder);
+								final PluginsCollectionConfig pluginsCollectionConfig,
+								final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks,
+								final ValidationProfile customProfile) {
+		this(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks, customProfile, defaultMdFolder);
 	}
 
 	private ProcessorConfigImpl(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
-			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final ValidationProfile customProfile,
-			final String mdFolder) {
+								final PluginsCollectionConfig pluginsCollectionConfig,
+								final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks,
+								final ValidationProfile customProfile, final String mdFolder) {
 		super();
 		this.tasks = EnumSet.copyOf(tasks);
 		this.validatorConfig = config;
 		this.featureConfig = featureConfig;
+		this.pluginsCollectionConfig = pluginsCollectionConfig;
 		this.fixerConfig = fixerConfig;
 		this.customProfile = customProfile;
 		this.mdFolder = mdFolder;
@@ -101,6 +109,11 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	@Override
 	public FeatureExtractorConfig getFeatureConfig() {
 		return this.featureConfig;
+	}
+
+	@Override
+	public PluginsCollectionConfig getPluginsCollectionConfig() {
+		return this.pluginsCollectionConfig;
 	}
 
 	@Override
@@ -133,64 +146,37 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 		return this.mdFolder;
 	}
 
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.featureConfig == null) ? 0 : this.featureConfig.hashCode());
-		result = prime * result + ((this.fixerConfig == null) ? 0 : this.fixerConfig.hashCode());
-		result = prime * result + ((this.tasks == null) ? 0 : this.tasks.hashCode());
-		result = prime * result + ((this.validatorConfig == null) ? 0 : this.validatorConfig.hashCode());
-		return result;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof ProcessorConfigImpl)) return false;
+
+		ProcessorConfigImpl that = (ProcessorConfigImpl) o;
+
+		if (tasks != null ? !tasks.equals(that.tasks) : that.tasks != null) return false;
+		if (validatorConfig != null ? !validatorConfig.equals(that.validatorConfig) : that.validatorConfig != null)
+			return false;
+		if (featureConfig != null ? !featureConfig.equals(that.featureConfig) : that.featureConfig != null)
+			return false;
+		if (pluginsCollectionConfig != null ? !pluginsCollectionConfig.equals(that.pluginsCollectionConfig) : that.pluginsCollectionConfig != null)
+			return false;
+		if (fixerConfig != null ? !fixerConfig.equals(that.fixerConfig) : that.fixerConfig != null) return false;
+		if (customProfile != null ? !customProfile.equals(that.customProfile) : that.customProfile != null)
+			return false;
+		return mdFolder != null ? mdFolder.equals(that.mdFolder) : that.mdFolder == null;
+
 	}
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof ProcessorConfigImpl)) {
-			return false;
-		}
-		ProcessorConfigImpl other = (ProcessorConfigImpl) obj;
-		if (this.featureConfig == null) {
-			if (other.featureConfig != null) {
-				return false;
-			}
-		} else if (!this.featureConfig.equals(other.featureConfig)) {
-			return false;
-		}
-		if (this.fixerConfig == null) {
-			if (other.fixerConfig != null) {
-				return false;
-			}
-		} else if (!this.fixerConfig.equals(other.fixerConfig)) {
-			return false;
-		}
-		if (this.tasks == null) {
-			if (other.tasks != null) {
-				return false;
-			}
-		} else if (!this.tasks.equals(other.tasks)) {
-			return false;
-		}
-		if (this.validatorConfig == null) {
-			if (other.validatorConfig != null) {
-				return false;
-			}
-		} else if (!this.validatorConfig.equals(other.validatorConfig)) {
-			return false;
-		}
-		return true;
+	public int hashCode() {
+		int result = tasks != null ? tasks.hashCode() : 0;
+		result = 31 * result + (validatorConfig != null ? validatorConfig.hashCode() : 0);
+		result = 31 * result + (featureConfig != null ? featureConfig.hashCode() : 0);
+		result = 31 * result + (pluginsCollectionConfig != null ? pluginsCollectionConfig.hashCode() : 0);
+		result = 31 * result + (fixerConfig != null ? fixerConfig.hashCode() : 0);
+		result = 31 * result + (customProfile != null ? customProfile.hashCode() : 0);
+		result = 31 * result + (mdFolder != null ? mdFolder.hashCode() : 0);
+		return result;
 	}
 
 	static ProcessorConfig defaultInstance() {
@@ -198,23 +184,27 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	}
 
 	static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
-			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks) {
-		return new ProcessorConfigImpl(config, featureConfig, fixerConfig, tasks);
+									  final PluginsCollectionConfig pluginsCollectionConfig,
+									  final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks) {
+		return new ProcessorConfigImpl(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks);
 	}
 
 	static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
-			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final String mdFolder) {
-		return new ProcessorConfigImpl(config, featureConfig, fixerConfig, tasks, mdFolder);
+									  final PluginsCollectionConfig pluginsCollectionConfig,
+									  final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final String mdFolder) {
+		return new ProcessorConfigImpl(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks, mdFolder);
 	}
 
 	static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
-			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final ValidationProfile profile) {
-		return new ProcessorConfigImpl(config, featureConfig, fixerConfig, tasks, profile);
+									  final PluginsCollectionConfig pluginsCollectionConfig,
+									  final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final ValidationProfile profile) {
+		return new ProcessorConfigImpl(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks, profile);
 	}
 
 	static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
-			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final ValidationProfile profile,
-			final String mdFolder) {
-		return new ProcessorConfigImpl(config, featureConfig, fixerConfig, tasks, profile, mdFolder);
+									  final PluginsCollectionConfig pluginsCollectionConfig,
+									  final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final ValidationProfile profile,
+									  final String mdFolder) {
+		return new ProcessorConfigImpl(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks, profile, mdFolder);
 	}
 }

@@ -30,6 +30,7 @@ import org.verapdf.features.FeatureExtractorConfig;
 import org.verapdf.metadata.fixer.MetadataFixerConfig;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
+import org.verapdf.processor.plugins.PluginsCollectionConfig;
 import org.verapdf.processor.reports.BatchSummary;
 import org.verapdf.processor.reports.Reports;
 
@@ -56,23 +57,27 @@ public final class ProcessorFactory {
 	}
 
 	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+											 final PluginsCollectionConfig pluginsCollectionConfig,
 			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks) {
-		return ProcessorConfigImpl.fromValues(config, featureConfig, fixerConfig, tasks);
+		return ProcessorConfigImpl.fromValues(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks);
 	}
 
 	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+											 final PluginsCollectionConfig pluginsCollectionConfig,
 			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final String mdFolder) {
-		return ProcessorConfigImpl.fromValues(config, featureConfig, fixerConfig, tasks, mdFolder);
+		return ProcessorConfigImpl.fromValues(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks, mdFolder);
 	}
 
 	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+											 final PluginsCollectionConfig pluginsCollectionConfig,
 			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, ValidationProfile customProfile) {
-		return ProcessorConfigImpl.fromValues(config, featureConfig, fixerConfig, tasks, customProfile);
+		return ProcessorConfigImpl.fromValues(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks, customProfile);
 	}
 
 	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
+											 final PluginsCollectionConfig pluginsCollectionConfig,
 			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, ValidationProfile customProfile, final String mdFolder) {
-		return ProcessorConfigImpl.fromValues(config, featureConfig, fixerConfig, tasks, customProfile, mdFolder);
+		return ProcessorConfigImpl.fromValues(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks, customProfile, mdFolder);
 	}
 
 	public static void configToXml(final ProcessorConfig toConvert, final OutputStream stream, boolean format)
