@@ -29,18 +29,36 @@ import org.verapdf.component.AuditDuration;
 import org.verapdf.core.VeraPDFException;
 
 /**
- * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *          <a href="https://github.com/carlwilson">carlwilson AT github</a>
- *
- * @version 0.1
+ * Interface that encapsulates the details of the result of a veraPDF task.
  * 
- * Created 30 Oct 2016:13:42:47
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1 Created 30 Oct 2016:13:42:47
  */
 @XmlJavaTypeAdapter(TaskResultImpl.Adapter.class)
 public interface TaskResult {
+	/**
+	 * @return true if the task was executed false otherwise
+	 */
 	public boolean isExecuted();
+
+	/**
+	 * @return true if the task was successful, false otherwise
+	 */
 	public boolean isSuccess();
+
+	/**
+	 * @return the {@link TaskType} of the task executed
+	 */
 	public TaskType getType();
+
+	/**
+	 * @return any exception thrown by an unsuccessful task
+	 */
 	public VeraPDFException getException();
+
+	/**
+	 * @return the {@link AuditDuration} for the task
+	 */
 	public AuditDuration getDuration();
 }

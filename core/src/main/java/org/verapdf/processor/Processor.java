@@ -29,14 +29,22 @@ import org.verapdf.ReleaseDetails;
 import org.verapdf.component.Component;
 
 /**
- * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *          <a href="https://github.com/carlwilson">carlwilson AT github</a>
- *
- * @version 0.1
+ * Base interface for veraPDF Processors, mandates some basic properties.
  * 
- * Created 2 Nov 2016:11:22:06
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1 Created 2 Nov 2016:11:22:06
  */
 public interface Processor extends Component {
+	/**
+	 * @return the {@link ProcessorConfig} that holds the details for the
+	 *         configuration of this {@link Processor}
+	 */
 	public ProcessorConfig getConfig();
+
+	/**
+	 * @return a {@link Collection} of {@link ReleaseDetails} for the
+	 *         {@link Processor}'s dependencies, for auditing.
+	 */
 	public Collection<ReleaseDetails> getDependencies();
 }

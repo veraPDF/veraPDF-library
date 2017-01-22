@@ -35,22 +35,34 @@ import org.verapdf.pdfa.results.ValidationResult;
  */
 public interface MetadataFixer extends Component {
 
-    /**
-     * @param toFix
-     *            an InputStream from which the PDF/A data to repair can be
-     *            read.
-     * @param outputRepaired
-     *            an OutputStream to which the Fixer instance should write the
-     *            repaired PDF/A data.
-     * @param result
-     *            a {@link ValidationResult} instance for the PDF/A to be
-     *            repaired, the toFix InputStream.
-     * @return a {@link MetadataFixerResult} that holds the repair status and
-     *         records any fixes applied.
-     */
-    public MetadataFixerResult fixMetadata(InputStream toFix,
-            OutputStream outputRepaired, ValidationResult result) throws IOException;
+	/**
+	 * @param toFix
+	 *            an {@link InputStream} from which the PDF/A data to repair can
+	 *            be read.
+	 * @param outputRepaired
+	 *            an {@link OutputStream} to which the Fixer instance should
+	 *            write the repaired PDF/A data.
+	 * @param result
+	 *            a {@link ValidationResult} instance for the PDF/A to be
+	 *            repaired, the toFix InputStream.
+	 * @return a {@link MetadataFixerResult} that holds the repair status and
+	 *         records any fixes applied.
+	 */
+	public MetadataFixerResult fixMetadata(InputStream toFix, OutputStream outputRepaired, ValidationResult result)
+			throws IOException;
 
-    public MetadataFixerResult fixMetadata(PDFAParser parser,
-            OutputStream outputRepaired, ValidationResult result);
+	/**
+	 * @param parser
+	 *            a veraPDF {@link PDFAParser} instance that has parsed the
+	 *            PDF/A to repair.
+	 * @param outputRepaired
+	 *            an {@link OutputStream} to which the Fixer instance should
+	 *            write the repaired PDF/A data.
+	 * @param result
+	 *            a {@link ValidationResult} instance for the PDF/A to be
+	 *            repaired, the toFix InputStream.
+	 * @return a {@link MetadataFixerResult} that holds the repair status and
+	 *         records any fixes applied.
+	 */
+	public MetadataFixerResult fixMetadata(PDFAParser parser, OutputStream outputRepaired, ValidationResult result);
 }

@@ -22,29 +22,36 @@ package org.verapdf.component;
 
 import java.net.URI;
 
+/**
+ * Holds metadata about a veraPDF {@link Component}.
+ * 
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1
+ */
 public interface ComponentDetails {
 	/**
-	 * @return the id
+	 * @return the {@link URI} id of the {@link Component}.
 	 */
 	URI getId();
 
 	/**
-	 * @return the name
+	 * @return the name of the {@link Component}
 	 */
 	String getName();
 
 	/**
-	 * @return the version
+	 * @return the version of the {@link Component}
 	 */
 	String getVersion();
 
 	/**
-	 * @return the provider
+	 * @return the provider of the {@link Component}
 	 */
 	String getProvider();
 
 	/**
-	 * @return the description
+	 * @return the description of the {@link Component}
 	 */
 	String getDescription();
 

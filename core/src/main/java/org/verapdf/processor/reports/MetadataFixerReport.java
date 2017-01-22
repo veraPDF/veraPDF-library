@@ -28,17 +28,32 @@ import java.util.List;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
- * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *          <a href="https://github.com/carlwilson">carlwilson AT github</a>
- *
- * @version 0.1
+ * Encapsulates the results fo applying the Metadata Fixer
  * 
- * Created 9 Nov 2016:07:47:03
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1 Created 9 Nov 2016:07:47:03
  */
 @XmlJavaTypeAdapter(FixerReportImpl.Adapter.class)
 public interface MetadataFixerReport {
+	/**
+	 * @return the status of the attempted repair as a {@link String}
+	 */
 	public String getStatus();
+
+	/**
+	 * @return the number of fixes attempted
+	 */
 	public int getFixCount();
+
+	/**
+	 * @return a {@link List} of {@link String}s detailing the fixes applied
+	 */
 	public List<String> getFixes();
+
+	/**
+	 * @return a {@link List} of {@link String}s detailing any errors
+	 *         encountered during repair
+	 */
 	public List<String> getErrors();
 }

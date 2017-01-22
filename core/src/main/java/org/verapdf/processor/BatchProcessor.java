@@ -30,16 +30,45 @@ import org.verapdf.core.VeraPDFException;
 import org.verapdf.processor.reports.BatchSummary;
 
 /**
- * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *          <a href="https://github.com/carlwilson">carlwilson AT github</a>
- *
- * @version 0.1
+ * The veraPDF batch processor, used to process multiple files.
  * 
- * Created 8 Nov 2016:22:55:35
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1 Created 8 Nov 2016:22:55:35
  */
-
 public interface BatchProcessor extends Processor {
-	public BatchSummary process(List<? extends File> toProcess, BatchProcessingHandler resutlHandler) throws VeraPDFException;
+	/**
+	 * Process a list of PDF files
+	 * 
+	 * @param toProcess
+	 *            a {@link List} of {@link File}s to process
+	 * @param resutlHandler
+	 *            the {@link BatchProcessingHandler} that will be used to
+	 *            process the results
+	 * @return a {@link BatchSummary} that reports the details of the batch
+	 *         process
+	 * @throws VeraPDFException
+	 *             when an error occurs during processing.
+	 */
+	public BatchSummary process(List<? extends File> toProcess, BatchProcessingHandler resutlHandler)
+			throws VeraPDFException;
 
-	public BatchSummary process(File toProcess, boolean recurse, BatchProcessingHandler resutlHandler) throws VeraPDFException;
+	/**
+	 * Process all .pdf files in a directory, optionally recursively.
+	 * 
+	 * @param toProcess
+	 *            a {@link File} that denotes a directory to process
+	 * @param recurse
+	 *            set {@code true} to recurse into sub-directories, false if
+	 *            recursion not required.
+	 * @param resutlHandler
+	 *            the {@link BatchProcessingHandler} that will be used to
+	 *            process the results
+	 * @return a {@link BatchSummary} that reports the details of the batch
+	 *         process
+	 * @throws VeraPDFException
+	 *             when an error occurs during processing.
+	 */
+	public BatchSummary process(File toProcess, boolean recurse, BatchProcessingHandler resutlHandler)
+			throws VeraPDFException;
 }

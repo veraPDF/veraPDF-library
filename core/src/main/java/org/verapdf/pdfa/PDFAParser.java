@@ -51,7 +51,7 @@ public interface PDFAParser extends Component {
 	public Object getRoot() throws ModelParsingException;
 
 	/**
-	 * @return flavour for which model has been parsed
+	 * @return {@link PDFAFlavour} for the model that has been parsed
 	 */
 	public PDFAFlavour getFlavour();
 
@@ -61,14 +61,23 @@ public interface PDFAParser extends Component {
 	public PDFDocument getPDFDocument();
 
 	/**
-	 * @return features collection of the document
+	 * @param config
+	 *            a {@link FeatureExtractorConfig} that denotes the features to
+	 *            be extracted.
+	 * @return features collection of the document as a
+	 *         {@link FeatureExtractionResult}
 	 */
 	public FeatureExtractionResult getFeatures(FeatureExtractorConfig config);
 
 	/**
+	 * @param config
+	 *            a {@link FeatureExtractorConfig} that denotes the features to
+	 *            be extracted.
 	 * @param extractors
 	 *            extractors for features reporting
-	 * @return features collection of the document
+	 * @return features collection of the document as a
+	 *         {@link FeatureExtractionResult}
 	 */
-	public FeatureExtractionResult getFeatures(FeatureExtractorConfig config, List<AbstractFeaturesExtractor> extractors);
+	public FeatureExtractionResult getFeatures(FeatureExtractorConfig config,
+			List<AbstractFeaturesExtractor> extractors);
 }

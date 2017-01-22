@@ -26,15 +26,21 @@ package org.verapdf.processor.reports;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
- * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *          <a href="https://github.com/carlwilson">carlwilson AT github</a>
- *
- * @version 0.1
+ * Encapsulates the details of an individual validation check.
  * 
- * Created 10 Nov 2016:08:50:42
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1 Created 10 Nov 2016:08:50:42
  */
 @XmlJavaTypeAdapter(CheckImpl.Adapter.class)
 public interface Check {
+	/**
+	 * @return the status of the check as a {@link String}
+	 */
 	public String getStatus();
+
+	/**
+	 * @return the context (location) of the check as a {@link String}
+	 */
 	public String getContext();
 }

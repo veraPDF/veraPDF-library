@@ -28,16 +28,36 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 /**
- * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *          <a href="https://github.com/carlwilson">carlwilson AT github</a>
- *
- * @version 0.1
+ * Encapsulates the configuration of the veraPDF PDF/A validator. An instance of
+ * this class is passed to the validator to control PDF/A validation behaviour.
  * 
- * Created 26 Oct 2016:00:04:41
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1 Created 26 Oct 2016:00:04:41
  */
 @XmlJavaTypeAdapter(ValidatorConfigImpl.Adapter.class)
 public interface ValidatorConfig {
+	/**
+	 * Indicates whether the validator is configured to record passed checks.
+	 * 
+	 * @return true if passed checks should be recorded, false if only failed
+	 *         checks should be recorde.
+	 */
 	public boolean isRecordPasses();
+
+	/**
+	 * The maximum number of failed validation checks encountered before
+	 * validation is terminated.
+	 * 
+	 * @return the number of failed validation checks before validation is
+	 *         terminated.
+	 */
 	public int getMaxFails();
+
+	/**
+	 * Obtain the particular PDF/A specification that the validator enforces.
+	 * 
+	 * @return the {@link PDFAFlavour} that the validator enforces.
+	 */
 	public PDFAFlavour getFlavour();
 }
