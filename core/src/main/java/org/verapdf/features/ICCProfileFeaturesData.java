@@ -20,10 +20,13 @@
  */
 package org.verapdf.features;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Features data of an iccprofile for feature extractor
@@ -31,6 +34,8 @@ import java.util.List;
  * @author Maksim Bezrukov
  */
 public final class ICCProfileFeaturesData extends FeaturesData {
+
+	private static final Logger LOGGER = Logger.getLogger(ICCProfileFeaturesData.class.getCanonicalName());
 
 	private final InputStream metadata;
 	private final Integer n;
@@ -77,5 +82,15 @@ public final class ICCProfileFeaturesData extends FeaturesData {
 	 */
 	public List<Double> getRange() {
 		return this.range == null ? null : Collections.unmodifiableList(this.range);
+	}
+
+	@Override
+	public void close() throws IOException {
+		try {
+			this.metadata.close();
+		} catch (IOException e) {
+			LOGGER.log(Level.FINE, "Exception during metadata closing", e);
+		}
+		super.close();
 	}
 }
