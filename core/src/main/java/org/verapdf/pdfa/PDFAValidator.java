@@ -35,7 +35,7 @@ public interface PDFAValidator extends Component {
      *            a {@link java.io.InputStream} to be validated
      * @return a {@link ValidationResult} containing the result of valdiation
      *         and details of failed checks and possibly passed checks,
-     *         dependant upon configuration.
+     *         dependent upon configuration.
      * @throws ValidationException 
      * @throws ModelParsingException 
      * @throws IllegalArgumentException
