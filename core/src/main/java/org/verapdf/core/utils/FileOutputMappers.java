@@ -119,7 +119,7 @@ public class FileOutputMappers {
 	 * Maps to a relative subfolder of the original with no prefix or suffix
 	 * 
 	 * @param relativePath
-	 *            the relative path to the results folder from the orignal
+	 *            the relative path to the results folder from the original
 	 *            source file location
 	 * @param prefix
 	 *            the prefix for generated files, can not be null or empty
@@ -133,7 +133,7 @@ public class FileOutputMappers {
 	 * Maps to a relative subfolder of the original with no prefix or suffix
 	 * 
 	 * @param relativePath
-	 *            the relative path to the results folder from the orignal
+	 *            the relative path to the results folder from the original
 	 *            source file location
 	 * @param prefix
 	 *            the prefix for generated files, can not be null or empty
@@ -147,7 +147,7 @@ public class FileOutputMappers {
 	 * Maps to a relative subfolder of the original with no prefix or suffix
 	 * 
 	 * @param relativePath
-	 *            the relative path to the results folder from the orignal
+	 *            the relative path to the results folder from the original
 	 *            source file location
 	 * @param prefix
 	 *            the prefix for generated files, can not be null or empty
@@ -169,7 +169,7 @@ public class FileOutputMappers {
 	 * Maps to a relative subfolder of the original with no prefix or suffix
 	 * 
 	 * @param relativePath
-	 *            the relative path to the results folder from the orignal
+	 *            the relative path to the results folder from the original
 	 *            source file location
 	 * @param prefix
 	 *            the prefix for generated files, can not be null or empty
@@ -221,7 +221,7 @@ public class FileOutputMappers {
 	 * Maps to a relative subfolder of the original with no prefix or suffix
 	 * 
 	 * @param relativePath
-	 *            the relative path to the results folder from the orignal
+	 *            the relative path to the results folder from the original
 	 *            source file location
 	 * @param prefix
 	 *            the prefix for generated files, can not be null or empty
@@ -252,7 +252,7 @@ public class FileOutputMappers {
 	 * Maps to a relative subfolder of the original with no prefix or suffix
 	 * 
 	 * @param relativePath
-	 *            the relative path to the results folder from the orignal
+	 *            the relative path to the results folder from the original
 	 *            source file location
 	 * @param prefix
 	 *            the prefix for generated files, can not be null or empty

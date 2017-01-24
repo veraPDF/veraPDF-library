@@ -362,7 +362,7 @@ public final class XmlSerialiser {
 
 	/**
 	 * Create a JAXBElement containing a JAXBCollection. Needed for marshalling
-	 * a generic collection without a seperate wrapper class.
+	 * a generic collection without a separate wrapper class.
 	 *
 	 * @param rootName
 	 *            Name of the XML root element
