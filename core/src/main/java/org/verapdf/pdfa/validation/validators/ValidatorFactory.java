@@ -204,23 +204,74 @@ public final class ValidatorFactory {
 		return createValidator(profile, logPassedChecks);
 	}
 
+	/**
+	 * @return the default {@link ValidatorConfig} instance
+	 */
 	public static ValidatorConfig defaultConfig() {
 		return ValidatorConfigImpl.defaultInstance();
 	}
 
+	/**
+	 * Create a {@link ValidatorConfig} instance from the passed values.
+	 * 
+	 * @param flavour
+	 *            the {@link PDFAFlavour} used for validation
+	 * @param recordPasses
+	 *            a {@code boolean} parameter, set {@code true} to record passed
+	 *            checks, {@code false} to only record failed checks.
+	 * @param maxFails
+	 *            an {@code int} value for the number of failed checks
+	 *            encountered before ending validation.
+	 * @return a new {@link ValidatorConfig} instance created from the passed
+	 *         values.
+	 */
 	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final boolean recordPasses,
 			final int maxFails) {
 		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails);
 	}
 
+	/**
+	 * De-serialises a {@link ValidatorConfig} instance from it's XML
+	 * representation
+	 * 
+	 * @param source
+	 *            an {@link InputStream} that is an XML representation of a
+	 *            {@link ValidatorConfig}
+	 * @return a {@link ValidatorConfig} instance created from the passed XML
+	 *         stream
+	 * @throws JAXBException
+	 *             when there's an error de-serialising
+	 */
 	public static ValidatorConfig createConfig(final InputStream source) throws JAXBException {
 		return XmlSerialiser.typeFromXml(ValidatorConfigImpl.class, source);
 	}
 
+	/**
+	 * Serialises a {@link ValidatorConfig} to XML
+	 * 
+	 * @param source
+	 *            a {@link ValidatorConfig} instance to serialise
+	 * @return a {@link String} containing the XML representation of the passed
+	 *         {@link ValidatorConfig} instance.
+	 * @throws JAXBException
+	 *             when there's an error serialising
+	 */
 	public static String configToXml(final ValidatorConfig source) throws JAXBException {
 		return XmlSerialiser.toXml(source, true, false);
 	}
 
+	/**
+	 * Serialises a {@link ValidatorConfig} instance to its XML representation
+	 * that's output to the passed {@link OutputStream}.
+	 * 
+	 * @param source
+	 *            the {@link ValidatorConfig} instance to serialise
+	 * @param dest
+	 *            an {@link OutputStream} to which the serialised instance will
+	 *            be written
+	 * @throws JAXBException
+	 *             when there's an error serialising
+	 */
 	public static void configToXml(final ValidatorConfig source, final OutputStream dest) throws JAXBException {
 		XmlSerialiser.toXml(source, dest, true, false);
 	}

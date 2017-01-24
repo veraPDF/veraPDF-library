@@ -40,7 +40,10 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 	private static final Logger logger = Logger.getLogger(BatchFileProcessor.class.getCanonicalName());
 
 	/**
+	 * Constructor for the {@link BatchFileProcessor}
+	 * 
 	 * @param processor
+	 *            the {@link ItemProcessor} used to process individual items.
 	 */
 	public BatchFileProcessor(ItemProcessor processor) {
 		super(processor);

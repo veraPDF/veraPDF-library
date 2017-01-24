@@ -23,27 +23,49 @@ package org.verapdf.processor.reports;
 import org.verapdf.component.AuditDuration;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+/**
+ * Interface for summary information for a veraPDF batch process.
+ * 
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1
+ */
 @XmlJavaTypeAdapter(BatchSummaryImpl.Adapter.class)
 public interface BatchSummary {
 
 	/**
-	 * @return the duration
+	 * @return the duration as an {@link AuditDuration}
 	 */
 	AuditDuration getDuration();
 
 	/**
-	 * @return the jobs
+	 * @return the number of jobs in the batch
 	 */
 	int getJobs();
 
 	/**
-	 * @return the failedJobs
+	 * @return the failed jobs, that is jobs where an exception was thrown and processing did not complete properly
 	 */
 	int getFailedJobs();
-	
+
+	/**
+	 * @return the number of valid PDF/A documents in the batch
+	 */
 	int getValidPdfaCount();
+
+	/**
+	 * @return the number of invalid PDF/A documents in the batch
+	 */
 	int getInvalidPdfaCount();
 
+	/**
+	 * @return the number of validation jobs that threw an exception, if any
+	 */
 	int getValidationExceptionCount();
+
+	/**
+	 * @return the number of PDF documents for which features were extracted.
+	 */
 	int getFeatureCount();
 }

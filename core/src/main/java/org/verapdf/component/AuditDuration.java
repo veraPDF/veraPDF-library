@@ -22,26 +22,34 @@ package org.verapdf.component;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+/**
+ * Simple class that encapsulates the duration of an action in milliseconds.
+ * Used for recording durations for process auditing.
+ * 
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1
+ */
 @XmlJavaTypeAdapter(AuditDurationImpl.Adapter.class)
 public interface AuditDuration {
 
 	/**
-	 * @return the start
+	 * @return the start time in millisecs
 	 */
 	public long getStart();
 
 	/**
-	 * @return the finish
+	 * @return the finish time in millisecs
 	 */
 	public long getFinish();
 
 	/**
-	 * @return the finish
+	 * @return the differece between the start and finish time in millisecs
 	 */
 	public long getDifference();
 
 	/**
-	 * @return the duration string
+	 * @return a string representation of the duration.
 	 */
 	public String getDuration();
 

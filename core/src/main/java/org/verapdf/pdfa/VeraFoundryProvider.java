@@ -24,14 +24,17 @@
 package org.verapdf.pdfa;
 
 /**
- * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *          <a href="https://github.com/carlwilson">carlwilson AT github</a>
- *
- * @version 0.1
+ * The {@link VeraFoundryProvider} class simply provides a method to obtain a
+ * {@link VeraPDFFoundry} instance. The class is only necessary to allow
+ * {@link VeraPDFFoundry} implementations to be supplied and switched at runtime.
  * 
- * Created 26 Oct 2016:20:29:21
+ * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
+ *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
+ * @version 0.1 Created 26 Oct 2016:20:29:21
  */
-
 public interface VeraFoundryProvider {
+	/**
+	 * @return a {@link VeraPDFFoundry} instance.
+	 */
 	public VeraPDFFoundry getInstance();
 }

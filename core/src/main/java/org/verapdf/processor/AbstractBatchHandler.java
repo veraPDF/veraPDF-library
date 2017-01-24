@@ -33,7 +33,6 @@ import org.verapdf.report.FeaturesReport;
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
  * @version 0.1 Created 10 Nov 2016:20:54:24
  */
-
 public abstract class AbstractBatchHandler implements BatchProcessingHandler {
 
 	/**

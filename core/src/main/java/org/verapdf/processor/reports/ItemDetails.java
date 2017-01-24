@@ -30,6 +30,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
+ * Encapsulates the details of a PDF document, just the name and the size in
+ * bytes.
+ * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 @XmlRootElement(name = "item")

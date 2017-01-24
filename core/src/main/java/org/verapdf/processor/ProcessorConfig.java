@@ -29,6 +29,8 @@ import org.verapdf.processor.plugins.PluginsCollectionConfig;
 import java.util.EnumSet;
 
 /**
+ * Configuration for a veraPDF {@link Processor} or {@link BatchProcessor}.
+ * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
  * @version 0.1 Created 30 Oct 2016:22:13:34
@@ -71,6 +73,10 @@ public interface ProcessorConfig {
 	 */
 	public MetadataFixerConfig getFixerConfig();
 
+	/**
+	 * @return the folder that files fixed by the metadata fixer should be
+	 *         written to.
+	 */
 	public String getMetadataFolder();
 
 	/**
