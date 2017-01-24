@@ -23,7 +23,10 @@ package org.verapdf.features;
 import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.tools.FeatureTreeNode;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Features reporter
@@ -31,6 +34,9 @@ import java.util.*;
  * @author Maksim Bezrukov
  */
 public class FeaturesReporter {
+
+	private static final Logger LOGGER = Logger.getLogger(FeaturesReporter.class.getCanonicalName());
+
 	public static final String CUSTOM_FEATURES_NAME = "customFeatures";
 	public static final String PLUGIN_FEATURES_NAME = "pluginFeatures";
 
@@ -85,22 +91,24 @@ public class FeaturesReporter {
 		try {
 			FeatureTreeNode root = obj.reportFeatures(this.collection);
 			if (featuresExtractors.containsKey(obj.getType())) {
-				FeaturesData objData = obj.getData();
-				if (objData != null) {
-					FeatureTreeNode custom = root.addChild(CUSTOM_FEATURES_NAME);
-					for (AbstractFeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
+				FeatureTreeNode custom = root.addChild(CUSTOM_FEATURES_NAME);
+				for (AbstractFeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
+					try (FeaturesData objData = obj.getData()) {
 						List<FeatureTreeNode> cust = ext.getFeatures(objData);
 						if (cust != null && !cust.isEmpty()) {
 							FeatureTreeNode custRoot = custom.addChild(PLUGIN_FEATURES_NAME);
 							AbstractFeaturesExtractor.ExtractorDetails details = ext.getDetails();
-							if (!details.getName().isEmpty()) {
-								custRoot.setAttribute("name", details.getName());
+							String detailsName = details.getName();
+							if (detailsName != null && !detailsName.isEmpty()) {
+								custRoot.setAttribute("name", detailsName);
 							}
-							if (!details.getVersion().isEmpty()) {
-								custRoot.setAttribute("version", details.getVersion());
+							String detailsVersion = details.getVersion();
+							if (detailsVersion != null && !detailsVersion.isEmpty()) {
+								custRoot.setAttribute("version", detailsVersion);
 							}
-							if (!details.getDescription().isEmpty()) {
-								custRoot.setAttribute("description", details.getDescription());
+							String detailsDescription = details.getDescription();
+							if (detailsDescription != null && !detailsDescription.isEmpty()) {
+								custRoot.setAttribute("description", detailsDescription);
 							}
 							for (FeatureTreeNode ftn : cust) {
 								if (ftn != null) {
@@ -108,6 +116,8 @@ public class FeaturesReporter {
 								}
 							}
 						}
+					} catch (IOException e) {
+						LOGGER.log(Level.FINE, "Exception in features data", e);
 					}
 				}
 			}

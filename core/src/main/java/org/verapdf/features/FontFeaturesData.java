@@ -20,10 +20,13 @@
  */
 package org.verapdf.features;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Features data of a font for feature extractor
@@ -31,6 +34,8 @@ import java.util.List;
  * @author Maksim Bezrukov
  */
 public final class FontFeaturesData extends FeaturesData {
+
+	private static final Logger LOGGER = Logger.getLogger(FontFeaturesData.class.getCanonicalName());
 
 	private final InputStream metadata;
 	private final String fontName;
@@ -226,7 +231,18 @@ public final class FontFeaturesData extends FeaturesData {
 	public String getCharSet() {
 		return this.charSet;
 	}
-	@SuppressWarnings("hiding") 
+
+	@Override
+	public void close() throws IOException {
+		try {
+			this.metadata.close();
+		} catch (IOException e) {
+			LOGGER.log(Level.FINE, "Exception during metadata closing", e);
+		}
+		super.close();
+	}
+
+	@SuppressWarnings("hiding")
 	public static final class Builder {
 
 		private InputStream metadata = null;

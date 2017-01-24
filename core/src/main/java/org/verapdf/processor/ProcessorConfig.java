@@ -20,12 +20,13 @@
  */
 package org.verapdf.processor;
 
-import java.util.EnumSet;
-
 import org.verapdf.features.FeatureExtractorConfig;
 import org.verapdf.metadata.fixer.MetadataFixerConfig;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
+import org.verapdf.processor.plugins.PluginsCollectionConfig;
+
+import java.util.EnumSet;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -60,6 +61,8 @@ public interface ProcessorConfig {
 	 *         extraction task has been assigned.
 	 */
 	public FeatureExtractorConfig getFeatureConfig();
+
+	public PluginsCollectionConfig getPluginsCollectionConfig();
 
 	/**
 	 * @return the {@link MetadataFixerConfig} assigned to this configuration or

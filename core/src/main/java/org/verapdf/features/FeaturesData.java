@@ -20,14 +20,20 @@
  */
 package org.verapdf.features;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Features data of an object for feature extractor
  *
  * @author Maksim Bezrukov
  */
-public class FeaturesData {
+public class FeaturesData implements Closeable {
+
+	private static final Logger LOGGER = Logger.getLogger(FeaturesData.class.getCanonicalName());
 
 	private final InputStream stream;
 
@@ -47,4 +53,12 @@ public class FeaturesData {
 		return this.stream;
 	}
 
+	@Override
+	public void close() throws IOException {
+		try {
+			this.stream.close();
+		} catch (IOException e) {
+			LOGGER.log(Level.FINE, "Exception during stream closing", e);
+		}
+	}
 }

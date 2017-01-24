@@ -20,16 +20,15 @@
  */
 package org.verapdf.processor.plugins;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import org.verapdf.core.XmlSerialiser;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import org.verapdf.core.XmlSerialiser;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Maksim Bezrukov
@@ -56,6 +55,10 @@ public final class PluginsCollectionConfig {
 	 */
 	public static PluginsCollectionConfig fromValues(final List<PluginConfig> pluginConfigs) {
 		return new PluginsCollectionConfig(pluginConfigs);
+	}
+
+	public static PluginsCollectionConfig defaultConfig() {
+		return new PluginsCollectionConfig();
 	}
 
 	/**
