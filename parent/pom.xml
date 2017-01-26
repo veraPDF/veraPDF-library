@@ -1,3 +1,25 @@
+<!--
+
+    This file is part of veraPDF PDF/A Validation Library, a module of the veraPDF project.
+    Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+    All rights reserved.
+
+    veraPDF PDF/A Validation Library is free software: you can redistribute it and/or modify
+    it under the terms of either:
+
+    The GNU General public license GPLv3+.
+    You should have received a copy of the GNU General Public License
+    along with veraPDF PDF/A Validation Library as the LICENSE.GPL file in the root of the source
+    tree.  If not, see http://www.gnu.org/licenses/ or
+    https://www.gnu.org/licenses/gpl-3.0.en.html.
+
+    The Mozilla Public License MPLv2+.
+    You should have received a copy of the Mozilla Public License along with
+    veraPDF PDF/A Validation Library as the LICENSE.MPL file in the root of the source tree.
+    If a copy of the MPL was not distributed with this file, you can obtain one at
+    http://mozilla.org/MPL/2.0/.
+
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -10,7 +32,7 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-parent</artifactId>
-  <version>1.0.16</version>
+  <version>1.0.17</version>
   <packaging>pom</packaging>
 
   <name>veraPDF Consortium parent </name>
@@ -286,73 +308,37 @@
 
   <profiles>
     <profile>
-      <id>apply-mpl-header</id>
+      <id>license-header</id>
       <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>com.mycila</groupId>
-              <artifactId>license-maven-plugin</artifactId>
-              <version>2.3</version>
-              <configuration>
-                <header>license/template/MPL-2.txt</header>
-                <properties>
-                  <owner>veraPDF Consortium</owner>
-                  <email>info@verapdf.org</email>
-                </properties>
-                <excludes>
-                  <exclude>license/template/**</exclude>
-                  <exclude>src/test/resources/**</exclude>
-                  <exclude>src/main/resources/**</exclude>
-                </excludes>
-              </configuration>
-              <executions>
-                <execution>
-                  <goals>
-                    <goal>check</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
-          </plugins>
-        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>com.mycila</groupId>
+            <artifactId>license-maven-plugin</artifactId>
+            <version>2.3</version>
+            <configuration>
+              <header>license/template/license.txt</header>
+              <properties>
+                <owner>veraPDF Consortium</owner>
+                <email>info@verapdf.org</email>
+              </properties>
+              <excludes>
+                <exclude>license/template/**</exclude>
+                <exclude>src/test/resources/**</exclude>
+                <exclude>src/main/resources/**</exclude>
+              </excludes>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>format</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
       </build>
     </profile>
-    <profile>
-      <id>apply-gpl-header</id>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>com.mycila</groupId>
-              <artifactId>license-maven-plugin</artifactId>
-              <version>2.3</version>
-              <configuration>
-                <header>license/template/GPL-3.txt</header>
-                <properties>
-                  <owner>veraPDF Consortium</owner>
-                  <email>info@verapdf.org</email>
-                </properties>
-                <excludes>
-                  <exclude>license/template/**</exclude>
-                  <exclude>src/test/resources/**</exclude>
-                  <exclude>src/main/resources/**</exclude>
-                </excludes>
-              </configuration>
-              <executions>
-                <execution>
-                  <goals>
-                    <goal>check</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-
-
     <profile>
       <id>coverage-per-test</id>
       <build>
