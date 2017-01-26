@@ -19,10 +19,11 @@
  * http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.verapdf.pdfa;
 
+import java.io.File;
 import java.io.InputStream;
 
 import org.verapdf.component.Component;
@@ -35,7 +36,7 @@ import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 /**
  * The veraPDFFoundry interface provides methods for creating implementations of
  * the classes provided by a PDF Parser and Metadata Fixer implementations.
- * 
+ *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
  * @version 0.1 Created 21 Sep 2016:12:37:55
@@ -45,10 +46,10 @@ public interface VeraPDFFoundry extends Component {
 	 * Method that returns a PDFParser instance, parsing the passed
 	 * {@link pdfStream} parameter. The parser or parser provider will detect
 	 * the flavour of the PDF document stream and provide an appropriate parser.
-	 * 
+	 *
 	 * @param pdfStream
 	 *            {@link java.io.InputStream} for the PDF document to be parsed.
-	 * @return a {@link PDFParser} instance created from the supplied
+	 * @return a {@link PDFAParser} instance created from the supplied
 	 *         InputStream.
 	 * @throws ModelParsingException
 	 *             when there's a problem parsing the PDF file
@@ -68,7 +69,7 @@ public interface VeraPDFFoundry extends Component {
 	 *            a {@link PDFAFlavour} instance indicating parser configuration
 	 *            (PDF/A part and conformance level) to be assumed when parsing
 	 *            the document.
-	 * @return a {@link PDFParser} instance created from the supplied
+	 * @return a {@link PDFAParser} instance created from the supplied
 	 *         InputStream.
 	 * @throws ModelParsingException
 	 *             when there's a problem parsing the PDF file
@@ -79,19 +80,53 @@ public interface VeraPDFFoundry extends Component {
 			throws ModelParsingException, EncryptedPdfException;
 
 	/**
-	 * Obtain a new {@link PDFAValidator} instance.
-	 * 
-	 * @param config
-	 *            a {@link ValidatorConfig} instance used to configure the
-	 *            {@link PDFAValidator}
-	 * @return an appropriately configured {@link PDFAValidator} instance.
+	 * Method that returns a PDFParser instance, parsing file passed as
+	 * {@link pdfFile} parameter. The caller must explicitly state the flavour
+	 * of the PDF document stream.
+	 *
+	 * @param pdfFile {@link File} with PDF document to be parsed.
+	 * @param flavour a {@link PDFAFlavour} instance indicating parser configuration
+	 *                (PDF/A part and conformance level) to be assumed when parsing
+	 *                the document.
+	 * @return a {@link PDFAParser} instance created from the supplied
+	 * InputStream.
+	 * @throws ModelParsingException when there's a problem parsing the PDF file
+	 * @throws EncryptedPdfException if the PDF to be parsed is encrypted
 	 */
+	public PDFAParser createParser(File pdfFile, PDFAFlavour flavour)
+			throws ModelParsingException, EncryptedPdfException;
+
+	/**
+	 * Method that returns a PDFParser instance, parsing file passed as
+	 * {@link pdfStream} parameter. The parser or parser provider will detect
+	 * the flavour of the PDF document stream and provide an appropriate parser.
+	 *
+	 * @param pdfFile
+	 *            {@link java.io.File} with the PDF document to be parsed.
+	 * @return a {@link PDFAParser} instance created from the supplied
+	 *         InputStream.
+	 * @throws ModelParsingException
+	 *             when there's a problem parsing the PDF file
+	 * @throws EncryptedPdfException
+	 *             if the PDF to be parsed is encrypted
+	 */
+	public PDFAParser createParser(File pdfFile)
+		throws ModelParsingException, EncryptedPdfException;
+
+		/**
+		 * Obtain a new {@link PDFAValidator} instance.
+		 *
+		 * @param config
+		 *            a {@link ValidatorConfig} instance used to configure the
+		 *            {@link PDFAValidator}
+		 * @return an appropriately configured {@link PDFAValidator} instance.
+		 */
 	public PDFAValidator createValidator(ValidatorConfig config);
 
 	/**
 	 * Obtain a new {@link PDFAValidator} instance that uses a custom
 	 * {@link org.verapdf.pdfa.validation.profiles.ValidationProfile} instance.
-	 * 
+	 *
 	 * @param config
 	 *            a {@link ValidatorConfig} instance used to configure the
 	 *            {@link PDFAValidator}
@@ -103,7 +138,7 @@ public interface VeraPDFFoundry extends Component {
 	/**
 	 * Obtain a new {@link PDFAValidator} instance that uses a custom
 	 * {@link org.verapdf.pdfa.flavours.PDFAFlavour}.
-	 * 
+	 *
 	 * @param config
 	 *            a {@link ValidatorConfig} instance used to configure the
 	 *            {@link PDFAValidator}
@@ -121,7 +156,7 @@ public interface VeraPDFFoundry extends Component {
 	 * when offline. A {@link ProfileDirectory} populated with the pre-loaded
 	 * profiles can be obtained by calling
 	 * {@link Profiles#getVeraProfileDirectory()}.
-	 * 
+	 *
 	 * @param flavour
 	 *            the {@link PDFAFlavour} that's associated with the
 	 *            {@code ValidationProfile} to used to initialise the
@@ -138,7 +173,7 @@ public interface VeraPDFFoundry extends Component {
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile
 	 * and chosen passed test logging.
-	 * 
+	 *
 	 * @param profile
 	 *            the {@link ValidationProfile} to be enforced by the returned
 	 *            {@code PDFAValidator}.
@@ -154,7 +189,7 @@ public interface VeraPDFFoundry extends Component {
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
 	 * requested fast failing behaviour and configured NOT to log passed checks.
-	 * 
+	 *
 	 * @param flavour
 	 *            the {@link PDFAFlavour} that's associated with the
 	 *            {@code ValidationProfile} to used to initialise the
@@ -173,7 +208,7 @@ public interface VeraPDFFoundry extends Component {
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
 	 * requested fast failing behaviour and configured NOT to log passed checks.
-	 * 
+	 *
 	 * @param profile
 	 *            the {@link ValidationProfile} to be enforced by the returned
 	 *            {@code PDFAValidator}.
@@ -190,7 +225,7 @@ public interface VeraPDFFoundry extends Component {
 
 	/**
 	 * Obtain a new {@link MetadataFixer} instance.
-	 * 
+	 *
 	 * @return a {@link MetadataFixer} instance.
 	 */
 	public MetadataFixer createMetadataFixer();
