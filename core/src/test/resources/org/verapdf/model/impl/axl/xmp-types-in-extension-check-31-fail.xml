@@ -61,21 +61,6 @@
 	</rdf:Description>
 	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
 					   xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
-		<fs:markprop2 rdf:parseType="Resource">
-			<xmpDM:startTime rdf:parseType="Resource">
-				<xmpDM:value>50</xmpDM:value>
-				<xmpDM:scale>12/5</xmpDM:scale>
-			</xmpDM:startTime>
-			<xmpDM:duration rdf:parseType="Resource">
-				<xmpDM:value>50.35</xmpDM:value>
-				<xmpDM:scale>125</xmpDM:scale>
-			</xmpDM:duration>
-			<xmpDM:comment>Some comment</xmpDM:comment>
-			<xmpDM:name>Chapter 1</xmpDM:name>
-			<xmpDM:location>http://ns.adobe.com/xmp#Start</xmpDM:location>
-			<xmpDM:target>Start</xmpDM:target>
-			<xmpDM:type>Chapter</xmpDM:type>
-		</fs:markprop2>
 		<fs:markprop3 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
 				<xmpDM:value>50</xmpDM:value>
@@ -126,21 +111,6 @@
 			<xmpDM:target>Start</xmpDM:target>
 			<xmpDM:type>Chapter</xmpDM:type>
 		</fs:markprop5>
-		<fs:markprop6 rdf:parseType="Resource">
-			<xmpDM:startTime rdf:parseType="Resource">
-				<xmpDM:value>50</xmpDM:value>
-				<xmpDM:scale>1/25</xmpDM:scale>
-			</xmpDM:startTime>
-			<xmpDM:duration rdf:parseType="Resource">
-				<xmpDM:value>50</xmpDM:value>
-				<xmpDM:scale>1/25</xmpDM:scale>
-			</xmpDM:duration>
-			<xmpDM:comment>Some comment</xmpDM:comment>
-			<xmpDM:name>Chapter 1</xmpDM:name>
-			<xmpDM:location>http://  @#$  $% 121 ns.adobe.com/xmp#Start</xmpDM:location>
-			<xmpDM:target>Start</xmpDM:target>
-			<xmpDM:type>Chapter</xmpDM:type>
-		</fs:markprop6>
 		<fs:markprop7 rdf:parseType="Resource">
 			<xmpDM:startTime rdf:parseType="Resource">
 				<xmpDM:value>50</xmpDM:value>
