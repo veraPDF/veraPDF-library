@@ -91,11 +91,6 @@
 			<xmpDM:type>1</xmpDM:type>
 			<xmpDM:path>ht tp:// maps. google .com/FortWorth Texas/m ore+url da +ta</xmpDM:path>
 		</fs:projlinkprop2>
-		  <!--TODO: refactor after the final decision about URI validation -->
-		<!--<fs:projlinkprop3 rdf:parseType="Resource">-->
-			<!--<xmpDM:type>audio</xmpDM:type>-->
-			<!--<xmpDM:path>2004-10-23T12:00:00-06:00</xmpDM:path>-->
-		<!--</fs:projlinkprop3>-->
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>

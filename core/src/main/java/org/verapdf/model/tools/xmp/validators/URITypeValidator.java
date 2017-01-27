@@ -38,7 +38,7 @@ public class URITypeValidator implements TypeValidator {
         if (node == null) {
             throw new IllegalArgumentException("Argument node can not be null.");
         }
-        // TODO: refactor after the final decision about URI validation
+        // was changed to text validation after discussion with TWG
 //        try {
 //            if (!node.getOptions().isSimple()) {
 //                return false;
