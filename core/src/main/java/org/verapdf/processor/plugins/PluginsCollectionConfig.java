@@ -26,6 +26,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -70,5 +71,9 @@ public final class PluginsCollectionConfig {
 	
 	public static PluginsCollectionConfig create(final InputStream source) throws JAXBException {
 		return XmlSerialiser.typeFromXml(PluginsCollectionConfig.class, source);
+	}
+
+	public static void configToXml(PluginsCollectionConfig config, OutputStream dest) throws JAXBException {
+		XmlSerialiser.toXml(config, dest, true, false);
 	}
 }
