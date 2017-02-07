@@ -93,28 +93,32 @@ public class FeaturesReporter {
 			if (featuresExtractors.containsKey(obj.getType())) {
 				FeatureTreeNode custom = root.addChild(CUSTOM_FEATURES_NAME);
 				for (AbstractFeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
-					try (FeaturesData objData = obj.getData()) {
-						List<FeatureTreeNode> cust = ext.getFeatures(objData);
-						if (cust != null && !cust.isEmpty()) {
-							FeatureTreeNode custRoot = custom.addChild(PLUGIN_FEATURES_NAME);
-							AbstractFeaturesExtractor.ExtractorDetails details = ext.getDetails();
-							String detailsName = details.getName();
-							if (detailsName != null && !detailsName.isEmpty()) {
-								custRoot.setAttribute("name", detailsName);
-							}
-							String detailsVersion = details.getVersion();
-							if (detailsVersion != null && !detailsVersion.isEmpty()) {
-								custRoot.setAttribute("version", detailsVersion);
-							}
-							String detailsDescription = details.getDescription();
-							if (detailsDescription != null && !detailsDescription.isEmpty()) {
-								custRoot.setAttribute("description", detailsDescription);
-							}
-							for (FeatureTreeNode ftn : cust) {
-								if (ftn != null) {
-									custRoot.addChild(ftn);
+					try {
+						FeaturesData objData = obj.getData();
+						if (objData != null) {
+							List<FeatureTreeNode> cust = ext.getFeatures(objData);
+							if (cust != null && !cust.isEmpty()) {
+								FeatureTreeNode custRoot = custom.addChild(PLUGIN_FEATURES_NAME);
+								AbstractFeaturesExtractor.ExtractorDetails details = ext.getDetails();
+								String detailsName = details.getName();
+								if (detailsName != null && !detailsName.isEmpty()) {
+									custRoot.setAttribute("name", detailsName);
+								}
+								String detailsVersion = details.getVersion();
+								if (detailsVersion != null && !detailsVersion.isEmpty()) {
+									custRoot.setAttribute("version", detailsVersion);
+								}
+								String detailsDescription = details.getDescription();
+								if (detailsDescription != null && !detailsDescription.isEmpty()) {
+									custRoot.setAttribute("description", detailsDescription);
+								}
+								for (FeatureTreeNode ftn : cust) {
+									if (ftn != null) {
+										custRoot.addChild(ftn);
+									}
 								}
 							}
+							objData.close();
 						}
 					} catch (IOException e) {
 						LOGGER.log(Level.FINE, "Exception in features data", e);
