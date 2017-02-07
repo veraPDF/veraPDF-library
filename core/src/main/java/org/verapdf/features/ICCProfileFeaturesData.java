@@ -86,10 +86,12 @@ public final class ICCProfileFeaturesData extends FeaturesData {
 
 	@Override
 	public void close() throws IOException {
-		try {
-			this.metadata.close();
-		} catch (IOException e) {
-			LOGGER.log(Level.FINE, "Exception during metadata closing", e);
+		if (this.metadata != null) {
+			try {
+				this.metadata.close();
+			} catch (IOException e) {
+				LOGGER.log(Level.FINE, "Exception during metadata closing", e);
+			}
 		}
 		super.close();
 	}
