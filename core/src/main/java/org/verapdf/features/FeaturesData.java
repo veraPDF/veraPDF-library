@@ -55,10 +55,12 @@ public class FeaturesData implements Closeable {
 
 	@Override
 	public void close() throws IOException {
-		try {
-			this.stream.close();
-		} catch (IOException e) {
-			LOGGER.log(Level.FINE, "Exception during stream closing", e);
+		if (this.stream != null) {
+			try {
+				this.stream.close();
+			} catch (IOException e) {
+				LOGGER.log(Level.FINE, "Exception during stream closing", e);
+			}
 		}
 	}
 }
