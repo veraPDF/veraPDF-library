@@ -100,13 +100,13 @@ public class PluginConfig {
 
 		@Override
 		public Path unmarshal(String v) throws Exception {
-			Path path = Paths.get(new URI(v));
+			Path path = Paths.get(v);
 			return path.toAbsolutePath();
 		}
 
 		@Override
 		public String marshal(Path v) {
-			return v.toAbsolutePath().toUri().toString();
+			return v.toAbsolutePath().toString();
 		}
 	}
 }
