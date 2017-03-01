@@ -1,3 +1,26 @@
+# Version 1.2 (March 2, 2017)
+PDFBox version downloadable from http://downloads.verapdf.org/rel/verapdf-installer.zip. Greenfield version downloadable from: http://downloads.verapdf.org/gf/verapdf-gf-installer.zip.
+
+This is a maintenance release focused on bug fixing and improvements of the test infrastructure.
+
+## Conformance checker:
+- fixed cache issues in parsing embedded CMaps
+- fixed multiple issues with glyph widths checks for embedded CID fonts
+- fixed CIDSet entry validation
+- fixed delimiter handling in parsing content streams
+- ignore None colorants when checking DeviceN color spaces
+- fixed validation of Order arrays in optional content groups
+- fixed parsing of /ToUnicode map
+
+## Policy checker:
+- fixed plug-in infrastructure
+- fixed handling of unknown feature types
+- added error info into HTML reports in case of broken PDFs
+
+## Documentation:
+- updated developer samples
+- updated GUI documentation
+
 # Version 1.0 (January 9, 2017)
 PDFBox version downloadable from http://downloads.verapdf.org/rel/verapdf-installer.zip. Greenfield version downloadable from: http://downloads.verapdf.org/gf/verapdf-gf-installer.zip.
 
