@@ -48,15 +48,11 @@
 		</pdfaExtension:schemas>
 	</rdf:Description>
 	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
-		<fs:xpathprop1>./au thor</fs:xpathprop1>
-		<fs:xpathprop2>author[[]</fs:xpathprop2>
 		<fs:xpathprop3>
 			<rdf:Seq>
 				<rdf:li>.title</rdf:li>
-			</rdf:Seq>	
-		</fs:xpathprop3>		
-		<fs:xpathprop4>2004-10-23T12:00:00-06:00</fs:xpathprop4>		
-		<fs:xpathprop5>+3.6589</fs:xpathprop5>		
+			</rdf:Seq>
+		</fs:xpathprop3>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>
