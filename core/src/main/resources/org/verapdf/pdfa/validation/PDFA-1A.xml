@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_A">
-    <details creator="veraPDF Consortium" created="2016-11-30T21:00:19.719-03:00">
+    <details creator="veraPDF Consortium" created="2017-03-21T18:50:15.950-03:00">
         <name>PDF/A-1A validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011, Level A</description>
     </details>
@@ -614,14 +614,16 @@
         <rule object="PDType0Font">
             <id specification="ISO_19005_1" clause="6.3.3" testNumber="1"/>
             <description>For any given composite (Type 0) font referenced within a conforming file, the CIDSystemInfo entries of its 
-			CIDFont and CMap dictionaries shall be compatible</description>
-            <test>areRegistryOrderingCompatible == true</test>
+			CIDFont and CMap dictionaries shall be compatible. In other words, the Registry and Ordering strings of the CIDSystemInfo dictionaries
+			for that font shall be identical, unless the value of the Encoding key in the font dictionary is Identity-H or Identity-V.</description>
+            <test>cmapName == &quot;Identity-H&quot; || cmapName == &quot;Identity-V&quot; || areRegistryOrderingCompatible == true</test>
             <error>
                 <message>Registry and Ordering entries in the CIDFont and CMap dictionaries of a Type 0 font are not compatible</message>
                 <arguments/>
             </error>
             <references>
                 <reference specification="PDF 1.4 Reference" clause="5.6.2"/>
+                <reference specification="ISO 19005-1:2005/Cor.2:2011" clause="6.3.3"/>
             </references>
         </rule>
         <rule object="PDCIDFont">
