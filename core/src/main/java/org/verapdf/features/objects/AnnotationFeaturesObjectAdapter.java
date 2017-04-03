@@ -20,12 +20,29 @@
  */
 package org.verapdf.features.objects;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Maksim Bezrukov
  */
-public interface FeaturesObjectAdapter {
-
-	List<String> getErrors();
+public interface AnnotationFeaturesObjectAdapter extends FeaturesObjectAdapter {
+	String getId();
+	String getPopupId();
+	Set<String> getFormXObjectsResources();
+	String getSubtype();
+	double[] getRectangle();
+	String getContents();
+	String getAnnotationName();
+	String getModifiedDate();
+	double[] getColor();
+	boolean isInvisible();
+	boolean isHidden();
+	boolean isPrinted();
+	boolean isNoZoom();
+	boolean isNoRotate();
+	boolean isNoView();
+	boolean isReadOnly();
+	boolean isLocked();
+	boolean isToggleNoView();
+	boolean isLockedContents();
 }

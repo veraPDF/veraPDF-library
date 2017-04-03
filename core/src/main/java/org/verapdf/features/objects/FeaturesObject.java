@@ -18,22 +18,40 @@
  * If a copy of the MPL was not distributed with this file, you can obtain one at
  * http://mozilla.org/MPL/2.0/.
  */
-package org.verapdf.features;
+package org.verapdf.features.objects;
 
 import org.verapdf.core.FeatureParsingException;
+import org.verapdf.features.FeatureExtractionResult;
+import org.verapdf.features.FeatureObjectType;
+import org.verapdf.features.FeaturesData;
+import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Main interface for all features objects
  *
  * @author Maksim Bezrukov
  */
-public interface IFeaturesObject {
+public abstract class FeaturesObject {
+
+	protected FeaturesObjectAdapter adapter;
+	private final List<String> errors = new ArrayList<>();
+
+	FeaturesObject(FeaturesObjectAdapter adapter) {
+		this.adapter = adapter;
+	}
+
+	public void registerNewError(String error) {
+		errors.add(error);
+	}
 
 	/**
 	 * @return enum type of the current feature object
 	 */
-	FeatureObjectType getType();
+	public abstract FeatureObjectType getType();
 
 	/**
 	 * Reports all features from the object into the collection
@@ -42,10 +60,23 @@ public interface IFeaturesObject {
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
 	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
-	FeatureTreeNode reportFeatures(FeatureExtractionResult collection) throws FeatureParsingException;
+	public final FeatureTreeNode reportFeatures(FeatureExtractionResult collection) throws FeatureParsingException {
+		this.errors.clear();
+		FeatureTreeNode root = collectFeatures();
+		this.errors.addAll(adapter.getErrors());
+		if (!errors.isEmpty()) {
+			for (String error : errors) {
+				ErrorsHelper.addErrorIntoCollection(collection, root, error);
+			}
+		}
+		collection.addNewFeatureTree(FeatureObjectType.LOW_LEVEL_INFO, root);
+		return root;
+	}
+
+	protected abstract FeatureTreeNode collectFeatures() throws FeatureParsingException;
 
 	/**
 	 * @return features data for object
 	 */
-	FeaturesData getData();
+	public abstract FeaturesData getData();
 }

@@ -25,7 +25,39 @@ import java.util.List;
 /**
  * @author Maksim Bezrukov
  */
-public interface FeaturesObjectAdapter {
+public interface ColorSpaceFeaturesObjectAdapter extends FeaturesObjectAdapter {
 
-	List<String> getErrors();
+	String getId();
+
+	String getFamily();
+
+	String getColorSpaceChild();
+	String getICCProfileChild();
+
+	// CIE based colorspaces
+	double[] getWhitePoint();
+	double[] getBlackPoint();
+
+	// Cal Gray
+	Double getCalGrayGamma();
+
+	// Cal RGB
+	double[] getCalRGBGamma();
+	double[] getMatrix();
+
+	// Lab
+	double[] getLabRange();
+
+	// ICCBased
+	int getNumberOfComponents();
+
+	// Indexed
+	Long getHival();
+	String getHexEncodedLookup();
+
+	// Separation
+	String getColorantName();
+
+	// DeviceN
+	List<String> getColorantNames();
 }

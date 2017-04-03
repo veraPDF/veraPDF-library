@@ -1,15 +1,31 @@
+/**
+ * This file is part of veraPDF Library core, a module of the veraPDF project.
+ * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * All rights reserved.
+ * <p>
+ * veraPDF Library core is free software: you can redistribute it and/or modify
+ * it under the terms of either:
+ * <p>
+ * The GNU General public license GPLv3+.
+ * You should have received a copy of the GNU General Public License
+ * along with veraPDF Library core as the LICENSE.GPL file in the root of the source
+ * tree.  If not, see http://www.gnu.org/licenses/ or
+ * https://www.gnu.org/licenses/gpl-3.0.en.html.
+ * <p>
+ * The Mozilla Public License MPLv2+.
+ * You should have received a copy of the Mozilla Public License along with
+ * veraPDF Library core as the LICENSE.MPL file in the root of the source tree.
+ * If a copy of the MPL was not distributed with this file, you can obtain one at
+ * http://mozilla.org/MPL/2.0/.
+ */
 package org.verapdf.features.objects;
 
 import org.verapdf.core.FeatureParsingException;
-import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.features.FeatureObjectType;
 import org.verapdf.features.FeaturesData;
-import org.verapdf.features.IFeaturesObject;
-import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -18,11 +34,7 @@ import java.util.Set;
  *
  * @author Maksim Bezrukov
  */
-public class LowLvlInfoFeaturesObject implements IFeaturesObject {
-
-	private static List<Feature> featuresList;
-
-	private LowLvlInfoFeaturesObjectAdapter adapter;
+public class LowLvlInfoFeaturesObject extends FeaturesObject {
 
 	/**
 	 * Constructs new low level info feature object.
@@ -30,7 +42,7 @@ public class LowLvlInfoFeaturesObject implements IFeaturesObject {
 	 * @param adapter low lvl info adapter class represents document object
 	 */
 	public LowLvlInfoFeaturesObject(LowLvlInfoFeaturesObjectAdapter adapter) {
-		this.adapter = adapter;
+		super(adapter);
 	}
 
 	/**
@@ -44,20 +56,20 @@ public class LowLvlInfoFeaturesObject implements IFeaturesObject {
 	/**
 	 * Reports all features from the object into the collection
 	 *
-	 * @param collection collection for feature report
 	 * @return FeatureTreeNode class which represents a root node of the
 	 * constructed collection tree
 	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
 	@Override
-	public FeatureTreeNode reportFeatures(FeatureExtractionResult collection) throws FeatureParsingException {
+	public FeatureTreeNode collectFeatures() throws FeatureParsingException {
+		LowLvlInfoFeaturesObjectAdapter lowLvlAdapter = (LowLvlInfoFeaturesObjectAdapter) this.adapter;
 		FeatureTreeNode root = FeatureTreeNode.createRootNode("lowLevelInfo");
 
 		root.addChild("indirectObjectsNumber")
-				.setValue(String.valueOf(adapter.getIndirectObjectsNumber()));
+				.setValue(String.valueOf(lowLvlAdapter.getIndirectObjectsNumber()));
 
-		String creationId = adapter.getCreationId();
-		String modificationId = adapter.getModificationId();
+		String creationId = lowLvlAdapter.getCreationId();
+		String modificationId = lowLvlAdapter.getModificationId();
 
 		if (creationId != null || modificationId != null) {
 			FeatureTreeNode documentId = root.addChild("documentId");
@@ -69,7 +81,7 @@ public class LowLvlInfoFeaturesObject implements IFeaturesObject {
 			}
 		}
 
-		Set<String> filters = adapter.getFilters();
+		Set<String> filters = lowLvlAdapter.getFilters();
 
 		if (!filters.isEmpty()) {
 			FeatureTreeNode filtersNode = root.addChild("filters");
@@ -81,16 +93,6 @@ public class LowLvlInfoFeaturesObject implements IFeaturesObject {
 				}
 			}
 		}
-
-		// TODO: Next code lines should be in parent abstract class implementation
-		// when IFeaturesObject type will be changed from interface to abstract class
-		List<String> errors = adapter.getErrors();
-		if (!errors.isEmpty()) {
-			for (String error : errors) {
-				ErrorsHelper.addErrorIntoCollection(collection, root, error);
-			}
-		}
-		collection.addNewFeatureTree(FeatureObjectType.LOW_LEVEL_INFO, root);
 		return root;
 	}
 
@@ -102,28 +104,18 @@ public class LowLvlInfoFeaturesObject implements IFeaturesObject {
 		return null;
 	}
 
-	// TODO: for next method should be created abstract implementation in parent abstract class
-	// in this method we should register all features with their names,
-	// XPath related to feature root node and feature type
-	static void registerAllFeatures() {
-		registerFeature("Indirect Objects Number", "/indirectObjectsNumber", Feature.FeatureType.NUMBER);
-		registerFeature("Creation ID", "/documentId/@creationId", Feature.FeatureType.STRING);
-		registerFeature("Modification ID", "/documentId/@modificationId", Feature.FeatureType.STRING);
-		registerFeature("Filter Name", "/filters/filter/@name", Feature.FeatureType.STRING);
+	static List<Feature> getFeaturesList() {
+		// All fields are present
+		List<Feature> featuresList = new ArrayList<>();
+		featuresList.add(new Feature("Indirect Objects Number", "/lowLevelInfo/indirectObjectsNumber",
+				Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Creation ID", "/lowLevelInfo/documentId/@creationId",
+				Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Modification ID", "/lowLevelInfo/documentId/@modificationId",
+				Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Filter Name", "/lowLevelInfo/filters/filter/@name",
+				Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Error IDs", "/lowLevelInfo/@errorId", Feature.FeatureType.STRING));
+		return featuresList;
 	}
-
-	// TODO: next two methods should be in parent abstract class implementation
-	public static List<Feature> getFeaturesMap() {
-		if (featuresList == null) {
-			featuresList = new ArrayList<>();
-			registerAllFeatures();
-			registerFeature("Error IDs", "/@errorId", Feature.FeatureType.STRING);
-		}
-		return Collections.unmodifiableList(featuresList);
-	}
-
-	static void registerFeature(String featureName, String featureXPath, Feature.FeatureType featureType) {
-		featuresList.add(new Feature(featureName, featureXPath, featureType));
-	}
-
 }
