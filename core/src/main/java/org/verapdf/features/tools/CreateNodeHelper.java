@@ -73,13 +73,11 @@ public final class CreateNodeHelper {
 	 *            parent element for created node
 	 * @param date
 	 *            the given date as Calendar class
-	 * @param collection
-	 *            collection for which this node creates
 	 * @return created node
 	 * @throws FeatureParsingException
 	 */
 	public static FeatureTreeNode createDateNode(String nodeName, FeatureTreeNode parent, Calendar date,
-												 FeatureExtractionResult collection) throws FeatureParsingException {
+												 FeaturesObject object) throws FeatureParsingException {
 		FeatureTreeNode modificationDate = null;
 
 		if (date != null) {
@@ -88,7 +86,7 @@ public final class CreateNodeHelper {
 				modificationDate.setValue(getXMLFormat(date));
 			} catch (DatatypeConfigurationException e) {
 				LOGGER.log(Level.FINE, "DatatypeFactory implementation not available or can't be instantiated", e);
-				ErrorsHelper.addErrorIntoCollection(collection, modificationDate, e.getMessage());
+				object.registerNewError(e.getMessage());
 			}
 		}
 

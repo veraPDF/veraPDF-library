@@ -205,7 +205,7 @@ public class ColorSpaceFeaturesObject extends FeaturesObject {
 		// Only family field is present
 		List<Feature> featuresList = new ArrayList<>();
 		featuresList.add(new Feature("Family", "/colorSpace/@family", Feature.FeatureType.STRING));
-		featuresList.add(new Feature("Error IDs", "/@errorId", Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Error IDs", "/colorSpace/@errorId", Feature.FeatureType.STRING));
 		return featuresList;
 	}
 }

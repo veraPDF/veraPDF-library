@@ -36,6 +36,9 @@ public final class FeaturesStructureContainer {
 
 	static {
 		featuresStructure.put(FeatureObjectType.ANNOTATION, AnnotationFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.COLORSPACE, ColorSpaceFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.DOCUMENT_SECURITY, DocSecurityFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.EMBEDDED_FILE, EmbeddedFileFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.LOW_LEVEL_INFO, LowLvlInfoFeaturesObject.getFeaturesList());
 	}
 

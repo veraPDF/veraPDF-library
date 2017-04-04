@@ -140,7 +140,7 @@ public class AnnotationFeaturesObject extends FeaturesObject {
 		featuresList.add(new Feature("Toggle No View", "/annotation/toggleNoView", Feature.FeatureType.BOOLEAN));
 		featuresList.add(new Feature("Locked Contents", "/annotation/lockedContents", Feature.FeatureType.BOOLEAN));
 
-		featuresList.add(new Feature("Error IDs", "/@errorId", Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Error IDs", "/annotation/@errorId", Feature.FeatureType.STRING));
 		return featuresList;
 	}
 }
