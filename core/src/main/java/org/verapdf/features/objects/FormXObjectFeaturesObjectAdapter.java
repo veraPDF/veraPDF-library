@@ -21,21 +21,30 @@
 package org.verapdf.features.objects;
 
 import java.io.InputStream;
-import java.util.Calendar;
+import java.util.Set;
 
 /**
  * @author Maksim Bezrukov
  */
-public interface EmbeddedFileFeaturesObjectAdapter extends FeaturesObjectAdapter {
-    int getIndex();
-    String getFileName();
-    String getDescription();
-    String getAFRelationship();
-    String getSubtype();
-    String getFilter();
-    Calendar getCreationDate();
-    Calendar getModDate();
-    String getCheckSum();
-    Long getSize();
-    InputStream getData();
+public interface FormXObjectFeaturesObjectAdapter extends FeaturesObjectAdapter {
+	String getId();
+	InputStream getMetadataStream();
+	String getGroupColorSpaceChild();
+	Set<String> getExtGStateChild();
+	Set<String> getColorSpaceChild();
+	Set<String> getPatternChild();
+	Set<String> getShadingChild();
+	Set<String> getXObjectChild();
+	Set<String> getFontChild();
+	Set<String> getPropertiesChild();
+
+	double[] getBBox();
+	double[] getMatrix();
+
+	boolean isGroupPresent();
+	String getGroupSubtype();
+	boolean isTransparencyGroupIsolated();
+	boolean isTransparencyGroupKnockout();
+
+	Long getStructParents();
 }

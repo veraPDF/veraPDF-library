@@ -20,22 +20,15 @@
  */
 package org.verapdf.features.objects;
 
-import java.io.InputStream;
-import java.util.Calendar;
-
 /**
  * @author Maksim Bezrukov
  */
-public interface EmbeddedFileFeaturesObjectAdapter extends FeaturesObjectAdapter {
-    int getIndex();
-    String getFileName();
-    String getDescription();
-    String getAFRelationship();
-    String getSubtype();
-    String getFilter();
-    Calendar getCreationDate();
-    Calendar getModDate();
-    String getCheckSum();
-    Long getSize();
-    InputStream getData();
+public interface ExtGStateFeaturesObjectAdapter extends FeaturesObjectAdapter {
+
+	String getId();
+	String getFontChildId();
+	Boolean getTransparency();
+	Boolean getStrokeAdjustment();
+	Boolean getOverprintForStroke();
+	Boolean getOverprintForFill();
 }

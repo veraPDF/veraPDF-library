@@ -21,9 +21,9 @@
 package org.verapdf.features.tools;
 
 import org.verapdf.core.FeatureParsingException;
-import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.features.objects.FeaturesObject;
 
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -67,12 +67,9 @@ public final class CreateNodeHelper {
 	 * Creates node with date value formatted in XML format from the given
 	 * Calendar
 	 *
-	 * @param nodeName
-	 *            name of the created node
-	 * @param parent
-	 *            parent element for created node
-	 * @param date
-	 *            the given date as Calendar class
+	 * @param nodeName name of the created node
+	 * @param parent   parent element for created node
+	 * @param date     the given date as Calendar class
 	 * @return created node
 	 * @throws FeatureParsingException
 	 */
@@ -96,12 +93,9 @@ public final class CreateNodeHelper {
 	/**
 	 * Creates feature node for boxes
 	 *
-	 * @param name
-	 *            name of the node
-	 * @param box
-	 *            PDRectangle object represents the box
-	 * @param parent
-	 *            parent element for the created node
+	 * @param name   name of the node
+	 * @param box    PDRectangle object represents the box
+	 * @param parent parent element for the created node
 	 * @return created node
 	 * @throws FeatureParsingException
 	 */
@@ -124,12 +118,9 @@ public final class CreateNodeHelper {
 	 * Creates new node with given name and value if both of this parametrs are
 	 * not null
 	 *
-	 * @param name
-	 *            name of the node
-	 * @param value
-	 *            value of the node
-	 * @param parent
-	 *            parent of the node
+	 * @param name   name of the node
+	 * @param value  value of the node
+	 * @param parent parent of the node
 	 * @return generated node
 	 * @throws FeatureParsingException
 	 */
@@ -146,14 +137,10 @@ public final class CreateNodeHelper {
 	/**
 	 * Creates new node for device color space
 	 *
-	 * @param name
-	 *            name for the created node
-	 * @param color
-	 *            PDColor class represents device color space for creating node
-	 * @param parent
-	 *            parent node for the creating node
-	 * @param object
-	 *            features object which calls this method
+	 * @param name   name for the created node
+	 * @param color  PDColor class represents device color space for creating node
+	 * @param parent parent node for the creating node
+	 * @param object features object which calls this method
 	 * @return created node
 	 * @throws FeatureParsingException
 	 */
@@ -185,17 +172,13 @@ public final class CreateNodeHelper {
 	 * case, when {@code setName} is null and to the element with {@code root}
 	 * parent and name {@code elementName} in other case
 	 *
-	 * @param set
-	 *            set of elements id
-	 * @param elementName
-	 *            element names
-	 * @param setName
-	 *            name of the parent element for created elements. If null, all
-	 *            created elements will be attached to the {@code root}
-	 * @param root
-	 *            root element for the generated parent element for generated
-	 *            elements or direct paren for generated elements in case of
-	 *            {@code setName} equals to null
+	 * @param set         set of elements id
+	 * @param elementName element names
+	 * @param setName     name of the parent element for created elements. If null, all
+	 *                    created elements will be attached to the {@code root}
+	 * @param root        root element for the generated parent element for generated
+	 *                    elements or direct paren for generated elements in case of
+	 *                    {@code setName} equals to null
 	 * @throws FeatureParsingException
 	 */
 	public static void parseIDSet(Set<String> set, String elementName, String setName, FeatureTreeNode root)
@@ -216,16 +199,40 @@ public final class CreateNodeHelper {
 		}
 	}
 
+	public static FeatureTreeNode parseMetadata(InputStream metadata, String nodeName, FeatureTreeNode parent,
+												FeaturesObject object) throws FeatureParsingException {
+		if (metadata == null) {
+			return null;
+		}
+		FeatureTreeNode node;
+		node = parent.addMetadataChild(nodeName);
+		try {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			byte[] buffer = new byte[1024];
+			while (true) {
+				int r = metadata.read(buffer);
+				if (r == -1) break;
+				out.write(buffer, 0, r);
+			}
+			byte[] bStream = out.toByteArray();
+			String hexString = DatatypeConverter.printHexBinary(bStream);
+			node.setValue(hexString);
+		} catch (IOException e) {
+			LOGGER.log(Level.FINE, "Error while obtaining unfiltered metadata stream", e);
+			object.registerNewError(e.getMessage());
+		}
+
+		return node;
+	}
+
 	/**
 	 * Generates byte array with contents of a stream
 	 *
-	 * @param is
-	 *            input stream for converting
+	 * @param is input stream for converting
 	 * @return byte array with contents of a stream
-	 * @throws IOException
-	 *             If the first byte cannot be read for any reason other than
-	 *             end of file, or if the input stream has been closed, or if
-	 *             some other I/O error occurs.
+	 * @throws IOException If the first byte cannot be read for any reason other than
+	 *                     end of file, or if the input stream has been closed, or if
+	 *                     some other I/O error occurs.
 	 */
 	public static byte[] inputStreamToByteArray(InputStream is) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();

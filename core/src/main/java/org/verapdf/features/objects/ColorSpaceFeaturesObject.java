@@ -24,6 +24,7 @@ import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeatureObjectType;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.tools.CreateNodeHelper;
+import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class ColorSpaceFeaturesObject extends FeaturesObject {
 	private static final String INDEXED = "Indexed";
 	private static final String SEPARATION = "Separation";
 	private static final String DEVICEN = "DeviceN";
+	private static final String COLOR_SPACE = "colorSpace";
+	private static final String FAMILY = "family";
 
 	/**
 	 * Constructs new ColorSpace Feature Object
@@ -73,14 +76,14 @@ public class ColorSpaceFeaturesObject extends FeaturesObject {
 	@Override
 	public FeatureTreeNode collectFeatures() throws FeatureParsingException {
 		ColorSpaceFeaturesObjectAdapter csAdapter = (ColorSpaceFeaturesObjectAdapter) this.adapter;
-		FeatureTreeNode root = FeatureTreeNode.createRootNode("colorSpace");
+		FeatureTreeNode root = FeatureTreeNode.createRootNode(COLOR_SPACE);
 
 		String id = csAdapter.getId();
 		if (id != null) {
 			root.setAttribute(ID, id);
 		}
 		String colorSpaceType = csAdapter.getFamily();
-		root.setAttribute("family", colorSpaceType);
+		root.setAttribute(FAMILY, colorSpaceType);
 
 		if (CALGRAY.equals(colorSpaceType)
 				|| CALRGB.equals(colorSpaceType)
@@ -204,8 +207,10 @@ public class ColorSpaceFeaturesObject extends FeaturesObject {
 	static List<Feature> getFeaturesList() {
 		// Only family field is present
 		List<Feature> featuresList = new ArrayList<>();
-		featuresList.add(new Feature("Family", "/colorSpace/@family", Feature.FeatureType.STRING));
-		featuresList.add(new Feature("Error IDs", "/colorSpace/@errorId", Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Family",
+				generateAttributeXPath(COLOR_SPACE, FAMILY), Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Error IDs",
+				generateAttributeXPath(COLOR_SPACE, ErrorsHelper.ERRORID), Feature.FeatureType.STRING));
 		return featuresList;
 	}
 }

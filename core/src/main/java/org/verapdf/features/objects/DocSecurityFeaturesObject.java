@@ -24,11 +24,11 @@ import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeatureObjectType;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.tools.CreateNodeHelper;
+import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Feature object for document security
@@ -36,6 +36,23 @@ import java.util.Set;
  * @author Maksim Bezrukov
  */
 public class DocSecurityFeaturesObject extends FeaturesObject {
+
+    private static final String DOCUMENT_SECURITY = "documentSecurity";
+    private static final String FILTER = "filter";
+    private static final String SUB_FILTER = "subFilter";
+    private static final String VERSION = "version";
+    private static final String LENGTH = "length";
+    private static final String OWNER_KEY = "ownerKey";
+    private static final String USER_KEY = "userKey";
+    private static final String ENCRYPT_METADATA = "encryptMetadata";
+    private static final String PRINT_ALLOWED = "printAllowed";
+    private static final String PRINT_DEGRADED_ALLOWED = "printDegradedAllowed";
+    private static final String CHANGES_ALLOWED = "changesAllowed";
+    private static final String MODIFY_ANNOTATIONS_ALLOWED = "modifyAnnotationsAllowed";
+    private static final String FILLING_SIGNING_ALLOWED = "fillingSigningAllowed";
+    private static final String DOCUMENT_ASSEMBLY_ALLOWED = "documentAssemblyAllowed";
+    private static final String EXTRACT_CONTENT_ALLOWED = "extractContentAllowed";
+    private static final String EXTRACT_ACCESSIBILITY_ALLOWED = "extractAccessibilityAllowed";
 
     /**
      * Constructs new Document Security Feature Object
@@ -64,24 +81,24 @@ public class DocSecurityFeaturesObject extends FeaturesObject {
     @Override
     public FeatureTreeNode collectFeatures() throws FeatureParsingException {
         DocSecurityFeaturesObjectAdapter docSecAdapter = (DocSecurityFeaturesObjectAdapter) this.adapter;
-        FeatureTreeNode root = FeatureTreeNode.createRootNode("documentSecurity");
-        CreateNodeHelper.addNotEmptyNode("filter", docSecAdapter.getFilter(), root);
-        CreateNodeHelper.addNotEmptyNode("subFilter", docSecAdapter.getSubFilter(), root);
-        CreateNodeHelper.addNotEmptyNode("version", String.valueOf(docSecAdapter.getVersion()), root);
-        CreateNodeHelper.addNotEmptyNode("length", String.valueOf(docSecAdapter.getLength()), root);
-        CreateNodeHelper.addNotEmptyNode("ownerKey", docSecAdapter.getHexEncodedOwnerKey(), root);
-        CreateNodeHelper.addNotEmptyNode("userKey", docSecAdapter.getHexEncodedUserKey(), root);
-        CreateNodeHelper.addNotEmptyNode("encryptMetadata", String.valueOf(docSecAdapter.isEncryptMetadata()), root);
+        FeatureTreeNode root = FeatureTreeNode.createRootNode(DOCUMENT_SECURITY);
+        CreateNodeHelper.addNotEmptyNode(FILTER, docSecAdapter.getFilter(), root);
+        CreateNodeHelper.addNotEmptyNode(SUB_FILTER, docSecAdapter.getSubFilter(), root);
+        CreateNodeHelper.addNotEmptyNode(VERSION, String.valueOf(docSecAdapter.getVersion()), root);
+        CreateNodeHelper.addNotEmptyNode(LENGTH, String.valueOf(docSecAdapter.getLength()), root);
+        CreateNodeHelper.addNotEmptyNode(OWNER_KEY, docSecAdapter.getHexEncodedOwnerKey(), root);
+        CreateNodeHelper.addNotEmptyNode(USER_KEY, docSecAdapter.getHexEncodedUserKey(), root);
+        CreateNodeHelper.addNotEmptyNode(ENCRYPT_METADATA, String.valueOf(docSecAdapter.isEncryptMetadata()), root);
 
         if (docSecAdapter.isUserPermissionsPresent()) {
-            CreateNodeHelper.addNotEmptyNode("printAllowed", String.valueOf(docSecAdapter.isPrintAllowed()), root);
-            CreateNodeHelper.addNotEmptyNode("printDegradedAllowed", String.valueOf(docSecAdapter.isPrintDegradedAllowed()), root);
-            CreateNodeHelper.addNotEmptyNode("changesAllowed", String.valueOf(docSecAdapter.isModifyAnnotationsAllowed()), root);
-            CreateNodeHelper.addNotEmptyNode("modifyAnnotationsAllowed", String.valueOf(docSecAdapter.isChangesAllowed()), root);
-            CreateNodeHelper.addNotEmptyNode("fillingSigningAllowed", String.valueOf(docSecAdapter.isFillingSigningAllowed()), root);
-            CreateNodeHelper.addNotEmptyNode("documentAssemblyAllowed", String.valueOf(docSecAdapter.isDocumentAssemblyAllowed()), root);
-            CreateNodeHelper.addNotEmptyNode("extractContentAllowed", String.valueOf(docSecAdapter.isExtractContentAllowed()), root);
-            CreateNodeHelper.addNotEmptyNode("extractAccessibilityAllowed", String.valueOf(docSecAdapter.isExtractAccessibilityAllowed()), root);
+            CreateNodeHelper.addNotEmptyNode(PRINT_ALLOWED, String.valueOf(docSecAdapter.isPrintAllowed()), root);
+            CreateNodeHelper.addNotEmptyNode(PRINT_DEGRADED_ALLOWED, String.valueOf(docSecAdapter.isPrintDegradedAllowed()), root);
+            CreateNodeHelper.addNotEmptyNode(CHANGES_ALLOWED, String.valueOf(docSecAdapter.isModifyAnnotationsAllowed()), root);
+            CreateNodeHelper.addNotEmptyNode(MODIFY_ANNOTATIONS_ALLOWED, String.valueOf(docSecAdapter.isChangesAllowed()), root);
+            CreateNodeHelper.addNotEmptyNode(FILLING_SIGNING_ALLOWED, String.valueOf(docSecAdapter.isFillingSigningAllowed()), root);
+            CreateNodeHelper.addNotEmptyNode(DOCUMENT_ASSEMBLY_ALLOWED, String.valueOf(docSecAdapter.isDocumentAssemblyAllowed()), root);
+            CreateNodeHelper.addNotEmptyNode(EXTRACT_CONTENT_ALLOWED, String.valueOf(docSecAdapter.isExtractContentAllowed()), root);
+            CreateNodeHelper.addNotEmptyNode(EXTRACT_ACCESSIBILITY_ALLOWED, String.valueOf(docSecAdapter.isExtractAccessibilityAllowed()), root);
         }
 
         return root;
@@ -98,23 +115,39 @@ public class DocSecurityFeaturesObject extends FeaturesObject {
     static List<Feature> getFeaturesList() {
         // All fields are present
         List<Feature> featuresList = new ArrayList<>();
-        featuresList.add(new Feature("Filter", "/documentSecurity/filter", Feature.FeatureType.STRING));
-        featuresList.add(new Feature("SubFilter", "/documentSecurity/filter", Feature.FeatureType.STRING));
-        featuresList.add(new Feature("Version", "/documentSecurity/filter", Feature.FeatureType.NUMBER));
-        featuresList.add(new Feature("Length", "/documentSecurity/filter", Feature.FeatureType.NUMBER));
-        featuresList.add(new Feature("Owner Key", "/documentSecurity/filter", Feature.FeatureType.STRING));
-        featuresList.add(new Feature("User Key", "/documentSecurity/filter", Feature.FeatureType.STRING));
-        featuresList.add(new Feature("Encrypt Metadata", "/documentSecurity/filter", Feature.FeatureType.BOOLEAN));
-        featuresList.add(new Feature("Print Allowed", "/documentSecurity/filter", Feature.FeatureType.BOOLEAN));
-        featuresList.add(new Feature("Print Degraded Allowed", "/documentSecurity/filter", Feature.FeatureType.BOOLEAN));
-        featuresList.add(new Feature("Changes Allowed", "/documentSecurity/filter", Feature.FeatureType.BOOLEAN));
-        featuresList.add(new Feature("Modify Annotations Allowed", "/documentSecurity/filter", Feature.FeatureType.BOOLEAN));
-        featuresList.add(new Feature("Filling Signing Allowed", "/documentSecurity/filter", Feature.FeatureType.BOOLEAN));
-        featuresList.add(new Feature("Document Assembly Allowed", "/documentSecurity/filter", Feature.FeatureType.BOOLEAN));
-        featuresList.add(new Feature("Extract Content Allowed", "/documentSecurity/filter", Feature.FeatureType.BOOLEAN));
-        featuresList.add(new Feature("Extract Accessibility Allowed", "/documentSecurity/filter", Feature.FeatureType.BOOLEAN));
+        featuresList.add(new Feature("Filter",
+                generateVariableXPath(DOCUMENT_SECURITY, FILTER), Feature.FeatureType.STRING));
+        featuresList.add(new Feature("SubFilter",
+                generateVariableXPath(DOCUMENT_SECURITY, SUB_FILTER), Feature.FeatureType.STRING));
+        featuresList.add(new Feature("Version",
+                generateVariableXPath(DOCUMENT_SECURITY, VERSION), Feature.FeatureType.NUMBER));
+        featuresList.add(new Feature("Length",
+                generateVariableXPath(DOCUMENT_SECURITY, LENGTH), Feature.FeatureType.NUMBER));
+        featuresList.add(new Feature("Owner Key",
+                generateVariableXPath(DOCUMENT_SECURITY, OWNER_KEY), Feature.FeatureType.STRING));
+        featuresList.add(new Feature("User Key",
+                generateVariableXPath(DOCUMENT_SECURITY, USER_KEY), Feature.FeatureType.STRING));
+        featuresList.add(new Feature("Encrypt Metadata",
+                generateVariableXPath(DOCUMENT_SECURITY, ENCRYPT_METADATA), Feature.FeatureType.BOOLEAN));
+        featuresList.add(new Feature("Print Allowed",
+                generateVariableXPath(DOCUMENT_SECURITY, PRINT_ALLOWED), Feature.FeatureType.BOOLEAN));
+        featuresList.add(new Feature("Print Degraded Allowed",
+                generateVariableXPath(DOCUMENT_SECURITY, PRINT_DEGRADED_ALLOWED), Feature.FeatureType.BOOLEAN));
+        featuresList.add(new Feature("Changes Allowed",
+                generateVariableXPath(DOCUMENT_SECURITY, CHANGES_ALLOWED), Feature.FeatureType.BOOLEAN));
+        featuresList.add(new Feature("Modify Annotations Allowed",
+                generateVariableXPath(DOCUMENT_SECURITY, MODIFY_ANNOTATIONS_ALLOWED), Feature.FeatureType.BOOLEAN));
+        featuresList.add(new Feature("Filling Signing Allowed",
+                generateVariableXPath(DOCUMENT_SECURITY, FILLING_SIGNING_ALLOWED), Feature.FeatureType.BOOLEAN));
+        featuresList.add(new Feature("Document Assembly Allowed",
+                generateVariableXPath(DOCUMENT_SECURITY, DOCUMENT_ASSEMBLY_ALLOWED), Feature.FeatureType.BOOLEAN));
+        featuresList.add(new Feature("Extract Content Allowed",
+                generateVariableXPath(DOCUMENT_SECURITY, EXTRACT_CONTENT_ALLOWED), Feature.FeatureType.BOOLEAN));
+        featuresList.add(new Feature("Extract Accessibility Allowed",
+                generateVariableXPath(DOCUMENT_SECURITY, EXTRACT_ACCESSIBILITY_ALLOWED), Feature.FeatureType.BOOLEAN));
 
-        featuresList.add(new Feature("Error IDs", "/documentSecurity/@errorId", Feature.FeatureType.STRING));
+        featuresList.add(new Feature("Error IDs",
+                generateAttributeXPath(DOCUMENT_SECURITY, ErrorsHelper.ERRORID), Feature.FeatureType.STRING));
         return featuresList;
     }
 }

@@ -24,6 +24,7 @@ import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeatureObjectType;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.tools.CreateNodeHelper;
+import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 
 import java.util.ArrayList;
@@ -36,6 +37,22 @@ import java.util.Set;
  * @author Maksim Bezrukov
  */
 public class AnnotationFeaturesObject extends FeaturesObject {
+
+	private static final String SUB_TYPE = "subType";
+	private static final String ANNOTATION = "annotation";
+	private static final String CONTENTS = "contents";
+	private static final String ANNOTATION_NAME = "annotationName";
+	private static final String MODIFIED_DATE = "modifiedDate";
+	private static final String INVISIBLE = "invisible";
+	private static final String HIDDEN = "hidden";
+	private static final String PRINT = "print";
+	private static final String NO_ZOOM = "noZoom";
+	private static final String NO_ROTATE = "noRotate";
+	private static final String NO_VIEW = "noView";
+	private static final String READ_ONLY = "readOnly";
+	private static final String LOCKED = "locked";
+	private static final String TOGGLE_NO_VIEW = "toggleNoView";
+	private static final String LOCKED_CONTENTS = "lockedContents";
 
 	/**
 	 * Constructs new Annotation Feature Object
@@ -64,17 +81,17 @@ public class AnnotationFeaturesObject extends FeaturesObject {
 	@Override
 	public FeatureTreeNode collectFeatures() throws FeatureParsingException {
 		AnnotationFeaturesObjectAdapter annotationAdapter = (AnnotationFeaturesObjectAdapter) this.adapter;
-		FeatureTreeNode root = FeatureTreeNode.createRootNode("annotation");
+		FeatureTreeNode root = FeatureTreeNode.createRootNode(ANNOTATION);
 		String id = annotationAdapter.getId();
 		if (id != null) {
 			root.setAttribute(CreateNodeHelper.ID, id);
 		}
 
-		CreateNodeHelper.addNotEmptyNode("subType", annotationAdapter.getSubtype(), root);
+		CreateNodeHelper.addNotEmptyNode(SUB_TYPE, annotationAdapter.getSubtype(), root);
 		CreateNodeHelper.addBoxFeature("rectangle", annotationAdapter.getRectangle(), root);
-		CreateNodeHelper.addNotEmptyNode("contents", annotationAdapter.getContents(), root);
-		CreateNodeHelper.addNotEmptyNode("annotationName", annotationAdapter.getAnnotationName(), root);
-		CreateNodeHelper.addNotEmptyNode("modifiedDate", annotationAdapter.getModifiedDate(), root);
+		CreateNodeHelper.addNotEmptyNode(CONTENTS, annotationAdapter.getContents(), root);
+		CreateNodeHelper.addNotEmptyNode(ANNOTATION_NAME, annotationAdapter.getAnnotationName(), root);
+		CreateNodeHelper.addNotEmptyNode(MODIFIED_DATE, annotationAdapter.getModifiedDate(), root);
 
 		Set<String> formXObjects = annotationAdapter.getFormXObjectsResources();
 
@@ -96,16 +113,16 @@ public class AnnotationFeaturesObject extends FeaturesObject {
 
 		CreateNodeHelper.addDeviceColorSpaceNode("color", annotationAdapter.getColor(), root, this);
 
-		CreateNodeHelper.addNotEmptyNode("invisible", String.valueOf(annotationAdapter.isInvisible()), root);
-		CreateNodeHelper.addNotEmptyNode("hidden", String.valueOf(annotationAdapter.isHidden()), root);
-		CreateNodeHelper.addNotEmptyNode("print", String.valueOf(annotationAdapter.isPrinted()), root);
-		CreateNodeHelper.addNotEmptyNode("noZoom", String.valueOf(annotationAdapter.isNoZoom()), root);
-		CreateNodeHelper.addNotEmptyNode("noRotate", String.valueOf(annotationAdapter.isNoRotate()), root);
-		CreateNodeHelper.addNotEmptyNode("noView", String.valueOf(annotationAdapter.isNoView()), root);
-		CreateNodeHelper.addNotEmptyNode("readOnly", String.valueOf(annotationAdapter.isReadOnly()), root);
-		CreateNodeHelper.addNotEmptyNode("locked", String.valueOf(annotationAdapter.isLocked()), root);
-		CreateNodeHelper.addNotEmptyNode("toggleNoView", String.valueOf(annotationAdapter.isToggleNoView()), root);
-		CreateNodeHelper.addNotEmptyNode("lockedContents", String.valueOf(annotationAdapter.isLockedContents()), root);
+		CreateNodeHelper.addNotEmptyNode(INVISIBLE, String.valueOf(annotationAdapter.isInvisible()), root);
+		CreateNodeHelper.addNotEmptyNode(HIDDEN, String.valueOf(annotationAdapter.isHidden()), root);
+		CreateNodeHelper.addNotEmptyNode(PRINT, String.valueOf(annotationAdapter.isPrinted()), root);
+		CreateNodeHelper.addNotEmptyNode(NO_ZOOM, String.valueOf(annotationAdapter.isNoZoom()), root);
+		CreateNodeHelper.addNotEmptyNode(NO_ROTATE, String.valueOf(annotationAdapter.isNoRotate()), root);
+		CreateNodeHelper.addNotEmptyNode(NO_VIEW, String.valueOf(annotationAdapter.isNoView()), root);
+		CreateNodeHelper.addNotEmptyNode(READ_ONLY, String.valueOf(annotationAdapter.isReadOnly()), root);
+		CreateNodeHelper.addNotEmptyNode(LOCKED, String.valueOf(annotationAdapter.isLocked()), root);
+		CreateNodeHelper.addNotEmptyNode(TOGGLE_NO_VIEW, String.valueOf(annotationAdapter.isToggleNoView()), root);
+		CreateNodeHelper.addNotEmptyNode(LOCKED_CONTENTS, String.valueOf(annotationAdapter.isLockedContents()), root);
 
 		return root;
 	}
@@ -125,22 +142,37 @@ public class AnnotationFeaturesObject extends FeaturesObject {
 		// * popup
 		// * color
 		List<Feature> featuresList = new ArrayList<>();
-		featuresList.add(new Feature("Subtype", "/annotation/subType", Feature.FeatureType.STRING));
-		featuresList.add(new Feature("Contents", "/annotation/contents", Feature.FeatureType.STRING));
-		featuresList.add(new Feature("Annotation Name", "/annotation/annotationName", Feature.FeatureType.STRING));
-		featuresList.add(new Feature("Modified Date", "/annotation/modifiedDate", Feature.FeatureType.STRING));
-		featuresList.add(new Feature("Invisible", "/annotation/invisible", Feature.FeatureType.BOOLEAN));
-		featuresList.add(new Feature("Hidden", "/annotation/hidden", Feature.FeatureType.BOOLEAN));
-		featuresList.add(new Feature("Print", "/annotation/print", Feature.FeatureType.BOOLEAN));
-		featuresList.add(new Feature("No Zoom", "/annotation/noZoom", Feature.FeatureType.BOOLEAN));
-		featuresList.add(new Feature("No Rotate", "/annotation/noRotate", Feature.FeatureType.BOOLEAN));
-		featuresList.add(new Feature("No View", "/annotation/noView", Feature.FeatureType.BOOLEAN));
-		featuresList.add(new Feature("Read Only", "/annotation/readOnly", Feature.FeatureType.BOOLEAN));
-		featuresList.add(new Feature("Locked", "/annotation/locked", Feature.FeatureType.BOOLEAN));
-		featuresList.add(new Feature("Toggle No View", "/annotation/toggleNoView", Feature.FeatureType.BOOLEAN));
-		featuresList.add(new Feature("Locked Contents", "/annotation/lockedContents", Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Subtype",
+				generateVariableXPath(ANNOTATION, SUB_TYPE), Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Contents",
+				generateVariableXPath(ANNOTATION, CONTENTS), Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Annotation Name",
+				generateVariableXPath(ANNOTATION, ANNOTATION_NAME), Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Modified Date",
+				generateVariableXPath(ANNOTATION, MODIFIED_DATE), Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Invisible",
+				generateVariableXPath(ANNOTATION, INVISIBLE), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Hidden",
+				generateVariableXPath(ANNOTATION, HIDDEN), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Print",
+				generateVariableXPath(ANNOTATION, PRINT), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("No Zoom",
+				generateVariableXPath(ANNOTATION, NO_ZOOM), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("No Rotate",
+				generateVariableXPath(ANNOTATION, NO_ROTATE), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("No View",
+				generateVariableXPath(ANNOTATION, NO_VIEW), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Read Only",
+				generateVariableXPath(ANNOTATION, READ_ONLY), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Locked",
+				generateVariableXPath(ANNOTATION, LOCKED), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Toggle No View",
+				generateVariableXPath(ANNOTATION, TOGGLE_NO_VIEW), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Locked Contents",
+				generateVariableXPath(ANNOTATION, LOCKED_CONTENTS), Feature.FeatureType.BOOLEAN));
 
-		featuresList.add(new Feature("Error IDs", "/annotation/@errorId", Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Error IDs",
+				generateAttributeXPath(ANNOTATION, ErrorsHelper.ERRORID), Feature.FeatureType.STRING));
 		return featuresList;
 	}
 }

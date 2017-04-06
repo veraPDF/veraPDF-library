@@ -69,7 +69,7 @@ public abstract class FeaturesObject {
 				ErrorsHelper.addErrorIntoCollection(collection, root, error);
 			}
 		}
-		collection.addNewFeatureTree(FeatureObjectType.LOW_LEVEL_INFO, root);
+		collection.addNewFeatureTree(getType(), root);
 		return root;
 	}
 
@@ -79,4 +79,27 @@ public abstract class FeaturesObject {
 	 * @return features data for object
 	 */
 	public abstract FeaturesData getData();
+
+	protected static String generateVariableXPath(String... node) {
+		if (node == null || node.length == 0) {
+			throw new IllegalArgumentException("There should be at least one node");
+		}
+		StringBuilder builder = new StringBuilder(node[0]);
+		for (int i = 1; i < node.length; ++i) {
+			builder.append("/").append(node[i]);
+		}
+		return builder.toString();
+	}
+
+	protected static String generateAttributeXPath(String... node) {
+		if (node == null || node.length < 2) {
+			throw new IllegalArgumentException("There should be at least two nodes for attribute path");
+		}
+		StringBuilder builder = new StringBuilder(node[0]);
+		for (int i = 1; i < node.length - 1; ++i) {
+			builder.append("/").append(node[i]);
+		}
+		builder.append("/@").append(node[node.length - 1]);
+		return builder.toString();
+	}
 }

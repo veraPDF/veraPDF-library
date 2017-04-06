@@ -39,6 +39,9 @@ public final class FeaturesStructureContainer {
 		featuresStructure.put(FeatureObjectType.COLORSPACE, ColorSpaceFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.DOCUMENT_SECURITY, DocSecurityFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.EMBEDDED_FILE, EmbeddedFileFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.EXT_G_STATE, ExtGStateFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.FONT, FontFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.FORM_XOBJECT, FormXObjectFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.LOW_LEVEL_INFO, LowLvlInfoFeaturesObject.getFeaturesList());
 	}
 

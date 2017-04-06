@@ -23,6 +23,7 @@ package org.verapdf.features.objects;
 import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.FeatureObjectType;
 import org.verapdf.features.FeaturesData;
+import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 
 import java.util.ArrayList;
@@ -35,6 +36,15 @@ import java.util.Set;
  * @author Maksim Bezrukov
  */
 public class LowLvlInfoFeaturesObject extends FeaturesObject {
+
+	private static final String LOW_LEVEL_INFO = "lowLevelInfo";
+	private static final String INDIRECT_OBJECTS_NUMBER = "indirectObjectsNumber";
+	private static final String DOCUMENT_ID = "documentId";
+	private static final String CREATION_ID = "creationId";
+	private static final String MOD_ID = "modificationId";
+	private static final String FILTERS = "filters";
+	private static final String FILTER = "filter";
+	private static final String NAME = "name";
 
 	/**
 	 * Constructs new low level info feature object.
@@ -63,33 +73,33 @@ public class LowLvlInfoFeaturesObject extends FeaturesObject {
 	@Override
 	public FeatureTreeNode collectFeatures() throws FeatureParsingException {
 		LowLvlInfoFeaturesObjectAdapter lowLvlAdapter = (LowLvlInfoFeaturesObjectAdapter) this.adapter;
-		FeatureTreeNode root = FeatureTreeNode.createRootNode("lowLevelInfo");
+		FeatureTreeNode root = FeatureTreeNode.createRootNode(LOW_LEVEL_INFO);
 
-		root.addChild("indirectObjectsNumber")
+		root.addChild(INDIRECT_OBJECTS_NUMBER)
 				.setValue(String.valueOf(lowLvlAdapter.getIndirectObjectsNumber()));
 
 		String creationId = lowLvlAdapter.getCreationId();
 		String modificationId = lowLvlAdapter.getModificationId();
 
 		if (creationId != null || modificationId != null) {
-			FeatureTreeNode documentId = root.addChild("documentId");
+			FeatureTreeNode documentId = root.addChild(DOCUMENT_ID);
 			if (creationId != null) {
-				documentId.setAttribute("creationId", creationId);
+				documentId.setAttribute(CREATION_ID, creationId);
 			}
 			if (modificationId != null) {
-				documentId.setAttribute("modificationId", modificationId);
+				documentId.setAttribute(MOD_ID, modificationId);
 			}
 		}
 
 		Set<String> filters = lowLvlAdapter.getFilters();
 
 		if (!filters.isEmpty()) {
-			FeatureTreeNode filtersNode = root.addChild("filters");
+			FeatureTreeNode filtersNode = root.addChild(FILTERS);
 
 			for (String filter : filters) {
 				if (filter != null) {
-					FeatureTreeNode filterNode = filtersNode.addChild("filter");
-					filterNode.setAttribute("name", filter);
+					FeatureTreeNode filterNode = filtersNode.addChild(FILTER);
+					filterNode.setAttribute(NAME, filter);
 				}
 			}
 		}
@@ -107,15 +117,20 @@ public class LowLvlInfoFeaturesObject extends FeaturesObject {
 	static List<Feature> getFeaturesList() {
 		// All fields are present
 		List<Feature> featuresList = new ArrayList<>();
-		featuresList.add(new Feature("Indirect Objects Number", "/lowLevelInfo/indirectObjectsNumber",
+		featuresList.add(new Feature("Indirect Objects Number",
+				generateVariableXPath(LOW_LEVEL_INFO, INDIRECT_OBJECTS_NUMBER),
 				Feature.FeatureType.NUMBER));
-		featuresList.add(new Feature("Creation ID", "/lowLevelInfo/documentId/@creationId",
+		featuresList.add(new Feature("Creation ID",
+				generateAttributeXPath(LOW_LEVEL_INFO, DOCUMENT_ID, CREATION_ID),
 				Feature.FeatureType.STRING));
-		featuresList.add(new Feature("Modification ID", "/lowLevelInfo/documentId/@modificationId",
+		featuresList.add(new Feature("Modification ID",
+				generateAttributeXPath(LOW_LEVEL_INFO, DOCUMENT_ID, MOD_ID),
 				Feature.FeatureType.STRING));
-		featuresList.add(new Feature("Filter Name", "/lowLevelInfo/filters/filter/@name",
+		featuresList.add(new Feature("Filter Name",
+				generateAttributeXPath(LOW_LEVEL_INFO, FILTERS, FILTER, NAME),
 				Feature.FeatureType.STRING));
-		featuresList.add(new Feature("Error IDs", "/lowLevelInfo/@errorId", Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Error IDs",
+				generateAttributeXPath(LOW_LEVEL_INFO, ErrorsHelper.ERRORID), Feature.FeatureType.STRING));
 		return featuresList;
 	}
 }
