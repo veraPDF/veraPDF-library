@@ -59,7 +59,7 @@ public class FontFeaturesObject extends FeaturesObject {
 	/**
 	 * Constructs new Font Feature Object
 	 *
-	 * @param adapter class represents annotation adapter
+	 * @param adapter class represents font adapter
 	 */
 	public FontFeaturesObject(FontFeaturesObjectAdapter adapter) {
 		super(adapter);

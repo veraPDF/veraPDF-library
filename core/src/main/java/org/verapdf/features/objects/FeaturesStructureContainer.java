@@ -46,6 +46,12 @@ public final class FeaturesStructureContainer {
 		featuresStructure.put(FeatureObjectType.METADATA, MetadataFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.OUTLINES, OutlinesFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.OUTPUTINTENT, OutputIntentFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.PAGE, PageFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.POSTSCRIPT_XOBJECT, PostScriptFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.PROPERTIES, PropertiesDictFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.SHADING, ShadingFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.SIGNATURE, SignatureFeaturesObject.getFeaturesList());
+		// Shanding and tiling patterns are missing because they have the same feature object type
 	}
 
 	private FeaturesStructureContainer() {

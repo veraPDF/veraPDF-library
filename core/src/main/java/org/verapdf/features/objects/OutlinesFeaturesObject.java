@@ -25,9 +25,10 @@ import org.verapdf.features.FeatureObjectType;
 import org.verapdf.features.FeaturesData;
 import org.verapdf.features.tools.ColorComponent;
 import org.verapdf.features.tools.CreateNodeHelper;
+import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,10 +40,12 @@ import java.util.Set;
  */
 public class OutlinesFeaturesObject extends FeaturesObject {
 
+	private static final String OUTLINES = "outlines";
+
 	/**
 	 * Constructs new outlines feature object.
 	 *
-	 * @param adapter metadata adapter class represents document object
+	 * @param adapter outlines adapter class represents document object
 	 */
 	public OutlinesFeaturesObject(OutlinesFeaturesObjectAdapter adapter) {
 		super(adapter);
@@ -66,7 +69,7 @@ public class OutlinesFeaturesObject extends FeaturesObject {
 	@Override
 	public FeatureTreeNode collectFeatures() throws FeatureParsingException {
 		OutlinesFeaturesObjectAdapter outlinesAdapter = (OutlinesFeaturesObjectAdapter) this.adapter;
-		FeatureTreeNode root = FeatureTreeNode.createRootNode("outlines");
+		FeatureTreeNode root = FeatureTreeNode.createRootNode(OUTLINES);
 		Set<Integer> itemsNumbers = new HashSet<>();
 		for (OutlinesFeaturesObjectAdapter.OutlineFeaturesObjectAdapter item : outlinesAdapter.getChildren()) {
 			Integer keyNumber = item.getKeyNumber();
@@ -114,7 +117,10 @@ public class OutlinesFeaturesObject extends FeaturesObject {
 	}
 
 	static List<Feature> getFeaturesList() {
-		// Empty list
-		return Collections.emptyList();
+		// Only errors of top level node
+		List<Feature> featuresList = new ArrayList<>();
+		featuresList.add(new Feature("Error IDs",
+				generateAttributeXPath(OUTLINES, ErrorsHelper.ERRORID), Feature.FeatureType.STRING));
+		return featuresList;
 	}
 }

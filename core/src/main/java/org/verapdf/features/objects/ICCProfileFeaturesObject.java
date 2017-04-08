@@ -61,7 +61,7 @@ public class ICCProfileFeaturesObject extends FeaturesObject {
 	/**
 	 * Constructs new ICCProfile Feature Object
 	 *
-	 * @param adapter class represents annotation adapter
+	 * @param adapter class represents icc profile adapter
 	 */
 	public ICCProfileFeaturesObject(ICCProfileFeaturesObjectAdapter adapter) {
 		super(adapter);

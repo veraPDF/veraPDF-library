@@ -57,7 +57,7 @@ public class EmbeddedFileFeaturesObject extends FeaturesObject {
     /**
      * Constructs new Embedded File Feature Object
      *
-     * @param adapter class represents annotation adapter
+     * @param adapter class represents embedded file adapter
      */
     public EmbeddedFileFeaturesObject(EmbeddedFileFeaturesObjectAdapter adapter) {
         super(adapter);

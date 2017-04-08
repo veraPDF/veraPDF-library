@@ -57,7 +57,7 @@ public class InfoDictFeaturesObject extends FeaturesObject {
 	/**
 	 * Constructs new info dict Feature Object
 	 *
-	 * @param adapter class represents annotation adapter
+	 * @param adapter class represents info dict adapter
 	 */
 	public InfoDictFeaturesObject(InfoDictFeaturesObjectAdapter adapter) {
 		super(adapter);

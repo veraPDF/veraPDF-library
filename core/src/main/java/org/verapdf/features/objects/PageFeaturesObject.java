@@ -27,44 +27,37 @@ import org.verapdf.features.tools.CreateNodeHelper;
 import org.verapdf.features.tools.ErrorsHelper;
 import org.verapdf.features.tools.FeatureTreeNode;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- * Feature object for form xobject
+ * Feature object for page part of the features report
  *
  * @author Maksim Bezrukov
  */
-public class FormXObjectFeaturesObject extends FeaturesObject {
-
-	private static final Logger LOGGER = Logger.getLogger(FormXObjectFeaturesObject.class.getCanonicalName());
+public class PageFeaturesObject extends FeaturesObject {
 
 	private static final String ID = "id";
-	private static final String XOBJECT = "xobject";
-	private static final String FORM = "form";
-	private static final String XOBJECT_XPATH = XOBJECT + "[@type='" + FORM + "']";
-	private static final String TRANSPARENCY = "Transparency";
+	private static final String PAGE = "page";
+	private static final String ROTATION = "rotation";
+	private static final String SCALING = "scaling";
 
 	/**
-	 * Constructs new From XObject Feature Object
+	 * Constructs new page feature object.
 	 *
-	 * @param adapter class represents form xobject adapter
+	 * @param adapter page adapter class represents document object
 	 */
-	public FormXObjectFeaturesObject(FormXObjectFeaturesObjectAdapter adapter) {
+	public PageFeaturesObject(PageFeaturesObjectAdapter adapter) {
 		super(adapter);
 	}
 
 	/**
-	 * @return FORM_XOBJECT instance of the FeatureObjectType enumeration
+	 * @return PAGE instance of the FeatureObjectType enumeration
 	 */
 	@Override
 	public FeatureObjectType getType() {
-		return FeatureObjectType.FORM_XOBJECT;
+		return FeatureObjectType.PAGE;
 	}
 
 	/**
@@ -76,60 +69,42 @@ public class FormXObjectFeaturesObject extends FeaturesObject {
 	 */
 	@Override
 	public FeatureTreeNode collectFeatures() throws FeatureParsingException {
-		FormXObjectFeaturesObjectAdapter formAdapter = (FormXObjectFeaturesObjectAdapter) this.adapter;
-		FeatureTreeNode root = FeatureTreeNode.createRootNode(XOBJECT);
-		root.setAttribute("type", FORM);
-		String id = formAdapter.getId();
-		if (id != null) {
-			root.setAttribute(ID, id);
+		PageFeaturesObjectAdapter pageAdapter = (PageFeaturesObjectAdapter) this.adapter;
+		FeatureTreeNode root = FeatureTreeNode.createRootNode(PAGE);
+		root.setAttribute("orderNumber", Integer.toString(pageAdapter.getIndex()));
+		CreateNodeHelper.addBoxFeature("mediaBox", pageAdapter.getMediaBox(), root);
+		CreateNodeHelper.addBoxFeature("cropBox", pageAdapter.getCropBox(), root);
+		CreateNodeHelper.addBoxFeature("trimBox", pageAdapter.getTrimBox(), root);
+		CreateNodeHelper.addBoxFeature("bleedBox", pageAdapter.getBleedBox(), root);
+		CreateNodeHelper.addBoxFeature("artBox", pageAdapter.getArtBox(), root);
+		Long rotation = pageAdapter.getRotation();
+		if (rotation != null) {
+			root.addChild(ROTATION).setValue(String.valueOf(rotation));
 		}
-
-		CreateNodeHelper.addBoxFeature("bbox", formAdapter.getBBox(), root);
-		CreateNodeHelper.parseMatrix(formAdapter.getMatrix(), root.addChild("matrix"));
-
-		if (formAdapter.isGroupPresent()) {
-			FeatureTreeNode groupNode = root.addChild("group");
-			String groupSubtype = formAdapter.getGroupSubtype();
-			CreateNodeHelper.addNotEmptyNode("subtype", groupSubtype, groupNode);
-			if (groupSubtype != null) {
-				if (TRANSPARENCY.equals(groupSubtype)) {
-					String groupColorSpaceChild = formAdapter.getGroupColorSpaceChild();
-					if (groupColorSpaceChild != null) {
-						FeatureTreeNode clr = groupNode.addChild("colorSpace");
-						clr.setAttribute(ID, groupColorSpaceChild);
-					}
-					groupNode.addChild("isolated").setValue(String.valueOf(formAdapter.isTransparencyGroupIsolated()));
-					groupNode.addChild("knockout").setValue(String.valueOf(formAdapter.isTransparencyGroupKnockout()));
-				}
-
-			}
+		Double scaling = pageAdapter.getScaling();
+		if (scaling != null) {
+			root.addChild(SCALING).setValue(String.valueOf(scaling));
 		}
-
-		Long structParents = formAdapter.getStructParents();
-		if (structParents != null) {
-			root.addChild("structParents").setValue(String.valueOf(structParents));
+		String thumb = pageAdapter.getThumb();
+		if (thumb != null) {
+			FeatureTreeNode thumbNode = root.addChild("thumbnail");
+			thumbNode.setAttribute(ID, thumb);
 		}
-
-		try (InputStream is = formAdapter.getMetadataStream()) {
-			CreateNodeHelper.parseMetadata(is, "metadata", root, this);
-		} catch (IOException e) {
-			LOGGER.log(Level.FINE, "Error while obtaining unfiltered metadata stream", e);
-			registerNewError(e.getMessage());
-		}
-
+		CreateNodeHelper.parseMetadata(pageAdapter.getMetadataStream(), "metadata", root, this);
+		CreateNodeHelper.parseIDSet(pageAdapter.getAnnotsId(), "annotation", "annotations", root);
 		parseResources(root);
 		return root;
 	}
 
 	private void parseResources(FeatureTreeNode root) throws FeatureParsingException {
-		FormXObjectFeaturesObjectAdapter formAdapter = (FormXObjectFeaturesObjectAdapter) this.adapter;
-		Set<String> extGStateChild = formAdapter.getExtGStateChild();
-		Set<String> colorSpaceChild = formAdapter.getColorSpaceChild();
-		Set<String> patternChild = formAdapter.getPatternChild();
-		Set<String> shadingChild = formAdapter.getShadingChild();
-		Set<String> xobjectChild = formAdapter.getXObjectChild();
-		Set<String> fontChild = formAdapter.getFontChild();
-		Set<String> propertiesChild = formAdapter.getPropertiesChild();
+		PageFeaturesObjectAdapter pageAdapter = (PageFeaturesObjectAdapter) this.adapter;
+		Set<String> extGStateChild = pageAdapter.getExtGStateChild();
+		Set<String> colorSpaceChild = pageAdapter.getColorSpaceChild();
+		Set<String> patternChild = pageAdapter.getPatternChild();
+		Set<String> shadingChild = pageAdapter.getShadingChild();
+		Set<String> xobjectChild = pageAdapter.getXObjectChild();
+		Set<String> fontChild = pageAdapter.getFontChild();
+		Set<String> propertiesChild = pageAdapter.getPropertiesChild();
 		if ((extGStateChild != null && !extGStateChild.isEmpty()) ||
 				(colorSpaceChild != null && !colorSpaceChild.isEmpty()) ||
 				(patternChild != null && !patternChild.isEmpty()) ||
@@ -158,10 +133,14 @@ public class FormXObjectFeaturesObject extends FeaturesObject {
 	}
 
 	static List<Feature> getFeaturesList() {
-		// Missed all fields
+		// Only rotation and scaling are present
 		List<Feature> featuresList = new ArrayList<>();
+		featuresList.add(new Feature("Rotation",
+				generateVariableXPath(PAGE, ROTATION), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Scaling",
+				generateVariableXPath(PAGE, SCALING), Feature.FeatureType.NUMBER));
 		featuresList.add(new Feature("Error IDs",
-				generateAttributeXPath(XOBJECT_XPATH, ErrorsHelper.ERRORID), Feature.FeatureType.STRING));
+				generateAttributeXPath(PAGE, ErrorsHelper.ERRORID), Feature.FeatureType.STRING));
 		return featuresList;
 	}
 }

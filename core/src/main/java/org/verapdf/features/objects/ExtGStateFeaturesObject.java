@@ -46,7 +46,7 @@ public class ExtGStateFeaturesObject extends FeaturesObject {
 	/**
 	 * Constructs new ExtGState Feature Object
 	 *
-	 * @param adapter class represents annotation adapter
+	 * @param adapter class represents extfstate adapter
 	 */
 	public ExtGStateFeaturesObject(ExtGStateFeaturesObjectAdapter adapter) {
 		super(adapter);

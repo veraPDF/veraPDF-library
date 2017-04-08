@@ -57,7 +57,7 @@ public class DocSecurityFeaturesObject extends FeaturesObject {
     /**
      * Constructs new Document Security Feature Object
      *
-     * @param adapter class represents annotation adapter
+     * @param adapter class represents doc security adapter
      */
     public DocSecurityFeaturesObject(DocSecurityFeaturesObjectAdapter adapter) {
         super(adapter);

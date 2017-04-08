@@ -47,7 +47,7 @@ public class OutputIntentFeaturesObject extends FeaturesObject {
 	/**
 	 * Constructs new output intent feature object.
 	 *
-	 * @param adapter metadata adapter class represents document object
+	 * @param adapter output intent adapter class represents document object
 	 */
 	public OutputIntentFeaturesObject(OutputIntentFeaturesObjectAdapter adapter) {
 		super(adapter);

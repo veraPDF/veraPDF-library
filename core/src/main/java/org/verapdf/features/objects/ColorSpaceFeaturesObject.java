@@ -52,7 +52,7 @@ public class ColorSpaceFeaturesObject extends FeaturesObject {
 	/**
 	 * Constructs new ColorSpace Feature Object
 	 *
-	 * @param adapter class represents annotation adapter
+	 * @param adapter class represents colorspace adapter
 	 */
 	public ColorSpaceFeaturesObject(ColorSpaceFeaturesObjectAdapter adapter) {
 		super(adapter);
