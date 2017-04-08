@@ -42,6 +42,9 @@ public final class FeaturesStructureContainer {
 		featuresStructure.put(FeatureObjectType.EXT_G_STATE, ExtGStateFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.FONT, FontFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.FORM_XOBJECT, FormXObjectFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.ICCPROFILE, ICCProfileFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.IMAGE_XOBJECT, ImageXObjectFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.INFORMATION_DICTIONARY, InfoDictFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.LOW_LEVEL_INFO, LowLvlInfoFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.METADATA, MetadataFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.OUTLINES, OutlinesFeaturesObject.getFeaturesList());
