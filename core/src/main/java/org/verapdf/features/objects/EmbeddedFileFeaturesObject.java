@@ -91,7 +91,10 @@ public class EmbeddedFileFeaturesObject extends FeaturesObject {
         CreateNodeHelper.createDateNode(CREATION_DATE, root, efAdapter.getCreationDate(), this);
         CreateNodeHelper.createDateNode(MOD_DATE, root, efAdapter.getModDate(), this);
         CreateNodeHelper.addNotEmptyNode(CHECK_SUM, efAdapter.getCheckSum(), root);
-        CreateNodeHelper.addNotEmptyNode(SIZE, String.valueOf(efAdapter.getSize().longValue()), root);
+        Long size = efAdapter.getSize();
+        if(size != null) {
+            CreateNodeHelper.addNotEmptyNode(SIZE, String.valueOf(size.longValue()), root);
+        }
         return root;
     }
 
