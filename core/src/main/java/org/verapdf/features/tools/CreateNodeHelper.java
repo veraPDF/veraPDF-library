@@ -105,10 +105,10 @@ public final class CreateNodeHelper {
 
 		if (box != null && box.length >= 4) {
 			boxNode = parent.addChild(name);
-			boxNode.setAttribute(LLX, String.valueOf(box[0]));
-			boxNode.setAttribute(LLY, String.valueOf(box[1]));
-			boxNode.setAttribute(URX, String.valueOf(box[2]));
-			boxNode.setAttribute(URY, String.valueOf(box[3]));
+			boxNode.setAttribute(LLX, String.format("%.3f", box[0]));
+			boxNode.setAttribute(LLY, String.format("%.3f", box[1]));
+			boxNode.setAttribute(URX, String.format("%.3f", box[2]));
+			boxNode.setAttribute(URY, String.format("%.3f", box[3]));
 		}
 
 		return boxNode;
@@ -249,7 +249,7 @@ public final class CreateNodeHelper {
 			for (int i = 0; i < array.length; ++i) {
 				FeatureTreeNode element = parent.addChild("element");
 				element.setAttribute("index", String.valueOf(i + 1));
-				element.setAttribute("value", String.valueOf(array[i]));
+				element.setAttribute("value", String.format("%.3f", array[i]));
 			}
 		}
 	}

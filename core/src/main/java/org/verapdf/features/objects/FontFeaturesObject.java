@@ -291,7 +291,7 @@ public class FontFeaturesObject extends FeaturesObject {
 	}
 
 	private static String getStringFromDouble(Double d) {
-		return d == null ? null : Double.toString(d);
+		return d == null ? null : String.format("%.3f", d);
 	}
 
 }
