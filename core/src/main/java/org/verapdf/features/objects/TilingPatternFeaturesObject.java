@@ -75,8 +75,8 @@ public class TilingPatternFeaturesObject extends FeaturesObject {
 		root.addChild("paintType").setValue(String.valueOf(tpAdapter.getPaintType()));
 		root.addChild("tilingType").setValue(String.valueOf(tpAdapter.getTilingType()));
 		CreateNodeHelper.addBoxFeature("bbox", tpAdapter.getBBox(), root);
-		root.addChild("xStep").setValue(String.valueOf(tpAdapter.getXStep()));
-		root.addChild("yStep").setValue(String.valueOf(tpAdapter.getYStep()));
+		root.addChild("xStep").setValue(String.format("%.3f", tpAdapter.getXStep()));
+		root.addChild("yStep").setValue(String.format("%.3f", tpAdapter.getYStep()));
 		CreateNodeHelper.parseMatrix(tpAdapter.getMatrix(), root.addChild("matrix"));
 		parseResources(root);
 		return root;

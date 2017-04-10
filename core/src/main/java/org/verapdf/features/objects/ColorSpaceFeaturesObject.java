@@ -146,7 +146,7 @@ public class ColorSpaceFeaturesObject extends FeaturesObject {
 		if (CALGRAY.equals(cieType)) {
 			Double gamma = adapter.getCalGrayGamma();
 			if (gamma != null) {
-				CreateNodeHelper.addNotEmptyNode("gamma", String.valueOf(gamma), root);
+				CreateNodeHelper.addNotEmptyNode("gamma", String.format("%.3f", gamma), root);
 			}
 		} else if (CALRGB.equals(cieType)) {
 			FeatureTreeNode gamma = root.addChild("gamma");
@@ -156,9 +156,9 @@ public class ColorSpaceFeaturesObject extends FeaturesObject {
 			} else if (gammaValue.length < 3) {
 				registerNewError("Gamma value contains less than three elements");
 			} else {
-				gamma.setAttribute("red", String.valueOf(gammaValue[0]));
-				gamma.setAttribute("green", String.valueOf(gammaValue[1]));
-				gamma.setAttribute("blue", String.valueOf(gammaValue[2]));
+				gamma.setAttribute("red", String.format("%.3f", gammaValue[0]));
+				gamma.setAttribute("green", String.format("%.3f", gammaValue[1]));
+				gamma.setAttribute("blue", String.format("%.3f", gammaValue[2]));
 			}
 			parseFloatArray(adapter.getMatrix(), root.addChild("matrix"));
 		} else if (LAB.equals(cieType)) {
@@ -167,10 +167,10 @@ public class ColorSpaceFeaturesObject extends FeaturesObject {
 			if (rangeValue.length < 4) {
 				registerNewError("Gamma value contains less than three elements");
 			} else {
-				range.setAttribute("aMin", String.valueOf(rangeValue[0]));
-				range.setAttribute("aMax", String.valueOf(rangeValue[1]));
-				range.setAttribute("bMin", String.valueOf(rangeValue[2]));
-				range.setAttribute("bMax", String.valueOf(rangeValue[3]));
+				range.setAttribute("aMin", String.format("%.3f", rangeValue[0]));
+				range.setAttribute("aMax", String.format("%.3f", rangeValue[1]));
+				range.setAttribute("bMin", String.format("%.3f", rangeValue[2]));
+				range.setAttribute("bMax", String.format("%.3f", rangeValue[3]));
 			}
 		}
 
@@ -180,7 +180,7 @@ public class ColorSpaceFeaturesObject extends FeaturesObject {
 		for (int i = 0; i < array.length; ++i) {
 			FeatureTreeNode element = parent.addChild("element");
 			element.setAttribute("number", String.valueOf(i));
-			element.setAttribute("value", String.valueOf(array[i]));
+			element.setAttribute("value", String.format("%.3f", array[i]));
 		}
 	}
 
@@ -190,9 +190,9 @@ public class ColorSpaceFeaturesObject extends FeaturesObject {
 		} else if (tris.length < 3) {
 			registerNewError("Tristimulus value contains less than three elements");
 		} else {
-			curNode.setAttribute("x", String.valueOf(tris[0]));
-			curNode.setAttribute("y", String.valueOf(tris[1]));
-			curNode.setAttribute("z", String.valueOf(tris[2]));
+			curNode.setAttribute("x", String.format("%.3f", tris[0]));
+			curNode.setAttribute("y", String.format("%.3f", tris[1]));
+			curNode.setAttribute("z", String.format("%.3f", tris[2]));
 		}
 	}
 
