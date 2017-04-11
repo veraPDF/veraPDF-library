@@ -21,6 +21,7 @@
 package org.verapdf.features;
 
 import org.verapdf.core.FeatureParsingException;
+import org.verapdf.features.objects.FeaturesObject;
 import org.verapdf.features.tools.FeatureTreeNode;
 
 import java.io.IOException;
@@ -84,7 +85,7 @@ public class FeaturesReporter {
 	 *
 	 * @param obj object for reporting
 	 */
-	public void report(IFeaturesObject obj) {
+	public void report(FeaturesObject obj) {
 		if (!config.isFeatureEnabled(obj.getType()))
 			return;
 

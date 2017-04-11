@@ -18,34 +18,30 @@
  * If a copy of the MPL was not distributed with this file, you can obtain one at
  * http://mozilla.org/MPL/2.0/.
  */
-package org.verapdf.features;
-
-import org.verapdf.core.FeatureParsingException;
-import org.verapdf.features.tools.FeatureTreeNode;
+package org.verapdf.features.objects;
 
 /**
- * Main interface for all features objects
- *
  * @author Maksim Bezrukov
  */
-public interface IFeaturesObject {
+public interface DocSecurityFeaturesObjectAdapter extends FeaturesObjectAdapter{
 
-	/**
-	 * @return enum type of the current feature object
-	 */
-	FeatureObjectType getType();
+    String getFilter();
+    String getSubFilter();
+    int getVersion();
+    int getLength();
+    String getHexEncodedOwnerKey();
+    String getHexEncodedUserKey();
+    boolean isEncryptMetadata();
 
-	/**
-	 * Reports all features from the object into the collection
-	 *
-	 * @param collection collection for feature report
-	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
-	 * @throws FeatureParsingException occurs when wrong features tree node constructs
-	 */
-	FeatureTreeNode reportFeatures(FeatureExtractionResult collection) throws FeatureParsingException;
+    // Encryption handler/user permissions presistance
+    boolean isUserPermissionsPresent();
 
-	/**
-	 * @return features data for object
-	 */
-	FeaturesData getData();
+    boolean isPrintAllowed();
+    boolean isPrintDegradedAllowed();
+    boolean isChangesAllowed();
+    boolean isModifyAnnotationsAllowed();
+    boolean isFillingSigningAllowed();
+    boolean isDocumentAssemblyAllowed();
+    boolean isExtractContentAllowed();
+    boolean isExtractAccessibilityAllowed();
 }
