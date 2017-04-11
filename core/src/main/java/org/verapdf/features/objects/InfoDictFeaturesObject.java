@@ -39,7 +39,6 @@ import java.util.Map;
  */
 public class InfoDictFeaturesObject extends FeaturesObject {
 
-	private static final String SUB_TYPE = "subType";
 	private static final String INFORMATION_DICT = "informationDict";
 	private static final String TITLE = "Title";
 	private static final String AUTHOR = "Author";
