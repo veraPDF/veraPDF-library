@@ -91,6 +91,9 @@ public class SchematronGenerator {
 		private String argument;
 
 		public Assertion(FeatureObjectType featureType, Feature feature, SchematronOperation operation, String argument) {
+			if (featureType == null || feature == null || operation == null) {
+				throw new IllegalArgumentException("Arguments feature type, feature and operation can not be null");
+			}
 			this.featureType = featureType;
 			this.feature = feature;
 			this.operation = operation;

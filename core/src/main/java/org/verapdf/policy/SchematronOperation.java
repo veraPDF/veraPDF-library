@@ -110,10 +110,18 @@ public enum SchematronOperation {
 				test = "not(count(" + feature.getFeatureXPath() + ") > 0)";
 				break;
 			case IS_EQUAL:
-				test = feature.getFeatureXPath() + " = '" + argument + "'";
+				if (feature.getFeatureType() == Feature.FeatureType.NUMBER) {
+					test = "number(" + feature.getFeatureXPath() + ") = " + argument;
+				} else {
+					test = feature.getFeatureXPath() + " = '" + argument + "'";
+				}
 				break;
 			case NOT_EQUAL:
-				test = "not(" + feature.getFeatureXPath() + " = '" + argument + "')";
+				if (feature.getFeatureType() == Feature.FeatureType.NUMBER) {
+					test = "not(number(" + feature.getFeatureXPath() + ") = " + argument + ")";
+				} else {
+					test = "not(" + feature.getFeatureXPath() + " = '" + argument + "')";
+				}
 				break;
 			case IS_TRUE:
 				test = "boolean(" + feature.getFeatureXPath() + ")";
