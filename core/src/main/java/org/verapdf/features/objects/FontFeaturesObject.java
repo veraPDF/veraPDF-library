@@ -55,6 +55,8 @@ public class FontFeaturesObject extends FeaturesObject {
 	private static final String CID_FONT_TYPE0 = "CIDFontType0";
 	private static final String CID_FONT_TYPE2 = "CIDFontType2";
 	private static final String TYPE = "type";
+	private static final String FONT_DESCRIPTOR = "fontDescriptor";
+	private static final String FONT_NAME = "fontName";
 
 	/**
 	 * Constructs new Font Feature Object
@@ -200,7 +202,8 @@ public class FontFeaturesObject extends FeaturesObject {
 		List<Feature> featuresList = new ArrayList<>();
 		featuresList.add(new Feature("Font Type",
 				generateVariableXPath(FONT, TYPE), Feature.FeatureType.STRING));
-
+		featuresList.add(new Feature("Font Name",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, FONT_NAME), Feature.FeatureType.STRING));
 		featuresList.add(new Feature("Error IDs",
 				generateAttributeXPath(FONT, ErrorsHelper.ERRORID), Feature.FeatureType.STRING));
 		return featuresList;
@@ -209,9 +212,9 @@ public class FontFeaturesObject extends FeaturesObject {
 	private void parseFontDescriptior(FontFeaturesObjectAdapter.FontDescriptorAdapter descriptor,
 									  FeatureTreeNode root) throws FeatureParsingException {
 		if (descriptor != null) {
-			FeatureTreeNode descriptorNode = root.addChild("fontDescriptor");
+			FeatureTreeNode descriptorNode = root.addChild(FONT_DESCRIPTOR);
 
-			CreateNodeHelper.addNotEmptyNode("fontName", descriptor.getFontName(), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(FONT_NAME, descriptor.getFontName(), descriptorNode);
 			CreateNodeHelper.addNotEmptyNode("fontFamily", descriptor.getFontFamily(), descriptorNode);
 			CreateNodeHelper.addNotEmptyNode("fontStretch", descriptor.getFontStretch(), descriptorNode);
 			CreateNodeHelper.addNotEmptyNode("fontWeight", getStringFromDouble(descriptor.getFontWeight()), descriptorNode);
