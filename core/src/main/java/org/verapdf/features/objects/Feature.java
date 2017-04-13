@@ -22,10 +22,9 @@ package org.verapdf.features.objects;
 
 import org.verapdf.policy.SchematronOperation;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.List;
+import java.util.Set;
 
 import static org.verapdf.policy.SchematronOperation.*;
 
@@ -58,33 +57,21 @@ public class Feature {
 	}
 
 	public enum FeatureType {
-		BOOLEAN,
-		NUMBER,
-		STRING;
+		BOOLEAN(PRESENT, NOT_PRESENT, IS_TRUE, IS_FALSE),
+		NUMBER(PRESENT, NOT_PRESENT, IS_EQUAL,
+				NOT_EQUAL, IS_GREATER, IS_GREATER_OR_EQUAL, IS_LESS,
+				IS_LESS_OR_EQUAL),
+		STRING(PRESENT, NOT_PRESENT, IS_EQUAL,
+				NOT_EQUAL, STARTS_WITH, ENDS_WITH, CONTAINS);
 
 		EnumSet<SchematronOperation> legalOperations;
 
-		FeatureType() {
-			switch (this) {
-				case BOOLEAN:
-					legalOperations = EnumSet.of(PRESENT, NOT_PRESENT, IS_TRUE, IS_FALSE);
-					break;
-				case NUMBER:
-					legalOperations = EnumSet.of(PRESENT, NOT_PRESENT, IS_EQUAL,
-							NOT_EQUAL, IS_GREATER, IS_GREATER_OR_EQUAL, IS_LESS,
-							IS_LESS_OR_EQUAL);
-					break;
-				case STRING:
-					legalOperations = EnumSet.of(PRESENT, NOT_PRESENT, IS_EQUAL,
-							NOT_EQUAL, STARTS_WITH, ENDS_WITH, CONTAINS);
-					break;
-				default:
-					throw new IllegalStateException("Unsupported FeatureType in getOperationsForType: " + this);
-			}
+		FeatureType(SchematronOperation op, SchematronOperation... operations) {
+			legalOperations = EnumSet.of(op, operations);
 		}
 
-		public EnumSet<SchematronOperation> getLegalOperations() {
-			return this.legalOperations;
+		public Set<SchematronOperation> getLegalOperations() {
+			return Collections.unmodifiableSet(this.legalOperations);
 		}
 	}
 }
