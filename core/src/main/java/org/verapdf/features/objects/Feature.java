@@ -20,6 +20,14 @@
  */
 package org.verapdf.features.objects;
 
+import org.verapdf.policy.SchematronOperation;
+
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Set;
+
+import static org.verapdf.policy.SchematronOperation.*;
+
 /**
  * @author Maksim Bezrukov
  */
@@ -49,8 +57,21 @@ public class Feature {
 	}
 
 	public enum FeatureType {
-		BOOLEAN,
-		NUMBER,
-		STRING
+		BOOLEAN(PRESENT, NOT_PRESENT, IS_TRUE, IS_FALSE),
+		NUMBER(PRESENT, NOT_PRESENT, IS_EQUAL,
+				NOT_EQUAL, IS_GREATER, IS_GREATER_OR_EQUAL, IS_LESS,
+				IS_LESS_OR_EQUAL),
+		STRING(PRESENT, NOT_PRESENT, IS_EQUAL,
+				NOT_EQUAL, STARTS_WITH, ENDS_WITH, CONTAINS);
+
+		private EnumSet<SchematronOperation> legalOperations;
+
+		FeatureType(SchematronOperation op, SchematronOperation... operations) {
+			legalOperations = EnumSet.of(op, operations);
+		}
+
+		public EnumSet<SchematronOperation> getLegalOperations() {
+			return EnumSet.copyOf(this.legalOperations);
+		}
 	}
 }

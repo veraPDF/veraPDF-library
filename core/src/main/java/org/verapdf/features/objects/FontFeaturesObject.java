@@ -55,6 +55,33 @@ public class FontFeaturesObject extends FeaturesObject {
 	private static final String CID_FONT_TYPE0 = "CIDFontType0";
 	private static final String CID_FONT_TYPE2 = "CIDFontType2";
 	private static final String TYPE = "type";
+	private static final String FONT_DESCRIPTOR = "fontDescriptor";
+	private static final String FONT_NAME = "fontName";
+	private static final String FONT_FAMILY = "fontFamily";
+	private static final String FONT_STRETCH = "fontStretch";
+	private static final String FONT_WEIGHT = "fontWeight";
+	private static final String FIXED_PITCH = "fixedPitch";
+	private static final String SERIF = "serif";
+	private static final String SYMBOLIC = "symbolic";
+	private static final String SCRIPT = "script";
+	private static final String NONSYMBOLIC = "nonsymbolic";
+	private static final String ITALIC = "italic";
+	private static final String ALL_CAP = "allCap";
+	private static final String SMALL_CAP = "smallCap";
+	private static final String FORCE_BOLD = "forceBold";
+	private static final String ITALIC_ANGLE = "italicAngle";
+	private static final String ASCENT = "ascent";
+	private static final String DESCENT = "descent";
+	private static final String LEADING = "leading";
+	private static final String CAP_HEIGHT = "capHeight";
+	private static final String X_HEIGHT = "xHeight";
+	private static final String STEM_V = "stemV";
+	private static final String STEM_H = "stemH";
+	private static final String AVERAGE_WIDTH = "averageWidth";
+	private static final String MAX_WIDTH = "maxWidth";
+	private static final String MISSING_WIDTH = "missingWidth";
+	private static final String CHAR_SET = "charSet";
+	private static final String EMBEDDED = "embedded";
 
 	/**
 	 * Constructs new Font Feature Object
@@ -117,15 +144,13 @@ public class FontFeaturesObject extends FeaturesObject {
 
 			CreateNodeHelper.addNotEmptyNode("encoding", fontAdapter.getEncoding(), root);
 
-			if (!TYPE3.equals(fontType)) {
-				parseFontDescriptior(fontAdapter.getFontDescriptor(), root);
-			}
-
 			if (TYPE3.equals(fontType)) {
 				CreateNodeHelper.addBoxFeature("fontBBox", fontAdapter.getBoundingBox(), root);
 				CreateNodeHelper.parseMatrix(fontAdapter.getMatrix(), root.addChild("fontMatrix"));
-
+				parseFontDescriptior(fontAdapter.getFontDescriptor(), root);
 				parseResources(root);
+			} else {
+				parseFontDescriptior(fontAdapter.getFontDescriptor(), root);
 			}
 
 		} else if (CID_FONT_TYPE0.equals(fontType) ||
@@ -196,11 +221,65 @@ public class FontFeaturesObject extends FeaturesObject {
 	}
 
 	static List<Feature> getFeaturesList() {
-		// Only font type is present
+		// From font: only font type is present
+		// From font descriptor missing fields:
+		// * font bbox
+		// * metadata
 		List<Feature> featuresList = new ArrayList<>();
 		featuresList.add(new Feature("Font Type",
 				generateVariableXPath(FONT, TYPE), Feature.FeatureType.STRING));
-
+		featuresList.add(new Feature("Font Name",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, FONT_NAME), Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Font Family",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, FONT_FAMILY), Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Font Stretch",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, FONT_STRETCH), Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Font Weight",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, FONT_WEIGHT), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Fixed Pitch",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, FIXED_PITCH), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Serif",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, SERIF), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Symbolic",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, SYMBOLIC), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Script",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, SCRIPT), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Non Symbolic",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, NONSYMBOLIC), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Italic",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, ITALIC), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("All Cap",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, ALL_CAP), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Small Cap",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, SMALL_CAP), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Force Bold",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, FORCE_BOLD), Feature.FeatureType.BOOLEAN));
+		featuresList.add(new Feature("Italic Angle",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, ITALIC_ANGLE), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Ascent",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, ASCENT), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Descent",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, DESCENT), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Leading",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, LEADING), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Cap Height",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, CAP_HEIGHT), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("X Height",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, X_HEIGHT), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Stem V",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, STEM_V), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Stem H",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, STEM_H), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Average Width",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, AVERAGE_WIDTH), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Max Width",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, MAX_WIDTH), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Missing Width",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, MISSING_WIDTH), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Char Set",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, CHAR_SET), Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Embedded",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, EMBEDDED), Feature.FeatureType.BOOLEAN));
 		featuresList.add(new Feature("Error IDs",
 				generateAttributeXPath(FONT, ErrorsHelper.ERRORID), Feature.FeatureType.STRING));
 		return featuresList;
@@ -209,37 +288,37 @@ public class FontFeaturesObject extends FeaturesObject {
 	private void parseFontDescriptior(FontFeaturesObjectAdapter.FontDescriptorAdapter descriptor,
 									  FeatureTreeNode root) throws FeatureParsingException {
 		if (descriptor != null) {
-			FeatureTreeNode descriptorNode = root.addChild("fontDescriptor");
+			FeatureTreeNode descriptorNode = root.addChild(FONT_DESCRIPTOR);
 
-			CreateNodeHelper.addNotEmptyNode("fontName", descriptor.getFontName(), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("fontFamily", descriptor.getFontFamily(), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("fontStretch", descriptor.getFontStretch(), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("fontWeight", getStringFromDouble(descriptor.getFontWeight()), descriptorNode);
-			descriptorNode.addChild("fixedPitch").setValue(String.valueOf(descriptor.isFixedPitch()));
-			descriptorNode.addChild("serif").setValue(String.valueOf(descriptor.isSerif()));
-			descriptorNode.addChild("symbolic").setValue(String.valueOf(descriptor.isSymbolic()));
-			descriptorNode.addChild("script").setValue(String.valueOf(descriptor.isScript()));
-			descriptorNode.addChild("nonsymbolic").setValue(String.valueOf(descriptor.isNonSymbolic()));
-			descriptorNode.addChild("italic").setValue(String.valueOf(descriptor.isItalic()));
-			descriptorNode.addChild("allCap").setValue(String.valueOf(descriptor.isAllcap()));
-			descriptorNode.addChild("smallCap").setValue(String.valueOf(descriptor.isScript()));
-			descriptorNode.addChild("forceBold").setValue(String.valueOf(descriptor.isForceBold()));
+			CreateNodeHelper.addNotEmptyNode(FONT_NAME, descriptor.getFontName(), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(FONT_FAMILY, descriptor.getFontFamily(), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(FONT_STRETCH, descriptor.getFontStretch(), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(FONT_WEIGHT, getStringFromDouble(descriptor.getFontWeight()), descriptorNode);
+			descriptorNode.addChild(FIXED_PITCH).setValue(String.valueOf(descriptor.isFixedPitch()));
+			descriptorNode.addChild(SERIF).setValue(String.valueOf(descriptor.isSerif()));
+			descriptorNode.addChild(SYMBOLIC).setValue(String.valueOf(descriptor.isSymbolic()));
+			descriptorNode.addChild(SCRIPT).setValue(String.valueOf(descriptor.isScript()));
+			descriptorNode.addChild(NONSYMBOLIC).setValue(String.valueOf(descriptor.isNonSymbolic()));
+			descriptorNode.addChild(ITALIC).setValue(String.valueOf(descriptor.isItalic()));
+			descriptorNode.addChild(ALL_CAP).setValue(String.valueOf(descriptor.isAllcap()));
+			descriptorNode.addChild(SMALL_CAP).setValue(String.valueOf(descriptor.isScript()));
+			descriptorNode.addChild(FORCE_BOLD).setValue(String.valueOf(descriptor.isForceBold()));
 			CreateNodeHelper.addBoxFeature("fontBBox", descriptor.getFontBoundingBox(), descriptorNode);
 
-			CreateNodeHelper.addNotEmptyNode("italicAngle", getStringFromDouble(descriptor.getItalicAngle()), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("ascent", getStringFromDouble(descriptor.getAscent()), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("descent", getStringFromDouble(descriptor.getDescent()), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("leading", getStringFromDouble(descriptor.getLeading()), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("capHeight", getStringFromDouble(descriptor.getCapHeight()), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("xHeight", getStringFromDouble(descriptor.getXHeight()), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("stemV", getStringFromDouble(descriptor.getStemV()), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("stemH", getStringFromDouble(descriptor.getStemH()), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("averageWidth", getStringFromDouble(descriptor.getAverageWidth()), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("maxWidth", getStringFromDouble(descriptor.getMaxWidth()), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("missingWidth", getStringFromDouble(descriptor.getMissingWidth()), descriptorNode);
-			CreateNodeHelper.addNotEmptyNode("charSet", descriptor.getCharSet(), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(ITALIC_ANGLE, getStringFromDouble(descriptor.getItalicAngle()), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(ASCENT, getStringFromDouble(descriptor.getAscent()), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(DESCENT, getStringFromDouble(descriptor.getDescent()), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(LEADING, getStringFromDouble(descriptor.getLeading()), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(CAP_HEIGHT, getStringFromDouble(descriptor.getCapHeight()), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(X_HEIGHT, getStringFromDouble(descriptor.getXHeight()), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(STEM_V, getStringFromDouble(descriptor.getStemV()), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(STEM_H, getStringFromDouble(descriptor.getStemH()), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(AVERAGE_WIDTH, getStringFromDouble(descriptor.getAverageWidth()), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(MAX_WIDTH, getStringFromDouble(descriptor.getMaxWidth()), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(MISSING_WIDTH, getStringFromDouble(descriptor.getMissingWidth()), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(CHAR_SET, descriptor.getCharSet(), descriptorNode);
 
-			descriptorNode.addChild("embedded").setValue(String.valueOf(descriptor.isEmbedded()));
+			descriptorNode.addChild(EMBEDDED).setValue(String.valueOf(descriptor.isEmbedded()));
 			try (InputStream metadata = descriptor.getMetadataStream()) {
 				CreateNodeHelper.parseMetadata(metadata, "embeddedFileMetadata", descriptorNode, this);
 			} catch (IOException e) {
