@@ -108,7 +108,7 @@ public enum SchematronOperation {
 			default:
 				throw new IllegalStateException("Unsupported operation type");
 		}
-		String desc = feature.getFeatureName() + " " + this.getDescription();
+		String desc = "Failed check: " + feature.getFeatureName() + " " + this.getDescription();
 		if (argument != null) {
 			desc += " " + argument;
 		}
