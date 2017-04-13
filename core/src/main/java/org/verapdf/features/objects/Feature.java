@@ -20,6 +20,15 @@
  */
 package org.verapdf.features.objects;
 
+import org.verapdf.policy.SchematronOperation;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.List;
+
+import static org.verapdf.policy.SchematronOperation.*;
+
 /**
  * @author Maksim Bezrukov
  */
@@ -51,6 +60,31 @@ public class Feature {
 	public enum FeatureType {
 		BOOLEAN,
 		NUMBER,
-		STRING
+		STRING;
+
+		EnumSet<SchematronOperation> legalOperations;
+
+		FeatureType() {
+			switch (this) {
+				case BOOLEAN:
+					legalOperations = EnumSet.of(PRESENT, NOT_PRESENT, IS_TRUE, IS_FALSE);
+					break;
+				case NUMBER:
+					legalOperations = EnumSet.of(PRESENT, NOT_PRESENT, IS_EQUAL,
+							NOT_EQUAL, IS_GREATER, IS_GREATER_OR_EQUAL, IS_LESS,
+							IS_LESS_OR_EQUAL);
+					break;
+				case STRING:
+					legalOperations = EnumSet.of(PRESENT, NOT_PRESENT, IS_EQUAL,
+							NOT_EQUAL, STARTS_WITH, ENDS_WITH, CONTAINS);
+					break;
+				default:
+					throw new IllegalStateException("Unsupported FeatureType in getOperationsForType: " + this);
+			}
+		}
+
+		public EnumSet<SchematronOperation> getLegalOperations() {
+			return this.legalOperations;
+		}
 	}
 }
