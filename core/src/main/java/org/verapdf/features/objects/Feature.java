@@ -64,14 +64,14 @@ public class Feature {
 		STRING(PRESENT, NOT_PRESENT, IS_EQUAL,
 				NOT_EQUAL, STARTS_WITH, ENDS_WITH, CONTAINS);
 
-		EnumSet<SchematronOperation> legalOperations;
+		private EnumSet<SchematronOperation> legalOperations;
 
 		FeatureType(SchematronOperation op, SchematronOperation... operations) {
 			legalOperations = EnumSet.of(op, operations);
 		}
 
-		public Set<SchematronOperation> getLegalOperations() {
-			return Collections.unmodifiableSet(this.legalOperations);
+		public EnumSet<SchematronOperation> getLegalOperations() {
+			return EnumSet.copyOf(this.legalOperations);
 		}
 	}
 }
