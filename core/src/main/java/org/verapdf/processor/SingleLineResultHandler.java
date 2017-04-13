@@ -1,22 +1,16 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
- * All rights reserved.
- *
- * veraPDF Library core is free software: you can redistribute it and/or modify
- * it under the terms of either:
- *
- * The GNU General public license GPLv3+.
- * You should have received a copy of the GNU General Public License
- * along with veraPDF Library core as the LICENSE.GPL file in the root of the source
- * tree.  If not, see http://www.gnu.org/licenses/ or
- * https://www.gnu.org/licenses/gpl-3.0.en.html.
- *
- * The Mozilla Public License MPLv2+.
- * You should have received a copy of the Mozilla Public License along with
- * veraPDF Library core as the LICENSE.MPL file in the root of the source tree.
- * If a copy of the MPL was not distributed with this file, you can obtain one at
- * http://mozilla.org/MPL/2.0/.
+ * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org> All rights
+ * reserved. veraPDF Library core is free software: you can redistribute it
+ * and/or modify it under the terms of either: The GNU General public license
+ * GPLv3+. You should have received a copy of the GNU General Public License
+ * along with veraPDF Library core as the LICENSE.GPL file in the root of the
+ * source tree. If not, see http://www.gnu.org/licenses/ or
+ * https://www.gnu.org/licenses/gpl-3.0.en.html. The Mozilla Public License
+ * MPLv2+. You should have received a copy of the Mozilla Public License along
+ * with veraPDF Library core as the LICENSE.MPL file in the root of the source
+ * tree. If a copy of the MPL was not distributed with this file, you can obtain
+ * one at http://mozilla.org/MPL/2.0/.
  */
 package org.verapdf.processor;
 
@@ -41,21 +35,30 @@ import org.verapdf.report.FeaturesReport;
  * @author Sergey Shemyakov
  */
 class SingleLineResultHandler extends AbstractBatchHandler {
+	private static final String pass = "PASS ";
+	private static final String fail = "FAIL ";
 	private static final String ioExcepMess = "IOException caught when writing to output stream";
 	private static final String parseExcepMessTmpl = "%s does not appear to be a valid PDF file and could not be parsed.";
 	private static final String pdfEncryptMessTmpl = "%s appears to be an encrypted PDF file and could not be processed.";
+	private static final String ruleMessTmpl = "  %s%s-%d\n";
 	private OutputStream outputStream;
-	private boolean isVerbose;
+	private final boolean isVerbose;
+	private final boolean logSuccess;
 	private ItemDetails item;
 
 	private SingleLineResultHandler(OutputStream outputStream) {
-		this(outputStream, true);
+		this(outputStream, false);
 	}
 
 	private SingleLineResultHandler(OutputStream outputStream, boolean isVerbose) {
+		this(outputStream, isVerbose, false);
+	}
+
+	private SingleLineResultHandler(OutputStream outputStream, boolean isVerbose, boolean logSuccess) {
 		super();
 		this.outputStream = outputStream;
 		this.isVerbose = isVerbose;
+		this.logSuccess = logSuccess;
 	}
 
 	@Override
@@ -94,11 +97,11 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 	@Override
 	void validationSuccess(final TaskResult taskResult, final ValidationResult validationResult)
 			throws VeraPDFException {
-		String reportSummary = (validationResult.isCompliant() ? "PASS " : "FAIL ") + this.item.getName() + "\n";
+		String reportSummary = (validationResult.isCompliant() ? pass : fail) + this.item.getName() + "\n";
 		try {
 			this.outputStream.write(reportSummary.getBytes());
 			if (this.isVerbose) {
-				processFiledRules(validationResult);
+				processRules(validationResult);
 			}
 		} catch (IOException excep) {
 			throw new VeraPDFException(ioExcepMess, excep);
@@ -152,16 +155,26 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 		}
 	}
 
-	private void processFiledRules(ValidationResult validationResult) throws IOException {
-		Set<RuleId> ruleIds = new HashSet<>();
+	private void processRules(final ValidationResult validationResult) throws IOException {
+		Set<RuleId> passedRules = new HashSet<>();
+		Set<RuleId> failedRules = new HashSet<>();
 		for (TestAssertion assertion : validationResult.getTestAssertions()) {
 			if (assertion.getStatus() == TestAssertion.Status.FAILED) {
-				ruleIds.add(assertion.getRuleId());
+				failedRules.add(assertion.getRuleId());
+			} else if (this.isVerbose) {
+				passedRules.add(assertion.getRuleId());
 			}
 		}
-		for (RuleId id : ruleIds) {
-			String reportRuleSummary = id.getClause() + "-" + id.getTestNumber() + "\n";
-			this.outputStream.write(reportRuleSummary.getBytes());
+		this.outputRules(failedRules, fail);
+		if (this.isVerbose) {
+			this.outputRules(passedRules, pass);
+		}
+	}
+
+	private void outputRules(final Set<RuleId> rules, final String messStart) throws IOException {
+		for (RuleId id : rules) {
+			this.outputStream.write(String
+					.format(ruleMessTmpl, messStart, id.getClause(), Integer.valueOf(id.getTestNumber())).getBytes());
 		}
 	}
 
