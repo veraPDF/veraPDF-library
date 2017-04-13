@@ -46,7 +46,7 @@ final class ValidationReportImpl implements ValidationReport {
 	private final boolean isCompliant;
 
 	private ValidationReportImpl() {
-		this(ValidationDetailsImpl.defaultInstance(), "Unknown Profile", "Statement", false);
+		this(ValidationDetailsImpl.defaultInstance(), "Unknown Profile", "Statement", false); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private ValidationReportImpl(final ValidationDetails details, final String profileName, final String statement,

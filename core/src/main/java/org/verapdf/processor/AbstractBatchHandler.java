@@ -45,7 +45,7 @@ public abstract class AbstractBatchHandler implements BatchProcessingHandler {
 	@Override
 	public void handleResult(ProcessorResult result) throws VeraPDFException {
 		if (result == null) {
-			throw new VeraPDFException("Arg result is null and can not be handled.");
+			throw new VeraPDFException("Arg result is null and can not be handled."); //$NON-NLS-1$
 		}
 		resultStart(result);
 		processTasks(result);

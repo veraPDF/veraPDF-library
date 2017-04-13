@@ -23,18 +23,6 @@
  */
 package org.verapdf.processor;
 
-import org.verapdf.ReleaseDetails;
-import org.verapdf.component.AuditDuration;
-import org.verapdf.component.AuditDurationImpl;
-import org.verapdf.core.VeraPDFException;
-import org.verapdf.core.XmlSerialiser;
-import org.verapdf.pdfa.results.MetadataFixerResult;
-import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.processor.reports.*;
-import org.verapdf.report.FeaturesReport;
-
-import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,6 +30,22 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLStreamException;
+
+import org.verapdf.ReleaseDetails;
+import org.verapdf.component.AuditDuration;
+import org.verapdf.component.AuditDurationImpl;
+import org.verapdf.core.VeraPDFException;
+import org.verapdf.pdfa.results.MetadataFixerResult;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.processor.reports.BatchSummary;
+import org.verapdf.processor.reports.MetadataFixerReport;
+import org.verapdf.processor.reports.Reports;
+import org.verapdf.processor.reports.ValidationDetails;
+import org.verapdf.processor.reports.ValidationReport;
+import org.verapdf.report.FeaturesReport;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -58,13 +62,18 @@ final class MrrHandler extends AbstractXmlHandler {
             + STATEMENT_SUFFIX;
     private final static String NONCOMPLIANT_STATEMENT = STATEMENT_PREFIX
             + NOT_INSERT + STATEMENT_SUFFIX;
-	private final static String report = "report";
-	private final static String job = "job";
-	private final static String jobs = job + "s";
-	private final static String processingTime = "processingTime";
-
-	private final static String buildInformation = "buildInformation";
-
+	private final static String report = "report"; //$NON-NLS-1$
+	private final static String jobEleName = "job"; //$NON-NLS-1$
+	private final static String jobsEleName = jobEleName + "s"; //$NON-NLS-1$
+	private final static String procTimeEleName = "processingTime"; //$NON-NLS-1$
+	private final static String buildInfoEleName = "buildInformation"; //$NON-NLS-1$
+	private final static String itemDetailsEleName = "itemDetails"; //$NON-NLS-1$
+	private final static String releaseDetailsEleName = "releaseDetails"; //$NON-NLS-1$
+	private final static String taskResultEleName = "taskResult"; //$NON-NLS-1$
+	private final static String batchSummaryEleName = "batchSummary"; //$NON-NLS-1$
+	private final static String fixerRepEleName = "fixerReport"; //$NON-NLS-1$
+	private final static String featuresRepEleName = "featuresReport"; //$NON-NLS-1$
+	private final static String validationRepEleName = "validationReport"; //$NON-NLS-1$
 	private final int maxFailedChecks;
 	private final boolean logPassed;
 
@@ -82,11 +91,7 @@ final class MrrHandler extends AbstractXmlHandler {
 	 * @throws VeraPDFException
 	 */
 	private MrrHandler(Writer dest, int maxFailedChecks, boolean logPassed) throws VeraPDFException {
-		this(dest, 2, maxFailedChecks, logPassed);
-	}
-	
-	private MrrHandler(Writer dest, int indentSize, int maxFailedChecks, boolean logPassed) throws VeraPDFException {
-		super(dest, indentSize);
+		super(dest);
 		this.maxFailedChecks = maxFailedChecks;
 		this.logPassed = logPassed;
 	}
@@ -98,9 +103,9 @@ final class MrrHandler extends AbstractXmlHandler {
 	public void handleBatchStart(ProcessorConfig config) throws VeraPDFException {
 		try {
 			startDoc(this.writer);
-			indentElement(report);
+			this.writer.writeStartElement(report);
 			addReleaseDetails();
-			indentElement(jobs);
+			this.writer.writeStartElement(jobsEleName);
 			this.writer.flush();
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
@@ -108,30 +113,21 @@ final class MrrHandler extends AbstractXmlHandler {
 	}
 
 	private void addReleaseDetails() throws XMLStreamException, VeraPDFException {
-		indentElement(buildInformation);
+		this.writer.writeStartElement(buildInfoEleName);
 		for (ReleaseDetails details : ReleaseDetails.getDetails()) {
-			try {
-				XmlSerialiser.toXml(details, this.writer, true, true);
-				this.writer.flush();
-			} catch (JAXBException excep) {
-				logger.log(Level.WARNING, String.format(unmarshalErrMessage, "releaseDetails"), excep);
-				throw wrapMarshallException(excep, "releaseDetails");
-			}
+			this.serialseElement(details, releaseDetailsEleName, true, true);
 		}
-		outdentElement();
+		this.writer.writeEndElement();
 	}
 
 	@Override
 	void resultStart(ProcessorResult result) throws VeraPDFException {
 		try {
-			indentElement(job);
-			XmlSerialiser.toXml(result.getProcessedItem(), this.writer, true, true);
+			this.writer.writeStartElement(jobEleName);
+			this.serialseElement(result.getProcessedItem(), itemDetailsEleName, true, true);
 			this.writer.flush();
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
-		} catch (JAXBException excep) {
-			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "itemDetails"), excep);
-			throw wrapMarshallException(excep, "itemDetails");
 		}
 	}
 
@@ -142,102 +138,56 @@ final class MrrHandler extends AbstractXmlHandler {
 
 	@Override
 	void parsingFailure(TaskResult taskResult) throws VeraPDFException {
-		try {
-			XmlSerialiser.toXml(taskResult, this.writer, true, true);
-		} catch (JAXBException excep) {
-			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "taskResult"), excep);
-			throw wrapMarshallException(excep, "taskResult");
-		}
+		this.serialseElement(taskResult, taskResultEleName, true, true);
 	}
 
 	@Override
 	void pdfEncrypted(TaskResult taskResult) throws VeraPDFException {
-		try {
-			XmlSerialiser.toXml(taskResult, this.writer, true, true);
-		} catch (JAXBException excep) {
-			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "taskResult"), excep);
-			throw wrapMarshallException(excep, "taskResult");
-		}
+		this.serialseElement(taskResult, taskResultEleName, true, true);
 	}
 
 	@Override
 	void validationSuccess(TaskResult taskResult, ValidationResult result) throws VeraPDFException {
 		ValidationDetails details = Reports.fromValues(result, this.logPassed, this.maxFailedChecks);
 		ValidationReport valRep = Reports.createValidationReport(details, result.getProfileDetails().getName(), getStatement(result.isCompliant()), result.isCompliant());
-		try {
-			XmlSerialiser.toXml(valRep, this.writer, true, true);
-			this.writer.flush();
-		} catch (JAXBException excep) {
-			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "validationReport"), excep);
-			throw wrapMarshallException(excep, "validationReport");
-		} catch (XMLStreamException excep) {
-			throw wrapStreamException(excep);
-		}
+		this.serialseElement(valRep, validationRepEleName, true, true);
 	}
 
 	@Override
 	void validationFailure(TaskResult taskResult) throws VeraPDFException {
-		try {
-			XmlSerialiser.toXml(taskResult, this.writer, true, true);
-		} catch (JAXBException excep) {
-			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "taskResult"), excep);
-			throw wrapMarshallException(excep, "taskResult");
-		}
+		this.serialseElement(taskResult, taskResultEleName, true, true);
 	}
 
 	@Override
-	void featureSuccess(TaskResult taskResult, FeaturesReport featuresReport) throws VeraPDFException {
-		try {
-			XmlSerialiser.toXml(featuresReport, this.writer, true, true);
-			this.writer.flush();
-		} catch (JAXBException excep) {
-			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "featuresReport"), excep);
-			throw wrapMarshallException(excep, "featuresReport");
-		} catch (XMLStreamException excep) {
-			throw wrapStreamException(excep);
-		}
+	void featureSuccess(TaskResult taskResult, FeaturesReport featRep) throws VeraPDFException {
+		this.serialseElement(featRep, featuresRepEleName, true, true);
 	}
 
 	@Override
 	void featureFailure(TaskResult taskResult) throws VeraPDFException {
-		try {
-			XmlSerialiser.toXml(taskResult, this.writer, true, true);
-		} catch (JAXBException excep) {
-			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "taskResult"), excep);
-			throw wrapMarshallException(excep, "taskResult");
-		}
+		this.serialseElement(taskResult, taskResultEleName, true, true);
 	}
 
 	@Override
 	void fixerSuccess(TaskResult taskResult, MetadataFixerResult fixerResult) throws VeraPDFException {
 		MetadataFixerReport mfRep = Reports.fromValues(fixerResult);
-		try {
-			XmlSerialiser.toXml(mfRep, this.writer, true, true);
-		} catch (JAXBException excep) {
-			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "fixerReport"), excep);
-			throw wrapMarshallException(excep, "fixerReport");
-		}
+		this.serialseElement(mfRep, fixerRepEleName, true, true);
 	}
 
 	@Override
 	void fixerFailure(TaskResult taskResult) throws VeraPDFException {
-		try {
-			XmlSerialiser.toXml(taskResult, this.writer, true, true);
-		} catch (JAXBException excep) {
-			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "taskResult"), excep);
-			throw wrapMarshallException(excep, "taskResult");
-		}
+		this.serialseElement(taskResult, taskResultEleName, true, true);
 	}
 
 	@Override
 	void resultEnd(ProcessorResult result) throws VeraPDFException {
 		try {
 			// End job element
-			indentElement(processingTime);
+			this.writer.writeStartElement(procTimeEleName);
 			long resTime = AuditDurationImpl.sumDuration(getDurations(result));
 			this.writer.writeCharacters(AuditDurationImpl.getStringDuration(resTime));
-			outdentElement();
-			outdentElement();
+			this.writer.writeEndElement();
+			this.writer.writeEndElement();
 			this.writer.flush();
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
@@ -251,24 +201,17 @@ final class MrrHandler extends AbstractXmlHandler {
 	public void handleBatchEnd(BatchSummary summary) throws VeraPDFException {
 		try {
 			// closes jobs element
-			outdentElement();
-			XmlSerialiser.toXml(summary,  this.writer,  true, true);
+			this.writer.writeEndElement();
+			this.serialseElement(summary, batchSummaryEleName, true, true);
 			newLine(this.writer);
 			// closes report element
-			outdentElement();
+			this.writer.writeEndElement();
 			this.writer.flush();
 			endDoc(this.writer);
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
-		} catch (JAXBException excep) {
-			logger.log(Level.WARNING, String.format(unmarshalErrMessage, "batchSummary"), excep);
-			throw wrapMarshallException(excep, "batchSummary");
 		}
-		try {
-			this.writer.close();
-		} catch (XMLStreamException excep) {
-			logger.log(Level.INFO, String.format(strmExcpMessTmpl, "closing"), excep);
-		}
+		this.close();
 	}
 
 	private static Collection<AuditDuration> getDurations(ProcessorResult result) {
@@ -291,10 +234,6 @@ final class MrrHandler extends AbstractXmlHandler {
 
 	static BatchProcessingHandler newInstance(final Writer dest, final boolean logPassed, final int maxFailedChecks) throws VeraPDFException {
 		return new MrrHandler(dest, maxFailedChecks, logPassed);
-	}
-
-	static BatchProcessingHandler newInstance(final Writer dest, final int indent, final boolean logPassed, final int maxFailedChecks) throws VeraPDFException {
-		return new MrrHandler(dest, indent, maxFailedChecks, logPassed);
 	}
 	
     private static String getStatement(boolean status) {

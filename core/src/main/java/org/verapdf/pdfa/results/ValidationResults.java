@@ -34,12 +34,12 @@ import org.verapdf.pdfa.validation.profiles.RuleId;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 public class ValidationResults {
-	private static final String NOT_NULL_MESSAGE = " cannot be null.";
-	private static final String FLAVOUR_NOT_NULL_MESSAGE = "Flavour " + NOT_NULL_MESSAGE;
-	private static final String ASSERTIONS_NOT_NULL_MESSAGE = "Assertions " + NOT_NULL_MESSAGE;
+	private static final String NOT_NULL_MESSAGE = " cannot be null."; //$NON-NLS-1$
+	private static final String FLAVOUR_NOT_NULL_MESSAGE = "Flavour " + NOT_NULL_MESSAGE; //$NON-NLS-1$
+	private static final String ASSERTIONS_NOT_NULL_MESSAGE = "Assertions " + NOT_NULL_MESSAGE; //$NON-NLS-1$
 
 	private ValidationResults() {
-		throw new AssertionError("Should never enter ValidationResults().");
+		throw new AssertionError("Should never enter ValidationResults()."); //$NON-NLS-1$
 	}
 
 	/**
@@ -196,7 +196,7 @@ public class ValidationResults {
 	 */
 	public static ValidationResult stripPassedTests(ValidationResult toStrip) {
 		if (toStrip == null)
-			throw new NullPointerException("toStrip can not be null.");
+			throw new NullPointerException("toStrip can not be null."); //$NON-NLS-1$
 		return ValidationResultImpl.stripPassedTests(toStrip);
 	}
 }

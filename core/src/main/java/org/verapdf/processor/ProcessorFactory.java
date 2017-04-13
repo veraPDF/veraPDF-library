@@ -105,11 +105,6 @@ public final class ProcessorFactory {
 		return RawResultHandler.newInstance(dest);
 	}
 
-	public static final BatchProcessingHandler rawResultHandler(final Writer dest, final int indentSize)
-			throws VeraPDFException {
-		return RawResultHandler.newInstance(dest, indentSize);
-	}
-
 	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose, int maxFailedChecksPerRule, boolean logPassed)
 			throws VeraPDFException {
 		return getHandler(option, isVerbose, System.out, maxFailedChecksPerRule, logPassed);
@@ -118,9 +113,9 @@ public final class ProcessorFactory {
 	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose,
 			OutputStream reportStream, int maxFailedChecksPerRule, boolean logPassed) throws VeraPDFException {
 		if (option == null)
-			throw new IllegalArgumentException("Arg option can not be null");
+			throw new IllegalArgumentException("Arg option can not be null"); //$NON-NLS-1$
 		if (reportStream == null)
-			throw new IllegalArgumentException("Arg reportStream can not be null");
+			throw new IllegalArgumentException("Arg reportStream can not be null"); //$NON-NLS-1$
 
 		switch (option) {
 		case TEXT:
@@ -130,7 +125,7 @@ public final class ProcessorFactory {
 		case MRR:
 			return MrrHandler.newInstance(new PrintWriter(reportStream), logPassed, maxFailedChecksPerRule);
 		default: // should not be reached
-			throw new VeraPDFException("Unknown report format option: " + option);
+			throw new VeraPDFException("Unknown report format option: " + option); //$NON-NLS-1$
 		}
 	}
 
