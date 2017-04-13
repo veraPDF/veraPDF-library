@@ -91,7 +91,7 @@ public class FeaturesReporter {
 
 		try {
 			FeatureTreeNode root = obj.reportFeatures(this.collection);
-			if (featuresExtractors.containsKey(obj.getType())) {
+			if (root != null && featuresExtractors.containsKey(obj.getType())) {
 				FeatureTreeNode custom = root.addChild(CUSTOM_FEATURES_NAME);
 				for (AbstractFeaturesExtractor ext : featuresExtractors.get(obj.getType())) {
 					try {

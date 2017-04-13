@@ -62,15 +62,18 @@ public abstract class FeaturesObject {
 	 */
 	public final FeatureTreeNode reportFeatures(FeatureExtractionResult collection) throws FeatureParsingException {
 		this.errors.clear();
-		FeatureTreeNode root = collectFeatures();
-		this.errors.addAll(adapter.getErrors());
-		if (!errors.isEmpty()) {
-			for (String error : errors) {
-				ErrorsHelper.addErrorIntoCollection(collection, root, error);
+		if (this.adapter.isPDFObjectPresent()) {
+			FeatureTreeNode root = collectFeatures();
+			this.errors.addAll(adapter.getErrors());
+			if (!errors.isEmpty()) {
+				for (String error : errors) {
+					ErrorsHelper.addErrorIntoCollection(collection, root, error);
+				}
 			}
+			collection.addNewFeatureTree(getType(), root);
+			return root;
 		}
-		collection.addNewFeatureTree(getType(), root);
-		return root;
+		return null;
 	}
 
 	protected abstract FeatureTreeNode collectFeatures() throws FeatureParsingException;
