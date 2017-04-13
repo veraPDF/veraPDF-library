@@ -35,7 +35,7 @@ import org.junit.Test;
  */
 @SuppressWarnings("static-method")
 public class LocationTest {
-    private final static String DEFAULT_LOCATION_STRING = "Location [level=level, context=context]";
+    private final static String DEFAULT_LOCATION_STRING = "Location [level=level, context=context]"; //$NON-NLS-1$
 
     /**
      * Test method for {@link org.verapdf.pdfa.results.LocationImpl#hashCode()}.
@@ -69,7 +69,7 @@ public class LocationTest {
      */
     @Test
     public final void testFromValues() {
-        Location fromValLoc = ValidationResults.locationFromValues("level", "context");
+        Location fromValLoc = ValidationResults.locationFromValues("level", "context"); //$NON-NLS-1$ //$NON-NLS-2$
         assertTrue(fromValLoc.equals(ValidationResults.defaultLocation()));
         assertFalse(fromValLoc == ValidationResults.defaultLocation());
     }

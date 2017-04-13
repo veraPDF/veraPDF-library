@@ -154,4 +154,23 @@ public class ValidationResultTest {
 			assertTrue(result.equals(unmarshalledResult));
 		}
 	}
+
+	/**
+	 * Test method for
+	 * {@link org.verapdf.pdfa.results.ValidationResultImpl#fromXml(java.io.InputStream)}.
+	 * 
+	 * @throws IOException
+	 * @throws JAXBException
+	 */
+	@Test
+	public final void testFromXmlInputString() throws JAXBException {
+		Set<TestAssertion> assertions = new HashSet<>();
+		assertions.add(TestAssertionImpl.defaultInstance());
+		ValidationResult result = ValidationResults.resultFromValues(PDFAFlavour.PDFA_1_A,
+				Profiles.defaultProfile().getDetails(), assertions);
+		String xmlSource = XmlSerialiser.toXml(result, true, true);
+		ValidationResult unmarshalledResult = ValidationResults.resultFromXmlString(xmlSource);
+		assertFalse(result == unmarshalledResult);
+		assertTrue(result.equals(unmarshalledResult));
+	}
 }

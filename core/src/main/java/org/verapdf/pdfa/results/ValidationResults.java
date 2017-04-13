@@ -25,6 +25,9 @@ package org.verapdf.pdfa.results;
 
 import java.util.Set;
 
+import javax.xml.bind.JAXBException;
+
+import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.profiles.ProfileDetails;
@@ -104,6 +107,15 @@ public class ValidationResults {
 			}
 		}
 		return resultFromValues(flavour, profileDetails, assertions, isCompliant);
+	}
+
+	/**
+	 * @param xmlSource XML representation of a {@link ValidationResult} to deserialise
+	 * @return a new ValidationResult instance deserialised from the passed String
+	 * @throws JAXBException when the passed String is not a valid XML representation
+	 */
+	public static ValidationResult resultFromXmlString(final String xmlSource) throws JAXBException {
+		return XmlSerialiser.typeFromXml(ValidationResultImpl.class, xmlSource);
 	}
 
 	/**

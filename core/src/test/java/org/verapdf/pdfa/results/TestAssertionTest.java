@@ -37,14 +37,14 @@ import org.verapdf.pdfa.validation.profiles.Profiles;
  */
 @SuppressWarnings("static-method")
 public class TestAssertionTest {
-    private static final String DEFAULT_ASSERTION_STRING = "TestAssertion [ruleId="
+    private static final String DEFAULT_ASSERTION_STRING = "TestAssertion [ruleId=" //$NON-NLS-1$
             + Profiles.defaultRuleId()
-            + ", status="
+            + ", status=" //$NON-NLS-1$
             + Status.FAILED
-            + ", message="
-            + "message"
-            + ", location="
-            + ValidationResults.defaultLocation() + "]";
+            + ", message=" //$NON-NLS-1$
+            + "message" //$NON-NLS-1$
+            + ", location=" //$NON-NLS-1$
+            + ValidationResults.defaultLocation() + "]"; //$NON-NLS-1$
 
     /**
      * Test method for
@@ -86,7 +86,7 @@ public class TestAssertionTest {
     public final void testFromValues() {
         TestAssertion assertionFromVals = ValidationResults
                 .assertionFromValues(0, Profiles.defaultRuleId(),
-                        Status.FAILED, "message",
+                        Status.FAILED, "message", //$NON-NLS-1$
                         ValidationResults.defaultLocation());
         assertTrue(assertionFromVals.equals(ValidationResults
                 .defaultAssertion()));
