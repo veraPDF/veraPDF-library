@@ -15,6 +15,7 @@ import java.util.List;
 public class SchematronGenerator {
 
 	private static final String SCH_NAMESPACE = "http://purl.oclc.org/dsdl/schematron";
+	private static final String SCH_PREFIX = "sch";
 
 	private static final String DOC_RESOURCES = "/documentResources";
 
@@ -28,8 +29,9 @@ public class SchematronGenerator {
 		XMLOutputFactory xof = XMLOutputFactory.newInstance();
 		XMLStreamWriter xtw = xof.createXMLStreamWriter(os);
 		xtw.writeStartDocument("utf-8","1.0");
-		xtw.setPrefix("sch", SCH_NAMESPACE);
+		xtw.setPrefix(SCH_PREFIX, SCH_NAMESPACE);
 		xtw.writeStartElement(SCH_NAMESPACE,"schema");
+		xtw.writeNamespace(SCH_PREFIX, SCH_NAMESPACE);
 		xtw.writeAttribute("queryBinding", "xslt");
 		for (Assertion assertion : assertions) {
 			xtw.writeStartElement(SCH_NAMESPACE, "pattern");
