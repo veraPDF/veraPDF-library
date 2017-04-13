@@ -27,5 +27,6 @@ import java.util.List;
  */
 public interface FeaturesObjectAdapter {
 
+	boolean isPDFObjectPresent();
 	List<String> getErrors();
 }
