@@ -53,10 +53,10 @@ public final class ReleaseDetails {
 	public static final String PROPERTIES_EXT = "properties"; //$NON-NLS-1$
 	public static final String LIBRARY_DETAILS_RESOURCE = APPLICATION_PROPERTIES_ROOT + "library." + PROPERTIES_EXT; //$NON-NLS-1$
 
-	private static final String RAW_DATE_FORMAT = "${maven.build.timestamp.format}";
-	private static final String RIGHTS = "Developed and released by the veraPDF Consortium.\n"
-			+ "Funded by the PREFORMA project.\n" + "Released under the GNU General Public License v3\n"
-			+ "and the Mozilla Public License v2 or later.\n";
+	private static final String RAW_DATE_FORMAT = "${maven.build.timestamp.format}"; //$NON-NLS-1$
+	private static final String RIGHTS = "Developed and released by the veraPDF Consortium.\n" //$NON-NLS-1$
+			+ "Funded by the PREFORMA project.\n" + "Released under the GNU General Public License v3\n"  //$NON-NLS-1$//$NON-NLS-2$
+			+ "and the Mozilla Public License v2 or later.\n"; //$NON-NLS-1$
 
 	private static final ReleaseDetails DEFAULT = new ReleaseDetails();
 	private static final Map<String, ReleaseDetails> DETAILS = initDetailsMap();

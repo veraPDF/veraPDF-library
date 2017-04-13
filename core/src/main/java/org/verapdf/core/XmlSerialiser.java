@@ -369,8 +369,8 @@ public final class XmlSerialiser {
 	 *            Collection that needs to be scanned
 	 * @return Classes found in the collection, including JAXBCollection.
 	 */
-	protected static <T> Class[] findTypes(Collection<T> c) {
-		Set<Class> types = new HashSet<>();
+	protected static <T> Class<?>[] findTypes(Collection<T> c) {
+		Set<Class<?>> types = new HashSet<>();
 		types.add(JAXBCollection.class);
 		for (T o : c) {
 			if (o != null) {
