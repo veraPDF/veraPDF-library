@@ -2,10 +2,6 @@ package org.verapdf.policy;
 
 import org.verapdf.features.objects.Feature;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Enum with operations on elements of Feature.FeatureType that can be used in
  * policy configuration file.
@@ -37,34 +33,6 @@ public enum SchematronOperation {
 	ENDS_WITH(true, "ends with"),
 	CONTAINS(true, "contains substring");
 
-	private static List<SchematronOperation> operationsOnBooleans = new ArrayList<>(4);
-	private static List<SchematronOperation> operationsOnNumbers = new ArrayList<>(8);
-	private static List<SchematronOperation> operationsOnStrings = new ArrayList<>(7);
-
-	static {
-		operationsOnBooleans.add(PRESENT);
-		operationsOnBooleans.add(NOT_PRESENT);
-		operationsOnBooleans.add(IS_TRUE);
-		operationsOnBooleans.add(IS_FALSE);
-
-		operationsOnNumbers.add(PRESENT);
-		operationsOnNumbers.add(NOT_PRESENT);
-		operationsOnNumbers.add(IS_EQUAL);
-		operationsOnNumbers.add(NOT_EQUAL);
-		operationsOnNumbers.add(IS_GREATER);
-		operationsOnNumbers.add(IS_GREATER_OR_EQUAL);
-		operationsOnNumbers.add(IS_LESS);
-		operationsOnNumbers.add(IS_LESS_OR_EQUAL);
-
-		operationsOnStrings.add(PRESENT);
-		operationsOnStrings.add(NOT_PRESENT);
-		operationsOnStrings.add(IS_EQUAL);
-		operationsOnStrings.add(NOT_EQUAL);
-		operationsOnStrings.add(STARTS_WITH);
-		operationsOnStrings.add(ENDS_WITH);
-		operationsOnStrings.add(CONTAINS);
-	}
-
 	private boolean hasArguments;
 	private String description;
 
@@ -79,19 +47,6 @@ public enum SchematronOperation {
 
 	public String getDescription() {
 		return description;
-	}
-
-	public static List<SchematronOperation> getOperationsForType(Feature.FeatureType type) {
-		switch (type) {
-			case BOOLEAN:
-				return Collections.unmodifiableList(operationsOnBooleans);
-			case NUMBER:
-				return Collections.unmodifiableList(operationsOnNumbers);
-			case STRING:
-				return Collections.unmodifiableList(operationsOnStrings);
-			default:
-				throw new IllegalStateException("Unsupported FeatureType in getOperationsForType: " + type);
-		}
 	}
 
 	public AssertionInformation getAssertionInfo(Feature feature, String argument) {
