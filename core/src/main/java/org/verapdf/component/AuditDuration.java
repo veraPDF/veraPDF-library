@@ -32,25 +32,23 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlJavaTypeAdapter(AuditDurationImpl.Adapter.class)
 public interface AuditDuration {
-
 	/**
 	 * @return the start time in millisecs
 	 */
-	public long getStart();
+	long getStart();
 
 	/**
 	 * @return the finish time in millisecs
 	 */
-	public long getFinish();
+	long getFinish();
 
 	/**
 	 * @return the differece between the start and finish time in millisecs
 	 */
-	public long getDifference();
+	long getDifference();
 
 	/**
 	 * @return a string representation of the duration.
 	 */
-	public String getDuration();
-
+	String getDuration();
 }

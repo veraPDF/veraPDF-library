@@ -18,13 +18,11 @@
  * If a copy of the MPL was not distributed with this file, you can obtain one at
  * http://mozilla.org/MPL/2.0/.
  */
-/**
- * 
- */
 package org.verapdf.component;
 
 import java.util.Collection;
 import java.util.Formatter;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,12 +36,11 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 @XmlRootElement(name = "duration")
 public final class AuditDurationImpl implements AuditDuration {
+
 	private static final AuditDuration defaultInstance = new AuditDurationImpl();
 	private static final long msInSec = 1000L;
 	private static final int secInMin = 60;
-	private static final long msInMin = secInMin * msInSec;
 	private static final int minInHour = 60;
-	private static final long msInHour = msInMin * minInHour;
 
 	@XmlAttribute
 	private final long start;
@@ -55,31 +52,21 @@ public final class AuditDurationImpl implements AuditDuration {
 	}
 
 	private AuditDurationImpl(final long start, final long finish) {
-		super();
 		this.start = start;
 		this.finish = finish;
 		assert (finish >= start);
 	}
 
-	/**
-	 * @return the start
-	 */
 	@Override
 	public long getStart() {
 		return this.start;
 	}
 
-	/**
-	 * @return the finish
-	 */
 	@Override
 	public long getFinish() {
 		return this.finish;
 	}
 
-	/**
-	 * @return the finish
-	 */
 	@Override
 	public long getDifference() {
 		return this.finish - this.start;
@@ -91,49 +78,27 @@ public final class AuditDurationImpl implements AuditDuration {
 		return getStringDuration(this.getDifference());
 	}
 
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (this.finish ^ (this.finish >>> 32));
-		result = prime * result + (int) (this.start ^ (this.start >>> 32));
-		return result;
-	}
-
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
-		if (!(obj instanceof AuditDuration)) {
-			return false;
-		}
-		AuditDuration other = (AuditDuration) obj;
-		if (this.finish != other.getFinish()) {
-			return false;
-		}
-		if (this.start != other.getStart()) {
-			return false;
-		}
-		return true;
+		AuditDurationImpl that = (AuditDurationImpl) obj;
+		return this.start == that.start && this.finish == that.finish;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(Long.valueOf(this.start), Long.valueOf(this.finish));
+	}
+
 	@Override
 	public String toString() {
-		return "AuditDurationImpl [start=" + this.start + ", finish=" + this.finish + ", getDifference()="
-				+ this.getDifference() + ", getDuration()=" + this.getDuration() + "]";
+		return "AuditDurationImpl [start=" + this.start + ", finish=" + this.finish + ", getDifference()=" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ this.getDifference() + ", getDuration()=" + this.getDuration() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	static AuditDuration defaultInstance() {
@@ -142,35 +107,25 @@ public final class AuditDurationImpl implements AuditDuration {
 
 	static AuditDuration fromValues(final long start, final long finish) {
 		if (start < 0 || finish < 0) {
-			throw new IllegalArgumentException("Args start:" + start + " and finish:" + finish + " must be >= 0");
+			throw new IllegalArgumentException("start:" + start + " and finish:" + finish + " must be >= 0"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 		if (start > finish) {
-			throw new IllegalArgumentException("Args start" + start + " must be > finish:" + finish);
+			throw new IllegalArgumentException("start:" + start + " must not be > finish:" + finish); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		return new AuditDurationImpl(start, finish);
 	}
 
 	public static String getStringDuration(final long difference) {
-		long diff = difference;
-		Long hours = Long.valueOf(diff / msInHour);
-		diff %= msInHour;
-
-		Long mins = Long.valueOf(diff / msInMin);
-		diff %= msInMin;
-
-		Long sec = Long.valueOf(diff / msInSec);
-		diff %= msInSec;
-
-		Long ms = Long.valueOf(diff);
-
-		String res;
+		long hours = difference / (minInHour * secInMin * msInSec);
+		long minutes = difference / (secInMin * msInSec) % minInHour;
+		long seconds = difference / msInSec % secInMin;
+		long millis = difference % msInSec;
 
 		try (Formatter formatter = new Formatter()) {
-			formatter.format("%02d:%02d:%02d:%03d", hours, mins, sec, ms);
-			res = formatter.toString();
+			formatter.format("%02d:%02d:%02d:%03d", Long.valueOf(hours), Long.valueOf(minutes), Long.valueOf(seconds), //$NON-NLS-1$
+					Long.valueOf(millis));
+			return formatter.toString();
 		}
-
-		return res;
 	}
 
 	public static long sumDuration(Collection<AuditDuration> durations) {
