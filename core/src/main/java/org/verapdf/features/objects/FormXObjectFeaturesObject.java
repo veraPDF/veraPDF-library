@@ -84,7 +84,9 @@ public class FormXObjectFeaturesObject extends FeaturesObject {
 			root.setAttribute(ID, id);
 		}
 
-		CreateNodeHelper.addBoxFeature("bbox", formAdapter.getBBox(), root);
+		double[] bBox = formAdapter.getBBox();
+		CreateNodeHelper.addBoxFeature("bbox", bBox, root);
+		CreateNodeHelper.addWidthHeightFeatures(bBox, root);
 		CreateNodeHelper.parseMatrix(formAdapter.getMatrix(), root.addChild("matrix"));
 
 		if (formAdapter.isGroupPresent()) {
@@ -160,6 +162,10 @@ public class FormXObjectFeaturesObject extends FeaturesObject {
 	static List<Feature> getFeaturesList() {
 		// Missed all fields
 		List<Feature> featuresList = new ArrayList<>();
+		featuresList.add(new Feature("Width",
+				generateVariableXPath(XOBJECT_XPATH, CreateNodeHelper.WIDTH), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Height",
+				generateVariableXPath(XOBJECT_XPATH, CreateNodeHelper.HEIGHT), Feature.FeatureType.NUMBER));
 		featuresList.add(new Feature("Error IDs",
 				generateAttributeXPath(XOBJECT_XPATH, ErrorsHelper.ERRORID), Feature.FeatureType.STRING));
 		return featuresList;
