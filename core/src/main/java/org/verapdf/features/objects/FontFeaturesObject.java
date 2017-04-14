@@ -294,7 +294,7 @@ public class FontFeaturesObject extends FeaturesObject {
 
 			String actualFontName = descriptor.getFontName();
 			boolean subset = actualFontName != null && actualFontName.matches("^[A-Z]{6}\\+.*");
-			String fontName = subset ? actualFontName.substring(6, actualFontName.length()) : actualFontName;
+			String fontName = subset ? actualFontName.substring(7, actualFontName.length()) : actualFontName;
 			CreateNodeHelper.addNotEmptyNode(SUBSET, String.valueOf(subset), descriptorNode);
 			CreateNodeHelper.addNotEmptyNode(FONT_NAME, fontName, descriptorNode);
 			CreateNodeHelper.addNotEmptyNode(FONT_FAMILY, descriptor.getFontFamily(), descriptorNode);
