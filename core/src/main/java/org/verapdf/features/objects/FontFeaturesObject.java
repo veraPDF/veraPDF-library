@@ -156,8 +156,9 @@ public class FontFeaturesObject extends FeaturesObject {
 		} else if (CID_FONT_TYPE0.equals(fontType) ||
 				CID_FONT_TYPE2.equals(fontType)) {
 			Double dw = fontAdapter.getDefaultWidth();
-			root.addChild("defaultWidth").setValue(String.valueOf(dw.intValue()));
-
+			if (dw != null) {
+				root.addChild("defaultWidth").setValue(String.valueOf(dw.intValue()));
+			}
 			if (fontAdapter.isCIDSystemInfoPresent()) {
 				FeatureTreeNode cidS = root.addChild("cidSystemInfo");
 				CreateNodeHelper.addNotEmptyNode("registry", fontAdapter.getCIDSysInfoRegistry(), cidS);
