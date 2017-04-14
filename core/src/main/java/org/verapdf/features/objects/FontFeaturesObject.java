@@ -82,6 +82,7 @@ public class FontFeaturesObject extends FeaturesObject {
 	private static final String MISSING_WIDTH = "missingWidth";
 	private static final String CHAR_SET = "charSet";
 	private static final String EMBEDDED = "embedded";
+	private static final String SUBSET = "subset";
 
 	/**
 	 * Constructs new Font Feature Object
@@ -139,8 +140,6 @@ public class FontFeaturesObject extends FeaturesObject {
 			if (lc != null && lc.longValue() != -1) {
 				root.addChild("lastChar").setValue(String.valueOf(lc.longValue()));
 			}
-
-			parseWidths(fontAdapter.getWidth(), fc, root.addChild("widths"));
 
 			CreateNodeHelper.addNotEmptyNode("encoding", fontAdapter.getEncoding(), root);
 
@@ -231,6 +230,8 @@ public class FontFeaturesObject extends FeaturesObject {
 				generateVariableXPath(FONT, TYPE), Feature.FeatureType.STRING));
 		featuresList.add(new Feature("Font Name",
 				generateVariableXPath(FONT, FONT_DESCRIPTOR, FONT_NAME), Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Subset",
+				generateVariableXPath(FONT, FONT_DESCRIPTOR, SUBSET), Feature.FeatureType.BOOLEAN));
 		featuresList.add(new Feature("Font Family",
 				generateVariableXPath(FONT, FONT_DESCRIPTOR, FONT_FAMILY), Feature.FeatureType.STRING));
 		featuresList.add(new Feature("Font Stretch",
@@ -291,7 +292,11 @@ public class FontFeaturesObject extends FeaturesObject {
 		if (descriptor != null) {
 			FeatureTreeNode descriptorNode = root.addChild(FONT_DESCRIPTOR);
 
-			CreateNodeHelper.addNotEmptyNode(FONT_NAME, descriptor.getFontName(), descriptorNode);
+			String actualFontName = descriptor.getFontName();
+			boolean subset = actualFontName != null && actualFontName.matches("^[A-Z]{6}\\+.*");
+			String fontName = subset ? actualFontName.substring(7, actualFontName.length()) : actualFontName;
+			CreateNodeHelper.addNotEmptyNode(SUBSET, String.valueOf(subset), descriptorNode);
+			CreateNodeHelper.addNotEmptyNode(FONT_NAME, fontName, descriptorNode);
 			CreateNodeHelper.addNotEmptyNode(FONT_FAMILY, descriptor.getFontFamily(), descriptorNode);
 			CreateNodeHelper.addNotEmptyNode(FONT_STRETCH, descriptor.getFontStretch(), descriptorNode);
 			CreateNodeHelper.addNotEmptyNode(FONT_WEIGHT, getStringFromDouble(descriptor.getFontWeight()), descriptorNode);
@@ -302,7 +307,7 @@ public class FontFeaturesObject extends FeaturesObject {
 			descriptorNode.addChild(NONSYMBOLIC).setValue(String.valueOf(descriptor.isNonSymbolic()));
 			descriptorNode.addChild(ITALIC).setValue(String.valueOf(descriptor.isItalic()));
 			descriptorNode.addChild(ALL_CAP).setValue(String.valueOf(descriptor.isAllcap()));
-			descriptorNode.addChild(SMALL_CAP).setValue(String.valueOf(descriptor.isScript()));
+			descriptorNode.addChild(SMALL_CAP).setValue(String.valueOf(descriptor.isSmallCap()));
 			descriptorNode.addChild(FORCE_BOLD).setValue(String.valueOf(descriptor.isForceBold()));
 			CreateNodeHelper.addBoxFeature("fontBBox", descriptor.getFontBoundingBox(), descriptorNode);
 
@@ -325,19 +330,6 @@ public class FontFeaturesObject extends FeaturesObject {
 			} catch (IOException e) {
 				LOGGER.log(Level.FINE, "Error while obtaining unfiltered metadata stream", e);
 				registerNewError(e.getMessage());
-			}
-		}
-	}
-
-	private static void parseWidths(List<Long> array, Long firstChar,
-									FeatureTreeNode parent) throws FeatureParsingException {
-		if (firstChar != null) {
-			int fc = firstChar.intValue() == -1 ? 0 : firstChar.intValue();
-			for (int i = 0; i < array.size(); ++i) {
-				FeatureTreeNode element = parent.addChild("width");
-				Long arElement = array.get(i);
-				element.setValue(String.valueOf(arElement.longValue()));
-				element.setAttribute("char", String.valueOf(i + fc));
 			}
 		}
 	}

@@ -72,7 +72,9 @@ public class PageFeaturesObject extends FeaturesObject {
 		PageFeaturesObjectAdapter pageAdapter = (PageFeaturesObjectAdapter) this.adapter;
 		FeatureTreeNode root = FeatureTreeNode.createRootNode(PAGE);
 		root.setAttribute("orderNumber", Integer.toString(pageAdapter.getIndex()));
-		CreateNodeHelper.addBoxFeature("mediaBox", pageAdapter.getMediaBox(), root);
+		double[] mediaBox = pageAdapter.getMediaBox();
+		CreateNodeHelper.addWidthHeightFeatures(mediaBox, root);
+		CreateNodeHelper.addBoxFeature("mediaBox", mediaBox, root);
 		CreateNodeHelper.addBoxFeature("cropBox", pageAdapter.getCropBox(), root);
 		CreateNodeHelper.addBoxFeature("trimBox", pageAdapter.getTrimBox(), root);
 		CreateNodeHelper.addBoxFeature("bleedBox", pageAdapter.getBleedBox(), root);
@@ -135,6 +137,10 @@ public class PageFeaturesObject extends FeaturesObject {
 	static List<Feature> getFeaturesList() {
 		// Only rotation and scaling are present
 		List<Feature> featuresList = new ArrayList<>();
+		featuresList.add(new Feature("Width",
+				generateVariableXPath(PAGE, CreateNodeHelper.WIDTH), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Height",
+				generateVariableXPath(PAGE, CreateNodeHelper.HEIGHT), Feature.FeatureType.NUMBER));
 		featuresList.add(new Feature("Rotation",
 				generateVariableXPath(PAGE, ROTATION), Feature.FeatureType.NUMBER));
 		featuresList.add(new Feature("Scaling",

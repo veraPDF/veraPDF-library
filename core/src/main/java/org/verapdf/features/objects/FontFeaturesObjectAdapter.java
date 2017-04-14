@@ -21,7 +21,6 @@
 package org.verapdf.features.objects;
 
 import java.io.InputStream;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -44,7 +43,6 @@ public interface FontFeaturesObjectAdapter extends FeaturesObjectAdapter {
 	// simple fonts
 	Long getFirstChar();
 	Long getLastChar();
-	List<Long> getWidth();
 	String getEncoding();
 
 	// type3
