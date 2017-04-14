@@ -1,5 +1,6 @@
 package org.verapdf.policy;
 
+import javanet.staxutils.IndentingXMLStreamWriter;
 import org.verapdf.features.FeatureObjectType;
 import org.verapdf.features.objects.Feature;
 
@@ -27,7 +28,7 @@ public class SchematronGenerator {
 			throw new IllegalArgumentException("Assertions has to be non empty list");
 		}
 		XMLOutputFactory xof = XMLOutputFactory.newInstance();
-		XMLStreamWriter xtw = xof.createXMLStreamWriter(os);
+		XMLStreamWriter xtw = new IndentingXMLStreamWriter(xof.createXMLStreamWriter(os));
 		xtw.writeStartDocument("utf-8","1.0");
 		xtw.setPrefix(SCH_PREFIX, SCH_NAMESPACE);
 		xtw.writeStartElement(SCH_NAMESPACE,"schema");
@@ -48,6 +49,7 @@ public class SchematronGenerator {
 		}
 		xtw.writeEndElement();
 		xtw.writeEndDocument();
+		xtw.close();
 	}
 
 	private static String getRuleContext(FeatureObjectType featureType) {
