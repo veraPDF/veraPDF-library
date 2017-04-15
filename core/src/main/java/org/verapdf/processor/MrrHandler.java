@@ -28,8 +28,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
@@ -54,7 +52,6 @@ import org.verapdf.report.FeaturesReport;
  */
 
 final class MrrHandler extends AbstractXmlHandler {
-	private final static Logger logger = Logger.getLogger(MrrHandler.class.getCanonicalName());
     private final static String STATEMENT_PREFIX = "PDF file is ";
     private final static String NOT_INSERT = "not ";
     private final static String STATEMENT_SUFFIX = "compliant with Validation Profile requirements.";
@@ -181,12 +178,10 @@ final class MrrHandler extends AbstractXmlHandler {
 
 	@Override
 	void resultEnd(ProcessorResult result) throws VeraPDFException {
+		AuditDuration duration = AuditDurationImpl.sumDuration(getDurations(result));
+		this.serialseElement(duration, procTimeEleName, true, true);
 		try {
 			// End job element
-			this.writer.writeStartElement(procTimeEleName);
-			long resTime = AuditDurationImpl.sumDuration(getDurations(result));
-			this.writer.writeCharacters(AuditDurationImpl.getStringDuration(resTime));
-			this.writer.writeEndElement();
 			this.writer.writeEndElement();
 			this.writer.flush();
 		} catch (XMLStreamException excep) {

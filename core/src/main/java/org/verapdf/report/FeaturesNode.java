@@ -116,7 +116,7 @@ public class FeaturesNode {
 
 	static FeaturesNode fromValues(FeatureTreeNode node, FeatureExtractionResult collection) {
 		if (node == null) {
-			throw new IllegalArgumentException("Argument node cannot be null");
+			throw new IllegalArgumentException("Argument node cannot be null"); //$NON-NLS-1$
 		}
 
 		Map<QName, Object> qAttributes = new HashMap<>();

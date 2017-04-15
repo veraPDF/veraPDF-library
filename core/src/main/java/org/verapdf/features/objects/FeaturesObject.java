@@ -45,7 +45,7 @@ public abstract class FeaturesObject {
 	}
 
 	public void registerNewError(String error) {
-		errors.add(error);
+		this.errors.add(error);
 	}
 
 	/**
@@ -64,9 +64,9 @@ public abstract class FeaturesObject {
 		this.errors.clear();
 		if (this.adapter.isPDFObjectPresent()) {
 			FeatureTreeNode root = collectFeatures();
-			this.errors.addAll(adapter.getErrors());
-			if (!errors.isEmpty()) {
-				for (String error : errors) {
+			this.errors.addAll(this.adapter.getErrors());
+			if (!this.errors.isEmpty()) {
+				for (String error : this.errors) {
 					ErrorsHelper.addErrorIntoCollection(collection, root, error);
 				}
 			}
@@ -85,24 +85,24 @@ public abstract class FeaturesObject {
 
 	protected static String generateVariableXPath(String... node) {
 		if (node == null || node.length == 0) {
-			throw new IllegalArgumentException("There should be at least one node");
+			throw new IllegalArgumentException("There should be at least one node"); //$NON-NLS-1$
 		}
 		StringBuilder builder = new StringBuilder(node[0]);
 		for (int i = 1; i < node.length; ++i) {
-			builder.append("/").append(node[i]);
+			builder.append("/").append(node[i]); //$NON-NLS-1$
 		}
 		return builder.toString();
 	}
 
 	protected static String generateAttributeXPath(String... node) {
 		if (node == null || node.length < 2) {
-			throw new IllegalArgumentException("There should be at least two nodes for attribute path");
+			throw new IllegalArgumentException("There should be at least two nodes for attribute path"); //$NON-NLS-1$
 		}
 		StringBuilder builder = new StringBuilder(node[0]);
 		for (int i = 1; i < node.length - 1; ++i) {
-			builder.append("/").append(node[i]);
+			builder.append("/").append(node[i]); //$NON-NLS-1$
 		}
-		builder.append("/@").append(node[node.length - 1]);
+		builder.append("/@").append(node[node.length - 1]); //$NON-NLS-1$
 		return builder.toString();
 	}
 }

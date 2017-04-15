@@ -128,14 +128,20 @@ public final class AuditDurationImpl implements AuditDuration {
 		}
 	}
 
-	public static long sumDuration(Collection<AuditDuration> durations) {
-		long res = 0;
+	public static AuditDuration sumDuration(Collection<AuditDuration> durations) {
+		long start = 0L;
+		long finish = 0L;
 		if (durations != null) {
 			for (AuditDuration duration : durations) {
-				res += duration.getDifference();
+				if (start == 0 || duration.getStart() < start) {
+					start = duration.getStart();
+				}
+				if (duration.getFinish() > finish) {
+					finish = duration.getFinish();
+				}
 			}
 		}
-		return res;
+		return fromValues(start, finish);
 	}
 
 	static class Adapter extends XmlAdapter<AuditDurationImpl, AuditDuration> {
