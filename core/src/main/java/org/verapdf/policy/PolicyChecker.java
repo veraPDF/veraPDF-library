@@ -1,22 +1,16 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
- * All rights reserved.
- *
- * veraPDF Library core is free software: you can redistribute it and/or modify
- * it under the terms of either:
- *
- * The GNU General public license GPLv3+.
- * You should have received a copy of the GNU General Public License
- * along with veraPDF Library core as the LICENSE.GPL file in the root of the source
- * tree.  If not, see http://www.gnu.org/licenses/ or
- * https://www.gnu.org/licenses/gpl-3.0.en.html.
- *
- * The Mozilla Public License MPLv2+.
- * You should have received a copy of the Mozilla Public License along with
- * veraPDF Library core as the LICENSE.MPL file in the root of the source tree.
- * If a copy of the MPL was not distributed with this file, you can obtain one at
- * http://mozilla.org/MPL/2.0/.
+ * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org> All rights
+ * reserved. veraPDF Library core is free software: you can redistribute it
+ * and/or modify it under the terms of either: The GNU General public license
+ * GPLv3+. You should have received a copy of the GNU General Public License
+ * along with veraPDF Library core as the LICENSE.GPL file in the root of the
+ * source tree. If not, see http://www.gnu.org/licenses/ or
+ * https://www.gnu.org/licenses/gpl-3.0.en.html. The Mozilla Public License
+ * MPLv2+. You should have received a copy of the Mozilla Public License along
+ * with veraPDF Library core as the LICENSE.MPL file in the root of the source
+ * tree. If a copy of the MPL was not distributed with this file, you can obtain
+ * one at http://mozilla.org/MPL/2.0/.
  */
 /**
  * 
@@ -40,6 +34,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.verapdf.core.VeraPDFException;
+import org.verapdf.core.utils.FileUtils;
 
 /**
  * The veraPDF policy checker which is simply an abstraction that makes applying
@@ -51,11 +46,9 @@ import org.verapdf.core.VeraPDFException;
  */
 public final class PolicyChecker {
 	private static final TransformerFactory factory = TransformerFactory.newInstance();
-	private static final String extensionRegEx = "\\.(?=[^\\.]+$)"; //$NON-NLS-1$
-	private static final String schematronExt = "sch"; //$NON-NLS-1$
-	private static final String xslExtension = "xsl"; //$NON-NLS-1$
-	private static final String xsltExtension = "xslt"; //$NON-NLS-1$
-	private static final String xslExt = "." + xslExtension; //$NON-NLS-1$
+	public static final String SCHEMA_EXT = "sch"; //$NON-NLS-1$
+	public static final String XSL_EXT = "xsl"; //$NON-NLS-1$
+	public static final String XSLT_EXT = "xslt"; //$NON-NLS-1$
 	/**
 	 * A {@link List} of allowed extensions for the passed schmeatron rules.
 	 * These can be:
@@ -68,9 +61,9 @@ public final class PolicyChecker {
 	 * schematron file.</li>
 	 * </ul>
 	 */
-	public static final List<String> allowedExtensions = Arrays.asList(schematronExt, xslExtension, xsltExtension);
+	public static final List<String> allowedExtensions = Arrays.asList(SCHEMA_EXT, XSL_EXT, XSLT_EXT);
 	private static final String resourcePath = "org/verapdf/policy/"; //$NON-NLS-1$
-	private static final String mergeXsl = resourcePath + "MergeMrrPolicy" + xslExt; //$NON-NLS-1$
+	private static final String mergeXsl = resourcePath + "MergeMrrPolicy" + '.' + XSL_EXT; //$NON-NLS-1$
 	private static final Templates cachedMergeXsl = SchematronPipeline.createCachedTransform(mergeXsl);
 
 	private PolicyChecker() {
@@ -100,7 +93,7 @@ public final class PolicyChecker {
 			transformer.transform(new StreamSource(mrrReport), new StreamResult(mergedReport));
 			return;
 		} catch (TransformerException excep) {
-			throw new VeraPDFException("Problem merging XML files.", excep);
+			throw new VeraPDFException("Problem merging XML files.", excep); //$NON-NLS-1$
 		}
 	}
 
@@ -124,16 +117,16 @@ public final class PolicyChecker {
 	public static void applyPolicy(final File policy, final InputStream xmlReport, final OutputStream policyReport)
 			throws VeraPDFException {
 		// Get the file extension
-		String ext = getExtensionFromFileName(policy.getName());
+		String ext = FileUtils.extFromFileName(policy.getName());
 		if (!isAllowedExtension(ext)) {
-			throw new VeraPDFException("Policy file extension must be one of " + schematronExt + ", " + xslExtension //$NON-NLS-2$
-					+ ", or " + xsltExtension);
+			throw new VeraPDFException("Policy file extension must be one of " + SCHEMA_EXT + ", " + XSL_EXT //$NON-NLS-1$//$NON-NLS-2$
+					+ ", or " + XSLT_EXT); //$NON-NLS-1$
 		}
-		boolean isXsl = !ext.equalsIgnoreCase(schematronExt);
+		boolean isXsl = !ext.equalsIgnoreCase(SCHEMA_EXT);
 		try (FileInputStream fis = new FileInputStream(policy)) {
 			applyPolicy(fis, xmlReport, policyReport, isXsl);
 		} catch (IOException excep) {
-			throw new VeraPDFException("IOException applying policy file " + policy.getAbsolutePath(), excep);
+			throw new VeraPDFException("IOException applying policy file " + policy.getAbsolutePath(), excep); //$NON-NLS-1$
 		}
 	}
 
@@ -145,7 +138,7 @@ public final class PolicyChecker {
 	 * @return true if the filename has a recognised policy extension
 	 */
 	public static boolean isFilenameAllowedExtension(final String filename) {
-		return isAllowedExtension(getExtensionFromFileName(filename));
+		return isAllowedExtension(FileUtils.extFromFileName(filename));
 	}
 
 	/**
@@ -156,7 +149,7 @@ public final class PolicyChecker {
 	 * @return true if the extension is a recognised policy extension
 	 */
 	public static boolean isAllowedExtension(final String ext) {
-		return allowedExtensions.contains(ext);
+		return allowedExtensions.contains(ext.toLowerCase());
 	}
 
 	/**
@@ -188,7 +181,7 @@ public final class PolicyChecker {
 				applyRawSchematron(policy, xmlReport, policyReport);
 			}
 		} catch (IOException | TransformerException excep) {
-			throw new VeraPDFException("Exception when applying policy file.", excep);
+			throw new VeraPDFException("Exception when applying policy file.", excep); //$NON-NLS-1$
 		}
 	}
 
@@ -213,16 +206,5 @@ public final class PolicyChecker {
 			final OutputStream policyReport) throws TransformerException {
 		Transformer transformer = factory.newTransformer(new StreamSource(schematronXsl));
 		transformer.transform(new StreamSource(xmlReport), new StreamResult(policyReport));
-	}
-
-	private static String getExtensionFromFileName(final String filename) {
-		if (!filename.contains(".")) { //$NON-NLS-1$
-			return ""; //$NON-NLS-1$
-		}
-		String[] nameParts = filename.split(extensionRegEx);
-		if (nameParts.length > 0) {
-			return nameParts[nameParts.length - 1];
-		}
-		return ""; //$NON-NLS-1$
 	}
 }
