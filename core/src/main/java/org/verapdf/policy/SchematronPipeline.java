@@ -1,22 +1,16 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
- * All rights reserved.
- *
- * veraPDF Library core is free software: you can redistribute it and/or modify
- * it under the terms of either:
- *
- * The GNU General public license GPLv3+.
- * You should have received a copy of the GNU General Public License
- * along with veraPDF Library core as the LICENSE.GPL file in the root of the source
- * tree.  If not, see http://www.gnu.org/licenses/ or
- * https://www.gnu.org/licenses/gpl-3.0.en.html.
- *
- * The Mozilla Public License MPLv2+.
- * You should have received a copy of the Mozilla Public License along with
- * veraPDF Library core as the LICENSE.MPL file in the root of the source tree.
- * If a copy of the MPL was not distributed with this file, you can obtain one at
- * http://mozilla.org/MPL/2.0/.
+ * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org> All rights
+ * reserved. veraPDF Library core is free software: you can redistribute it
+ * and/or modify it under the terms of either: The GNU General public license
+ * GPLv3+. You should have received a copy of the GNU General Public License
+ * along with veraPDF Library core as the LICENSE.GPL file in the root of the
+ * source tree. If not, see http://www.gnu.org/licenses/ or
+ * https://www.gnu.org/licenses/gpl-3.0.en.html. The Mozilla Public License
+ * MPLv2+. You should have received a copy of the Mozilla Public License along
+ * with veraPDF Library core as the LICENSE.MPL file in the root of the source
+ * tree. If a copy of the MPL was not distributed with this file, you can obtain
+ * one at http://mozilla.org/MPL/2.0/.
  */
 /**
  * 
@@ -62,8 +56,10 @@ final class SchematronPipeline {
 
 	public static void processSchematron(InputStream schematronSource, OutputStream xslDest)
 			throws TransformerException, IOException {
-		File isoDsdResult = createTempFileResult(cachedIsoDsdXsl.newTransformer(), new StreamSource(schematronSource), "IsoDsd");
-		File isoExpResult = createTempFileResult(cachedExpXsl.newTransformer(), new StreamSource(isoDsdResult), "ExpXsl");
+		File isoDsdResult = createTempFileResult(cachedIsoDsdXsl.newTransformer(), new StreamSource(schematronSource),
+				"IsoDsd"); //$NON-NLS-1$
+		File isoExpResult = createTempFileResult(cachedExpXsl.newTransformer(), new StreamSource(isoDsdResult),
+				"ExpXsl"); //$NON-NLS-1$
 		cachedIsoSvrlXsl.newTransformer().transform(new StreamSource(isoExpResult), new StreamResult(xslDest));
 		isoDsdResult.delete();
 		isoExpResult.delete();
@@ -73,13 +69,13 @@ final class SchematronPipeline {
 		try {
 			return factory.newTemplates(new StreamSource(cl.getResourceAsStream(transName)));
 		} catch (TransformerConfigurationException excep) {
-			throw new IllegalStateException("Policy Schematron transformer XSL " + transName + " not found.", excep);
+			throw new IllegalStateException("Policy Schematron transformer XSL " + transName + " not found.", excep); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
-	private static File createTempFileResult(final Transformer transformer, final StreamSource toTransform, final String suffix)
-			throws TransformerException, IOException {
-		File result = File.createTempFile("veraPDF_", suffix); //$NON-NLS-1$ //$NON-NLS-2$
+	private static File createTempFileResult(final Transformer transformer, final StreamSource toTransform,
+			final String suffix) throws TransformerException, IOException {
+		File result = File.createTempFile("veraPDF_", suffix); //$NON-NLS-1$
 		result.deleteOnExit();
 
 		try (FileOutputStream fos = new FileOutputStream(result)) {
@@ -93,7 +89,7 @@ final class SchematronPipeline {
 		fact.setURIResolver(new ClasspathResourceURIResolver());
 		return fact;
 	}
-	
+
 	private static class ClasspathResourceURIResolver implements URIResolver {
 		ClasspathResourceURIResolver() {
 			// Do nothing, just prevents synthetic access warning.
