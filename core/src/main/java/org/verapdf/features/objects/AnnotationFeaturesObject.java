@@ -88,7 +88,9 @@ public class AnnotationFeaturesObject extends FeaturesObject {
 		}
 
 		CreateNodeHelper.addNotEmptyNode(SUB_TYPE, annotationAdapter.getSubtype(), root);
-		CreateNodeHelper.addBoxFeature("rectangle", annotationAdapter.getRectangle(), root);
+		double[] rectangle = annotationAdapter.getRectangle();
+		CreateNodeHelper.addBoxFeature("rectangle", rectangle, root);
+		CreateNodeHelper.addWidthHeightFeatures(rectangle, root);
 		CreateNodeHelper.addNotEmptyNode(CONTENTS, annotationAdapter.getContents(), root);
 		CreateNodeHelper.addNotEmptyNode(ANNOTATION_NAME, annotationAdapter.getAnnotationName(), root);
 		CreateNodeHelper.addNotEmptyNode(MODIFIED_DATE, annotationAdapter.getModifiedDate(), root);
@@ -144,6 +146,10 @@ public class AnnotationFeaturesObject extends FeaturesObject {
 		List<Feature> featuresList = new ArrayList<>();
 		featuresList.add(new Feature("Subtype",
 				generateVariableXPath(ANNOTATION, SUB_TYPE), Feature.FeatureType.STRING));
+		featuresList.add(new Feature("Width",
+				generateVariableXPath(ANNOTATION, CreateNodeHelper.WIDTH), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Height",
+				generateVariableXPath(ANNOTATION, CreateNodeHelper.HEIGHT), Feature.FeatureType.NUMBER));
 		featuresList.add(new Feature("Contents",
 				generateVariableXPath(ANNOTATION, CONTENTS), Feature.FeatureType.STRING));
 		featuresList.add(new Feature("Annotation Name",

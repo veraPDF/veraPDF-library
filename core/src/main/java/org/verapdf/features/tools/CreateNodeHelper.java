@@ -51,6 +51,8 @@ public final class CreateNodeHelper {
 	private static final String LLY = "lly";
 	private static final String URX = "urx";
 	private static final String URY = "ury";
+	public static final String WIDTH = "width";
+	public static final String HEIGHT = "height";
 
 	private CreateNodeHelper() {
 	}
@@ -112,6 +114,14 @@ public final class CreateNodeHelper {
 		}
 
 		return boxNode;
+	}
+
+	public static void addWidthHeightFeatures(double[] box, FeatureTreeNode parent)
+			throws FeatureParsingException {
+		if (box != null && box.length >= 4) {
+			parent.addChild(WIDTH).setValue(String.format("%.3f", box[2] - box[0]));
+			parent.addChild(HEIGHT).setValue(String.format("%.3f", box[3] - box[1]));
+		}
 	}
 
 	/**
