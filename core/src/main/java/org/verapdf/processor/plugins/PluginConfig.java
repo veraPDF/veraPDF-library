@@ -20,19 +20,19 @@
  */
 package org.verapdf.processor.plugins;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.net.URI;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * @author Maksim Bezrukov
@@ -65,7 +65,7 @@ public class PluginConfig {
 	}
 
 	private PluginConfig() {
-		this(false, "", "", "", FileSystems.getDefault().getPath(""), Collections.<Attribute>emptyList());
+		this(false, "", "", "", FileSystems.getDefault().getPath(""), Collections.<Attribute>emptyList());  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
 	}
 
 	public static PluginConfig fromValues(boolean enabled, String name, String version, String description, Path pluginFolder, List<Attribute> attributes) {

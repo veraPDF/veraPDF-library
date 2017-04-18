@@ -22,21 +22,15 @@ package org.verapdf.model.tools.xmp.validators;
 
 import com.adobe.xmp.impl.VeraPDFXMPNode;
 
-import java.util.logging.Logger;
-
 /**
  * @author Maksim Bezrukov
  */
 public class URITypeValidator implements TypeValidator {
 
-    private static final Logger LOGGER = Logger
-            .getLogger(URITypeValidator.class.getName());
-
-    @SuppressWarnings("unused")
     @Override
     public boolean isCorresponding(VeraPDFXMPNode node) {
         if (node == null) {
-            throw new IllegalArgumentException("Argument node can not be null.");
+            throw new IllegalArgumentException("Argument node can not be null."); //$NON-NLS-1$
         }
         // was changed to text validation after discussion with TWG
 //        try {

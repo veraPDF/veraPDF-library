@@ -20,13 +20,23 @@
  */
 package org.verapdf.features.objects;
 
-import org.verapdf.policy.SchematronOperation;
+import static org.verapdf.policy.SchematronOperation.CONTAINS;
+import static org.verapdf.policy.SchematronOperation.ENDS_WITH;
+import static org.verapdf.policy.SchematronOperation.IS_EQUAL;
+import static org.verapdf.policy.SchematronOperation.IS_FALSE;
+import static org.verapdf.policy.SchematronOperation.IS_GREATER;
+import static org.verapdf.policy.SchematronOperation.IS_GREATER_OR_EQUAL;
+import static org.verapdf.policy.SchematronOperation.IS_LESS;
+import static org.verapdf.policy.SchematronOperation.IS_LESS_OR_EQUAL;
+import static org.verapdf.policy.SchematronOperation.IS_TRUE;
+import static org.verapdf.policy.SchematronOperation.NOT_EQUAL;
+import static org.verapdf.policy.SchematronOperation.NOT_PRESENT;
+import static org.verapdf.policy.SchematronOperation.PRESENT;
+import static org.verapdf.policy.SchematronOperation.STARTS_WITH;
 
-import java.util.Collections;
 import java.util.EnumSet;
-import java.util.Set;
 
-import static org.verapdf.policy.SchematronOperation.*;
+import org.verapdf.policy.SchematronOperation;
 
 /**
  * @author Maksim Bezrukov
@@ -45,15 +55,15 @@ public class Feature {
 
 
 	public String getFeatureName() {
-		return featureName;
+		return this.featureName;
 	}
 
 	public String getFeatureXPath() {
-		return featureXPath;
+		return this.featureXPath;
 	}
 
 	public FeatureType getFeatureType() {
-		return featureType;
+		return this.featureType;
 	}
 
 	public enum FeatureType {
@@ -67,7 +77,7 @@ public class Feature {
 		private EnumSet<SchematronOperation> legalOperations;
 
 		FeatureType(SchematronOperation op, SchematronOperation... operations) {
-			legalOperations = EnumSet.of(op, operations);
+			this.legalOperations = EnumSet.of(op, operations);
 		}
 
 		public EnumSet<SchematronOperation> getLegalOperations() {

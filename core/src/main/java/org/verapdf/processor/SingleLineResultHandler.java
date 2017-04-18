@@ -35,12 +35,12 @@ import org.verapdf.report.FeaturesReport;
  * @author Sergey Shemyakov
  */
 class SingleLineResultHandler extends AbstractBatchHandler {
-	private static final String pass = "PASS ";
-	private static final String fail = "FAIL ";
-	private static final String ioExcepMess = "IOException caught when writing to output stream";
+	private static final String pass = "PASS "; //$NON-NLS-1$
+	private static final String fail = "FAIL "; //$NON-NLS-1$
+	private static final String ioExcepMess = "IOException caught when writing to output stream"; //$NON-NLS-1$
 	private static final String parseExcepMessTmpl = "%s does not appear to be a valid PDF file and could not be parsed.";
 	private static final String pdfEncryptMessTmpl = "%s appears to be an encrypted PDF file and could not be processed.";
-	private static final String ruleMessTmpl = "  %s%s-%d\n";
+	private static final String ruleMessTmpl = "  %s%s-%d\n"; //$NON-NLS-1$
 	private OutputStream outputStream;
 	private final boolean isVerbose;
 	private final boolean logSuccess;
@@ -97,7 +97,7 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 	@Override
 	void validationSuccess(final TaskResult taskResult, final ValidationResult validationResult)
 			throws VeraPDFException {
-		String reportSummary = (validationResult.isCompliant() ? pass : fail) + this.item.getName() + "\n";
+		String reportSummary = (validationResult.isCompliant() ? pass : fail) + this.item.getName() + "\n"; //$NON-NLS-1$
 		try {
 			this.outputStream.write(reportSummary.getBytes());
 			if (this.isVerbose) {
@@ -110,7 +110,7 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 
 	@Override
 	void validationFailure(final TaskResult taskResult) throws VeraPDFException {
-		String reportSummary = "ERROR " + this.item.getName() + " " + taskResult.getType().fullName() + "\n";
+		String reportSummary = "ERROR " + this.item.getName() + " " + taskResult.getType().fullName() + "\n"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		try {
 			this.outputStream.write(reportSummary.getBytes());
 		} catch (IOException excep) {
@@ -161,7 +161,7 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 		for (TestAssertion assertion : validationResult.getTestAssertions()) {
 			if (assertion.getStatus() == TestAssertion.Status.FAILED) {
 				failedRules.add(assertion.getRuleId());
-			} else if (this.isVerbose) {
+			} else if (this.logSuccess) {
 				passedRules.add(assertion.getRuleId());
 			}
 		}
