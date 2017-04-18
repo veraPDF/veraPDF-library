@@ -27,7 +27,7 @@ In order to use the GUI you'll need:
  * Java 7, which can be downloaded [from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html), or for Linux users [OpenJDK](http://openjdk.java.net/install/index.html).
 
 ### veraPDF GUI
-####Download release version
+#### Download release version
 You can download a Java-based installer for the latest veraPDF GUI release [from our download site](http://downloads.verapdf.org/rel/verapdf-installer.zip). The current installation process requires Java 1.7 to be pre-installed.
 
 #### Download latest development version
@@ -72,7 +72,7 @@ Life will be easier if you also use [Git](https://git-scm.com/) to obtain and ma
 
 ### Building veraPDF
 First you'll need to obtain a version of the veraPDF-library source code. You can compile either the latest relase version or the latest development source.
-####Downloading the latest release source
+#### Downloading the latest release source
 Use Git to clone the repository and ensure that the `master` branch is checked out:
 ```
 git clone https://github.com/veraPDF/veraPDF-library

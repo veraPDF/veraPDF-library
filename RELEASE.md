@@ -2,19 +2,19 @@ Release Process
 ===============
 Introduction
 ------------
-###Audience
+### Audience
  - veraPDF development staff looking to release a new version;
  - anyone interested in knowing how our release process works; and
  - anyone who wants to change the version number or re-package our software.
 
-###Pre-requisites
+### Pre-requisites
 If you're still reading you'll also need an understanding and some experience using [Git](https://git-scm.com) and [Maven](https://maven.apache.org/). A quick brush up on [Semantic Versioning](http://semver.org/) and a typical [Git branching workflow](http://nvie.com/posts/a-successful-git-branching-model/) and we're ready to go.
 
 Releasing
 ---------
 The veraPDF software projects use the `MINOR` version number to indicate the development status of a particular version. An even number signifies a release version while an odd numbers are assigned to development prototypes. We increment the `MINOR` version number twice at each release milestone. The first increment is from the current odd numbered development version number to the new even release version.
 
-###Getting to integration
+### Getting to integration
 You should use the latest version of the `integration` branch of the project. In the following example we'll start from scratch and assume:
  - we're releasing `0.6.x` from development version `0.5.x`
  - you're using a bash shell; and
@@ -45,7 +45,7 @@ outputs:
 
     nothing to commit, working directory clean
 
-###Bumping minor
+### Bumping minor
 We bump the `MINOR` version on integration from `5` to `6` using Maven to set the version:
 
     mvn versions:set -DnewVersion=0.6.0
@@ -81,7 +81,7 @@ or issuing:
 
 will show the version numbers in the POM.
 
-###Create a release branch
+### Create a release branch
 If the version has been set properly then add the changes to Git and create a release branch:
 
     git add .
@@ -89,7 +89,7 @@ If the version has been set properly then add the changes to Git and create a re
     git checkout -b release-0.6
     git push --set-upstream origin release-0.6
 
-###Bump minor for integration to 0.7
+### Bump minor for integration to 0.7
 We now need to move the minor version number on the `integration` branch to 0.7 for future development:
 
     git checkout integration
