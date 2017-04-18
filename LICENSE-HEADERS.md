@@ -2,11 +2,11 @@ License Headers for Source Code
 ===============================
 Introduction
 ------------
-###Audience
+### Audience
  - veraPDF developers wanting to add a license header to the source code; and
  - anyone interested in knowing how our release process works.
 
-###Pre-requisites
+### Pre-requisites
 If you're still reading you'll also need an understanding and some experience using [Git](https://git-scm.com) and [Maven](https://maven.apache.org/).
 
 License Headers
@@ -25,7 +25,7 @@ The following worked example shows how to add the license headers to the 0.8 rel
  - create a temporary Git branch with MPL headers; and
  - use Git to create a zip and tar archive of the headed code.
 
-###Getting to the release branch
+### Getting to the release branch
 You should use the latest version of the `release-0.8` branch of the project. In the following example we'll start from scratch and assume:
  - you're using a bash shell; and
  - the `git remote` name for the repo used is `origin`.
@@ -55,7 +55,7 @@ outputs:
 
     nothing to commit, working directory clean
 
-###Creating a GPL source headed branch
+### Creating a GPL source headed branch
 From the release-0.8 branch create a new branch for the licensed source files:
 
     git checkout -b release-0.8-gpl origin/release-0.8
@@ -69,7 +69,7 @@ The Maven POM holds profiles for both of the license headers, we simply invoke w
 
 Now to create the MPL headed branch.
 
-###Creating an MPL source headed branch
+### Creating an MPL source headed branch
 From the release-0.8 branch create a new branch for the licensed source files:
 
     git checkout -b release-0.8-mpl origin/release-0.8
@@ -81,7 +81,7 @@ Again we invoke Maven, this time with the profile for the MPL header, test the c
     git add .
     git commit -m "Added MPL source headers."
 
-###Creating the source archives
+### Creating the source archives
 We can now use Git to create zip or tar source archives from our headed branches. To create a compressed tarball called `veraPDF-0.8-gpl.tar.gz` from our GPL headed branch `release-0.8-gpl` in the local directory:
 
     git archive --format=tar release-0.8-gpl | gzip > veraPDF-0.8-gpl.tar.gz
