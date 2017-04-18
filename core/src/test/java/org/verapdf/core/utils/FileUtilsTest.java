@@ -20,6 +20,17 @@ public class FileUtilsTest {
 	static final String aDir = File.separator + name + File.separator + name + '.' + name + File.separator;
 
 	@Test
+	public void testHasExt() {
+		assertTrue(FileUtils.hasExt(name + ext, "ext")); //$NON-NLS-1$
+		assertFalse(FileUtils.hasExt(name + ext, "EXT")); //$NON-NLS-1$
+		assertTrue(FileUtils.hasExtNoCase(name + ext, "EXT")); //$NON-NLS-1$
+		assertTrue(FileUtils.hasExt(name + ext, ext));
+		assertFalse(FileUtils.hasExt(name + ext, ext.toUpperCase()));
+		assertTrue(FileUtils.hasExtNoCase(name + ext, ext.toUpperCase())); //$NON-NLS-1$
+		assertFalse(FileUtils.hasExt(name + ext, schemaExt));
+		assertFalse(FileUtils.hasExt(name + ext, '.' + schemaExt));
+	}
+	@Test
 	public void testExtensionless() {
 		final String testName = name;
 		final String expectedName = name + schemaExt;

@@ -30,7 +30,7 @@ public final class FileUtils {
 
 	public static boolean hasExt(final String fileName, final String ext) {
 		final String fullExt = ext.startsWith(dot) ? ext : dot + ext;
-		return fileName.endsWith('.' + fullExt);
+		return fileName.endsWith(fullExt);
 	}
 
 	/**
