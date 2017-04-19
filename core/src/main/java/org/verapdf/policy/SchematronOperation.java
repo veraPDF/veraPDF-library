@@ -30,7 +30,7 @@ public enum SchematronOperation {
 
 	// String
 	STARTS_WITH(true, "starts with"),
-	ENDS_WITH(true, "ends with"),
+//	ENDS_WITH(true, "ends with"),
 	CONTAINS(true, "contains substring");
 
 	private boolean hasArguments;
@@ -102,14 +102,14 @@ public enum SchematronOperation {
 			case STARTS_WITH:
 				test = "starts-with(" + feature.getFeatureXPath() + ",'" + argument + "')";
 				break;
-			case ENDS_WITH:
-				test = "ends-with(" + feature.getFeatureXPath() + ",'" + argument + "')";
-				break;
+//			case ENDS_WITH:
+//				test = "ends-with(" + feature.getFeatureXPath() + ",'" + argument + "')";
+//				break;
 			default:
 				throw new IllegalStateException("Unsupported operation type");
 		}
 		String desc = "Failed check: " + feature.getFeatureName() + " " + this.getDescription();
-		if (argument != null) {
+		if (this.hasArguments) {
 			desc += " " + argument;
 		}
 		return new AssertionInformation(test, desc);
