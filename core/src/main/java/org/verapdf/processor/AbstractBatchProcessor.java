@@ -108,7 +108,7 @@ public abstract class AbstractBatchProcessor implements BatchProcessor {
 	protected abstract void processList(final List<? extends File> toProcess) throws VeraPDFException;
 
 	private void initialise(final BatchProcessingHandler resultHandler) {
-		this.summariser = new ProcessorFactory.BatchSummariser();
+		this.summariser = new ProcessorFactory.BatchSummariser(this.getConfig());
 		this.handler = resultHandler;
 	}
 

@@ -49,7 +49,7 @@ import org.verapdf.report.FeaturesReport;
 class ProcessorResultImpl implements ProcessorResult {
 	private final static ProcessorResult defaultInstance = new ProcessorResultImpl();
 	@XmlAttribute
-	private final boolean isValidPdf;
+	private final boolean isPdf;
 	@XmlAttribute
 	private final boolean isEncryptedPdf;
 	@XmlElement
@@ -85,12 +85,12 @@ class ProcessorResultImpl implements ProcessorResult {
 		this(details, true, false, results, validationResult, featuresResult, fixerResult);
 	}
 
-	private ProcessorResultImpl(final ItemDetails details, final boolean isValidPdf, final boolean isEncrypted,
+	private ProcessorResultImpl(final ItemDetails details, final boolean isPdf, final boolean isEncrypted,
 			final EnumMap<TaskType, TaskResult> results, final ValidationResult validationResult,
 			final FeatureExtractionResult featuresResult, final MetadataFixerResult fixerResult) {
 		super();
 		this.itemDetails = details;
-		this.isValidPdf = isValidPdf;
+		this.isPdf = isPdf;
 		this.isEncryptedPdf = isEncrypted;
 		this.taskResults = results;
 		this.validationResult = validationResult;
@@ -163,8 +163,8 @@ class ProcessorResultImpl implements ProcessorResult {
 	}
 
 	@Override
-	public boolean isValidPdf() {
-		return this.isValidPdf;
+	public boolean isPdf() {
+		return this.isPdf;
 	}
 
 	@Override

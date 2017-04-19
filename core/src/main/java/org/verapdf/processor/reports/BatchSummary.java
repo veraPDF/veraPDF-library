@@ -34,38 +34,19 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlJavaTypeAdapter(BatchSummaryImpl.Adapter.class)
 public interface BatchSummary {
 
-	/**
-	 * @return the duration as an {@link AuditDuration}
-	 */
 	AuditDuration getDuration();
 
-	/**
-	 * @return the number of jobs in the batch
-	 */
-	int getJobs();
+	ValidationBatchSummary getValidationSummary();
+	
+	FeaturesBatchSummary getFeaturesSummary();
+	
+	MetadataRepairBatchSummary getRepairSummary();
 
-	/**
-	 * @return the failed jobs, that is jobs where an exception was thrown and processing did not complete properly
-	 */
-	int getFailedJobs();
+	boolean isMultiJob();
 
-	/**
-	 * @return the number of valid PDF/A documents in the batch
-	 */
-	int getValidPdfaCount();
+	int getTotalJobs();
 
-	/**
-	 * @return the number of invalid PDF/A documents in the batch
-	 */
-	int getInvalidPdfaCount();
+	int getFailedParsingJobs();
 
-	/**
-	 * @return the number of validation jobs that threw an exception, if any
-	 */
-	int getValidationExceptionCount();
-
-	/**
-	 * @return the number of PDF documents for which features were extracted.
-	 */
-	int getFeatureCount();
+	int getFailedEncryptedJobs();
 }

@@ -17,6 +17,7 @@
  */
 package org.verapdf.processor.reports;
 
+import org.verapdf.component.AuditDuration;
 import org.verapdf.component.Components;
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.results.MetadataFixerResult;
@@ -55,9 +56,13 @@ public final class Reports {
 	 * @return a new {@link BatchSummary} instance created using the passed
 	 *         values
 	 */
-	public static final BatchSummary createBatchSummary(final Components.Timer timer, final int jobs,
-			final int failedJobs, final int valid, final int inValid, final int validExcep, final int features) {
-		return BatchSummaryImpl.fromValues(timer.stop(), jobs, failedJobs, valid, inValid, validExcep, features);
+	public static final BatchSummary createBatchSummary(final Components.Timer timer, final ValidationBatchSummary validationSummary,
+			final FeaturesBatchSummary featureSummary, final MetadataRepairBatchSummary repairSummary, final int totalJobs, final int failedToParse, final int encrypted) {
+		if (totalJobs < 0)  throw new IllegalArgumentException("Argument totalJobs must be >= 0"); //$NON-NLS-1$
+		if (failedToParse < 0)  throw new IllegalArgumentException("Argument failedToParse must be >= 0"); //$NON-NLS-1$
+		if (encrypted < 0)  throw new IllegalArgumentException("Argument encrypted must be >= 0"); //$NON-NLS-1$
+		if ((failedToParse + encrypted) > totalJobs) throw new IllegalArgumentException("Argument totalJobs must be >= arguments (failedJobs + encrypted)"); //$NON-NLS-1$
+		return BatchSummaryImpl.fromValues(timer.stop(), validationSummary, featureSummary, repairSummary, totalJobs, failedToParse, encrypted);
 	}
 
 	/**

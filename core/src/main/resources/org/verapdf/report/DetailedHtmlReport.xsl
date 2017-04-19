@@ -120,7 +120,7 @@
                 <xsl:if test="/report/jobs/job/validationReport/@isCompliant">
                     <tr>
                         <td width="200" class="{$validClass}">
-                            Compliance status:
+                            PDF/A compliance:
                         </td>
                         <td class="{$validClass}">
                             <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'true'">
@@ -148,11 +148,11 @@
                         <xsl:choose>
                             <xsl:when
                                     test="/report/jobs/job/policyReport/@failedChecks > 0">
-                                <td class="invalid">Policy status:</td>
+                                <td class="invalid">Policy compliance:</td>
                                 <td class="invalid">Failed</td>
                             </xsl:when>
                             <xsl:otherwise>
-                                <td class="valid">Policy status:</td>
+                                <td class="valid">Policy compliance:</td>
                                 <td class="valid">Passed</td>
                             </xsl:otherwise>
                         </xsl:choose>
@@ -168,7 +168,7 @@
                     </td>
                     <td>
                         <xsl:value-of
-                                select="/report/buildInformation/releaseDetails[1]/@version"/>
+                                select="/report/buildInformation/releaseDetails[@id='gui']/@version"/>
                     </td>
                 </tr>
                 <tr>
@@ -177,7 +177,7 @@
                     </td>
                     <td>
                         <xsl:value-of
-                                select="/report/buildInformation/releaseDetails[1]/@buildDate"/>
+                                select="/report/buildInformation/releaseDetails[@id='gui']/@buildDate"/>
                     </td>
                 </tr>
                 <tr>
@@ -185,7 +185,7 @@
                         <b>Processing time:</b>
                     </td>
                     <td>
-                        <xsl:value-of select="/report/jobs/job/processingTime"/>
+                        <xsl:value-of select="/report/jobs/job/duration"/>
                     </td>
                 </tr>
                 <xsl:if test="/report/jobs/job/validationReport/details/@passedRules or /report/jobs/job/validationReport/details/@failedRules">

@@ -1,27 +1,29 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
- * All rights reserved.
- *
- * veraPDF Library core is free software: you can redistribute it and/or modify
- * it under the terms of either:
- *
- * The GNU General public license GPLv3+.
- * You should have received a copy of the GNU General Public License
- * along with veraPDF Library core as the LICENSE.GPL file in the root of the source
- * tree.  If not, see http://www.gnu.org/licenses/ or
- * https://www.gnu.org/licenses/gpl-3.0.en.html.
- *
- * The Mozilla Public License MPLv2+.
- * You should have received a copy of the Mozilla Public License along with
- * veraPDF Library core as the LICENSE.MPL file in the root of the source tree.
- * If a copy of the MPL was not distributed with this file, you can obtain one at
- * http://mozilla.org/MPL/2.0/.
+ * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org> All rights
+ * reserved. veraPDF Library core is free software: you can redistribute it
+ * and/or modify it under the terms of either: The GNU General public license
+ * GPLv3+. You should have received a copy of the GNU General Public License
+ * along with veraPDF Library core as the LICENSE.GPL file in the root of the
+ * source tree. If not, see http://www.gnu.org/licenses/ or
+ * https://www.gnu.org/licenses/gpl-3.0.en.html. The Mozilla Public License
+ * MPLv2+. You should have received a copy of the Mozilla Public License along
+ * with veraPDF Library core as the LICENSE.MPL file in the root of the source
+ * tree. If a copy of the MPL was not distributed with this file, you can obtain
+ * one at http://mozilla.org/MPL/2.0/.
  */
 /**
  *
  */
 package org.verapdf.processor;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.util.EnumSet;
+
+import javax.xml.bind.JAXBException;
 
 import org.verapdf.component.Components;
 import org.verapdf.core.VeraPDFException;
@@ -33,13 +35,7 @@ import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 import org.verapdf.processor.plugins.PluginsCollectionConfig;
 import org.verapdf.processor.reports.BatchSummary;
 import org.verapdf.processor.reports.Reports;
-
-import javax.xml.bind.JAXBException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.util.EnumSet;
+import org.verapdf.processor.reports.Summarisers;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -57,27 +53,30 @@ public final class ProcessorFactory {
 	}
 
 	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
-											 final PluginsCollectionConfig pluginsCollectionConfig,
-			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks) {
+			final PluginsCollectionConfig pluginsCollectionConfig, final MetadataFixerConfig fixerConfig,
+			final EnumSet<TaskType> tasks) {
 		return ProcessorConfigImpl.fromValues(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks);
 	}
 
 	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
-											 final PluginsCollectionConfig pluginsCollectionConfig,
-			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, final String mdFolder) {
-		return ProcessorConfigImpl.fromValues(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks, mdFolder);
+			final PluginsCollectionConfig pluginsCollectionConfig, final MetadataFixerConfig fixerConfig,
+			final EnumSet<TaskType> tasks, final String mdFolder) {
+		return ProcessorConfigImpl.fromValues(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks,
+				mdFolder);
 	}
 
 	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
-											 final PluginsCollectionConfig pluginsCollectionConfig,
-			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, ValidationProfile customProfile) {
-		return ProcessorConfigImpl.fromValues(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks, customProfile);
+			final PluginsCollectionConfig pluginsCollectionConfig, final MetadataFixerConfig fixerConfig,
+			final EnumSet<TaskType> tasks, ValidationProfile customProfile) {
+		return ProcessorConfigImpl.fromValues(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks,
+				customProfile);
 	}
 
 	public static ProcessorConfig fromValues(final ValidatorConfig config, final FeatureExtractorConfig featureConfig,
-											 final PluginsCollectionConfig pluginsCollectionConfig,
-			final MetadataFixerConfig fixerConfig, final EnumSet<TaskType> tasks, ValidationProfile customProfile, final String mdFolder) {
-		return ProcessorConfigImpl.fromValues(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks, customProfile, mdFolder);
+			final PluginsCollectionConfig pluginsCollectionConfig, final MetadataFixerConfig fixerConfig,
+			final EnumSet<TaskType> tasks, ValidationProfile customProfile, final String mdFolder) {
+		return ProcessorConfigImpl.fromValues(config, featureConfig, pluginsCollectionConfig, fixerConfig, tasks,
+				customProfile, mdFolder);
 	}
 
 	public static void configToXml(final ProcessorConfig toConvert, final OutputStream stream, boolean format)
@@ -105,8 +104,8 @@ public final class ProcessorFactory {
 		return RawResultHandler.newInstance(dest);
 	}
 
-	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose, int maxFailedChecksPerRule, boolean logPassed)
-			throws VeraPDFException {
+	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose,
+			int maxFailedChecksPerRule, boolean logPassed) throws VeraPDFException {
 		return getHandler(option, isVerbose, System.out, maxFailedChecksPerRule, logPassed);
 	}
 
@@ -148,37 +147,36 @@ public final class ProcessorFactory {
 	}
 
 	public static final class BatchSummariser {
-		private int jobs = 0;
-		private int failedJobs = 0;
-		private int valid = 0;
-		private int invalid = 0;
-		private int validExcep = 0;
-		private int features = 0;
+		private final ProcessorConfig config;
+		private int totalJobs = 0;
+		private int failedToParse = 0;
+		private int encrypted = 0;
 		private Components.Timer timer = Components.Timer.start();
+		private Summarisers.ValidationSummaryBuilder validationBuilder = new Summarisers.ValidationSummaryBuilder();
+		private Summarisers.FeatureSummaryBuilder featureBuilder = new Summarisers.FeatureSummaryBuilder();
+		private Summarisers.RepairSummaryBuilder repairBuilder = new Summarisers.RepairSummaryBuilder();
+
+		public BatchSummariser(ProcessorConfig config) {
+			if (config == null)
+				throw new IllegalArgumentException("Argument config can not be null"); //$NON-NLS-1$
+			this.config = config;
+		}
 
 		public void addProcessingResult(ProcessorResult result) {
-			this.jobs++;
-			if (!result.isValidPdf() || result.isEncryptedPdf()) {
-				this.failedJobs++;
-				return;
-			}
-			if (result.getTaskTypes().contains(TaskType.VALIDATE) && result.getResultForTask(TaskType.VALIDATE).isExecuted()) {
-				if (!result.getResultForTask(TaskType.VALIDATE).isSuccess())
-					this.validExcep++;
-				if (result.getValidationResult().isCompliant())
-					this.valid++;
-				else
-					this.invalid++;
-			}
-			if (result.getTaskTypes().contains(TaskType.EXTRACT_FEATURES) && result.getResultForTask(TaskType.EXTRACT_FEATURES).isExecuted()
-					&& result.getResultForTask(TaskType.EXTRACT_FEATURES).isSuccess()) {
-				this.features++;
-			}
+			this.totalJobs++;
+			if (!result.isPdf()) this.failedToParse++;
+			if (result.isEncryptedPdf()) this.encrypted++;
+			if (this.config.hasTask(TaskType.VALIDATE))
+				this.validationBuilder.addResult(result);
+			if (this.config.hasTask(TaskType.EXTRACT_FEATURES))
+				this.featureBuilder.addResult(result);
+			if (this.config.hasTask(TaskType.FIX_METADATA))
+				this.repairBuilder.addResult(result);
 		}
 
 		public BatchSummary summarise() {
-			return Reports.createBatchSummary(this.timer, this.jobs, this.failedJobs, this.valid, this.invalid,
-					this.validExcep, this.features);
+			return Reports.createBatchSummary(this.timer, this.validationBuilder.build(), this.featureBuilder.build(),
+					this.repairBuilder.build(), this.totalJobs, this.failedToParse, this.encrypted);
 		}
 	}
 }

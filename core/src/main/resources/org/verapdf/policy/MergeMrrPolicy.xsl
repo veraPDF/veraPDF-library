@@ -79,7 +79,7 @@
     <xsl:copy>
       <xsl:copy-of select="buildInformation"/>
       <xsl:apply-templates select="jobs"/>
-      <xsl:copy-of select="summary"/>
+      <xsl:copy-of select="batchSummary"/>
     </xsl:copy>
   </xsl:template>
 </xsl:stylesheet>
