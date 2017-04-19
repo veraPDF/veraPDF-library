@@ -60,7 +60,7 @@ public final class HTMLReport {
 	 */
 	public static void writeHTMLReport(InputStream source, OutputStream destination, BatchSummary summary, String wikiPath,
 			boolean isFullHTML) throws TransformerException {
-		String reportPath = (summary.getJobs() > 1) ? summaryReport : detailedReport;
+		String reportPath = (summary.isMultiJob()) ? summaryReport : detailedReport;
 		Map<String, String> arguments = new HashMap<>();
 		arguments.put("wikiPath", wikiPath); //$NON-NLS-1$
 		arguments.put("isFullHTML", Boolean.toString(isFullHTML)); //$NON-NLS-1$

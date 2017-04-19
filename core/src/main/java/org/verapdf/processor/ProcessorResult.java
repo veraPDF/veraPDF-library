@@ -84,7 +84,7 @@ public interface ProcessorResult {
 	 * @return true if the parsed file was a valid PDF, false if the PDF parser
 	 *         failed to parse the document and couldn't continue to process it.
 	 */
-	public boolean isValidPdf();
+	public boolean isPdf();
 
 	/**
 	 * @return true if the parser detected that the PDF was encrypted and could

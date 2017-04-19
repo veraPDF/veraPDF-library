@@ -9,7 +9,7 @@
     <xsl:output method="html" indent="yes" />
     <!-- Parameter to select a full HTML document (true) or a fragment within div (false) -->
     <xsl:param name="isFullHTML" select="'true'" />
-    <!-- Prameter to set the base path to the Wiki instance -->
+    <!-- Parameter to set the base path to the Wiki instance -->
     <xsl:param name="wikiPath" select="'https://github.com/veraPDF/veraPDF-validation-profiles/wiki/'"/>
     <xsl:strip-space elements="*"/>
 
@@ -101,7 +101,7 @@
           <!-- Display the build information -->
           <xsl:apply-templates select="/report/buildInformation"/>
           <!-- Display the summary information -->
-          <xsl:apply-templates select="/report/summary"/>
+          <xsl:apply-templates select="/report/batchSummary"/>
           <!-- Call the job iteration template -->
           <xsl:apply-templates select="/report/jobs"/>
     </xsl:template>
@@ -115,7 +115,7 @@
                   <b>Version:</b>
               </td>
               <td class="lefted">
-                  <xsl:value-of select="releaseDetails[1]/@version"/>
+                  <xsl:value-of select="releaseDetails[@id='gui']/@version"/>
               </td>
           </tr>
           <tr>
@@ -123,44 +123,47 @@
                   <b>Build Date:</b>
               </td>
               <td class="lefted">
-                  <xsl:value-of select="releaseDetails[1]/@buildDate"/>
+                  <xsl:value-of select="releaseDetails[@id='gui']/@buildDate"/>
               </td>
           </tr>
         </table>
     </xsl:template>
 
     <!-- Display the summary information -->
-    <xsl:template match="/report/summary">
+    <xsl:template match="/report/batchSummary">
       <xsl:variable name="isPolicy" select="/report/jobs/job/policyReport" />
       <h2>Batch Summary</h2>
       <table border="0" id="table2">
           <tr>
             <th>Processing time</th>
             <th>Total Jobs</th>
-            <th>Exceptions</th>
-            <th>Valid</th>
-            <th>Invalid</th>
+            <th>Failed to Parse</th>
+            <th>Encrypted</th>
+            <th>PDF/A Compliant</th>
+            <th>Not PDF/A Compliant</th>
             <xsl:if test="$isPolicy">
-              <th>Passed Policy</th>
-              <th>Failed Policy</th>
+              <th>Policy Compliant</th>
+              <th>Not Policy Compliant</th>
             </xsl:if>
           </tr>
           <tr>
               <td>
-                  <xsl:value-of select="duration"/>
+                  <xsl:value-of select="duration/text()"/>
               </td>
               <td>
-                  <xsl:value-of
-                          select="@jobs"/>
+                  <xsl:value-of select="@totalJobs"/>
               </td>
               <td>
-                  <xsl:value-of select="@failedJobs"/>
+                  <xsl:value-of select="@failedToParse"/>
               </td>
               <td>
-                  <xsl:value-of select="@valid"/>
+                  <xsl:value-of select="@encrypted"/>
               </td>
               <td>
-                  <xsl:value-of select="@inValid"/>
+                  <xsl:value-of select="validationReports/@compliant"/>
+              </td>
+              <td>
+                  <xsl:value-of select="validationReports/@nonCompliant"/>
               </td>
               <xsl:if test="$isPolicy">
                 <td>
@@ -182,14 +185,13 @@
         <tr>
           <th>File Name</th>
           <th>Validation Profile</th>
-          <th>Is Valid</th>
+          <th>PDF/A Compliance</th>
           <th>Passed Rules</th>
           <th>Failed Rules</th>
           <th>Passed Checks</th>
           <th>Failed Checks</th>
           <xsl:if test="$isPolicy">
-            <th>Passed Policy</th>
-            <th>Failed Policy</th>
+            <th>Failed Policy Checks</th>
           </xsl:if>
           <th>Duration</th>
         </tr>
@@ -238,7 +240,7 @@
             </td>
             <xsl:apply-templates select="policyReport" />
             <td>
-              <xsl:value-of select="processingTime" />
+              <xsl:value-of select="duration/text()" />
             </td>
           </tr>
         </xsl:for-each>
@@ -246,11 +248,28 @@
     </xsl:template>
 
     <xsl:template match="/report/jobs/job/policyReport">
-      <td>
-        <xsl:value-of select="@passedChecks" />
-      </td>
-      <td>
-        <xsl:value-of select="@failedChecks" />
+      <xsl:variable name="policyClass">
+        <xsl:choose>
+          <xsl:when test="@failedChecks > 0">
+            <xsl:value-of select="'invalid'" />
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="'valid'" />
+            </xsl:otherwise>
+          </xsl:choose>
+      </xsl:variable>
+      <xsl:variable name="policyResult">
+        <xsl:choose>
+          <xsl:when test="@failedChecks > 0">
+            <xsl:value-of select="'Failed'" />
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="'Passed'" />
+            </xsl:otherwise>
+          </xsl:choose>
+      </xsl:variable>
+      <td class="{$policyClass}">
+          <xsl:value-of select="$policyResult"/>
       </td>
     </xsl:template>
 
