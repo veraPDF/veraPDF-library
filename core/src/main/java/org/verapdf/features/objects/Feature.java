@@ -21,7 +21,7 @@
 package org.verapdf.features.objects;
 
 import static org.verapdf.policy.SchematronOperation.CONTAINS;
-import static org.verapdf.policy.SchematronOperation.ENDS_WITH;
+//import static org.verapdf.policy.SchematronOperation.ENDS_WITH;
 import static org.verapdf.policy.SchematronOperation.IS_EQUAL;
 import static org.verapdf.policy.SchematronOperation.IS_FALSE;
 import static org.verapdf.policy.SchematronOperation.IS_GREATER;
@@ -72,7 +72,7 @@ public class Feature {
 				NOT_EQUAL, IS_GREATER, IS_GREATER_OR_EQUAL, IS_LESS,
 				IS_LESS_OR_EQUAL),
 		STRING(PRESENT, NOT_PRESENT, IS_EQUAL,
-				NOT_EQUAL, STARTS_WITH, ENDS_WITH, CONTAINS);
+				NOT_EQUAL, STARTS_WITH, /*ENDS_WITH,*/ CONTAINS);
 
 		private EnumSet<SchematronOperation> legalOperations;
 
