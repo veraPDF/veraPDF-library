@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.verapdf</groupId>
     <artifactId>verapdf-xmp</artifactId>
-    <version>0.11.100-SNAPSHOT</version>
+    <version>0.12.0</version>
   </parent>
 
   <artifactId>verapdf-xmp-core</artifactId>
