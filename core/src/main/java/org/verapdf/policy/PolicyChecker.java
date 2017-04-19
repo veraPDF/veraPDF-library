@@ -196,6 +196,7 @@ public final class PolicyChecker {
 	private static File createSchematronXslFile(final InputStream rawSchematron)
 			throws TransformerException, IOException {
 		File resXsl = File.createTempFile("veraPDF_", "SchXsl"); //$NON-NLS-1$ //$NON-NLS-2$
+		resXsl.deleteOnExit();
 		try (FileOutputStream fos = new FileOutputStream(resXsl)) {
 			SchematronPipeline.processSchematron(rawSchematron, fos);
 		}
