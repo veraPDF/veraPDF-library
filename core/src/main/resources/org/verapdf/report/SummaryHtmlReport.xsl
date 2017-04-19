@@ -191,7 +191,7 @@
           <th>Passed Checks</th>
           <th>Failed Checks</th>
           <xsl:if test="$isPolicy">
-            <th>Failed Policy Checks</th>
+            <th>Policy Check</th>
           </xsl:if>
           <th>Duration</th>
         </tr>

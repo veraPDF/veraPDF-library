@@ -224,15 +224,6 @@
                 <xsl:if test="/report/jobs/job/policyReport">
                     <tr>
                         <td width="250">
-                            <b>Passed Policy Checks:</b>
-                        </td>
-                        <td>
-                            <xsl:value-of
-                                    select="/report/jobs/job/policyReport/@passedChecks"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="250">
                             <b>Failed Policy Checks:</b>
                         </td>
                         <td>
