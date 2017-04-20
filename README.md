@@ -8,6 +8,7 @@ veraPDF-library
 [![Maven Central](https://img.shields.io/maven-central/v/org.verapdf/verapdf-library.svg)](http://repo1.maven.org/maven2/org/verapdf/verapdf-library/ "Maven central")
 [![CodeCov Coverage](https://img.shields.io/codecov/c/github/veraPDF/veraPDF-library.svg)](https://codecov.io/gh/veraPDF/veraPDF-library/ "CodeCov coverage")
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/cfafc08b44eb49b6aa790d6aaff09cd3)](https://www.codacy.com/app/carlwilson/veraPDF-library?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=veraPDF/veraPDF-library&amp;utm_campaign=Badge_Grade "Codacy grade")
+
 Licensing
 ---------
 The veraPDF PDF/A Validation Library is dual-licensed, see:
