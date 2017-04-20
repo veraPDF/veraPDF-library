@@ -1,0 +1,66 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - URI value type</pdfaProperty:description>
+								<pdfaProperty:name>uriprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>URI</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - URI value type</pdfaProperty:description>
+								<pdfaProperty:name>uriprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>URI</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - URI value type</pdfaProperty:description>
+								<pdfaProperty:name>uriprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>URI</pdfaProperty:valueType>
+							</rdf:li>		
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - URI value type</pdfaProperty:description>
+								<pdfaProperty:name>uriprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>URI</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - URI value type</pdfaProperty:description>
+								<pdfaProperty:name>uriprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>URI</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - URI value type</pdfaProperty:description>
+								<pdfaProperty:name>uriprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>URI</pdfaProperty:valueType>
+							</rdf:li>							
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
+		<fs:uriprop1>ftp://ftp.is.co.za/rfc/rfc1808.txt</fs:uriprop1>
+		<fs:uriprop2>http://www.ietf.org/rfc/rfc2396.txt</fs:uriprop2>
+		<fs:uriprop3>ldap://[2001:db8::7]/c=GB?objectClass?one</fs:uriprop3>
+		<fs:uriprop4>mailto:John.Doe@example.com</fs:uriprop4>
+		<fs:uriprop5>news:comp.infosystems.www.servers.unix</fs:uriprop5>
+		<fs:uriprop6>tel:+1-816-555-1212</fs:uriprop6>
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

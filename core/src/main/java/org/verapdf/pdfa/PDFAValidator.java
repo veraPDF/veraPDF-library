@@ -1,11 +1,29 @@
+/**
+ * This file is part of veraPDF Library core, a module of the veraPDF project.
+ * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * All rights reserved.
+ *
+ * veraPDF Library core is free software: you can redistribute it and/or modify
+ * it under the terms of either:
+ *
+ * The GNU General public license GPLv3+.
+ * You should have received a copy of the GNU General Public License
+ * along with veraPDF Library core as the LICENSE.GPL file in the root of the source
+ * tree.  If not, see http://www.gnu.org/licenses/ or
+ * https://www.gnu.org/licenses/gpl-3.0.en.html.
+ *
+ * The Mozilla Public License MPLv2+.
+ * You should have received a copy of the Mozilla Public License along with
+ * veraPDF Library core as the LICENSE.MPL file in the root of the source tree.
+ * If a copy of the MPL was not distributed with this file, you can obtain one at
+ * http://mozilla.org/MPL/2.0/.
+ */
 package org.verapdf.pdfa;
 
-import java.io.IOException;
-
+import org.verapdf.component.Component;
 import org.verapdf.core.ValidationException;
 import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.validation.ValidationProfile;
-import org.verapdf.pdfa.validators.Validators;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 /**
  * A PDFAValidator performs a series of checks on PDF/A documents to verify that
@@ -19,7 +37,7 @@ import org.verapdf.pdfa.validators.Validators;
  *
  * @author Maksim Bezrukov
  */
-public interface PDFAValidator {
+public interface PDFAValidator extends Component {
 
     /**
      * Returns the complete {@link ValidationProfile} enforced by this PDFAValidator.
@@ -37,12 +55,12 @@ public interface PDFAValidator {
      *            a {@link java.io.InputStream} to be validated
      * @return a {@link ValidationResult} containing the result of valdiation
      *         and details of failed checks and possibly passed checks,
-     *         dependant upon configuration.
+     *         dependent upon configuration.
      * @throws ValidationException 
-     * @throws IOException 
+     * @throws ModelParsingException 
      * @throws IllegalArgumentException
      *             if the toValidate parameter is null PDFAValidationException
      *             if the validation process fails
      */
-    public ValidationResult validate(ValidationModelParser toValidate) throws ValidationException, IOException;
+    public ValidationResult validate(PDFAParser toValidate) throws ValidationException;
 }

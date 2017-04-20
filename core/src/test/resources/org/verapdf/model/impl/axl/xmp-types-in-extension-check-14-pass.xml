@@ -1,0 +1,65 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - URL value type</pdfaProperty:description>
+								<pdfaProperty:name>urlprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>URL</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - URL value type</pdfaProperty:description>
+								<pdfaProperty:name>urlprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>URL</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - URL value type</pdfaProperty:description>
+								<pdfaProperty:name>urlprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>URL</pdfaProperty:valueType>
+							</rdf:li>		
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - URL value type</pdfaProperty:description>
+								<pdfaProperty:name>urlprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>URL</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - URL value type</pdfaProperty:description>
+								<pdfaProperty:name>urlprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>URL</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - URL value type</pdfaProperty:description>
+								<pdfaProperty:name>urlprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>URL</pdfaProperty:valueType>
+							</rdf:li>							
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
+		<fs:urlprop1>file:C:\Users\someUser\Downloads</fs:urlprop1>
+		<fs:urlprop2>https://www.w3.org/Addressing/schemes</fs:urlprop2>
+		<fs:urlprop3>https://www.google.by/search?q=xpathie=utf-8oe=utf-8gws_rd=crei=bj-eVvidI4zXa6b8rVA</fs:urlprop3>		
+		<fs:urlprop4>https://msdn.microsoft.com/ru-ru/library/ms256086%28v=vs.120%29.aspx</fs:urlprop4>		
+		<fs:urlprop5>https://support.microsoft.com/ru-ru/support/kb/articles/q157/2/77.asp</fs:urlprop5>		
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>

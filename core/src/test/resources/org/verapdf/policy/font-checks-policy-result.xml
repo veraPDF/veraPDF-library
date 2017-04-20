@@ -1,0 +1,13 @@
+<?xml version="1.0" standalone="yes"?>
+<svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:schold="http://www.ascc.net/xml/schematron" xmlns:sch="http://www.ascc.net/xml/schematron" xmlns:iso="http://purl.oclc.org/dsdl/schematron" title="" schemaVersion="">
+  <!--   
+		   
+		   
+		 -->
+  <svrl:active-pattern/>
+  <svrl:fired-rule context="fonts/font"/>
+  <svrl:failed-assert test="type = 'Type0'" location="/report/jobs/job/featuresReport/documentResources/fonts/font[1]">
+    <svrl:text>Only Type0 fonts allowed.</svrl:text>
+  </svrl:failed-assert>
+  <svrl:fired-rule context="fonts/font"/>
+</svrl:schematron-output>

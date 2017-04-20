@@ -1,60 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    This file is part of veraPDF PDF/A Validation Library, a module of the veraPDF project.
+    Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+    All rights reserved.
+
+    veraPDF PDF/A Validation Library is free software: you can redistribute it and/or modify
+    it under the terms of either:
+
+    The GNU General public license GPLv3+.
+    You should have received a copy of the GNU General Public License
+    along with veraPDF PDF/A Validation Library as the LICENSE.GPL file in the root of the source
+    tree.  If not, see http://www.gnu.org/licenses/ or
+    https://www.gnu.org/licenses/gpl-3.0.en.html.
+
+    The Mozilla Public License MPLv2+.
+    You should have received a copy of the Mozilla Public License along with
+    veraPDF PDF/A Validation Library as the LICENSE.MPL file in the root of the source tree.
+    If a copy of the MPL was not distributed with this file, you can obtain one at
+    http://mozilla.org/MPL/2.0/.
+
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>oss-parent</artifactId>
-    <groupId>org.sonatype.oss</groupId>
-    <version>7</version>
+    <artifactId>verapdf-parent</artifactId>
+    <groupId>org.verapdf</groupId>
+    <version>1.4.1</version>
+    <relativePath>parent/pom.xml</relativePath>
   </parent>
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-library</artifactId>
-  <version>0.8.0</version>
+  <version>1.5.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>veraPDF PDF/A Validation Library</name>
-  <description>veraPDF PDF/A Validation API and library.</description>
-  <url>https://github.com/veraPDF/veraPDF-library/</url>
-  <inceptionYear>2015</inceptionYear>
-  <organization>
-    <name>The veraPDF Consortium</name>
-    <url>http://www.verapdf.org/</url>
-  </organization>
-  <licenses>
-    <license>
-      <name>GNU General Public License, version 3 (GPL-3.0)</name>
-      <url>http://opensource.org/licenses/GPL-3.0</url>
-      <distribution>repo</distribution>
-    </license>
-    <license>
-      <name>Mozilla Public License 2.0 (MPL-2.0)</name>
-      <url>http://opensource.org/licenses/MPL-2.0</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-
-  <developers>
-    <developer>
-      <email>carl@openpreservation.org</email>
-      <name>Carl Wilson</name>
-      <url>https://github.com/carlwilson</url>
-      <organization>Open Preservation Foundation</organization>
-      <organizationUrl>http://openpreservation.org</organizationUrl>
-      <id>carlwilson</id>
-    </developer>
-  </developers>
+  <description>veraPDF PDF/A Validation API and core types.</description>
 
   <modules>
-    <module>legacy-types</module>
-    <module>model-implementation</module>
     <module>core</module>
-    <module>gui</module>
-    <module>feature-report</module>
-    <module>metadata-fixer</module>
-    <module>verapdf-qa</module>
-    <module>installer</module>
   </modules>
 
   <scm>
@@ -62,92 +49,54 @@
     <connection>scm:git:https://github.com/veraPDF/veraPDF-library.git</connection>
     <developerConnection>scm:git:git@github.com:veraPDF/veraPDF-library.git</developerConnection>
   </scm>
-  <issueManagement>
-    <url>https://github.com/veraPDF/veraPDF-library/issues/</url>
-    <system>GitHub Issues</system>
-  </issueManagement>
-  <ciManagement>
-    <system>OPF Jenkins</system>
-    <url>http://jenkins.opf-labs.org</url>
-  </ciManagement>
-  <distributionManagement>
-    <repository>
-      <id>OPF Artefactory</id>
-      <name>OPF Artefactory-releases</name>
-      <url>http://artifactory.opf-labs.org/artifactory/vera-dev-local</url>
-    </repository>
-  </distributionManagement>
-
-  <repositories>
-    <repository>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <id>vera-dev</id>
-      <name>Vera development</name>
-      <url>http://artifactory.opf-labs.org/artifactory/vera-dev</url>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <id>vera-dev</id>
-      <name>Vera development</name>
-      <url>http://artifactory.opf-labs.org/artifactory/vera-dev</url>
-    </pluginRepository>
-  </pluginRepositories>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>1.7</java.version>
+    <verapdf.model.version>[1.5.0,1.6.0)</verapdf.model.version>
+    <verapdf.xmp.version>[0.12.0,0.13.0)</verapdf.xmp.version>
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
-    <faster.xml.version>2.6.0-rc4</faster.xml.version>
-    <guava.version>18.0</guava.version>
-    <maven.failsafe.version>2.18.1</maven.failsafe.version>
-    <maven.surefire.version>2.18.1</maven.surefire.version>
-    <maven.exec.version>1.4.0</maven.exec.version>
-    <mvn.javadoc.version>2.10</mvn.javadoc.version>
-    <mvn.source.version>2.4</mvn.source.version>
-    <mvn.gpg.plugin.version>1.6</mvn.gpg.plugin.version>
-    <verapdf.pdfbox.version>2.0.0-SNAPSHOT</verapdf.pdfbox.version>
-    <verapdf.model.version>[0.8.0,0.9.0)</verapdf.model.version>
   </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+      </plugin>
+
+    </plugins>
+  </build>
 
   <dependencyManagement>
     <dependencies>
 
       <dependency>
-        <groupId>com.google.guava</groupId>
-        <artifactId>guava</artifactId>
-        <version>${guava.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.beust</groupId>
-        <artifactId>jcommander</artifactId>
-        <version>1.48</version>
-      </dependency>
-
-      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.12</version>
+        <scope>test</scope>
       </dependency>
 
       <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.17</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.bouncycastle</groupId>
-        <artifactId>bcprov-jdk15on</artifactId>
-        <version>1.52</version>
+        <groupId>nl.jqno.equalsverifier</groupId>
+        <artifactId>equalsverifier</artifactId>
+        <version>1.5.1</version>
+        <scope>test</scope>
       </dependency>
 
       <!-- Mozilla Rhino JavaScript engine -->
@@ -158,43 +107,6 @@
       </dependency>
 
       <dependency>
-        <groupId>xmlunit</groupId>
-        <artifactId>xmlunit</artifactId>
-        <version>1.6</version>
-      </dependency>
-
-      <!-- veraPDF Project dependencies -->
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>core</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>gui</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>feature-report</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>model-implementation</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>metadata-fixer</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
         <groupId>org.verapdf</groupId>
         <artifactId>pdf-model</artifactId>
         <version>${verapdf.model.version}</version>
@@ -202,48 +114,8 @@
 
       <dependency>
         <groupId>org.verapdf</groupId>
-        <artifactId>validation-report</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf.pdfbox</groupId>
-        <artifactId>pdfbox</artifactId>
-        <version>${verapdf.pdfbox.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf.pdfbox</groupId>
-        <artifactId>preflight</artifactId>
-        <version>${verapdf.pdfbox.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf.pdfbox</groupId>
-        <artifactId>xmpbox</artifactId>
-        <version>${verapdf.pdfbox.version}</version>
-      </dependency>
-
-      <!-- TEST DEPENDENCIES -->
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-annotations</artifactId>
-        <version>${faster.xml.version}</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-core</artifactId>
-        <version>${faster.xml.version}</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>${faster.xml.version}</version>
-        <scope>test</scope>
+        <artifactId>verapdf-xmp-core</artifactId>
+        <version>${verapdf.xmp.version}</version>
       </dependency>
 
       <dependency>
@@ -255,158 +127,6 @@
 
     </dependencies>
   </dependencyManagement>
-
-
-  <build>
-    <pluginManagement>
-      <plugins>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.5.5</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.3</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>2.7</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-failsafe-plugin</artifactId>
-          <version>${maven.failsafe.version}</version>
-          <executions>
-            <execution>
-              <id>integration-test</id>
-              <goals>
-                <goal>integration-test</goal>
-              </goals>
-            </execution>
-            <execution>
-              <id>verify</id>
-              <goals>
-                <goal>verify</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-gpg-plugin</artifactId>
-          <version>${mvn.gpg.plugin.version}</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-release-plugin</artifactId>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.4</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${maven.surefire.version}</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>appassembler-maven-plugin</artifactId>
-          <version>1.10</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>versions-maven-plugin</artifactId>
-          <version>2.2</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>${mvn.source.version}</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>${mvn.javadoc.version}</version>
-        </plugin>
-
-      </plugins>
-    </pluginManagement>
-
-    <plugins>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-          <encoding>${project.build.sourceEncoding}</encoding>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <configuration>
-          <preparationGoals>clean install</preparationGoals>
-          <goals>deploy</goals>
-          <autoVersionSubmodules>true</autoVersionSubmodules>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>**/*IT.java</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <configuration>
-          <attach>true</attach>
-        </configuration>
-      </plugin>
-
-    </plugins>
-  </build>
 
   <reporting>
     <plugins>
@@ -436,316 +156,21 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.3</version>
         <configuration>
+          <failOnError>false</failOnError>
+          <dependencySourceExcludes>
+            <!-- exclude ONLY commons-cli artifacts -->
+            <dependencySourceExclude>junit:*</dependencySourceExclude>
+            <dependencySourceExclude>org.apache:*</dependencySourceExclude>
+            <dependencySourceExclude>org.junit:*</dependencySourceExclude>
+            <dependencySourceExclude>org.hamcrest.*</dependencySourceExclude>
+            <dependencySourceExclude>org.log4j.*</dependencySourceExclude>
+          </dependencySourceExcludes>
+          <includeDependencySources>true</includeDependencySources>
           <show>public</show>
         </configuration>
       </plugin>
     </plugins>
   </reporting>
 
-  <profiles>
-    <profile>
-      <id>apply-mpl-header</id>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>com.mycila</groupId>
-              <artifactId>license-maven-plugin</artifactId>
-              <version>2.3</version>
-              <configuration>
-                <header>license/template/MPL-2.txt</header>
-                <properties>
-                  <owner>veraPDF Consortium</owner>
-                  <email>info@verapdf.org</email>
-                </properties>
-                <excludes>
-                  <exclude>license/template/**</exclude>
-                  <exclude>src/test/resources/**</exclude>
-                  <exclude>src/main/resources/**</exclude>
-                </excludes>
-              </configuration>
-              <executions>
-                <execution>
-                  <goals>
-                    <goal>check</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-    <profile>
-      <id>apply-gpl-header</id>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>com.mycila</groupId>
-              <artifactId>license-maven-plugin</artifactId>
-              <version>2.3</version>
-              <configuration>
-                <header>license/template/GPL-3.txt</header>
-                <properties>
-                  <owner>veraPDF Consortium</owner>
-                  <email>info@verapdf.org</email>
-                </properties>
-                <excludes>
-                  <exclude>license/template/**</exclude>
-                  <exclude>src/test/resources/**</exclude>
-                  <exclude>src/main/resources/**</exclude>
-                </excludes>
-              </configuration>
-              <executions>
-                <execution>
-                  <goals>
-                    <goal>check</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-    <profile>
-      <id>clone-test-resources</id>
-      <build>
-        <pluginManagement>
-          <plugins>
-
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>exec-maven-plugin</artifactId>
-              <version>${maven.exec.version}</version>
-              <executions>
-
-                <execution>
-                  <id>download test files</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                    <goal>exec</goal>
-                  </goals>
-                  <configuration>
-                    <executable>git</executable>
-                    <workingDirectory>target/test-classes/test-resources</workingDirectory>
-                    <arguments>
-                      <argument>clone</argument>
-                      <argument>https://github.com/veraPDF/veraPDF-corpus-PDFA-1b</argument>
-                    </arguments>
-                  </configuration>
-                </execution>
-
-                <execution>
-                  <id>download validation profiles</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                    <goal>exec</goal>
-                  </goals>
-                  <configuration>
-                    <executable>git</executable>
-                    <workingDirectory>target/test-classes/test-resources</workingDirectory>
-                    <arguments>
-                      <argument>clone</argument>
-                      <argument>-b</argument>
-                      <argument>integration</argument>
-                      <argument>https://github.com/veraPDF/veraPDF-validation-profiles</argument>
-                    </arguments>
-                  </configuration>
-                </execution>
-
-              </executions>
-            </plugin>
-
-            <plugin>
-              <groupId>com.googlecode.maven-download-plugin</groupId>
-              <artifactId>download-maven-plugin</artifactId>
-              <version>1.2.1</version>
-
-              <executions>
-                <execution>
-                  <id>download isartor test suite</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                    <goal>wget</goal>
-                  </goals>
-                  <configuration>
-                    <url>
-                      http://www.pdfa.org/wp-content/uploads/2011/08/isartor-pdfa-2008-08-13.zip
-                    </url>
-                    <unpack>true</unpack>
-                    <outputDirectory>target/test-classes/test-resources</outputDirectory>
-                    <md5>9f129c834bc6f9f8dabad4491c4c10ec</md5>
-                  </configuration>
-                </execution>
-
-                <execution>
-                  <id>download bavaria test suite</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                    <goal>wget</goal>
-                  </goals>
-                  <configuration>
-                    <url>
-                      http://www.pdflib.com/fileadmin/pdflib/Bavaria/2009-04-03-Bavaria-pdfa.zip
-                    </url>
-                    <unpack>true</unpack>
-                    <outputDirectory>target/test-classes/test-resources</outputDirectory>
-                    <md5>d8fccb2fea540ab49bef237f3579546b</md5>
-                  </configuration>
-                </execution>
-              </executions>
-            </plugin>
-
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-
-    <profile>
-      <id>update-test-resources</id>
-      <build>
-        <pluginManagement>
-          <plugins>
-
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>exec-maven-plugin</artifactId>
-              <version>${maven.exec.version}</version>
-              <executions>
-
-                <execution>
-                  <id>update test files</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                    <goal>exec</goal>
-                  </goals>
-                  <configuration>
-                    <executable>git</executable>
-                    <workingDirectory>
-                      target/test-classes/test-resources/veraPDF-corpus-PDFA-1b
-                    </workingDirectory>
-                    <arguments>
-                      <argument>pull</argument>
-                    </arguments>
-                  </configuration>
-                </execution>
-
-                <execution>
-                  <id>update validation profiles</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                    <goal>exec</goal>
-                  </goals>
-                  <configuration>
-                    <executable>git</executable>
-                    <workingDirectory>
-                      target/test-classes/test-resources/veraPDF-validation-profiles
-                    </workingDirectory>
-                    <arguments>
-                      <argument>pull</argument>
-                    </arguments>
-                  </configuration>
-                </execution>
-              </executions>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-
-    <profile>
-      <id>coverage-per-test</id>
-      <build>
-        <plugins>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-
-              <properties>
-                <property>
-                  <name>listener</name>
-                  <value>org.sonar.java.jacoco.JUnitListener</value>
-                </property>
-              </properties>
-
-              <excludes>
-                <exclude>**/*IT.java</exclude>
-              </excludes>
-
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-      <dependencies>
-
-        <dependency>
-          <groupId>org.codehaus.sonar-plugins.java</groupId>
-          <artifactId>sonar-jacoco-listeners</artifactId>
-          <version>1.2</version>
-          <scope>test</scope>
-        </dependency>
-
-      </dependencies>
-    </profile>
-
-    <profile>
-      <id>release-sign-artifacts</id>
-      <activation>
-        <property>
-          <name>performRelease</name>
-          <value>true</value>
-        </property>
-      </activation>
-
-      <build>
-        <plugins>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-
-        </plugins>
-      </build>
-    </profile>
-
-    <profile>
-      <id>jenkins-site</id>
-      <distributionManagement>
-        <site>
-          <id>jenkins.local.site</id>
-          <name>veraPDF Site</name>
-          <url>file:///var/www/projects.verapdf.org/verapdf-library</url>
-        </site>
-      </distributionManagement>
-    </profile>
-
-    <profile>
-      <id>sonar</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <sonar.host.url>
-          http://sonar.opf-labs.org
-        </sonar.host.url>
-      </properties>
-    </profile>
-
-  </profiles>
 </project>

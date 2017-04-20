@@ -1,0 +1,97 @@
+<?xpacket begin='п»ї' id='W5M0MpCehiHzreSzNTczkc9d'?>
+<x:xmpmeta xmlns:x="adobe:ns:meta/">
+  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <rdf:Description rdf:about="" xmlns:pdfaExtension="http://www.aiim.org/pdfa/ns/extension/" xmlns:pdfaSchema="http://www.aiim.org/pdfa/ns/schema#" xmlns:pdfaProperty="http://www.aiim.org/pdfa/ns/property#"
+	>
+		<pdfaExtension:schemas>
+			<rdf:Bag>
+				<rdf:li rdf:parseType="Resource">
+					<pdfaSchema:namespaceURI>http://www.999.org/</pdfaSchema:namespaceURI>
+					<pdfaSchema:prefix>fs</pdfaSchema:prefix>
+					<pdfaSchema:schema>Some extension schema</pdfaSchema:schema>
+					<pdfaSchema:property>
+						<rdf:Seq>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ProjectLink value type</pdfaProperty:description>
+								<pdfaProperty:name>projlinkprop1</pdfaProperty:name>
+								<pdfaProperty:valueType>ProjectLink</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ProjectLink value type</pdfaProperty:description>
+								<pdfaProperty:name>projlinkprop2</pdfaProperty:name>
+								<pdfaProperty:valueType>ProjectLink</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ProjectLink value type</pdfaProperty:description>
+								<pdfaProperty:name>projlinkprop3</pdfaProperty:name>
+								<pdfaProperty:valueType>ProjectLink</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ProjectLink value type</pdfaProperty:description>
+								<pdfaProperty:name>projlinkprop4</pdfaProperty:name>
+								<pdfaProperty:valueType>ProjectLink</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ProjectLink value type</pdfaProperty:description>
+								<pdfaProperty:name>projlinkprop5</pdfaProperty:name>
+								<pdfaProperty:valueType>ProjectLink</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ProjectLink value type</pdfaProperty:description>
+								<pdfaProperty:name>projlinkprop6</pdfaProperty:name>
+								<pdfaProperty:valueType>ProjectLink</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ProjectLink value type</pdfaProperty:description>
+								<pdfaProperty:name>projlinkprop7</pdfaProperty:name>
+								<pdfaProperty:valueType>ProjectLink</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ProjectLink value type</pdfaProperty:description>
+								<pdfaProperty:name>projlinkprop8</pdfaProperty:name>
+								<pdfaProperty:valueType>ProjectLink</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ProjectLink value type</pdfaProperty:description>
+								<pdfaProperty:name>projlinkprop9</pdfaProperty:name>
+								<pdfaProperty:valueType>ProjectLink</pdfaProperty:valueType>
+							</rdf:li>
+							<rdf:li rdf:parseType="Resource">
+								<pdfaProperty:category>internal</pdfaProperty:category>
+								<pdfaProperty:description>Desc - ProjectLink value type</pdfaProperty:description>
+								<pdfaProperty:name>projlinkprop10</pdfaProperty:name>
+								<pdfaProperty:valueType>ProjectLink</pdfaProperty:valueType>
+							</rdf:li>							
+						</rdf:Seq>
+					</pdfaSchema:property>
+				</rdf:li>
+			</rdf:Bag>
+		</pdfaExtension:schemas>
+	</rdf:Description>
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
+					   xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
+		<fs:projlinkprop1 rdf:parseType="Resource">
+			<xmpDM:type>SomeType</xmpDM:type>
+			<xmpDM:path>
+				<rdf:Seq>
+					<rdf:li>http://www.mysite.com/page?id=1</rdf:li>
+				</rdf:Seq>	
+			</xmpDM:path>
+		</fs:projlinkprop1>
+		<fs:projlinkprop2 rdf:parseType="Resource">
+			<xmpDM:type>1</xmpDM:type>
+			<xmpDM:path>ht tp:// maps. google .com/FortWorth Texas/m ore+url da +ta</xmpDM:path>
+		</fs:projlinkprop2>
+	</rdf:Description>
+  </rdf:RDF>
+</x:xmpmeta>
+<?xpacket end='w'?>
