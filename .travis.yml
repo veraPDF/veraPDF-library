@@ -16,5 +16,10 @@ notifications:
   slack:
     secure: WgsTp3dk8wNWNJkESk1Hg317W1gNtksHPf8XFv2dzLN6ncv718CNwBg/wcFglLVSQk0AViOtpwdWtf1RO67TlvQV2WZHW2E7NLnJjozTCbXpeheywApou24QbW+i+CJaGVwsP1kFRw0hom3EjhF6o0g+tWJE0W4wVy5yX5u7+GYTfMKkRTRVf42AI/vvD6130AmGRQ8eMWGTyw2NU35q6Q6UGRSqpwx+w5dNWW+SXuL9eI5ZedHRu/mEteh7/jMylxM7W14BkZysXO0TmnfklpshjbOsicdIhdhIQ4SffBPSXdkGoE0XCLtLsEi4b+zTKlRTH/4qzJEiXdO7SwFzFt7uGXPx6gLIpnCGoSciikVMpr06ujz2vukR+tFmwLK6W6+R5PpgNVlfeP4WNHfZHGNbr6alp3loYZEA33BjbTOXKFtv68pPuIQ8LCinPL/J8EGyeIVh8xrxgdiswvO51CxpsuY/G6gm9BxcKbZE14GaZjrOhyPMBylZaBdzbOFkzbrgE7O8tYVt/asItUFQGysfBEQZLvb3eBeMK0p6SVmn0YZ5mqh6o5REr68cy4pK2jwcGQegj5vU61TjCIism+tRGxIanTRkUUfOpobpVa3k2saMTglY7/tnuqQsxYKl6eEg2cPeftr/b+M4o2nOtTBJYik93mTKJo9PmhCGZJ4=
 
+before_install:
+  - sudo apt-get install jq
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
+
 after_success:
-- bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash)
+  - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r target/site/jacoco/jacoco.xml

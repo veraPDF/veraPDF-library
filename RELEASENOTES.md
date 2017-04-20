@@ -1,3 +1,28 @@
+# Version 1.4 (April 20, 2017)
+
+## Conformance Checker:
+- significant optimization of performance in the greenfield PDF parser
+- fixed parsing of embedded PS Type1 fonts
+- fixed default value of WMode entry for embedded CMaps
+- fixed inline image data parsing
+- fixed digital signature parsing
+
+## Reporting:
+- refactored feature extraction
+- pretty formatted XML reports
+- clearer XML structure in veraPDF reports
+- improvements to the HTML reports
+
+## Policy Checker:
+- added GUI wizard for creating custom policy files
+
+## Infrastructure
+- release artifacts now deployed to Maven Central
+- started transfer to external static code QA service
+
+## Test corpus:
+- aligned the existing veraPDF corpus and added 80 new test files to cover Technical Working Group resolutions
+
 # Version 1.2 (March 2, 2017)
 PDFBox version downloadable from http://downloads.verapdf.org/rel/verapdf-installer.zip. Greenfield version downloadable from: http://downloads.verapdf.org/gf/verapdf-gf-installer.zip.
 
