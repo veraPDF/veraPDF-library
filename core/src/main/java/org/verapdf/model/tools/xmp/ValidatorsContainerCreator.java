@@ -67,14 +67,16 @@ public class ValidatorsContainerCreator {
     private static ValidatorsContainer createValidatorsContainerPredefinedForPDFA_1(boolean isClosedFieldsCheck) {
         ValidatorsContainer container = createBasicValidatorsContainer(isClosedFieldsCheck);
         container.registerSimpleValidator(XMPConstants.GPS_COORDINATE, Pattern.compile("^\\d{2},\\d{2}[,\\.]\\d{2}[NSEW]$"));
-        container.registerSimpleValidator(XMPConstants.LOCALE, Pattern.compile("^([a-zA-Z]{1,8})((-[a-zA-Z]{1,8})*)$"));
+        //Locale strong validation requires next regexp for XMP2004: "^([a-zA-Z]{1,8})((-[a-zA-Z]{1,8})*)$"
+        container.registerSimpleValidator(XMPConstants.LOCALE, Pattern.compile("(?s)(^.*$)"));
         return container;
     }
 
     private static ValidatorsContainer createValidatorsContainerPredefinedForPDFA_2_3(boolean isClosedFieldsCheck) {
         ValidatorsContainer container = createBasicValidatorsContainer(isClosedFieldsCheck);
         container.registerSimpleValidator(XMPConstants.GPS_COORDINATE, Pattern.compile("^\\d{1,3},\\d{1,2}(,\\d{1,2}|\\.\\d+)[NSEW]$"));
-        container.registerSimpleValidator(XMPConstants.LOCALE, Pattern.compile("^([a-zA-Z]{1,8})((-[a-zA-Z0-9]{1,8})*)$"));
+        //Locale strong validation requires next regexp for XMP2005: "^([a-zA-Z]{1,8})((-[a-zA-Z0-9]{1,8})*)$"
+        container.registerSimpleValidator(XMPConstants.LOCALE, Pattern.compile("(?s)(^.*$)"));
         registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.COLORANT,
                 isClosedFieldsCheck,
