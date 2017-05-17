@@ -53,14 +53,6 @@
 			</rdf:Bag>
 		</pdfaExtension:schemas>
 	</rdf:Description>
-	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
-		<fs:locprop1>Some.LangTag</fs:locprop1>
-		<fs:locprop2>fr fr</fs:locprop2>
-		<fs:locprop3>1.0</fs:locprop3>
-		<fs:locprop4>+16</fs:locprop4>
-		<fs:locprop5>-de</fs:locprop5>
-		<fs:locprop6>1997-07-16T19:20:15+01:00</fs:locprop6>
-	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>
 <?xpacket end='w'?>
