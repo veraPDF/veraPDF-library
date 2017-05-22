@@ -23,9 +23,8 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.List;
 
 /**
  * Encapsulates a PDF/A Validation Rule including the String property
@@ -47,6 +46,12 @@ public interface Rule {
      * @return the String name of the PDF Object type to which the Rule applies
      */
     public String getObject();
+
+	/**
+     * @return the Boolean flag which identifiers
+     * if the rule has to be checked after other rules
+     */
+    public Boolean getDeferred();
 
     /**
      * @return a textual description of the Rule

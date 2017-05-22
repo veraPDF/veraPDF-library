@@ -23,34 +23,20 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
+import org.junit.Test;
+import org.verapdf.core.XmlSerialiser;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import javax.xml.bind.JAXBException;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
-
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
-
-import org.junit.Test;
-import org.verapdf.core.XmlSerialiser;
-import org.verapdf.pdfa.validation.profiles.ErrorDetailsImpl;
-import org.verapdf.pdfa.validation.profiles.Profiles;
-import org.verapdf.pdfa.validation.profiles.Reference;
-import org.verapdf.pdfa.validation.profiles.ReferenceImpl;
-import org.verapdf.pdfa.validation.profiles.Rule;
-import org.verapdf.pdfa.validation.profiles.RuleIdImpl;
-import org.verapdf.pdfa.validation.profiles.RuleImpl;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -60,7 +46,7 @@ import org.verapdf.pdfa.validation.profiles.RuleImpl;
 public class RuleImplTest {
     private static final String DEFAULT_RULE_STRING = "Rule [id="
             + Profiles.defaultRuleId()
-            + ", object=object, description=description, test=test, error=" + ErrorDetailsImpl.defaultInstance() + ", references=[]]";
+            + ", object=object, deferred=null, description=description, test=test, error=" + ErrorDetailsImpl.defaultInstance() + ", references=[]]";
 
     /**
      * Test method for
@@ -89,7 +75,7 @@ public class RuleImplTest {
     public final void testFromValues() {
         // Get an equivalent to the default instance
         RuleImpl rule = RuleImpl
-                .fromValues(Profiles.defaultRuleId(), "object",
+                .fromValues(Profiles.defaultRuleId(), "object", null,
                         "description", "test", ErrorDetailsImpl.defaultInstance(), Collections.<Reference> emptyList());
         Rule defaultInstance = RuleImpl.defaultInstance();
         // Equivalent is NOT the same object as default instance
@@ -126,7 +112,7 @@ public class RuleImplTest {
     public final void testToXmlString() throws JAXBException {
         List<Reference> refs = new ArrayList<>();
         refs.add(ReferenceImpl.defaultInstance());
-        Rule rule = RuleImpl.fromValues(RuleIdImpl.defaultInstance(), "object",
+        Rule rule = RuleImpl.fromValues(RuleIdImpl.defaultInstance(), "object", null,
                 "description", "test", ErrorDetailsImpl.defaultInstance(), refs);
         String xmlDefault = XmlSerialiser.toXml(rule, true, true);
         Rule unmarshalledDefault = XmlSerialiser.typeFromXml(RuleImpl.class, xmlDefault);

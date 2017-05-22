@@ -28,16 +28,11 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 
 import javax.xml.bind.JAXBException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 /**
  * Utitlity class that provides helper methods for handling
@@ -310,6 +305,34 @@ public final class Profiles {
 	 */
 	public static Rule ruleFromValues(final RuleId id, final String object, final String description, final String test,
 			final ErrorDetails error, final List<Reference> references) {
+		return ruleFromValues(RuleIdImpl.fromRuleId(id), object, null, description, test, error, references);
+	}
+
+	/**
+	 * Returns a {@link Rule} instance initialised with the passed values.
+	 *
+	 * @param id
+	 *            the {@link RuleId} id for the {@link Rule}
+	 * @param object
+	 *            a String that identifies the Object that the rule applies to
+	 * @param deferred
+	 *            a Boolean that identifies the deferred property of the rule
+	 * @param description
+	 *            a textual description of the {@link Rule}.
+	 * @param test
+	 *            a JavaScript expression that is the test carried out on a
+	 *            model instance
+	 * @param error
+	 *            the {@link ErrorDetails} associated with the{@link Rule}.
+	 * @param references
+	 *            a list of further {@link Reference}s for this rule
+	 * @return a {@link Rule} instance.
+	 * @throws IllegalArgumentException
+	 *             if any of the parameters are null or the test, object, or
+	 *             description is empty
+	 */
+	public static Rule ruleFromValues(final RuleId id, final String object, final Boolean deferred, final String description, final String test,
+									  final ErrorDetails error, final List<Reference> references) {
 		if (id == null)
 			throw new IllegalArgumentException("Parameter id can not be null.");
 		if (object == null)
@@ -328,7 +351,7 @@ public final class Profiles {
 			throw new IllegalArgumentException("Parameter error can not be null.");
 		if (references == null)
 			throw new IllegalArgumentException("Parameter references can not be null.");
-		return RuleImpl.fromValues(RuleIdImpl.fromRuleId(id), object, description, test, error, references);
+		return RuleImpl.fromValues(RuleIdImpl.fromRuleId(id), object, deferred, description, test, error, references);
 	}
 
 	/**
