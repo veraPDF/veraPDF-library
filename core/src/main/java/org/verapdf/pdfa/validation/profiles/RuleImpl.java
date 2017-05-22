@@ -23,15 +23,14 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * JAXB serialisable implementation of {@link Reference} with safe methods for
@@ -49,6 +48,8 @@ final class RuleImpl implements Rule {
     private final RuleId id;
     @XmlAttribute
     private final String object;
+    @XmlAttribute
+    private final Boolean deferred;
     @XmlElement
     private final String description;
     @XmlElement
@@ -60,16 +61,17 @@ final class RuleImpl implements Rule {
     private final List<Reference> references = new ArrayList<>();
 
     private RuleImpl() {
-        this(RuleIdImpl.defaultInstance(), "object", "description", "test",
+        this(RuleIdImpl.defaultInstance(), "object", null, "description", "test",
                 ErrorDetailsImpl.defaultInstance(), Collections.<Reference> emptyList());
     }
 
-    private RuleImpl(final RuleId id, final String object,
+    private RuleImpl(final RuleId id, final String object, final Boolean deferred,
             final String description, final String test,
             final ErrorDetails error, final List<Reference> references) {
         super();
         this.id = id;
         this.object = object;
+        this.deferred = deferred;
         this.description = description;
         this.test = test;
         this.error = error;
@@ -90,6 +92,14 @@ final class RuleImpl implements Rule {
     @Override
     public String getObject() {
         return this.object;
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public Boolean getDeferred() {
+        return this.deferred;
     }
 
     /**
@@ -128,21 +138,34 @@ final class RuleImpl implements Rule {
      * { @inheritDoc }
      */
     @Override
-    public final int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime
-                * result
-                + ((this.description == null) ? 0 : this.description.hashCode());
-        result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-        result = prime * result
-                + ((this.object == null) ? 0 : this.object.hashCode());
-        result = prime * result
-                + ((this.references == null) ? 0 : this.references.hashCode());
-        result = prime * result
-                + ((this.test == null) ? 0 : this.test.hashCode());
-        result = prime * result
-                + ((this.error == null) ? 0 : this.error.hashCode());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RuleImpl)) return false;
+
+        RuleImpl rule = (RuleImpl) o;
+
+        if (id != null ? !id.equals(rule.id) : rule.id != null) return false;
+        if (object != null ? !object.equals(rule.object) : rule.object != null) return false;
+        if (deferred != null ? !deferred.equals(rule.deferred) : rule.deferred != null) return false;
+        if (description != null ? !description.equals(rule.description) : rule.description != null) return false;
+        if (test != null ? !test.equals(rule.test) : rule.test != null) return false;
+        if (error != null ? !error.equals(rule.error) : rule.error != null) return false;
+        return references != null ? references.equals(rule.references) : rule.references == null;
+
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (object != null ? object.hashCode() : 0);
+        result = 31 * result + (deferred != null ? deferred.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (test != null ? test.hashCode() : 0);
+        result = 31 * result + (error != null ? error.hashCode() : 0);
+        result = 31 * result + (references != null ? references.hashCode() : 0);
         return result;
     }
 
@@ -150,53 +173,8 @@ final class RuleImpl implements Rule {
      * { @inheritDoc }
      */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (!(obj instanceof Rule))
-            return false;
-        Rule other = (Rule) obj;
-        if (this.description == null) {
-            if (other.getDescription() != null)
-                return false;
-        } else if (!this.description.equals(other.getDescription()))
-            return false;
-        if (this.id == null) {
-            if (other.getRuleId() != null)
-                return false;
-        } else if (!this.id.equals(other.getRuleId()))
-            return false;
-        if (this.object == null) {
-            if (other.getObject() != null)
-                return false;
-        } else if (!this.object.equals(other.getObject()))
-            return false;
-        if (this.references == null) {
-            if (other.getReferences() != null)
-                return false;
-        } else if (!this.references.equals(other.getReferences()))
-            return false;
-        if (this.test == null) {
-            if (other.getTest() != null)
-                return false;
-        } else if (!this.test.equals(other.getTest()))
-            return false;
-        if (this.error == null) {
-            if (other.getError() != null)
-                return false;
-        } else if (!this.error.equals(other.getError()))
-            return false;
-        return true;
-    }
-
-    /**
-     * { @inheritDoc }
-     */
-    @Override
     public String toString() {
-        return "Rule [id=" + this.id + ", object=" + this.object
+        return "Rule [id=" + this.id + ", object=" + this.object + ", deferred=" + this.deferred
                 + ", description=" + this.description + ", test=" + this.test
                 + ", error=" + this.error + ", references=" + this.references
                 + "]";
@@ -206,16 +184,16 @@ final class RuleImpl implements Rule {
         return RuleImpl.DEFAULT;
     }
 
-    static RuleImpl fromValues(final RuleId id, final String object,
+    static RuleImpl fromValues(final RuleId id, final String object, final Boolean deferred,
             final String description, final String test,
             final ErrorDetails error, final List<Reference> references) {
-        return new RuleImpl(RuleIdImpl.fromRuleId(id), object, description, test, error, references);
+        return new RuleImpl(RuleIdImpl.fromRuleId(id), object, deferred, description, test, error, references);
     }
 
     static RuleImpl fromRule(final Rule toConvert) {
         return RuleImpl.fromValues(
                 RuleIdImpl.fromRuleId(toConvert.getRuleId()),
-                toConvert.getObject(), toConvert.getDescription(),
+                toConvert.getObject(), toConvert.getDeferred(), toConvert.getDescription(),
                 toConvert.getTest(), toConvert.getError(),
                 toConvert.getReferences());
     }
