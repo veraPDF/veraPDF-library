@@ -11,12 +11,11 @@ package org.verapdf;
 
 final class VersionNumberImpl implements SemanticVersionNumber {
 	private static final String separator = "\\."; //$NON-NLS-1$
-	private static final String pdfBoxBuildInfo = "-PDFBOX"; //$NON-NLS-1$
-	private static final String snapshotBuildInfo = "-SNAPSHOT"; //$NON-NLS-1$
-	private static final String versionPrefix = "v"; //$NON-NLS-1$
+	private static final String preReleaseSeparator = "-"; //$NON-NLS-1$
+	private static final String buildMetadataSeparator = "+"; //$NON-NLS-1$
 	private final int major;
 	private final int minor;
-	private final int revision;
+	private final int patch;
 
 	@SuppressWarnings("unused")
 	private VersionNumberImpl(final String version) {
@@ -31,16 +30,16 @@ final class VersionNumberImpl implements SemanticVersionNumber {
 		this(parts[0], parts[1], parts[2]);
 	}
 
-	VersionNumberImpl(final int major, final int minor, final int revision) {
+	VersionNumberImpl(final int major, final int minor, final int patch) {
 		this.major = major;
 		this.minor = minor;
-		this.revision = revision;
+		this.patch = patch;
 	}
 
 	@Override
 	public String getVersionString() {
 		return String.format("%d.%d.%d", Integer.valueOf(this.major), //$NON-NLS-1$
-				Integer.valueOf(this.minor), Integer.valueOf(this.revision));
+				Integer.valueOf(this.minor), Integer.valueOf(this.patch));
 	}
 
 	@Override
@@ -53,9 +52,10 @@ final class VersionNumberImpl implements SemanticVersionNumber {
 		return this.minor;
 	}
 
+
 	@Override
-	public int getRevision() {
-		return this.revision;
+	public int getPatch() {
+		return this.patch;
 	}
 
 	/**
@@ -67,7 +67,7 @@ final class VersionNumberImpl implements SemanticVersionNumber {
 		int result = 1;
 		result = prime * result + this.major;
 		result = prime * result + this.minor;
-		result = prime * result + this.revision;
+		result = prime * result + this.patch;
 		return result;
 	}
 
@@ -92,7 +92,7 @@ final class VersionNumberImpl implements SemanticVersionNumber {
 		if (this.minor != other.minor) {
 			return false;
 		}
-		if (this.revision != other.revision) {
+		if (this.patch != other.patch) {
 			return false;
 		}
 		return true;
@@ -116,12 +116,8 @@ final class VersionNumberImpl implements SemanticVersionNumber {
 			throw new IllegalArgumentException("Argument versionString can not be null"); //$NON-NLS-1$
 		if (versionString.isEmpty())
 			throw new IllegalArgumentException("Argument versionString can not be empty"); //$NON-NLS-1$
-		String strippedVersion = (versionString.endsWith(pdfBoxBuildInfo)) ? versionString.replace(pdfBoxBuildInfo, "") //$NON-NLS-1$
-				: versionString;
-		strippedVersion = (strippedVersion.endsWith(snapshotBuildInfo)) ? strippedVersion.replace(snapshotBuildInfo, "") //$NON-NLS-1$
-				: strippedVersion;
-		strippedVersion = strippedVersion.startsWith(versionPrefix) ? strippedVersion.replaceFirst(versionPrefix, "") //$NON-NLS-1$
-				: strippedVersion;
+		String strippedVersion = stripBuildMetadata(versionString);
+		strippedVersion = stripPreRelease(versionString);
 		return fromStrings(strippedVersion.split(separator));
 	}
 
@@ -157,6 +153,18 @@ final class VersionNumberImpl implements SemanticVersionNumber {
 			throw new IllegalArgumentException("Argument revision can not be < 0"); //$NON-NLS-1$
 		return new VersionNumberImpl(major, minor, revision);
 	}
+	
+	private static String stripBuildMetadata(final String versionString) {
+		if (!versionString.contains(buildMetadataSeparator))
+			return versionString;
+		return versionString.substring(0, versionString.indexOf(buildMetadataSeparator));
+	}
+
+	private static String stripPreRelease(final String versionString) {
+		if (!versionString.contains(preReleaseSeparator))
+			return versionString;
+		return versionString.substring(0, versionString.indexOf(preReleaseSeparator));
+	}
 
 	private static int compare(final SemanticVersionNumber that, final SemanticVersionNumber other) {
 		int majorDiff = that.getMajor() - other.getMajor();
@@ -165,7 +173,7 @@ final class VersionNumberImpl implements SemanticVersionNumber {
 		int minorDiff = that.getMinor() - other.getMinor();
 		if (minorDiff != 0)
 			return minorDiff;
-		int revisionDiff = that.getRevision() - other.getRevision();
+		int revisionDiff = that.getPatch() - other.getPatch();
 		if (revisionDiff != 0)
 			return revisionDiff;
 		return 0;

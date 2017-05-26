@@ -5,7 +5,7 @@ package org.verapdf;
 
 /**
  * Simple interface for a <a href="http://semver.org/">semantic version
- * number</a>.
+ * number</a>. Currently ignores pre-release and build metadata 
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
@@ -13,7 +13,7 @@ package org.verapdf;
  */
 public interface SemanticVersionNumber extends Comparable<SemanticVersionNumber> {
 	/**
-	 * @return the version number as a String, that is major.minor.revision
+	 * @return the version number as a String, that is major.minor.patch
 	 */
 	public String getVersionString();
 
@@ -28,7 +28,7 @@ public interface SemanticVersionNumber extends Comparable<SemanticVersionNumber>
 	public int getMinor();
 
 	/**
-	 * @return the int value of the revision number
+	 * @return the int value of the patch number
 	 */
-	public int getRevision();
+	public int getPatch();
 }
