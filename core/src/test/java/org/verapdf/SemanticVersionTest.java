@@ -3,9 +3,9 @@
  */
 package org.verapdf;
 
-import static org.junit.Assert.*;
-
-import java.io.Console;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -22,16 +22,13 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 @SuppressWarnings("static-method")
 public class SemanticVersionTest {
-	private static final String v1_0_0 = "1.0.0";
-	private static final String[] v1_0_0_strings = { "1", "0", "0" };
+	private static final String v1_0_0 = "1.0.0"; //$NON-NLS-1$
+	private static final String[] v1_0_0_strings = { "1", "0", "0" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	private static final int[] v1_0_0_ints = { 1, 0, 0 };
 	private static final int[] v1_0_0_shortints = { 1, 0 };
 	private static final int[] v1_0_0_longints = { 1, 0, 1, 1 };
-	private static final String ver1_0_0 = "v1.0.0";
-	private static final String v1_0_0pdf = "1.0.0-PDFBOX";
-	private static final String ver1_0_0pdf = "v1.0.0-PDFBOX";
-	private static final String v1_0_0snap = "1.0.0-SNAPSHOT";
-	private static final String ver1_0_0snap = "v1.0.0-SNAPSHOT";
+	private static final String v1_0_0pdf = "1.0.0-PDFBOX"; //$NON-NLS-1$
+	private static final String v1_0_0snap = "1.0.0-SNAPSHOT"; //$NON-NLS-1$
 	/**
 	 * Test method for {@link org.verapdf.VersionNumberImpl#hashCode()}.
 	 */
@@ -46,12 +43,8 @@ public class SemanticVersionTest {
 	@Test
 	public final void testVersionNumberFromString() {
 		SemanticVersionNumber vNum = VersionNumberImpl.fromString(v1_0_0);
-		SemanticVersionNumber verNum = VersionNumberImpl.fromString(ver1_0_0);
-		assertEquals(vNum, verNum);
 		SemanticVersionNumber pdfNum = VersionNumberImpl.fromString(v1_0_0pdf);
 		assertEquals(vNum, pdfNum);
-		SemanticVersionNumber pdfVerNum = VersionNumberImpl.fromString(ver1_0_0pdf);
-		assertEquals(vNum, pdfVerNum);
 	}
 
 	/**
@@ -68,7 +61,7 @@ public class SemanticVersionTest {
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testVersionNumberFromEmptyString() {
-		VersionNumberImpl.fromString("");
+		VersionNumberImpl.fromString(""); //$NON-NLS-1$
 	}
 
 	/**
@@ -94,7 +87,7 @@ public class SemanticVersionTest {
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testVersionNumberImplStringArrayBad() {
-		String [] badStrings = { "1", "stuff", "0" };
+		String [] badStrings = { "1", "stuff", "0" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		VersionNumberImpl.fromStrings(badStrings);
 	}
 
@@ -173,16 +166,10 @@ public class SemanticVersionTest {
 	public final void testGetVersionString() {
 		SemanticVersionNumber vNum = VersionNumberImpl.fromString(v1_0_0);
 		assertEquals(v1_0_0, vNum.getVersionString());
-		SemanticVersionNumber verNum = VersionNumberImpl.fromString(ver1_0_0);
-		assertEquals(v1_0_0, verNum.getVersionString());
 		SemanticVersionNumber pdfNum = VersionNumberImpl.fromString(v1_0_0pdf);
 		assertEquals(v1_0_0, pdfNum.getVersionString());
-		SemanticVersionNumber pdfVerNum = VersionNumberImpl.fromString(ver1_0_0pdf);
-		assertEquals(v1_0_0, pdfVerNum.getVersionString());
 		SemanticVersionNumber snapNum = VersionNumberImpl.fromString(v1_0_0snap);
 		assertEquals(v1_0_0, snapNum.getVersionString());
-		SemanticVersionNumber snapVerNum = VersionNumberImpl.fromString(ver1_0_0snap);
-		assertEquals(v1_0_0, snapVerNum.getVersionString());
 	}
 
 	/**
@@ -191,7 +178,7 @@ public class SemanticVersionTest {
 	@Test
 	public final void testCompareTo() {
 		SemanticVersionNumber vNum = VersionNumberImpl.fromString(v1_0_0);
-		SemanticVersionNumber verNum = VersionNumberImpl.fromString(ver1_0_0);
+		SemanticVersionNumber verNum = VersionNumberImpl.fromString(v1_0_0pdf);
 		assertEquals(vNum, verNum);
 		assertTrue(vNum.compareTo(verNum) == 0);
 		SemanticVersionNumber lessThan = VersionNumberImpl.fromInts(0,90,100);
