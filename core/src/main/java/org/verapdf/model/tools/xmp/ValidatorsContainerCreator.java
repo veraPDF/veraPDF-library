@@ -209,11 +209,11 @@ public class ValidatorsContainerCreator {
             }
         }
 
-        if (name != null && namespace != null) {
-            if (fields != null && !fields.isEmpty()) {
-                container.registerStructuredValidator(name, namespace, fields);
-            } else {
+        if (name != null) {
+            if (fields == null || fields.isEmpty()) {
                 container.registerSimpleValidator(name, SimpleTypeValidator.fromValue(SimpleTypeValidator.SimpleTypeEnum.TEXT));
+            } else if (namespace != null) {
+                container.registerStructuredValidator(name, namespace, fields);
             }
         }
     }
