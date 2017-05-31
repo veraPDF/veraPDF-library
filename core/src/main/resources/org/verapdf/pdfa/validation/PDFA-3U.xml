@@ -1261,7 +1261,7 @@
 			(isNamespaceURIValidURI == true &amp;&amp; namespaceURIPrefix == &quot;pdfaType&quot; ) &amp;&amp;
 			(isPrefixValidText == true &amp;&amp; prefixPrefix == &quot;pdfaType&quot;) &amp;&amp;
 			(isDescriptionValidText == true &amp;&amp; descriptionPrefix == &quot;pdfaType&quot; ) &amp;&amp;
-			(isFieldValidSeq == true &amp;&amp; fieldPrefix == &quot;pdfaType&quot;)</test>
+			(isFieldValidSeq == true &amp;&amp; (fieldPrefix == null || fieldPrefix == &quot;pdfaType&quot;) )</test>
             <error>
                 <message>Invalid extension schema ValueType type definition</message>
                 <arguments/>
