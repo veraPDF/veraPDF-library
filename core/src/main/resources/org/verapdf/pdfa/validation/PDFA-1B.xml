@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_B">
-    <details creator="veraPDF Consortium" created="2017-03-21T18:50:07.707-03:00">
+    <details creator="veraPDF Consortium" created="2017-05-31T13:04:06.658-03:00">
         <name>PDF/A-1B validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011, Level B</description>
     </details>
@@ -8,7 +8,7 @@
     <rules>
         <rule object="CosDocument">
             <id specification="ISO_19005_1" clause="6.1.2" testNumber="1"/>
-            <description>The % character of the file header shall occur at byte offset 0 of the file.
+            <description>The % character of the file header shall occur at byte offset 0 of the file. 
 			The first line of a PDF file is a header identifying the version of the PDF specification to which the file conforms</description>
             <test>headerOffset == 0 &amp;&amp; /%PDF-\d\.\d/.test(header)</test>
             <error>
@@ -21,7 +21,7 @@
         </rule>
         <rule object="CosDocument">
             <id specification="ISO_19005_1" clause="6.1.2" testNumber="2"/>
-            <description>The file header line shall be immediately followed by a comment consisting of a % character followed by at
+            <description>The file header line shall be immediately followed by a comment consisting of a % character followed by at 
 			least four characters, each of whose encoded byte values shall have a decimal value greater than 127</description>
             <test>headerByte1 &gt; 127 &amp;&amp; headerByte2 &gt; 127 &amp;&amp; headerByte3 &gt; 127 &amp;&amp; headerByte4 &gt; 127</test>
             <error>
@@ -63,7 +63,7 @@
         </rule>
         <rule object="CosDocument">
             <id specification="ISO_19005_1" clause="6.1.3" testNumber="4"/>
-            <description>In a linearized PDF, if the ID keyword is present in both the first page trailer dictionary
+            <description>In a linearized PDF, if the ID keyword is present in both the first page trailer dictionary 
 			and the last trailer dictionary, the value to both instances of the ID keyword shall be identical</description>
             <test>(isLinearized != true)|| lastID == null || (firstPageID == lastID)</test>
             <error>
@@ -150,7 +150,7 @@
         </rule>
         <rule object="CosIndirect">
             <id specification="ISO_19005_1" clause="6.1.8" testNumber="1"/>
-            <description>The object number and generation number shall be separated by a single white-space character. The generation number and obj keyword
+            <description>The object number and generation number shall be separated by a single white-space character. The generation number and obj keyword 
 	shall be separated by a single white-space character. The object number and endobj keyword shall each be preceded by an EOL marker. The obj and endobj
 	keywords shall each be followed by an EOL marker.</description>
             <test>spacingCompliesPDFA</test>
@@ -338,7 +338,7 @@
         </rule>
         <rule object="ICCOutputProfile">
             <id specification="ISO_19005_1" clause="6.2.2" testNumber="1"/>
-            <description>A PDF/A-1 OutputIntent is an OutputIntent dictionary, as defined by PDF Reference 9.10.4, that is included in the file's OutputIntents
+            <description>A PDF/A-1 OutputIntent is an OutputIntent dictionary, as defined by PDF Reference 9.10.4, that is included in the file's OutputIntents 
 	array and has GTS_PDFA1 as the value of its S key and a valid ICC profile stream as the value its DestOutputProfile key</description>
             <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot;) &amp;&amp; (colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot;) &amp;&amp; version &lt; 3.0</test>
             <error>
@@ -363,7 +363,7 @@
         <rule object="ICCInputProfile">
             <id specification="ISO_19005_1" clause="6.2.3" testNumber="1"/>
             <description>All ICCBased colour spaces shall be embedded as ICC profile streams as described in PDF Reference 4.5</description>
-            <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot; || deviceClass == &quot;scnr&quot; || deviceClass == &quot;spac&quot;) &amp;&amp;
+            <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot; || deviceClass == &quot;scnr&quot; || deviceClass == &quot;spac&quot;) &amp;&amp; 
 			(colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot; || colorSpace == &quot;LAB &quot;) &amp;&amp; version &lt; 3.0</test>
             <error>
                 <message>The embedded ICC profile is either invalid or does not satisfy PDF 1.4 requirements</message>
@@ -406,7 +406,7 @@
         <rule object="ICCProfile">
             <id specification="ISO_19005_1" clause="6.2.3" testNumber="5"/>
             <description>All ICCBased colour spaces shall be embedded as ICC profile streams as described in PDF Reference 4.5.
-			The number of color components in the color space described by the ICC profile data must match the number of components actually in the ICC profile.
+			The number of color components in the color space described by the ICC profile data must match the number of components actually in the ICC profile. 
 			As of PDF 1.4, N must be 1, 3, or 4</description>
             <test>N != null &amp;&amp; ((N == 1 &amp;&amp; colorSpace == &quot;GRAY&quot;) || (N == 3 &amp;&amp; (colorSpace == &quot;RGB &quot; || colorSpace == &quot;LAB &quot;)) || (N == 4 &amp;&amp; colorSpace == &quot;CMYK&quot;))</test>
             <error>
@@ -521,7 +521,7 @@
         </rule>
         <rule object="PDFont">
             <id specification="ISO_19005_1" clause="6.3.2" testNumber="1"/>
-            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5.
+            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5. 
 	Type - name - (Required) The type of PDF object that this dictionary describes; must be Font for a font dictionary</description>
             <test>Type == &quot;Font&quot;</test>
             <error>
@@ -537,10 +537,10 @@
         </rule>
         <rule object="PDFont">
             <id specification="ISO_19005_1" clause="6.3.2" testNumber="2"/>
-            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5.
+            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5. 
 			Subtype - name - (Required) The type of font; must be &quot;Type1&quot; for Type 1 fonts, &quot;MMType1&quot; for multiple master fonts, &quot;TrueType&quot; for TrueType fonts
 			&quot;Type3&quot; for Type 3 fonts, &quot;Type0&quot; for Type 0 fonts and &quot;CIDFontType0&quot; or &quot;CIDFontType2&quot; for CID fonts</description>
-            <test>Subtype == &quot;Type1&quot; || Subtype == &quot;MMType1&quot; || Subtype == &quot;TrueType&quot; || Subtype == &quot;Type3&quot; || Subtype == &quot;Type0&quot;
+            <test>Subtype == &quot;Type1&quot; || Subtype == &quot;MMType1&quot; || Subtype == &quot;TrueType&quot; || Subtype == &quot;Type3&quot; || Subtype == &quot;Type0&quot; 
 			|| Subtype == &quot;CIDFontType0&quot; || Subtype == &quot;CIDFontType2&quot;</test>
             <error>
                 <message>A Font dictionary has missing or invalid Subtype entry</message>
@@ -555,7 +555,7 @@
         </rule>
         <rule object="PDFont">
             <id specification="ISO_19005_1" clause="6.3.2" testNumber="3"/>
-            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5.
+            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5. 
 			BaseFont - name - (Required) The PostScript name of the font</description>
             <test>Subtype == &quot;Type3&quot; || fontName != null</test>
             <error>
@@ -571,7 +571,7 @@
         </rule>
         <rule object="PDSimpleFont">
             <id specification="ISO_19005_1" clause="6.3.2" testNumber="4"/>
-            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5.
+            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5. 
 			FirstChar - integer - (Required except for the standard 14 fonts) The first character code defined in the font's Widths array</description>
             <test>isStandard == true || FirstChar != null</test>
             <error>
@@ -585,7 +585,7 @@
         </rule>
         <rule object="PDSimpleFont">
             <id specification="ISO_19005_1" clause="6.3.2" testNumber="5"/>
-            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5.
+            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5. 
 			FirstChar - integer - (Required except for the standard 14 fonts) The first character code defined in the font's Widths array</description>
             <test>isStandard == true || LastChar != null</test>
             <error>
@@ -599,7 +599,7 @@
         </rule>
         <rule object="PDSimpleFont">
             <id specification="ISO_19005_1" clause="6.3.2" testNumber="6"/>
-            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5.
+            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5. 
 			Widths - array - (Required except for the standard 14 fonts; indirect reference preferred) An array of (LastChar − FirstChar + 1) widths</description>
             <test>isStandard == true || (Widths_size != null &amp;&amp; Widths_size == LastChar - FirstChar + 1)</test>
             <error>
@@ -611,9 +611,25 @@
                 <reference specification="PDF 1.4 Reference" clause="5.5.4 - Table 5.9"/>
             </references>
         </rule>
+        <rule object="PDFont">
+            <id specification="ISO_19005_1" clause="6.3.2" testNumber="7"/>
+            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5. 
+			The subtype is the value of the Subtype key, if present, in the font file stream dictionary. The only valid values of this key in PDF 1.4 are
+			Type1C - Type 1–equivalent font program represented in the Compact Font Format (CFF) and CIDFontType0C - Type 0 CIDFont program represented 
+			in the Compact Font Format (CFF).</description>
+            <test>fontFileSubtype == null || fontFileSubtype == &quot;Type1C&quot; || fontFileSubtype == &quot;CIDFontType0C&quot;</test>
+            <error>
+                <message>Unsupported font file format of the embedded font</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="PDF 1.4 Reference" clause="5.8 - Table 5.22"/>
+                <reference specification="Adobe Technical Note #5176, The Compact Font Format Specification" clause=""/>
+            </references>
+        </rule>
         <rule object="PDType0Font">
             <id specification="ISO_19005_1" clause="6.3.3" testNumber="1"/>
-            <description>For any given composite (Type 0) font referenced within a conforming file, the CIDSystemInfo entries of its
+            <description>For any given composite (Type 0) font referenced within a conforming file, the CIDSystemInfo entries of its 
 			CIDFont and CMap dictionaries shall be compatible. In other words, the Registry and Ordering strings of the CIDSystemInfo dictionaries
 			for that font shall be identical, unless the value of the Encoding key in the font dictionary is Identity-H or Identity-V.</description>
             <test>cmapName == &quot;Identity-H&quot; || cmapName == &quot;Identity-V&quot; || areRegistryOrderingCompatible == true</test>
@@ -628,7 +644,7 @@
         </rule>
         <rule object="PDCIDFont">
             <id specification="ISO_19005_1" clause="6.3.3" testNumber="2"/>
-            <description>For all Type 2 CIDFonts that are used for rendering, the CIDFont dictionary shall contain a CIDToGIDMap entry that shall be a stream mapping
+            <description>For all Type 2 CIDFonts that are used for rendering, the CIDFont dictionary shall contain a CIDToGIDMap entry that shall be a stream mapping 
 			from CIDs to glyph indices or the name Identity, as described in PDF Reference Table 5.13</description>
             <test>Subtype != &quot;CIDFontType2&quot; || CIDToGIDMap != null || renderingMode == 3</test>
             <error>
@@ -664,7 +680,7 @@
         </rule>
         <rule object="PDFont">
             <id specification="ISO_19005_1" clause="6.3.4" testNumber="1"/>
-            <description>The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8,
+            <description>The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8, 
 			except when the fonts are used exclusively with text rendering mode 3</description>
             <test>Subtype == &quot;Type3&quot; || Subtype == &quot;Type0&quot; || renderingMode == 3 || fontFile_size == 1</test>
             <error>
@@ -677,7 +693,7 @@
         </rule>
         <rule object="Glyph">
             <id specification="ISO_19005_1" clause="6.3.5" testNumber="1"/>
-            <description>The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8,
+            <description>The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8, 
 			except when the fonts are used exclusively with text rendering mode 3.</description>
             <test>renderingMode == 3 || isGlyphPresent == null || isGlyphPresent == true</test>
             <error>
@@ -714,7 +730,7 @@
         </rule>
         <rule object="Glyph">
             <id specification="ISO_19005_1" clause="6.3.6" testNumber="1"/>
-            <description>For every font embedded in a conforming file and used for rendering, the glyph width information in the font dictionary and
+            <description>For every font embedded in a conforming file and used for rendering, the glyph width information in the font dictionary and 
 			in the embedded font program shall be consistent.</description>
             <test>renderingMode == 3 || isWidthConsistent == null || isWidthConsistent == true</test>
             <error>
@@ -787,7 +803,7 @@
         </rule>
         <rule object="PDGroup">
             <id specification="ISO_19005_1" clause="6.4" testNumber="3"/>
-            <description>A Group object with an S key with a value of Transparency shall not be included in a form XObject.
+            <description>A Group object with an S key with a value of Transparency shall not be included in a form XObject. 
 			A Group object with an S key with a value of Transparency shall not be included in a page dictionary</description>
             <test>S != &quot;Transparency&quot;</test>
             <error>
@@ -830,9 +846,9 @@
         </rule>
         <rule object="PDAnnot">
             <id specification="ISO_19005_1" clause="6.5.2" testNumber="1"/>
-            <description>Annotation types not defined in PDF Reference shall not be permitted. Additionally, the FileAttachment,
+            <description>Annotation types not defined in PDF Reference shall not be permitted. Additionally, the FileAttachment, 
 			Sound and Movie types shall not be permitted</description>
-            <test>Subtype == &quot;Text&quot; || Subtype == &quot;Link&quot; || Subtype == &quot;FreeText&quot; || Subtype == &quot;Line&quot; ||
+            <test>Subtype == &quot;Text&quot; || Subtype == &quot;Link&quot; || Subtype == &quot;FreeText&quot; || Subtype == &quot;Line&quot; || 
 			Subtype == &quot;Square&quot; || Subtype == &quot;Circle&quot; || Subtype == &quot;Highlight&quot; || Subtype == &quot;Underline&quot; ||
 			Subtype == &quot;Squiggly&quot; || Subtype == &quot;StrikeOut&quot; || Subtype == &quot;Stamp&quot; || Subtype == &quot;Ink&quot; ||
 			Subtype == &quot;Popup&quot; || Subtype == &quot;Widget&quot; || Subtype == &quot;PrinterMark&quot; || Subtype == &quot;TrapNet&quot;</test>
@@ -878,8 +894,8 @@
         </rule>
         <rule object="PDAnnot">
             <id specification="ISO_19005_1" clause="6.5.3" testNumber="4"/>
-            <description>For all annotation dictionaries containing an AP key, the appearance dictionary that it defines as its value shall contain only the N key.
-			If an annotation dictionary's Subtype key has a value of Widget and its FT key has a value of Btn, the value of the N key shall be an appearance
+            <description>For all annotation dictionaries containing an AP key, the appearance dictionary that it defines as its value shall contain only the N key. 
+			If an annotation dictionary's Subtype key has a value of Widget and its FT key has a value of Btn, the value of the N key shall be an appearance 
 			subdictionary; otherwise the value of the N key shall be an appearance stream.</description>
             <test>AP == null || ( AP == &quot;N&quot; &amp;&amp; ( ((Subtype != &quot;Widget&quot; || FT != &quot;Btn&quot;) &amp;&amp; N_type == &quot;Stream&quot;)
 			|| (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot; &amp;&amp; N_type == &quot;Dict&quot;) ) )</test>
@@ -893,7 +909,7 @@
         </rule>
         <rule object="PDAction">
             <id specification="ISO_19005_1" clause="6.6.1" testNumber="1"/>
-            <description>The Launch, Sound, Movie, ResetForm, ImportData and JavaScript actions shall not be permitted.
+            <description>The Launch, Sound, Movie, ResetForm, ImportData and JavaScript actions shall not be permitted. 
 			Additionally, the deprecated set-state and no-op actions shall not be permitted. The Hide action shall not be permitted (Corrigendum 2)</description>
             <test>S == &quot;GoTo&quot; || S == &quot;GoToR&quot; || S == &quot;Thread&quot; || S == &quot;URI&quot; || S == &quot;Named&quot; || S == &quot;SubmitForm&quot;</test>
             <error>
@@ -1022,7 +1038,7 @@
         </rule>
         <rule object="ExtensionSchemasContainer">
             <id specification="ISO_19005_1" clause="6.7.8" testNumber="2"/>
-            <description>The extension schema container schema uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/extension/&quot;.
+            <description>The extension schema container schema uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/extension/&quot;. 
 			The required schema namespace prefix is pdfaExtension. pdfaExtension:schemas - Bag Schema - Description of extension schemas</description>
             <test>isValidBag == true &amp;&amp; prefix == &quot;pdfaExtension&quot;</test>
             <error>
@@ -1055,9 +1071,9 @@
             <id specification="ISO_19005_1" clause="6.7.8" testNumber="4"/>
             <description>The Property type defined is an XMP structure containing the definition of a schema property. The
 		field namespace URI is &quot;http://www.aiim.org/pdfa/ns/property#&quot;. The required field namespace prefix is
-		pdfaProperty. The Property type includes the following fields: pdfaProperty:name (Text), pdfaProperty:valueType (Open Choice of Text),
+		pdfaProperty. The Property type includes the following fields: pdfaProperty:name (Text), pdfaProperty:valueType (Open Choice of Text), 
 		pdfaProperty:category (Closed Choice of Text), pdfaProperty:description (Text).</description>
-            <test>(isNameValidText == true &amp;&amp; namePrefix == &quot;pdfaProperty&quot; ) &amp;&amp;
+            <test>(isNameValidText == true &amp;&amp; namePrefix == &quot;pdfaProperty&quot; ) &amp;&amp; 
 			(isValueTypeValidText == true &amp;&amp; isValueTypeDefined == true &amp;&amp; valueTypePrefix == &quot;pdfaProperty&quot; ) &amp;&amp;
 			(isCategoryValidText == true &amp;&amp; (category == &quot;external&quot; || category == &quot;internal&quot;) &amp;&amp; categoryPrefix == &quot;pdfaProperty&quot;) &amp;&amp;
 			(isDescriptionValidText == true &amp;&amp; descriptionPrefix == &quot;pdfaProperty&quot; )</test>
@@ -1076,7 +1092,7 @@
             <test>(isTypeValidText == true &amp;&amp; typePrefix == &quot;pdfaType&quot;) &amp;&amp;
 			(isNamespaceURIValidURI == true &amp;&amp; namespaceURIPrefix == &quot;pdfaType&quot;) &amp;&amp;
 			(isPrefixValidText == true &amp;&amp; prefixPrefix == &quot;pdfaType&quot;) &amp;&amp;
-			(isDescriptionValidText == true &amp;&amp; descriptionPrefix == &quot;pdfaType&quot;) &amp;&amp;
+			(isDescriptionValidText == true &amp;&amp; descriptionPrefix == &quot;pdfaType&quot; ) &amp;&amp;
 			(isFieldValidSeq == true &amp;&amp; (fieldPrefix == null || fieldPrefix == &quot;pdfaType&quot;) )</test>
             <error>
                 <message>Invalid extension schema ValueType type definition</message>
@@ -1086,10 +1102,10 @@
         </rule>
         <rule object="ExtensionSchemaField">
             <id specification="ISO_19005_1" clause="6.7.8" testNumber="6"/>
-            <description>The Field type defined in Table 6 is an XMP structure containing the definition of a property value type field. The field
+            <description>The Field type defined in Table 6 is an XMP structure containing the definition of a property value type field. The field 
 		namespace URI is &quot;http://www.aiim.org/pdfa/ns/field#&quot;. The required field namespace prefix is pdfaField. The Field type contains the following fields:
 		pdfaField:name (Text), pdfaField:valueType (Open Choice of Text), pdfaField:description (Text).</description>
-            <test>(isNameValidText == true &amp;&amp; namePrefix == &quot;pdfaField&quot; ) &amp;&amp;
+            <test>(isNameValidText == true &amp;&amp; namePrefix == &quot;pdfaField&quot; ) &amp;&amp; 
 			(isValueTypeValidText == true &amp;&amp; isValueTypeDefined == true &amp;&amp; valueTypePrefix == &quot;pdfaField&quot; ) &amp;&amp;
 			(isDescriptionValidText == true &amp;&amp; descriptionPrefix == &quot;pdfaField&quot; )</test>
             <error>
@@ -1114,7 +1130,7 @@
         </rule>
         <rule object="XMPProperty">
             <id specification="ISO_19005_1" clause="6.7.9" testNumber="2"/>
-            <description>Properties specified in XMP form shall use either the predefined schemas defined in XMP Specification,
+            <description>Properties specified in XMP form shall use either the predefined schemas defined in XMP Specification, 
 			or extension schemas that comply with XMP Specification</description>
             <test>(isPredefinedInXMP2004 == true || isDefinedInCurrentPackage == true) &amp;&amp; isValueTypeCorrect == true</test>
             <error>
@@ -1161,8 +1177,8 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_1" clause="6.7.11" testNumber="4"/>
-            <description>The PDF/A Identification schema defined in Table 8 uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/id/&quot;.
-			The required schema namespace prefix is pdfaid. It contains the following fields: pdfaid:part (Open Choice of Integer),
+            <description>The PDF/A Identification schema defined in Table 8 uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/id/&quot;. 
+			The required schema namespace prefix is pdfaid. It contains the following fields: pdfaid:part (Open Choice of Integer), 
 			pdfaid:amd (Open Choice of Text), pdfaid:conformance (Open Choice of Text)</description>
             <test>partPrefix == &quot;pdfaid&quot; &amp;&amp; conformancePrefix == &quot;pdfaid&quot; &amp;&amp;
 			(amdPrefix == null || amdPrefix == &quot;pdfaid&quot;)</test>
