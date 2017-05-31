@@ -22,6 +22,7 @@ package org.verapdf.model.tools.xmp;
 
 import com.adobe.xmp.XMPConst;
 import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.model.tools.xmp.validators.SimpleTypeValidator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -208,8 +209,12 @@ public class ValidatorsContainerCreator {
             }
         }
 
-        if (name != null && namespace != null && fields != null && !fields.isEmpty()) {
-            container.registerStructuredValidator(name, namespace, fields);
+        if (name != null && namespace != null) {
+            if (fields != null && !fields.isEmpty()) {
+                container.registerStructuredValidator(name, namespace, fields);
+            } else {
+                container.registerSimpleValidator(name, SimpleTypeValidator.fromValue(SimpleTypeValidator.SimpleTypeEnum.TEXT));
+            }
         }
     }
 
