@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_B">
-    <details creator="veraPDF Consortium" created="2017-03-21T18:50:07.707-03:00">
+    <details creator="veraPDF Consortium" created="2017-05-31T13:04:06.658-03:00">
         <name>PDF/A-1B validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011, Level B</description>
     </details>
@@ -611,6 +611,22 @@
                 <reference specification="PDF 1.4 Reference" clause="5.5.4 - Table 5.9"/>
             </references>
         </rule>
+        <rule object="PDFont">
+            <id specification="ISO_19005_1" clause="6.3.2" testNumber="7"/>
+            <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5. 
+			The subtype is the value of the Subtype key, if present, in the font file stream dictionary. The only valid values of this key in PDF 1.4 are
+			Type1C - Type 1–equivalent font program represented in the Compact Font Format (CFF) and CIDFontType0C - Type 0 CIDFont program represented 
+			in the Compact Font Format (CFF).</description>
+            <test>fontFileSubtype == null || fontFileSubtype == &quot;Type1C&quot; || fontFileSubtype == &quot;CIDFontType0C&quot;</test>
+            <error>
+                <message>Unsupported font file format of the embedded font</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="PDF 1.4 Reference" clause="5.8 - Table 5.22"/>
+                <reference specification="Adobe Technical Note #5176, The Compact Font Format Specification" clause=""/>
+            </references>
+        </rule>
         <rule object="PDType0Font">
             <id specification="ISO_19005_1" clause="6.3.3" testNumber="1"/>
             <description>For any given composite (Type 0) font referenced within a conforming file, the CIDSystemInfo entries of its 
@@ -1035,13 +1051,13 @@
         </rule>
         <rule object="ExtensionSchemaDefinition">
             <id specification="ISO_19005_1" clause="6.7.8" testNumber="3"/>
-            <description>The Schema type is an XMP structure containing the definition of an extension schema. The field namespace URI is &quot;http://www.aiim.org/pdfa/ns/schema#&quot;. 
-			The required field namespace prefix is pdfaSchema. The Schema type includes the following fields: pdfaSchema:schema (Text), pdfaSchema:namespaceURI (URI), pdfaSchema:prefix (Text), 
+            <description>The Schema type is an XMP structure containing the definition of an extension schema. The field namespace URI is &quot;http://www.aiim.org/pdfa/ns/schema#&quot;.
+			The required field namespace prefix is pdfaSchema. The Schema type includes the following fields: pdfaSchema:schema (Text), pdfaSchema:namespaceURI (URI), pdfaSchema:prefix (Text),
 			pdfaSchema:property (Seq Property), pdfaSchema:valueType (Seq ValueType).</description>
-            <test>(isSchemaValidText == true &amp;&amp; (schemaPrefix == null || schemaPrefix == &quot;pdfaSchema&quot;) ) &amp;&amp; 
-			(isNamespaceURIValidURI == true &amp;&amp; ( (ExtensionSchemaProperties_size == 0 &amp;&amp; namespaceURIPrefix == null) || namespaceURIPrefix == &quot;pdfaSchema&quot; ) ) &amp;&amp;
-			(isPrefixValidText == true &amp;&amp; (prefixPrefix == null || prefixPrefix == &quot;pdfaSchema&quot;) ) &amp;&amp;
-			(isPropertyValidSeq == true &amp;&amp; (propertyPrefix == null || propertyPrefix == &quot;pdfaSchema&quot;) ) &amp;&amp;
+            <test>(isSchemaValidText == true &amp;&amp; schemaPrefix == &quot;pdfaSchema&quot;) &amp;&amp;
+			(isNamespaceURIValidURI == true &amp;&amp; namespaceURIPrefix == &quot;pdfaSchema&quot;) &amp;&amp;
+			(isPrefixValidText == true &amp;&amp; prefixPrefix == &quot;pdfaSchema&quot;) &amp;&amp;
+			(isPropertyValidSeq == true &amp;&amp; propertyPrefix == &quot;pdfaSchema&quot;) &amp;&amp;
 			(isValueTypeValidSeq == true &amp;&amp; (valueTypePrefix == null || valueTypePrefix == &quot;pdfaSchema&quot;) )</test>
             <error>
                 <message>Invalid Extension Schema definition</message>
@@ -1070,14 +1086,14 @@
         <rule object="ExtensionSchemaValueType">
             <id specification="ISO_19005_1" clause="6.7.8" testNumber="5"/>
             <description>The ValueType type is an XMP structure containing the definition of all property value
-		types used by embedded extension schemas that are not defined in the XMP Specification. The field namespace URI is &quot;http://www.aiim.org/pdfa/ns/type#&quot;. 
-		The required field namespace prefix is pdfaType. The ValueType type includes the following fields: pdfaType:type (Text), pdfaType:namespaceURI (URI), 
+		types used by embedded extension schemas that are not defined in the XMP Specification. The field namespace URI is &quot;http://www.aiim.org/pdfa/ns/type#&quot;.
+		The required field namespace prefix is pdfaType. The ValueType type includes the following fields: pdfaType:type (Text), pdfaType:namespaceURI (URI),
 		pdfaType:prefix (Text), pdfaType:description (Text), pdfaType:field (Seq Field).</description>
-            <test>(isTypeValidText == true &amp;&amp; typePrefix == &quot;pdfaType&quot; ) &amp;&amp; 
-			(isNamespaceURIValidURI == true &amp;&amp; namespaceURIPrefix == &quot;pdfaType&quot; ) &amp;&amp;
-			(isPrefixValidText == true &amp;&amp; (prefixPrefix == null || prefixPrefix == &quot;pdfaType&quot;) ) &amp;&amp;
+            <test>(isTypeValidText == true &amp;&amp; typePrefix == &quot;pdfaType&quot;) &amp;&amp;
+			(isNamespaceURIValidURI == true &amp;&amp; namespaceURIPrefix == &quot;pdfaType&quot;) &amp;&amp;
+			(isPrefixValidText == true &amp;&amp; prefixPrefix == &quot;pdfaType&quot;) &amp;&amp;
 			(isDescriptionValidText == true &amp;&amp; descriptionPrefix == &quot;pdfaType&quot; ) &amp;&amp;
-			(isFieldValidSeq == true &amp;&amp; fieldPrefix == &quot;pdfaType&quot;)</test>
+			(isFieldValidSeq == true &amp;&amp; (fieldPrefix == null || fieldPrefix == &quot;pdfaType&quot;) )</test>
             <error>
                 <message>Invalid extension schema ValueType type definition</message>
                 <arguments/>

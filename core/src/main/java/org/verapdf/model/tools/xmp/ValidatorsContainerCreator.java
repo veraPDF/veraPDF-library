@@ -22,6 +22,7 @@ package org.verapdf.model.tools.xmp;
 
 import com.adobe.xmp.XMPConst;
 import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.model.tools.xmp.validators.SimpleTypeValidator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -67,14 +68,16 @@ public class ValidatorsContainerCreator {
     private static ValidatorsContainer createValidatorsContainerPredefinedForPDFA_1(boolean isClosedFieldsCheck) {
         ValidatorsContainer container = createBasicValidatorsContainer(isClosedFieldsCheck);
         container.registerSimpleValidator(XMPConstants.GPS_COORDINATE, Pattern.compile("^\\d{2},\\d{2}[,\\.]\\d{2}[NSEW]$"));
-        container.registerSimpleValidator(XMPConstants.LOCALE, Pattern.compile("^([a-zA-Z]{1,8})((-[a-zA-Z]{1,8})*)$"));
+        //Locale strong validation requires next regexp for XMP2004: "^([a-zA-Z]{1,8})((-[a-zA-Z]{1,8})*)$"
+        container.registerSimpleValidator(XMPConstants.LOCALE, Pattern.compile("(?s)(^.*$)"));
         return container;
     }
 
     private static ValidatorsContainer createValidatorsContainerPredefinedForPDFA_2_3(boolean isClosedFieldsCheck) {
         ValidatorsContainer container = createBasicValidatorsContainer(isClosedFieldsCheck);
         container.registerSimpleValidator(XMPConstants.GPS_COORDINATE, Pattern.compile("^\\d{1,3},\\d{1,2}(,\\d{1,2}|\\.\\d+)[NSEW]$"));
-        container.registerSimpleValidator(XMPConstants.LOCALE, Pattern.compile("^([a-zA-Z]{1,8})((-[a-zA-Z0-9]{1,8})*)$"));
+        //Locale strong validation requires next regexp for XMP2005: "^([a-zA-Z]{1,8})((-[a-zA-Z0-9]{1,8})*)$"
+        container.registerSimpleValidator(XMPConstants.LOCALE, Pattern.compile("(?s)(^.*$)"));
         registerStructureTypeWithRestrictedSimpleFieldsForContainer(
                 XMPConstants.COLORANT,
                 isClosedFieldsCheck,
@@ -206,8 +209,12 @@ public class ValidatorsContainerCreator {
             }
         }
 
-        if (name != null && namespace != null && fields != null && !fields.isEmpty()) {
-            container.registerStructuredValidator(name, namespace, fields);
+        if (name != null) {
+            if (fields == null || fields.isEmpty()) {
+                container.registerSimpleValidator(name, SimpleTypeValidator.fromValue(SimpleTypeValidator.SimpleTypeEnum.TEXT));
+            } else if (namespace != null) {
+                container.registerStructuredValidator(name, namespace, fields);
+            }
         }
     }
 

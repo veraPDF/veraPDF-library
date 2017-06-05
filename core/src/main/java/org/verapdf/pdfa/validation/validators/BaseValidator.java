@@ -23,15 +23,6 @@
  */
 package org.verapdf.pdfa.validation.validators;
 
-import java.net.URI;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.Script;
@@ -53,6 +44,9 @@ import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.profiles.Variable;
 
+import java.net.URI;
+import java.util.*;
+
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
@@ -68,6 +62,7 @@ class BaseValidator implements PDFAValidator {
 	private final Deque<Object> objectsStack = new ArrayDeque<>();
 	private final Deque<String> objectsContext = new ArrayDeque<>();
 	private final Deque<Set<String>> contextSet = new ArrayDeque<>();
+	private final Map<Rule, List<ObjectWithContext>> deferredRules = new HashMap<>();
 	protected final Set<TestAssertion> results = new HashSet<>();
 	protected int testCounter = 0;
 	protected boolean abortProcessing = false;
@@ -136,6 +131,12 @@ class BaseValidator implements PDFAValidator {
 			checkNext();
 		}
 
+		for (Map.Entry<Rule, List<ObjectWithContext>> entry : this.deferredRules.entrySet()) {
+			for (ObjectWithContext objectWithContext : entry.getValue()) {
+				checkObjWithRule(objectWithContext.getObject(), objectWithContext.getContext(), entry.getKey());
+			}
+		}
+
 		Context.exit();
 
 		ValidationResult res = ValidationResults.resultFromValues(this.profile.getPDFAFlavour(), this.profile.getDetails(), this.results,
@@ -150,6 +151,7 @@ class BaseValidator implements PDFAValidator {
 		this.objectsStack.clear();
 		this.objectsContext.clear();
 		this.contextSet.clear();
+		this.deferredRules.clear();
 		this.results.clear();
 		this.idSet.clear();
 		this.testCounter = 0;
@@ -292,7 +294,7 @@ class BaseValidator implements PDFAValidator {
 		boolean res = true;
 		Set<Rule> roolsForObject = this.profile.getRulesByObject(checkObject.getObjectType());
 		for (Rule rule : roolsForObject) {
-			res &= checkObjWithRule(checkObject, checkContext, rule);
+			res &= firstProcessObjectWithRule(checkObject, checkContext, rule);
 		}
 
 		for (String checkType : checkObject.getSuperTypes()) {
@@ -300,13 +302,28 @@ class BaseValidator implements PDFAValidator {
 			if (roolsForObject != null) {
 				for (Rule rule : roolsForObject) {
 					if (rule != null) {
-						res &= checkObjWithRule(checkObject, checkContext, rule);
+						res &= firstProcessObjectWithRule(checkObject, checkContext, rule);
 					}
 				}
 			}
 		}
 
 		return res;
+	}
+
+	private boolean firstProcessObjectWithRule(Object checkObject, String checkContext, Rule rule) {
+		Boolean deferred = rule.getDeferred();
+		if (deferred != null && deferred) {
+			List<ObjectWithContext> list = this.deferredRules.get(rule);
+			if (list == null) {
+				list = new ArrayList<>();
+				this.deferredRules.put(rule, list);
+			}
+			list.add(new ObjectWithContext(checkObject, checkContext));
+			return true;
+		} else {
+			return checkObjWithRule(checkObject, checkContext, rule);
+		}
 	}
 
 	private static String getScript(Object obj, Rule rule) {
@@ -393,5 +410,23 @@ class BaseValidator implements PDFAValidator {
 		/**
 		 * Empty
 		 */
+	}
+
+	private static class ObjectWithContext {
+		private final Object object;
+		private final String context;
+
+		public ObjectWithContext(Object object, String context) {
+			this.object = object;
+			this.context = context;
+		}
+
+		public Object getObject() {
+			return object;
+		}
+
+		public String getContext() {
+			return context;
+		}
 	}
 }

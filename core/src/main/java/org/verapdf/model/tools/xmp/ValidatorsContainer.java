@@ -55,10 +55,17 @@ public class ValidatorsContainer {
     }
 
     boolean registerSimpleValidator(String typeName, Pattern pattern) {
+        if (pattern == null) {
+            throw new IllegalArgumentException("Argument pattern can not be null");
+        }
+        return registerSimpleValidator(typeName, SimpleTypeValidator.fromValue(pattern));
+    }
+
+    boolean registerSimpleValidator(String typeName, SimpleTypeValidator simpleTypeValidator) {
         if (typeName == null) {
             throw new IllegalArgumentException("Argument typeName can not be null");
         }
-        if (pattern == null) {
+        if (simpleTypeValidator == null) {
             throw new IllegalArgumentException("Argument pattern can not be null");
         }
 
@@ -67,7 +74,7 @@ public class ValidatorsContainer {
             return false;
         }
 
-        this.validators.put(type, SimpleTypeValidator.fromValue(pattern));
+        this.validators.put(type, simpleTypeValidator);
         return true;
     }
 

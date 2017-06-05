@@ -122,7 +122,7 @@ public final class AuditDurationImpl implements AuditDuration {
 		long millis = difference % msInSec;
 
 		try (Formatter formatter = new Formatter()) {
-			formatter.format("%02d:%02d:%02d:%03d", Long.valueOf(hours), Long.valueOf(minutes), Long.valueOf(seconds), //$NON-NLS-1$
+			formatter.format("%02d:%02d:%02d.%03d", Long.valueOf(hours), Long.valueOf(minutes), Long.valueOf(seconds), //$NON-NLS-1$
 					Long.valueOf(millis));
 			return formatter.toString();
 		}
