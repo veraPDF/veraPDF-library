@@ -1,3 +1,31 @@
+# Version 1.6 (June 6, 2017)
+
+## Desktop Applications:
+- GUI and CLI now capable of checking for updated version of the software.
+
+## Conformance Checker:
+Updated validation logic to comply with Technical Working Group resolutions:
+- color spaces are validated now when specified in the content stream;
+- a CMap may refer only to predefined CMaps in the ‘usecmap’ operator; and
+- OpenType causes an ‘unsupported font type’ error in PDF/A-1 validation.
+
+Other conformance checker fixes and improvements:
+- fixed calculation of glyph widths for embedded CFF fonts in some special cases;
+- fixed validation of digital signature ByteRange array;
+- fixed recursive links of color spaces;
+- fixed validation of spaces in the indirect object header;
+- fixed Crypt filter handling;
+- fixed misprint in ‘Lbl’ structure tag; and
+- added support for glyphs with CIDs > 65535 (with an appropriate validation. error)
+
+## Policy checker:
+- fixed feature extraction from encrypted documents.
+
+## Test corpus:
+- added new test corpus for the Technical Working Group resolutions;
+- fixed test file for digital signature validation; and
+- fixed test files for Extension Schema definitions in XMP.
+
 # Version 1.4 (April 20, 2017)
 
 ## Conformance Checker:
