@@ -57,6 +57,10 @@ public class SchematronGenerator {
 		switch (featureType) {
 			case SIGNATURE:
 				return base + "/signatures";
+			case ACTION:
+				return base + "/actions";
+			case INTERACTIVE_FORM_FIELDS:
+				return base + "/interactiveFormFields";
 			case EMBEDDED_FILE:
 				return base + "/embeddedFiles";
 			case ICCPROFILE:
