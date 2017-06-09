@@ -12,7 +12,8 @@ public interface ActionFeaturesObjectAdapter extends FeaturesObjectAdapter {
 		DOCUMENT("Document"),
 		PAGE("Page"),
 		INTERACTIVE_FORM_FIELD("Interactive From Field"),
-		ANNOTATION("Annotation");
+		ANNOTATION("Annotation"),
+		OUTLINES("Outlines");
 
 		private final String text;
 
