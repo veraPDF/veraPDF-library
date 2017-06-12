@@ -74,7 +74,7 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
 
     @Override
     public Boolean getisDefinedInCurrentPackage() {
-        if (this.flavour != null && this.flavour.getPart() != null && this.flavour.getPart().getPartNumber() == 1) {
+        if (this.flavour != null && this.flavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
             return Boolean.valueOf(this.currentSchemasDefinitionPDFA_1.isDefinedProperty(this.xmpNode));
         }
         return Boolean.valueOf(this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode));
@@ -91,7 +91,7 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
         if (this.xmpNode == null) {
             return Boolean.FALSE;
         }
-        if (this.flavour != null && this.flavour.getPart() != null && this.flavour.getPart().getPartNumber() == 1) {
+        if (this.flavour != null && this.flavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
             return isValueTypeCorrectForPDFA_1();
         }
         return isValueTypeCorrectForPDFA_2_3();

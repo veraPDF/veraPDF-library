@@ -34,11 +34,12 @@ import java.util.Set;
  * The PDF/A Specification:<br/>
  * ISO 19005 - Document Management - Electronic document format for long-term
  * preservation (PDF/A)<br/>
- * comprises 3 parts:
+ * comprises 4 parts:
  * <ol>
  * <li>Part 1: PDF/A-1 - Use of PDF 1.4</li>
  * <li>Part 2: PDF/A-2 - Use of ISO 32000-1</li>
  * <li>Part 3: PDF/A-3 - Use of ISO 32000-1 with support for embedded files</li>
+ * <li>Part 4: PDF/A-4 - Use of ISO 32000-2</li>
  * <ol>
  * Note that "Use of ISO 32000-1" indicates that PDF/A parts 2 and 3 are based
  * upon PDF 1.7. ISO 32000-1 is the code for the PDF 1.7 ISO standard. The
@@ -59,6 +60,7 @@ import java.util.Set;
  * <li>3a</li>
  * <li>3b</li>
  * <li>3u</li>
+ * <li>4</li>
  * </ul>
  *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -81,7 +83,9 @@ public enum PDFAFlavour {
     /** 3b PDF Version 3 Level B */
     PDFA_3_B(Specification.ISO_19005_3, Level.B),
     /** 3u PDF Version 3 Level U */
-    PDFA_3_U(Specification.ISO_19005_3, Level.U);
+    PDFA_3_U(Specification.ISO_19005_3, Level.U),
+    /** 4 PDF Version 4 */
+    PDFA_4(Specification.ISO_19005_4, Level.NO_LEVEL);
 
     private final static Map<String, PDFAFlavour> FLAVOUR_LOOKUP = new HashMap<>();
     static {
@@ -151,7 +155,11 @@ public enum PDFAFlavour {
         /** PDF/A Version 3 */
         ISO_19005_3(IsoStandardSeries.ISO_19005, PDFAFlavours.ISO_19005_3_PART,
                 PDFAFlavours.ISO_19005_3_YEAR,
-                PDFAFlavours.ISO_19005_3_DESCRIPTION);
+                PDFAFlavours.ISO_19005_3_DESCRIPTION),
+        /** PDF/A Version 4 */
+        ISO_19005_4(IsoStandardSeries.ISO_19005, PDFAFlavours.ISO_19005_4_PART,
+                    PDFAFlavours.ISO_19005_4_YEAR,
+                    PDFAFlavours.ISO_19005_4_DESCRIPTION);
 
         private final IsoStandardSeries series;
         private final int partNumber;
@@ -308,13 +316,13 @@ public enum PDFAFlavour {
     /**
      * Looks up a {@link PDFAFlavour} by two letter flavour identifier. The
      * identifier is a two letter String that identifies a {@link PDFAFlavour},
-     * e.g. 1a, 1b, 2a, 2b, 2u, 3a, 3b, 3u. The match is case insensitive so 1A,
+     * e.g. 1a, 1b, 2a, 2b, 2u, 3a, 3b, 3u, 4. The match is case insensitive so 1A,
      * 1B, etc. are also valid flavour ids.
-     * 
+     *
      * @param flavourId
      *            must be a two character string that exactly matches the
      *            flavour identifier.
-     * 
+     *
      * @return the correct {@link PDFAFlavour} looked up by String id or
      *         {@link PDFAFlavour#NO_FLAVOUR} if id does not match a flavour
      */
@@ -332,7 +340,7 @@ public enum PDFAFlavour {
      * the identifiers are only 2 character Strings (see
      * {@link PDFAFlavour#byFlavourId(String)} so unintended matches are
      * possible.
-     * 
+     *
      * @param toParse
      *            a String parameter that is parsed to see whether it contains a
      *            PDFAFlavour identifier.
