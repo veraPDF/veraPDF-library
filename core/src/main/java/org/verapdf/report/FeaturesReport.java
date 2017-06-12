@@ -20,14 +20,13 @@
  */
 package org.verapdf.report;
 
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.features.FeatureObjectType;
 import org.verapdf.features.tools.FeatureTreeNode;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 /**
  * @author Maksim Bezrukov
@@ -50,6 +49,10 @@ public class FeaturesReport {
 	@XmlElement
 	private final FeaturesNode lowLevelInfo;
 	@XmlElement
+	private final FeaturesNode actions;
+	@XmlElement
+	private final FeaturesNode interactiveFormFields;
+	@XmlElement
 	private final FeaturesNode embeddedFiles;
 	@XmlElement
 	private final FeaturesNode iccProfiles;
@@ -68,7 +71,8 @@ public class FeaturesReport {
 
 	private FeaturesReport(FeaturesNode informationDict, FeaturesNode metadata,
 						   FeaturesNode documentSecurity, FeaturesNode signatures,
-						   FeaturesNode lowLevelInfo,
+						   FeaturesNode lowLevelInfo, FeaturesNode actions,
+						   FeaturesNode interactiveFormFields,
 						   FeaturesNode embeddedFiles, FeaturesNode iccProfiles,
 						   FeaturesNode outputIntents, FeaturesNode outlines,
 						   FeaturesNode annotations, FeaturesNode pages,
@@ -79,6 +83,8 @@ public class FeaturesReport {
 		this.documentSecurity = documentSecurity;
 		this.signatures = signatures;
 		this.lowLevelInfo = lowLevelInfo;
+		this.actions = actions;
+		this.interactiveFormFields = interactiveFormFields;
 		this.embeddedFiles = embeddedFiles;
 		this.iccProfiles = iccProfiles;
 		this.outputIntents = outputIntents;
@@ -91,7 +97,7 @@ public class FeaturesReport {
 	}
 
 	private FeaturesReport() {
-		this(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		this(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 	}
 
 	static FeaturesReport createErrorReport() {
@@ -99,7 +105,7 @@ public class FeaturesReport {
 	}
 
 	static FeaturesReport createErrorReport(String errorMessage) {
-		return new FeaturesReport(null, null, null, null, null, null, null, null, null, null, null, null, null, errorMessage);
+		return new FeaturesReport(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, errorMessage);
 	}
 
 	/**
@@ -115,6 +121,8 @@ public class FeaturesReport {
 		FeaturesNode docSec = getFirstNodeFromType(collection, FeatureObjectType.DOCUMENT_SECURITY);
 		FeaturesNode sig = FeaturesNode.fromValues(collection, FeatureObjectType.SIGNATURE);
 		FeaturesNode lowLvl = getFirstNodeFromType(collection, FeatureObjectType.LOW_LEVEL_INFO);
+		FeaturesNode actions = FeaturesNode.fromValues(collection, FeatureObjectType.ACTION);
+		FeaturesNode interactiveFormFields = FeaturesNode.fromValues(collection, FeatureObjectType.INTERACTIVE_FORM_FIELDS);
 		FeaturesNode embeddedFiles = FeaturesNode.fromValues(collection, FeatureObjectType.EMBEDDED_FILE);
 		FeaturesNode iccProfiles = FeaturesNode.fromValues(collection, FeatureObjectType.ICCPROFILE);
 		FeaturesNode outputIntents = FeaturesNode.fromValues(collection, FeatureObjectType.OUTPUTINTENT);
@@ -123,7 +131,7 @@ public class FeaturesReport {
 		FeaturesNode pages = FeaturesNode.fromValues(collection, FeatureObjectType.PAGE);
 		DocumentResourcesFeatures res = DocumentResourcesFeatures.fromValues(collection);
 		FeaturesNode errors = FeaturesNode.fromValues(collection, FeatureObjectType.ERROR);
-		return new FeaturesReport(info, metadata, docSec, sig, lowLvl, embeddedFiles, iccProfiles, outputIntents, outlines, annotations, pages, res, errors, null);
+		return new FeaturesReport(info, metadata, docSec, sig, lowLvl, actions, interactiveFormFields, embeddedFiles, iccProfiles, outputIntents, outlines, annotations, pages, res, errors, null);
 	}
 
 	static FeaturesNode getFirstNodeFromType(FeatureExtractionResult collection, FeatureObjectType type) {
