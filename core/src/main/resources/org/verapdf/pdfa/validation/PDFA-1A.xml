@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_A">
-    <details creator="veraPDF Consortium" created="2017-05-31T13:04:16.695-03:00">
+    <details creator="veraPDF Consortium" created="2017-06-12T09:41:07.740-03:00">
         <name>PDF/A-1A validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011, Level A</description>
     </details>
@@ -1204,7 +1204,7 @@
         </rule>
         <rule object="CosDocument">
             <id specification="ISO_19005_1" clause="6.8.2" testNumber="1"/>
-            <description>The document catalog dictionary shall include a MarkInfo dictionary whose sole entry, Marked, shall have a value of true</description>
+            <description>The document catalog dictionary shall include a MarkInfo dictionary with a Marked entry in it, whose value shall be true.</description>
             <test>Marked == true</test>
             <error>
                 <message>/Marked entry of the MarkInfo dictionary is not present in the document catalog or is set to false</message>
