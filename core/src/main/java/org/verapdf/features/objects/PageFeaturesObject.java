@@ -42,6 +42,7 @@ public class PageFeaturesObject extends FeaturesObject {
 	private static final String PAGE = "page";
 	private static final String ROTATION = "rotation";
 	private static final String SCALING = "scaling";
+	private static final String LABEL = "label";
 
 	/**
 	 * Constructs new page feature object.
@@ -71,7 +72,11 @@ public class PageFeaturesObject extends FeaturesObject {
 	public FeatureTreeNode collectFeatures() throws FeatureParsingException {
 		PageFeaturesObjectAdapter pageAdapter = (PageFeaturesObjectAdapter) this.adapter;
 		FeatureTreeNode root = FeatureTreeNode.createRootNode(PAGE);
-		root.setAttribute("orderNumber", Integer.toString(pageAdapter.getIndex()));
+		root.setAttribute("orderNumber", Integer.toString(pageAdapter.getIndex() + 1));
+		String label = pageAdapter.getLabel();
+		if (label != null) {
+			root.setAttribute(LABEL, label);
+		}
 		double[] mediaBox = pageAdapter.getMediaBox();
 		CreateNodeHelper.addWidthHeightFeatures(mediaBox, root);
 		CreateNodeHelper.addBoxFeature("mediaBox", mediaBox, root);
@@ -137,6 +142,8 @@ public class PageFeaturesObject extends FeaturesObject {
 	static List<Feature> getFeaturesList() {
 		// Only rotation and scaling are present
 		List<Feature> featuresList = new ArrayList<>();
+		featuresList.add(new Feature("Label",
+				generateAttributeXPath(PAGE, LABEL), Feature.FeatureType.STRING));
 		featuresList.add(new Feature("Width",
 				generateVariableXPath(PAGE, CreateNodeHelper.WIDTH), Feature.FeatureType.NUMBER));
 		featuresList.add(new Feature("Height",

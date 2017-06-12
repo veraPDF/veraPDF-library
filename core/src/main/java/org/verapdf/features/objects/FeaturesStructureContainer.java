@@ -35,6 +35,7 @@ public final class FeaturesStructureContainer {
 			new EnumMap<>(FeatureObjectType.class);
 
 	static {
+		featuresStructure.put(FeatureObjectType.ACTION, ActionFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.ANNOTATION, AnnotationFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.COLORSPACE, ColorSpaceFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.DOCUMENT_SECURITY, DocSecurityFeaturesObject.getFeaturesList());
@@ -45,6 +46,7 @@ public final class FeaturesStructureContainer {
 		featuresStructure.put(FeatureObjectType.ICCPROFILE, ICCProfileFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.IMAGE_XOBJECT, ImageXObjectFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.INFORMATION_DICTIONARY, InfoDictFeaturesObject.getFeaturesList());
+		featuresStructure.put(FeatureObjectType.INTERACTIVE_FORM_FIELDS, InteractiveFormFieldFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.LOW_LEVEL_INFO, LowLvlInfoFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.METADATA, MetadataFeaturesObject.getFeaturesList());
 		featuresStructure.put(FeatureObjectType.OUTLINES, OutlinesFeaturesObject.getFeaturesList());

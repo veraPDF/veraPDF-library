@@ -38,7 +38,7 @@ import java.util.List;
 public abstract class FeaturesObject {
 
 	protected FeaturesObjectAdapter adapter;
-	private final List<String> errors = new ArrayList<>();
+	protected final List<String> errors = new ArrayList<>();
 
 	FeaturesObject(FeaturesObjectAdapter adapter) {
 		this.adapter = adapter;
@@ -60,23 +60,27 @@ public abstract class FeaturesObject {
 	 * @return FeatureTreeNode class which represents a root node of the constructed collection tree
 	 * @throws FeatureParsingException occurs when wrong features tree node constructs
 	 */
-	public final FeatureTreeNode reportFeatures(FeatureExtractionResult collection) throws FeatureParsingException {
+	public FeatureTreeNode reportFeatures(FeatureExtractionResult collection) throws FeatureParsingException {
 		this.errors.clear();
 		if (this.adapter.isPDFObjectPresent()) {
 			FeatureTreeNode root = collectFeatures();
-			this.errors.addAll(this.adapter.getErrors());
-			if (!this.errors.isEmpty()) {
-				for (String error : this.errors) {
-					ErrorsHelper.addErrorIntoCollection(collection, root, error);
+			if (root != null) {
+				this.errors.addAll(this.adapter.getErrors());
+				if (!this.errors.isEmpty()) {
+					for (String error : this.errors) {
+						ErrorsHelper.addErrorIntoCollection(collection, root, error);
+					}
 				}
+				collection.addNewFeatureTree(getType(), root);
+				return root;
 			}
-			collection.addNewFeatureTree(getType(), root);
-			return root;
 		}
 		return null;
 	}
 
-	protected abstract FeatureTreeNode collectFeatures() throws FeatureParsingException;
+	protected FeatureTreeNode collectFeatures() throws FeatureParsingException {
+		return null;
+	}
 
 	/**
 	 * @return features data for object
