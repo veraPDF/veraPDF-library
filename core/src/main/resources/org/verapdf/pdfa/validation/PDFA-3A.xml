@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_A">
-    <details creator="veraPDF Consortium" created="2017-06-27T08:09:46.830-03:00">
+    <details creator="veraPDF Consortium" created="2017-06-27T13:01:00.865-03:00">
         <name>PDF/A-3A validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level A</description>
     </details>
@@ -976,15 +976,39 @@
         <rule object="Glyph">
             <id specification="ISO_19005_3" clause="6.2.11.7" testNumber="1"/>
             <description>The Font dictionary of all fonts shall define the map of all used character codes to Unicode values, either via a ToUnicode entry,
-			or other mechanisms as defined in ISO 19005-2, 6.2.11.7.2. The Unicode values specified in the ToUnicode CMap shall all be greater than zero (0), 
-			but not equal to either U+FEFF or U+FFFE.</description>
-            <test>toUnicode != null &amp;&amp; toUnicode.indexOf(&quot;\u0000&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFFFE&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFEFF&quot;)  == -1</test>
+			or other mechanisms as defined in ISO 19005-2, 6.2.11.7.2.</description>
+            <test>toUnicode != null</test>
             <error>
-                <message>The font does not define Unicode character map or some glyphs have invalid Unicode value</message>
+                <message>The glyph can not be mapped to Unicode</message>
                 <arguments/>
             </error>
             <references>
                 <reference specification="ISO 19005-2:2011" clause="6.2.11.7.2"/>
+            </references>
+        </rule>
+        <rule object="Glyph">
+            <id specification="ISO_19005_3" clause="6.2.11.7" testNumber="2"/>
+            <description>The Unicode values specified in the ToUnicode CMap shall all be greater than zero (0), but not equal to either U+FEFF or U+FFFE.</description>
+            <test>toUnicode.indexOf(&quot;\u0000&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFFFE&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFEFF&quot;)  == -1</test>
+            <error>
+                <message>The glyph has an invalid Unicode value</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="Glyph">
+            <id specification="ISO_19005_3" clause="6.2.11.7" testNumber="3"/>
+            <description>For any character, regardless of its rendering mode, that is mapped to a code
+			or codes in the Unicode Private Use Area (PUA), an ActualText entry as described in
+			ISO 32000-1:2008, 14.9.4 shall be present for this character or a sequence of characters of which such a
+			character is a part.</description>
+            <test>unicodePUA == false || actualTextPresent == true</test>
+            <error>
+                <message>The character has Unicode value from Private Use Area, and no replacement text present</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="14.9.4"/>
             </references>
         </rule>
         <rule object="Glyph">
