@@ -989,7 +989,7 @@
         <rule object="Glyph">
             <id specification="ISO_19005_3" clause="6.2.11.7" testNumber="2"/>
             <description>The Unicode values specified in the ToUnicode CMap shall all be greater than zero (0), but not equal to either U+FEFF or U+FFFE.</description>
-            <test>toUnicode.indexOf(&quot;\u0000&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFFFE&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFEFF&quot;)  == -1</test>
+            <test>toUnicode == null || (toUnicode.indexOf(&quot;\u0000&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFFFE&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFEFF&quot;)  == -1)</test>
             <error>
                 <message>The glyph has an invalid Unicode value</message>
                 <arguments/>
