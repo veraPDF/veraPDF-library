@@ -234,7 +234,7 @@
         <rule object="CosString">
             <id specification="ISO_19005_2" clause="6.1.13" testNumber="3"/>
             <description>A conforming file shall not contain any string longer than 32767 bytes.</description>
-            <test>value.length() &lt; 32767</test>
+            <test>value.length() &lt; 32768</test>
             <error>
                 <message>Maximum length of a String (32767) exceeded</message>
                 <arguments/>
