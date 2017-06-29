@@ -291,10 +291,10 @@
             </error>
             <references/>
         </rule>
-        <rule object="CIDGlyph">
+        <rule object="CMapFile">
             <id specification="ISO_19005_3" clause="6.1.13" testNumber="10"/>
             <description>A conforming file shall not contain a CID value greater than 65535.</description>
-            <test>CID &lt;= 65535</test>
+            <test>maximalCID &lt;= 65535</test>
             <error>
                 <message>Maximum value of a CID (65535) is exceeded</message>
                 <arguments/>
