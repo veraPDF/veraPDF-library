@@ -652,7 +652,7 @@
             <description>If the document does not contain a PDF/A OutputIntent, then all Page objects
 			that contain transparency shall include the Group key, and the attribute dictionary that forms the value of that
 			Group key shall include a CS entry whose value shall be used as the default blending colour space.</description>
-            <test>gOutputCS != null || groupCS_size != 0 || containsTransparency == false</test>
+            <test>gOutputCS != null || containsGroupCS == true || containsTransparency == false</test>
             <error>
                 <message>The page contains transparent objects with no blending colour space defined.</message>
                 <arguments/>
