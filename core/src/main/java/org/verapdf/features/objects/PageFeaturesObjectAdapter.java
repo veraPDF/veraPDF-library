@@ -38,6 +38,7 @@ public interface PageFeaturesObjectAdapter extends FeaturesObjectAdapter {
 	Set<String> getPropertiesChild();
 	int getIndex();
 	String getLabel();
+	String getTransitionStyle();
 
 	double[] getMediaBox();
 	double[] getCropBox();
