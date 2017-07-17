@@ -43,6 +43,7 @@ public class PageFeaturesObject extends FeaturesObject {
 	private static final String ROTATION = "rotation";
 	private static final String SCALING = "scaling";
 	private static final String LABEL = "label";
+	private static final String TRANSITION_STYLE = "transitionStyle";
 
 	/**
 	 * Constructs new page feature object.
@@ -97,6 +98,7 @@ public class PageFeaturesObject extends FeaturesObject {
 			FeatureTreeNode thumbNode = root.addChild("thumbnail");
 			thumbNode.setAttribute(ID, thumb);
 		}
+		CreateNodeHelper.addNotEmptyNode(TRANSITION_STYLE, pageAdapter.getTransitionStyle(), root);
 		CreateNodeHelper.parseMetadata(pageAdapter.getMetadataStream(), "metadata", root, this);
 		CreateNodeHelper.parseIDSet(pageAdapter.getAnnotsId(), "annotation", "annotations", root);
 		parseResources(root);
@@ -152,6 +154,8 @@ public class PageFeaturesObject extends FeaturesObject {
 				generateVariableXPath(PAGE, ROTATION), Feature.FeatureType.NUMBER));
 		featuresList.add(new Feature("Scaling",
 				generateVariableXPath(PAGE, SCALING), Feature.FeatureType.NUMBER));
+		featuresList.add(new Feature("Transition Style",
+				generateVariableXPath(PAGE, TRANSITION_STYLE), Feature.FeatureType.STRING));
 		featuresList.add(new Feature("Error IDs",
 				generateAttributeXPath(PAGE, ErrorsHelper.ERRORID), Feature.FeatureType.STRING));
 		return featuresList;
