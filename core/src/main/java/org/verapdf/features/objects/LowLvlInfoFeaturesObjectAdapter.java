@@ -29,5 +29,6 @@ public interface LowLvlInfoFeaturesObjectAdapter extends FeaturesObjectAdapter {
 	int getIndirectObjectsNumber();
 	String getCreationId();
 	String getModificationId();
+	boolean isTagged();
 	Set<String> getFilters();
 }
