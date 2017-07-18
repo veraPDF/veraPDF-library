@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_U">
-    <details creator="veraPDF Consortium" created="2017-06-27T13:00:51.727-03:00">
+<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_B">
+    <details creator="veraPDF Consortium" created="2017-07-14T14:25:33.833-03:00">
         <name>PDF/A-3U validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level U</description>
     </details>
@@ -508,6 +508,18 @@
                 <arguments/>
             </error>
             <references/>
+        </rule>
+        <rule object="PDHalftone">
+            <id specification="ISO_19005_3" clause="6.2.5" testNumber="6"/>
+            <description>The TransferFunction key in a halftone dictionary shall be used only as required by ISO 32000-1.</description>
+            <test>['Cyan', 'Magenta', 'Yellow', 'Black', 'Red', 'Green', 'Blue'].indexOf(colorantName) &gt;=0  ? TransferFunction == null : TransferFunction != null</test>
+            <error>
+                <message>Invalid use of TransferFunction key in the Halftone dictionary</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="Table 130"/>
+            </references>
         </rule>
         <rule object="CosRenderingIntent">
             <id specification="ISO_19005_3" clause="6.2.6" testNumber="1"/>
@@ -1406,9 +1418,9 @@
             <id specification="ISO_19005_3" clause="6.8" testNumber="1"/>
             <description>The MIME type of an embedded file, or a subset of a file, shall be specified using the Subtype key of the file specification dictionary.
 			If the MIME type is not known, the &quot;application/octet-stream&quot; shall be used.</description>
-            <test>Subtype != null</test>
+            <test>Subtype != null &amp;&amp; /^[-\w+\.]+\/[-\w+\.]+$/.test(Subtype)</test>
             <error>
-                <message>An embedded file dictionary does not contain the MIME type information (Subtype entry)</message>
+                <message>The MIME type information (Subtype entry) of an embedded file is missing or invalid</message>
                 <arguments/>
             </error>
             <references/>

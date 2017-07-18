@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_A">
-    <details creator="veraPDF Consortium" created="2017-06-12T09:41:07.740-03:00">
+    <details creator="veraPDF Consortium" created="2017-07-18T07:30:00.311-03:00">
         <name>PDF/A-1A validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011, Level A</description>
     </details>
@@ -693,8 +693,7 @@
         </rule>
         <rule object="Glyph">
             <id specification="ISO_19005_1" clause="6.3.5" testNumber="1"/>
-            <description>The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8, 
-			except when the fonts are used exclusively with text rendering mode 3.</description>
+            <description>Embedded font programs shall define all font glyphs referenced for rendering with conforming file.</description>
             <test>renderingMode == 3 || isGlyphPresent == null || isGlyphPresent == true</test>
             <error>
                 <message>Not all glyphs referenced for rendering are present in the embedded font program</message>
