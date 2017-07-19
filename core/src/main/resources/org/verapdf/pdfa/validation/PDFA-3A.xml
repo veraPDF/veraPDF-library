@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_A">
-    <details creator="veraPDF Consortium" created="2017-07-14T14:25:43.448-03:00">
+    <details creator="veraPDF Consortium" created="2017-07-19T09:19:23.394-03:00">
         <name>PDF/A-3A validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level A</description>
     </details>
@@ -512,7 +512,9 @@
         <rule object="PDHalftone">
             <id specification="ISO_19005_3" clause="6.2.5" testNumber="6"/>
             <description>The TransferFunction key in a halftone dictionary shall be used only as required by ISO 32000-1.</description>
-            <test>['Cyan', 'Magenta', 'Yellow', 'Black', 'Red', 'Green', 'Blue'].indexOf(colorantName) &gt;=0  ? TransferFunction == null : TransferFunction != null</test>
+            <test>colorantName == null || colorantName == 'Default' ||
+			( (colorantName == 'Cyan' || colorantName == 'Magenta' || colorantName == 'Yellow' || colorantName == 'Black' || colorantName == 'Red' || 
+						colorantName == 'Green' || colorantName == 'Blue') ? TransferFunction == null : TransferFunction != null)</test>
             <error>
                 <message>Invalid use of TransferFunction key in the Halftone dictionary</message>
                 <arguments/>
