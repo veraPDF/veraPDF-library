@@ -60,10 +60,20 @@ public enum FeatureObjectType {
 	
 	private FeatureObjectType(final String nodeName, final String fullName, final String idPrefix) {
 		this.nodeName = nodeName;
-		this.fullName = fullName;
+		this.fullName = fullName.trim();
 		this.idPrefix = idPrefix;
 	}
-	
+
+	public static FeatureObjectType getFeatureObjectTypeByFullName(String fullName) {
+		String name = fullName.trim();
+		for (FeatureObjectType feature : FeatureObjectType.values()) {
+			if (feature.getFullName().equals(name)) {
+				return feature;
+			}
+		}
+		return null;
+	}
+
 	public String getNodeName() {
 		return this.nodeName;
 	}

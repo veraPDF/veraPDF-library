@@ -8,6 +8,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.OutputStream;
+import java.util.EnumSet;
 import java.util.List;
 
 /**
@@ -15,8 +16,15 @@ import java.util.List;
  */
 public class SchematronGenerator {
 
-	private static final String SCH_NAMESPACE = "http://purl.oclc.org/dsdl/schematron";
-	private static final String SCH_PREFIX = "sch";
+	public static final String SCH_NAMESPACE = "http://purl.oclc.org/dsdl/schematron";
+	public static final String SCH_PREFIX = "sch";
+
+	public static final String VERAPDF_NAMESPACE = "http://verapdf.org/policy/enabledFeatures";
+	public static final String VERAPDF_PREFIX = "verapdf";
+
+	public static final String ROOT_NAME = "schema";
+	public static final String ENABLED_FEATURES_NAME = "necessaryFeatures";
+	public static final String ENABLED_FEATURES_ATTRIBUTE_NAME = "features";
 
 	private static final String DOC_RESOURCES = "/documentResources";
 
@@ -31,9 +39,17 @@ public class SchematronGenerator {
 		XMLStreamWriter xtw = new IndentingXMLStreamWriter(xof.createXMLStreamWriter(os));
 		xtw.writeStartDocument("utf-8","1.0");
 		xtw.setPrefix(SCH_PREFIX, SCH_NAMESPACE);
-		xtw.writeStartElement(SCH_NAMESPACE,"schema");
+		xtw.writeStartElement(SCH_NAMESPACE,ROOT_NAME);
 		xtw.writeNamespace(SCH_PREFIX, SCH_NAMESPACE);
 		xtw.writeAttribute("queryBinding", "xslt");
+		String enabledFeatures = getEnabledFeatures(assertions);
+		if (enabledFeatures != null) {
+			xtw.setPrefix(VERAPDF_PREFIX, VERAPDF_NAMESPACE);
+			xtw.writeStartElement(VERAPDF_NAMESPACE, ENABLED_FEATURES_NAME);
+			xtw.writeNamespace(VERAPDF_PREFIX, VERAPDF_NAMESPACE);
+			xtw.writeAttribute(ENABLED_FEATURES_ATTRIBUTE_NAME, enabledFeatures);
+			xtw.writeEndElement();
+		}
 		for (Assertion assertion : assertions) {
 			xtw.writeStartElement(SCH_NAMESPACE, "pattern");
 			xtw.writeStartElement(SCH_NAMESPACE, "rule");
@@ -50,6 +66,21 @@ public class SchematronGenerator {
 		xtw.writeEndElement();
 		xtw.writeEndDocument();
 		xtw.close();
+	}
+
+	private static String getEnabledFeatures(List<Assertion> assertions) {
+		EnumSet<FeatureObjectType> res = EnumSet.noneOf(FeatureObjectType.class);
+		for (Assertion assertion : assertions) {
+			res.add(assertion.getFeatureType());
+		}
+		if (res.isEmpty()) {
+			return null;
+		}
+		StringBuilder builder = new StringBuilder();
+		for (FeatureObjectType feature : res) {
+			builder.append(feature.getFullName()).append(",");
+		}
+		return builder.substring(0, builder.length() - 1);
 	}
 
 	private static String getRuleContext(FeatureObjectType featureType) {
