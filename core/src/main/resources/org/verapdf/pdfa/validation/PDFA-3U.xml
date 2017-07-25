@@ -1448,7 +1448,7 @@
             </error>
             <references/>
         </rule>
-        <rule object="CosFileSpecification">
+        <rule object="CosFileSpecification" deferred="true">
             <id specification="ISO_19005_3" clause="6.8" testNumber="4"/>
             <description>The additional information provided for associated files as well as the usage requirements for associated files indicate the relationship
 		between the embedded file and the PDF document or the part of the PDF document with which it is associated.</description>
