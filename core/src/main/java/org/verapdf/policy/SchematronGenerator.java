@@ -19,12 +19,8 @@ public class SchematronGenerator {
 	public static final String SCH_NAMESPACE = "http://purl.oclc.org/dsdl/schematron";
 	public static final String SCH_PREFIX = "sch";
 
-	public static final String VERAPDF_NAMESPACE = "http://verapdf.org/policy/enabledFeatures";
-	public static final String VERAPDF_PREFIX = "verapdf";
-
 	public static final String ROOT_NAME = "schema";
-	public static final String ENABLED_FEATURES_NAME = "necessaryFeatures";
-	public static final String ENABLED_FEATURES_ATTRIBUTE_NAME = "features";
+	public static final String ENABLED_FEATURES_ATTRIBUTE_NAME = "veraPDFNecessaryFeatures";
 
 	private static final String DOC_RESOURCES = "/documentResources";
 
@@ -44,11 +40,7 @@ public class SchematronGenerator {
 		xtw.writeAttribute("queryBinding", "xslt");
 		String enabledFeatures = getEnabledFeatures(assertions);
 		if (enabledFeatures != null) {
-			xtw.setPrefix(VERAPDF_PREFIX, VERAPDF_NAMESPACE);
-			xtw.writeStartElement(VERAPDF_NAMESPACE, ENABLED_FEATURES_NAME);
-			xtw.writeNamespace(VERAPDF_PREFIX, VERAPDF_NAMESPACE);
 			xtw.writeAttribute(ENABLED_FEATURES_ATTRIBUTE_NAME, enabledFeatures);
-			xtw.writeEndElement();
 		}
 		for (Assertion assertion : assertions) {
 			xtw.writeStartElement(SCH_NAMESPACE, "pattern");
