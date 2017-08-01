@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_2_U">
-    <details creator="veraPDF Consortium" created="2017-07-19T09:18:45.925-03:00">
+    <details creator="veraPDF Consortium" created="2017-08-01T02:24:37.637-03:00">
         <name>PDF/A-2U validation profile</name>
         <description>Validation rules against ISO 19005-2:2011, Level U</description>
     </details>
@@ -547,7 +547,7 @@
         <rule object="PDXImage">
             <id specification="ISO_19005_2" clause="6.2.8" testNumber="2"/>
             <description>An Image dictionary shall not contain the OPI key</description>
-            <test>OPI_size == 0</test>
+            <test>containsOPI == false</test>
             <error>
                 <message>OPI key is present in the XObject dictionary(</message>
                 <arguments/>
@@ -620,7 +620,7 @@
         <rule object="PDXForm">
             <id specification="ISO_19005_2" clause="6.2.9" testNumber="1"/>
             <description>A form XObject dictionary shall not contain any of the following: - the OPI key; - the Subtype2 key with a value of PS; - the PS key.</description>
-            <test>(Subtype2 == null || Subtype2 != &quot;PS&quot;) &amp;&amp; PS_size == 0 &amp;&amp; OPI_size == 0</test>
+            <test>(Subtype2 == null || Subtype2 != &quot;PS&quot;) &amp;&amp; containsPS == false &amp;&amp; containsOPI == false</test>
             <error>
                 <message>The form XObject dictionary contains a PS key, or a Subtype2 key with value PS, or an OPI key</message>
                 <arguments/>
@@ -630,7 +630,7 @@
         <rule object="PDXForm">
             <id specification="ISO_19005_2" clause="6.2.9" testNumber="2"/>
             <description>A conforming file shall not contain any reference XObjects</description>
-            <test>Ref_size == 0</test>
+            <test>containsRef == false</test>
             <error>
                 <message>The document contains a reference XObject (Ref key in the form XObject dictionary)</message>
                 <arguments/>
@@ -1097,7 +1097,7 @@
         <rule object="PDAnnot">
             <id specification="ISO_19005_2" clause="6.4.1" testNumber="1"/>
             <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys.</description>
-            <test>Subtype != &quot;Widget&quot; || (A_size == 0 &amp;&amp; AA_size == 0)</test>
+            <test>Subtype != &quot;Widget&quot; || (A_size == 0 &amp;&amp; containsAA == false)</test>
             <error>
                 <message>A Widget annotation contains either A or AA entry</message>
                 <arguments/>
@@ -1107,7 +1107,7 @@
         <rule object="PDFormField">
             <id specification="ISO_19005_2" clause="6.4.1" testNumber="2"/>
             <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys.</description>
-            <test>AA_size == 0</test>
+            <test>containsAA == false</test>
             <error>
                 <message>A Form field dictionary contains the AA entry</message>
                 <arguments/>
@@ -1203,7 +1203,7 @@
         <rule object="PDDocument">
             <id specification="ISO_19005_2" clause="6.5.2" testNumber="1"/>
             <description>The document's Catalog shall not include an AA entry for an additional-actions dictionary.</description>
-            <test>AA_size == 0</test>
+            <test>containsAA == false</test>
             <error>
                 <message>The document catalog dictionary contains an additional-actions dictionary (AA entry)</message>
                 <arguments/>
@@ -1213,7 +1213,7 @@
         <rule object="PDPage">
             <id specification="ISO_19005_2" clause="6.5.2" testNumber="2"/>
             <description>The Page dictionary shall not include an AA entry for an additional-actions dictionary.</description>
-            <test>AA_size == 0</test>
+            <test>containsAA == false</test>
             <error>
                 <message>The Page dictionary contains an additional-actions dictionary (AA entry)</message>
                 <arguments/>
@@ -1430,7 +1430,7 @@
         <rule object="CosFileSpecification">
             <id specification="ISO_19005_2" clause="6.8" testNumber="2"/>
             <description>The file specification dictionary for an embedded file shall contain the F and UF keys</description>
-            <test>EF_size == 0 || (F != null &amp;&amp; UF != null)</test>
+            <test>containsEF == false || (F != null &amp;&amp; UF != null)</test>
             <error>
                 <message>The file specification dictionary for an embedded file does not contain either F or EF key</message>
                 <arguments/>
