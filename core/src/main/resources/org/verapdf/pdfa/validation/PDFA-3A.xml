@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_A">
-    <details creator="veraPDF Consortium" created="2017-08-01T02:24:46.974-03:00">
+    <details creator="veraPDF Consortium" created="2017-08-01T11:49:07.504-03:00">
         <name>PDF/A-3A validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level A</description>
     </details>
@@ -365,7 +365,7 @@
         <rule object="PDOutputIntent">
             <id specification="ISO_19005_3" clause="6.2.3" testNumber="3"/>
             <description>In addition, the DestOutputProfileRef key, as defined in ISO 15930-7:2010, Annex A, shall not be present in any PDF/X OutputIntent.</description>
-            <test>DestOutputProfileRef_size == 0</test>
+            <test>containsDestOutputProfileRef == false</test>
             <error>
                 <message>The output intent dictionary contains forbidden entry DestOutputProfileRef</message>
                 <arguments/>
@@ -482,7 +482,7 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_3" clause="6.2.5" testNumber="3"/>
             <description>An ExtGState dictionary shall not contain the HTP key</description>
-            <test>HTP_size == 0</test>
+            <test>containsHTP == false</test>
             <error>
                 <message>An ExtGState dictionary contains the HTP key</message>
                 <arguments/>
@@ -537,7 +537,7 @@
         <rule object="PDXImage">
             <id specification="ISO_19005_3" clause="6.2.8" testNumber="1"/>
             <description>An Image dictionary shall not contain the Alternates key</description>
-            <test>Alternates_size == 0</test>
+            <test>containsAlternates == false</test>
             <error>
                 <message>Alternates key is present in the Image dictionary(</message>
                 <arguments/>
@@ -945,7 +945,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.6" testNumber="1"/>
             <description>For all non-symbolic TrueType fonts used for rendering, the embedded TrueType font program shall contain one or several non-symbolic 
 			cmap entries such that all necessary glyph lookups can be carried out.</description>
-            <test>isSymbolic == true || nrCmaps &gt;= 1 || renderingMode == 3</test>
+            <test>isSymbolic == true || renderingMode == 3 || cmap10Present == true || cmap31Present == true </test>
             <error>
                 <message>The embedded font program for a non-symbolic TrueType font does not contain any cmap subtables</message>
                 <arguments/>
@@ -1112,7 +1112,7 @@
         <rule object="PDAnnot">
             <id specification="ISO_19005_3" clause="6.4.1" testNumber="1"/>
             <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys.</description>
-            <test>Subtype != &quot;Widget&quot; || (A_size == 0 &amp;&amp; containsAA == false)</test>
+            <test>Subtype != &quot;Widget&quot; || (containsA == false &amp;&amp; containsAA == false)</test>
             <error>
                 <message>A Widget annotation contains either A or AA entry</message>
                 <arguments/>
@@ -1143,7 +1143,7 @@
             <id specification="ISO_19005_3" clause="6.4.2" testNumber="1"/>
             <description>The document's interactive form dictionary that forms the value of the AcroForm key in the document's Catalog of a PDF/A-2 file, 
 			if present, shall not contain the XFA key.</description>
-            <test>XFA_size == 0</test>
+            <test>containsXFA == false</test>
             <error>
                 <message>The interactive form dictionary contains the XFA key</message>
                 <arguments/>
