@@ -26,6 +26,8 @@ import java.util.Set;
  * @author Maksim Bezrukov
  */
 public interface LowLvlInfoFeaturesObjectAdapter extends FeaturesObjectAdapter {
+	double getHeaderVersion();
+	String getCatalogVersion();
 	int getIndirectObjectsNumber();
 	String getCreationId();
 	String getModificationId();

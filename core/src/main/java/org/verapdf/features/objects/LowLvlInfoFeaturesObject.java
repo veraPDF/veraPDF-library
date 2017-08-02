@@ -30,6 +30,8 @@ import org.verapdf.features.tools.FeatureTreeNode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Feature object for low level info part of the features report
@@ -38,7 +40,10 @@ import java.util.Set;
  */
 public class LowLvlInfoFeaturesObject extends FeaturesObject {
 
+	private static final Logger LOGGER = Logger.getLogger(LowLvlInfoFeaturesObject.class.getCanonicalName());
+
 	private static final String LOW_LEVEL_INFO = "lowLevelInfo";
+	private static final String PDF_VERSION = "pdfVersion";
 	private static final String INDIRECT_OBJECTS_NUMBER = "indirectObjectsNumber";
 	private static final String DOCUMENT_ID = "documentId";
 	private static final String CREATION_ID = "creationId";
@@ -77,6 +82,8 @@ public class LowLvlInfoFeaturesObject extends FeaturesObject {
 		LowLvlInfoFeaturesObjectAdapter lowLvlAdapter = (LowLvlInfoFeaturesObjectAdapter) this.adapter;
 		FeatureTreeNode root = FeatureTreeNode.createRootNode(LOW_LEVEL_INFO);
 
+		CreateNodeHelper.addNotEmptyNode(PDF_VERSION, getPDFVersionString(lowLvlAdapter), root);
+
 		root.addChild(INDIRECT_OBJECTS_NUMBER)
 				.setValue(String.valueOf(lowLvlAdapter.getIndirectObjectsNumber()));
 
@@ -110,6 +117,20 @@ public class LowLvlInfoFeaturesObject extends FeaturesObject {
 		return root;
 	}
 
+	private String getPDFVersionString(LowLvlInfoFeaturesObjectAdapter lowLvlAdapter) {
+		double res = lowLvlAdapter.getHeaderVersion();
+		String catalogVersion = lowLvlAdapter.getCatalogVersion();
+		if (catalogVersion != null) {
+			try {
+				double catalogValue = Double.valueOf(catalogVersion);
+				res = Math.max(res, catalogValue);
+			} catch (NumberFormatException e) {
+				LOGGER.log(Level.FINE, "Problems in obtaining pdf version number from the catalog", e);
+			}
+		}
+		return String.format("%.1f", res);
+	}
+
 	/**
 	 * @return null
 	 */
@@ -121,6 +142,9 @@ public class LowLvlInfoFeaturesObject extends FeaturesObject {
 	static List<Feature> getFeaturesList() {
 		// All fields are present
 		List<Feature> featuresList = new ArrayList<>();
+		featuresList.add(new Feature("PDF Version",
+				generateVariableXPath(LOW_LEVEL_INFO, PDF_VERSION),
+				Feature.FeatureType.NUMBER));
 		featuresList.add(new Feature("Indirect Objects Number",
 				generateVariableXPath(LOW_LEVEL_INFO, INDIRECT_OBJECTS_NUMBER),
 				Feature.FeatureType.NUMBER));
