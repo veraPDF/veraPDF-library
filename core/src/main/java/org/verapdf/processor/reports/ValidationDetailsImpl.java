@@ -129,10 +129,8 @@ final class ValidationDetailsImpl implements ValidationDetails {
 		return defaultInstance;
 	}
 
-	static ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks,
+	static ValidationDetails fromValues(final ValidationResult result, final ValidationProfile profile, boolean logPassedChecks,
 			final int maxFailedChecks) {
-		ValidationProfile profile = Profiles.getVeraProfileDirectory()
-				.getValidationProfileByFlavour(result.getPDFAFlavour());
 		Map<RuleId, Set<TestAssertion>> assertionMap = mapAssertionsByRule(result.getTestAssertions());
 		Set<RuleSummary> ruleSummaries = new HashSet<>();
 		int passedRules = 0;

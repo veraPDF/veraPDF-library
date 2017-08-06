@@ -22,6 +22,8 @@ import org.verapdf.component.Components;
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import java.util.List;
 
@@ -56,13 +58,20 @@ public final class Reports {
 	 * @return a new {@link BatchSummary} instance created using the passed
 	 *         values
 	 */
-	public static final BatchSummary createBatchSummary(final Components.Timer timer, final ValidationBatchSummary validationSummary,
-			final FeaturesBatchSummary featureSummary, final MetadataRepairBatchSummary repairSummary, final int totalJobs, final int failedToParse, final int encrypted) {
-		if (totalJobs < 0)  throw new IllegalArgumentException("Argument totalJobs must be >= 0"); //$NON-NLS-1$
-		if (failedToParse < 0)  throw new IllegalArgumentException("Argument failedToParse must be >= 0"); //$NON-NLS-1$
-		if (encrypted < 0)  throw new IllegalArgumentException("Argument encrypted must be >= 0"); //$NON-NLS-1$
-		if ((failedToParse + encrypted) > totalJobs) throw new IllegalArgumentException("Argument totalJobs must be >= arguments (failedJobs + encrypted)"); //$NON-NLS-1$
-		return BatchSummaryImpl.fromValues(timer.stop(), validationSummary, featureSummary, repairSummary, totalJobs, failedToParse, encrypted);
+	public static final BatchSummary createBatchSummary(final Components.Timer timer,
+			final ValidationBatchSummary validationSummary, final FeaturesBatchSummary featureSummary,
+			final MetadataRepairBatchSummary repairSummary, final int totalJobs, final int failedToParse,
+			final int encrypted) {
+		if (totalJobs < 0)
+			throw new IllegalArgumentException("Argument totalJobs must be >= 0"); //$NON-NLS-1$
+		if (failedToParse < 0)
+			throw new IllegalArgumentException("Argument failedToParse must be >= 0"); //$NON-NLS-1$
+		if (encrypted < 0)
+			throw new IllegalArgumentException("Argument encrypted must be >= 0"); //$NON-NLS-1$
+		if ((failedToParse + encrypted) > totalJobs)
+			throw new IllegalArgumentException("Argument totalJobs must be >= arguments (failedJobs + encrypted)"); //$NON-NLS-1$
+		return BatchSummaryImpl.fromValues(timer.stop(), validationSummary, featureSummary, repairSummary, totalJobs,
+				failedToParse, encrypted);
 	}
 
 	/**
@@ -117,7 +126,26 @@ public final class Reports {
 	 */
 	public static final ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks,
 			final int maxFailedChecks) {
-		return ValidationDetailsImpl.fromValues(result, logPassedChecks, maxFailedChecks);
+		ValidationProfile profile = Profiles.getVeraProfileDirectory()
+				.getValidationProfileByFlavour(result.getPDFAFlavour());
+		return fromValues(result, profile, logPassedChecks, maxFailedChecks);
+	}
+
+	/**
+	 * Creates a new {@link ValidationDetails} instance from the passed
+	 * parameters
+	 * 
+	 * @param result
+	 *            the {@link ValidationResult} produced by the validation task
+	 * @param logPassedChecks
+	 *            boolean indicating whether passed checks were logged
+	 * @param maxFailedChecks
+	 *            in that records the max failed checks limit applied
+	 * @return a new {@link ValidationDetails} instance
+	 */
+	public static final ValidationDetails fromValues(final ValidationResult result, final ValidationProfile profile,
+			boolean logPassedChecks, final int maxFailedChecks) {
+		return ValidationDetailsImpl.fromValues(result, profile, logPassedChecks, maxFailedChecks);
 	}
 
 	public static final MetadataFixerReport fromValues(final String status, final int fixCount,
