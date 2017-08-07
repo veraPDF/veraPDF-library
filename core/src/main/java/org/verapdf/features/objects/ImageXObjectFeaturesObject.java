@@ -164,8 +164,8 @@ public class ImageXObjectFeaturesObject extends FeaturesObject {
 					xImageAdapter.getFilterAdapters();
 			for (int i = 0; i < filterNames.size(); ++i) {
 				String filterNameValue = filterNames.get(i);
-				ImageXObjectFeaturesObjectAdapter.StreamFilterAdapter adapter =
-						filterAdapters.get(i);
+				ImageXObjectFeaturesObjectAdapter.StreamFilterAdapter adapter = i < filterAdapters.size() ?
+						filterAdapters.get(i) : null;
 				switch (filterNameValue) {
 					case "LZWDecode":
 						resFilters.add(ImageFeaturesData.Filter.newInstance(filterNameValue, createLZWFilterMap(adapter),
