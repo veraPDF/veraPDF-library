@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_A">
-    <details creator="veraPDF Consortium" created="2017-08-01T11:49:07.504-03:00">
+    <details creator="veraPDF Consortium" created="2017-08-07T06:05:21.679-03:00">
         <name>PDF/A-3A validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level A</description>
     </details>
@@ -825,7 +825,7 @@
 			in ISO 32000-1:2008, 9.7.5.</description>
             <test>CMapName == &quot;Identity-H&quot; || CMapName == &quot;Identity-V&quot; || CMapName == &quot;GB-EUC-H&quot; || CMapName == &quot;GB-EUC-V&quot; ||
 			CMapName == &quot;GBpc-EUC-H&quot; || CMapName == &quot;GBpc-EUC-V&quot; || CMapName == &quot;GBK-EUC-H&quot; || CMapName == &quot;GBK-EUC-V&quot; ||
-			CMapName == &quot;GBKp-EUC-H&quot; || CMapName == &quot;GBKp-EUC-V&quot; || CMapName == &quot;GBK2K-EUC-H&quot; || CMapName == &quot;GBK2K-EUC-V&quot; ||
+			CMapName == &quot;GBKp-EUC-H&quot; || CMapName == &quot;GBKp-EUC-V&quot; || CMapName == &quot;GBK2K-H&quot; || CMapName == &quot;GBK2K-V&quot; ||
 			CMapName == &quot;UniGB-UCS2-H&quot; || CMapName == &quot;UniGB-UCS2-V&quot; || CMapName == &quot;UniGB-UFT16-H&quot; || CMapName == &quot;UniGB-UFT16-V&quot; ||
 			CMapName == &quot;B5pc-H&quot; || CMapName == &quot;B5pc-V&quot; || CMapName == &quot;HKscs-B5-H&quot; || CMapName == &quot;HKscs-B5-V&quot; ||
 			CMapName == &quot;ETen-B5-H&quot; || CMapName == &quot;ETen-B5-V&quot; || CMapName == &quot;ETenms-B5-H&quot; || CMapName == &quot;ETenms-B5-V&quot; ||
@@ -863,7 +863,7 @@
             <description>A CMap shall not reference any other CMap except those listed in ISO 32000-1:2008, 9.7.5.2, Table 118.</description>
             <test>CMapName == &quot;Identity-H&quot; || CMapName == &quot;Identity-V&quot; || CMapName == &quot;GB-EUC-H&quot; || CMapName == &quot;GB-EUC-V&quot; ||
 			CMapName == &quot;GBpc-EUC-H&quot; || CMapName == &quot;GBpc-EUC-V&quot; || CMapName == &quot;GBK-EUC-H&quot; || CMapName == &quot;GBK-EUC-V&quot; ||
-			CMapName == &quot;GBKp-EUC-H&quot; || CMapName == &quot;GBKp-EUC-V&quot; || CMapName == &quot;GBK2K-EUC-H&quot; || CMapName == &quot;GBK2K-EUC-V&quot; ||
+			CMapName == &quot;GBKp-EUC-H&quot; || CMapName == &quot;GBKp-EUC-V&quot; || CMapName == &quot;GBK2K-H&quot; || CMapName == &quot;GBK2K-V&quot; ||
 			CMapName == &quot;UniGB-UCS2-H&quot; || CMapName == &quot;UniGB-UCS2-V&quot; || CMapName == &quot;UniGB-UFT16-H&quot; || CMapName == &quot;UniGB-UFT16-V&quot; ||
 			CMapName == &quot;B5pc-H&quot; || CMapName == &quot;B5pc-V&quot; || CMapName == &quot;HKscs-B5-H&quot; || CMapName == &quot;HKscs-B5-V&quot; ||
 			CMapName == &quot;ETen-B5-H&quot; || CMapName == &quot;ETen-B5-V&quot; || CMapName == &quot;ETenms-B5-H&quot; || CMapName == &quot;ETenms-B5-V&quot; ||
