@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_A">
-    <details creator="veraPDF Consortium" created="2017-08-07T06:05:21.679-03:00">
+    <details creator="veraPDF Consortium" created="2017-08-07T08:13:21.050-03:00">
         <name>PDF/A-3A validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level A</description>
     </details>
@@ -365,7 +365,7 @@
         <rule object="PDOutputIntent">
             <id specification="ISO_19005_3" clause="6.2.3" testNumber="3"/>
             <description>In addition, the DestOutputProfileRef key, as defined in ISO 15930-7:2010, Annex A, shall not be present in any PDF/X OutputIntent.</description>
-            <test>containsDestOutputProfileRef == false</test>
+            <test>S != 'GTS_PDFX' || containsDestOutputProfileRef == false</test>
             <error>
                 <message>The output intent dictionary contains forbidden entry DestOutputProfileRef</message>
                 <arguments/>
