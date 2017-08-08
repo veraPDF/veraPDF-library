@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_U">
-    <details creator="veraPDF Consortium" created="2017-08-07T08:13:39.995-03:00">
+    <details creator="veraPDF Consortium" created="2017-08-08T11:33:33.610-03:00">
         <name>PDF/A-3U validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level U</description>
     </details>
@@ -912,7 +912,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="3"/>
             <description>If the FontDescriptor dictionary of an embedded Type 1 font contains a CharSet string, then it shall list the character names of all glyphs
 			present in the font program, regardless of whether a glyph in the font is referenced or used by the PDF or not.</description>
-            <test>fontFile_size == 0 || CharSet == null || charSetListsAllGlyphs == true</test>
+            <test>fontFile_size == 0 || fontName.search(/[A-Z]{6}\+/) != 0 || CharSet == null || charSetListsAllGlyphs == true</test>
             <error>
                 <message>A CharSet entry in the Descriptor dictionary of a Type1 font incorrectly lists glyphs present in the font program</message>
                 <arguments/>
@@ -923,7 +923,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="4"/>
             <description>If the FontDescriptor dictionary of an embedded CID font contains a CIDSet stream, then it shall identify all CIDs which are present in the font program,
 			regardless of whether a CID in the font is referenced or used by the PDF or not.</description>
-            <test>fontFile_size == 0 || CIDSet_size == 0 || cidSetListsAllGlyphs == true</test>
+            <test>fontFile_size == 0 || fontName.search(/[A-Z]{6}\+/) != 0 || CIDSet_size == 0 || cidSetListsAllGlyphs == true</test>
             <error>
                 <message>A CID Font subset does not define CIDSet entry in its Descriptor dictionary</message>
                 <arguments/>
