@@ -26,6 +26,7 @@ package org.verapdf.features;
  * @author Maksim Bezrukov
  */
 public enum FeatureObjectType {
+	ACTION("actions", "Actions"),
 	ANNOTATION("annotations", "Annotations", "annot"),
 	COLORSPACE("colorSpace", "Color Spaces", "clrsp"),
 	DOCUMENT_SECURITY("ds", "Document Security"),
@@ -36,6 +37,7 @@ public enum FeatureObjectType {
 	ICCPROFILE("iccProfile", "ICC Profiles", "iccProfile"),
 	IMAGE_XOBJECT("imageXobject", "Images", "xobj"),
 	INFORMATION_DICTIONARY("informationDict", "Information Dictionary"),
+	INTERACTIVE_FORM_FIELDS("interactiveFormField", "Interactive Form Fields", "intFormField"),
 	LOW_LEVEL_INFO("lowLevelInfo", "Low Level Info"),
 	METADATA("metadata", "Metadata"),
 	OUTLINES("outlines", "Outlines"),
@@ -58,10 +60,20 @@ public enum FeatureObjectType {
 	
 	private FeatureObjectType(final String nodeName, final String fullName, final String idPrefix) {
 		this.nodeName = nodeName;
-		this.fullName = fullName;
+		this.fullName = fullName.trim();
 		this.idPrefix = idPrefix;
 	}
-	
+
+	public static FeatureObjectType getFeatureObjectTypeByFullName(String fullName) {
+		String name = fullName.trim();
+		for (FeatureObjectType feature : FeatureObjectType.values()) {
+			if (feature.getFullName().equals(name)) {
+				return feature;
+			}
+		}
+		return null;
+	}
+
 	public String getNodeName() {
 		return this.nodeName;
 	}

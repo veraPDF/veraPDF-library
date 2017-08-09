@@ -20,13 +20,12 @@
  */
 package org.verapdf.model.impl.axl;
 
+import com.adobe.xmp.XMPConst;
+import com.adobe.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.tools.xmp.ValidatorsContainer;
 import org.verapdf.model.tools.xmp.validators.SimpleTypeValidator;
 import org.verapdf.model.xmplayer.ExtensionSchemaField;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.impl.VeraPDFXMPNode;
 
 /**
  * @author Maksim Bezrukov
@@ -95,7 +94,7 @@ public class AXLExtensionSchemaField extends AXLExtensionSchemaObject implements
 
     @Override
     public Boolean getisValueTypeDefined() {
-        if (this.flavour != null && this.flavour.getPart() != null && this.flavour.getPart().getPartNumber() == 1) {
+        if (this.flavour != null && this.flavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
             return isValueTypeValidForPDFA_1();
         }
         return isValueTypeValidForPDFA_2_3();

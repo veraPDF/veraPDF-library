@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_A">
-    <details creator="veraPDF Consortium" created="2017-05-31T13:04:16.695-03:00">
+    <details creator="veraPDF Consortium" created="2017-08-01T11:48:16.365-03:00">
         <name>PDF/A-1A validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011, Level A</description>
     </details>
@@ -183,7 +183,7 @@
         <rule object="CosFileSpecification">
             <id specification="ISO_19005_1" clause="6.1.11" testNumber="1"/>
             <description>A file specification dictionary, as defined in PDF 3.10.2, shall not contain the EF key</description>
-            <test>EF_size == 0</test>
+            <test>containsEF == false</test>
             <error>
                 <message>A file specification dictionary contains the EF key</message>
                 <arguments/>
@@ -195,7 +195,7 @@
         <rule object="CosDocument">
             <id specification="ISO_19005_1" clause="6.1.11" testNumber="2"/>
             <description>A file's name dictionary, as defined in PDF Reference 3.6.3, shall not contain the EmbeddedFiles key</description>
-            <test>EmbeddedFiles_size == 0</test>
+            <test>containsEmbeddedFiles == false</test>
             <error>
                 <message>The document contains embedded files (EmbeddedFiles key is present in the file's name dictionary)</message>
                 <arguments/>
@@ -420,7 +420,7 @@
         <rule object="PDXImage">
             <id specification="ISO_19005_1" clause="6.2.4" testNumber="1"/>
             <description>An Image dictionary shall not contain the Alternates key</description>
-            <test>Alternates_size == 0</test>
+            <test>containsAlternates == false</test>
             <error>
                 <message>Alternates key is present in the Image dictionary(</message>
                 <arguments/>
@@ -430,7 +430,7 @@
         <rule object="PDXObject">
             <id specification="ISO_19005_1" clause="6.2.4" testNumber="2"/>
             <description>An XObject dictionary (Image or Form) shall not contain the OPI key</description>
-            <test>OPI_size == 0</test>
+            <test>containsOPI == false</test>
             <error>
                 <message>OPI key is present in the XObject dictionary(</message>
                 <arguments/>
@@ -450,7 +450,7 @@
         <rule object="PDXForm">
             <id specification="ISO_19005_1" clause="6.2.5" testNumber="1"/>
             <description>A form XObject dictionary shall not contain the Subtype2 key with a value of PS or the PS key</description>
-            <test>(Subtype2 == null || Subtype2 != &quot;PS&quot;) &amp;&amp; PS_size == 0</test>
+            <test>(Subtype2 == null || Subtype2 != &quot;PS&quot;) &amp;&amp; containsPS == false</test>
             <error>
                 <message>The form XObject dictionary contains a PS key or Subtype2 key with value PS</message>
                 <arguments/>
@@ -460,7 +460,7 @@
         <rule object="PDXForm">
             <id specification="ISO_19005_1" clause="6.2.6" testNumber="1"/>
             <description>A conforming file shall not contain any reference XObjects</description>
-            <test>Ref_size == 0</test>
+            <test>containsRef == false</test>
             <error>
                 <message>The document contains a reference XObject (Ref key in the form XObject dictionary)</message>
                 <arguments/>
@@ -693,8 +693,7 @@
         </rule>
         <rule object="Glyph">
             <id specification="ISO_19005_1" clause="6.3.5" testNumber="1"/>
-            <description>The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8, 
-			except when the fonts are used exclusively with text rendering mode 3.</description>
+            <description>Embedded font programs shall define all font glyphs referenced for rendering with conforming file.</description>
             <test>renderingMode == 3 || isGlyphPresent == null || isGlyphPresent == true</test>
             <error>
                 <message>Not all glyphs referenced for rendering are present in the embedded font program</message>
@@ -949,7 +948,7 @@
         <rule object="PDAnnot">
             <id specification="ISO_19005_1" clause="6.6.1" testNumber="3"/>
             <description>Interactive form fields shall not perform actions of any type</description>
-            <test>Subtype != &quot;Widget&quot; || A_size == 0</test>
+            <test>Subtype != &quot;Widget&quot; || containsA == false</test>
             <error>
                 <message>Interactive form field contains an action object ('A' key)</message>
                 <arguments/>
@@ -959,7 +958,7 @@
         <rule object="PDAnnot">
             <id specification="ISO_19005_1" clause="6.6.2" testNumber="1"/>
             <description>A Widget annotation dictionary shall not include an AA entry for an additional-actions dictionary</description>
-            <test>Subtype != &quot;Widget&quot; || AA_size == 0</test>
+            <test>Subtype != &quot;Widget&quot; || containsAA == false</test>
             <error>
                 <message>A Widget annotation contains an additional-actions dictionary (AA entry)</message>
                 <arguments/>
@@ -969,7 +968,7 @@
         <rule object="PDFormField">
             <id specification="ISO_19005_1" clause="6.6.2" testNumber="2"/>
             <description>A Field dictionary shall not include an AA entry for an additional-actions dictionary</description>
-            <test>AA_size == 0</test>
+            <test>containsAA == false</test>
             <error>
                 <message>A Field dictionary contains an additional-actions dictionary (AA entry)</message>
                 <arguments/>
@@ -979,7 +978,7 @@
         <rule object="PDDocument">
             <id specification="ISO_19005_1" clause="6.6.2" testNumber="3"/>
             <description>The document catalog dictionary shall not include an AA entry for an additional-actions dictionary</description>
-            <test>AA_size == 0</test>
+            <test>containsAA == false</test>
             <error>
                 <message>The document catalog dictionary contains an additional-actions dictionary (AA entry)</message>
                 <arguments/>
@@ -1204,7 +1203,7 @@
         </rule>
         <rule object="CosDocument">
             <id specification="ISO_19005_1" clause="6.8.2" testNumber="1"/>
-            <description>The document catalog dictionary shall include a MarkInfo dictionary whose sole entry, Marked, shall have a value of true</description>
+            <description>The document catalog dictionary shall include a MarkInfo dictionary with a Marked entry in it, whose value shall be true.</description>
             <test>Marked == true</test>
             <error>
                 <message>/Marked entry of the MarkInfo dictionary is not present in the document catalog or is set to false</message>
@@ -1252,7 +1251,7 @@
         <rule object="PDAnnot">
             <id specification="ISO_19005_1" clause="6.9" testNumber="2"/>
             <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys</description>
-            <test>Subtype != &quot;Widget&quot; || (A_size == 0 &amp;&amp; AA_size == 0)</test>
+            <test>Subtype != &quot;Widget&quot; || (containsA == false &amp;&amp; containsAA == false)</test>
             <error>
                 <message>A Widget annotation contains either A or AA entry</message>
                 <arguments/>
@@ -1262,7 +1261,7 @@
         <rule object="PDFormField">
             <id specification="ISO_19005_1" clause="6.9" testNumber="3"/>
             <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys</description>
-            <test>AA_size == 0</test>
+            <test>containsAA == false</test>
             <error>
                 <message>A Form field dictionary contains the AA entry</message>
                 <arguments/>
