@@ -1,3 +1,71 @@
+Version 1.8 (August 9, 2017)
+==========================
+
+## PDF parser:
+- fixed PS-specific issues in pasting embedded CMaps, ToUnicode maps and PS Type1 fonts;
+- implemented the protection against (invalid) loops in PDF tree structures;
+- fixed parsing of CIDSet and CharSet and their comparison with the glyph collection in the embedded font subset (PDF/A-2 and PDF/A-3);
+- implemented support for CalCMYK colour space as specified in ISO 3200-1; and
+- fixed initialization and inheritance of graphics state for tiling patterns, Type3 fonts and form XObjects.
+
+## Conformance checker:
+- implemented check for glyph width consistence in case of Type3 fonts;
+- implemented check for the Private Unicode Area use in Level A conformance;
+- implemented validation of transfer functions in Halftone dictionaries (PDF/A-2 and PDF/A-3);
+- added validation of MIME type value for embedded files (PDF/A-3);
+- refactored the validation model to check for presence of certain keys, even if they refer to empty arrays/collections;
+- fixed misspelled predefined CMap names for GBK2K-H and GBK2K-V;
+- fixed validation of UTF8 encoding for role map names (PDF/A-2 and PDF/A-3); and
+- fixed detection of references to Associated files from marked content sequences (PDF/A-3)
+
+## Feature report generation and policy checker:
+- added new features to the report:
+  * PDF Version;
+  * form field names and values; and
+  * page labels.
+
+## Application enhancements:
+- implemented automatic configuration of veraPDF feature report by a custom Policy profile;
+- implemented workaround for the veraPDF GUI appearance on high resolution screens;
+- fixed problems with spaces if full JRE path used on Windows; and
+- fixed problems handling spaces in installer path.
+
+## Infrastructure:
+- implemented automatic generation of PREFORMA test reports; and
+- both greenfield anb PDF Box versions now built and packaged from a single branch
+
+## Test corpus:
+- fixed veraPDF test files to comply with PDFA TechNote 0010; and
+- fixed outlines Count value to comply with ISO 32000-1
+
+# Version 1.6 (June 6, 2017)
+
+## Desktop Applications:
+- GUI and CLI now capable of checking for updated version of the software.
+
+## Conformance Checker:
+Updated validation logic to comply with Technical Working Group resolutions:
+- color spaces are validated now when specified in the content stream;
+- a CMap may refer only to predefined CMaps in the ‘usecmap’ operator; and
+- OpenType causes an ‘unsupported font type’ error in PDF/A-1 validation.
+
+Other conformance checker fixes and improvements:
+- fixed calculation of glyph widths for embedded CFF fonts in some special cases;
+- fixed validation of digital signature ByteRange array;
+- fixed recursive links of color spaces;
+- fixed validation of spaces in the indirect object header;
+- fixed Crypt filter handling;
+- fixed misprint in ‘Lbl’ structure tag; and
+- added support for glyphs with CIDs > 65535 (with an appropriate validation. error)
+
+## Policy checker:
+- fixed feature extraction from encrypted documents.
+
+## Test corpus:
+- added new test corpus for the Technical Working Group resolutions;
+- fixed test file for digital signature validation; and
+- fixed test files for Extension Schema definitions in XMP.
+
 # Version 1.4 (April 20, 2017)
 
 ## Conformance Checker:

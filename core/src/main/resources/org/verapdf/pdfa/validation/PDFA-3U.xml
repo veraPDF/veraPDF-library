@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_U">
-    <details creator="veraPDF Consortium" created="2017-05-31T13:05:12.630-03:00">
+    <details creator="veraPDF Consortium" created="2017-08-08T11:33:33.610-03:00">
         <name>PDF/A-3U validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level U</description>
     </details>
@@ -234,7 +234,7 @@
         <rule object="CosString">
             <id specification="ISO_19005_3" clause="6.1.13" testNumber="3"/>
             <description>A conforming file shall not contain any string longer than 32767 bytes.</description>
-            <test>value.length() &lt; 32767</test>
+            <test>value.length() &lt; 32768</test>
             <error>
                 <message>Maximum length of a String (32767) exceeded</message>
                 <arguments/>
@@ -291,10 +291,10 @@
             </error>
             <references/>
         </rule>
-        <rule object="CIDGlyph">
+        <rule object="CMapFile">
             <id specification="ISO_19005_3" clause="6.1.13" testNumber="10"/>
             <description>A conforming file shall not contain a CID value greater than 65535.</description>
-            <test>CID &lt;= 65535</test>
+            <test>maximalCID &lt;= 65535</test>
             <error>
                 <message>Maximum value of a CID (65535) is exceeded</message>
                 <arguments/>
@@ -365,7 +365,7 @@
         <rule object="PDOutputIntent">
             <id specification="ISO_19005_3" clause="6.2.3" testNumber="3"/>
             <description>In addition, the DestOutputProfileRef key, as defined in ISO 15930-7:2010, Annex A, shall not be present in any PDF/X OutputIntent.</description>
-            <test>DestOutputProfileRef_size == 0</test>
+            <test>S != 'GTS_PDFX' || containsDestOutputProfileRef == false</test>
             <error>
                 <message>The output intent dictionary contains forbidden entry DestOutputProfileRef</message>
                 <arguments/>
@@ -389,8 +389,9 @@
         </rule>
         <rule object="PDICCBasedCMYK">
             <id specification="ISO_19005_3" clause="6.2.4.2" testNumber="2"/>
-            <description>Overprint mode (as set by the OPM value in an ExtGState dictionary) shall not be one (1) when an ICCBased CMYK colour space is used and 
-			when overprinting for stroke or fill or both is set to true.</description>
+            <description>OOverprint mode (as set by the OPM value in an ExtGState dictionary) shall not be one (1) when an ICCBased CMYK colour space is 
+			used for stroke and overprinting for stroke is set to true, or when ICCBased CMYK colour space is used for fill and overprinting for 
+			fill is set to true, or both.</description>
             <test>overprintFlag == false || OPM == 0</test>
             <error>
                 <message>Overprint mode (OPM) is set to 1 when an ICCBased CMYK colour space is used with enabled overprinting</message>
@@ -481,7 +482,7 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_3" clause="6.2.5" testNumber="3"/>
             <description>An ExtGState dictionary shall not contain the HTP key</description>
-            <test>HTP_size == 0</test>
+            <test>containsHTP == false</test>
             <error>
                 <message>An ExtGState dictionary contains the HTP key</message>
                 <arguments/>
@@ -508,6 +509,20 @@
             </error>
             <references/>
         </rule>
+        <rule object="PDHalftone">
+            <id specification="ISO_19005_3" clause="6.2.5" testNumber="6"/>
+            <description>The TransferFunction key in a halftone dictionary shall be used only as required by ISO 32000-1.</description>
+            <test>colorantName == null || colorantName == 'Default' ||
+			( (colorantName == 'Cyan' || colorantName == 'Magenta' || colorantName == 'Yellow' || colorantName == 'Black' || colorantName == 'Red' || 
+						colorantName == 'Green' || colorantName == 'Blue') ? TransferFunction == null : TransferFunction != null)</test>
+            <error>
+                <message>Invalid use of TransferFunction key in the Halftone dictionary</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="Table 130"/>
+            </references>
+        </rule>
         <rule object="CosRenderingIntent">
             <id specification="ISO_19005_3" clause="6.2.6" testNumber="1"/>
             <description>Where a rendering intent is specified, its value shall be one of the four values defined in ISO 32000-1:2008,
@@ -522,7 +537,7 @@
         <rule object="PDXImage">
             <id specification="ISO_19005_3" clause="6.2.8" testNumber="1"/>
             <description>An Image dictionary shall not contain the Alternates key</description>
-            <test>Alternates_size == 0</test>
+            <test>containsAlternates == false</test>
             <error>
                 <message>Alternates key is present in the Image dictionary(</message>
                 <arguments/>
@@ -532,7 +547,7 @@
         <rule object="PDXImage">
             <id specification="ISO_19005_3" clause="6.2.8" testNumber="2"/>
             <description>An Image dictionary shall not contain the OPI key</description>
-            <test>OPI_size == 0</test>
+            <test>containsOPI == false</test>
             <error>
                 <message>OPI key is present in the XObject dictionary(</message>
                 <arguments/>
@@ -605,7 +620,7 @@
         <rule object="PDXForm">
             <id specification="ISO_19005_3" clause="6.2.9" testNumber="1"/>
             <description>A form XObject dictionary shall not contain any of the following: - the OPI key; - the Subtype2 key with a value of PS; - the PS key.</description>
-            <test>(Subtype2 == null || Subtype2 != &quot;PS&quot;) &amp;&amp; PS_size == 0 &amp;&amp; OPI_size == 0</test>
+            <test>(Subtype2 == null || Subtype2 != &quot;PS&quot;) &amp;&amp; containsPS == false &amp;&amp; containsOPI == false</test>
             <error>
                 <message>The form XObject dictionary contains a PS key, or a Subtype2 key with value PS, or an OPI key</message>
                 <arguments/>
@@ -615,7 +630,7 @@
         <rule object="PDXForm">
             <id specification="ISO_19005_3" clause="6.2.9" testNumber="2"/>
             <description>A conforming file shall not contain any reference XObjects</description>
-            <test>Ref_size == 0</test>
+            <test>containsRef == false</test>
             <error>
                 <message>The document contains a reference XObject (Ref key in the form XObject dictionary)</message>
                 <arguments/>
@@ -651,7 +666,7 @@
             <description>If the document does not contain a PDF/A OutputIntent, then all Page objects
 			that contain transparency shall include the Group key, and the attribute dictionary that forms the value of that
 			Group key shall include a CS entry whose value shall be used as the default blending colour space.</description>
-            <test>gOutputCS != null || groupCS_size != 0 || containsTransparency == false</test>
+            <test>gOutputCS != null || containsGroupCS == true || containsTransparency == false</test>
             <error>
                 <message>The page contains transparent objects with no blending colour space defined.</message>
                 <arguments/>
@@ -810,7 +825,7 @@
 			in ISO 32000-1:2008, 9.7.5.</description>
             <test>CMapName == &quot;Identity-H&quot; || CMapName == &quot;Identity-V&quot; || CMapName == &quot;GB-EUC-H&quot; || CMapName == &quot;GB-EUC-V&quot; ||
 			CMapName == &quot;GBpc-EUC-H&quot; || CMapName == &quot;GBpc-EUC-V&quot; || CMapName == &quot;GBK-EUC-H&quot; || CMapName == &quot;GBK-EUC-V&quot; ||
-			CMapName == &quot;GBKp-EUC-H&quot; || CMapName == &quot;GBKp-EUC-V&quot; || CMapName == &quot;GBK2K-EUC-H&quot; || CMapName == &quot;GBK2K-EUC-V&quot; ||
+			CMapName == &quot;GBKp-EUC-H&quot; || CMapName == &quot;GBKp-EUC-V&quot; || CMapName == &quot;GBK2K-H&quot; || CMapName == &quot;GBK2K-V&quot; ||
 			CMapName == &quot;UniGB-UCS2-H&quot; || CMapName == &quot;UniGB-UCS2-V&quot; || CMapName == &quot;UniGB-UFT16-H&quot; || CMapName == &quot;UniGB-UFT16-V&quot; ||
 			CMapName == &quot;B5pc-H&quot; || CMapName == &quot;B5pc-V&quot; || CMapName == &quot;HKscs-B5-H&quot; || CMapName == &quot;HKscs-B5-V&quot; ||
 			CMapName == &quot;ETen-B5-H&quot; || CMapName == &quot;ETen-B5-V&quot; || CMapName == &quot;ETenms-B5-H&quot; || CMapName == &quot;ETenms-B5-V&quot; ||
@@ -848,7 +863,7 @@
             <description>A CMap shall not reference any other CMap except those listed in ISO 32000-1:2008, 9.7.5.2, Table 118.</description>
             <test>CMapName == &quot;Identity-H&quot; || CMapName == &quot;Identity-V&quot; || CMapName == &quot;GB-EUC-H&quot; || CMapName == &quot;GB-EUC-V&quot; ||
 			CMapName == &quot;GBpc-EUC-H&quot; || CMapName == &quot;GBpc-EUC-V&quot; || CMapName == &quot;GBK-EUC-H&quot; || CMapName == &quot;GBK-EUC-V&quot; ||
-			CMapName == &quot;GBKp-EUC-H&quot; || CMapName == &quot;GBKp-EUC-V&quot; || CMapName == &quot;GBK2K-EUC-H&quot; || CMapName == &quot;GBK2K-EUC-V&quot; ||
+			CMapName == &quot;GBKp-EUC-H&quot; || CMapName == &quot;GBKp-EUC-V&quot; || CMapName == &quot;GBK2K-H&quot; || CMapName == &quot;GBK2K-V&quot; ||
 			CMapName == &quot;UniGB-UCS2-H&quot; || CMapName == &quot;UniGB-UCS2-V&quot; || CMapName == &quot;UniGB-UFT16-H&quot; || CMapName == &quot;UniGB-UFT16-V&quot; ||
 			CMapName == &quot;B5pc-H&quot; || CMapName == &quot;B5pc-V&quot; || CMapName == &quot;HKscs-B5-H&quot; || CMapName == &quot;HKscs-B5-V&quot; ||
 			CMapName == &quot;ETen-B5-H&quot; || CMapName == &quot;ETen-B5-V&quot; || CMapName == &quot;ETenms-B5-H&quot; || CMapName == &quot;ETenms-B5-V&quot; ||
@@ -897,7 +912,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="3"/>
             <description>If the FontDescriptor dictionary of an embedded Type 1 font contains a CharSet string, then it shall list the character names of all glyphs
 			present in the font program, regardless of whether a glyph in the font is referenced or used by the PDF or not.</description>
-            <test>fontFile_size == 0 || CharSet == null || charSetListsAllGlyphs == true</test>
+            <test>fontFile_size == 0 || fontName.search(/[A-Z]{6}\+/) != 0 || CharSet == null || charSetListsAllGlyphs == true</test>
             <error>
                 <message>A CharSet entry in the Descriptor dictionary of a Type1 font incorrectly lists glyphs present in the font program</message>
                 <arguments/>
@@ -908,7 +923,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="4"/>
             <description>If the FontDescriptor dictionary of an embedded CID font contains a CIDSet stream, then it shall identify all CIDs which are present in the font program,
 			regardless of whether a CID in the font is referenced or used by the PDF or not.</description>
-            <test>fontFile_size == 0 || CIDSet_size == 0 || cidSetListsAllGlyphs == true</test>
+            <test>fontFile_size == 0 || fontName.search(/[A-Z]{6}\+/) != 0 || CIDSet_size == 0 || cidSetListsAllGlyphs == true</test>
             <error>
                 <message>A CID Font subset does not define CIDSet entry in its Descriptor dictionary</message>
                 <arguments/>
@@ -930,7 +945,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.6" testNumber="1"/>
             <description>For all non-symbolic TrueType fonts used for rendering, the embedded TrueType font program shall contain one or several non-symbolic 
 			cmap entries such that all necessary glyph lookups can be carried out.</description>
-            <test>isSymbolic == true || nrCmaps &gt;= 1 || renderingMode == 3</test>
+            <test>isSymbolic == true || renderingMode == 3 || cmap10Present == true || cmap31Present == true </test>
             <error>
                 <message>The embedded font program for a non-symbolic TrueType font does not contain any cmap subtables</message>
                 <arguments/>
@@ -974,10 +989,23 @@
         </rule>
         <rule object="Glyph">
             <id specification="ISO_19005_3" clause="6.2.11.7" testNumber="1"/>
-            <description>The Unicode values specified in the ToUnicode CMap shall all be greater than zero (0), but not equal to either U+FEFF or U+FFFE.</description>
-            <test>toUnicode != null &amp;&amp; toUnicode.indexOf(&quot;\u0000&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFFFE&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFEFF&quot;)  == -1</test>
+            <description>The Font dictionary of all fonts shall define the map of all used character codes to Unicode values, either via a ToUnicode entry,
+			or other mechanisms as defined in ISO 19005-2, 6.2.11.7.2.</description>
+            <test>toUnicode != null</test>
             <error>
-                <message>The font does not define Unicode character map or some glyphs have invalid Unicode value</message>
+                <message>The glyph can not be mapped to Unicode</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 19005-2:2011" clause="6.2.11.7.2"/>
+            </references>
+        </rule>
+        <rule object="Glyph">
+            <id specification="ISO_19005_3" clause="6.2.11.7" testNumber="2"/>
+            <description>The Unicode values specified in the ToUnicode CMap shall all be greater than zero (0), but not equal to either U+FEFF or U+FFFE.</description>
+            <test>toUnicode == null || (toUnicode.indexOf(&quot;\u0000&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFFFE&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFEFF&quot;)  == -1)</test>
+            <error>
+                <message>The glyph has an invalid Unicode value</message>
                 <arguments/>
             </error>
             <references/>
@@ -1069,7 +1097,7 @@
         <rule object="PDAnnot">
             <id specification="ISO_19005_3" clause="6.4.1" testNumber="1"/>
             <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys.</description>
-            <test>Subtype != &quot;Widget&quot; || (A_size == 0 &amp;&amp; AA_size == 0)</test>
+            <test>Subtype != &quot;Widget&quot; || (containsA == false &amp;&amp; containsAA == false)</test>
             <error>
                 <message>A Widget annotation contains either A or AA entry</message>
                 <arguments/>
@@ -1079,7 +1107,7 @@
         <rule object="PDFormField">
             <id specification="ISO_19005_3" clause="6.4.1" testNumber="2"/>
             <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys.</description>
-            <test>AA_size == 0</test>
+            <test>containsAA == false</test>
             <error>
                 <message>A Form field dictionary contains the AA entry</message>
                 <arguments/>
@@ -1100,7 +1128,7 @@
             <id specification="ISO_19005_3" clause="6.4.2" testNumber="1"/>
             <description>The document's interactive form dictionary that forms the value of the AcroForm key in the document's Catalog of a PDF/A-2 file, 
 			if present, shall not contain the XFA key.</description>
-            <test>XFA_size == 0</test>
+            <test>containsXFA == false</test>
             <error>
                 <message>The interactive form dictionary contains the XFA key</message>
                 <arguments/>
@@ -1175,7 +1203,7 @@
         <rule object="PDDocument">
             <id specification="ISO_19005_3" clause="6.5.2" testNumber="1"/>
             <description>The document's Catalog shall not include an AA entry for an additional-actions dictionary.</description>
-            <test>AA_size == 0</test>
+            <test>containsAA == false</test>
             <error>
                 <message>The document catalog dictionary contains an additional-actions dictionary (AA entry)</message>
                 <arguments/>
@@ -1185,7 +1213,7 @@
         <rule object="PDPage">
             <id specification="ISO_19005_3" clause="6.5.2" testNumber="2"/>
             <description>The Page dictionary shall not include an AA entry for an additional-actions dictionary.</description>
-            <test>AA_size == 0</test>
+            <test>containsAA == false</test>
             <error>
                 <message>The Page dictionary contains an additional-actions dictionary (AA entry)</message>
                 <arguments/>
@@ -1392,9 +1420,9 @@
             <id specification="ISO_19005_3" clause="6.8" testNumber="1"/>
             <description>The MIME type of an embedded file, or a subset of a file, shall be specified using the Subtype key of the file specification dictionary.
 			If the MIME type is not known, the &quot;application/octet-stream&quot; shall be used.</description>
-            <test>Subtype != null</test>
+            <test>Subtype != null &amp;&amp; /^[-\w+\.]+\/[-\w+\.]+$/.test(Subtype)</test>
             <error>
-                <message>An embedded file dictionary does not contain the MIME type information (Subtype entry)</message>
+                <message>The MIME type information (Subtype entry) of an embedded file is missing or invalid</message>
                 <arguments/>
             </error>
             <references/>
@@ -1402,7 +1430,7 @@
         <rule object="CosFileSpecification">
             <id specification="ISO_19005_3" clause="6.8" testNumber="2"/>
             <description>The file specification dictionary for an embedded file shall contain the F and UF keys</description>
-            <test>EF_size == 0 || (F != null &amp;&amp; UF != null)</test>
+            <test>containsEF == false || (F != null &amp;&amp; UF != null)</test>
             <error>
                 <message>The file specification dictionary for an embedded file does not contain either F or EF key</message>
                 <arguments/>
@@ -1420,7 +1448,7 @@
             </error>
             <references/>
         </rule>
-        <rule object="CosFileSpecification">
+        <rule object="CosFileSpecification" deferred="true">
             <id specification="ISO_19005_3" clause="6.8" testNumber="4"/>
             <description>The additional information provided for associated files as well as the usage requirements for associated files indicate the relationship
 		between the embedded file and the PDF document or the part of the PDF document with which it is associated.</description>
