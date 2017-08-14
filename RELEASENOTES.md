@@ -2,10 +2,10 @@ Version 1.8 (August 9, 2017)
 ==========================
 
 ## PDF parser:
-- fixed PS-specific issues in pasting embedded CMaps, ToUnicode maps and PS Type1 fonts;
+- fixed PS-specific issues in parsing embedded CMaps, ToUnicode maps and PS Type1 fonts;
 - implemented the protection against (invalid) loops in PDF tree structures;
 - fixed parsing of CIDSet and CharSet and their comparison with the glyph collection in the embedded font subset (PDF/A-2 and PDF/A-3);
-- implemented support for CalCMYK colour space as specified in ISO 3200-1; and
+- implemented support for CalCMYK colour space as specified in ISO 32000-1; and
 - fixed initialization and inheritance of graphics state for tiling patterns, Type3 fonts and form XObjects.
 
 ## Conformance checker:
