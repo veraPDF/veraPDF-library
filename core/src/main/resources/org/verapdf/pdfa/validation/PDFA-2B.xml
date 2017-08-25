@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_2_B">
-    <details creator="veraPDF Consortium" created="2017-08-08T11:33:01.806-03:00">
+    <details creator="veraPDF Consortium" created="2017-08-25T04:58:48.168-03:00">
         <name>PDF/A-2B validation profile</name>
         <description>Validation rules against ISO 19005-2:2011, Level B</description>
     </details>
@@ -1036,16 +1036,6 @@
             <references/>
         </rule>
         <rule object="PDAnnot">
-            <id specification="ISO_19005_2" clause="6.3.2" testNumber="3"/>
-            <description>Text annotations should set the NoZoom and NoRotate flag bits of the F key to 1.</description>
-            <test>Subtype != &quot;Text&quot; || (F != null &amp;&amp; (F &amp; 8) == 8 &amp;&amp; (F &amp; 16) == 16)</test>
-            <error>
-                <message>Text annotation has one of the flags NoZoom or NoRotate set to 0</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
-        <rule object="PDAnnot">
             <id specification="ISO_19005_2" clause="6.3.3" testNumber="1"/>
             <description>Every annotation (including those whose Subtype value is Widget, as used for form fields), except for the two cases listed below,
 			shall have at least one appearance dictionary:
@@ -1372,7 +1362,7 @@
 			pdfaid:conformance as B. A Level U conforming file shall specify the value of pdfaid:conformance as U.</description>
             <test>conformance == &quot;B&quot; || conformance == &quot;U&quot; || conformance == &quot;A&quot;</test>
             <error>
-                <message>The &quot;conformance&quot; property of the PDF/A Identification Schema is %1 instead of &quot;B&quot; for PDF/A-2b conforming file.</message>
+                <message>The &quot;conformance&quot; property of the PDF/A Identification Schema is %1 instead of &quot;B&quot; for PDF/A-2B conforming file.</message>
                 <arguments>
                     <argument>conformance</argument>
                 </arguments>
