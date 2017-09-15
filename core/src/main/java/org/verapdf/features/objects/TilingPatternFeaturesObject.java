@@ -77,8 +77,14 @@ public class TilingPatternFeaturesObject extends FeaturesObject {
 		double[] bBox = tpAdapter.getBBox();
 		CreateNodeHelper.addWidthHeightFeatures(bBox, root);
 		CreateNodeHelper.addBoxFeature("bbox", bBox, root);
-		root.addChild("xStep").setValue(String.format("%.3f", tpAdapter.getXStep()));
-		root.addChild("yStep").setValue(String.format("%.3f", tpAdapter.getYStep()));
+		Double xStep = tpAdapter.getXStep();
+		if (xStep != null) {
+			root.addChild("xStep").setValue(CreateNodeHelper.formatDouble(xStep, 3));
+		}
+		Double yStep = tpAdapter.getYStep();
+		if (yStep != null) {
+			root.addChild("yStep").setValue(CreateNodeHelper.formatDouble(yStep, 3));
+		}
 		CreateNodeHelper.parseMatrix(tpAdapter.getMatrix(), root.addChild("matrix"));
 		parseResources(root);
 		return root;
