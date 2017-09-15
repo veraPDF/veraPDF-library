@@ -128,7 +128,7 @@ public class LowLvlInfoFeaturesObject extends FeaturesObject {
 				LOGGER.log(Level.FINE, "Problems in obtaining pdf version number from the catalog", e);
 			}
 		}
-		return String.format("%.1f", res);
+		return CreateNodeHelper.formatDouble(res, 1);
 	}
 
 	/**

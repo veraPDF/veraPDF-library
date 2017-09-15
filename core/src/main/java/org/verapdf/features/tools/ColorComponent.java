@@ -53,7 +53,7 @@ public enum ColorComponent {
 	public Map<String, String> createAttributesMap(double[] componentValues) {
 		Map<String, String> attMap = new HashMap<>();
 		for (Colors color : this.getColors()) {
-			attMap.put(color.getName(), String.format("%.6f", componentValues[color.getPosition()]));
+			attMap.put(color.getName(), CreateNodeHelper.formatDouble(componentValues[color.getPosition()], 6));
 		}
 		return attMap;
 	}

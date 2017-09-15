@@ -30,6 +30,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -53,6 +54,8 @@ public final class CreateNodeHelper {
 	private static final String URY = "ury";
 	public static final String WIDTH = "width";
 	public static final String HEIGHT = "height";
+
+	private static final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
 	private CreateNodeHelper() {
 	}
@@ -107,10 +110,10 @@ public final class CreateNodeHelper {
 
 		if (box != null && box.length >= 4) {
 			boxNode = parent.addChild(name);
-			boxNode.setAttribute(LLX, String.format("%.3f", box[0]));
-			boxNode.setAttribute(LLY, String.format("%.3f", box[1]));
-			boxNode.setAttribute(URX, String.format("%.3f", box[2]));
-			boxNode.setAttribute(URY, String.format("%.3f", box[3]));
+			boxNode.setAttribute(LLX, formatDouble(box[0], 3));
+			boxNode.setAttribute(LLY, formatDouble(box[1], 3));
+			boxNode.setAttribute(URX, formatDouble(box[2], 3));
+			boxNode.setAttribute(URY, formatDouble(box[3], 3));
 		}
 
 		return boxNode;
@@ -119,8 +122,8 @@ public final class CreateNodeHelper {
 	public static void addWidthHeightFeatures(double[] box, FeatureTreeNode parent)
 			throws FeatureParsingException {
 		if (box != null && box.length >= 4) {
-			parent.addChild(WIDTH).setValue(String.format("%.3f", box[2] - box[0]));
-			parent.addChild(HEIGHT).setValue(String.format("%.3f", box[3] - box[1]));
+			parent.addChild(WIDTH).setValue(formatDouble(box[2] - box[0], 3));
+			parent.addChild(HEIGHT).setValue(formatDouble(box[3] - box[1],3));
 		}
 	}
 
@@ -259,8 +262,14 @@ public final class CreateNodeHelper {
 			for (int i = 0; i < array.length; ++i) {
 				FeatureTreeNode element = parent.addChild("element");
 				element.setAttribute("index", String.valueOf(i + 1));
-				element.setAttribute("value", String.format("%.3f", array[i]));
+				element.setAttribute("value", formatDouble(array[i], 3));
 			}
 		}
+	}
+
+	public static String formatDouble(double value, int fractionDigits) {
+		numberFormat.setMinimumFractionDigits(fractionDigits);
+		numberFormat.setMaximumFractionDigits(fractionDigits);
+		return numberFormat.format(value);
 	}
 }
