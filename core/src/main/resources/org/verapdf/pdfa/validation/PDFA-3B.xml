@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_B">
-    <details creator="veraPDF Consortium" created="2017-08-08T11:33:23.621-03:00">
+    <details creator="veraPDF Consortium" created="2017-08-25T04:59:15.826-03:00">
         <name>PDF/A-3B validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level B</description>
     </details>
@@ -1031,16 +1031,6 @@
             <test>F == null || ((F &amp; 1) == 0 &amp;&amp; (F &amp; 2) == 0 &amp;&amp; (F &amp; 4) == 4 &amp;&amp; (F &amp; 32) == 0 &amp;&amp; (F &amp; 256) == 0)</test>
             <error>
                 <message>One of the annotation flags Hidden, Invisible, ToggleNoView, or NoView is set to 1, or the Print flag is set to 0</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
-        <rule object="PDAnnot">
-            <id specification="ISO_19005_3" clause="6.3.2" testNumber="3"/>
-            <description>Text annotations should set the NoZoom and NoRotate flag bits of the F key to 1.</description>
-            <test>Subtype != &quot;Text&quot; || (F != null &amp;&amp; (F &amp; 8) == 8 &amp;&amp; (F &amp; 16) == 16)</test>
-            <error>
-                <message>Text annotation has one of the flags NoZoom or NoRotate set to 0</message>
                 <arguments/>
             </error>
             <references/>
