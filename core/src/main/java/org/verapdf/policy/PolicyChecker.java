@@ -17,14 +17,8 @@
  */
 package org.verapdf.policy;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.List;
+import org.verapdf.core.VeraPDFException;
+import org.verapdf.core.utils.FileUtils;
 
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
@@ -32,9 +26,9 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import org.verapdf.core.VeraPDFException;
-import org.verapdf.core.utils.FileUtils;
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * The veraPDF policy checker which is simply an abstraction that makes applying
@@ -191,12 +185,12 @@ public final class PolicyChecker {
 		try (FileInputStream fis = new FileInputStream(schemaXsl)) {
 			applySchematronXsl(fis, xmlReport, policyReport);
 		}
+		schemaXsl.delete();
 	}
 
 	private static File createSchematronXslFile(final InputStream rawSchematron)
 			throws TransformerException, IOException {
 		File resXsl = File.createTempFile("veraPDF_", "SchXsl"); //$NON-NLS-1$ //$NON-NLS-2$
-		resXsl.deleteOnExit();
 		try (FileOutputStream fos = new FileOutputStream(resXsl)) {
 			SchematronPipeline.processSchematron(rawSchematron, fos);
 		}

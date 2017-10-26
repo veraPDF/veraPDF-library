@@ -17,21 +17,10 @@
  */
 package org.verapdf.policy;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import javax.xml.transform.Source;
-import javax.xml.transform.Templates;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.URIResolver;
+import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import java.io.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -76,7 +65,6 @@ final class SchematronPipeline {
 	private static File createTempFileResult(final Transformer transformer, final StreamSource toTransform,
 			final String suffix) throws TransformerException, IOException {
 		File result = File.createTempFile("veraPDF_", suffix); //$NON-NLS-1$
-		result.deleteOnExit();
 
 		try (FileOutputStream fos = new FileOutputStream(result)) {
 			transformer.transform(toTransform, new StreamResult(fos));
