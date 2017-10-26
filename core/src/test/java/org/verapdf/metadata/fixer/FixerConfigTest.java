@@ -23,23 +23,16 @@
  */
 package org.verapdf.metadata.fixer;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-
-import javax.xml.bind.JAXBException;
-
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
 import org.verapdf.core.XmlSerialiser;
 
-import nl.jqno.equalsverifier.EqualsVerifier;
+import javax.xml.bind.JAXBException;
+import java.io.*;
+import java.nio.file.Files;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -110,6 +103,7 @@ public class FixerConfigTest {
 		}
 		assertTrue(defaultInstance.equals(FixerFactory.defaultConfig()));
 		assertFalse(defaultInstance == FixerFactory.defaultConfig());
+		temp.delete();
 	}
 
 }

@@ -20,24 +20,19 @@
  */
 package org.verapdf.policy;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.xml.transform.Source;
-
 import org.junit.Test;
 import org.verapdf.core.VeraPDFException;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.builder.Input;
 import org.xmlunit.diff.Diff;
+
+import javax.xml.transform.Source;
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class PolicyCheckerTests {
 	private static final String resourceBase = "/org/verapdf/policy/"; //$NON-NLS-1$
@@ -64,6 +59,7 @@ public class PolicyCheckerTests {
 		Diff myDiff = DiffBuilder.compare(control).checkForSimilar().ignoreComments().ignoreWhitespace().withTest(test)
 				.build();
 		assertFalse(myDiff.toString(), myDiff.hasDifferences());
+		tempResult.delete();
 	}
 
 	@Test
@@ -106,6 +102,7 @@ public class PolicyCheckerTests {
 		Diff myDiff = DiffBuilder.compare(control).checkForSimilar().ignoreComments().ignoreWhitespace().withTest(test)
 				.build();
 		assertFalse(myDiff.toString(), myDiff.hasDifferences());
+		tempResult.delete();
 	}
 
 	@Test
@@ -127,6 +124,7 @@ public class PolicyCheckerTests {
 		}
 		policyReport.delete();
 		mrrFile.delete();
+		tempResult.delete();
 	}
 
 	private static void copyStreamToFile(final InputStream in, final OutputStream out) throws IOException {
