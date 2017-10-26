@@ -185,7 +185,9 @@ public final class PolicyChecker {
 		try (FileInputStream fis = new FileInputStream(schemaXsl)) {
 			applySchematronXsl(fis, xmlReport, policyReport);
 		}
-		schemaXsl.delete();
+		if (!schemaXsl.delete()) {
+			schemaXsl.deleteOnExit();
+		}
 	}
 
 	private static File createSchematronXslFile(final InputStream rawSchematron)

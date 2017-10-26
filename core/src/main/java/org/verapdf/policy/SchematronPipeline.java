@@ -50,8 +50,12 @@ final class SchematronPipeline {
 		File isoExpResult = createTempFileResult(cachedExpXsl.newTransformer(), new StreamSource(isoDsdResult),
 				"ExpXsl"); //$NON-NLS-1$
 		cachedIsoSvrlXsl.newTransformer().transform(new StreamSource(isoExpResult), new StreamResult(xslDest));
-		isoDsdResult.delete();
-		isoExpResult.delete();
+		if (!isoDsdResult.delete()) {
+			isoDsdResult.deleteOnExit();
+		}
+		if (!isoExpResult.delete()) {
+			isoExpResult.deleteOnExit();
+		}
 	}
 
 	static Templates createCachedTransform(final String transName) {
