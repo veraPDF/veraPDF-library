@@ -57,6 +57,10 @@ public final class CreateNodeHelper {
 
 	private static final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
+	static {
+		numberFormat.setGroupingUsed(false);
+	}
+
 	private CreateNodeHelper() {
 	}
 
