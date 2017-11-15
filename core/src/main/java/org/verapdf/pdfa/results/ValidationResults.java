@@ -23,22 +23,20 @@
  */
 package org.verapdf.pdfa.results;
 
-import java.util.Set;
+import org.verapdf.core.XmlSerialiser;
+import org.verapdf.pdfa.results.TestAssertion.Status;
+import org.verapdf.pdfa.validation.profiles.RuleId;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import javax.xml.bind.JAXBException;
-
-import org.verapdf.core.XmlSerialiser;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.results.TestAssertion.Status;
-import org.verapdf.pdfa.validation.profiles.ProfileDetails;
-import org.verapdf.pdfa.validation.profiles.RuleId;
+import java.util.Set;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 public class ValidationResults {
 	private static final String NOT_NULL_MESSAGE = " cannot be null."; //$NON-NLS-1$
-	private static final String FLAVOUR_NOT_NULL_MESSAGE = "Flavour " + NOT_NULL_MESSAGE; //$NON-NLS-1$
+	private static final String VALIDATION_PROFILE_NOT_NULL_MESSAGE = "Validation profile " + NOT_NULL_MESSAGE; //$NON-NLS-1$
 	private static final String ASSERTIONS_NOT_NULL_MESSAGE = "Assertions " + NOT_NULL_MESSAGE; //$NON-NLS-1$
 
 	private ValidationResults() {
@@ -46,8 +44,8 @@ public class ValidationResults {
 	}
 
 	/**
-	 * @param flavour
-	 *            a {@link PDFAFlavour} instance indicating the validation type
+	 * @param validationProfile
+	 *            a {@link ValidationProfile} instance indicating the validation type
 	 *            performed
 	 * @param assertions
 	 *            the Set of TestAssertions reported by during validation
@@ -56,18 +54,18 @@ public class ValidationResults {
 	 *            compliant with the indicated flavour
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final PDFAFlavour flavour, final ProfileDetails profileDetails, final Set<TestAssertion> assertions,
-			final boolean isCompliant) {
-		if (flavour == null)
-			throw new NullPointerException(FLAVOUR_NOT_NULL_MESSAGE);
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions,
+													final boolean isCompliant) {
+		if (validationProfile == null)
+			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		if (assertions == null)
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
-		return ValidationResultImpl.fromValues(flavour, profileDetails, assertions, isCompliant, assertions.size());
+		return ValidationResultImpl.fromValues(validationProfile, assertions, isCompliant, assertions.size());
 	}
 
 	/**
-	 * @param flavour
-	 *            a {@link PDFAFlavour} instance indicating the validation type
+	 * @param validationProfile
+	 *            a {@link ValidationProfile} instance indicating the validation type
 	 *            performed
 	 * @param assertions
 	 *            the Set of TestAssertions reported by during validation
@@ -77,26 +75,26 @@ public class ValidationResults {
 	 * @param totalAssertions
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final PDFAFlavour flavour, final ProfileDetails profileDetails, final Set<TestAssertion> assertions,
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions,
 			final boolean isCompliant, final int totalAssertions) {
-		if (flavour == null)
-			throw new NullPointerException(FLAVOUR_NOT_NULL_MESSAGE);
+		if (validationProfile == null)
+			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		if (assertions == null)
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
-		return ValidationResultImpl.fromValues(flavour, profileDetails, assertions, isCompliant, totalAssertions);
+		return ValidationResultImpl.fromValues(validationProfile, assertions, isCompliant, totalAssertions);
 	}
 
 	/**
-	 * @param flavour
-	 *            a {@link PDFAFlavour} instance indicating the validation type
+	 * @param validationProfile
+	 *            a {@link ValidationProfile} instance indicating the validation type
 	 *            performed
 	 * @param assertions
 	 *            the Set of TestAssertions reported by during validation
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final PDFAFlavour flavour, final ProfileDetails profileDetails, final Set<TestAssertion> assertions) {
-		if (flavour == null)
-			throw new NullPointerException(FLAVOUR_NOT_NULL_MESSAGE);
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions) {
+		if (validationProfile == null)
+			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		if (assertions == null)
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
 		boolean isCompliant = true;
@@ -106,7 +104,7 @@ public class ValidationResults {
 				break;
 			}
 		}
-		return resultFromValues(flavour, profileDetails, assertions, isCompliant);
+		return resultFromValues(validationProfile, assertions, isCompliant);
 	}
 
 	/**
@@ -138,7 +136,7 @@ public class ValidationResults {
 	 *            the integer ordinal for the instance
 	 * @param ruleId
 	 *            the {@link RuleId} value for
-	 *            {@link org.verapdf.pdfa.validation.Rule} the assertion refers
+	 *            {@link org.verapdf.pdfa.validation.profiles.Rule} the assertion refers
 	 *            to.
 	 * @param status
 	 *            the {@link Status} of the assertion.

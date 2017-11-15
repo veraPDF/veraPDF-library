@@ -139,9 +139,8 @@ class BaseValidator implements PDFAValidator {
 
 		Context.exit();
 
-		ValidationResult res = ValidationResults.resultFromValues(this.profile.getPDFAFlavour(), this.profile.getDetails(), this.results,
+		return ValidationResults.resultFromValues(this.profile, this.results,
 				this.isCompliant, this.testCounter);
-		return res;
 	}
 
 	protected void initialise() {
@@ -174,19 +173,17 @@ class BaseValidator implements PDFAValidator {
 		}
 	}
 
-	private boolean checkNext() throws ValidationException {
+	private void checkNext() throws ValidationException {
 
 		Object checkObject = this.objectsStack.pop();
 		String checkContext = this.objectsContext.pop();
 		Set<String> checkIDContext = this.contextSet.pop();
 
-		boolean res = checkAllRules(checkObject, checkContext);
+		checkAllRules(checkObject, checkContext);
 
 		updateVariables(checkObject);
 
 		addAllLinkedObjects(checkObject, checkContext, checkIDContext);
-
-		return res;
 	}
 
 	private void updateVariables(Object object) {

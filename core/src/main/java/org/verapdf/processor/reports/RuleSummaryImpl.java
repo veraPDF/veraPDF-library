@@ -23,18 +23,18 @@
  */
 package org.verapdf.processor.reports;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.profiles.Profiles;
 import org.verapdf.pdfa.validation.profiles.RuleId;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -66,7 +66,8 @@ final class RuleSummaryImpl implements RuleSummary {
 
 	private RuleSummaryImpl(final RuleId ruleId, final Status status, final int passedChecks, final int failedChecks,
 			final String description, final String object, final String test, final Set<Check> checks) {
-		this.specification = ruleId.getSpecification().getId();
+		PDFAFlavour.Specification specification = ruleId.getSpecification();
+		this.specification = specification == null ? null : specification.getId();
 		this.clause = ruleId.getClause();
 		this.testNumber = ruleId.getTestNumber();
 		this.ruleStatus = status;
