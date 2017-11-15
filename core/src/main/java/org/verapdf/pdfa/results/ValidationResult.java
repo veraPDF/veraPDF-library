@@ -23,16 +23,16 @@
  */
 package org.verapdf.pdfa.results;
 
-import java.util.Set;
-
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.profiles.ProfileDetails;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
+
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.Set;
 
 /**
  * Created as the result of validating a PDF/A document against a
- * {@link org.verapdf.pdfa.validation.ValidationProfile}. The class encapsulates
+ * {@link org.verapdf.pdfa.validation.profiles.ValidationProfile}. The class encapsulates
  * the following information:
  * <ul>
  * <li>a boolean flag indicating whether the PDF/A document validated complied
@@ -82,4 +82,9 @@ public interface ValidationResult {
      * @return the list of {@link TestAssertion}s made during PDF/A validation
      */
     public Set<TestAssertion> getTestAssertions();
+
+    /**
+     * @return validation profile which has been used for generating validation result
+     */
+    public ValidationProfile getValidationProfile();
 }
