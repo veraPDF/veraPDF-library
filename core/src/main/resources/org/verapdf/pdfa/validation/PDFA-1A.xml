@@ -805,7 +805,7 @@
         <rule object="PDXObject">
             <id specification="ISO_19005_1" clause="6.4" testNumber="2"/>
             <description>An XObject dictionary shall not contain the SMask key</description>
-            <test>SMask_size == 0</test>
+            <test>containsSMask == false</test>
             <error>
                 <message>An XObject contains an SMask key</message>
                 <arguments/>
