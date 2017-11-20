@@ -392,14 +392,16 @@ class BaseValidator implements PDFAValidator {
 
 	protected void processAssertionResult(final boolean assertionResult, final String locationContext,
 			final Rule rule) {
-		this.testCounter++;
-		Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
-		TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
-				assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location);
-		if (this.isCompliant)
-			this.isCompliant = assertionResult;
-		if (!assertionResult || this.logPassedTests)
-			this.results.add(assertion);
+		if (!this.abortProcessing) {
+			this.testCounter++;
+			Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
+			TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
+					assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location);
+			if (this.isCompliant)
+				this.isCompliant = assertionResult;
+			if (!assertionResult || this.logPassedTests)
+				this.results.add(assertion);
+		}
 	}
 
 	@Override
