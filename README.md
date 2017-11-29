@@ -9,6 +9,11 @@ veraPDF-library
 [![CodeCov Coverage](https://img.shields.io/codecov/c/github/veraPDF/veraPDF-library.svg)](https://codecov.io/gh/veraPDF/veraPDF-library/ "CodeCov coverage")
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/cfafc08b44eb49b6aa790d6aaff09cd3)](https://www.codacy.com/app/carlwilson/veraPDF-library?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=veraPDF/veraPDF-library&amp;utm_campaign=Badge_Grade "Codacy grade")
 
+[![GitHub issues](https://img.shields.io/github/issues/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues "Open issues on GitHub")
+[![GitHub issues](https://img.shields.io/github/issues-closed/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues-closed "Open issues on GitHub")
+[![GitHub issues](https://img.shields.io/github/issues-pr/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues-pr "Open issues on GitHub")
+[![GitHub issues](https://img.shields.io/github/issues-pr-closed/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues-pr-closed "Open issues on GitHub")
+
 Licensing
 ---------
 The veraPDF PDF/A Validation Library is dual-licensed, see:
