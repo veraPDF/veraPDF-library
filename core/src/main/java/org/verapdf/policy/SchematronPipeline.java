@@ -21,6 +21,8 @@ import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -29,6 +31,9 @@ import java.io.*;
  */
 
 final class SchematronPipeline {
+	private static final Logger LOGGER = Logger
+			.getLogger(SchematronPipeline.class.getName());
+
 	static final ClassLoader cl = SchematronPipeline.class.getClassLoader();
 	private static final TransformerFactory factory = getTransformerFactory();
 	private static final String xslExt = ".xsl"; //$NON-NLS-1$
@@ -89,7 +94,19 @@ final class SchematronPipeline {
 
 		@Override
 		public Source resolve(String href, String base) throws TransformerException {
-			return new StreamSource(cl.getResourceAsStream(resourcePath + href));
+			InputStream inputStream;
+			File file = new File(href);
+			if (file.exists()) {
+				try {
+					inputStream = new FileInputStream(file);
+				} catch (FileNotFoundException e) {
+					LOGGER.log(Level.SEVERE, "File not found but exists", e);
+					inputStream = new ByteArrayInputStream(new byte[0]);
+				}
+			} else {
+				inputStream = cl.getResourceAsStream(resourcePath + href);
+			}
+			return new StreamSource(inputStream);
 		}
 	}
 
