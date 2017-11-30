@@ -20,21 +20,6 @@
  */
 package org.verapdf.metadata.fixer.utils.parser;
 
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.OBJECT_TYPE_TAG;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.PROCESSED_OBJECTS_PROPERTIES_PATH;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.RULE_DESCRIPTION_TAG;
-import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.TEST_TAG;
-
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.verapdf.metadata.fixer.utils.model.ProcessedObjects;
 import org.verapdf.metadata.fixer.utils.model.RuleDescription;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
@@ -42,6 +27,17 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.*;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -51,6 +47,7 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
     private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_1 = "processed.objects.path.pdfa_1";
     private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_2_3 = "processed.objects.path.pdfa_2_3";
 
+    private static ClassLoader cl = XMLProcessedObjectsParser.class.getClassLoader();
     private static ProcessedObjectsParser instance;
 
     private XMLProcessedObjectsParser() {
@@ -61,14 +58,12 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
     public ProcessedObjects getProcessedObjects(PDFAFlavour flavour)
             throws IOException, ParserConfigurationException, SAXException {
         Properties prop = new Properties();
-        try (InputStream inputStream = ClassLoader.class
-                .getResourceAsStream(PROCESSED_OBJECTS_PROPERTIES_PATH)) {
+        try (InputStream inputStream = cl.getResourceAsStream(PROCESSED_OBJECTS_PROPERTIES_PATH)) {
             prop.load(inputStream);
         }
         String appliedObjectsPath = prop.getProperty(this
                 .getProcessedObjectsPathProperty(flavour));
-        try (InputStream xml = ClassLoader.class
-                .getResourceAsStream(appliedObjectsPath)) {
+        try (InputStream xml = cl.getResourceAsStream(appliedObjectsPath)) {
             return this.getProcessedObjects(xml);
         }
     }
