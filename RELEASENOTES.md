@@ -1,3 +1,27 @@
+Version 1.10 (November 30, 2017)
+==========================
+
+## PDF Parser:
+- fixed retrieval of glyph widths from PS and CFF font programs (multiple issues);
+- optimized creation and cleanup of temporary files; and
+- optimized parsing of text-related data in PDF documents (up to 3 times faster for PDF documents with primarily text content).
+
+## Conformance Checker:
+- fixed checks on the presence of SMask, NeedApperane keys in case of invalid value types;
+- fixed ByteRange check of digital signatures in case of incrementally updated files;
+- fixed Unicode checks in PDF/A-1A validation for Type1 and Type3 fonts;
+- fixed inheritance of /FT entry in Widget annotations; and
+- fixed role map retrieval in case of remapping standard structure types.
+
+## Policy Checker:
+- fixed Schematron warnings in Policy checks; and
+- fixed issue with access to temp reports from Schematron stylesheets on some systems and in case of Java 9.
+
+## Application enhancements:
+- fixed various issues caused by Java 9, particularly a problem in the start up scripts; and
+- fixed access to PDF resources in case of veraPDF integration into web applications.
+
+
 Version 1.8 (August 9, 2017)
 ==========================
 
