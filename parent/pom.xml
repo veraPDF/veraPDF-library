@@ -32,7 +32,7 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-parent</artifactId>
-  <version>1.12</version>
+  <version>1.12.1</version>
   <packaging>pom</packaging>
 
   <name>veraPDF Consortium parent </name>
@@ -151,7 +151,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <java.version>1.7</java.version>
+    <java.version>1.8</java.version>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
     <mvn.assembly.version>3.1.0</mvn.assembly.version>
     <mvn.clean.version>3.0.0</mvn.clean.version>
