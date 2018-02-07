@@ -20,10 +20,9 @@
  */
 package org.verapdf.report;
 
+import org.verapdf.pdfa.Foundries;
+
 import javax.xml.transform.TransformerException;
-
-import org.verapdf.processor.reports.BatchSummary;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -54,16 +53,34 @@ public final class HTMLReport {
 	 * @throws TransformerException
 	 *             if an unrecoverable error occurs during the course of the
 	 *             transformation
-	 * @throws IOException
-	 *             file system exceptions
-	 * @throws JAXBException
+	 * @throws TransformerException
 	 */
-	public static void writeHTMLReport(InputStream source, OutputStream destination, BatchSummary summary, String wikiPath,
+	public static void writeHTMLReport(InputStream source, OutputStream destination, boolean isMultiJob, String wikiPath,
 			boolean isFullHTML) throws TransformerException {
-		String reportPath = (summary.isMultiJob()) ? summaryReport : detailedReport;
+		String parserId = Foundries.defaultInstance().getParserId();
+		writeHTMLReport(source, destination, isMultiJob, wikiPath, parserId, isFullHTML);
+	}
+
+	/**
+	 * Creates html validation report
+	 *
+	 * @param source
+	 *            an {@link InputStream} instance that is the source Machine
+	 *            Readable Report.
+	 * @param destination
+	 *            an {@link OutputStream} to write the HTML report to.
+	 * @throws TransformerException
+	 *             if an unrecoverable error occurs during the course of the
+	 *             transformation
+	 * @throws TransformerException
+	 */
+	public static void writeHTMLReport(InputStream source, OutputStream destination, boolean isMultiJob, String wikiPath,
+									   String parserType, boolean isFullHTML) throws TransformerException {
+		String reportPath = isMultiJob ? summaryReport : detailedReport;
 		Map<String, String> arguments = new HashMap<>();
 		arguments.put("wikiPath", wikiPath); //$NON-NLS-1$
 		arguments.put("isFullHTML", Boolean.toString(isFullHTML)); //$NON-NLS-1$
+		arguments.put("parserType", parserType); //$NON-NLS-1$
 		XsltTransformer.transform(source, HTMLReport.class.getClassLoader().getResourceAsStream(reportPath),
 				destination, arguments);
 	}

@@ -9,6 +9,8 @@
     <xsl:output method="html" indent="yes" />
     <!-- Parameter to select a full HTML document (true) or a fragment within div (false) -->
     <xsl:param name="isFullHTML" select="'true'" />
+    <!-- Parameter to show parser type -->
+    <xsl:param name="parserType"/>
     <!-- Parameter to set the base path to the Wiki instance -->
     <xsl:param name="wikiPath" select="'https://github.com/veraPDF/veraPDF-validation-profiles/wiki/'"/>
     <xsl:strip-space elements="*"/>
@@ -118,6 +120,16 @@
                   <xsl:value-of select="releaseDetails[@id='gui']/@version"/>
               </td>
           </tr>
+          <xsl:if test="$parserType">
+              <tr>
+                  <td class="lefted" width="250">
+                      <b>Parser:</b>
+                  </td>
+                  <td class="lefted">
+                      <xsl:value-of select="$parserType"/>
+                  </td>
+              </tr>
+          </xsl:if>
           <tr>
               <td class="lefted" width="250">
                   <b>Build Date:</b>
