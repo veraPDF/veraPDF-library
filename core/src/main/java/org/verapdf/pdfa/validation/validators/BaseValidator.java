@@ -23,8 +23,8 @@
  */
 package org.verapdf.pdfa.validation.validators;
 
-import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
+import org.mozilla.javascript.ScriptableObject;
 import org.verapdf.component.ComponentDetails;
 import org.verapdf.component.Components;
 import org.verapdf.core.ModelParsingException;
@@ -65,6 +65,8 @@ class BaseValidator implements PDFAValidator {
     protected boolean abortProcessing = false;
     protected final boolean logPassedTests;
     protected boolean isCompliant = true;
+
+    private ScriptableObject scope;
 
     private Set<String> idSet = new HashSet<>();
 
@@ -131,14 +133,14 @@ class BaseValidator implements PDFAValidator {
             }
         }
 
-        Context.exit();
+        JavaScriptEvaluator.exitContext();
 
         return ValidationResults.resultFromValues(this.profile, this.results,
                 this.isCompliant, this.testCounter);
     }
 
     protected void initialise() {
-
+        this.scope = JavaScriptEvaluator.initialise();
         this.objectsStack.clear();
         this.objectsContext.clear();
         this.contextSet.clear();
@@ -155,20 +157,16 @@ class BaseValidator implements PDFAValidator {
             if (var == null)
                 continue;
 
-            java.lang.Object res;
-            res = JavaScriptEvaluator.evaluateString(var.getDefaultValue(), null, 0, null);
-            JavaScriptEvaluator.evaluateString(var.getDefaultValue(), null, 0, null);
+            java.lang.Object res = JavaScriptEvaluator.evaluateString(var.getDefaultValue(), this.scope);
 
             if (res instanceof NativeJavaObject) {
                 res = ((NativeJavaObject) res).unwrap();
             }
-
-            JavaScriptEvaluator.putInScope(var.getName(), res);
+            this.scope.put(var.getName(), this.scope, res);
         }
     }
 
     private void checkNext() throws ValidationException {
-
         Object checkObject = this.objectsStack.pop();
         String checkContext = this.objectsContext.pop();
         Set<String> checkIDContext = this.contextSet.pop();
@@ -192,13 +190,12 @@ class BaseValidator implements PDFAValidator {
 
     private void updateVariableForObjectWithType(Object object, String objectType) {
         for (Variable var : this.profile.getVariablesByObject(objectType)) {
-
-            if (var == null)
+            if (var == null) {
                 continue;
+            }
+            java.lang.Object variable = JavaScriptEvaluator.evalVariableResult(var, object, this.scope);
 
-            java.lang.Object variable = JavaScriptEvaluator.evalVariableResult(var, object);
-
-            JavaScriptEvaluator.putInScope(var.getName(), variable);
+            this.scope.put(var.getName(), this.scope, variable);
         }
     }
 
@@ -297,7 +294,7 @@ class BaseValidator implements PDFAValidator {
     }
 
     private boolean checkObjWithRule(Object obj, String cntxtForRule, Rule rule) {
-        boolean testEvalResult = JavaScriptEvaluator.getTestEvalResult(obj, rule);
+        boolean testEvalResult = JavaScriptEvaluator.getTestEvalResult(obj, rule, this.scope);
 
         this.processAssertionResult(testEvalResult, cntxtForRule, rule);
 
