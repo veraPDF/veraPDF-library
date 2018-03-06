@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
  */
 public class ValidatorsContainerCreator {
 
+    public static ValidatorsContainer EMPTY_VALIDATORS_CONTAINER = new ValidatorsContainer();
     private static ValidatorsContainer PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1 = null;
     private static ValidatorsContainer PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3 = null;
     private static ValidatorsContainer PREDEFINED_CONTAINER_WITH_CLOSED_CHOICE_FOR_PDFA_1 = null;
@@ -65,7 +66,7 @@ public class ValidatorsContainerCreator {
         return PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3;
     }
 
-    private static ValidatorsContainer createValidatorsContainerPredefinedForPDFA_1(boolean isClosedFieldsCheck) {
+    static ValidatorsContainer createValidatorsContainerPredefinedForPDFA_1(boolean isClosedFieldsCheck) {
         ValidatorsContainer container = createBasicValidatorsContainer(isClosedFieldsCheck);
         container.registerSimpleValidator(XMPConstants.GPS_COORDINATE, Pattern.compile("^\\d{2},\\d{2}[,\\.]\\d{2}[NSEW]$"));
         //Locale strong validation requires next regexp for XMP2004: "^([a-zA-Z]{1,8})((-[a-zA-Z]{1,8})*)$"
@@ -73,7 +74,7 @@ public class ValidatorsContainerCreator {
         return container;
     }
 
-    private static ValidatorsContainer createValidatorsContainerPredefinedForPDFA_2_3(boolean isClosedFieldsCheck) {
+    static ValidatorsContainer createValidatorsContainerPredefinedForPDFA_2_3(boolean isClosedFieldsCheck) {
         ValidatorsContainer container = createBasicValidatorsContainer(isClosedFieldsCheck);
         container.registerSimpleValidator(XMPConstants.GPS_COORDINATE, Pattern.compile("^\\d{1,3},\\d{1,2}(,\\d{1,2}|\\.\\d+)[NSEW]$"));
         //Locale strong validation requires next regexp for XMP2005: "^([a-zA-Z]{1,8})((-[a-zA-Z0-9]{1,8})*)$"
@@ -146,35 +147,11 @@ public class ValidatorsContainerCreator {
         return container;
     }
 
-    static ValidatorsContainer createExtendedValidatorsContainerForPDFA_1(VeraPDFXMPNode extensionContainer, boolean isClosedFieldsCheck) {
-        ValidatorsContainer container = createValidatorsContainerPredefinedForPDFA_1(isClosedFieldsCheck);
-        return createExtendedValidatorsContainer(extensionContainer, container);
-    }
-
-    static ValidatorsContainer createExtendedValidatorsContainerForPDFA_2_3(VeraPDFXMPNode extensionContainer, boolean isClosedFieldsCheck) {
-        ValidatorsContainer container = createValidatorsContainerPredefinedForPDFA_2_3(isClosedFieldsCheck);
-        return createExtendedValidatorsContainer(extensionContainer, container);
-    }
-
-    private static ValidatorsContainer createExtendedValidatorsContainer(VeraPDFXMPNode schemasDefinitions, ValidatorsContainer container) {
-        List<VeraPDFXMPNode> schemas = schemasDefinitions.getChildren();
-        for (VeraPDFXMPNode node : schemas) {
-            registerAllTypesFromExtensionSchemaNode(node, container);
+    static ValidatorsContainer extendValidatorsContainer(ValidatorsContainer container, VeraPDFXMPNode valueTypeContainer) {
+        if (valueTypeContainer != null) {
+            registerAllTypesFromValueTypeArrayNode(valueTypeContainer, container);
         }
         return container;
-    }
-
-    private static void registerAllTypesFromExtensionSchemaNode(VeraPDFXMPNode schema, ValidatorsContainer container) {
-        List<VeraPDFXMPNode> schemaChildren = schema.getChildren();
-        for (int i = schemaChildren.size() - 1; i >= 0; --i) {
-            VeraPDFXMPNode child = schemaChildren.get(i);
-            if (XMPConst.NS_PDFA_SCHEMA.equals(child.getNamespaceURI()) && "valueType".equals(child.getName())) {
-                if (child.getOptions().isArray()) {
-                    registerAllTypesFromValueTypeArrayNode(child, container);
-                }
-                break;
-            }
-        }
     }
 
     private static void registerAllTypesFromValueTypeArrayNode(VeraPDFXMPNode valueTypes, ValidatorsContainer container) {

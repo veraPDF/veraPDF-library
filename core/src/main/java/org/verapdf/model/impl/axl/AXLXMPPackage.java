@@ -32,6 +32,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,9 +57,9 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     private final boolean isMainMetadata;
     private final PDFAFlavour flavour;
     private final boolean isClosedChoiceCheck;
-    private SchemasDefinition mainPackageSchemasDefinition;
-    private SchemasDefinition currentSchemasDefinitionPDFA_1;
-    private SchemasDefinition currentSchemasDefinitionPDFA_2_3;
+    private Map<String, SchemasDefinition> mainPackageSchemasDefinition;
+    private Map<String, SchemasDefinition> currentSchemasDefinitionPDFA_1;
+    private Map<String, SchemasDefinition> currentSchemasDefinitionPDFA_2_3;
 
     public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid,
             boolean isClosedChoiceCheck,
@@ -111,9 +112,8 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
                 && this.xmpMetadata.getExtensionSchemasNode() != null) {
             List<AXLExtensionSchemasContainer> res = new ArrayList<>(1);
             res.add(new AXLExtensionSchemasContainer(this.getXmpMetadata()
-                    .getExtensionSchemasNode(), getCurrentSchemasDefinitionPDFA_1()
-                    .getValidatorsContainer(),
-                    getCurrentSchemasDefinitionPDFA_2_3().getValidatorsContainer(),
+                    .getExtensionSchemasNode(), getCurrentSchemasDefinitionPDFA_1(),
+                    getCurrentSchemasDefinitionPDFA_2_3(),
                     this.flavour));
             return Collections.unmodifiableList(res);
         }
@@ -135,20 +135,21 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     }
 
     private AXLXMPProperty createProperty(VeraPDFXMPNode node) {
-        if (XMPConst.NS_XMP_MM.equals(node.getNamespaceURI())
+        String namespaceURI = node.getNamespaceURI();
+        if (XMPConst.NS_XMP_MM.equals(namespaceURI)
                 && "History".equals(node.getName())) {
             return new AXLXMPMMHistoryProperty(node, this.isMainMetadata,
-                    this.isClosedChoiceCheck, this
-                    .getMainPackageSchemasDefinition(), this
-                    .getCurrentSchemasDefinitionPDFA_1(), this
-                    .getCurrentSchemasDefinitionPDFA_2_3(),
+                    this.isClosedChoiceCheck,
+                    this.getMainPackageSchemasDefinitionForNS(namespaceURI),
+                    this.getCurrentSchemasDefinitionPDFA_1ForNS(namespaceURI),
+                    this.getCurrentSchemasDefinitionPDFA_2_3ForNS(namespaceURI),
                     this.flavour);
         }
         return new AXLXMPProperty(node, this.isMainMetadata,
-                this.isClosedChoiceCheck, this
-                .getMainPackageSchemasDefinition(), this
-                .getCurrentSchemasDefinitionPDFA_1(), this
-                .getCurrentSchemasDefinitionPDFA_2_3(),
+                this.isClosedChoiceCheck,
+                this.getMainPackageSchemasDefinitionForNS(namespaceURI),
+                this.getCurrentSchemasDefinitionPDFA_1ForNS(namespaceURI),
+                this.getCurrentSchemasDefinitionPDFA_2_3ForNS(namespaceURI),
                 this.flavour);
     }
 
@@ -193,14 +194,14 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
         return null;
     }
 
-    protected SchemasDefinition getMainPackageSchemasDefinition() {
+    protected Map<String, SchemasDefinition> getMainPackageSchemasDefinition() {
         if (this.mainPackageSchemasDefinition == null) {
             this.mainPackageSchemasDefinition = SchemasDefinitionCreator.EMPTY_SCHEMAS_DEFINITION;
         }
         return this.mainPackageSchemasDefinition;
     }
 
-    protected SchemasDefinition getCurrentSchemasDefinitionPDFA_1() {
+    protected Map<String, SchemasDefinition> getCurrentSchemasDefinitionPDFA_1() {
         if (this.currentSchemasDefinitionPDFA_1 == null) {
             if (this.xmpMetadata != null
                     && this.xmpMetadata.getExtensionSchemasNode() != null) {
@@ -215,18 +216,38 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
         return this.currentSchemasDefinitionPDFA_1;
     }
 
-    protected SchemasDefinition getCurrentSchemasDefinitionPDFA_2_3() {
+    protected Map<String, SchemasDefinition> getCurrentSchemasDefinitionPDFA_2_3() {
         if (this.currentSchemasDefinitionPDFA_2_3 == null) {
             if (this.xmpMetadata != null
                     && this.xmpMetadata.getExtensionSchemasNode() != null) {
-                this.currentSchemasDefinitionPDFA_2_3 = SchemasDefinitionCreator
-                        .createExtendedSchemasDefinitionForPDFA_2_3(
+                this.currentSchemasDefinitionPDFA_2_3 = isMainMetadata ?
+                        SchemasDefinitionCreator.createExtendedSchemasDefinitionForPDFA_2_3(
                                 this.xmpMetadata.getExtensionSchemasNode(),
-                                this.isClosedChoiceCheck);
+                                this.isClosedChoiceCheck) :
+                        SchemasDefinitionCreator.extendSchemasDefinitionForPDFA_2_3(
+                                getMainPackageSchemasDefinition(),
+                                this.xmpMetadata.getExtensionSchemasNode(),
+                                this.isClosedChoiceCheck
+                        );
             } else {
                 this.currentSchemasDefinitionPDFA_2_3 = SchemasDefinitionCreator.EMPTY_SCHEMAS_DEFINITION;
             }
         }
         return this.currentSchemasDefinitionPDFA_2_3;
+    }
+
+    protected SchemasDefinition getMainPackageSchemasDefinitionForNS(String nameSpace) {
+        SchemasDefinition schemasDefinition = getMainPackageSchemasDefinition().get(nameSpace);
+        return schemasDefinition == null ? SchemasDefinitionCreator.EMPTY_SCHEMA_DEFINITION : schemasDefinition;
+    }
+
+    protected SchemasDefinition getCurrentSchemasDefinitionPDFA_1ForNS(String nameSpace) {
+        SchemasDefinition schemasDefinition = getCurrentSchemasDefinitionPDFA_1().get(nameSpace);
+        return schemasDefinition == null ? SchemasDefinitionCreator.EMPTY_SCHEMA_DEFINITION : schemasDefinition;
+    }
+
+    protected SchemasDefinition getCurrentSchemasDefinitionPDFA_2_3ForNS(String nameSpace) {
+        SchemasDefinition schemasDefinition = getCurrentSchemasDefinitionPDFA_2_3().get(nameSpace);
+        return schemasDefinition == null ? SchemasDefinitionCreator.EMPTY_SCHEMA_DEFINITION : schemasDefinition;
     }
 }
