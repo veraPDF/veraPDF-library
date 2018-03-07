@@ -54,6 +54,15 @@ public class ValidatorsContainer {
         }
     }
 
+    /**
+     * Creates new copy of validators container
+     * @param validatorsContainer to copy
+     */
+    ValidatorsContainer(ValidatorsContainer validatorsContainer) {
+        this.validators = new HashMap<>(validatorsContainer.validators);
+        this.arrayValidators = new HashMap<>(validatorsContainer.arrayValidators);
+    }
+
     boolean registerSimpleValidator(String typeName, Pattern pattern) {
         if (pattern == null) {
             throw new IllegalArgumentException("Argument pattern can not be null");

@@ -42,7 +42,7 @@ public class AXLExtensionSchemaDefinition extends AXLExtensionSchemaObject imple
 
 	public static final String EXTENSION_SCHEMA_PROPERTIES = "ExtensionSchemaProperties";
 	public static final String EXTENSION_SCHEMA_VALUE_TYPES = "ExtensionSchemaValueTypes";
-	private static final String NAMESPACE_URI = "namespaceURI";
+	public static final String NAMESPACE_URI = "namespaceURI";
 	private static final String PREFIX = "prefix";
 	private static final String PROPERTY = "property";
 	private static final String SCHEMA = "schema";
