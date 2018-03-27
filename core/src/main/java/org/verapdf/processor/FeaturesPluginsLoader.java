@@ -52,8 +52,11 @@ public class FeaturesPluginsLoader {
 	private FeaturesPluginsLoader() {
 	}
 
-	public static void initialize(String baseFolderPath) {
-		FeaturesPluginsLoader.baseFolderPath = baseFolderPath;
+	public static void setBaseFolderPath(String baseFolderPath) {
+		FeaturesPluginsLoader.baseFolderPath =
+				baseFolderPath == null || baseFolderPath.endsWith("/") ?
+				baseFolderPath :
+				baseFolderPath + "/";
 	}
 
 	/**
@@ -112,11 +115,9 @@ public class FeaturesPluginsLoader {
 		String path;
 		if (pluginJar.startsWith("/") || baseFolderPath == null) {
 			path = pluginJar;
-		} else if (baseFolderPath.endsWith("/")) {
+		} else {
 			path = baseFolderPath + pluginJar;
 
-		} else {
-			path = baseFolderPath + "/" + pluginJar;
 		}
 		File pluginJarFile = new File(path);
 		if (!pluginJarFile.isFile()) {
