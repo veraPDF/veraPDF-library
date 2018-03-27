@@ -47,7 +47,13 @@ public class FeaturesPluginsLoader {
 	private static final Logger LOGGER = Logger
 			.getLogger(FeaturesPluginsLoader.class.getName());
 
+	private static String baseFolderPath = null;
+
 	private FeaturesPluginsLoader() {
+	}
+
+	public static void initialize(String baseFolderPath) {
+		FeaturesPluginsLoader.baseFolderPath = baseFolderPath;
 	}
 
 	/**
@@ -98,13 +104,22 @@ public class FeaturesPluginsLoader {
 	}
 
 	private static AbstractFeaturesExtractor getExtractorFromConfig(PluginConfig config) {
-		Path pluginJar = config.getPluginJar();
+		String pluginJar = config.getPluginJar();
 		if (pluginJar == null) {
 			LOGGER.log(Level.WARNING, "Plugins config file contains an enabled plugin with empty path");
 			return null;
 		}
-		File pluginJarFile = pluginJar.toFile();
-		if (pluginJarFile == null || !pluginJarFile.isFile()) {
+		String path;
+		if (pluginJar.startsWith("/") || baseFolderPath == null) {
+			path = pluginJar;
+		} else if (baseFolderPath.endsWith("/")) {
+			path = baseFolderPath + pluginJar;
+
+		} else {
+			path = baseFolderPath + "/" + pluginJar;
+		}
+		File pluginJarFile = new File(path);
+		if (!pluginJarFile.isFile()) {
 			LOGGER.log(Level.WARNING, "Plugins config file contains wrong path");
 			return null;
 		}
