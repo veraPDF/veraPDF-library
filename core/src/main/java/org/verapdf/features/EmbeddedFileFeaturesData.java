@@ -75,14 +75,14 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 	 * @return creation date of a file
 	 */
 	public Calendar getCreationDate() {
-		return (Calendar) this.creationDate.clone();
+		return this.creationDate == null ? null : (Calendar) this.creationDate.clone();
 	}
 
 	/**
 	 * @return modification date of a file
 	 */
 	public Calendar getModDate() {
-		return (Calendar) this.modDate.clone();
+		return this.modDate == null ? null : (Calendar) this.modDate.clone();
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class EmbeddedFileFeaturesData extends FeaturesData {
 
 	public static final class Builder {
 
-		private InputStream stream = null;
+		private InputStream stream;
 		private String name = null;
 		private String description = null;
 		private String afRelationship;
