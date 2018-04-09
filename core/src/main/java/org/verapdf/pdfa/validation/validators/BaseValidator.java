@@ -2,16 +2,16 @@
  * This file is part of veraPDF Library core, a module of the veraPDF project.
  * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
- *
+ * <p>
  * veraPDF Library core is free software: you can redistribute it and/or modify
  * it under the terms of either:
- *
+ * <p>
  * The GNU General public license GPLv3+.
  * You should have received a copy of the GNU General Public License
  * along with veraPDF Library core as the LICENSE.GPL file in the root of the source
  * tree.  If not, see http://www.gnu.org/licenses/ or
  * https://www.gnu.org/licenses/gpl-3.0.en.html.
- *
+ * <p>
  * The Mozilla Public License MPLv2+.
  * You should have received a copy of the Mozilla Public License along with
  * veraPDF Library core as the LICENSE.MPL file in the root of the source tree.
@@ -19,7 +19,7 @@
  * http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.validation.validators;
 
@@ -55,26 +55,22 @@ class BaseValidator implements PDFAValidator {
 	private static final String componentName = "veraPDF PDF/A Validator";
 	private static final ComponentDetails componentDetails = Components.libraryDetails(componentId, componentName);
 	private static final int OPTIMIZATION_LEVEL = 9;
+	protected final Set<TestAssertion> results = new HashSet<>();
+	protected final boolean logPassedTests;
 	private final ValidationProfile profile;
-	private Context context;
-	private ScriptableObject scope;
-
 	private final Deque<Object> objectsStack = new ArrayDeque<>();
 	private final Deque<String> objectsContext = new ArrayDeque<>();
 	private final Deque<Set<String>> contextSet = new ArrayDeque<>();
 	private final Map<Rule, List<ObjectWithContext>> deferredRules = new HashMap<>();
-	protected final Set<TestAssertion> results = new HashSet<>();
 	protected int testCounter = 0;
 	protected boolean abortProcessing = false;
-	protected final boolean logPassedTests;
 	protected boolean isCompliant = true;
-
+	protected String rootType;
+	private Context context;
+	private ScriptableObject scope;
 	private Map<RuleId, Script> ruleScripts = new HashMap<>();
 	private Map<String, Script> variableScripts = new HashMap<>();
-
 	private Set<String> idSet = new HashSet<>();
-
-	protected String rootType;
 
 	protected BaseValidator(final ValidationProfile profile) {
 		this(profile, false);
@@ -86,9 +82,59 @@ class BaseValidator implements PDFAValidator {
 		this.logPassedTests = logPassedTests;
 	}
 
+	private static String getScript(Object obj, Rule rule) {
+		return getStringScript(obj, "(" + rule.getTest() + ")==true");
+	}
+
+	private static String getStringScript(Object obj, String arg) {
+		return getScriptPrefix(obj, arg) + arg + getScriptSuffix();
+	}
+
+	private static String getScriptPrefix(Object obj, String test) {
+		StringBuilder builder = new StringBuilder();
+		String[] vars = test.split("\\W");
+
+		for (String prop : obj.getProperties()) {
+			if (contains(vars, prop)) {
+				builder.append("var ");
+				builder.append(prop);
+				builder.append(" = obj.get");
+				builder.append(prop);
+				builder.append("();\n");
+			}
+		}
+
+		for (String linkName : obj.getLinks()) {
+			if (contains(vars, linkName + "_size")) {
+				builder.append("var ");
+				builder.append(linkName);
+				builder.append("_size = obj.getLinkedObjects(\"");
+				builder.append(linkName);
+				builder.append("\").size();\n");
+			}
+		}
+
+		builder.append("function test(){return ");
+
+		return builder.toString();
+	}
+
+	private static boolean contains(String[] values, String prop) {
+		for (String value : values) {
+			if (value.equals(prop)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static String getScriptSuffix() {
+		return ";}\ntest();";
+	}
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.verapdf.pdfa.PDFAValidator#getProfile()
 	 */
 	@Override
@@ -323,56 +369,6 @@ class BaseValidator implements PDFAValidator {
 		}
 	}
 
-	private static String getScript(Object obj, Rule rule) {
-		return getStringScript(obj, "(" + rule.getTest() + ")==true");
-	}
-
-	private static String getStringScript(Object obj, String arg) {
-		return getScriptPrefix(obj, arg) + arg + getScriptSuffix();
-	}
-
-	private static String getScriptPrefix(Object obj, String test) {
-		StringBuilder builder = new StringBuilder();
-		String[] vars = test.split("\\W");
-
-		for (String prop : obj.getProperties()) {
-			if (contains(vars, prop)) {
-				builder.append("var ");
-				builder.append(prop);
-				builder.append(" = obj.get");
-				builder.append(prop);
-				builder.append("();\n");
-			}
-		}
-
-		for (String linkName : obj.getLinks()) {
-			if (contains(vars, linkName + "_size")) {
-				builder.append("var ");
-				builder.append(linkName);
-				builder.append("_size = obj.getLinkedObjects(\"");
-				builder.append(linkName);
-				builder.append("\").size();\n");
-			}
-		}
-
-		builder.append("function test(){return ");
-
-		return builder.toString();
-	}
-
-	private static boolean contains(String[] values, String prop) {
-		for (String value : values) {
-			if (value.equals(prop)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static String getScriptSuffix() {
-		return ";}\ntest();";
-	}
-
 	private boolean checkObjWithRule(Object obj, String cntxtForRule, Rule rule) {
 		this.scope.put("obj", this.scope, obj);
 		Script scr;
@@ -391,7 +387,7 @@ class BaseValidator implements PDFAValidator {
 	}
 
 	protected void processAssertionResult(final boolean assertionResult, final String locationContext,
-			final Rule rule) {
+										  final Rule rule) {
 		if (!this.abortProcessing) {
 			this.testCounter++;
 			Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
