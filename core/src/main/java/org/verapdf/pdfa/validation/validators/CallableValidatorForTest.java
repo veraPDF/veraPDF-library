@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.concurrent.Callable;
 
-class CallableValidatorForTest implements Callable<ValidationResult> {
+public class CallableValidatorForTest implements Callable<ValidationResult> {
     private File fileToValidate;
 
     public CallableValidatorForTest(File fileToValidate) {
