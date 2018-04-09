@@ -248,7 +248,7 @@ public final class FontFeaturesData extends FeaturesData {
 	public static final class Builder {
 
 		private InputStream metadata = null;
-		private InputStream stream = null;
+		private InputStream stream;
 		private String fontName = null;
 		private String fontFamily = null;
 		private String fontStretch = null;
