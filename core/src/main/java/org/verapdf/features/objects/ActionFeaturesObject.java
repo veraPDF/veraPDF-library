@@ -54,7 +54,7 @@ public class ActionFeaturesObject extends FeaturesObject {
 		return null;
 	}
 
-	private void addLocation(FeatureTreeNode root, ActionFeaturesObjectAdapter.Location location) throws FeatureParsingException {
+	private static void addLocation(FeatureTreeNode root, ActionFeaturesObjectAdapter.Location location) throws FeatureParsingException {
 		if (location != null) {
 			List<FeatureTreeNode> children = root.getChildren();
 			for (FeatureTreeNode child : children) {
@@ -74,7 +74,7 @@ public class ActionFeaturesObject extends FeaturesObject {
 		return root;
 	}
 
-	private FeatureTreeNode findRootForType(FeatureExtractionResult collection, String type) {
+	private static FeatureTreeNode findRootForType(FeatureExtractionResult collection, String type) {
 		List<FeatureTreeNode> featureTreesForType = collection.getFeatureTreesForType(FeatureObjectType.ACTION);
 		for (FeatureTreeNode node : featureTreesForType) {
 			Map<String, String> attributes = node.getAttributes();

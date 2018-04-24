@@ -1,6 +1,7 @@
 package org.verapdf.processor.reports.multithread;
 
-import org.verapdf.processor.reports.ResultStructure;
+import java.io.File;
+
 import org.verapdf.processor.reports.multithread.writer.ReportWriter;
 
 public class MultiThreadProcessingHandlerImpl implements MultiThreadProcessingHandler {
@@ -16,8 +17,8 @@ public class MultiThreadProcessingHandlerImpl implements MultiThreadProcessingHa
 	}
 
 	@Override
-	public void fillReport(ResultStructure result) {
-		reportWriter.write(result);
+	public void fillReport(File reportFile) {
+		reportWriter.write(reportFile);
 	}
 
 	@Override

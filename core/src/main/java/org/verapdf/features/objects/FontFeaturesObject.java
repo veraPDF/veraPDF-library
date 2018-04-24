@@ -193,12 +193,12 @@ public class FontFeaturesObject extends FeaturesObject {
 			builder.fontStretch(descriptor.getFontStretch());
 			builder.fontWeight(descriptor.getFontWeight());
 			Long flags = descriptor.getFlags();
-			builder.flags(flags == null ? null : flags.intValue());
+			builder.flags(flags == null ? null : Integer.valueOf(flags.intValue()));
 			double[] rex = descriptor.getFontBoundingBox();
 			if (rex != null) {
 				List<Double> rect = new ArrayList<>(rex.length);
 				for (int i = 0; i < rex.length; ++i) {
-					rect.add(rex[i]);
+					rect.add(Double.valueOf(rex[i]));
 				}
 				builder.fontBBox(rect);
 			}

@@ -210,15 +210,15 @@ public class ImageXObjectFeaturesObject extends FeaturesObject {
 		Map<String, String> res = new HashMap<>();
 		if (filter != null) {
 			putIntegerAsStringWithDefault(res, "K", filter.getCCITTK(), Integer.valueOf(0));
-			putBooleanAsStringWithDefault(res, "EndOfLine", filter.getCCITTEndOfLine(), Boolean.FALSE);
-			putBooleanAsStringWithDefault(res, "EncodedByteAlign", filter.getCCITTEncodedByteAlign(),
+			putBooleanAsStringWithDefault(res, "EndOfLine", Boolean.valueOf(filter.getCCITTEndOfLine()), Boolean.FALSE);
+			putBooleanAsStringWithDefault(res, "EncodedByteAlign", Boolean.valueOf(filter.getCCITTEncodedByteAlign()),
 					Boolean.FALSE);
 			putIntegerAsStringWithDefault(res, "Columns", filter.getCCITTColumns(),
 					Integer.valueOf(1728));
 			putIntegerAsStringWithDefault(res, "Rows", filter.getCCITTRows(), Integer.valueOf(0));
-			putBooleanAsStringWithDefault(res, "EndOfBlock", filter.getCCITTEndOfBlock(),
+			putBooleanAsStringWithDefault(res, "EndOfBlock", Boolean.valueOf(filter.getCCITTEndOfBlock()),
 					Boolean.TRUE);
-			putBooleanAsStringWithDefault(res, "BlackIs1", filter.getCCITTBlackIs1(), Boolean.FALSE);
+			putBooleanAsStringWithDefault(res, "BlackIs1", Boolean.valueOf(filter.getCCITTBlackIs1()), Boolean.FALSE);
 			putIntegerAsStringWithDefault(res, "DamagedRowsBeforeError",
 					filter.getCCITTDamagedRowsBeforeError(), Integer.valueOf(0));
 		} else {

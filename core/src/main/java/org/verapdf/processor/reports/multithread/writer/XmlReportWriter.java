@@ -1,6 +1,5 @@
 package org.verapdf.processor.reports.multithread.writer;
 
-import org.verapdf.processor.reports.ResultStructure;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -14,30 +13,29 @@ import java.util.logging.Logger;
 public class XmlReportWriter extends AbstractXmlReportWriter {
 	private static final Logger LOGGER = Logger.getLogger(XmlReportWriter.class.getCanonicalName());
 
-	private final String RAW_RESULTS_TAG = "rawResults";
-	private final String ITEM_TAG = "item";
-	private final String VALIDATION_RESULT_TAG = "validationResult";
-	private final String PROCESSOR_CONFIG_TAG = "processorConfig";
-	private final String FEATURES_REPORT_TAG = "featuresReport";
-	private final String FIXER_RESULT_TAG = "fixerResult";
+	private static final String RAW_RESULTS_TAG = "rawResults";
+	private static final String ITEM_TAG = "item";
+	private static final String VALIDATION_RESULT_TAG = "validationResult";
+	private static final String PROCESSOR_CONFIG_TAG = "processorConfig";
+	private static final String FEATURES_REPORT_TAG = "featuresReport";
+	private static final String FIXER_RESULT_TAG = "fixerResult";
 
-	protected XmlReportWriter(OutputStream os, OutputStream errorStream) throws XMLStreamException, ParserConfigurationException, SAXException {
-		super(os, errorStream);
+	protected XmlReportWriter(OutputStream os) throws XMLStreamException, ParserConfigurationException, SAXException {
+		super(os);
 	}
 
 	@Override
-	public synchronized void write(ResultStructure result) {
+	public synchronized void write(File reportFile) {
 		try {
-			File reportFile = result.getReportFile();
-			if (isFirstReport) {
-				writer.writeStartElement(RAW_RESULTS_TAG);
+			if (this.isFirstReport) {
+				this.writer.writeStartElement(XmlReportWriter.RAW_RESULTS_TAG);
 				printFirstReport(reportFile);
-				isFirstReport = false;
+				this.isFirstReport = false;
 			} else {
 				printReport(reportFile);
 			}
 
-			deleteTemp(result);
+			deleteFile(reportFile);
 
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, "Can't printTag element", e);
@@ -45,15 +43,15 @@ public class XmlReportWriter extends AbstractXmlReportWriter {
 	}
 
 	private void printReport(File reportFile) throws SAXException, IOException {
-		super.printTag(reportFile, ITEM_TAG, false);
-		super.printTag(reportFile, VALIDATION_RESULT_TAG, true);
-		super.printTag(reportFile, FEATURES_REPORT_TAG, false);
-		super.printTag(reportFile, FIXER_RESULT_TAG, false);
+		super.printTag(reportFile, XmlReportWriter.ITEM_TAG, Boolean.FALSE);
+		super.printTag(reportFile, XmlReportWriter.VALIDATION_RESULT_TAG, Boolean.TRUE);
+		super.printTag(reportFile, XmlReportWriter.FEATURES_REPORT_TAG, Boolean.FALSE);
+		super.printTag(reportFile, XmlReportWriter.FIXER_RESULT_TAG, Boolean.FALSE);
 	}
 
 	@Override
 	public void printFirstReport(File report) throws SAXException, IOException {
-		printTag(report, PROCESSOR_CONFIG_TAG, false);
+		printTag(report, XmlReportWriter.PROCESSOR_CONFIG_TAG, Boolean.FALSE);
 		printReport(report);
 	}
 }

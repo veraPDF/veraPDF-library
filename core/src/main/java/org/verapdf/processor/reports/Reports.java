@@ -17,15 +17,14 @@
  */
 package org.verapdf.processor.reports;
 
-import org.verapdf.component.AuditDuration;
+import java.util.List;
+
+import javax.xml.bind.JAXBException;
+
 import org.verapdf.component.Components;
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
-
-import java.util.List;
-
-import javax.xml.bind.JAXBException;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

@@ -1,7 +1,6 @@
 package org.verapdf.processor.reports.multithread.writer;
 
 import org.verapdf.processor.FormatOption;
-import org.verapdf.processor.reports.ResultStructure;
 
 import java.io.File;
 import java.io.FileReader;
@@ -15,22 +14,20 @@ public abstract class ReportWriter {
 
 	protected OutputStream os;
 
-	private OutputStream errorStream;
 
-	protected ReportWriter(OutputStream os, OutputStream errorStream) {
+	protected ReportWriter(OutputStream os) {
 		this.os = os;
-		this.errorStream = errorStream;
 	}
 
-	public static ReportWriter newInstance(OutputStream os, FormatOption outputFormat, OutputStream errorStream) {
+	public static ReportWriter newInstance(OutputStream os, FormatOption outputFormat) {
 		try {
 			switch (outputFormat) {
 				case TEXT:
-					return new TextReportWriter(os, errorStream);
+					return new TextReportWriter(os);
 				case MRR:
-					return new MrrReportWriter(os, errorStream);
+					return new MrrReportWriter(os);
 				case XML:
-					return new XmlReportWriter(os, errorStream);
+					return new XmlReportWriter(os);
 				default:
 					return null;
 			}
@@ -40,7 +37,7 @@ public abstract class ReportWriter {
 		}
 	}
 
-	public abstract void write(ResultStructure result);
+	public abstract void write(File reportFile);
 
 	public abstract void startDocument();
 
@@ -58,11 +55,7 @@ public abstract class ReportWriter {
 		}
 	}
 
-	protected void deleteTemp(ResultStructure result) {
-		deleteFile(result.getReportFile());
-	}
-
-	private void deleteFile(File file) {
+	protected static void deleteFile(File file) {
 		if (!file.delete()) {
 			file.deleteOnExit();
 		}

@@ -146,7 +146,7 @@ public class ColorSpaceFeaturesObject extends FeaturesObject {
 		if (CALGRAY.equals(cieType)) {
 			Double gamma = adapter.getCalGrayGamma();
 			if (gamma != null) {
-				CreateNodeHelper.addNotEmptyNode("gamma", CreateNodeHelper.formatDouble(gamma, 3), root);
+				CreateNodeHelper.addNotEmptyNode("gamma", CreateNodeHelper.formatDouble(gamma.doubleValue(), 3), root);
 			}
 		} else if (CALRGB.equals(cieType)) {
 			FeatureTreeNode gamma = root.addChild("gamma");
@@ -176,7 +176,7 @@ public class ColorSpaceFeaturesObject extends FeaturesObject {
 
 	}
 
-	private void parseFloatArray(double[] array, FeatureTreeNode parent) throws FeatureParsingException {
+	private static void parseFloatArray(double[] array, FeatureTreeNode parent) throws FeatureParsingException {
 		for (int i = 0; i < array.length; ++i) {
 			FeatureTreeNode element = parent.addChild("element");
 			element.setAttribute("number", String.valueOf(i));

@@ -1,6 +1,5 @@
 package org.verapdf.processor.reports.multithread.writer;
 
-import org.verapdf.processor.reports.ResultStructure;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -18,23 +17,22 @@ public class MrrReportWriter extends AbstractXmlReportWriter {
 	private final String JOBS_TAG = "jobs";
 	private final String JOB_TAG = "job";
 
-	MrrReportWriter(OutputStream os, OutputStream errorStream) throws XMLStreamException, ParserConfigurationException, SAXException {
-		super(os, errorStream);
+	MrrReportWriter(OutputStream os) throws XMLStreamException, ParserConfigurationException, SAXException {
+		super(os);
 	}
 
 	@Override
-	public void write(ResultStructure result) {
+	public void write(File reportFile) {
 		try {
-			File reportFile = result.getReportFile();
-			if (isFirstReport) {
-				writer.writeStartElement(REPORT_TAG);
+			if (this.isFirstReport) {
+				this.writer.writeStartElement(this.REPORT_TAG);
 				printFirstReport(reportFile);
-				isFirstReport = false;
+				this.isFirstReport = false;
 			} else {
-				super.printTag(reportFile, JOB_TAG, true);
+				super.printTag(reportFile, this.JOB_TAG, Boolean.TRUE);
 			}
 
-			deleteTemp(result);
+			deleteFile(reportFile);
 
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, "Can't write element", e);
@@ -49,7 +47,7 @@ public class MrrReportWriter extends AbstractXmlReportWriter {
 
 	public void writeEndElement() {
 		try {
-			writer.writeEndElement();
+			this.writer.writeEndElement();
 		} catch (XMLStreamException e) {
 			LOGGER.log(Level.SEVERE, "Can't write end element", e);
 		}
@@ -57,8 +55,8 @@ public class MrrReportWriter extends AbstractXmlReportWriter {
 
 	@Override
 	public void printFirstReport(File report) throws SAXException, IOException, XMLStreamException {
-		printTag(report, BUILD_INFORMATION_TAG, false);
-		writer.writeStartElement(JOBS_TAG);
-		printTag(report, JOB_TAG, true);
+		printTag(report, this.BUILD_INFORMATION_TAG, Boolean.FALSE);
+		this.writer.writeStartElement(this.JOBS_TAG);
+		printTag(report, this.JOB_TAG, Boolean.TRUE);
 	}
 }

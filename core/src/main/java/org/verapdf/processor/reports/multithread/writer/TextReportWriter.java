@@ -1,20 +1,19 @@
 package org.verapdf.processor.reports.multithread.writer;
 
 
-import org.verapdf.processor.reports.ResultStructure;
-
+import java.io.File;
 import java.io.OutputStream;
 
 public class TextReportWriter extends ReportWriter {
 
-	protected TextReportWriter(OutputStream os, OutputStream errorStream) {
-		super(os, errorStream);
+	protected TextReportWriter(OutputStream os) {
+		super(os);
 	}
 
 	@Override
-	public void write(ResultStructure result) {
-		merge(result.getReportFile(), os);
-		deleteTemp(result);
+	public void write(File reportFile) {
+		merge(reportFile, os);
+		deleteFile(reportFile);
 	}
 
 	@Override

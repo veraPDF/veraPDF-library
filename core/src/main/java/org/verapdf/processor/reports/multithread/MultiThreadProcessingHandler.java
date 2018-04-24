@@ -1,11 +1,11 @@
 package org.verapdf.processor.reports.multithread;
 
-import org.verapdf.processor.reports.ResultStructure;
+import java.io.File;
 
 public interface MultiThreadProcessingHandler {
 	void startReport();
 
-	void fillReport(ResultStructure result);
+	void fillReport(File reportFile);
 
 	void endReport();
 }

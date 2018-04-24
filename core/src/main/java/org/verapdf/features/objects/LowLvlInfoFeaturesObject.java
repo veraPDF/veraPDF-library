@@ -122,7 +122,7 @@ public class LowLvlInfoFeaturesObject extends FeaturesObject {
 		String catalogVersion = lowLvlAdapter.getCatalogVersion();
 		if (catalogVersion != null) {
 			try {
-				double catalogValue = Double.valueOf(catalogVersion);
+				double catalogValue = Double.valueOf(catalogVersion).doubleValue();
 				res = Math.max(res, catalogValue);
 			} catch (NumberFormatException e) {
 				LOGGER.log(Level.FINE, "Problems in obtaining pdf version number from the catalog", e);
