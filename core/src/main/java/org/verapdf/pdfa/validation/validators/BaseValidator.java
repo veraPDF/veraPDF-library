@@ -51,9 +51,7 @@ class BaseValidator implements PDFAValidator {
 	private static final URI componentId = URI.create("http://pdfa.verapdf.org/validators#default");
 	private static final String componentName = "veraPDF PDF/A Validator";
 	private static final ComponentDetails componentDetails = Components.libraryDetails(componentId, componentName);
-	private static final int OPTIMIZATION_LEVEL = 9;
 	private final ValidationProfile profile;
-	private Context context;
 	private ScriptableObject scope;
 
 	private final Deque<Object> objectsStack = new ArrayDeque<>();
@@ -65,9 +63,6 @@ class BaseValidator implements PDFAValidator {
 	protected boolean abortProcessing = false;
 	protected final boolean logPassedTests;
 	protected boolean isCompliant = true;
-
-	private Map<RuleId, Script> ruleScripts = new HashMap<>();
-	private Map<String, Script> variableScripts = new HashMap<>();
 
 	private Set<String> idSet = new HashSet<>();
 
@@ -81,56 +76,6 @@ class BaseValidator implements PDFAValidator {
 		super();
 		this.profile = profile;
 		this.logPassedTests = logPassedTests;
-	}
-
-	private static String getScript(Object obj, Rule rule) {
-		return getStringScript(obj, "(" + rule.getTest() + ")==true");
-	}
-
-	private static String getStringScript(Object obj, String arg) {
-		return getScriptPrefix(obj, arg) + arg + getScriptSuffix();
-	}
-
-	private static String getScriptPrefix(Object obj, String test) {
-		StringBuilder builder = new StringBuilder();
-		String[] vars = test.split("\\W");
-
-		for (String prop : obj.getProperties()) {
-			if (contains(vars, prop)) {
-				builder.append("var ");
-				builder.append(prop);
-				builder.append(" = obj.get");
-				builder.append(prop);
-				builder.append("();\n");
-			}
-		}
-
-		for (String linkName : obj.getLinks()) {
-			if (contains(vars, linkName + "_size")) {
-				builder.append("var ");
-				builder.append(linkName);
-				builder.append("_size = obj.getLinkedObjects(\"");
-				builder.append(linkName);
-				builder.append("\").size();\n");
-			}
-		}
-
-		builder.append("function test(){return ");
-
-		return builder.toString();
-	}
-
-	private static boolean contains(String[] values, String prop) {
-		for (String value : values) {
-			if (value.equals(prop)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static String getScriptSuffix() {
-		return ";}\ntest();";
 	}
 
 	/*
@@ -331,7 +276,7 @@ class BaseValidator implements PDFAValidator {
 
 	private boolean firstProcessObjectWithRule(Object checkObject, String checkContext, Rule rule) {
 		Boolean deferred = rule.getDeferred();
-		if (deferred != null && deferred) {
+		if (deferred != null && deferred.booleanValue()) {
 			List<ObjectWithContext> list = this.deferredRules.get(rule);
 			if (list == null) {
 				list = new ArrayList<>();
@@ -339,9 +284,8 @@ class BaseValidator implements PDFAValidator {
 			}
 			list.add(new ObjectWithContext(checkObject, checkContext));
 			return true;
-		} else {
-			return checkObjWithRule(checkObject, checkContext, rule);
 		}
+		return checkObjWithRule(checkObject, checkContext, rule);
 	}
 
 	private boolean checkObjWithRule(Object obj, String cntxtForRule, Rule rule) {
@@ -383,11 +327,11 @@ class BaseValidator implements PDFAValidator {
 		}
 
 		public Object getObject() {
-			return object;
+			return this.object;
 		}
 
 		public String getContext() {
-			return context;
+			return this.context;
 		}
 	}
 }
