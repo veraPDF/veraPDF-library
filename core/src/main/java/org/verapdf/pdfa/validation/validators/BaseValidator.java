@@ -2,16 +2,16 @@
  * This file is part of veraPDF Library core, a module of the veraPDF project.
  * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
- *
+ * <p>
  * veraPDF Library core is free software: you can redistribute it and/or modify
  * it under the terms of either:
- *
+ * <p>
  * The GNU General public license GPLv3+.
  * You should have received a copy of the GNU General Public License
  * along with veraPDF Library core as the LICENSE.GPL file in the root of the source
  * tree.  If not, see http://www.gnu.org/licenses/ or
  * https://www.gnu.org/licenses/gpl-3.0.en.html.
- *
+ * <p>
  * The Mozilla Public License MPLv2+.
  * You should have received a copy of the Mozilla Public License along with
  * veraPDF Library core as the LICENSE.MPL file in the root of the source tree.
@@ -19,13 +19,11 @@
  * http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.validation.validators;
 
-import org.mozilla.javascript.Context;
 import org.mozilla.javascript.NativeJavaObject;
-import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
 import org.verapdf.component.ComponentDetails;
 import org.verapdf.component.Components;
@@ -40,7 +38,6 @@ import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.profiles.Rule;
-import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.profiles.Variable;
 
@@ -54,9 +51,7 @@ class BaseValidator implements PDFAValidator {
 	private static final URI componentId = URI.create("http://pdfa.verapdf.org/validators#default");
 	private static final String componentName = "veraPDF PDF/A Validator";
 	private static final ComponentDetails componentDetails = Components.libraryDetails(componentId, componentName);
-	private static final int OPTIMIZATION_LEVEL = 9;
 	private final ValidationProfile profile;
-	private Context context;
 	private ScriptableObject scope;
 
 	private final Deque<Object> objectsStack = new ArrayDeque<>();
@@ -68,9 +63,6 @@ class BaseValidator implements PDFAValidator {
 	protected boolean abortProcessing = false;
 	protected final boolean logPassedTests;
 	protected boolean isCompliant = true;
-
-	private Map<RuleId, Script> ruleScripts = new HashMap<>();
-	private Map<String, Script> variableScripts = new HashMap<>();
 
 	private Set<String> idSet = new HashSet<>();
 
@@ -88,7 +80,7 @@ class BaseValidator implements PDFAValidator {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.verapdf.pdfa.PDFAValidator#getProfile()
 	 */
 	@Override
@@ -137,16 +129,14 @@ class BaseValidator implements PDFAValidator {
 			}
 		}
 
-		Context.exit();
+		JavaScriptEvaluator.exitContext();
 
 		return ValidationResults.resultFromValues(this.profile, this.results,
 				this.isCompliant, this.testCounter);
 	}
 
 	protected void initialise() {
-		this.context = Context.enter();
-		this.context.setOptimizationLevel(OPTIMIZATION_LEVEL);
-		this.scope = this.context.initStandardObjects();
+		this.scope = JavaScriptEvaluator.initialise();
 		this.objectsStack.clear();
 		this.objectsContext.clear();
 		this.contextSet.clear();
@@ -163,18 +153,16 @@ class BaseValidator implements PDFAValidator {
 			if (var == null)
 				continue;
 
-			java.lang.Object res;
-			res = this.context.evaluateString(this.scope, var.getDefaultValue(), null, 0, null);
+			java.lang.Object res = JavaScriptEvaluator.evaluateString(var.getDefaultValue(), this.scope);
+
 			if (res instanceof NativeJavaObject) {
 				res = ((NativeJavaObject) res).unwrap();
 			}
-
 			this.scope.put(var.getName(), this.scope, res);
 		}
 	}
 
 	private void checkNext() throws ValidationException {
-
 		Object checkObject = this.objectsStack.pop();
 		String checkContext = this.objectsContext.pop();
 		Set<String> checkIDContext = this.contextSet.pop();
@@ -198,33 +186,13 @@ class BaseValidator implements PDFAValidator {
 
 	private void updateVariableForObjectWithType(Object object, String objectType) {
 		for (Variable var : this.profile.getVariablesByObject(objectType)) {
-
-			if (var == null)
+			if (var == null) {
 				continue;
+			}
+			java.lang.Object variable = JavaScriptEvaluator.evalVariableResult(var, object, this.scope);
 
-			java.lang.Object variable = evalVariableResult(var, object);
 			this.scope.put(var.getName(), this.scope, variable);
 		}
-	}
-
-	private java.lang.Object evalVariableResult(Variable variable, Object object) {
-		Script script;
-		if (!this.variableScripts.containsKey(variable.getName())) {
-			String source = getStringScript(object, variable.getValue());
-			script = this.context.compileString(source, null, 0, null);
-			this.variableScripts.put(variable.getName(), script);
-		} else {
-			script = this.variableScripts.get(variable.getName());
-		}
-
-		this.scope.put("obj", this.scope, object);
-
-		java.lang.Object res = script.exec(this.context, this.scope);
-
-		if (res instanceof NativeJavaObject) {
-			res = ((NativeJavaObject) res).unwrap();
-		}
-		return res;
 	}
 
 	private void addAllLinkedObjects(Object checkObject, String checkContext, Set<String> checkIDContext)
@@ -277,7 +245,6 @@ class BaseValidator implements PDFAValidator {
 	}
 
 	private boolean checkRequired(Object obj, Set<String> checkIDContext) {
-
 		if (obj.getID() == null) {
 			return true;
 		} else if (obj.isContextDependent().booleanValue()) {
@@ -304,13 +271,12 @@ class BaseValidator implements PDFAValidator {
 				}
 			}
 		}
-
 		return res;
 	}
 
 	private boolean firstProcessObjectWithRule(Object checkObject, String checkContext, Rule rule) {
 		Boolean deferred = rule.getDeferred();
-		if (deferred != null && deferred) {
+		if (deferred != null && deferred.booleanValue()) {
 			List<ObjectWithContext> list = this.deferredRules.get(rule);
 			if (list == null) {
 				list = new ArrayList<>();
@@ -318,72 +284,12 @@ class BaseValidator implements PDFAValidator {
 			}
 			list.add(new ObjectWithContext(checkObject, checkContext));
 			return true;
-		} else {
-			return checkObjWithRule(checkObject, checkContext, rule);
 		}
-	}
-
-	private static String getScript(Object obj, Rule rule) {
-		return getStringScript(obj, "(" + rule.getTest() + ")==true");
-	}
-
-	private static String getStringScript(Object obj, String arg) {
-		return getScriptPrefix(obj, arg) + arg + getScriptSuffix();
-	}
-
-	private static String getScriptPrefix(Object obj, String test) {
-		StringBuilder builder = new StringBuilder();
-		String[] vars = test.split("\\W");
-
-		for (String prop : obj.getProperties()) {
-			if (contains(vars, prop)) {
-				builder.append("var ");
-				builder.append(prop);
-				builder.append(" = obj.get");
-				builder.append(prop);
-				builder.append("();\n");
-			}
-		}
-
-		for (String linkName : obj.getLinks()) {
-			if (contains(vars, linkName + "_size")) {
-				builder.append("var ");
-				builder.append(linkName);
-				builder.append("_size = obj.getLinkedObjects(\"");
-				builder.append(linkName);
-				builder.append("\").size();\n");
-			}
-		}
-
-		builder.append("function test(){return ");
-
-		return builder.toString();
-	}
-
-	private static boolean contains(String[] values, String prop) {
-		for (String value : values) {
-			if (value.equals(prop)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static String getScriptSuffix() {
-		return ";}\ntest();";
+		return checkObjWithRule(checkObject, checkContext, rule);
 	}
 
 	private boolean checkObjWithRule(Object obj, String cntxtForRule, Rule rule) {
-		this.scope.put("obj", this.scope, obj);
-		Script scr;
-		if (!this.ruleScripts.containsKey(rule.getRuleId())) {
-			scr = this.context.compileString(getScript(obj, rule), null, 0, null);
-			this.ruleScripts.put(rule.getRuleId(), scr);
-		} else {
-			scr = this.ruleScripts.get(rule.getRuleId());
-		}
-
-		boolean testEvalResult = ((Boolean) scr.exec(this.context, this.scope)).booleanValue();
+		boolean testEvalResult = JavaScriptEvaluator.getTestEvalResult(obj, rule, this.scope);
 
 		this.processAssertionResult(testEvalResult, cntxtForRule, rule);
 
@@ -391,7 +297,7 @@ class BaseValidator implements PDFAValidator {
 	}
 
 	protected void processAssertionResult(final boolean assertionResult, final String locationContext,
-			final Rule rule) {
+										  final Rule rule) {
 		if (!this.abortProcessing) {
 			this.testCounter++;
 			Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
@@ -421,11 +327,11 @@ class BaseValidator implements PDFAValidator {
 		}
 
 		public Object getObject() {
-			return object;
+			return this.object;
 		}
 
 		public String getContext() {
-			return context;
+			return this.context;
 		}
 	}
 }
