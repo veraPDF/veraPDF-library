@@ -117,7 +117,7 @@ public class LowLvlInfoFeaturesObject extends FeaturesObject {
 		return root;
 	}
 
-	private String getPDFVersionString(LowLvlInfoFeaturesObjectAdapter lowLvlAdapter) {
+	private static String getPDFVersionString(LowLvlInfoFeaturesObjectAdapter lowLvlAdapter) {
 		double res = lowLvlAdapter.getHeaderVersion();
 		String catalogVersion = lowLvlAdapter.getCatalogVersion();
 		if (catalogVersion != null) {
