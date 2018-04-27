@@ -1,9 +1,11 @@
 package org.verapdf.pdfa.validation.validators;
 
-import org.mozilla.javascript.*;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.NativeJavaObject;
+import org.mozilla.javascript.Script;
+import org.mozilla.javascript.ScriptableObject;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.validation.profiles.Rule;
-import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.Variable;
 
 import java.util.HashMap;
@@ -14,7 +16,7 @@ public class JavaScriptEvaluator {
 
 	private static Context context;
 
-	private static Map<RuleId, Script> ruleScripts = new HashMap<>();
+	private static Map<String, Script> ruleScripts = new HashMap<>();
 	private static Map<String, Script> variableScripts = new HashMap<>();
 
 	public static synchronized ScriptableObject initialise() {
@@ -96,19 +98,20 @@ public class JavaScriptEvaluator {
 		return ";}\ntest();";
 	}
 
-	private static String getScript(Object obj, Rule rule) {
-		return getStringScript(obj, "(" + rule.getTest() + ")==true");
+	private static String getScript(Object obj, String test) {
+		return getStringScript(obj, "(" + test + ")==true");
 	}
 
 	public static synchronized boolean getTestEvalResult(Object obj, Rule rule, ScriptableObject scope) {
 		scope.put("obj", scope, obj);
 
 		Script scr;
-		if (!ruleScripts.containsKey(rule.getRuleId())) {
-			scr = compileString(getScript(obj, rule));
-			ruleScripts.put(rule.getRuleId(), scr);
+		String test = rule.getTest();
+		if (!ruleScripts.containsKey(test)) {
+			scr = compileString(getScript(obj, test));
+			ruleScripts.put(test, scr);
 		} else {
-			scr = ruleScripts.get(rule.getRuleId());
+			scr = ruleScripts.get(test);
 		}
 
 		boolean testEvalResult = ((Boolean) scr.exec(context, scope)).booleanValue();
