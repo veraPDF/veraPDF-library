@@ -6,16 +6,17 @@
   <parent>
     <artifactId>verapdf-parent</artifactId>
     <groupId>org.verapdf</groupId>
-    <version>1.0.16</version>
+    <version>1.4.1</version>
   </parent>
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-xmp</artifactId>
-  <version>0.11.100-SNAPSHOT</version>
+  <version>0.12.0</version>
   <packaging>pom</packaging>
 
   <name>veraPDF PDF/A XMP Library</name>
   <description>veraPDF PDF/A XMP Parsing and Validation library.</description>
+
   <url>https://github.com/veraPDF/veraPDF-xmp/</url>
   <licenses>
     <license>
@@ -27,7 +28,6 @@
 
   <modules>
     <module>xmp-core</module>
-    <module>xmp-core-coverage</module>
   </modules>
 
   <scm>
@@ -50,10 +50,6 @@
       <url>http://artifactory.opf-labs.org/artifactory/vera-dev</url>
     </repository>
   </repositories>
-
-  <properties>
-    <sonar.language>java</sonar.language>
-  </properties>
 
   <build>
     <plugins>
