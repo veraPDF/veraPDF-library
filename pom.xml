@@ -41,6 +41,7 @@
   <description>veraPDF PDF/A Validation API and core types.</description>
 
   <modules>
+    <module>xmp-core</module>
     <module>core</module>
   </modules>
 
@@ -110,12 +111,6 @@
         <groupId>org.verapdf</groupId>
         <artifactId>pdf-model</artifactId>
         <version>${verapdf.model.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.verapdf</groupId>
-        <artifactId>verapdf-xmp-core</artifactId>
-        <version>${verapdf.xmp.version}</version>
       </dependency>
 
       <dependency>
