@@ -43,6 +43,7 @@
     <dependency>
       <groupId>org.verapdf</groupId>
       <artifactId>verapdf-xmp-core</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.mozilla</groupId>
