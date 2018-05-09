@@ -366,7 +366,7 @@ public class FontFeaturesObject extends FeaturesObject {
 	}
 
 	private static String getStringFromDouble(Double d) {
-		return d == null ? null : String.format("%.3f", d);
+		return d == null ? null : CreateNodeHelper.formatDouble(d, 3);
 	}
 
 }

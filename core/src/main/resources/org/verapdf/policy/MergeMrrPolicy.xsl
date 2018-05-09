@@ -13,7 +13,7 @@
   </xsl:template>
 
   <xsl:template match="report/jobs">
-    <xsl:copy select=".">
+    <xsl:copy>
       <xsl:variable name="jobCount" select="count(/report/jobs/job)" />
       <xsl:for-each select="job">
         <xsl:variable name="jobPos">

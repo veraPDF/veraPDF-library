@@ -91,7 +91,7 @@ public class PageFeaturesObject extends FeaturesObject {
 		}
 		Double scaling = pageAdapter.getScaling();
 		if (scaling != null) {
-			root.addChild(SCALING).setValue(String.format("%.3f", scaling));
+			root.addChild(SCALING).setValue(CreateNodeHelper.formatDouble(scaling, 3));
 		}
 		String thumb = pageAdapter.getThumb();
 		if (thumb != null) {

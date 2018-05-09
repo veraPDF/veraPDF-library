@@ -23,29 +23,22 @@
  */
 package org.verapdf.pdfa.results;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.xml.bind.JAXBException;
-
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.profiles.Profiles;
 
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
+import javax.xml.bind.JAXBException;
+import java.io.*;
+import java.nio.file.Files;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -87,12 +80,11 @@ public class ValidationResultTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.results.ValidationResultImpl#fromValues(org.verapdf.pdfa.flavours.PDFAFlavour, java.util.Set, boolean, int)}.
+	 * {@link org.verapdf.pdfa.results.ValidationResultImpl#fromValues(org.verapdf.pdfa.validation.profiles.ValidationProfile, java.util.Set, boolean, int)}.
 	 */
 	@Test
 	public final void testFromValues() {
-		ValidationResult resultFromVals = ValidationResults.resultFromValues(PDFAFlavour.NO_FLAVOUR,
-				Profiles.defaultProfile().getDetails(), Collections.<TestAssertion>emptySet(), false);
+		ValidationResult resultFromVals = ValidationResults.resultFromValues(Profiles.defaultProfile(), Collections.<TestAssertion>emptySet(), false);
 		assertTrue(resultFromVals.equals(ValidationResults.defaultResult()));
 		assertFalse(resultFromVals == ValidationResults.defaultResult());
 	}
@@ -120,8 +112,7 @@ public class ValidationResultTest {
 	public final void testToXmlString() throws JAXBException {
 		Set<TestAssertion> assertions = new HashSet<>();
 		assertions.add(ValidationResults.defaultAssertion());
-		ValidationResult result = ValidationResults.resultFromValues(PDFAFlavour.PDFA_1_A,
-				Profiles.defaultProfile().getDetails(), assertions);
+		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
 		String xmlRawResult = XmlSerialiser.toXml(result, true, false);
 		String xmlPrettyResult = XmlSerialiser.toXml(result, true, true);
 		assertFalse(xmlRawResult.equals(xmlPrettyResult));
@@ -142,8 +133,7 @@ public class ValidationResultTest {
 	public final void testFromXmlInputStream() throws IOException, JAXBException {
 		Set<TestAssertion> assertions = new HashSet<>();
 		assertions.add(TestAssertionImpl.defaultInstance());
-		ValidationResult result = ValidationResults.resultFromValues(PDFAFlavour.PDFA_1_A,
-				Profiles.defaultProfile().getDetails(), assertions);
+		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
 		File temp = Files.createTempFile("profile", "xml").toFile(); //$NON-NLS-1$ //$NON-NLS-2$
 		try (OutputStream forXml = new FileOutputStream(temp)) {
 			XmlSerialiser.toXml(result, forXml, true, true);
@@ -153,6 +143,7 @@ public class ValidationResultTest {
 			assertFalse(result == unmarshalledResult);
 			assertTrue(result.equals(unmarshalledResult));
 		}
+		temp.delete();
 	}
 
 	/**
@@ -166,8 +157,7 @@ public class ValidationResultTest {
 	public final void testFromXmlInputString() throws JAXBException {
 		Set<TestAssertion> assertions = new HashSet<>();
 		assertions.add(TestAssertionImpl.defaultInstance());
-		ValidationResult result = ValidationResults.resultFromValues(PDFAFlavour.PDFA_1_A,
-				Profiles.defaultProfile().getDetails(), assertions);
+		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
 		String xmlSource = XmlSerialiser.toXml(result, true, true);
 		ValidationResult unmarshalledResult = ValidationResults.resultFromXmlString(xmlSource);
 		assertFalse(result == unmarshalledResult);

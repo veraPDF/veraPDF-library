@@ -23,7 +23,10 @@ package org.verapdf.model.tools.xmp;
 import com.adobe.xmp.XMPConst;
 import com.adobe.xmp.impl.VeraPDFXMPNode;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
@@ -31,7 +34,8 @@ import java.util.regex.Pattern;
  */
 public class SchemasDefinitionCreator {
 
-    public static final SchemasDefinition EMPTY_SCHEMAS_DEFINITION = new SchemasDefinition();
+    public static final Map<String, SchemasDefinition> EMPTY_SCHEMAS_DEFINITION = Collections.emptyMap();
+    public static final SchemasDefinition EMPTY_SCHEMA_DEFINITION = new SchemasDefinition();
     private static SchemasDefinition PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1 = null;
     private static SchemasDefinition PREDEFINED_SCHEMA_DEFINITION_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3 = null;
     private static SchemasDefinition PREDEFINED_SCHEMA_DEFINITION_WITH_CLOSED_CHOICE_FOR_PDFA_1 = null;
@@ -79,8 +83,9 @@ public class SchemasDefinitionCreator {
      * @param schemas extension schemas container node
      * @return created Schemas Definition object
      */
-    public static SchemasDefinition createExtendedSchemasDefinitionForPDFA_1(VeraPDFXMPNode schemas, boolean isClosedFieldsCheck) {
-        return createExtendedSchemasDefinition(schemas, true, isClosedFieldsCheck);
+    public static Map<String, SchemasDefinition> createExtendedSchemasDefinitionForPDFA_1(VeraPDFXMPNode schemas,
+                                                                                          boolean isClosedFieldsCheck) {
+        return createExtendedSchemasDefinition(Collections.emptyMap(), schemas, true, isClosedFieldsCheck);
     }
 
     /**
@@ -89,30 +94,58 @@ public class SchemasDefinitionCreator {
      * @param schemas extension schemas container node
      * @return created Schemas Definition object
      */
-    public static SchemasDefinition createExtendedSchemasDefinitionForPDFA_2_3(VeraPDFXMPNode schemas, boolean isClosedFieldsCheck) {
-        return createExtendedSchemasDefinition(schemas, false, isClosedFieldsCheck);
+    public static Map<String, SchemasDefinition> createExtendedSchemasDefinitionForPDFA_2_3(VeraPDFXMPNode schemas,
+                                                                                            boolean isClosedFieldsCheck) {
+        return extendSchemasDefinitionForPDFA_2_3(Collections.emptyMap(), schemas, isClosedFieldsCheck);
     }
 
-    private static SchemasDefinition createExtendedSchemasDefinition(VeraPDFXMPNode schemas, boolean isPDFA_1, boolean isClosedFieldsCheck) {
+    /**
+     * Extends already created extended schemas definitions object valid for PDF/A-2 or for PDF/A-3 without properties
+     * This method doesn't require PDF/A-1 analog because extended schemas extensions aren't allowed in PDF/A-1
+     *
+     * @param extendedSchemas extended schemas for extension
+     * @param schemas extension schemas container node
+     * @return created Schemas Definition object
+     */
+    public static Map<String, SchemasDefinition> extendSchemasDefinitionForPDFA_2_3(Map<String, SchemasDefinition> extendedSchemas,
+                                                                                    VeraPDFXMPNode schemas,
+                                                                                    boolean isClosedFieldsCheck) {
+        if (extendedSchemas == null) {
+            throw new IllegalArgumentException("Nothing to extend");
+        }
+        return createExtendedSchemasDefinition(extendedSchemas, schemas, false, isClosedFieldsCheck);
+    }
+
+    private static Map<String, SchemasDefinition> createExtendedSchemasDefinition(Map<String, SchemasDefinition> extendedSchema,
+                                                                                  VeraPDFXMPNode schemas,
+                                                                                  boolean isPDFA_1,
+                                                                                  boolean isClosedFieldsCheck) {
         if (schemas == null) {
             return EMPTY_SCHEMAS_DEFINITION;
         }
         if (!(XMPConst.NS_PDFA_EXTENSION.equals(schemas.getNamespaceURI()) && "schemas".equals(schemas.getName()) && schemas.getOptions().isArray())) {
             return EMPTY_SCHEMAS_DEFINITION;
         }
-        ValidatorsContainer typeContainer = isPDFA_1 ? ValidatorsContainerCreator.createExtendedValidatorsContainerForPDFA_1(schemas, isClosedFieldsCheck) :
-                ValidatorsContainerCreator.createExtendedValidatorsContainerForPDFA_2_3(schemas, isClosedFieldsCheck);
-        SchemasDefinition res = new SchemasDefinition(typeContainer);
+        Map<String, ValidatorsContainer> valueType = new HashMap<>(extendedSchema.size());
+        for (Map.Entry<String, SchemasDefinition> entry : extendedSchema.entrySet()) {
+            valueType.put(entry.getKey(), entry.getValue().getValidatorsContainer());
+        }
+        Map<String, SchemasDefinition> res = new HashMap<>();
         List<VeraPDFXMPNode> schemasNodes = schemas.getChildren();
         for (VeraPDFXMPNode node : schemasNodes) {
-            registerAllPropertiesFromExtensionSchemaNode(node, res);
+            registerAllPropertiesFromExtensionSchemaNode(node, res, valueType, isPDFA_1, isClosedFieldsCheck);
         }
         return res;
     }
 
-    private static void registerAllPropertiesFromExtensionSchemaNode(VeraPDFXMPNode schema, SchemasDefinition schemasDefinition) {
+    private static void registerAllPropertiesFromExtensionSchemaNode(VeraPDFXMPNode schema,
+                                                                     Map<String, SchemasDefinition> schemasMap,
+                                                                     Map<String, ValidatorsContainer> oldValidators,
+                                                                     boolean isPDFA_1,
+                                                                     boolean isClosedFieldsCheck) {
         List<VeraPDFXMPNode> schemaChildren = schema.getChildren();
         VeraPDFXMPNode propertyNode = null;
+        VeraPDFXMPNode valueTypeNode = null;
         String namespaceURI = null;
         for (VeraPDFXMPNode child : schemaChildren) {
             if (XMPConst.NS_PDFA_SCHEMA.equals(child.getNamespaceURI())) {
@@ -120,6 +153,11 @@ public class SchemasDefinitionCreator {
                     case "property":
                         if (child.getOptions().isArray()) {
                             propertyNode = child;
+                        }
+                        break;
+                    case "valueType":
+                        if (child.getOptions().isArray()) {
+                            valueTypeNode = child;
                         }
                         break;
                     case "namespaceURI":
@@ -131,7 +169,18 @@ public class SchemasDefinitionCreator {
             }
         }
         if (namespaceURI != null && propertyNode != null) {
+            ValidatorsContainer validatorsContainer = oldValidators.get(namespaceURI);
+            ValidatorsContainer currentContainer;
+            if (validatorsContainer == null) {
+                currentContainer = isPDFA_1 ? ValidatorsContainerCreator.createValidatorsContainerPredefinedForPDFA_1(isClosedFieldsCheck) :
+                        ValidatorsContainerCreator.createValidatorsContainerPredefinedForPDFA_2_3(isClosedFieldsCheck);
+            } else {
+                currentContainer = new ValidatorsContainer(validatorsContainer);
+            }
+            ValidatorsContainerCreator.extendValidatorsContainer(currentContainer, valueTypeNode);
+            SchemasDefinition schemasDefinition = new SchemasDefinition(currentContainer);
             registerAllPropertiesFromPropertyArrayNode(namespaceURI, propertyNode, schemasDefinition);
+            schemasMap.put(namespaceURI, schemasDefinition);
         }
     }
 

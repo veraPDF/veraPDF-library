@@ -529,9 +529,12 @@
 	     <xsl:message>Schema error: in the queryBinding attribute, use 'xslt'</xsl:message>
 	</xsl:if>
 	<axsl:stylesheet>
+
+		<!-- old comment: Handle the namespaces before the version attribute: reported to help SAXON -->
+		<!-- Moved attribute version up to fix the compiler warning -->
+		<xsl:attribute name="version">1.0</xsl:attribute>
 	    <xsl:apply-templates select="iso:ns"/>
-	    <!-- Handle the namespaces before the version attribute: reported to help SAXON -->
-	    <xsl:attribute name="version">1.0</xsl:attribute>
+
 	    
 		<xsl:apply-templates select="." mode="stylesheetbody"/>
 		<!-- was xsl:call-template name="stylesheetbody"/ -->
@@ -551,10 +554,12 @@
    		xmlns:set="http://exslt.org/sets"
    		xmlns:str="http://exslt.org/strings"
    		extension-element-prefixes="date dyn exsl math random regexp set str" >
-	
+
+		<!-- old comment: Handle the namespaces before the version attribute: reported to help SAXON -->
+		<!-- Moved attribute version up to fix the compiler warning -->
+		<xsl:attribute name="version">1.0</xsl:attribute>
         <xsl:apply-templates select="iso:ns"/>
-	    <!-- Handle the namespaces before the version attribute: reported to help SAXON -->
-	    <xsl:attribute name="version">1.0</xsl:attribute>
+
 	    
 	    <xsl:apply-templates select="." mode="stylesheetbody"/>
 		<!-- was xsl:call-template name="stylesheetbody"/ -->

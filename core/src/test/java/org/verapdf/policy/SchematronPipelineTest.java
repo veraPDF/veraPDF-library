@@ -23,21 +23,20 @@
  */
 package org.verapdf.policy;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.xmlunit.builder.DiffBuilder;
+import org.xmlunit.builder.Input;
+import org.xmlunit.diff.Diff;
 
+import javax.xml.transform.Source;
+import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.xml.transform.Source;
-import javax.xml.transform.TransformerException;
-
-import org.junit.Test;
-import org.xmlunit.builder.DiffBuilder;
-import org.xmlunit.builder.Input;
-import org.xmlunit.diff.Diff;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -65,6 +64,7 @@ public class SchematronPipelineTest {
 		Diff myDiff = DiffBuilder.compare(control).checkForSimilar().ignoreComments().ignoreWhitespace().withTest(test)
 				.build();
 		assertFalse(myDiff.toString(), myDiff.hasDifferences());
+		tempResult.delete();
 	}
 
 }

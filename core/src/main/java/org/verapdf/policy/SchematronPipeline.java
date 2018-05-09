@@ -17,21 +17,12 @@
  */
 package org.verapdf.policy;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import javax.xml.transform.Source;
-import javax.xml.transform.Templates;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.URIResolver;
+import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -40,6 +31,9 @@ import javax.xml.transform.stream.StreamSource;
  */
 
 final class SchematronPipeline {
+	private static final Logger LOGGER = Logger
+			.getLogger(SchematronPipeline.class.getName());
+
 	static final ClassLoader cl = SchematronPipeline.class.getClassLoader();
 	private static final TransformerFactory factory = getTransformerFactory();
 	private static final String xslExt = ".xsl"; //$NON-NLS-1$
@@ -61,8 +55,12 @@ final class SchematronPipeline {
 		File isoExpResult = createTempFileResult(cachedExpXsl.newTransformer(), new StreamSource(isoDsdResult),
 				"ExpXsl"); //$NON-NLS-1$
 		cachedIsoSvrlXsl.newTransformer().transform(new StreamSource(isoExpResult), new StreamResult(xslDest));
-		isoDsdResult.delete();
-		isoExpResult.delete();
+		if (!isoDsdResult.delete()) {
+			isoDsdResult.deleteOnExit();
+		}
+		if (!isoExpResult.delete()) {
+			isoExpResult.deleteOnExit();
+		}
 	}
 
 	static Templates createCachedTransform(final String transName) {
@@ -76,7 +74,6 @@ final class SchematronPipeline {
 	private static File createTempFileResult(final Transformer transformer, final StreamSource toTransform,
 			final String suffix) throws TransformerException, IOException {
 		File result = File.createTempFile("veraPDF_", suffix); //$NON-NLS-1$
-		result.deleteOnExit();
 
 		try (FileOutputStream fos = new FileOutputStream(result)) {
 			transformer.transform(toTransform, new StreamResult(fos));
@@ -97,7 +94,19 @@ final class SchematronPipeline {
 
 		@Override
 		public Source resolve(String href, String base) throws TransformerException {
-			return new StreamSource(cl.getResourceAsStream(resourcePath + href));
+			InputStream inputStream;
+			File file = new File(href);
+			if (file.exists()) {
+				try {
+					inputStream = new FileInputStream(file);
+				} catch (FileNotFoundException e) {
+					LOGGER.log(Level.SEVERE, "File not found but exists", e);
+					inputStream = new ByteArrayInputStream(new byte[0]);
+				}
+			} else {
+				inputStream = cl.getResourceAsStream(resourcePath + href);
+			}
+			return new StreamSource(inputStream);
 		}
 	}
 

@@ -28,7 +28,7 @@
   <parent>
     <artifactId>verapdf-library</artifactId>
     <groupId>org.verapdf</groupId>
-    <version>1.8.0</version>
+    <version>1.12.0</version>
   </parent>
 
   <artifactId>core</artifactId>
@@ -43,10 +43,11 @@
     <dependency>
       <groupId>org.verapdf</groupId>
       <artifactId>verapdf-xmp-core</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>rhino</groupId>
-      <artifactId>js</artifactId>
+      <groupId>org.mozilla</groupId>
+      <artifactId>rhino</artifactId>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

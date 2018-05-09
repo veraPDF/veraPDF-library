@@ -140,6 +140,7 @@ public class RuleImplTest {
             assertFalse(rule == unmarshalledDefault);
             assertTrue(rule.equals(unmarshalledDefault));
         }
+        temp.delete();
     }
 
 }

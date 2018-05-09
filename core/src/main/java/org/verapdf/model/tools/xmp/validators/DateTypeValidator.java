@@ -20,12 +20,12 @@
  */
 package org.verapdf.model.tools.xmp.validators;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.adobe.xmp.XMPDateTimeFactory;
 import com.adobe.xmp.XMPException;
 import com.adobe.xmp.impl.VeraPDFXMPNode;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Maksim Bezrukov
@@ -47,8 +47,7 @@ public class DateTypeValidator implements TypeValidator {
             XMPDateTimeFactory.createFromISO8601(node.getValue());
             return true;
         } catch (XMPException e) {
-            LOGGER.log(Level.WARNING, "Node:" + node.getName() + " with value:" + node.getValue() + " is not a valid ISO8601 date value");
-            LOGGER.log(Level.FINE, "XMP Exception is", e);
+            LOGGER.log(Level.FINE, "Node:" + node.getName() + " with value:" + node.getValue() + " is not a valid ISO8601 date value");
             return false;
         }
     }

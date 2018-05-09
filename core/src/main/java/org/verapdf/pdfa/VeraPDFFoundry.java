@@ -23,15 +23,15 @@
  */
 package org.verapdf.pdfa;
 
-import java.io.File;
-import java.io.InputStream;
-
 import org.verapdf.component.Component;
 import org.verapdf.core.EncryptedPdfException;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
+
+import java.io.File;
+import java.io.InputStream;
 
 /**
  * The veraPDFFoundry interface provides methods for creating implementations of
@@ -234,4 +234,9 @@ public interface VeraPDFFoundry extends Component {
 	 * @return the default {@link PDFAFlavour} set for this {@link VeraPDFFoundry}
 	 */
 	public PDFAFlavour defaultFlavour();
+
+	/**
+	 * @return parser id
+	 */
+	public String getParserId();
 }

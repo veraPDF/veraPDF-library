@@ -20,19 +20,13 @@
  */
 package org.verapdf.processor.plugins;
 
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Maksim Bezrukov
@@ -49,13 +43,12 @@ public class PluginConfig {
 	@XmlElement
 	private final String description;
 	@XmlElement
-	@XmlJavaTypeAdapter(PluginConfig.PathAdapter.class)
-	private final Path pluginJar;
+	private final String pluginJar;
 	@XmlElement(name="attribute")
 	@XmlElementWrapper(name = "attributes")
 	private final List<Attribute> attributes;
 
-	private PluginConfig(boolean enabled, String name, String version, String description, Path pluginJar, List<Attribute> attributes) {
+	private PluginConfig(boolean enabled, String name, String version, String description, String pluginJar, List<Attribute> attributes) {
 		this.enabled = enabled;
 		this.name = name;
 		this.version = version;
@@ -65,10 +58,10 @@ public class PluginConfig {
 	}
 
 	private PluginConfig() {
-		this(false, "", "", "", FileSystems.getDefault().getPath(""), Collections.<Attribute>emptyList());  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
+		this(false, "", "", "","", Collections.<Attribute>emptyList());  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
 	}
 
-	public static PluginConfig fromValues(boolean enabled, String name, String version, String description, Path pluginFolder, List<Attribute> attributes) {
+	public static PluginConfig fromValues(boolean enabled, String name, String version, String description, String pluginFolder, List<Attribute> attributes) {
 		return new PluginConfig(enabled, name, version, description, pluginFolder, attributes);
 	}
 
@@ -88,25 +81,11 @@ public class PluginConfig {
 		return this.description;
 	}
 
-	public Path getPluginJar() {
+	public String getPluginJar() {
 		return this.pluginJar;
 	}
 
 	public List<Attribute> getAttributes() {
 		return this.attributes == null ? Collections.<Attribute>emptyList() : Collections.unmodifiableList(this.attributes);
-	}
-
-	private static class PathAdapter extends XmlAdapter<String, Path> {
-
-		@Override
-		public Path unmarshal(String v) throws Exception {
-			Path path = Paths.get(v);
-			return path.toAbsolutePath();
-		}
-
-		@Override
-		public String marshal(Path v) {
-			return v.toAbsolutePath().toString();
-		}
 	}
 }

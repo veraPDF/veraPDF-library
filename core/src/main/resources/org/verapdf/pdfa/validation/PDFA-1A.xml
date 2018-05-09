@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_A">
-    <details creator="veraPDF Consortium" created="2017-08-01T11:48:16.365-03:00">
+    <details creator="veraPDF Consortium" created="2017-09-06T10:12:11.281-03:00">
         <name>PDF/A-1A validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011, Level A</description>
     </details>
@@ -314,10 +314,10 @@
                 <reference specification="PDF Reference 1.4" clause="Table C.1"/>
             </references>
         </rule>
-        <rule object="CIDGlyph">
+        <rule object="CMapFile">
             <id specification="ISO_19005_1" clause="6.1.12" testNumber="10"/>
             <description>Maximum value of a CID (character identifier) is 65,535</description>
-            <test>CID &lt;= 65535</test>
+            <test>maximalCID &lt;= 65535</test>
             <error>
                 <message>Maximum value of a CID (65,535) is exceeded</message>
                 <arguments/>
@@ -805,7 +805,7 @@
         <rule object="PDXObject">
             <id specification="ISO_19005_1" clause="6.4" testNumber="2"/>
             <description>An XObject dictionary shall not contain the SMask key</description>
-            <test>SMask_size == 0</test>
+            <test>containsSMask == false</test>
             <error>
                 <message>An XObject contains an SMask key</message>
                 <arguments/>

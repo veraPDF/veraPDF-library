@@ -23,23 +23,17 @@
  */
 package org.verapdf.processor.reports;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import org.verapdf.pdfa.results.TestAssertion;
+import org.verapdf.pdfa.results.TestAssertion.Status;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.pdfa.validation.profiles.Rule;
+import org.verapdf.pdfa.validation.profiles.RuleId;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-
-import org.verapdf.pdfa.results.TestAssertion;
-import org.verapdf.pdfa.results.TestAssertion.Status;
-import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.pdfa.validation.profiles.Profiles;
-import org.verapdf.pdfa.validation.profiles.Rule;
-import org.verapdf.pdfa.validation.profiles.RuleId;
-import org.verapdf.pdfa.validation.profiles.ValidationProfile;
+import java.util.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -131,12 +125,10 @@ final class ValidationDetailsImpl implements ValidationDetails {
 
 	static ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks,
 			final int maxFailedChecks) {
-		ValidationProfile profile = Profiles.getVeraProfileDirectory()
-				.getValidationProfileByFlavour(result.getPDFAFlavour());
+		ValidationProfile profile = result.getValidationProfile();
 		Map<RuleId, Set<TestAssertion>> assertionMap = mapAssertionsByRule(result.getTestAssertions());
 		Set<RuleSummary> ruleSummaries = new HashSet<>();
 		int passedRules = 0;
-		int passedChecks = 0;
 		int failedRules = 0;
 		int failedChecks = 0;
 		for (Rule rule : profile.getRules()) {
@@ -150,14 +142,15 @@ final class ValidationDetailsImpl implements ValidationDetails {
 			failedChecks += summary.getFailedChecks();
 			if (summary.getRuleStatus() == Status.PASSED) {
 				passedRules++;
-				if (logPassedChecks)
+				if (logPassedChecks) {
 					ruleSummaries.add(summary);
+				}
 			} else {
 				failedRules++;
 				ruleSummaries.add(summary);
 			}
 		}
-		passedChecks = result.getTotalAssertions() - failedChecks;
+		int passedChecks = result.getTotalAssertions() - failedChecks;
 
 		return new ValidationDetailsImpl(passedRules, failedRules, passedChecks, failedChecks, ruleSummaries);
 	}
