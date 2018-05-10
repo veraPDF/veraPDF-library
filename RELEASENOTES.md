@@ -1,3 +1,81 @@
+Version 1.12 (May 9, 2018)
+==========================
+
+## PDF Parser:
+- added support for PDF files over 2Gb [[#par-334][]]
+- fixed date parsing issues with trailing apostrophe [[#par-335][]]
+- fixed bug with Standard Encoding in PostScript font programs [[#par-340][]]
+- fixed issue parsing digital signatures for files below 1024 bytes [[#par-343][]], [[#par-351][]], [[#par-353][]]
+- fixed issue with recognition of standard font with differences entry and parsing empty differences array [[#par-345][]][[#par-350][]]
+- close streams properly during parsing and ensure tempfile deletion [[#par-346][]], [[#par-352][]], [[#par-353][]]
+- fixed signature EOF stream logic causing ByteRange issues[[#par-348][]]
+- Fixed detection of the CFF font charset in case of a predefined charset with incomplete glyph plus issues with Adobe Type 3 Font, Adobe Type 1 Font and ASCII85 parsing [[#par-348][]], [[#par-355][]]
+- added check to disallow and report Type 1 PFB fonts [[#par-349][]]
+
+## Conformance Checker:
+- add Identifier to validator type for reporting, added details to HTML report [[#val-261][]], [[#lib-940][]]
+- fixed issue parsing digital signatures for files below 1024 bytes [[#val-265][]]
+- exclude process colors from spot color validation in DeviceN / NChannel color spaces for PDF/A-2 and 3 [[#val-267][]] [[#pdf-191][]]
+- fixed metadata extensions support across different PDF/A levels [[#lib-947]]
+- fixed bug with automatic selection and processing of PDF/A flavour  [[#pdf-190][]]
+- fixed validation of smooth shading color spaces and inline images in presence of default color space [[#val-263][]]
+- fixed bug in embedded file features data extraction [[#lib-951][]]
+- fixed bug with validation rule caching [[#lib-963][]]
+
+## Application enhancements:
+- added fixes for thread saftey and multithreading support [[#apps-246][]], [[#apps-248][]], [[#par-342][]], [[#lib-941][]], [[#lib-960][]], [[#val-262][]],  [[#pdf-189][]], [[#lib-950][]] [[#apps-244][]]
+- added multi-process parallelization in the CLI [[#apps-242][]]
+- improved formatting of XML reports [[#apps-243][]]
+- fixed plug-ins loading mechanism [[#apps-244][]]
+- updated copyright statement for GUI  [[#apps-245][]]
+
+## Project infrastructure
+- merged veraPDF-xmp project with library [[#lib-964][]]
+
+[#lib-940]: https://github.com/veraPDF/veraPDF-library/pull/940/
+[#lib-941]: https://github.com/veraPDF/veraPDF-library/pull/941/
+[#lib-947]: https://github.com/veraPDF/veraPDF-library/pull/947/
+[#lib-950]: https://github.com/veraPDF/veraPDF-library/pull/950/
+[#lib-951]: https://github.com/veraPDF/veraPDF-library/pull/951/
+[#lib-960]: https://github.com/veraPDF/veraPDF-library/pull/960/
+[#lib-963]: https://github.com/veraPDF/veraPDF-library/pull/963/
+[#lib-964]: https://github.com/veraPDF/veraPDF-library/pull/964/
+
+[#par-334]: https://github.com/veraPDF/veraPDF-parser/pull/334/
+[#par-335]: https://github.com/veraPDF/veraPDF-parser/pull/335/
+[#par-340]: https://github.com/veraPDF/veraPDF-parser/pull/340/
+[#par-342]: https://github.com/veraPDF/veraPDF-parser/pull/342/
+[#par-343]: https://github.com/veraPDF/veraPDF-parser/pull/343/
+[#par-345]: https://github.com/veraPDF/veraPDF-parser/pull/345/
+[#par-346]: https://github.com/veraPDF/veraPDF-parser/pull/346/
+[#par-347]: https://github.com/veraPDF/veraPDF-parser/pull/347/
+[#par-348]: https://github.com/veraPDF/veraPDF-parser/pull/348/
+[#par-349]: https://github.com/veraPDF/veraPDF-parser/pull/349/
+[#par-350]: https://github.com/veraPDF/veraPDF-parser/pull/350/
+[#par-351]: https://github.com/veraPDF/veraPDF-parser/pull/351/
+[#par-352]: https://github.com/veraPDF/veraPDF-parser/pull/352/
+[#par-353]: https://github.com/veraPDF/veraPDF-parser/pull/353/
+[#par-355]: https://github.com/veraPDF/veraPDF-parser/pull/355/
+
+[#val-261]: https://github.com/veraPDF/veraPDF-validation/pull/261/
+[#val-262]: https://github.com/veraPDF/veraPDF-validation/pull/262/
+[#val-263]: https://github.com/veraPDF/veraPDF-validation/pull/263/
+[#val-265]: https://github.com/veraPDF/veraPDF-validation/pull/265/
+[#val-267]: https://github.com/veraPDF/veraPDF-validation/pull/267/
+
+[#pdf-188]: https://github.com/veraPDF/veraPDF-pdfbox-validation/pull/189/
+[#pdf-189]: https://github.com/veraPDF/veraPDF-pdfbox-validation/pull/189/
+[#pdf-190]: https://github.com/veraPDF/veraPDF-pdfbox-validation/pull/190/
+[#pdf-191]: https://github.com/veraPDF/veraPDF-pdfbox-validation/pull/191/
+[#pdf-192]: https://github.com/veraPDF/veraPDF-pdfbox-validation/pull/192/
+
+[#apps-242]: https://github.com/veraPDF/veraPDF-apps/pull/242/
+[#apps-243]: https://github.com/veraPDF/veraPDF-apps/pull/243/
+[#apps-244]: https://github.com/veraPDF/veraPDF-apps/pull/244/
+[#apps-245]: https://github.com/veraPDF/veraPDF-apps/pull/245/
+[#apps-246]: https://github.com/veraPDF/veraPDF-apps/pull/246/
+[#apps-248]: https://github.com/veraPDF/veraPDF-apps/pull/248/
+
 Version 1.10 (November 30, 2017)
 ==========================
 
