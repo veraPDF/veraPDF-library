@@ -80,17 +80,10 @@ public class ByteBuffer
 		this.buffer = new byte[chunk];
 		
 		int read;
-		while ((read = in.read(this.buffer, this.length, chunk)) > 0)
+		while ((read = in.read(this.buffer, this.length, chunk)) > -1)
 		{
 			this.length += read;
-			if (read == chunk)
-			{
-				ensureCapacity(length + chunk);
-			}
-			else
-			{
-				break;
-			}
+			ensureCapacity(this.length + chunk);
 		}
 	}	
 	
@@ -316,7 +309,7 @@ public class ByteBuffer
 	 */
 	private void ensureCapacity(int requestedLength)
 	{
-		if (requestedLength > buffer.length)
+		while (requestedLength > buffer.length)
 		{
 			byte[] oldBuf = buffer;
 			buffer = new byte[oldBuf.length * 2];
