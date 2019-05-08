@@ -34,6 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
@@ -68,7 +69,8 @@ public class FeaturesPluginsLoader {
 			try (FileInputStream fis = new FileInputStream(pluginsConfigFile)) {
 				return loadExtractors(fis);
 			} catch (IOException e) {
-				LOGGER.log(Level.WARNING, "Problem loading Feature Extraction plugins from: " + pluginsConfigFile, e);
+				LOGGER.log(Level.WARNING, MessageFormat.format("Problem loading Feature Extraction plugins from file: {0}.",
+						pluginsConfigFile), e);
 			}
 		}
 		return Collections.emptyList();
@@ -80,7 +82,7 @@ public class FeaturesPluginsLoader {
 					PluginsCollectionConfig.create(pluginsConfigStream);
 			return loadExtractors(pluginsCollectionConfig);
 		} catch (JAXBException e) {
-			LOGGER.log(Level.WARNING, "Problem loading Feature Extraction plugins.", e);
+			LOGGER.log(Level.WARNING, "Problem parsing Feature Extraction plugins config file.", e);
 		}
 		return Collections.emptyList();
 	}
@@ -107,9 +109,14 @@ public class FeaturesPluginsLoader {
 	}
 
 	private static AbstractFeaturesExtractor getExtractorFromConfig(PluginConfig config) {
+		String pluginName = config.getName();
+		if (pluginName == null || pluginName.isEmpty()) {
+			LOGGER.log(Level.WARNING, "Plugin entry with null or empty name enabled in config file.");
+			return null;
+		}
 		String pluginJar = config.getPluginJar();
-		if (pluginJar == null) {
-			LOGGER.log(Level.WARNING, "Plugins config file contains an enabled plugin with empty path");
+		if (pluginJar == null || pluginJar.isEmpty()) {
+			LOGGER.log(Level.WARNING, MessageFormat.format("Plugin {0} enabled in config file an empty <pluginJar> path.", pluginName));
 			return null;
 		}
 		String path;
@@ -121,7 +128,7 @@ public class FeaturesPluginsLoader {
 		}
 		File pluginJarFile = new File(path);
 		if (!pluginJarFile.isFile()) {
-			LOGGER.log(Level.WARNING, "Plugins config file contains wrong path");
+			LOGGER.log(Level.WARNING, MessageFormat.format("Plugin JAR file not found at {0} for plugin {1} enabled in config file.", pluginJarFile, pluginName));
 			return null;
 		}
 
@@ -157,8 +164,8 @@ public class FeaturesPluginsLoader {
 			List<String> classNames = getAllClassNamesFromJAR(jar);
 			return loadExtractorByClassNames(jar, classNames);
 		} catch (IOException e) {
-			LOGGER.log(Level.WARNING, "Can not load extractors from file with path "
-					+ jar.getPath(), e);
+			LOGGER.log(Level.WARNING, MessageFormat.format("Can not load Extractor class from file: {0}",
+					jar.getPath()), e);
 		}
 		return null;
 	}

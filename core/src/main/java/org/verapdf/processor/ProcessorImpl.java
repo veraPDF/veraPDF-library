@@ -105,10 +105,10 @@ final class ProcessorImpl implements ItemProcessor {
 	@Override
 	public ProcessorResult process(File toProcess) throws VeraPDFException {
 		this.initialise();
-		ItemDetails fileDetails = ItemDetails.fromFile(toProcess);
 		if (toProcess == null) {
 			throw new IllegalArgumentException("PDF file cannot be null");
 		}
+		ItemDetails fileDetails = ItemDetails.fromFile(toProcess);
 		Components.Timer parseTimer = Components.Timer.start();
 		try (PDFAParser parser = this.hasCustomProfile()
 				? foundry.createParser(toProcess, this.processorConfig.getCustomProfile().getPDFAFlavour())
@@ -219,11 +219,11 @@ final class ProcessorImpl implements ItemProcessor {
 			this.validationResult = validator.validate(parser);
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop()));
 		} catch (ValidationException excep) {
-			logger.log(Level.WARNING, "Exception caught when validaing item", excep); //$NON-NLS-1$
+			logger.log(Level.WARNING, "Exception caught when validating item", excep); //$NON-NLS-1$
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), excep));
 		} catch (OutOfMemoryError excep) {
-			logger.log(Level.WARNING, "OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
-			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
+			logger.log(Level.WARNING, "OutOfMemory caught when validating item", excep); //$NON-NLS-1$
+			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validating item", excep); //$NON-NLS-1$
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), veraExcep));
 		} catch (IOException excep) {
 			logger.log(Level.INFO, "IOException closing validator.", excep); //$NON-NLS-1$
@@ -268,8 +268,8 @@ final class ProcessorImpl implements ItemProcessor {
 			rpStat = this.fixerResult.getRepairStatus();
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop()));
 		} catch (OutOfMemoryError excep) {
-			logger.log(Level.WARNING, "OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
-			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
+			logger.log(Level.WARNING, "OutOfMemory caught when validating item", excep); //$NON-NLS-1$
+			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validating item", excep); //$NON-NLS-1$
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), veraExcep));
 		} catch (IOException excep) {
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(),
@@ -291,8 +291,8 @@ final class ProcessorImpl implements ItemProcessor {
 			this.taskResults.put(TaskType.EXTRACT_FEATURES,
 					TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop()));
 		} catch (OutOfMemoryError excep) {
-			logger.log(Level.WARNING, "OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
-			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validaing item", excep); //$NON-NLS-1$
+			logger.log(Level.WARNING, "OutOfMemory caught when validating item", excep); //$NON-NLS-1$
+			VeraPDFException veraExcep = new VeraPDFException("OutOfMemory caught when validating item", excep); //$NON-NLS-1$
 			this.taskResults.put(TaskType.EXTRACT_FEATURES,
 					TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop(), veraExcep));
 		} catch (Throwable e) {
