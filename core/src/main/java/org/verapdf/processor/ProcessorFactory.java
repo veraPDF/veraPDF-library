@@ -133,6 +133,14 @@ public final class ProcessorFactory {
 		XmlSerialiser.toXml(toConvert, stream, prettyXml, false);
 	}
 
+	public static void writeSingleResultReport(final ProcessorResult toConvert,final BatchProcessingHandler tmpHandler, ProcessorConfig config) throws VeraPDFException {
+		tmpHandler.handleBatchStart(config);
+		tmpHandler.handleResult(toConvert);
+		BatchSummariser tmpSummariser = new BatchSummariser(config);
+		tmpSummariser.addProcessingResult(toConvert);
+		tmpHandler.handleBatchEnd(tmpSummariser.summarise());
+	}
+
 	public static ProcessorResult resultFromXml(final InputStream source) throws JAXBException {
 		return XmlSerialiser.typeFromXml(ProcessorResultImpl.class, source);
 	}
