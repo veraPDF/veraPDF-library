@@ -54,10 +54,9 @@ class BaseValidator implements PDFAValidator {
 	private final ValidationProfile profile;
 	private ScriptableObject scope;
 
-	private final Deque<Object> objectsStack = new ArrayDeque<>();
-	private final Deque<String> objectsContext = new ArrayDeque<>();
+	private final Deque<QueueObject> queueObjectDeque = new ArrayDeque<>();
 	private final Deque<Set<String>> contextSet = new ArrayDeque<>();
-	private final Map<Rule, List<ObjectWithContext>> deferredRules = new HashMap<>();
+	private final Map<Rule, List<QueueObject>> deferredRules = new HashMap<>();
 	protected final Set<TestAssertion> results = new HashSet<>();
 	protected int testCounter = 0;
 	protected boolean abortProcessing = false;
@@ -107,9 +106,6 @@ class BaseValidator implements PDFAValidator {
 	protected ValidationResult validate(Object root) throws ValidationException {
 		initialise();
 		this.rootType = root.getObjectType();
-		this.objectsStack.push(root);
-		this.objectsContext.push("root");
-
 		Set<String> rootIDContext = new HashSet<>();
 
 		if (root.getID() != null) {
@@ -117,15 +113,15 @@ class BaseValidator implements PDFAValidator {
 			this.idSet.add(root.getID());
 		}
 
+		queueObjectDeque.push(new QueueObject(root, "root"));
 		this.contextSet.push(rootIDContext);
-
-		while (!this.objectsStack.isEmpty() && !this.abortProcessing) {
+		while (!this.queueObjectDeque.isEmpty() && !this.abortProcessing) {
 			checkNext();
 		}
 
-		for (Map.Entry<Rule, List<ObjectWithContext>> entry : this.deferredRules.entrySet()) {
-			for (ObjectWithContext objectWithContext : entry.getValue()) {
-				checkObjWithRule(objectWithContext.getObject(), objectWithContext.getContext(), entry.getKey());
+		for (Map.Entry<Rule, List<QueueObject>> entry : this.deferredRules.entrySet()) {
+			for (QueueObject objectWithContext : entry.getValue()) {
+				checkObjWithRule(objectWithContext , entry.getKey());
 			}
 		}
 
@@ -137,10 +133,6 @@ class BaseValidator implements PDFAValidator {
 
 	protected void initialise() {
 		this.scope = JavaScriptEvaluator.initialise();
-		this.objectsStack.clear();
-		this.objectsContext.clear();
-		this.contextSet.clear();
-		this.deferredRules.clear();
 		this.results.clear();
 		this.idSet.clear();
 		this.testCounter = 0;
@@ -163,21 +155,19 @@ class BaseValidator implements PDFAValidator {
 	}
 
 	private void checkNext() throws ValidationException {
-		Object checkObject = this.objectsStack.pop();
-		String checkContext = this.objectsContext.pop();
+		QueueObject checkObject = this.queueObjectDeque.pop();
 		Set<String> checkIDContext = this.contextSet.pop();
 
-		checkAllRules(checkObject, checkContext);
+		checkAllRules(checkObject);
 
-		updateVariables(checkObject);
+		updateVariables(checkObject.getObject());
 
-		addAllLinkedObjects(checkObject, checkContext, checkIDContext);
+		addAllLinkedObjects(checkObject.getObject(), checkObject.getObjectsContext(), checkIDContext);
 	}
 
 	private void updateVariables(Object object) {
 		if (object != null) {
 			updateVariableForObjectWithType(object, object.getObjectType());
-
 			for (String parentName : object.getSuperTypes()) {
 				updateVariableForObjectWithType(object, parentName);
 			}
@@ -190,7 +180,6 @@ class BaseValidator implements PDFAValidator {
 				continue;
 			}
 			java.lang.Object variable = JavaScriptEvaluator.evalVariableResult(var, object, this.scope);
-
 			this.scope.put(var.getName(), this.scope, variable);
 		}
 	}
@@ -200,7 +189,6 @@ class BaseValidator implements PDFAValidator {
 		List<String> links = checkObject.getLinks();
 		for (int j = links.size() - 1; j >= 0; --j) {
 			String link = links.get(j);
-
 			if (link == null) {
 				throw new ValidationException("There is a null link name in an object. Context: " + checkContext);
 			}
@@ -212,32 +200,30 @@ class BaseValidator implements PDFAValidator {
 			for (int i = 0; i < objects.size(); ++i) {
 				Object obj = objects.get(i);
 
-				StringBuilder path = new StringBuilder(checkContext);
-				path.append("/");
-				path.append(link);
-				path.append("[");
-				path.append(i);
-				path.append("]");
-
 				if (obj == null) {
-					throw new ValidationException("There is a null link in an object. Context of the link: " + path);
+					throw new ValidationException(String.format("There is a null link in an object. Context of the link: /%s[%d]", link, i));
 				}
 
 				if (checkRequired(obj, checkIDContext)) {
-					this.objectsStack.push(obj);
 
 					Set<String> newCheckIDContext = new HashSet<>(checkIDContext);
-
-					if (obj.getID() != null) {
+					StringBuilder path = new StringBuilder(checkContext);
+					path.append("/");
+					path.append(link);
+					path.append("[");
+					path.append(i);
+					path.append("]");
+					String id = obj.getID();
+					if (id != null) {
 						path.append("(");
-						path.append(obj.getID());
+						path.append(id);
 						path.append(")");
 
 						newCheckIDContext.add(obj.getID());
 						this.idSet.add(obj.getID());
 					}
 
-					this.objectsContext.push(path.toString());
+					queueObjectDeque.push(new QueueObject(obj, path.toString()));
 					this.contextSet.push(newCheckIDContext);
 				}
 			}
@@ -254,19 +240,19 @@ class BaseValidator implements PDFAValidator {
 		}
 	}
 
-	private boolean checkAllRules(Object checkObject, String checkContext) {
+	private boolean checkAllRules(QueueObject queueObject) {
 		boolean res = true;
-		Set<Rule> roolsForObject = this.profile.getRulesByObject(checkObject.getObjectType());
+		Set<Rule> roolsForObject = this.profile.getRulesByObject(queueObject.getObject().getObjectType());
 		for (Rule rule : roolsForObject) {
-			res &= firstProcessObjectWithRule(checkObject, checkContext, rule);
+			res &= firstProcessObjectWithRule(queueObject, rule);
 		}
 
-		for (String checkType : checkObject.getSuperTypes()) {
+		for (String checkType : queueObject.getObject().getSuperTypes()) {
 			roolsForObject = this.profile.getRulesByObject(checkType);
 			if (roolsForObject != null) {
 				for (Rule rule : roolsForObject) {
 					if (rule != null) {
-						res &= firstProcessObjectWithRule(checkObject, checkContext, rule);
+						res &= firstProcessObjectWithRule(queueObject, rule);
 					}
 				}
 			}
@@ -274,25 +260,23 @@ class BaseValidator implements PDFAValidator {
 		return res;
 	}
 
-	private boolean firstProcessObjectWithRule(Object checkObject, String checkContext, Rule rule) {
+	private boolean firstProcessObjectWithRule(QueueObject object, Rule rule) {
 		Boolean deferred = rule.getDeferred();
 		if (deferred != null && deferred.booleanValue()) {
-			List<ObjectWithContext> list = this.deferredRules.get(rule);
+			List<QueueObject> list = this.deferredRules.get(rule);
 			if (list == null) {
 				list = new ArrayList<>();
 				this.deferredRules.put(rule, list);
 			}
-			list.add(new ObjectWithContext(checkObject, checkContext));
+			list.add(object);
 			return true;
 		}
-		return checkObjWithRule(checkObject, checkContext, rule);
+		return checkObjWithRule(object, rule);
 	}
 
-	private boolean checkObjWithRule(Object obj, String cntxtForRule, Rule rule) {
-		boolean testEvalResult = JavaScriptEvaluator.getTestEvalResult(obj, rule, this.scope);
-
-		this.processAssertionResult(testEvalResult, cntxtForRule, rule);
-
+	private boolean checkObjWithRule(QueueObject object, Rule rule) {
+		boolean testEvalResult = JavaScriptEvaluator.getTestEvalResult(object.getObject(), rule, this.scope);
+		this.processAssertionResult(testEvalResult, object.getObjectsContext(), rule);
 		return testEvalResult;
 	}
 
@@ -317,21 +301,21 @@ class BaseValidator implements PDFAValidator {
 		 */
 	}
 
-	private static class ObjectWithContext {
+	private static class QueueObject {
 		private final Object object;
-		private final String context;
+		private final String objectsContext;
 
-		public ObjectWithContext(Object object, String context) {
+		public QueueObject(Object object, String objectsContext) {
 			this.object = object;
-			this.context = context;
+			this.objectsContext = objectsContext;
 		}
 
 		public Object getObject() {
-			return this.object;
+			return object;
 		}
 
-		public String getContext() {
-			return this.context;
+		public String getObjectsContext() {
+			return objectsContext;
 		}
 	}
 }
