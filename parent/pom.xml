@@ -134,7 +134,7 @@
       </snapshots>
       <id>vera-dev</id>
       <name>Vera development</name>
-      <url>http://artifactory.opf-labs.org/artifactory/vera-dev</url>
+      <url>http://artifactory.openpreservation.org/artifactory/vera-dev</url>
     </repository>
   </repositories>
   <pluginRepositories>
@@ -144,7 +144,7 @@
       </snapshots>
       <id>vera-dev</id>
       <name>Vera development</name>
-      <url>http://artifactory.opf-labs.org/artifactory/vera-dev</url>
+      <url>http://artifactory.openpreservation.org/artifactory/vera-dev</url>
     </pluginRepository>
   </pluginRepositories>
 
