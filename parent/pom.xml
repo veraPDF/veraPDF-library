@@ -32,7 +32,7 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-parent</artifactId>
-  <version>1.14.0</version>
+  <version>1.14.1</version>
   <packaging>pom</packaging>
 
   <name>veraPDF Consortium parent </name>
@@ -134,7 +134,7 @@
       </snapshots>
       <id>vera-dev</id>
       <name>Vera development</name>
-      <url>http://artifactory.openpreservation.org/artifactory/vera-dev</url>
+      <url>https://artifactory.openpreservation.org/artifactory/vera-dev</url>
     </repository>
   </repositories>
   <pluginRepositories>
@@ -144,7 +144,7 @@
       </snapshots>
       <id>vera-dev</id>
       <name>Vera development</name>
-      <url>http://artifactory.openpreservation.org/artifactory/vera-dev</url>
+      <url>https://artifactory.openpreservation.org/artifactory/vera-dev</url>
     </pluginRepository>
   </pluginRepositories>
 
