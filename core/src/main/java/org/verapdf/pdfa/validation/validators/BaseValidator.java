@@ -56,7 +56,6 @@ class BaseValidator implements PDFAValidator {
 
 	private final Deque<Object> objectsStack = new ArrayDeque<>();
 	private final Deque<String> objectsContext = new ArrayDeque<>();
-	private final Deque<Set<String>> contextSet = new ArrayDeque<>();
 	private final Map<Rule, List<ObjectWithContext>> deferredRules = new HashMap<>();
 	protected final Set<TestAssertion> results = new HashSet<>();
 	protected int testCounter = 0;
@@ -110,14 +109,9 @@ class BaseValidator implements PDFAValidator {
 		this.objectsStack.push(root);
 		this.objectsContext.push("root");
 
-		Set<String> rootIDContext = new HashSet<>();
-
 		if (root.getID() != null) {
-			rootIDContext.add(root.getID());
 			this.idSet.add(root.getID());
 		}
-
-		this.contextSet.push(rootIDContext);
 
 		while (!this.objectsStack.isEmpty() && !this.abortProcessing) {
 			checkNext();
@@ -139,7 +133,6 @@ class BaseValidator implements PDFAValidator {
 		this.scope = JavaScriptEvaluator.initialise();
 		this.objectsStack.clear();
 		this.objectsContext.clear();
-		this.contextSet.clear();
 		this.deferredRules.clear();
 		this.results.clear();
 		this.idSet.clear();
@@ -165,13 +158,12 @@ class BaseValidator implements PDFAValidator {
 	private void checkNext() throws ValidationException {
 		Object checkObject = this.objectsStack.pop();
 		String checkContext = this.objectsContext.pop();
-		Set<String> checkIDContext = this.contextSet.pop();
 
 		checkAllRules(checkObject, checkContext);
 
 		updateVariables(checkObject);
 
-		addAllLinkedObjects(checkObject, checkContext, checkIDContext);
+		addAllLinkedObjects(checkObject, checkContext);
 	}
 
 	private void updateVariables(Object object) {
@@ -195,7 +187,7 @@ class BaseValidator implements PDFAValidator {
 		}
 	}
 
-	private void addAllLinkedObjects(Object checkObject, String checkContext, Set<String> checkIDContext)
+	private void addAllLinkedObjects(Object checkObject, String checkContext)
 			throws ValidationException {
 		List<String> links = checkObject.getLinks();
 		for (int j = links.size() - 1; j >= 0; --j) {
@@ -223,35 +215,25 @@ class BaseValidator implements PDFAValidator {
 					throw new ValidationException("There is a null link in an object. Context of the link: " + path);
 				}
 
-				if (checkRequired(obj, checkIDContext)) {
+				if (checkRequired(obj)) {
 					this.objectsStack.push(obj);
-
-					Set<String> newCheckIDContext = new HashSet<>(checkIDContext);
 
 					if (obj.getID() != null) {
 						path.append("(");
 						path.append(obj.getID());
 						path.append(")");
 
-						newCheckIDContext.add(obj.getID());
 						this.idSet.add(obj.getID());
 					}
 
 					this.objectsContext.push(path.toString());
-					this.contextSet.push(newCheckIDContext);
 				}
 			}
 		}
 	}
 
-	private boolean checkRequired(Object obj, Set<String> checkIDContext) {
-		if (obj.getID() == null) {
-			return true;
-		} else if (obj.isContextDependent().booleanValue()) {
-			return !checkIDContext.contains(obj.getID());
-		} else {
-			return !this.idSet.contains(obj.getID());
-		}
+	private boolean checkRequired(Object obj) {
+		return obj.getID() == null || !this.idSet.contains(obj.getID());
 	}
 
 	private boolean checkAllRules(Object checkObject, String checkContext) {
