@@ -1,3 +1,111 @@
+Version 1.14-RC (June 10, 2019)
+==============================
+
+### Applications
+- fixed installer CLI args not forwarded [[#apps-253][]], [[#iss-1021][]]
+- fixed Java 11 XML bind dependencies [[#apps-254][]], [[#iss-986][]]
+- command line application terminsation codes [[#apps-255][]], [[#apps-256][]], [[#iss-841][]]
+
+## PDF Model:
+- added processColor link for PDDeviceN [[#mod-168][]], [[#iss-902][]]
+
+## PDF Parser:
+- fixed XRefStream handling for trailers [[#par-359][]]
+- fixed space skipping afer RD for type1 [[#par-360][]], [[#par-361][]]
+- fixed various issues with AES decryption [[#par-362][]], [[#par-364][]], [[#par-365][]]
+- fixed font encoding issue [[#par-363][]]
+- fixed buffered in filter and COSStream problems [[#par-366][]]
+- fixed SOF exception for colorspaces [[#par-368][]]
+- fixed date parser issue [[#par-368][]]
+- fixed creation of PD resources from dictionary when cos object empty  [[#par-370][]]
+- logging improvements [[#par-367][]], [[#par-371][]]
+- fixed toUnicode for PDF/A-1 glyph name check [[#par-372][]], [[#iss-1012][]]
+- add underlying color space for PDPattern [[#par-373][]], [[#iss-984][]]
+
+## Core Library:
+- fixed xmp-core byte buffer [[#lib-974][]]
+- logging improvements [[#lib-980][]], [[#lib-1023][]]
+- input stream and file processing XML results now consistent [[#lib-1020][]], [[#iss-1014][]]
+- fixed Java 11 XML bind dependencies  [[#lib-1022][]], [[#iss-986][]]
+- performance tweaks  [[#lib-1028][]]
+
+## PDF Validation:
+- fix metadata creation [[#val-270][]]
+- fix null pointer exception when processing glyphs [[#val-271][]]
+- fix null pointer exception when validating embedded files [[#val-273][]], [[#iss-976][]]
+- fxed graphic state initial colorspace creation and font inheritance  [[#val-274][]], [[#iss-975][]], [[#iss-978][]]
+- deny operstors q, Q, cm inside Text object [[#val-276][]], [[#iss-985][]]
+- preflight passes, veraPDF shows clause="6.2.11.4" error [[#val-277][]], [[#iss-1019][]]
+- fix Ignore trailing zero for info dictionary values during metadata info match xmp check [[#val-278][]], [[#iss-1017][]]
+- fixed Java 11 XML bind dependencies  [[#val-279][]], [[#iss-986][]]
+- fix processColorspace model link implementation for PDDeviceN [[#val-280][]], [[#iss-902][]]
+- added warning for invalid color space objects [[#val-281][]], [[#iss-797][]]
+- fix process color operator flag logic, add underlying color space processing for PDPattern [[#val-282][]], [[#iss-984][]]
+
+## PDF Box Validation:
+- fix metadata creation [[#pdf-195][]]
+- fixed Java 11 XML bind dependencies  [[#pdf-197][]], [[#iss-986][]]
+- fix processColorspace model link implementation for PDDeviceN [[#pdf-198][]], [[#iss-902][]]
+
+[#iss-797]: https://github.com/veraPDF/veraPDF-library/issues/797
+[#iss-841]: https://github.com/veraPDF/veraPDF-library/issues/841
+[#iss-902]: https://github.com/veraPDF/veraPDF-library/issues/902
+[#iss-975]: https://github.com/veraPDF/veraPDF-library/issues/975
+[#iss-976]: https://github.com/veraPDF/veraPDF-library/issues/976
+[#iss-978]: https://github.com/veraPDF/veraPDF-library/issues/978
+[#iss-984]: https://github.com/veraPDF/veraPDF-library/issues/984
+[#iss-985]: https://github.com/veraPDF/veraPDF-library/issues/985
+[#iss-986]: https://github.com/veraPDF/veraPDF-library/issues/986
+[#iss-1012]: https://github.com/veraPDF/veraPDF-library/issues/1012
+[#iss-1014]: https://github.com/veraPDF/veraPDF-library/issues/1014
+[#iss-1017]: https://github.com/veraPDF/veraPDF-library/issues/1017
+[#iss-1019]: https://github.com/veraPDF/veraPDF-library/issues/1019
+[#iss-1021]: https://github.com/veraPDF/veraPDF-library/issues/1021
+
+[#apps-253]: https://github.com/veraPDF/veraPDF-apps/pull/253
+[#apps-254]: https://github.com/veraPDF/veraPDF-apps/pull/254
+[#apps-255]: https://github.com/veraPDF/veraPDF-apps/pull/255
+[#apps-256]: https://github.com/veraPDF/veraPDF-apps/pull/256
+
+[#lib-974]: https://github.com/veraPDF/veraPDF-library/pull/974
+[#lib-980]: https://github.com/veraPDF/veraPDF-library/pull/980
+[#lib-1020]: https://github.com/veraPDF/veraPDF-library/pull/1020
+[#lib-1022]: https://github.com/veraPDF/veraPDF-library/pull/1022
+[#lib-1023]: https://github.com/veraPDF/veraPDF-library/pull/1023
+[#lib-1028]: https://github.com/veraPDF/veraPDF-library/pull/1028
+
+[#mod-168]: https://github.com/veraPDF/veraPDF-model/pull/168
+
+[#par-359]: https://github.com/veraPDF/veraPDF-parser/pull/359
+[#par-360]: https://github.com/veraPDF/veraPDF-parser/pull/360
+[#par-361]: https://github.com/veraPDF/veraPDF-parser/pull/361
+[#par-362]: https://github.com/veraPDF/veraPDF-parser/pull/362
+[#par-363]: https://github.com/veraPDF/veraPDF-parser/pull/363
+[#par-364]: https://github.com/veraPDF/veraPDF-parser/pull/364
+[#par-365]: https://github.com/veraPDF/veraPDF-parser/pull/365
+[#par-366]: https://github.com/veraPDF/veraPDF-parser/pull/366
+[#par-367]: https://github.com/veraPDF/veraPDF-parser/pull/367
+[#par-368]: https://github.com/veraPDF/veraPDF-parser/pull/368
+[#par-370]: https://github.com/veraPDF/veraPDF-parser/pull/370
+[#par-371]: https://github.com/veraPDF/veraPDF-parser/pull/371
+[#par-372]: https://github.com/veraPDF/veraPDF-parser/pull/372
+
+[#pdf-195]: https://github.com/veraPDF/veraPDF-pdfbox-validation/pull/195
+[#pdf-197]: https://github.com/veraPDF/veraPDF-pdfbox-validation/pull/197
+[#pdf-198]: https://github.com/veraPDF/veraPDF-pdfbox-validation/pull/198
+
+[#val-270]: https://github.com/veraPDF/veraPDF-validation/pull/270
+[#val-271]: https://github.com/veraPDF/veraPDF-validation/pull/271
+[#val-273]: https://github.com/veraPDF/veraPDF-validation/pull/273
+[#val-274]: https://github.com/veraPDF/veraPDF-validation/pull/274
+[#val-276]: https://github.com/veraPDF/veraPDF-validation/pull/276
+[#val-277]: https://github.com/veraPDF/veraPDF-validation/pull/277
+[#val-277]: https://github.com/veraPDF/veraPDF-validation/pull/278
+[#val-277]: https://github.com/veraPDF/veraPDF-validation/pull/279
+[#val-280]: https://github.com/veraPDF/veraPDF-validation/pull/280
+[#val-281]: https://github.com/veraPDF/veraPDF-validation/pull/281
+[#val-282]: https://github.com/veraPDF/veraPDF-validation/pull/282
+
 Version 1.12 (May 9, 2018)
 ==========================
 
