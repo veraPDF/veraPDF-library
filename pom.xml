@@ -34,7 +34,7 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-library</artifactId>
-  <version>1.14.0-RC</version>
+  <version>1.14.0</version>
   <packaging>pom</packaging>
 
   <name>veraPDF PDF/A Validation Library</name>
@@ -52,7 +52,7 @@
   </scm>
 
   <properties>
-    <verapdf.model.version>[1.14.0-RC,1.15.0-RC)</verapdf.model.version>
+    <verapdf.model.version>[1.14.0,1.15.0)</verapdf.model.version>
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
   </properties>
