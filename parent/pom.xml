@@ -32,7 +32,7 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-parent</artifactId>
-  <version>1.14.2</version>
+  <version>1.14.3</version>
   <packaging>pom</packaging>
 
   <name>veraPDF Consortium parent </name>
@@ -115,17 +115,6 @@
     <system>OPF Jenkins</system>
     <url>http://jenkins.opf-labs.org</url>
   </ciManagement>
-
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
 
   <repositories>
     <repository>
@@ -485,6 +474,34 @@
 
         </plugins>
       </build>
+    </profile>
+
+    <profile>
+      <id>ossrh</id>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+      </distributionManagement>
+    </profile>
+
+    <profile>
+      <id>verapdf</id>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>opf-artefactory</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>opf-artefactory</id>
+          <url>https://artifactory.openpreservation.org/artifactory/opf-dev-local/</url>
+        </repository>
+      </distributionManagement>
     </profile>
 
     <profile>
