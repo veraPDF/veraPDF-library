@@ -499,7 +499,7 @@
         </snapshotRepository>
         <repository>
           <id>opf-artefactory</id>
-          <url>https://artifactory.openpreservation.org/artifactory/opf-dev-local/</url>
+          <url>https://artifactory.openpreservation.org/artifactory/vera-dev-local/</url>
         </repository>
       </distributionManagement>
     </profile>
