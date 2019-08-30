@@ -31,7 +31,7 @@ Quick Start
 
 In order to build the library you'll need:
 
- * Java 7, which can be downloaded [from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html), or for Linux users [OpenJDK](http://openjdk.java.net/install/index.html).
+ * Java 8, which can be downloaded [from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html), or for Linux users [OpenJDK](http://openjdk.java.net/install/index.html).
  * [Maven v3+](https://maven.apache.org/)
 
 Life will be easier if you also use [Git](https://git-scm.com/) to obtain and manage the source.
@@ -43,7 +43,7 @@ First you'll need to obtain a version of the veraPDF-library source code. You ca
 Use Git to clone the repository and ensure that the `master` branch is checked out:
 ```
 git clone https://github.com/veraPDF/veraPDF-library
-git checkout master
+git checkout integration
 ```
 or download the latest [tar archive](https://github.com/veraPDF/veraPDF-library/archive/master.tar.gz "veraPDF-library latest GitHub tar archive") or [zip archive](https://github.com/veraPDF/veraPDF-library/archive/master.zip "veraPDF-library latest GitHub zip archive") from GitHub.
 
