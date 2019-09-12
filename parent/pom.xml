@@ -32,7 +32,7 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-parent</artifactId>
-  <version>1.12.2</version>
+  <version>1.14.3</version>
   <packaging>pom</packaging>
 
   <name>veraPDF Consortium parent </name>
@@ -116,17 +116,6 @@
     <url>http://jenkins.opf-labs.org</url>
   </ciManagement>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
-
   <repositories>
     <repository>
       <snapshots>
@@ -134,7 +123,7 @@
       </snapshots>
       <id>vera-dev</id>
       <name>Vera development</name>
-      <url>http://artifactory.opf-labs.org/artifactory/vera-dev</url>
+      <url>https://artifactory.openpreservation.org/artifactory/vera-dev</url>
     </repository>
   </repositories>
   <pluginRepositories>
@@ -144,7 +133,7 @@
       </snapshots>
       <id>vera-dev</id>
       <name>Vera development</name>
-      <url>http://artifactory.opf-labs.org/artifactory/vera-dev</url>
+      <url>https://artifactory.openpreservation.org/artifactory/vera-dev</url>
     </pluginRepository>
   </pluginRepositories>
 
@@ -153,20 +142,22 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
     <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
-    <mvn.assembly.version>3.1.0</mvn.assembly.version>
-    <mvn.clean.version>3.0.0</mvn.clean.version>
-    <mvn.compiler.version>3.7.0</mvn.compiler.version>
-    <mvn.deploy.version>2.8.2</mvn.deploy.version>
+    <mvn.assembly.version>3.1.1</mvn.assembly.version>
+    <mvn.clean.version>3.1.0</mvn.clean.version>
+    <mvn.compiler.version>3.8.1</mvn.compiler.version>
+    <mvn.deploy.version>3.0.0-M1</mvn.deploy.version>
+    <mvn.enforcer.version>1.3.1</mvn.enforcer.version>
     <mvn.exec.version>1.4.0</mvn.exec.version>
     <mvn.gpg.plugin.version>1.6</mvn.gpg.plugin.version>
-    <mvn.javadoc.version>3.0.0</mvn.javadoc.version>
+    <mvn.jarsigner.version>3.0.0</mvn.jarsigner.version>
+    <mvn.javadoc.version>3.1.0</mvn.javadoc.version>
     <mvn.project-info.version>2.9</mvn.project-info.version>
     <mvn.release.version>2.5.3</mvn.release.version>
-    <mvn.resources.version>3.0.2</mvn.resources.version>
+    <mvn.resources.version>3.1.0</mvn.resources.version>
     <mvn.site.version>3.6</mvn.site.version>
-    <mvn.source.version>3.0.1</mvn.source.version>
-    <mvn.surefire.version>2.20.1</mvn.surefire.version>
-    <mvn.versions.version>2.5</mvn.versions.version>
+    <mvn.source.version>3.1.0</mvn.source.version>
+    <mvn.surefire.version>3.0.0-M3</mvn.surefire.version>
+    <mvn.versions.version>2.7</mvn.versions.version>
     <mvn.mycilla.license.version>3.0</mvn.mycilla.license.version>
     <verapdf.timestamp>${maven.build.timestamp}</verapdf.timestamp>
   </properties>
@@ -255,6 +246,12 @@
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jarsigner-plugin</artifactId>
+          <version>${mvn.jarsigner.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
           <version>${mvn.resources.version}</version>
         </plugin>
@@ -322,13 +319,37 @@
 
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <inherited>true</inherited>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${mvn.enforcer.version}</version>
+          <executions>
+            <execution>
+              <id>enforce-maven-3</id>
+              <goals>
+                <goal>enforce</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <requireMavenVersion>
+                    <version>3.0</version>
+                  </requireMavenVersion>
+                </rules>
+                <fail>true</fail>
+              </configuration>
+            </execution>
+         </executions>
+       </plugin>
+    </plugins>
   </build>
 
   <dependencies>
     <dependency>
       <groupId>org.codehaus.sonar-plugins.java</groupId>
       <artifactId>sonar-jacoco-listeners</artifactId>
-      <version>1.2</version>
+      <version>3.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -426,6 +447,19 @@
 
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jarsigner-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>sign</id>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
             <executions>
               <execution>
@@ -440,6 +474,34 @@
 
         </plugins>
       </build>
+    </profile>
+
+    <profile>
+      <id>ossrh</id>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>ossrh</id>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+      </distributionManagement>
+    </profile>
+
+    <profile>
+      <id>verapdf</id>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>opf-artefactory</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>opf-artefactory</id>
+          <url>https://artifactory.openpreservation.org/artifactory/vera-dev-local/</url>
+        </repository>
+      </distributionManagement>
     </profile>
 
     <profile>
