@@ -28,7 +28,7 @@
   <parent>
     <artifactId>verapdf-parent</artifactId>
     <groupId>org.verapdf</groupId>
-    <version>1.14.3</version>
+    <version>1.14.4</version>
     <relativePath>parent/pom.xml</relativePath>
   </parent>
 

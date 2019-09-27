@@ -32,7 +32,7 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-parent</artifactId>
-  <version>1.14.3</version>
+  <version>1.14.4</version>
   <packaging>pom</packaging>
 
   <name>veraPDF Consortium parent </name>
@@ -447,19 +447,6 @@
 
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jarsigner-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>sign</id>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
             <executions>
               <execution>
@@ -488,6 +475,22 @@
           <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
       </distributionManagement>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jarsigner-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>sign</id>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
 
     <profile>
@@ -495,7 +498,7 @@
       <distributionManagement>
         <snapshotRepository>
           <id>opf-artefactory</id>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+          <url>https://artifactory.openpreservation.org/artifactory/vera-dev-local/</url>
         </snapshotRepository>
         <repository>
           <id>opf-artefactory</id>
