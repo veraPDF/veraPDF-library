@@ -19,7 +19,7 @@
  * http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.results;
 
@@ -35,7 +35,7 @@ import java.util.Set;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 public class ValidationResults {
-	private static final String NOT_NULL_MESSAGE = " cannot be null."; //$NON-NLS-1$
+	private static final String NOT_NULL_MESSAGE = " cannot be null"; //$NON-NLS-1$
 	private static final String VALIDATION_PROFILE_NOT_NULL_MESSAGE = "Validation profile " + NOT_NULL_MESSAGE; //$NON-NLS-1$
 	private static final String ASSERTIONS_NOT_NULL_MESSAGE = "Assertions " + NOT_NULL_MESSAGE; //$NON-NLS-1$
 
@@ -131,7 +131,7 @@ public class ValidationResults {
 	/**
 	 * Creates an immutable TestAssertion instance from the passed parameter
 	 * values.
-	 * 
+	 *
 	 * @param ordinal
 	 *            the integer ordinal for the instance
 	 * @param ruleId
@@ -168,7 +168,7 @@ public class ValidationResults {
 	/**
 	 * TODO: Better explanation of level and context. Creates an immutable
 	 * {@link Location} instance.
-	 * 
+	 *
 	 * @param level
 	 *            the Locations level, represented as a String
 	 * @param context
@@ -197,7 +197,7 @@ public class ValidationResults {
 	 * {@code assertion.getStatus() == TestAssertion.Status.PASSED} from
 	 * {@code toStrip} and returns a new {@link ValidationResult} without the
 	 * passed assertions.
-	 * 
+	 *
 	 * @param toStrip
 	 *            a {@code ValidationResult} to clone without passed
 	 *            {@code TestAssertion}s
