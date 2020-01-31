@@ -29,6 +29,8 @@ import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import javax.xml.bind.JAXBException;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -54,7 +56,7 @@ public class ValidationResults {
 	 *            compliant with the indicated flavour
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions,
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Map<RuleId, Set<TestAssertion>> assertions,
 													final boolean isCompliant) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
@@ -75,7 +77,7 @@ public class ValidationResults {
 	 * @param totalAssertions
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions,
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Map<RuleId, Set<TestAssertion>> assertions,
 			final boolean isCompliant, final int totalAssertions) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
@@ -92,16 +94,18 @@ public class ValidationResults {
 	 *            the Set of TestAssertions reported by during validation
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions) {
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Map<RuleId, Set<TestAssertion>> assertions) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		if (assertions == null)
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
 		boolean isCompliant = true;
-		for (TestAssertion assertion : assertions) {
-			if (assertion.getStatus() == Status.FAILED) {
-				isCompliant = false;
-				break;
+		for(Set<TestAssertion> setAssertions : assertions.values()) {
+			for(TestAssertion assertion : setAssertions) {
+				if (assertion.getStatus() == Status.FAILED) {
+					isCompliant = false;
+					break;
+				}
 			}
 		}
 		return resultFromValues(validationProfile, assertions, isCompliant);

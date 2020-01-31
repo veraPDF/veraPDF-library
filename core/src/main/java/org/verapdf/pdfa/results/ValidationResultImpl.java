@@ -27,6 +27,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.profiles.ProfileDetails;
 import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -36,6 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -180,6 +182,15 @@ final class ValidationResultImpl implements ValidationResult {
 
 	static ValidationResultImpl defaultInstance() {
 		return DEFAULT;
+	}
+
+	static ValidationResultImpl fromValues(final ValidationProfile validationProfile,
+										   final Map<RuleId, Set<TestAssertion>> assertions, final boolean isCompliant, final int totalChecks) {
+		Set<TestAssertion> allAssertions = new HashSet<>();
+		for(Set<TestAssertion> setAssertion : assertions.values()) {
+			allAssertions.addAll(setAssertion);
+		}
+		return new ValidationResultImpl(validationProfile, allAssertions, isCompliant, totalChecks);
 	}
 
 	static ValidationResultImpl fromValues(final ValidationProfile validationProfile,

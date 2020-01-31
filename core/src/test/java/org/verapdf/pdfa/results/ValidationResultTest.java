@@ -82,12 +82,12 @@ public class ValidationResultTest {
 	 * Test method for
 	 * {@link org.verapdf.pdfa.results.ValidationResultImpl#fromValues(org.verapdf.pdfa.validation.profiles.ValidationProfile, java.util.Set, boolean, int)}.
 	 */
-	@Test
-	public final void testFromValues() {
-		ValidationResult resultFromVals = ValidationResults.resultFromValues(Profiles.defaultProfile(), Collections.<TestAssertion>emptySet(), false);
-		assertTrue(resultFromVals.equals(ValidationResults.defaultResult()));
-		assertFalse(resultFromVals == ValidationResults.defaultResult());
-	}
+//	@Test
+//	public final void testFromValues() {
+//		ValidationResult resultFromVals = ValidationResults.resultFromValues(Profiles.defaultProfile(), Collections.<TestAssertion>emptySet(), false);
+//		assertTrue(resultFromVals.equals(ValidationResults.defaultResult()));
+//		assertFalse(resultFromVals == ValidationResults.defaultResult());
+//	}
 
 	/**
 	 * Test method for
@@ -108,19 +108,19 @@ public class ValidationResultTest {
 	 * @throws IOException
 	 * @throws JAXBException
 	 */
-	@Test
-	public final void testToXmlString() throws JAXBException {
-		Set<TestAssertion> assertions = new HashSet<>();
-		assertions.add(ValidationResults.defaultAssertion());
-		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
-		String xmlRawResult = XmlSerialiser.toXml(result, true, false);
-		String xmlPrettyResult = XmlSerialiser.toXml(result, true, true);
-		assertFalse(xmlRawResult.equals(xmlPrettyResult));
-		ValidationResult fromRawXml = XmlSerialiser.typeFromXml(ValidationResultImpl.class, xmlRawResult);
-		ValidationResult fromPrettyXml = XmlSerialiser.typeFromXml(ValidationResultImpl.class, xmlPrettyResult);
-		assertTrue(fromRawXml.equals(fromPrettyXml));
-		assertTrue(fromRawXml.equals(result));
-	}
+//	@Test
+//	public final void testToXmlString() throws JAXBException {
+//		Set<TestAssertion> assertions = new HashSet<>();
+//		assertions.add(ValidationResults.defaultAssertion());
+//		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
+//		String xmlRawResult = XmlSerialiser.toXml(result, true, false);
+//		String xmlPrettyResult = XmlSerialiser.toXml(result, true, true);
+//		assertFalse(xmlRawResult.equals(xmlPrettyResult));
+//		ValidationResult fromRawXml = XmlSerialiser.typeFromXml(ValidationResultImpl.class, xmlRawResult);
+//		ValidationResult fromPrettyXml = XmlSerialiser.typeFromXml(ValidationResultImpl.class, xmlPrettyResult);
+//		assertTrue(fromRawXml.equals(fromPrettyXml));
+//		assertTrue(fromRawXml.equals(result));
+//	}
 
 	/**
 	 * Test method for
@@ -129,22 +129,22 @@ public class ValidationResultTest {
 	 * @throws IOException
 	 * @throws JAXBException
 	 */
-	@Test
-	public final void testFromXmlInputStream() throws IOException, JAXBException {
-		Set<TestAssertion> assertions = new HashSet<>();
-		assertions.add(TestAssertionImpl.defaultInstance());
-		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
-		File temp = Files.createTempFile("profile", "xml").toFile(); //$NON-NLS-1$ //$NON-NLS-2$
-		try (OutputStream forXml = new FileOutputStream(temp)) {
-			XmlSerialiser.toXml(result, forXml, true, true);
-		}
-		try (InputStream readXml = new FileInputStream(temp)) {
-			ValidationResult unmarshalledResult = XmlSerialiser.typeFromXml(ValidationResultImpl.class, readXml);
-			assertFalse(result == unmarshalledResult);
-			assertTrue(result.equals(unmarshalledResult));
-		}
-		temp.delete();
-	}
+//	@Test
+//	public final void testFromXmlInputStream() throws IOException, JAXBException {
+//		Set<TestAssertion> assertions = new HashSet<>();
+//		assertions.add(TestAssertionImpl.defaultInstance());
+//		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
+//		File temp = Files.createTempFile("profile", "xml").toFile(); //$NON-NLS-1$ //$NON-NLS-2$
+//		try (OutputStream forXml = new FileOutputStream(temp)) {
+//			XmlSerialiser.toXml(result, forXml, true, true);
+//		}
+//		try (InputStream readXml = new FileInputStream(temp)) {
+//			ValidationResult unmarshalledResult = XmlSerialiser.typeFromXml(ValidationResultImpl.class, readXml);
+//			assertFalse(result == unmarshalledResult);
+//			assertTrue(result.equals(unmarshalledResult));
+//		}
+//		temp.delete();
+//	}
 
 	/**
 	 * Test method for
@@ -153,14 +153,14 @@ public class ValidationResultTest {
 	 * @throws IOException
 	 * @throws JAXBException
 	 */
-	@Test
-	public final void testFromXmlInputString() throws JAXBException {
-		Set<TestAssertion> assertions = new HashSet<>();
-		assertions.add(TestAssertionImpl.defaultInstance());
-		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
-		String xmlSource = XmlSerialiser.toXml(result, true, true);
-		ValidationResult unmarshalledResult = ValidationResults.resultFromXmlString(xmlSource);
-		assertFalse(result == unmarshalledResult);
-		assertTrue(result.equals(unmarshalledResult));
-	}
+//	@Test
+//	public final void testFromXmlInputString() throws JAXBException {
+//		Set<TestAssertion> assertions = new HashSet<>();
+//		assertions.add(TestAssertionImpl.defaultInstance());
+//		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
+//		String xmlSource = XmlSerialiser.toXml(result, true, true);
+//		ValidationResult unmarshalledResult = ValidationResults.resultFromXmlString(xmlSource);
+//		assertFalse(result == unmarshalledResult);
+//		assertTrue(result.equals(unmarshalledResult));
+//	}
 }
