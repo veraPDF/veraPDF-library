@@ -90,6 +90,10 @@ public class VeraPDFMeta {
         return packetHeader;
     }
 
+    public String getActualEncoding() {
+        return meta.getActualEncoding();
+    }
+
     public VeraPDFXMPNode getExtensionSchemasNode() {
         return extensionSchemasNode;
     }

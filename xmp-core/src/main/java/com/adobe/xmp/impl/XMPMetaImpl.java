@@ -49,7 +49,9 @@ public class XMPMetaImpl implements XMPMeta, XMPConst
 	private XMPNode tree;
 	/** the xpacket processing instructions content */ 
 	private String packetHeader = null;
-	
+	//------------------------------------------------------------------------------ veraPDF: additional field for actual encoding
+	/** the actual encoding used for XMP package serialization */
+	private String actualEncoding;
 
 	/**
 	 * Constructor for an empty metadata object.
@@ -1218,8 +1220,19 @@ public class XMPMetaImpl implements XMPMeta, XMPConst
 	{
 		this.packetHeader = packetHeader;
 	}
-	
-	
+
+	//------------------------------------------------------------------------------ veraPDF: getter method for actual encoding
+	public String getActualEncoding()
+	{
+		return actualEncoding;
+	}
+
+	//------------------------------------------------------------------------------ veraPDF: setter method for actual encoding
+	public void setActualEncoding(String actualEncoding)
+	{
+		this.actualEncoding = actualEncoding;
+	}
+
 	/**
 	 * Performs a deep clone of the XMPMeta-object
 	 * 
