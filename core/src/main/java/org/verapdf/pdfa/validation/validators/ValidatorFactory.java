@@ -19,7 +19,7 @@
  * http://mozilla.org/MPL/2.0/.
  */
 /**
- *
+ * 
  */
 package org.verapdf.pdfa.validation.validators;
 
@@ -36,7 +36,7 @@ import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 /**
  * Static utility class that fills in for a factory for {@link PDFAValidator}s.
- *
+ * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 public final class ValidatorFactory {
@@ -51,7 +51,7 @@ public final class ValidatorFactory {
 	 * when offline. A {@link ProfileDirectory} populated with the pre-loaded
 	 * profiles can be obtained by calling
 	 * {@link Profiles#getVeraProfileDirectory()}.
-	 *
+	 * 
 	 * @param flavour
 	 *            the {@link PDFAFlavour} that's associated with the
 	 *            {@code ValidationProfile} to used to initialise the
@@ -63,20 +63,18 @@ public final class ValidatorFactory {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public static PDFAValidator createValidator(final PDFAFlavour flavour,
-												final boolean logPassedChecks,
-												final int viewFailures) {
+	public static PDFAValidator createValidator(final PDFAFlavour flavour, final boolean logPassedChecks) {
 		if (flavour == null)
 			throw new IllegalArgumentException("Parameter (PDFAFlavour flavour) cannot be null.");
 		return createValidator(Profiles.getVeraProfileDirectory().getValidationProfileByFlavour(flavour),
-				logPassedChecks, viewFailures);
+				logPassedChecks);
 	}
 
 	/**
 	 * Creates a new {@link PDFAValidator} instance that uses one of the
 	 * {@link ValidationProfile}s packaged as a core library resource, see
 	 * {@link Validators#createValidator(PDFAFlavour, boolean)}.
-	 *
+	 * 
 	 * @param flavour
 	 *            the {@link PDFAFlavour} that's associated with the
 	 *            {@code ValidationProfile} to used to initialise the
@@ -95,33 +93,31 @@ public final class ValidatorFactory {
 	 *         parameters
 	 */
 	public static PDFAValidator createValidator(final PDFAFlavour flavour, final boolean logPassedChecks,
-                                                final int viewFailures,
-                                                final int maxFailures) {
+			final int maxFailures) {
 		if (flavour == null)
 			throw new IllegalArgumentException("Parameter (PDFAFlavour flavour) cannot be null.");
 		return createValidator(Profiles.getVeraProfileDirectory().getValidationProfileByFlavour(flavour),
-				logPassedChecks, viewFailures, maxFailures);
+				logPassedChecks, maxFailures);
 	}
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile
 	 * and configured NOT to log passed checks.
-	 *
+	 * 
 	 * @param profile
 	 *            the {@link ValidationProfile} to be enforced by the returned
 	 *            {@code PDFAValidator}.
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public static PDFAValidator createValidator(final ValidationProfile profile,
-                                                final int viewFailures) {
-		return createValidator(profile, false, viewFailures);
+	public static PDFAValidator createValidator(final ValidationProfile profile) {
+		return createValidator(profile, false);
 	}
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile
 	 * and chosen passed test logging.
-	 *
+	 * 
 	 * @param profile
 	 *            the {@link ValidationProfile} to be enforced by the returned
 	 *            {@code PDFAValidator}.
@@ -132,18 +128,16 @@ public final class ValidatorFactory {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public static PDFAValidator createValidator(final ValidationProfile profile,
-												final boolean logPassedChecks,
-												final int viewFailures) {
+	public static PDFAValidator createValidator(final ValidationProfile profile, final boolean logPassedChecks) {
 		if (profile == null)
 			throw new IllegalArgumentException("Parameter (ValidationProfile profile) cannot be null.");
-		return new BaseValidator(profile, logPassedChecks, viewFailures);
+		return new BaseValidator(profile, logPassedChecks);
 	}
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
 	 * requested fast failing behaviour and configured NOT to log passed checks.
-	 *
+	 * 
 	 * @param profile
 	 *            the {@link ValidationProfile} to be enforced by the returned
 	 *            {@code PDFAValidator}.
@@ -156,16 +150,14 @@ public final class ValidatorFactory {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public static PDFAValidator createValidator(final ValidationProfile profile,
-                                                final int viewFailures,
-                                                final int maxFailures) {
-		return createValidator(profile, false, viewFailures, maxFailures);
+	public static PDFAValidator createValidator(final ValidationProfile profile, final int maxFailures) {
+		return createValidator(profile, false, maxFailures);
 	}
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
 	 * requested fast failing behaviour and configured NOT to log passed checks.
-	 *
+	 * 
 	 * @param flavour
 	 *            the {@link PDFAFlavour} that's associated with the
 	 *            {@code ValidationProfile} to used to initialise the
@@ -179,16 +171,14 @@ public final class ValidatorFactory {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public static PDFAValidator createValidator(final PDFAFlavour flavour,
-                                                final int viewFailures,
-                                                final int maxFailures) {
-		return createValidator(flavour, false, viewFailures, maxFailures);
+	public static PDFAValidator createValidator(final PDFAFlavour flavour, final int maxFailures) {
+		return createValidator(flavour, false, maxFailures);
 	}
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
 	 * chosen passed test logging and requested fast failing behaviour.
-	 *
+	 * 
 	 * @param profile
 	 *            the {@link ValidationProfile} to be enforced by the returned
 	 *            {@code PDFAValidator}.
@@ -205,15 +195,13 @@ public final class ValidatorFactory {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public static PDFAValidator createValidator(final ValidationProfile profile,
-                                                final boolean logPassedChecks,
-                                                final int viewFailures,
-                                                final int maxFailures) {
+	public static PDFAValidator createValidator(final ValidationProfile profile, final boolean logPassedChecks,
+			final int maxFailures) {
 		if (profile == null)
 			throw new IllegalArgumentException("Parameter (ValidationProfile profile) cannot be null.");
 		if (maxFailures > 0)
-			return new FastFailValidator(profile, logPassedChecks, viewFailures, maxFailures);
-		return createValidator(profile, logPassedChecks, viewFailures);
+			return new FastFailValidator(profile, logPassedChecks, maxFailures);
+		return createValidator(profile, logPassedChecks);
 	}
 
 	/**
@@ -225,7 +213,7 @@ public final class ValidatorFactory {
 
 	/**
 	 * Create a {@link ValidatorConfig} instance from the passed values.
-	 *
+	 * 
 	 * @param flavour
 	 *            the {@link PDFAFlavour} used for validation
 	 * @param recordPasses
@@ -238,14 +226,14 @@ public final class ValidatorFactory {
 	 *         values.
 	 */
 	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final boolean recordPasses,
-											   final int viewFails, final int maxFails) {
-		return ValidatorConfigImpl.fromValues(flavour, recordPasses, viewFails, maxFails);
+			final int maxFails) {
+		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails);
 	}
 
 	/**
 	 * De-serialises a {@link ValidatorConfig} instance from it's XML
 	 * representation
-	 *
+	 * 
 	 * @param source
 	 *            an {@link InputStream} that is an XML representation of a
 	 *            {@link ValidatorConfig}
@@ -260,7 +248,7 @@ public final class ValidatorFactory {
 
 	/**
 	 * Serialises a {@link ValidatorConfig} to XML
-	 *
+	 * 
 	 * @param source
 	 *            a {@link ValidatorConfig} instance to serialise
 	 * @return a {@link String} containing the XML representation of the passed
@@ -275,7 +263,7 @@ public final class ValidatorFactory {
 	/**
 	 * Serialises a {@link ValidatorConfig} instance to its XML representation
 	 * that's output to the passed {@link OutputStream}.
-	 *
+	 * 
 	 * @param source
 	 *            the {@link ValidatorConfig} instance to serialise
 	 * @param dest

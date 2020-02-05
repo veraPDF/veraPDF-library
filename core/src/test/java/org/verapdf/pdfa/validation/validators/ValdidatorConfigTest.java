@@ -66,7 +66,7 @@ public class ValdidatorConfigTest {
 	public final void testFromValues() {
 		ValidatorConfig defaultInstance = ValidatorFactory.defaultConfig();
 		ValidatorConfig fromVals = ValidatorFactory.createConfig(defaultInstance.getFlavour(),
-				defaultInstance.isRecordPasses(), defaultInstance.getMaxFails(), defaultInstance.getViewFails());
+				defaultInstance.isRecordPasses(), defaultInstance.getMaxFails());
 		assertTrue(fromVals.equals(defaultInstance));
 		assertFalse(fromVals == defaultInstance);
 	}

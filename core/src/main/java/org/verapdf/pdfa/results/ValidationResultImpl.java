@@ -19,7 +19,7 @@
  * http://mozilla.org/MPL/2.0/.
  */
 /**
- *
+ * 
  */
 package org.verapdf.pdfa.results;
 
@@ -66,12 +66,12 @@ final class ValidationResultImpl implements ValidationResult {
 	}
 
 	private ValidationResultImpl(final ValidationProfile validationProfile,
-								 final Set<TestAssertion> assertions, final boolean isCompliant) {
+			final Set<TestAssertion> assertions, final boolean isCompliant) {
 		this(validationProfile, assertions, isCompliant, assertions.size());
 	}
 
 	private ValidationResultImpl(final ValidationProfile validationProfile,
-								 final Set<TestAssertion> assertions, final boolean isCompliant, int totalAssertions) {
+			final Set<TestAssertion> assertions, final boolean isCompliant, int totalAssertions) {
 		super();
 		this.flavour = validationProfile.getPDFAFlavour();
 		this.assertions = new HashSet<>(assertions);
@@ -186,11 +186,11 @@ final class ValidationResultImpl implements ValidationResult {
 
 	static ValidationResultImpl fromValues(final ValidationProfile validationProfile,
 										   final Map<RuleId, Set<TestAssertion>> assertions, final boolean isCompliant, final int totalChecks) {
-		Set<TestAssertion> setAssertions = new HashSet<>();
-		for(Set<TestAssertion> ruleAssertions : assertions.values()) {
-			setAssertions.addAll(ruleAssertions);
+		Set<TestAssertion> allAssertions = new HashSet<>();
+		for(Set<TestAssertion> setAssertion : assertions.values()) {
+			allAssertions.addAll(setAssertion);
 		}
-		return new ValidationResultImpl(validationProfile, setAssertions, isCompliant, totalChecks);
+		return new ValidationResultImpl(validationProfile, allAssertions, isCompliant, totalChecks);
 	}
 
 	static ValidationResultImpl fromValues(final ValidationProfile validationProfile,

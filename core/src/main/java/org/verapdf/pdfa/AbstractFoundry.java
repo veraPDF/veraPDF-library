@@ -39,41 +39,41 @@ abstract class AbstractFoundry implements VeraPDFFoundry {
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config) {
 		if (config.getMaxFails() > 0)
-			return createFailFastValidator(config.getFlavour(), config.getViewFails(), config.getMaxFails());
-		return createValidator(config.getFlavour(), config.isRecordPasses(), config.getViewFails());
+			return createFailFastValidator(config.getFlavour(), config.getMaxFails());
+		return createValidator(config.getFlavour(), config.isRecordPasses());
 	}
 
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config, PDFAFlavour flavour) {
 		if (config.getMaxFails() > 0)
-			return createFailFastValidator(flavour, config.getViewFails(), config.getMaxFails());
-		return createValidator(flavour, config.isRecordPasses(), config.getViewFails());
+			return createFailFastValidator(flavour, config.getMaxFails());
+		return createValidator(flavour, config.isRecordPasses());
 	}
 
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config, ValidationProfile profile) {
 		if (config.getMaxFails() > 0)
-			return createFailFastValidator(profile, config.getViewFails(), config.getMaxFails());
-		return createValidator(profile, config.isRecordPasses(), config.getViewFails());
+			return createFailFastValidator(profile, config.getMaxFails());
+		return createValidator(profile, config.isRecordPasses());
 	}
 
 	@Override
-	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess, int viewFails) {
-		return ValidatorFactory.createValidator(flavour, logSuccess, viewFails);
+	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess) {
+		return ValidatorFactory.createValidator(flavour, logSuccess);
 	}
 
 	@Override
-	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess, int viewFails) {
-		return ValidatorFactory.createValidator(profile, logSuccess, viewFails);
+	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess) {
+		return ValidatorFactory.createValidator(profile, logSuccess);
 	}
 
 	@Override
-	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int viewFails, int maxFailures) {
-		return ValidatorFactory.createValidator(flavour, viewFails, maxFailures);
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures) {
+		return ValidatorFactory.createValidator(flavour, maxFailures);
 	}
 
 	@Override
-	public PDFAValidator createFailFastValidator(ValidationProfile profile, int viewFails, int maxFailures) {
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures) {
 		return ValidatorFactory.createValidator(profile, maxFailures);
 	}
 

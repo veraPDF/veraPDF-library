@@ -49,6 +49,7 @@ import java.util.*;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 class BaseValidator implements PDFAValidator {
+	private static final int MAX_OF_EQUAL_TYPE_RULES_ISSUES = 100;
 	private static final URI componentId = URI.create("http://pdfa.verapdf.org/validators#default");
 	private static final String componentName = "veraPDF PDF/A Validator";
 	private static final ComponentDetails componentDetails = Components.libraryDetails(componentId, componentName);
@@ -58,10 +59,9 @@ class BaseValidator implements PDFAValidator {
 	private final Deque<Object> objectsStack = new ArrayDeque<>();
 	private final Deque<String> objectsContext = new ArrayDeque<>();
 	private final Map<Rule, List<ObjectWithContext>> deferredRules = new HashMap<>();
+//	protected final Set<TestAssertion> results = new HashSet<>();
 	protected final Map<RuleId, Set<TestAssertion>> results = new HashMap<>();
 	protected int testCounter = 0;
-	protected int displayedFailuresCounter;
-	protected int failureCount = 0;
 	protected boolean abortProcessing = false;
 	protected final boolean logPassedTests;
 	protected boolean isCompliant = true;
@@ -70,15 +70,14 @@ class BaseValidator implements PDFAValidator {
 
 	protected String rootType;
 
-	protected BaseValidator(final ValidationProfile profile, final int displayedFailuresCounter) {
-		this(profile, false, displayedFailuresCounter);
+	protected BaseValidator(final ValidationProfile profile) {
+		this(profile, false);
 	}
 
-	protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests, final int displayedFailuresCounter) {
+	protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests) {
 		super();
 		this.profile = profile;
 		this.logPassedTests = logPassedTests;
-		this.displayedFailuresCounter = displayedFailuresCounter;
 	}
 
 	/*
@@ -289,18 +288,13 @@ class BaseValidator implements PDFAValidator {
 			Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
 			TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
 					assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location);
-			if (this.isCompliant)
+			if (this.isCompliant) {
 				this.isCompliant = assertionResult;
+			}
 			if (!assertionResult || this.logPassedTests) {
-				failureCount++;
-				if(failureCount < displayedFailuresCounter) {
-					if (results.containsKey(assertion.getRuleId())) {
-						this.results.get(assertion.getRuleId()).add(assertion);
-					} else {
-						Set<TestAssertion> assertionSet = new HashSet<>();
-						assertionSet.add(assertion);
-						this.results.put(assertion.getRuleId(), assertionSet);
-					}
+				Set<TestAssertion> resultSet = this.results.get(assertion.getRuleId());
+				if(resultSet.size() < MAX_OF_EQUAL_TYPE_RULES_ISSUES) {
+					resultSet.add(assertion);
 				}
 			}
 		}
