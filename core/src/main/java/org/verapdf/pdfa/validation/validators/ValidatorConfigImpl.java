@@ -43,16 +43,19 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	@XmlAttribute
 	private final boolean recordPasses;
 	@XmlAttribute
+	private final int viewFails;
+	@XmlAttribute
 	private final int maxFails;
 
 	private ValidatorConfigImpl() {
-		this(PDFAFlavour.NO_FLAVOUR, false, -1);
+		this(PDFAFlavour.NO_FLAVOUR, false, -1, -1);
 	}
 
-	private ValidatorConfigImpl(final PDFAFlavour flavour, final boolean recordPasses, final int maxFails) {
+	private ValidatorConfigImpl(final PDFAFlavour flavour, final boolean recordPasses, final int viewFails, final int maxFails) {
 		super();
 		this.flavour = flavour;
 		this.recordPasses = recordPasses;
+		this.viewFails = viewFails;
 		this.maxFails = maxFails;
 	}
 
@@ -78,6 +81,11 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	@Override
 	public PDFAFlavour getFlavour() {
 		return this.flavour;
+	}
+
+	@Override
+	public int getViewFails() {
+		return this.viewFails;
 	}
 
 	/**
@@ -125,16 +133,20 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	 */
 	@Override
 	public String toString() {
-		return "ValidatorConfigImpl [recordPasses=" + this.recordPasses + ", maxFails=" + this.maxFails + ", flavour="
-				+ this.flavour + "]";
+		return "ValidatorConfigImpl{" +
+				"flavour=" + flavour +
+				", recordPasses=" + recordPasses +
+				", viewFails=" + viewFails +
+				", maxFails=" + maxFails +
+				'}';
 	}
 
 	static ValidatorConfig defaultInstance() {
 		return defaultConfig;
 	}
 
-	static ValidatorConfig fromValues(final PDFAFlavour flavour, final boolean recordPasses, final int maxFails) {
-		return new ValidatorConfigImpl(flavour, recordPasses, maxFails);
+	static ValidatorConfig fromValues(final PDFAFlavour flavour, final boolean recordPasses, final int viewFails, final int maxFails) {
+		return new ValidatorConfigImpl(flavour, recordPasses, viewFails, maxFails);
 	}
 
 	static class Adapter extends XmlAdapter<ValidatorConfigImpl, ValidatorConfig> {

@@ -168,7 +168,7 @@ public interface VeraPDFFoundry extends Component {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess);
+	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess, int viewFails);
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile
@@ -184,7 +184,7 @@ public interface VeraPDFFoundry extends Component {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess);
+	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess, int viewFails);
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
@@ -203,7 +203,7 @@ public interface VeraPDFFoundry extends Component {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures);
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int viewFails, int maxFailures);
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
@@ -221,7 +221,7 @@ public interface VeraPDFFoundry extends Component {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures);
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int viewFails, int maxFailures);
 
 	/**
 	 * Obtain a new {@link MetadataFixer} instance.

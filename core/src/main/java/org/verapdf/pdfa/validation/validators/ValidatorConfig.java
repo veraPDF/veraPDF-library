@@ -46,7 +46,7 @@ public interface ValidatorConfig {
 	public boolean isRecordPasses();
 
 	/**
-	 * The maximum number of failed validation checks encountered before
+	 * The maximum number of failed validation checks encountered for the one rule before
 	 * validation is terminated.
 	 * 
 	 * @return the number of failed validation checks before validation is
@@ -60,4 +60,11 @@ public interface ValidatorConfig {
 	 * @return the {@link PDFAFlavour} that the validator enforces.
 	 */
 	public PDFAFlavour getFlavour();
+
+	/**
+	 * The maximum number of fails that should be saved to show them to user.
+	 *
+	 * @return the number of fails that should be saved to show them to user
+	 */
+	public int getViewFails();
 }
