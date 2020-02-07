@@ -48,6 +48,8 @@ public class XMPMetaParser
 	private static final Object XMP_RDF = new Object();
 	/** the DOM Parser Factory, options are set */ 
 	private static DocumentBuilderFactory factory = createDocumentBuilderFactory();
+	//------------------------------------------------------------------------------ veraPDF: additional field for actual encoding used for XMP package serialization
+	private String actualEncoding;
 
 	/**
 	 * Hidden constructor, initialises the SAX parser handler.
@@ -56,8 +58,6 @@ public class XMPMetaParser
 	{
 		// EMPTY
 	}
-
-	
 
 	/**
 	 * Parses the input source into an XMP metadata object, including
@@ -74,7 +74,13 @@ public class XMPMetaParser
 		ParameterAsserts.assertNotNull(input);
 		options = options != null ? options : new ParseOptions();
 
-		Document document = parseXml(input, options);
+		//------------------------------------------------------------------------------ veraPDF: added creating class instance
+		XMPMetaParser xmpMetaParser = new XMPMetaParser();
+		Document document = xmpMetaParser.parseXml(input, options);
+		//------------------------------------------------------------------------------ veraPDF: added updating for actual encoding
+		if (xmpMetaParser.actualEncoding == null) {
+			xmpMetaParser.actualEncoding = document.getInputEncoding();
+		}
 
 		boolean xmpmetaRequired = options.getRequireXMPMeta();
 		Object[] result = new Object[3];
@@ -83,6 +89,8 @@ public class XMPMetaParser
 		if (result != null  &&  result[1] == XMP_RDF)
 		{
 			XMPMetaImpl xmp = ParseRDF.parse((Node) result[0]);
+			//------------------------------------------------------------------------------ veraPDF: added setter for actual encoding
+			xmp.setActualEncoding(xmpMetaParser.actualEncoding);
 			xmp.setPacketHeader((String) result[2]);
 			
 			// Check if the XMP object shall be normalized
@@ -102,7 +110,7 @@ public class XMPMetaParser
 		}
 	}
 
-	
+	//------------------------------------------------------------------------------ veraPDF: method was changed to non-static
 	/**
 	 * Parses the raw XML metadata packet considering the parsing options.
 	 * Latin-1/ISO-8859-1 can be accepted when the input is a byte stream 
@@ -120,7 +128,7 @@ public class XMPMetaParser
 	 * @return Returns the parsed XML document or an exception.
 	 * @throws XMPException Thrown if the parsing fails for different reasons
 	 */
-	private static Document parseXml(Object input, ParseOptions options)
+	private Document parseXml(Object input, ParseOptions options)
 			throws XMPException
 	{
 		if (input instanceof InputStream)
@@ -136,8 +144,8 @@ public class XMPMetaParser
 			return parseXmlFromString((String) input, options);
 		}
 	}
-	
 
+	//------------------------------------------------------------------------------ veraPDF: method was changed to non-static
 	/**
 	 * Parses XML from an {@link InputStream},
 	 * fixing the encoding (Latin-1 to UTF-8) and illegal control character optionally.
@@ -147,7 +155,7 @@ public class XMPMetaParser
 	 * @return Returns an XML DOM-Document.
 	 * @throws XMPException Thrown when the parsing fails.
 	 */
-	private static Document parseXmlFromInputStream(InputStream stream, ParseOptions options)
+	private Document parseXmlFromInputStream(InputStream stream, ParseOptions options)
 			throws XMPException
 	{
 		if (!options.getAcceptLatin1()  &&  !options.getFixControlChars())
@@ -170,7 +178,7 @@ public class XMPMetaParser
 		}
 	}
 
-	
+	//------------------------------------------------------------------------------ veraPDF: method was changed to non-static
 	/**
 	 * Parses XML from a byte buffer, 
 	 * fixing the encoding (Latin-1 to UTF-8) and illegal control character optionally.
@@ -180,7 +188,7 @@ public class XMPMetaParser
 	 * @return Returns an XML DOM-Document.
 	 * @throws XMPException Thrown when the parsing fails.
 	 */
-	private static Document parseXmlFromBytebuffer(ByteBuffer buffer, ParseOptions options)
+	private Document parseXmlFromBytebuffer(ByteBuffer buffer, ParseOptions options)
 		throws XMPException
 	{
 		InputSource source = new InputSource(buffer.getByteStream());
@@ -203,6 +211,10 @@ public class XMPMetaParser
 					try
 					{
 						String encoding = buffer.getEncoding();
+						//------------------------------------------------------------------------------ veraPDF: added updating for actual encoding
+						if (actualEncoding == null) {
+							actualEncoding = encoding;
+						}
 						Reader fixReader = new FixASCIIControlsReader(
 							new InputStreamReader(
 								buffer.getByteStream(), encoding));
@@ -225,7 +237,7 @@ public class XMPMetaParser
 		}
 	}
 
-
+	//------------------------------------------------------------------------------ veraPDF: method was changed to non-static
 	/**
 	 * Parses XML from a {@link String}, 
 	 * fixing the illegal control character optionally.
@@ -235,7 +247,7 @@ public class XMPMetaParser
 	 * @return Returns an XML DOM-Document.
 	 * @throws XMPException Thrown when the parsing fails.
 	 */
-	private static Document parseXmlFromString(String input, ParseOptions options)
+	private Document parseXmlFromString(String input, ParseOptions options)
 			throws XMPException
 	{
 		InputSource source = new InputSource(new StringReader(input));
@@ -257,14 +269,14 @@ public class XMPMetaParser
 		}
 	}
 
-	
+	//------------------------------------------------------------------------------ veraPDF: method was changed to non-static
 	/**
 	 * Runs the XML-Parser. 
 	 * @param source an <code>InputSource</code>
 	 * @return Returns an XML DOM-Document.
 	 * @throws XMPException Wraps parsing and I/O-exceptions into an XMPException.
 	 */
-	private static Document parseInputSource(InputSource source) throws XMPException
+	private Document parseInputSource(InputSource source) throws XMPException
 	{
 		try
 		{
