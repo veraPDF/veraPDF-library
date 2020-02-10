@@ -169,7 +169,6 @@ final class ProcessorImpl implements ItemProcessor {
 					break;
 				default:
 					break;
-
 				}
 			}
 		} catch (EncryptedPdfException e) {

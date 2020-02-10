@@ -70,8 +70,19 @@ class BaseValidator implements PDFAValidator {
 
 	protected String rootType;
 
+	protected BaseValidator(final ValidationProfile profile) {
+		this(profile, false, -1);
+	}
+
 	protected BaseValidator(final ValidationProfile profile, final int maxCheckedDetailsPerRule) {
 		this(profile, false, maxCheckedDetailsPerRule);
+	}
+
+	protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests) {
+		super();
+		this.profile = profile;
+		this.logPassedTests = logPassedTests;
+		this.maxCheckedDetailsPerRule = -1;
 	}
 
 	protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests, final int maxCheckedDetailsPerRule) {
@@ -301,6 +312,7 @@ class BaseValidator implements PDFAValidator {
 					}
 				} else {
 					List<TestAssertion> assertionsList = new ArrayList<>();
+					assertionsList.add(assertion);
 					results.put(assertion.getRuleId(), assertionsList);
 				}
 			}

@@ -111,16 +111,16 @@ public interface VeraPDFFoundry extends Component {
 	 *             if the PDF to be parsed is encrypted
 	 */
 	public PDFAParser createParser(File pdfFile)
-		throws ModelParsingException, EncryptedPdfException;
+			throws ModelParsingException, EncryptedPdfException;
 
-		/**
-		 * Obtain a new {@link PDFAValidator} instance.
-		 *
-		 * @param config
-		 *            a {@link ValidatorConfig} instance used to configure the
-		 *            {@link PDFAValidator}
-		 * @return an appropriately configured {@link PDFAValidator} instance.
-		 */
+	/**
+	 * Obtain a new {@link PDFAValidator} instance.
+	 *
+	 * @param config
+	 *            a {@link ValidatorConfig} instance used to configure the
+	 *            {@link PDFAValidator}
+	 * @return an appropriately configured {@link PDFAValidator} instance.
+	 */
 	public PDFAValidator createValidator(ValidatorConfig config);
 
 	/**
@@ -168,7 +168,9 @@ public interface VeraPDFFoundry extends Component {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess, int viewFails);
+	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess);
+
+	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess, int maxCheckedDetailsPerRule);
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile
@@ -184,7 +186,9 @@ public interface VeraPDFFoundry extends Component {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess, int viewFails);
+	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess);
+
+	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess, int maxCheckedDetailsPerRule);
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
@@ -203,7 +207,9 @@ public interface VeraPDFFoundry extends Component {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int viewFails, int maxFailures);
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures);
+
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxCheckedDetailsPerRule, int maxFailures);
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
@@ -221,7 +227,9 @@ public interface VeraPDFFoundry extends Component {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public PDFAValidator createFailFastValidator(ValidationProfile profile, int viewFails, int maxFailures);
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures);
+
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxCheckedDetailsPerRule, int maxFailures);
 
 	/**
 	 * Obtain a new {@link MetadataFixer} instance.

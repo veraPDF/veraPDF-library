@@ -58,24 +58,45 @@ abstract class AbstractFoundry implements VeraPDFFoundry {
 	}
 
 	@Override
-	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess, int viewFails) {
-		return ValidatorFactory.createValidator(flavour, logSuccess, viewFails);
+	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess) {
+		return ValidatorFactory.createValidator(flavour, logSuccess);
 	}
 
 	@Override
-	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess, int viewFails) {
-		return ValidatorFactory.createValidator(profile, logSuccess, viewFails);
+	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess, int maxCheckedDetailsPerRule) {
+		return ValidatorFactory.createValidator(flavour, logSuccess, maxCheckedDetailsPerRule);
 	}
 
 	@Override
-	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int viewFails, int maxFailures) {
-		return ValidatorFactory.createValidator(flavour, viewFails, maxFailures);
+	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess) {
+		return ValidatorFactory.createValidator(profile, logSuccess);
 	}
 
 	@Override
-	public PDFAValidator createFailFastValidator(ValidationProfile profile, int viewFails, int maxFailures) {
+	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess, int maxCheckedDetailsPerRule) {
+		return ValidatorFactory.createValidator(profile, logSuccess, maxCheckedDetailsPerRule);
+	}
+
+	@Override
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures) {
+		return ValidatorFactory.createValidator(flavour, maxFailures);
+	}
+
+	@Override
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxCheckedDetailsPerRule, int maxFailures) {
+		return ValidatorFactory.createValidator(flavour, maxCheckedDetailsPerRule, maxFailures);
+	}
+
+	@Override
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures) {
 		return ValidatorFactory.createValidator(profile, maxFailures);
 	}
+
+	@Override
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxCheckedDetailsPerRule, int maxFailures) {
+		return ValidatorFactory.createValidator(profile, maxCheckedDetailsPerRule, maxFailures);
+	}
+
 
 	@Override
 	public PDFAFlavour defaultFlavour() {

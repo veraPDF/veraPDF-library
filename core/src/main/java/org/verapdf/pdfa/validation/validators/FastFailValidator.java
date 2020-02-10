@@ -38,9 +38,19 @@ class FastFailValidator extends BaseValidator {
      * @param logPassedTests
      */
     protected FastFailValidator(final ValidationProfile profile,
+                                final boolean logPassedTests) {
+        this(profile, logPassedTests, -1, 0);
+    }
+
+    /**
+     * @param profile
+     * @param logPassedTests
+     */
+    protected FastFailValidator(final ValidationProfile profile,
                                 final boolean logPassedTests,
-                                final int maxCheckedDetailsPerRule) {
-        this(profile, logPassedTests, maxCheckedDetailsPerRule, 0);
+                                final int maxFailedTests) {
+        super(profile, logPassedTests, -1);
+        this.maxFailedTests = maxFailedTests;
     }
 
     /**

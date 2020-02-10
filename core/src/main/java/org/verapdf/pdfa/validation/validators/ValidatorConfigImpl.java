@@ -98,6 +98,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		result = prime * result + ((this.flavour == null) ? 0 : this.flavour.hashCode());
 		result = prime * result + this.maxFails;
 		result = prime * result + (this.recordPasses ? 1231 : 1237);
+		result = prime * result + this.maxCheckedDetailsPerRule;
 		return result;
 	}
 
@@ -123,6 +124,9 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 			return false;
 		}
 		if (this.recordPasses != other.recordPasses) {
+			return false;
+		}
+		if (this.maxCheckedDetailsPerRule != other.maxCheckedDetailsPerRule) {
 			return false;
 		}
 		return true;
