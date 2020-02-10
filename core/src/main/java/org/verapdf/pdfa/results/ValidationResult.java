@@ -28,7 +28,7 @@ import org.verapdf.pdfa.validation.profiles.ProfileDetails;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created as the result of validating a PDF/A document against a
@@ -81,7 +81,7 @@ public interface ValidationResult {
     /**
      * @return the list of {@link TestAssertion}s made during PDF/A validation
      */
-    public Set<TestAssertion> getTestAssertions();
+    public List<TestAssertion> getTestAssertions();
 
     /**
      * @return validation profile which has been used for generating validation result

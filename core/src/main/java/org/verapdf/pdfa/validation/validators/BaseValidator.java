@@ -58,27 +58,27 @@ class BaseValidator implements PDFAValidator {
 	private final Deque<Object> objectsStack = new ArrayDeque<>();
 	private final Deque<String> objectsContext = new ArrayDeque<>();
 	private final Map<Rule, List<ObjectWithContext>> deferredRules = new HashMap<>();
-	protected final Map<RuleId, Set<TestAssertion>> results = new HashMap<>();
+	protected final Map<RuleId, List<TestAssertion>> results = new HashMap<>();
 	protected int testCounter = 0;
-	protected int displayedFailuresCounter;
-	protected int failureCount = 0;
+	protected int maxCheckedDetailsPerRule;
 	protected boolean abortProcessing = false;
 	protected final boolean logPassedTests;
 	protected boolean isCompliant = true;
+	protected boolean isLowerMaxCheckedDetailsPerRule = true;
 
 	private Set<String> idSet = new HashSet<>();
 
 	protected String rootType;
 
-	protected BaseValidator(final ValidationProfile profile, final int displayedFailuresCounter) {
-		this(profile, false, displayedFailuresCounter);
+	protected BaseValidator(final ValidationProfile profile, final int maxCheckedDetailsPerRule) {
+		this(profile, false, maxCheckedDetailsPerRule);
 	}
 
-	protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests, final int displayedFailuresCounter) {
+	protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests, final int maxCheckedDetailsPerRule) {
 		super();
 		this.profile = profile;
 		this.logPassedTests = logPassedTests;
-		this.displayedFailuresCounter = displayedFailuresCounter;
+		this.maxCheckedDetailsPerRule = maxCheckedDetailsPerRule;
 	}
 
 	/*
@@ -291,16 +291,17 @@ class BaseValidator implements PDFAValidator {
 					assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location);
 			if (this.isCompliant)
 				this.isCompliant = assertionResult;
-			if (!assertionResult || this.logPassedTests) {
-				failureCount++;
-				if(failureCount < displayedFailuresCounter) {
-					if (results.containsKey(assertion.getRuleId())) {
-						this.results.get(assertion.getRuleId()).add(assertion);
+			if ((!assertionResult || this.logPassedTests) && isLowerMaxCheckedDetailsPerRule) {
+				if (results.containsKey(assertion.getRuleId())) {
+					if (maxCheckedDetailsPerRule > 0
+							&& results.get(assertion.getRuleId()).size() < maxCheckedDetailsPerRule) {
+						results.get(assertion.getRuleId()).add(assertion);
 					} else {
-						Set<TestAssertion> assertionSet = new HashSet<>();
-						assertionSet.add(assertion);
-						this.results.put(assertion.getRuleId(), assertionSet);
+						isLowerMaxCheckedDetailsPerRule = false;
 					}
+				} else {
+					List<TestAssertion> assertionsList = new ArrayList<>();
+					results.put(assertion.getRuleId(), assertionsList);
 				}
 			}
 		}

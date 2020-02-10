@@ -29,8 +29,8 @@ import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import javax.xml.bind.JAXBException;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -55,7 +55,7 @@ public class ValidationResults {
 	 *            compliant with the indicated flavour
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Map<RuleId, Set<TestAssertion>> assertions,
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Map<RuleId, List<TestAssertion>> assertions,
 													final boolean isCompliant) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
@@ -76,7 +76,7 @@ public class ValidationResults {
 	 * @param totalAssertions
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Map<RuleId, Set<TestAssertion>> assertions,
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Map<RuleId, List<TestAssertion>> assertions,
 													final boolean isCompliant, final int totalAssertions) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
@@ -93,16 +93,17 @@ public class ValidationResults {
 	 *            the Set of TestAssertions reported by during validation
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Map<RuleId, Set<TestAssertion>> assertions) {
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile,
+                                                    final Map<RuleId, List<TestAssertion>> assertions) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		if (assertions == null)
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
 		boolean isCompliant = true;
-		for(Set<TestAssertion> ruleAssertions : assertions.values()) {
+		for(List<TestAssertion> assertionsPerRule : assertions.values()) {
 			if(!isCompliant)
 				break;
-			for (TestAssertion assertion : ruleAssertions) {
+			for (TestAssertion assertion : assertionsPerRule) {
 				if (assertion.getStatus() == Status.FAILED) {
 					isCompliant = false;
 					break;

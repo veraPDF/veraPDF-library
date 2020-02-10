@@ -66,5 +66,5 @@ public interface ValidatorConfig {
 	 *
 	 * @return the number of fails that should be saved to show them to user
 	 */
-	public int getViewFails();
+	public int getMaxCheckedDetailsPerRule();
 }
