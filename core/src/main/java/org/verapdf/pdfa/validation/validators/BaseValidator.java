@@ -71,7 +71,7 @@ class BaseValidator implements PDFAValidator {
     protected String rootType;
 
     protected BaseValidator(final ValidationProfile profile) {
-        this(profile, false, -1);
+        this(profile,-1);
     }
 
     protected BaseValidator(final ValidationProfile profile, final int maxDetailedChecksPerRule) {
