@@ -20,7 +20,7 @@
  */
 
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.validation.validators;
 
@@ -43,16 +43,23 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	@XmlAttribute
 	private final boolean recordPasses;
 	@XmlAttribute
+	private final int maxDetailedChecksPerRule;
+	@XmlAttribute
 	private final int maxFails;
 
 	private ValidatorConfigImpl() {
-		this(PDFAFlavour.NO_FLAVOUR, false, -1);
+		this(PDFAFlavour.NO_FLAVOUR, false, -0);
 	}
 
 	private ValidatorConfigImpl(final PDFAFlavour flavour, final boolean recordPasses, final int maxFails) {
+		this(flavour, recordPasses, -1, maxFails);
+	}
+
+	private ValidatorConfigImpl(final PDFAFlavour flavour, final boolean recordPasses, final int maxDetailedChecksPerRule, final int maxFails) {
 		super();
 		this.flavour = flavour;
 		this.recordPasses = recordPasses;
+		this.maxDetailedChecksPerRule = maxDetailedChecksPerRule;
 		this.maxFails = maxFails;
 	}
 
@@ -80,6 +87,11 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		return this.flavour;
 	}
 
+	@Override
+	public int getMaxDetailedChecksPerRule() {
+		return this.maxDetailedChecksPerRule;
+	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -90,6 +102,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		result = prime * result + ((this.flavour == null) ? 0 : this.flavour.hashCode());
 		result = prime * result + this.maxFails;
 		result = prime * result + (this.recordPasses ? 1231 : 1237);
+		result = prime * result + this.maxDetailedChecksPerRule;
 		return result;
 	}
 
@@ -117,6 +130,9 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		if (this.recordPasses != other.recordPasses) {
 			return false;
 		}
+		if (this.maxDetailedChecksPerRule != other.maxDetailedChecksPerRule) {
+			return false;
+		}
 		return true;
 	}
 
@@ -125,16 +141,24 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	 */
 	@Override
 	public String toString() {
-		return "ValidatorConfigImpl [recordPasses=" + this.recordPasses + ", maxFails=" + this.maxFails + ", flavour="
-				+ this.flavour + "]";
+		return "ValidatorConfigImpl{" +
+				"flavour=" + flavour +
+				", recordPasses=" + recordPasses +
+				", maxDetailedChecksPerRule=" + maxDetailedChecksPerRule +
+				", maxFails=" + maxFails +
+				'}';
 	}
 
 	static ValidatorConfig defaultInstance() {
 		return defaultConfig;
 	}
 
+	static ValidatorConfig fromValues(final PDFAFlavour flavour, final boolean recordPasses, final int maxDetailedChecksPerRule, final int maxFails) {
+		return new ValidatorConfigImpl(flavour, recordPasses, maxDetailedChecksPerRule, maxFails);
+	}
+
 	static ValidatorConfig fromValues(final PDFAFlavour flavour, final boolean recordPasses, final int maxFails) {
-		return new ValidatorConfigImpl(flavour, recordPasses, maxFails);
+		return ValidatorConfigImpl.fromValues(flavour, recordPasses, -1, maxFails);
 	}
 
 	static class Adapter extends XmlAdapter<ValidatorConfigImpl, ValidatorConfig> {

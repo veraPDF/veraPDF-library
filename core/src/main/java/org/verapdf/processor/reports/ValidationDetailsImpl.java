@@ -19,7 +19,7 @@
  * http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.verapdf.processor.reports;
 
@@ -56,9 +56,9 @@ final class ValidationDetailsImpl implements ValidationDetails {
 	private ValidationDetailsImpl() {
 		this(0, 0, 0, 0, Collections.<RuleSummary>emptySet());
 	}
-	
+
 	private ValidationDetailsImpl(final int passedRules, final int failedRules, final int passedChecks,
-			final int failedChecks, final Set<RuleSummary> ruleSummaries) {
+								  final int failedChecks, final Set<RuleSummary> ruleSummaries) {
 		this.passedRules = passedRules;
 		this.failedRules = failedRules;
 		this.passedChecks = passedChecks;
@@ -124,9 +124,9 @@ final class ValidationDetailsImpl implements ValidationDetails {
 	}
 
 	static ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks,
-			final int maxFailedChecks) {
+										final int maxFailedChecks) {
 		ValidationProfile profile = result.getValidationProfile();
-		Map<RuleId, Set<TestAssertion>> assertionMap = mapAssertionsByRule(result.getTestAssertions());
+		Map<RuleId, List<TestAssertion>> assertionMap = mapAssertionsByRule(result.getTestAssertions());
 		Set<RuleSummary> ruleSummaries = new HashSet<>();
 		int passedRules = 0;
 		int failedRules = 0;
@@ -155,13 +155,13 @@ final class ValidationDetailsImpl implements ValidationDetails {
 		return new ValidationDetailsImpl(passedRules, failedRules, passedChecks, failedChecks, ruleSummaries);
 	}
 
-	private static Map<RuleId, Set<TestAssertion>> mapAssertionsByRule(final Set<TestAssertion> assertions) {
-		Map<RuleId, Set<TestAssertion>> assertionMap = new HashMap<>();
+	private static Map<RuleId, List<TestAssertion>> mapAssertionsByRule(final List<TestAssertion> assertions) {
+		Map<RuleId, List<TestAssertion>> assertionMap = new HashMap<>();
 		for (TestAssertion assertion : assertions) {
 			if (assertionMap.containsKey(assertion.getRuleId())) {
 				assertionMap.get(assertion.getRuleId()).add(assertion);
 			} else {
-				Set<TestAssertion> assertionSet = new HashSet<>();
+				List<TestAssertion> assertionSet = new ArrayList<>();
 				assertionSet.add(assertion);
 				assertionMap.put(assertion.getRuleId(), assertionSet);
 			}

@@ -19,7 +19,7 @@
  * http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.results;
 
@@ -29,13 +29,12 @@ import org.junit.Test;
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.RuleId;
 
 import javax.xml.bind.JAXBException;
 import java.io.*;
 import java.nio.file.Files;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -84,7 +83,8 @@ public class ValidationResultTest {
 	 */
 	@Test
 	public final void testFromValues() {
-		ValidationResult resultFromVals = ValidationResults.resultFromValues(Profiles.defaultProfile(), Collections.<TestAssertion>emptySet(), false);
+		Map<RuleId, List<TestAssertion>> results = new HashMap<>();
+		ValidationResult resultFromVals = ValidationResults.resultFromValues(Profiles.defaultProfile(), results, false);
 		assertTrue(resultFromVals.equals(ValidationResults.defaultResult()));
 		assertFalse(resultFromVals == ValidationResults.defaultResult());
 	}
@@ -104,14 +104,16 @@ public class ValidationResultTest {
 	/**
 	 * Test method for
 	 * {@link org.verapdf.pdfa.results.ValidationResultImpl#toXml(org.verapdf.pdfa.results.ValidationResult, java.lang.Boolean)}.
-	 * 
+	 *
 	 * @throws IOException
 	 * @throws JAXBException
 	 */
 	@Test
 	public final void testToXmlString() throws JAXBException {
-		Set<TestAssertion> assertions = new HashSet<>();
-		assertions.add(ValidationResults.defaultAssertion());
+		Map<RuleId, List<TestAssertion>> assertions = new HashMap<>();
+		TestAssertion defaultAssertion = ValidationResults.defaultAssertion();
+		List<TestAssertion> assertionsPerRule = new ArrayList<>();
+		assertions.put(defaultAssertion.getRuleId(), assertionsPerRule);
 		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
 		String xmlRawResult = XmlSerialiser.toXml(result, true, false);
 		String xmlPrettyResult = XmlSerialiser.toXml(result, true, true);
@@ -125,14 +127,16 @@ public class ValidationResultTest {
 	/**
 	 * Test method for
 	 * {@link org.verapdf.pdfa.results.ValidationResultImpl#fromXml(java.io.InputStream)}.
-	 * 
+	 *
 	 * @throws IOException
 	 * @throws JAXBException
 	 */
 	@Test
 	public final void testFromXmlInputStream() throws IOException, JAXBException {
-		Set<TestAssertion> assertions = new HashSet<>();
-		assertions.add(TestAssertionImpl.defaultInstance());
+		Map<RuleId, List<TestAssertion>> assertions = new HashMap<>();
+		TestAssertion defaultAssertion = ValidationResults.defaultAssertion();
+		List<TestAssertion> assertionsPerRule = new ArrayList<>();
+		assertions.put(defaultAssertion.getRuleId(), assertionsPerRule);
 		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
 		File temp = Files.createTempFile("profile", "xml").toFile(); //$NON-NLS-1$ //$NON-NLS-2$
 		try (OutputStream forXml = new FileOutputStream(temp)) {
@@ -149,14 +153,16 @@ public class ValidationResultTest {
 	/**
 	 * Test method for
 	 * {@link org.verapdf.pdfa.results.ValidationResultImpl#fromXml(java.io.InputStream)}.
-	 * 
+	 *
 	 * @throws IOException
 	 * @throws JAXBException
 	 */
 	@Test
 	public final void testFromXmlInputString() throws JAXBException {
-		Set<TestAssertion> assertions = new HashSet<>();
-		assertions.add(TestAssertionImpl.defaultInstance());
+		Map<RuleId, List<TestAssertion>> assertions = new HashMap<>();
+		TestAssertion defaultAssertion = ValidationResults.defaultAssertion();
+		List<TestAssertion> assertionsPerRule = new ArrayList<>();
+		assertions.put(defaultAssertion.getRuleId(), assertionsPerRule);
 		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
 		String xmlSource = XmlSerialiser.toXml(result, true, true);
 		ValidationResult unmarshalledResult = ValidationResults.resultFromXmlString(xmlSource);

@@ -54,8 +54,6 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
 
     private final VeraPDFMeta xmpMetadata;
     private final boolean isSerializationValid;
-    //------------------------------------------------------------------------------ veraPDF: additional field for actual encoding
-    private final String actualEncoding;
     private final boolean isMainMetadata;
     private final PDFAFlavour flavour;
     private final boolean isClosedChoiceCheck;
@@ -64,28 +62,26 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     private Map<String, SchemasDefinition> currentSchemasDefinitionPDFA_2_3;
 
     public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid,
-            boolean isClosedChoiceCheck,
-            VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
+                         boolean isClosedChoiceCheck,
+                         VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
         this(xmpMetadata, isSerializationValid, false, isClosedChoiceCheck,
                 mainPackageExtensionNode, XMP_PACKAGE_TYPE, flavour);
     }
 
     public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid,
-            VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
+                         VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
         this(xmpMetadata, isSerializationValid, false, false,
                 mainPackageExtensionNode, XMP_PACKAGE_TYPE, flavour);
     }
 
     protected AXLXMPPackage(VeraPDFMeta xmpMetadata,
-            boolean isSerializationValid, boolean isMainMetadata,
-            boolean isClosedChoiceCheck,
-            VeraPDFXMPNode mainPackageExtensionNode, final String type,
-            PDFAFlavour flavour) {
+                            boolean isSerializationValid, boolean isMainMetadata,
+                            boolean isClosedChoiceCheck,
+                            VeraPDFXMPNode mainPackageExtensionNode, final String type,
+                            PDFAFlavour flavour) {
         super(type);
         this.xmpMetadata = xmpMetadata;
         this.isSerializationValid = isSerializationValid;
-        //------------------------------------------------------------------------------ veraPDF: added actual encoding into constructor
-        this.actualEncoding = this.xmpMetadata != null ? this.xmpMetadata.getActualEncoding() : null;
         this.isMainMetadata = isMainMetadata;
         this.isClosedChoiceCheck = isClosedChoiceCheck;
         this.mainPackageSchemasDefinition = SchemasDefinitionCreator
@@ -102,12 +98,12 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         switch (link) {
-        case PROPERTIES:
-            return this.getXMPProperties();
-        case EXTENSION_SCHEMAS_CONTAINERS:
-            return this.getExtensionSchemasContainers();
-        default:
-            return super.getLinkedObjects(link);
+            case PROPERTIES:
+                return this.getXMPProperties();
+            case EXTENSION_SCHEMAS_CONTAINERS:
+                return this.getExtensionSchemasContainers();
+            default:
+                return super.getLinkedObjects(link);
         }
     }
 
@@ -164,12 +160,6 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     @Override
     public Boolean getisSerializationValid() {
         return Boolean.valueOf(this.isSerializationValid);
-    }
-
-    //------------------------------------------------------------------------------ veraPDF: getter method for actual encoding
-    @Override
-    public String getactualEncoding() {
-        return this.actualEncoding;
     }
 
     @Override

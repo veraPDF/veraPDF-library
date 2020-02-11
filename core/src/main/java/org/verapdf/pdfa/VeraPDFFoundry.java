@@ -111,16 +111,16 @@ public interface VeraPDFFoundry extends Component {
 	 *             if the PDF to be parsed is encrypted
 	 */
 	public PDFAParser createParser(File pdfFile)
-		throws ModelParsingException, EncryptedPdfException;
+			throws ModelParsingException, EncryptedPdfException;
 
-		/**
-		 * Obtain a new {@link PDFAValidator} instance.
-		 *
-		 * @param config
-		 *            a {@link ValidatorConfig} instance used to configure the
-		 *            {@link PDFAValidator}
-		 * @return an appropriately configured {@link PDFAValidator} instance.
-		 */
+	/**
+	 * Obtain a new {@link PDFAValidator} instance.
+	 *
+	 * @param config
+	 *            a {@link ValidatorConfig} instance used to configure the
+	 *            {@link PDFAValidator}
+	 * @return an appropriately configured {@link PDFAValidator} instance.
+	 */
 	public PDFAValidator createValidator(ValidatorConfig config);
 
 	/**
@@ -170,6 +170,8 @@ public interface VeraPDFFoundry extends Component {
 	 */
 	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess);
 
+	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess, int maxDetailedChecksPerRule);
+
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile
 	 * and chosen passed test logging.
@@ -185,6 +187,8 @@ public interface VeraPDFFoundry extends Component {
 	 *         parameters
 	 */
 	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess);
+
+	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess, int maxDetailedChecksPerRule);
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
@@ -205,6 +209,8 @@ public interface VeraPDFFoundry extends Component {
 	 */
 	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures);
 
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxDetailedChecksPerRule, int maxFailures);
+
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
 	 * requested fast failing behaviour and configured NOT to log passed checks.
@@ -222,6 +228,8 @@ public interface VeraPDFFoundry extends Component {
 	 *         parameters
 	 */
 	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures);
+
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxDetailedChecksPerRule, int maxFailures);
 
 	/**
 	 * Obtain a new {@link MetadataFixer} instance.

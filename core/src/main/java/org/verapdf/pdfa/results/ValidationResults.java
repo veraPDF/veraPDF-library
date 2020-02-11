@@ -19,7 +19,7 @@
  * http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.results;
 
@@ -29,7 +29,8 @@ import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import javax.xml.bind.JAXBException;
-import java.util.Set;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -54,7 +55,7 @@ public class ValidationResults {
 	 *            compliant with the indicated flavour
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions,
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Map<RuleId, List<TestAssertion>> assertions,
 													final boolean isCompliant) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
@@ -75,12 +76,14 @@ public class ValidationResults {
 	 * @param totalAssertions
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions,
-			final boolean isCompliant, final int totalAssertions) {
-		if (validationProfile == null)
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Map<RuleId, List<TestAssertion>> assertions,
+													final boolean isCompliant, final int totalAssertions) {
+		if (validationProfile == null) {
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
-		if (assertions == null)
+		}
+		if (assertions == null) {
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
+		}
 		return ValidationResultImpl.fromValues(validationProfile, assertions, isCompliant, totalAssertions);
 	}
 
@@ -88,23 +91,31 @@ public class ValidationResults {
 	 * @param validationProfile
 	 *            a {@link ValidationProfile} instance indicating the validation type
 	 *            performed
-	 * @param assertions
+	 * @param assertionsPerAllRules
 	 *            the Set of TestAssertions reported by during validation
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions) {
-		if (validationProfile == null)
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile,
+													final Map<RuleId, List<TestAssertion>> assertionsPerAllRules) {
+		if (validationProfile == null) {
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
-		if (assertions == null)
+		}
+		if (assertionsPerAllRules == null) {
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
+		}
 		boolean isCompliant = true;
-		for (TestAssertion assertion : assertions) {
-			if (assertion.getStatus() == Status.FAILED) {
-				isCompliant = false;
+		for(List<TestAssertion> assertionsPerRule : assertionsPerAllRules.values()) {
+			for (TestAssertion assertion : assertionsPerRule) {
+				if (assertion.getStatus() == Status.FAILED) {
+					isCompliant = false;
+					break;
+				}
+			}
+			if(!isCompliant) {
 				break;
 			}
 		}
-		return resultFromValues(validationProfile, assertions, isCompliant);
+		return resultFromValues(validationProfile, assertionsPerAllRules, isCompliant);
 	}
 
 	/**
@@ -131,7 +142,7 @@ public class ValidationResults {
 	/**
 	 * Creates an immutable TestAssertion instance from the passed parameter
 	 * values.
-	 * 
+	 *
 	 * @param ordinal
 	 *            the integer ordinal for the instance
 	 * @param ruleId
@@ -149,7 +160,7 @@ public class ValidationResults {
 	 *         values
 	 */
 	public static TestAssertion assertionFromValues(final int ordinal, final RuleId ruleId, final Status status,
-			final String message, final Location location) {
+													final String message, final Location location) {
 		return TestAssertionImpl.fromValues(ordinal, ruleId, status, message, location);
 	}
 
@@ -168,7 +179,7 @@ public class ValidationResults {
 	/**
 	 * TODO: Better explanation of level and context. Creates an immutable
 	 * {@link Location} instance.
-	 * 
+	 *
 	 * @param level
 	 *            the Locations level, represented as a String
 	 * @param context
@@ -197,7 +208,7 @@ public class ValidationResults {
 	 * {@code assertion.getStatus() == TestAssertion.Status.PASSED} from
 	 * {@code toStrip} and returns a new {@link ValidationResult} without the
 	 * passed assertions.
-	 * 
+	 *
 	 * @param toStrip
 	 *            a {@code ValidationResult} to clone without passed
 	 *            {@code TestAssertion}s

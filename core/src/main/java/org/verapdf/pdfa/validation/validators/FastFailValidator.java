@@ -19,7 +19,7 @@
  * http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.validation.validators;
 
@@ -28,7 +28,6 @@ import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
- *
  */
 class FastFailValidator extends BaseValidator {
     private final int maxFailedTests;
@@ -39,8 +38,8 @@ class FastFailValidator extends BaseValidator {
      * @param logPassedTests
      */
     protected FastFailValidator(final ValidationProfile profile,
-            final boolean logPassedTests) {
-        this(profile, logPassedTests, 0);
+                                final boolean logPassedTests) {
+        this(profile, logPassedTests, -1, 0);
     }
 
     /**
@@ -48,14 +47,26 @@ class FastFailValidator extends BaseValidator {
      * @param logPassedTests
      */
     protected FastFailValidator(final ValidationProfile profile,
-            final boolean logPassedTests, final int maxFailedTests) {
-        super(profile, logPassedTests);
+                                final boolean logPassedTests,
+                                final int maxFailedTests) {
+        this(profile, logPassedTests,-1, maxFailedTests);
+    }
+
+    /**
+     * @param profile
+     * @param logPassedTests
+     */
+    protected FastFailValidator(final ValidationProfile profile,
+                                final boolean logPassedTests,
+                                final int maxDetailedChecksPerRule,
+                                final int maxFailedTests) {
+        super(profile, logPassedTests, maxDetailedChecksPerRule);
         this.maxFailedTests = maxFailedTests;
     }
 
     @Override
     protected void processAssertionResult(final boolean assertionResult,
-            final String locationContext, final Rule rule) {
+                                          final String locationContext, final Rule rule) {
         super.processAssertionResult(assertionResult, locationContext, rule);
         if (!assertionResult) {
             this.failureCount++;

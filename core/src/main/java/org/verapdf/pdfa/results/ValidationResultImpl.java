@@ -19,7 +19,7 @@
  * http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.results;
 
@@ -27,6 +27,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.profiles.ProfileDetails;
 import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -34,9 +35,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.util.Map;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -52,27 +54,25 @@ final class ValidationResultImpl implements ValidationResult {
 	private final int totalAssertions;
 	@XmlElementWrapper
 	@XmlElement(name = "assertion")
-	private final Set<TestAssertion> assertions;
+	private final List<TestAssertion> assertions;
 	@XmlAttribute
 	private final boolean isCompliant;
 
 	private final ValidationProfile validationProfile;
 
 	private ValidationResultImpl() {
-		this(Profiles.defaultProfile(), Collections.<TestAssertion>emptySet(),
+		this(Profiles.defaultProfile(), Collections.<TestAssertion>emptyList(),
 				false);
 	}
 
-	private ValidationResultImpl(final ValidationProfile validationProfile,
-			final Set<TestAssertion> assertions, final boolean isCompliant) {
+	private ValidationResultImpl(final ValidationProfile validationProfile, final List<TestAssertion> assertions, final boolean isCompliant) {
 		this(validationProfile, assertions, isCompliant, assertions.size());
 	}
 
-	private ValidationResultImpl(final ValidationProfile validationProfile,
-			final Set<TestAssertion> assertions, final boolean isCompliant, int totalAssertions) {
+	private ValidationResultImpl(final ValidationProfile validationProfile, final List<TestAssertion> assertions, final boolean isCompliant, int totalAssertions) {
 		super();
 		this.flavour = validationProfile.getPDFAFlavour();
-		this.assertions = new HashSet<>(assertions);
+		this.assertions = new ArrayList<>(assertions);
 		this.isCompliant = isCompliant;
 		this.totalAssertions = totalAssertions;
 		this.profileDetails = validationProfile.getDetails();
@@ -115,8 +115,8 @@ final class ValidationResultImpl implements ValidationResult {
 	 * { @inheritDoc }
 	 */
 	@Override
-	public Set<TestAssertion> getTestAssertions() {
-		return Collections.unmodifiableSet(this.assertions);
+	public List<TestAssertion> getTestAssertions() {
+		return Collections.unmodifiableList(this.assertions);
 	}
 
 	/**
@@ -183,18 +183,27 @@ final class ValidationResultImpl implements ValidationResult {
 	}
 
 	static ValidationResultImpl fromValues(final ValidationProfile validationProfile,
-										   final Set<TestAssertion> assertions, final boolean isCompliant, final int totalChecks) {
+										   final Map<RuleId, List<TestAssertion>> assertionsPerAllRules, final boolean isCompliant, final int totalChecks) {
+		List<TestAssertion> assertions = new ArrayList<>();
+		for(List<TestAssertion> assertionsPerRule : assertionsPerAllRules.values()) {
+			assertions.addAll(assertionsPerRule);
+		}
+		return new ValidationResultImpl(validationProfile, assertions, isCompliant, totalChecks);
+	}
+
+	static ValidationResultImpl fromValues(final ValidationProfile validationProfile,
+										   final List<TestAssertion> assertions, final boolean isCompliant, final int totalChecks) {
 		return new ValidationResultImpl(validationProfile, assertions, isCompliant, totalChecks);
 	}
 
 	static ValidationResultImpl fromValidationResult(ValidationResult toConvert) {
-		Set<TestAssertion> assertions = toConvert.getTestAssertions();
+		List<TestAssertion> assertions = toConvert.getTestAssertions();
 		return fromValues(toConvert.getValidationProfile(), assertions,
 				toConvert.isCompliant(), toConvert.getTotalAssertions());
 	}
 
 	static ValidationResultImpl stripPassedTests(ValidationResult toStrip) {
-		Set<TestAssertion> assertions = toStrip.getTestAssertions();
+		List<TestAssertion> assertions = toStrip.getTestAssertions();
 		return fromValues(toStrip.getValidationProfile(), stripPassedTests(assertions),
 				toStrip.isCompliant(), toStrip.getTotalAssertions());
 	}
@@ -211,8 +220,8 @@ final class ValidationResultImpl implements ValidationResult {
 		}
 	}
 
-	static Set<TestAssertion> stripPassedTests(final Set<TestAssertion> toStrip) {
-		Set<TestAssertion> strippedSet = new HashSet<>();
+	static List<TestAssertion> stripPassedTests(final List<TestAssertion> toStrip) {
+		List<TestAssertion> strippedSet = new ArrayList<>();
 		for (TestAssertion test : toStrip) {
 			if (test.getStatus() != Status.PASSED)
 				strippedSet.add(test);

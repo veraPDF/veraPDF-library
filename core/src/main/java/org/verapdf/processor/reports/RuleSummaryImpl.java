@@ -19,7 +19,7 @@
  * http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.verapdf.processor.reports;
 
@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -65,7 +66,7 @@ final class RuleSummaryImpl implements RuleSummary {
 	private final Set<Check> checks;
 
 	private RuleSummaryImpl(final RuleId ruleId, final Status status, final int passedChecks, final int failedChecks,
-			final String description, final String object, final String test, final Set<Check> checks) {
+							final String description, final String object, final String test, final Set<Check> checks) {
 		PDFAFlavour.Specification specification = ruleId.getSpecification();
 		this.specification = specification == null ? null : specification.getId();
 		this.clause = ruleId.getClause();
@@ -81,7 +82,7 @@ final class RuleSummaryImpl implements RuleSummary {
 	}
 
 	private RuleSummaryImpl(final RuleId ruleId, final Status status, final String description, final String object,
-			final String test) {
+							final String test) {
 		this(ruleId, status, 0, 0, description, object, test, Collections.<Check>emptySet());
 	}
 
@@ -191,7 +192,7 @@ final class RuleSummaryImpl implements RuleSummary {
 	}
 
 	static final RuleSummary fromValues(final RuleId id, final String description, final String object, final String test,
-			Set<TestAssertion> assertions, boolean logPassedChecks, int maxNumberOfDisplayedFailedChecks) {
+										List<TestAssertion> assertions, boolean logPassedChecks, int maxNumberOfDisplayedFailedChecks) {
 		if (id == null) {
 			throw new NullPointerException("Argument id can not be null");
 		}
@@ -222,7 +223,7 @@ final class RuleSummaryImpl implements RuleSummary {
 	}
 
 	static final RuleSummary uncheckedInstance(final RuleId id, final String description, final String object,
-			final String test) {
+											   final String test) {
 		if (id == null) {
 			throw new NullPointerException("Argument id can not be null");
 		}

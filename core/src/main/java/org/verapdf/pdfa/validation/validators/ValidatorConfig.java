@@ -19,7 +19,7 @@
  * http://mozilla.org/MPL/2.0/.
  */
 /**
- * 
+ *
  */
 package org.verapdf.pdfa.validation.validators;
 
@@ -30,7 +30,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 /**
  * Encapsulates the configuration of the veraPDF PDF/A validator. An instance of
  * this class is passed to the validator to control PDF/A validation behaviour.
- * 
+ *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
  * @version 0.1 Created 26 Oct 2016:00:04:41
@@ -39,7 +39,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 public interface ValidatorConfig {
 	/**
 	 * Indicates whether the validator is configured to record passed checks.
-	 * 
+	 *
 	 * @return true if passed checks should be recorded, false if only failed
 	 *         checks should be recorde.
 	 */
@@ -48,7 +48,7 @@ public interface ValidatorConfig {
 	/**
 	 * The maximum number of failed validation checks encountered before
 	 * validation is terminated.
-	 * 
+	 *
 	 * @return the number of failed validation checks before validation is
 	 *         terminated.
 	 */
@@ -56,8 +56,15 @@ public interface ValidatorConfig {
 
 	/**
 	 * Obtain the particular PDF/A specification that the validator enforces.
-	 * 
+	 *
 	 * @return the {@link PDFAFlavour} that the validator enforces.
 	 */
 	public PDFAFlavour getFlavour();
+
+	/**
+	 * The maximum number of detailed checks per rule that should be saved to show them to user.
+	 *
+	 * @return the maximum number of detailed checks per rule that should be saved to show them to user
+	 */
+	public int getMaxDetailedChecksPerRule();
 }

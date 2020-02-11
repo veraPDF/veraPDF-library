@@ -39,22 +39,22 @@ abstract class AbstractFoundry implements VeraPDFFoundry {
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config) {
 		if (config.getMaxFails() > 0)
-			return createFailFastValidator(config.getFlavour(), config.getMaxFails());
-		return createValidator(config.getFlavour(), config.isRecordPasses());
+			return createFailFastValidator(config.getFlavour(), config.getMaxDetailedChecksPerRule(), config.getMaxFails());
+		return createValidator(config.getFlavour(), config.isRecordPasses(), config.getMaxDetailedChecksPerRule());
 	}
 
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config, PDFAFlavour flavour) {
 		if (config.getMaxFails() > 0)
-			return createFailFastValidator(flavour, config.getMaxFails());
-		return createValidator(flavour, config.isRecordPasses());
+			return createFailFastValidator(flavour, config.getMaxDetailedChecksPerRule(), config.getMaxFails());
+		return createValidator(flavour, config.isRecordPasses(), config.getMaxDetailedChecksPerRule());
 	}
 
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config, ValidationProfile profile) {
 		if (config.getMaxFails() > 0)
-			return createFailFastValidator(profile, config.getMaxFails());
-		return createValidator(profile, config.isRecordPasses());
+			return createFailFastValidator(profile, config.getMaxDetailedChecksPerRule(), config.getMaxFails());
+		return createValidator(profile, config.isRecordPasses(), config.getMaxDetailedChecksPerRule());
 	}
 
 	@Override
@@ -63,8 +63,18 @@ abstract class AbstractFoundry implements VeraPDFFoundry {
 	}
 
 	@Override
+	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess, int maxDetailedChecksPerRule) {
+		return ValidatorFactory.createValidator(flavour, logSuccess, maxDetailedChecksPerRule);
+	}
+
+	@Override
 	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess) {
 		return ValidatorFactory.createValidator(profile, logSuccess);
+	}
+
+	@Override
+	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess, int maxDetailedChecksPerRule) {
+		return ValidatorFactory.createValidator(profile, logSuccess, maxDetailedChecksPerRule);
 	}
 
 	@Override
@@ -73,9 +83,20 @@ abstract class AbstractFoundry implements VeraPDFFoundry {
 	}
 
 	@Override
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxDetailedChecksPerRule, int maxFailures) {
+		return ValidatorFactory.createValidator(flavour, maxDetailedChecksPerRule, maxFailures);
+	}
+
+	@Override
 	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures) {
 		return ValidatorFactory.createValidator(profile, maxFailures);
 	}
+
+	@Override
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxDetailedChecksPerRule, int maxFailures) {
+		return ValidatorFactory.createValidator(profile, maxDetailedChecksPerRule, maxFailures);
+	}
+
 
 	@Override
 	public PDFAFlavour defaultFlavour() {

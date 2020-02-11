@@ -38,6 +38,7 @@ import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.profiles.Rule;
+import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.profiles.Variable;
 
@@ -48,272 +49,293 @@ import java.util.*;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 class BaseValidator implements PDFAValidator {
-	private static final URI componentId = URI.create("http://pdfa.verapdf.org/validators#default");
-	private static final String componentName = "veraPDF PDF/A Validator";
-	private static final ComponentDetails componentDetails = Components.libraryDetails(componentId, componentName);
-	private final ValidationProfile profile;
-	private ScriptableObject scope;
+    private static final URI componentId = URI.create("http://pdfa.verapdf.org/validators#default");
+    private static final String componentName = "veraPDF PDF/A Validator";
+    private static final ComponentDetails componentDetails = Components.libraryDetails(componentId, componentName);
+    private final ValidationProfile profile;
+    private ScriptableObject scope;
 
-	private final Deque<Object> objectsStack = new ArrayDeque<>();
-	private final Deque<String> objectsContext = new ArrayDeque<>();
-	private final Map<Rule, List<ObjectWithContext>> deferredRules = new HashMap<>();
-	protected final Set<TestAssertion> results = new HashSet<>();
-	protected int testCounter = 0;
-	protected boolean abortProcessing = false;
-	protected final boolean logPassedTests;
-	protected boolean isCompliant = true;
+    private final Deque<Object> objectsStack = new ArrayDeque<>();
+    private final Deque<String> objectsContext = new ArrayDeque<>();
+    private final Map<Rule, List<ObjectWithContext>> deferredRules = new HashMap<>();
+    protected final Map<RuleId, List<TestAssertion>> results = new HashMap<>();
+    protected int testCounter = 0;
+    protected int maxDetailedChecksPerRule;
+    protected boolean abortProcessing = false;
+    protected final boolean logPassedTests;
+    protected boolean isCompliant = true;
 
-	private Set<String> idSet = new HashSet<>();
+    private Set<String> idSet = new HashSet<>();
 
-	protected String rootType;
+    protected String rootType;
 
-	protected BaseValidator(final ValidationProfile profile) {
-		this(profile, false);
-	}
+    protected BaseValidator(final ValidationProfile profile) {
+        this(profile, false, -1);
+    }
 
-	protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests) {
-		super();
-		this.profile = profile;
-		this.logPassedTests = logPassedTests;
-	}
+    protected BaseValidator(final ValidationProfile profile, final int maxDetailedChecksPerRule) {
+        this(profile, false, maxDetailedChecksPerRule);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.verapdf.pdfa.PDFAValidator#getProfile()
-	 */
-	@Override
-	public ValidationProfile getProfile() {
-		return this.profile;
-	}
+    protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests) {
+        this(profile, logPassedTests, -1);
+    }
 
-	@Override
-	public ValidationResult validate(PDFAParser toValidate) throws ValidationException {
-		try {
-			return this.validate(toValidate.getRoot());
-		} catch (RuntimeException e) {
-			throw new ValidationException("Caught unexpected runtime exception during validation", e);
-		} catch (ModelParsingException excep) {
-			throw new ValidationException("Parsing problem trying to validate.", excep);
-		}
-	}
+    protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests, final int maxDetailedChecksPerRule) {
+        super();
+        this.profile = profile;
+        this.logPassedTests = logPassedTests;
+        this.maxDetailedChecksPerRule = maxDetailedChecksPerRule;
+    }
 
-	@Override
-	public ComponentDetails getDetails() {
-		return componentDetails;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see org.verapdf.pdfa.PDFAValidator#getProfile()
+     */
+    @Override
+    public ValidationProfile getProfile() {
+        return this.profile;
+    }
 
-	protected ValidationResult validate(Object root) throws ValidationException {
-		initialise();
-		this.rootType = root.getObjectType();
-		this.objectsStack.push(root);
-		this.objectsContext.push("root");
+    @Override
+    public ValidationResult validate(PDFAParser toValidate) throws ValidationException {
+        try {
+            return this.validate(toValidate.getRoot());
+        } catch (RuntimeException e) {
+            throw new ValidationException("Caught unexpected runtime exception during validation", e);
+        } catch (ModelParsingException excep) {
+            throw new ValidationException("Parsing problem trying to validate.", excep);
+        }
+    }
 
-		if (root.getID() != null) {
-			this.idSet.add(root.getID());
-		}
+    @Override
+    public ComponentDetails getDetails() {
+        return componentDetails;
+    }
 
-		while (!this.objectsStack.isEmpty() && !this.abortProcessing) {
-			checkNext();
-		}
+    protected ValidationResult validate(Object root) throws ValidationException {
+        initialise();
+        this.rootType = root.getObjectType();
+        this.objectsStack.push(root);
+        this.objectsContext.push("root");
 
-		for (Map.Entry<Rule, List<ObjectWithContext>> entry : this.deferredRules.entrySet()) {
-			for (ObjectWithContext objectWithContext : entry.getValue()) {
-				checkObjWithRule(objectWithContext.getObject(), objectWithContext.getContext(), entry.getKey());
-			}
-		}
+        if (root.getID() != null) {
+            this.idSet.add(root.getID());
+        }
 
-		JavaScriptEvaluator.exitContext();
+        while (!this.objectsStack.isEmpty() && !this.abortProcessing) {
+            checkNext();
+        }
 
-		return ValidationResults.resultFromValues(this.profile, this.results,
-				this.isCompliant, this.testCounter);
-	}
+        for (Map.Entry<Rule, List<ObjectWithContext>> entry : this.deferredRules.entrySet()) {
+            for (ObjectWithContext objectWithContext : entry.getValue()) {
+                checkObjWithRule(objectWithContext.getObject(), objectWithContext.getContext(), entry.getKey());
+            }
+        }
 
-	protected void initialise() {
-		this.scope = JavaScriptEvaluator.initialise();
-		this.objectsStack.clear();
-		this.objectsContext.clear();
-		this.deferredRules.clear();
-		this.results.clear();
-		this.idSet.clear();
-		this.testCounter = 0;
-		this.isCompliant = true;
-		initializeAllVariables();
-	}
+        JavaScriptEvaluator.exitContext();
 
-	private void initializeAllVariables() {
-		for (Variable var : this.profile.getVariables()) {
-			if (var == null)
-				continue;
+        return ValidationResults.resultFromValues(this.profile, this.results,
+                this.isCompliant, this.testCounter);
+    }
 
-			java.lang.Object res = JavaScriptEvaluator.evaluateString(var.getDefaultValue(), this.scope);
+    protected void initialise() {
+        this.scope = JavaScriptEvaluator.initialise();
+        this.objectsStack.clear();
+        this.objectsContext.clear();
+        this.deferredRules.clear();
+        this.results.clear();
+        this.idSet.clear();
+        this.testCounter = 0;
+        this.isCompliant = true;
+        initializeAllVariables();
+    }
 
-			if (res instanceof NativeJavaObject) {
-				res = ((NativeJavaObject) res).unwrap();
-			}
-			this.scope.put(var.getName(), this.scope, res);
-		}
-	}
+    private void initializeAllVariables() {
+        for (Variable var : this.profile.getVariables()) {
+            if (var == null)
+                continue;
 
-	private void checkNext() throws ValidationException {
-		Object checkObject = this.objectsStack.pop();
-		String checkContext = this.objectsContext.pop();
+            java.lang.Object res = JavaScriptEvaluator.evaluateString(var.getDefaultValue(), this.scope);
 
-		checkAllRules(checkObject, checkContext);
+            if (res instanceof NativeJavaObject) {
+                res = ((NativeJavaObject) res).unwrap();
+            }
+            this.scope.put(var.getName(), this.scope, res);
+        }
+    }
 
-		updateVariables(checkObject);
+    private void checkNext() throws ValidationException {
+        Object checkObject = this.objectsStack.pop();
+        String checkContext = this.objectsContext.pop();
 
-		addAllLinkedObjects(checkObject, checkContext);
-	}
+        checkAllRules(checkObject, checkContext);
 
-	private void updateVariables(Object object) {
-		if (object != null) {
-			updateVariableForObjectWithType(object, object.getObjectType());
+        updateVariables(checkObject);
 
-			for (String parentName : object.getSuperTypes()) {
-				updateVariableForObjectWithType(object, parentName);
-			}
-		}
-	}
+        addAllLinkedObjects(checkObject, checkContext);
+    }
 
-	private void updateVariableForObjectWithType(Object object, String objectType) {
-		for (Variable var : this.profile.getVariablesByObject(objectType)) {
-			if (var == null) {
-				continue;
-			}
-			java.lang.Object variable = JavaScriptEvaluator.evalVariableResult(var, object, this.scope);
+    private void updateVariables(Object object) {
+        if (object != null) {
+            updateVariableForObjectWithType(object, object.getObjectType());
 
-			this.scope.put(var.getName(), this.scope, variable);
-		}
-	}
+            for (String parentName : object.getSuperTypes()) {
+                updateVariableForObjectWithType(object, parentName);
+            }
+        }
+    }
 
-	private void addAllLinkedObjects(Object checkObject, String checkContext)
-			throws ValidationException {
-		List<String> links = checkObject.getLinks();
-		for (int j = links.size() - 1; j >= 0; --j) {
-			String link = links.get(j);
+    private void updateVariableForObjectWithType(Object object, String objectType) {
+        for (Variable var : this.profile.getVariablesByObject(objectType)) {
+            if (var == null) {
+                continue;
+            }
+            java.lang.Object variable = JavaScriptEvaluator.evalVariableResult(var, object, this.scope);
 
-			if (link == null) {
-				throw new ValidationException("There is a null link name in an object. Context: " + checkContext);
-			}
-			List<? extends Object> objects = checkObject.getLinkedObjects(link);
-			if (objects == null) {
-				throw new ValidationException("There is a null link in an object. Context: " + checkContext);
-			}
+            this.scope.put(var.getName(), this.scope, variable);
+        }
+    }
 
-			for (int i = 0; i < objects.size(); ++i) {
-				Object obj = objects.get(i);
+    private void addAllLinkedObjects(Object checkObject, String checkContext)
+            throws ValidationException {
+        List<String> links = checkObject.getLinks();
+        for (int j = links.size() - 1; j >= 0; --j) {
+            String link = links.get(j);
 
-				StringBuilder path = new StringBuilder(checkContext);
-				path.append("/");
-				path.append(link);
-				path.append("[");
-				path.append(i);
-				path.append("]");
+            if (link == null) {
+                throw new ValidationException("There is a null link name in an object. Context: " + checkContext);
+            }
+            List<? extends Object> objects = checkObject.getLinkedObjects(link);
+            if (objects == null) {
+                throw new ValidationException("There is a null link in an object. Context: " + checkContext);
+            }
 
-				if (obj == null) {
-					throw new ValidationException("There is a null link in an object. Context of the link: " + path);
-				}
+            for (int i = 0; i < objects.size(); ++i) {
+                Object obj = objects.get(i);
 
-				if (checkRequired(obj)) {
-					this.objectsStack.push(obj);
+                StringBuilder path = new StringBuilder(checkContext);
+                path.append("/");
+                path.append(link);
+                path.append("[");
+                path.append(i);
+                path.append("]");
 
-					if (obj.getID() != null) {
-						path.append("(");
-						path.append(obj.getID());
-						path.append(")");
+                if (obj == null) {
+                    throw new ValidationException("There is a null link in an object. Context of the link: " + path);
+                }
 
-						this.idSet.add(obj.getID());
-					}
+                if (checkRequired(obj)) {
+                    this.objectsStack.push(obj);
 
-					this.objectsContext.push(path.toString());
-				}
-			}
-		}
-	}
+                    if (obj.getID() != null) {
+                        path.append("(");
+                        path.append(obj.getID());
+                        path.append(")");
 
-	private boolean checkRequired(Object obj) {
-		return obj.getID() == null || !this.idSet.contains(obj.getID());
-	}
+                        this.idSet.add(obj.getID());
+                    }
 
-	private boolean checkAllRules(Object checkObject, String checkContext) {
-		boolean res = true;
-		Set<Rule> roolsForObject = this.profile.getRulesByObject(checkObject.getObjectType());
-		for (Rule rule : roolsForObject) {
-			res &= firstProcessObjectWithRule(checkObject, checkContext, rule);
-		}
+                    this.objectsContext.push(path.toString());
+                }
+            }
+        }
+    }
 
-		for (String checkType : checkObject.getSuperTypes()) {
-			roolsForObject = this.profile.getRulesByObject(checkType);
-			if (roolsForObject != null) {
-				for (Rule rule : roolsForObject) {
-					if (rule != null) {
-						res &= firstProcessObjectWithRule(checkObject, checkContext, rule);
-					}
-				}
-			}
-		}
-		return res;
-	}
+    private boolean checkRequired(Object obj) {
+        return obj.getID() == null || !this.idSet.contains(obj.getID());
+    }
 
-	private boolean firstProcessObjectWithRule(Object checkObject, String checkContext, Rule rule) {
-		Boolean deferred = rule.getDeferred();
-		if (deferred != null && deferred.booleanValue()) {
-			List<ObjectWithContext> list = this.deferredRules.get(rule);
-			if (list == null) {
-				list = new ArrayList<>();
-				this.deferredRules.put(rule, list);
-			}
-			list.add(new ObjectWithContext(checkObject, checkContext));
-			return true;
-		}
-		return checkObjWithRule(checkObject, checkContext, rule);
-	}
+    private boolean checkAllRules(Object checkObject, String checkContext) {
+        boolean res = true;
+        Set<Rule> roolsForObject = this.profile.getRulesByObject(checkObject.getObjectType());
+        for (Rule rule : roolsForObject) {
+            res &= firstProcessObjectWithRule(checkObject, checkContext, rule);
+        }
 
-	private boolean checkObjWithRule(Object obj, String cntxtForRule, Rule rule) {
-		boolean testEvalResult = JavaScriptEvaluator.getTestEvalResult(obj, rule, this.scope);
+        for (String checkType : checkObject.getSuperTypes()) {
+            roolsForObject = this.profile.getRulesByObject(checkType);
+            if (roolsForObject != null) {
+                for (Rule rule : roolsForObject) {
+                    if (rule != null) {
+                        res &= firstProcessObjectWithRule(checkObject, checkContext, rule);
+                    }
+                }
+            }
+        }
+        return res;
+    }
 
-		this.processAssertionResult(testEvalResult, cntxtForRule, rule);
+    private boolean firstProcessObjectWithRule(Object checkObject, String checkContext, Rule rule) {
+        Boolean deferred = rule.getDeferred();
+        if (deferred != null && deferred.booleanValue()) {
+            List<ObjectWithContext> list = this.deferredRules.get(rule);
+            if (list == null) {
+                list = new ArrayList<>();
+                this.deferredRules.put(rule, list);
+            }
+            list.add(new ObjectWithContext(checkObject, checkContext));
+            return true;
+        }
+        return checkObjWithRule(checkObject, checkContext, rule);
+    }
 
-		return testEvalResult;
-	}
+    private boolean checkObjWithRule(Object obj, String cntxtForRule, Rule rule) {
+        boolean testEvalResult = JavaScriptEvaluator.getTestEvalResult(obj, rule, this.scope);
 
-	protected void processAssertionResult(final boolean assertionResult, final String locationContext,
-										  final Rule rule) {
-		if (!this.abortProcessing) {
-			this.testCounter++;
-			Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
-			TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
-					assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location);
-			if (this.isCompliant)
-				this.isCompliant = assertionResult;
-			if (!assertionResult || this.logPassedTests)
-				this.results.add(assertion);
-		}
-	}
+        this.processAssertionResult(testEvalResult, cntxtForRule, rule);
 
-	@Override
-	public void close() {
-		/**
-		 * Empty
-		 */
-	}
+        return testEvalResult;
+    }
 
-	private static class ObjectWithContext {
-		private final Object object;
-		private final String context;
+    protected void processAssertionResult(final boolean assertionResult, final String locationContext,
+                                          final Rule rule) {
+        if (!this.abortProcessing) {
+            this.testCounter++;
+            Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
+            TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
+                    assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location);
+            if (this.isCompliant) {
+                this.isCompliant = assertionResult;
+            }
+            if ((!assertionResult || this.logPassedTests)) {
+                if (results.containsKey(assertion.getRuleId())) {
+                    if ((maxDetailedChecksPerRule > 0
+                            && results.get(assertion.getRuleId()).size() < maxDetailedChecksPerRule) || maxDetailedChecksPerRule == -1) {
+                        results.get(assertion.getRuleId()).add(assertion);
+                    }
+                } else {
+                    List<TestAssertion> assertionsList = new ArrayList<>();
+                    assertionsList.add(assertion);
+                    results.put(assertion.getRuleId(), assertionsList);
+                }
+            }
+        }
+    }
 
-		public ObjectWithContext(Object object, String context) {
-			this.object = object;
-			this.context = context;
-		}
+    @Override
+    public void close() {
+        /**
+         * Empty
+         */
+    }
 
-		public Object getObject() {
-			return this.object;
-		}
+    private static class ObjectWithContext {
+        private final Object object;
+        private final String context;
 
-		public String getContext() {
-			return this.context;
-		}
-	}
+        public ObjectWithContext(Object object, String context) {
+            this.object = object;
+            this.context = context;
+        }
+
+        public Object getObject() {
+            return this.object;
+        }
+
+        public String getContext() {
+            return this.context;
+        }
+    }
 }
