@@ -130,7 +130,6 @@ final class ValidationDetailsImpl implements ValidationDetails {
 		Set<RuleSummary> ruleSummaries = new HashSet<>();
 		int passedRules = 0;
 		int failedRules = 0;
-		int failedChecks = 0;
 		for (Rule rule : profile.getRules()) {
 			RuleSummary summary = RuleSummaryImpl.uncheckedInstance(rule.getRuleId(), rule.getDescription(),
 					rule.getObject(), rule.getTest());
@@ -139,7 +138,6 @@ final class ValidationDetailsImpl implements ValidationDetails {
 						rule.getTest(), assertionMap.get(rule.getRuleId()), logPassedChecks,
 						maxFailedChecks);
 			}
-			failedChecks += summary.getFailedChecks();
 			if (summary.getRuleStatus() == Status.PASSED) {
 				passedRules++;
 				if (logPassedChecks) {
@@ -150,9 +148,9 @@ final class ValidationDetailsImpl implements ValidationDetails {
 				ruleSummaries.add(summary);
 			}
 		}
-		int passedChecks = result.getTotalAssertions() - failedChecks;
+		int passedChecks = result.getTotalAssertions() - result.getTotalFailedAssertions();
 
-		return new ValidationDetailsImpl(passedRules, failedRules, passedChecks, failedChecks, ruleSummaries);
+		return new ValidationDetailsImpl(passedRules, failedRules, passedChecks, result.getTotalFailedAssertions(), ruleSummaries);
 	}
 
 	private static Map<RuleId, List<TestAssertion>> mapAssertionsByRule(final List<TestAssertion> assertions) {

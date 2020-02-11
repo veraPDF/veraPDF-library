@@ -63,6 +63,7 @@ class BaseValidator implements PDFAValidator {
     protected int maxDetailedChecksPerRule;
     protected boolean abortProcessing = false;
     protected final boolean logPassedTests;
+    protected int totalFailedAssertions = 0;
     protected boolean isCompliant = true;
 
     private Set<String> idSet = new HashSet<>();
@@ -137,7 +138,7 @@ class BaseValidator implements PDFAValidator {
         JavaScriptEvaluator.exitContext();
 
         return ValidationResults.resultFromValues(this.profile, this.results,
-                this.isCompliant, this.testCounter);
+                this.isCompliant, this.testCounter, this.totalFailedAssertions);
     }
 
     protected void initialise() {
@@ -300,6 +301,7 @@ class BaseValidator implements PDFAValidator {
                 this.isCompliant = assertionResult;
             }
             if ((!assertionResult || this.logPassedTests)) {
+                this.totalFailedAssertions++;
                 if (results.containsKey(assertion.getRuleId())) {
                     if ((maxDetailedChecksPerRule > 0
                             && results.get(assertion.getRuleId()).size() < maxDetailedChecksPerRule) || maxDetailedChecksPerRule == -1) {

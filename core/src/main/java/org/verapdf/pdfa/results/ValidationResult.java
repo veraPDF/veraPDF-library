@@ -74,7 +74,7 @@ public interface ValidationResult {
     public ProfileDetails getProfileDetails();
 
     /**
-     * @return the total number of valdiation checks performed
+     * @return the total number of validation checks performed
      */
     public int getTotalAssertions();
 
@@ -87,4 +87,9 @@ public interface ValidationResult {
      * @return validation profile which has been used for generating validation result
      */
     public ValidationProfile getValidationProfile();
+
+    /**
+     * @return the total number of failed validation checks performed
+     */
+    public int getTotalFailedAssertions();
 }

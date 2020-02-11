@@ -57,11 +57,13 @@ public class ValidationResults {
 	 */
 	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Map<RuleId, List<TestAssertion>> assertions,
 													final boolean isCompliant) {
-		if (validationProfile == null)
+		if (validationProfile == null) {
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
-		if (assertions == null)
+		}
+		if (assertions == null) {
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
-		return ValidationResultImpl.fromValues(validationProfile, assertions, isCompliant, assertions.size());
+		}
+		return ValidationResultImpl.fromValues(validationProfile, assertions, isCompliant, assertions.size(), assertions.size());
 	}
 
 	/**
@@ -77,14 +79,14 @@ public class ValidationResults {
 	 * @return a new ValidationResult instance populated from the values
 	 */
 	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Map<RuleId, List<TestAssertion>> assertions,
-													final boolean isCompliant, final int totalAssertions) {
+													final boolean isCompliant, final int totalAssertions, final int totalFailedAssertions) {
 		if (validationProfile == null) {
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		}
 		if (assertions == null) {
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
 		}
-		return ValidationResultImpl.fromValues(validationProfile, assertions, isCompliant, totalAssertions);
+		return ValidationResultImpl.fromValues(validationProfile, assertions, isCompliant, totalAssertions, totalFailedAssertions);
 	}
 
 	/**

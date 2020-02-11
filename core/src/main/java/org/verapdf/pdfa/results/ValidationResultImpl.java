@@ -52,6 +52,8 @@ final class ValidationResultImpl implements ValidationResult {
 	private final ProfileDetails profileDetails;
 	@XmlAttribute
 	private final int totalAssertions;
+	@XmlAttribute
+	private final int totalFailedAssertions;
 	@XmlElementWrapper
 	@XmlElement(name = "assertion")
 	private final List<TestAssertion> assertions;
@@ -69,12 +71,18 @@ final class ValidationResultImpl implements ValidationResult {
 		this(validationProfile, assertions, isCompliant, assertions.size());
 	}
 
-	private ValidationResultImpl(final ValidationProfile validationProfile, final List<TestAssertion> assertions, final boolean isCompliant, int totalAssertions) {
+	private ValidationResultImpl(final ValidationProfile validationProfile, final List<TestAssertion> assertions, final boolean isCompliant, final int totalAssertions) {
+		this(validationProfile, assertions, isCompliant, totalAssertions, assertions.size());
+	}
+
+	private ValidationResultImpl(final ValidationProfile validationProfile, final List<TestAssertion> assertions, final boolean isCompliant, final int totalAssertions,
+								 final int totalFailedAssertions) {
 		super();
 		this.flavour = validationProfile.getPDFAFlavour();
 		this.assertions = new ArrayList<>(assertions);
 		this.isCompliant = isCompliant;
 		this.totalAssertions = totalAssertions;
+		this.totalFailedAssertions = totalFailedAssertions;
 		this.profileDetails = validationProfile.getDetails();
 		this.validationProfile = validationProfile;
 	}
@@ -127,6 +135,11 @@ final class ValidationResultImpl implements ValidationResult {
 		return this.validationProfile;
 	}
 
+	@Override
+	public int getTotalFailedAssertions() {
+		return this.totalFailedAssertions;
+	}
+
 	/**
 	 * { @inheritDoc }
 	 */
@@ -138,6 +151,7 @@ final class ValidationResultImpl implements ValidationResult {
 		result = prime * result + ((this.flavour == null) ? 0 : this.flavour.hashCode());
 		result = prime * result + (this.isCompliant ? 1231 : 1237);
 		result = prime * result + this.totalAssertions;
+		result = prime * result + this.totalFailedAssertions;
 		return result;
 	}
 
@@ -146,49 +160,67 @@ final class ValidationResultImpl implements ValidationResult {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		if (!(obj instanceof ValidationResult))
+		}
+		if (!(obj instanceof ValidationResult)) {
 			return false;
+		}
 		ValidationResult other = (ValidationResult) obj;
 		if (this.assertions == null) {
-			if (other.getTestAssertions() != null)
+			if (other.getTestAssertions() != null) {
 				return false;
-		} else if (other.getTestAssertions() == null)
+			}
+		} else if (other.getTestAssertions() == null) {
 			return false;
-		else if (!this.assertions.equals(other.getTestAssertions()))
+		}
+		else if (!this.assertions.equals(other.getTestAssertions())) {
 			return false;
-		if (this.flavour != other.getPDFAFlavour())
+		}
+		if (this.flavour != other.getPDFAFlavour()) {
 			return false;
-		if (this.isCompliant != other.isCompliant())
+		}
+		if (this.isCompliant != other.isCompliant()) {
 			return false;
+		}
+		if(this.totalFailedAssertions != other.getTotalFailedAssertions()) {
+			return false;
+		}
 		return this.totalAssertions == other.getTotalAssertions();
 	}
 
-	/**
-	 * { @inheritDoc }
-	 */
 	@Override
 	public String toString() {
-		return "ValidationResult [flavour=" + this.flavour + ", totalAssertions=" + this.totalAssertions //$NON-NLS-1$ //$NON-NLS-2$
-				+ ", assertions=" + this.assertions + ", isCompliant=" + this.isCompliant + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return "ValidationResultImpl{" +
+				"flavour=" + flavour +
+				", profileDetails=" + profileDetails +
+				", totalAssertions=" + totalAssertions +
+				", totalFailedAssertions=" + totalFailedAssertions +
+				", assertions=" + assertions +
+				", isCompliant=" + isCompliant +
+				", validationProfile=" + validationProfile +
+				'}';
 	}
+
 
 	static ValidationResultImpl defaultInstance() {
 		return DEFAULT;
 	}
 
 	static ValidationResultImpl fromValues(final ValidationProfile validationProfile,
-										   final Map<RuleId, List<TestAssertion>> assertionsPerAllRules, final boolean isCompliant, final int totalChecks) {
+										   final Map<RuleId, List<TestAssertion>> assertionsPerAllRules, final boolean isCompliant,
+										   final int totalChecks, final int totalFailedAssertions) {
 		List<TestAssertion> assertions = new ArrayList<>();
 		for(List<TestAssertion> assertionsPerRule : assertionsPerAllRules.values()) {
 			assertions.addAll(assertionsPerRule);
 		}
-		return new ValidationResultImpl(validationProfile, assertions, isCompliant, totalChecks);
+		return new ValidationResultImpl(validationProfile, assertions, isCompliant, totalChecks, totalFailedAssertions);
 	}
 
 	static ValidationResultImpl fromValues(final ValidationProfile validationProfile,
