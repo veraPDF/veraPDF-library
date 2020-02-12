@@ -192,7 +192,7 @@ final class RuleSummaryImpl implements RuleSummary {
 	}
 
 	static final RuleSummary fromValues(final RuleId id, final String description, final String object, final String test,
-										List<TestAssertion> assertions, boolean logPassedChecks, int maxNumberOfDisplayedDetailedChecksPerRule) {
+										List<TestAssertion> assertions, boolean logPassedChecks, int maxNumberOfDisplayedFailedChecks) {
 		if (id == null) {
 			throw new NullPointerException("Argument id can not be null");
 		}
@@ -214,7 +214,7 @@ final class RuleSummaryImpl implements RuleSummary {
 			} else {
 				status = assertion.getStatus();
 				failedChecks++;
-				if ((maxNumberOfDisplayedDetailedChecksPerRule == -1) || (failedChecks <= maxNumberOfDisplayedDetailedChecksPerRule)) {
+				if ((maxNumberOfDisplayedFailedChecks == -1) || (failedChecks <= maxNumberOfDisplayedFailedChecks)) {
 					checks.add(CheckImpl.fromValue(assertion));
 				}
 			}

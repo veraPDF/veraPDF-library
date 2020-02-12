@@ -167,10 +167,10 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     }
 
     //------------------------------------------------------------------------------ veraPDF: getter method for actual encoding
-//    @Override
-//    public String getactualEncoding() {
-//        return this.actualEncoding;
-//    }
+    @Override
+    public String getactualEncoding() {
+        return this.actualEncoding;
+    }
 
     @Override
     public String getbytes() {
