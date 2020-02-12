@@ -67,12 +67,17 @@ class FastFailValidator extends BaseValidator {
     @Override
     protected void processAssertionResult(final boolean assertionResult,
                                           final String locationContext, final Rule rule) {
-        super.processAssertionResult(assertionResult, locationContext, rule);
-        if (!assertionResult) {
-            this.failureCount++;
-            if ((this.maxFailedTests > 0) && (this.failureCount >= this.maxFailedTests)) {
-                this.abortProcessing = true;
+        if(this.maxFailedTests != 0) {
+            super.processAssertionResult(assertionResult, locationContext, rule);
+
+            if (!assertionResult) {
+                this.failureCount++;
+                if ((this.maxFailedTests > 0) && (this.failureCount >= this.maxFailedTests)) {
+                    this.abortProcessing = true;
+                }
             }
+        } else {
+            this.abortProcessing = true;
         }
     }
 
