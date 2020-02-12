@@ -76,7 +76,7 @@ class FastFailValidator extends BaseValidator {
                     this.abortProcessing = true;
                 }
             }
-        } else {
+        } else if(!abortProcessing){
             this.abortProcessing = true;
         }
     }
