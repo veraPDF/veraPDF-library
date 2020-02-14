@@ -54,6 +54,8 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
 
     private final VeraPDFMeta xmpMetadata;
     private final boolean isSerializationValid;
+    //------------------------------------------------------------------------------ veraPDF: additional field for actual encoding
+    private final String actualEncoding;
     private final boolean isMainMetadata;
     private final PDFAFlavour flavour;
     private final boolean isClosedChoiceCheck;
@@ -82,6 +84,8 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
         super(type);
         this.xmpMetadata = xmpMetadata;
         this.isSerializationValid = isSerializationValid;
+        //------------------------------------------------------------------------------ veraPDF: added actual encoding into constructor
+        this.actualEncoding = this.xmpMetadata != null ? this.xmpMetadata.getActualEncoding() : null;
         this.isMainMetadata = isMainMetadata;
         this.isClosedChoiceCheck = isClosedChoiceCheck;
         this.mainPackageSchemasDefinition = SchemasDefinitionCreator
@@ -160,6 +164,12 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     @Override
     public Boolean getisSerializationValid() {
         return Boolean.valueOf(this.isSerializationValid);
+    }
+
+    //------------------------------------------------------------------------------ veraPDF: getter method for actual encoding
+    @Override
+    public String getactualEncoding() {
+        return this.actualEncoding;
     }
 
     @Override
