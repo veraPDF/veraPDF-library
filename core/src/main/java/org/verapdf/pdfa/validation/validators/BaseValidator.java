@@ -57,7 +57,7 @@ class BaseValidator implements PDFAValidator {
 	private final Deque<Object> objectsStack = new ArrayDeque<>();
 	private final Deque<String> objectsContext = new ArrayDeque<>();
 	private final Map<Rule, List<ObjectWithContext>> deferredRules = new HashMap<>();
-	protected final Set<TestAssertion> results = new HashSet<>();
+	protected final List<TestAssertion> results = new ArrayList<>();
 	protected int testCounter = 0;
 	protected boolean abortProcessing = false;
 	protected final boolean logPassedTests;
@@ -282,13 +282,22 @@ class BaseValidator implements PDFAValidator {
 										  final Rule rule) {
 		if (!this.abortProcessing) {
 			this.testCounter++;
-			Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
-			TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
+            //TODO rebuild structure of project for secure saving assertions without overflow memory exception with big files.
+			Location location;
+            if (this.results.size() > 10_000) {
+				location = ValidationResults.locationFromValues(this.rootType, "");
+            } else {
+                location = ValidationResults.locationFromValues(this.rootType, locationContext);
+            }
+
+            TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
 					assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location);
-			if (this.isCompliant)
-				this.isCompliant = assertionResult;
-			if (!assertionResult || this.logPassedTests)
-				this.results.add(assertion);
+			if (this.isCompliant) {
+                this.isCompliant = assertionResult;
+            }
+			if (!assertionResult || this.logPassedTests) {
+					this.results.add(assertion);
+            }
 		}
 	}
 

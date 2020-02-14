@@ -29,7 +29,7 @@ import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import javax.xml.bind.JAXBException;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -54,7 +54,7 @@ public class ValidationResults {
 	 *            compliant with the indicated flavour
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions,
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
 													final boolean isCompliant) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
@@ -75,7 +75,7 @@ public class ValidationResults {
 	 * @param totalAssertions
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions,
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
 			final boolean isCompliant, final int totalAssertions) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
@@ -92,7 +92,7 @@ public class ValidationResults {
 	 *            the Set of TestAssertions reported by during validation
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions) {
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		if (assertions == null)

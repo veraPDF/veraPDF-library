@@ -33,9 +33,7 @@ import org.verapdf.pdfa.validation.profiles.Profiles;
 import javax.xml.bind.JAXBException;
 import java.io.*;
 import java.nio.file.Files;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -46,7 +44,7 @@ import static org.junit.Assert.assertTrue;
 @SuppressWarnings("static-method")
 public class ValidationResultTest {
 	private static final String DEFAULT_RESULT_STRING = "ValidationResult [flavour=" + PDFAFlavour.NO_FLAVOUR //$NON-NLS-1$
-			+ ", totalAssertions=" + 0 + ", assertions=" + Collections.<TestAssertion>emptySet() + ", isCompliant=" //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+			+ ", totalAssertions=" + 0 + ", assertions=" + Collections.<TestAssertion>emptyList() + ", isCompliant=" //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 			+ false + "]"; //$NON-NLS-1$
 
 	/**
@@ -84,7 +82,7 @@ public class ValidationResultTest {
 	 */
 	@Test
 	public final void testFromValues() {
-		ValidationResult resultFromVals = ValidationResults.resultFromValues(Profiles.defaultProfile(), Collections.<TestAssertion>emptySet(), false);
+		ValidationResult resultFromVals = ValidationResults.resultFromValues(Profiles.defaultProfile(), Collections.<TestAssertion>emptyList(), false);
 		assertTrue(resultFromVals.equals(ValidationResults.defaultResult()));
 		assertFalse(resultFromVals == ValidationResults.defaultResult());
 	}
@@ -110,7 +108,7 @@ public class ValidationResultTest {
 	 */
 	@Test
 	public final void testToXmlString() throws JAXBException {
-		Set<TestAssertion> assertions = new HashSet<>();
+		List<TestAssertion> assertions = new ArrayList<>();
 		assertions.add(ValidationResults.defaultAssertion());
 		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
 		String xmlRawResult = XmlSerialiser.toXml(result, true, false);
@@ -131,7 +129,7 @@ public class ValidationResultTest {
 	 */
 	@Test
 	public final void testFromXmlInputStream() throws IOException, JAXBException {
-		Set<TestAssertion> assertions = new HashSet<>();
+		List<TestAssertion> assertions = new ArrayList<>();
 		assertions.add(TestAssertionImpl.defaultInstance());
 		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
 		File temp = Files.createTempFile("profile", "xml").toFile(); //$NON-NLS-1$ //$NON-NLS-2$
@@ -155,7 +153,7 @@ public class ValidationResultTest {
 	 */
 	@Test
 	public final void testFromXmlInputString() throws JAXBException {
-		Set<TestAssertion> assertions = new HashSet<>();
+		List<TestAssertion> assertions = new ArrayList<>();
 		assertions.add(TestAssertionImpl.defaultInstance());
 		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
 		String xmlSource = XmlSerialiser.toXml(result, true, true);

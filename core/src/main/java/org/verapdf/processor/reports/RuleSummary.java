@@ -23,6 +23,7 @@
  */
 package org.verapdf.processor.reports;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -49,5 +50,5 @@ public interface RuleSummary {
     public String getDescription();
     public String getObject();
     public String getTest();
-    public Set<Check> getChecks();
+    public List<Check> getChecks();
 }
