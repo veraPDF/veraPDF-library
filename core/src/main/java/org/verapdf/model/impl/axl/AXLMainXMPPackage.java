@@ -42,6 +42,8 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
 
     public static final String IDENTIFICATION = "Identification";
 
+    public static final String UAIDENTIFICATION = "UAIdentification";
+
     /**
      * Constructs new object
      *
@@ -65,9 +67,25 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
         switch (link) {
             case IDENTIFICATION:
                 return this.getIdentification();
+            case UAIDENTIFICATION:
+                return this.getUAIdentification();
             default:
                 return super.getLinkedObjects(link);
         }
+    }
+
+    private List<AXLPDFUAIdentification> getUAIdentification() {
+        VeraPDFMeta xmpMetadata = this.getXmpMetadata();
+        if (xmpMetadata != null) {
+            for (VeraPDFXMPNode node : xmpMetadata.getProperties()) {
+                if (XMPConst.NS_PDFUA_ID.equals(node.getNamespaceURI())) {
+                    List<AXLPDFUAIdentification> res = new ArrayList<>(1);
+                    res.add(new AXLPDFUAIdentification(xmpMetadata));
+                    return Collections.unmodifiableList(res);
+                }
+            }
+        }
+        return Collections.emptyList();
     }
 
     private List<AXLPDFAIdentification> getIdentification() {
@@ -82,5 +100,20 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
             }
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public Boolean getcontainsDc_title() {
+        VeraPDFMeta xmpMetadata = this.getXmpMetadata();
+        if (xmpMetadata != null) {
+            for (VeraPDFXMPNode node : xmpMetadata.getProperties()) {
+                if (XMPConst.NS_DC.equals(node.getNamespaceURI())) {
+                    if(node.getPrefix().equals("dc") && node.getName().equals("title")) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
