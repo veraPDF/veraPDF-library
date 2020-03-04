@@ -277,6 +277,15 @@ public class VeraPDFMeta {
         }
     }
 
+    public Integer getUAIdentificationPart() throws XMPException {
+        String stringValue = getSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFUA_ID, "part");
+        try {
+            return stringValue == null ? null : Integer.parseInt(stringValue);
+        } catch (NumberFormatException e) {
+            throw new XMPException("Property part of PDFUA Identification schema contains not integer value", XMPError.BADVALUE, e);
+        }
+    }
+
     public VeraPDFMeta setIdentificationPart(Integer identificationPart) throws XMPException {
         String value = identificationPart == null ? null : identificationPart.toString();
         return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, "part", value);
