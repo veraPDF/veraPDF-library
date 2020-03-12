@@ -43,7 +43,7 @@ First you'll need to obtain a version of the veraPDF-library source code. You ca
 Use Git to clone the repository and ensure that the `master` branch is checked out:
 ```
 git clone https://github.com/veraPDF/veraPDF-library
-git checkout integration
+git checkout master
 ```
 or download the latest [tar archive](https://github.com/veraPDF/veraPDF-library/archive/master.tar.gz "veraPDF-library latest GitHub tar archive") or [zip archive](https://github.com/veraPDF/veraPDF-library/archive/master.zip "veraPDF-library latest GitHub zip archive") from GitHub.
 
