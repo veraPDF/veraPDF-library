@@ -32,6 +32,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -69,7 +70,7 @@ public class ProcessedObjectsInspector {
      * @throws SAXException 
      */
     public static ValidationStatus validationStatus(
-            Set<TestAssertion> assertions, ValidationProfile profile)
+            List<TestAssertion> assertions, ValidationProfile profile)
             throws URISyntaxException, IOException,
             ParserConfigurationException, SAXException {
         ProcessedObjectsParser parser = XMLProcessedObjectsParser.getInstance();
@@ -93,7 +94,7 @@ public class ProcessedObjectsInspector {
      * @throws SAXException 
      */
     public static ValidationStatus validationStatus(
-            Set<TestAssertion> assertions, ValidationProfile profile,
+            List<TestAssertion> assertions, ValidationProfile profile,
             ProcessedObjectsParser parser) throws IOException,
             URISyntaxException, ParserConfigurationException, SAXException {
         return validationStatus(assertions, profile,
@@ -116,7 +117,7 @@ public class ProcessedObjectsInspector {
      * @throws SAXException 
      */
     public static ValidationStatus validationStatus(
-            Set<TestAssertion> assertions, ValidationProfile profile,
+            List<TestAssertion> assertions, ValidationProfile profile,
             ProcessedObjects objects) {
         ValidationStatus status = ValidationStatus.VALID;
 
