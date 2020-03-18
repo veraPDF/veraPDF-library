@@ -103,17 +103,17 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
     }
 
     @Override
-    public Boolean getcontainsDc_title() {
+    public String getdc_title() {
         VeraPDFMeta xmpMetadata = this.getXmpMetadata();
         if (xmpMetadata != null) {
             for (VeraPDFXMPNode node : xmpMetadata.getProperties()) {
                 if (XMPConst.NS_DC.equals(node.getNamespaceURI())) {
                     if(node.getPrefix().equals("dc") && node.getName().equals("title")) {
-                        return true;
+                        return node.getValue();
                     }
                 }
             }
         }
-        return false;
+        return null;
     }
 }
