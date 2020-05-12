@@ -378,7 +378,7 @@
             <id specification="ISO_19005_2" clause="6.2.4.2" testNumber="1"/>
             <description>The profile that forms the stream of an ICCBased colour space shall conform to ICC.1:1998-09, ICC.1:2001-12, ICC.1:2003-09 or ISO 15076-1.</description>
             <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot; || deviceClass == &quot;scnr&quot; || deviceClass == &quot;spac&quot;) &amp;&amp; 
-			(colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot; || colorSpace == &quot;LAB &quot;) &amp;&amp; version &lt; 5.0</test>
+			(colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot; || colorSpace == &quot;Lab &quot;) &amp;&amp; version &lt; 5.0</test>
             <error>
                 <message>The embedded ICC profile is either invalid or does not satisfy PDF 1.7 requirements</message>
                 <arguments/>
@@ -1054,7 +1054,7 @@
 			contain only the N key. If an annotation dictionary's Subtype key has a value of Widget and its FT key has a
 			value of Btn, the value of the N key shall be an appearance subdictionary, otherwise the value of the N key shall be an appearance stream.</description>
             <test>AP == null || ( AP == &quot;N&quot; &amp;&amp; ( ((Subtype != &quot;Widget&quot; || FT != &quot;Btn&quot;) &amp;&amp; N_type == &quot;Stream&quot;)
-			|| (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot; &amp;&amp; N_type == &quot;Dict&quot;) ) )</test>
+			|| (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot; &amp;&amp; N_type == &quot;Dict&quot; &amp;&amp; appearance_size &gt; 0) ) )</test>
             <error>
                 <message>Annotation's appearance dictionary contains entries other than N or the N entry has an invalid type</message>
                 <arguments/>
@@ -1234,6 +1234,18 @@
                 <reference specification="XMP Specification September 2005" clause=""/>
                 <reference specification="Extensible Markup Language (XML) 1.0 (Third Edition), 04 February 2004" clause="2.1"/>
                 <reference specification="RDF/XML Syntax Specification (Revised), 10 February 2004" clause=""/>
+            </references>
+        </rule>
+		<rule object="XMPPackage">
+            <id specification="ISO_19005_2" clause="6.6.2.1" testNumber="5"/>
+            <description>All metadata streams present in the PDF shall conform to the XMP Specification. The XMP package must be encoded as UTF-8.</description>
+            <test>actualEncoding == "UTF-8"</test>
+            <error>
+                <message>The XMP package uses an encoding different from UTF-8</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="XMP Specification, September 2005" clause="5 - Embedding XMP Metadata in Application Files - PDF"/>
             </references>
         </rule>
         <rule object="ExtensionSchemaObject">
