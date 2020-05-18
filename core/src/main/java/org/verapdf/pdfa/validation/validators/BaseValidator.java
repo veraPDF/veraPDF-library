@@ -226,6 +226,12 @@ class BaseValidator implements PDFAValidator {
 						this.idSet.add(obj.getID());
 					}
 
+					if (obj.getExtraContext() != null) {
+						path.append("{");
+						path.append(obj.getExtraContext());
+						path.append("}");
+					}
+
 					this.objectsContext.push(path.toString());
 				}
 			}
