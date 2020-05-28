@@ -151,8 +151,8 @@
             <th>Total Jobs</th>
             <th>Failed to Parse</th>
             <th>Encrypted</th>
-            <th>PDF/A Compliant</th>
-            <th>Not PDF/A Compliant</th>
+            <th>Compliant</th>
+            <th>Not Compliant</th>
             <xsl:if test="$isPolicy">
               <th>Policy Compliant</th>
               <th>Not Policy Compliant</th>
@@ -197,7 +197,7 @@
         <tr>
           <th>File Name</th>
           <th>Validation Profile</th>
-          <th>PDF/A Compliance</th>
+          <th>Compliance</th>
           <th>Passed Rules</th>
           <th>Failed Rules</th>
           <th>Passed Checks</th>

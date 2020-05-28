@@ -122,7 +122,7 @@
                 <xsl:if test="/report/jobs/job/validationReport/@isCompliant">
                     <tr>
                         <td width="200" class="{$validClass}">
-                            PDF/A compliance:
+                            Compliance:
                         </td>
                         <td class="{$validClass}">
                             <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'true'">
