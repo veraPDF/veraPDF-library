@@ -41,9 +41,20 @@
         <rule object="SEMarkedContent">
             <id specification="ISO_14289_1" clause="7.1" testNumber="2"/>
             <description>Tagged content should not present inside content marked as Artifact</description>
-            <test>structureTag == null || parentTag != 'Artifact'</test>
+            <test>structureTag == null || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length == 0</test>
             <error>
                 <message>Tagged content is present inside content marked as Artifact</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SESimpleContentItem">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="3"/>
+            <description>Content shall be marked in the structure tree with semantically appropriate tags in a logical reading
+                order. Content that does not render and does not have a rendered equivalent shall be marked as an artifact.</description>
+            <test>parentStructureTag != null || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length &gt; 0</test>
+            <error>
+                <message>Content is neither marked as Artifact nor tagged as real content</message>
                 <arguments/>
             </error>
             <references/>
@@ -137,7 +148,7 @@
 			as described in PDF Reference 5.9, unless the font meets any of the following three conditions:
 			(*) fonts that use the predefined encodings MacRomanEncoding, MacExpertEncoding or WinAnsiEncoding, or that use the predefined Identity-H or Identity-V CMaps;
 			(*) Type 1 fonts whose character names are taken from the Adobe standard Latin character set or the set of named characters in the Symbol font, as defined in PDF Reference Appendix D;
-			(*) Type 0 fonts whose descendant CIDFont uses the Adobe-GB1, Adobe-CNS1, Adobe-Japan1 orAdobe-Korea1 character collections.</description>
+			(*) Type 0 fonts whose descendant CIDFont uses the Adobe-GB1, Adobe-CNS1, Adobe-Japan1 or Adobe-Korea1 character collections.</description>
             <test>toUnicode != null</test>
             <error>
                 <message>The font does not define Unicode character map</message>
@@ -426,7 +437,7 @@
                 kidsStandardTypes == ''</test>
             <error>
                 <message>TOC element contains more than one Caption element or TOC element contains a Caption element
-                    not as its first kid or TOC elem contains not a TOC, TOCI or Caption elements</message>
+                    not as its first kid or TOC element contains not a TOC, TOCI or Caption elements</message>
                 <arguments/>
             </error>
             <references>
@@ -488,10 +499,20 @@
             </error>
             <references/>
         </rule>
+        <rule object="SETextItem">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="34"/>
+            <description>Natural language for text in page content shall be determined</description>
+            <test>gSizeCatalogLang != 0 || Lang != null</test>
+            <error>
+                <message>Natural language for text in page content cannot be determined</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
         <rule object="SETHead">
             <id specification="ISO_14289_1" clause="7.2" testNumber="36"/>
             <description>THead element may contain only TR elements</description>
-            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0</test>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0 || kidsStandardTypes == ''</test>
             <error>
                 <message>THead element contains not a TR elements</message>
                 <arguments/>
@@ -515,7 +536,7 @@
         <rule object="SETFoot">
             <id specification="ISO_14289_1" clause="7.2" testNumber="38"/>
             <description>TFoot element may contain only TR elements</description>
-            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0</test>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0 || kidsStandardTypes == ''</test>
             <error>
                 <message>TFoot element contains not a TR elements</message>
                 <arguments/>
@@ -528,7 +549,7 @@
             <id specification="ISO_14289_1" clause="7.3" testNumber="1"/>
             <description>Figure tags shall include an alternative representation or replacement text that represents the contents
                 marked with the Figure tag as noted in ISO 32000-1:2008, 14.7.2, Table 323</description>
-            <test>(Alt != null &amp;&amp; Alt != '') || (ActualText != null &amp;&amp; ActualText != '')</test>
+            <test>(Alt != null &amp;&amp; Alt != '') || ActualText != null</test>
             <error>
                 <message>Figure tag alternative or replacement text missing</message>
                 <arguments/>
@@ -591,7 +612,7 @@
             <id specification="ISO_14289_1" clause="7.7" testNumber="1"/>
             <description>All mathematical expressions shall be enclosed within a Formula tag as detailed in ISO 32000-1:2008,
                 14.8.4.5 and shall have Alt or ActualText attributes</description>
-            <test>(Alt != null &amp;&amp; Alt != '') || (ActualText != null &amp;&amp; ActualText != '')</test>
+            <test>(Alt != null &amp;&amp; Alt != '') || ActualText != null</test>
             <error>
                 <message>Formula tag is missing Alt or ActualText attributes</message>
                 <arguments/>
@@ -682,7 +703,8 @@
                 and whose rectangle is not outside the crop-box and does not have a Contents key shall have
                 an alternative description (in the form of an Alt entry in the enclosing structure element)</description>
             <test>structParentType != 'Annot' || Subtype == 'Widget' || Subtype == 'Popup' || Subtype == 'Link'
-                || isOutsideCropBox == true || (F &amp; 2) == 2 || Contents != null || Alt != null</test>
+                || isOutsideCropBox == true || (F &amp; 2) == 2 || (Contents != null &amp;&amp; Contents != '') ||
+                (Alt != null &amp;&amp; Alt != '')</test>
             <error>
                 <message>An annotation other than annotations of type Link, Widget or Popup whose hidden flag is not set
                     and whose rectangle is not outside the crop-box and does not have a Contents key does not have
@@ -692,7 +714,7 @@
             <references/>
         </rule>
         <rule object="PDAnnot">
-            <id specification="ISO_14289_1" clause="7.18.2" testNumber="2"/>
+            <id specification="ISO_14289_1" clause="7.18.2" testNumber="1"/>
             <description>Annotations of subtype TrapNet shall not be permitted.</description>
             <test>Subtype != 'TrapNet'</test>
             <error>
@@ -902,7 +924,7 @@
             </references>
         </rule>
         <rule object="Glyph">
-            <id specification="ISO_14289_1" clause="7.21.4.1" testNumber="3"/>
+            <id specification="ISO_14289_1" clause="7.21.4.1" testNumber="2"/>
             <description>Embedded fonts shall define all glyphs referenced for rendering within the conforming file. A font referenced for use solely 
 			in rendering mode 3 is therefore not rendered and is thus exempt from the embedding requirement.</description>
             <test>renderingMode == 3 || isGlyphPresent == null || isGlyphPresent == true</test>
