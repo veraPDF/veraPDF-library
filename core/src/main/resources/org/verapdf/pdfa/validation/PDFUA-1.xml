@@ -169,7 +169,7 @@
         <rule object="SETable">
             <id specification="ISO_14289_1" clause="7.2" testNumber="3"/>
             <description>Table element may contain a Caption element as its first or last kid and
-                Table element may contain only TR, THead, TBody, TFoot and Caption elems</description>
+                Table element may contain only TR, THead, TBody, TFoot and Caption elements</description>
             <test>/^(Caption&amp;)?(TR|THead|TBody|TFoot)(&amp;(TR|THead|TBody|TFoot))*$/.test(kidsStandardTypes)
                 || /^(TR|THead|TBody|TFoot)(&amp;(TR|THead|TBody|TFoot))*(&amp;Caption)?$/.test(kidsStandardTypes)
                 || kidsStandardTypes == 'Caption' || kidsStandardTypes == ''</test>
@@ -607,6 +607,16 @@
                 <arguments/>
             </error>
             <references/>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.5" testNumber="1"/>
+            <description>If the table's structure is not determinable via Headers and IDs,
+                then structure elements of type TH shall have a Scope attribute</description>
+            <test>useHeadersAndIdOrScope == true</test>
+            <error>
+                <message>In a table not organized with Headers attributes and IDs, a TH cell does not contain a Scope attribute</message>
+                <arguments/>
+            </error>
         </rule>
         <rule object="SEFormula">
             <id specification="ISO_14289_1" clause="7.7" testNumber="1"/>
