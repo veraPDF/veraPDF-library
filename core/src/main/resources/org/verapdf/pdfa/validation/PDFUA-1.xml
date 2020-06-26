@@ -50,8 +50,7 @@
         </rule>
         <rule object="SESimpleContentItem">
             <id specification="ISO_14289_1" clause="7.1" testNumber="3"/>
-            <description>Content shall be marked in the structure tree with semantically appropriate tags in a logical reading
-                order. Content that does not render and does not have a rendered equivalent shall be marked as an artifact.</description>
+            <description>Content shall be marked as Artifact or tagged as real content</description>
             <test>parentStructureTag != null || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length &gt; 0</test>
             <error>
                 <message>Content is neither marked as Artifact nor tagged as real content</message>
@@ -719,6 +718,20 @@
                 <message>An annotation other than annotations of type Link, Widget or Popup whose hidden flag is not set
                     and whose rectangle is not outside the crop-box and does not have a Contents key does not have
                     an alternative description (in the form of an Alt entry in the enclosing structure element)</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDAnnot">
+            <id specification="ISO_14289_1" clause="7.18.1" testNumber="3"/>
+            <description>A form field whose hidden flag is not set and whose rectangle is not outside the crop-box
+                shall have a TU key present or all its Widget annotations shall have alternative descriptions
+                (in the form of an Alt entry in the enclosing structure elements)</description>
+            <test>Subtype != 'Widget' || isOutsideCropBox == true || (F &amp; 2) == 2 || (TU != null &amp;&amp; TU != '') || (Alt != null &amp;&amp; Alt != '')</test>
+            <error>
+                <message>A form field whose hidden flag is not set and whose rectangle is not outside the crop-box
+                    and does not have a TU key and its Widget annotations do not have alternative descriptions
+                    (in the form of an Alt entry in the enclosing structure element)</message>
                 <arguments/>
             </error>
             <references/>
