@@ -141,20 +141,6 @@
             </error>
             <references/>
         </rule>
-        <rule object="Glyph">
-            <id specification="ISO_14289_1" clause="7.2" testNumber="1"/>
-            <description>The font dictionary shall include a ToUnicode entry whose value is a CMap stream object that maps character codes to Unicode values, 
-			as described in PDF Reference 5.9, unless the font meets any of the following three conditions:
-			(*) fonts that use the predefined encodings MacRomanEncoding, MacExpertEncoding or WinAnsiEncoding, or that use the predefined Identity-H or Identity-V CMaps;
-			(*) Type 1 fonts whose character names are taken from the Adobe standard Latin character set or the set of named characters in the Symbol font, as defined in PDF Reference Appendix D;
-			(*) Type 0 fonts whose descendant CIDFont uses the Adobe-GB1, Adobe-CNS1, Adobe-Japan1 or Adobe-Korea1 character collections.</description>
-            <test>toUnicode != null</test>
-            <error>
-                <message>The font does not define Unicode character map</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
         <rule object="PDOutline">
             <id specification="ISO_14289_1" clause="7.2" testNumber="2"/>
             <description>Natural language in the Outline entries shall be determined</description>
@@ -309,6 +295,19 @@
                 kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'TBody').length &gt; 0</test>
             <error>
                 <message>Table element contains THead kid, but not contains TBody kids</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="15"/>
+            <description>Tables shall be regular, that is have the same number of cells in each row after accounting
+                for rowspan and colspan attributes.</description>
+            <test>isRegular == true</test>
+            <error>
+                <message>Irregular table found</message>
                 <arguments/>
             </error>
             <references>
@@ -677,6 +676,16 @@
             <test>containsEF == false || (F != null &amp;&amp; F != '' &amp;&amp; UF != null &amp;&amp; UF != '')</test>
             <error>
                 <message>The file specification dictionary for an embedded file does not contain either F or EF key or at least one of the keys is empty</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDAcroForm">
+            <id specification="ISO_14289_1" clause="7.15" testNumber="1"/>
+            <description>Dynamic XFA forms shall not be used</description>
+            <test>dynamicRender != 'required'</test>
+            <error>
+                <message>Dynamic XFA forms is present</message>
                 <arguments/>
             </error>
             <references/>
