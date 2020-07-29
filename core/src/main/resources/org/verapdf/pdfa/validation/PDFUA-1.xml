@@ -460,7 +460,7 @@
         <rule object="SEMarkedContent">
             <id specification="ISO_14289_1" clause="7.2" testNumber="30"/>
             <description>Natural language for text in ActualText attribute shall be determined</description>
-            <test>tag != 'Span' || ActualText == null || Lang_size != 0 || gSizeCatalogLang != 0</test>
+            <test>tag != 'Span' || ActualText == null || Lang_size != 0 || inheritedLang != null || gSizeCatalogLang != 0</test>
             <error>
                 <message>Natural language for text in ActualText attribute cannot be determined</message>
                 <arguments/>
@@ -470,7 +470,7 @@
         <rule object="SEMarkedContent">
             <id specification="ISO_14289_1" clause="7.2" testNumber="31"/>
             <description>Natural language for text in Alt attribute shall be determined</description>
-            <test>tag != 'Span' || Alt == null || Lang_size != 0 || gSizeCatalogLang != 0</test>
+            <test>tag != 'Span' || Alt == null || Lang_size != 0 || inheritedLang != null || gSizeCatalogLang != 0</test>
             <error>
                 <message>Natural language for text in Alt attribute cannot be determined</message>
                 <arguments/>
@@ -480,7 +480,7 @@
         <rule object="SEMarkedContent">
             <id specification="ISO_14289_1" clause="7.2" testNumber="32"/>
             <description>Natural language for text in E attribute shall be determined</description>
-            <test>tag != 'Span' || E == null || Lang_size != 0 || gSizeCatalogLang != 0</test>
+            <test>tag != 'Span' || E == null || Lang_size != 0 || inheritedLang != null || gSizeCatalogLang != 0</test>
             <error>
                 <message>Natural language for text in E attribute cannot be determined</message>
                 <arguments/>
@@ -717,16 +717,16 @@
         </rule>
         <rule object="PDAnnot">
             <id specification="ISO_14289_1" clause="7.18.1" testNumber="2"/>
-            <description>An annotation other than annotations of type Link, Widget or Popup whose hidden flag is not set
-                and whose rectangle is not outside the crop-box and does not have a Contents key shall have
-                an alternative description (in the form of an Alt entry in the enclosing structure element)</description>
+            <description>An annotation (except annotations of type Link, Widget or Popup, or hidden annotations,
+                or those having rectangle outside the crop-box) shall have either Contents key or an Alt entry
+                in the enclosing structure element</description>
             <test>structParentType != 'Annot' || Subtype == 'Widget' || Subtype == 'Popup' || Subtype == 'Link'
                 || isOutsideCropBox == true || (F &amp; 2) == 2 || (Contents != null &amp;&amp; Contents != '') ||
                 (Alt != null &amp;&amp; Alt != '')</test>
             <error>
-                <message>An annotation other than annotations of type Link, Widget or Popup whose hidden flag is not set
-                    and whose rectangle is not outside the crop-box and does not have a Contents key does not have
-                    an alternative description (in the form of an Alt entry in the enclosing structure element)</message>
+                <message>An annotation (except annotations of type Link, Widget or Popup, or hidden annotations,
+                    or those having rectangle outside the crop-box) has neither Contents key nor an Alt entry
+                    in the enclosing structure element</message>
                 <arguments/>
             </error>
             <references/>
@@ -1001,9 +1001,9 @@
         </rule>
         <rule object="TrueTypeFontProgram">
             <id specification="ISO_14289_1" clause="7.21.6" testNumber="1"/>
-            <description>For all non-symbolic TrueType fonts used for rendering, the embedded TrueType font program shall contain one or several non-symbolic 
-			cmap entries such that all necessary glyph lookups can be carried out.</description>
-            <test>isSymbolic == true || renderingMode == 3 || cmap10Present == true || cmap31Present == true </test>
+            <description>For all non-symbolic TrueType fonts used for rendering, the embedded TrueType font program shall contain one or several non-symbolic
+                    cmap entries such that all necessary glyph lookups can be carried out.</description>
+            <test>isSymbolic == true || nrCmaps &gt; 1 || (nrCmaps &gt; 0 &amp;&amp; cmap30Present == false)</test>
             <error>
                 <message>The embedded font program for a non-symbolic TrueType font does not contain any cmap subtables</message>
                 <arguments/>
