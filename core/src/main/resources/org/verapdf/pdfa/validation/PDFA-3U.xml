@@ -389,7 +389,7 @@
         </rule>
         <rule object="PDICCBasedCMYK">
             <id specification="ISO_19005_3" clause="6.2.4.2" testNumber="2"/>
-            <description>OOverprint mode (as set by the OPM value in an ExtGState dictionary) shall not be one (1) when an ICCBased CMYK colour space is 
+            <description>Overprint mode (as set by the OPM value in an ExtGState dictionary) shall not be one (1) when an ICCBased CMYK colour space is
 			used for stroke and overprinting for stroke is set to true, or when ICCBased CMYK colour space is used for fill and overprinting for 
 			fill is set to true, or both.</description>
             <test>overprintFlag == false || OPM == 0</test>
@@ -945,7 +945,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.6" testNumber="1"/>
             <description>For all non-symbolic TrueType fonts used for rendering, the embedded TrueType font program shall contain one or several non-symbolic 
 			cmap entries such that all necessary glyph lookups can be carried out.</description>
-            <test>isSymbolic == true || renderingMode == 3 || cmap10Present == true || cmap31Present == true </test>
+            <test>isSymbolic == true || nrCmaps &gt; 1 || (nrCmaps &gt; 0 &amp;&amp; cmap30Present == false)</test>
             <error>
                 <message>The embedded font program for a non-symbolic TrueType font does not contain any cmap subtables</message>
                 <arguments/>
