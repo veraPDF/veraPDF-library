@@ -94,6 +94,29 @@ public class VeraPDFXMPNode {
         return value;
     }
 
+    public boolean isLanguageAlternative() {
+        if (children.isEmpty()) {
+            return false;
+        }
+        for(VeraPDFXMPNode node : children) {
+            List elems = node.getQualifier();
+            boolean hasLanguageNode = false;
+            for(Object elem : elems) {
+                if (((XMPNode)elem).isLanguageNode()) {
+                    hasLanguageNode = true;
+                }
+            }
+            if (!hasLanguageNode) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public List getQualifier(){
+        return originalNode.getQualifier();
+    }
+
     public List<VeraPDFXMPNode> getChildren() {
         return children;
     }

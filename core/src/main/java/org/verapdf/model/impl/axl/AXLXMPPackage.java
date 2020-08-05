@@ -149,6 +149,14 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
                     this.getCurrentSchemasDefinitionPDFA_2_3ForNS(namespaceURI),
                     this.flavour);
         }
+        if (node.isLanguageAlternative()) {
+            return new AXLXMPLangAlt(node, this.isMainMetadata,
+                    this.isClosedChoiceCheck,
+                    this.getMainPackageSchemasDefinitionForNS(namespaceURI),
+                    this.getCurrentSchemasDefinitionPDFA_1ForNS(namespaceURI),
+                    this.getCurrentSchemasDefinitionPDFA_2_3ForNS(namespaceURI),
+                    this.flavour);
+        }
         return new AXLXMPProperty(node, this.isMainMetadata,
                 this.isClosedChoiceCheck,
                 this.getMainPackageSchemasDefinitionForNS(namespaceURI),
