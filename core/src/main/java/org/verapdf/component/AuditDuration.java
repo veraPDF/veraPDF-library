@@ -43,7 +43,7 @@ public interface AuditDuration {
 	long getFinish();
 
 	/**
-	 * @return the differece between the start and finish time in millisecs
+	 * @return the difference between the start and finish time in millisecs
 	 */
 	long getDifference();
 
