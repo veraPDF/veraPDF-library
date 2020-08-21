@@ -586,7 +586,7 @@
         <rule object="PDSimpleFont">
             <id specification="ISO_19005_1" clause="6.3.2" testNumber="5"/>
             <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5. 
-			FirstChar - integer - (Required except for the standard 14 fonts) The first character code defined in the font's Widths array</description>
+			LastChar - integer - (Required except for the standard 14 fonts) The last character code defined in the font's Widths array</description>
             <test>isStandard == true || LastChar != null</test>
             <error>
                 <message>A non-standard simple font dictionary has missing or invalid LastChar entry</message>
@@ -1207,18 +1207,8 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDFormField">
-            <id specification="ISO_19005_1" clause="6.9" testNumber="3"/>
-            <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys</description>
-            <test>containsAA == false</test>
-            <error>
-                <message>A Form field dictionary contains the AA entry</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
         <rule object="PDAnnot">
-            <id specification="ISO_19005_1" clause="6.9" testNumber="4"/>
+            <id specification="ISO_19005_1" clause="6.9" testNumber="3"/>
             <description>Every form field shall have an appearance dictionary associated with the field's data.</description>
             <test>Subtype != &quot;Widget&quot; || AP != null</test>
             <error>
