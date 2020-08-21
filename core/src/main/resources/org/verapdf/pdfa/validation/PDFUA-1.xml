@@ -459,30 +459,30 @@
         </rule>
         <rule object="SEMarkedContent">
             <id specification="ISO_14289_1" clause="7.2" testNumber="30"/>
-            <description>Natural language for text in ActualText attribute shall be determined</description>
+            <description>Natural language for text in ActualText attribute in Span Marked Content shall be determined</description>
             <test>tag != 'Span' || ActualText == null || Lang_size != 0 || inheritedLang != null || gSizeCatalogLang != 0</test>
             <error>
-                <message>Natural language for text in ActualText attribute cannot be determined</message>
+                <message>Natural language for text in ActualText attribute in Span Marked Content cannot be determined</message>
                 <arguments/>
             </error>
             <references/>
         </rule>
         <rule object="SEMarkedContent">
             <id specification="ISO_14289_1" clause="7.2" testNumber="31"/>
-            <description>Natural language for text in Alt attribute shall be determined</description>
+            <description>Natural language for text in Alt attribute in Span Marked Content shall be determined</description>
             <test>tag != 'Span' || Alt == null || Lang_size != 0 || inheritedLang != null || gSizeCatalogLang != 0</test>
             <error>
-                <message>Natural language for text in Alt attribute cannot be determined</message>
+                <message>Natural language for text in Alt attribute in Span Marked Content cannot be determined</message>
                 <arguments/>
             </error>
             <references/>
         </rule>
         <rule object="SEMarkedContent">
             <id specification="ISO_14289_1" clause="7.2" testNumber="32"/>
-            <description>Natural language for text in E attribute shall be determined</description>
+            <description>Natural language for text in E attribute in Span Marked Content shall be determined</description>
             <test>tag != 'Span' || E == null || Lang_size != 0 || inheritedLang != null || gSizeCatalogLang != 0</test>
             <error>
-                <message>Natural language for text in E attribute cannot be determined</message>
+                <message>Natural language for text in E attribute in Span Marked Content cannot be determined</message>
                 <arguments/>
             </error>
             <references/>
