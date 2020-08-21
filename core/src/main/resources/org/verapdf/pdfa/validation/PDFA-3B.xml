@@ -748,7 +748,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.2" testNumber="5"/>
             <description>All fonts and font programs used in a conforming file, regardless of rendering mode usage, shall conform to the provisions
 			in ISO 32000-1:2008, 9.6 and 9.7, as well as to the font specifications referenced by these provisions.
-			FirstChar - integer - (Required except for the standard 14 fonts) The first character code defined in the font's Widths array</description>
+			LastChar - integer - (Required except for the standard 14 fonts) The last character code defined in the font's Widths array</description>
             <test>isStandard == true || LastChar != null</test>
             <error>
                 <message>A non-standard simple font dictionary has missing or invalid LastChar entry</message>
@@ -954,9 +954,12 @@
         </rule>
         <rule object="PDTrueTypeFont">
             <id specification="ISO_19005_3" clause="6.2.11.6" testNumber="2"/>
-            <description>No non-symbolic TrueType font shall define a Differences array unless all of the glyph names in
-			the Differences array are listed in the Adobe Glyph List and the embedded font program contains at least the
-			Microsoft Unicode (3,1 – Platform ID=3, Encoding ID=1) encoding in the 'cmap' table.</description>
+            <description>All non-symbolic TrueType fonts shall have either MacRomanEncoding or WinAnsiEncoding as the
+                value for the Encoding key in the Font dictionary or as the value for the BaseEncoding key in the
+                dictionary that is the value of the Encoding key in the Font dictionary. In addition, all non-symbolic
+                TrueType fonts shall not define a Differences array unless all of the glyph names in the Differences
+                array are listed in the Adobe Glyph List and the embedded font program contains at least the Microsoft
+                Unicode (3,1 – Platform ID = 3, Encoding ID = 1) encoding in the 'cmap' table.</description>
             <test>isSymbolic == true || (Encoding == &quot;MacRomanEncoding&quot; || Encoding == &quot;WinAnsiEncoding&quot;) || 
 				(Encoding == &quot;Custom&quot; &amp;&amp; differencesAreUnicodeCompliant == true)</test>
             <error>
@@ -1236,7 +1239,7 @@
                 <reference specification="RDF/XML Syntax Specification (Revised), 10 February 2004" clause=""/>
             </references>
         </rule>
- 		<rule object="XMPPackage">
+        <rule object="XMPPackage">
             <id specification="ISO_19005_3" clause="6.6.2.1" testNumber="5"/>
             <description>All metadata streams present in the PDF shall conform to the XMP Specification. The XMP package must be encoded as UTF-8.</description>
             <test>actualEncoding == "UTF-8"</test>
@@ -1519,7 +1522,7 @@
         </variable>
         <variable name="gOutputProfileIndirect" object="PDOutputIntent">
             <defaultValue>null</defaultValue>
-            <value>gOutputProfileIndirect== null ? destOutputProfileIndirect : gOutputProfileIndirect</value>
+            <value>gOutputProfileIndirect == null ? destOutputProfileIndirect : gOutputProfileIndirect</value>
         </variable>
     </variables>
 </profile>
