@@ -346,7 +346,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="PDF 1.4 Reference" clause="9.4.10"/>
+                <reference specification="PDF 1.4 Reference" clause="9.10.4"/>
             </references>
         </rule>
         <rule object="PDOutputIntent">
