@@ -99,7 +99,7 @@
             <description>Hexadecimal strings shall contain an even number of non-white-space characters</description>
             <test>(isHex != true) || hexCount % 2 == 0</test>
             <error>
-                <message>Hexadecimal string contains odd number of non-white-space characters</message>
+                <message>A hexadecimal string contains odd number of non-white-space characters</message>
                 <arguments/>
             </error>
             <references/>
@@ -346,7 +346,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="PDF 1.4 Reference" clause="9.4.10"/>
+                <reference specification="PDF 1.4 Reference" clause="9.10.4"/>
             </references>
         </rule>
         <rule object="PDOutputIntent">

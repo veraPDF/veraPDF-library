@@ -77,7 +77,7 @@
             <description>Hexadecimal strings shall contain an even number of non-white-space characters</description>
             <test>(isHex != true) || hexCount % 2 == 0</test>
             <error>
-                <message>The number of hexadecimal digits in a hexadecimal string shall always be even</message>
+                <message>A hexadecimal string contains odd number of non-white-space characters</message>
                 <arguments/>
             </error>
             <references/>
@@ -777,7 +777,7 @@
         <rule object="PDFont">
             <id specification="ISO_19005_2" clause="6.2.11.2" testNumber="7"/>
             <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5. 
-			The subtype is the value of the Subtype key, if present, in the font file stream dictionary. The only valid values of this key in PDF 1.4 are
+			The subtype is the value of the Subtype key, if present, in the font file stream dictionary. The only valid values of this key in PDF 1.7 are
 			Type1C - Type 1–equivalent font program represented in the Compact Font Format (CFF), CIDFontType0C - Type 0 CIDFont program represented
 			in the Compact Font Format (CFF) and OpenType - OpenType® font program, as described in the OpenType Specification v.1.4.</description>
             <test>fontFileSubtype == null || fontFileSubtype == &quot;Type1C&quot; || fontFileSubtype == &quot;CIDFontType0C&quot; || fontFileSubtype == &quot;OpenType&quot;</test>
@@ -1067,7 +1067,7 @@
 			shall have at least one appearance dictionary:
 			- annotations where the value of the Rect key consists of an array where value 1 is equal to value 3 and value 2 is equal to value 4;
 			- annotations whose Subtype value is Popup or Link.</description>
-            <test>(width == 0 &amp;&amp; height ==0) || Subtype == &quot;Popup&quot; || Subtype == &quot;Link&quot; || AP != null</test>
+            <test>(width == 0 &amp;&amp; height == 0) || Subtype == &quot;Popup&quot; || Subtype == &quot;Link&quot; || AP != null</test>
             <error>
                 <message>An annotation does not contain an appearance dictionary</message>
                 <arguments/>
@@ -1089,7 +1089,7 @@
         </rule>
         <rule object="PDAnnot">
             <id specification="ISO_19005_2" clause="6.4.1" testNumber="1"/>
-            <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys.</description>
+            <description>A Widget annotation dictionary shall not contains the A or AA keys.</description>
             <test>Subtype != &quot;Widget&quot; || (containsA == false &amp;&amp; containsAA == false)</test>
             <error>
                 <message>A Widget annotation contains either A or AA entry</message>
@@ -1099,7 +1099,7 @@
         </rule>
         <rule object="PDFormField">
             <id specification="ISO_19005_2" clause="6.4.1" testNumber="2"/>
-            <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys.</description>
+            <description>A Field dictionary shall not contains the A or AA keys.</description>
             <test>containsAA == false</test>
             <error>
                 <message>A Form field dictionary contains the AA entry</message>
