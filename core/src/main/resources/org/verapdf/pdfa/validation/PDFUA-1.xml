@@ -67,7 +67,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.7.1"/>
+                <reference specification="ISO 32000-1:2008" clause="14.7.1"/>
             </references>
         </rule>
         <rule object="PDStructElem">
@@ -366,7 +366,7 @@
         <rule object="PDStructElem">
             <id specification="ISO_14289_1" clause="7.2" testNumber="21"/>
             <description>Natural language for text in ActualText attribute shall be determined</description>
-            <test>ActualText == null || Lang_size != 0 || gSizeCatalogLang != 0</test>
+            <test>ActualText == null || Lang_size != 0 || parentLang != null || gSizeCatalogLang != 0</test>
             <error>
                 <message>Natural language for text in ActualText attribute cannot be determined</message>
                 <arguments/>
@@ -376,7 +376,7 @@
         <rule object="PDStructElem">
             <id specification="ISO_14289_1" clause="7.2" testNumber="22"/>
             <description>Natural language for text in Alt attribute shall be determined</description>
-            <test>Alt == null || Lang_size != 0 || gSizeCatalogLang != 0</test>
+            <test>Alt == null || Lang_size != 0 || parentLang != null || gSizeCatalogLang != 0</test>
             <error>
                 <message>Natural language for text in Alt attribute cannot be determined</message>
                 <arguments/>
@@ -386,7 +386,7 @@
         <rule object="PDStructElem">
             <id specification="ISO_14289_1" clause="7.2" testNumber="23"/>
             <description>Natural language for text in E attribute shall be determined</description>
-            <test>E == null || Lang_size != 0 || gSizeCatalogLang != 0</test>
+            <test>E == null || Lang_size != 0 || parentLang != null || gSizeCatalogLang != 0</test>
             <error>
                 <message>Natural language for text in E attribute cannot be determined</message>
                 <arguments/>
@@ -707,7 +707,7 @@
         </rule>
         <rule object="PDAnnot">
             <id specification="ISO_14289_1" clause="7.18.1" testNumber="1"/>
-            <description>An annotation, excluding annotations of subtype Widget, Popup or Link, shall nested within an Annot tag</description>
+            <description>An annotation, excluding annotations of subtype Widget, Popup or Link, shall be nested within an Annot tag</description>
             <test>Subtype == 'Widget' || Subtype == 'Popup' || Subtype == 'Link' || structParentType == 'Annot'</test>
             <error>
                 <message>An annotation, excluding annotations of subtype Widget, Popup or Link, is not nested within an Annot tag</message>
@@ -731,12 +731,12 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDAnnot">
+        <rule object="PDWidgetAnnot">
             <id specification="ISO_14289_1" clause="7.18.1" testNumber="3"/>
             <description>A form field whose hidden flag is not set and whose rectangle is not outside the crop-box
                 shall have a TU key present or all its Widget annotations shall have alternative descriptions
                 (in the form of an Alt entry in the enclosing structure elements)</description>
-            <test>Subtype != 'Widget' || isOutsideCropBox == true || (F &amp; 2) == 2 || (TU != null &amp;&amp; TU != '') || (Alt != null &amp;&amp; Alt != '')</test>
+            <test>isOutsideCropBox == true || (F &amp; 2) == 2 || (TU != null &amp;&amp; TU != '') || (Alt != null &amp;&amp; Alt != '')</test>
             <error>
                 <message>A form field whose hidden flag is not set and whose rectangle is not outside the crop-box
                     and does not have a TU key and its Widget annotations do not have alternative descriptions
@@ -745,10 +745,10 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDAnnot">
+        <rule object="PDTrapNetAnnot">
             <id specification="ISO_14289_1" clause="7.18.2" testNumber="1"/>
             <description>Annotations of subtype TrapNet shall not be permitted.</description>
-            <test>Subtype != 'TrapNet'</test>
+            <test>false</test>
             <error>
                 <message>An annotation of subtype TrapNet exists</message>
                 <arguments/>
@@ -765,10 +765,10 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDAnnot">
+        <rule object="PDWidgetAnnot">
             <id specification="ISO_14289_1" clause="7.18.4" testNumber="1"/>
             <description>A Widget annotation shall be nested within a Form tag per ISO 32000-1:2008, 14.8.4.5, Table 340.</description>
-            <test>Subtype != 'Widget' || structParentType == 'Form'</test>
+            <test>structParentType == 'Form'</test>
             <error>
                 <message>A widget annotation is not nested within a Form tag</message>
                 <arguments/>
@@ -777,10 +777,10 @@
                 <reference specification="ISO 32000-1" clause="14.8.4.5"/>
             </references>
         </rule>
-        <rule object="PDAnnot">
+        <rule object="PDLinkAnnot">
             <id specification="ISO_14289_1" clause="7.18.5" testNumber="1"/>
             <description>Links shall be tagged according to ISO 32000-1:2008, 14.8.4.4.2, Link Element.</description>
-            <test>Subtype != 'Link' || structParentType == 'Link'</test>
+            <test>structParentType == 'Link'</test>
             <error>
                 <message>A link annotation is not nested within a Link tag</message>
                 <arguments/>
@@ -789,10 +789,10 @@
                 <reference specification="ISO 32000-1" clause="14.8.4.4.2"/>
             </references>
         </rule>
-        <rule object="PDAnnot">
+        <rule object="PDLinkAnnot">
             <id specification="ISO_14289_1" clause="7.18.5" testNumber="2"/>
             <description>Links shall contain an alternate description via their Contents key as described in ISO 32000-1:2008, 14.9.3.</description>
-            <test>Subtype != 'Link' || (Contents != null &amp;&amp; Contents != '')</test>
+            <test>Contents != null &amp;&amp; Contents != ''</test>
             <error>
                 <message>A link annotation does not include an alternate description in the Contents Key</message>
                 <arguments/>
@@ -828,16 +828,18 @@
                 <reference specification="ISO 32000-1" clause="13.2.4.2"/>
             </references>
         </rule>
-        <rule object="PDAnnot">
+        <rule object="PDPrinterMarkAnnot">
             <id specification="ISO_14289_1" clause="7.18.8" testNumber="1"/>
             <description>PrinterMark annotations, if present, shall be considered Incidental Artifacts, as if they are hidden page
                 elements as defined in ISO 32000-1:2008, 14.8.2.2.3.</description>
-            <test>Subtype != 'PrinterMark' || structParentType == null</test>
+            <test>structParentType == null</test>
             <error>
                 <message>A PrinterMark annotation is included in logical structure</message>
                 <arguments/>
             </error>
-            <references/>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.2.2.3"/>
+            </references>
         </rule>
         <rule object="PDXForm">
             <id specification="ISO_14289_1" clause="7.20" testNumber="1"/>
@@ -1025,9 +1027,12 @@
         </rule>
         <rule object="PDTrueTypeFont">
             <id specification="ISO_14289_1" clause="7.21.6" testNumber="2"/>
-            <description>No non-symbolic TrueType font shall define a Differences array unless all of the glyph names in
-			the Differences array are listed in the Adobe Glyph List and the embedded font program contains at least the
-			Microsoft Unicode (3,1 - Platform ID=3, Encoding ID=1) encoding in the 'cmap' table.</description>
+            <description>All non-symbolic TrueType fonts shall have either MacRomanEncoding or WinAnsiEncoding as the
+                value for the Encoding key in the Font dictionary or as the value for the BaseEncoding key in the
+                dictionary which is the value of the Encoding key in the Font dictionary. In addition, no non-symbolic
+                TrueType font shall define a Differences array unless all of the glyph names in the Differences array
+                are listed in the Adobe Glyph List and the embedded font program contains at least the Microsoft
+                Unicode (3,1 – Platform ID=3, Encoding ID=1) encoding in the 'cmap' table.</description>
             <test>isSymbolic == true || (Encoding == "MacRomanEncoding" || Encoding == "WinAnsiEncoding") || 
 				(Encoding == "Custom" &amp;&amp; differencesAreUnicodeCompliant == true)</test>
             <error>
