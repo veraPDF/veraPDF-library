@@ -186,12 +186,8 @@ public enum PDFAFlavour {
             this.description = description;
             this.family = family;
             this.name = family + "-" + this.getPartNumber(); //$NON-NLS-1$
-            if (!PDFAFlavours.WCAG_2_1_DESCRIPTION.equals(description)) {
-                this.id = this.series.getName()
-                        + "-" + this.getPartNumber() + ":" + this.getYear(); //$NON-NLS-1$//$NON-NLS-2$
-            } else {
-                this.id = PDFAFlavours.WCAG_2_1;
-            }
+            this.id = PDFAFlavours.WCAG_2_1_DESCRIPTION.equals(description) ? PDFAFlavours.WCAG_2_1 :
+                    this.series.getName() + "-" + this.getPartNumber() + ":" + this.getYear();
         }
 
         /**
@@ -298,7 +294,7 @@ public enum PDFAFlavour {
         ISO_19005(PDFAFlavours.ISO_19005_ID, PDFAFlavours.ISO_19005_DESCRIPTION),
         /** Identifier for PDF 1.7 ISO Standard */
         ISO_32000(PDFAFlavours.ISO_32000_ID, PDFAFlavours.ISO_32000_DESCRIPTION),
-
+        /** Identifier for PDF/UA ISO Standard */
         ISO_14289(PDFAFlavours.ISO_14289_ID, PDFAFlavours.ISO_14289_DESCRIPTION);
 
         private final int id;
