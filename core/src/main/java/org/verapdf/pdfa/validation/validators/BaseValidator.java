@@ -201,7 +201,7 @@ class BaseValidator implements PDFAValidator {
 				throw new ValidationException("There is a null link in an object. Context: " + checkContext);
 			}
 
-			for (int i = 0; i < objects.size(); ++i) {
+			for (int i = objects.size() - 1; i >= 0; --i) {
 				Object obj = objects.get(i);
 
 				StringBuilder path = new StringBuilder(checkContext);
@@ -224,6 +224,12 @@ class BaseValidator implements PDFAValidator {
 						path.append(")");
 
 						this.idSet.add(obj.getID());
+					}
+
+					if (obj.getExtraContext() != null) {
+						path.append("{");
+						path.append(obj.getExtraContext());
+						path.append("}");
 					}
 
 					this.objectsContext.push(path.toString());

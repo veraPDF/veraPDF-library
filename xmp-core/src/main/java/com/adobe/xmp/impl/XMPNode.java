@@ -30,7 +30,7 @@ import java.util.*;
  * 
  * @since 21.02.2006
  */
-class XMPNode implements Comparable
+public class XMPNode implements Comparable
 {
 	//------------------------------------------------------------------------------ veraPDF: additional field for original prefix
 	/** original prefix of the node*/
@@ -806,7 +806,7 @@ class XMPNode implements Comparable
 	/**
 	 * @return Returns whether this node is a language qualifier. 
 	 */
-	private boolean isLanguageNode()
+	public boolean isLanguageNode()
 	{
 		return XMPConst.XML_LANG.equals(name);
 	}
@@ -848,7 +848,7 @@ class XMPNode implements Comparable
 	/**
 	 * @return Returns list of qualifier that is lazy initialized.
 	 */
-	private List getQualifier()
+	protected List getQualifier()
 	{
 		if (qualifier == null)
 		{

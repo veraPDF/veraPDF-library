@@ -122,7 +122,7 @@
                 <xsl:if test="/report/jobs/job/validationReport/@isCompliant">
                     <tr>
                         <td width="200" class="{$validClass}">
-                            PDF/A compliance:
+                            Compliance:
                         </td>
                         <td class="{$validClass}">
                             <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'true'">
@@ -366,7 +366,7 @@
         <xsl:param name="idWithDots" select="concat(@clause,'t',@testNumber)"/>
         <xsl:param name="id" select="translate($idWithDots, '.', '_')"/>
 
-        <xsl:variable name="part-1-rules">
+        <xsl:variable name="part-a1-rules">
             <xsl:choose>
                 <xsl:when
                         test="'/' = substring($wikiPath, string-length($wikiPath))">
@@ -380,7 +380,7 @@
             </xsl:choose>
         </xsl:variable>
 
-        <xsl:variable name="part-2-rules">
+        <xsl:variable name="part-a2-rules">
             <xsl:choose>
                 <xsl:when
                         test="'/' = substring($wikiPath, string-length($wikiPath))">
@@ -394,13 +394,30 @@
             </xsl:choose>
         </xsl:variable>
 
+        <xsl:variable name="part-ua1-rules">
+            <xsl:choose>
+                <xsl:when
+                        test="'/' = substring($wikiPath, string-length($wikiPath))">
+                    <xsl:value-of
+                            select="concat($wikiPath, 'PDFUA-Part-1-rules')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of
+                            select="concat($wikiPath, '/PDFUA-Part-1-rules')"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
         <xsl:variable name="tempWikiLink">
             <xsl:choose>
                 <xsl:when test="starts-with(@specification, 'ISO 19005-1')">
-                    <xsl:value-of select="$part-1-rules"/>
+                    <xsl:value-of select="$part-a1-rules"/>
+                </xsl:when>
+                <xsl:when test="starts-with(@specification, 'ISO 14289-1')">
+                    <xsl:value-of select="$part-ua1-rules"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="$part-2-rules"/>
+                    <xsl:value-of select="$part-a2-rules"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>

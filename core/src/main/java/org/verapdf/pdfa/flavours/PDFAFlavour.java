@@ -85,7 +85,9 @@ public enum PDFAFlavour {
     /** 3u PDF Version 3 Level U */
     PDFA_3_U(Specification.ISO_19005_3, Level.U),
     /** 4 PDF Version 4 */
-    PDFA_4(Specification.ISO_19005_4, Level.NO_LEVEL);
+    PDFA_4(Specification.ISO_19005_4, Level.NO_LEVEL),
+    /** ua1 PDF Version 1 */
+    PDFUA_1(Specification.ISO_14289_1, Level.NO_LEVEL);
 
     private final static Map<String, PDFAFlavour> FLAVOUR_LOOKUP = new HashMap<>();
     static {
@@ -99,7 +101,7 @@ public enum PDFAFlavour {
     private final String id;
 
     private PDFAFlavour(final Specification standard, final Level level) {
-    	this(standard.getPartNumber() + level.getCode(), standard, level);
+        this((PDFAFlavours.PDFUA.equals(standard.family) ? PDFAFlavours.PDFUA_PREFIX : "") + standard.getPartNumber() + level.getCode(), standard, level);
     }
 
     private PDFAFlavour(final String id, final Specification standard, final Level level) {
@@ -142,41 +144,50 @@ public enum PDFAFlavour {
      */
     public enum Specification {
         /** PDF/A Version 1 */
-        NO_STANDARD(IsoStandardSeries.NO_SERIES, PDFAFlavours.NONE_ID,
+        NO_STANDARD(IsoStandardSeries.NO_SERIES, PDFAFlavours.NONE, PDFAFlavours.NONE_ID,
                 PDFAFlavours.NONE, PDFAFlavours.NONE),
         /** PDF/A Version 1 */
-        ISO_19005_1(IsoStandardSeries.ISO_19005, PDFAFlavours.ISO_19005_1_PART,
+        ISO_19005_1(IsoStandardSeries.ISO_19005, PDFAFlavours.PDFA, PDFAFlavours.ISO_19005_1_PART,
                 PDFAFlavours.ISO_19005_1_YEAR,
                 PDFAFlavours.ISO_19005_1_DESCRIPTION),
         /** PDF/A Version 2 */
-        ISO_19005_2(IsoStandardSeries.ISO_19005, PDFAFlavours.ISO_19005_2_PART,
+        ISO_19005_2(IsoStandardSeries.ISO_19005, PDFAFlavours.PDFA, PDFAFlavours.ISO_19005_2_PART,
                 PDFAFlavours.ISO_19005_2_YEAR,
                 PDFAFlavours.ISO_19005_2_DESCRIPTION),
         /** PDF/A Version 3 */
-        ISO_19005_3(IsoStandardSeries.ISO_19005, PDFAFlavours.ISO_19005_3_PART,
+        ISO_19005_3(IsoStandardSeries.ISO_19005, PDFAFlavours.PDFA, PDFAFlavours.ISO_19005_3_PART,
                 PDFAFlavours.ISO_19005_3_YEAR,
                 PDFAFlavours.ISO_19005_3_DESCRIPTION),
         /** PDF/A Version 4 */
-        ISO_19005_4(IsoStandardSeries.ISO_19005, PDFAFlavours.ISO_19005_4_PART,
+        ISO_19005_4(IsoStandardSeries.ISO_19005, PDFAFlavours.PDFA, PDFAFlavours.ISO_19005_4_PART,
                     PDFAFlavours.ISO_19005_4_YEAR,
-                    PDFAFlavours.ISO_19005_4_DESCRIPTION);
+                    PDFAFlavours.ISO_19005_4_DESCRIPTION),
+        /** PDF/UA Version 1 */
+        ISO_14289_1(IsoStandardSeries.ISO_14289, PDFAFlavours.PDFUA, PDFAFlavours.ISO_14289_1_PART,
+                    PDFAFlavours.ISO_14289_1_YEAR,
+                    PDFAFlavours.ISO_14289_1_DESCRIPTION),
+        /** WCAG Version 2.1 */
+        WCAG_2_1(IsoStandardSeries.NO_SERIES, PDFAFlavours.PDFUA, PDFAFlavours.WCAG_2_1_PART,
+                PDFAFlavours.WCAG_2_1_YEAR, PDFAFlavours.WCAG_2_1_DESCRIPTION);
 
         private final IsoStandardSeries series;
         private final int partNumber;
         private final String id;
         private final String year;
+        private final String family;
         private final String name;
         private final String description;
 
-        Specification(final IsoStandardSeries series, final int partNumber,
+        Specification(final IsoStandardSeries series, final String family, final int partNumber,
                 final String year, final String description) {
             this.series = series;
             this.partNumber = partNumber;
             this.year = year;
             this.description = description;
-            this.id = this.series.getName()
-                    + "-" + this.getPartNumber() + ":" + this.getYear(); //$NON-NLS-1$//$NON-NLS-2$
-            this.name = PDFAFlavours.PDFA_STRING_PREFIX + this.getPartNumber();
+            this.family = family;
+            this.name = family + "-" + this.getPartNumber(); //$NON-NLS-1$
+            this.id = PDFAFlavours.WCAG_2_1_DESCRIPTION.equals(description) ? PDFAFlavours.WCAG_2_1 :
+                    this.series.getName() + "-" + this.getPartNumber() + ":" + this.getYear();
         }
 
         /**
@@ -205,6 +216,13 @@ public enum PDFAFlavour {
          */
         public final String getName() {
             return this.name;
+        }
+
+        /**
+         * @return the family for the standard part
+         */
+        public final String getFamily() {
+            return this.family;
         }
 
         /**
@@ -275,7 +293,10 @@ public enum PDFAFlavour {
         /** Identifier for PDF/A ISO Standard */
         ISO_19005(PDFAFlavours.ISO_19005_ID, PDFAFlavours.ISO_19005_DESCRIPTION),
         /** Identifier for PDF 1.7 ISO Standard */
-        ISO_32000(PDFAFlavours.ISO_32000_ID, PDFAFlavours.ISO_32000_DESCRIPTION);
+        ISO_32000(PDFAFlavours.ISO_32000_ID, PDFAFlavours.ISO_32000_DESCRIPTION),
+        /** Identifier for PDF/UA ISO Standard */
+        ISO_14289(PDFAFlavours.ISO_14289_ID, PDFAFlavours.ISO_14289_DESCRIPTION);
+
         private final int id;
         private final String name;
         private final String description;
