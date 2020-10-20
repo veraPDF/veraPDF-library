@@ -708,7 +708,8 @@
         <rule object="PDAnnot">
             <id specification="ISO_14289_1" clause="7.18.1" testNumber="1"/>
             <description>An annotation, excluding annotations of subtype Widget, Popup or Link, shall be nested within an Annot tag</description>
-            <test>Subtype == 'Widget' || Subtype == 'Popup' || Subtype == 'Link' || structParentType == 'Annot'</test>
+            <test>Subtype == 'Widget' || Subtype == 'Popup' || Subtype == 'Link' || isOutsideCropBox == true ||
+                (F &amp; 2) == 2 || structParentType == 'Annot'</test>
             <error>
                 <message>An annotation, excluding annotations of subtype Widget, Popup or Link, is not nested within an Annot tag</message>
                 <arguments/>
@@ -748,7 +749,7 @@
         <rule object="PDTrapNetAnnot">
             <id specification="ISO_14289_1" clause="7.18.2" testNumber="1"/>
             <description>Annotations of subtype TrapNet shall not be permitted.</description>
-            <test>false</test>
+            <test>isOutsideCropBox == true || (F &amp; 2) == 2</test>
             <error>
                 <message>An annotation of subtype TrapNet exists</message>
                 <arguments/>
@@ -768,7 +769,7 @@
         <rule object="PDWidgetAnnot">
             <id specification="ISO_14289_1" clause="7.18.4" testNumber="1"/>
             <description>A Widget annotation shall be nested within a Form tag per ISO 32000-1:2008, 14.8.4.5, Table 340.</description>
-            <test>structParentType == 'Form'</test>
+            <test>structParentType == 'Form' || isOutsideCropBox == true || (F &amp; 2) == 2</test>
             <error>
                 <message>A widget annotation is not nested within a Form tag</message>
                 <arguments/>
@@ -780,7 +781,7 @@
         <rule object="PDLinkAnnot">
             <id specification="ISO_14289_1" clause="7.18.5" testNumber="1"/>
             <description>Links shall be tagged according to ISO 32000-1:2008, 14.8.4.4.2, Link Element.</description>
-            <test>structParentType == 'Link'</test>
+            <test>structParentType == 'Link' || isOutsideCropBox == true || (F &amp; 2) == 2</test>
             <error>
                 <message>A link annotation is not nested within a Link tag</message>
                 <arguments/>
@@ -792,7 +793,7 @@
         <rule object="PDLinkAnnot">
             <id specification="ISO_14289_1" clause="7.18.5" testNumber="2"/>
             <description>Links shall contain an alternate description via their Contents key as described in ISO 32000-1:2008, 14.9.3.</description>
-            <test>Contents != null &amp;&amp; Contents != ''</test>
+            <test>(Contents != null &amp;&amp; Contents != '') || isOutsideCropBox == true || (F &amp; 2) == 2</test>
             <error>
                 <message>A link annotation does not include an alternate description in the Contents Key</message>
                 <arguments/>
@@ -832,7 +833,7 @@
             <id specification="ISO_14289_1" clause="7.18.8" testNumber="1"/>
             <description>PrinterMark annotations, if present, shall be considered Incidental Artifacts, as if they are hidden page
                 elements as defined in ISO 32000-1:2008, 14.8.2.2.3.</description>
-            <test>structParentType == null</test>
+            <test>structParentType == null || isOutsideCropBox == true || (F &amp; 2) == 2</test>
             <error>
                 <message>A PrinterMark annotation is included in logical structure</message>
                 <arguments/>
