@@ -65,7 +65,7 @@
             <id specification="ISO_19005_1" clause="6.1.3" testNumber="4"/>
             <description>In a linearized PDF, if the ID keyword is present in both the first page trailer dictionary 
 			and the last trailer dictionary, the value to both instances of the ID keyword shall be identical</description>
-            <test>(isLinearized != true)|| lastID == null || (firstPageID == lastID)</test>
+            <test>(isLinearized != true) || lastID == null || (firstPageID == lastID)</test>
             <error>
                 <message>Last ID is present in the Linearized PDF and does not match the first page ID</message>
                 <arguments/>
@@ -784,7 +784,7 @@
 			as described in PDF Reference 5.9, unless the font meets any of the following three conditions:
 			(*) fonts that use the predefined encodings MacRomanEncoding, MacExpertEncoding or WinAnsiEncoding, or that use the predefined Identity-H or Identity-V CMaps;
 			(*) Type 1 fonts whose character names are taken from the Adobe standard Latin character set or the set of named characters in the Symbol font, as defined in PDF Reference Appendix D;
-			(*) Type 0 fonts whose descendant CIDFont uses the Adobe-GB1, Adobe-CNS1, Adobe-Japan1 orAdobe-Korea1 character collections.</description>
+			(*) Type 0 fonts whose descendant CIDFont uses the Adobe-GB1, Adobe-CNS1, Adobe-Japan1 or Adobe-Korea1 character collections.</description>
             <test>toUnicode != null</test>
             <error>
                 <message>The font does not define Unicode character map</message>
@@ -945,20 +945,20 @@
                 <reference specification="PDF 1.4 Reference" clause="8.5.3 - Named Actions - Table 8.45"/>
             </references>
         </rule>
-        <rule object="PDAnnot">
+        <rule object="PDWidgetAnnot">
             <id specification="ISO_19005_1" clause="6.6.1" testNumber="3"/>
             <description>Interactive form fields shall not perform actions of any type</description>
-            <test>Subtype != &quot;Widget&quot; || containsA == false</test>
+            <test>containsA == false</test>
             <error>
                 <message>Interactive form field contains an action object ('A' key)</message>
                 <arguments/>
             </error>
             <references/>
         </rule>
-        <rule object="PDAnnot">
+        <rule object="PDWidgetAnnot">
             <id specification="ISO_19005_1" clause="6.6.2" testNumber="1"/>
             <description>A Widget annotation dictionary shall not include an AA entry for an additional-actions dictionary</description>
-            <test>Subtype != &quot;Widget&quot; || containsAA == false</test>
+            <test>containsAA == false</test>
             <error>
                 <message>A Widget annotation contains an additional-actions dictionary (AA entry)</message>
                 <arguments/>
@@ -1248,20 +1248,10 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDAnnot">
+        <rule object="PDWidgetAnnot">
             <id specification="ISO_19005_1" clause="6.9" testNumber="2"/>
-            <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys</description>
-            <test>Subtype != &quot;Widget&quot; || (containsA == false &amp;&amp; containsAA == false)</test>
-            <error>
-                <message>A Widget annotation contains either A or AA entry</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
-        <rule object="PDAnnot">
-            <id specification="ISO_19005_1" clause="6.9" testNumber="3"/>
             <description>Every form field shall have an appearance dictionary associated with the field's data.</description>
-            <test>Subtype != &quot;Widget&quot; || AP != null</test>
+            <test>AP != null</test>
             <error>
                 <message>Form field does not have an appearance dictionary associated with the field's data.</message>
                 <arguments/>
