@@ -48,6 +48,8 @@ import java.util.Set;
  * <li>Level b - basic</li>
  * <li>Level a - accessible</li>
  * <li>Level u - unicode</li>
+ * <li>Level f - embedded files</li>
+ * <li>Level e - engineering</li>
  * </ul>
  * Part 1 does not allow a conformance level u (Unicode) so there are eight
  * valid combinations of specification part and level, shown below:
@@ -61,6 +63,8 @@ import java.util.Set;
  * <li>3b</li>
  * <li>3u</li>
  * <li>4</li>
+ * <li>4f</li>
+ * <li>4e</li>
  * </ul>
  *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -86,6 +90,10 @@ public enum PDFAFlavour {
     PDFA_3_U(Specification.ISO_19005_3, Level.U),
     /** 4 PDF Version 4 */
     PDFA_4(Specification.ISO_19005_4, Level.NO_LEVEL),
+    /** 4 PDF Version 4 Level F */
+    PDFA_4_F(Specification.ISO_19005_4, Level.F),
+    /** 4 PDF Version 4 Level E */
+    PDFA_4_E(Specification.ISO_19005_4, Level.E),
     /** ua1 PDF Version 1 */
     PDFUA_1(Specification.ISO_14289_1, Level.NO_LEVEL);
 
@@ -248,7 +256,7 @@ public enum PDFAFlavour {
 
     /**
      * Enum type that identifies the different PDF/A Conformance Levels A
-     * (accessible), B (basic) & U (unicode).
+     * (accessible), B (basic), U (unicode), F (embedded files) & E (engineering).
      *
      */
     public enum Level {
@@ -259,7 +267,11 @@ public enum PDFAFlavour {
         /** Level B */
         B(PDFAFlavours.LEVEL_B_CODE, PDFAFlavours.LEVEL_B_NAME),
         /** Level U */
-        U(PDFAFlavours.LEVEL_U_CODE, PDFAFlavours.LEVEL_U_NAME);
+        U(PDFAFlavours.LEVEL_U_CODE, PDFAFlavours.LEVEL_U_NAME),
+        /** Level F */
+        F(PDFAFlavours.LEVEL_F_CODE, PDFAFlavours.LEVEL_F_NAME),
+        /** Level E */
+        E(PDFAFlavours.LEVEL_E_CODE, PDFAFlavours.LEVEL_E_NAME);
 
         private final String code;
         private final String name;
@@ -270,7 +282,7 @@ public enum PDFAFlavour {
         }
 
         /**
-         * @return the PDF/A Level code ("a", "b", or "u")
+         * @return the PDF/A Level code ("a", "b", "u", "f" or "e")
          */
         public final String getCode() {
             return this.code;
@@ -337,7 +349,7 @@ public enum PDFAFlavour {
     /**
      * Looks up a {@link PDFAFlavour} by two letter flavour identifier. The
      * identifier is a two letter String that identifies a {@link PDFAFlavour},
-     * e.g. 1a, 1b, 2a, 2b, 2u, 3a, 3b, 3u, 4. The match is case insensitive so 1A,
+     * e.g. 1a, 1b, 2a, 2b, 2u, 3a, 3b, 3u, 4, 4f, 4e. The match is case insensitive so 1A,
      * 1B, etc. are also valid flavour ids.
      *
      * @param flavourId
