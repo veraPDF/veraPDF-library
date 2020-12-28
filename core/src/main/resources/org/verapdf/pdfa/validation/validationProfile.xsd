@@ -105,6 +105,9 @@
       <xs:enumeration value="PDFA_3_A"/>
       <xs:enumeration value="PDFA_3_B"/>
       <xs:enumeration value="PDFA_3_U"/>
+      <xs:enumeration value="PDFA_4"/>
+      <xs:enumeration value="PDFA_4_E"/>
+      <xs:enumeration value="PDFA_4_F"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -114,6 +117,8 @@
       <xs:enumeration value="ISO_19005_1"/>
       <xs:enumeration value="ISO_19005_2"/>
       <xs:enumeration value="ISO_19005_3"/>
+      <xs:enumeration value="ISO_19005_4"/>
+      <xs:enumeration value="ISO_14289_1"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
