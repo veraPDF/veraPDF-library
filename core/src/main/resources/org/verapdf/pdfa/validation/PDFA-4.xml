@@ -216,7 +216,7 @@
             <description>If the Version key is present in the document catalog dictionary, the first character in its value
                 shall be a 2 (32h) and the second character of its value shall be a PERIOD (2Eh) (decimal point). The third
                 character shall be a decimal digit. The number of characters of the value of the Version key shall be exactly 3.</description>
-            <test>Version == null || /^%2\.[0-9]$/.test(Version)</test>
+            <test>Version == null || /^2\.[0-9]$/.test(Version)</test>
             <error>
                 <message>The Version key is present and does not comply with the requirements of PDF/A-4 specification.</message>
                 <arguments/>
@@ -505,6 +505,27 @@
                 <arguments/>
             </error>
             <references/>
+        </rule>
+        <rule object="CosBM">
+            <id specification="ISO_19005_4" clause="6.2.9" testNumber="1"/>
+            <description>Only blend modes that are specified in ISO 32000-2:2020 shall be used for the value of the BM
+                key in a graphic state dictionary or an annotation dictionary.</description>
+            <test>internalRepresentation == &quot;Normal&quot; || internalRepresentation == &quot;Compatible&quot; ||
+                internalRepresentation == &quot;Multiply&quot; || internalRepresentation == &quot;Screen&quot; ||
+                internalRepresentation == &quot;Overlay&quot; || internalRepresentation == &quot;Darken&quot; ||
+                internalRepresentation == &quot;Lighten&quot; || internalRepresentation == &quot;ColorDodge&quot; ||
+                internalRepresentation == &quot;ColorBurn&quot; || internalRepresentation == &quot;HardLight&quot; ||
+                internalRepresentation == &quot;SoftLight&quot; || internalRepresentation == &quot;Difference&quot; ||
+                internalRepresentation == &quot;Exclusion&quot; || internalRepresentation == &quot;Hue&quot; ||
+                internalRepresentation == &quot;Saturation&quot; || internalRepresentation == &quot;Color&quot; ||
+                internalRepresentation == &quot;Luminosity&quot;</test>
+            <error>
+                <message>The document uses the blend mode not defined in ISO 32000-2:2020</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="11.3.5, Tables 134-135"/>
+            </references>
         </rule>
         <rule object="PDPage">
             <id specification="ISO_19005_4" clause="6.2.9" testNumber="2"/>
@@ -1112,6 +1133,16 @@
             <test>containsEF == false || (F != null &amp;&amp; UF != null)</test>
             <error>
                 <message>The file specification dictionary for an embedded file does not contain either F or EF key</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="EmbeddedFile">
+            <id specification="ISO_19005_4" clause="6.9" testNumber="3"/>
+            <description>All of the embedded files shall be compliant with ISO 19005-1, 19005-2 or 19005-4</description>
+            <test>isValidPDFA124 == true</test>
+            <error>
+                <message>An embedded file does not comply to either ISO 19005-1, ISO 19005-2 or ISO 19005-4</message>
                 <arguments/>
             </error>
             <references/>
