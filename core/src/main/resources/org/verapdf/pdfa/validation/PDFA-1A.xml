@@ -1132,10 +1132,8 @@
             <description>The metadata stream shall conform to XMP Specification and well formed PDFAExtension Schema for all extensions</description>
             <test>isSerializationValid</test>
             <error>
-                <message>%1</message>
-                <arguments>
-                    <argument>errorMessage</argument>
-                </arguments>
+                <message>The serialization of the metadata stream does not conform to XMP Specification.</message>
+                <arguments/>
             </error>
             <references>
                 <reference specification="XMP Specification January 2004" clause=""/>
@@ -1147,10 +1145,8 @@
 			or extension schemas that comply with XMP Specification</description>
             <test>(isPredefinedInXMP2004 == true || isDefinedInCurrentPackage == true) &amp;&amp; isValueTypeCorrect == true</test>
             <error>
-                <message>%1</message>
-                <arguments>
-                    <argument>errorMessage</argument>
-                </arguments>
+                <message>A property is either not defined in XMP Specification, or is not defined in any of the extension schemas, or has an invalid value type.</message>
+                <arguments/>
             </error>
             <references/>
         </rule>

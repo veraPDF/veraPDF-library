@@ -125,8 +125,7 @@ class BaseValidator implements PDFAValidator {
 
 		JavaScriptEvaluator.exitContext();
 
-		return ValidationResults.resultFromValues(this.profile, this.results,
-				this.isCompliant, this.testCounter);
+		return ValidationResults.resultFromValues(this.profile, this.results, this.isCompliant, this.testCounter);
 	}
 
 	protected void initialise() {
@@ -143,8 +142,9 @@ class BaseValidator implements PDFAValidator {
 
 	private void initializeAllVariables() {
 		for (Variable var : this.profile.getVariables()) {
-			if (var == null)
+			if (var == null) {
 				continue;
+			}
 
 			java.lang.Object res = JavaScriptEvaluator.evaluateString(var.getDefaultValue(), this.scope);
 
@@ -289,20 +289,19 @@ class BaseValidator implements PDFAValidator {
 		if (!this.abortProcessing) {
 			this.testCounter++;
             //TODO rebuild structure of project for secure saving assertions without overflow memory exception with big files.
-			Location location;
-            if (this.results.size() > 10_000) {
-				location = ValidationResults.locationFromValues(this.rootType, "");
-            } else {
-                location = ValidationResults.locationFromValues(this.rootType, locationContext);
-            }
-
-            TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
-					assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location);
 			if (this.isCompliant) {
                 this.isCompliant = assertionResult;
             }
 			if (!assertionResult || this.logPassedTests) {
-					this.results.add(assertion);
+				Location location;
+				if (this.results.size() > 10_000) {
+					location = ValidationResults.locationFromValues(this.rootType, null);
+				} else {
+					location = ValidationResults.locationFromValues(this.rootType, locationContext);
+				}
+				TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
+						assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location);
+				this.results.add(assertion);
             }
 		}
 	}

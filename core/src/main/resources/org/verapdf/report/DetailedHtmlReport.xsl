@@ -394,6 +394,20 @@
             </xsl:choose>
         </xsl:variable>
 
+        <xsl:variable name="part-a4-rules">
+            <xsl:choose>
+                <xsl:when
+                        test="'/' = substring($wikiPath, string-length($wikiPath))">
+                    <xsl:value-of
+                            select="concat($wikiPath, 'PDFA-Part-4-rules')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of
+                            select="concat($wikiPath, '/PDFA-Part-4-rules')"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
         <xsl:variable name="part-ua1-rules">
             <xsl:choose>
                 <xsl:when
@@ -412,6 +426,9 @@
             <xsl:choose>
                 <xsl:when test="starts-with(@specification, 'ISO 19005-1')">
                     <xsl:value-of select="$part-a1-rules"/>
+                </xsl:when>
+                <xsl:when test="starts-with(@specification, 'ISO 19005-4')">
+                    <xsl:value-of select="$part-a4-rules"/>
                 </xsl:when>
                 <xsl:when test="starts-with(@specification, 'ISO 14289-1')">
                     <xsl:value-of select="$part-ua1-rules"/>
