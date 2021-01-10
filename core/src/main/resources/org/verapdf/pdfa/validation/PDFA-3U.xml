@@ -116,7 +116,7 @@
         </rule>
         <rule object="CosStream">
             <id specification="ISO_19005_3" clause="6.1.7" testNumber="3"/>
-            <description>A stream dictionary shall not contain the F, FFilter, or FDecodeParams keys</description>
+            <description>A stream dictionary shall not contain the F, FFilter, or FDecodeParms keys</description>
             <test>F == null &amp;&amp; FFilter == null &amp;&amp; FDecodeParms == null</test>
             <error>
                 <message>A stream object dictionary contains one of the F, FFilter, or FDecodeParms keys</message>
@@ -1251,10 +1251,8 @@
 			as defined by Extensible Markup Language (XML) 1.0 (Third Edition), 2.1, and the RDF/XML Syntax Specification (Revised).</description>
             <test>isSerializationValid</test>
             <error>
-                <message>%1</message>
-                <arguments>
-                    <argument>errorMessage</argument>
-                </arguments>
+                <message>A metadata stream is serialized icorrectly and can not be parsed.</message>
+                <arguments/>
             </error>
             <references>
                 <reference specification="XMP Specification September 2005" clause=""/>
@@ -1365,10 +1363,8 @@
 			ISO 19005-1 or this part of ISO 19005, or any extension schemas that comply with 6.6.2.3.2.</description>
             <test>(isPredefinedInXMP2005 == true || isDefinedInMainPackage == true || isDefinedInCurrentPackage == true) &amp;&amp; isValueTypeCorrect == true</test>
             <error>
-                <message>%1</message>
-                <arguments>
-                    <argument>errorMessage</argument>
-                </arguments>
+                <message>An XMP property is either not not pre-defined, is not defined in any extension schema, or has invalid type.</message>
+                <arguments/>
             </error>
             <references/>
         </rule>

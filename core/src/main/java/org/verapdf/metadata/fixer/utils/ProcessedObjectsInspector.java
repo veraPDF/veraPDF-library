@@ -33,7 +33,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Current class check status of validation according to failed rules,

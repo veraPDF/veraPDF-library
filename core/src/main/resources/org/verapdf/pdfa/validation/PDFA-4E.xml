@@ -30,7 +30,7 @@
         </rule>
         <rule object="CosDocument">
             <id specification="ISO_19005_4" clause="6.1.3" testNumber="1"/>
-            <description>The file trailer dictionary shall contain the ID keyword whose value shall be File Identifiers as defined in ISO 32000-1:2008, 14.4</description>
+            <description>File identifiers shall be defined by the ID entry in a PDF file’s trailer dictionary</description>
             <test>lastID != null &amp;&amp; lastID.length() &gt; 0</test>
             <error>
                 <message>Missing ID in the document trailer</message>
@@ -125,7 +125,7 @@
         </rule>
         <rule object="CosStream">
             <id specification="ISO_19005_4" clause="6.1.6.1" testNumber="2"/>
-            <description>A stream dictionary shall not contain the F, FFilter, or FDecodeParams keys</description>
+            <description>A stream dictionary shall not contain the F, FFilter, or FDecodeParms keys</description>
             <test>F == null &amp;&amp; FFilter == null &amp;&amp; FDecodeParms == null</test>
             <error>
                 <message>A stream object dictionary contains one of the F, FFilter, or FDecodeParms keys</message>
@@ -1079,10 +1079,8 @@
                 well-formed as defined by XMP (ISO 16684-1).</description>
             <test>isSerializationValid</test>
             <error>
-                <message>%1</message>
-                <arguments>
-                    <argument>errorMessage</argument>
-                </arguments>
+                <message>A metadata stream is serialized icorrectly and can not be parsed.</message>
+                <arguments/>
             </error>
             <references>
                 <reference specification="ISO 16684-1:2019" clause=""/>
