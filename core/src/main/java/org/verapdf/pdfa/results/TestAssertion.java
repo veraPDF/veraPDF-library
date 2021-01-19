@@ -51,10 +51,19 @@ public interface TestAssertion {
     public Status getStatus();
 
     /**
-     * @return any message that accompanies this assertion, usually an error
-     *         message. Returns an empty string if there is no message.
+     * @return any message that accompanies this assertion.
      */
     public String getMessage();
+
+    /**
+     * @return location context.
+     */
+    public String getLocationContext();
+
+    /**
+     * @return error message.
+     */
+    public String getErrorMessage();
 
     /**
      * @return the {@link Location} within the PDF document where this test was

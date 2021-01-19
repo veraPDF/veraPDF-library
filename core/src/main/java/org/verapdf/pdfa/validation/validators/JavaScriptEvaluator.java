@@ -8,7 +8,9 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.validation.profiles.Rule;
 import org.verapdf.pdfa.validation.profiles.Variable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class JavaScriptEvaluator {
@@ -18,6 +20,7 @@ public class JavaScriptEvaluator {
 
 	private static Map<String, Script> ruleScripts = new HashMap<>();
 	private static Map<String, Script> variableScripts = new HashMap<>();
+	private static Map<String, Script> argumentScripts = new HashMap<>();
 
 	public static synchronized ScriptableObject initialise() {
 		context = Context.enter();
@@ -117,6 +120,33 @@ public class JavaScriptEvaluator {
 		boolean testEvalResult = ((Boolean) scr.exec(context, scope)).booleanValue();
 
 		return testEvalResult;
+	}
+
+	private static synchronized String getErrorArgumentResult(String argument, Object obj, ScriptableObject scope) {
+		Script scr;
+
+		if (!argumentScripts.containsKey(argument)) {
+			scr = JavaScriptEvaluator.compileString(getStringScript(obj, argument));
+			argumentScripts.put(argument, scr);
+		} else {
+			scr = argumentScripts.get(argument);
+		}
+		java.lang.Object res = scr.exec(context, scope);
+		if (res instanceof NativeJavaObject) {
+			res = ((NativeJavaObject) res).unwrap();
+		}
+		return res != null ? res.toString() : null;
+
+	}
+
+	public static synchronized List<String> getErrorArgumentsResult(Object obj, List<String> arguments, ScriptableObject scope) {
+		List<String> result = new ArrayList<>(arguments.size());
+
+		for (String argument : arguments) {
+			result.add(getErrorArgumentResult(argument, obj, scope));
+		}
+
+		return result;
 	}
 
 	public static void exitContext() {

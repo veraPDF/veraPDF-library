@@ -40,7 +40,17 @@ public interface Check {
 	public String getStatus();
 
 	/**
-	 * @return the context (location) of the check as a {@link String}
+	 * @return the location of the check as a {@link String}
+	 */
+	public String getLocation();
+
+	/**
+	 * @return the error message of the check as a {@link String}
+	 */
+	public String getErrorMessage();
+
+	/**
+	 * @return the context of the check as a {@link String}
 	 */
 	public String getContext();
 }

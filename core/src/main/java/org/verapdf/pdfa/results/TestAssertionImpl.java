@@ -48,20 +48,26 @@ final class TestAssertionImpl implements TestAssertion {
     private final String message;
     @XmlElement
     private final Location location;
+    @XmlElement
+    private final String locationContext;
+    @XmlElement
+    private final String errorMessage;
 
     private TestAssertionImpl() {
         this(0, Profiles.defaultRuleId(), Status.FAILED, "message", LocationImpl
-                .defaultInstance());
+                .defaultInstance(), null, null);
     }
 
     private TestAssertionImpl(final int ordinal, final RuleId ruleId, final Status status,
-            final String message, final Location location) {
+            final String message, final Location location, final String locationContext, final String errorMessage) {
         super();
         this.ordinal = ordinal;
         this.ruleId = ruleId;
         this.status = status;
         this.message = message;
         this.location = location;
+        this.locationContext = locationContext;
+        this.errorMessage = errorMessage;
     }
 
     /**
@@ -100,6 +106,22 @@ final class TestAssertionImpl implements TestAssertion {
      * { @inheritDoc }
      */
     @Override
+    public String getLocationContext() {
+        return this.locationContext;
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public String getErrorMessage() {
+        return this.errorMessage;
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
     public Location getLocation() {
         return this.location;
     }
@@ -114,6 +136,8 @@ final class TestAssertionImpl implements TestAssertion {
         result = prime * result
                 + ((this.location == null) ? 0 : this.location.hashCode());
         result = prime * result + ((this.message == null) ? 0 : this.message.hashCode());
+        result = prime * result + ((this.locationContext == null) ? 0 : this.locationContext.hashCode());
+        result = prime * result + ((this.errorMessage == null) ? 0 : this.errorMessage.hashCode());
         result = prime * result + ((this.ruleId == null) ? 0 : this.ruleId.hashCode());
         result = prime * result + ((this.status == null) ? 0 : this.status.hashCode());
         return result;
@@ -148,6 +172,16 @@ final class TestAssertionImpl implements TestAssertion {
             return false;
         if (this.status != other.getStatus())
             return false;
+        if (this.locationContext == null) {
+            if (other.getLocationContext() != null)
+                return false;
+        } else if (!this.locationContext.equals(other.getLocationContext()))
+            return false;
+        if (this.errorMessage == null) {
+            if (other.getErrorMessage() != null)
+                return false;
+        } else if (!this.errorMessage.equals(other.getErrorMessage()))
+            return false;
         return true;
     }
 
@@ -156,8 +190,9 @@ final class TestAssertionImpl implements TestAssertion {
      */
     @Override
     public String toString() {
-        return "TestAssertion [ruleId=" + this.ruleId + ", status=" + this.status
-                + ", message=" + this.message + ", location=" + this.location + "]";
+        return "TestAssertion [ruleId=" + this.ruleId + ", status=" + this.status + ", message=" + this.message +
+                ", location=" + this.location + ", locationContext=" + this.locationContext + ", errorMessage=" +
+                this.errorMessage + "]";
     }
     
     static TestAssertionImpl defaultInstance() {
@@ -165,8 +200,8 @@ final class TestAssertionImpl implements TestAssertion {
     }
 
     static TestAssertionImpl fromValues(final int ordinal, final RuleId ruleId, final Status status,
-            final String message, final Location location) {
-        return new TestAssertionImpl(ordinal, ruleId, status, message, location);
+            final String message, final Location location, final String locationContext, final String errorMessage) {
+        return new TestAssertionImpl(ordinal, ruleId, status, message, location, locationContext, errorMessage);
     }
 
     static class Adapter extends XmlAdapter<TestAssertionImpl, TestAssertion> {
