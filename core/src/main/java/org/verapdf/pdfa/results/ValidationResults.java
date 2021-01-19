@@ -149,8 +149,8 @@ public class ValidationResults {
 	 *         values
 	 */
 	public static TestAssertion assertionFromValues(final int ordinal, final RuleId ruleId, final Status status,
-			final String message, final Location location) {
-		return TestAssertionImpl.fromValues(ordinal, ruleId, status, message, location);
+			final String message, final Location location, final String context, final String errorMessage) {
+		return TestAssertionImpl.fromValues(ordinal, ruleId, status, message, location, context, errorMessage);
 	}
 
 	/**

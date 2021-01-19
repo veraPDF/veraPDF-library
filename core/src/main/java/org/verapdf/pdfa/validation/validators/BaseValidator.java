@@ -279,13 +279,13 @@ class BaseValidator implements PDFAValidator {
 	private boolean checkObjWithRule(Object obj, String cntxtForRule, Rule rule) {
 		boolean testEvalResult = JavaScriptEvaluator.getTestEvalResult(obj, rule, this.scope);
 
-		this.processAssertionResult(testEvalResult, cntxtForRule, rule);
+		this.processAssertionResult(testEvalResult, cntxtForRule, rule, obj);
 
 		return testEvalResult;
 	}
 
 	protected void processAssertionResult(final boolean assertionResult, final String locationContext,
-										  final Rule rule) {
+										  final Rule rule, final Object obj) {
 		if (!this.abortProcessing) {
 			this.testCounter++;
             //TODO rebuild structure of project for secure saving assertions without overflow memory exception with big files.
@@ -299,11 +299,24 @@ class BaseValidator implements PDFAValidator {
 				} else {
 					location = ValidationResults.locationFromValues(this.rootType, locationContext);
 				}
+
+				String errorMessage = createErrorMessage(rule.getError().getMessage(),
+						JavaScriptEvaluator.getErrorArgumentsResult(obj, rule.getError().getArguments(), this.scope));
 				TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
-						assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location);
+						assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location, null, errorMessage);
 				this.results.add(assertion);
             }
 		}
+	}
+
+	private String createErrorMessage(String errorMessage, List<String> arguments) {
+		for (int i = 1; i <= arguments.size(); i++) {
+			String argument = arguments.get(i - 1);
+			if (argument != null) {
+				errorMessage = errorMessage.replace("%" + i, argument);
+			}
+		}
+		return errorMessage;
 	}
 
 	@Override

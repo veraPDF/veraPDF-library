@@ -64,7 +64,7 @@ public class XMPMMHistoryTest {
 				List<? extends Object> resList = historyProperty
 						.getLinkedObjects(AXLXMPMMHistoryProperty.RESOURCE_EVENTS);
 				assertEquals(1, resList.size());
-				if (resList.size() != 0) {
+				if (!resList.isEmpty()) {
 					Object object = resList.get(0);
 					assertTrue(object instanceof AXLXMPMMHistoryResourceEvent);
 					AXLXMPMMHistoryResourceEvent event = (AXLXMPMMHistoryResourceEvent) object;

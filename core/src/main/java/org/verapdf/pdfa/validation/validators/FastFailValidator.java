@@ -25,6 +25,7 @@ package org.verapdf.pdfa.validation.validators;
 
 import org.verapdf.pdfa.validation.profiles.Rule;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
+import org.verapdf.model.baselayer.Object;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -55,8 +56,8 @@ class FastFailValidator extends BaseValidator {
 
     @Override
     protected void processAssertionResult(final boolean assertionResult,
-            final String locationContext, final Rule rule) {
-        super.processAssertionResult(assertionResult, locationContext, rule);
+            final String locationContext, final Rule rule, final Object obj) {
+        super.processAssertionResult(assertionResult, locationContext, rule, obj);
         if (!assertionResult) {
             this.failureCount++;
             if ((this.maxFailedTests > 0) && (this.failureCount >= this.maxFailedTests)) {
