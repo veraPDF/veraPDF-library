@@ -805,11 +805,10 @@
         <rule object="PDMediaClip">
             <id specification="ISO_14289_1" clause="7.18.6.2" testNumber="1"/>
             <description>In the media clip data dictionary, the optional CT key (ISO 32000-1:2008, 13.2.4.2, Table 274)
-                are required. Value of CT should conform to the content type specification described in Internet RFC 2045</description>
-            <test>CT != null &amp;&amp; /^[-\w+\.]+\/[-\w+\.]+$/.test(CT)</test>
+                is required.</description>
+            <test>CT != null</test>
             <error>
-                <message>CT key is missing from the media clip data dictionary or
-                    value of CT not conform to the content type specification described in Internet RFC 2045</message>
+                <message>CT key is missing from the media clip data dictionary</message>
                 <arguments/>
             </error>
             <references>
@@ -819,10 +818,10 @@
         <rule object="PDMediaClip">
             <id specification="ISO_14289_1" clause="7.18.6.2" testNumber="2"/>
             <description>In the media clip data dictionary, the optional Alt key (ISO 32000-1:2008, 13.2.4.2, Table 274)
-                are required.</description>
-            <test>Alt != null &amp;&amp; Alt != ''</test>
+                is required.</description>
+            <test>hasCorrectAlt == true</test>
             <error>
-                <message>Alt key is missing from the media clip data dictionary</message>
+                <message>Alt key is missing from the media clip data dictionary or has not correct value</message>
                 <arguments/>
             </error>
             <references>
