@@ -92,7 +92,7 @@ public class TestAssertionTest {
         TestAssertion assertionFromVals = ValidationResults
                 .assertionFromValues(0, Profiles.defaultRuleId(),
                         Status.FAILED, "message", //$NON-NLS-1$
-                        ValidationResults.defaultLocation(), null, null);
+                        ValidationResults.defaultLocation(), null, null, null);
         assertTrue(assertionFromVals.equals(ValidationResults
                 .defaultAssertion()));
         assertFalse(assertionFromVals == ValidationResults.defaultAssertion());

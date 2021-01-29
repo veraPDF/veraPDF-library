@@ -31,6 +31,8 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 import org.verapdf.pdfa.validation.profiles.Profiles;
 import org.verapdf.pdfa.validation.profiles.RuleId;
 
+import java.util.List;
+
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
@@ -53,13 +55,16 @@ final class TestAssertionImpl implements TestAssertion {
     @XmlElement
     private final String errorMessage;
 
+    private final List<String> errorArguments;
+
     private TestAssertionImpl() {
         this(0, Profiles.defaultRuleId(), Status.FAILED, "message", LocationImpl
-                .defaultInstance(), null, null);
+                .defaultInstance(), null, null, null);
     }
 
-    private TestAssertionImpl(final int ordinal, final RuleId ruleId, final Status status,
-            final String message, final Location location, final String locationContext, final String errorMessage) {
+    private TestAssertionImpl(final int ordinal, final RuleId ruleId, final Status status, final String message,
+                              final Location location, final String locationContext, final String errorMessage,
+                              final List<String> errorArguments) {
         super();
         this.ordinal = ordinal;
         this.ruleId = ruleId;
@@ -68,6 +73,7 @@ final class TestAssertionImpl implements TestAssertion {
         this.location = location;
         this.locationContext = locationContext;
         this.errorMessage = errorMessage;
+        this.errorArguments = errorArguments;
     }
 
     /**
@@ -124,6 +130,11 @@ final class TestAssertionImpl implements TestAssertion {
     @Override
     public Location getLocation() {
         return this.location;
+    }
+
+    @Override
+    public List<String> getErrorArguments() {
+        return errorArguments;
     }
 
     /**
@@ -200,8 +211,9 @@ final class TestAssertionImpl implements TestAssertion {
     }
 
     static TestAssertionImpl fromValues(final int ordinal, final RuleId ruleId, final Status status,
-            final String message, final Location location, final String locationContext, final String errorMessage) {
-        return new TestAssertionImpl(ordinal, ruleId, status, message, location, locationContext, errorMessage);
+            final String message, final Location location, final String locationContext, final String errorMessage,
+            final List<String> errorArguments) {
+        return new TestAssertionImpl(ordinal, ruleId, status, message, location, locationContext, errorMessage, errorArguments);
     }
 
     static class Adapter extends XmlAdapter<TestAssertionImpl, TestAssertion> {

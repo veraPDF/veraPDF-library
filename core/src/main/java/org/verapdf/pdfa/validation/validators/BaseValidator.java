@@ -300,21 +300,18 @@ class BaseValidator implements PDFAValidator {
 					location = ValidationResults.locationFromValues(this.rootType, locationContext);
 				}
 
-				String errorMessage = createErrorMessage(rule.getError().getMessage(),
-						JavaScriptEvaluator.getErrorArgumentsResult(obj, rule.getError().getArguments(), this.scope));
+				List<String> errorArguments = JavaScriptEvaluator.getErrorArgumentsResult(obj, rule.getError().getArguments(), this.scope);
+				String errorMessage = createErrorMessage(rule.getError().getMessage(), errorArguments);
 				TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
-						assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location, null, errorMessage);
+						assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location, null, errorMessage, errorArguments);
 				this.results.add(assertion);
             }
 		}
 	}
 
 	private String createErrorMessage(String errorMessage, List<String> arguments) {
-		for (int i = 1; i <= arguments.size(); i++) {
-			String argument = arguments.get(i - 1);
-			if (argument != null) {
-				errorMessage = errorMessage.replace("%" + i, argument);
-			}
+		for (int i = arguments.size(); i > 0 ; --i) {
+			errorMessage = errorMessage.replace("%" + i, arguments.get(i - 1));
 		}
 		return errorMessage;
 	}
