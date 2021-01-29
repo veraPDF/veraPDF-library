@@ -27,6 +27,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.verapdf.pdfa.validation.profiles.RuleId;
 
+import java.util.List;
+
 /**
  * A TestAssertion records the result of performing a validation test on a
  * particular document property, or set of properties.
@@ -70,6 +72,11 @@ public interface TestAssertion {
      *         asserted.
      */
     public Location getLocation();
+
+    /**
+     * @return the list of error arguments
+     */
+    public List<String> getErrorArguments();
 
     /**
      * Enum that indicates the result of a particular test assertion, i.e.
