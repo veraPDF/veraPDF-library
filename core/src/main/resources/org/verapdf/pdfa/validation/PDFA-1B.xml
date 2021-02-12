@@ -705,7 +705,7 @@
             <id specification="ISO_19005_1" clause="6.3.5" testNumber="2"/>
             <description>For all Type 1 font subsets referenced within a conforming file, the font descriptor dictionary shall include a CharSet string
 			listing the character names defined in the font subset, as described in PDF Reference Table 5.18</description>
-            <test>fontName.search(/[A-Z]{6}\+/) != 0 || CharSet != null</test>
+            <test>fontName.search(/[A-Z]{6}\+/) != 0 || (CharSet != null &amp;&amp; charSetListsAllGlyphs == true)</test>
             <error>
                 <message>A Type1 font subset does not define CharSet entry in its Descriptor dictionary</message>
                 <arguments/>
@@ -718,7 +718,7 @@
             <id specification="ISO_19005_1" clause="6.3.5" testNumber="3"/>
             <description>For all CIDFont subsets referenced within a conforming file, the font descriptor dictionary shall include a
 			CIDSet stream identifying which CIDs are present in the embedded CIDFont file, as described in PDF Reference Table 5.20</description>
-            <test>fontName.search(/[A-Z]{6}\+/) != 0 || CIDSet_size == 1 || cidSetListsAllGlyphs == true</test>
+            <test>fontName.search(/[A-Z]{6}\+/) != 0 || (CIDSet_size == 1 &amp;&amp; cidSetListsAllGlyphs == true)</test>
             <error>
                 <message>A CID Font subset does not define CIDSet entry in its Descriptor dictionary</message>
                 <arguments/>
