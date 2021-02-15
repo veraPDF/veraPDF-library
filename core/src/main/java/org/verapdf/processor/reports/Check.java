@@ -24,6 +24,7 @@
 package org.verapdf.processor.reports;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.List;
 
 /**
  * Encapsulates the details of an individual validation check.
@@ -53,4 +54,9 @@ public interface Check {
 	 * @return the context of the check as a {@link String}
 	 */
 	public String getContext();
+
+	/**
+	 * @return the error arguments as a list of {@link String}
+	 */
+	public List<String> getErrorArguments();
 }
