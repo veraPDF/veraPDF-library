@@ -43,6 +43,7 @@
   <modules>
     <module>xmp-core</module>
     <module>core</module>
+    <module>parent</module>
   </modules>
 
   <scm>
