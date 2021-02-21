@@ -294,16 +294,18 @@ class BaseValidator implements PDFAValidator {
             }
 			if (!assertionResult || this.logPassedTests) {
 				Location location;
+				String errorMessage = "";
+				List<String> errorArguments = new ArrayList<>();
 				if (this.results.size() > 10_000) {
-					location = ValidationResults.locationFromValues(this.rootType, null);
+					location = ValidationResults.locationFromValues(this.rootType, "");
 				} else {
 					location = ValidationResults.locationFromValues(this.rootType, locationContext);
+					errorArguments = JavaScriptEvaluator.getErrorArgumentsResult(obj, rule.getError().getArguments(), this.scope);
+					errorMessage = createErrorMessage(rule.getError().getMessage(), errorArguments);
 				}
 
-				List<String> errorArguments = JavaScriptEvaluator.getErrorArgumentsResult(obj, rule.getError().getArguments(), this.scope);
-				String errorMessage = createErrorMessage(rule.getError().getMessage(), errorArguments);
 				TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
-						assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location, null, errorMessage, errorArguments);
+						assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location, obj.getContext(), errorMessage, errorArguments);
 				this.results.add(assertion);
             }
 		}
