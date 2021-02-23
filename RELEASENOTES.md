@@ -1,4 +1,47 @@
-Version 1.14-RC (June 10, 2019)
+Version 1.18 (February 23, 2021)
+=================================
+
+### Applications
+- added support for PDF/UA-1 (Machine) validaiton
+- fixed issues with STDIN support
+- added support for input files with non-pdf extension
+
+### PDF Model
+- extended the model to support PDF/UA-1 rules
+
+### PDF Parser
+- fixed parsing of inline images
+- fixed token parsing on non-ASCII systems
+- fixed TrueType font parsing in case of different number of glyphs specified in maxp and post tables
+- fixed infinite loop in circular dependency of CMaps
+- added support for documents with zero pages
+- improved parsing of Type1 font private data
+- improved glyph width calculation for CFF fonts
+- fixed null pointer exceptions on invalid PDF documents (multiple places)
+
+### Core library
+- adjusted vaidation reports to support PDF/UA-1 profile 
+
+
+Version 1.16 (February 19, 2020)
+=================================
+### Applications
+- added drag&drop support for input files in the GUI
+
+### PDF Model
+- added PDFunction type to support validation of Type4 functions
+- added types corresponding to the PDF 1.7 standard structure tagset
+- added actualEncoding property of XMP Metadata
+
+### PDF Parser
+- fixed null pointer exception on empty trailer
+- improved the logic of parsing page content consisting of multiple streams
+
+### Core library
+- improved memory management in case of large number of validation errors
+
+
+Version 1.14 (June 10, 2019)
 ==============================
 
 ### Applications
