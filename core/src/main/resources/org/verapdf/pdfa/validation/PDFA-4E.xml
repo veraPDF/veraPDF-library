@@ -1160,6 +1160,16 @@
             </error>
             <references/>
         </rule>
+        <rule object="PDFAIdentification">
+            <id specification="ISO_19005_4" clause="6.7.3" testNumber="5"/>
+            <description>The value of pdfaid:rev shall be the four digit year.</description>
+            <test>/^\d{4}$/.test(rev)</test>
+            <error>
+                <message>The value of pdfaid:rev not the four digit year.</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
         <rule object="EmbeddedFile">
             <id specification="ISO_19005_4" clause="6.9" testNumber="1"/>
             <description>The embedded file stream dictionary shall include a valid MIME type value for the Subtype key.
