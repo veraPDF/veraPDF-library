@@ -295,6 +295,10 @@ public class VeraPDFMeta {
         return getSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, "conformance");
     }
 
+    public  String getRevisionYear() throws XMPException {
+        return getSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, "rev");
+    }
+
     public VeraPDFMeta setIdentificationConformance(String identificationConformance) throws XMPException {
         return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID,  "conformance", identificationConformance);
     }
