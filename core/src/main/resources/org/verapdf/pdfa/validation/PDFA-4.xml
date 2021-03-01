@@ -883,10 +883,10 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDStructElem">
+        <rule object="CosActualText">
             <id specification="ISO_19005_4" clause="6.2.10.8" testNumber="1"/>
             <description>The ActualText entry shall not contain any PUA values.</description>
-            <test>actualTextContainsPUA == false</test>
+            <test>containsPUA == false</test>
             <error>
                 <message>The ActualText entry contains any PUA values.</message>
                 <arguments/>
@@ -1183,6 +1183,19 @@
                 <arguments/>
             </error>
             <references/>
+        </rule>
+        <rule object="CosFileSpecification">
+            <id specification="ISO_19005_4" clause="6.9" testNumber="4"/>
+            <description>Each embedded file’s file specification dictionary shall contain an AFRelationship key
+                (ISO 32000-2, 7.11.3) that describes how this embedded file relates to the content of the PDF.</description>
+            <test>AFRelationship != null</test>
+            <error>
+                <message>The file specification dictionary for an embedded file does not contain the AFRelationship key</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="7.11.3"/>
+            </references>
         </rule>
         <rule object="PDOCConfig">
             <id specification="ISO_19005_4" clause="6.10" testNumber="1"/>

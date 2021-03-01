@@ -883,10 +883,10 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDStructElem">
+        <rule object="CosActualText">
             <id specification="ISO_19005_4" clause="6.2.10.8" testNumber="1"/>
             <description>The ActualText entry shall not contain any PUA values.</description>
-            <test>actualTextContainsPUA == false</test>
+            <test>containsPUA == false</test>
             <error>
                 <message>The ActualText entry contains any PUA values.</message>
                 <arguments/>
@@ -1178,7 +1178,7 @@
             <references/>
         </rule>
         <rule object="CosDocument">
-            <id specification="ISO_19005_4" clause="6.9" testNumber="4"/>
+            <id specification="ISO_19005_4" clause="6.9" testNumber="5"/>
             <description>A PDF/A-4f conforming file shall contain an EmbeddedFiles key in the name dictionary of the
                 document catalog dictionary.</description>
             <test>containsEmbeddedFiles == true</test>
