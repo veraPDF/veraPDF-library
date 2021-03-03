@@ -1275,9 +1275,9 @@
             <defaultValue>null</defaultValue>
             <value>outputColorSpace</value>
         </variable>
+        <variable name="gPageOutputCS" object="PDPage">
+            <defaultValue>null</defaultValue>
+            <value>outputColorSpace</value>
+        </variable>
     </variables>
-    <variable name="gPageOutputCS" object="PDPage">
-        <defaultValue>null</defaultValue>
-        <value>outputColorSpace</value>
-    </variable>
 </profile>
