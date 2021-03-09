@@ -1115,9 +1115,22 @@
                 <reference specification="ISO 16684-1:2019" clause=""/>
             </references>
         </rule>
+        <rule object="XMPPackage">
+            <id specification="ISO_19005_4" clause="6.7.2.1" testNumber="5"/>
+            <description>All metadata streams present in the PDF shall conform to the XMP Specification. The XMP package must be encoded as UTF-8.</description>
+            <test>actualEncoding == "UTF-8"</test>
+            <error>
+                <message>The XMP package uses an encoding different from UTF-8</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="XMP Specification, September 2005" clause="5 - Embedding XMP Metadata in Application Files - PDF"/>
+            </references>
+        </rule>
         <rule object="MainXMPPackage">
             <id specification="ISO_19005_4" clause="6.7.3" testNumber="1"/>
-            <description>The PDF/A version and conformance level of a file shall be specified using the PDF/A Identification extension schema.</description>
+            <description>The PDF/A version and conformance level of a file shall be specified using the PDF/A Identification extension schema.
+                The PDF/A Identification schema defined in Table 2 uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/id/&quot;.</description>
             <test>Identification_size == 1</test>
             <error>
                 <message>The document metadata stream doesn't contains PDF/A Identification Schema.</message>
