@@ -1186,7 +1186,7 @@
         <rule object="PDAction">
             <id specification="ISO_19005_2" clause="6.5.1" testNumber="1"/>
             <description>The Launch, Sound, Movie, ResetForm, ImportData, Hide, SetOCGState, Rendition, Trans, GoTo3DView and JavaScript actions shall not be permitted. 
-			Additionally, the deprecated set-state and noop actions shall not be permitted.</description>
+			Additionally, the deprecated set-state and no-op actions shall not be permitted.</description>
             <test>S == &quot;GoTo&quot; || S == &quot;GoToR&quot; || S == &quot;GotToE&quot; || S == &quot;Thread&quot; || S == &quot;URI&quot; || S == &quot;Named&quot; || S == &quot;SubmitForm&quot;</test>
             <error>
                 <message>Unknown or not permitted action type</message>
