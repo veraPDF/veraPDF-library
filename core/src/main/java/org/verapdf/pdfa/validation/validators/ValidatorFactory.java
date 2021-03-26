@@ -230,6 +230,11 @@ public final class ValidatorFactory {
 		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails);
 	}
 
+	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour,
+	                                           final boolean recordPasses, final int maxFails) {
+		return ValidatorConfigImpl.fromValues(flavour, defaultFlavour, recordPasses, maxFails);
+	}
+
 	/**
 	 * De-serialises a {@link ValidatorConfig} instance from it's XML
 	 * representation

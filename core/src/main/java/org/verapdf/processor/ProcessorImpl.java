@@ -112,8 +112,8 @@ final class ProcessorImpl implements ItemProcessor {
 		Components.Timer parseTimer = Components.Timer.start();
 		try (PDFAParser parser = this.hasCustomProfile()
 				? foundry.createParser(toProcess, this.processorConfig.getCustomProfile().getPDFAFlavour())
-				: this.isAuto() ? foundry.createParser(toProcess)
-				: foundry.createParser(toProcess, this.valConf().getFlavour())) {
+				: this.isAuto() ? foundry.createParser(toProcess, PDFAFlavour.NO_FLAVOUR, this.valConf().getDefaultFlavour())
+				: foundry.createParser(toProcess, this.valConf().getFlavour(), this.valConf().getDefaultFlavour())) {
 			for (TaskType task : this.getConfig().getTasks()) {
 				switch (task) {
 					case VALIDATE:
