@@ -96,6 +96,9 @@ public interface VeraPDFFoundry extends Component {
 	public PDFAParser createParser(File pdfFile, PDFAFlavour flavour)
 			throws ModelParsingException, EncryptedPdfException;
 
+	public PDFAParser createParser(File pdfFile, PDFAFlavour flavour, PDFAFlavour defaultFlavour)
+			throws ModelParsingException, EncryptedPdfException;
+
 	/**
 	 * Method that returns a PDFParser instance, parsing file passed as
 	 * {@link pdfStream} parameter. The parser or parser provider will detect
