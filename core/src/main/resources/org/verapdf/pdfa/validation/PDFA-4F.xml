@@ -1037,7 +1037,7 @@
         </rule>
         <rule object="PDAcroForm">
             <id specification="ISO_19005_4" clause="6.4.2" testNumber="1"/>
-            <description>The document's interactive form dictionary that forms the value of the AcroForm key in the document's Catalog of a PDF/A-2 file,
+            <description>The document's interactive form dictionary that forms the value of the AcroForm key in the document's Catalog of a PDF/A-4 file,
                 if present, shall not contain the XFA key.</description>
             <test>containsXFA == false</test>
             <error>
@@ -1232,6 +1232,19 @@
                 <arguments/>
             </error>
             <references/>
+        </rule>
+        <rule object="CosFileSpecification">
+            <id specification="ISO_19005_4" clause="6.9" testNumber="4"/>
+            <description>Each embedded file’s file specification dictionary shall contain an AFRelationship key
+                (ISO 32000-2, 7.11.3) that describes how this embedded file relates to the content of the PDF.</description>
+            <test>containsEF == false || AFRelationship != null</test>
+            <error>
+                <message>The file specification dictionary for an embedded file does not contain the AFRelationship key</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="7.11.3"/>
+            </references>
         </rule>
         <rule object="CosDocument">
             <id specification="ISO_19005_4" clause="6.9" testNumber="5"/>
