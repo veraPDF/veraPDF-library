@@ -135,7 +135,7 @@ public class JavaScriptEvaluator {
 		if (res instanceof NativeJavaObject) {
 			res = ((NativeJavaObject) res).unwrap();
 		}
-		return res != null ? res.toString() : "null";
+		return res != null ? res.toString() : null;
 
 	}
 

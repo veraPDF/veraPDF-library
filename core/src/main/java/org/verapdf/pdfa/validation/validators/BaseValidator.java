@@ -313,7 +313,7 @@ class BaseValidator implements PDFAValidator {
 
 	private String createErrorMessage(String errorMessage, List<String> arguments) {
 		for (int i = arguments.size(); i > 0 ; --i) {
-			errorMessage = errorMessage.replace("%" + i, arguments.get(i - 1));
+			errorMessage = errorMessage.replace("%" + i, arguments.get(i - 1) != null ? arguments.get(i - 1) : "null");
 		}
 		return errorMessage;
 	}
