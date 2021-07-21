@@ -967,7 +967,7 @@
                 array are listed in the Adobe Glyph List and the embedded font program contains at least the Microsoft
                 Unicode (3,1 – Platform ID = 3, Encoding ID = 1) encoding in the 'cmap' table.</description>
             <test>isSymbolic == true || (Encoding == &quot;MacRomanEncoding&quot; || Encoding == &quot;WinAnsiEncoding&quot;) || 
-				(Encoding == &quot;Custom&quot; &amp;&amp; differencesAreUnicodeCompliant == true)</test>
+				(containsDifferences == true &amp;&amp; differencesAreUnicodeCompliant == true)</test>
             <error>
                 <message>A non-symbolic TrueType font has encoding different from MacRomanEncoding or WinAnsiEncoding, or 
 				the glyphs in the Differences array can not be mapped to the embedded font glyphs via the Adobe Glyph List</message>
