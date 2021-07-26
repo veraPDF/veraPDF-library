@@ -118,7 +118,7 @@ public final class ProcessorFactory {
 
 		switch (option) {
 		case TEXT:
-			return SingleLineResultHandler.newInstance(reportStream, isVerbose);
+			return SingleLineResultHandler.newInstance(reportStream, isVerbose, logPassed);
 		case XML:
 			return rawResultHandler(new PrintWriter(reportStream));
 		case MRR:

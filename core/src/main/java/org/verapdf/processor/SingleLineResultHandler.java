@@ -100,7 +100,7 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 		String reportSummary = (validationResult.isCompliant() ? pass : fail) + this.item.getName() + "\n"; //$NON-NLS-1$
 		try {
 			this.outputStream.write(reportSummary.getBytes());
-			if (this.isVerbose) {
+			if (this.isVerbose || this.logSuccess) {
 				processRules(validationResult);
 			}
 		} catch (IOException excep) {
@@ -160,13 +160,17 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 		Set<RuleId> failedRules = new HashSet<>();
 		for (TestAssertion assertion : validationResult.getTestAssertions()) {
 			if (assertion.getStatus() == TestAssertion.Status.FAILED) {
-				failedRules.add(assertion.getRuleId());
+				if (this.isVerbose) {
+					failedRules.add(assertion.getRuleId());
+				}
 			} else if (this.logSuccess) {
 				passedRules.add(assertion.getRuleId());
 			}
 		}
-		this.outputRules(failedRules, fail);
 		if (this.isVerbose) {
+			this.outputRules(failedRules, fail);
+		}
+		if (this.logSuccess) {
 			this.outputRules(passedRules, pass);
 		}
 	}
@@ -184,5 +188,9 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 
 	static BatchProcessingHandler newInstance(OutputStream outputStream, final boolean verbose) {
 		return new SingleLineResultHandler(outputStream, verbose);
+	}
+
+	static BatchProcessingHandler newInstance(OutputStream outputStream, final boolean verbose, final boolean logSuccess) {
+		return new SingleLineResultHandler(outputStream, verbose, logSuccess);
 	}
 }
