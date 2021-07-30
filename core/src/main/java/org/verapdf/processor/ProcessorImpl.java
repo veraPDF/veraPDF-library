@@ -135,6 +135,12 @@ final class ProcessorImpl implements ItemProcessor {
 			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
 			return ProcessorResultImpl.encryptedResult(fileDetails,
 					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
+		} catch (RuntimeException e) {
+			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			return ProcessorResultImpl.invalidPdfResult(fileDetails,
+			       TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(),
+			       new VeraPDFException("Caught unexpected runtime exception during parsing", e))); //$NON-NLS-1$
 		} catch (ModelParsingException e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
 			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
@@ -177,6 +183,12 @@ final class ProcessorImpl implements ItemProcessor {
 			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
 			return ProcessorResultImpl.encryptedResult(fileDetails,
 					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
+		} catch (RuntimeException e) {
+			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			return ProcessorResultImpl.invalidPdfResult(fileDetails,
+			        TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(),
+					new VeraPDFException("Caught unexpected runtime exception during parsing", e))); //$NON-NLS-1$
 		} catch (ModelParsingException e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
 			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
