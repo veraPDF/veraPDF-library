@@ -454,7 +454,7 @@
 			and whether or not an object is direct or indirect shall be ignored.</description>
             <test>areTintAndAlternateConsistent == true</test>
             <error>
-                <message>Several occurrances of a Separation colour space with the same name are not consistent</message>
+                <message>Several occurrences of a Separation colour space with the same name are not consistent</message>
                 <arguments/>
             </error>
             <references/>
@@ -512,9 +512,9 @@
         <rule object="PDHalftone">
             <id specification="ISO_19005_3" clause="6.2.5" testNumber="6"/>
             <description>The TransferFunction key in a halftone dictionary shall be used only as required by ISO 32000-1.</description>
-            <test>colorantName == null || colorantName == 'Default' ||
-			( (colorantName == 'Cyan' || colorantName == 'Magenta' || colorantName == 'Yellow' || colorantName == 'Black' || colorantName == 'Red' || 
-						colorantName == 'Green' || colorantName == 'Blue') ? TransferFunction == null : TransferFunction != null)</test>
+            <test>colorantName == 'Default' || ((colorantName == 'Cyan' || colorantName == 'Magenta' ||
+                colorantName == 'Yellow' || colorantName == 'Black' || colorantName == 'Red' || colorantName == 'Green' ||
+                colorantName == 'Blue' || colorantName == null) ? TransferFunction == null : TransferFunction != null)</test>
             <error>
                 <message>Invalid use of TransferFunction key in the Halftone dictionary</message>
                 <arguments/>
