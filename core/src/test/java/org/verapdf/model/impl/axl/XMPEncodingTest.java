@@ -20,22 +20,20 @@
  */
 package org.verapdf.model.impl.axl;
 
-import com.adobe.xmp.XMPException;
-import com.adobe.xmp.impl.VeraPDFMeta;
+import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collection;
-
-import static org.junit.Assert.assertEquals;
+import com.adobe.xmp.XMPException;
+import com.adobe.xmp.impl.VeraPDFMeta;
 
 /**
  * @author Maxim Plushchov
@@ -53,36 +51,29 @@ public class XMPEncodingTest {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 // UTF-8 without BOM
-                {"/org/verapdf/model/impl/axl/xmp-encoding-check-1.xml", "UTF-8"},
+                {"org/verapdf/model/impl/axl/xmp-encoding-check-1.xml", "UTF-8"},
                 // UTF-8 with BOM
-                {"/org/verapdf/model/impl/axl/xmp-encoding-check-2.xml", "UTF-8"},
+                {"org/verapdf/model/impl/axl/xmp-encoding-check-2.xml", "UTF-8"},
                 // UTF-16 LE without BOM
-                {"/org/verapdf/model/impl/axl/xmp-encoding-check-3.xml", "UTF-16LE"},
+                {"org/verapdf/model/impl/axl/xmp-encoding-check-3.xml", "UTF-16LE"},
                 // UTF-16 LE with BOM
-                {"/org/verapdf/model/impl/axl/xmp-encoding-check-4.xml", "UTF-16LE"},
+                {"org/verapdf/model/impl/axl/xmp-encoding-check-4.xml", "UTF-16LE"},
                 // UTF-16 BE without BOM
-                {"/org/verapdf/model/impl/axl/xmp-encoding-check-5.xml", "UTF-16BE"},
+                {"org/verapdf/model/impl/axl/xmp-encoding-check-5.xml", "UTF-16BE"},
                 // UTF-16 BE with BOM
-                {"/org/verapdf/model/impl/axl/xmp-encoding-check-6.xml", "UTF-16BE"},
+                {"org/verapdf/model/impl/axl/xmp-encoding-check-6.xml", "UTF-16BE"},
                 // UTF-32 BE without BOM
-                {"/org/verapdf/model/impl/axl/xmp-encoding-check-7.xml", "ISO-10646-UCS-4"},
+                {"org/verapdf/model/impl/axl/xmp-encoding-check-7.xml", "ISO-10646-UCS-4"},
                 // UTF-32 BE with BOM
-                {"/org/verapdf/model/impl/axl/xmp-encoding-check-8.xml", "UTF-32BE"},
+                {"org/verapdf/model/impl/axl/xmp-encoding-check-8.xml", "UTF-32BE"},
         });
     }
 
     @Test
     public void test() throws URISyntaxException, XMPException, IOException {
-        try (FileInputStream in = new FileInputStream(getSystemIndependentPath(this.filePath))) {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream(this.filePath)) {
             VeraPDFMeta veraPDFMeta = VeraPDFMeta.parse(in);
             assertEquals(actualEncoding, veraPDFMeta.getActualEncoding());
         }
-    }
-
-    private static String getSystemIndependentPath(String path)
-            throws URISyntaxException {
-        URL resourceUrl = ClassLoader.class.getResource(path);
-        Path resourcePath = Paths.get(resourceUrl.toURI());
-        return resourcePath.toString();
     }
 }

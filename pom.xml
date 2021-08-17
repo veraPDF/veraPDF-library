@@ -89,14 +89,14 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.13.1</version>
+        <version>4.13.2</version>
         <scope>test</scope>
       </dependency>
 
       <dependency>
         <groupId>nl.jqno.equalsverifier</groupId>
         <artifactId>equalsverifier</artifactId>
-        <version>1.7.8</version>
+        <version>3.7.1</version>
         <scope>test</scope>
       </dependency>
 
@@ -104,7 +104,7 @@
       <dependency>
         <groupId>org.mozilla</groupId>
         <artifactId>rhino</artifactId>
-        <version>1.7.11</version>
+        <version>1.7.13</version>
       </dependency>
 
       <dependency>
@@ -116,7 +116,7 @@
       <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
-        <version>2.7</version>
+        <version>2.11.0</version>
         <scope>test</scope>
       </dependency>
 

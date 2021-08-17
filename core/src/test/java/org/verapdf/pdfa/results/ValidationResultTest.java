@@ -53,7 +53,7 @@ public class ValidationResultTest {
 	 */
 	@Test
 	public final void testHashCodeAndEquals() {
-		EqualsVerifier.forClass(ValidationResultImpl.class).suppress(Warning.NULL_FIELDS).verify();
+		EqualsVerifier.forClass(ValidationResultImpl.class).withIgnoredFields("profileDetails", "validationProfile").suppress(Warning.NULL_FIELDS).verify();
 	}
 
 	/**

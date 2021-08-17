@@ -45,7 +45,7 @@ public class ValidatorConfigTest {
 	 */
 	@Test
 	public final void testHashCodeAndEquals() {
-		EqualsVerifier.forClass(ValidatorConfigImpl.class).verify();
+		EqualsVerifier.forClass(ValidatorConfigImpl.class).withIgnoredFields("defaultFlavour").verify();
 	}
 
 	/**
