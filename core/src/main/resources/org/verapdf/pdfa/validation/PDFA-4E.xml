@@ -1076,7 +1076,7 @@
                 permitted. Additionally, the deprecated set-state and no-op actions shall not be permitted. The
                 SetOCGState and GoTo3DView actions shall only be permitted in a PDF/A-4e compliant file as described in
                 Annex B.</description>
-            <test>S == &quot;GoTo&quot; || S == &quot;GoToR&quot; || S == &quot;GotToE&quot; || S == &quot;Thread&quot; || S == &quot;URI&quot; || S == &quot;Named&quot; ||
+            <test>S == &quot;GoTo&quot; || S == &quot;GoToR&quot; || S == &quot;GoToE&quot; || S == &quot;Thread&quot; || S == &quot;URI&quot; || S == &quot;Named&quot; ||
                 S == &quot;SubmitForm&quot; || S == &quot;SetOCGState&quot; || S == &quot;GoTo3DView&quot; || S == &quot;JavaScript&quot; ||
                 S == &quot;RichMediaExecute&quot; || S == &quot;GoToDp&quot;</test>
             <error>
