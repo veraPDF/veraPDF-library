@@ -57,7 +57,7 @@ public class TestAssertionTest {
      */
     @Test
     public final void testHashCodeAndEquals() {
-        EqualsVerifier.forClass(TestAssertionImpl.class).verify();
+        EqualsVerifier.forClass(TestAssertionImpl.class).withIgnoredFields("ordinal", "errorArguments").verify();
     }
 
     /**

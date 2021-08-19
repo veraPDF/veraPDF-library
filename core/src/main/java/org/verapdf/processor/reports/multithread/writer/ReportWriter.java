@@ -1,14 +1,14 @@
 package org.verapdf.processor.reports.multithread.writer;
 
-import org.verapdf.processor.FormatOption;
-import org.verapdf.processor.reports.ResultStructure;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.verapdf.processor.FormatOption;
+import org.verapdf.processor.reports.ResultStructure;
 
 public abstract class ReportWriter {
 	private static final Logger LOGGER = Logger.getLogger(ReportWriter.class.getCanonicalName());

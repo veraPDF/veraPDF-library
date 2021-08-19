@@ -24,7 +24,6 @@
 package org.verapdf.processor.reports;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
