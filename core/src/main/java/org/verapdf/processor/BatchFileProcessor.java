@@ -95,6 +95,9 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 	}
 
 	private void processItem(final File item) throws VeraPDFException {
+		if (this.processor.getConfig().getValidatorConfig().isDebug()) {
+			logger.log(Level.WARNING, item.getAbsolutePath());
+		}
 		ProcessorResult result = this.processor.process(item);
 		this.processResult(result);
 	}
