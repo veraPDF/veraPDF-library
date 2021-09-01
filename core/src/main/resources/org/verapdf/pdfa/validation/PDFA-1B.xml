@@ -701,7 +701,7 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDType1Font">
+        <rule object="PDType1Font" deferred="true">
             <id specification="ISO_19005_1" clause="6.3.5" testNumber="2"/>
             <description>For all Type 1 font subsets referenced within a conforming file, the font descriptor dictionary shall include a CharSet string
 			listing the character names defined in the font subset, as described in PDF Reference Table 5.18</description>
@@ -714,7 +714,7 @@
                 <reference specification="PDF 1.4 Reference" clause="5.5.3"/>
             </references>
         </rule>
-        <rule object="PDCIDFont">
+        <rule object="PDCIDFont" deferred="true">
             <id specification="ISO_19005_1" clause="6.3.5" testNumber="3"/>
             <description>For all CIDFont subsets referenced within a conforming file, the font descriptor dictionary shall include a
 			CIDSet stream identifying which CIDs are present in the embedded CIDFont file, as described in PDF Reference Table 5.20</description>
