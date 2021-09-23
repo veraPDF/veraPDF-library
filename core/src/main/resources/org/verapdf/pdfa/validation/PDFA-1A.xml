@@ -65,7 +65,7 @@
             <id specification="ISO_19005_1" clause="6.1.3" testNumber="4"/>
             <description>In a linearized PDF, if the ID keyword is present in both the first page trailer dictionary 
 			and the last trailer dictionary, the value to both instances of the ID keyword shall be identical</description>
-            <test>(isLinearized != true)|| lastID == null || (firstPageID == lastID)</test>
+            <test>(isLinearized != true) || lastID == null || (firstPageID == lastID)</test>
             <error>
                 <message>Last ID is present in the Linearized PDF and does not match the first page ID</message>
                 <arguments/>
@@ -346,14 +346,14 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="PDF 1.4 Reference" clause="9.4.10"/>
+                <reference specification="PDF 1.4 Reference" clause="9.10.4"/>
             </references>
         </rule>
-        <rule object="PDOutputIntent">
+        <rule object="OutputIntents">
             <id specification="ISO_19005_1" clause="6.2.2" testNumber="2"/>
             <description>If a file's OutputIntents array contains more than one entry, then all entries that contain a DestOutputProfile
 			key shall have as the value of that key the same indirect object, which shall be a valid ICC profile stream</description>
-            <test>destOutputProfileIndirect == null || gOutputProfileIndirect == null || destOutputProfileIndirect == gOutputProfileIndirect</test>
+            <test>sameOutputProfileIndirect == true</test>
             <error>
                 <message>File's OutputIntents array contains output intent dictionaries with non-matching destination output profiles</message>
                 <arguments/>
@@ -364,7 +364,7 @@
             <id specification="ISO_19005_1" clause="6.2.3" testNumber="1"/>
             <description>All ICCBased colour spaces shall be embedded as ICC profile streams as described in PDF Reference 4.5</description>
             <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot; || deviceClass == &quot;scnr&quot; || deviceClass == &quot;spac&quot;) &amp;&amp; 
-			(colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot; || colorSpace == &quot;LAB &quot;) &amp;&amp; version &lt; 3.0</test>
+			(colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot; || colorSpace == &quot;Lab &quot;) &amp;&amp; version &lt; 3.0</test>
             <error>
                 <message>The embedded ICC profile is either invalid or does not satisfy PDF 1.4 requirements</message>
                 <arguments/>
@@ -408,7 +408,7 @@
             <description>All ICCBased colour spaces shall be embedded as ICC profile streams as described in PDF Reference 4.5.
 			The number of color components in the color space described by the ICC profile data must match the number of components actually in the ICC profile. 
 			As of PDF 1.4, N must be 1, 3, or 4</description>
-            <test>N != null &amp;&amp; ((N == 1 &amp;&amp; colorSpace == &quot;GRAY&quot;) || (N == 3 &amp;&amp; (colorSpace == &quot;RGB &quot; || colorSpace == &quot;LAB &quot;)) || (N == 4 &amp;&amp; colorSpace == &quot;CMYK&quot;))</test>
+            <test>N != null &amp;&amp; ((N == 1 &amp;&amp; colorSpace == &quot;GRAY&quot;) || (N == 3 &amp;&amp; (colorSpace == &quot;RGB &quot; || colorSpace == &quot;Lab &quot;)) || (N == 4 &amp;&amp; colorSpace == &quot;CMYK&quot;))</test>
             <error>
                 <message>The N entry in the ICC profile dictionary is missing or does not match the number of components in the embedded ICC profile</message>
                 <arguments/>
@@ -422,7 +422,7 @@
             <description>An Image dictionary shall not contain the Alternates key</description>
             <test>containsAlternates == false</test>
             <error>
-                <message>Alternates key is present in the Image dictionary(</message>
+                <message>Alternates key is present in the Image dictionary</message>
                 <arguments/>
             </error>
             <references/>
@@ -432,7 +432,7 @@
             <description>An XObject dictionary (Image or Form) shall not contain the OPI key</description>
             <test>containsOPI == false</test>
             <error>
-                <message>OPI key is present in the XObject dictionary(</message>
+                <message>OPI key is present in the XObject dictionary</message>
                 <arguments/>
             </error>
             <references/>
@@ -586,7 +586,7 @@
         <rule object="PDSimpleFont">
             <id specification="ISO_19005_1" clause="6.3.2" testNumber="5"/>
             <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5. 
-			FirstChar - integer - (Required except for the standard 14 fonts) The first character code defined in the font's Widths array</description>
+			LastChar - integer - (Required except for the standard 14 fonts) The last character code defined in the font's Widths array</description>
             <test>isStandard == true || LastChar != null</test>
             <error>
                 <message>A non-standard simple font dictionary has missing or invalid LastChar entry</message>
@@ -701,11 +701,11 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDType1Font">
+        <rule object="PDType1Font" deferred="true">
             <id specification="ISO_19005_1" clause="6.3.5" testNumber="2"/>
             <description>For all Type 1 font subsets referenced within a conforming file, the font descriptor dictionary shall include a CharSet string
 			listing the character names defined in the font subset, as described in PDF Reference Table 5.18</description>
-            <test>fontName.search(/[A-Z]{6}\+/) != 0 || CharSet != null</test>
+            <test>fontName.search(/[A-Z]{6}\+/) != 0 || (CharSet != null &amp;&amp; charSetListsAllGlyphs == true)</test>
             <error>
                 <message>A Type1 font subset does not define CharSet entry in its Descriptor dictionary</message>
                 <arguments/>
@@ -714,11 +714,11 @@
                 <reference specification="PDF 1.4 Reference" clause="5.5.3"/>
             </references>
         </rule>
-        <rule object="PDCIDFont">
+        <rule object="PDCIDFont" deferred="true">
             <id specification="ISO_19005_1" clause="6.3.5" testNumber="3"/>
             <description>For all CIDFont subsets referenced within a conforming file, the font descriptor dictionary shall include a
 			CIDSet stream identifying which CIDs are present in the embedded CIDFont file, as described in PDF Reference Table 5.20</description>
-            <test>fontName.search(/[A-Z]{6}\+/) != 0 || CIDSet_size == 1</test>
+            <test>fontName.search(/[A-Z]{6}\+/) != 0 || (CIDSet_size == 1 &amp;&amp; cidSetListsAllGlyphs == true)</test>
             <error>
                 <message>A CID Font subset does not define CIDSet entry in its Descriptor dictionary</message>
                 <arguments/>
@@ -784,7 +784,7 @@
 			as described in PDF Reference 5.9, unless the font meets any of the following three conditions:
 			(*) fonts that use the predefined encodings MacRomanEncoding, MacExpertEncoding or WinAnsiEncoding, or that use the predefined Identity-H or Identity-V CMaps;
 			(*) Type 1 fonts whose character names are taken from the Adobe standard Latin character set or the set of named characters in the Symbol font, as defined in PDF Reference Appendix D;
-			(*) Type 0 fonts whose descendant CIDFont uses the Adobe-GB1, Adobe-CNS1, Adobe-Japan1 orAdobe-Korea1 character collections.</description>
+			(*) Type 0 fonts whose descendant CIDFont uses the Adobe-GB1, Adobe-CNS1, Adobe-Japan1 or Adobe-Korea1 character collections.</description>
             <test>toUnicode != null</test>
             <error>
                 <message>The font does not define Unicode character map</message>
@@ -911,7 +911,7 @@
 			If an annotation dictionary's Subtype key has a value of Widget and its FT key has a value of Btn, the value of the N key shall be an appearance 
 			subdictionary; otherwise the value of the N key shall be an appearance stream.</description>
             <test>AP == null || ( AP == &quot;N&quot; &amp;&amp; ( ((Subtype != &quot;Widget&quot; || FT != &quot;Btn&quot;) &amp;&amp; N_type == &quot;Stream&quot;)
-			|| (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot; &amp;&amp; N_type == &quot;Dict&quot;) ) )</test>
+			|| (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot; &amp;&amp; N_type == &quot;Dict&quot; &amp;&amp; appearance_size &gt; 0) ) )</test>
             <error>
                 <message>Annotation's appearance dictionary contains entries other than N or the N entry has an invalid type</message>
                 <arguments/>
@@ -945,20 +945,20 @@
                 <reference specification="PDF 1.4 Reference" clause="8.5.3 - Named Actions - Table 8.45"/>
             </references>
         </rule>
-        <rule object="PDAnnot">
+        <rule object="PDWidgetAnnot">
             <id specification="ISO_19005_1" clause="6.6.1" testNumber="3"/>
             <description>Interactive form fields shall not perform actions of any type</description>
-            <test>Subtype != &quot;Widget&quot; || containsA == false</test>
+            <test>containsA == false</test>
             <error>
                 <message>Interactive form field contains an action object ('A' key)</message>
                 <arguments/>
             </error>
             <references/>
         </rule>
-        <rule object="PDAnnot">
+        <rule object="PDWidgetAnnot">
             <id specification="ISO_19005_1" clause="6.6.2" testNumber="1"/>
             <description>A Widget annotation dictionary shall not include an AA entry for an additional-actions dictionary</description>
-            <test>Subtype != &quot;Widget&quot; || containsAA == false</test>
+            <test>containsAA == false</test>
             <error>
                 <message>A Widget annotation contains an additional-actions dictionary (AA entry)</message>
                 <arguments/>
@@ -1132,10 +1132,8 @@
             <description>The metadata stream shall conform to XMP Specification and well formed PDFAExtension Schema for all extensions</description>
             <test>isSerializationValid</test>
             <error>
-                <message>%1</message>
-                <arguments>
-                    <argument>errorMessage</argument>
-                </arguments>
+                <message>The serialization of the metadata stream does not conform to XMP Specification.</message>
+                <arguments/>
             </error>
             <references>
                 <reference specification="XMP Specification January 2004" clause=""/>
@@ -1147,10 +1145,8 @@
 			or extension schemas that comply with XMP Specification</description>
             <test>(isPredefinedInXMP2004 == true || isDefinedInCurrentPackage == true) &amp;&amp; isValueTypeCorrect == true</test>
             <error>
-                <message>%1</message>
-                <arguments>
-                    <argument>errorMessage</argument>
-                </arguments>
+                <message>A property is either not defined in XMP Specification, or is not defined in any of the extension schemas, or has an invalid value type.</message>
+                <arguments/>
             </error>
             <references/>
         </rule>
@@ -1238,6 +1234,21 @@
                 <reference specification="PDF 1.4 Reference" clause="9.7.4"/>
             </references>
         </rule>
+        <rule object="CosLang">
+            <id specification="ISO_19005_1" clause="6.8.4" testNumber="1"/>
+            <description>If the Lang entry is present in the document catalog dictionary or in a structure element
+                dictionary or property list, its value shall be a language identifier as defined by RFC 1766, Tags for
+                the Identification of Languages, as described in PDF Reference 9.8.1.</description>
+            <test>unicodeValue == '' || /^[a-zA-Z]{1,8}(-[a-zA-Z]{1,8})*$/.test(unicodeValue)</test>
+            <error>
+                <message>The Lang value is invalid</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="PDF Reference 1.4" clause="9.8.1"/>
+                <reference specification="RFC 1766" clause="2"/>
+            </references>
+        </rule>
         <rule object="PDAcroForm">
             <id specification="ISO_19005_1" clause="6.9" testNumber="1"/>
             <description>The NeedAppearances flag of the interactive form dictionary shall either not be present or shall be false</description>
@@ -1248,30 +1259,10 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDAnnot">
+        <rule object="PDWidgetAnnot">
             <id specification="ISO_19005_1" clause="6.9" testNumber="2"/>
-            <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys</description>
-            <test>Subtype != &quot;Widget&quot; || (containsA == false &amp;&amp; containsAA == false)</test>
-            <error>
-                <message>A Widget annotation contains either A or AA entry</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
-        <rule object="PDFormField">
-            <id specification="ISO_19005_1" clause="6.9" testNumber="3"/>
-            <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys</description>
-            <test>containsAA == false</test>
-            <error>
-                <message>A Form field dictionary contains the AA entry</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
-        <rule object="PDAnnot">
-            <id specification="ISO_19005_1" clause="6.9" testNumber="4"/>
             <description>Every form field shall have an appearance dictionary associated with the field's data.</description>
-            <test>Subtype != &quot;Widget&quot; || AP != null</test>
+            <test>AP != null</test>
             <error>
                 <message>Form field does not have an appearance dictionary associated with the field's data.</message>
                 <arguments/>
@@ -1283,10 +1274,6 @@
         <variable name="gOutputCS" object="ICCOutputProfile">
             <defaultValue>null</defaultValue>
             <value>S == &quot;GTS_PDFA1&quot; ? colorSpace : gOutputCS</value>
-        </variable>
-        <variable name="gOutputProfileIndirect" object="PDOutputIntent">
-            <defaultValue>null</defaultValue>
-            <value>gOutputProfileIndirect == null ? destOutputProfileIndirect : gOutputProfileIndirect</value>
         </variable>
     </variables>
 </profile>

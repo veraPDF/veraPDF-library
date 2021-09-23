@@ -60,4 +60,8 @@ public interface ValidatorConfig {
 	 * @return the {@link PDFAFlavour} that the validator enforces.
 	 */
 	public PDFAFlavour getFlavour();
+
+	public PDFAFlavour getDefaultFlavour();
+
+	public boolean isDebug();
 }

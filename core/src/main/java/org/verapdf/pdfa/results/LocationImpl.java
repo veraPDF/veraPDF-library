@@ -128,9 +128,12 @@ final class LocationImpl implements Location {
 
     static LocationImpl fromValues(final String level, final String context) {
         String deRefdContext = context;
-        Matcher matcher = DEREF_PATTERN.matcher(context);
-        if (matcher.find())
-            deRefdContext = matcher.replaceAll(DEREF_REPL + matcher.group(1));
+        if (context != null) {
+            Matcher matcher = DEREF_PATTERN.matcher(context);
+            if (matcher.find()) {
+                deRefdContext = matcher.replaceAll(DEREF_REPL + matcher.group(1));
+            }
+        }
         return new LocationImpl(level, deRefdContext);
     }
 

@@ -77,7 +77,7 @@
             <description>Hexadecimal strings shall contain an even number of non-white-space characters</description>
             <test>(isHex != true) || hexCount % 2 == 0</test>
             <error>
-                <message>The number of hexadecimal digits in a hexadecimal string shall always be even</message>
+                <message>A hexadecimal string contains odd number of non-white-space characters</message>
                 <arguments/>
             </error>
             <references/>
@@ -116,7 +116,7 @@
         </rule>
         <rule object="CosStream">
             <id specification="ISO_19005_3" clause="6.1.7" testNumber="3"/>
-            <description>A stream dictionary shall not contain the F, FFilter, or FDecodeParams keys</description>
+            <description>A stream dictionary shall not contain the F, FFilter, or FDecodeParms keys</description>
             <test>F == null &amp;&amp; FFilter == null &amp;&amp; FDecodeParms == null</test>
             <error>
                 <message>A stream object dictionary contains one of the F, FFilter, or FDecodeParms keys</message>
@@ -349,13 +349,13 @@
                 <reference specification="ISO32000-1:2008" clause="14.11.5"/>
             </references>
         </rule>
-        <rule object="PDOutputIntent">
+        <rule object="OutputIntents">
             <id specification="ISO_19005_3" clause="6.2.3" testNumber="2"/>
             <description>If a file's OutputIntents array contains more than one entry, as might be the case where a file is compliant
 			with this part of ISO 19005 and at the same time with PDF/X-4 or PDF/E-1, then all entries that contain a
 			DestOutputProfile key shall have as the value of that key the same indirect object, which shall be a valid ICC
 			profile stream.</description>
-            <test>destOutputProfileIndirect == null || gOutputProfileIndirect == null || destOutputProfileIndirect == gOutputProfileIndirect</test>
+            <test>sameOutputProfileIndirect == true</test>
             <error>
                 <message>File's OutputIntents array contains output intent dictionaries with non-matching destination output profiles</message>
                 <arguments/>
@@ -378,7 +378,7 @@
             <id specification="ISO_19005_3" clause="6.2.4.2" testNumber="1"/>
             <description>The profile that forms the stream of an ICCBased colour space shall conform to ICC.1:1998-09, ICC.1:2001-12, ICC.1:2003-09 or ISO 15076-1.</description>
             <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot; || deviceClass == &quot;scnr&quot; || deviceClass == &quot;spac&quot;) &amp;&amp; 
-			(colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot; || colorSpace == &quot;LAB &quot;) &amp;&amp; version &lt; 5.0</test>
+			(colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot; || colorSpace == &quot;Lab &quot;) &amp;&amp; version &lt; 5.0</test>
             <error>
                 <message>The embedded ICC profile is either invalid or does not satisfy PDF 1.7 requirements</message>
                 <arguments/>
@@ -389,7 +389,7 @@
         </rule>
         <rule object="PDICCBasedCMYK">
             <id specification="ISO_19005_3" clause="6.2.4.2" testNumber="2"/>
-            <description>OOverprint mode (as set by the OPM value in an ExtGState dictionary) shall not be one (1) when an ICCBased CMYK colour space is 
+            <description>Overprint mode (as set by the OPM value in an ExtGState dictionary) shall not be one (1) when an ICCBased CMYK colour space is
 			used for stroke and overprinting for stroke is set to true, or when ICCBased CMYK colour space is used for fill and overprinting for 
 			fill is set to true, or both.</description>
             <test>overprintFlag == false || OPM == 0</test>
@@ -454,7 +454,7 @@
 			and whether or not an object is direct or indirect shall be ignored.</description>
             <test>areTintAndAlternateConsistent == true</test>
             <error>
-                <message>Several occurrances of a Separation colour space with the same name are not consistent</message>
+                <message>Several occurrences of a Separation colour space with the same name are not consistent</message>
                 <arguments/>
             </error>
             <references/>
@@ -512,9 +512,9 @@
         <rule object="PDHalftone">
             <id specification="ISO_19005_3" clause="6.2.5" testNumber="6"/>
             <description>The TransferFunction key in a halftone dictionary shall be used only as required by ISO 32000-1.</description>
-            <test>colorantName == null || colorantName == 'Default' ||
-			( (colorantName == 'Cyan' || colorantName == 'Magenta' || colorantName == 'Yellow' || colorantName == 'Black' || colorantName == 'Red' || 
-						colorantName == 'Green' || colorantName == 'Blue') ? TransferFunction == null : TransferFunction != null)</test>
+            <test>colorantName == 'Default' || ((colorantName == 'Cyan' || colorantName == 'Magenta' ||
+                colorantName == 'Yellow' || colorantName == 'Black' || colorantName == 'Red' || colorantName == 'Green' ||
+                colorantName == 'Blue' || colorantName == null) ? TransferFunction == null : TransferFunction != null)</test>
             <error>
                 <message>Invalid use of TransferFunction key in the Halftone dictionary</message>
                 <arguments/>
@@ -539,7 +539,7 @@
             <description>An Image dictionary shall not contain the Alternates key</description>
             <test>containsAlternates == false</test>
             <error>
-                <message>Alternates key is present in the Image dictionary(</message>
+                <message>Alternates key is present in the Image dictionary</message>
                 <arguments/>
             </error>
             <references/>
@@ -549,7 +549,7 @@
             <description>An Image dictionary shall not contain the OPI key</description>
             <test>containsOPI == false</test>
             <error>
-                <message>OPI key is present in the XObject dictionary(</message>
+                <message>OPI key is present in the Image dictionary</message>
                 <arguments/>
             </error>
             <references/>
@@ -647,12 +647,18 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDExtGState">
+        <rule object="CosBM">
             <id specification="ISO_19005_3" clause="6.2.10" testNumber="1"/>
             <description>Only blend modes that are specified in ISO 32000-1:2008 shall be used for the value of the BM key in an extended graphic state dictionary.</description>
-            <test>BM == null || BM == &quot;Normal&quot; || BM == &quot;Compatible&quot; || BM == &quot;Multiply&quot; || BM == &quot;Screen&quot; || BM == &quot;Overlay&quot; || BM == &quot;Darken&quot; ||
-			BM == &quot;Lighten&quot; || BM == &quot;ColorDodge&quot; || BM == &quot;ColorBurn&quot; || BM == &quot;HardLight&quot; || BM == &quot;SoftLight&quot; || BM == &quot;Difference&quot; || BM == &quot;Exclusion&quot; ||
-			BM == &quot;Hue&quot; || BM == &quot;Saturation&quot; || BM == &quot;Color&quot; || BM == &quot;Luminosity&quot;</test>
+            <test>internalRepresentation == &quot;Normal&quot; || internalRepresentation == &quot;Compatible&quot; ||
+                internalRepresentation == &quot;Multiply&quot; || internalRepresentation == &quot;Screen&quot; ||
+                internalRepresentation == &quot;Overlay&quot; || internalRepresentation == &quot;Darken&quot; ||
+                internalRepresentation == &quot;Lighten&quot; || internalRepresentation == &quot;ColorDodge&quot; ||
+                internalRepresentation == &quot;ColorBurn&quot; || internalRepresentation == &quot;HardLight&quot; ||
+                internalRepresentation == &quot;SoftLight&quot; || internalRepresentation == &quot;Difference&quot; ||
+                internalRepresentation == &quot;Exclusion&quot; || internalRepresentation == &quot;Hue&quot; ||
+                internalRepresentation == &quot;Saturation&quot; || internalRepresentation == &quot;Color&quot; ||
+                internalRepresentation == &quot;Luminosity&quot;</test>
             <error>
                 <message>The document uses the blend mode not defined in ISO 32000-1:2008</message>
                 <arguments/>
@@ -748,7 +754,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.2" testNumber="5"/>
             <description>All fonts and font programs used in a conforming file, regardless of rendering mode usage, shall conform to the provisions
 			in ISO 32000-1:2008, 9.6 and 9.7, as well as to the font specifications referenced by these provisions.
-			FirstChar - integer - (Required except for the standard 14 fonts) The first character code defined in the font's Widths array</description>
+			LastChar - integer - (Required except for the standard 14 fonts) The last character code defined in the font's Widths array</description>
             <test>isStandard == true || LastChar != null</test>
             <error>
                 <message>A non-standard simple font dictionary has missing or invalid LastChar entry</message>
@@ -777,7 +783,7 @@
         <rule object="PDFont">
             <id specification="ISO_19005_3" clause="6.2.11.2" testNumber="7"/>
             <description>All fonts used in a conforming file shall conform to the font specifications defined in PDF Reference 5.5. 
-			The subtype is the value of the Subtype key, if present, in the font file stream dictionary. The only valid values of this key in PDF 1.4 are
+			The subtype is the value of the Subtype key, if present, in the font file stream dictionary. The only valid values of this key in PDF 1.7 are
 			Type1C - Type 1–equivalent font program represented in the Compact Font Format (CFF), CIDFontType0C - Type 0 CIDFont program represented
 			in the Compact Font Format (CFF) and OpenType - OpenType® font program, as described in the OpenType Specification v.1.4.</description>
             <test>fontFileSubtype == null || fontFileSubtype == &quot;Type1C&quot; || fontFileSubtype == &quot;CIDFontType0C&quot; || fontFileSubtype == &quot;OpenType&quot;</test>
@@ -945,7 +951,7 @@
             <id specification="ISO_19005_3" clause="6.2.11.6" testNumber="1"/>
             <description>For all non-symbolic TrueType fonts used for rendering, the embedded TrueType font program shall contain one or several non-symbolic 
 			cmap entries such that all necessary glyph lookups can be carried out.</description>
-            <test>isSymbolic == true || renderingMode == 3 || cmap10Present == true || cmap31Present == true </test>
+            <test>isSymbolic == true || nrCmaps &gt; 1 || (nrCmaps &gt; 0 &amp;&amp; cmap30Present == false)</test>
             <error>
                 <message>The embedded font program for a non-symbolic TrueType font does not contain any cmap subtables</message>
                 <arguments/>
@@ -954,11 +960,14 @@
         </rule>
         <rule object="PDTrueTypeFont">
             <id specification="ISO_19005_3" clause="6.2.11.6" testNumber="2"/>
-            <description>No non-symbolic TrueType font shall define a Differences array unless all of the glyph names in
-			the Differences array are listed in the Adobe Glyph List and the embedded font program contains at least the
-			Microsoft Unicode (3,1 – Platform ID=3, Encoding ID=1) encoding in the 'cmap' table.</description>
-            <test>isSymbolic == true || (Encoding == &quot;MacRomanEncoding&quot; || Encoding == &quot;WinAnsiEncoding&quot;) || 
-				(Encoding == &quot;Custom&quot; &amp;&amp; differencesAreUnicodeCompliant == true)</test>
+            <description>All non-symbolic TrueType fonts shall have either MacRomanEncoding or WinAnsiEncoding as the
+                value for the Encoding key in the Font dictionary or as the value for the BaseEncoding key in the
+                dictionary that is the value of the Encoding key in the Font dictionary. In addition, all non-symbolic
+                TrueType fonts shall not define a Differences array unless all of the glyph names in the Differences
+                array are listed in the Adobe Glyph List and the embedded font program contains at least the Microsoft
+                Unicode (3,1 – Platform ID = 3, Encoding ID = 1) encoding in the 'cmap' table.</description>
+            <test>isSymbolic == true || (Encoding == &quot;MacRomanEncoding&quot; || Encoding == &quot;WinAnsiEncoding&quot;) ||
+				(containsDifferences == true &amp;&amp; differencesAreUnicodeCompliant == true)</test>
             <error>
                 <message>A non-symbolic TrueType font has encoding different from MacRomanEncoding or WinAnsiEncoding, or 
 				the glyphs in the Differences array can not be mapped to the embedded font glyphs via the Adobe Glyph List</message>
@@ -1079,7 +1088,7 @@
 			shall have at least one appearance dictionary:
 			- annotations where the value of the Rect key consists of an array where value 1 is equal to value 3 and value 2 is equal to value 4;
 			- annotations whose Subtype value is Popup or Link.</description>
-            <test>(width == 0 &amp;&amp; height ==0) || Subtype == &quot;Popup&quot; || Subtype == &quot;Link&quot; || AP != null</test>
+            <test>(width == 0 &amp;&amp; height == 0) || Subtype == &quot;Popup&quot; || Subtype == &quot;Link&quot; || AP != null</test>
             <error>
                 <message>An annotation does not contain an appearance dictionary</message>
                 <arguments/>
@@ -1092,17 +1101,17 @@
 			contain only the N key. If an annotation dictionary's Subtype key has a value of Widget and its FT key has a
 			value of Btn, the value of the N key shall be an appearance subdictionary, otherwise the value of the N key shall be an appearance stream.</description>
             <test>AP == null || ( AP == &quot;N&quot; &amp;&amp; ( ((Subtype != &quot;Widget&quot; || FT != &quot;Btn&quot;) &amp;&amp; N_type == &quot;Stream&quot;)
-			|| (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot; &amp;&amp; N_type == &quot;Dict&quot;) ) )</test>
+			|| (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot; &amp;&amp; N_type == &quot;Dict&quot; &amp;&amp; appearance_size &gt; 0) ) )</test>
             <error>
                 <message>Annotation's appearance dictionary contains entries other than N or the N entry has an invalid type</message>
                 <arguments/>
             </error>
             <references/>
         </rule>
-        <rule object="PDAnnot">
+        <rule object="PDWidgetAnnot">
             <id specification="ISO_19005_3" clause="6.4.1" testNumber="1"/>
-            <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys.</description>
-            <test>Subtype != &quot;Widget&quot; || (containsA == false &amp;&amp; containsAA == false)</test>
+            <description>A Widget annotation dictionary shall not contains the A or AA keys.</description>
+            <test>containsA == false &amp;&amp; containsAA == false</test>
             <error>
                 <message>A Widget annotation contains either A or AA entry</message>
                 <arguments/>
@@ -1111,7 +1120,7 @@
         </rule>
         <rule object="PDFormField">
             <id specification="ISO_19005_3" clause="6.4.1" testNumber="2"/>
-            <description>A Widget annotation dictionary or Field dictionary shall not contain the A or AA keys.</description>
+            <description>A Field dictionary shall not contains the A or AA keys.</description>
             <test>containsAA == false</test>
             <error>
                 <message>A Form field dictionary contains the AA entry</message>
@@ -1160,7 +1169,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 19005-2:2011" clause="Annex B"/>
+                <reference specification="ISO 19005-3:2012" clause="Annex B"/>
                 <reference specification="ISO 32000-1:2008" clause="12.8.1"/>
             </references>
         </rule>
@@ -1176,15 +1185,15 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 19005-2:2011" clause="Annex B"/>
+                <reference specification="ISO 19005-3:2012" clause="Annex B"/>
                 <reference specification="RFC 2315" clause=""/>
             </references>
         </rule>
         <rule object="PDAction">
             <id specification="ISO_19005_3" clause="6.5.1" testNumber="1"/>
             <description>The Launch, Sound, Movie, ResetForm, ImportData, Hide, SetOCGState, Rendition, Trans, GoTo3DView and JavaScript actions shall not be permitted. 
-			Additionally, the deprecated set-state and noop actions shall not be permitted.</description>
-            <test>S == &quot;GoTo&quot; || S == &quot;GoToR&quot; || S == &quot;GotToE&quot; || S == &quot;Thread&quot; || S == &quot;URI&quot; || S == &quot;Named&quot; || S == &quot;SubmitForm&quot;</test>
+			Additionally, the deprecated set-state and no-op actions shall not be permitted.</description>
+            <test>S == &quot;GoTo&quot; || S == &quot;GoToR&quot; || S == &quot;GoToE&quot; || S == &quot;Thread&quot; || S == &quot;URI&quot; || S == &quot;Named&quot; || S == &quot;SubmitForm&quot;</test>
             <error>
                 <message>Unknown or not permitted action type</message>
                 <arguments/>
@@ -1263,10 +1272,8 @@
 			as defined by Extensible Markup Language (XML) 1.0 (Third Edition), 2.1, and the RDF/XML Syntax Specification (Revised).</description>
             <test>isSerializationValid</test>
             <error>
-                <message>%1</message>
-                <arguments>
-                    <argument>errorMessage</argument>
-                </arguments>
+                <message>A metadata stream is serialized icorrectly and can not be parsed.</message>
+                <arguments/>
             </error>
             <references>
                 <reference specification="XMP Specification September 2005" clause=""/>
@@ -1274,7 +1281,19 @@
                 <reference specification="RDF/XML Syntax Specification (Revised), 10 February 2004" clause=""/>
             </references>
         </rule>
-        <rule object="ExtensionSchemaObject">
+        <rule object="XMPPackage">
+            <id specification="ISO_19005_3" clause="6.6.2.1" testNumber="5"/>
+            <description>All metadata streams present in the PDF shall conform to the XMP Specification. The XMP package must be encoded as UTF-8.</description>
+            <test>actualEncoding == "UTF-8"</test>
+            <error>
+                <message>The XMP package uses an encoding different from UTF-8</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="XMP Specification, September 2005" clause="5 - Embedding XMP Metadata in Application Files - PDF"/>
+            </references>
+        </rule>        
+		<rule object="ExtensionSchemaObject">
             <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="1"/>
             <description>Extension schemas shall be specified using the PDF/A extension schema container schema defined in 6.6.2.3.3. All fields described in each 
 			of the tables in 6.6.2.3.3 shall be present in any extension schema container schema.</description>
@@ -1365,10 +1384,8 @@
 			ISO 19005-1 or this part of ISO 19005, or any extension schemas that comply with 6.6.2.3.2.</description>
             <test>(isPredefinedInXMP2005 == true || isDefinedInMainPackage == true || isDefinedInCurrentPackage == true) &amp;&amp; isValueTypeCorrect == true</test>
             <error>
-                <message>%1</message>
-                <arguments>
-                    <argument>errorMessage</argument>
-                </arguments>
+                <message>An XMP property is either not not pre-defined, is not defined in any extension schema, or has invalid type.</message>
+                <arguments/>
             </error>
             <references/>
         </rule>
@@ -1461,13 +1478,13 @@
         </rule>
         <rule object="CosLang">
             <id specification="ISO_19005_3" clause="6.7.4" testNumber="1"/>
-            <description>If the Lang entry is present in the document’s Catalog dictionary or in a structure element dictionary or
+            <description>If the Lang entry is present in the document's Catalog dictionary or in a structure element dictionary or
 			property list, its value shall be a language identifier as described in ISO 32000-1:2008, 14.9.2.
 			A language identifier shall either be the empty text string, to indicate that the language is unknown, or a Language-Tag 
 			as defined in RFC 3066, Tags for the Identification of Languages.</description>
-            <test>value == '' || /^[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*$/.test(value)</test>
+            <test>unicodeValue == '' || /^[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*$/.test(unicodeValue)</test>
             <error>
-                <message>Non-standard structure type is not mapped to a standard type</message>
+                <message>The Lang value is invalid</message>
                 <arguments/>
             </error>
             <references>
@@ -1596,10 +1613,6 @@
         <variable name="gOutputCS" object="ICCOutputProfile">
             <defaultValue>null</defaultValue>
             <value>S == &quot;GTS_PDFA1&quot; ? colorSpace : gOutputCS</value>
-        </variable>
-        <variable name="gOutputProfileIndirect" object="PDOutputIntent">
-            <defaultValue>null</defaultValue>
-            <value>gOutputProfileIndirect== null ? destOutputProfileIndirect : gOutputProfileIndirect</value>
         </variable>
     </variables>
 </profile>

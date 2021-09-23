@@ -91,4 +91,20 @@ public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentific
         VeraPDFXMPNode property = this.metadata.getProperty(XMPConst.NS_PDFA_ID, "corr");
         return property == null ? null : property.getPrefix();
     }
+
+    @Override
+    public String getrevPrefix() {
+        VeraPDFXMPNode property = this.metadata.getProperty(XMPConst.NS_PDFA_ID, "rev");
+        return property == null ? null : property.getPrefix();
+    }
+
+    @Override
+    public String getrev() {
+        try {
+            return this.metadata.getRevisionYear();
+        } catch (XMPException e) {
+            LOGGER.log(Level.FINE, "Can not get revision year", e);
+            return null;
+        }
+    }
 }

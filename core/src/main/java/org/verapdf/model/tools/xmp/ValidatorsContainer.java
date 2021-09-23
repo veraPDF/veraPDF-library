@@ -138,6 +138,9 @@ public class ValidatorsContainer {
      */
     public boolean validate(VeraPDFXMPNode node, String typeName) {
         String type = getSimplifiedType(typeName);
+        if (XMPConstants.ANY.equals(type)) {
+            return true;
+        }
         for (ArrayTypeValidator.ArrayTypeEnum entr : ArrayTypeValidator.ArrayTypeEnum.values()) {
             String prefix = entr.getType() + " ";
             if (type.startsWith(prefix)) {

@@ -98,19 +98,25 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
     }
 
     private Boolean isValueTypeCorrectForPDFA_1() {
+        if (this.currentSchemasDefinitionPDFA_1.isDefinedProperty(this.xmpNode)) {
+            return this.currentSchemasDefinitionPDFA_1.isCorrespondsDefinedType(this.xmpNode);
+        }
         if (SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_1(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode)) {
             return SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_1(this.isClosedChoiceCheck).isCorrespondsDefinedType(this.xmpNode);
         }
-        return this.currentSchemasDefinitionPDFA_1.isCorrespondsDefinedType(this.xmpNode);
+        return null;
     }
 
     private Boolean isValueTypeCorrectForPDFA_2_3() {
-        if (SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_2_3(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode)) {
-            return SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_2_3(this.isClosedChoiceCheck).isCorrespondsDefinedType(this.xmpNode);
-        } else if (this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode)) {
+        if (this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode)) {
             return this.currentSchemasDefinitionPDFA_2_3.isCorrespondsDefinedType(this.xmpNode);
-        } else {
+        }
+        if (this.mainPackageSchemasDefinition.isDefinedProperty(this.xmpNode)) {
             return this.mainPackageSchemasDefinition.isCorrespondsDefinedType(this.xmpNode);
         }
+        if (SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_2_3(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode)) {
+            return SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_2_3(this.isClosedChoiceCheck).isCorrespondsDefinedType(this.xmpNode);
+        }
+        return null;
     }
 }

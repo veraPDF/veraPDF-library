@@ -37,7 +37,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
  */
 
 @SuppressWarnings("static-method")
-public class ValdidatorConfigTest {
+public class ValidatorConfigTest {
 
 	/**
 	 * Test method for
@@ -45,7 +45,7 @@ public class ValdidatorConfigTest {
 	 */
 	@Test
 	public final void testHashCodeAndEquals() {
-		EqualsVerifier.forClass(ValidatorConfigImpl.class).verify();
+		EqualsVerifier.forClass(ValidatorConfigImpl.class).withIgnoredFields("defaultFlavour").verify();
 	}
 
 	/**
@@ -65,8 +65,8 @@ public class ValdidatorConfigTest {
 	@Test
 	public final void testFromValues() {
 		ValidatorConfig defaultInstance = ValidatorFactory.defaultConfig();
-		ValidatorConfig fromVals = ValidatorFactory.createConfig(defaultInstance.getFlavour(),
-				defaultInstance.isRecordPasses(), defaultInstance.getMaxFails());
+		ValidatorConfig fromVals = ValidatorFactory.createConfig(defaultInstance.getFlavour(), defaultInstance.getDefaultFlavour(),
+				defaultInstance.isRecordPasses(), defaultInstance.getMaxFails(), defaultInstance.isDebug());
 		assertTrue(fromVals.equals(defaultInstance));
 		assertFalse(fromVals == defaultInstance);
 	}

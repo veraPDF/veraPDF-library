@@ -226,8 +226,13 @@ public final class ValidatorFactory {
 	 *         values.
 	 */
 	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final boolean recordPasses,
-			final int maxFails) {
-		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails);
+			final int maxFails, final boolean debug) {
+		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails, debug);
+	}
+
+	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour,
+	                                           final boolean recordPasses, final int maxFails, final boolean debug) {
+		return ValidatorConfigImpl.fromValues(flavour, defaultFlavour, recordPasses, maxFails, debug);
 	}
 
 	/**

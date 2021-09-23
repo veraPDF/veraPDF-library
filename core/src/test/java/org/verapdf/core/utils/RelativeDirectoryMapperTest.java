@@ -48,14 +48,6 @@ public class RelativeDirectoryMapperTest {
 		tmpRoot = Files.createTempDirectory("veraTest"); //$NON-NLS-1$
 	}
 
-	/**
-	 * Test method for {@link org.verapdf.ReleaseDetails#hashCode()}.
-	 */
-	@Test
-	public final void testHashCodeAndEquals() {
-		EqualsVerifier.forClass(RelativeDirectoryMapper.class).withRedefinedSuperclass().verify();
-	}
-
 	@Test
 	public void testGetdefaultInstance() {
 		FileOutputMapper defaultInstance = RelativeDirectoryMapper.defaultInstance();

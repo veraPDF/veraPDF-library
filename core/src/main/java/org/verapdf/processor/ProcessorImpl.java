@@ -112,8 +112,8 @@ final class ProcessorImpl implements ItemProcessor {
 		Components.Timer parseTimer = Components.Timer.start();
 		try (PDFAParser parser = this.hasCustomProfile()
 				? foundry.createParser(toProcess, this.processorConfig.getCustomProfile().getPDFAFlavour())
-				: this.isAuto() ? foundry.createParser(toProcess)
-				: foundry.createParser(toProcess, this.valConf().getFlavour())) {
+				: this.isAuto() ? foundry.createParser(toProcess, PDFAFlavour.NO_FLAVOUR, this.valConf().getDefaultFlavour())
+				: foundry.createParser(toProcess, this.valConf().getFlavour(), this.valConf().getDefaultFlavour())) {
 			for (TaskType task : this.getConfig().getTasks()) {
 				switch (task) {
 					case VALIDATE:
@@ -142,6 +142,12 @@ final class ProcessorImpl implements ItemProcessor {
 					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
 		} catch (IOException excep) {
 			logger.log(Level.FINER, "Problem closing PDF Stream", excep); //$NON-NLS-1$
+		} catch (Exception e) {
+			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			return ProcessorResultImpl.invalidPdfResult(fileDetails,
+			       TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(),
+			       new VeraPDFException("Caught unexpected exception during parsing", e))); //$NON-NLS-1$
 		}
 		return ProcessorResultImpl.fromValues(fileDetails, this.taskResults, this.validationResult, this.featureResult,
 				this.fixerResult);
@@ -184,6 +190,12 @@ final class ProcessorImpl implements ItemProcessor {
 					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
 		} catch (IOException excep) {
 			logger.log(Level.FINER, "Problem closing PDF Stream", excep); //$NON-NLS-1$
+		}  catch (Exception e) {
+			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			return ProcessorResultImpl.invalidPdfResult(fileDetails,
+			       TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(),
+			       new VeraPDFException("Caught unexpected exception during parsing", e))); //$NON-NLS-1$
 		}
 		return ProcessorResultImpl.fromValues(fileDetails, this.taskResults, this.validationResult, this.featureResult,
 				this.fixerResult);

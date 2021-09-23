@@ -44,7 +44,12 @@ public class TestAssertionTest {
             + ", message=" //$NON-NLS-1$
             + "message" //$NON-NLS-1$
             + ", location=" //$NON-NLS-1$
-            + ValidationResults.defaultLocation() + "]"; //$NON-NLS-1$
+            + ValidationResults.defaultLocation() //$NON-NLS-1$
+            + ", locationContext=" //$NON-NLS-1$
+            + "null" //$NON-NLS-1$
+            + ", errorMessage=" //$NON-NLS-1$
+            + "null" //$NON-NLS-1$
+            + "]"; //$NON-NLS-1$
 
     /**
      * Test method for
@@ -52,7 +57,7 @@ public class TestAssertionTest {
      */
     @Test
     public final void testHashCodeAndEquals() {
-        EqualsVerifier.forClass(TestAssertionImpl.class).verify();
+        EqualsVerifier.forClass(TestAssertionImpl.class).withIgnoredFields("ordinal", "errorArguments").verify();
     }
 
     /**
@@ -87,7 +92,7 @@ public class TestAssertionTest {
         TestAssertion assertionFromVals = ValidationResults
                 .assertionFromValues(0, Profiles.defaultRuleId(),
                         Status.FAILED, "message", //$NON-NLS-1$
-                        ValidationResults.defaultLocation());
+                        ValidationResults.defaultLocation(), null, null, null);
         assertTrue(assertionFromVals.equals(ValidationResults
                 .defaultAssertion()));
         assertFalse(assertionFromVals == ValidationResults.defaultAssertion());
