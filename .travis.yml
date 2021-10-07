@@ -3,6 +3,7 @@ sudo: required
 dist: bionic
 
 jdk:
+  - openjdk8
   - openjdk11
 
 branches:
