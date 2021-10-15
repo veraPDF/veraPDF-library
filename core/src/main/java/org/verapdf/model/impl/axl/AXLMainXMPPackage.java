@@ -108,8 +108,8 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
         if (xmpMetadata != null) {
             for (VeraPDFXMPNode node : xmpMetadata.getProperties()) {
                 if (XMPConst.NS_DC.equals(node.getNamespaceURI())) {
-                    if(node.getPrefix().equals("dc") && node.getName().equals("title")) {
-                        return node.getValue();
+                    if ("dc".equals(node.getPrefix()) && "title".equals(node.getName())) {
+                        return node.getLanguageAlternative();
                     }
                 }
             }

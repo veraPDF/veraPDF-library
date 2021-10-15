@@ -6,6 +6,8 @@ import com.adobe.xmp.options.PropertyOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.adobe.xmp.XMPConst.X_DEFAULT;
+
 /**
  * @author Maksim Bezrukov
  */
@@ -111,6 +113,28 @@ public class VeraPDFXMPNode {
             }
         }
         return true;
+    }
+
+    public String getLanguageAlternative() {
+        if (children.isEmpty()) {
+            return null;
+        }
+        String firstValue = null;
+        for (VeraPDFXMPNode node : children) {
+            List elems = node.getQualifier();
+            for (java.lang.Object elem : elems) {
+                if (((XMPNode)elem).isLanguageNode()) {
+                    String value = ((XMPNode)elem).getValue();
+                    if (X_DEFAULT.equals(value)) {
+                        return value;
+                    }
+                    if (firstValue == null) {
+                        firstValue = value;
+                    }
+                }
+            }
+        }
+        return firstValue;
     }
 
     public List getQualifier(){
