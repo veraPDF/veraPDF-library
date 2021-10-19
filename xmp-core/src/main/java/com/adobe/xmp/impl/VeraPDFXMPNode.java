@@ -124,12 +124,11 @@ public class VeraPDFXMPNode {
             List elems = node.getQualifier();
             for (java.lang.Object elem : elems) {
                 if (((XMPNode)elem).isLanguageNode()) {
-                    String value = ((XMPNode)elem).getValue();
-                    if (X_DEFAULT.equals(value)) {
-                        return value;
+                    if (X_DEFAULT.equals(((XMPNode)elem).getValue())) {
+                        return node.getValue();
                     }
                     if (firstValue == null) {
-                        firstValue = value;
+                        firstValue = node.getValue();
                     }
                 }
             }
