@@ -186,7 +186,7 @@ public enum PDFAFlavour {
                     PDFAFlavours.ISO_14289_1_YEAR,
                     PDFAFlavours.ISO_14289_1_DESCRIPTION),
         /** WCAG Version 2.1 */
-        WCAG_2_1(IsoStandardSeries.NO_SERIES, PDFAFlavours.WCAG_2_1, PDFAFlavours.WCAG_2_1_PART,
+        WCAG_2_1(IsoStandardSeries.NO_SERIES, PDFAFlavours.WCAG, PDFAFlavours.WCAG_2_1_PART,
                 PDFAFlavours.WCAG_2_1_YEAR, PDFAFlavours.WCAG_2_1_DESCRIPTION);
 
         private final IsoStandardSeries series;
