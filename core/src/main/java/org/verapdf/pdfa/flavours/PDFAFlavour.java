@@ -95,7 +95,9 @@ public enum PDFAFlavour {
     /** 4 PDF Version 4 Level E */
     PDFA_4_E(Specification.ISO_19005_4, Level.E),
     /** ua1 PDF Version 1 */
-    PDFUA_1(Specification.ISO_14289_1, Level.NO_LEVEL);
+    PDFUA_1(Specification.ISO_14289_1, Level.NO_LEVEL),
+    /** wcag PDF version 2.1 */
+    WCAG2_1(Specification.WCAG_2_1, Level.NO_LEVEL);
 
     private final static Map<String, PDFAFlavour> FLAVOUR_LOOKUP = new HashMap<>();
     static {
@@ -109,13 +111,22 @@ public enum PDFAFlavour {
     private final String id;
 
     private PDFAFlavour(final Specification standard, final Level level) {
-        this((PDFAFlavours.PDFUA.equals(standard.family) ? PDFAFlavours.PDFUA_PREFIX : "") + standard.getPartNumber() + level.getCode(), standard, level);
+        this(getPrefix(standard) + standard.getPartNumber() + level.getCode(), standard, level);
     }
 
     private PDFAFlavour(final String id, final Specification standard, final Level level) {
         this.part = standard;
         this.level = level;
         this.id = id;
+    }
+
+    private static String getPrefix(final Specification standard) {
+        if (PDFAFlavours.PDFUA.equals(standard.family)) {
+            return PDFAFlavours.PDFUA_PREFIX;
+        } else if(PDFAFlavours.WCAG_2_1.equals(standard.family)) {
+            return PDFAFlavours.WCAG2_1_PREFIX;
+        }
+        return "";
     }
 
     /**
@@ -175,7 +186,7 @@ public enum PDFAFlavour {
                     PDFAFlavours.ISO_14289_1_YEAR,
                     PDFAFlavours.ISO_14289_1_DESCRIPTION),
         /** WCAG Version 2.1 */
-        WCAG_2_1(IsoStandardSeries.NO_SERIES, PDFAFlavours.PDFUA, PDFAFlavours.WCAG_2_1_PART,
+        WCAG_2_1(IsoStandardSeries.NO_SERIES, PDFAFlavours.WCAG_2_1, PDFAFlavours.WCAG_2_1_PART,
                 PDFAFlavours.WCAG_2_1_YEAR, PDFAFlavours.WCAG_2_1_DESCRIPTION);
 
         private final IsoStandardSeries series;
