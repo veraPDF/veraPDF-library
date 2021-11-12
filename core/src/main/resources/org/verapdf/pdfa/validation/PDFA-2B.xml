@@ -452,7 +452,7 @@
 			same name shall have the same tintTransform and alternateSpace. In evaluating equivalence, the PDF
 			objects shall be compared, rather than the computational result of the use of those PDF objects. Compression
 			and whether or not an object is direct or indirect shall be ignored.</description>
-            <test>areTintAndAlternateConsistent == true</test>
+            <test>name == 'All' || name == 'None' || areTintAndAlternateConsistent == true</test>
             <error>
                 <message>Several occurrences of a Separation colour space with the same name are not consistent</message>
                 <arguments/>
@@ -579,7 +579,7 @@
             <id specification="ISO_19005_2" clause="6.2.8.3" testNumber="2"/>
             <description>If the number of colour space specifications in the JPEG2000 data is greater than 1, there shall be exactly one colour space 
 			specification that has the value 0x01 in the APPROX field.</description>
-            <test>nrColorSpaceSpecs == 1 || nrColorSpacesWithApproxField == 1</test>
+            <test>hasColorSpace == true || nrColorSpaceSpecs == 1 || nrColorSpacesWithApproxField == 1</test>
             <error>
                 <message>The JPEG2000 image contains more than one colour specification with the best colour fidelity (value 0x01 in the APPROX field).</message>
                 <arguments/>
@@ -590,7 +590,7 @@
             <id specification="ISO_19005_2" clause="6.2.8.3" testNumber="3"/>
             <description>The value of the METH entry in its 'colr' box shall be 0x01, 0x02 or 0x03. A conforming reader shall use only
 			that colour space and shall ignore all other colour space specifications.</description>
-            <test>colrMethod == 1 || colrMethod == 2 || colrMethod == 3</test>
+            <test>hasColorSpace == true || colrMethod == 1 || colrMethod == 2 || colrMethod == 3</test>
             <error>
                 <message>Colour specification of the JPEG2000 image has specification method.</message>
                 <arguments/>
@@ -600,7 +600,7 @@
         <rule object="JPEG2000">
             <id specification="ISO_19005_2" clause="6.2.8.3" testNumber="4"/>
             <description>JPEG2000 enumerated colour space 19 (CIEJab) shall not be used.</description>
-            <test>colrEnumCS == null || colrEnumCS != 19</test>
+            <test>hasColorSpace == true || colrEnumCS == null || colrEnumCS != 19</test>
             <error>
                 <message>JPEG2000 image uses enumerated colour space 19 (CIEJab), which is not allowed in PDF/A</message>
                 <arguments/>
