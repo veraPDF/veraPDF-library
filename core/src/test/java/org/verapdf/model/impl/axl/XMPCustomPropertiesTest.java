@@ -57,7 +57,7 @@ public class XMPCustomPropertiesTest {
                 "org/verapdf/model/impl/axl/xmp-custom-structured-property-check-3.xml",
                 Boolean.FALSE, Boolean.TRUE, null, Boolean.FALSE });
 
-        for (int i = 1; i <= 25; ++i) {
+        for (int i = 1; i <= 26; ++i) {
             String filePassName = "org/verapdf/model/impl/axl/xmp-types-in-extension-check-"
                     + i + "-pass.xml";
             res.add(new Object[] { filePassName, Boolean.TRUE, Boolean.TRUE,
@@ -67,7 +67,7 @@ public class XMPCustomPropertiesTest {
             res.add(new Object[] { fileFailName, Boolean.TRUE, Boolean.TRUE,
                     Boolean.FALSE, Boolean.FALSE });
         }
-        for (int i = 26; i <= 35; ++i) {
+        for (int i = 27; i <= 36; ++i) {
             String filePassName = "org/verapdf/model/impl/axl/xmp-types-in-extension-check-"
                     + i + "-pass.xml";
             res.add(new Object[] { filePassName, Boolean.FALSE, Boolean.TRUE,

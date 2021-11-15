@@ -13,45 +13,20 @@
 						<rdf:Seq>
 							<rdf:li rdf:parseType="Resource">
 								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
-								<pdfaProperty:name>tssprop1</pdfaProperty:name>
-								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
-							</rdf:li>
-							<rdf:li rdf:parseType="Resource">
-								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
-								<pdfaProperty:name>tssprop2</pdfaProperty:name>
-								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
-							</rdf:li>
-							<rdf:li rdf:parseType="Resource">
-								<pdfaProperty:category>internal</pdfaProperty:category>
-								<pdfaProperty:description>Desc - timeScaleStretch value type</pdfaProperty:description>
-								<pdfaProperty:name>tssprop3</pdfaProperty:name>
-								<pdfaProperty:valueType>timeScaleStretch</pdfaProperty:valueType>
-							</rdf:li>							
-						</rdf:Seq>
+								<pdfaProperty:description>Desc - Lang Alt value type</pdfaProperty:description>
+								<pdfaProperty:name>langprop</pdfaProperty:name>
+								<pdfaProperty:valueType>Lang Alt</pdfaProperty:valueType>
+							</rdf:li>		
+						</rdf:Seq>		
 					</pdfaSchema:property>
 				</rdf:li>
 			</rdf:Bag>
 		</pdfaExtension:schemas>
 	</rdf:Description>
-	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/"
-					   xmlns:xmpDM="http://ns.adobe.com/xmp/1.0/DynamicMedia/">
-		<fs:tssprop1 rdf:parseType="Resource">
-			<xmpDM:quality>High</xmpDM:quality>
-			<xmpDM:frameSize>123.02</xmpDM:frameSize>
-			<xmpDM:frameOverlappingPercentage>1.0</xmpDM:frameOverlappingPercentage>
-		</fs:tssprop1>
-		<fs:tssprop2 rdf:parseType="Resource">
-			<xmpDM:quality>Medium</xmpDM:quality>
-			<xmpDM:frameSize>-1.0</xmpDM:frameSize>
-			<xmpDM:frameOverlappingPercentage>+51.9</xmpDM:frameOverlappingPercentage>
-		</fs:tssprop2>
-		<fs:tssprop3 rdf:parseType="Resource">
-			<xmpDM:quality>Low</xmpDM:quality>
-			<xmpDM:frameSize>+4.0</xmpDM:frameSize>
-			<xmpDM:frameOverlappingPercentage>-1.0</xmpDM:frameOverlappingPercentage>
-		</fs:tssprop3>		
+	  <rdf:Description rdf:about="" xmlns:fs="http://www.999.org/">
+		<fs:langprop>
+			<rdf:Alt/>
+		</fs:langprop>
 	</rdf:Description>
   </rdf:RDF>
 </x:xmpmeta>
