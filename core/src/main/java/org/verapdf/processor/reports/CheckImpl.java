@@ -31,6 +31,7 @@ import org.verapdf.pdfa.results.TestAssertion;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -121,7 +122,15 @@ final class CheckImpl implements Check {
 		if (assertion == null) {
 			throw new IllegalArgumentException("Argument assertion con not be null");
 		}
-		return new CheckImpl(assertion.getStatus(), assertion.getLocation().getContext(), assertion.getLocationContext(),
-		                     assertion.getErrorMessage(), assertion.getErrorArguments());
+		return new CheckImpl(assertion.getStatus(), getStringWithoutInvalidXmlChars(assertion.getLocation().getContext()),
+		                     assertion.getLocationContext(), assertion.getErrorMessage(), assertion.getErrorArguments());
+	}
+
+	private static String getStringWithoutInvalidXmlChars(String string) {
+		if (string == null || string.isEmpty()) {
+			return string;
+		}
+		Pattern xmlInvalidChars = Pattern.compile("[^\\u0009\\u000A\\u000D\\u0020-\\uD7FF\\uE000-\\uFFFD\\x{10000}-\\x{10FFFF}]");
+		return xmlInvalidChars.matcher(string).replaceAll("");
 	}
 }
