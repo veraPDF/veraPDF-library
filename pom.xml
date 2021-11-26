@@ -28,13 +28,13 @@
   <parent>
     <artifactId>verapdf-parent</artifactId>
     <groupId>org.verapdf</groupId>
-    <version>1.19.1</version>
+    <version>1.20.1</version>
     <relativePath>parent/pom.xml</relativePath>
   </parent>
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-library</artifactId>
-  <version>1.19.0-SNAPSHOT</version>
+  <version>1.20.0-RC1</version>
   <packaging>pom</packaging>
 
   <name>veraPDF PDF/A Validation Library</name>
@@ -53,7 +53,7 @@
   </scm>
 
   <properties>
-    <verapdf.model.version>[1.19.0,1.20.0)</verapdf.model.version>
+    <verapdf.model.version>[1.20.0-RC,1.21.0)</verapdf.model.version>
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
   </properties>
