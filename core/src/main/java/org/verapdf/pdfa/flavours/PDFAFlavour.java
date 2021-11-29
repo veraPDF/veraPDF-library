@@ -123,7 +123,7 @@ public enum PDFAFlavour {
     private static String getPrefix(final Specification standard) {
         if (PDFAFlavours.PDFUA.equals(standard.family)) {
             return PDFAFlavours.PDFUA_PREFIX;
-        } else if(PDFAFlavours.WCAG_2_1.equals(standard.family)) {
+        } else if(PDFAFlavours.WCAG.equals(standard.family)) {
             return PDFAFlavours.WCAG2_1_PREFIX;
         }
         return "";
