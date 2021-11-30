@@ -53,7 +53,7 @@
   </scm>
 
   <properties>
-    <verapdf.model.version>[1.19.0,1.20.0)</verapdf.model.version>
+    <verapdf.model.version>[1.19.0,1.20.0-RC)</verapdf.model.version>
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
   </properties>
