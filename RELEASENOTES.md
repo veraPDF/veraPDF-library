@@ -1,3 +1,35 @@
+Version 1.20 RC (December 2, 2021)
+==================================
+
+### Applications
+- added support for PDF/A-4 including Level F (file attachments) and Level E (engineering)
+- added more informative logs in batch processing
+- added new parameter to specify the default validation profile in case of missing standard identification in XMP Metadata
+
+### PDF Model
+- extended the model to support PDF/A-4 rules
+
+### PDF Parser
+- more robust handing of malicisious PDF documents
+- improved parsing of PostScript and CFF fonts
+
+### Validation
+- allow empty Lang Alt arrays in XMP metadata
+- excluded All and None colorants from the PDF/A-2 and PDF/A-3 requirement to have the same tintTransform and alternateSpace
+- disabled JPEG2000 `colr` box checks in case of explicitly defined ColorSpace in the Image dictionary
+- fixed validation of predefined XMP value types if they are redefined in the extension schema
+- check XMP URL type as Text
+- fixed CIDSet and CharSet validation for PDF/A-1
+- fixed validation of the permissions dictionary in PDF/A-2 and PDF/A-3
+
+### Corpus
+- added test corpus of ~600 new atomic documents covering PDF/A-4 specification
+- extended PDF/A-2u tests on ToUnicode mapping and character encodings in simple fonts
+
+### Core library
+- added support of Java versions from 11 to 16
+- fixed validation of documents with non-PDF extension in multi-process mode
+
 Version 1.18 (February 23, 2021)
 =================================
 
