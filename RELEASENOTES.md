@@ -10,7 +10,7 @@ Version 1.20 RC (December 2, 2021)
 - extended the model to support PDF/A-4 rules
 
 ### PDF Parser
-- more robust handing of malicisious PDF documents
+- more robust handling of malicisious PDF documents
 - improved parsing of PostScript and CFF fonts
 
 ### Validation
@@ -18,9 +18,11 @@ Version 1.20 RC (December 2, 2021)
 - excluded All and None colorants from the PDF/A-2 and PDF/A-3 requirement to have the same tintTransform and alternateSpace
 - disabled JPEG2000 `colr` box checks in case of explicitly defined ColorSpace in the Image dictionary
 - fixed validation of predefined XMP value types if they are redefined in the extension schema
-- check XMP URL type as Text
+- validate XMP URL type as Text
 - fixed CIDSet and CharSet validation for PDF/A-1
 - fixed validation of the permissions dictionary in PDF/A-2 and PDF/A-3
+- added validation of Lang against RFC 1766 regular expression
+- fixed validaiton of permitted transfer functions in Halftone dictionaries
 
 ### Corpus
 - added test corpus of ~600 new atomic documents covering PDF/A-4 specification
