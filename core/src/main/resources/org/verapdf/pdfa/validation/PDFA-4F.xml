@@ -751,7 +751,7 @@
             <description>ISO 32000-2:2020, 9.7.4 Table 115 requires that all embedded Type 2 CIDFonts, the CIDFont
                 dictionary shall contain a CIDToGIDMap entry that shall be a stream mapping from CIDs to glyph indices
                 or the name Identity, as described in ISO 32000-2:2020, 9.7.4 Table 115.</description>
-            <test>Subtype != &quot;CIDFontType2&quot; || CIDToGIDMap != null</test>
+            <test>Subtype != &quot;CIDFontType2&quot; || CIDToGIDMap != null || fontFile_size == 0</test>
             <error>
                 <message>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</message>
                 <arguments/>
