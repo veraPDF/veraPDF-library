@@ -79,9 +79,6 @@ public class ValidatorsContainer {
         }
 
         String type = getSimplifiedType(typeName);
-        if (this.validators.containsKey(type)) {
-            return false;
-        }
 
         this.validators.put(type, simpleTypeValidator);
         return true;
@@ -99,9 +96,6 @@ public class ValidatorsContainer {
         }
 
         String type = getSimplifiedType(typeName);
-        if (this.validators.containsKey(type)) {
-            return false;
-        }
 
         this.validators.put(type, StructuredTypeValidator.fromValues(typeNamespaceURI, childrenTypes, this));
         return true;
@@ -121,9 +115,6 @@ public class ValidatorsContainer {
             throw new IllegalArgumentException("Argument childrenClosedTypes can not be null or empty");
         }
         String type = getSimplifiedType(typeName);
-        if (this.validators.containsKey(type)) {
-            return false;
-        }
 
         this.validators.put(type, StructuredTypeWithRestrictedFieldsValidator.fromValues(typeNamespaceURI, childrenTypes, childrenRestrictedTypes, this));
         return true;
