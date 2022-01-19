@@ -1,8 +1,42 @@
+Version 1.20 RC (December 2, 2021)
+==================================
+
+### Applications
+- added support for PDF/A-4 including Level F (file attachments) and Level E (engineering)
+- added more informative logs in batch processing
+- added new parameter to specify the default validation profile in case of missing standard identification in XMP Metadata
+
+### PDF Model
+- extended the model to support PDF/A-4 rules
+
+### PDF Parser
+- more robust handling of malicious PDF documents
+- improved parsing of PostScript and CFF fonts
+
+### Validation
+- allow empty Lang Alt arrays in XMP metadata
+- excluded All and None colorants from the PDF/A-2 and PDF/A-3 requirement to have the same tintTransform and alternateSpace
+- disabled JPEG2000 `colr` box checks in case of explicitly defined ColorSpace in the Image dictionary
+- fixed validation of predefined XMP value types if they are redefined in the extension schema
+- validate XMP URL type as Text
+- fixed CIDSet and CharSet validation for PDF/A-1
+- fixed validation of the permissions dictionary in PDF/A-2 and PDF/A-3
+- added validation of Lang against RFC 1766 regular expression
+- fixed validation of permitted transfer functions in Halftone dictionaries
+
+### Corpus
+- added test corpus of ~600 new atomic documents covering PDF/A-4 specification
+- extended PDF/A-2u tests on ToUnicode mapping and character encodings in simple fonts
+
+### Core library
+- added support of Java versions from 11 to 16
+- fixed validation of documents with non-PDF extension in multi-process mode
+
 Version 1.18 (February 23, 2021)
 =================================
 
 ### Applications
-- added support for PDF/UA-1 (Machine) validaiton
+- added support for PDF/UA-1 (Machine) validation
 - fixed issues with STDIN support
 - added support for input files with non-pdf extension
 
@@ -20,7 +54,7 @@ Version 1.18 (February 23, 2021)
 - fixed null pointer exceptions on invalid PDF documents (multiple places)
 
 ### Core library
-- adjusted vaidation reports to support PDF/UA-1 profile 
+- adjusted validation reports to support PDF/UA-1 profile 
 
 
 Version 1.16 (February 19, 2020)
@@ -47,14 +81,14 @@ Version 1.14 (June 10, 2019)
 ### Applications
 - fixed installer CLI args not forwarded [[#apps-253][]], [[#iss-1021][]]
 - fixed Java 11 XML bind dependencies [[#apps-254][]], [[#iss-986][]]
-- command line application terminsation codes [[#apps-255][]], [[#apps-256][]], [[#iss-841][]]
+- command line application termination codes [[#apps-255][]], [[#apps-256][]], [[#iss-841][]]
 
 ## PDF Model:
 - added processColor link for PDDeviceN [[#mod-168][]], [[#iss-902][]]
 
 ## PDF Parser:
 - fixed XRefStream handling for trailers [[#par-359][]]
-- fixed space skipping afer RD for type1 [[#par-360][]], [[#par-361][]]
+- fixed space skipping after RD for type1 [[#par-360][]], [[#par-361][]]
 - fixed various issues with AES decryption [[#par-362][]], [[#par-364][]], [[#par-365][]]
 - fixed font encoding issue [[#par-363][]]
 - fixed buffered in filter and COSStream problems [[#par-366][]]
@@ -76,8 +110,8 @@ Version 1.14 (June 10, 2019)
 - fix metadata creation [[#val-270][]]
 - fix null pointer exception when processing glyphs [[#val-271][]]
 - fix null pointer exception when validating embedded files [[#val-273][]], [[#iss-976][]]
-- fxed graphic state initial colorspace creation and font inheritance  [[#val-274][]], [[#iss-975][]], [[#iss-978][]]
-- deny operstors q, Q, cm inside Text object [[#val-276][]], [[#iss-985][]]
+- fixed graphic state initial colorspace creation and font inheritance  [[#val-274][]], [[#iss-975][]], [[#iss-978][]]
+- deny operators q, Q, cm inside Text object [[#val-276][]], [[#iss-985][]]
 - preflight passes, veraPDF shows clause="6.2.11.4" error [[#val-277][]], [[#iss-1019][]]
 - fix Ignore trailing zero for info dictionary values during metadata info match xmp check [[#val-278][]], [[#iss-1017][]]
 - fixed Java 11 XML bind dependencies  [[#val-279][]], [[#iss-986][]]
@@ -174,7 +208,7 @@ Version 1.12 (May 9, 2018)
 - fixed bug with validation rule caching [[#lib-963][]]
 
 ## Application enhancements:
-- added fixes for thread saftey and multithreading support [[#apps-246][]], [[#apps-248][]], [[#par-342][]], [[#lib-941][]], [[#lib-960][]], [[#val-262][]],  [[#pdf-189][]], [[#lib-950][]] [[#apps-244][]]
+- added fixes for thread safety and multithreading support [[#apps-246][]], [[#apps-248][]], [[#par-342][]], [[#lib-941][]], [[#lib-960][]], [[#val-262][]],  [[#pdf-189][]], [[#lib-950][]] [[#apps-244][]]
 - added multi-process parallelization in the CLI [[#apps-242][]]
 - improved formatting of XML reports [[#apps-243][]]
 - fixed plug-ins loading mechanism [[#apps-244][]]
@@ -236,7 +270,7 @@ Version 1.10 (November 30, 2017)
 - optimized parsing of text-related data in PDF documents (up to 3 times faster for PDF documents with primarily text content).
 
 ## Conformance Checker:
-- fixed checks on the presence of SMask, NeedApperane keys in case of invalid value types;
+- fixed checks on the presence of SMask, NeedAppearances keys in case of invalid value types;
 - fixed ByteRange check of digital signatures in case of incrementally updated files;
 - fixed Unicode checks in PDF/A-1A validation for Type1 and Type3 fonts;
 - fixed inheritance of /FT entry in Widget annotations; and
@@ -402,7 +436,7 @@ Last pre-version 1.0 release. PDFBox version downloadable from http://downloads.
 - fixed Unicode character maps support for PDF/A-1 Level A.
 
 # Version 0.26 (November 16, 2016)
-We've made two downloads available for out 0.26 release. There's the ususal version, based on Apache PDFBox and downloadable from: http://downloads.verapdf.org/rel/verapdf-installer.zip. For 0.26 we've also prepared the first beta release of our purpose built PDF parser and validation model, also known as the greenfield validator. This is downloadable from: http://downloads.verapdf.org/gf/verapdf-gf-installer.zip. It's not functionally complete yet as it only supports PDF/A validation. Full details of the release features are listed below.
+We've made two downloads available for out 0.26 release. There's the usual version, based on Apache PDFBox and downloadable from: http://downloads.verapdf.org/rel/verapdf-installer.zip. For 0.26 we've also prepared the first beta release of our purpose built PDF parser and validation model, also known as the greenfield validator. This is downloadable from: http://downloads.verapdf.org/gf/verapdf-gf-installer.zip. It's not functionally complete yet as it only supports PDF/A validation. Full details of the release features are listed below.
 
 ## Conformance checker
 - added the new rule for embedded files to be associated with the document or its parts (PDF/A-3 only).
@@ -507,9 +541,9 @@ This beta release provides fixes for PDF/A Validation, enhanced functionality & 
 - added 180 new test files for parts 2 and 3
 
 ## Infrastructure
-- test coverage now monitered by Codecov online service
+- test coverage now monitored by Codecov online service
 - integration tests for 2u and 3b validation profiles added
-- using codacy and covertiy online code QA services
+- using codacy and coverity online code QA services
 
 # Version 0.16 (June 3, 2016)
 
@@ -520,7 +554,7 @@ This beta release features the full support of all PDF/A-2 and PDF/A-3 requireme
   - added validation of digital signature requirements
   - added extraction of color space info from JPEG2000 images
   - added validation of permissions dictionary (Parts 2 and 3)
-  - PDF/A-2B fix: correct implementation of CIDSystemInfo entry requrements
+  - PDF/A-2B fix: correct implementation of CIDSystemInfo entry requirements
   - command line support for plugin execution to extend feature extraction
 
 ## veraPDF characterisation plugins
@@ -571,7 +605,7 @@ This beta release features improved PDF/A-2b and PDF/A-3b validation and the ful
   - full coverage of all predefined XMP properties
 
 - Documentation
-  - first version of wiki on all validation rules availabe at: https://github.com/veraPDF/veraPDF-validation-profiles/wiki
+  - first version of wiki on all validation rules available at: https://github.com/veraPDF/veraPDF-validation-profiles/wiki
 
 - Command line:
   - CLI now supports metadata fixing
@@ -702,7 +736,7 @@ The release includes a fully functional prototype for the PDF/A-1b validation an
   - 6.7 Metadata
   - 6.9 Interactive Forms
 - Initial implementation of the PDF Feature Report generation
-- Minor imporvements in the GUI and the Human-readable Report in HTML format
+- Minor improvements in the GUI and the Human-readable Report in HTML format
 
 ## Infrastructure
 
