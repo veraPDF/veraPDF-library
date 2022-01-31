@@ -20,7 +20,7 @@
  */
 package org.verapdf.model.tools.xmp;
 
-import com.adobe.xmp.XMPConst;
+import org.verapdf.xmp.XMPConst;
 
 import java.util.Arrays;
 

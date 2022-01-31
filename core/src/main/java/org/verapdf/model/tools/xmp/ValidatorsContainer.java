@@ -20,7 +20,7 @@
  */
 package org.verapdf.model.tools.xmp;
 
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.tools.xmp.validators.*;
 
 import java.util.HashMap;

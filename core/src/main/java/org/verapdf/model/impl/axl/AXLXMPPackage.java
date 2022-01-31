@@ -20,9 +20,9 @@
  */
 package org.verapdf.model.impl.axl;
 
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.impl.VeraPDFMeta;
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.xmp.XMPConst;
+import org.verapdf.xmp.impl.VeraPDFMeta;
+import org.verapdf.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.tools.xmp.SchemasDefinition;
 import org.verapdf.model.tools.xmp.SchemasDefinitionCreator;
