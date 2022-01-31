@@ -20,7 +20,7 @@
  */
 package org.verapdf.model.impl.axl;
 
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.tools.xmp.ValidatorsContainer;
 import org.verapdf.model.xmplayer.ExtensionSchemaObject;
 import org.verapdf.pdfa.flavours.PDFAFlavour;

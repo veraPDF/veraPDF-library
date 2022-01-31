@@ -27,7 +27,7 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.xmp.impl.VeraPDFXMPNode;
 
 /**
  * @author Maksim Bezrukov

@@ -1,7 +1,7 @@
 package org.verapdf.model.impl.axl;
 
-import com.adobe.xmp.XMPException;
-import com.adobe.xmp.impl.VeraPDFMeta;
+import org.verapdf.xmp.XMPException;
+import org.verapdf.xmp.impl.VeraPDFMeta;
 import org.verapdf.model.xmplayer.PDFUAIdentification;
 
 import java.util.logging.Level;

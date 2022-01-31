@@ -20,8 +20,8 @@
  */
 package org.verapdf.model.tools.xmp;
 
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.xmp.XMPConst;
+import org.verapdf.xmp.impl.VeraPDFXMPNode;
 
 import java.util.Collections;
 import java.util.HashMap;
