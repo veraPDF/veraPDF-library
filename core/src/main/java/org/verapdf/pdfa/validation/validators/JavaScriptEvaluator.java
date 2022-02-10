@@ -135,6 +135,9 @@ public class JavaScriptEvaluator {
 		if (res instanceof NativeJavaObject) {
 			res = ((NativeJavaObject) res).unwrap();
 		}
+		if (res instanceof Double && Math.abs((Double) res - Math.floor((Double) res)) < 1.0E-7){
+			return Integer.toString(((Double) res).intValue());
+		}
 		return res != null ? res.toString() : null;
 
 	}
