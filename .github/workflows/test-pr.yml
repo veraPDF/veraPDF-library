@@ -1,0 +1,22 @@
+name: PR QA
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        java-version: [11, 16, 17]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: JDK setup
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn --batch-mode --update-snapshots verify
