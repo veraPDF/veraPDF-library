@@ -2,7 +2,7 @@ name: PR QA
 
 on:
   pull_request:
-    types: [opened, edited, reopened]
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
