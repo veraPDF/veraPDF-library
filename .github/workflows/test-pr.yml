@@ -1,14 +1,17 @@
 name: PR QA
 
 on: [push]
+  # pull_request:
+  #   types: [opened, edited, reopened]
 
 jobs:
   build:
+    name: Checkout and Build
     runs-on: ubuntu-20.04
 
     strategy:
       matrix:
-        java-version: [8, 11, 16]
+        java-version: [8, 11, 16, 17]
 
     steps:
       - uses: actions/checkout@v2
@@ -20,10 +23,24 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
-      - uses: codecov/codecov-action@v2
+
+  coverage:
+    name: Quality Assurance
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Codecov coverage reporting
+        uses: codecov/codecov-action@v2
         with:
           files: ./core/target/site/jacoco/jacoco.xml
           fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
-      - name: Run Codacy Analysis CLI
+      - name: Codacy coverage reporting
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          # or
+          # api-token: ${{ secrets.CODACY_API_TOKEN }}
+          coverage-reports: cobertura.xml
+      - name: Codacy analysis reporting
         uses: codacy/codacy-analysis-cli-action@4.0.0
