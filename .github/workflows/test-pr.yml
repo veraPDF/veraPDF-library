@@ -27,6 +27,7 @@ jobs:
   coverage:
     name: Quality Assurance
     runs-on: ubuntu-20.04
+    needs: [ build ]
 
     steps:
       - name: Codecov coverage reporting
