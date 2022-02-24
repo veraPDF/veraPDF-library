@@ -23,17 +23,26 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
-
+      - name: Upload coverage report
+        uses: actions/upload-artifact@master
+        with:
+          name: coverage-report
+          path: core/target/site/jacoco/
   coverage:
     name: Quality Assurance
     runs-on: ubuntu-20.04
     needs: [ build ]
 
     steps:
+      - name: Download coverage report
+        uses: actions/download-artifact@master
+        with:
+          name: coverage-report
+          path: core/target/site/jacoco/
       - name: Codecov coverage reporting
         uses: codecov/codecov-action@v2
         with:
-          files: ./core/target/site/jacoco/jacoco.xml
+          files: core/target/site/jacoco/jacoco.xml
           fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
       - name: Codacy coverage reporting
@@ -42,6 +51,6 @@ jobs:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           # or
           # api-token: ${{ secrets.CODACY_API_TOKEN }}
-          coverage-reports: cobertura.xml
+          coverage-reports: core/target/site/jacoco/jacoco.xml
       - name: Codacy analysis reporting
         uses: codacy/codacy-analysis-cli-action@4.0.0
