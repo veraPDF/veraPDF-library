@@ -49,4 +49,8 @@ public interface BatchSummary {
 	int getFailedParsingJobs();
 
 	int getFailedEncryptedJobs();
+
+	int getOutOfMemory();
+
+	int getVeraExceptions();
 }

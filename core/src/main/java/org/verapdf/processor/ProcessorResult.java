@@ -91,4 +91,15 @@ public interface ProcessorResult {
 	 *         not continue to process it.
 	 */
 	public boolean isEncryptedPdf();
+
+	/**
+	 * @return true if the parser detected OutOfMemoryException and could
+	 *         not continue to process PDF.
+	 */
+	public boolean isOutOfMemory();
+
+	/**
+	 * @return true if processed PDF has VeraPDFException.
+	 */
+	public boolean hasException();
 }
