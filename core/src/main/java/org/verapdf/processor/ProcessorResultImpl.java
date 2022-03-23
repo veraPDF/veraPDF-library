@@ -52,6 +52,10 @@ class ProcessorResultImpl implements ProcessorResult {
 	private final boolean isPdf;
 	@XmlAttribute
 	private final boolean isEncryptedPdf;
+	@XmlAttribute
+	private final boolean isOutOfMemory;
+	@XmlAttribute
+	private final boolean hasException;
 	@XmlElement
 	private final ItemDetails itemDetails;
 	private final EnumMap<TaskType, TaskResult> taskResults;
@@ -66,33 +70,36 @@ class ProcessorResultImpl implements ProcessorResult {
 	}
 
 	private ProcessorResultImpl(final ItemDetails details, final TaskResult result) {
-		this(details, false, false, result);
+		this(details, false, false, false, result);
 	}
 
-	private ProcessorResultImpl(final ItemDetails details, boolean isEncrypted, final TaskResult result) {
-		this(details, true, isEncrypted, result);
+	private ProcessorResultImpl(final ItemDetails details, boolean isEncrypted, boolean isOutOfMemory, final TaskResult result) {
+		this(details, true, isEncrypted, isOutOfMemory, result);
 	}
 
-	private ProcessorResultImpl(final ItemDetails details, boolean isValidPdf, boolean isEncrypted,
+	private ProcessorResultImpl(final ItemDetails details, boolean isValidPdf, boolean isEncrypted, boolean isOutOfMemory,
 			final TaskResult result) {
-		this(details, isValidPdf, isEncrypted, resMap(result), ValidationResults.defaultResult(),
+		this(details, isValidPdf, isEncrypted, isOutOfMemory, resMap(result), ValidationResults.defaultResult(),
 				new FeatureExtractionResult(), FixerFactory.defaultResult());
 	}
 
 	private ProcessorResultImpl(final ItemDetails details, final EnumMap<TaskType, TaskResult> results,
 			final ValidationResult validationResult, final FeatureExtractionResult featuresResult,
 			final MetadataFixerResult fixerResult) {
-		this(details, true, false, results, validationResult, featuresResult, fixerResult);
+		this(details, true, false, false, results, validationResult, featuresResult, fixerResult);
 	}
 
 	private ProcessorResultImpl(final ItemDetails details, final boolean isPdf, final boolean isEncrypted,
+			final boolean isOutOfMemory,
 			final EnumMap<TaskType, TaskResult> results, final ValidationResult validationResult,
 			final FeatureExtractionResult featuresResult, final MetadataFixerResult fixerResult) {
 		super();
 		this.itemDetails = details;
 		this.isPdf = isPdf;
 		this.isEncryptedPdf = isEncrypted;
+		this.isOutOfMemory = isOutOfMemory;
 		this.taskResults = results;
+		this.hasException = this.taskResults.values().stream().anyMatch(res -> res.getException() != null);
 		this.validationResult = validationResult;
 		this.featuresResult = featuresResult;
 		this.fixerResult = fixerResult;
@@ -130,7 +137,7 @@ class ProcessorResultImpl implements ProcessorResult {
 	static ProcessorResult fromValues(final ItemDetails details, final EnumMap<TaskType, TaskResult> results,
 			final ValidationResult validationResult, final FeatureExtractionResult featuresResult,
 			final MetadataFixerResult fixerResult) {
-		return new ProcessorResultImpl(details, true, false, results, validationResult, featuresResult, fixerResult);
+		return new ProcessorResultImpl(details, true, false, false, results, validationResult, featuresResult, fixerResult);
 	}
 
 	static ProcessorResult invalidPdfResult(final ItemDetails details, final TaskResult res) {
@@ -138,7 +145,11 @@ class ProcessorResultImpl implements ProcessorResult {
 	}
 
 	static ProcessorResult encryptedResult(final ItemDetails details, final TaskResult res) {
-		return new ProcessorResultImpl(details, true, true, res);
+		return new ProcessorResultImpl(details, true, false, res);
+	}
+
+	static ProcessorResult outOfMemoryResult(final ItemDetails details, final TaskResult res) {
+		return new ProcessorResultImpl(details, false, true, res);
 	}
 
 	@Override
@@ -170,6 +181,16 @@ class ProcessorResultImpl implements ProcessorResult {
 	@Override
 	public boolean isEncryptedPdf() {
 		return this.isEncryptedPdf;
+	}
+
+	@Override
+	public boolean isOutOfMemory() {
+		return this.isOutOfMemory;
+	}
+
+	@Override
+	public boolean hasException() {
+		return this.hasException;
 	}
 
 	static class Adapter extends XmlAdapter<ProcessorResultImpl, ProcessorResult> {

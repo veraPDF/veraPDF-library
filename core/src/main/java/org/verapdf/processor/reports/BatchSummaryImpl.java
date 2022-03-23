@@ -47,20 +47,19 @@ final class BatchSummaryImpl implements BatchSummary {
 	private final int failedToParse;
 	@XmlAttribute
 	private final int encrypted;
+	@XmlAttribute
+	private final int outOfMemory;
+	@XmlAttribute
+	private final int veraExceptions;
 
 	private BatchSummaryImpl() {
 		this(Components.defaultDuration(), ValidationBatchSummaryImpl.defaultInstance(),
-				FeaturesBatchSummary.defaultInstance(), MetadataRepairBatchSummary.defaultInstance(), 0, 0, 0);
+				FeaturesBatchSummary.defaultInstance(), MetadataRepairBatchSummary.defaultInstance(), 0, 0, 0, 0, 0);
 	}
 
-	/**
-	 * @param duration
-	 * @param jobs
-	 * @param failedJobs
-	 */
 	private BatchSummaryImpl(final AuditDuration duration, final ValidationBatchSummary validationSummary,
-			final FeaturesBatchSummary featureSummary, final MetadataRepairBatchSummary repairSummary,
-			final int totalJobs, final int failedToParse, final int encrypted) {
+							 final FeaturesBatchSummary featureSummary, final MetadataRepairBatchSummary repairSummary,
+							 final int totalJobs, final int failedToParse, final int encrypted, int outOfMemory, int veraExceptions) {
 		super();
 		this.duration = duration;
 		this.validationReports = validationSummary;
@@ -69,6 +68,8 @@ final class BatchSummaryImpl implements BatchSummary {
 		this.totalJobs = totalJobs;
 		this.failedToParse = failedToParse;
 		this.encrypted = encrypted;
+		this.outOfMemory = outOfMemory;
+		this.veraExceptions = veraExceptions;
 	}
 
 	/**
@@ -114,15 +115,25 @@ final class BatchSummaryImpl implements BatchSummary {
 		return this.encrypted;
 	}
 
-	public static final BatchSummary defaultInstance() {
+	@Override
+	public int getOutOfMemory() {
+		return this.outOfMemory;
+	}
+
+	@Override
+	public int getVeraExceptions() {
+		return this.veraExceptions;
+	}
+
+	public static BatchSummary defaultInstance() {
 		return DEFAULT;
 	}
 
-	static final BatchSummary fromValues(final AuditDuration duration, final ValidationBatchSummary validationSummary,
-			final FeaturesBatchSummary featureSummary, final MetadataRepairBatchSummary repairSummary,
-			final int totalJobs, final int failedToParse, final int encrypted) {
+	static BatchSummary fromValues(final AuditDuration duration, final ValidationBatchSummary validationSummary,
+								   final FeaturesBatchSummary featureSummary, final MetadataRepairBatchSummary repairSummary,
+								   final int totalJobs, final int failedToParse, final int encrypted, final int outOfMemory, final int veraExceptions) {
 		return new BatchSummaryImpl(duration, validationSummary, featureSummary, repairSummary, totalJobs,
-				failedToParse, encrypted);
+				failedToParse, encrypted, outOfMemory, veraExceptions);
 	}
 
 	static class Adapter extends XmlAdapter<BatchSummaryImpl, BatchSummary> {
