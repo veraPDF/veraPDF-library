@@ -57,12 +57,15 @@ public final class Reports {
 	 *         values
 	 */
 	public static final BatchSummary createBatchSummary(final Components.Timer timer, final ValidationBatchSummary validationSummary,
-			final FeaturesBatchSummary featureSummary, final MetadataRepairBatchSummary repairSummary, final int totalJobs, final int failedToParse, final int encrypted) {
+			final FeaturesBatchSummary featureSummary, final MetadataRepairBatchSummary repairSummary, final int totalJobs,
+														final int failedToParse, final int encrypted, final int outOfMemory, final int veraExceptions) {
 		if (totalJobs < 0)  throw new IllegalArgumentException("Argument totalJobs must be >= 0"); //$NON-NLS-1$
 		if (failedToParse < 0)  throw new IllegalArgumentException("Argument failedToParse must be >= 0"); //$NON-NLS-1$
 		if (encrypted < 0)  throw new IllegalArgumentException("Argument encrypted must be >= 0"); //$NON-NLS-1$
+		if (outOfMemory < 0)  throw new IllegalArgumentException("Argument outOfMemory must be >= 0"); //$NON-NLS-1$
+		if (veraExceptions < 0)  throw new IllegalArgumentException("Argument veraExceptions must be >= 0"); //$NON-NLS-1$
 		if ((failedToParse + encrypted) > totalJobs) throw new IllegalArgumentException("Argument totalJobs must be >= arguments (failedJobs + encrypted)"); //$NON-NLS-1$
-		return BatchSummaryImpl.fromValues(timer.stop(), validationSummary, featureSummary, repairSummary, totalJobs, failedToParse, encrypted);
+		return BatchSummaryImpl.fromValues(timer.stop(), validationSummary, featureSummary, repairSummary, totalJobs, failedToParse, encrypted, outOfMemory, veraExceptions);
 	}
 
 	/**
