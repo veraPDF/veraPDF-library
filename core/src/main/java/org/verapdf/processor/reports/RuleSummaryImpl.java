@@ -189,7 +189,7 @@ final class RuleSummaryImpl implements RuleSummary {
 	}
 
 	static final RuleSummary fromValues(final RuleId id, final String description, final String object, final String test,
-										List<TestAssertion> assertions, boolean logPassedChecks, int maxNumberOfDisplayedFailedChecks) {
+										List<TestAssertion> assertions, boolean logPassedChecks, Integer failedChecks) {
 		if (id == null) {
 			throw new NullPointerException("Argument id can not be null");
 		}
@@ -202,21 +202,18 @@ final class RuleSummaryImpl implements RuleSummary {
 		List<Check> checks = new ArrayList<>();
 		Status status = Status.PASSED;
 		int passedChecks = 0;
-		int failedChecks = 0;
 		for (TestAssertion assertion : assertions) {
 			if (assertion.getStatus() == Status.PASSED) {
 				passedChecks++;
-				if (logPassedChecks)
-					checks.add(CheckImpl.fromValue(assertion));
-			} else {
-				status = assertion.getStatus();
-				failedChecks++;
-				if ((maxNumberOfDisplayedFailedChecks == -1) || (failedChecks <= maxNumberOfDisplayedFailedChecks)) {
+				if (logPassedChecks) {
 					checks.add(CheckImpl.fromValue(assertion));
 				}
+			} else {
+				status = assertion.getStatus();
+				checks.add(CheckImpl.fromValue(assertion));
 			}
 		}
-		return new RuleSummaryImpl(id, status, passedChecks, failedChecks, description, object, test, checks);
+		return new RuleSummaryImpl(id, status, passedChecks, failedChecks != null ? failedChecks : 0, description, object, test, checks);
 	}
 
 	static final RuleSummary uncheckedInstance(final RuleId id, final String description, final String object,

@@ -48,28 +48,26 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	private final int maxFails;
 	@XmlAttribute
 	private final boolean debug;
+	@XmlAttribute
+	private final int maxNumberOfDisplayedFailedChecks;
 
 	private ValidatorConfigImpl() {
 		this(PDFAFlavour.NO_FLAVOUR, false, -1, false);
 	}
 
 	private ValidatorConfigImpl(final PDFAFlavour flavour, final boolean recordPasses, final int maxFails, boolean debug) {
-		super();
-		this.flavour = flavour;
-		this.defaultFlavour = PDFAFlavour.PDFA_1_B;
-		this.recordPasses = recordPasses;
-		this.maxFails = maxFails;
-		this.debug = debug;
+		this(flavour, PDFAFlavour.PDFA_1_B, recordPasses, maxFails, debug, BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS);
 	}
 
 	private ValidatorConfigImpl(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour, final boolean recordPasses,
-	                            final int maxFails, boolean debug) {
+	                            final int maxFails, final boolean debug, final int maxNumberOfDisplayedFailedChecks) {
 		super();
 		this.flavour = flavour;
 		this.defaultFlavour = defaultFlavour;
 		this.recordPasses = recordPasses;
 		this.maxFails = maxFails;
 		this.debug = debug;
+		this.maxNumberOfDisplayedFailedChecks = maxNumberOfDisplayedFailedChecks;
 	}
 
 	/**
@@ -106,6 +104,11 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		return this.debug;
 	}
 
+	@Override
+	public int getMaxNumberOfDisplayedFailedChecks() {
+		return maxNumberOfDisplayedFailedChecks;
+	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -117,6 +120,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		result = prime * result + this.maxFails;
 		result = prime * result + (this.recordPasses ? 1231 : 1237);
 		result = prime * result + (this.debug ? 1231 : 1237);
+		result = prime * result + this.maxNumberOfDisplayedFailedChecks;
 		return result;
 	}
 
@@ -144,6 +148,9 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		if (this.recordPasses != other.recordPasses) {
 			return false;
 		}
+		if (this.maxNumberOfDisplayedFailedChecks != other.maxNumberOfDisplayedFailedChecks) {
+			return false;
+		}
 		if (this.debug != other.debug) {
 			return false;
 		}
@@ -168,8 +175,8 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	}
 
 	static ValidatorConfig fromValues(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour, final boolean recordPasses,
-	                                  final int maxFails, final boolean debug) {
-		return new ValidatorConfigImpl(flavour, defaultFlavour, recordPasses, maxFails, debug);
+	                                  final int maxFails, final boolean debug, final int maxNumberOfDisplayedFailedChecks) {
+		return new ValidatorConfigImpl(flavour, defaultFlavour, recordPasses, maxFails, debug, maxNumberOfDisplayedFailedChecks);
 	}
 
 	static class Adapter extends XmlAdapter<ValidatorConfigImpl, ValidatorConfig> {

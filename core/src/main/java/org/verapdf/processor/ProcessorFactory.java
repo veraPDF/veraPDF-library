@@ -105,12 +105,12 @@ public final class ProcessorFactory {
 	}
 
 	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose,
-			int maxFailedChecksPerRule, boolean logPassed) throws VeraPDFException {
-		return getHandler(option, isVerbose, System.out, maxFailedChecksPerRule, logPassed);
+			boolean logPassed) throws VeraPDFException {
+		return getHandler(option, isVerbose, System.out, logPassed);
 	}
 
 	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose,
-			OutputStream reportStream, int maxFailedChecksPerRule, boolean logPassed) throws VeraPDFException {
+			OutputStream reportStream, boolean logPassed) throws VeraPDFException {
 		if (option == null)
 			throw new IllegalArgumentException("Arg option can not be null"); //$NON-NLS-1$
 		if (reportStream == null)
@@ -122,7 +122,7 @@ public final class ProcessorFactory {
 		case XML:
 			return rawResultHandler(new PrintWriter(reportStream));
 		case MRR:
-			return MrrHandler.newInstance(new PrintWriter(reportStream), logPassed, maxFailedChecksPerRule);
+			return MrrHandler.newInstance(new PrintWriter(reportStream), logPassed);
 		default: // should not be reached
 			throw new VeraPDFException("Unknown report format option: " + option); //$NON-NLS-1$
 		}

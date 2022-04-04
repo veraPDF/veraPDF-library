@@ -38,6 +38,7 @@ import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.profiles.Rule;
+import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.profiles.Variable;
 
@@ -47,7 +48,9 @@ import java.util.*;
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
-class BaseValidator implements PDFAValidator {
+public class BaseValidator implements PDFAValidator {
+	public static final int DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS = 100;
+	private static final int MAX_CHECKS_NUMBER = 10_000;
 	private static final URI componentId = URI.create("http://pdfa.verapdf.org/validators#default");
 	private static final String componentName = "veraPDF PDF/A Validator";
 	private static final ComponentDetails componentDetails = Components.libraryDetails(componentId, componentName);
@@ -58,9 +61,11 @@ class BaseValidator implements PDFAValidator {
 	private final Deque<String> objectsContext = new ArrayDeque<>();
 	private final Map<Rule, List<ObjectWithContext>> deferredRules = new HashMap<>();
 	protected final List<TestAssertion> results = new ArrayList<>();
+	private final HashMap<RuleId, Integer> failedChecks = new HashMap<>();
 	protected int testCounter = 0;
 	protected boolean abortProcessing = false;
 	protected final boolean logPassedTests;
+	protected final int maxNumberOfDisplayedFailedChecks;
 	protected boolean isCompliant = true;
 
 	private Set<String> idSet = new HashSet<>();
@@ -72,8 +77,13 @@ class BaseValidator implements PDFAValidator {
 	}
 
 	protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests) {
+		this(profile, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, logPassedTests);
+	}
+
+	protected BaseValidator(final ValidationProfile profile, final int maxNumberOfDisplayedFailedChecks, final boolean logPassedTests) {
 		super();
 		this.profile = profile;
+		this.maxNumberOfDisplayedFailedChecks = maxNumberOfDisplayedFailedChecks;
 		this.logPassedTests = logPassedTests;
 	}
 
@@ -125,11 +135,12 @@ class BaseValidator implements PDFAValidator {
 
 		JavaScriptEvaluator.exitContext();
 
-		return ValidationResults.resultFromValues(this.profile, this.results, this.isCompliant, this.testCounter);
+		return ValidationResults.resultFromValues(this.profile, this.results, this.failedChecks, this.isCompliant, this.testCounter);
 	}
 
 	protected void initialise() {
 		this.scope = JavaScriptEvaluator.initialise();
+		this.failedChecks.clear();
 		this.objectsStack.clear();
 		this.objectsContext.clear();
 		this.deferredRules.clear();
@@ -276,10 +287,10 @@ class BaseValidator implements PDFAValidator {
 		return checkObjWithRule(checkObject, checkContext, rule);
 	}
 
-	private boolean checkObjWithRule(Object obj, String cntxtForRule, Rule rule) {
+	private boolean checkObjWithRule(Object obj, String contextForRule, Rule rule) {
 		boolean testEvalResult = JavaScriptEvaluator.getTestEvalResult(obj, rule, this.scope);
 
-		this.processAssertionResult(testEvalResult, cntxtForRule, rule, obj);
+		this.processAssertionResult(testEvalResult, contextForRule, rule, obj);
 
 		return testEvalResult;
 	}
@@ -288,24 +299,26 @@ class BaseValidator implements PDFAValidator {
 										  final Rule rule, final Object obj) {
 		if (!this.abortProcessing) {
 			this.testCounter++;
-            //TODO rebuild structure of project for secure saving assertions without overflow memory exception with big files.
 			if (this.isCompliant) {
                 this.isCompliant = assertionResult;
             }
-			if (!assertionResult || this.logPassedTests) {
-				Location location;
-				String errorMessage = "";
-				List<String> errorArguments = new ArrayList<>();
-				if (this.results.size() > 10_000) {
-					location = ValidationResults.locationFromValues(this.rootType, "");
-				} else {
-					location = ValidationResults.locationFromValues(this.rootType, locationContext);
-					errorArguments = JavaScriptEvaluator.getErrorArgumentsResult(obj, rule.getError().getArguments(), this.scope);
-					errorMessage = createErrorMessage(rule.getError().getMessage(), errorArguments);
+			if (!assertionResult) {
+				int failedChecksNumberOfRule = failedChecks.getOrDefault(rule.getRuleId(), 0);
+				failedChecks.put(rule.getRuleId(), ++failedChecksNumberOfRule);
+				if ((failedChecksNumberOfRule <= maxNumberOfDisplayedFailedChecks || maxNumberOfDisplayedFailedChecks == -1) &&
+						(this.results.size() <= MAX_CHECKS_NUMBER || failedChecksNumberOfRule <= 1)) {
+					Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
+					List<String> errorArguments = JavaScriptEvaluator.getErrorArgumentsResult(obj,
+							rule.getError().getArguments(), this.scope);
+					String errorMessage = createErrorMessage(rule.getError().getMessage(), errorArguments);
+					TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
+							Status.FAILED, rule.getDescription(), location, obj.getContext(), errorMessage, errorArguments);
+					this.results.add(assertion);
 				}
-
+			} else if (this.logPassedTests && this.results.size() <= MAX_CHECKS_NUMBER) {
+				Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
 				TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
-						assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location, obj.getContext(), errorMessage, errorArguments);
+						Status.PASSED, rule.getDescription(), location, obj.getContext(), null, Collections.emptyList());
 				this.results.add(assertion);
             }
 		}

@@ -114,13 +114,10 @@ public final class Reports {
 	 *            the {@link ValidationResult} produced by the validation task
 	 * @param logPassedChecks
 	 *            boolean indicating whether passed checks were logged
-	 * @param maxFailedChecks
-	 *            in that records the max failed checks limit applied
 	 * @return a new {@link ValidationDetails} instance
 	 */
-	public static final ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks,
-			final int maxFailedChecks) {
-		return ValidationDetailsImpl.fromValues(result, logPassedChecks, maxFailedChecks);
+	public static final ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks) {
+		return ValidationDetailsImpl.fromValues(result, logPassedChecks);
 	}
 
 	public static final MetadataFixerReport fromValues(final String status, final int fixCount,
