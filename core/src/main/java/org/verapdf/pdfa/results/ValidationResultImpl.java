@@ -27,6 +27,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.profiles.ProfileDetails;
 import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -35,6 +36,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -55,6 +57,8 @@ final class ValidationResultImpl implements ValidationResult {
 	private final List<TestAssertion> assertions;
 	@XmlAttribute
 	private final boolean isCompliant;
+
+	private HashMap<RuleId, Integer> failedChecks = null;
 
 	private final ValidationProfile validationProfile;
 
@@ -77,6 +81,12 @@ final class ValidationResultImpl implements ValidationResult {
 		this.totalAssertions = totalAssertions;
 		this.profileDetails = validationProfile.getDetails();
 		this.validationProfile = validationProfile;
+	}
+
+	private ValidationResultImpl(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
+	                             final HashMap<RuleId, Integer> failedChecks, final boolean isCompliant, int totalAssertions) {
+		this(validationProfile, assertions, isCompliant, totalAssertions);
+		this.failedChecks = failedChecks;
 	}
 
 	/**
@@ -125,6 +135,10 @@ final class ValidationResultImpl implements ValidationResult {
 	@Override
 	public ValidationProfile getValidationProfile() {
 		return this.validationProfile;
+	}
+
+	public HashMap<RuleId, Integer> getFailedChecks() {
+		return this.failedChecks;
 	}
 
 	/**
@@ -182,8 +196,13 @@ final class ValidationResultImpl implements ValidationResult {
 		return DEFAULT;
 	}
 
-	static ValidationResultImpl fromValues(final ValidationProfile validationProfile,
-										   final List<TestAssertion> assertions, final boolean isCompliant, final int totalChecks) {
+	static ValidationResultImpl fromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
+	                                       final HashMap<RuleId, Integer> failedChecks, final boolean isCompliant, final int totalChecks) {
+		return new ValidationResultImpl(validationProfile, assertions, failedChecks, isCompliant, totalChecks);
+	}
+
+	static ValidationResultImpl fromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
+	                                       final boolean isCompliant, final int totalChecks) {
 		return new ValidationResultImpl(validationProfile, assertions, isCompliant, totalChecks);
 	}
 

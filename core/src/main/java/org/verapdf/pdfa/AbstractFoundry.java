@@ -36,25 +36,29 @@ import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 
 abstract class AbstractFoundry implements VeraPDFFoundry {
 	static PDFAFlavour defaultFlavour = PDFAFlavour.PDFA_1_B;
+
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config) {
-		if (config.getMaxFails() > 0)
+		if (config.getMaxFails() > 0) {
 			return createFailFastValidator(config.getFlavour(), config.getMaxFails());
-		return createValidator(config.getFlavour(), config.isRecordPasses());
+		}
+		return createValidator(config.getFlavour(), config.getMaxNumberOfDisplayedFailedChecks(), config.isRecordPasses());
 	}
 
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config, PDFAFlavour flavour) {
-		if (config.getMaxFails() > 0)
+		if (config.getMaxFails() > 0) {
 			return createFailFastValidator(flavour, config.getMaxFails());
-		return createValidator(flavour, config.isRecordPasses());
+		}
+		return createValidator(flavour, config.getMaxNumberOfDisplayedFailedChecks(), config.isRecordPasses());
 	}
 
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config, ValidationProfile profile) {
-		if (config.getMaxFails() > 0)
+		if (config.getMaxFails() > 0) {
 			return createFailFastValidator(profile, config.getMaxFails());
-		return createValidator(profile, config.isRecordPasses());
+		}
+		return createValidator(profile, config.getMaxNumberOfDisplayedFailedChecks(), config.isRecordPasses());
 	}
 
 	@Override
@@ -65,6 +69,16 @@ abstract class AbstractFoundry implements VeraPDFFoundry {
 	@Override
 	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess) {
 		return ValidatorFactory.createValidator(profile, logSuccess);
+	}
+
+	@Override
+	public PDFAValidator createValidator(PDFAFlavour flavour, int maxNumberOfDisplayedFailedChecks, boolean logSuccess) {
+		return ValidatorFactory.createValidator(flavour, maxNumberOfDisplayedFailedChecks, logSuccess);
+	}
+
+	@Override
+	public PDFAValidator createValidator(ValidationProfile profile, int maxNumberOfDisplayedFailedChecks, boolean logSuccess) {
+		return ValidatorFactory.createValidator(profile, maxNumberOfDisplayedFailedChecks, logSuccess);
 	}
 
 	@Override

@@ -60,13 +60,15 @@ public class ValidatorConfigTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.validation.validators.ValidatorConfigImpl#fromValues(org.verapdf.pdfa.flavours.PDFAFlavour, boolean, int, int)}.
+	 * {@link org.verapdf.pdfa.validation.validators.ValidatorConfigImpl#fromValues(org.verapdf.pdfa.flavours.PDFAFlavour,
+	 * org.verapdf.pdfa.flavours.PDFAFlavour, boolean, int, boolean, int)}.
 	 */
 	@Test
 	public final void testFromValues() {
 		ValidatorConfig defaultInstance = ValidatorFactory.defaultConfig();
-		ValidatorConfig fromVals = ValidatorFactory.createConfig(defaultInstance.getFlavour(), defaultInstance.getDefaultFlavour(),
-				defaultInstance.isRecordPasses(), defaultInstance.getMaxFails(), defaultInstance.isDebug());
+		ValidatorConfig fromVals = ValidatorFactory.createConfig(defaultInstance.getFlavour(),
+				defaultInstance.getDefaultFlavour(), defaultInstance.isRecordPasses(), defaultInstance.getMaxFails(),
+				defaultInstance.isDebug(), defaultInstance.getMaxNumberOfDisplayedFailedChecks());
 		assertTrue(fromVals.equals(defaultInstance));
 		assertFalse(fromVals == defaultInstance);
 	}

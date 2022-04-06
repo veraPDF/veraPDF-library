@@ -71,30 +71,28 @@ final class MrrHandler extends AbstractXmlHandler {
 	private final static String fixerRepEleName = "fixerReport"; //$NON-NLS-1$
 	private final static String featuresRepEleName = "featuresReport"; //$NON-NLS-1$
 	private final static String validationRepEleName = "validationReport"; //$NON-NLS-1$
-	private final int maxFailedChecks;
 	private final boolean logPassed;
 
 	/**
-	 * @param indentSize
 	 * @param dest
 	 * @throws VeraPDFException
 	 */
 	private MrrHandler(Writer dest) throws VeraPDFException {
-		this(dest, 100, false);
+		this(dest, false);
 	}
 
 	/**
 	 * @param dest
+	 * @param logPassed
 	 * @throws VeraPDFException
 	 */
-	private MrrHandler(Writer dest, int maxFailedChecks, boolean logPassed) throws VeraPDFException {
+	private MrrHandler(Writer dest, boolean logPassed) throws VeraPDFException {
 		super(dest);
-		this.maxFailedChecks = maxFailedChecks;
 		this.logPassed = logPassed;
 	}
 
 	/**
-	 * @see org.verapdf.processor.BatchProcessingHandler#handleBatchStart()
+	 * @see org.verapdf.processor.BatchProcessingHandler#handleBatchStart(ProcessorConfig)
 	 */
 	@Override
 	public void handleBatchStart(ProcessorConfig config) throws VeraPDFException {
@@ -145,7 +143,7 @@ final class MrrHandler extends AbstractXmlHandler {
 
 	@Override
 	void validationSuccess(TaskResult taskResult, ValidationResult result) throws VeraPDFException {
-		ValidationDetails details = Reports.fromValues(result, this.logPassed, this.maxFailedChecks);
+		ValidationDetails details = Reports.fromValues(result, this.logPassed);
 		ValidationReport valRep = Reports.createValidationReport(details, result.getProfileDetails().getName(), getStatement(result.isCompliant()), result.isCompliant());
 		this.serialseElement(valRep, validationRepEleName, true, true);
 	}
@@ -190,7 +188,7 @@ final class MrrHandler extends AbstractXmlHandler {
 	}
 
 	/**
-	 * @see org.verapdf.processor.BatchProcessingHandler#handleBatchEnd(org.verapdf.processor.BatchSummary)
+	 * @see org.verapdf.processor.BatchProcessingHandler#handleBatchEnd(org.verapdf.processor.reports.BatchSummary)
 	 */
 	@Override
 	public void handleBatchEnd(BatchSummary summary) throws VeraPDFException {
@@ -227,8 +225,8 @@ final class MrrHandler extends AbstractXmlHandler {
 		return new VeraPDFException(String.format(unmarshalErrMessage, typePart), excep);
 	}
 
-	static BatchProcessingHandler newInstance(final Writer dest, final boolean logPassed, final int maxFailedChecks) throws VeraPDFException {
-		return new MrrHandler(dest, maxFailedChecks, logPassed);
+	static BatchProcessingHandler newInstance(final Writer dest, final boolean logPassed) throws VeraPDFException {
+		return new MrrHandler(dest, logPassed);
 	}
 	
     private static String getStatement(boolean status) {

@@ -64,10 +64,20 @@ public final class ValidatorFactory {
 	 *         parameters
 	 */
 	public static PDFAValidator createValidator(final PDFAFlavour flavour, final boolean logPassedChecks) {
-		if (flavour == null)
+		if (flavour == null) {
 			throw new IllegalArgumentException("Parameter (PDFAFlavour flavour) cannot be null.");
+		}
 		return createValidator(Profiles.getVeraProfileDirectory().getValidationProfileByFlavour(flavour),
 				logPassedChecks);
+	}
+
+	public static PDFAValidator createValidator(final PDFAFlavour flavour, final int maxNumberOfDisplayedFailedChecks,
+												final boolean logPassedChecks) {
+		if (flavour == null) {
+			throw new IllegalArgumentException("Parameter (PDFAFlavour flavour) cannot be null.");
+		}
+		return createValidator(Profiles.getVeraProfileDirectory().getValidationProfileByFlavour(flavour),
+			maxNumberOfDisplayedFailedChecks, logPassedChecks);
 	}
 
 	/**
@@ -129,9 +139,18 @@ public final class ValidatorFactory {
 	 *         parameters
 	 */
 	public static PDFAValidator createValidator(final ValidationProfile profile, final boolean logPassedChecks) {
-		if (profile == null)
+		if (profile == null) {
 			throw new IllegalArgumentException("Parameter (ValidationProfile profile) cannot be null.");
+		}
 		return new BaseValidator(profile, logPassedChecks);
+	}
+
+	public static PDFAValidator createValidator(final ValidationProfile profile, final int maxNumberOfDisplayedFailedChecks,
+												final boolean logPassedChecks) {
+		if (profile == null) {
+			throw new IllegalArgumentException("Parameter (ValidationProfile profile) cannot be null.");
+		}
+		return new BaseValidator(profile, maxNumberOfDisplayedFailedChecks, logPassedChecks);
 	}
 
 	/**
@@ -197,10 +216,12 @@ public final class ValidatorFactory {
 	 */
 	public static PDFAValidator createValidator(final ValidationProfile profile, final boolean logPassedChecks,
 			final int maxFailures) {
-		if (profile == null)
+		if (profile == null) {
 			throw new IllegalArgumentException("Parameter (ValidationProfile profile) cannot be null.");
-		if (maxFailures > 0)
+		}
+		if (maxFailures > 0) {
 			return new FastFailValidator(profile, logPassedChecks, maxFailures);
+		}
 		return createValidator(profile, logPassedChecks);
 	}
 
@@ -231,8 +252,10 @@ public final class ValidatorFactory {
 	}
 
 	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour,
-	                                           final boolean recordPasses, final int maxFails, final boolean debug) {
-		return ValidatorConfigImpl.fromValues(flavour, defaultFlavour, recordPasses, maxFails, debug);
+	                                           final boolean recordPasses, final int maxFails, final boolean debug,
+											   final int maxNumberOfDisplayedFailedChecks) {
+		return ValidatorConfigImpl.fromValues(flavour, defaultFlavour, recordPasses, maxFails, debug,
+				maxNumberOfDisplayedFailedChecks);
 	}
 
 	/**

@@ -64,4 +64,6 @@ public interface ValidatorConfig {
 	public PDFAFlavour getDefaultFlavour();
 
 	public boolean isDebug();
+
+	public int getMaxNumberOfDisplayedFailedChecks();
 }

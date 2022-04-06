@@ -29,6 +29,7 @@ import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import javax.xml.bind.JAXBException;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -76,12 +77,12 @@ public class ValidationResults {
 	 * @return a new ValidationResult instance populated from the values
 	 */
 	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
-			final boolean isCompliant, final int totalAssertions) {
+	        final HashMap<RuleId, Integer> failedChecks, final boolean isCompliant, final int totalAssertions) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		if (assertions == null)
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
-		return ValidationResultImpl.fromValues(validationProfile, assertions, isCompliant, totalAssertions);
+		return ValidationResultImpl.fromValues(validationProfile, assertions, failedChecks, isCompliant, totalAssertions);
 	}
 
 	/**

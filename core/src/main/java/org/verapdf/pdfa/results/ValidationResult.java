@@ -25,9 +25,11 @@ package org.verapdf.pdfa.results;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.profiles.ProfileDetails;
+import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -87,4 +89,6 @@ public interface ValidationResult {
      * @return validation profile which has been used for generating validation result
      */
     public ValidationProfile getValidationProfile();
+
+    public HashMap<RuleId, Integer> getFailedChecks();
 }
