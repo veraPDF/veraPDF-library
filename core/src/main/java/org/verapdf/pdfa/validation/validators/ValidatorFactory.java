@@ -25,6 +25,7 @@ package org.verapdf.pdfa.validation.validators;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.logging.Level;
 
 import javax.xml.bind.JAXBException;
 
@@ -247,15 +248,19 @@ public final class ValidatorFactory {
 	 *         values.
 	 */
 	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final boolean recordPasses,
-			final int maxFails, final boolean debug) {
-		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails, debug);
+											   final int maxFails, final boolean debug) {
+		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails, debug, false, Level.WARNING);
+	}
+
+	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final boolean recordPasses,
+			final int maxFails, final boolean debug, final boolean isLogsEnabled, final Level loggingLevel) {
+		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel);
 	}
 
 	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour,
 	                                           final boolean recordPasses, final int maxFails, final boolean debug,
-											   final int maxNumberOfDisplayedFailedChecks) {
-		return ValidatorConfigImpl.fromValues(flavour, defaultFlavour, recordPasses, maxFails, debug,
-				maxNumberOfDisplayedFailedChecks);
+											   final boolean isLogsEnabled, final Level loggingLevel, final int maxNumberOfDisplayedFailedChecks) {
+		return ValidatorConfigImpl.fromValues(flavour, defaultFlavour, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel, maxNumberOfDisplayedFailedChecks);
 	}
 
 	/**

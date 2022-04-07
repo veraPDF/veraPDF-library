@@ -139,7 +139,7 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 	}
 
 	@Override
-	void resultEnd(ProcessorResult result) {
+	void resultEnd(ProcessorResult result, Boolean isLogsEnabled) {
 		// Do nothing here
 	}
 
