@@ -112,8 +112,8 @@ public abstract class AbstractBatchProcessor implements BatchProcessor {
 		this.handler = resultHandler;
 	}
 
-	protected void processResult(ProcessorResult result) throws VeraPDFException {
-		this.handler.handleResult(result);
+	protected void processResult(ProcessorResult result, Boolean isLogsEnabled) throws VeraPDFException {
+		this.handler.handleResult(result, isLogsEnabled);
 		this.summariser.addProcessingResult(result);
 	}
 

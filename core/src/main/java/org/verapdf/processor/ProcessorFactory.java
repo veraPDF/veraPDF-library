@@ -135,7 +135,7 @@ public final class ProcessorFactory {
 
 	public static void writeSingleResultReport(final ProcessorResult toConvert,final BatchProcessingHandler tmpHandler, ProcessorConfig config) throws VeraPDFException {
 		tmpHandler.handleBatchStart(config);
-		tmpHandler.handleResult(toConvert);
+		tmpHandler.handleResult(toConvert, config.getValidatorConfig().isLogsEnabled());
 		BatchSummariser tmpSummariser = new BatchSummariser(config);
 		tmpSummariser.addProcessingResult(toConvert);
 		tmpHandler.handleBatchEnd(tmpSummariser.summarise());

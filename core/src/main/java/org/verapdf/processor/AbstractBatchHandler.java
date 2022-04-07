@@ -43,13 +43,13 @@ public abstract class AbstractBatchHandler implements BatchProcessingHandler {
 	}
 
 	@Override
-	public void handleResult(ProcessorResult result) throws VeraPDFException {
+	public void handleResult(ProcessorResult result, Boolean isLogsEnabled) throws VeraPDFException {
 		if (result == null) {
 			throw new VeraPDFException("Arg result is null and can not be handled."); //$NON-NLS-1$
 		}
 		resultStart(result);
 		processTasks(result);
-		resultEnd(result);
+		resultEnd(result, isLogsEnabled);
 	}
 
 	private void processTasks(ProcessorResult result) throws VeraPDFException {
@@ -117,5 +117,5 @@ public abstract class AbstractBatchHandler implements BatchProcessingHandler {
 
 	abstract void fixerFailure(final TaskResult taskResult) throws VeraPDFException;
 
-	abstract void resultEnd(final ProcessorResult result) throws VeraPDFException;
+	abstract void resultEnd(final ProcessorResult result, Boolean isLogsEnabled) throws VeraPDFException;
 }

@@ -23,27 +23,24 @@
  */
 package org.verapdf.processor;
 
+import org.verapdf.ReleaseDetails;
+import org.verapdf.component.AuditDuration;
+import org.verapdf.component.AuditDurationImpl;
+import org.verapdf.component.LogsSummary;
+import org.verapdf.component.LogsSummaryImpl;
+import org.verapdf.core.VeraPDFException;
+import org.verapdf.pdfa.results.MetadataFixerResult;
+import org.verapdf.pdfa.results.ValidationResult;
+import org.verapdf.processor.reports.*;
+import org.verapdf.report.FeaturesReport;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLStreamException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumMap;
-
-import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
-
-import org.verapdf.ReleaseDetails;
-import org.verapdf.component.AuditDuration;
-import org.verapdf.component.AuditDurationImpl;
-import org.verapdf.core.VeraPDFException;
-import org.verapdf.pdfa.results.MetadataFixerResult;
-import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.processor.reports.BatchSummary;
-import org.verapdf.processor.reports.MetadataFixerReport;
-import org.verapdf.processor.reports.Reports;
-import org.verapdf.processor.reports.ValidationDetails;
-import org.verapdf.processor.reports.ValidationReport;
-import org.verapdf.report.FeaturesReport;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -70,6 +67,7 @@ final class MrrHandler extends AbstractXmlHandler {
 	private final static String batchSummaryEleName = "batchSummary"; //$NON-NLS-1$
 	private final static String fixerRepEleName = "fixerReport"; //$NON-NLS-1$
 	private final static String featuresRepEleName = "featuresReport"; //$NON-NLS-1$
+	private final static String logsRepEleName = "logs"; //$NON-NLS-1$
 	private final static String validationRepEleName = "validationReport"; //$NON-NLS-1$
 	private final boolean logPassed;
 
@@ -175,9 +173,15 @@ final class MrrHandler extends AbstractXmlHandler {
 	}
 
 	@Override
-	void resultEnd(ProcessorResult result) throws VeraPDFException {
+	void resultEnd(ProcessorResult result, Boolean isLogsEnabled) throws VeraPDFException {
 		AuditDuration duration = AuditDurationImpl.sumDuration(getDurations(result));
 		this.serialseElement(duration, procTimeEleName, true, true);
+		if (isLogsEnabled) {
+			LogsSummary logsSummary = LogsSummaryImpl.getSummary();
+			if (logsSummary.getLogsCount() != 0) {
+				this.serialseElement(logsSummary, logsRepEleName, true, true);
+			}
+		}
 		try {
 			// End job element
 			this.writer.writeEndElement();

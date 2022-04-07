@@ -27,6 +27,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
+import java.util.logging.Level;
+
 /**
  * Encapsulates the configuration of the veraPDF PDF/A validator. An instance of
  * this class is passed to the validator to control PDF/A validation behaviour.
@@ -64,6 +66,10 @@ public interface ValidatorConfig {
 	public PDFAFlavour getDefaultFlavour();
 
 	public boolean isDebug();
+
+	public boolean isLogsEnabled();
+
+	public Level getLoggingLevel();
 
 	public int getMaxNumberOfDisplayedFailedChecks();
 }

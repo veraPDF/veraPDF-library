@@ -134,7 +134,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 	}
 
 	@Override
-	void resultEnd(ProcessorResult result) {
+	void resultEnd(ProcessorResult result, Boolean isLogsEnabled) {
 		// Nothing to do here
 	}
 

@@ -23,12 +23,14 @@
  */
 package org.verapdf.processor;
 
+import org.verapdf.core.VeraPDFException;
+import org.verapdf.core.utils.LogsFileHandler;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.verapdf.core.VeraPDFException;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -67,6 +69,7 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 	 */
 	@Override
 	protected void processList(List<? extends File> toProcess) throws VeraPDFException {
+		configLogs();
 		for (File item : toProcess) {
 			if (item == null || !item.isFile() || !item.canRead()) {
 				logger.log(Level.SEVERE, badItemMessage(item, false));
@@ -94,12 +97,30 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 		return true;
 	}
 
+	private void configLogs() {
+		if (this.processor.getConfig().getValidatorConfig().isLogsEnabled()) {
+			try {
+				LogsFileHandler.configLogs();
+				LogsFileHandler.setLoggingLevel(this.processor.getConfig().getValidatorConfig().getLoggingLevel());
+			} catch (IOException ex) {
+				logger.log(Level.WARNING, "Logging is not configured (console output only)");
+			}
+		}
+	}
+
 	private void processItem(final File item) throws VeraPDFException {
 		if (this.processor.getConfig().getValidatorConfig().isDebug()) {
 			logger.log(Level.WARNING, item.getAbsolutePath());
 		}
+		if (this.processor.getConfig().getValidatorConfig().isLogsEnabled()) {
+			try {
+				LogsFileHandler.createNewLogFile();
+			} catch (IOException e) {
+				logger.log(Level.WARNING, "Error while creating log file");
+			}
+		}
 		ProcessorResult result = this.processor.process(item);
-		this.processResult(result);
+		this.processResult(result, this.processor.getConfig().getValidatorConfig().isLogsEnabled());
 	}
 
 	private static String badItemMessage(final File item, final boolean isDir) {

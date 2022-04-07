@@ -92,5 +92,4 @@ public interface ProcessorConfig {
 	 *         {@link TaskType} toCheck.
 	 */
 	public boolean hasTask(TaskType toCheck);
-
 }
