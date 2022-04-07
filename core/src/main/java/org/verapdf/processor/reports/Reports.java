@@ -125,6 +125,11 @@ public final class Reports {
 		return FixerReportImpl.fromValues(status, fixCount, fixes, errors);
 	}
 
+	public static final ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks,
+													 final int maxFailedChecks) {
+		return Reports.fromValues(result, logPassedChecks);
+	}
+
 	public static final MetadataFixerReport fromValues(final MetadataFixerResult fixerResult) {
 		return FixerReportImpl.fromValues(fixerResult);
 	}
