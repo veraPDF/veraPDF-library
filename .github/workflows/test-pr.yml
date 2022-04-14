@@ -24,6 +24,7 @@ jobs:
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots verify
       - name: Upload coverage report
+        if: matrix.java-version == 8
         uses: actions/upload-artifact@master
         with:
           name: coverage-report
