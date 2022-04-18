@@ -738,10 +738,10 @@
                 for the Registry, Ordering, and Supplement keys may be used in the CIDSystemInfo dictionary of the CIDFont.
                 - Otherwise the corresponding values of the Registry and Ordering keys in both CIDSystemInfo dictionaries
                 shall be identical, and the value of the Supplement key in the CIDSystemInfo dictionary of the CIDFont shall
-                be greater than or equal to the value of the Supplement key in the CIDSystemInfo dictionary of the CMap.</description>
+                be less than or equal to the value of the Supplement key in the CIDSystemInfo dictionary of the CMap.</description>
             <test>cmapName == &quot;Identity-H&quot; || cmapName == &quot;Identity-V&quot; || (areRegistryOrderingCompatible == true &amp;&amp; isSupplementCompatible == true)</test>
             <error>
-                <message>CiDSystemInfo entries the CIDFont and CMap dictionaries of a Type 0 font are not compatible</message>
+                <message>CIDSystemInfo entries the CIDFont and CMap dictionaries of a Type 0 font are not compatible</message>
                 <arguments/>
             </error>
             <references/>
