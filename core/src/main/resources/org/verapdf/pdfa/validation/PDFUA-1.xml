@@ -871,10 +871,10 @@
 			- If the Encoding key in the Type 0 font dictionary is Identity-H or Identity-V, any values of Registry, Ordering, 
 			and Supplement may be used in the CIDSystemInfo entry of the CIDFont. 
 			- Otherwise, the corresponding Registry and Ordering strings in both CIDSystemInfo dictionaries shall be identical, and the value of the Supplement key in 
-			the CIDSystemInfo dictionary of the CIDFont shall be greater than or equal to the Supplement key in the CIDSystemInfo dictionary of the CMap.</description>
+			the CIDSystemInfo dictionary of the CIDFont shall be less than or equal to the Supplement key in the CIDSystemInfo dictionary of the CMap.</description>
             <test>cmapName == "Identity-H" || cmapName == "Identity-V" || (areRegistryOrderingCompatible == true &amp;&amp; isSupplementCompatible == true)</test>
             <error>
-                <message>CiDSystemInfo entries the CIDFont and CMap dictionaries of a Type 0 font are not compatible</message>
+                <message>CIDSystemInfo entries the CIDFont and CMap dictionaries of a Type 0 font are not compatible</message>
                 <arguments/>
             </error>
             <references/>
