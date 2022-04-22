@@ -427,15 +427,18 @@
                 <xsl:when test="starts-with(@specification, 'ISO 19005-1')">
                     <xsl:value-of select="$part-a1-rules"/>
                 </xsl:when>
+                <xsl:when test="starts-with(@specification, 'ISO 19005-2')">
+                    <xsl:value-of select="$part-a2-rules"/>
+                </xsl:when>
+                <xsl:when test="starts-with(@specification, 'ISO 19005-3')">
+                    <xsl:value-of select="$part-a2-rules"/>
+                </xsl:when>
                 <xsl:when test="starts-with(@specification, 'ISO 19005-4')">
                     <xsl:value-of select="$part-a4-rules"/>
                 </xsl:when>
                 <xsl:when test="starts-with(@specification, 'ISO 14289-1')">
                     <xsl:value-of select="$part-ua1-rules"/>
                 </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$part-a2-rules"/>
-                </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="wikiLink">
@@ -450,17 +453,33 @@
         </xsl:variable>
         <xsl:variable name="ruleLink"
                       select="concat($wikiLink, '#rule-', translate(@clause, '.', ''), '-', @testNumber)"/>
+        <xsl:variable name="hasLink"
+                      select="starts-with(@specification, 'ISO 19005-1') or
+                            starts-with(@specification, 'ISO 19005-2') or starts-with(@specification, 'ISO 19005-3') or
+                            starts-with(@specification, 'ISO 19005-4') or starts-with(@specification, 'ISO 14289-1')"/>
+        <xsl:variable name="ruleInformation">
+            Specification:
+            <xsl:value-of select="@specification"/>,
+            Clause:
+            <xsl:value-of select="@clause"/>,
+            Test number:
+            <xsl:value-of select="@testNumber"/>
+        </xsl:variable>
 
         <tr style="BACKGROUND: #dcdaf6">
             <td width="800">
-                <a href="{$ruleLink}">
-                    Specification:
-                    <xsl:value-of select="@specification"/>,
-                    Clause:
-                    <xsl:value-of select="@clause"/>,
-                    Test number:
-                    <xsl:value-of select="@testNumber"/>
-                </a>
+                <xsl:choose>
+                    <xsl:when test="$hasLink">
+                        <a href="{$ruleLink}">
+                            <xsl:copy-of select="$ruleInformation" />
+                        </a>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <b>
+                            <xsl:copy-of select="$ruleInformation" />
+                        </b>
+                    </xsl:otherwise>
+                </xsl:choose>
             </td>
             <td/>
         </tr>
