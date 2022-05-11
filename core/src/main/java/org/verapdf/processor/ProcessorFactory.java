@@ -111,6 +111,11 @@ public final class ProcessorFactory {
 
 	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose,
 			OutputStream reportStream, boolean logPassed) throws VeraPDFException {
+		return getHandler(option, isVerbose, reportStream, logPassed, "");
+	}
+
+	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose,
+			OutputStream reportStream, boolean logPassed, String wikiPath) throws VeraPDFException {
 		if (option == null)
 			throw new IllegalArgumentException("Arg option can not be null"); //$NON-NLS-1$
 		if (reportStream == null)
@@ -123,6 +128,8 @@ public final class ProcessorFactory {
 			return rawResultHandler(new PrintWriter(reportStream));
 		case MRR:
 			return MrrHandler.newInstance(new PrintWriter(reportStream), logPassed);
+		case HTML:
+			return HTMLHandler.newInstance(reportStream, wikiPath);
 		default: // should not be reached
 			throw new VeraPDFException("Unknown report format option: " + option); //$NON-NLS-1$
 		}

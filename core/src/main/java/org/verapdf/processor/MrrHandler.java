@@ -48,7 +48,7 @@ import java.util.EnumMap;
  * @version 0.1 Created 9 Nov 2016:06:43:57
  */
 
-final class MrrHandler extends AbstractXmlHandler {
+class MrrHandler extends AbstractXmlHandler {
     private final static String STATEMENT_PREFIX = "PDF file is ";
     private final static String NOT_INSERT = "not ";
     private final static String STATEMENT_SUFFIX = "compliant with Validation Profile requirements.";
@@ -84,7 +84,7 @@ final class MrrHandler extends AbstractXmlHandler {
 	 * @param logPassed
 	 * @throws VeraPDFException
 	 */
-	private MrrHandler(Writer dest, boolean logPassed) throws VeraPDFException {
+	protected MrrHandler(Writer dest, boolean logPassed) throws VeraPDFException {
 		super(dest);
 		this.logPassed = logPassed;
 	}

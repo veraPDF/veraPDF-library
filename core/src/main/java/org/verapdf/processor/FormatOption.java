@@ -41,7 +41,11 @@ public enum FormatOption {
     /**
      * Output in brief format
      */
-    TEXT("text");
+    TEXT("text"),
+    /**
+     * Output in HTML format
+     */
+    HTML("html");
 
     private final String option;
 
