@@ -69,6 +69,8 @@ public interface ValidatorConfig {
 
 	public boolean isLogsEnabled();
 
+	public boolean showErrorMessages();
+
 	public Level getLoggingLevel();
 
 	public int getMaxNumberOfDisplayedFailedChecks();

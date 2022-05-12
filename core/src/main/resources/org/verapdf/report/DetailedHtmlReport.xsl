@@ -536,6 +536,11 @@
                         <xsl:value-of select="context"/>
                     </td>
                 </tr>
+                <tr class="hideable hide{$id}">
+                    <td width="800" style="word-break: break-all">
+                        <xsl:value-of select="errorMessage"/>
+                    </td>
+                </tr>
             </xsl:for-each>
         </xsl:if>
 

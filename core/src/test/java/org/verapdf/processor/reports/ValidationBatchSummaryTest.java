@@ -33,7 +33,7 @@ public class ValidationBatchSummaryTest {
     }
 
     /**
-	 * Test method for {@link org.verapdf.processor.reports.ValidationBatchSummaryImpl#getCompliantPdfaTota1()}.
+	 * Test method for {@link org.verapdf.processor.reports.ValidationBatchSummaryImpl#getCompliantPdfaCount()}.
 	 */
 	@Test
 	public void testGetCompliantPdfaTota1() {
@@ -50,7 +50,7 @@ public class ValidationBatchSummaryTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.processor.reports.ValidationBatchSummaryImpl#getNonCompliantPdfaTota1()}.
+	 * Test method for {@link org.verapdf.processor.reports.ValidationBatchSummaryImpl#getNonCompliantPdfaCount()}.
 	 */
 	@Test
 	public void testGetNonCompliantPdfaTota1() {
