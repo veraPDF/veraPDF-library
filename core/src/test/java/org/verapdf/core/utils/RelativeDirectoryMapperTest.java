@@ -31,8 +31,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.verapdf.core.VeraPDFException;
 
-import nl.jqno.equalsverifier.EqualsVerifier;
-
 @SuppressWarnings("static-method")
 public class RelativeDirectoryMapperTest {
 	private static Path tmpRoot;

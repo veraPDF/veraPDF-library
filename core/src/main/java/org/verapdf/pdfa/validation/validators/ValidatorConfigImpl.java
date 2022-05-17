@@ -52,6 +52,8 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	@XmlAttribute
 	private final boolean debug;
 	@XmlAttribute
+	private final boolean showErrorMessages;
+	@XmlAttribute
 	private final boolean isLogsEnabled;
 	@XmlAttribute
 	private final String loggingLevel;
@@ -66,11 +68,13 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 
 	private ValidatorConfigImpl(final PDFAFlavour flavour, final boolean recordPasses, final int maxFails, boolean debug,
 								boolean isLogsEnabled, Level loggingLevel) {
-		this(flavour, PDFAFlavour.PDFA_1_B, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel, BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS);
+		this(flavour, PDFAFlavour.PDFA_1_B, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel,
+				BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, true);
 	}
 
 	private ValidatorConfigImpl(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour, final boolean recordPasses,
-	                            final int maxFails, final boolean debug, final boolean isLogsEnabled, final Level loggingLevel, final int maxNumberOfDisplayedFailedChecks) {
+	                            final int maxFails, final boolean debug, final boolean isLogsEnabled,
+								final Level loggingLevel, final int maxNumberOfDisplayedFailedChecks, final boolean showErrorMessages) {
 		super();
 		this.flavour = flavour;
 		this.defaultFlavour = defaultFlavour;
@@ -80,6 +84,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		this.isLogsEnabled = isLogsEnabled;
 		this.loggingLevel = loggingLevel.toString();
 		this.maxNumberOfDisplayedFailedChecks = maxNumberOfDisplayedFailedChecks;
+		this.showErrorMessages = showErrorMessages;
 	}
 
 	/**
@@ -122,6 +127,11 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	}
 
 	@Override
+	public boolean showErrorMessages() {
+		return this.showErrorMessages;
+	}
+
+	@Override
 	public Level getLoggingLevel() {
 		return Level.parse(this.loggingLevel);
 	}
@@ -143,6 +153,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		result = prime * result + (this.recordPasses ? 1231 : 1237);
 		result = prime * result + (this.debug ? 1231 : 1237);
 		result = prime * result + (this.isLogsEnabled ? 1231 : 1237);
+		result = prime * result + (this.showErrorMessages ? 1231 : 1237);
 		result = prime * result + ((this.loggingLevel == null) ? 0 : this.loggingLevel.hashCode());
 		result = prime * result + this.maxNumberOfDisplayedFailedChecks;
 		return result;
@@ -178,6 +189,9 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		if (this.debug != other.debug) {
 			return false;
 		}
+		if (this.showErrorMessages != other.showErrorMessages) {
+			return false;
+		}
 		if (this.isLogsEnabled != other.isLogsEnabled) {
 			return false;
 		}
@@ -203,8 +217,10 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	}
 
 	static ValidatorConfig fromValues(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour, final boolean recordPasses,
-	                                  final int maxFails, final boolean debug, final boolean isLogsEnabled, final Level loggingLevel, final int maxNumberOfDisplayedFailedChecks) {
-		return new ValidatorConfigImpl(flavour, defaultFlavour, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel, maxNumberOfDisplayedFailedChecks);
+	                                  final int maxFails, final boolean debug, final boolean isLogsEnabled,
+									  final Level loggingLevel, final int maxNumberOfDisplayedFailedChecks, final boolean showErrorMessages) {
+		return new ValidatorConfigImpl(flavour, defaultFlavour, recordPasses, maxFails, debug, isLogsEnabled,
+				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages);
 	}
 
 	static class Adapter extends XmlAdapter<ValidatorConfigImpl, ValidatorConfig> {

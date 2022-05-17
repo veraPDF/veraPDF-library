@@ -67,8 +67,10 @@ public class ValidatorConfigTest {
 	@Test
 	public final void testFromValues() {
 		ValidatorConfig defaultInstance = ValidatorFactory.defaultConfig();
-		ValidatorConfig fromVals = ValidatorFactory.createConfig(defaultInstance.getFlavour(), defaultInstance.getDefaultFlavour(),
-				defaultInstance.isRecordPasses(), defaultInstance.getMaxFails(), defaultInstance.isDebug(), false, Level.WARNING, defaultInstance.getMaxNumberOfDisplayedFailedChecks());
+		ValidatorConfig fromVals = ValidatorFactory.createConfig(defaultInstance.getFlavour(),
+				defaultInstance.getDefaultFlavour(), defaultInstance.isRecordPasses(), defaultInstance.getMaxFails(),
+				defaultInstance.isDebug(), false, Level.WARNING, defaultInstance.getMaxNumberOfDisplayedFailedChecks(),
+				defaultInstance.showErrorMessages());
 		assertTrue(fromVals.equals(defaultInstance));
 		assertFalse(fromVals == defaultInstance);
 	}

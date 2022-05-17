@@ -189,9 +189,11 @@ public interface VeraPDFFoundry extends Component {
 	 */
 	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess);
 
-	public PDFAValidator createValidator(PDFAFlavour flavour, int maxNumberOfDisplayedFailedChecks, boolean logSuccess);
+	public PDFAValidator createValidator(PDFAFlavour flavour, int maxNumberOfDisplayedFailedChecks,
+										 boolean logSuccess, boolean showErrorMessages);
 
-	public PDFAValidator createValidator(ValidationProfile profile, int maxNumberOfDisplayedFailedChecks, boolean logSuccess);
+	public PDFAValidator createValidator(ValidationProfile profile, int maxNumberOfDisplayedFailedChecks,
+										 boolean logSuccess, boolean showErrorMessages);
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,

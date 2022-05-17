@@ -67,6 +67,7 @@ public class BaseValidator implements PDFAValidator {
 	protected final boolean logPassedTests;
 	protected final int maxNumberOfDisplayedFailedChecks;
 	protected boolean isCompliant = true;
+	private boolean showErrorMessages = false;
 
 	private Set<String> idSet = new HashSet<>();
 
@@ -77,14 +78,16 @@ public class BaseValidator implements PDFAValidator {
 	}
 
 	protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests) {
-		this(profile, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, logPassedTests);
+		this(profile, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, logPassedTests, false);
 	}
 
-	protected BaseValidator(final ValidationProfile profile, final int maxNumberOfDisplayedFailedChecks, final boolean logPassedTests) {
+	protected BaseValidator(final ValidationProfile profile, final int maxNumberOfDisplayedFailedChecks,
+							final boolean logPassedTests, final boolean showErrorMessages) {
 		super();
 		this.profile = profile;
 		this.maxNumberOfDisplayedFailedChecks = maxNumberOfDisplayedFailedChecks;
 		this.logPassedTests = logPassedTests;
+		this.showErrorMessages = showErrorMessages;
 	}
 
 	/*
@@ -308,9 +311,9 @@ public class BaseValidator implements PDFAValidator {
 				if ((failedChecksNumberOfRule <= maxNumberOfDisplayedFailedChecks || maxNumberOfDisplayedFailedChecks == -1) &&
 						(this.results.size() <= MAX_CHECKS_NUMBER || failedChecksNumberOfRule <= 1)) {
 					Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
-					List<String> errorArguments = JavaScriptEvaluator.getErrorArgumentsResult(obj,
-							rule.getError().getArguments(), this.scope);
-					String errorMessage = createErrorMessage(rule.getError().getMessage(), errorArguments);
+					List<String> errorArguments = showErrorMessages ? JavaScriptEvaluator.getErrorArgumentsResult(obj,
+							rule.getError().getArguments(), this.scope) : Collections.emptyList();
+					String errorMessage = showErrorMessages ? createErrorMessage(rule.getError().getMessage(), errorArguments) : null;
 					TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
 							Status.FAILED, rule.getDescription(), location, obj.getContext(), errorMessage, errorArguments);
 					this.results.add(assertion);

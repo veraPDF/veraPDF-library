@@ -50,7 +50,7 @@ public class ProfileDirectoryImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.ProfileDirectoryImpl#getValidationProfileIds()}
+     * {@link org.verapdf.pdfa.validation.profiles.ProfileDirectoryImpl#getValidationProfileIds()}
      * .
      */
     @Test
@@ -138,7 +138,7 @@ public class ProfileDirectoryImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.ProfileDirectoryImpl#getValidationProfileByFlavour(org.verapdf.pdfa.flavours.PDFAFlavour)}
+     * {@link org.verapdf.pdfa.validation.profiles.ProfileDirectoryImpl#getValidationProfileByFlavour(org.verapdf.pdfa.flavours.PDFAFlavour)}
      * .
      */
     @Test(expected = NoSuchElementException.class)
@@ -149,7 +149,7 @@ public class ProfileDirectoryImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.ProfileDirectoryImpl#getValidationProfiles()}
+     * {@link org.verapdf.pdfa.validation.profiles.ProfileDirectoryImpl#getValidationProfiles()}
      * .
      */
     @Test
