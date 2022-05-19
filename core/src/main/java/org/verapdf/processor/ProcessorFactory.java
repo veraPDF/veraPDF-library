@@ -159,6 +159,8 @@ public final class ProcessorFactory {
 		private int totalJobs = 0;
 		private int failedToParse = 0;
 		private int encrypted = 0;
+		private int outOfMemory = 0;
+		private int veraExceptions = 0;
 		private Components.Timer timer = Components.Timer.start();
 		private Summarisers.ValidationSummaryBuilder validationBuilder = new Summarisers.ValidationSummaryBuilder();
 		private Summarisers.FeatureSummaryBuilder featureBuilder = new Summarisers.FeatureSummaryBuilder();
@@ -174,6 +176,8 @@ public final class ProcessorFactory {
 			this.totalJobs++;
 			if (!result.isPdf()) this.failedToParse++;
 			if (result.isEncryptedPdf()) this.encrypted++;
+			if (result.isOutOfMemory()) this.outOfMemory++;
+			if (result.hasException()) this.veraExceptions++;
 			if (this.config.hasTask(TaskType.VALIDATE))
 				this.validationBuilder.addResult(result);
 			if (this.config.hasTask(TaskType.EXTRACT_FEATURES))
@@ -184,7 +188,7 @@ public final class ProcessorFactory {
 
 		public BatchSummary summarise() {
 			return Reports.createBatchSummary(this.timer, this.validationBuilder.build(), this.featureBuilder.build(),
-					this.repairBuilder.build(), this.totalJobs, this.failedToParse, this.encrypted);
+					this.repairBuilder.build(), this.totalJobs, this.failedToParse, this.encrypted, this.outOfMemory, this.veraExceptions);
 		}
 	}
 }
