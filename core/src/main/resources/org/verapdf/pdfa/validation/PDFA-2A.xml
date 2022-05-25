@@ -67,7 +67,7 @@
             <description>The xref keyword and the cross-reference subsection header shall be separated by a single EOL marker</description>
             <test>xrefEOLMarkersComplyPDFA</test>
             <error>
-                <message>Spacings after the 'xref' keyword iin the cross reference table do not comply PDF/A specification</message>
+                <message>Spacings after the 'xref' keyword in the cross reference table do not comply PDF/A specification</message>
                 <arguments/>
             </error>
             <references/>
@@ -77,8 +77,10 @@
             <description>Hexadecimal strings shall contain an even number of non-white-space characters</description>
             <test>(isHex != true) || hexCount % 2 == 0</test>
             <error>
-                <message>A hexadecimal string contains odd number of non-white-space characters</message>
-                <arguments/>
+                <message>A hexadecimal string contains odd number (%1) of non-white-space characters</message>
+                <arguments>
+                    <argument>hexCount</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -138,8 +140,10 @@
                 (internalRepresentation == &quot;Crypt&quot; &amp;&amp; decodeParms == &quot;Identity&quot;)
             </test>
             <error>
-                <message>LZW compression is used</message>
-                <arguments/>
+                <message>Unknown or not permitted Stream filter %1 is used</message>
+                <arguments>
+                    <argument>internalRepresentation</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -149,7 +153,7 @@
 			a NUMBER SIGN (23h), if any, shall be valid UTF-8 character sequences.</description>
             <test>isValidUtf8 == true</test>
             <error>
-                <message>The name object does not represent a correct Utf8 byte sequence</message>
+                <message>The name object does not represent a correct UTF-8 character sequence</message>
                 <arguments/>
             </error>
             <references>
@@ -181,8 +185,10 @@
                 internalRepresentation == &quot;CCF&quot; || internalRepresentation == &quot;DCT&quot;
             </test>
             <error>
-                <message>Inline image uses LZW, Crypt or one of the unknown filters</message>
-                <arguments/>
+                <message>Inline image uses not permitted or unknown filter %1</message>
+                <arguments>
+                    <argument>internalRepresentation</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -216,8 +222,10 @@
             <description>A conforming file shall not contain any integer greater than 2147483647. A conforming file shall not contain any integer less than -2147483648.</description>
             <test>(intValue &lt;= 2147483647) &amp;&amp; (intValue &gt;= -2147483648)</test>
             <error>
-                <message>Integer value out of range</message>
-                <arguments/>
+                <message>Integer value %1 out of range</message>
+                <arguments>
+                    <argument>intValue</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -226,8 +234,10 @@
             <description>A conforming file shall not contain any real number outside the range of +/-3.403 x 10^38</description>
             <test>(realValue &gt;= -3.403e+38) &amp;&amp; (realValue &lt;= 3.403e+38)</test>
             <error>
-                <message>Real value out of range</message>
-                <arguments/>
+                <message>Real value %1 out of range</message>
+                <arguments>
+                    <argument>realValue</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -236,8 +246,10 @@
             <description>A conforming file shall not contain any string longer than 32767 bytes.</description>
             <test>value.length() &lt; 32768</test>
             <error>
-                <message>Maximum length of a String (32767) exceeded</message>
-                <arguments/>
+                <message>String length (%1) exceeded 32767</message>
+                <arguments>
+                    <argument>value.length()</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -246,8 +258,10 @@
             <description>A conforming file shall not contain any name longer than 127 bytes.</description>
             <test>internalRepresentation.length() &lt;= 127</test>
             <error>
-                <message>Maximum length of a Name (127) exceeded</message>
-                <arguments/>
+                <message>Name length (%1) exceeded 127</message>
+                <arguments>
+                    <argument>internalRepresentation.length()</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -256,8 +270,10 @@
             <description>A conforming file shall not contain any real number closer to zero than +/-1.175 x 10^(-38).</description>
             <test>realValue == 0.0 || (realValue &lt;= -1.175e-38) || (realValue &gt;= 1.175e-38)</test>
             <error>
-                <message>Non-zero real value is too close to 0.0</message>
-                <arguments/>
+                <message>Non-zero real value %1 is too close to 0.0</message>
+                <arguments>
+                    <argument>realValue</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -266,8 +282,10 @@
             <description>A conforming file shall not contain more than 8388607 indirect objects</description>
             <test>nrIndirects &lt;= 8388607</test>
             <error>
-                <message>Maximum number of indirect objects (8,388,607) in a PDF file exceeded</message>
-                <arguments/>
+                <message>Number of indirect objects in a PDF file (%1) exceeded 8,388,607</message>
+                <arguments>
+                    <argument>nrIndirects</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -276,8 +294,10 @@
             <description>A conforming file shall not nest q/Q pairs by more than 28 nesting levels</description>
             <test>nestingLevel &lt;= 28</test>
             <error>
-                <message>Maximum depth of graphics state nesting (q and Q operators) is exceeded</message>
-                <arguments/>
+                <message>Depth of graphics state nesting of q/Q operators (%1) exceeded 28</message>
+                <arguments>
+                    <argument>nestingLevel</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -286,8 +306,10 @@
             <description>A conforming file shall not contain a DeviceN colour space with more than 32 colourants.</description>
             <test>nrComponents &lt;= 32</test>
             <error>
-                <message>Maximum number of DeviceN components (32) is exceeded</message>
-                <arguments/>
+                <message>Number of DeviceN components (%1) exceeded 32</message>
+                <arguments>
+                    <argument>nrComponents</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -296,8 +318,10 @@
             <description>A conforming file shall not contain a CID value greater than 65535.</description>
             <test>maximalCID &lt;= 65535</test>
             <error>
-                <message>Maximum value of a CID (65535) is exceeded</message>
-                <arguments/>
+                <message>Value of a CID (%1) exceeded 65,535</message>
+                <arguments>
+                    <argument>maximalCID</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -307,7 +331,7 @@
 			in either direction, nor shall it be greater than 14 400 units in either direction.</description>
             <test>Math.abs(top - bottom) &gt;= 3 &amp;&amp; Math.abs(top - bottom) &lt;= 14400 &amp;&amp; Math.abs(right - left) &gt;= 3 &amp;&amp; Math.abs(right - left) &lt;= 14400</test>
             <error>
-                <message>One of the bage boundaries is out of range (3-14400) in one of the directions</message>
+                <message>One of the page boundaries is out of range (3-14400) in one of the directions</message>
                 <arguments/>
             </error>
             <references/>
@@ -367,7 +391,7 @@
             <description>In addition, the DestOutputProfileRef key, as defined in ISO 15930-7:2010, Annex A, shall not be present in any PDF/X OutputIntent.</description>
             <test>S != 'GTS_PDFX' || containsDestOutputProfileRef == false</test>
             <error>
-                <message>The output intent dictionary contains forbidden entry DestOutputProfileRef</message>
+                <message>The PDF/X output intent dictionary contains forbidden entry DestOutputProfileRef</message>
                 <arguments/>
             </error>
             <references>
@@ -474,8 +498,10 @@
             <description>An ExtGState dictionary shall not contain the TR2 key with a value other than Default</description>
             <test>TR2 == null || TR2 == &quot;Default&quot;</test>
             <error>
-                <message>An ExtGState dictionary contains the TR2 key with a value other than Default</message>
-                <arguments/>
+                <message>An ExtGState dictionary contains the TR2 key with value %1 other than Default</message>
+                <arguments>
+                    <argument>TR2</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -494,8 +520,10 @@
             <description>All halftones in a conforming PDF/A-2 file shall have the value 1 or 5 for the HalftoneType key.</description>
             <test>HalftoneType != null &amp;&amp; (HalftoneType == 1 || HalftoneType == 5)</test>
             <error>
-                <message>A Halftone has type other than 1 or 5</message>
-                <arguments/>
+                <message>A Halftone has type %1 instead of 1 or 5</message>
+                <arguments>
+                    <argument>HalftoneType</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -529,8 +557,10 @@
 			Table 70: RelativeColorimetric, AbsoluteColorimetric, Perceptual or Saturation.</description>
             <test>internalRepresentation == &quot;RelativeColorimetric&quot; || internalRepresentation == &quot;AbsoluteColorimetric&quot; || internalRepresentation == &quot;Perceptual&quot; || internalRepresentation == &quot;Saturation&quot;</test>
             <error>
-                <message>A rendering intent with non-standard value is used</message>
-                <arguments/>
+                <message>A rendering intent with non-standard value %1 is used</message>
+                <arguments>
+                    <argument>internalRepresentation</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -570,8 +600,10 @@
             <description>The number of colour channels in the JPEG2000 data shall be 1, 3 or 4.</description>
             <test>nrColorChannels == 1 || nrColorChannels == 3 || nrColorChannels == 4</test>
             <error>
-                <message>JPEG2000 image has number of colour channels different from 1, 3 or 4.</message>
-                <arguments/>
+                <message>JPEG2000 image has %1 colour channels that is neither 1, 3 or 4</message>
+                <arguments>
+                    <argument>nrColorChannels</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -660,8 +692,10 @@
                 internalRepresentation == &quot;Saturation&quot; || internalRepresentation == &quot;Color&quot; ||
                 internalRepresentation == &quot;Luminosity&quot;</test>
             <error>
-                <message>The document uses the blend mode not defined in ISO 32000-1:2008</message>
-                <arguments/>
+                <message>The document uses the blend mode %1 not defined in ISO 32000-1:2008</message>
+                <arguments>
+                    <argument>internalRepresentation</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO32000-1:2008" clause="11.3.5, Tables 136-137"/>
@@ -688,8 +722,10 @@
 			Type - name - (Required) The type of PDF object that this dictionary describes; must be Font for a font dictionary</description>
             <test>Type == &quot;Font&quot;</test>
             <error>
-                <message>A Font dictionary has missing or invalid Type entry</message>
-                <arguments/>
+                <message>A Font dictionary has value %1 of Type entry instead of Font</message>
+                <arguments>
+                    <argument>Type</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO32000-1:2008" clause="9.6.2.1, Table 111"/>
@@ -707,8 +743,10 @@
             <test>Subtype == &quot;Type1&quot; || Subtype == &quot;MMType1&quot; || Subtype == &quot;TrueType&quot; || Subtype == &quot;Type3&quot; || Subtype == &quot;Type0&quot; 
 			|| Subtype == &quot;CIDFontType0&quot; || Subtype == &quot;CIDFontType2&quot;</test>
             <error>
-                <message>A Font dictionary has missing or invalid Subtype entry</message>
-                <arguments/>
+                <message>Invalid Subtype entry in font dictionary with value %1</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO32000-1:2008" clause="9.6.2.1, Table 111"/>
@@ -772,8 +810,11 @@
 			Widths - array - (Required except for the standard 14 fonts; indirect reference preferred) An array of (LastChar − FirstChar + 1) widths</description>
             <test>isStandard == true || (Widths_size != null &amp;&amp; Widths_size == LastChar - FirstChar + 1)</test>
             <error>
-                <message>Widths array is missing or has invalid size</message>
-                <arguments/>
+                <message>Widths array is missing or has invalid size %1 instead of %2</message>
+                <arguments>
+                    <argument>Widths_size</argument>
+                    <argument>LastChar - FirstChar + 1</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO32000-1:2008" clause="9.6.2.1, Table 111"/>
@@ -788,8 +829,10 @@
 			in the Compact Font Format (CFF) and OpenType - OpenType® font program, as described in the OpenType Specification v.1.4.</description>
             <test>fontFileSubtype == null || fontFileSubtype == &quot;Type1C&quot; || fontFileSubtype == &quot;CIDFontType0C&quot; || fontFileSubtype == &quot;OpenType&quot;</test>
             <error>
-                <message>Unsupported font file format of the embedded font</message>
-                <arguments/>
+                <message>Unsupported font file format %1 of the embedded font</message>
+                <arguments>
+                    <argument>fontFileSubtype</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO32000-1:2008" clause="9.9, Table 126"/>
@@ -846,8 +889,10 @@
 			CMapName == &quot;KSCpc-EUC-H&quot; || CMapName == &quot;UniKS-UCS2-H&quot; || CMapName == &quot;UniKS-UCS2-V&quot; || CMapName == &quot;UniKS-UTF16-H&quot; || CMapName == &quot;UniKS-UTF16-V&quot; ||
 			embeddedFile_size == 1</test>
             <error>
-                <message>A non-standard CMap is not embedded</message>
-                <arguments/>
+                <message>A non-standard CMap %1 is not embedded</message>
+                <arguments>
+                    <argument>CMapName</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO32000-1:2008" clause="9.7.5.2, Table 118"/>
@@ -859,8 +904,11 @@
 			in the embedded CMap stream.</description>
             <test>WMode == dictWMode</test>
             <error>
-                <message>WMode entry in the embedded CMap and in the CMap dictionary are not identical</message>
-                <arguments/>
+                <message>WMode entry (value %1) in the embedded CMap and in the CMap dictionary (value %2) are not identical</message>
+                <arguments>
+                    <argument>WMode</argument>
+                    <argument>dictWMode</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -884,8 +932,10 @@
 			CMapName == &quot;KSCpc-EUC-H&quot; || CMapName == &quot;UniKS-UCS2-H&quot; || CMapName == &quot;UniKS-UCS2-V&quot; || CMapName == &quot;UniKS-UTF16-H&quot; || 
 			CMapName == &quot;UniKS-UTF16-V&quot;</test>
             <error>
-                <message>A CMap references another non-standard CMap</message>
-                <arguments/>
+                <message>A CMap references another non-standard CMap %1</message>
+                <arguments>
+                    <argument>CMapName</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO32000-1:2008" clause="9.7.5.2, Table 118"/>
@@ -996,8 +1046,11 @@
 			shall either contain exactly one encoding or it shall contain, at least, the Microsoft Symbol (3,0 – Platform ID=3, Encoding ID=0) encoding.</description>
             <test>isSymbolic == false || nrCmaps == 1 || cmap30Present == true</test>
             <error>
-                <message>The embedded font program for a symbolic TrueType font contains more than one cmap subtable</message>
-                <arguments/>
+                <message>The embedded font program for a symbolic TrueType font contains %1 cmap subtables and
+                    does not contain Microsoft Symbol (3,0 – Platform ID=3, Encoding ID=0)</message>
+                <arguments>
+                    <argument>nrCmaps</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1060,8 +1113,10 @@
 			Subtype == &quot;FileAttachment&quot; || Subtype == &quot;Widget&quot; || Subtype == &quot;PrinterMark&quot; || Subtype == &quot;TrapNet&quot; ||
 			Subtype == &quot;Watermark&quot; || Subtype == &quot;Redact&quot;</test>
             <error>
-                <message>Unknown or not permitted annotation type</message>
-                <arguments/>
+                <message>Unknown or not permitted Annotation type %1</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF 1.4 Reference" clause="12.5.6.1, Table 169"/>
@@ -1072,8 +1127,10 @@
             <description>Except for annotation dictionaries whose Subtype value is Popup, all annotation dictionaries shall contain the F key.</description>
             <test>Subtype == &quot;Popup&quot; || F != null</test>
             <error>
-                <message>A dictionary of a non-Popup annotation does not contain F key</message>
-                <arguments/>
+                <message>A dictionary of %1 annotation does not contain F key</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1170,7 +1227,7 @@
 			dictionary but excluding the PDF Signature itself.</description>
             <test>doesByteRangeCoverEntireDocument == true</test>
             <error>
-                <message>ByteRanbe array of the digital signature does not cover the entire file (excluding the PDF Signature itself)</message>
+                <message>ByteRange array of the digital signature does not cover the entire file (excluding the PDF Signature itself)</message>
                 <arguments/>
             </error>
             <references>
@@ -1200,8 +1257,10 @@
 			Additionally, the deprecated set-state and no-op actions shall not be permitted.</description>
             <test>S == &quot;GoTo&quot; || S == &quot;GoToR&quot; || S == &quot;GoToE&quot; || S == &quot;Thread&quot; || S == &quot;URI&quot; || S == &quot;Named&quot; || S == &quot;SubmitForm&quot;</test>
             <error>
-                <message>Unknown or not permitted action type</message>
-                <arguments/>
+                <message>Unknown or not permitted Action type %1</message>
+                <arguments>
+                    <argument>S</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO32000-1:2008" clause="12.6.4.1, Table 198"/>
@@ -1212,8 +1271,10 @@
             <description>Named actions other than NextPage, PrevPage, FirstPage, and LastPage shall not be permitted.</description>
             <test>N == &quot;NextPage&quot; || N == &quot;PrevPage&quot; || N == &quot;FirstPage&quot; || N == &quot;LastPage&quot;</test>
             <error>
-                <message>Unknown or not permitted named action</message>
-                <arguments/>
+                <message>Unknown or not permitted named action %1</message>
+                <arguments>
+                    <argument>N</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO32000-1:2008" clause="12.6.4.11, Table 211"/>
@@ -1277,7 +1338,7 @@
 			as defined by Extensible Markup Language (XML) 1.0 (Third Edition), 2.1, and the RDF/XML Syntax Specification (Revised).</description>
             <test>isSerializationValid</test>
             <error>
-                <message>A metadata stream is serialized icorrectly and can not be parsed.</message>
+                <message>A metadata stream is serialized incorrectly and can not be parsed.</message>
                 <arguments/>
             </error>
             <references>
@@ -1291,8 +1352,10 @@
             <description>All metadata streams present in the PDF shall conform to the XMP Specification. The XMP package must be encoded as UTF-8.</description>
             <test>actualEncoding == "UTF-8"</test>
             <error>
-                <message>The XMP package uses an encoding different from UTF-8</message>
-                <arguments/>
+                <message>The XMP package uses encoding %1 different from UTF-8</message>
+                <arguments>
+                    <argument>actualEncoding</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="XMP Specification, September 2005" clause="5 - Embedding XMP Metadata in Application Files - PDF"/>
@@ -1468,11 +1531,11 @@
                 <reference specification="ISO 32000-1:2008" clause="14.7"/>
             </references>
         </rule>
-        <rule object="PDStructElem">
+        <rule object="SENonStandard">
             <id specification="ISO_19005_2" clause="6.7.3" testNumber="2"/>
             <description>All non-standard structure types shall be mapped to the nearest functionally equivalent standard type, as
             defined in ISO 32000-1:2008, 14.8.4, in the role map dictionary of the structure tree root.</description>
-            <test>standardType != null</test>
+            <test>false</test>
             <error>
                 <message>Non-standard structure type is not mapped to a standard type</message>
                 <arguments/>
@@ -1489,8 +1552,10 @@
 			as defined in RFC 3066, Tags for the Identification of Languages.</description>
             <test>unicodeValue == '' || /^[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*$/.test(unicodeValue)</test>
             <error>
-                <message>The Lang value is invalid</message>
-                <arguments/>
+                <message>Value %1 of the Lang entry is not Language-Tag</message>
+                <arguments>
+                    <argument>unicodeValue</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1:2008" clause="14.9.2"/>

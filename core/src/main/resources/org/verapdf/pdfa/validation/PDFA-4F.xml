@@ -87,7 +87,7 @@
             <description>The xref keyword and the cross-reference subsection header shall be separated by a single EOL marker</description>
             <test>xrefEOLMarkersComplyPDFA</test>
             <error>
-                <message>Spacings after the 'xref' keyword iin the cross reference table do not comply PDF/A specification</message>
+                <message>Spacings after the 'xref' keyword in the cross reference table do not comply PDF/A specification</message>
                 <arguments/>
             </error>
             <references/>
@@ -97,8 +97,10 @@
             <description>Hexadecimal strings shall contain an even number of non-white-space characters</description>
             <test>(isHex != true) || hexCount % 2 == 0</test>
             <error>
-                <message>The number of hexadecimal digits in a hexadecimal string shall always be even</message>
-                <arguments/>
+                <message>A hexadecimal string contains odd number (%1) of non-white-space characters</message>
+                <arguments>
+                    <argument>hexCount</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -147,8 +149,10 @@
                 (internalRepresentation == &quot;Crypt&quot; &amp;&amp; decodeParms == &quot;Identity&quot;)
             </test>
             <error>
-                <message>LZW compression is used</message>
-                <arguments/>
+                <message>Unknown or not permitted Stream filter %1 is used</message>
+                <arguments>
+                    <argument>internalRepresentation</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="7.4"/>
@@ -160,7 +164,7 @@
                 a NUMBER SIGN (23h), if any, shall be valid UTF-8 character sequences.</description>
             <test>isValidUtf8 == true</test>
             <error>
-                <message>The name object does not represent a correct Utf8 byte sequence</message>
+                <message>The name object does not represent a correct UTF-8 character sequence</message>
                 <arguments/>
             </error>
             <references>
@@ -192,8 +196,10 @@
                 internalRepresentation == &quot;CCF&quot; || internalRepresentation == &quot;DCT&quot;
             </test>
             <error>
-                <message>Inline image uses LZW, Crypt or one of the unknown filters</message>
-                <arguments/>
+                <message>Inline image uses not permitted or unknown filter %1</message>
+                <arguments>
+                    <argument>internalRepresentation</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="8.9.7"/>
@@ -218,8 +224,10 @@
                 character shall be a decimal digit. The number of characters of the value of the Version key shall be exactly 3.</description>
             <test>Version == null || /^2\.[0-9]$/.test(Version)</test>
             <error>
-                <message>The Version key is present and does not comply with the requirements of PDF/A-4 specification.</message>
-                <arguments/>
+                <message>The Version key with value %1 does not comply with the requirements of PDF/A-4 specification.</message>
+                <arguments>
+                    <argument>Version</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -338,7 +346,7 @@
                 ICCProfileIndirect != currentTransparencyProfileIndirect)) &amp;&amp; (ICCProfileMD5 == null ||
                 (ICCProfileMD5 != gOutputICCProfileMD5 &amp;&amp; ICCProfileMD5 != currentTransparencyICCProfileMD5))</test>
             <error>
-                <message>An ICCBased colour space shall not be used where the profile is a CMYK destination profile and
+                <message>An ICCBased colour space is used where the profile is a CMYK destination profile and
                     is identical to that in the current PDF/A OutputIntent or the current transparency blending colorspace.</message>
                 <arguments/>
             </error>
@@ -426,8 +434,10 @@
             <description>A graphics state parameter dictionary shall not contain the TR2 key with a value other than Default</description>
             <test>TR2 == null || TR2 == &quot;Default&quot;</test>
             <error>
-                <message>A graphics state parameter dictionary contains the TR2 key with a value other than Default</message>
-                <arguments/>
+                <message>A graphics state parameter dictionary contains the TR2 key with value %1 other than Default</message>
+                <arguments>
+                    <argument>TR2</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -436,7 +446,7 @@
             <description>A graphics state parameter dictionary shall not contain the HTO key</description>
             <test>containsHTO == false</test>
             <error>
-                <message>A graphics state parameter dictionary contains the HTP key</message>
+                <message>A graphics state parameter dictionary contains the HTO key</message>
                 <arguments/>
             </error>
             <references/>
@@ -446,8 +456,10 @@
             <description>All halftones in a conforming PDF/A-4 file shall have the value 1 or 5 for the HalftoneType key.</description>
             <test>HalftoneType != null &amp;&amp; (HalftoneType == 1 || HalftoneType == 5)</test>
             <error>
-                <message>A Halftone has type other than 1 or 5</message>
-                <arguments/>
+                <message>A Halftone has type %1 instead of 1 or 5</message>
+                <arguments>
+                    <argument>HalftoneType</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -511,8 +523,10 @@
             <description>The number of colour channels in the JPEG2000 data shall be 1, 3 or 4.</description>
             <test>nrColorChannels == 1 || nrColorChannels == 3 || nrColorChannels == 4</test>
             <error>
-                <message>JPEG2000 image has number of colour channels different from 1, 3 or 4.</message>
-                <arguments/>
+                <message>JPEG2000 image has %1 colour channels that is neither 1, 3 or 4</message>
+                <arguments>
+                    <argument>nrColorChannels</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -592,8 +606,10 @@
                 internalRepresentation == &quot;Saturation&quot; || internalRepresentation == &quot;Color&quot; ||
                 internalRepresentation == &quot;Luminosity&quot;</test>
             <error>
-                <message>The document uses the blend mode not defined in ISO 32000-2:2020</message>
-                <arguments/>
+                <message>The document uses the blend mode %1 not defined in ISO 32000-2:2020</message>
+                <arguments>
+                    <argument>internalRepresentation</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="11.3.5, Tables 134-135"/>
@@ -621,8 +637,10 @@
                 Type - name - (Required) The type of PDF object that this dictionary describes; must be Font for a font dictionary</description>
             <test>Type == &quot;Font&quot;</test>
             <error>
-                <message>A Font dictionary has missing or invalid Type entry</message>
-                <arguments/>
+                <message>A Font dictionary has value %1 of Type entry instead of Font</message>
+                <arguments>
+                    <argument>Type</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="9.6.2.1, Table 109"/>
@@ -640,8 +658,10 @@
             <test>Subtype == &quot;Type1&quot; || Subtype == &quot;MMType1&quot; || Subtype == &quot;TrueType&quot; || Subtype == &quot;Type3&quot; || Subtype == &quot;Type0&quot;
                 || Subtype == &quot;CIDFontType0&quot; || Subtype == &quot;CIDFontType2&quot;</test>
             <error>
-                <message>A Font dictionary has missing or invalid Subtype entry</message>
-                <arguments/>
+                <message>Invalid Subtype entry in font dictionary with value %1</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="9.6.2.1, Table 109"/>
@@ -705,8 +725,11 @@
                 Widths - array - (Required except for the standard 14 fonts; indirect reference preferred) An array of (LastChar − FirstChar + 1) widths</description>
             <test>isStandard == true || (Widths_size != null &amp;&amp; Widths_size == LastChar - FirstChar + 1)</test>
             <error>
-                <message>Widths array is missing or has invalid size</message>
-                <arguments/>
+                <message>Widths array is missing or has invalid size %1 instead of %2</message>
+                <arguments>
+                    <argument>Widths_size</argument>
+                    <argument>LastChar - FirstChar + 1</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="9.6.2.1, Table 109"/>
@@ -721,8 +744,10 @@
                 in the Compact Font Format (CFF) and OpenType - OpenType® font program, as described in the ISO/IEC 14496-22.</description>
             <test>fontFileSubtype == null || fontFileSubtype == "Type1C" || fontFileSubtype == "CIDFontType0C" || fontFileSubtype == "OpenType"</test>
             <error>
-                <message>Unsupported font file format of the embedded font</message>
-                <arguments/>
+                <message>Unsupported font file format %1 of the embedded font</message>
+                <arguments>
+                    <argument>fontFileSubtype</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="9.9.1, Table 124"/>
@@ -781,8 +806,10 @@
                 CMapName == &quot;KSCpc-EUC-H&quot; || CMapName == &quot;UniKS-UCS2-H&quot; || CMapName == &quot;UniKS-UCS2-V&quot; || CMapName == &quot;UniKS-UTF16-H&quot; || CMapName == &quot;UniKS-UTF16-V&quot; ||
                 embeddedFile_size == 1</test>
             <error>
-                <message>A non-standard CMap is not embedded</message>
-                <arguments/>
+                <message>A non-standard CMap %1 is not embedded</message>
+                <arguments>
+                    <argument>CMapName</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="9.7.5.2, Table 116"/>
@@ -794,8 +821,11 @@
                 shall be identical to the WMode value in the embedded CMap stream.</description>
             <test>WMode == dictWMode</test>
             <error>
-                <message>WMode entry in the embedded CMap and in the CMap dictionary are not identical</message>
-                <arguments/>
+                <message>WMode entry (value %1) in the embedded CMap and in the CMap dictionary (value %2) are not identical</message>
+                <arguments>
+                    <argument>WMode</argument>
+                    <argument>dictWMode</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -819,8 +849,10 @@
                 CMapName == &quot;KSCpc-EUC-H&quot; || CMapName == &quot;UniKS-UCS2-H&quot; || CMapName == &quot;UniKS-UCS2-V&quot; || CMapName == &quot;UniKS-UTF16-H&quot; ||
                 CMapName == &quot;UniKS-UTF16-V&quot;</test>
             <error>
-                <message>A CMap references another non-standard CMap</message>
-                <arguments/>
+                <message>A CMap references another non-standard CMap %1</message>
+                <arguments>
+                    <argument>CMapName</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="9.7.5.2, Table 116"/>
@@ -964,8 +996,10 @@
                 Subtype == &quot;FileAttachment&quot; || Subtype == &quot;Widget&quot; || Subtype == &quot;PrinterMark&quot; || Subtype == &quot;TrapNet&quot; ||
                 Subtype == &quot;Watermark&quot; || Subtype == &quot;Redact&quot; || Subtype == &quot;Projection&quot;</test>
             <error>
-                <message>Unknown or not permitted annotation type</message>
-                <arguments/>
+                <message>Unknown or not permitted Annotation type %1</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="12.5.6.1, Table 171"/>
@@ -976,8 +1010,10 @@
             <description>Except for annotation dictionaries whose Subtype value is Popup, all annotation dictionaries shall contain the F key.</description>
             <test>Subtype == &quot;Popup&quot; || F != null</test>
             <error>
-                <message>A dictionary of a non-Popup annotation does not contain F key</message>
-                <arguments/>
+                <message>A dictionary of %1 annotation does not contain F key</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1069,8 +1105,10 @@
             <test>S == &quot;GoTo&quot; || S == &quot;GoToR&quot; || S == &quot;GoToE&quot; || S == &quot;Thread&quot; || S == &quot;URI&quot; || S == &quot;Named&quot; ||
                 S == &quot;SubmitForm&quot; || S == &quot;JavaScript&quot; || S == &quot;RichMediaExecute&quot; || S == &quot;GoToDp&quot;</test>
             <error>
-                <message>Unknown or not permitted action type</message>
-                <arguments/>
+                <message>Unknown or not permitted Action type %1</message>
+                <arguments>
+                    <argument>S</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2010" clause="12.6.4.1, Table 201"/>
@@ -1081,8 +1119,10 @@
             <description>Named actions other than NextPage, PrevPage, FirstPage, and LastPage shall not be permitted.</description>
             <test>N == &quot;NextPage&quot; || N == &quot;PrevPage&quot; || N == &quot;FirstPage&quot; || N == &quot;LastPage&quot;</test>
             <error>
-                <message>Unknown or not permitted named action</message>
-                <arguments/>
+                <message>Unknown or not permitted named action %1</message>
+                <arguments>
+                    <argument>N</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="12.6.4.12, Table 215"/>
@@ -1140,7 +1180,7 @@
                 well-formed as defined by XMP (ISO 16684-1).</description>
             <test>isSerializationValid</test>
             <error>
-                <message>A metadata stream is serialized icorrectly and can not be parsed.</message>
+                <message>A metadata stream is serialized incorrectly and can not be parsed.</message>
                 <arguments/>
             </error>
             <references>
@@ -1152,8 +1192,10 @@
             <description>All metadata streams present in the PDF shall conform to the XMP Specification. The XMP package must be encoded as UTF-8.</description>
             <test>actualEncoding == "UTF-8"</test>
             <error>
-                <message>The XMP package uses an encoding different from UTF-8</message>
-                <arguments/>
+                <message>The XMP package uses encoding %1 different from UTF-8</message>
+                <arguments>
+                    <argument>actualEncoding</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="XMP Specification, September 2005" clause="5 - Embedding XMP Metadata in Application Files - PDF"/>
@@ -1210,8 +1252,10 @@
             <description>The value of pdfaid:rev shall be the four digit year.</description>
             <test>/^\d{4}$/.test(rev)</test>
             <error>
-                <message>The value of pdfaid:rev not the four digit year.</message>
-                <arguments/>
+                <message>The value of pdfaid:rev (%1) not the four digit year.</message>
+                <arguments>
+                    <argument>rev</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1221,8 +1265,10 @@
                 If the MIME type is not known, the value "application/octet-stream" shall be used.</description>
             <test>Subtype != null &amp;&amp; /^[-\w+\.]+\/[-\w+\.]+$/.test(Subtype)</test>
             <error>
-                <message>The MIME type information (Subtype entry) of an embedded file is missing or invalid</message>
-                <arguments/>
+                <message>MIME type %1 of an embedded file is missing or invalid</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="14.13.2"/>

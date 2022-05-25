@@ -67,8 +67,11 @@
 			and the last trailer dictionary, the value to both instances of the ID keyword shall be identical</description>
             <test>(isLinearized != true) || lastID == null || (firstPageID == lastID)</test>
             <error>
-                <message>Last ID is present in the Linearized PDF and does not match the first page ID</message>
-                <arguments/>
+                <message>Last ID (%1) is present in the Linearized PDF and does not match the first page ID (%2)</message>
+                <arguments>
+                    <argument>lastID</argument>
+                    <argument>firstPageID</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 19005-1:2005/Cor.2:2011" clause="6.1.3"/>
@@ -89,7 +92,7 @@
             <description>The xref keyword and the cross reference subsection header shall be separated by a single EOL marker</description>
             <test>xrefEOLMarkersComplyPDFA</test>
             <error>
-                <message>Spacings after the 'xref' keyword iin the cross reference table do not comply PDF/A specification</message>
+                <message>Spacings after the 'xref' keyword in the cross reference table do not comply PDF/A specification</message>
                 <arguments/>
             </error>
             <references/>
@@ -99,8 +102,10 @@
             <description>Hexadecimal strings shall contain an even number of non-white-space characters</description>
             <test>(isHex != true) || hexCount % 2 == 0</test>
             <error>
-                <message>Hexadecimal string contains odd number of non-white-space characters</message>
-                <arguments/>
+                <message>A hexadecimal string contains odd number (%1) of non-white-space characters</message>
+                <arguments>
+                    <argument>hexCount</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -165,8 +170,10 @@
             <description>The LZWDecode filter shall not be permitted</description>
             <test>internalRepresentation != &quot;LZWDecode&quot;</test>
             <error>
-                <message>LZW compression is used</message>
-                <arguments/>
+                <message>Unknown or not permitted Stream filter %1 is used</message>
+                <arguments>
+                    <argument>internalRepresentation</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -209,8 +216,10 @@
             <description>Largest Integer value is 2,147,483,647. Smallest integer value is -2,147,483,648</description>
             <test>(intValue &lt;= 2147483647) &amp;&amp; (intValue &gt;= -2147483648)</test>
             <error>
-                <message>Integer value out of range</message>
-                <arguments/>
+                <message>Integer value %1 out of range</message>
+                <arguments>
+                    <argument>intValue</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF Reference 1.4" clause="Table C.1"/>
@@ -221,8 +230,10 @@
             <description>Absolute real value must be less than or equal to 32767.0</description>
             <test>(realValue &gt;= -32767.0) &amp;&amp; (realValue &lt;= 32767.0)</test>
             <error>
-                <message>Real value out of range</message>
-                <arguments/>
+                <message>Real value %1 out of range</message>
+                <arguments>
+                    <argument>realValue</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF Reference 1.4" clause="Table C.1"/>
@@ -233,8 +244,10 @@
             <description>Maximum length of a string (in bytes) is 65535</description>
             <test>value.length() &lt; 65536</test>
             <error>
-                <message>Maximum length of a String (65535) exceeded</message>
-                <arguments/>
+                <message>String length (%1) exceeded 65535</message>
+                <arguments>
+                    <argument>value.length()</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF Reference 1.4" clause="Table C.1"/>
@@ -245,7 +258,7 @@
             <description>Maximum length of a name (in bytes) is 127</description>
             <test>internalRepresentation.length() &lt;= 127</test>
             <error>
-                <message>Maximum length of a Name (127) exceeded</message>
+                <message>Name length (%1) exceeded 127</message>
                 <arguments>
                     <argument>internalRepresentation.length()</argument>
                 </arguments>
@@ -259,8 +272,10 @@
             <description>Maximum capacity of an array (in elements) is 8191</description>
             <test>size &lt;= 8191</test>
             <error>
-                <message>Maximum capacity of an array (8191) exceeded</message>
-                <arguments/>
+                <message>Array capacity (%1) exceeded 8191</message>
+                <arguments>
+                    <argument>size</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF Reference 1.4" clause="Table C.1"/>
@@ -271,8 +286,10 @@
             <description>Maximum capacity of a dictionary (in entries) is 4095</description>
             <test>size &lt;= 4095</test>
             <error>
-                <message>Maximum capacity of a dictionary (4095) exceeded</message>
-                <arguments/>
+                <message>Dictionary capacity (%1) exceeded 4095</message>
+                <arguments>
+                    <argument>size</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF Reference 1.4" clause="Table C.1"/>
@@ -283,8 +300,10 @@
             <description>Maximum number of indirect objects in a PDF file is 8,388,607</description>
             <test>nrIndirects &lt;= 8388607</test>
             <error>
-                <message>Maximum number of indirect objects (8,388,607) in a PDF file exceeded</message>
-                <arguments/>
+                <message>Number of indirect objects in a PDF file (%1) exceeded 8,388,607</message>
+                <arguments>
+                    <argument>nrIndirects</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF Reference 1.4" clause="Table C.1"/>
@@ -295,8 +314,10 @@
             <description>Maximum depth of graphics state nesting by q and Q operators is 28</description>
             <test>nestingLevel &lt;= 28</test>
             <error>
-                <message>Maximum depth of graphics state nesting (q and Q operators) is exceeded</message>
-                <arguments/>
+                <message>Depth of graphics state nesting of q/Q operators (%1) exceeded 28</message>
+                <arguments>
+                    <argument>nestingLevel</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF Reference 1.4" clause="Table C.1"/>
@@ -307,8 +328,10 @@
             <description>Maximum number of DeviceN components is 8</description>
             <test>nrComponents &lt;= 8</test>
             <error>
-                <message>Maximum number of DeviceN components is exceeded</message>
-                <arguments/>
+                <message>Number of DeviceN components (%1) exceeded 8</message>
+                <arguments>
+                    <argument>nrComponents</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF Reference 1.4" clause="Table C.1"/>
@@ -319,8 +342,10 @@
             <description>Maximum value of a CID (character identifier) is 65,535</description>
             <test>maximalCID &lt;= 65535</test>
             <error>
-                <message>Maximum value of a CID (65,535) is exceeded</message>
-                <arguments/>
+                <message>Value of a CID (%1) exceeded 65,535</message>
+                <arguments>
+                    <argument>maximalCID</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF Reference 1.4" clause="Table C.1"/>
@@ -492,8 +517,10 @@
             <description>An ExtGState dictionary shall not contain the TR2 key with a value other than Default</description>
             <test>TR2 == null || TR2 == &quot;Default&quot;</test>
             <error>
-                <message>An ExtGState dictionary contains the TR2 key with a value other than Default</message>
-                <arguments/>
+                <message>An ExtGState dictionary contains the TR2 key with value %1 other than Default</message>
+                <arguments>
+                    <argument>TR2</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -503,8 +530,10 @@
 			RelativeColorimetric, AbsoluteColorimetric, Perceptual or Saturation</description>
             <test>internalRepresentation == &quot;RelativeColorimetric&quot; || internalRepresentation == &quot;AbsoluteColorimetric&quot; || internalRepresentation == &quot;Perceptual&quot; || internalRepresentation == &quot;Saturation&quot;</test>
             <error>
-                <message>A rendering intent with non-standard value is used</message>
-                <arguments/>
+                <message>A rendering intent with non-standard value %1 is used</message>
+                <arguments>
+                    <argument>internalRepresentation</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -525,8 +554,10 @@
 	Type - name - (Required) The type of PDF object that this dictionary describes; must be Font for a font dictionary</description>
             <test>Type == &quot;Font&quot;</test>
             <error>
-                <message>A Font dictionary has missing or invalid Type entry</message>
-                <arguments/>
+                <message>A Font dictionary has value %1 of Type entry instead of Font</message>
+                <arguments>
+                    <argument>Type</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF 1.4 Reference" clause="5.5.1 - Table 5.8"/>
@@ -543,8 +574,10 @@
             <test>Subtype == &quot;Type1&quot; || Subtype == &quot;MMType1&quot; || Subtype == &quot;TrueType&quot; || Subtype == &quot;Type3&quot; || Subtype == &quot;Type0&quot; 
 			|| Subtype == &quot;CIDFontType0&quot; || Subtype == &quot;CIDFontType2&quot;</test>
             <error>
-                <message>A Font dictionary has missing or invalid Subtype entry</message>
-                <arguments/>
+                <message>Invalid Subtype entry in font dictionary with value %1</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF 1.4 Reference" clause="5.5.1 - Table 5.8"/>
@@ -603,8 +636,11 @@
 			Widths - array - (Required except for the standard 14 fonts; indirect reference preferred) An array of (LastChar − FirstChar + 1) widths</description>
             <test>isStandard == true || (Widths_size != null &amp;&amp; Widths_size == LastChar - FirstChar + 1)</test>
             <error>
-                <message>Widths array is missing or has invalid size</message>
-                <arguments/>
+                <message>Widths array is missing or has invalid size %1 instead of %2</message>
+                <arguments>
+                    <argument>Widths_size</argument>
+                    <argument>LastChar - FirstChar + 1</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF 1.4 Reference" clause="5.5.1 - Table 5.8"/>
@@ -619,8 +655,10 @@
 			in the Compact Font Format (CFF).</description>
             <test>fontFileSubtype == null || fontFileSubtype == &quot;Type1C&quot; || fontFileSubtype == &quot;CIDFontType0C&quot;</test>
             <error>
-                <message>Unsupported font file format of the embedded font</message>
-                <arguments/>
+                <message>Unsupported font file format %1 of the embedded font</message>
+                <arguments>
+                    <argument>fontFileSubtype</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF 1.4 Reference" clause="5.8 - Table 5.22"/>
@@ -673,8 +711,11 @@
             <description>For those CMaps that are embedded, the integer value of the WMode entry in the CMap dictionary shall be identical to the WMode value in the embedded CMap stream</description>
             <test>WMode == dictWMode</test>
             <error>
-                <message>WMode entry in the embedded CMap and in the CMap dictionary are not identical</message>
-                <arguments/>
+                <message>WMode entry (value %1) in the embedded CMap and in the CMap dictionary (value %2) are not identical</message>
+                <arguments>
+                    <argument>WMode</argument>
+                    <argument>dictWMode</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -747,8 +788,10 @@
 			If the value of the Encoding entry is a dictionary, it shall not contain a Differences entry.</description>
             <test>isSymbolic == true || (Encoding == &quot;MacRomanEncoding&quot; || Encoding == &quot;WinAnsiEncoding&quot;)</test>
             <error>
-                <message>A non-symbolic TrueType font has an encoding different from MacRomanEncoding or WinAnsiEncoding</message>
-                <arguments/>
+                <message>A non-symbolic TrueType font has an encoding %1 different from MacRomanEncoding or WinAnsiEncoding</message>
+                <arguments>
+                    <argument>Encoding</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO19005-1:2005/Cor.2:2011" clause="6.3.7"/>
@@ -771,8 +814,10 @@
             <description>Font programs' &quot;cmap&quot; tables for all symbolic TrueType fonts shall contain exactly one encoding</description>
             <test>isSymbolic == false || nrCmaps == 1</test>
             <error>
-                <message>The embedded font program for a symbolic TrueType font contains more than one cmap subtable</message>
-                <arguments/>
+                <message>The embedded font program for a symbolic TrueType font contains %1 cmap subtables</message>
+                <arguments>
+                    <argument>nrCmaps</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO19005-1:2005/Cor.2:2011" clause="6.3.7"/>
@@ -797,8 +842,10 @@
             <description>If an SMask key appears in an ExtGState dictionary, its value shall be None</description>
             <test>SMask == null || SMask == &quot;None&quot;</test>
             <error>
-                <message>An ExtGState contains SMask key with a value other than None</message>
-                <arguments/>
+                <message>An ExtGState contains SMask key with value %1 instead of None</message>
+                <arguments>
+                    <argument>SMask</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -832,8 +879,10 @@
             <description>The following keys, if present in an ExtGState object, shall have the values shown: BM - Normal or Compatible</description>
             <test>BM == null || BM == &quot;Normal&quot; || BM == &quot;Compatible&quot;</test>
             <error>
-                <message>An ExtGState dictionary contains the BM key (blend mode) with a value other than Normal or Compatible</message>
-                <arguments/>
+                <message>An ExtGState dictionary contains the BM key (blend mode) with value %1 that is neither Normal or Compatible</message>
+                <arguments>
+                    <argument>BM</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -842,8 +891,10 @@
             <description>The following keys, if present in an ExtGState object, shall have the values shown: CA - 1.0</description>
             <test>CA == null || CA - 1.0 &lt; 0.000001 &amp;&amp; CA - 1.0 &gt; -0.000001</test>
             <error>
-                <message>An ExtGState dictionary contains the CA key (stroke alpha) with a value other than 1.0</message>
-                <arguments/>
+                <message>An ExtGState dictionary contains the CA key (stroke alpha) with value %1 other than 1.0</message>
+                <arguments>
+                    <argument>CA</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -852,8 +903,10 @@
             <description>The following keys, if present in an ExtGState object, shall have the values shown: ca - 1.0</description>
             <test>ca == null || ca - 1.0 &lt; 0.000001 &amp;&amp; ca - 1.0 &gt; -0.000001</test>
             <error>
-                <message>An ExtGState dictionary contains the ca key (fill alpha) with a value other than 1.0</message>
-                <arguments/>
+                <message>An ExtGState dictionary contains the ca key (fill alpha) with value %1 other than 1.0</message>
+                <arguments>
+                    <argument>ca</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -866,8 +919,10 @@
 			Subtype == &quot;Squiggly&quot; || Subtype == &quot;StrikeOut&quot; || Subtype == &quot;Stamp&quot; || Subtype == &quot;Ink&quot; ||
 			Subtype == &quot;Popup&quot; || Subtype == &quot;Widget&quot; || Subtype == &quot;PrinterMark&quot; || Subtype == &quot;TrapNet&quot;</test>
             <error>
-                <message>Unknown or not permitted annotation type</message>
-                <arguments/>
+                <message>Unknown or not permitted Annotation type %1</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF 1.4 Reference" clause="8.4.5"/>
@@ -878,8 +933,10 @@
             <description>An annotation dictionary shall not contain the CA key with a value other than 1.0</description>
             <test>CA == null || CA == 1.0</test>
             <error>
-                <message>An annotation dictionary contains the CA key with value other than 1.0</message>
-                <arguments/>
+                <message>An annotation dictionary contains the CA key with value %1 instead of 1.0</message>
+                <arguments>
+                    <argument>CA</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -926,8 +983,10 @@
 			Additionally, the deprecated set-state and no-op actions shall not be permitted. The Hide action shall not be permitted (Corrigendum 2)</description>
             <test>S == &quot;GoTo&quot; || S == &quot;GoToR&quot; || S == &quot;Thread&quot; || S == &quot;URI&quot; || S == &quot;Named&quot; || S == &quot;SubmitForm&quot;</test>
             <error>
-                <message>Unknown or not permitted action type</message>
-                <arguments/>
+                <message>Unknown or not permitted Action type %1</message>
+                <arguments>
+                    <argument>S</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO19005-1:2005/Cor.2:2011" clause="6.6.1"/>
@@ -938,8 +997,10 @@
             <description>Named actions other than NextPage, PrevPage, FirstPage, and LastPage shall not be permitted</description>
             <test>N == &quot;NextPage&quot; || N == &quot;PrevPage&quot; || N == &quot;FirstPage&quot; || N == &quot;LastPage&quot;</test>
             <error>
-                <message>Unknown or not permitted action type</message>
-                <arguments/>
+                <message>Unknown or not permitted named action %1</message>
+                <arguments>
+                    <argument>N</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF 1.4 Reference" clause="8.5.3 - Named Actions - Table 8.45"/>
@@ -1221,11 +1282,11 @@
                 <reference specification="PDF 1.4 Reference" clause="9.6.1"/>
             </references>
         </rule>
-        <rule object="PDStructElem">
+        <rule object="SENonStandard">
             <id specification="ISO_19005_1" clause="6.8.3" testNumber="2"/>
             <description>All non-standard structure types shall be mapped to the nearest functionally equivalent standard type, as
 			defined in PDF Reference 9.7.4, in the role map dictionary of the structure tree root.</description>
-            <test>standardType != null</test>
+            <test>false</test>
             <error>
                 <message>Non-standard structure type is not mapped to a standard type</message>
                 <arguments/>
@@ -1241,8 +1302,10 @@
                 the Identification of Languages, as described in PDF Reference 9.8.1.</description>
             <test>unicodeValue == '' || /^[a-zA-Z]{1,8}(-[a-zA-Z]{1,8})*$/.test(unicodeValue)</test>
             <error>
-                <message>The Lang value is invalid</message>
-                <arguments/>
+                <message>Value %1 of the Lang entry is not Language-Tag</message>
+                <arguments>
+                    <argument>unicodeValue</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF Reference 1.4" clause="9.8.1"/>
