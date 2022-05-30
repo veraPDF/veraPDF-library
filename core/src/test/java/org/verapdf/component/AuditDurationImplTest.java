@@ -69,7 +69,7 @@ public class AuditDurationImplTest {
 		AuditDuration second = AuditDurationImpl.fromValues(15000, 30000);
 		AuditDuration third = AuditDurationImpl.fromValues(12000, 35000);
 		AuditDuration fourth = AuditDurationImpl.fromValues(10000, 27000);
-		AuditDuration expected = AuditDurationImpl.fromValues(1000, 35000);
+		AuditDuration expected = AuditDurationImpl.fromValues(10000, 35000);
 		AuditDuration[] durations = {first, second, third, fourth};
 		assertEquals(expected, AuditDurationImpl.sumDuration(Arrays.asList(durations)));
 	}
