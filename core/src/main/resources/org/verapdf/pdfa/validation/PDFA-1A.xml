@@ -12,8 +12,11 @@
 			The first line of a PDF file is a header identifying the version of the PDF specification to which the file conforms</description>
             <test>headerOffset == 0 &amp;&amp; /%PDF-\d\.\d/.test(header)</test>
             <error>
-                <message>File header does not start at byte offset 0 or does not correctly identify the version of the PDF document</message>
-                <arguments/>
+                <message>File header %1 starts at byte offset %2 instead of 0 or does not correctly identify the version of the PDF document</message>
+                <arguments>
+                    <argument>header</argument>
+                    <argument>headerOffset</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF 1.4 Reference" clause="3.4.1"/>
@@ -36,7 +39,7 @@
 			as described in PDF Reference 3.4.4 and 3.4.5, or the first page trailer in a linearized PDF file, as described in PDF Reference F.2</description>
             <test>(isLinearized == true &amp;&amp; firstPageID != null) || ((isLinearized != true) &amp;&amp; lastID != null)</test>
             <error>
-                <message>Missing ID in the document trailer</message>
+                <message>Missing or empty ID in the document trailer</message>
                 <arguments/>
             </error>
             <references/>
@@ -56,8 +59,10 @@
             <description>No data shall follow the last end-of-file marker except a single optional end-of-line marker.</description>
             <test>postEOFDataSize == 0</test>
             <error>
-                <message>Data is present after the last end-of-file marker</message>
-                <arguments/>
+                <message>%1 byte(s) of data is present after the last end-of-file marker</message>
+                <arguments>
+                    <argument>postEOFDataSize</argument>
+                </arguments>
             </error>
             <references/>
         </rule>

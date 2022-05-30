@@ -12,8 +12,11 @@
                 where 'n' is a single digit number between 0 (30h) and 9 (39h)</description>
             <test>headerOffset == 0 &amp;&amp; /^%PDF-2\.[0-9]$/.test(header)</test>
             <error>
-                <message>File header does not start at byte offset 0 or does not comply with the requirements of PDF/A-4 specification</message>
-                <arguments/>
+                <message>File header %1 starts at byte offset %2 instead of 0 or does not comply with the requirements of PDF/A-4 specification</message>
+                <arguments>
+                    <argument>header</argument>
+                    <argument>headerOffset</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -33,7 +36,7 @@
             <description>File identifiers shall be defined by the ID entry in a PDF file’s trailer dictionary</description>
             <test>lastID != null &amp;&amp; lastID.length() &gt; 0</test>
             <error>
-                <message>Missing ID in the document trailer</message>
+                <message>Missing or empty ID in the document trailer</message>
                 <arguments/>
             </error>
             <references>
@@ -55,8 +58,10 @@
             <description>No data shall follow the last end-of-file marker as described in ISO 32000-2:2020, 7.5.5.</description>
             <test>postEOFDataSize == 0</test>
             <error>
-                <message>Data is present after the last end-of-file marker</message>
-                <arguments/>
+                <message>%1 byte(s) of data is present after the last end-of-file marker</message>
+                <arguments>
+                    <argument>postEOFDataSize</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="7.5.5"/>
@@ -293,8 +298,12 @@
                 (Device Class = &quot;mntr&quot;). The profiles shall have a colour space of either &quot;GRAY&quot;, &quot;RGB&quot;, or &quot;CMYK&quot;.</description>
             <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot;) &amp;&amp; (colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot;) &amp;&amp; version &lt; 5.0</test>
             <error>
-                <message>The embedded PDF/A Output Intent colour profile has invalid header</message>
-                <arguments/>
+                <message>The embedded PDF/A Output Intent colour profile has invalid header (Device Class = &quot;%1&quot;, color space = &quot;%2&quot;, version = %3)</message>
+                <arguments>
+                    <argument>deviceClass</argument>
+                    <argument>colorSpace</argument>
+                    <argument>version</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="14.11.5"/>
@@ -345,8 +354,10 @@
                 fill is set to true, or both.</description>
             <test>overprintFlag == false || OPM == 0</test>
             <error>
-                <message>Overprint mode (OPM) is set to 1 when an ICCBased CMYK colour space is used with enabled overprinting</message>
-                <arguments/>
+                <message>Overprint mode (OPM) is set to %1 instead of 0 when an ICCBased CMYK colour space is used with enabled overprinting</message>
+                <arguments>
+                    <argument>OPM</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="8.6.7"/>
@@ -411,7 +422,7 @@
             <description>For any spot colour used in a DeviceN or NChannel colour space, an entry in the Colorants dictionary shall be present.</description>
             <test>areColorantsPresent == true</test>
             <error>
-                <message>A colorant of the DeviceN color space is not defined in the Colorants dictionary</message>
+                <message>A colorant of the DeviceN or NChannel color space is not defined in the Colorants dictionary</message>
                 <arguments/>
             </error>
             <references>
@@ -550,8 +561,10 @@
                 specification that has the value 0x01 in the APPROX field.</description>
             <test>hasColorSpace == true || nrColorSpaceSpecs == 1 || nrColorSpacesWithApproxField == 1</test>
             <error>
-                <message>The JPEG2000 image contains more than one colour specification with the best colour fidelity (value 0x01 in the APPROX field).</message>
-                <arguments/>
+                <message>The JPEG2000 image contains %1 colour specifications with the best colour fidelity (value 0x01 in the APPROX field).</message>
+                <arguments>
+                    <argument>nrColorSpacesWithApproxField</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1152,7 +1165,7 @@
             <test>containsOtherActions == false</test>
             <error>
                 <message>A document catalog dictionary include an AA entry and its value (which is an additional-actions
-                    dictionary) contains key not from the following list: E, X, D, U, Fo, and Bl</message>
+                    dictionary) contains key(s) not from the following list: E, X, D, U, Fo, and Bl</message>
                 <arguments/>
             </error>
             <references/>
