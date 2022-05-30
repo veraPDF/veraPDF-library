@@ -21,7 +21,7 @@
             <description>The value of pdfuaid:part shall be the part number of the International Standard to which the file conforms.</description>
             <test>part == 1</test>
             <error>
-                <message>The "part" property of the PDF/UA Identification Schema is %1 instead of 1 for PDF/UA conforming file.</message>
+                <message>The "part" property of the PDF/UA Identification Schema is %1 instead of 1 for PDF/UA-1 conforming file.</message>
                 <arguments>
                     <argument>part</argument>
                 </arguments>
@@ -136,7 +136,7 @@
             <description>The document catalog dictionary shall include a ViewerPreferences dictionary containing a DisplayDocTitle key, whose value shall be true.</description>
             <test>DisplayDocTitle == true</test>
             <error>
-                <message>DisplayDocTitle key of the ViewerPreferences dictionary is not present in the document catalog or is set to true</message>
+                <message>DisplayDocTitle key of the ViewerPreferences dictionary is not present in the document catalog or is set to false</message>
                 <arguments/>
             </error>
             <references/>
@@ -172,8 +172,10 @@
             <description>TR element should contained in Table, THead, TBody or TFoot element</description>
             <test>/^(Table|THead|TBody|TFoot)$/.test(parentStandardType)</test>
             <error>
-                <message>TR element not contained in Table, THead, TBody and TFoot element</message>
-                <arguments/>
+                <message>TR element contained in %1 instead of Table, THead, TBody or TFoot element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
@@ -184,8 +186,10 @@
             <description>THead element should contained in Table element</description>
             <test>parentStandardType == 'Table'</test>
             <error>
-                <message>THead element not contained in Table element</message>
-                <arguments/>
+                <message>THead element contained in %1 instead of Table element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
@@ -196,8 +200,10 @@
             <description>TBody element should contained in Table element</description>
             <test>parentStandardType == 'Table'</test>
             <error>
-                <message>TBody element not contained in Table element</message>
-                <arguments/>
+                <message>TBody element contained in %1 instead of Table element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
@@ -208,8 +214,10 @@
             <description>TFoot element should contained in Table element</description>
             <test>parentStandardType == 'Table'</test>
             <error>
-                <message>TFoot element not contained in Table element</message>
-                <arguments/>
+                <message>TFoot element contained in %1 instead of Table element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
@@ -220,8 +228,10 @@
             <description>TH element should contained in TR element</description>
             <test>parentStandardType == 'TR'</test>
             <error>
-                <message>TH element not contained in TR element</message>
-                <arguments/>
+                <message>TH element contained in %1 instead of TR element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
@@ -232,8 +242,10 @@
             <description>TD element should contained in TR element</description>
             <test>parentStandardType == 'TR'</test>
             <error>
-                <message>TD element not contained in TR element</message>
-                <arguments/>
+                <message>TD element contained in %1 instead of TR element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
@@ -244,8 +256,10 @@
             <description>TR element may contain only TH and TD elements</description>
             <test>/^(TH|TD)(&amp;(TH|TD))*$/.test(kidsStandardTypes) || kidsStandardTypes == ''</test>
             <error>
-                <message>TR element contains not a TH or TD elements</message>
-                <arguments/>
+                <message>TR element contains %1 element(s) instead of TH or TD</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TD' &amp;&amp; elem != 'TH').toString()</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
@@ -319,8 +333,10 @@
             <description>LI element should contained in L element</description>
             <test>parentStandardType == 'L'</test>
             <error>
-                <message>LI element not contained in L element</message>
-                <arguments/>
+                <message>LI element contained in %1 instead of L element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.3"/>
@@ -331,8 +347,10 @@
             <description>LBody element should contained in LI element</description>
             <test>parentStandardType == 'LI'</test>
             <error>
-                <message>LBody element not contained in LI element</message>
-                <arguments/>
+                <message>LBody element contained in %1 instead of LI element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.3"/>
@@ -356,8 +374,10 @@
             <description>LI element may contain only Lbl and LBody elements</description>
             <test>/^(Lbl|LBody)(&amp;(Lbl|LBody))*$/.test(kidsStandardTypes) || kidsStandardTypes == ''</test>
             <error>
-                <message>LI element contains not a Lbl or LBody elements</message>
-                <arguments/>
+                <message>LI element contains %1 element(s) instead of Lbl or LBody</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'LBody' &amp;&amp; elem != 'Lbl').toString()</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.3"/>
@@ -420,8 +440,10 @@
             <description>TOCI element should contained in TOC element</description>
             <test>parentStandardType == 'TOC'</test>
             <error>
-                <message>TOCI element not contained in TOC element</message>
-                <arguments/>
+                <message>TOCI element contained in %1 instead of TOC element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.2"/>
@@ -449,8 +471,10 @@
 			A language identifier shall be a Language-Tag as defined in RFC 3066, Tags for the Identification of Languages.</description>
             <test>/^[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*$/.test(unicodeValue)</test>
             <error>
-                <message>Value of the Lang entry is not Language-Tag</message>
-                <arguments/>
+                <message>Value %1 of the Lang entry is not Language-Tag</message>
+                <arguments>
+                    <argument>unicodeValue</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1:2008" clause="14.9.2"/>
@@ -510,10 +534,12 @@
         <rule object="SETHead">
             <id specification="ISO_14289_1" clause="7.2" testNumber="36"/>
             <description>THead element may contain only TR elements</description>
-            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0 || kidsStandardTypes == ''</test>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0</test>
             <error>
-                <message>THead element contains not a TR elements</message>
-                <arguments/>
+                <message>THead element contains %1 element(s) instead of TR</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').toString()</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
@@ -524,8 +550,10 @@
             <description>TBody element may contain only TR elements</description>
             <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0</test>
             <error>
-                <message>TBody element contains not a TR elements</message>
-                <arguments/>
+                <message>TBody element contains %1 element(s) instead of TR</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').toString()</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
@@ -534,10 +562,12 @@
         <rule object="SETFoot">
             <id specification="ISO_14289_1" clause="7.2" testNumber="38"/>
             <description>TFoot element may contain only TR elements</description>
-            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0 || kidsStandardTypes == ''</test>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0</test>
             <error>
-                <message>TFoot element contains not a TR elements</message>
-                <arguments/>
+                <message>TFoot element contains %1 element(s) instead of TR</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').toString()</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
@@ -697,7 +727,7 @@
             <test>P != null &amp;&amp; (P &amp; 512) == 512</test>
             <error>
                 <message>The file is encrypted but does not contain a P entry in its encryption dictionary or
-                    the file is encrypted and does contain a P entry but the 10th bit position of the P entry is false
+                    the file is encrypted and does contain a P entry, but the 10th bit position of the P entry is false
                 </message>
                 <arguments/>
             </error>
@@ -711,8 +741,11 @@
             <test>Subtype == 'Widget' || Subtype == 'Popup' || Subtype == 'Link' || isOutsideCropBox == true ||
                 (F &amp; 2) == 2 || structParentType == 'Annot'</test>
             <error>
-                <message>An annotation, excluding annotations of subtype Widget, Popup or Link, is not nested within an Annot tag</message>
-                <arguments/>
+                <message>%1 annotation is nested within %2 tag instead of Annot</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                    <argument>structParentType</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -761,8 +794,10 @@
             <description>Every page on which there is an annotation shall contain in its page dictionary the key Tabs, and its value shall be S.</description>
             <test>annots_size == 0 || Tabs == 'S'</test>
             <error>
-                <message>A page containing an annotation does not contain a Tabs key or has a Tabs key with a value other than S.</message>
-                <arguments/>
+                <message>A page containing an annotation contains a Tabs key with value %1 instead of S.</message>
+                <arguments>
+                    <argument>Tabs</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -771,8 +806,10 @@
             <description>A Widget annotation shall be nested within a Form tag per ISO 32000-1:2008, 14.8.4.5, Table 340.</description>
             <test>structParentType == 'Form' || isOutsideCropBox == true || (F &amp; 2) == 2</test>
             <error>
-                <message>A widget annotation is not nested within a Form tag</message>
-                <arguments/>
+                <message>A Widget annotation is nested within %1 tag instead of Form</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.5"/>
@@ -783,8 +820,10 @@
             <description>Links shall be tagged according to ISO 32000-1:2008, 14.8.4.4.2, Link Element.</description>
             <test>structParentType == 'Link' || isOutsideCropBox == true || (F &amp; 2) == 2</test>
             <error>
-                <message>A link annotation is not nested within a Link tag</message>
-                <arguments/>
+                <message>A Link annotation is nested within %1 tag instead of Link</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.4.2"/>
@@ -913,8 +952,10 @@
 			CMapName == "KSCpc-EUC-H" || CMapName == "UniKS-UCS2-H" || CMapName == "UniKS-UCS2-V" || CMapName == "UniKS-UTF16-H" || CMapName == "UniKS-UTF16-V" ||
 			embeddedFile_size == 1</test>
             <error>
-                <message>A non-standard CMap is not embedded</message>
-                <arguments/>
+                <message>A non-standard CMap %1 is not embedded</message>
+                <arguments>
+                    <argument>CMapName</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO32000-1:2008" clause="9.7.5.2, Table 118"/>
@@ -926,8 +967,11 @@
 			in the embedded CMap stream.</description>
             <test>WMode == dictWMode</test>
             <error>
-                <message>WMode entry in the embedded CMap and in the CMap dictionary are not identical</message>
-                <arguments/>
+                <message>WMode entry (value %1) in the embedded CMap and in the CMap dictionary (value %2) are not identical</message>
+                <arguments>
+                    <argument>WMode</argument>
+                    <argument>dictWMode</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -951,8 +995,10 @@
 			CMapName == "KSCpc-EUC-H" || CMapName == "UniKS-UCS2-H" || CMapName == "UniKS-UCS2-V" || CMapName == "UniKS-UTF16-H" || 
 			CMapName == "UniKS-UTF16-V"</test>
             <error>
-                <message>A CMap references another non-standard CMap</message>
-                <arguments/>
+                <message>A CMap references another non-standard CMap %1</message>
+                <arguments>
+                    <argument>CMapName</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO32000-1:2008" clause="9.7.5.2, Table 118"/>
@@ -1025,8 +1071,10 @@
                     cmap entries such that all necessary glyph lookups can be carried out.</description>
             <test>isSymbolic == true || nrCmaps &gt; 1 || (nrCmaps &gt; 0 &amp;&amp; cmap30Present == false)</test>
             <error>
-                <message>The embedded font program for a non-symbolic TrueType font does not contain any cmap subtables</message>
-                <arguments/>
+                <message>The embedded font program for a non-symbolic TrueType font contains %1 cmap subtable(s)</message>
+                <arguments>
+                    <argument>nrCmaps</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1063,8 +1111,11 @@
 			shall either contain exactly one encoding or it shall contain, at least, the Microsoft Symbol (3,0 - Platform ID=3, Encoding ID=0) encoding.</description>
             <test>isSymbolic == false || nrCmaps == 1 || cmap30Present == true</test>
             <error>
-                <message>The embedded font program for a symbolic TrueType font contains more than one cmap subtable</message>
-                <arguments/>
+                <message>The embedded font program for a symbolic TrueType font contains %1 cmap subtables and
+                    does not contain Microsoft Symbol (3,0 – Platform ID=3, Encoding ID=0)</message>
+                <arguments>
+                    <argument>nrCmaps</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
