@@ -31,8 +31,7 @@ import javax.xml.bind.JAXBException;
 import java.io.*;
 import java.nio.file.Files;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -58,8 +57,8 @@ public class FixerConfigTest {
 	@Test
 	public void testDefaultInstance() {
 		MetadataFixerConfig defaultConfig = FixerFactory.defaultConfig();
-		assertTrue(defaultConfig == FixerFactory.defaultConfig());
-		assertTrue(defaultConfig.equals(FixerFactory.defaultConfig()));
+		assertSame(defaultConfig, FixerFactory.defaultConfig());
+		assertEquals(defaultConfig, FixerFactory.defaultConfig());
 	}
 
 	/**
@@ -70,8 +69,8 @@ public class FixerConfigTest {
 	public void testFromValues() {
 		MetadataFixerConfig defaultConfig = FixerFactory.defaultConfig();
 		MetadataFixerConfig fromVals = FixerFactory.configFromValues(defaultConfig.getFixesPrefix(), defaultConfig.isFixId());
-		assertTrue(defaultConfig.equals(fromVals));
-		assertFalse(defaultConfig == fromVals);
+		assertEquals(defaultConfig, fromVals);
+		assertNotSame(defaultConfig, fromVals);
 	}
 
 	/**
@@ -82,8 +81,8 @@ public class FixerConfigTest {
 	public void testToXmlMetadataFixerConfigBoolean() throws JAXBException {
 		String defaultXml = XmlSerialiser.toXml(FixerFactory.defaultConfig(), true, true);
 		MetadataFixerConfig defaultCopy = XmlSerialiser.typeFromXml(FixerConfigImpl.class, defaultXml);
-		assertTrue(defaultCopy.equals(FixerFactory.defaultConfig()));
-		assertFalse(defaultCopy == FixerFactory.defaultConfig());
+		assertEquals(defaultCopy, FixerFactory.defaultConfig());
+		assertNotSame(defaultCopy, FixerFactory.defaultConfig());
 	}
 
 	/**
@@ -94,15 +93,15 @@ public class FixerConfigTest {
 	public void testToXmlMetadataFixerConfigOutputStreamBoolean() throws IOException, JAXBException {
 		File temp = Files.createTempFile("", "").toFile();
 		MetadataFixerConfig defaultInstance = FixerFactory.defaultConfig();
-		assertTrue(defaultInstance == FixerFactory.defaultConfig());
+		assertSame(defaultInstance, FixerFactory.defaultConfig());
 		try (OutputStream fos = new FileOutputStream(temp)) {
 			XmlSerialiser.toXml(FixerFactory.defaultConfig(), fos, true, true);
 		}
 		try (InputStream fis = new FileInputStream(temp)) {
 			defaultInstance = XmlSerialiser.typeFromXml(FixerConfigImpl.class, fis);
 		}
-		assertTrue(defaultInstance.equals(FixerFactory.defaultConfig()));
-		assertFalse(defaultInstance == FixerFactory.defaultConfig());
+		assertEquals(defaultInstance, FixerFactory.defaultConfig());
+		assertNotSame(defaultInstance, FixerFactory.defaultConfig());
 		temp.delete();
 	}
 

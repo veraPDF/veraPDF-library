@@ -32,7 +32,7 @@ public class AXLXMPObject extends GenericModelObject implements XMPObject {
 
 	protected AXLXMPObject(final String type) {
 		super(type);
-		this.contextDependent = Boolean.valueOf(true);
+		this.contextDependent = true;
 	}
 
 }

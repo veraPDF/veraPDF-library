@@ -31,8 +31,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PolicyCheckerTests {
 	private static final String resourceBase = "/org/verapdf/policy/"; //$NON-NLS-1$
@@ -47,7 +46,7 @@ public class PolicyCheckerTests {
 	@Test
 	public void testApplySchematronPolicy() throws VeraPDFException, IOException {
 		File tempResult = File.createTempFile("veraPDF", "unitTest"); //$NON-NLS-1$ //$NON-NLS-2$
-		assertTrue(tempResult.length() == 0);
+		assertEquals(0, tempResult.length());
 		try (InputStream policyIs = PolicyCheckerTests.class.getResourceAsStream(fontChecksSchematron);
 				InputStream mrrIs = PolicyCheckerTests.class.getResourceAsStream(fontChecksMrr);
 				FileOutputStream fosPolicyResult = new FileOutputStream(tempResult)) {
@@ -90,7 +89,7 @@ public class PolicyCheckerTests {
 	@Test
 	public void testApplyPolicyStyleSheet() throws IOException, VeraPDFException {
 		File tempResult = File.createTempFile("veraPDF", "unitTest"); //$NON-NLS-1$ //$NON-NLS-2$
-		assertTrue(tempResult.length() == 0);
+		assertEquals(0, tempResult.length());
 		try (InputStream policyIs = PolicyCheckerTests.class.getResourceAsStream(fontChecksStylesheet);
 				InputStream mrrIs = PolicyCheckerTests.class.getResourceAsStream(fontChecksMrr);
 				FileOutputStream fosPolicyResult = new FileOutputStream(tempResult)) {
@@ -108,7 +107,7 @@ public class PolicyCheckerTests {
 	@Test
 	public void testInsertPolicyReport() throws IOException, VeraPDFException {
 		File policyReport = File.createTempFile("policyReport", "veraPDF"); //$NON-NLS-1$ //$NON-NLS-2$
-		assertTrue(policyReport.length() == 0);
+		assertEquals(0, policyReport.length());
 		try (InputStream policyIs = PolicyCheckerTests.class.getResourceAsStream(fontChecksStylesheet);
 				InputStream mrrIs = PolicyCheckerTests.class.getResourceAsStream(fontChecksMrr);
 				FileOutputStream fosPolicyResult = new FileOutputStream(policyReport)) {

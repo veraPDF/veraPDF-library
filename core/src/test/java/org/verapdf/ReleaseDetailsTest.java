@@ -64,7 +64,7 @@ public class ReleaseDetailsTest {
 	@Test
 	public final void testGetVersion() {
 		ReleaseDetails instance = ReleaseDetails.byId(NAME);
-		assertTrue("0.0.0-TEST".equals(instance.getVersion()));
+		assertEquals("0.0.0-TEST", instance.getVersion());
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class ReleaseDetailsTest {
 		ReleaseDetails instance = ReleaseDetails.byId(NAME);
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = formatter.parse("2011-07-31");
-		assertTrue(instance.getBuildDate().equals(date));
+		assertEquals(instance.getBuildDate(), date);
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class ReleaseDetailsTest {
 	public final void testGetDefaultInstance() {
 		ReleaseDetails instance = ReleaseDetails.defaultInstance();
 		ReleaseDetails secondInstance = ReleaseDetails.defaultInstance();
-		assertTrue(instance == secondInstance);
+		assertSame(instance, secondInstance);
 	}
 
 	/**
@@ -120,8 +120,8 @@ public class ReleaseDetailsTest {
         try (InputStream readXml = new FileInputStream(temp)) {
             ReleaseDetails unmarshalledResult = XmlSerialiser
                     .typeFromXml(ReleaseDetails.class, readXml);
-            assertFalse(details == unmarshalledResult);
-            assertTrue(details.equals(unmarshalledResult));
+			assertNotSame(details, unmarshalledResult);
+			assertEquals(details, unmarshalledResult);
         }
         temp.delete();
     }

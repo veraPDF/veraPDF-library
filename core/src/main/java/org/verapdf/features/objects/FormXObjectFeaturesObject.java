@@ -93,17 +93,14 @@ public class FormXObjectFeaturesObject extends FeaturesObject {
 			FeatureTreeNode groupNode = root.addChild("group");
 			String groupSubtype = formAdapter.getGroupSubtype();
 			CreateNodeHelper.addNotEmptyNode("subtype", groupSubtype, groupNode);
-			if (groupSubtype != null) {
-				if (TRANSPARENCY.equals(groupSubtype)) {
-					String groupColorSpaceChild = formAdapter.getGroupColorSpaceChild();
-					if (groupColorSpaceChild != null) {
-						FeatureTreeNode clr = groupNode.addChild("colorSpace");
-						clr.setAttribute(ID, groupColorSpaceChild);
-					}
-					groupNode.addChild("isolated").setValue(String.valueOf(formAdapter.isTransparencyGroupIsolated()));
-					groupNode.addChild("knockout").setValue(String.valueOf(formAdapter.isTransparencyGroupKnockout()));
+			if (TRANSPARENCY.equals(groupSubtype)) {
+				String groupColorSpaceChild = formAdapter.getGroupColorSpaceChild();
+				if (groupColorSpaceChild != null) {
+					FeatureTreeNode clr = groupNode.addChild("colorSpace");
+					clr.setAttribute(ID, groupColorSpaceChild);
 				}
-
+				groupNode.addChild("isolated").setValue(String.valueOf(formAdapter.isTransparencyGroupIsolated()));
+				groupNode.addChild("knockout").setValue(String.valueOf(formAdapter.isTransparencyGroupKnockout()));
 			}
 		}
 
