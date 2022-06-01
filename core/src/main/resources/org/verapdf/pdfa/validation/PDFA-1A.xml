@@ -788,12 +788,15 @@
         </rule>
         <rule object="PDTrueTypeFont">
             <id specification="ISO_19005_1" clause="6.3.7" testNumber="1"/>
-            <description>All non-symbolic TrueType fonts shall specify MacRomanEncoding or WinAnsiEncoding, either as the value of the Encoding entry in the font dictionary
-			or as the value of the BaseEncoding entry in the dictionary that is the value of the Encoding entry in the font dictionary.
-			If the value of the Encoding entry is a dictionary, it shall not contain a Differences entry.</description>
-            <test>isSymbolic == true || (Encoding == &quot;MacRomanEncoding&quot; || Encoding == &quot;WinAnsiEncoding&quot;)</test>
+            <description>All non-symbolic TrueType fonts shall specify MacRomanEncoding or WinAnsiEncoding, either as
+                the value of the Encoding entry in the font dictionary or as the value of the BaseEncoding entry in the
+                dictionary that is the value of the Encoding entry in the font dictionary.
+                If the value of the Encoding entry is a dictionary, it shall not contain a Differences entry.</description>
+            <test>isSymbolic == true || ((Encoding == &quot;MacRomanEncoding&quot; ||
+                Encoding == &quot;WinAnsiEncoding&quot;) &amp;&amp; containsDifferences == false)</test>
             <error>
-                <message>A non-symbolic TrueType font has an encoding %1 different from MacRomanEncoding or WinAnsiEncoding</message>
+                <message>A non-symbolic TrueType font has an encoding %1 different from MacRomanEncoding or
+                    WinAnsiEncoding or Encoding entry contains a Differences entry.</message>
                 <arguments>
                     <argument>Encoding</argument>
                 </arguments>
