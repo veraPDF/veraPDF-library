@@ -815,6 +815,20 @@
                 <reference specification="ISO 32000-1" clause="14.8.4.5"/>
             </references>
         </rule>
+        <rule object="SEForm">
+            <id specification="ISO_14289_1" clause="7.18.4" testNumber="2"/>
+            <description>If the Form element omits a Role attribute (Table 348), it shall have
+                only one child: an object reference (14.7.4.3) identifying the widget annotation
+                per ISO 32000-1:2008, 14.8.4.5, Table 340.</description>
+            <test>roleAttribute != null || hasOneInteractiveChild == true</test>
+            <error>
+                <message>The Form element omits a Role attribute and doesn't have only one child identifying
+                    the widget annotation</message>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.5"/>
+            </references>
+        </rule>
         <rule object="PDLinkAnnot">
             <id specification="ISO_14289_1" clause="7.18.5" testNumber="1"/>
             <description>Links shall be tagged according to ISO 32000-1:2008, 14.8.4.4.2, Link Element.</description>
