@@ -39,7 +39,7 @@
 			as described in PDF Reference 3.4.4 and 3.4.5, or the first page trailer in a linearized PDF file, as described in PDF Reference F.2</description>
             <test>(isLinearized == true &amp;&amp; firstPageID != null) || ((isLinearized != true) &amp;&amp; lastID != null)</test>
             <error>
-                <message>Missing or empty ID in the document trailer</message>
+                <message>Missing ID in the document trailer</message>
                 <arguments/>
             </error>
             <references/>
