@@ -20,9 +20,6 @@
  */
 package org.verapdf.features;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.util.EnumSet;
 
 import javax.xml.bind.JAXBException;
@@ -31,6 +28,8 @@ import org.junit.Test;
 import org.verapdf.core.XmlSerialiser;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
+
+import static org.junit.Assert.*;
 
 @SuppressWarnings("static-method")
 public class FeatureExtractorConfigTest {
@@ -61,7 +60,7 @@ public class FeatureExtractorConfigTest {
 		EnumSet<FeatureObjectType> enabledFeaturesSet = EnumSet.noneOf(FeatureObjectType.class);
 		EnumSet<FeatureObjectType> disabledFeaturesSet = EnumSet.allOf(FeatureObjectType.class);
 		FeatureExtractorConfig testConfig = FeatureExtractorConfigImpl.fromFeatureSet(enabledFeaturesSet);
-		assertTrue(testConfig.getEnabledFeatures().size() == 0);
+		assertEquals(0, testConfig.getEnabledFeatures().size());
 		assertFalse(testConfig.isAnyFeatureEnabled(enabledFeaturesSet));
 		assertFalse(testConfig.isAnyFeatureEnabled(disabledFeaturesSet));
 		for (FeatureObjectType type : FeatureObjectType.values()) {
@@ -76,14 +75,14 @@ public class FeatureExtractorConfigTest {
 				assertTrue(testConfig.isAnyFeatureEnabled(testSet));
 			}
 		}
-		assertTrue(enabledFeaturesSet.size() == FeatureObjectType.values().length);
+		assertEquals(enabledFeaturesSet.size(), FeatureObjectType.values().length);
 		assertTrue(disabledFeaturesSet.isEmpty());
 	}
 
 	@Test
 	public void testDefaultInstance() {
-		assertTrue(FeatureExtractorConfigImpl.defaultInstance() == FeatureExtractorConfigImpl.defaultInstance());
-		assertTrue(FeatureExtractorConfigImpl.defaultInstance().equals(FeatureExtractorConfigImpl.defaultInstance()));
+		assertSame(FeatureExtractorConfigImpl.defaultInstance(), FeatureExtractorConfigImpl.defaultInstance());
+		assertEquals(FeatureExtractorConfigImpl.defaultInstance(), FeatureExtractorConfigImpl.defaultInstance());
 		for (FeatureObjectType type : FeatureObjectType.values()) {
 			if (type != FeatureObjectType.INFORMATION_DICTIONARY)
 				assertFalse(FeatureExtractorConfigImpl.defaultInstance().isFeatureEnabled(type));
@@ -97,14 +96,14 @@ public class FeatureExtractorConfigTest {
 		EnumSet<FeatureObjectType> enabledFeaturesSet = EnumSet.noneOf(FeatureObjectType.class);
 		EnumSet<FeatureObjectType> disabledFeaturesSet = EnumSet.allOf(FeatureObjectType.class);
 		FeatureExtractorConfig testConfig = FeatureExtractorConfigImpl.fromFeatureSet(enabledFeaturesSet);
-		assertTrue(testConfig.equals(XmlSerialiser.typeFromXml(FeatureExtractorConfigImpl.class,
-				XmlSerialiser.toXml(testConfig, true, true))));
+		assertEquals(testConfig, XmlSerialiser.typeFromXml(FeatureExtractorConfigImpl.class,
+				XmlSerialiser.toXml(testConfig, true, true)));
 		for (FeatureObjectType type : FeatureObjectType.values()) {
 			enabledFeaturesSet.add(type);
 			disabledFeaturesSet.remove(type);
 			testConfig = FeatureExtractorConfigImpl.fromFeatureSet(enabledFeaturesSet);
-			assertTrue(testConfig.equals(XmlSerialiser.typeFromXml(FeatureExtractorConfigImpl.class,
-					XmlSerialiser.toXml(testConfig, true, true))));
+			assertEquals(testConfig, XmlSerialiser.typeFromXml(FeatureExtractorConfigImpl.class,
+					XmlSerialiser.toXml(testConfig, true, true)));
 		}
 	}
 }

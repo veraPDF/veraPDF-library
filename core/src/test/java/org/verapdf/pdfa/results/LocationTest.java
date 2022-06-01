@@ -23,11 +23,11 @@
  */
 package org.verapdf.pdfa.results;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -50,8 +50,7 @@ public class LocationTest {
      */
     @Test
     public final void testToString() {
-        assertTrue(ValidationResults.defaultLocation().toString()
-                .equals(DEFAULT_LOCATION_STRING));
+        assertEquals(DEFAULT_LOCATION_STRING, ValidationResults.defaultLocation().toString());
     }
 
     /**
@@ -60,8 +59,8 @@ public class LocationTest {
     @Test
     public final void testDefaultInstance() {
         Location defaultLoc = ValidationResults.defaultLocation();
-        assertTrue(defaultLoc.equals(ValidationResults.defaultLocation()));
-        assertTrue(defaultLoc == ValidationResults.defaultLocation());
+        assertEquals(defaultLoc, ValidationResults.defaultLocation());
+        assertSame(defaultLoc, ValidationResults.defaultLocation());
     }
 
     /**
@@ -70,8 +69,8 @@ public class LocationTest {
     @Test
     public final void testFromValues() {
         Location fromValLoc = ValidationResults.locationFromValues("level", "context"); //$NON-NLS-1$ //$NON-NLS-2$
-        assertTrue(fromValLoc.equals(ValidationResults.defaultLocation()));
-        assertFalse(fromValLoc == ValidationResults.defaultLocation());
+        assertEquals(fromValLoc, ValidationResults.defaultLocation());
+        assertNotSame(fromValLoc, ValidationResults.defaultLocation());
     }
 
 }

@@ -35,8 +35,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -53,7 +52,7 @@ public class SchematronPipelineTest {
 	public void testProcessSchematron() throws IOException, TransformerException {
 
 		File tempResult = File.createTempFile("veraPDF", "unitTest"); //$NON-NLS-1$ //$NON-NLS-2$
-		assertTrue(tempResult.length() == 0);
+		assertEquals(0, tempResult.length());
 		try (InputStream is = SchematronPipelineTest.class.getResourceAsStream(basicSchematronPath);
 				FileOutputStream fos = new FileOutputStream(tempResult)) {
 			SchematronPipeline.processSchematron(is, fos);

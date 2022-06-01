@@ -180,7 +180,7 @@ public class SemanticVersionTest {
 		SemanticVersionNumber vNum = VersionNumberImpl.fromString(v1_0_0);
 		SemanticVersionNumber verNum = VersionNumberImpl.fromString(v1_0_0pdf);
 		assertEquals(vNum, verNum);
-		assertTrue(vNum.compareTo(verNum) == 0);
+		assertEquals(0, vNum.compareTo(verNum));
 		SemanticVersionNumber lessThan = VersionNumberImpl.fromInts(0,90,100);
 		assertNotEquals(vNum, lessThan);
 		assertTrue(vNum.compareTo(lessThan) > 0);

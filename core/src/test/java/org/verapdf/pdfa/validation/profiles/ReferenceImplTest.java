@@ -23,12 +23,11 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
+
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -52,7 +51,7 @@ public class ReferenceImplTest {
 	 */
 	@Test
 	public final void testToString() {
-		assertTrue(Profiles.defaultReference().toString().equals(DEFAULT_REFERENCE_STRING));
+		assertEquals(DEFAULT_REFERENCE_STRING, Profiles.defaultReference().toString());
 	}
 
 	/**
@@ -65,9 +64,9 @@ public class ReferenceImplTest {
 		Reference reference = Profiles.referenceFromValues("specification", "clause");
 		Reference defaultInstance = Profiles.defaultReference();
 		// Equivalent is NOT the same object as default instance
-		assertFalse(reference == defaultInstance);
+		assertNotSame(reference, defaultInstance);
 		// But it is equal
-		assertTrue(reference.equals(defaultInstance));
+		assertEquals(reference, defaultInstance);
 	}
 
 	/**
@@ -80,8 +79,8 @@ public class ReferenceImplTest {
 		// Get an equivalent to the default instance
 		Reference reference = ReferenceImpl.fromValues(defaultInstance.getSpecification(), defaultInstance.getClause());
 		// Equivalent is NOT the same object as default instance
-		assertFalse(reference == defaultInstance);
+		assertNotSame(reference, defaultInstance);
 		// But it is equal
-		assertTrue(reference.equals(defaultInstance));
+		assertEquals(reference, defaultInstance);
 	}
 }

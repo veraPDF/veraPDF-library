@@ -293,8 +293,7 @@ final class ProcessorImpl implements ItemProcessor {
 					new VeraPDFException("Processing exception in metadata fixer", excep))); //$NON-NLS-1$
 		}
 
-		if (rpStat != MetadataFixerResult.RepairStatus.SUCCESS
-				&& rpStat != MetadataFixerResult.RepairStatus.ID_REMOVED) {
+		if (rpStat != MetadataFixerResult.RepairStatus.SUCCESS && rpStat != MetadataFixerResult.RepairStatus.ID_REMOVED) {
 			if (!fxfl.delete()) {
 				fxfl.deleteOnExit();
 			}

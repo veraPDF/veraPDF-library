@@ -35,8 +35,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -62,7 +61,7 @@ public class ValidationResultTest {
 	 */
 	@Test
 	public final void testToString() {
-		assertTrue(ValidationResults.defaultResult().toString().equals(DEFAULT_RESULT_STRING));
+		assertEquals(DEFAULT_RESULT_STRING, ValidationResults.defaultResult().toString());
 	}
 
 	/**
@@ -72,8 +71,8 @@ public class ValidationResultTest {
 	@Test
 	public final void testDefaultInstance() {
 		ValidationResult defaultResult = ValidationResults.defaultResult();
-		assertTrue(defaultResult.equals(ValidationResults.defaultResult()));
-		assertTrue(defaultResult == ValidationResults.defaultResult());
+		assertEquals(defaultResult, ValidationResults.defaultResult());
+		assertSame(defaultResult, ValidationResults.defaultResult());
 	}
 
 	/**
@@ -83,8 +82,8 @@ public class ValidationResultTest {
 	@Test
 	public final void testFromValues() {
 		ValidationResult resultFromVals = ValidationResults.resultFromValues(Profiles.defaultProfile(), Collections.<TestAssertion>emptyList(), false);
-		assertTrue(resultFromVals.equals(ValidationResults.defaultResult()));
-		assertFalse(resultFromVals == ValidationResults.defaultResult());
+		assertEquals(resultFromVals, ValidationResults.defaultResult());
+		assertNotSame(resultFromVals, ValidationResults.defaultResult());
 	}
 
 	/**
@@ -95,8 +94,8 @@ public class ValidationResultTest {
 	public final void testFromValidationResult() {
 		ValidationResult resultFromResult = ValidationResultImpl
 				.fromValidationResult(ValidationResults.defaultResult());
-		assertTrue(resultFromResult.equals(ValidationResults.defaultResult()));
-		assertFalse(resultFromResult == ValidationResults.defaultResult());
+		assertEquals(resultFromResult, ValidationResults.defaultResult());
+		assertNotSame(resultFromResult, ValidationResults.defaultResult());
 	}
 
 	/**
@@ -113,11 +112,11 @@ public class ValidationResultTest {
 		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
 		String xmlRawResult = XmlSerialiser.toXml(result, true, false);
 		String xmlPrettyResult = XmlSerialiser.toXml(result, true, true);
-		assertFalse(xmlRawResult.equals(xmlPrettyResult));
+		assertNotEquals(xmlRawResult, xmlPrettyResult);
 		ValidationResult fromRawXml = XmlSerialiser.typeFromXml(ValidationResultImpl.class, xmlRawResult);
 		ValidationResult fromPrettyXml = XmlSerialiser.typeFromXml(ValidationResultImpl.class, xmlPrettyResult);
-		assertTrue(fromRawXml.equals(fromPrettyXml));
-		assertTrue(fromRawXml.equals(result));
+		assertEquals(fromRawXml, fromPrettyXml);
+		assertEquals(fromRawXml, result);
 	}
 
 	/**
@@ -138,8 +137,8 @@ public class ValidationResultTest {
 		}
 		try (InputStream readXml = new FileInputStream(temp)) {
 			ValidationResult unmarshalledResult = XmlSerialiser.typeFromXml(ValidationResultImpl.class, readXml);
-			assertFalse(result == unmarshalledResult);
-			assertTrue(result.equals(unmarshalledResult));
+			assertNotSame(result, unmarshalledResult);
+			assertEquals(result, unmarshalledResult);
 		}
 		temp.delete();
 	}
@@ -158,7 +157,7 @@ public class ValidationResultTest {
 		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
 		String xmlSource = XmlSerialiser.toXml(result, true, true);
 		ValidationResult unmarshalledResult = ValidationResults.resultFromXmlString(xmlSource);
-		assertFalse(result == unmarshalledResult);
-		assertTrue(result.equals(unmarshalledResult));
+		assertNotSame(result, unmarshalledResult);
+		assertEquals(result, unmarshalledResult);
 	}
 }

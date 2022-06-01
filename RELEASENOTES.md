@@ -166,6 +166,7 @@ Version 1.14 (June 10, 2019)
 [#par-370]: https://github.com/veraPDF/veraPDF-parser/pull/370
 [#par-371]: https://github.com/veraPDF/veraPDF-parser/pull/371
 [#par-372]: https://github.com/veraPDF/veraPDF-parser/pull/372
+[#par-373]: https://github.com/veraPDF/veraPDF-parser/pull/373
 
 [#pdf-195]: https://github.com/veraPDF/veraPDF-pdfbox-validation/pull/195
 [#pdf-197]: https://github.com/veraPDF/veraPDF-pdfbox-validation/pull/197
@@ -177,8 +178,8 @@ Version 1.14 (June 10, 2019)
 [#val-274]: https://github.com/veraPDF/veraPDF-validation/pull/274
 [#val-276]: https://github.com/veraPDF/veraPDF-validation/pull/276
 [#val-277]: https://github.com/veraPDF/veraPDF-validation/pull/277
-[#val-277]: https://github.com/veraPDF/veraPDF-validation/pull/278
-[#val-277]: https://github.com/veraPDF/veraPDF-validation/pull/279
+[#val-278]: https://github.com/veraPDF/veraPDF-validation/pull/278
+[#val-279]: https://github.com/veraPDF/veraPDF-validation/pull/279
 [#val-280]: https://github.com/veraPDF/veraPDF-validation/pull/280
 [#val-281]: https://github.com/veraPDF/veraPDF-validation/pull/281
 [#val-282]: https://github.com/veraPDF/veraPDF-validation/pull/282
@@ -201,7 +202,7 @@ Version 1.12 (May 9, 2018)
 - add Identifier to validator type for reporting, added details to HTML report [[#val-261][]], [[#lib-940][]]
 - fixed issue parsing digital signatures for files below 1024 bytes [[#val-265][]]
 - exclude process colors from spot color validation in DeviceN / NChannel color spaces for PDF/A-2 and 3 [[#val-267][]] [[#pdf-191][]]
-- fixed metadata extensions support across different PDF/A levels [[#lib-947]]
+- fixed metadata extensions support across different PDF/A levels [[#lib-947][]]
 - fixed bug with automatic selection and processing of PDF/A flavour  [[#pdf-190][]]
 - fixed validation of smooth shading color spaces and inline images in presence of default color space [[#val-263][]]
 - fixed bug in embedded file features data extraction [[#lib-951][]]

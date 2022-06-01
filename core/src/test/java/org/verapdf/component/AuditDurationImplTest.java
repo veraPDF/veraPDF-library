@@ -1,13 +1,12 @@
 package org.verapdf.component;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Arrays;
 
 import org.junit.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
+
+import static org.junit.Assert.*;
 
 public class AuditDurationImplTest {
 	/**
@@ -22,7 +21,7 @@ public class AuditDurationImplTest {
 	@Test
 	public void testDefaultInstance() {
 		AuditDuration defaultInstance = AuditDurationImpl.defaultInstance();
-		assertTrue(defaultInstance == AuditDurationImpl.defaultInstance());
+		assertSame(defaultInstance, AuditDurationImpl.defaultInstance());
 	}
 
 	@Test(expected=IllegalArgumentException.class)

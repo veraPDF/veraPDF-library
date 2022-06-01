@@ -23,13 +23,12 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
+
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -51,8 +50,7 @@ public class RuleIdImplTest {
      */
     @Test
     public final void testToString() {
-        assertTrue(Profiles.defaultRuleId().toString()
-                .equals(DEFAULT_RULE_ID_STRING));
+        assertEquals(Profiles.defaultRuleId().toString(), DEFAULT_RULE_ID_STRING);
     }
 
     /**
@@ -64,9 +62,9 @@ public class RuleIdImplTest {
         RuleId ruleId = Profiles.ruleIdFromValues(Specification.NO_STANDARD, "clause", 0);
         RuleId defaultInstance = Profiles.defaultRuleId();
         // Equivalent is NOT the same object as default instance
-        assertFalse(ruleId == defaultInstance);
+        assertNotSame(ruleId, defaultInstance);
         // But it is equal
-        assertTrue(ruleId.equals(defaultInstance));
+        assertEquals(ruleId, defaultInstance);
     }
 
     /**
@@ -78,8 +76,8 @@ public class RuleIdImplTest {
         RuleId ruleId = RuleIdImpl.fromRuleId(RuleIdImpl.defaultInstance());
         RuleId defaultInstance = Profiles.defaultRuleId();
         // Equivalent is NOT the same object as default instance
-        assertFalse(ruleId == defaultInstance);
+        assertNotSame(ruleId, defaultInstance);
         // But it is equal
-        assertTrue(ruleId.equals(defaultInstance));
+        assertEquals(ruleId, defaultInstance);
     }
 }

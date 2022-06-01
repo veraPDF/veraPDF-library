@@ -23,13 +23,13 @@
  */
 package org.verapdf.pdfa.results;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.profiles.Profiles;
+
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -66,8 +66,7 @@ public class TestAssertionTest {
      */
     @Test
     public final void testToString() {
-        assertTrue(ValidationResults.defaultAssertion().toString()
-                .equals(DEFAULT_ASSERTION_STRING));
+        assertEquals(DEFAULT_ASSERTION_STRING, ValidationResults.defaultAssertion().toString());
     }
 
     /**
@@ -77,9 +76,8 @@ public class TestAssertionTest {
     @Test
     public final void testDefaultInstance() {
         TestAssertion defaultAssertion = ValidationResults.defaultAssertion();
-        assertTrue(defaultAssertion
-                .equals(ValidationResults.defaultAssertion()));
-        assertTrue(defaultAssertion == ValidationResults.defaultAssertion());
+        assertEquals(defaultAssertion, ValidationResults.defaultAssertion());
+        assertSame(defaultAssertion, ValidationResults.defaultAssertion());
     }
 
     /**
@@ -93,9 +91,9 @@ public class TestAssertionTest {
                 .assertionFromValues(0, Profiles.defaultRuleId(),
                         Status.FAILED, "message", //$NON-NLS-1$
                         ValidationResults.defaultLocation(), null, null, null);
-        assertTrue(assertionFromVals.equals(ValidationResults
-                .defaultAssertion()));
-        assertFalse(assertionFromVals == ValidationResults.defaultAssertion());
+        assertEquals(assertionFromVals, ValidationResults
+                .defaultAssertion());
+        assertNotSame(assertionFromVals, ValidationResults.defaultAssertion());
     }
 
 }

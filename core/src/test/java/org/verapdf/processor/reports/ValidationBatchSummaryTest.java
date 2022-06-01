@@ -3,16 +3,14 @@
  */
 package org.verapdf.processor.reports;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
 import org.verapdf.core.XmlSerialiser;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
+
+import static org.junit.Assert.*;
 
 /**
  * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -38,15 +36,15 @@ public class ValidationBatchSummaryTest {
 	@Test
 	public void testGetCompliantPdfaTota1() {
 		ValidationBatchSummary summary = ValidationBatchSummaryImpl.fromValues(12, 0, 0);
-		assertTrue(summary.getCompliantPdfaCount() == 12);
+		assertEquals(12, summary.getCompliantPdfaCount());
 		summary = ValidationBatchSummaryImpl.fromValues(10, 12, 0);
-		assertTrue(summary.getCompliantPdfaCount() == 10);
+		assertEquals(10, summary.getCompliantPdfaCount());
 		summary = ValidationBatchSummaryImpl.fromValues(15, 0, 20);
-		assertTrue(summary.getCompliantPdfaCount() == 15);
+		assertEquals(15, summary.getCompliantPdfaCount());
 		summary = ValidationBatchSummaryImpl.fromValues(25, 13, 20);
-		assertTrue(summary.getCompliantPdfaCount() == 25);
+		assertEquals(25, summary.getCompliantPdfaCount());
 		summary = ValidationBatchSummaryImpl.fromValues(0, 13, 20);
-		assertTrue(summary.getCompliantPdfaCount() == 0);
+		assertEquals(0, summary.getCompliantPdfaCount());
 	}
 
 	/**
@@ -55,15 +53,15 @@ public class ValidationBatchSummaryTest {
 	@Test
 	public void testGetNonCompliantPdfaTota1() {
 		ValidationBatchSummary summary = ValidationBatchSummaryImpl.fromValues(0, 12, 0);
-		assertTrue(summary.getNonCompliantPdfaCount() == 12);
+		assertEquals(12, summary.getNonCompliantPdfaCount());
 		summary = ValidationBatchSummaryImpl.fromValues(10, 15, 0);
-		assertTrue(summary.getNonCompliantPdfaCount() == 15);
+		assertEquals(15, summary.getNonCompliantPdfaCount());
 		summary = ValidationBatchSummaryImpl.fromValues(0, 18, 20);
-		assertTrue(summary.getNonCompliantPdfaCount() == 18);
+		assertEquals(18, summary.getNonCompliantPdfaCount());
 		summary = ValidationBatchSummaryImpl.fromValues(25, 13, 20);
-		assertTrue(summary.getNonCompliantPdfaCount() == 13);
+		assertEquals(13, summary.getNonCompliantPdfaCount());
 		summary = ValidationBatchSummaryImpl.fromValues(13, 0, 20);
-		assertTrue(summary.getNonCompliantPdfaCount() == 0);
+		assertEquals(0, summary.getNonCompliantPdfaCount());
 	}
 
 	/**
@@ -72,15 +70,15 @@ public class ValidationBatchSummaryTest {
 	@Test
 	public void testGetFailedJobCount() {
 		ValidationBatchSummary summary = ValidationBatchSummaryImpl.fromValues(0, 0, 12);
-		assertTrue(summary.getFailedJobCount() == 12);
+		assertEquals(12, summary.getFailedJobCount());
 		summary = ValidationBatchSummaryImpl.fromValues(10, 0, 15);
-		assertTrue(summary.getFailedJobCount() == 15);
+		assertEquals(15, summary.getFailedJobCount());
 		summary = ValidationBatchSummaryImpl.fromValues(0, 20, 18);
-		assertTrue(summary.getFailedJobCount() == 18);
+		assertEquals(18, summary.getFailedJobCount());
 		summary = ValidationBatchSummaryImpl.fromValues(25, 13, 20);
-		assertTrue(summary.getFailedJobCount() == 20);
+		assertEquals(20, summary.getFailedJobCount());
 		summary = ValidationBatchSummaryImpl.fromValues(13, 0, 4);
-		assertTrue(summary.getFailedJobCount() == 4);
+		assertEquals(4, summary.getFailedJobCount());
 	}
 
 	/**
@@ -89,15 +87,15 @@ public class ValidationBatchSummaryTest {
 	@Test
 	public void testGetTotalJobCount() throws JAXBException {
 		ValidationBatchSummary summary = ValidationBatchSummaryImpl.fromValues(0, 0, 12);
-		assertTrue(summary.getTotalJobCount() == 12);
+		assertEquals(12, summary.getTotalJobCount());
 		summary = ValidationBatchSummaryImpl.fromValues(10, 0, 15);
-		assertTrue(summary.getTotalJobCount() == 25);
+		assertEquals(25, summary.getTotalJobCount());
 		summary = ValidationBatchSummaryImpl.fromValues(0, 20, 18);
-		assertTrue(summary.getTotalJobCount() == 38);
+		assertEquals(38, summary.getTotalJobCount());
 		summary = ValidationBatchSummaryImpl.fromValues(25, 13, 20);
-		assertTrue(summary.getTotalJobCount() == 58);
+		assertEquals(58, summary.getTotalJobCount());
 		summary = ValidationBatchSummaryImpl.fromValues(13, 0, 4);
-		assertTrue(summary.getTotalJobCount() == 17);
+		assertEquals(17, summary.getTotalJobCount());
 		System.out.println(XmlSerialiser.toXml(summary, true, true));
 	}
 
@@ -107,7 +105,7 @@ public class ValidationBatchSummaryTest {
 	@Test
 	public void testDefaultInstance() {
 		ValidationBatchSummary defaultInstance = ValidationBatchSummaryImpl.defaultInstance();
-		assertTrue(defaultInstance == ValidationBatchSummaryImpl.defaultInstance());
+		assertSame(defaultInstance, ValidationBatchSummaryImpl.defaultInstance());
 	}
 
 	/**
@@ -116,7 +114,7 @@ public class ValidationBatchSummaryTest {
 	@Test
 	public void testFromValues() {
 		ValidationBatchSummary instance = ValidationBatchSummaryImpl.fromValues(0, 0, 0);
-		assertFalse(instance == ValidationBatchSummaryImpl.defaultInstance());
+		assertNotSame(instance, ValidationBatchSummaryImpl.defaultInstance());
 		assertEquals(ValidationBatchSummaryImpl.defaultInstance(), instance);
 	}
 

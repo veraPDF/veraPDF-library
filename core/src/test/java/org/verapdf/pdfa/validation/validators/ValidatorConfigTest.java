@@ -23,14 +23,13 @@
  */
 package org.verapdf.pdfa.validation.validators;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import java.util.logging.Level;
+
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -57,7 +56,7 @@ public class ValidatorConfigTest {
 	@Test
 	public final void testDefaultInstance() {
 		ValidatorConfig defaultInstance = ValidatorFactory.defaultConfig();
-		assertTrue(defaultInstance == ValidatorFactory.defaultConfig());
+		assertSame(defaultInstance, ValidatorFactory.defaultConfig());
 	}
 
 	/**
@@ -71,8 +70,8 @@ public class ValidatorConfigTest {
 				defaultInstance.getDefaultFlavour(), defaultInstance.isRecordPasses(), defaultInstance.getMaxFails(),
 				defaultInstance.isDebug(), false, Level.WARNING, defaultInstance.getMaxNumberOfDisplayedFailedChecks(),
 				defaultInstance.showErrorMessages());
-		assertTrue(fromVals.equals(defaultInstance));
-		assertFalse(fromVals == defaultInstance);
+		assertEquals(fromVals, defaultInstance);
+		assertNotSame(fromVals, defaultInstance);
 	}
 
 }
