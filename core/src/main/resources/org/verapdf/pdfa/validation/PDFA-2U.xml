@@ -336,8 +336,11 @@
 			in either direction, nor shall it be greater than 14 400 units in either direction.</description>
             <test>Math.abs(top - bottom) &gt;= 3 &amp;&amp; Math.abs(top - bottom) &lt;= 14400 &amp;&amp; Math.abs(right - left) &gt;= 3 &amp;&amp; Math.abs(right - left) &lt;= 14400</test>
             <error>
-                <message>One of the page boundaries is out of range (3-14400) in one of the directions</message>
-                <arguments/>
+                <message>One of the page boundaries is out of range (3-14400) in one of the directions (height = %1, width = %2)</message>
+                <arguments>
+                    <argument>Math.abs(top - bottom)</argument>
+                    <argument>Math.abs(right - left)</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -413,8 +416,12 @@
             <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot; || deviceClass == &quot;scnr&quot; || deviceClass == &quot;spac&quot;) &amp;&amp; 
 			(colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot; || colorSpace == &quot;Lab &quot;) &amp;&amp; version &lt; 5.0</test>
             <error>
-                <message>The embedded ICC profile is either invalid or does not satisfy PDF 1.7 requirements</message>
-                <arguments/>
+                <message>The embedded ICC profile (Device Class = &quot;%1&quot;, color space = &quot;%2&quot;, version = %3) is either invalid or does not satisfy PDF 1.7 requirements</message>
+                <arguments>
+                    <argument>deviceClass</argument>
+                    <argument>colorSpace</argument>
+                    <argument>version</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1:2008" clause="8.6.5.5"/>
@@ -1546,8 +1553,10 @@
 			dictionaries within the PDF/A-2 file.</description>
             <test>hasDuplicateName == false</test>
             <error>
-                <message>Optional content configuration dictionary has duplicated name</message>
-                <arguments/>
+                <message>Optional content configuration dictionary has duplicated name %1</message>
+                <arguments>
+                    <argument>Name</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
