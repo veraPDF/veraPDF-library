@@ -674,8 +674,10 @@
             <description>Each Note tag shall have unique ID key</description>
             <test>hasDuplicateNoteID == false</test>
             <error>
-                <message>ID key of the Note tag is non-unique</message>
-                <arguments/>
+                <message>ID key %1 of the Note tag is non-unique</message>
+                <arguments>
+                    <argument>noteID</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
