@@ -82,8 +82,10 @@
             <description>If a document information dictionary is present, it shall only contain a ModDate entry.</description>
             <test>size == 1 &amp;&amp; ModDate != null</test>
             <error>
-                <message>Document information dictionary is present and does not contain only a ModDate entry</message>
-                <arguments/>
+                <message>Document information dictionary is present and contains %1 key(s), but allowed only ModDate</message>
+                <arguments>
+                    <argument>keysString.split('&amp;').filter(elem =&gt; elem != 'ModDate').toString()</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -123,10 +125,13 @@
             <id specification="ISO_19005_4" clause="6.1.6.1" testNumber="1"/>
             <description>The value of the Length key specified in the stream dictionary shall match the number of bytes in the file following the LINE FEED (0Ah) character
                 after the stream keyword and preceding the EOL marker before the endstream keyword.</description>
-            <test>isLengthCorrect</test>
+            <test>Length == realLength</test>
             <error>
-                <message>Actual length of the stream does not match the value of the Length key in the Stream dictionary</message>
-                <arguments/>
+                <message>Actual length of the stream (%1 byte(s)) does not match the value of the Length key in the Stream dictionary (%2 byte(s))</message>
+                <arguments>
+                    <argument>realLength</argument>
+                    <argument>Length</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -135,8 +140,10 @@
             <description>A stream dictionary shall not contain the F, FFilter, or FDecodeParms keys</description>
             <test>F == null &amp;&amp; FFilter == null &amp;&amp; FDecodeParms == null</test>
             <error>
-                <message>A stream object dictionary contains one of the F, FFilter, or FDecodeParms keys</message>
-                <arguments/>
+                <message>A stream object dictionary contains %1 key(s)</message>
+                <arguments>
+                    <argument>keysString.split('&amp;').filter(elem =&gt; elem == 'F' || elem == 'FFilter' || elem == 'FDecodeParms').toString()</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -213,10 +220,12 @@
         <rule object="PDPerms">
             <id specification="ISO_19005_4" clause="6.1.11" testNumber="1"/>
             <description>No keys other than UR3 and DocMDP shall be present in a permissions dictionary (ISO 32000-2:2020, 12.8.6, Table 263).</description>
-            <test>containsOtherEntries == false</test>
+            <test>entries.split('&amp;').filter(elem =&gt; elem != 'UR3' &amp;&amp; elem != 'DocMDP').length == 0</test>
             <error>
-                <message>The document permissions dictionary contains keys other than UR3 and DocMDP</message>
-                <arguments/>
+                <message>The document permissions dictionary contains key(s) %1 other than UR3 and DocMDP</message>
+                <arguments>
+                    <argument>entries.split('&amp;').filter(elem =&gt; elem != 'UR3' &amp;&amp; elem != 'DocMDP').toString()</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="12.8.6"/>
@@ -242,8 +251,10 @@
                 by the BX/EX compatibility operators.</description>
             <test>false</test>
             <error>
-                <message>A content stream contains an operator not defined in ISO 32000-2:2020</message>
-                <arguments/>
+                <message>A content stream contains operator %1 not defined in ISO 32000-2:2020</message>
+                <arguments>
+                    <argument>name</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -267,12 +278,12 @@
             <description>A content stream's named resources shall be defined by a resource dictionary, which shall
                 enumerate the named resources needed by the operators in the content stream and the names by which
                 they can be referred to.</description>
-            <test>containsUndefinedResource == false</test>
+            <test>undefinedResourceNames == ''</test>
             <error>
-                <message>A content stream's named resources not define by a resource dictionary, which shall enumerate
-                    the named resources needed by the operators in the content stream and the names by which they can
-                    be referred to.</message>
-                <arguments/>
+                <message>A content stream references named resource(s) %1 not defined by a resource dictionary.</message>
+                <arguments>
+                    <argument>undefinedResourceNames</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="7.8.3"/>
@@ -781,10 +792,21 @@
                 - Otherwise the corresponding values of the Registry and Ordering keys in both CIDSystemInfo dictionaries
                 shall be identical, and the value of the Supplement key in the CIDSystemInfo dictionary of the CIDFont shall
                 be less than or equal to the value of the Supplement key in the CIDSystemInfo dictionary of the CMap.</description>
-            <test>cmapName == &quot;Identity-H&quot; || cmapName == &quot;Identity-V&quot; || (areRegistryOrderingCompatible == true &amp;&amp; isSupplementCompatible == true)</test>
+            <test>cmapName == &quot;Identity-H&quot; || cmapName == &quot;Identity-V&quot; || (CIDFontOrdering != null &amp;&amp;
+                CIDFontOrdering == CMapOrdering &amp;&amp; CIDFontRegistry != null &amp;&amp; CIDFontRegistry == CMapRegistry &amp;&amp;
+                CIDFontSupplement != null &amp;&amp; CMapSupplement != null &amp;&amp; CIDFontSupplement &lt;= CMapSupplement)</test>
             <error>
-                <message>CIDSystemInfo entries the CIDFont and CMap dictionaries of a Type 0 font are not compatible</message>
-                <arguments/>
+                <message>CIDSystemInfo entries the CIDFont and CMap dictionaries of a Type 0 font are not compatible
+                    (CIDSystemInfo Ordering = %1, CMap Ordering = %2, CIDSystemInfo Registry = %3,
+                    CMap Registry = %4, CIDSystemInfo Supplement = %5, CMap Supplement = %6)</message>
+                <arguments>
+                    <argument>CIDFontOrdering</argument>
+                    <argument>CMapOrdering</argument>
+                    <argument>CIDFontRegistry</argument>
+                    <argument>CMapRegistry</argument>
+                    <argument>CIDFontSupplement</argument>
+                    <argument>CMapSupplement</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -909,10 +931,14 @@
             <description>For every font embedded in a conforming file, the glyph width information in the font
                 dictionary and in the embedded font program shall be consistent for every glyph referenced for
                 rendering. Glyphs that are referenced only with rendering mode 3 are exempt from this requirement.</description>
-            <test>renderingMode == 3 || isWidthConsistent == null || isWidthConsistent == true</test>
+            <test>renderingMode == 3 || widthFromFontProgram == null || widthFromDictionary == null ||
+                Math.abs(widthFromFontProgram - widthFromDictionary) &lt;= 1</test>
             <error>
-                <message>Glyph width information in the embedded font program is not consistent with the Widths entry of the font dictionary</message>
-                <arguments/>
+                <message>Glyph width %1 in the embedded font program is not consistent with the Widths entry of the font dictionary (value %2)</message>
+                <arguments>
+                    <argument>widthFromFontProgram</argument>
+                    <argument>widthFromDictionary</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -960,9 +986,9 @@
         </rule>
         <rule object="TrueTypeFontProgram">
             <id specification="ISO_19005_4" clause="6.2.10.6" testNumber="4"/>
-            <description>Symbolic TrueType fonts shall not contain an Encoding entry in the font dictionary, and the 'cmap'
-                subtable in the embedded font program shall either contain the Microsoft Symbol (3,0 – Platform ID=3, Encoding ID=0)
-                or the Mac Roman (1,0 – Platform ID=1, Encoding ID=0) encoding.</description>
+            <description>The 'cmap' subtable in the embedded font program for a symbolic TrueType font shall contain
+                either the Microsoft Symbol (3,0 – Platform ID=3, Encoding ID=0) or the Mac Roman (1,0 – Platform ID=1,
+                Encoding ID=0) encoding.</description>
             <test>isSymbolic == false || cmap30Present == true || cmap10Present == true</test>
             <error>
                 <message>The embedded font program for a symbolic TrueType font does not contain Microsoft
@@ -1154,9 +1180,12 @@
                 shall only contain keys from the following list: E, X, D, U, Fo, and Bl.</description>
             <test>containsOtherActions == false</test>
             <error>
-                <message>A document catalog dictionary include an AA entry and its value (which is an additional-actions
-                    dictionary) contains key(s) not from the following list: E, X, D, U, Fo, and Bl</message>
-                <arguments/>
+                <message>Additional-actions dictionary contains key(s) %1 not from the following permitted list: E, X, D,
+                    U, Fo, and Bl</message>
+                <arguments>
+                    <argument>actions.split('&amp;').filter(elem =&gt; elem != 'E' &amp;&amp; elem != 'X'&amp;&amp; elem != 'D' &amp;&amp;
+                        elem != 'U' &amp;&amp; elem != 'Fo' &amp;&amp; elem != 'Bl').toString()</argument>
+                </arguments>
             </error>
             <references/>
         </rule>

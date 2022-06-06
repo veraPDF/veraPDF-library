@@ -103,10 +103,13 @@
             <id specification="ISO_19005_2" clause="6.1.7" testNumber="1"/>
             <description>The value of the Length key specified in the stream dictionary shall match the number of bytes in the file following the LINE FEED (0Ah) character
 			after the stream keyword and preceding the EOL marker before the endstream keyword.</description>
-            <test>isLengthCorrect</test>
+            <test>Length == realLength</test>
             <error>
-                <message>Actual length of the stream does not match the value of the Length key in the Stream dictionary</message>
-                <arguments/>
+                <message>Actual length of the stream (%1 byte(s)) does not match the value of the Length key in the Stream dictionary (%2 byte(s))</message>
+                <arguments>
+                    <argument>realLength</argument>
+                    <argument>Length</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -126,8 +129,10 @@
             <description>A stream dictionary shall not contain the F, FFilter, or FDecodeParms keys</description>
             <test>F == null &amp;&amp; FFilter == null &amp;&amp; FDecodeParms == null</test>
             <error>
-                <message>A stream object dictionary contains one of the F, FFilter, or FDecodeParms keys</message>
-                <arguments/>
+                <message>A stream object dictionary contains %1 key(s)</message>
+                <arguments>
+                    <argument>keysString.split('&amp;').filter(elem =&gt; elem == 'F' || elem == 'FFilter' || elem == 'FDecodeParms').toString()</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -200,10 +205,12 @@
         <rule object="PDPerms">
             <id specification="ISO_19005_2" clause="6.1.12" testNumber="1"/>
             <description>No keys other than UR3 and DocMDP shall be present in a permissions dictionary (ISO 32000-1:2008, 12.8.4, Table 258).</description>
-            <test>containsOtherEntries == false</test>
+            <test>entries.split('&amp;').filter(elem =&gt; elem != 'UR3' &amp;&amp; elem != 'DocMDP').length == 0</test>
             <error>
-                <message>The document permissions dictionary contains keys other than UR3 and DocMDP</message>
-                <arguments/>
+                <message>The document permissions dictionary contains key(s) %1 other than UR3 and DocMDP</message>
+                <arguments>
+                    <argument>entries.split('&amp;').filter(elem =&gt; elem != 'UR3' &amp;&amp; elem != 'DocMDP').toString()</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1:2008" clause="12.8.4"/>
@@ -350,8 +357,10 @@
 			by the BX/EX compatibility operators.</description>
             <test>false</test>
             <error>
-                <message>A content stream contains an operator not defined in ISO 32000-1</message>
-                <arguments/>
+                <message>A content stream contains operator %1 not defined in ISO 32000-1</message>
+                <arguments>
+                    <argument>name</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -868,10 +877,21 @@
 			and Supplement may be used in the CIDSystemInfo entry of the CIDFont. 
 			- Otherwise, the corresponding Registry and Ordering strings in both CIDSystemInfo dictionaries shall be identical, and the value of the Supplement key in 
 			the CIDSystemInfo dictionary of the CIDFont shall be less than or equal to the Supplement key in the CIDSystemInfo dictionary of the CMap.</description>
-            <test>cmapName == &quot;Identity-H&quot; || cmapName == &quot;Identity-V&quot; || (areRegistryOrderingCompatible == true &amp;&amp; isSupplementCompatible == true)</test>
+            <test>cmapName == &quot;Identity-H&quot; || cmapName == &quot;Identity-V&quot; || (CIDFontOrdering != null &amp;&amp;
+                CIDFontOrdering == CMapOrdering &amp;&amp; CIDFontRegistry != null &amp;&amp; CIDFontRegistry == CMapRegistry &amp;&amp;
+                CIDFontSupplement != null &amp;&amp; CMapSupplement != null &amp;&amp; CIDFontSupplement &lt;= CMapSupplement)</test>
             <error>
-                <message>CIDSystemInfo entries the CIDFont and CMap dictionaries of a Type 0 font are not compatible</message>
-                <arguments/>
+                <message>CIDSystemInfo entries the CIDFont and CMap dictionaries of a Type 0 font are not compatible
+                    (CIDSystemInfo Ordering = %1, CMap Ordering = %2, CIDSystemInfo Registry = %3,
+                    CMap Registry = %4, CIDSystemInfo Supplement = %5, CMap Supplement = %6)</message>
+                <arguments>
+                    <argument>CIDFontOrdering</argument>
+                    <argument>CMapOrdering</argument>
+                    <argument>CIDFontRegistry</argument>
+                    <argument>CMapRegistry</argument>
+                    <argument>CIDFontSupplement</argument>
+                    <argument>CMapSupplement</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1015,10 +1035,14 @@
             <id specification="ISO_19005_2" clause="6.2.11.5" testNumber="1"/>
             <description>For every font embedded in a conforming file and used for rendering, the glyph width information in the font dictionary and in the embedded 
 			font program shall be consistent.</description>
-            <test>renderingMode == 3 || isWidthConsistent == null || isWidthConsistent == true</test>
+            <test>renderingMode == 3 || widthFromFontProgram == null || widthFromDictionary == null ||
+                Math.abs(widthFromFontProgram - widthFromDictionary) &lt;= 1</test>
             <error>
-                <message>Glyph width information in the embedded font program is not consistent with the Widths entry of the font dictionary</message>
-                <arguments/>
+                <message>Glyph width %1 in the embedded font program is not consistent with the Widths entry of the font dictionary (value %2)</message>
+                <arguments>
+                    <argument>widthFromFontProgram</argument>
+                    <argument>widthFromDictionary</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1066,8 +1090,9 @@
         </rule>
         <rule object="TrueTypeFontProgram">
             <id specification="ISO_19005_2" clause="6.2.11.6" testNumber="4"/>
-            <description>Symbolic TrueType fonts shall not contain an Encoding entry in the font dictionary, and the 'cmap' table in the embedded font program
-			shall either contain exactly one encoding or it shall contain, at least, the Microsoft Symbol (3,0 – Platform ID=3, Encoding ID=0) encoding.</description>
+            <description>The 'cmap' table in the embedded font program for a symbolic TrueType font shall contain either
+                exactly one encoding or it shall contain, at least, the Microsoft Symbol (3,0 - Platform ID=3,
+                Encoding ID=0) encoding.</description>
             <test>isSymbolic == false || nrCmaps == 1 || cmap30Present == true</test>
             <error>
                 <message>The embedded font program for a symbolic TrueType font contains %1 cmap subtables and
@@ -1161,8 +1186,10 @@
             <description>A Widget annotation dictionary shall not contains the A or AA keys.</description>
             <test>containsA == false &amp;&amp; containsAA == false</test>
             <error>
-                <message>A Widget annotation contains either A or AA entry</message>
-                <arguments/>
+                <message>A Widget annotation contains %1 key(s)</message>
+                <arguments>
+                    <argument>keys.split('&amp;').filter(elem =&gt; elem == 'A' || elem == 'AA').toString()</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
