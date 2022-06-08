@@ -25,6 +25,10 @@ import org.verapdf.model.tools.xmp.ValidatorsContainer;
 import org.verapdf.model.xmplayer.ExtensionSchemaObject;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author Maksim Bezrukov
  */
@@ -44,6 +48,28 @@ public abstract class AXLExtensionSchemaObject extends AXLXMPObject implements E
     }
 
     @Override
-    public abstract Boolean getcontainsUndefinedFields();
+    public Boolean getcontainsUndefinedFields() {
+        for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
+            if (!getValidNamespaceURI().equals(child.getNamespaceURI()) || !getValidChildNames().contains(child.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String getundefinedFields() {
+        List<String> undefinedFields = new LinkedList<>();
+        for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
+            if (!getValidNamespaceURI().equals(child.getNamespaceURI()) || !getValidChildNames().contains(child.getName())) {
+                undefinedFields.add(child.getName() + "(" + child.getNamespaceURI() + ")");
+            }
+        }
+        return String.join(",", undefinedFields);
+    }
+
+    protected abstract String getValidNamespaceURI();
+
+    protected abstract Set<String> getValidChildNames();
 
 }
