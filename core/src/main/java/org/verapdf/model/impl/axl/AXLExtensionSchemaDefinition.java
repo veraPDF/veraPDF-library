@@ -31,6 +31,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -125,6 +126,28 @@ public class AXLExtensionSchemaDefinition extends AXLExtensionSchemaObject imple
 			}
 		}
 		return Boolean.valueOf(undef);
+	}
+
+	@Override
+	public String getundefinedFields() {
+		List<String> undefinedFields = new LinkedList<>();
+		for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
+			if (XMPConst.NS_PDFA_SCHEMA.equals(child.getNamespaceURI())) {
+				switch (child.getName()) {
+					case NAMESPACE_URI:
+					case PREFIX:
+					case PROPERTY:
+					case SCHEMA:
+					case VALUE_TYPE:
+						break;
+					default:
+						undefinedFields.add(child.getNamespaceURI() + ":" + child.getName());
+				}
+			} else {
+				undefinedFields.add(child.getNamespaceURI() + ":" + child.getName());
+			}
+		}
+		return String.join(",", undefinedFields);
 	}
 
 	@Override

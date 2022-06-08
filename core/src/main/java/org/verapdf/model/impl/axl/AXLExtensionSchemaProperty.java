@@ -27,6 +27,9 @@ import org.verapdf.model.tools.xmp.validators.SimpleTypeValidator;
 import org.verapdf.model.xmplayer.ExtensionSchemaProperty;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author Maksim Bezrukov
  */
@@ -62,6 +65,27 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
             }
         }
         return Boolean.valueOf(undef);
+    }
+
+    @Override
+    public String getundefinedFields() {
+        List<String> undefinedFields = new LinkedList<>();
+        for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
+            if (XMPConst.NS_PDFA_PROPERTY.equals(child.getNamespaceURI())) {
+                switch (child.getName()) {
+                    case CATEGORY:
+                    case DESCRIPTION:
+                    case NAME:
+                    case VALUE_TYPE:
+                        break;
+                    default:
+                        undefinedFields.add(child.getNamespaceURI() + ":" + child.getName());
+                }
+            } else {
+                undefinedFields.add(child.getNamespaceURI() + ":" + child.getName());
+            }
+        }
+        return String.join(",", undefinedFields);
     }
 
     @Override

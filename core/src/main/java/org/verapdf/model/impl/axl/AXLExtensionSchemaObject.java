@@ -46,4 +46,7 @@ public abstract class AXLExtensionSchemaObject extends AXLXMPObject implements E
     @Override
     public abstract Boolean getcontainsUndefinedFields();
 
+    @Override
+    public abstract String getundefinedFields();
+
 }
