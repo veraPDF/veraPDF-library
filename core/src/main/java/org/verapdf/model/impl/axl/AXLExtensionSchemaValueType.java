@@ -29,9 +29,7 @@ import org.verapdf.model.tools.xmp.validators.URITypeValidator;
 import org.verapdf.model.xmplayer.ExtensionSchemaValueType;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Maksim Bezrukov
@@ -47,6 +45,7 @@ public class AXLExtensionSchemaValueType extends AXLExtensionSchemaObject implem
     private static final String FIELD = "field";
     private static final String DESCRIPTION = "description";
     private static final String TYPE = "type";
+    private static final Set<String> validChildNames = new HashSet<>();
 
     public AXLExtensionSchemaValueType(VeraPDFXMPNode xmpNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3, PDFAFlavour flavour) {
         super(EXTENSION_SCHEMA_VALUE_TYPE, xmpNode, containerForPDFA_1, containerForPDFA_2_3, flavour);
@@ -82,29 +81,6 @@ public class AXLExtensionSchemaValueType extends AXLExtensionSchemaObject implem
             return Collections.unmodifiableList(res);
         }
         return Collections.emptyList();
-    }
-
-    @Override
-    public Boolean getcontainsUndefinedFields() {
-        boolean undef = false;
-        for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-            if (!undef && XMPConst.NS_PDFA_TYPE.equals(child.getNamespaceURI())) {
-                switch (child.getName()) {
-                    case NAMESPACE_URI:
-                    case PREFIX:
-                    case FIELD:
-                    case DESCRIPTION:
-                    case TYPE:
-                        break;
-                    default:
-                        undef = true;
-                }
-            } else {
-                undef = true;
-                break;
-            }
-        }
-        return Boolean.valueOf(undef);
     }
 
     @Override
@@ -205,5 +181,21 @@ public class AXLExtensionSchemaValueType extends AXLExtensionSchemaObject implem
             }
         }
         return null;
+    }
+
+    protected String getValidNamespaceURI() {
+        return XMPConst.NS_PDFA_TYPE;
+    }
+
+    protected Set<String> getValidChildNames() {
+        return validChildNames;
+    }
+
+    static {
+        validChildNames.add(NAMESPACE_URI);
+        validChildNames.add(PREFIX);
+        validChildNames.add(FIELD);
+        validChildNames.add(DESCRIPTION);
+        validChildNames.add(TYPE);
     }
 }
