@@ -123,7 +123,8 @@ final class CheckImpl implements Check {
 			throw new IllegalArgumentException("Argument assertion con not be null");
 		}
 		return new CheckImpl(assertion.getStatus(), getStringWithoutInvalidXmlChars(assertion.getLocation().getContext()),
-		                     assertion.getLocationContext(), assertion.getErrorMessage(), assertion.getErrorArguments());
+				assertion.getLocationContext(), getStringWithoutInvalidXmlChars(assertion.getErrorMessage()),
+				assertion.getErrorArguments());
 	}
 
 	private static String getStringWithoutInvalidXmlChars(String string) {
