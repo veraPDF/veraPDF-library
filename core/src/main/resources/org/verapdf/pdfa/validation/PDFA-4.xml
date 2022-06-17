@@ -1177,7 +1177,8 @@
             <description>If a document catalog dictionary or page dictionary or an annotation dictionary (other than a
                 Widget annotation dictionary) include an AA entry, its value (which is an additional-actions dictionary)
                 shall only contain keys from the following list: E, X, D, U, Fo, and Bl.</description>
-            <test>containsOtherActions == false</test>
+            <test>parentType == 'WidgetAnnot' || parentType == 'FormField' || actions.split('&amp;').filter(elem =&gt; elem != 'E' &amp;&amp;
+                elem != 'X'&amp;&amp; elem != 'D' &amp;&amp; elem != 'U' &amp;&amp; elem != 'Fo' &amp;&amp; elem != 'Bl').length == 0</test>
             <error>
                 <message>Additional-actions dictionary contains key(s) %1 not from the following permitted list: E, X, D,
                     U, Fo, and Bl</message>
