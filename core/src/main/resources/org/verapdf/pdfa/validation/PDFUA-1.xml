@@ -33,8 +33,10 @@
             <description>Content marked as Artifact should not present inside tagged content</description>
             <test>tag != 'Artifact' || parentStructureTag == null</test>
             <error>
-                <message>Content marked as Artifact is present inside tagged content</message>
-                <arguments/>
+                <message>Content marked as Artifact is present inside tagged content (tag %1)</message>
+                <arguments>
+                    <argument>parentStructureTag</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -43,8 +45,10 @@
             <description>Tagged content should not present inside content marked as Artifact</description>
             <test>structureTag == null || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length == 0</test>
             <error>
-                <message>Tagged content is present inside content marked as Artifact</message>
-                <arguments/>
+                <message>Tagged content (tag %1) is present inside content marked as Artifact</message>
+                <arguments>
+                    <argument>structureTag</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -763,14 +767,15 @@
             <description>An annotation (except annotations of type Link, Widget or Popup, or hidden annotations,
                 or those having rectangle outside the crop-box) shall have either Contents key or an Alt entry
                 in the enclosing structure element</description>
-            <test>structParentType != 'Annot' || Subtype == 'Widget' || Subtype == 'Popup' || Subtype == 'Link'
+            <test>Subtype == 'Widget' || Subtype == 'Popup' || Subtype == 'Link'
                 || isOutsideCropBox == true || (F &amp; 2) == 2 || (Contents != null &amp;&amp; Contents != '') ||
                 (Alt != null &amp;&amp; Alt != '')</test>
             <error>
-                <message>An annotation (except annotations of type Link, Widget or Popup, or hidden annotations,
-                    or those having rectangle outside the crop-box) has neither Contents key nor an Alt entry
-                    in the enclosing structure element</message>
-                <arguments/>
+                <message>%1 annotation whose hidden flag is not set and whose rectangle is not outside the crop-box
+                    has neither Contents key nor an Alt entry in the enclosing structure element</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -782,7 +787,7 @@
             <test>isOutsideCropBox == true || (F &amp; 2) == 2 || (TU != null &amp;&amp; TU != '') || (Alt != null &amp;&amp; Alt != '')</test>
             <error>
                 <message>A form field whose hidden flag is not set and whose rectangle is not outside the crop-box
-                    and does not have a TU key and its Widget annotations do not have alternative descriptions
+                    has neither TU key nor its Widget annotations do not have alternative descriptions
                     (in the form of an Alt entry in the enclosing structure element)</message>
                 <arguments/>
             </error>
@@ -883,8 +888,10 @@
                 is required.</description>
             <test>hasCorrectAlt == true</test>
             <error>
-                <message>Alt key is missing from the media clip data dictionary or has not correct value</message>
-                <arguments/>
+                <message>Alt key (value %1) is missing from the media clip data dictionary or has incorrect value</message>
+                <arguments>
+                    <argument>Alt</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="13.2.4.2"/>
