@@ -1136,8 +1136,10 @@
             <description>Extension schema descriptions shall be specified using the PDF/A extension schema description schema defined in this clause.</description>
             <test>containsUndefinedFields == false</test>
             <error>
-                <message>An extension schema object contains fields not defined by the specification</message>
-                <arguments/>
+                <message>An extension schema object contains field(s) %1 not defined by the specification</message>
+                <arguments>
+                    <argument>undefinedFields</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 19005-1:2005/Cor.1:2007" clause="6.7.8"/>

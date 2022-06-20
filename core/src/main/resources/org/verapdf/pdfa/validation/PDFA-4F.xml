@@ -176,8 +176,10 @@
                 a NUMBER SIGN (23h), if any, shall be valid UTF-8 character sequences.</description>
             <test>isValidUtf8 == true</test>
             <error>
-                <message>The name object does not represent a correct UTF-8 character sequence</message>
-                <arguments/>
+                <message>The name value %1 does not represent a correct UTF-8 character sequence</message>
+                <arguments>
+                    <argument>unicodeValue</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="7.3.5"/>
@@ -258,16 +260,18 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDResource">
+        <rule object="PDContentStream" deferred="true">
             <id specification="ISO_19005_4" clause="6.2.2" testNumber="2"/>
             <description>A content stream that references other objects, such as images and fonts that are necessary to
                 fully render or process the stream, shall have an explicitly associated Resources dictionary as
                 described in ISO 32000-2:2020, 7.8.3. Such resource dictionaries shall define all named resources
                 referenced by this content stream.</description>
-            <test>isInherited == false</test>
+            <test>inheritedResourceNames == ''</test>
             <error>
-                <message>A content stream refers to resources not defined in an explicitly associated Resources dictionary</message>
-                <arguments/>
+                <message>A content stream refers to resource(s) %1 not defined in an explicitly associated Resources dictionary</message>
+                <arguments>
+                    <argument>inheritedResourceNames</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-2:2020" clause="7.8.3"/>
@@ -1388,10 +1392,12 @@
             <id specification="ISO_19005_4" clause="6.10" testNumber="3"/>
             <description>If an optional content configuration dictionary contains the Order key, the array which is the value of this Order key shall contain references
                 to all OCGs in the conforming file.</description>
-            <test>doesOrderContainAllOCGs == true</test>
+            <test>OCGsNotContainInOrder == ''</test>
             <error>
-                <message>Not all optional content groups are present in the Order entry of the optional content configuration dictionary</message>
-                <arguments/>
+                <message>Optional content group(s) %1 not presented in the Order entry of the optional content configuration dictionary</message>
+                <arguments>
+                    <argument>OCGsNotContainInOrder</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
