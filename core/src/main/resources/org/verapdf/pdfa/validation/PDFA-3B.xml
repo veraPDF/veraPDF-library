@@ -207,7 +207,7 @@
         <rule object="PDPerms">
             <id specification="ISO_19005_3" clause="6.1.12" testNumber="1"/>
             <description>No keys other than UR3 and DocMDP shall be present in a permissions dictionary (ISO 32000-1:2008, 12.8.4, Table 258).</description>
-            <test>entries.split('&amp;').filter(elem =&gt; elem != 'UR3' &amp;&amp; elem != 'DocMDP').length == 0</test>
+            <test>entries.split('&amp;').filter(elem =&gt; elem != 'UR3' &amp;&amp; elem != 'DocMDP').length == 0 || entries == ''</test>
             <error>
                 <message>The document permissions dictionary contains key(s) %1 other than UR3 and DocMDP</message>
                 <arguments>
@@ -1192,7 +1192,7 @@
             <error>
                 <message>A Widget annotation contains %1 key(s)</message>
                 <arguments>
-                    <argument>keys.split('&amp;').filter(elem =&gt; elem == 'A' || elem == 'AA').toString()</argument>
+                    <argument>entries.split('&amp;').filter(elem =&gt; elem == 'A' || elem == 'AA').toString()</argument>
                 </arguments>
             </error>
             <references/>
