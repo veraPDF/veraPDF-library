@@ -545,7 +545,7 @@
         <rule object="SETHead">
             <id specification="ISO_14289_1" clause="7.2" testNumber="36"/>
             <description>THead element may contain only TR elements</description>
-            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0</test>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0 || kidsStandardTypes == ''</test>
             <error>
                 <message>THead element contains %1 element(s) instead of TR</message>
                 <arguments>
@@ -559,7 +559,7 @@
         <rule object="SETBody">
             <id specification="ISO_14289_1" clause="7.2" testNumber="37"/>
             <description>TBody element may contain only TR elements</description>
-            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0</test>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0 || kidsStandardTypes == ''</test>
             <error>
                 <message>TBody element contains %1 element(s) instead of TR</message>
                 <arguments>
@@ -573,7 +573,7 @@
         <rule object="SETFoot">
             <id specification="ISO_14289_1" clause="7.2" testNumber="38"/>
             <description>TFoot element may contain only TR elements</description>
-            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0</test>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0 || kidsStandardTypes == ''</test>
             <error>
                 <message>TFoot element contains %1 element(s) instead of TR</message>
                 <arguments>
