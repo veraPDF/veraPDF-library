@@ -1392,7 +1392,7 @@
             <id specification="ISO_19005_4" clause="6.10" testNumber="3"/>
             <description>If an optional content configuration dictionary contains the Order key, the array which is the value of this Order key shall contain references
                 to all OCGs in the conforming file.</description>
-            <test>OCGsNotContainInOrder == ''</test>
+            <test>OCGsNotContainInOrder == null</test>
             <error>
                 <message>Optional content group(s) %1 not presented in the Order entry of the optional content configuration dictionary</message>
                 <arguments>

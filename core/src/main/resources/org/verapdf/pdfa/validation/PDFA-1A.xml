@@ -1298,8 +1298,12 @@
             <description>The document catalog dictionary shall include a MarkInfo dictionary with a Marked entry in it, whose value shall be true.</description>
             <test>Marked == true</test>
             <error>
-                <message>/Marked entry of the MarkInfo dictionary is not present in the document catalog or is set to false</message>
-                <arguments/>
+                <message>MarkInfo dictionary is not present in the document catalog, or Marked entry is set to false or
+                    is not present in the MarkInfo dictionary (MarkInfo = %1, Marked = %2)</message>
+                <arguments>
+                    <argument>MarkInfo</argument>
+                    <argument>Marked</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="PDF 1.4 Reference" clause="9.7.1"/>
