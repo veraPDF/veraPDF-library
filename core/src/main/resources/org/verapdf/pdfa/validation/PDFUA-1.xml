@@ -144,11 +144,17 @@
         </rule>
         <rule object="CosDocument">
             <id specification="ISO_14289_1" clause="7.1" testNumber="10"/>
-            <description>The document catalog dictionary shall include a ViewerPreferences dictionary containing a DisplayDocTitle key, whose value shall be true.</description>
+            <description>The document catalog dictionary shall include a ViewerPreferences dictionary containing a
+                DisplayDocTitle key, whose value shall be true.</description>
             <test>DisplayDocTitle == true</test>
             <error>
-                <message>DisplayDocTitle key of the ViewerPreferences dictionary is not present in the document catalog or is set to false</message>
-                <arguments/>
+                <message>ViewerPreferences dictionary is not present in the document Catalog, or DisplayDocTitle key is
+                    set to false or is not present in the ViewerPreferences dictionary (ViewerPreferences = %1,
+                    DisplayDocTitle = %2)</message>
+                <arguments>
+                    <argument>ViewerPreferences</argument>
+                    <argument>DisplayDocTitle</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -718,8 +724,12 @@
             <description>The file specification dictionary for an embedded file shall contain the non-empty F and UF keys</description>
             <test>containsEF == false || (F != null &amp;&amp; F != '' &amp;&amp; UF != null &amp;&amp; UF != '')</test>
             <error>
-                <message>The file specification dictionary for an embedded file does not contain either F or EF key or at least one of the keys is empty</message>
-                <arguments/>
+                <message>The file specification dictionary for an embedded file does not contain either F or UF key or
+                    at least one of the keys is empty (F = %1, UF = %2)</message>
+                <arguments>
+                    <argument>F</argument>
+                    <argument>UF</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -741,8 +751,12 @@
             <error>
                 <message>The file is encrypted but does not contain a P entry in its encryption dictionary or
                     the file is encrypted and does contain a P entry, but the 10th bit position of the P entry is false
+                    (P = %1, 10th bit = %2)
                 </message>
-                <arguments/>
+                <arguments>
+                    <argument>P</argument>
+                    <argument>P != null ? (P &amp; 512) >> 9 : null</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="7.6.3.2"/>
@@ -787,8 +801,8 @@
             <test>isOutsideCropBox == true || (F &amp; 2) == 2 || (TU != null &amp;&amp; TU != '') || (Alt != null &amp;&amp; Alt != '')</test>
             <error>
                 <message>A form field whose hidden flag is not set and whose rectangle is not outside the crop-box
-                    has neither TU key nor its Widget annotations do not have alternative descriptions
-                    (in the form of an Alt entry in the enclosing structure element)</message>
+                    neither has TU key nor its Widget annotations have alternative descriptions (in the form of an Alt
+                    entry in the enclosing structure element)</message>
                 <arguments/>
             </error>
             <references/>
