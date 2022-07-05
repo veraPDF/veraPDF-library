@@ -40,16 +40,12 @@ final class RawResultHandler extends AbstractXmlHandler {
 	private static final String rawEleName = "rawResults"; //$NON-NLS-1$
 	private static final String configEleName = "config"; //$NON-NLS-1$
 	private static final String itemEleName = "item"; //$NON-NLS-1$
-	private static final String validResultEleName = "validationResult"; //$NON-NLS-1$
-	private static final String featuresRepEleName = "featuresReport"; //$NON-NLS-1$
-	private static final String fixerResultName = "fixerResult"; //$NON-NLS-1$
 	private static final String summaryName = "summary"; //$NON-NLS-1$
 	private static final String taskResultName = "taskResult"; //$NON-NLS-1$
 	private final boolean format;
 	private final boolean fragment;
 
 	/**
-	 * @param indentSize
 	 * @param dest
 	 * @throws VeraPDFException
 	 */
@@ -105,7 +101,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 
 	@Override
 	void validationSuccess(TaskResult taskResult, ValidationResult validationResult) throws VeraPDFException {
-		this.serialseElement(validationResult, validResultEleName, this.format, this.fragment);
+		this.serialseElement(validationResult, VALIDATION_RESULT, this.format, this.fragment);
 	}
 
 	@Override
@@ -115,7 +111,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 
 	@Override
 	void featureSuccess(TaskResult taskResult, FeaturesReport featuresReport) throws VeraPDFException {
-		this.serialseElement(featuresReport, featuresRepEleName, this.format, this.fragment);
+		this.serialseElement(featuresReport, FEATURES_REPORT, this.format, this.fragment);
 	}
 
 	@Override
@@ -125,7 +121,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 
 	@Override
 	void fixerSuccess(TaskResult taskResult, MetadataFixerResult fixerResult) throws VeraPDFException {
-		this.serialseElement(fixerResult, fixerResultName, this.format, this.fragment);
+		this.serialseElement(fixerResult, FIXER_RESULT, this.format, this.fragment);
 	}
 
 	@Override

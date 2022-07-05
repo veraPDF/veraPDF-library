@@ -31,6 +31,8 @@ public abstract class ReportWriter {
 					return new MrrReportWriter(os, errorStream);
 				case XML:
 					return new XmlReportWriter(os, errorStream);
+				case JSON:
+					return new JsonReportWriter(os, errorStream);
 				default:
 					return null;
 			}

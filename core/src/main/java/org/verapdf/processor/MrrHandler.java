@@ -49,13 +49,6 @@ import java.util.EnumMap;
  */
 
 class MrrHandler extends AbstractXmlHandler {
-    private final static String STATEMENT_PREFIX = "PDF file is ";
-    private final static String NOT_INSERT = "not ";
-    private final static String STATEMENT_SUFFIX = "compliant with Validation Profile requirements.";
-    private final static String COMPLIANT_STATEMENT = STATEMENT_PREFIX
-            + STATEMENT_SUFFIX;
-    private final static String NONCOMPLIANT_STATEMENT = STATEMENT_PREFIX
-            + NOT_INSERT + STATEMENT_SUFFIX;
 	private final static String report = "report"; //$NON-NLS-1$
 	private final static String jobEleName = "job"; //$NON-NLS-1$
 	private final static String jobsEleName = jobEleName + "s"; //$NON-NLS-1$
@@ -141,9 +134,7 @@ class MrrHandler extends AbstractXmlHandler {
 
 	@Override
 	void validationSuccess(TaskResult taskResult, ValidationResult result) throws VeraPDFException {
-		ValidationDetails details = Reports.fromValues(result, this.logPassed);
-		ValidationReport valRep = Reports.createValidationReport(details, result.getProfileDetails().getName(), getStatement(result.isCompliant()), result.isCompliant());
-		this.serialseElement(valRep, validationRepEleName, true, true);
+		this.serialseElement(Reports.createValidationReport(result, this.logPassed), validationRepEleName, true, true);
 	}
 
 	@Override
@@ -232,9 +223,5 @@ class MrrHandler extends AbstractXmlHandler {
 	static BatchProcessingHandler newInstance(final Writer dest, final boolean logPassed) throws VeraPDFException {
 		return new MrrHandler(dest, logPassed);
 	}
-	
-    private static String getStatement(boolean status) {
-        return status ? COMPLIANT_STATEMENT : NONCOMPLIANT_STATEMENT;
-    }
 
 }
