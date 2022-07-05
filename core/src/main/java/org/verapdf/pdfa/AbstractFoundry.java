@@ -34,7 +34,7 @@ import org.verapdf.pdfa.validation.validators.ValidatorFactory;
  * @version 0.1 Created 26 Oct 2016:21:25:17
  */
 
-abstract class AbstractFoundry implements VeraPDFFoundry {
+public abstract class AbstractFoundry implements VeraPDFFoundry {
 	static PDFAFlavour defaultFlavour = PDFAFlavour.PDFA_1_B;
 
 	@Override

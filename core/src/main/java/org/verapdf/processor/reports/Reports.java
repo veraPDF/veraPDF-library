@@ -33,6 +33,15 @@ import org.verapdf.pdfa.validation.profiles.ValidationProfile;
  * @version 0.1 Created 10 Nov 2016:08:12:36
  */
 public final class Reports {
+
+	private static final String STATEMENT_PREFIX = "PDF file is ";
+	private static final String NOT_INSERT = "not ";
+	private static final String STATEMENT_SUFFIX = "compliant with Validation Profile requirements.";
+	private static final String COMPLIANT_STATEMENT = STATEMENT_PREFIX
+			+ STATEMENT_SUFFIX;
+	private static final String NONCOMPLIANT_STATEMENT = STATEMENT_PREFIX
+			+ NOT_INSERT + STATEMENT_SUFFIX;
+
 	private Reports() {
 		throw new AssertionError("Should never enter Reports()."); //$NON-NLS-1$
 	}
@@ -88,6 +97,17 @@ public final class Reports {
 	public static final ValidationReport createValidationReport(final ValidationDetails details,
 			final String profileName, final String statement, final boolean isCompliant) {
 		return ValidationReportImpl.fromValues(details, profileName, statement, isCompliant);
+	}
+
+	public static final ValidationReport createValidationReport(final ValidationResult validationResult,
+																final boolean logPassed) {
+		ValidationDetails details = Reports.fromValues(validationResult, logPassed);
+		return Reports.createValidationReport(details, validationResult.getProfileDetails().getName(),
+				getStatement(validationResult.isCompliant()), validationResult.isCompliant());
+	}
+
+	private static String getStatement(boolean status) {
+		return status ? COMPLIANT_STATEMENT : NONCOMPLIANT_STATEMENT;
 	}
 
 	/**

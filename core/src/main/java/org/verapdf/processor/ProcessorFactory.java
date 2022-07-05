@@ -130,6 +130,8 @@ public final class ProcessorFactory {
 			return MrrHandler.newInstance(new PrintWriter(reportStream), logPassed);
 		case HTML:
 			return HTMLHandler.newInstance(reportStream, wikiPath);
+		case JSON:
+			return new JsonHandler(reportStream, logPassed);
 		default: // should not be reached
 			throw new VeraPDFException("Unknown report format option: " + option); //$NON-NLS-1$
 		}

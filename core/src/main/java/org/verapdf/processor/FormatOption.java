@@ -45,7 +45,11 @@ public enum FormatOption {
     /**
      * Output in HTML format
      */
-    HTML("html");
+    HTML("html"),
+    /**
+     * Output in JSON format
+     */
+    JSON("json");
 
     private final String option;
 

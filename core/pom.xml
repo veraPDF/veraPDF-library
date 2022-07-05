@@ -87,6 +87,12 @@
     </dependency>
 
     <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.11.3</version>
+    </dependency>
+
+    <dependency>
         <groupId>net.java.dev.stax-utils</groupId>
         <artifactId>stax-utils</artifactId>
         <version>20070216</version>

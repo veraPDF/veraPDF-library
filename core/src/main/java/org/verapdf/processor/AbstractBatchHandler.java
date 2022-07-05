@@ -35,6 +35,10 @@ import org.verapdf.report.FeaturesReport;
  */
 public abstract class AbstractBatchHandler implements BatchProcessingHandler {
 
+	public static final String VALIDATION_RESULT = "validationResult"; //$NON-NLS-1$
+	public static final String FEATURES_REPORT = "featuresReport"; //$NON-NLS-1$
+	public static final String FIXER_RESULT = "fixerResult"; //$NON-NLS-1$
+
 	/**
 	 * 
 	 */
