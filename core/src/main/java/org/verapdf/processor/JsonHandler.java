@@ -17,108 +17,228 @@
  */
 package org.verapdf.processor;
 
-import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.verapdf.ReleaseDetails;
+import org.verapdf.component.AuditDuration;
+import org.verapdf.component.AuditDurationImpl;
+import org.verapdf.component.LogsSummary;
+import org.verapdf.component.LogsSummaryImpl;
 import org.verapdf.core.VeraPDFException;
 
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.processor.reports.BatchSummary;
+import org.verapdf.processor.reports.MetadataFixerReport;
+import org.verapdf.processor.reports.Reports;
 import org.verapdf.report.FeaturesReport;
 
 import java.io.IOException;
-import java.io.OutputStream;
-
+import java.io.Writer;
+import java.util.Stack;
 
 public class JsonHandler extends AbstractBatchHandler {
 
-	private final OutputStream stream;
+	private final Writer writer;
 	private final ObjectMapper objectMapper;
+	private final boolean logPassed;
+	private final Stack<Boolean> stack = new Stack<>();
 
-	protected JsonHandler(OutputStream stream, boolean logPassed) {
-		this.stream = stream;
+	protected JsonHandler(Writer writer, boolean logPassed) {
+		this.writer = writer;
 		this.objectMapper = new ObjectMapper();
-		SimpleModule module = new SimpleModule("Serializer", new Version(2, 1,
-				3, null, null, null));
-
-		ProcessorResultSerializer resultSerializer = new ProcessorResultSerializer(ProcessorResult.class, logPassed);
-		module.addSerializer(ProcessorResult.class, resultSerializer);
-
-		objectMapper.registerModule(module);
+		this.logPassed = logPassed;
 	}
 
 	@Override
 	public void handleBatchStart(ProcessorConfig config) throws VeraPDFException {
-		// Nothing to do here
+		try {
+			this.startDocument();
+			this.startElement(REPORT);
+			addReleaseDetails();
+			this.startElement(JOBS, true);
+			writer.flush();
+		} catch (IOException excep) {
+			throw new VeraPDFException(excep.getMessage(), excep);
+		}
+	}
+
+	private void addReleaseDetails() throws VeraPDFException {
+		this.startElement(BUILD_INFORMATION);
+		this.startElement(RELEASE_DETAILS, true);
+		for (ReleaseDetails details : ReleaseDetails.getDetails()) {
+			this.serializeElement(details, null);
+		}
+		endArray();
+		endElement();
 	}
 
 	@Override
 	public void handleBatchEnd(BatchSummary summary) throws VeraPDFException {
-		// Nothing to do here
+		try {
+			// closes jobs element
+			endArray();
+			this.serializeElement(summary, BATCH_SUMMARY);
+			// closes report element
+			endElement();
+			endElement();
+			writer.flush();
+			this.close();
+		} catch (IOException excep) {
+			throw new VeraPDFException(excep.getMessage(), excep);
+		}
 	}
 
 	@Override
 	void resultStart(ProcessorResult result) throws VeraPDFException {
-		// Nothing to do here
+		// Start job element
+		this.startElement(null);
+		this.serializeElement(result.getProcessedItem(), ITEM_DETAILS);
+		try {
+			writer.flush();
+		} catch (IOException excep) {
+			throw new VeraPDFException(excep.getMessage(), excep);
+		}
 	}
 
 	@Override
 	void parsingSuccess(TaskResult taskResult) throws VeraPDFException {
-		// Nothing to do here
+		// Even here we're not handling parsing success event
 	}
 
 	@Override
 	void parsingFailure(TaskResult taskResult) throws VeraPDFException {
-		// Nothing to do here
+		this.serializeElement(taskResult, TASK_RESULT);
 	}
 
 	@Override
 	void pdfEncrypted(TaskResult taskResult) throws VeraPDFException {
-		// Nothing to do here
+		this.serializeElement(taskResult, TASK_RESULT);
 	}
 
 	@Override
 	void validationSuccess(TaskResult taskResult, ValidationResult validationResult) throws VeraPDFException {
-		// Nothing to do here
+		this.serializeElement(Reports.createValidationReport(validationResult, this.logPassed), VALIDATION_RESULT);
 	}
 
 	@Override
 	void validationFailure(TaskResult taskResult) throws VeraPDFException {
-		// Nothing to do here
+		this.serializeElement(taskResult, TASK_RESULT);
 	}
 
 	@Override
-	void featureSuccess(TaskResult taskResult, FeaturesReport featuresReport) throws VeraPDFException {
-		// Nothing to do here
+	void featureSuccess(TaskResult taskResult, FeaturesReport featRep) throws VeraPDFException {
+		this.serializeElement(featRep, FEATURES_REPORT);
 	}
 
 	@Override
 	void featureFailure(TaskResult taskResult) throws VeraPDFException {
-		// Nothing to do here
+		this.serializeElement(taskResult, TASK_RESULT);
 	}
 
 	@Override
 	void fixerSuccess(TaskResult taskResult, MetadataFixerResult fixerResult) throws VeraPDFException {
-		// Nothing to do here
+		MetadataFixerReport mfRep = Reports.fromValues(fixerResult);
+		this.serializeElement(mfRep, FIXER_REPORT);
 	}
 
 	@Override
 	void fixerFailure(TaskResult taskResult) throws VeraPDFException {
-		// Nothing to do here
+		this.serializeElement(taskResult, TASK_RESULT);
 	}
 
 	@Override
 	void resultEnd(ProcessorResult result, Boolean isLogsEnabled) throws VeraPDFException {
+		AuditDuration duration = AuditDurationImpl.sumDuration(getDurations(result));
+		this.serializeElement(duration, PROCESSING_TIME);
+		if (isLogsEnabled) {
+			LogsSummary logsSummary = LogsSummaryImpl.getSummary();
+			if (logsSummary.getLogsCount() != 0) {
+				this.serializeElement(logsSummary, LOGS);
+			}
+		}
 		try {
-			objectMapper.writeValue(stream, result);
-		} catch (IOException e) {
-			throw new VeraPDFException(e.getMessage(), e);
+			// End job element
+			endElement();
+			writer.flush();
+		} catch (IOException excep) {
+			throw new VeraPDFException(excep.getMessage(), excep);
 		}
 	}
 
 	@Override
 	public void close() throws IOException {
-		stream.close();
+		writer.close();
+	}
+
+	private void startElement(String name) throws VeraPDFException {
+		startElement(name, false);
+	}
+
+	private void startElement(String name, boolean isArray) throws VeraPDFException {
+		try {
+			if (stack.peek()) {
+				writer.write(",");
+			} else {
+				stack.set(stack.size() - 1, true);
+			}
+			stack.add(false);
+			if (name != null) {
+				writer.write("\"");
+				writer.write(name);
+				writer.write("\":");
+			}
+			if (isArray) {
+				writer.write("[");
+			} else {
+				writer.write("{");
+			}
+		} catch (IOException e) {
+			throw new VeraPDFException(e.getMessage(), e);
+		}
+	}
+
+	private void startDocument() throws VeraPDFException {
+		stack.add(false);
+		try {
+			writer.write("{");
+		} catch (IOException e) {
+			throw new VeraPDFException(e.getMessage(), e);
+		}
+	}
+
+	private void endElement() throws VeraPDFException {
+		stack.pop();
+		try {
+			writer.write("}");
+		} catch (IOException e) {
+			throw new VeraPDFException(e.getMessage(), e);
+		}
+	}
+
+	private void endArray() throws VeraPDFException {
+		stack.pop();
+		try {
+			writer.write("]");
+		} catch (IOException e) {
+			throw new VeraPDFException(e.getMessage(), e);
+		}
+	}
+
+	private void serializeElement(Object object, String name) throws VeraPDFException {
+		try {
+			if (stack.peek()) {
+				writer.write(",");
+			} else {
+				stack.set(stack.size() - 1, true);
+			}
+			if (name != null) {
+				writer.write("\"");
+				writer.write(name);
+				writer.write("\":");
+			}
+			writer.write(objectMapper.writeValueAsString(object));
+		} catch (IOException e) {
+			throw new VeraPDFException(e.getMessage(), e);
+		}
 	}
 }
