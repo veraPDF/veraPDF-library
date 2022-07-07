@@ -58,7 +58,7 @@ public abstract class AbstractXmlHandler extends AbstractBatchHandler {
 		}
 	}
 
-	protected <T> void serialseElement(T obj, String eleName, boolean format, boolean fragment)
+	protected <T> void serializeElement(T obj, String eleName, boolean format, boolean fragment)
 			throws VeraPDFException {
 		try {
 			XmlSerialiser.toXml(obj, this.writer, format, fragment);
