@@ -596,7 +596,7 @@
                 marked with the Figure tag as noted in ISO 32000-1:2008, 14.7.2, Table 323</description>
             <test>(Alt != null &amp;&amp; Alt != '') || ActualText != null</test>
             <error>
-                <message>Figure tag alternative or replacement text missing</message>
+                <message>Figure tag alternative and replacement text missing</message>
                 <arguments/>
             </error>
             <references>
@@ -669,7 +669,7 @@
                 14.8.4.5 and shall have Alt or ActualText attributes</description>
             <test>(Alt != null &amp;&amp; Alt != '') || ActualText != null</test>
             <error>
-                <message>Formula tag is missing Alt or ActualText attributes</message>
+                <message>Formula tag is missing Alt and ActualText attributes</message>
                 <arguments/>
             </error>
             <references>
@@ -1104,7 +1104,7 @@
 			regardless of whether a CID in the font is referenced or used by the PDF or not.</description>
             <test>fontFile_size == 0 || fontName.search(/[A-Z]{6}\+/) != 0 || CIDSet_size == 0 || cidSetListsAllGlyphs == true</test>
             <error>
-                <message>A CID Font subset does not define CIDSet entry in its Descriptor dictionary</message>
+                <message>A CIDSet entry in the Font descriptor does not correctly identify all glyphs present in the embedded font subse</message>
                 <arguments/>
             </error>
             <references/>
@@ -1128,12 +1128,10 @@
             <id specification="ISO_14289_1" clause="7.21.6" testNumber="1"/>
             <description>For all non-symbolic TrueType fonts used for rendering, the embedded TrueType font program shall contain one or several non-symbolic
                     cmap entries such that all necessary glyph lookups can be carried out.</description>
-            <test>isSymbolic == true || nrCmaps &gt; 1 || (nrCmaps &gt; 0 &amp;&amp; cmap30Present == false)</test>
+            <test>isSymbolic == true || (cmap30Present == true ? nrCmaps &gt; 1 : nrCmaps &gt; 0)</test>
             <error>
-                <message>The embedded font program for a non-symbolic TrueType font contains %1 cmap subtable(s)</message>
-                <arguments>
-                    <argument>nrCmaps</argument>
-                </arguments>
+                <message>The embedded font program for a non-symbolic TrueType font does not contain non-symbolic cmap entries</message>
+                <arguments/>
             </error>
             <references/>
         </rule>
@@ -1148,10 +1146,12 @@
             <test>isSymbolic == true || ((Encoding == "MacRomanEncoding" || Encoding == "WinAnsiEncoding") &amp;&amp;
                 (containsDifferences == false || differencesAreUnicodeCompliant == true))</test>
             <error>
-                <message>A non-symbolic TrueType font has encoding %1 different from MacRomanEncoding or WinAnsiEncoding, or
-                    the glyphs in the Differences array can not be mapped to the embedded font glyphs via the Adobe Glyph List</message>
+                <message>A non-symbolic TrueType font encoding does not define a correct mapping to the Adobe Glyph List
+                    (Encoding = %1, Encoding entry contains a Differences = %2, Differences are Unicode compliant = %3)</message>
                 <arguments>
                     <argument>Encoding</argument>
+                    <argument>containsDifferences</argument>
+                    <argument>differencesAreUnicodeCompliant</argument>
                 </arguments>
             </error>
             <references/>
@@ -1199,7 +1199,7 @@
             <description>The Unicode values specified in the ToUnicode CMap shall all be greater than zero (0), but not equal to either U+FEFF or U+FFFE.</description>
             <test>toUnicode == null || (toUnicode.indexOf("\u0000") == -1 &amp;&amp; toUnicode.indexOf("\uFFFE") == -1 &amp;&amp; toUnicode.indexOf("\uFEFF")  == -1)</test>
             <error>
-                <message>The glyph has an invalid Unicode value</message>
+                <message>The glyph has an invalid Unicode value, which is either 0, or is equal to U+FEFF or U+FFFE</message>
                 <arguments/>
             </error>
             <references/>
