@@ -12,7 +12,7 @@
 			The first line of a PDF file is a header identifying the version of the PDF specification to which the file conforms</description>
             <test>headerOffset == 0 &amp;&amp; /%PDF-\d\.\d/.test(header)</test>
             <error>
-                <message>File header %1 starts at byte offset %2 instead of 0 or does not correctly identify the version of the PDF document</message>
+                <message>File header %1 (offset = %2) starts at non-zero offset or does not match the pattern %PDF-n.m</message>
                 <arguments>
                     <argument>header</argument>
                     <argument>headerOffset</argument>
@@ -28,8 +28,14 @@
 			least four characters, each of whose encoded byte values shall have a decimal value greater than 127</description>
             <test>headerByte1 &gt; 127 &amp;&amp; headerByte2 &gt; 127 &amp;&amp; headerByte3 &gt; 127 &amp;&amp; headerByte4 &gt; 127</test>
             <error>
-                <message>Binary comment in the file header is missing or does not comply PDF/A requirements</message>
-                <arguments/>
+                <message>Binary comment in the file header is missing or does not start with 4 bytes with byte values
+                    above 127 (first four bytes = %1, %2, %3, %4)</message>
+                <arguments>
+                    <argument>headerByte1</argument>
+                    <argument>headerByte2</argument>
+                    <argument>headerByte3</argument>
+                    <argument>headerByte4</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -37,7 +43,7 @@
             <id specification="ISO_19005_1" clause="6.1.3" testNumber="1"/>
             <description>The file trailer dictionary shall contain the ID keyword. The file trailer referred to is either the last trailer dictionary in a PDF file,
 			as described in PDF Reference 3.4.4 and 3.4.5, or the first page trailer in a linearized PDF file, as described in PDF Reference F.2</description>
-            <test>(isLinearized == true &amp;&amp; firstPageID != null) || ((isLinearized != true) &amp;&amp; lastID != null)</test>
+            <test>(isLinearized == true) ? (firstPageID != null) : (lastID != null)</test>
             <error>
                 <message>Missing ID in the document trailer</message>
                 <arguments/>
@@ -87,7 +93,7 @@
             <description>In a cross reference subsection header the starting object number and the range shall be separated by a single SPACE character (20h)</description>
             <test>subsectionHeaderSpaceSeparated == true</test>
             <error>
-                <message>Spacings of subsection headers in the cross reference table do not comply PDF/A specification</message>
+                <message>Extra or missing spacings around in a subsection header of the cross reference table</message>
                 <arguments/>
             </error>
             <references/>
@@ -97,7 +103,7 @@
             <description>The xref keyword and the cross reference subsection header shall be separated by a single EOL marker</description>
             <test>xrefEOLMarkersComplyPDFA</test>
             <error>
-                <message>Spacings after the 'xref' keyword in the cross reference table do not comply PDF/A specification</message>
+                <message>Extra spacings or missing EOL characters after the 'xref' keyword in the cross reference table</message>
                 <arguments/>
             </error>
             <references/>
@@ -144,7 +150,7 @@
 			or by a single LINE FEED character. The endstream keyword shall be preceded by an EOL marker</description>
             <test>streamKeywordCRLFCompliant == true &amp;&amp; endstreamKeywordEOLCompliant == true</test>
             <error>
-                <message>Spacings of keywords 'stream' and 'endstream' do not comply PDF/A specification</message>
+                <message>Extra spacings or missing EOL characters around keywords 'stream' and 'endstream'</message>
                 <arguments/>
             </error>
             <references/>
@@ -170,7 +176,7 @@
 	keywords shall each be followed by an EOL marker.</description>
             <test>spacingCompliesPDFA</test>
             <error>
-                <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                <message>Extra spacings or missing EOL characters around indirect object/generation number or keywords 'obj' and 'endobj'</message>
                 <arguments/>
             </error>
             <references/>
@@ -787,7 +793,8 @@
 			CIDSet stream identifying which CIDs are present in the embedded CIDFont file, as described in PDF Reference Table 5.20</description>
             <test>fontName.search(/[A-Z]{6}\+/) != 0 || (CIDSet_size == 1 &amp;&amp; cidSetListsAllGlyphs == true)</test>
             <error>
-                <message>A CID Font subset does not define CIDSet entry in its Descriptor dictionary</message>
+                <message>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs
+                    present in the embedded font subset and used for rendering</message>
                 <arguments/>
             </error>
             <references>
@@ -820,10 +827,11 @@
             <test>isSymbolic == true || ((Encoding == &quot;MacRomanEncoding&quot; ||
                 Encoding == &quot;WinAnsiEncoding&quot;) &amp;&amp; containsDifferences == false)</test>
             <error>
-                <message>A non-symbolic TrueType font has an encoding %1 different from MacRomanEncoding or
-                    WinAnsiEncoding or Encoding entry contains a Differences entry.</message>
+                <message>A non-symbolic TrueType font encoding does not define a correct mapping to the Adobe Glyph List
+                    (Encoding = %1, Encoding entry contains a Differences = %2)</message>
                 <arguments>
                     <argument>Encoding</argument>
+                    <argument>containsDifferences</argument>
                 </arguments>
             </error>
             <references>
@@ -965,8 +973,15 @@
 			Invisible and NoView flag bits shall be set to 0</description>
             <test>F != null &amp;&amp; (F &amp; 4) == 4 &amp;&amp; (F &amp; 1) == 0 &amp;&amp; (F &amp; 2) == 0 &amp;&amp; (F &amp; 32) == 0</test>
             <error>
-                <message>Annotation flags are either missing or have forbidden values</message>
-                <arguments/>
+                <message>Annotation flags are either missing or set the annotation to be hidden/invisible or non-printable
+                    (F = %1, Print = %2, Hidden = %3, Invisible = %4, NoView = %5)</message>
+                <arguments>
+                    <argument>F</argument>
+                    <argument>F != null ? (F &amp; 4) >> 2 : null</argument>
+                    <argument>F != null ? (F &amp; 1) : null</argument>
+                    <argument>F != null ? (F &amp; 2) >> 1 : null</argument>
+                    <argument>F != null ? (F &amp; 32) >> 5 : null</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -976,8 +991,11 @@
 			DestOutputProfile in the PDF/A-1 OutputIntent dictionary, defined in 6.2.2, is RGB</description>
             <test>(C_size == 0 &amp;&amp; IC_size == 0) || gOutputCS == &quot;RGB &quot;</test>
             <error>
-                <message>Annotation's color or interior color is used without specifying RGB-based destination output profile</message>
-                <arguments/>
+                <message>Annotation's color (C = %1) or interior color (IC = %2) is used without specifying RGB-based destination output profile</message>
+                <arguments>
+                    <argument>C</argument>
+                    <argument>IC</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1137,7 +1155,7 @@
 			The required schema namespace prefix is pdfaExtension. pdfaExtension:schemas - Bag Schema - Description of extension schemas</description>
             <test>isValidBag == true &amp;&amp; prefix == &quot;pdfaExtension&quot;</test>
             <error>
-                <message>Invalid syntax of the extension schema container</message>
+                <message>Invalid type or prefix of the extension schema container</message>
                 <arguments/>
             </error>
             <references>

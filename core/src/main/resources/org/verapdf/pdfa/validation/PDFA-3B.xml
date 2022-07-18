@@ -12,7 +12,8 @@
 			where 'n' is a single digit number between 0 (30h) and 7 (37h)</description>
             <test>headerOffset == 0 &amp;&amp; /^%PDF-1\.[0-7]$/.test(header)</test>
             <error>
-                <message>File header %1 starts at byte offset %2 instead of 0 or does not comply with the requirements of PDF/A-3 specification</message>
+                <message>File header %1 (offset = %2) starts at non-zero offset or does not match the pattern %PDF-1.n,
+                    where 'n' is a single digit number between 0 and 7</message>
                 <arguments>
                     <argument>header</argument>
                     <argument>headerOffset</argument>
@@ -26,8 +27,14 @@
 			byte values shall have a decimal value greater than 127</description>
             <test>headerByte1 &gt; 127 &amp;&amp; headerByte2 &gt; 127 &amp;&amp; headerByte3 &gt; 127 &amp;&amp; headerByte4 &gt; 127</test>
             <error>
-                <message>Binary comment in the file header is missing or does not comply PDF/A requirements</message>
-                <arguments/>
+                <message>Binary comment in the file header is missing or does not start with 4 bytes with byte values
+                    above 127 (first four bytes = %1, %2, %3, %4)</message>
+                <arguments>
+                    <argument>headerByte1</argument>
+                    <argument>headerByte2</argument>
+                    <argument>headerByte3</argument>
+                    <argument>headerByte4</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -72,7 +79,7 @@
             <description>The xref keyword and the cross-reference subsection header shall be separated by a single EOL marker</description>
             <test>xrefEOLMarkersComplyPDFA</test>
             <error>
-                <message>Spacings after the 'xref' keyword in the cross reference table do not comply PDF/A specification</message>
+                <message>Extra spacings or missing EOL characters after the 'xref' keyword in the cross reference table</message>
                 <arguments/>
             </error>
             <references/>
@@ -119,7 +126,7 @@
 			character. The endstream keyword shall be preceded by an EOL marker.</description>
             <test>streamKeywordCRLFCompliant == true &amp;&amp; endstreamKeywordEOLCompliant == true</test>
             <error>
-                <message>Spacings of keywords 'stream' and 'endstream' do not comply PDF/A specification</message>
+                <message>Extra spacings or missing EOL characters around keywords 'stream' and 'endstream'</message>
                 <arguments/>
             </error>
             <references/>
@@ -179,7 +186,7 @@
 			keywords shall each be followed by an EOL marker.</description>
             <test>spacingCompliesPDFA</test>
             <error>
-                <message>Spacings of object number and generation number or keywords 'obj' and 'endobj' do not comply PDF/A specification</message>
+                <message>Extra spacings or missing EOL characters around indirect object/generation number or keywords 'obj' and 'endobj'</message>
                 <arguments/>
             </error>
             <references/>
@@ -579,7 +586,7 @@
                 colorantName == 'Magenta' || colorantName == 'Yellow' || colorantName == 'Black') ?
                 TransferFunction == null : TransferFunction != null)</test>
             <error>
-                <message>Invalid use of TransferFunction key in the Halftone dictionary</message>
+                <message>Custom TransferFunction in a Halftone dictionary is not permitted for primary (CMYK) colorants</message>
                 <arguments/>
             </error>
             <references>
@@ -661,8 +668,10 @@
 			that colour space and shall ignore all other colour space specifications.</description>
             <test>hasColorSpace == true || colrMethod == 1 || colrMethod == 2 || colrMethod == 3</test>
             <error>
-                <message>Colour specification of the JPEG2000 image has specification method.</message>
-                <arguments/>
+                <message>Invalid JPEG2000 image: the value of the METH entry (%1) in its 'colr' box is different from 0x01, 0x02 or 0x03</message>
+                <arguments>
+                    <argument>colrMethod</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -681,8 +690,12 @@
             <description>The bit-depth of the JPEG2000 data shall have a value in the range 1 to 38. All colour channels in the JPEG2000 data shall have the same bit-depth.</description>
             <test>bpccBoxPresent == false &amp;&amp; (bitDepth &gt;= 1 &amp;&amp; bitDepth &lt;= 38) </test>
             <error>
-                <message>JPEG2000 image has invalid bit-depth parameters</message>
-                <arguments/>
+                <message>JPEG2000 image has different bit-depth parameters in 'bpcc' box, or bit depth is out of range
+                    ('bpcc' box present = %1, bit depth = %2)</message>
+                <arguments>
+                    <argument>bpccBoxPresent</argument>
+                    <argument>bitDepth</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1034,7 +1047,7 @@
 			regardless of whether a CID in the font is referenced or used by the PDF or not.</description>
             <test>fontFile_size == 0 || fontName.search(/[A-Z]{6}\+/) != 0 || CIDSet_size == 0 || cidSetListsAllGlyphs == true</test>
             <error>
-                <message>A CID Font subset does not define CIDSet entry in its Descriptor dictionary</message>
+                <message>A CIDSet entry in the Font descriptor does not correctly identify all glyphs present in the embedded font subse</message>
                 <arguments/>
             </error>
             <references/>
@@ -1058,12 +1071,10 @@
             <id specification="ISO_19005_3" clause="6.2.11.6" testNumber="1"/>
             <description>For all non-symbolic TrueType fonts used for rendering, the embedded TrueType font program shall contain one or several non-symbolic 
 			cmap entries such that all necessary glyph lookups can be carried out.</description>
-            <test>isSymbolic == true || nrCmaps &gt; 1 || (nrCmaps &gt; 0 &amp;&amp; cmap30Present == false)</test>
+            <test>isSymbolic == true || (cmap30Present == true ? nrCmaps &gt; 1 : nrCmaps &gt; 0)</test>
             <error>
-                <message>The embedded font program for a non-symbolic TrueType font contains %1 cmap subtable(s)</message>
-                <arguments>
-                    <argument>nrCmaps</argument>
-                </arguments>
+                <message>The embedded font program for a non-symbolic TrueType font does not contain non-symbolic cmap entries</message>
+                <arguments/>
             </error>
             <references/>
         </rule>
@@ -1078,10 +1089,12 @@
             <test>isSymbolic == true || ((Encoding == "MacRomanEncoding" || Encoding == "WinAnsiEncoding") &amp;&amp;
                 (containsDifferences == false || differencesAreUnicodeCompliant == true))</test>
             <error>
-                <message>A non-symbolic TrueType font has encoding %1 different from MacRomanEncoding or WinAnsiEncoding, or
-                    the glyphs in the Differences array can not be mapped to the embedded font glyphs via the Adobe Glyph List</message>
+                <message>A non-symbolic TrueType font encoding does not define a correct mapping to the Adobe Glyph List
+                    (Encoding = %1, Encoding entry contains a Differences = %2, Differences are Unicode compliant = %3)</message>
                 <arguments>
                     <argument>Encoding</argument>
+                    <argument>containsDifferences</argument>
+                    <argument>differencesAreUnicodeCompliant</argument>
                 </arguments>
             </error>
             <references/>
@@ -1158,8 +1171,16 @@
             <description>If present, the F key's Print flag bit shall be set to 1 and its Hidden, Invisible, ToggleNoView, and NoView flag bits shall be set to 0.</description>
             <test>F == null || ((F &amp; 1) == 0 &amp;&amp; (F &amp; 2) == 0 &amp;&amp; (F &amp; 4) == 4 &amp;&amp; (F &amp; 32) == 0 &amp;&amp; (F &amp; 256) == 0)</test>
             <error>
-                <message>One of the annotation flags Hidden, Invisible, ToggleNoView, or NoView is set to 1, or the Print flag is set to 0</message>
-                <arguments/>
+                <message>Annotation flags are set the annotation to be hidden/invisible or non-printable
+                    (F = %1, Print = %2, Hidden = %3, Invisible = %4, NoView = %5, ToggleNoView = %6)</message>
+                <arguments>
+                    <argument>F</argument>
+                    <argument>(F &amp; 4) >> 2</argument>
+                    <argument>(F &amp; 1)</argument>
+                    <argument>(F &amp; 2) >> 1</argument>
+                    <argument>(F &amp; 32) >> 5</argument>
+                    <argument>(F &amp; 256) >> 8</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1401,7 +1422,7 @@
 			The required schema namespace prefix is pdfaExtension. pdfaExtension:schemas - Bag Schema - Description of extension schemas</description>
             <test>isValidBag == true &amp;&amp; prefix == &quot;pdfaExtension&quot;</test>
             <error>
-                <message>Invalid syntax of the extension schema container</message>
+                <message>Invalid type or prefix of the extension schema container</message>
                 <arguments/>
             </error>
             <references/>
@@ -1547,8 +1568,12 @@
             <description>The file specification dictionary for an embedded file shall contain the F and UF keys</description>
             <test>containsEF == false || (F != null &amp;&amp; UF != null)</test>
             <error>
-                <message>The file specification dictionary for an embedded file does not contain either F or EF key</message>
-                <arguments/>
+                <message>The file specification dictionary for an embedded file does not contain either F or UF key
+                    (F = %1, UF = %2)</message>
+                <arguments>
+                    <argument>F</argument>
+                    <argument>UF</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1602,11 +1627,11 @@
             <id specification="ISO_19005_3" clause="6.9" testNumber="3"/>
             <description>If an optional content configuration dictionary contains the Order key, the array which is the value of this Order key shall contain references 
 			to all OCGs in the conforming file.</description>
-            <test>OCGsNotContainInOrder == null</test>
+            <test>OCGsNotContainedInOrder == null</test>
             <error>
                 <message>Optional content group(s) %1 not presented in the Order entry of the optional content configuration dictionary</message>
                 <arguments>
-                    <argument>OCGsNotContainInOrder</argument>
+                    <argument>OCGsNotContainedInOrder</argument>
                 </arguments>
             </error>
             <references/>
