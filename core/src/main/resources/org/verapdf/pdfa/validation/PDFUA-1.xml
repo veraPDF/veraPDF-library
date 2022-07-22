@@ -596,7 +596,7 @@
                 marked with the Figure tag as noted in ISO 32000-1:2008, 14.7.2, Table 323</description>
             <test>(Alt != null &amp;&amp; Alt != '') || ActualText != null</test>
             <error>
-                <message>Figure tag alternative and replacement text missing</message>
+                <message>Figure structure element neither has an alternate description nor a replacement text</message>
                 <arguments/>
             </error>
             <references>
@@ -669,7 +669,7 @@
                 14.8.4.5 and shall have Alt or ActualText attributes</description>
             <test>(Alt != null &amp;&amp; Alt != '') || ActualText != null</test>
             <error>
-                <message>Formula tag is missing Alt and ActualText attributes</message>
+                <message>Formula structure element neither has an alternate description nor a replacement text</message>
                 <arguments/>
             </error>
             <references>
@@ -1104,7 +1104,7 @@
 			regardless of whether a CID in the font is referenced or used by the PDF or not.</description>
             <test>fontFile_size == 0 || fontName.search(/[A-Z]{6}\+/) != 0 || CIDSet_size == 0 || cidSetListsAllGlyphs == true</test>
             <error>
-                <message>A CIDSet entry in the Font descriptor does not correctly identify all glyphs present in the embedded font subse</message>
+                <message>A CIDSet entry in the Font descriptor does not correctly identify all glyphs present in the embedded font subset</message>
                 <arguments/>
             </error>
             <references/>
