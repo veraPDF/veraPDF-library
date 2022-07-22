@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+import org.verapdf.pdfa.Foundries;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.Objects;
@@ -69,7 +70,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	private ValidatorConfigImpl(final PDFAFlavour flavour, final boolean recordPasses, final int maxFails, boolean debug,
 								boolean isLogsEnabled, Level loggingLevel) {
 		this(flavour, PDFAFlavour.PDFA_1_B, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel,
-				BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, true);
+				BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, !Foundries.defaultParserIsPDFBox());
 	}
 
 	private ValidatorConfigImpl(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour, final boolean recordPasses,
@@ -84,7 +85,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		this.isLogsEnabled = isLogsEnabled;
 		this.loggingLevel = loggingLevel.toString();
 		this.maxNumberOfDisplayedFailedChecks = maxNumberOfDisplayedFailedChecks;
-		this.showErrorMessages = showErrorMessages;
+		this.showErrorMessages = showErrorMessages && !Foundries.defaultParserIsPDFBox();
 	}
 
 	/**
@@ -128,7 +129,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 
 	@Override
 	public boolean showErrorMessages() {
-		return this.showErrorMessages;
+		return this.showErrorMessages && !Foundries.defaultParserIsPDFBox();
 	}
 
 	@Override
