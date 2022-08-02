@@ -1,3 +1,40 @@
+Version 1.22 RC (August 3, 2022)
+==================================
+
+### Applications
+- fixed CLI scripts for Windows to support arbitrary characters in the veraPDF installation folder
+- fixed file drag&drop functionality for the GUI app on MacOS
+- disabled policy checks if the text report format is specified in the CLI app
+- added support for user specific config directory
+- added option to include all warnings into the validation report
+- exit after displaying help message if CLI is invoked without parameters 
+
+### PDF Model
+- added support for evaluating PDF functions
+- added support for PDF 2.0 namespace mechanism
+- added support for standard strcuture types in PDF 2.0 namespace
+
+### PDF Parser
+- improved CFF font parsing: trim the CharSet range by the number of glyphs specified in the other font data
+- implemented greedfield parser for PKCS #7 files
+- added support for custom font matrices in CFF fonts
+- implemented more tolerant Flate decode with broken checksum
+
+### Validation
+- (PDF/UA-1) added a new rule that the Form structure element without Role attribute shall have only one child: an object
+reference identifying the widget (ISO 32000-1, Table 348)
+- (PDF/A-4) updated supplement numbers for predefind character collections and CMaps 
+- (PDF/A-2,3,4) added a check if a character in a symbolic TrueType font cannot be mapped to a font glyph via the specified algorithms
+- revised error messages with additional context parameters 
+
+### Corpus
+- automated regression tests 
+
+### Core library
+- added support for Java 17
+- added support for Java Platform Module System
+
+
 Version 1.20 RC (December 2, 2021)
 ==================================
 
