@@ -12,18 +12,18 @@ Version 1.22 RC (August 3, 2022)
 ### PDF Model
 - added support for evaluating PDF functions
 - added support for PDF 2.0 namespace mechanism
-- added support for standard strcuture types in PDF 2.0 namespace
+- added support for standard structure types in PDF 2.0 namespace
 
 ### PDF Parser
 - improved CFF font parsing: trim the CharSet range by the number of glyphs specified in the other font data
-- implemented greedfield parser for PKCS #7 files
+- implemented greenfield parser for PKCS #7 files
 - added support for custom font matrices in CFF fonts
 - implemented more tolerant Flate decode with broken checksum
 
 ### Validation
 - (PDF/UA-1) added a new rule that the Form structure element without Role attribute shall have only one child: an object
 reference identifying the widget (ISO 32000-1, Table 348)
-- (PDF/A-4) updated supplement numbers for predefind character collections and CMaps 
+- (PDF/A-4) updated supplement numbers for predefined character collections and CMaps 
 - (PDF/A-2,3,4) added a check if a character in a symbolic TrueType font cannot be mapped to a font glyph via the specified algorithms
 - revised error messages with additional context parameters 
 
