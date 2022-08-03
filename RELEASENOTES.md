@@ -37,8 +37,16 @@ reference identifying the widget (ISO 32000-1, Table 348)
 
 ### Core library
 - added support for Java 17
-- added support for Java Platform Module System
+- added support for Java Platform Module System (JPMS)
 
+**CAUTION**: the JPMS support required moving several classes into different packages:
+
+- `org.verapdf.pdfa.PdfBoxFoundry` -> `org.verapdf.pdfbox.foundry.PdfBoxFoundry`
+- `org.verapdf.pdfa.PdfBoxFoundryProvider` -> `org.verapdf.pdfbox.foundry.PdfBoxFoundryProvider`
+- `org.verapdf.pdfa.VeraFoundry` -> `org.verapdf.gf.foundry.VeraFoundry`
+- `org.verapdf.pdfa.VeraGreenfieldFoundryProvider` -> `org.verapdf.gf.foundry/VeraGreenfieldFoundryProvider`
+
+These changes need to be applied to any Java source code that integrates veraPDF API as a Java library. 
 
 Version 1.20 RC (December 2, 2021)
 ==================================
