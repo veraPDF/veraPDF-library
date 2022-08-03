@@ -2,12 +2,15 @@ Version 1.22 RC (August 3, 2022)
 ==================================
 
 ### Applications
+- added HTML and JSON report formats in the CLI app
 - fixed CLI scripts for Windows to support arbitrary characters in the veraPDF installation folder
 - fixed file drag&drop functionality for the GUI app on MacOS
-- disabled policy checks if the text report format is specified in the CLI app
+- force mrr report format if policy checks are enabled
 - added support for user specific config directory
-- added option to include all warnings into the validation report
-- exit after displaying help message if CLI is invoked without parameters 
+- added option to include all warnings into the validation report (both GUI and CLI)
+- added verbosity level to CLI app to control the level of visible warnings
+- exit after displaying help message if CLI is invoked without parameters
+- fixed check for veraPDF updates from the GUI app
 
 ### PDF Model
 - added support for evaluating PDF functions
@@ -19,12 +22,14 @@ Version 1.22 RC (August 3, 2022)
 - implemented greenfield parser for PKCS #7 files
 - added support for custom font matrices in CFF fonts
 - implemented more tolerant Flate decode with broken checksum
+- added warning for UTF16-LE encoded text string
 
 ### Validation
 - (PDF/UA-1) added a new rule that the Form structure element without Role attribute shall have only one child: an object
 reference identifying the widget (ISO 32000-1, Table 348)
 - (PDF/A-4) updated supplement numbers for predefined character collections and CMaps 
 - (PDF/A-2,3,4) added a check if a character in a symbolic TrueType font cannot be mapped to a font glyph via the specified algorithms
+- (PDF/A-2,3,4) do not require the presence of CIDtoGID map for CIDType2 fonts without embedded font program, which are used solely in rendering mode 3
 - revised error messages with additional context parameters 
 
 ### Corpus
