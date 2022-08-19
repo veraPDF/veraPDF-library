@@ -76,4 +76,6 @@ public interface ValidatorConfig {
 	public int getMaxNumberOfDisplayedFailedChecks();
 
 	public String getPassword();
+
+	public boolean getShowProgress();
 }

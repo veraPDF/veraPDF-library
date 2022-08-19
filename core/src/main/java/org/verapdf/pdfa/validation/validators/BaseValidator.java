@@ -29,6 +29,7 @@ import org.verapdf.component.ComponentDetails;
 import org.verapdf.component.Components;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
+import org.verapdf.core.utils.ValidationProgress;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.PDFAParser;
 import org.verapdf.pdfa.PDFAValidator;
@@ -68,6 +69,7 @@ public class BaseValidator implements PDFAValidator {
 	protected final int maxNumberOfDisplayedFailedChecks;
 	protected boolean isCompliant = true;
 	private boolean showErrorMessages = false;
+	protected ValidationProgress validationProgress;
 
 	private Set<String> idSet = new HashSet<>();
 
@@ -78,16 +80,17 @@ public class BaseValidator implements PDFAValidator {
 	}
 
 	protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests) {
-		this(profile, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, logPassedTests, false);
+		this(profile, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, logPassedTests, false, false);
 	}
 
 	protected BaseValidator(final ValidationProfile profile, final int maxNumberOfDisplayedFailedChecks,
-							final boolean logPassedTests, final boolean showErrorMessages) {
+							final boolean logPassedTests, final boolean showErrorMessages, boolean showProgress) {
 		super();
 		this.profile = profile;
 		this.maxNumberOfDisplayedFailedChecks = maxNumberOfDisplayedFailedChecks;
 		this.logPassedTests = logPassedTests;
 		this.showErrorMessages = showErrorMessages;
+		this.validationProgress = new ValidationProgress(showProgress);
 	}
 
 	/*
@@ -118,6 +121,7 @@ public class BaseValidator implements PDFAValidator {
 
 	protected ValidationResult validate(Object root) throws ValidationException {
 		initialise();
+		this.validationProgress.updateVariables();
 		this.rootType = root.getObjectType();
 		this.objectsStack.push(root);
 		this.objectsContext.push("root");
@@ -128,6 +132,8 @@ public class BaseValidator implements PDFAValidator {
 
 		while (!this.objectsStack.isEmpty() && !this.abortProcessing) {
 			checkNext();
+			this.validationProgress.incrementNumberOfProcessedObjects();
+			this.validationProgress.updateNumberOfObjectsToBeProcessed(objectsStack.size());
 		}
 
 		for (Map.Entry<Rule, List<ObjectWithContext>> entry : this.deferredRules.entrySet()) {
@@ -135,6 +141,8 @@ public class BaseValidator implements PDFAValidator {
 				checkObjWithRule(objectWithContext.getObject(), objectWithContext.getContext(), entry.getKey());
 			}
 		}
+
+		this.validationProgress.showProgressAfterValidation();
 
 		JavaScriptEvaluator.exitContext();
 
@@ -294,6 +302,9 @@ public class BaseValidator implements PDFAValidator {
 		boolean testEvalResult = JavaScriptEvaluator.getTestEvalResult(obj, rule, this.scope);
 
 		this.processAssertionResult(testEvalResult, contextForRule, rule, obj);
+
+		this.validationProgress.updateNumberOfFailedChecks(this.failedChecks.size());
+		this.validationProgress.incrementNumberOfChecks();
 
 		return testEvalResult;
 	}
