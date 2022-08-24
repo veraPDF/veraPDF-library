@@ -74,4 +74,6 @@ public interface ValidatorConfig {
 	public Level getLoggingLevel();
 
 	public int getMaxNumberOfDisplayedFailedChecks();
+
+	public String getPassword();
 }

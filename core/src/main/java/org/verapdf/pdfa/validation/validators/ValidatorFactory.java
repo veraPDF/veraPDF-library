@@ -262,20 +262,21 @@ public final class ValidatorFactory {
 	 */
 	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final boolean recordPasses,
 											   final int maxFails, final boolean debug) {
-		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails, debug, false, Level.WARNING);
+		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails, debug, false, Level.WARNING, "");
 	}
 
 	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final boolean recordPasses,
-			final int maxFails, final boolean debug, final boolean isLogsEnabled, final Level loggingLevel) {
-		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel);
+			final int maxFails, final boolean debug, final boolean isLogsEnabled, final Level loggingLevel, String password) {
+		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel, password);
 	}
 
 	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour,
 	                                           final boolean recordPasses, final int maxFails, final boolean debug,
 											   final boolean isLogsEnabled, final Level loggingLevel,
-											   final int maxNumberOfDisplayedFailedChecks, final boolean showErrorMessages) {
+											   final int maxNumberOfDisplayedFailedChecks, final boolean showErrorMessages,
+	                                           final String password) {
 		return ValidatorConfigImpl.fromValues(flavour, defaultFlavour, recordPasses, maxFails, debug, isLogsEnabled,
-				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages);
+				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password);
 	}
 
 	/**
