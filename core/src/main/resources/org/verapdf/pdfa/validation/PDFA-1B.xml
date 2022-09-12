@@ -991,10 +991,10 @@
 			DestOutputProfile in the PDF/A-1 OutputIntent dictionary, defined in 6.2.2, is RGB</description>
             <test>(C_size == 0 &amp;&amp; IC_size == 0) || gOutputCS == &quot;RGB &quot;</test>
             <error>
-                <message>Annotation's color (C = %1) or interior color (IC = %2) is used without specifying RGB-based destination output profile</message>
+                <message>Annotation's color (C size = %1) or interior color (IC size = %2) is used without specifying RGB-based destination output profile</message>
                 <arguments>
-                    <argument>C</argument>
-                    <argument>IC</argument>
+                    <argument>C_size</argument>
+                    <argument>IC_size</argument>
                 </arguments>
             </error>
             <references/>
