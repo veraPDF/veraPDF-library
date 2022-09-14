@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf;
+package org.verapdf.version;
 
 /**
  * Simple interface for a <a href="http://semver.org/">semantic version
