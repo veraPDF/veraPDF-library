@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf;
+package org.verapdf.version;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -20,6 +20,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
  * Created 25 May 2017:22:31:17
  */
 
+//Move Versions to org.verapdf.version
 @SuppressWarnings("static-method")
 public class SemanticVersionTest {
 	private static final String v1_0_0 = "1.0.0"; //$NON-NLS-1$
@@ -30,7 +31,7 @@ public class SemanticVersionTest {
 	private static final String v1_0_0pdf = "1.0.0-PDFBOX"; //$NON-NLS-1$
 	private static final String v1_0_0snap = "1.0.0-SNAPSHOT"; //$NON-NLS-1$
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#hashCode()}.
+	 * Test method for {@link VersionNumberImpl#hashCode()}.
 	 */
 	@Test
 	public final void testHashCodeAndEquals() {
@@ -38,7 +39,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#fromString(java.lang.String)}.
+	 * Test method for {@link VersionNumberImpl#fromString(java.lang.String)}.
 	 */
 	@Test
 	public final void testVersionNumberFromString() {
@@ -48,7 +49,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#fromString(java.lang.String)}.
+	 * Test method for {@link VersionNumberImpl#fromString(java.lang.String)}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testVersionNumberFromNullString() {
@@ -57,7 +58,7 @@ public class SemanticVersionTest {
 
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#fromString(java.lang.String)}.
+	 * Test method for {@link VersionNumberImpl#fromString(java.lang.String)}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testVersionNumberFromEmptyString() {
@@ -65,7 +66,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#fromStrings(java.lang.String[])}.
+	 * Test method for {@link VersionNumberImpl#fromStrings(java.lang.String[])}.
 	 */
 	@Test
 	public final void testVersionNumberImplStringArray() {
@@ -75,7 +76,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#fromStrings(java.lang.String[])}.
+	 * Test method for {@link VersionNumberImpl#fromStrings(java.lang.String[])}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testVersionNumberImplStringArrayNull() {
@@ -83,7 +84,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#fromStrings(java.lang.String[])}.
+	 * Test method for {@link VersionNumberImpl#fromStrings(java.lang.String[])}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testVersionNumberImplStringArrayBad() {
@@ -92,7 +93,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#fromInts(int[])}.
+	 * Test method for {@link VersionNumberImpl#fromInts(int[])}.
 	 */
 	@Test
 	public final void testVersionNumberImplIntArray() {
@@ -102,7 +103,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#fromInts(int[])}.
+	 * Test method for {@link VersionNumberImpl#fromInts(int[])}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testVersionNumberImplIntArrayNull() {
@@ -110,7 +111,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#fromInts(int[])}.
+	 * Test method for {@link VersionNumberImpl#fromInts(int[])}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testVersionNumberImplIntArrayShort() {
@@ -118,7 +119,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#fromInts(int[])}.
+	 * Test method for {@link VersionNumberImpl#fromInts(int[])}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testVersionNumberImplIntArrayLong() {
@@ -126,7 +127,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#VersionNumberImpl(int, int, int)}.
+	 * Test method for {@link VersionNumberImpl#VersionNumberImpl(int, int, int)}.
 	 */
 	@Test
 	public final void testVersionNumberImplIntIntInt() {
@@ -136,7 +137,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#VersionNumberImpl(int, int, int)}.
+	 * Test method for {@link VersionNumberImpl#VersionNumberImpl(int, int, int)}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testVersionNumberImplIntIntIntMinusMajor() {
@@ -144,7 +145,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#VersionNumberImpl(int, int, int)}.
+	 * Test method for {@link VersionNumberImpl#VersionNumberImpl(int, int, int)}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testVersionNumberImplIntIntIntMinusMinor() {
@@ -152,7 +153,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#VersionNumberImpl(int, int, int)}.
+	 * Test method for {@link VersionNumberImpl#VersionNumberImpl(int, int, int)}.
 	 */
 	@Test(expected=IllegalArgumentException.class)
 	public final void testVersionNumberImplIntIntIntMinusRev() {
@@ -160,7 +161,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#getVersionString()}.
+	 * Test method for {@link VersionNumberImpl#getVersionString()}.
 	 */
 	@Test
 	public final void testGetVersionString() {
@@ -173,7 +174,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link org.verapdf.VersionNumberImpl#compareTo(org.verapdf.VersionNumberImpl)}.
+	 * Test method for {@link VersionNumberImpl#compareTo(VersionNumberImpl)}.
 	 */
 	@Test
 	public final void testCompareTo() {

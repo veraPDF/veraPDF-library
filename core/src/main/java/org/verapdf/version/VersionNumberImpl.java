@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.verapdf;
+package org.verapdf.version;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
