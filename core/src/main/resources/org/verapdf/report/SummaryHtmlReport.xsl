@@ -192,6 +192,7 @@
     <!-- Iterate the job reports and output the details -->
     <xsl:template match="/report/jobs">
       <xsl:variable name="isPolicy" select="/report/jobs/job/policyReport" />
+      <xsl:variable name="hasLogs" select="/report/jobs/job/logs" />
       <h2>Job Summary</h2>
       <table>
         <tr>
@@ -204,6 +205,9 @@
           <th>Failed Checks</th>
           <xsl:if test="$isPolicy">
             <th>Policy Check</th>
+          </xsl:if>
+          <xsl:if test="$hasLogs">
+              <th>Logs</th>
           </xsl:if>
           <th>Duration</th>
         </tr>
@@ -251,6 +255,18 @@
               <xsl:value-of select="validationReport/details/@failedChecks" />
             </td>
             <xsl:apply-templates select="policyReport" />
+            <xsl:if test="$hasLogs">
+                <td>
+                    <xsl:choose>
+                        <xsl:when test="logs">
+                            <xsl:value-of select="logs/@logsCount"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="0"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </td>
+            </xsl:if>
             <td>
               <xsl:value-of select="duration/text()" />
             </td>
