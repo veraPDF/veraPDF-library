@@ -249,6 +249,8 @@
                         select="/report/jobs/job/metadataRepairReport/@status"/>
                 <xsl:apply-templates
                         select="/report/jobs/job/metadataRepairReport/@fixCount"/>
+                <xsl:apply-templates
+                        select="/report/jobs/job/logs/@logsCount"/>
             </table>
             <xsl:if test="/report/jobs/job/metadataRepairReport/fixes/fix">
                 <h2>Metadata fixes information</h2>
@@ -320,6 +322,28 @@
             </xsl:if>
 
         </div>
+
+        <xsl:if test="/report/jobs/job/logs">
+            <h2>Logs information</h2>
+
+            <table border="0" id="table5">
+                <tr style="BACKGROUND: #bcbad6">
+                    <td width="80">
+                        <b>Type</b>
+                    </td>
+                    <td width="670">
+                        <b>Log message</b>
+                    </td>
+                    <td width="100">
+                        <b>Occurrences</b>
+                    </td>
+                </tr>
+
+                <xsl:apply-templates
+                        select="/report/jobs/job/logs/*"/>
+            </table>
+        </xsl:if>
+
         <xsl:if test="/report/jobs/job/featuresReport">
             <h2>Features information</h2>
 
@@ -356,6 +380,18 @@
             <td>
                 <xsl:value-of
                         select="/report/jobs/job/metadataRepairReport/@fixCount"/>
+            </td>
+        </tr>
+    </xsl:template>
+
+    <xsl:template match="/report/jobs/job/logs/@logsCount">
+        <tr>
+            <td width="250">
+                <b>Number of logs:</b>
+            </td>
+            <td>
+                <xsl:value-of
+                        select="/report/jobs/job/logs/@logsCount"/>
             </td>
         </tr>
     </xsl:template>
@@ -603,6 +639,39 @@
         </tr>
 
     </xsl:template>
+
+    <xsl:template match="/report/jobs/job/logs/*">
+        <tr style="BACKGROUND: #dcdaf6">
+            <td width="80" style="word-break: break-all">
+            <b>
+                <xsl:choose>
+                    <xsl:when test="@level = 'SEVERE'">
+                        <font color="red">
+                            <b>SEVERE</b>
+                        </font>
+                    </xsl:when>
+                    <xsl:when test="@level = 'WARNING'">
+                        <font color="orange">
+                            <b>WARNING</b>
+                        </font>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <font color="green">
+                            <b><xsl:value-of select="@level"/></b>
+                        </font>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </b>
+            </td>
+            <td width="670" style="word-break: break-all">
+                <xsl:value-of select="."/>
+            </td>
+            <td width="100" style="word-break: break-all">
+                <xsl:value-of select="@occurrences"/>
+            </td>
+        </tr>
+    </xsl:template>
+
     <!-- Metadata fixes information -->
     <xsl:template match="/report/jobs/job/metadataRepairReport/fixes/fix">
         <tr class="hideable hide{fixesId}">
