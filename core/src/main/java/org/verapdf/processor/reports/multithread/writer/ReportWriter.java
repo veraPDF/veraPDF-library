@@ -28,9 +28,10 @@ public abstract class ReportWriter {
 				case TEXT:
 					return new TextReportWriter(os, errorStream);
 				case MRR:
-					return new MrrReportWriter(os, errorStream);
 				case XML:
-					return new XmlReportWriter(os, errorStream);
+					return new MrrReportWriter(os, errorStream);
+				case RAW:
+					return new RawReportWriter(os, errorStream);
 				case JSON:
 					return new JsonReportWriter(os, errorStream);
 				default:

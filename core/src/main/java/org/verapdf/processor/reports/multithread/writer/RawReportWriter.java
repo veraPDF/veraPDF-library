@@ -11,8 +11,8 @@ import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class XmlReportWriter extends AbstractXmlReportWriter {
-	private static final Logger LOGGER = Logger.getLogger(XmlReportWriter.class.getCanonicalName());
+public class RawReportWriter extends AbstractXmlReportWriter {
+	private static final Logger LOGGER = Logger.getLogger(RawReportWriter.class.getCanonicalName());
 
 	private final String RAW_RESULTS_TAG = "rawResults";
 	private final String ITEM_TAG = "item";
@@ -21,7 +21,7 @@ public class XmlReportWriter extends AbstractXmlReportWriter {
 	private final String FEATURES_REPORT_TAG = "featuresReport";
 	private final String FIXER_RESULT_TAG = "fixerResult";
 
-	protected XmlReportWriter(OutputStream os, OutputStream errorStream) throws XMLStreamException, ParserConfigurationException, SAXException {
+	protected RawReportWriter(OutputStream os, OutputStream errorStream) throws XMLStreamException, ParserConfigurationException, SAXException {
 		super(os, errorStream);
 	}
 
