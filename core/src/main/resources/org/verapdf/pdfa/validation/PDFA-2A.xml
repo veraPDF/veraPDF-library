@@ -1621,10 +1621,23 @@
             <id specification="ISO_19005_2" clause="6.7.3" testNumber="2"/>
             <description>All non-standard structure types shall be mapped to the nearest functionally equivalent standard type, as
             defined in ISO 32000-1:2008, 14.8.4, in the role map dictionary of the structure tree root.</description>
-            <test>false</test>
+            <test>circularMappingExist == true</test>
             <error>
-                <message>Non-standard structure type %1 is not mapped to a standard type, or a circular mapping for this
-                    structure type is detected</message>
+                <message>Non-standard structure type %1 is not mapped to a standard type</message>
+                <arguments>
+                    <argument>valueS</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4"/>
+            </references>
+        </rule>
+        <rule object="SENonStandard">
+            <id specification="ISO_19005_2" clause="6.7.3" testNumber="2"/>
+            <description>A circular mapping shall not exist.</description>
+            <test>circularMappingExist != true</test>
+            <error>
+                <message>A circular mapping exists for %1 structure type</message>
                 <arguments>
                     <argument>valueS</argument>
                 </arguments>
