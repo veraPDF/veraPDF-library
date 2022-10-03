@@ -80,10 +80,9 @@
                 as defined in ISO 32000-1:2008, 14.8.4, in the role map dictionary of the structure tree root.
                 This mapping may be indirect; within the role map a non-standard type can map directly to another
                 non-standard type, but eventually the mapping shall terminate at a standard type.</description>
-            <test>false</test>
+            <test>circularMappingExist == true</test>
             <error>
-                <message>Non-standard structure type %1 is not mapped to a standard type, or a circular mapping for this
-                    structure type is detected</message>
+                <message>Non-standard structure type %1 is not mapped to a standard type</message>
                 <arguments>
                     <argument>valueS</argument>
                 </arguments>
