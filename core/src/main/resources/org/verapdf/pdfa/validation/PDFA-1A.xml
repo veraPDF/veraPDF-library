@@ -1355,7 +1355,7 @@
             </references>
         </rule>
         <rule object="SENonStandard">
-            <id specification="ISO_19005_1" clause="6.8.3" testNumber="2"/>
+            <id specification="ISO_19005_1" clause="6.8.3" testNumber="3"/>
             <description>A circular mapping shall not exist</description>
             <test>false</test>
             <error>
