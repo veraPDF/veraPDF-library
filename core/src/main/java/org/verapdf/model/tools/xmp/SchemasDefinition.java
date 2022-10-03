@@ -67,6 +67,13 @@ public class SchemasDefinition {
         return type == null ? null : Boolean.valueOf(this.validator.validate(node, type));
     }
 
+    public String getDefinedType(VeraPDFXMPNode node) {
+        if (this.validator == null) {
+            return null;
+        }
+        return getType(node);
+    }
+
     public ValidatorsContainer getValidatorsContainer() {
         return this.validator;
     }
