@@ -33,11 +33,12 @@ public enum FormatOption {
     /**
      * Output in XML format
      */
-    XML("xml"),
+    RAW("raw"),
     /**
      * Output in {@link MachineReadableReport} XML format
      */
     MRR("mrr"),
+    XML("xml"),
     /**
      * Output in brief format
      */
@@ -72,7 +73,7 @@ public enum FormatOption {
     /**
      * Performs a match against the parameter {@code String option} of each
      * {@code FormatType}'s option and returns a matching instance. Defaults to
-     * returning {@link FormatOption#XML} if no match can be made.
+     * returning {@link FormatOption#RAW} if no match can be made.
      * 
      * @param option
      *            the string CLI option to compare
