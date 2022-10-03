@@ -91,31 +91,37 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
         if (this.xmpNode == null) {
             return Boolean.FALSE;
         }
+        SchemasDefinition schemasDefinition = getSchemasDefinition();
+        return schemasDefinition != null ? schemasDefinition.isCorrespondsDefinedType(this.xmpNode) : null;
+    }
+
+    @Override
+    public String getpredefinedType() {
+        if (this.xmpNode == null) {
+            return null;
+        }
+        SchemasDefinition schemasDefinition = getSchemasDefinition();
+        return schemasDefinition != null ? schemasDefinition.getDefinedType(this.xmpNode) : null;
+    }
+
+    private SchemasDefinition getSchemasDefinition() {
         if (this.flavour != null && this.flavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
-            return isValueTypeCorrectForPDFA_1();
-        }
-        return isValueTypeCorrectForPDFA_2_3();
-    }
-
-    private Boolean isValueTypeCorrectForPDFA_1() {
-        if (this.currentSchemasDefinitionPDFA_1.isDefinedProperty(this.xmpNode)) {
-            return this.currentSchemasDefinitionPDFA_1.isCorrespondsDefinedType(this.xmpNode);
-        }
-        if (SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_1(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode)) {
-            return SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_1(this.isClosedChoiceCheck).isCorrespondsDefinedType(this.xmpNode);
-        }
-        return null;
-    }
-
-    private Boolean isValueTypeCorrectForPDFA_2_3() {
-        if (this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode)) {
-            return this.currentSchemasDefinitionPDFA_2_3.isCorrespondsDefinedType(this.xmpNode);
-        }
-        if (this.mainPackageSchemasDefinition.isDefinedProperty(this.xmpNode)) {
-            return this.mainPackageSchemasDefinition.isCorrespondsDefinedType(this.xmpNode);
-        }
-        if (SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_2_3(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode)) {
-            return SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_2_3(this.isClosedChoiceCheck).isCorrespondsDefinedType(this.xmpNode);
+            if (this.currentSchemasDefinitionPDFA_1.isDefinedProperty(this.xmpNode)) {
+                return this.currentSchemasDefinitionPDFA_1;
+            }
+            if (SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_1(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode)) {
+                return SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_1(this.isClosedChoiceCheck);
+            }
+        } else {
+            if (this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode)) {
+                return this.currentSchemasDefinitionPDFA_2_3;
+            }
+            if (this.mainPackageSchemasDefinition.isDefinedProperty(this.xmpNode)) {
+                return this.mainPackageSchemasDefinition;
+            }
+            if (SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_2_3(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode)) {
+                return SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_2_3(this.isClosedChoiceCheck);
+            }
         }
         return null;
     }
