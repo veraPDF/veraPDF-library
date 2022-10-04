@@ -107,7 +107,7 @@ public interface VeraPDFFoundry extends Component {
 
 	/**
 	 * Method that returns a PDFParser instance, parsing file passed as
-	 * {@link pdfStream} parameter. The parser or parser provider will detect
+	 * {@link pdfFile} parameter. The parser or parser provider will detect
 	 * the flavour of the PDF document stream and provide an appropriate parser.
 	 *
 	 * @param pdfFile

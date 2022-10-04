@@ -79,4 +79,32 @@ public class DocumentResourcesFeatures {
 		}
 		return new DocumentResourcesFeatures(propertiesDicts, fonts, xobjects, shadings, patterns, colorSpaces, graphicsStates);
 	}
+
+	public FeaturesNode getPropertiesDicts() {
+		return propertiesDicts;
+	}
+
+	public FeaturesNode getXobjects() {
+		return xobjects;
+	}
+
+	public FeaturesNode getFonts() {
+		return fonts;
+	}
+
+	public FeaturesNode getShadings() {
+		return shadings;
+	}
+
+	public FeaturesNode getPatterns() {
+		return patterns;
+	}
+
+	public FeaturesNode getColorSpaces() {
+		return colorSpaces;
+	}
+
+	public FeaturesNode getGraphicsStates() {
+		return graphicsStates;
+	}
 }
