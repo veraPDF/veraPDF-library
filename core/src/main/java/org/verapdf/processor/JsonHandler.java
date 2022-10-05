@@ -17,7 +17,10 @@
  */
 package org.verapdf.processor;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.verapdf.ReleaseDetails;
 import org.verapdf.component.AuditDuration;
 import org.verapdf.component.AuditDurationImpl;
@@ -30,6 +33,7 @@ import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.processor.reports.BatchSummary;
 import org.verapdf.processor.reports.MetadataFixerReport;
 import org.verapdf.processor.reports.Reports;
+import org.verapdf.report.FeaturesNode;
 import org.verapdf.report.FeaturesReport;
 
 import java.io.IOException;
@@ -47,6 +51,11 @@ public class JsonHandler extends AbstractBatchHandler {
 		this.writer = writer;
 		this.objectMapper = new ObjectMapper();
 		this.logPassed = logPassed;
+		SimpleModule module = new SimpleModule("FeaturesNodeSerializer", new Version(2, 1,
+				3, null, null, null));
+		module.addSerializer(FeaturesNode.class, new FeaturesNodeSerializer(FeaturesNode.class));
+		objectMapper.registerModule(module);
+		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 	}
 
 	@Override
