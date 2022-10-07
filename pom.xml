@@ -26,10 +26,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>verapdf-parent</artifactId>
     <groupId>org.verapdf</groupId>
+    <artifactId>verapdf-parent</artifactId>
     <version>1.23.1</version>
-    <relativePath>parent/pom.xml</relativePath>
   </parent>
 
   <groupId>org.verapdf</groupId>
@@ -40,10 +39,30 @@
   <name>veraPDF PDF/A Validation Library</name>
   <description>veraPDF PDF/A Validation API and core types.</description>
 
+  <repositories>
+    <repository>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>vera-dev</id>
+      <name>Vera development</name>
+      <url>https://artifactory.openpreservation.org/artifactory/vera-dev</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>vera-dev</id>
+      <name>Vera development</name>
+      <url>https://artifactory.openpreservation.org/artifactory/vera-dev</url>
+    </pluginRepository>
+  </pluginRepositories>
+
   <modules>
     <module>xmp-core</module>
     <module>core</module>
-    <module>parent</module>
   </modules>
 
   <scm>
