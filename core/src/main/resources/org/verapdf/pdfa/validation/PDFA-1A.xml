@@ -1357,7 +1357,7 @@
         <rule object="PDStructElem">
             <id specification="ISO_19005_1" clause="6.8.3" testNumber="3"/>
             <description>A circular mapping shall not exist</description>
-            <test>false</test>
+            <test>circularMappingExist != true</test>
             <error>
                 <message>A circular mapping exists for %1 structure type</message>
                 <arguments>
