@@ -1322,8 +1322,10 @@
             <description>A PDF/A-4e conforming file (as described in Annex B) shall specify the value of pdfaid:conformance as E.</description>
             <test>conformance == &quot;E&quot;</test>
             <error>
-                <message>A PDF/A-4e conforming file does not specify the value of pdfaid:conformance as E.</message>
-                <arguments/>
+                <message>The &quot;conformance&quot; property of the PDF/A Identification Schema is %1 instead of &quot;E&quot; for PDF/A-4E conforming file.</message>
+                <arguments>
+                    <argument>conformance</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 19005-4:2020" clause="Annex B"/>

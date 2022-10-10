@@ -1305,8 +1305,10 @@
             <description>A file that does not conform to either PDF/A-4e or PDF/A-4f shall not provide any pdfaid:conformance.</description>
             <test>conformance == null</test>
             <error>
-                <message>A file that does not conform to either PDF/A-4e or PDF/A-4f provides pdfaid:conformance.</message>
-                <arguments/>
+                <message>The &quot;conformance&quot; property of the PDF/A Identification Schema is %1 instead of null for PDF/A-4 conforming file.</message>
+                <arguments>
+                    <argument>conformance</argument>
+                </arguments>
             </error>
             <references/>
         </rule>

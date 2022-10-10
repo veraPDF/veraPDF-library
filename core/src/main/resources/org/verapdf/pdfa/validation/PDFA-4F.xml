@@ -1306,8 +1306,10 @@
             <description>A PDF/A-4f conforming file (as described in Annex A) shall specify the value of pdfaid:conformance as F.</description>
             <test>conformance == &quot;F&quot;</test>
             <error>
-                <message>A PDF/A-4f conforming file does not specify the value of pdfaid:conformance as F.</message>
-                <arguments/>
+                <message>The &quot;conformance&quot; property of the PDF/A Identification Schema is %1 instead of &quot;F&quot; for PDF/A-4F conforming file.</message>
+                <arguments>
+                    <argument>conformance</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 19005-4:2020" clause="Annex A"/>
