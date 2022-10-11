@@ -328,10 +328,10 @@
 
             <table border="0" id="table5">
                 <tr style="BACKGROUND: #bcbad6">
-                    <td width="80">
+                    <td width="100">
                         <b>Type</b>
                     </td>
-                    <td width="670">
+                    <td width="650">
                         <b>Log message</b>
                     </td>
                     <td width="100">
@@ -642,7 +642,7 @@
 
     <xsl:template match="/report/jobs/job/logs/*">
         <tr style="BACKGROUND: #dcdaf6">
-            <td width="80" style="word-break: break-all">
+            <td width="100" style="word-break: break-all">
             <b>
                 <xsl:choose>
                     <xsl:when test="@level = 'SEVERE'">
@@ -663,7 +663,7 @@
                 </xsl:choose>
             </b>
             </td>
-            <td width="670" style="word-break: break-all">
+            <td width="650" style="word-break: break-all">
                 <xsl:value-of select="."/>
             </td>
             <td width="100" style="word-break: break-all">
