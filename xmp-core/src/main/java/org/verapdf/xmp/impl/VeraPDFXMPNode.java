@@ -83,6 +83,10 @@ public class VeraPDFXMPNode {
         return prefix;
     }
 
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
     public String getNamespaceURI() {
         return namespaceURI;
     }

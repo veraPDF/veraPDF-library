@@ -46,6 +46,8 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
 
     private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_1 = "processed.objects.path.pdfa_1";
     private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_2_3 = "processed.objects.path.pdfa_2_3";
+    private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_4 = "processed.objects.path.pdfa_4";
+    private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFUA_1 = "processed.objects.path.pdfua_1";
 
     private static ClassLoader cl = XMLProcessedObjectsParser.class.getClassLoader();
     private static ProcessedObjectsParser instance;
@@ -97,6 +99,12 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
     public String getProcessedObjectsPathProperty(PDFAFlavour flavour) {
         if (flavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
             return XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_1;
+        }
+        if (flavour.getPart() == PDFAFlavour.Specification.ISO_19005_4) {
+            return XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_4;
+        }
+        if (flavour.getPart() == PDFAFlavour.Specification.ISO_14289_1) {
+            return XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFUA_1;
         }
         return XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_2_3;
     }
