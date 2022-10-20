@@ -22,6 +22,7 @@ package org.verapdf.metadata.fixer.entity;
 
 import java.io.OutputStream;
 
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 
 /**
@@ -81,7 +82,8 @@ public interface PDFDocument {
 	 * @param output output stream for document save
 	 * @return 
 	 */
-	MetadataFixerResult saveDocumentIncremental(MetadataFixerResult.RepairStatus status, OutputStream output);
+	MetadataFixerResult saveDocumentIncremental(MetadataFixerResult.RepairStatus status, OutputStream output,
+												PDFAFlavour flavour);
 
 	/**
 	 * Removes filters for all metadata streams in document

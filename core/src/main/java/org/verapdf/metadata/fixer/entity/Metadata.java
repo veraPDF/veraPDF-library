@@ -104,6 +104,6 @@ public interface Metadata {
 	 *
 	 * @throws Exception problems with stream update
 	 */
-	void updateMetadataStream() throws Exception;
+	void updateMetadataStream(MetadataFixerResultImpl.Builder resultBuilder, PDFAFlavour flavour) throws Exception;
 
 }
