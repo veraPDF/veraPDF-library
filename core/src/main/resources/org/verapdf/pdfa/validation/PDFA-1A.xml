@@ -402,7 +402,7 @@
             <references/>
         </rule>
         <rule object="ICCInputProfile">
-            <id specification="ISO_19005_1" clause="6.2.3" testNumber="1"/>
+            <id specification="ISO_19005_1" clause="6.2.3.2" testNumber="1"/>
             <description>All ICCBased colour spaces shall be embedded as ICC profile streams as described in PDF Reference 4.5</description>
             <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot; || deviceClass == &quot;scnr&quot; || deviceClass == &quot;spac&quot;) &amp;&amp; 
 			(colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot; || colorSpace == &quot;Lab &quot;) &amp;&amp; version &lt; 3.0</test>
@@ -418,41 +418,11 @@
                 <reference specification="PDF 1.4 Reference" clause="4.5.4, ICCBased Color Spaces"/>
             </references>
         </rule>
-        <rule object="PDDeviceRGB">
-            <id specification="ISO_19005_1" clause="6.2.3" testNumber="2"/>
-            <description>DeviceRGB may be used only if the file has a PDF/A-1 OutputIntent that uses an RGB colour space</description>
-            <test>gOutputCS != null &amp;&amp; gOutputCS == &quot;RGB &quot;</test>
-            <error>
-                <message>DeviceRGB colour space is used without RGB output intent profile</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
-        <rule object="PDDeviceCMYK">
-            <id specification="ISO_19005_1" clause="6.2.3" testNumber="3"/>
-            <description>DeviceCMYK may be used only if the file has a PDF/A-1 OutputIntent that uses a CMYK colour space</description>
-            <test>gOutputCS != null &amp;&amp; gOutputCS == &quot;CMYK&quot;</test>
-            <error>
-                <message>DeviceCMYK colour space is used without CMYK output intent profile</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
-        <rule object="PDDeviceGray">
-            <id specification="ISO_19005_1" clause="6.2.3" testNumber="4"/>
-            <description>If an uncalibrated colour space is used in a file then that file shall contain a PDF/A-1 OutputIntent, as defined in 6.2.2</description>
-            <test>gOutputCS != null</test>
-            <error>
-                <message>DeviceGray colour space is used without output intent profile</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
         <rule object="ICCProfile">
-            <id specification="ISO_19005_1" clause="6.2.3" testNumber="5"/>
+            <id specification="ISO_19005_1" clause="6.2.3.2" testNumber="2"/>
             <description>All ICCBased colour spaces shall be embedded as ICC profile streams as described in PDF Reference 4.5.
-			The number of color components in the color space described by the ICC profile data must match the number of components actually in the ICC profile. 
-			As of PDF 1.4, N must be 1, 3, or 4</description>
+                The number of color components in the color space described by the ICC profile data must match the number of components actually in the ICC profile.
+                As of PDF 1.4, N must be 1, 3, or 4</description>
             <test>N != null &amp;&amp; ((N == 1 &amp;&amp; colorSpace == &quot;GRAY&quot;) || (N == 3 &amp;&amp; (colorSpace == &quot;RGB &quot; || colorSpace == &quot;Lab &quot;)) || (N == 4 &amp;&amp; colorSpace == &quot;CMYK&quot;))</test>
             <error>
                 <message>The N entry (value %1) in the ICC profile dictionary is missing or does not match the number of components in the embedded ICC profile (color space %2)</message>
@@ -464,6 +434,36 @@
             <references>
                 <reference specification="PDF 1.4 Reference" clause="4.5.4, Table 4.16"/>
             </references>
+        </rule>
+        <rule object="PDDeviceRGB">
+            <id specification="ISO_19005_1" clause="6.2.3.3" testNumber="1"/>
+            <description>DeviceRGB may be used only if the file has a PDF/A-1 OutputIntent that uses an RGB colour space</description>
+            <test>gOutputCS != null &amp;&amp; gOutputCS == &quot;RGB &quot;</test>
+            <error>
+                <message>DeviceRGB colour space is used without RGB output intent profile</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDDeviceCMYK">
+            <id specification="ISO_19005_1" clause="6.2.3.3" testNumber="2"/>
+            <description>DeviceCMYK may be used only if the file has a PDF/A-1 OutputIntent that uses a CMYK colour space</description>
+            <test>gOutputCS != null &amp;&amp; gOutputCS == &quot;CMYK&quot;</test>
+            <error>
+                <message>DeviceCMYK colour space is used without CMYK output intent profile</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDDeviceGray">
+            <id specification="ISO_19005_1" clause="6.2.3.3" testNumber="3"/>
+            <description>If an uncalibrated colour space is used in a file then that file shall contain a PDF/A-1 OutputIntent, as defined in 6.2.2</description>
+            <test>gOutputCS != null</test>
+            <error>
+                <message>DeviceGray colour space is used without output intent profile</message>
+                <arguments/>
+            </error>
+            <references/>
         </rule>
         <rule object="PDXImage">
             <id specification="ISO_19005_1" clause="6.2.4" testNumber="1"/>
@@ -691,7 +691,7 @@
             </references>
         </rule>
         <rule object="PDType0Font">
-            <id specification="ISO_19005_1" clause="6.3.3" testNumber="1"/>
+            <id specification="ISO_19005_1" clause="6.3.3.3" testNumber="1"/>
             <description>For any given composite (Type 0) font referenced within a conforming file, the CIDSystemInfo entries of its 
 			CIDFont and CMap dictionaries shall be compatible. In other words, the Registry and Ordering strings of the CIDSystemInfo dictionaries
 			for that font shall be identical, unless the value of the Encoding key in the font dictionary is Identity-H or Identity-V.</description>
@@ -713,7 +713,7 @@
             </references>
         </rule>
         <rule object="PDCIDFont">
-            <id specification="ISO_19005_1" clause="6.3.3" testNumber="2"/>
+            <id specification="ISO_19005_1" clause="6.3.3.2" testNumber="1"/>
             <description>For all Type 2 CIDFonts that are used for rendering, the CIDFont dictionary shall contain a CIDToGIDMap entry that shall be a stream mapping 
 			from CIDs to glyph indices or the name Identity, as described in PDF Reference Table 5.13</description>
             <test>Subtype != &quot;CIDFontType2&quot; || CIDToGIDMap != null || renderingMode == 3</test>
@@ -727,7 +727,7 @@
             </references>
         </rule>
         <rule object="PDCMap">
-            <id specification="ISO_19005_1" clause="6.3.3" testNumber="3"/>
+            <id specification="ISO_19005_1" clause="6.3.3.3" testNumber="1"/>
             <description>All CMaps used within a conforming file, except Identity-H and Identity-V, shall be embedded in that file as described in PDF Reference 5.6.4</description>
             <test>CMapName == &quot;Identity-H&quot; || CMapName == &quot;Identity-V&quot; || embeddedFile_size == 1</test>
             <error>
@@ -739,7 +739,7 @@
             </references>
         </rule>
         <rule object="CMapFile">
-            <id specification="ISO_19005_1" clause="6.3.3" testNumber="4"/>
+            <id specification="ISO_19005_1" clause="6.3.3.3" testNumber="2"/>
             <description>For those CMaps that are embedded, the integer value of the WMode entry in the CMap dictionary shall be identical to the WMode value in the embedded CMap stream</description>
             <test>WMode == dictWMode</test>
             <error>
@@ -1328,7 +1328,7 @@
             </references>
         </rule>
         <rule object="PDDocument">
-            <id specification="ISO_19005_1" clause="6.8.3" testNumber="1"/>
+            <id specification="ISO_19005_1" clause="6.8.3.3" testNumber="1"/>
             <description>The logical structure of the conforming file shall be described by a structure hierarchy rooted in the StructTreeRoot entry of the document catalog dictionary, as described in PDF Reference 9.6</description>
             <test>StructTreeRoot_size == 1</test>
             <error>
@@ -1340,7 +1340,7 @@
             </references>
         </rule>
         <rule object="SENonStandard">
-            <id specification="ISO_19005_1" clause="6.8.3" testNumber="2"/>
+            <id specification="ISO_19005_1" clause="6.8.3.4" testNumber="1"/>
             <description>All non-standard structure types shall be mapped to the nearest functionally equivalent standard type, as
 			defined in PDF Reference 9.7.4, in the role map dictionary of the structure tree root.</description>
             <test>circularMappingExist == true</test>
@@ -1355,7 +1355,7 @@
             </references>
         </rule>
         <rule object="PDStructElem">
-            <id specification="ISO_19005_1" clause="6.8.3" testNumber="3"/>
+            <id specification="ISO_19005_1" clause="6.8.3.4" testNumber="2"/>
             <description>A circular mapping shall not exist</description>
             <test>circularMappingExist != true</test>
             <error>
