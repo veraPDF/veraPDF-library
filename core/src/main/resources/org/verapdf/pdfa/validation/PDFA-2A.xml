@@ -1632,7 +1632,7 @@
                 <reference specification="ISO 32000-1:2008" clause="14.8.4"/>
             </references>
         </rule>
-        <rule object="PDStructElem">
+        <rule object="SENonStandard">
             <id specification="ISO_19005_2" clause="6.7.3" testNumber="3"/>
             <description>A circular mapping shall not exist.</description>
             <test>circularMappingExist != true</test>
