@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.logging.*;
 
 public class LogsFileHandler extends FileHandler {
+    private static final Logger LOGGER = Logger.getLogger(BatchFileProcessor.class.getCanonicalName());
+
     public static final String SUFFIX = LogManager.getLogManager().getProperty(LogsFileHandler.class.getName() + ".pattern") == null ?
             ".log" : LogManager.getLogManager().getProperty(LogsFileHandler.class.getName() + ".pattern");
     private static final List<String> logFilePaths = new ArrayList<>();
@@ -52,9 +54,13 @@ public class LogsFileHandler extends FileHandler {
         return logFilePaths.get(logFilePaths.size() - 1);
     }
 
-    public static void configLogs() throws IOException {
+    public static void configLogs() {
         InputStream loggersConfig = BatchFileProcessor.class.getClassLoader().getResourceAsStream("org/verapdf/processor/logging.properties");
-        LogManager.getLogManager().readConfiguration(loggersConfig);
+        try {
+            LogManager.getLogManager().readConfiguration(loggersConfig);
+        } catch (IOException ex) {
+            LOGGER.log(Level.WARNING, "Logging is not configured (console output only)");
+        }
     }
 
     public static void createNewLogFile() throws IOException {

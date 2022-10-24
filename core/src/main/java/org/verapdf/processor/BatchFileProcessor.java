@@ -99,12 +99,8 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 
 	private void configLogs() {
 		if (this.processor.getConfig().getValidatorConfig().isLogsEnabled()) {
-			try {
-				LogsFileHandler.configLogs();
-				LogsFileHandler.setLoggingLevel(this.processor.getConfig().getValidatorConfig().getLoggingLevel());
-			} catch (IOException ex) {
-				logger.log(Level.WARNING, "Logging is not configured (console output only)");
-			}
+			LogsFileHandler.configLogs();
+			LogsFileHandler.setLoggingLevel(this.processor.getConfig().getValidatorConfig().getLoggingLevel());
 		}
 	}
 
