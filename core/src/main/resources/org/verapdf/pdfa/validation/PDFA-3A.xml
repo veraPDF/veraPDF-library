@@ -107,7 +107,7 @@
             <references/>
         </rule>
         <rule object="CosStream">
-            <id specification="ISO_19005_3" clause="6.1.7" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.1.7.1" testNumber="1"/>
             <description>The value of the Length key specified in the stream dictionary shall match the number of bytes in the file following the LINE FEED (0Ah) character
 			after the stream keyword and preceding the EOL marker before the endstream keyword.</description>
             <test>Length == realLength</test>
@@ -121,7 +121,7 @@
             <references/>
         </rule>
         <rule object="CosStream">
-            <id specification="ISO_19005_3" clause="6.1.7" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.1.7.1" testNumber="2"/>
             <description>The stream keyword shall be followed either by a CARRIAGE RETURN (0Dh) and LINE FEED (0Ah) character sequence or by a single LINE FEED (0Ah) 
 			character. The endstream keyword shall be preceded by an EOL marker.</description>
             <test>streamKeywordCRLFCompliant == true &amp;&amp; endstreamKeywordEOLCompliant == true</test>
@@ -132,7 +132,7 @@
             <references/>
         </rule>
         <rule object="CosStream">
-            <id specification="ISO_19005_3" clause="6.1.7" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.1.7.1" testNumber="3"/>
             <description>A stream dictionary shall not contain the F, FFilter, or FDecodeParms keys</description>
             <test>F == null &amp;&amp; FFilter == null &amp;&amp; FDecodeParms == null</test>
             <error>
@@ -144,7 +144,7 @@
             <references/>
         </rule>
         <rule object="CosFilter">
-            <id specification="ISO_19005_3" clause="6.1.7" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.1.7.2" testNumber="1"/>
             <description>All standard stream filters listed in ISO 32000-1:2008, 7.4, Table 6 may be used, with the exception of
                 LZWDecode. In addition, the Crypt filter shall not be used unless the value of the Name key in the decode
                 parameters dictionary is Identity. Filters that are not listed in ISO 32000-1:2008, 7.4, Table 6 shall not be
@@ -891,7 +891,7 @@
             </references>
         </rule>
         <rule object="PDType0Font">
-            <id specification="ISO_19005_3" clause="6.2.11.3" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.11.3.1" testNumber="1"/>
             <description>For any given composite (Type 0) font within a conforming file, the CIDSystemInfo entry in its CIDFont dictionary and its Encoding dictionary 
 			shall have the following relationship: 
 			- If the Encoding key in the Type 0 font dictionary is Identity-H or Identity-V, any values of Registry, Ordering, 
@@ -917,7 +917,7 @@
             <references/>
         </rule>
         <rule object="PDCIDFont">
-            <id specification="ISO_19005_3" clause="6.2.11.3" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.11.3.2" testNumber="1"/>
             <description>ISO 32000-1:2008, 9.7.4, Table 117 requires that all embedded Type 2 CIDFonts in the CIDFont dictionary shall contain a 
 			CIDToGIDMap entry that shall be a stream mapping from CIDs to glyph indices or the name Identity, as described in ISO 32000-1:2008, 9.7.4, Table 117.</description>
             <test>Subtype != &quot;CIDFontType2&quot; || CIDToGIDMap != null || fontFile_size == 0</test>
@@ -930,7 +930,7 @@
             </references>
         </rule>
         <rule object="PDCMap">
-            <id specification="ISO_19005_3" clause="6.2.11.3" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.2.11.3.3" testNumber="1"/>
             <description>All CMaps used within a PDF/A-3 file, except those listed in ISO 32000-1:2008, 9.7.5.2, Table 118, shall be embedded in that file as described
 			in ISO 32000-1:2008, 9.7.5.</description>
             <test>CMapName == &quot;Identity-H&quot; || CMapName == &quot;Identity-V&quot; || CMapName == &quot;GB-EUC-H&quot; || CMapName == &quot;GB-EUC-V&quot; ||
@@ -960,7 +960,7 @@
             </references>
         </rule>
         <rule object="CMapFile">
-            <id specification="ISO_19005_3" clause="6.2.11.3" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.2.11.3.3" testNumber="2"/>
             <description>For those CMaps that are embedded, the integer value of the WMode entry in the CMap dictionary shall be identical to the WMode value
 			in the embedded CMap stream.</description>
             <test>WMode == dictWMode</test>
@@ -974,7 +974,7 @@
             <references/>
         </rule>
         <rule object="PDReferencedCMap">
-            <id specification="ISO_19005_3" clause="6.2.11.3" testNumber="5"/>
+            <id specification="ISO_19005_3" clause="6.2.11.3.3" testNumber="3"/>
             <description>A CMap shall not reference any other CMap except those listed in ISO 32000-1:2008, 9.7.5.2, Table 118.</description>
             <test>CMapName == &quot;Identity-H&quot; || CMapName == &quot;Identity-V&quot; || CMapName == &quot;GB-EUC-H&quot; || CMapName == &quot;GB-EUC-V&quot; ||
 			CMapName == &quot;GBpc-EUC-H&quot; || CMapName == &quot;GBpc-EUC-V&quot; || CMapName == &quot;GBK-EUC-H&quot; || CMapName == &quot;GBK-EUC-V&quot; ||
@@ -1003,7 +1003,7 @@
             </references>
         </rule>
         <rule object="PDFont">
-            <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.11.4.1" testNumber="1"/>
             <description>The font programs for all fonts used for rendering within a conforming file shall be embedded within that file, as defined in ISO 32000-1:2008, 9.9.</description>
             <test>Subtype == &quot;Type3&quot; || Subtype == &quot;Type0&quot; || renderingMode == 3 || fontFile_size == 1</test>
             <error>
@@ -1015,7 +1015,7 @@
             </references>
         </rule>
         <rule object="Glyph">
-            <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.11.4.1" testNumber="2"/>
             <description>Embedded fonts shall define all glyphs referenced for rendering within the conforming file.
                 A font referenced for use solely in rendering mode 3 is therefore not rendered and is thus exempt
                 from the embedding requirement. In all cases for TrueType fonts that are to be rendered, character codes
@@ -1031,7 +1031,7 @@
             </references>
         </rule>
         <rule object="PDType1Font">
-            <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.2.11.4.2" testNumber="1"/>
             <description>If the FontDescriptor dictionary of an embedded Type 1 font contains a CharSet string, then it shall list the character names of all glyphs
 			present in the font program, regardless of whether a glyph in the font is referenced or used by the PDF or not.</description>
             <test>fontFile_size == 0 || fontName.search(/[A-Z]{6}\+/) != 0 || CharSet == null || charSetListsAllGlyphs == true</test>
@@ -1042,7 +1042,7 @@
             <references/>
         </rule>
         <rule object="PDCIDFont">
-            <id specification="ISO_19005_3" clause="6.2.11.4" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.2.11.4.2" testNumber="2"/>
             <description>If the FontDescriptor dictionary of an embedded CID font contains a CIDSet stream, then it shall identify all CIDs which are present in the font program,
 			regardless of whether a CID in the font is referenced or used by the PDF or not.</description>
             <test>fontFile_size == 0 || fontName.search(/[A-Z]{6}\+/) != 0 || CIDSet_size == 0 || cidSetListsAllGlyphs == true</test>
@@ -1125,7 +1125,7 @@
             <references/>
         </rule>
         <rule object="Glyph">
-            <id specification="ISO_19005_3" clause="6.2.11.7" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.2.11.7.2" testNumber="1"/>
             <description>The Font dictionary of all fonts shall define the map of all used character codes to Unicode values, either via a ToUnicode entry,
 			or other mechanisms as defined in ISO 19005-2, 6.2.11.7.2.</description>
             <test>toUnicode != null</test>
@@ -1138,7 +1138,7 @@
             </references>
         </rule>
         <rule object="Glyph">
-            <id specification="ISO_19005_3" clause="6.2.11.7" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.2.11.7.2" testNumber="2"/>
             <description>The Unicode values specified in the ToUnicode CMap shall all be greater than zero (0), but not equal to either U+FEFF or U+FFFE.</description>
             <test>toUnicode == null || (toUnicode.indexOf(&quot;\u0000&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFFFE&quot;) == -1 &amp;&amp; toUnicode.indexOf(&quot;\uFEFF&quot;)  == -1)</test>
             <error>
@@ -1148,7 +1148,7 @@
             <references/>
         </rule>
         <rule object="Glyph">
-            <id specification="ISO_19005_3" clause="6.2.11.7" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.2.11.7.3" testNumber="1"/>
             <description>For any character, regardless of its rendering mode, that is mapped to a code
 			or codes in the Unicode Private Use Area (PUA), an ActualText entry as described in
 			ISO 32000-1:2008, 14.9.4 shall be present for this character or a sequence of characters of which such a
@@ -1440,9 +1440,20 @@
             <references>
                 <reference specification="XMP Specification, September 2005" clause="5 - Embedding XMP Metadata in Application Files - PDF"/>
             </references>
-        </rule>        
+        </rule>
+        <rule object="XMPProperty">
+            <id specification="ISO_19005_3" clause="6.6.2.3.1" testNumber="1"/>
+            <description>All properties specified in XMP form shall use either the predefined schemas defined in the XMP Specification,
+                ISO 19005-1 or this part of ISO 19005, or any extension schemas that comply with 6.6.2.3.2.</description>
+            <test>(isPredefinedInXMP2005 == true || isDefinedInMainPackage == true || isDefinedInCurrentPackage == true) &amp;&amp; isValueTypeCorrect == true</test>
+            <error>
+                <message>An XMP property is either not not pre-defined, is not defined in any extension schema, or has invalid type.</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
 		<rule object="ExtensionSchemaObject">
-            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.6.2.3.2" testNumber="1"/>
             <description>Extension schemas shall be specified using the PDF/A extension schema container schema defined in 6.6.2.3.3. All fields described in each 
 			of the tables in 6.6.2.3.3 shall be present in any extension schema container schema.</description>
             <test>containsUndefinedFields == false</test>
@@ -1455,7 +1466,7 @@
             <references/>
         </rule>
         <rule object="ExtensionSchemasContainer">
-            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.6.2.3.3" testNumber="1"/>
             <description>The extension schema container schema uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/extension/&quot;. 
 			The required schema namespace prefix is pdfaExtension. pdfaExtension:schemas - Bag Schema - Description of extension schemas</description>
             <test>isValidBag == true &amp;&amp; prefix == &quot;pdfaExtension&quot;</test>
@@ -1466,7 +1477,7 @@
             <references/>
         </rule>
         <rule object="ExtensionSchemaDefinition">
-            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.6.2.3.3" testNumber="2"/>
             <description>The Schema type is an XMP structure containing the definition of an extension schema. The field namespace URI is &quot;http://www.aiim.org/pdfa/ns/schema#&quot;.
 			The required field namespace prefix is pdfaSchema. The Schema type includes the following fields: pdfaSchema:schema (Text), pdfaSchema:namespaceURI (URI), pdfaSchema:prefix (Text),
 			pdfaSchema:property (Seq Property), pdfaSchema:valueType (Seq ValueType).</description>
@@ -1482,7 +1493,7 @@
             <references/>
         </rule>
         <rule object="ExtensionSchemaProperty">
-            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="4"/>
+            <id specification="ISO_19005_3" clause="6.6.2.3.3" testNumber="3"/>
             <description>The Property type defined is an XMP structure containing the definition of a schema property. The
 		field namespace URI is &quot;http://www.aiim.org/pdfa/ns/property#&quot;. The required field namespace prefix is
 		pdfaProperty. The Property type includes the following fields: pdfaProperty:name (Text), pdfaProperty:valueType (Open Choice of Text), 
@@ -1498,7 +1509,7 @@
             <references/>
         </rule>
         <rule object="ExtensionSchemaValueType">
-            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="5"/>
+            <id specification="ISO_19005_3" clause="6.6.2.3.3" testNumber="4"/>
             <description>The ValueType type is an XMP structure containing the definition of all property value
 		types used by embedded extension schemas that are not defined in the XMP Specification. The field namespace URI is &quot;http://www.aiim.org/pdfa/ns/type#&quot;.
 		The required field namespace prefix is pdfaType. The ValueType type includes the following fields: pdfaType:type (Text), pdfaType:namespaceURI (URI),
@@ -1515,7 +1526,7 @@
             <references/>
         </rule>
         <rule object="ExtensionSchemaField">
-            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="6"/>
+            <id specification="ISO_19005_3" clause="6.6.2.3.3" testNumber="5"/>
             <description>The Field type defined in Table 6 is an XMP structure containing the definition of a property value type field. The field 
 		namespace URI is &quot;http://www.aiim.org/pdfa/ns/field#&quot;. The required field namespace prefix is pdfaField. The Field type contains the following fields:
 		pdfaField:name (Text), pdfaField:valueType (Open Choice of Text), pdfaField:description (Text).</description>
@@ -1524,17 +1535,6 @@
 			(isDescriptionValidText == true &amp;&amp; descriptionPrefix == &quot;pdfaField&quot; )</test>
             <error>
                 <message>Invalid extension schema Field type definition</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
-        <rule object="XMPProperty">
-            <id specification="ISO_19005_3" clause="6.6.2.3" testNumber="7"/>
-            <description>All properties specified in XMP form shall use either the predefined schemas defined in the XMP Specification,
-			ISO 19005-1 or this part of ISO 19005, or any extension schemas that comply with 6.6.2.3.2.</description>
-            <test>(isPredefinedInXMP2005 == true || isDefinedInMainPackage == true || isDefinedInCurrentPackage == true) &amp;&amp; isValueTypeCorrect == true</test>
-            <error>
-                <message>An XMP property is either not not pre-defined, is not defined in any extension schema, or has invalid type.</message>
                 <arguments/>
             </error>
             <references/>
@@ -1589,7 +1589,7 @@
             <references/>
         </rule>
         <rule object="CosDocument">
-            <id specification="ISO_19005_3" clause="6.7.2" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.7.2.2" testNumber="1"/>
             <description>The document catalog dictionary shall include a MarkInfo dictionary containing an entry, Marked, whose value shall be true.</description>
             <test>Marked == true</test>
             <error>
@@ -1605,7 +1605,7 @@
             </references>
         </rule>
         <rule object="PDDocument">
-            <id specification="ISO_19005_3" clause="6.7.3" testNumber="1"/>
+            <id specification="ISO_19005_3" clause="6.7.3.3" testNumber="1"/>
             <description>The logical structure of the conforming file shall be described by a structure hierarchy rooted in the StructTreeRoot entry 
 			of the document's Catalog dictionary, as described in ISO 32000-1:2008, 14.7.</description>
             <test>StructTreeRoot_size == 1</test>
@@ -1618,7 +1618,7 @@
             </references>
         </rule>
         <rule object="SENonStandard">
-            <id specification="ISO_19005_3" clause="6.7.3" testNumber="2"/>
+            <id specification="ISO_19005_3" clause="6.7.3.4" testNumber="1"/>
             <description>All non-standard structure types shall be mapped to the nearest functionally equivalent standard type, as
             defined in ISO 32000-1:2008, 14.8.4, in the role map dictionary of the structure tree root.</description>
             <test>circularMappingExist == true</test>
@@ -1633,7 +1633,7 @@
             </references>
         </rule>
         <rule object="SENonStandard">
-            <id specification="ISO_19005_3" clause="6.7.3" testNumber="3"/>
+            <id specification="ISO_19005_3" clause="6.7.3.4" testNumber="2"/>
             <description>A circular mapping shall not exist.</description>
             <test>circularMappingExist != true</test>
             <error>

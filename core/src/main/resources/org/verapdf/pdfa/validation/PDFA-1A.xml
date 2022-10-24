@@ -691,7 +691,7 @@
             </references>
         </rule>
         <rule object="PDType0Font">
-            <id specification="ISO_19005_1" clause="6.3.3.3" testNumber="1"/>
+            <id specification="ISO_19005_1" clause="6.3.3.1" testNumber="1"/>
             <description>For any given composite (Type 0) font referenced within a conforming file, the CIDSystemInfo entries of its 
 			CIDFont and CMap dictionaries shall be compatible. In other words, the Registry and Ordering strings of the CIDSystemInfo dictionaries
 			for that font shall be identical, unless the value of the Encoding key in the font dictionary is Identity-H or Identity-V.</description>
