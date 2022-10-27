@@ -23,9 +23,7 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
@@ -43,13 +41,13 @@ final class ErrorDetailsImpl implements ErrorDetails {
     private final String message;
     @XmlElementWrapper
     @XmlElement(name = "argument")
-    private final List<String> arguments;
+    private final List<ErrorArgument> arguments;
 
     private ErrorDetailsImpl() {
-        this("message", Collections.<String> emptyList());
+        this("message", Collections.<ErrorArgument> emptyList());
     }
 
-    private ErrorDetailsImpl(final String message, final List<String> arguments) {
+    private ErrorDetailsImpl(final String message, final List<ErrorArgument> arguments) {
         super();
         this.message = message;
         this.arguments = new ArrayList<>(arguments);
@@ -67,7 +65,7 @@ final class ErrorDetailsImpl implements ErrorDetails {
      * { @inheritDoc }
      */
     @Override
-    public List<String> getArguments() {
+    public List<ErrorArgument> getArguments() {
         return Collections.unmodifiableList(this.arguments);
     }
 
@@ -77,11 +75,8 @@ final class ErrorDetailsImpl implements ErrorDetails {
     @Override
     public final int hashCode() {
         final int prime = 31;
-        int result = 1;
-        result = prime * result
-                + ((this.arguments == null) ? 0 : this.arguments.hashCode());
-        result = prime * result
-                + ((this.message == null) ? 0 : this.message.hashCode());
+        int result = ((this.arguments == null) ? 0 : this.arguments.hashCode());
+        result = prime * result + ((this.message == null) ? 0 : this.message.hashCode());
         return result;
     }
 
@@ -90,24 +85,21 @@ final class ErrorDetailsImpl implements ErrorDetails {
      */
     @Override
     public final boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (!(obj instanceof ErrorDetails))
+        }
+        if (!(obj instanceof ErrorDetails)) {
             return false;
+        }
         ErrorDetails other = (ErrorDetails) obj;
-        if (this.arguments == null) {
-            if (other.getArguments() != null)
-                return false;
-        } else if (!this.arguments.equals(other.getArguments()))
+        if (!Objects.equals(this.arguments, other.getArguments())) {
             return false;
-        if (this.message == null) {
-            if (other.getMessage() != null)
-                return false;
-        } else if (!this.message.equals(other.getMessage()))
-            return false;
-        return true;
+        }
+        return Objects.equals(this.message, other.getMessage());
+
     }
 
     /**
@@ -124,14 +116,14 @@ final class ErrorDetailsImpl implements ErrorDetails {
     }
 
     static ErrorDetailsImpl fromValues(final String message,
-            final List<String> arguments) {
+            final List<ErrorArgument> arguments) {
         return new ErrorDetailsImpl(message, arguments);
     }
 
     static class Adapter extends XmlAdapter<ErrorDetailsImpl, ErrorDetails> {
         @Override
-        public ErrorDetailsImpl unmarshal(ErrorDetailsImpl efforDetailsImpl) {
-            return efforDetailsImpl;
+        public ErrorDetailsImpl unmarshal(ErrorDetailsImpl errorDetailsImpl) {
+            return errorDetailsImpl;
         }
 
         @Override

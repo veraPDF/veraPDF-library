@@ -25,6 +25,7 @@ package org.verapdf.pdfa.results;
 
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.results.TestAssertion.Status;
+import org.verapdf.pdfa.validation.profiles.ErrorArgument;
 import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
@@ -151,7 +152,7 @@ public class ValidationResults {
 	 */
 	public static TestAssertion assertionFromValues(final int ordinal, final RuleId ruleId, final Status status,
 			final String message, final Location location, final String context, final String errorMessage,
-			final List<String> errorArguments) {
+			final List<ErrorArgument> errorArguments) {
 		return TestAssertionImpl.fromValues(ordinal, ruleId, status, message, location, context, errorMessage, errorArguments);
 	}
 

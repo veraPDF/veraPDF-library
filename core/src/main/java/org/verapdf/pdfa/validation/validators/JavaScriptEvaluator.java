@@ -5,10 +5,10 @@ import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.pdfa.validation.profiles.ErrorArgument;
 import org.verapdf.pdfa.validation.profiles.Rule;
 import org.verapdf.pdfa.validation.profiles.Variable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -142,14 +142,10 @@ public class JavaScriptEvaluator {
 
 	}
 
-	public static synchronized List<String> getErrorArgumentsResult(Object obj, List<String> arguments, ScriptableObject scope) {
-		List<String> result = new ArrayList<>(arguments.size());
-
-		for (String argument : arguments) {
-			result.add(getErrorArgumentResult(argument, obj, scope));
+	public static synchronized void setErrorArgumentsResult(Object obj, List<ErrorArgument> arguments, ScriptableObject scope) {
+		for (ErrorArgument argument : arguments) {
+			argument.setArgumentValue(getErrorArgumentResult(argument.getArgument(), obj, scope));
 		}
-
-		return result;
 	}
 
 	public static void exitContext() {
