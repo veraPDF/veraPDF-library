@@ -25,6 +25,7 @@ package org.verapdf.pdfa.results;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.verapdf.pdfa.validation.profiles.ErrorArgument;
 import org.verapdf.pdfa.validation.profiles.RuleId;
 
 import java.util.List;
@@ -76,7 +77,7 @@ public interface TestAssertion {
     /**
      * @return the list of error arguments
      */
-    public List<String> getErrorArguments();
+    public List<ErrorArgument> getErrorArguments();
 
     /**
      * Enum that indicates the result of a particular test assertion, i.e.

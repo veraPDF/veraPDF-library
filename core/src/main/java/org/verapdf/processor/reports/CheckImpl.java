@@ -28,10 +28,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.verapdf.pdfa.results.TestAssertion;
+import org.verapdf.pdfa.validation.profiles.ErrorArgument;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -124,7 +126,7 @@ final class CheckImpl implements Check {
 		}
 		return new CheckImpl(assertion.getStatus(), getStringWithoutInvalidXmlChars(assertion.getLocation().getContext()),
 				assertion.getLocationContext(), getStringWithoutInvalidXmlChars(assertion.getErrorMessage()),
-				assertion.getErrorArguments());
+				assertion.getErrorArguments().stream().map(ErrorArgument::getArgumentValue).collect(Collectors.toList()));
 	}
 
 	private static String getStringWithoutInvalidXmlChars(String string) {

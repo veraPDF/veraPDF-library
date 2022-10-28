@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+import org.verapdf.pdfa.validation.profiles.ErrorArgument;
 import org.verapdf.pdfa.validation.profiles.Profiles;
 import org.verapdf.pdfa.validation.profiles.RuleId;
 
@@ -55,7 +56,7 @@ final class TestAssertionImpl implements TestAssertion {
     @XmlElement
     private final String errorMessage;
 
-    private final List<String> errorArguments;
+    private final List<ErrorArgument> errorArguments;
 
     private TestAssertionImpl() {
         this(0, Profiles.defaultRuleId(), Status.FAILED, "message", LocationImpl
@@ -64,7 +65,7 @@ final class TestAssertionImpl implements TestAssertion {
 
     private TestAssertionImpl(final int ordinal, final RuleId ruleId, final Status status, final String message,
                               final Location location, final String locationContext, final String errorMessage,
-                              final List<String> errorArguments) {
+                              final List<ErrorArgument> errorArguments) {
         super();
         this.ordinal = ordinal;
         this.ruleId = ruleId;
@@ -133,7 +134,7 @@ final class TestAssertionImpl implements TestAssertion {
     }
 
     @Override
-    public List<String> getErrorArguments() {
+    public List<ErrorArgument> getErrorArguments() {
         return errorArguments;
     }
 
@@ -212,7 +213,7 @@ final class TestAssertionImpl implements TestAssertion {
 
     static TestAssertionImpl fromValues(final int ordinal, final RuleId ruleId, final Status status,
             final String message, final Location location, final String locationContext, final String errorMessage,
-            final List<String> errorArguments) {
+            final List<ErrorArgument> errorArguments) {
         return new TestAssertionImpl(ordinal, ruleId, status, message, location, locationContext, errorMessage, errorArguments);
     }
 

@@ -38,10 +38,7 @@ import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.pdfa.validation.profiles.Rule;
-import org.verapdf.pdfa.validation.profiles.RuleId;
-import org.verapdf.pdfa.validation.profiles.ValidationProfile;
-import org.verapdf.pdfa.validation.profiles.Variable;
+import org.verapdf.pdfa.validation.profiles.*;
 
 import java.net.URI;
 import java.util.*;
@@ -322,11 +319,12 @@ public class BaseValidator implements PDFAValidator {
 				if ((failedChecksNumberOfRule <= maxNumberOfDisplayedFailedChecks || maxNumberOfDisplayedFailedChecks == -1) &&
 						(this.results.size() <= MAX_CHECKS_NUMBER || failedChecksNumberOfRule <= 1)) {
 					Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
-					List<String> errorArguments = showErrorMessages ? JavaScriptEvaluator.getErrorArgumentsResult(obj,
-							rule.getError().getArguments(), this.scope) : Collections.emptyList();
-					String errorMessage = showErrorMessages ? createErrorMessage(rule.getError().getMessage(), errorArguments) : null;
+					if (showErrorMessages) {
+						JavaScriptEvaluator.setErrorArgumentsResult(obj, rule.getError().getArguments(), this.scope);
+					}
+					String errorMessage = showErrorMessages ? createErrorMessage(rule.getError().getMessage(), rule.getError().getArguments()) : null;
 					TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
-							Status.FAILED, rule.getDescription(), location, obj.getContext(), errorMessage, errorArguments);
+							Status.FAILED, rule.getDescription(), location, obj.getContext(), errorMessage, rule.getError().getArguments());
 					this.results.add(assertion);
 				}
 			} else if (this.logPassedTests && this.results.size() <= MAX_CHECKS_NUMBER) {
@@ -338,11 +336,15 @@ public class BaseValidator implements PDFAValidator {
 		}
 	}
 
-	private String createErrorMessage(String errorMessage, List<String> arguments) {
+	private String createErrorMessage(String errorMessage, List<ErrorArgument> arguments) {
+		String result = errorMessage;
 		for (int i = arguments.size(); i > 0 ; --i) {
-			errorMessage = errorMessage.replace("%" + i, arguments.get(i - 1) != null ? arguments.get(i - 1) : "null");
+			ErrorArgument argument = arguments.get(i - 1);
+			String value = argument.getArgumentValue() != null ? argument.getArgumentValue() : "null";
+			result = result.replace("%" + argument.getName() + "%", value);
+			result = result.replace("%" + i, value);
 		}
-		return errorMessage;
+		return result;
 	}
 
 	@Override
