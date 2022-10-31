@@ -1286,7 +1286,7 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_1" clause="6.7.11" testNumber="4"/>
-            <description>The PDF/A Identification schema defined in Table 8 uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/id/&quot;. 
+            <description>The PDF/A Identification schema defined in Table 6 uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/id/&quot;.
 			The required schema namespace prefix is pdfaid. It contains the following fields: pdfaid:part (Open Choice of Integer), 
 			pdfaid:amd (Open Choice of Text), pdfaid:conformance (Open Choice of Text)</description>
             <test>partPrefix == &quot;pdfaid&quot; &amp;&amp; conformancePrefix == &quot;pdfaid&quot; &amp;&amp;
