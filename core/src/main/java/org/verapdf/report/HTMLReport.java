@@ -23,8 +23,8 @@ package org.verapdf.report;
 import org.verapdf.pdfa.Foundries;
 
 import javax.xml.transform.TransformerException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,6 +58,13 @@ public final class HTMLReport {
 	public static void writeHTMLReport(InputStream source, OutputStream destination, boolean isMultiJob, String wikiPath,
 			boolean isFullHTML) throws TransformerException {
 		String parserId = Foundries.defaultInstance().getParserId();
+		writeHTMLReport(source, new PrintWriter(new OutputStreamWriter(destination, StandardCharsets.UTF_8)),
+				isMultiJob, wikiPath, parserId, isFullHTML);
+	}
+
+	public static void writeHTMLReport(InputStream source, PrintWriter destination, boolean isMultiJob, String wikiPath,
+									   boolean isFullHTML) throws TransformerException {
+		String parserId = Foundries.defaultInstance().getParserId();
 		writeHTMLReport(source, destination, isMultiJob, wikiPath, parserId, isFullHTML);
 	}
 
@@ -74,7 +81,7 @@ public final class HTMLReport {
 	 *             transformation
 	 * @throws TransformerException
 	 */
-	public static void writeHTMLReport(InputStream source, OutputStream destination, boolean isMultiJob, String wikiPath,
+	public static void writeHTMLReport(InputStream source, PrintWriter destination, boolean isMultiJob, String wikiPath,
 									   String parserType, boolean isFullHTML) throws TransformerException {
 		String reportPath = isMultiJob ? summaryReport : detailedReport;
 		Map<String, String> arguments = new HashMap<>();

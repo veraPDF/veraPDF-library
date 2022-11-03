@@ -75,6 +75,7 @@ public abstract class AbstractXmlHandler extends AbstractBatchHandler {
 	@Override
 	public void close() {
 		try {
+			this.writer.flush();
 			this.writer.close();
 		} catch (XMLStreamException excep) {
 			logger.log(Level.INFO, String.format(strmExcpMessTmpl, "closing"), excep); //$NON-NLS-1$
