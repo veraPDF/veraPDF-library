@@ -29,6 +29,7 @@ import org.verapdf.report.HTMLReport;
 
 import javax.xml.transform.TransformerException;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Maxim Plushchov
@@ -40,7 +41,7 @@ final class HTMLHandler extends MrrHandler {
 	private final String wikiPath;
 
 	private HTMLHandler(PrintWriter reportStreamWriter, File file, String wikiPath) throws VeraPDFException, IOException {
-		super(reportStreamWriter, false);
+		super(new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)), false);
 		this.reportStreamWriter = reportStreamWriter;
 		this.file = file;
 		this.wikiPath = wikiPath;
@@ -64,6 +65,13 @@ final class HTMLHandler extends MrrHandler {
 			throw new VeraPDFException(e.getMessage(), e);
 		}
 		file.deleteOnExit();
+		this.close();
+	}
+
+	@Override
+	public void close() {
+		this.reportStreamWriter.flush();
+		this.reportStreamWriter.close();
 	}
 
 }
