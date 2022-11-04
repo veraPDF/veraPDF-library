@@ -133,11 +133,11 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 
 	@Override
 	public void handleBatchEnd(BatchSummary summary) {
-		// Do nothing here
+		this.close();
 	}
 
 	@Override
-	public void close() throws IOException {
+	public void close() {
 		this.outputStreamWriter.flush();
 		this.outputStreamWriter.close();
 	}
