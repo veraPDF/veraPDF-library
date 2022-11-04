@@ -65,11 +65,6 @@ final class HTMLHandler extends MrrHandler {
 			throw new VeraPDFException(e.getMessage(), e);
 		}
 		file.deleteOnExit();
-		this.close();
-	}
-
-	@Override
-	public void close() {
 		this.reportStreamWriter.flush();
 		this.reportStreamWriter.close();
 	}
