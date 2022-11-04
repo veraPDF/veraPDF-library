@@ -8,9 +8,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,10 +21,12 @@ public abstract class AbstractXmlReportWriter extends ReportWriter {
 	protected ReportParserEventHandler reportHandler;
 	protected boolean isFirstReport;
 
-	protected AbstractXmlReportWriter(OutputStream os, OutputStream errorStream) throws XMLStreamException, ParserConfigurationException, SAXException {
-		super(os, errorStream);
+	protected AbstractXmlReportWriter(PrintWriter outputStreamWriter, PrintWriter errorStreamWriter)
+			throws XMLStreamException, ParserConfigurationException, SAXException {
+		super(outputStreamWriter, errorStreamWriter);
 		this.saxParser = SAXParserFactory.newInstance().newSAXParser();
-		IndentingXMLStreamWriter writer = new IndentingXMLStreamWriter(XMLOutputFactory.newFactory().createXMLStreamWriter(os));
+		IndentingXMLStreamWriter writer = new IndentingXMLStreamWriter(XMLOutputFactory.newFactory()
+				.createXMLStreamWriter(outputStreamWriter));
 		this.writer = writer;
 		this.reportHandler = new ReportParserEventHandler(writer);
 	}

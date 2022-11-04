@@ -2,9 +2,7 @@ package org.verapdf.processor.reports.multithread.writer;
 
 import org.verapdf.processor.reports.ResultStructure;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.logging.Level;
+import java.io.PrintWriter;
 import java.util.logging.Logger;
 
 public class JsonReportWriter extends ReportWriter {
@@ -13,39 +11,27 @@ public class JsonReportWriter extends ReportWriter {
 
 	protected boolean isFirstReport;
 
-	protected JsonReportWriter(OutputStream os, OutputStream errorStream) {
-		super(os, errorStream);
+	protected JsonReportWriter(PrintWriter outputStreamWriter, PrintWriter errorStreamWriter) {
+		super(outputStreamWriter, errorStreamWriter);
 	}
 
 	public void write(ResultStructure result) {
 		if (isFirstReport) {
 			isFirstReport = false;
 		} else {
-			try {
-				os.write(",".getBytes());
-			} catch (IOException e) {
-				LOGGER.log(Level.SEVERE, "Can't write", e);
-			}
+			outputStreamWriter.write(",");
 		}
-		merge(result.getReportFile(), os);
+		merge(result.getReportFile(), outputStreamWriter);
 		deleteTemp(result);
 	}
 
 	public void startDocument() {
-		try {
-			os.write("{\"reports\":[".getBytes());
-			isFirstReport = true;
-		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "Can't write start document", e);
-		}
+		outputStreamWriter.write("{\"reports\":[");
+		isFirstReport = true;
 	}
 
 	public void endDocument() {
-		try {
-			os.write("]}".getBytes());
-		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "Can't write end document", e);
-		}
+		outputStreamWriter.write("]}");
 	}
 
 }

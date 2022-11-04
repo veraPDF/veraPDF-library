@@ -17,10 +17,8 @@
  */
 package org.verapdf.processor;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.Writer;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.EnumSet;
 
 import javax.xml.bind.JAXBException;
@@ -120,19 +118,19 @@ public final class ProcessorFactory {
 			throw new IllegalArgumentException("Arg option can not be null"); //$NON-NLS-1$
 		if (reportStream == null)
 			throw new IllegalArgumentException("Arg reportStream can not be null"); //$NON-NLS-1$
-
+		PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(reportStream, StandardCharsets.UTF_8));
 		switch (option) {
 		case TEXT:
-			return SingleLineResultHandler.newInstance(reportStream, isVerbose, logPassed);
+			return SingleLineResultHandler.newInstance(printWriter, isVerbose, logPassed);
 		case RAW:
-			return rawResultHandler(new PrintWriter(reportStream));
+			return rawResultHandler(printWriter);
 		case MRR:
 		case XML:
-			return MrrHandler.newInstance(new PrintWriter(reportStream), logPassed);
+			return MrrHandler.newInstance(printWriter, logPassed);
 		case HTML:
-			return HTMLHandler.newInstance(reportStream, wikiPath);
+			return HTMLHandler.newInstance(printWriter, wikiPath);
 		case JSON:
-			return new JsonHandler(new PrintWriter(reportStream), logPassed);
+			return new JsonHandler(printWriter, logPassed);
 		default: // should not be reached
 			throw new VeraPDFException("Unknown report format option: " + option); //$NON-NLS-1$
 		}

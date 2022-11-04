@@ -7,7 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,8 +21,8 @@ public class RawReportWriter extends AbstractXmlReportWriter {
 	private final String FEATURES_REPORT_TAG = "featuresReport";
 	private final String FIXER_RESULT_TAG = "fixerResult";
 
-	protected RawReportWriter(OutputStream os, OutputStream errorStream) throws XMLStreamException, ParserConfigurationException, SAXException {
-		super(os, errorStream);
+	protected RawReportWriter(PrintWriter outputStreamWriter, PrintWriter errorStreamWriter) throws XMLStreamException, ParserConfigurationException, SAXException {
+		super(outputStreamWriter, errorStreamWriter);
 	}
 
 	@Override

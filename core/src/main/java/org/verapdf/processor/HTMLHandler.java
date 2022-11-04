@@ -36,20 +36,20 @@ import java.io.*;
 final class HTMLHandler extends MrrHandler {
 
 	private final File file;
-	private final OutputStream reportStream;
+	private final PrintWriter reportStreamWriter;
 	private final String wikiPath;
 
-	private HTMLHandler(OutputStream reportStream, File file, String wikiPath) throws VeraPDFException, IOException {
-		super(new PrintWriter(new FileOutputStream(file)), false);
-		this.reportStream = reportStream;
+	private HTMLHandler(PrintWriter reportStreamWriter, File file, String wikiPath) throws VeraPDFException, IOException {
+		super(reportStreamWriter, false);
+		this.reportStreamWriter = reportStreamWriter;
 		this.file = file;
 		this.wikiPath = wikiPath;
 	}
 
-	static BatchProcessingHandler newInstance(final OutputStream reportStream, final String wikiPath) throws VeraPDFException {
+	static BatchProcessingHandler newInstance(final PrintWriter reportStreamWriter, final String wikiPath) throws VeraPDFException {
 		try {
 			File file = File.createTempFile("veraPDF","xmlReport");
-			return new HTMLHandler(reportStream, file, wikiPath);
+			return new HTMLHandler(reportStreamWriter, file, wikiPath);
 		} catch (IOException exception) {
 			throw new VeraPDFException(exception.getMessage(), exception);
 		}
@@ -59,7 +59,7 @@ final class HTMLHandler extends MrrHandler {
 	public void handleBatchEnd(BatchSummary summary) throws VeraPDFException {
 		super.handleBatchEnd(summary);
 		try (InputStream xmlStream = new FileInputStream(file)) {
-			HTMLReport.writeHTMLReport(xmlStream, reportStream, summary.isMultiJob(), wikiPath, true);
+			HTMLReport.writeHTMLReport(xmlStream, reportStreamWriter, summary.isMultiJob(), wikiPath, true);
 		} catch (IOException | TransformerException e) {
 			throw new VeraPDFException(e.getMessage(), e);
 		}
