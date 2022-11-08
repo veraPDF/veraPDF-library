@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.logging.*;
 
 public class LogsFileHandler extends FileHandler {
-    private static final Logger LOGGER = Logger.getLogger(BatchFileProcessor.class.getCanonicalName());
+    private static final Logger LOGGER = Logger.getLogger(LogsFileHandler.class.getCanonicalName());
 
     public static final String SUFFIX = LogManager.getLogManager().getProperty(LogsFileHandler.class.getName() + ".pattern") == null ?
             ".log" : LogManager.getLogManager().getProperty(LogsFileHandler.class.getName() + ".pattern");
