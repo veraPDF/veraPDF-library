@@ -185,7 +185,7 @@
         </rule>
         <rule object="SETR">
             <id specification="ISO_14289_1" clause="7.2" testNumber="4"/>
-            <description>TR element should contained in Table, THead, TBody or TFoot element</description>
+            <description>TR element should be contained in Table, THead, TBody or TFoot element</description>
             <test>/^(Table|THead|TBody|TFoot)$/.test(parentStandardType)</test>
             <error>
                 <message>TR element contained in %1 instead of Table, THead, TBody or TFoot element</message>
@@ -199,7 +199,7 @@
         </rule>
         <rule object="SETHead">
             <id specification="ISO_14289_1" clause="7.2" testNumber="5"/>
-            <description>THead element should contained in Table element</description>
+            <description>THead element should be contained in Table element</description>
             <test>parentStandardType == 'Table'</test>
             <error>
                 <message>THead element contained in %1 instead of Table element</message>
@@ -213,7 +213,7 @@
         </rule>
         <rule object="SETBody">
             <id specification="ISO_14289_1" clause="7.2" testNumber="6"/>
-            <description>TBody element should contained in Table element</description>
+            <description>TBody element should be contained in Table element</description>
             <test>parentStandardType == 'Table'</test>
             <error>
                 <message>TBody element contained in %1 instead of Table element</message>
@@ -227,7 +227,7 @@
         </rule>
         <rule object="SETFoot">
             <id specification="ISO_14289_1" clause="7.2" testNumber="7"/>
-            <description>TFoot element should contained in Table element</description>
+            <description>TFoot element should be contained in Table element</description>
             <test>parentStandardType == 'Table'</test>
             <error>
                 <message>TFoot element contained in %1 instead of Table element</message>
@@ -241,7 +241,7 @@
         </rule>
         <rule object="SETH">
             <id specification="ISO_14289_1" clause="7.2" testNumber="8"/>
-            <description>TH element should contained in TR element</description>
+            <description>TH element should be contained in TR element</description>
             <test>parentStandardType == 'TR'</test>
             <error>
                 <message>TH element contained in %1 instead of TR element</message>
@@ -255,7 +255,7 @@
         </rule>
         <rule object="SETD">
             <id specification="ISO_14289_1" clause="7.2" testNumber="9"/>
-            <description>TD element should contained in TR element</description>
+            <description>TD element should be contained in TR element</description>
             <test>parentStandardType == 'TR'</test>
             <error>
                 <message>TD element contained in %1 instead of TR element</message>
@@ -346,7 +346,7 @@
         </rule>
         <rule object="SELI">
             <id specification="ISO_14289_1" clause="7.2" testNumber="17"/>
-            <description>LI element should contained in L element</description>
+            <description>LI element should be contained in L element</description>
             <test>parentStandardType == 'L'</test>
             <error>
                 <message>LI element contained in %1 instead of L element</message>
@@ -360,7 +360,7 @@
         </rule>
         <rule object="SELBody">
             <id specification="ISO_14289_1" clause="7.2" testNumber="18"/>
-            <description>LBody element should contained in LI element</description>
+            <description>LBody element should be contained in LI element</description>
             <test>parentStandardType == 'LI'</test>
             <error>
                 <message>LBody element contained in %1 instead of LI element</message>
@@ -453,7 +453,7 @@
         </rule>
         <rule object="SETOCI">
             <id specification="ISO_14289_1" clause="7.2" testNumber="26"/>
-            <description>TOCI element should contained in TOC element</description>
+            <description>TOCI element should be contained in TOC element</description>
             <test>parentStandardType == 'TOC'</test>
             <error>
                 <message>TOCI element contained in %1 instead of TOC element</message>
