@@ -116,6 +116,11 @@ public class BaseValidator implements PDFAValidator {
 		return componentDetails;
 	}
 
+	@Override
+	public String getValidationProgressString() {
+		return validationProgress.getCurrentValidationJobProgressWithCommas();
+	}
+
 	protected ValidationResult validate(Object root) throws ValidationException {
 		initialise();
 		this.validationProgress.updateVariables();

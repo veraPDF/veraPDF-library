@@ -59,6 +59,22 @@ public class ValidationProgress {
 		this.numberOfObjectsToBeProcessed = numberOfObjectsToBeProcessed;
 	}
 
+	public String getCurrentValidationJobProgressWithCommas() {
+		return "Progress: "
+		       + numberOfChecks + " checks, "
+		       + numberOfFailedChecks + " failed, "
+		       + numberOfProcessedObjects + " processed objects, "
+		       + numberOfObjectsToBeProcessed + " in stack.";
+	}
+
+	private String getCurrentValidationJobProgress() {
+		return "Progress: "
+		       + numberOfChecks + " checks / "
+		       + numberOfFailedChecks + " failed / "
+		       + numberOfProcessedObjects + " processed objects / "
+		       + numberOfObjectsToBeProcessed + " in stack.";
+	}
+
 	private boolean checkCurrentNumberOfChecks() {
 		return numberOfChecks % currentStep == 0;
 	}
@@ -80,13 +96,5 @@ public class ValidationProgress {
 		String currentProgress = getCurrentValidationJobProgress();
 		System.err.printf("%-" + this.lengthOfPrevProgressString + "s\r", currentProgress);
 		this.lengthOfPrevProgressString = currentProgress.length();
-	}
-
-	private String getCurrentValidationJobProgress() {
-		return "Progress: "
-		       + numberOfChecks + " checks / "
-		       + numberOfFailedChecks + " failed / "
-		       + numberOfProcessedObjects + " processed objects / "
-		       + numberOfObjectsToBeProcessed + " in stack.";
 	}
 }

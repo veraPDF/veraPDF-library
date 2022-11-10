@@ -63,4 +63,7 @@ public interface PDFAValidator extends Component {
      *             if the validation process fails
      */
     public ValidationResult validate(PDFAParser toValidate) throws ValidationException;
+
+    public String getValidationProgressString();
+
 }
