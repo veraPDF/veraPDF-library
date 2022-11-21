@@ -169,15 +169,15 @@
         </rule>
         <rule object="SETable">
             <id specification="ISO_14289_1" clause="7.2" testNumber="3"/>
-            <description>Table element may contain a Caption element as its first or last kid and
-                Table element may contain only TR, THead, TBody, TFoot and Caption elements</description>
-            <test>/^(Caption&amp;)?(TR|THead|TBody|TFoot)(&amp;(TR|THead|TBody|TFoot))*$/.test(kidsStandardTypes)
-                || /^(TR|THead|TBody|TFoot)(&amp;(TR|THead|TBody|TFoot))*(&amp;Caption)?$/.test(kidsStandardTypes)
-                || kidsStandardTypes == 'Caption' || kidsStandardTypes == ''</test>
+            <description>Table element may contain only TR, THead, TBody, TFoot and Caption elements</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR' &amp;&amp; elem != 'THead'
+                &amp;&amp; elem != 'TBody' &amp;&amp; elem != 'TFoot' &amp;&amp; elem != 'Caption').length == 0 || kidsStandardTypes == ''</test>
             <error>
-                <message>Table element contains more than one Caption element or Table element contains a Caption element not as its first or
-                    last kid or Table element contains not a TR, THead, TBody, TFoot or Caption elements</message>
-                <arguments/>
+                <message>Table element contains %1 element(s) instead of TR, THead, TBode, TFoot or Caption</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR' &amp;&amp; elem != 'THead'
+                        &amp;&amp; elem != 'TBody' &amp;&amp; elem != 'TFoot' &amp;&amp; elem != 'Caption').toString()</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
@@ -344,6 +344,20 @@
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
             </references>
         </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="16"/>
+            <description>Table element may contain a Caption element as its first or last kid</description>
+            <test>kidsStandardTypes.indexOf('&amp;Caption&amp;') &lt; 0</test>
+            <error>
+                <message>Table element contains Caption as its %1 child instead of first or last one</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').slice(1).findIndex(elem =&gt; elem == 'Caption') + 2</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
         <rule object="SELI">
             <id specification="ISO_14289_1" clause="7.2" testNumber="17"/>
             <description>LI element should be contained in L element</description>
@@ -374,12 +388,15 @@
         </rule>
         <rule object="SEL">
             <id specification="ISO_14289_1" clause="7.2" testNumber="19"/>
-            <description>L element may contain a Caption element as its first kid and L element may contain only L, LI and Caption elements</description>
-            <test>/^(Caption&amp;)?(L|LI)(&amp;(L|LI))*$/.test(kidsStandardTypes) || kidsStandardTypes == '' || kidsStandardTypes == 'Caption'</test>
+            <description>L element may contain only L, LI and Caption elements</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'L' &amp;&amp; elem != 'LI'
+                &amp;&amp; elem != 'Caption').length == 0 || kidsStandardTypes == ''</test>
             <error>
-                <message>L element contains more than one Caption element or L element contains a Caption element not as its first kid or
-                    L element contains not a L, LI or Caption elements</message>
-                <arguments/>
+                <message>L element contains %1 element(s) instead of L, LI or Caption</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'L' &amp;&amp; elem != 'LI'
+                        &amp;&amp; elem != 'Caption').toString()</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.3"/>
@@ -467,14 +484,29 @@
         </rule>
         <rule object="SETOC">
             <id specification="ISO_14289_1" clause="7.2" testNumber="27"/>
-            <description>TOC element may contain a Caption element as its first kid and
-                TOC element may contain only TOC, TOCI and Caption elements</description>
-            <test>/^(Caption&amp;)?(TOC|TOCI)(&amp;(TOC|TOCI))*$/.test(kidsStandardTypes) || kidsStandardTypes == 'Caption' ||
-                kidsStandardTypes == ''</test>
+            <description>TOC element may contain only TOC, TOCI and Caption elements</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TOC' &amp;&amp; elem != 'TOCI'
+                &amp;&amp; elem != 'Caption').length == 0 || kidsStandardTypes == ''</test>
             <error>
-                <message>TOC element contains more than one Caption element or TOC element contains a Caption element
-                    not as its first kid or TOC element contains not a TOC, TOCI or Caption elements</message>
-                <arguments/>
+                <message>TOC element contains %1 element(s) instead of TOC, TOCI or Caption</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TOC' &amp;&amp; elem != 'TOCI'
+                        &amp;&amp; elem != 'Caption').toString()</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.2"/>
+            </references>
+        </rule>
+        <rule object="SETOC">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="28"/>
+            <description>TOC element may contain a Caption element only as its first kid</description>
+            <test>kidsStandardTypes == '' || kidsStandardTypes.split('&amp;').slice(1).findIndex(elem =&gt; elem == 'Caption') &lt; 0</test>
+            <error>
+                <message>TOC element contains Caption as its %1 child instead of first one</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').slice(1).findIndex(elem =&gt; elem == 'Caption') + 2</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.2"/>
@@ -589,6 +621,34 @@
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
             </references>
         </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="39"/>
+            <description>Table element may contain only one Caption element</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt; 2</test>
+            <error>
+                <message>Table element contains %1 Caption elements instead of one</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SEL">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="40"/>
+            <description>L element may contain a Caption element only as its first kid</description>
+            <test>kidsStandardTypes == '' || kidsStandardTypes.split('&amp;').slice(1).findIndex(elem =&gt; elem == 'Caption') &lt; 0</test>
+            <error>
+                <message>L element contains Caption as its %1 child instead of first one</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').slice(1).findIndex(elem =&gt; elem == 'Caption') + 2</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.2"/>
+            </references>
+        </rule>
         <rule object="SEFigure">
             <id specification="ISO_14289_1" clause="7.3" testNumber="1"/>
             <description>Figure tags shall include an alternative representation or replacement text that represents the contents
@@ -615,8 +675,10 @@
                 require it.</description>
             <test>hasCorrectNestingLevel == true</test>
             <error>
-                <message>Does use numbered headings, but the first heading tag is not H1 or numbered heading levels in descending sequence are skipped</message>
-                <arguments/>
+                <message>Heading level %1 is skipped in a descending sequence of header levels</message>
+                <arguments>
+                    <argument>nestingLevel - 1</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 32000-1" clause="14.8.4.3.5"/>
