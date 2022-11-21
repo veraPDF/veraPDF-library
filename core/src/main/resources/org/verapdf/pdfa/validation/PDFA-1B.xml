@@ -396,8 +396,10 @@
 			key shall have as the value of that key the same indirect object, which shall be a valid ICC profile stream</description>
             <test>sameOutputProfileIndirect == true</test>
             <error>
-                <message>File's OutputIntents array contains output intent dictionaries with non-matching destination output profiles</message>
-                <arguments/>
+                <message>File's OutputIntents array contains output intent dictionaries with non-matching destination output profiles (indirect keys %1)</message>
+                <arguments>
+                    <argument>outputProfileIndirects</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1001,14 +1003,47 @@
         </rule>
         <rule object="PDAnnot">
             <id specification="ISO_19005_1" clause="6.5.3" testNumber="4"/>
-            <description>For all annotation dictionaries containing an AP key, the appearance dictionary that it defines as its value shall contain only the N key. 
-			If an annotation dictionary's Subtype key has a value of Widget and its FT key has a value of Btn, the value of the N key shall be an appearance 
-			subdictionary; otherwise the value of the N key shall be an appearance stream.</description>
-            <test>AP == null || ( AP == &quot;N&quot; &amp;&amp; ( ((Subtype != &quot;Widget&quot; || FT != &quot;Btn&quot;) &amp;&amp; N_type == &quot;Stream&quot;)
-			|| (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot; &amp;&amp; N_type == &quot;Dict&quot; &amp;&amp; appearance_size &gt; 0) ) )</test>
+            <description>For all annotation dictionaries containing an AP key, the appearance dictionary that it defines as
+                its value shall contain only the N key.</description>
+            <test>AP == null || AP == &quot;N&quot;</test>
             <error>
-                <message>Annotation's appearance dictionary contains entries other than N or the N entry has an invalid type</message>
-                <arguments/>
+                <message>Annotation's appearance dictionary contains entries %1 other than N</message>
+                <arguments>
+                    <argument>AP.split('&amp;').filter(elem =&gt; elem != 'N').toString()</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO19005-1/Cor.2:2011" clause="6.5.3"/>
+            </references>
+        </rule>
+        <rule object="PDAnnot">
+            <id specification="ISO_19005_1" clause="6.5.3" testNumber="5"/>
+            <description>If an annotation dictionary's Subtype key has a value of Widget and its FT key has a value of Btn,
+                the value of the N key shall be an appearance subdictionary.</description>
+            <test>AP != &quot;N&quot; || Subtype != &quot;Widget&quot; || FT != &quot;Btn&quot; || (N_type == &quot;Dict&quot; &amp;&amp; appearance_size &gt; 0)</test>
+            <error>
+                <message>An annotation dictionary's Subtype key has a value of Widget and its FT key has a value of
+                    Btn, but the value of the N key is %1 instead of appearance subdictionary</message>
+                <arguments>
+                    <argument>N_type</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO19005-1/Cor.2:2011" clause="6.5.3"/>
+            </references>
+        </rule>
+        <rule object="PDAnnot">
+            <id specification="ISO_19005_1" clause="6.5.3" testNumber="6"/>
+            <description>If an annotation dictionary's Subtype key has value other than Widget, or if FT key associated
+                with Widget annotation has value other than Btn, the value of the N key shall be an appearance stream.</description>
+            <test>AP != &quot;N&quot; || (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot;) || N_type == &quot;Stream&quot;</test>
+            <error>
+                <message>An annotation dictionary's Subtype key has a value %1 and its FT key has a value %2, but the
+                    value of the N key is not an appearance stream</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                    <argument>FT</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO19005-1/Cor.2:2011" clause="6.5.3"/>
@@ -1103,13 +1138,137 @@
             </error>
             <references/>
         </rule>
-        <rule object="CosDocument">
+        <rule object="CosInfo">
             <id specification="ISO_19005_1" clause="6.7.3" testNumber="1"/>
-            <description>If a document information dictionary does appear at a document, then all of its entries that have analogous properties in predefined XMP schemas, shall also be embedded in the file in XMP form with equivalent values.</description>
-            <test>doesInfoMatchXMP</test>
+            <description>The value of CreationDate entry from the document information dictionary, if present, and its
+                analogous XMP property xmp:CreateDate shall be equivalent.</description>
+            <test>doCreationDatesMatch != false</test>
             <error>
-                <message>Some of document information dictionary entries' that have analogous properties in predefined XMP schemas do not embedded or have not equivalent values in the file in XMP form.</message>
-                <arguments/>
+                <message>The value of CreationDate entry from the document Info dictionary and its matching XMP property
+                    xmp:CreateDate are not equivalent (Info /CreationDate = %1, XMP xmp:CreateDate = %2)</message>
+                <arguments>
+                    <argument>CreationDate</argument>
+                    <argument>XMPCreateDate</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 19005-1:2005/Cor.1:2007/Cor.2:2011" clause="6.7.3"/>
+            </references>
+        </rule>
+        <rule object="CosInfo">
+            <id specification="ISO_19005_1" clause="6.7.3" testNumber="2"/>
+            <description>The value of Title entry from the document information dictionary, if present, and its
+                analogous XMP property dc:title shall be equivalent.</description>
+            <test>Title == null || Title == XMPTitle</test>
+            <error>
+                <message>The value of Title entry from the document Info dictionary and its matching XMP property
+                    dc:title are not equivalent (Info /Title = %1, XMP dc:title = %2)</message>
+                <arguments>
+                    <argument>Title</argument>
+                    <argument>XMPTitle</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 19005-1:2005/Cor.1:2007/Cor.2:2011" clause="6.7.3"/>
+            </references>
+        </rule>
+        <rule object="CosInfo">
+            <id specification="ISO_19005_1" clause="6.7.3" testNumber="3"/>
+            <description>The value of Author entry from the document information dictionary, if present, and its
+                analogous XMP property dc:creator shall be equivalent.</description>
+            <test>Author == null || Author == XMPCreator</test>
+            <error>
+                <message>The value of Author entry from the document Info dictionary and its matching XMP property
+                    dc:creator are not equivalent (Info /Author = %1, XMP dc:creator = %2)</message>
+                <arguments>
+                    <argument>Author</argument>
+                    <argument>XMPCreator</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 19005-1:2005/Cor.1:2007/Cor.2:2011" clause="6.7.3"/>
+            </references>
+        </rule>
+        <rule object="CosInfo">
+            <id specification="ISO_19005_1" clause="6.7.3" testNumber="4"/>
+            <description>The value of Subject entry from the document information dictionary, if present, and its
+                analogous XMP property dc:subject shall be equivalent.</description>
+            <test>Subject == null || Subject == XMPDescription</test>
+            <error>
+                <message>The value of Subject entry from the document Info dictionary and its matching XMP property
+                    dc:subject are not equivalent (Info /Subject = %1, XMP dc:subject = %2)</message>
+                <arguments>
+                    <argument>Subject</argument>
+                    <argument>XMPDescription</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 19005-1:2005/Cor.1:2007/Cor.2:2011" clause="6.7.3"/>
+            </references>
+        </rule>
+        <rule object="CosInfo">
+            <id specification="ISO_19005_1" clause="6.7.3" testNumber="5"/>
+            <description>The value of Keywords entry from the document information dictionary, if present, and its
+                analogous XMP property pdf:Keywords shall be equivalent.</description>
+            <test>Keywords == null || Keywords == XMPKeywords</test>
+            <error>
+                <message>The value of Keywords entry from the document Info dictionary and its matching XMP property
+                    pdf:Keywords are not equivalent (Info /Keywords = %1, XMP pdf:Keywords = %2)</message>
+                <arguments>
+                    <argument>Keywords</argument>
+                    <argument>XMPKeywords</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 19005-1:2005/Cor.1:2007/Cor.2:2011" clause="6.7.3"/>
+            </references>
+        </rule>
+        <rule object="CosInfo">
+            <id specification="ISO_19005_1" clause="6.7.3" testNumber="6"/>
+            <description>The value of Creator entry from the document information dictionary, if present, and its
+                analogous XMP property xmp:CreatorTool shall be equivalent.</description>
+            <test>Creator == null || Creator == XMPCreatorTool</test>
+            <error>
+                <message>The value of Creator entry from the document Info dictionary and its matching XMP property
+                    xmp:CreatorTool are not equivalent (Info /Creator = %1, XMP xmp:CreatorTool = %2)</message>
+                <arguments>
+                    <argument>Creator</argument>
+                    <argument>XMPCreatorTool</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 19005-1:2005/Cor.1:2007/Cor.2:2011" clause="6.7.3"/>
+            </references>
+        </rule>
+        <rule object="CosInfo">
+            <id specification="ISO_19005_1" clause="6.7.3" testNumber="7"/>
+            <description>The value of Producer entry from the document information dictionary, if present, and its
+                analogous XMP property pdf:Producer shall be equivalent.</description>
+            <test>Producer == null || Producer == XMPProducer</test>
+            <error>
+                <message>The value of Producer entry from the document Info dictionary and its matching XMP property
+                    pdf:Producer are not equivalent (Info /Producer = %1, XMP pdf:Producer = %2)</message>
+                <arguments>
+                    <argument>Producer</argument>
+                    <argument>XMPProducer</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 19005-1:2005/Cor.1:2007/Cor.2:2011" clause="6.7.3"/>
+            </references>
+        </rule>
+        <rule object="CosInfo">
+            <id specification="ISO_19005_1" clause="6.7.3" testNumber="8"/>
+            <description>The value of ModDate entry from the document information dictionary, if present, and its
+                analogous XMP property xmp:ModifyDate shall be equivalent.</description>
+            <test>doModDatesMatch != false</test>
+            <error>
+                <message>The value of ModDate entry from the document Info dictionary and its matching XMP property
+                    xmp:ModifyDate are not equivalent (Info /ModDate = %1, XMP xmp:ModifyDate = %2)</message>
+                <arguments>
+                    <argument>ModDate</argument>
+                    <argument>XMPModifyDate</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 19005-1:2005/Cor.1:2007/Cor.2:2011" clause="6.7.3"/>
@@ -1241,12 +1400,25 @@
         </rule>
         <rule object="XMPProperty">
             <id specification="ISO_19005_1" clause="6.7.9" testNumber="2"/>
-            <description>Properties specified in XMP form shall use either the predefined schemas defined in XMP Specification, 
-			or extension schemas that comply with XMP Specification</description>
-            <test>(isPredefinedInXMP2004 == true || isDefinedInCurrentPackage == true) &amp;&amp; isValueTypeCorrect == true</test>
+            <description>Properties specified in XMP form shall use either the predefined schemas defined in XMP Specification,
+                or extension schemas that comply with XMP Specification</description>
+            <test>isPredefinedInXMP2004 == true || isDefinedInCurrentPackage == true</test>
             <error>
-                <message>A property is either not defined in XMP Specification, or is not defined in any of the extension schemas, or has an invalid value type.</message>
+                <message>A property is either not defined in XMP Specification, or is not defined in any of the extension schemas.</message>
                 <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="XMPProperty">
+            <id specification="ISO_19005_1" clause="6.7.9" testNumber="3"/>
+            <description>Properties specified in XMP form shall use either the predefined schemas defined in XMP Specification,
+                or extension schemas that comply with XMP Specification</description>
+            <test>isValueTypeCorrect == true</test>
+            <error>
+                <message>XMP property does not correspond to type %1</message>
+                <arguments>
+                    <argument>predefinedType</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1286,14 +1458,37 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_1" clause="6.7.11" testNumber="4"/>
-            <description>The PDF/A Identification schema defined in Table 6 uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/id/&quot;.
-			The required schema namespace prefix is pdfaid. It contains the following fields: pdfaid:part (Open Choice of Integer), 
-			pdfaid:amd (Open Choice of Text), pdfaid:conformance (Open Choice of Text)</description>
-            <test>partPrefix == &quot;pdfaid&quot; &amp;&amp; conformancePrefix == &quot;pdfaid&quot; &amp;&amp;
-			(amdPrefix == null || amdPrefix == &quot;pdfaid&quot;)</test>
+            <description>Property part of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <test>partPrefix == null || partPrefix == &quot;pdfaid&quot;</test>
             <error>
-                <message>A property of the PDF/A Identification Schema has an invalid namespace prefix</message>
-                <arguments/>
+                <message>Property part of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <arguments>
+                    <argument>partPrefix</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDFAIdentification">
+            <id specification="ISO_19005_1" clause="6.7.11" testNumber="5"/>
+            <description>Property conformance of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <test>conformancePrefix == null || conformancePrefix == &quot;pdfaid&quot;</test>
+            <error>
+                <message>Property conformance of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <arguments>
+                    <argument>conformancePrefix</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDFAIdentification">
+            <id specification="ISO_19005_1" clause="6.7.11" testNumber="6"/>
+            <description>Property amd of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <test>amdPrefix == null || amdPrefix == &quot;pdfaid&quot;</test>
+            <error>
+                <message>Property amd of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <arguments>
+                    <argument>amdPrefix</argument>
+                </arguments>
             </error>
             <references/>
         </rule>

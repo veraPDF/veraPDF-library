@@ -326,8 +326,10 @@
                 profile stream.</description>
             <test>sameOutputProfileIndirect == true</test>
             <error>
-                <message>OutputIntents array contains output intent dictionaries with non-matching destination output profiles</message>
-                <arguments/>
+                <message>OutputIntents array contains output intent dictionaries with non-matching destination output profiles (indirect keys %1)</message>
+                <arguments>
+                    <argument>outputProfileIndirects</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1118,14 +1120,43 @@
         </rule>
         <rule object="PDAnnot">
             <id specification="ISO_19005_4" clause="6.3.3" testNumber="2"/>
-            <description>For all annotation dictionaries containing an AP key, the appearance dictionary that it defines as its value shall
-                contain only the N key. If an annotation dictionary's Subtype key has a value of Widget and its FT key has a
-                value of Btn, the value of the N key shall be an appearance subdictionary, otherwise the value of the N key shall be an appearance stream.</description>
-            <test>AP == null || ( AP == &quot;N&quot; &amp;&amp; ( ((Subtype != &quot;Widget&quot; || FT != &quot;Btn&quot;) &amp;&amp; N_type == &quot;Stream&quot;) ||
-                (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot; &amp;&amp; N_type == &quot;Dict&quot;  &amp;&amp; appearance_size &gt; 0) ) )</test>
+            <description>For all annotation dictionaries containing an AP key, the appearance dictionary that it defines as
+                its value shall contain only the N key.</description>
+            <test>AP == null || AP == &quot;N&quot;</test>
             <error>
-                <message>Annotation's appearance dictionary contains entries other than N or the N entry has an invalid type</message>
-                <arguments/>
+                <message>Annotation's appearance dictionary contains entries %1 other than N</message>
+                <arguments>
+                    <argument>AP.split('&amp;').filter(elem =&gt; elem != 'N').toString()</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDAnnot">
+            <id specification="ISO_19005_4" clause="6.3.3" testNumber="3"/>
+            <description>If an annotation dictionary's Subtype key has a value of Widget and its FT key has a value of Btn,
+                the value of the N key shall be an appearance subdictionary.</description>
+            <test>AP != &quot;N&quot; || Subtype != &quot;Widget&quot; || FT != &quot;Btn&quot; || (N_type == &quot;Dict&quot; &amp;&amp; appearance_size &gt; 0)</test>
+            <error>
+                <message>An annotation dictionary's Subtype key has a value of Widget and its FT key has a value of
+                    Btn, but the value of the N key is %1 instead of appearance subdictionary</message>
+                <arguments>
+                    <argument>N_type</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDAnnot">
+            <id specification="ISO_19005_4" clause="6.3.3" testNumber="4"/>
+            <description>If an annotation dictionary's Subtype key has value other than Widget, or if FT key associated
+                with Widget annotation has value other than Btn, the value of the N key shall be an appearance stream.</description>
+            <test>AP != &quot;N&quot; || (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot;) || N_type == &quot;Stream&quot;</test>
+            <error>
+                <message>An annotation dictionary's Subtype key has a value %1 and its FT key has a value %2, but the
+                    value of the N key is not an appearance stream</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                    <argument>FT</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1317,12 +1348,13 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_4" clause="6.7.3" testNumber="4"/>
-            <description>The PDF/A Identification schema defined in Table 2 uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/id/&quot;. The required schema namespace prefix is pdfaid.
-                It contains the following properties: pdfaid:part (Open Choice of Integer), pdfaid:rev (Open Choice of Integer).</description>
-            <test>partPrefix == &quot;pdfaid&quot; &amp;&amp; revPrefix == &quot;pdfaid&quot;</test>
+            <description>Property part of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <test>partPrefix == null || partPrefix == &quot;pdfaid&quot;</test>
             <error>
-                <message>A property of the PDF/A Identification Schema has an invalid namespace prefix</message>
-                <arguments/>
+                <message>Property part of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <arguments>
+                    <argument>partPrefix</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1334,6 +1366,18 @@
                 <message>The value of pdfaid:rev (%1) not the four digit year.</message>
                 <arguments>
                     <argument>rev</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDFAIdentification">
+            <id specification="ISO_19005_4" clause="6.7.3" testNumber="6"/>
+            <description>Property rev of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <test>revPrefix == null || revPrefix == &quot;pdfaid&quot;</test>
+            <error>
+                <message>Property rev of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <arguments>
+                    <argument>revPrefix</argument>
                 </arguments>
             </error>
             <references/>

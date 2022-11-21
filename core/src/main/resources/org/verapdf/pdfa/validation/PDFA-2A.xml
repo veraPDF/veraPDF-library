@@ -417,8 +417,10 @@
 			profile stream.</description>
             <test>sameOutputProfileIndirect == true</test>
             <error>
-                <message>File's OutputIntents array contains output intent dictionaries with non-matching destination output profiles</message>
-                <arguments/>
+                <message>File's OutputIntents array contains output intent dictionaries with non-matching destination output profiles (indirect keys %1)</message>
+                <arguments>
+                    <argument>outputProfileIndirects</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1237,14 +1239,43 @@
         </rule>
         <rule object="PDAnnot">
             <id specification="ISO_19005_2" clause="6.3.3" testNumber="2"/>
-            <description>For all annotation dictionaries containing an AP key, the appearance dictionary that it defines as its value shall
-			contain only the N key. If an annotation dictionary's Subtype key has a value of Widget and its FT key has a
-			value of Btn, the value of the N key shall be an appearance subdictionary, otherwise the value of the N key shall be an appearance stream.</description>
-            <test>AP == null || ( AP == &quot;N&quot; &amp;&amp; ( ((Subtype != &quot;Widget&quot; || FT != &quot;Btn&quot;) &amp;&amp; N_type == &quot;Stream&quot;)
-			|| (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot; &amp;&amp; N_type == &quot;Dict&quot;  &amp;&amp; appearance_size &gt; 0) ) )</test>
+            <description>For all annotation dictionaries containing an AP key, the appearance dictionary that it defines
+                as its value shall contain only the N key.</description>
+            <test>AP == null || AP == &quot;N&quot;</test>
             <error>
-                <message>Annotation's appearance dictionary contains entries other than N or the N entry has an invalid type</message>
-                <arguments/>
+                <message>Annotation's appearance dictionary contains entries %1 other than N</message>
+                <arguments>
+                    <argument>AP.split('&amp;').filter(elem =&gt; elem != 'N').toString()</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDAnnot">
+            <id specification="ISO_19005_2" clause="6.3.3" testNumber="3"/>
+            <description>If an annotation dictionary's Subtype key has a value of Widget and its FT key has a value of
+                Btn, the value of the N key shall be an appearance subdictionary.</description>
+            <test>AP != &quot;N&quot; || Subtype != &quot;Widget&quot; || FT != &quot;Btn&quot; || (N_type == &quot;Dict&quot; &amp;&amp; appearance_size &gt; 0)</test>
+            <error>
+                <message>An annotation dictionary's Subtype key has a value of Widget and its FT key has a value of
+                    Btn, but the value of the N key is %1 instead of appearance subdictionary</message>
+                <arguments>
+                    <argument>N_type</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDAnnot">
+            <id specification="ISO_19005_2" clause="6.3.3" testNumber="4"/>
+            <description>If an annotation dictionary's Subtype key has value other than Widget, or if FT key associated
+                with Widget annotation has value other than Btn, the value of the N key shall be an appearance stream.</description>
+            <test>AP != &quot;N&quot; || (Subtype == &quot;Widget&quot; &amp;&amp; FT == &quot;Btn&quot;) || N_type == &quot;Stream&quot;</test>
+            <error>
+                <message>An annotation dictionary's Subtype key has a value %1 and its FT key has a value %2, but the
+                    value of the N key is not an appearance stream</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                    <argument>FT</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1318,13 +1349,30 @@
         <rule object="PKCSDataObject">
             <id specification="ISO_19005_2" clause="6.4.3" testNumber="2"/>
             <description>The PDF Signature (a DER-encoded PKCS#7 binary data object) shall be placed into the Contents entry of
-			the signature dictionary. The PKCS#7 object shall conform to the PKCS#7 specification in RFC 2315. At
-			minimum, it shall include the signer's X.509 signing certificate and there shall only be a single signer (e.g.
-			a single &quot;SignerInfo&quot; structure) in the PDF Signature.</description>
-            <test>signingCertificatePresent == true &amp;&amp; SignerInfoCount == 1</test>
+                the signature dictionary. The PKCS#7 object shall conform to the PKCS#7 specification in RFC 2315. At
+                minimum, it shall include the signer's X.509 signing certificate.</description>
+            <test>signingCertificatePresent == true</test>
             <error>
-                <message>The DER-encoded PKCS#7 binary data object representing a PDF Signature does not conform to PDF/A-2 requirements</message>
+                <message>The DER-encoded PKCS#7 binary data object representing a PDF Signature does not include the signer's X.509 signing certificate</message>
                 <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 19005-2:2011" clause="Annex B"/>
+                <reference specification="RFC 2315" clause=""/>
+            </references>
+        </rule>
+        <rule object="PKCSDataObject">
+            <id specification="ISO_19005_2" clause="6.4.3" testNumber="3"/>
+            <description>The PDF Signature (a DER-encoded PKCS#7 binary data object) shall be placed into the Contents entry of
+                the signature dictionary. The PKCS#7 object shall conform to the PKCS#7 specification in RFC 2315. At
+                minimum, there shall only be a single signer (e.g. a single "SignerInfo" structure) in the PDF Signature.</description>
+            <test>SignerInfoCount == 1</test>
+            <error>
+                <message>The DER-encoded PKCS#7 binary data object representing a PDF Signature has %1
+                    signer(s) (e.g. a single "SignerInfo" structure) in the PDF Signature instead of one</message>
+                <arguments>
+                    <argument>SignerInfoCount</argument>
+                </arguments>
             </error>
             <references>
                 <reference specification="ISO 19005-2:2011" clause="Annex B"/>
@@ -1445,10 +1493,22 @@
             <id specification="ISO_19005_2" clause="6.6.2.3.1" testNumber="1"/>
             <description>All properties specified in XMP form shall use either the predefined schemas defined in the XMP Specification,
                 ISO 19005-1 or this part of ISO 19005, or any extension schemas that comply with 6.6.2.3.2.</description>
-            <test>(isPredefinedInXMP2005 == true || isDefinedInMainPackage == true || isDefinedInCurrentPackage == true) &amp;&amp; isValueTypeCorrect == true</test>
+            <test>isPredefinedInXMP2005 == true || isDefinedInMainPackage == true || isDefinedInCurrentPackage == true</test>
             <error>
-                <message>An XMP property is either not not pre-defined, is not defined in any extension schema, or has invalid type.</message>
-                <arguments/>
+                <message>XMP property is either not predefined, or is not defined in any XMP extension schema.</message>
+            </error>
+            <references/>
+        </rule>
+        <rule object="XMPProperty">
+            <id specification="ISO_19005_2" clause="6.6.2.3.1" testNumber="2"/>
+            <description>All properties specified in XMP form shall use either the predefined schemas defined in the XMP Specification,
+                ISO 19005-1 or this part of ISO 19005, or any extension schemas that comply with 6.6.2.3.2.</description>
+            <test>isValueTypeCorrect == true</test>
+            <error>
+                <message>XMP property does not correspond to type %1</message>
+                <arguments>
+                    <argument>predefinedType</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
@@ -1576,15 +1636,49 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_2" clause="6.6.4" testNumber="4"/>
-            <description>The PDF/A Identification schema defined in Table 8 uses the namespace URI &quot;http://www.aiim.org/pdfa/ns/id/&quot;. 
-			The required schema namespace prefix is pdfaid. It contains the following fields: pdfaid:part (Open Choice of Integer), 
-			pdfaid:amd (Open Choice of Text), pdfaid:corr (Open Choice of Text), pdfaid:conformance (Open Choice of Text)</description>
-            <test>partPrefix == &quot;pdfaid&quot; &amp;&amp; conformancePrefix == &quot;pdfaid&quot; &amp;&amp;
-			(amdPrefix == null || amdPrefix == &quot;pdfaid&quot;) &amp;&amp;
-			(corrPrefix == null || corrPrefix == &quot;pdfaid&quot;)</test>
+            <description>Property part of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <test>partPrefix == null || partPrefix == &quot;pdfaid&quot;</test>
             <error>
-                <message>A property of the PDF/A Identification Schema has an invalid namespace prefix</message>
-                <arguments/>
+                <message>Property part of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <arguments>
+                    <argument>partPrefix</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDFAIdentification">
+            <id specification="ISO_19005_2" clause="6.6.4" testNumber="5"/>
+            <description>Property conformance of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <test>conformancePrefix == null || conformancePrefix == &quot;pdfaid&quot;</test>
+            <error>
+                <message>Property conformance of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <arguments>
+                    <argument>conformancePrefix</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDFAIdentification">
+            <id specification="ISO_19005_2" clause="6.6.4" testNumber="6"/>
+            <description>Property amd of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <test>amdPrefix == null || amdPrefix == &quot;pdfaid&quot;</test>
+            <error>
+                <message>Property amd of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <arguments>
+                    <argument>amdPrefix</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDFAIdentification">
+            <id specification="ISO_19005_2" clause="6.6.4" testNumber="7"/>
+            <description>Property corr of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <test>corrPrefix == null || corrPrefix == &quot;pdfaid&quot;</test>
+            <error>
+                <message>Property corr of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <arguments>
+                    <argument>corrPrefix</argument>
+                </arguments>
             </error>
             <references/>
         </rule>
