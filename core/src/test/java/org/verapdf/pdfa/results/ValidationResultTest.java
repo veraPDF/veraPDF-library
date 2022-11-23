@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.processor.reports.enums.JobEndStatus;
 
 import javax.xml.bind.JAXBException;
 import java.io.*;
@@ -81,7 +82,7 @@ public class ValidationResultTest {
 	 */
 	@Test
 	public final void testFromValues() {
-		ValidationResult resultFromVals = ValidationResults.resultFromValues(Profiles.defaultProfile(), Collections.<TestAssertion>emptyList(), false);
+		ValidationResult resultFromVals = ValidationResults.resultFromValues(Profiles.defaultProfile(), Collections.<TestAssertion>emptyList(), false, JobEndStatus.NORMAL);
 		assertEquals(resultFromVals, ValidationResults.defaultResult());
 		assertNotSame(resultFromVals, ValidationResults.defaultResult());
 	}
@@ -109,7 +110,7 @@ public class ValidationResultTest {
 	public final void testToXmlString() throws JAXBException {
 		List<TestAssertion> assertions = new ArrayList<>();
 		assertions.add(ValidationResults.defaultAssertion());
-		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
+		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions, JobEndStatus.NORMAL);
 		String xmlRawResult = XmlSerialiser.toXml(result, true, false);
 		String xmlPrettyResult = XmlSerialiser.toXml(result, true, true);
 		assertNotEquals(xmlRawResult, xmlPrettyResult);
@@ -130,7 +131,7 @@ public class ValidationResultTest {
 	public final void testFromXmlInputStream() throws IOException, JAXBException {
 		List<TestAssertion> assertions = new ArrayList<>();
 		assertions.add(TestAssertionImpl.defaultInstance());
-		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
+		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions, JobEndStatus.NORMAL);
 		File temp = Files.createTempFile("profile", "xml").toFile(); //$NON-NLS-1$ //$NON-NLS-2$
 		try (OutputStream forXml = new FileOutputStream(temp)) {
 			XmlSerialiser.toXml(result, forXml, true, true);
@@ -154,7 +155,7 @@ public class ValidationResultTest {
 	public final void testFromXmlInputString() throws JAXBException {
 		List<TestAssertion> assertions = new ArrayList<>();
 		assertions.add(TestAssertionImpl.defaultInstance());
-		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions);
+		ValidationResult result = ValidationResults.resultFromValues(Profiles.defaultProfile(), assertions, JobEndStatus.NORMAL);
 		String xmlSource = XmlSerialiser.toXml(result, true, true);
 		ValidationResult unmarshalledResult = ValidationResults.resultFromXmlString(xmlSource);
 		assertNotSame(result, unmarshalledResult);
