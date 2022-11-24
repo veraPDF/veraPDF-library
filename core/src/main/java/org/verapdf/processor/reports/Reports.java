@@ -95,15 +95,17 @@ public final class Reports {
 	 * @return a new {@link ValidationReport} instance
 	 */
 	public static final ValidationReport createValidationReport(final ValidationDetails details,
-			final String profileName, final String statement, final boolean isCompliant) {
-		return ValidationReportImpl.fromValues(details, profileName, statement, isCompliant);
+	                                                            final String profileName, final String statement,
+	                                                            final boolean isCompliant, final String jobEndStatus) {
+		return ValidationReportImpl.fromValues(details, profileName, statement, isCompliant, jobEndStatus);
 	}
 
 	public static final ValidationReport createValidationReport(final ValidationResult validationResult,
 																final boolean logPassed) {
 		ValidationDetails details = Reports.fromValues(validationResult, logPassed);
 		return Reports.createValidationReport(details, validationResult.getProfileDetails().getName(),
-				getStatement(validationResult.isCompliant()), validationResult.isCompliant());
+		                                      getStatement(validationResult.isCompliant()), validationResult.isCompliant(),
+		                                      validationResult.getJobEndStatus().getValue());
 	}
 
 	private static String getStatement(boolean status) {

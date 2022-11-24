@@ -29,23 +29,21 @@ import org.verapdf.pdfa.validation.profiles.ProfileDetails;
 import org.verapdf.pdfa.validation.profiles.Profiles;
 import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
+import org.verapdf.processor.reports.enums.JobEndStatus;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 @XmlRootElement(name = "validationResult")
 final class ValidationResultImpl implements ValidationResult {
-	private final static ValidationResultImpl DEFAULT = new ValidationResultImpl();
+	private static final ValidationResultImpl DEFAULT = new ValidationResultImpl();
 	@XmlAttribute
 	private final PDFAFlavour flavour;
 	@XmlElement
@@ -57,6 +55,8 @@ final class ValidationResultImpl implements ValidationResult {
 	private final List<TestAssertion> assertions;
 	@XmlAttribute
 	private final boolean isCompliant;
+	@XmlAttribute
+	private final JobEndStatus jobEndStatus;
 
 	private HashMap<RuleId, Integer> failedChecks = null;
 
@@ -64,16 +64,17 @@ final class ValidationResultImpl implements ValidationResult {
 
 	private ValidationResultImpl() {
 		this(Profiles.defaultProfile(), Collections.<TestAssertion>emptyList(),
-				false);
+		     false, JobEndStatus.NORMAL);
 	}
 
 	private ValidationResultImpl(final ValidationProfile validationProfile,
-			final List<TestAssertion> assertions, final boolean isCompliant) {
-		this(validationProfile, assertions, isCompliant, assertions.size());
+			final List<TestAssertion> assertions, final boolean isCompliant, JobEndStatus endStatus) {
+		this(validationProfile, assertions, isCompliant, assertions.size(), endStatus);
 	}
 
 	private ValidationResultImpl(final ValidationProfile validationProfile,
-			final List<TestAssertion> assertions, final boolean isCompliant, int totalAssertions) {
+			final List<TestAssertion> assertions, final boolean isCompliant, int totalAssertions,
+			                     final JobEndStatus endStatus) {
 		super();
 		this.flavour = validationProfile.getPDFAFlavour();
 		this.assertions = new ArrayList<>(assertions);
@@ -81,11 +82,13 @@ final class ValidationResultImpl implements ValidationResult {
 		this.totalAssertions = totalAssertions;
 		this.profileDetails = validationProfile.getDetails();
 		this.validationProfile = validationProfile;
+		this.jobEndStatus = endStatus;
 	}
 
 	private ValidationResultImpl(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
-	                             final HashMap<RuleId, Integer> failedChecks, final boolean isCompliant, int totalAssertions) {
-		this(validationProfile, assertions, isCompliant, totalAssertions);
+	                             final HashMap<RuleId, Integer> failedChecks, final boolean isCompliant,
+	                             int totalAssertions, final JobEndStatus endStatus) {
+		this(validationProfile, assertions, isCompliant, totalAssertions, endStatus);
 		this.failedChecks = failedChecks;
 	}
 
@@ -137,6 +140,11 @@ final class ValidationResultImpl implements ValidationResult {
 		return this.validationProfile;
 	}
 
+	@Override
+	public JobEndStatus getJobEndStatus() {
+		return this.jobEndStatus;
+	}
+
 	public HashMap<RuleId, Integer> getFailedChecks() {
 		return this.failedChecks;
 	}
@@ -151,6 +159,7 @@ final class ValidationResultImpl implements ValidationResult {
 		result = prime * result + ((this.assertions == null) ? 0 : this.assertions.hashCode());
 		result = prime * result + ((this.flavour == null) ? 0 : this.flavour.hashCode());
 		result = prime * result + (this.isCompliant ? 1231 : 1237);
+		result = prime * result + ((this.jobEndStatus == null) ? 0 : this.jobEndStatus.hashCode());
 		result = prime * result + this.totalAssertions;
 		return result;
 	}
@@ -180,6 +189,8 @@ final class ValidationResultImpl implements ValidationResult {
 			return false;
 		if (this.isCompliant != other.isCompliant())
 			return false;
+		if (this.jobEndStatus != other.getJobEndStatus())
+			return false;
 		return this.totalAssertions == other.getTotalAssertions();
 	}
 
@@ -197,25 +208,26 @@ final class ValidationResultImpl implements ValidationResult {
 	}
 
 	static ValidationResultImpl fromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
-	                                       final HashMap<RuleId, Integer> failedChecks, final boolean isCompliant, final int totalChecks) {
-		return new ValidationResultImpl(validationProfile, assertions, failedChecks, isCompliant, totalChecks);
+	                                       final HashMap<RuleId, Integer> failedChecks, final boolean isCompliant,
+	                                       final int totalChecks, final JobEndStatus endStatus) {
+		return new ValidationResultImpl(validationProfile, assertions, failedChecks, isCompliant, totalChecks, endStatus);
 	}
 
 	static ValidationResultImpl fromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
-	                                       final boolean isCompliant, final int totalChecks) {
-		return new ValidationResultImpl(validationProfile, assertions, isCompliant, totalChecks);
+	                                       final boolean isCompliant, final int totalChecks, JobEndStatus endStatus) {
+		return new ValidationResultImpl(validationProfile, assertions, isCompliant, totalChecks, endStatus);
 	}
 
 	static ValidationResultImpl fromValidationResult(ValidationResult toConvert) {
 		List<TestAssertion> assertions = toConvert.getTestAssertions();
 		return fromValues(toConvert.getValidationProfile(), assertions,
-				toConvert.isCompliant(), toConvert.getTotalAssertions());
+				toConvert.isCompliant(), toConvert.getTotalAssertions(), toConvert.getJobEndStatus());
 	}
 
 	static ValidationResultImpl stripPassedTests(ValidationResult toStrip) {
 		List<TestAssertion> assertions = toStrip.getTestAssertions();
 		return fromValues(toStrip.getValidationProfile(), stripPassedTests(assertions),
-				toStrip.isCompliant(), toStrip.getTotalAssertions());
+				toStrip.isCompliant(), toStrip.getTotalAssertions(), toStrip.getJobEndStatus());
 	}
 
 	static class Adapter extends XmlAdapter<ValidationResultImpl, ValidationResult> {

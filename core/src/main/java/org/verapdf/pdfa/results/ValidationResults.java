@@ -28,6 +28,7 @@ import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.profiles.ErrorArgument;
 import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
+import org.verapdf.processor.reports.enums.JobEndStatus;
 
 import javax.xml.bind.JAXBException;
 import java.util.HashMap;
@@ -57,12 +58,12 @@ public class ValidationResults {
 	 * @return a new ValidationResult instance populated from the values
 	 */
 	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
-													final boolean isCompliant) {
+													final boolean isCompliant, final JobEndStatus endStatus) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		if (assertions == null)
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
-		return ValidationResultImpl.fromValues(validationProfile, assertions, isCompliant, assertions.size());
+		return ValidationResultImpl.fromValues(validationProfile, assertions, isCompliant, assertions.size(), endStatus);
 	}
 
 	/**
@@ -78,12 +79,14 @@ public class ValidationResults {
 	 * @return a new ValidationResult instance populated from the values
 	 */
 	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
-	        final HashMap<RuleId, Integer> failedChecks, final boolean isCompliant, final int totalAssertions) {
+	        final HashMap<RuleId, Integer> failedChecks, final boolean isCompliant, final int totalAssertions,
+	                                                final JobEndStatus endStatus) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		if (assertions == null)
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
-		return ValidationResultImpl.fromValues(validationProfile, assertions, failedChecks, isCompliant, totalAssertions);
+		return ValidationResultImpl.fromValues(validationProfile, assertions, failedChecks, isCompliant, totalAssertions,
+		                                       endStatus);
 	}
 
 	/**
@@ -94,7 +97,8 @@ public class ValidationResults {
 	 *            the Set of TestAssertions reported by during validation
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions) {
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
+	                                                final JobEndStatus endStatus) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		if (assertions == null)
@@ -106,7 +110,7 @@ public class ValidationResults {
 				break;
 			}
 		}
-		return resultFromValues(validationProfile, assertions, isCompliant);
+		return resultFromValues(validationProfile, assertions, isCompliant, endStatus);
 	}
 
 	/**

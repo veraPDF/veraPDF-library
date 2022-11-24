@@ -39,6 +39,7 @@ import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
 import org.verapdf.pdfa.validation.profiles.*;
+import org.verapdf.processor.reports.enums.JobEndStatus;
 
 import java.net.URI;
 import java.util.*;
@@ -61,12 +62,13 @@ public class BaseValidator implements PDFAValidator {
 	protected final List<TestAssertion> results = new ArrayList<>();
 	private final HashMap<RuleId, Integer> failedChecks = new HashMap<>();
 	protected int testCounter = 0;
-	protected boolean abortProcessing = false;
+	protected volatile boolean abortProcessing = false;
 	protected final boolean logPassedTests;
 	protected final int maxNumberOfDisplayedFailedChecks;
 	protected boolean isCompliant = true;
 	private boolean showErrorMessages = false;
 	protected ValidationProgress validationProgress;
+	protected volatile JobEndStatus jobEndStatus = JobEndStatus.NORMAL;
 
 	private Set<String> idSet = new HashSet<>();
 
@@ -121,6 +123,12 @@ public class BaseValidator implements PDFAValidator {
 		return validationProgress.getCurrentValidationJobProgressWithCommas();
 	}
 
+	@Override
+	public void cancelValidation(JobEndStatus endStatus) {
+		this.jobEndStatus = endStatus;
+		this.abortProcessing = true;
+	}
+
 	protected ValidationResult validate(Object root) throws ValidationException {
 		initialise();
 		this.validationProgress.updateVariables();
@@ -148,7 +156,8 @@ public class BaseValidator implements PDFAValidator {
 
 		JavaScriptEvaluator.exitContext();
 
-		return ValidationResults.resultFromValues(this.profile, this.results, this.failedChecks, this.isCompliant, this.testCounter);
+		return ValidationResults.resultFromValues(this.profile, this.results, this.failedChecks, this.isCompliant,
+		                                          this.testCounter, this.jobEndStatus);
 	}
 
 	protected void initialise() {
