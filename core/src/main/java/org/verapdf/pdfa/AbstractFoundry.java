@@ -40,7 +40,8 @@ public abstract class AbstractFoundry implements VeraPDFFoundry {
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config) {
 		if (config.getMaxFails() > 0) {
-			return createFailFastValidator(config.getFlavour(), config.getMaxFails(), config.getShowProgress());
+			return createFailFastValidator(config.getFlavour(), config.getMaxFails(), config.getMaxNumberOfDisplayedFailedChecks(),
+					config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
 		}
 		return createValidator(config.getFlavour(), config.getMaxNumberOfDisplayedFailedChecks(),
 				config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
@@ -49,7 +50,8 @@ public abstract class AbstractFoundry implements VeraPDFFoundry {
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config, PDFAFlavour flavour) {
 		if (config.getMaxFails() > 0) {
-			return createFailFastValidator(flavour, config.getMaxFails(), config.getShowProgress());
+			return createFailFastValidator(flavour, config.getMaxFails(), config.getMaxNumberOfDisplayedFailedChecks(),
+					config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
 		}
 		return createValidator(flavour, config.getMaxNumberOfDisplayedFailedChecks(),
 				config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
@@ -58,7 +60,8 @@ public abstract class AbstractFoundry implements VeraPDFFoundry {
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config, ValidationProfile profile) {
 		if (config.getMaxFails() > 0) {
-			return createFailFastValidator(profile, config.getMaxFails(), config.getShowProgress());
+			return createFailFastValidator(profile, config.getMaxFails(), config.getMaxNumberOfDisplayedFailedChecks(),
+					config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
 		}
 		return createValidator(profile, config.getMaxNumberOfDisplayedFailedChecks(),
 				config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
@@ -89,13 +92,17 @@ public abstract class AbstractFoundry implements VeraPDFFoundry {
 	}
 
 	@Override
-	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures, boolean showProgress) {
-		return ValidatorFactory.createValidator(flavour, maxFailures, showProgress);
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures, int maxNumberOfDisplayedFailedChecks,
+												 boolean logSuccess, boolean showErrorMessages, boolean showProgress) {
+		return ValidatorFactory.createValidator(flavour, logSuccess, maxFailures, maxNumberOfDisplayedFailedChecks,
+				showErrorMessages, showProgress);
 	}
 
 	@Override
-	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures, boolean showProgress) {
-		return ValidatorFactory.createValidator(profile, maxFailures, showProgress);
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures, int maxNumberOfDisplayedFailedChecks,
+												 boolean logSuccess, boolean showErrorMessages, boolean showProgress) {
+		return ValidatorFactory.createValidator(profile,logSuccess, maxFailures, maxNumberOfDisplayedFailedChecks,
+				showErrorMessages, showProgress);
 	}
 
 	@Override

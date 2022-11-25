@@ -218,7 +218,8 @@ public interface VeraPDFFoundry extends Component {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures, boolean showProgress);
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures, int maxNumberOfDisplayedFailedChecks,
+												 boolean logSuccess, boolean showErrorMessages, boolean showProgress);
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
@@ -236,7 +237,8 @@ public interface VeraPDFFoundry extends Component {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures, boolean showProgress);
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures, int maxNumberOfDisplayedFailedChecks,
+												 boolean logSuccess, boolean showErrorMessages, boolean showProgress);
 
 	/**
 	 * Obtain a new {@link MetadataFixer} instance.
