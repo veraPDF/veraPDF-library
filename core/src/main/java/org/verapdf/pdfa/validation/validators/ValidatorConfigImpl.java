@@ -80,7 +80,6 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	                            final int maxFails, final boolean debug, final boolean isLogsEnabled,
 								final Level loggingLevel, final int maxNumberOfDisplayedFailedChecks,
 								final boolean showErrorMessages, final String password, final boolean showProgress) {
-		super();
 		this.flavour = flavour;
 		this.defaultFlavour = defaultFlavour;
 		this.recordPasses = recordPasses;

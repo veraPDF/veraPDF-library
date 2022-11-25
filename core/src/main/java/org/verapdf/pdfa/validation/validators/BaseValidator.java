@@ -63,7 +63,7 @@ public class BaseValidator implements PDFAValidator {
 	private final HashMap<RuleId, Integer> failedChecks = new HashMap<>();
 	protected int testCounter = 0;
 	protected volatile boolean abortProcessing = false;
-	protected final boolean logPassedTests;
+	protected final boolean logPassedChecks;
 	protected final int maxNumberOfDisplayedFailedChecks;
 	protected boolean isCompliant = true;
 	private boolean showErrorMessages = false;
@@ -78,16 +78,16 @@ public class BaseValidator implements PDFAValidator {
 		this(profile, false);
 	}
 
-	protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests) {
-		this(profile, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, logPassedTests, false, false);
+	protected BaseValidator(final ValidationProfile profile, final boolean logPassedChecks) {
+		this(profile, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, logPassedChecks, false, false);
 	}
 
 	protected BaseValidator(final ValidationProfile profile, final int maxNumberOfDisplayedFailedChecks,
-							final boolean logPassedTests, final boolean showErrorMessages, boolean showProgress) {
+							final boolean logPassedChecks, final boolean showErrorMessages, boolean showProgress) {
 		super();
 		this.profile = profile;
 		this.maxNumberOfDisplayedFailedChecks = maxNumberOfDisplayedFailedChecks;
-		this.logPassedTests = logPassedTests;
+		this.logPassedChecks = logPassedChecks;
 		this.showErrorMessages = showErrorMessages;
 		this.validationProgress = new ValidationProgress(showProgress);
 	}
@@ -325,8 +325,8 @@ public class BaseValidator implements PDFAValidator {
 		if (!this.abortProcessing) {
 			this.testCounter++;
 			if (this.isCompliant) {
-                this.isCompliant = assertionResult;
-            }
+				this.isCompliant = assertionResult;
+			}
 			if (!assertionResult) {
 				int failedChecksNumberOfRule = failedChecks.getOrDefault(rule.getRuleId(), 0);
 				failedChecks.put(rule.getRuleId(), ++failedChecksNumberOfRule);
@@ -341,12 +341,12 @@ public class BaseValidator implements PDFAValidator {
 							Status.FAILED, rule.getDescription(), location, obj.getContext(), errorMessage, rule.getError().getArguments());
 					this.results.add(assertion);
 				}
-			} else if (this.logPassedTests && this.results.size() <= MAX_CHECKS_NUMBER) {
+			} else if (this.logPassedChecks && this.results.size() <= MAX_CHECKS_NUMBER) {
 				Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
 				TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
 						Status.PASSED, rule.getDescription(), location, obj.getContext(), null, Collections.emptyList());
 				this.results.add(assertion);
-            }
+			}
 		}
 	}
 
