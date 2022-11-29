@@ -157,6 +157,20 @@
             </error>
             <references/>
         </rule>
+        <rule object="PDDocument">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="11"/>
+            <description>The logical structure of the conforming file shall be described by a structure hierarchy
+                rooted in the StructTreeRoot entry of the document catalog dictionary,
+                as described in ISO 32000-1:2008, 14.7.</description>
+            <test>StructTreeRoot_size == 1</test>
+            <error>
+                <message>StructTreeRoot entry is not present in the document catalog</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="14.7"/>
+            </references>
+        </rule>
         <rule object="PDOutline">
             <id specification="ISO_14289_1" clause="7.2" testNumber="2"/>
             <description>Natural language in the Outline entries shall be determined</description>
