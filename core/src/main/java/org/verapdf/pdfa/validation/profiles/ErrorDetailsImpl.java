@@ -123,7 +123,8 @@ final class ErrorDetailsImpl implements ErrorDetails {
     static class Adapter extends XmlAdapter<ErrorDetailsImpl, ErrorDetails> {
         @Override
         public ErrorDetailsImpl unmarshal(ErrorDetailsImpl errorDetailsImpl) {
-            return errorDetailsImpl;
+            return new ErrorDetailsImpl(RuleImpl.getStringWithoutProfilesTabulation(errorDetailsImpl.getMessage()),
+                    errorDetailsImpl.getArguments());
         }
 
         @Override
