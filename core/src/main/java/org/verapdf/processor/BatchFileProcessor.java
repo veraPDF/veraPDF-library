@@ -79,10 +79,10 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 		for (File item : toProcess) {
 			if (item == null || !item.isFile() || !item.canRead()) {
 				logger.log(Level.SEVERE, badItemMessage(item, false));
-			} else if (isPdf(item.getName())) {
-				processItem(item);
 			} else if (FileUtils.hasExtNoCase(item.getName(), "zip")) {
 				processArchive(item);
+			} else {
+				processItem(item);
 			}
 		}
 	}
