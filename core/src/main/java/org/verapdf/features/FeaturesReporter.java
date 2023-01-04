@@ -41,7 +41,7 @@ public class FeaturesReporter {
 	public static final String CUSTOM_FEATURES_NAME = "customFeatures";
 	public static final String PLUGIN_FEATURES_NAME = "pluginFeatures";
 
-	private static Map<FeatureObjectType, List<AbstractFeaturesExtractor>> featuresExtractors = new HashMap<>();
+	private final Map<FeatureObjectType, List<AbstractFeaturesExtractor>> featuresExtractors = new HashMap<>();
 
 	private final FeatureExtractionResult collection;
 	private final FeatureExtractorConfig config;
@@ -72,7 +72,7 @@ public class FeaturesReporter {
 	 *
 	 * @param extractor object for extract custom features
 	 */
-	static void registerFeaturesExtractor(AbstractFeaturesExtractor extractor) {
+	private void registerFeaturesExtractor(AbstractFeaturesExtractor extractor) {
 		if (featuresExtractors.get(extractor.getType()) == null) {
 			featuresExtractors.put(extractor.getType(), new ArrayList<AbstractFeaturesExtractor>());
 		}
