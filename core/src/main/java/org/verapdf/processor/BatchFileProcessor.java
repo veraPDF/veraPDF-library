@@ -96,7 +96,7 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 					continue;
 				}
 				ItemDetails itemDetails = ItemDetails.fromValues(toProcess.getAbsolutePath() + "\\" +
-						entry.getName(), entry.getSize());
+						entry.getName().replace('/', '\\'), entry.getSize());
 				processItem(itemDetails, zipFile.getInputStream(entry));
 			}
 		} catch (IOException exp) {

@@ -210,6 +210,7 @@ public class FeaturesPluginsLoader {
 			} catch (ClassNotFoundException e) {
 				LOGGER.log(Level.WARNING, "Can not load class " + className + " from jar "
 						+ jar.getAbsolutePath(), e);
+			} catch (NoClassDefFoundError ignored) {
 			}
 		}
 		if (extractorClass != null) {
