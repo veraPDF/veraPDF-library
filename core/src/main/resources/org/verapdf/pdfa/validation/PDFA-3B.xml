@@ -1675,7 +1675,7 @@
         </rule>
         <rule object="ExtensionSchemaValueType">
             <id specification="ISO_19005_3" clause="6.6.2.3.3" testNumber="13"/>
-            <description>Field 'prefix' of the PDF/A ValueType value type in the PDF/A extension schema be present and
+            <description>Field 'prefix' of the PDF/A ValueType value type in the PDF/A extension schema shall be present and
                 shall have type Text and namespace prefix 'pdfaType'.</description>
             <test>isPrefixValidText == true &amp;&amp; prefixPrefix == &quot;pdfaType&quot;</test>
             <error>
