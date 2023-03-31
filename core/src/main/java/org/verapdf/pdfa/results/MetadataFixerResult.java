@@ -25,7 +25,7 @@ package org.verapdf.pdfa.results;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Holds the result of an attempt to repair PDF/A metadata by a

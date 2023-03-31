@@ -28,7 +28,7 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 import org.verapdf.core.XmlSerialiser;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;

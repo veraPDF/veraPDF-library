@@ -23,7 +23,7 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Interface that encapsulates the behaviour of variables in {@link ValidationProfile}s.

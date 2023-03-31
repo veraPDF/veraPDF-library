@@ -25,7 +25,7 @@ import org.verapdf.processor.plugins.Attribute;
 import org.verapdf.processor.plugins.PluginConfig;
 import org.verapdf.processor.plugins.PluginsCollectionConfig;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
