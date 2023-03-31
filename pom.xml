@@ -32,7 +32,7 @@
   </parent>
 
   <groupId>org.verapdf</groupId>
-  <artifactId>verapdf-library</artifactId>
+  <artifactId>verapdf-library-javax</artifactId>
   <version>1.23.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 

@@ -26,12 +26,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>verapdf-library</artifactId>
+    <artifactId>verapdf-library-javax</artifactId>
     <groupId>org.verapdf</groupId>
     <version>1.23.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>core</artifactId>
+  <artifactId>core-javax</artifactId>
   <name>veraPDF Library core</name>
   <description>Core classes for the veraPDF Library.</description>
 
@@ -43,7 +43,7 @@
 
     <dependency>
       <groupId>org.verapdf</groupId>
-      <artifactId>verapdf-xmp-core</artifactId>
+      <artifactId>verapdf-xmp-core-javax</artifactId>
       <version>${project.version}</version>
     </dependency>
 
