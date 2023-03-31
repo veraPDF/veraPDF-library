@@ -27,7 +27,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.EnumSet;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 
 import org.verapdf.core.XmlSerialiser;
 
@@ -55,7 +55,7 @@ public final class FeatureFactory {
 	/**
 	 * Converts XML file to PluginsCollectionConfig,
 	 * 
-	 * @see javax.xml.bind.JAXB for more details
+	 * @see jakarta.xml.bind.JAXB for more details
 	 */
 	public static FeatureExtractorConfig configFromXml(final InputStream source) throws JAXBException {
 		if (source == null)

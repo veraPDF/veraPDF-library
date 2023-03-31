@@ -34,7 +34,7 @@ import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.processor.reports.*;
 import org.verapdf.report.FeaturesReport;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import java.io.Writer;
 

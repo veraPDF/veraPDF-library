@@ -2,6 +2,8 @@ name: PR QA
 
 on:
   pull_request:
+    branches:
+      - jakarta
     types: [opened, synchronize, reopened]
 
 jobs:
@@ -11,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        java-version: [8, 11, 16, 17]
+        java-version: [11, 16, 17]
 
     steps:
       - uses: actions/checkout@v2

@@ -19,7 +19,7 @@ package org.verapdf.processor.reports;
 
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 
 import org.verapdf.component.Components;
 import org.verapdf.core.XmlSerialiser;

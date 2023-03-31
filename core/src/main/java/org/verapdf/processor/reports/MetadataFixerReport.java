@@ -25,7 +25,7 @@ package org.verapdf.processor.reports;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Encapsulates the results fo applying the Metadata Fixer

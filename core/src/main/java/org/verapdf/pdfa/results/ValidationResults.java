@@ -30,7 +30,7 @@ import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.processor.reports.enums.JobEndStatus;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 import java.util.HashMap;
 import java.util.List;
 

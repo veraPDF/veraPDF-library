@@ -25,7 +25,7 @@ package org.verapdf.pdfa.validation.profiles;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * RuleIds are used to identify the individual {@link Rule}s that make up a

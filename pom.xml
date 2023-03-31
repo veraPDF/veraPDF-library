@@ -32,7 +32,7 @@
   </parent>
 
   <groupId>org.verapdf</groupId>
-  <artifactId>verapdf-library</artifactId>
+  <artifactId>verapdf-library-jakarta</artifactId>
   <version>1.23.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
@@ -140,21 +140,21 @@
       </dependency>
 
       <dependency>
-        <groupId>javax.xml.bind</groupId>
-        <artifactId>jaxb-api</artifactId>
-        <version>2.4.0-b180830.0359</version>
+        <groupId>jakarta.xml.bind</groupId>
+        <artifactId>jakarta.xml.bind-api</artifactId>
+        <version>4.0.0</version>
       </dependency>
 
       <dependency>
-        <groupId>com.sun.xml.bind</groupId>
-        <artifactId>jaxb-impl</artifactId>
-        <version>2.3.2</version>
+        <groupId>org.glassfish.jaxb</groupId>
+        <artifactId>jaxb-runtime</artifactId>
+        <version>4.0.2</version>
       </dependency>
 
       <dependency>
-        <groupId>com.sun.xml.bind</groupId>
+        <groupId>org.glassfish.jaxb</groupId>
         <artifactId>jaxb-core</artifactId>
-        <version>2.3.0.1</version>
+        <version>4.0.2</version>
       </dependency>
 
     </dependencies>

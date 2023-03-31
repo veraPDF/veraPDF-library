@@ -22,7 +22,7 @@ package org.verapdf.processor.reports;
 
 import org.verapdf.component.AuditDuration;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Interface for summary information for a veraPDF batch process.

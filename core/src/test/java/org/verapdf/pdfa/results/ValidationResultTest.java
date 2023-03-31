@@ -31,7 +31,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.profiles.Profiles;
 import org.verapdf.processor.reports.enums.JobEndStatus;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.*;

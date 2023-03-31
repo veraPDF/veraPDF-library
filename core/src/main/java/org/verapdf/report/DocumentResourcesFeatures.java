@@ -23,7 +23,7 @@ package org.verapdf.report;
 import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.features.FeatureObjectType;
 
-import javax.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElement;
 
 /**
  * @author Maksim Bezrukov

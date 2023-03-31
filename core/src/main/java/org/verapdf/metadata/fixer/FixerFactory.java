@@ -26,7 +26,7 @@ package org.verapdf.metadata.fixer;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.results.MetadataFixerResult;

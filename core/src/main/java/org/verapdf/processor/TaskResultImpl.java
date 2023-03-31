@@ -27,10 +27,10 @@ import org.verapdf.component.AuditDuration;
 import org.verapdf.component.Components;
 import org.verapdf.core.VeraPDFException;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>

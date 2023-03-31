@@ -22,7 +22,7 @@ package org.verapdf.features;
 
 import java.util.EnumSet;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 
 import org.junit.Test;
 import org.verapdf.core.XmlSerialiser;

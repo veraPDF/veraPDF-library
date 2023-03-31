@@ -24,8 +24,8 @@
 package org.verapdf.pdfa.validation.profiles;
 
 
-import javax.xml.bind.annotation.*;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.Objects;
 
 @XmlRootElement(name = "argument")
