@@ -1,8 +1,8 @@
 package org.verapdf.processor.reports;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 @XmlRootElement(name = "validationReports")
 final class ValidationBatchSummaryImpl extends AbstractBatchJobSummary implements ValidationBatchSummary {

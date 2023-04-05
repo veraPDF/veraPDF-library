@@ -345,13 +345,12 @@
                 <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
             </references>
         </rule>
-        <rule object="SETable">
+        <rule object="SETableCell">
             <id specification="ISO_14289_1" clause="7.2" testNumber="15"/>
-            <description>Tables shall be regular, that is have the same number of cells in each row after accounting
-                for rowspan and colspan attributes.</description>
-            <test>isRegular == true</test>
+            <description>Table cell shall not have intersection with other cells</description>
+            <test>hasIntersection != true</test>
             <error>
-                <message>Irregular table found</message>
+                <message>Table cell has intersection with other cells</message>
                 <arguments/>
             </error>
             <references>
@@ -663,6 +662,50 @@
                 <reference specification="ISO 32000-1" clause="14.8.4.2"/>
             </references>
         </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="41"/>
+            <description>Table columns shall have the same number of rows (taking into account row spans)</description>
+            <test>numberOfColumnWithWrongRowSpan == null</test>
+            <error>
+                <message>Table columns 1 and %1 span different number of rows</message>
+                <arguments>
+                    <argument>numberOfColumnWithWrongRowSpan + 1</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="42"/>
+            <description>Table rows shall have the same number of columns (taking into account column spans)</description>
+            <test>numberOfRowWithWrongColumnSpan == null || wrongColumnSpan != null</test>
+            <error>
+                <message>Table rows 1 and %1 span different number of columns</message>
+                <arguments>
+                    <argument>numberOfRowWithWrongColumnSpan + 1</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="43"/>
+            <description>Table rows shall have the same number of columns (taking into account column spans)</description>
+            <test>numberOfRowWithWrongColumnSpan == null || wrongColumnSpan == null</test>
+            <error>
+                <message>Table rows 1 and %1 span different number of columns (%2 and %3 respectively)</message>
+                <arguments>
+                    <argument>numberOfRowWithWrongColumnSpan + 1</argument>
+                    <argument>columnSpan</argument>
+                    <argument>wrongColumnSpan</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
         <rule object="SEFigure">
             <id specification="ISO_14289_1" clause="7.3" testNumber="1"/>
             <description>Figure tags shall include an alternative representation or replacement text that represents the contents
@@ -728,15 +771,34 @@
             </error>
             <references/>
         </rule>
-        <rule object="SETable">
+        <rule object="SETD">
             <id specification="ISO_14289_1" clause="7.5" testNumber="1"/>
             <description>If the table's structure is not determinable via Headers and IDs,
                 then structure elements of type TH shall have a Scope attribute</description>
-            <test>useHeadersAndIdOrScope == true</test>
+            <test>hasConnectedHeader != false || unknownHeaders != ''</test>
             <error>
-                <message>In a table not organized with Headers attributes and IDs, a TH cell does not contain a Scope attribute</message>
-                <arguments/>
+                <message>TD does not contain Headers attribute, and Headers for this table cell can not be determined
+                    via algorithm from ISO32000-2, 14.8.4.8.3.</message>
             </error>
+            <references>
+                <reference specification="ISO 32000-2" clause="14.8.4.8.3"/>
+            </references>
+        </rule>
+        <rule object="SETD">
+            <id specification="ISO_14289_1" clause="7.5" testNumber="2"/>
+            <description>If the table's structure is not determinable via Headers and IDs,
+                then structure elements of type TH shall have a Scope attribute</description>
+            <test>hasConnectedHeader != false || unknownHeaders == ''</test>
+            <error>
+                <message>TD references undefined Header(s) %1, and Headers for this table cell can not be determined
+                    via algorithm from ISO32000-2, 14.8.4.8.3.</message>
+                <arguments>
+                    <argument>unknownHeaders</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2" clause="14.8.4.8.3"/>
+            </references>
         </rule>
         <rule object="SEFormula">
             <id specification="ISO_14289_1" clause="7.7" testNumber="1"/>

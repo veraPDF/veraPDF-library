@@ -26,12 +26,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>verapdf-library</artifactId>
+    <artifactId>verapdf-library-jakarta</artifactId>
     <groupId>org.verapdf</groupId>
     <version>1.23.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>core</artifactId>
+  <artifactId>core-jakarta</artifactId>
   <name>veraPDF Library core</name>
   <description>Core classes for the veraPDF Library.</description>
 
@@ -43,7 +43,7 @@
 
     <dependency>
       <groupId>org.verapdf</groupId>
-      <artifactId>verapdf-xmp-core</artifactId>
+      <artifactId>verapdf-xmp-core-jakarta</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -53,17 +53,17 @@
     </dependency>
 
     <dependency>
-      <groupId>javax.xml.bind</groupId>
-      <artifactId>jaxb-api</artifactId>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-impl</artifactId>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>com.sun.xml.bind</groupId>
+      <groupId>org.glassfish.jaxb</groupId>
       <artifactId>jaxb-core</artifactId>
     </dependency>
 

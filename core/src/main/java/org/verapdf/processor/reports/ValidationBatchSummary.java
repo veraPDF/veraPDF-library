@@ -3,7 +3,7 @@
  */
 package org.verapdf.processor.reports;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Holds the count of validation jobs and their statuses for a batch job

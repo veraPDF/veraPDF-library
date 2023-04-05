@@ -22,7 +22,7 @@ import org.verapdf.core.XmlSerialiser;
 
 import javanet.staxutils.IndentingXMLStreamWriter;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;

@@ -46,7 +46,7 @@ package org.verapdf.core;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAnyElement;
+import jakarta.xml.bind.annotation.XmlAnyElement;
 
 /**
  * Generic collection wrapper class.

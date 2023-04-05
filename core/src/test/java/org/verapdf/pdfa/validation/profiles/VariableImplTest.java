@@ -23,7 +23,7 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 

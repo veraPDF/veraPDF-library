@@ -23,7 +23,7 @@
  */
 package org.verapdf.pdfa.validation.validators;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 

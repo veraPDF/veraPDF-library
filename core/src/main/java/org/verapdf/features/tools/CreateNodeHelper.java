@@ -23,7 +23,7 @@ package org.verapdf.features.tools;
 import org.verapdf.core.FeatureParsingException;
 import org.verapdf.features.objects.FeaturesObject;
 
-import javax.xml.bind.DatatypeConverter;
+import jakarta.xml.bind.DatatypeConverter;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;

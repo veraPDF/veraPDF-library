@@ -23,7 +23,7 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * A Reference is used to correlate a validation {@link Rule} to a specific

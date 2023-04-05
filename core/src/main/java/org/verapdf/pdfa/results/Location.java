@@ -23,7 +23,7 @@
  */
 package org.verapdf.pdfa.results;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Used to record the location of specific test assertions during the validation

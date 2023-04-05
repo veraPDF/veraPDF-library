@@ -22,7 +22,7 @@ package org.verapdf.features;
 
 import java.util.EnumSet;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlJavaTypeAdapter(FeatureExtractorConfigImpl.Adapter.class)
 public interface FeatureExtractorConfig {

@@ -23,7 +23,7 @@
  */
 package org.verapdf.processor;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.verapdf.component.AuditDuration;
 import org.verapdf.core.VeraPDFException;
