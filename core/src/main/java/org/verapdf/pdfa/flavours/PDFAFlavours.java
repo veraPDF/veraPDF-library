@@ -31,13 +31,19 @@ package org.verapdf.pdfa.flavours;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
-final class PDFAFlavours {
+public final class PDFAFlavours {
     static final String NONE = "";
+    public static final String ARLINGTON = "Arlington"; //$NON-NLS-1$
+    static final String ARLINGTON_1 = "ARLINGTON1"; //$NON-NLS-1$
+    static final String ARLINGTON_2 = "ARLINGTON2"; //$NON-NLS-1$
     static final String PDFA = "PDF/A"; //$NON-NLS-1$
     static final String PDFUA = "PDF/UA"; //$NON-NLS-1$
     static final String TAGGED_PDF = "Tagged PDF"; //$NON-NLS-1$
     static final String WCAG_2_1 = "WCAG2.1"; //$NON-NLS-1$
     static final String WCAG = "WCAG"; //$NON-NLS-1$
+    public static final String ARLINGTON_PREFIX = "arlington"; //$NON-NLS-1$
+    public static final float VERSION_1_4 = 1.4f;
+    public static final float VERSION_1_7 = 1.7f;
     static final String PDFUA_PREFIX = "ua"; //$NON-NLS-1$
     static final String WCAG2_1_PREFIX = "wcag"; //$NON-NLS-1$
     static final String ISO = "ISO"; //$NON-NLS-1$
@@ -46,6 +52,8 @@ final class PDFAFlavours {
     static final int ISO_14289_ID = 14289;
     static final int ISO_19005_ID = 19005;
     static final int ISO_32000_ID = 32000;
+    static final int ISO_32000_1_ID = 320001;
+    static final int ISO_32000_2_ID = 320002;
     static final int ISO_32005_ID = 32005;
     static final String ISO_14289_DESCRIPTION = "Document management applications — Electronic document file format enhancement for accessibility"; //$NON-NLS-1$
     static final String ISO_14289_1_DESCRIPTION = "Use of ISO 32000-1 (PDF/UA-1)"; //$NON-NLS-1$

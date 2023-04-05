@@ -43,9 +43,9 @@ import static org.junit.Assert.*;
 @SuppressWarnings("static-method")
 public class ProfileDirectoryImplTest {
     private static ValidationProfile DEFAULT = Profiles.defaultProfile();
-    private static ValidationProfile PDFA_1B = getPDFA1b();
+    private static ValidationProfile ARLINGTON_1_0 = getArlington_1_0();
     private static Set<ValidationProfile> DEFAULT_ALONE = getSolitarySet(DEFAULT);
-    private static Set<ValidationProfile> PDFA_1B_ALONE = getSolitarySet(PDFA_1B);
+    private static Set<ValidationProfile> ARLINGTON_1_0_ALONE = getSolitarySet(ARLINGTON_1_0);
     private static Set<ValidationProfile> DUAL_PROFILE = getDualSet();
 
     /**
@@ -58,14 +58,14 @@ public class ProfileDirectoryImplTest {
         ProfileDirectory dir = Profiles
                 .directoryFromProfiles(DEFAULT_ALONE);
         assertEquals(1, dir.getValidationProfileIds().size());
-        dir = Profiles.directoryFromProfiles(PDFA_1B_ALONE);
+        dir = Profiles.directoryFromProfiles(ARLINGTON_1_0_ALONE);
         assertEquals(1, dir.getValidationProfileIds().size());
         dir = Profiles.directoryFromProfiles(DUAL_PROFILE);
         assertEquals(2, dir.getValidationProfileIds().size());
         assertTrue(dir.getValidationProfileIds().contains(
                 DEFAULT.getPDFAFlavour().getId()));
         assertTrue(dir.getValidationProfileIds().contains(
-                PDFA_1B.getPDFAFlavour().getId()));
+                ARLINGTON_1_0.getPDFAFlavour().getId()));
     }
 
     /**
@@ -77,12 +77,12 @@ public class ProfileDirectoryImplTest {
     public final void testGetPDFAFlavours() {
         ProfileDirectory dir = Profiles.directoryFromProfiles(DEFAULT_ALONE);
         assertEquals(1, dir.getPDFAFlavours().size());
-        dir = Profiles.directoryFromProfiles(PDFA_1B_ALONE);
+        dir = Profiles.directoryFromProfiles(ARLINGTON_1_0_ALONE);
         assertEquals(1, dir.getPDFAFlavours().size());
         dir = Profiles.directoryFromProfiles(DUAL_PROFILE);
         assertEquals(2, dir.getPDFAFlavours().size());
         assertTrue(dir.getPDFAFlavours().contains(DEFAULT.getPDFAFlavour()));
-        assertTrue(dir.getPDFAFlavours().contains(PDFA_1B.getPDFAFlavour()));
+        assertTrue(dir.getPDFAFlavours().contains(ARLINGTON_1_0.getPDFAFlavour()));
     }
 
     /**
@@ -95,14 +95,14 @@ public class ProfileDirectoryImplTest {
         ProfileDirectory dir = Profiles.directoryFromProfiles(DEFAULT_ALONE);
         assertSame(dir.getValidationProfileById(
                 DEFAULT.getPDFAFlavour().getId()).getPDFAFlavour(), PDFAFlavour.NO_FLAVOUR);
-        dir = Profiles.directoryFromProfiles(PDFA_1B_ALONE);
+        dir = Profiles.directoryFromProfiles(ARLINGTON_1_0_ALONE);
         assertSame(dir.getValidationProfileById(
-                PDFA_1B.getPDFAFlavour().getId()).getPDFAFlavour(), PDFAFlavour.PDFA_1_B);
+                ARLINGTON_1_0.getPDFAFlavour().getId()).getPDFAFlavour(), PDFAFlavour.ARLINGTON1_0);
         dir = Profiles.directoryFromProfiles(DUAL_PROFILE);
         assertSame(dir.getValidationProfileById(
                 DEFAULT.getPDFAFlavour().getId()).getPDFAFlavour(), PDFAFlavour.NO_FLAVOUR);
         assertSame(dir.getValidationProfileById(
-                PDFA_1B.getPDFAFlavour().getId()).getPDFAFlavour(), PDFAFlavour.PDFA_1_B);
+                ARLINGTON_1_0.getPDFAFlavour().getId()).getPDFAFlavour(), PDFAFlavour.ARLINGTON1_0);
     }
 
     /**
@@ -126,14 +126,14 @@ public class ProfileDirectoryImplTest {
         ProfileDirectory dir = Profiles.directoryFromProfiles(DEFAULT_ALONE);
         assertSame(dir.getValidationProfileByFlavour(DEFAULT.getPDFAFlavour())
                 .getPDFAFlavour(), PDFAFlavour.NO_FLAVOUR);
-        dir = Profiles.directoryFromProfiles(PDFA_1B_ALONE);
-        assertSame(dir.getValidationProfileByFlavour(PDFA_1B.getPDFAFlavour())
-                .getPDFAFlavour(), PDFAFlavour.PDFA_1_B);
+        dir = Profiles.directoryFromProfiles(ARLINGTON_1_0_ALONE);
+        assertSame(dir.getValidationProfileByFlavour(ARLINGTON_1_0.getPDFAFlavour())
+                .getPDFAFlavour(), PDFAFlavour.ARLINGTON1_0);
         dir = Profiles.directoryFromProfiles(DUAL_PROFILE);
         assertSame(dir.getValidationProfileByFlavour(DEFAULT.getPDFAFlavour())
                 .getPDFAFlavour(), PDFAFlavour.NO_FLAVOUR);
-        assertSame(dir.getValidationProfileByFlavour(PDFA_1B.getPDFAFlavour())
-                .getPDFAFlavour(), PDFAFlavour.PDFA_1_B);
+        assertSame(dir.getValidationProfileByFlavour(ARLINGTON_1_0.getPDFAFlavour())
+                .getPDFAFlavour(), PDFAFlavour.ARLINGTON1_0);
     }
 
     /**
@@ -156,16 +156,16 @@ public class ProfileDirectoryImplTest {
     public final void testGetValidationProfiles() {
         ProfileDirectory dir = Profiles.directoryFromProfiles(DEFAULT_ALONE);
         assertTrue(dir.getValidationProfiles().contains(DEFAULT));
-        dir = Profiles.directoryFromProfiles(PDFA_1B_ALONE);
-        assertTrue(dir.getValidationProfiles().contains(PDFA_1B));
+        dir = Profiles.directoryFromProfiles(ARLINGTON_1_0_ALONE);
+        assertTrue(dir.getValidationProfiles().contains(ARLINGTON_1_0));
         dir = Profiles.directoryFromProfiles(DUAL_PROFILE);
         assertTrue(dir.getValidationProfiles().contains(DEFAULT));
-        assertTrue(dir.getValidationProfiles().contains(PDFA_1B));
+        assertTrue(dir.getValidationProfiles().contains(ARLINGTON_1_0));
     }
 
-    private static ValidationProfile getPDFA1b() {
+    private static ValidationProfile getArlington_1_0() {
         try (InputStream is = ValidationProfileImpl.class.getClassLoader()
-                .getResourceAsStream("org/verapdf/pdfa/validation/PDFA-1B.xml")) {
+                .getResourceAsStream("org/verapdf/pdfa/validation/ARLINGTON1-0.xml")) {
             return Profiles.profileFromXml(is);
         } catch (JAXBException | IOException e) {
             throw new IllegalStateException(e);
@@ -182,7 +182,7 @@ public class ProfileDirectoryImplTest {
     private static Set<ValidationProfile> getDualSet() {
         Set<ValidationProfile> profiles = new HashSet<>();
         profiles.add(DEFAULT);
-        profiles.add(PDFA_1B);
+        profiles.add(ARLINGTON_1_0);
         return profiles;
     }
 }

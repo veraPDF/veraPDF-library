@@ -115,7 +115,7 @@ final class ProcessorImpl implements ItemProcessor {
 		try (PDFAParser parser = this.hasCustomProfile()
 				? foundry.createParser(toProcess, this.processorConfig.getCustomProfile().getPDFAFlavour(), password)
 				: this.isAuto()
-				  ? foundry.createParser(toProcess, PDFAFlavour.NO_FLAVOUR, this.valConf().getDefaultFlavour(), password)
+				  ? foundry.createParser(toProcess, this.valConf().getFlavour() == PDFAFlavour.NO_ARLINGTON_FLAVOUR ? PDFAFlavour.NO_ARLINGTON_FLAVOUR : PDFAFlavour.NO_FLAVOUR, this.valConf().getDefaultFlavour(), password)
 				  : foundry.createParser(toProcess, this.valConf().getFlavour(), this.valConf().getDefaultFlavour(), password)) {
 			for (TaskType t : this.getConfig().getTasks()) {
 				task = t;
@@ -217,7 +217,7 @@ final class ProcessorImpl implements ItemProcessor {
 	}
 
 	private boolean isAuto() {
-		return (this.valConf().getFlavour() == PDFAFlavour.NO_FLAVOUR)
+		return (this.valConf().getFlavour() == PDFAFlavour.NO_FLAVOUR || this.valConf().getFlavour() == PDFAFlavour.NO_ARLINGTON_FLAVOUR)
 				&& (this.processorConfig.getCustomProfile() == Profiles.defaultProfile());
 	}
 

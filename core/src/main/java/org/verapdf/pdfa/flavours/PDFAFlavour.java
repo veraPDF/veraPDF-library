@@ -96,6 +96,17 @@ public enum PDFAFlavour {
     PDFA_4_E(Specification.ISO_19005_4, Level.E),
     /** ua1 PDF Version 1 */
     PDFUA_1(Specification.ISO_14289_1, Level.NO_LEVEL),
+    /** Special ID for the arlington none case */
+    NO_ARLINGTON_FLAVOUR(Specification.ISO_32000_1_0, Level.A),
+    ARLINGTON1_0(Specification.ISO_32000_1_0, Level.NO_LEVEL),
+    ARLINGTON1_1(Specification.ISO_32000_1_1, Level.NO_LEVEL),
+    ARLINGTON1_2(Specification.ISO_32000_1_2, Level.NO_LEVEL),
+    ARLINGTON1_3(Specification.ISO_32000_1_3, Level.NO_LEVEL),
+    ARLINGTON1_4(Specification.ISO_32000_1_4, Level.NO_LEVEL),
+    ARLINGTON1_5(Specification.ISO_32000_1_5, Level.NO_LEVEL),
+    ARLINGTON1_6(Specification.ISO_32000_1_6, Level.NO_LEVEL),
+    ARLINGTON1_7(Specification.ISO_32000_1_7, Level.NO_LEVEL),
+    ARLINGTON2_0(Specification.ISO_32000_2_0, Level.NO_LEVEL),
     /** wcag PDF version 2.1 */
     WCAG2_1(Specification.WCAG_2_1, Level.NO_LEVEL);
 
@@ -125,6 +136,8 @@ public enum PDFAFlavour {
             return PDFAFlavours.PDFUA_PREFIX;
         } else if(PDFAFlavours.WCAG.equals(standard.family)) {
             return PDFAFlavours.WCAG2_1_PREFIX;
+        } else if (PDFAFlavours.ARLINGTON_1.equals(standard.family) || PDFAFlavours.ARLINGTON_2.equals(standard.family)) {
+            return PDFAFlavours.ARLINGTON_PREFIX + standard.series.id % 10 + ".";
         }
         return "";
     }
@@ -185,6 +198,24 @@ public enum PDFAFlavour {
         ISO_19005_4(IsoStandardSeries.ISO_19005, PDFAFlavours.PDFA, PDFAFlavours.ISO_19005_4_PART,
                     PDFAFlavours.ISO_19005_4_YEAR,
                     PDFAFlavours.ISO_19005_4_DESCRIPTION),
+        ISO_32000_1_0(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 0,
+                "1993", "Based on PDF 1.0"),
+        ISO_32000_1_1(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 1,
+                "1996", "Based on PDF 1.1"),
+        ISO_32000_1_2(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 2,
+                "1996", "Based on PDF 1.2"),
+        ISO_32000_1_3(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 3,
+                "2000", "Based on PDF 1.3"),
+        ISO_32000_1_4(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 4,
+                "2001", "Based on PDF 1.4"),
+        ISO_32000_1_5(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 5,
+                "2003", "Based on PDF 1.5"),
+        ISO_32000_1_6(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 6,
+                "2004", "Based on PDF 1.6"),
+        ISO_32000_1_7(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 7,
+                "2008", "Based on PDF 1.7"),
+        ISO_32000_2_0(IsoStandardSeries.ISO_32000_2, PDFAFlavours.ARLINGTON_2, 0,
+                "2020", "Based on PDF 2.0"),
         ISO_32005(IsoStandardSeries.ISO_32005, PDFAFlavours.TAGGED_PDF, PDFAFlavours.NONE_ID,
                 PDFAFlavours.ISO_32005_YEAR,
                 PDFAFlavours.ISO_32005_DESCRIPTION),
@@ -331,6 +362,8 @@ public enum PDFAFlavour {
         ISO_19005(PDFAFlavours.ISO_19005_ID, PDFAFlavours.ISO_19005_DESCRIPTION),
         /** Identifier for PDF 1.7 ISO Standard */
         ISO_32000(PDFAFlavours.ISO_32000_ID, PDFAFlavours.ISO_32000_DESCRIPTION),
+        ISO_32000_1(PDFAFlavours.ISO_32000_1_ID, PDFAFlavours.ISO_32000_DESCRIPTION),
+        ISO_32000_2(PDFAFlavours.ISO_32000_2_ID, PDFAFlavours.ISO_32000_DESCRIPTION),
         /** Identifier for Tagged PDF ISO Standard */
         ISO_32005(PDFAFlavours.ISO_32005_ID, PDFAFlavours.ISO_32005_DESCRIPTION);
 
