@@ -78,4 +78,6 @@ public interface ValidatorConfig {
 	public String getPassword();
 
 	public boolean getShowProgress();
+
+	public boolean getNonPDFExtension();
 }

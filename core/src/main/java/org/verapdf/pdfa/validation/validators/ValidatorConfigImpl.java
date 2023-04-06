@@ -63,6 +63,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	private final int maxNumberOfDisplayedFailedChecks;
 	@XmlAttribute
 	private final boolean showProgress;
+	private final boolean nonPDFExtension;
 
 	private ValidatorConfigImpl() {
 		this(PDFAFlavour.NO_FLAVOUR, false, -1, false, false, Level.WARNING,
@@ -73,13 +74,14 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 								boolean isLogsEnabled, Level loggingLevel, String password, final boolean showProgress) {
 		this(flavour, PDFAFlavour.PDFA_1_B, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel,
 		     BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, !Foundries.defaultParserIsPDFBox(), password,
-		     showProgress);
+		     showProgress, false);
 	}
 
 	private ValidatorConfigImpl(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour, final boolean recordPasses,
 	                            final int maxFails, final boolean debug, final boolean isLogsEnabled,
 								final Level loggingLevel, final int maxNumberOfDisplayedFailedChecks,
-								final boolean showErrorMessages, final String password, final boolean showProgress) {
+								final boolean showErrorMessages, final String password, final boolean showProgress,
+								final boolean nonPDFExtension) {
 		this.flavour = flavour;
 		this.defaultFlavour = defaultFlavour;
 		this.recordPasses = recordPasses;
@@ -91,6 +93,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		this.showErrorMessages = showErrorMessages && !Foundries.defaultParserIsPDFBox();
 		this.password = password;
 		this.showProgress = showProgress;
+		this.nonPDFExtension = nonPDFExtension;
 	}
 
 	/**
@@ -157,6 +160,11 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		return showProgress;
 	}
 
+	@Override
+	public boolean getNonPDFExtension() {
+		return nonPDFExtension;
+	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -174,6 +182,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		result = prime * result + ((this.password == null) ? 0 : this.password.hashCode());
 		result = prime * result + this.maxNumberOfDisplayedFailedChecks;
 		result = prime * result + (this.showProgress ? 1231 : 1237);
+		result = prime * result + (this.nonPDFExtension ? 1231 : 1237);
 		return result;
 	}
 
@@ -219,6 +228,9 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		if (this.showProgress != other.showProgress) {
 			return false;
 		}
+		if (this.nonPDFExtension != other.nonPDFExtension) {
+			return false;
+		}
 		return Objects.equals(this.loggingLevel, other.loggingLevel);
 	}
 
@@ -245,9 +257,10 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	static ValidatorConfig fromValues(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour, final boolean recordPasses,
 	                                  final int maxFails, final boolean debug, final boolean isLogsEnabled,
 									  final Level loggingLevel, final int maxNumberOfDisplayedFailedChecks,
-									  final boolean showErrorMessages, final String password, final boolean showProgress) {
+									  final boolean showErrorMessages, final String password, final boolean showProgress,
+									  final boolean nonPDFExtension) {
 		return new ValidatorConfigImpl(flavour, defaultFlavour, recordPasses, maxFails, debug, isLogsEnabled,
-				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password, showProgress);
+				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password, showProgress, nonPDFExtension);
 	}
 
 	static class Adapter extends XmlAdapter<ValidatorConfigImpl, ValidatorConfig> {

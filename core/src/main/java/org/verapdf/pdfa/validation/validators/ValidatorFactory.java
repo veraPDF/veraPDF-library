@@ -284,9 +284,9 @@ public final class ValidatorFactory {
 	                                           final boolean recordPasses, final int maxFails, final boolean debug,
 											   final boolean isLogsEnabled, final Level loggingLevel,
 											   final int maxNumberOfDisplayedFailedChecks, final boolean showErrorMessages,
-	                                           final String password, final boolean showProgress) {
+	                                           final String password, final boolean showProgress, final boolean nonPDFExtension) {
 		return ValidatorConfigImpl.fromValues(flavour, defaultFlavour, recordPasses, maxFails, debug, isLogsEnabled,
-				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password, showProgress);
+				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password, showProgress, nonPDFExtension);
 	}
 
 	/**
