@@ -18,6 +18,7 @@ public class ValidatorConfigBuilder {
 	private int maxNumberOfDisplayedFailedChecks = BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS;
 	private String password = "";
 	private boolean showProgress = false;
+	private boolean nonPDFExtension = false;
 
 	public ValidatorConfigBuilder password(String password) {
 		this.password = password;
@@ -74,12 +75,17 @@ public class ValidatorConfigBuilder {
 		return this;
 	}
 
+	public ValidatorConfigBuilder nonPDFExtension(boolean nonPDFExtension) {
+		this.nonPDFExtension = nonPDFExtension;
+		return this;
+	}
+
 	public static ValidatorConfigBuilder defaultBuilder() {
 		return new ValidatorConfigBuilder();
 	}
 
 	public ValidatorConfig build() {
 		return ValidatorConfigImpl.fromValues(flavour, defaultFlavour, recordPasses, maxFails, debug, isLogsEnabled,
-				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password, showProgress);
+				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password, showProgress, nonPDFExtension);
 	}
 }

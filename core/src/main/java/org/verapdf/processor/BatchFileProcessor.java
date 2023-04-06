@@ -92,11 +92,12 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 			Enumeration<? extends ZipEntry> entries = zipFile.entries();
 			while (entries.hasMoreElements()) {
 				ZipEntry entry = entries.nextElement();
-				if (entry.isDirectory() || !isPdf(entry.getName())) {
+				if (entry.isDirectory() || (!processor.getConfig().getValidatorConfig().getNonPDFExtension() &&
+						!isPdf(entry.getName()))) {
 					continue;
 				}
-				ItemDetails itemDetails = ItemDetails.fromValues(toProcess.getAbsolutePath() + "\\" +
-						entry.getName().replace('/', '\\'), entry.getSize());
+				ItemDetails itemDetails = ItemDetails.fromValues(toProcess.getAbsolutePath() + File.separator +
+						entry.getName().replace("/", File.separator).replace("\\", File.separator), entry.getSize());
 				processItem(itemDetails, zipFile.getInputStream(entry));
 			}
 		} catch (IOException exp) {

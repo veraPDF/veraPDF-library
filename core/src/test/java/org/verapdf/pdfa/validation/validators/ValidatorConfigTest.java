@@ -69,7 +69,7 @@ public class ValidatorConfigTest {
 		ValidatorConfig fromVals = ValidatorFactory.createConfig(defaultInstance.getFlavour(),
 				defaultInstance.getDefaultFlavour(), defaultInstance.isRecordPasses(), defaultInstance.getMaxFails(),
 				defaultInstance.isDebug(), false, Level.WARNING, defaultInstance.getMaxNumberOfDisplayedFailedChecks(),
-				defaultInstance.showErrorMessages(), "", false);
+				defaultInstance.showErrorMessages(), "", false, false);
 		assertEquals(fromVals, defaultInstance);
 		assertNotSame(fromVals, defaultInstance);
 	}

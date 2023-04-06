@@ -166,11 +166,13 @@ final class ProcessorImpl implements ItemProcessor {
 		this.initialise();
 		checkArguments(pdfFileStream, fileDetails, this.processorConfig);
 		Components.Timer parseTimer = Components.Timer.start();
+		String password = this.processorConfig.getValidatorConfig().getPassword();
 		TaskType task = null;
 		try (PDFAParser parser = this.hasCustomProfile()
-				? foundry.createParser(pdfFileStream, this.processorConfig.getCustomProfile().getPDFAFlavour())
-				: this.isAuto() ? foundry.createParser(pdfFileStream)
-						: foundry.createParser(pdfFileStream, this.valConf().getFlavour())) {
+				? foundry.createParser(pdfFileStream, this.processorConfig.getCustomProfile().getPDFAFlavour(), password)
+				: this.isAuto()
+				? foundry.createParser(pdfFileStream, PDFAFlavour.NO_FLAVOUR, this.valConf().getDefaultFlavour(), password)
+				: foundry.createParser(pdfFileStream, this.valConf().getFlavour(), this.valConf().getDefaultFlavour(), password)) {
 			for (TaskType t : this.getConfig().getTasks()) {
 				task = t;
 				switch (task) {
