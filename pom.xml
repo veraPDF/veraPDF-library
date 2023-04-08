@@ -32,7 +32,7 @@
   </parent>
 
   <groupId>org.verapdf</groupId>
-  <artifactId>verapdf-library</artifactId>
+  <artifactId>verapdf-library-arlington</artifactId>
   <version>1.23.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
@@ -128,7 +128,7 @@
 
       <dependency>
         <groupId>org.verapdf</groupId>
-        <artifactId>pdf-model</artifactId>
+        <artifactId>pdf-model-arlington</artifactId>
         <version>${verapdf.model.version}</version>
       </dependency>
 

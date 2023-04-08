@@ -97,7 +97,7 @@ public enum PDFAFlavour {
     /** ua1 PDF Version 1 */
     PDFUA_1(Specification.ISO_14289_1, Level.NO_LEVEL),
     /** Special ID for the arlington none case */
-    NO_ARLINGTON_FLAVOUR(Specification.ISO_32000_1_0, Level.A),
+    NO_ARLINGTON_FLAVOUR(Specification.NO_STANDARD, Level.A),
     ARLINGTON1_0(Specification.ISO_32000_1_0, Level.NO_LEVEL),
     ARLINGTON1_1(Specification.ISO_32000_1_1, Level.NO_LEVEL),
     ARLINGTON1_2(Specification.ISO_32000_1_2, Level.NO_LEVEL),
