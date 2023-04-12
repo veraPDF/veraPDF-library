@@ -23,6 +23,7 @@
  */
 package org.verapdf.pdfa.validation.validators;
 
+import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
@@ -46,7 +47,7 @@ public class ValidatorConfigTest {
 	 */
 	@Test
 	public final void testHashCodeAndEquals() {
-		EqualsVerifier.forClass(ValidatorConfigImpl.class).withIgnoredFields("defaultFlavour").verify();
+		EqualsVerifier.forClass(ValidatorConfigImpl.class).suppress(Warning.NONFINAL_FIELDS).verify();
 	}
 
 	/**
