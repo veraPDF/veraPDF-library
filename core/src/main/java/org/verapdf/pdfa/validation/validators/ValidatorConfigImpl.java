@@ -43,10 +43,8 @@ import java.util.logging.Level;
 final class ValidatorConfigImpl implements ValidatorConfig {
 	private static final ValidatorConfigImpl defaultConfig = new ValidatorConfigImpl();
 	private final String password;
-	@XmlAttribute
-	private final PDFAFlavour flavour;
-	@XmlAttribute
-	private final PDFAFlavour defaultFlavour;
+	private PDFAFlavour flavour;
+	private PDFAFlavour defaultFlavour;
 	@XmlAttribute
 	private final boolean recordPasses;
 	@XmlAttribute
@@ -115,14 +113,26 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	/**
 	 * @see org.verapdf.pdfa.validation.validators.ValidatorConfig#getFlavour()
 	 */
+	@XmlAttribute
 	@Override
 	public PDFAFlavour getFlavour() {
 		return this.flavour;
 	}
 
 	@Override
+	public void setFlavour(PDFAFlavour flavour) {
+		this.flavour = flavour;
+	}
+
+	@XmlAttribute
+	@Override
 	public PDFAFlavour getDefaultFlavour() {
 		return this.defaultFlavour;
+	}
+
+	@Override
+	public void setDefaultFlavour(PDFAFlavour defaultFlavour) {
+		this.defaultFlavour = defaultFlavour;
 	}
 
 	@Override
@@ -173,6 +183,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((this.flavour == null) ? 0 : this.flavour.hashCode());
+		result = prime * result + ((this.defaultFlavour == null) ? 0 : this.defaultFlavour.hashCode());
 		result = prime * result + this.maxFails;
 		result = prime * result + (this.recordPasses ? 1231 : 1237);
 		result = prime * result + (this.debug ? 1231 : 1237);
@@ -202,6 +213,9 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		}
 		ValidatorConfigImpl other = (ValidatorConfigImpl) obj;
 		if (this.flavour != other.flavour) {
+			return false;
+		}
+		if (this.defaultFlavour != other.defaultFlavour) {
 			return false;
 		}
 		if (this.maxFails != other.maxFails) {

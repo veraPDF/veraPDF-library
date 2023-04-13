@@ -63,7 +63,11 @@ public interface ValidatorConfig {
 	 */
 	public PDFAFlavour getFlavour();
 
+	public void setFlavour(PDFAFlavour flavour);
+
 	public PDFAFlavour getDefaultFlavour();
+
+	public void setDefaultFlavour(PDFAFlavour defaultFlavour);
 
 	public boolean isDebug();
 

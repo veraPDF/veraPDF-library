@@ -138,6 +138,12 @@ public class JavaScriptEvaluator {
 		if (res instanceof Double && Math.abs((Double) res - Math.floor((Double) res)) < 1.0E-7){
 			return Integer.toString(((Double) res).intValue());
 		}
+		if (res instanceof String) {
+			String resultString = res.toString();
+			if (resultString.isEmpty() || "null".equals(resultString)) {
+				return "\"" + resultString + "\"";
+			}
+		}
 		return res != null ? res.toString() : null;
 
 	}
