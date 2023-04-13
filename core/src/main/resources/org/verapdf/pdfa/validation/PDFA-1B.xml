@@ -409,7 +409,7 @@
             <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot; || deviceClass == &quot;scnr&quot; || deviceClass == &quot;spac&quot;) &amp;&amp; 
 			(colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot; || colorSpace == &quot;Lab &quot;) &amp;&amp; version &lt; 3.0</test>
             <error>
-                <message>The embedded ICC profile (Device Class = &quot;%1&quot;, color space = &quot;%2&quot;, version = %3) is either invalid or does not satisfy PDF 1.4 requirements</message>
+                <message>The embedded ICC profile (Device Class = %1, color space = %2, version = %3) is either invalid or does not satisfy PDF 1.4 requirements</message>
                 <arguments>
                     <argument>deviceClass</argument>
                     <argument>colorSpace</argument>

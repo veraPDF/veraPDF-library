@@ -321,7 +321,7 @@
                 (Device Class = &quot;mntr&quot;). The profiles shall have a colour space of either &quot;GRAY&quot;, &quot;RGB&quot;, or &quot;CMYK&quot;.</description>
             <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot;) &amp;&amp; (colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot;) &amp;&amp; version &lt; 5.0</test>
             <error>
-                <message>The embedded PDF/A Output Intent colour profile has invalid header (Device Class = &quot;%1&quot;, color space = &quot;%2&quot;, version = %3)</message>
+                <message>The embedded PDF/A Output Intent colour profile has invalid header (Device Class = %1, color space = %2, version = %3)</message>
                 <arguments>
                     <argument>deviceClass</argument>
                     <argument>colorSpace</argument>
@@ -365,7 +365,7 @@
             <test>(deviceClass == &quot;prtr&quot; || deviceClass == &quot;mntr&quot; || deviceClass == &quot;scnr&quot; || deviceClass == &quot;spac&quot;) &amp;&amp;
                 (colorSpace == &quot;RGB &quot; || colorSpace == &quot;CMYK&quot; || colorSpace == &quot;GRAY&quot; || colorSpace == &quot;Lab &quot;) &amp;&amp; version &lt; 5.0</test>
             <error>
-                <message>The embedded ICC profile (Device Class = &quot;%1&quot;, color space = &quot;%2&quot;, version = %3) is either invalid or does not satisfy PDF 2.0 requirements</message>
+                <message>The embedded ICC profile (Device Class = %1, color space = %2, version = %3) is either invalid or does not satisfy PDF 2.0 requirements</message>
                 <arguments>
                     <argument>deviceClass</argument>
                     <argument>colorSpace</argument>
