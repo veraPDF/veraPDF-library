@@ -1435,9 +1435,9 @@
             <id specification="ISO_19005_4" clause="6.10" testNumber="1"/>
             <description>Each optional content configuration dictionary that forms the value of the D key, or that is an element in the array that forms the
                 value of the Configs key in the OCProperties dictionary, shall contain the Name key.</description>
-            <test>Name != null &amp;&amp; Name.length() > 0</test>
+            <test>Name != null</test>
             <error>
-                <message>Missing or empty Name entry of the optional content configuration dictionary</message>
+                <message>Missing Name entry of the optional content configuration dictionary</message>
                 <arguments/>
             </error>
             <references/>
