@@ -80,10 +80,10 @@
 		</rule>
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="5392"/>
-			<description>Entry Dest in AnnotLink shall have one of types: Array, StringByte, Name</description>
-			<test>containsDest == false || DestHasTypeArray == true || DestHasTypeStringByte == true || DestHasTypeName == true</test>
+			<description>Entry Dest in AnnotLink shall have one of types: Array, Name, StringByte</description>
+			<test>containsDest == false || DestHasTypeArray == true || DestHasTypeName == true || DestHasTypeStringByte == true</test>
 			<error>
-				<message>Entry Dest in AnnotLink is not one of types: Array, StringByte, Name</message>
+				<message>Entry Dest in AnnotLink is not one of types: Array, Name, StringByte</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -422,10 +422,10 @@
 		</rule>
 		<rule object="AArrayOfDecodeParamsEntry">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="10873"/>
-			<description>Entry in ArrayOfDecodeParams shall have one of types: Null, Dictionary</description>
-			<test>HasTypeNull == true || HasTypeDictionary == true</test>
+			<description>Entry in ArrayOfDecodeParams shall have one of types: Dictionary, Null</description>
+			<test>HasTypeDictionary == true || HasTypeNull == true</test>
 			<error>
-				<message>Entry %1 in ArrayOfDecodeParams is not one of types: Null, Dictionary</message>
+				<message>Entry %1 in ArrayOfDecodeParams is not one of types: Dictionary, Null</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -968,10 +968,10 @@
 		</rule>
 		<rule object="ADest0Array">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="15358"/>
-			<description>Entry 0 in Dest0Array shall have one of types: Number, Dictionary</description>
-			<test>size &lt;= 0 || entry0HasTypeNumber == true || entry0HasTypeDictionary == true</test>
+			<description>Entry 0 in Dest0Array shall have one of types: Dictionary, Number</description>
+			<test>size &lt;= 0 || entry0HasTypeDictionary == true || entry0HasTypeNumber == true</test>
 			<error>
-				<message>Entry 0 in Dest0Array is not one of types: Number, Dictionary</message>
+				<message>Entry 0 in Dest0Array is not one of types: Dictionary, Number</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1041,10 +1041,10 @@
 		</rule>
 		<rule object="ADest1Array">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="15419"/>
-			<description>Entry 0 in Dest1Array shall have one of types: Number, Dictionary</description>
-			<test>size &lt;= 0 || entry0HasTypeNumber == true || entry0HasTypeDictionary == true</test>
+			<description>Entry 0 in Dest1Array shall have one of types: Dictionary, Number</description>
+			<test>size &lt;= 0 || entry0HasTypeDictionary == true || entry0HasTypeNumber == true</test>
 			<error>
-				<message>Entry 0 in Dest1Array is not one of types: Number, Dictionary</message>
+				<message>Entry 0 in Dest1Array is not one of types: Dictionary, Number</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1090,10 +1090,10 @@
 		</rule>
 		<rule object="ADest1Array">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="15423"/>
-			<description>Entry 2 in Dest1Array shall have one of types: Number, Null</description>
-			<test>size &lt;= 2 || entry2HasTypeNumber == true || entry2HasTypeNull == true</test>
+			<description>Entry 2 in Dest1Array shall have one of types: Null, Number</description>
+			<test>size &lt;= 2 || entry2HasTypeNull == true || entry2HasTypeNumber == true</test>
 			<error>
-				<message>Entry 2 in Dest1Array is not one of types: Number, Null</message>
+				<message>Entry 2 in Dest1Array is not one of types: Null, Number</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1126,10 +1126,10 @@
 		</rule>
 		<rule object="ADest4Array">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="15490"/>
-			<description>Entry 0 in Dest4Array shall have one of types: Number, Dictionary</description>
-			<test>size &lt;= 0 || entry0HasTypeNumber == true || entry0HasTypeDictionary == true</test>
+			<description>Entry 0 in Dest4Array shall have one of types: Dictionary, Number</description>
+			<test>size &lt;= 0 || entry0HasTypeDictionary == true || entry0HasTypeNumber == true</test>
 			<error>
-				<message>Entry 0 in Dest4Array is not one of types: Number, Dictionary</message>
+				<message>Entry 0 in Dest4Array is not one of types: Dictionary, Number</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1175,10 +1175,10 @@
 		</rule>
 		<rule object="ADest4Array">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="15494"/>
-			<description>Entry 2 in Dest4Array shall have one of types: Number, Null</description>
-			<test>size &lt;= 2 || entry2HasTypeNumber == true || entry2HasTypeNull == true</test>
+			<description>Entry 2 in Dest4Array shall have one of types: Null, Number</description>
+			<test>size &lt;= 2 || entry2HasTypeNull == true || entry2HasTypeNumber == true</test>
 			<error>
-				<message>Entry 2 in Dest4Array is not one of types: Number, Null</message>
+				<message>Entry 2 in Dest4Array is not one of types: Null, Number</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1187,10 +1187,10 @@
 		</rule>
 		<rule object="ADest4Array">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="15495"/>
-			<description>Entry 3 in Dest4Array shall have one of types: Number, Null</description>
-			<test>size &lt;= 3 || entry3HasTypeNumber == true || entry3HasTypeNull == true</test>
+			<description>Entry 3 in Dest4Array shall have one of types: Null, Number</description>
+			<test>size &lt;= 3 || entry3HasTypeNull == true || entry3HasTypeNumber == true</test>
 			<error>
-				<message>Entry 3 in Dest4Array is not one of types: Number, Null</message>
+				<message>Entry 3 in Dest4Array is not one of types: Null, Number</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1199,10 +1199,10 @@
 		</rule>
 		<rule object="ADest4Array">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="15496"/>
-			<description>Entry 4 in Dest4Array shall have one of types: Number, Null</description>
-			<test>size &lt;= 4 || entry4HasTypeNumber == true || entry4HasTypeNull == true</test>
+			<description>Entry 4 in Dest4Array shall have one of types: Null, Number</description>
+			<test>size &lt;= 4 || entry4HasTypeNull == true || entry4HasTypeNumber == true</test>
 			<error>
-				<message>Entry 4 in Dest4Array is not one of types: Number, Null</message>
+				<message>Entry 4 in Dest4Array is not one of types: Null, Number</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1211,10 +1211,10 @@
 		</rule>
 		<rule object="ADest4Array">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="15497"/>
-			<description>Entry 5 in Dest4Array shall have one of types: Number, Null</description>
-			<test>size &lt;= 5 || entry5HasTypeNumber == true || entry5HasTypeNull == true</test>
+			<description>Entry 5 in Dest4Array shall have one of types: Null, Number</description>
+			<test>size &lt;= 5 || entry5HasTypeNull == true || entry5HasTypeNumber == true</test>
 			<error>
-				<message>Entry 5 in Dest4Array is not one of types: Number, Null</message>
+				<message>Entry 5 in Dest4Array is not one of types: Null, Number</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1247,10 +1247,10 @@
 		</rule>
 		<rule object="ADestXYZArray">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="15642"/>
-			<description>Entry 0 in DestXYZArray shall have one of types: Number, Dictionary</description>
-			<test>size &lt;= 0 || entry0HasTypeNumber == true || entry0HasTypeDictionary == true</test>
+			<description>Entry 0 in DestXYZArray shall have one of types: Dictionary, Number</description>
+			<test>size &lt;= 0 || entry0HasTypeDictionary == true || entry0HasTypeNumber == true</test>
 			<error>
-				<message>Entry 0 in DestXYZArray is not one of types: Number, Dictionary</message>
+				<message>Entry 0 in DestXYZArray is not one of types: Dictionary, Number</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1296,10 +1296,10 @@
 		</rule>
 		<rule object="ADestXYZArray">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="15646"/>
-			<description>Entry 2 in DestXYZArray shall have one of types: Number, Null</description>
-			<test>size &lt;= 2 || entry2HasTypeNumber == true || entry2HasTypeNull == true</test>
+			<description>Entry 2 in DestXYZArray shall have one of types: Null, Number</description>
+			<test>size &lt;= 2 || entry2HasTypeNull == true || entry2HasTypeNumber == true</test>
 			<error>
-				<message>Entry 2 in DestXYZArray is not one of types: Number, Null</message>
+				<message>Entry 2 in DestXYZArray is not one of types: Null, Number</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1308,10 +1308,10 @@
 		</rule>
 		<rule object="ADestXYZArray">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="15647"/>
-			<description>Entry 3 in DestXYZArray shall have one of types: Number, Null</description>
-			<test>size &lt;= 3 || entry3HasTypeNumber == true || entry3HasTypeNull == true</test>
+			<description>Entry 3 in DestXYZArray shall have one of types: Null, Number</description>
+			<test>size &lt;= 3 || entry3HasTypeNull == true || entry3HasTypeNumber == true</test>
 			<error>
-				<message>Entry 3 in DestXYZArray is not one of types: Number, Null</message>
+				<message>Entry 3 in DestXYZArray is not one of types: Null, Number</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1320,10 +1320,10 @@
 		</rule>
 		<rule object="ADestXYZArray">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="15648"/>
-			<description>Entry 4 in DestXYZArray shall have one of types: Number, Null</description>
-			<test>size &lt;= 4 || entry4HasTypeNumber == true || entry4HasTypeNull == true</test>
+			<description>Entry 4 in DestXYZArray shall have one of types: Null, Number</description>
+			<test>size &lt;= 4 || entry4HasTypeNull == true || entry4HasTypeNumber == true</test>
 			<error>
-				<message>Entry 4 in DestXYZArray is not one of types: Number, Null</message>
+				<message>Entry 4 in DestXYZArray is not one of types: Null, Number</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -3249,10 +3249,10 @@
 		</rule>
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="22252"/>
-			<description>Entry Encoding in FontMultipleMaster shall have one of types: Name, Dictionary</description>
-			<test>containsEncoding == false || EncodingHasTypeName == true || EncodingHasTypeDictionary == true</test>
+			<description>Entry Encoding in FontMultipleMaster shall have one of types: Dictionary, Name</description>
+			<test>containsEncoding == false || EncodingHasTypeDictionary == true || EncodingHasTypeName == true</test>
 			<error>
-				<message>Entry Encoding in FontMultipleMaster is not one of types: Name, Dictionary</message>
+				<message>Entry Encoding in FontMultipleMaster is not one of types: Dictionary, Name</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -3564,10 +3564,10 @@
 		</rule>
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="22500"/>
-			<description>Entry Encoding in FontTrueType shall have one of types: Name, Dictionary</description>
-			<test>containsEncoding == false || EncodingHasTypeName == true || EncodingHasTypeDictionary == true</test>
+			<description>Entry Encoding in FontTrueType shall have one of types: Dictionary, Name</description>
+			<test>containsEncoding == false || EncodingHasTypeDictionary == true || EncodingHasTypeName == true</test>
 			<error>
-				<message>Entry Encoding in FontTrueType is not one of types: Name, Dictionary</message>
+				<message>Entry Encoding in FontTrueType is not one of types: Dictionary, Name</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -3879,10 +3879,10 @@
 		</rule>
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="22888"/>
-			<description>Entry Encoding in FontType1 shall have one of types: Name, Dictionary</description>
-			<test>containsEncoding == false || EncodingHasTypeName == true || EncodingHasTypeDictionary == true</test>
+			<description>Entry Encoding in FontType1 shall have one of types: Dictionary, Name</description>
+			<test>containsEncoding == false || EncodingHasTypeDictionary == true || EncodingHasTypeName == true</test>
 			<error>
-				<message>Entry Encoding in FontType1 is not one of types: Name, Dictionary</message>
+				<message>Entry Encoding in FontType1 is not one of types: Dictionary, Name</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -4835,10 +4835,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_0" clause="8" testNumber="30192"/>
-			<description>Entry Dest in OutlineItem shall have one of types: Array, StringByte, Name</description>
-			<test>containsDest == false || DestHasTypeArray == true || DestHasTypeStringByte == true || DestHasTypeName == true</test>
+			<description>Entry Dest in OutlineItem shall have one of types: Array, Name, StringByte</description>
+			<test>containsDest == false || DestHasTypeArray == true || DestHasTypeName == true || DestHasTypeStringByte == true</test>
 			<error>
-				<message>Entry Dest in OutlineItem is not one of types: Array, StringByte, Name</message>
+				<message>Entry Dest in OutlineItem is not one of types: Array, Name, StringByte</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -4859,10 +4859,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_0" clause="9" testNumber="30194"/>
-			<description>Entry Dest with type StringByte in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
-			<test>DestHasTypeStringByte != true || (((containsA == true)) != true)</test>
+			<description>Entry Dest with type Name in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
+			<test>DestHasTypeName != true || (((containsA == true)) != true)</test>
 			<error>
-				<message>Entry Dest with type StringByte in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
+				<message>Entry Dest with type Name in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -4871,10 +4871,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_0" clause="9" testNumber="30195"/>
-			<description>Entry Dest with type Name in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
-			<test>DestHasTypeName != true || (((containsA == true)) != true)</test>
+			<description>Entry Dest with type StringByte in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
+			<test>DestHasTypeStringByte != true || (((containsA == true)) != true)</test>
 			<error>
-				<message>Entry Dest with type Name in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
+				<message>Entry Dest with type StringByte in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
