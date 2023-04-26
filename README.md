@@ -9,7 +9,7 @@ veraPDF-library
 
 [![GitHub issues](https://img.shields.io/github/issues/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues "Open issues on GitHub")
 [![GitHub issues](https://img.shields.io/github/issues-closed/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues?q=is%3Aissue+is%3Aclosed "Closed issues on GitHub")
-[![GitHub issues](https://img.shields.io/github/issues-pr/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues-pr "Open pull requests on GitHub")
+[![GitHub issues](https://img.shields.io/github/issues-pr/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/pulls "Open pull requests on GitHub")
 [![GitHub issues](https://img.shields.io/github/issues-pr-closed/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/pulls?q=is%3Apr+is%3Aclosed "Closed pull requests on GitHub")
 
 Licensing
