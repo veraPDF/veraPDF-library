@@ -2,15 +2,15 @@ veraPDF-library
 ===============
 *Industry Supported PDF/A and PDF/UA Validation*
 
-[Build Status](https://jenkins.openpreservation.org/job/veraPDF/ "OPF Jenkins")
+[![Build Status](https://jenkins.openpreservation.org/job/veraPDF/job/1.23/job/library/badge/icon)](https://jenkins.openpreservation.org/job/veraPDF/job/1.23/job/library/ "OPF Jenkins")
 [![Maven Central](https://img.shields.io/maven-central/v/org.verapdf/verapdf-library.svg)](https://repo1.maven.org/maven2/org/verapdf/verapdf-library/ "Maven central")
 [![CodeCov Coverage](https://img.shields.io/codecov/c/github/veraPDF/veraPDF-library.svg)](https://codecov.io/gh/veraPDF/veraPDF-library/ "CodeCov coverage")
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cfafc08b44eb49b6aa790d6aaff09cd3)](https://app.codacy.com/gh/veraPDF/veraPDF-library/dashboard "Codacy grade")
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/79a5ff15e77444d79d6e97cc40bb458c)](https://app.codacy.com/gh/veraPDF/veraPDF-library/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade "Codacy grade")
 
-[![GitHub issues](https://img.shields.io/github/issues/veraPDF/veraPDF-apps.svg)](https://github.com/veraPDF/veraPDF-library/issues "Open issues on GitHub")
-[![GitHub issues](https://img.shields.io/github/issues-closed/veraPDF/veraPDF-apps.svg)](https://github.com/veraPDF/veraPDF-library/issues?q=is%3Aissue+is%3Aclosed "Closed issues on GitHub")
-[![GitHub issues](https://img.shields.io/github/issues-pr/veraPDF/veraPDF-apps.svg)](https://github.com/veraPDF/veraPDF-apps/issues-pr "Open pull requests on GitHub")
-[![GitHub issues](https://img.shields.io/github/issues-pr-closed/veraPDF/veraPDF-apps.svg)](https://github.com/veraPDF/veraPDF-apps/pulls?q=is%3Apr+is%3Aclosed "Closed pull requests on GitHub")
+[![GitHub issues](https://img.shields.io/github/issues/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues "Open issues on GitHub")
+[![GitHub issues](https://img.shields.io/github/issues-closed/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues?q=is%3Aissue+is%3Aclosed "Closed issues on GitHub")
+[![GitHub issues](https://img.shields.io/github/issues-pr/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues-pr "Open pull requests on GitHub")
+[![GitHub issues](https://img.shields.io/github/issues-pr-closed/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/pulls?q=is%3Apr+is%3Aclosed "Closed pull requests on GitHub")
 
 Licensing
 ---------
