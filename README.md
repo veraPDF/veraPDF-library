@@ -1,18 +1,16 @@
 veraPDF-library
 ===============
-*Industry Supported PDF/A Validation*
+*Industry Supported PDF/A and PDF/UA Validation*
 
-[![Build Status](https://travis-ci.org/veraPDF/veraPDF-library.svg?branch=integration)](https://travis-ci.org/veraPDF/library "Travis-CI")
-[![Build Status](http://jenkins.openpreservation.org/buildStatus/icon?job=veraPDF-library)](http://jenkins.openpreservation.org/job/veraPDF-library/ "OPF Jenkins Release")
-[![Build Status](http://jenkins.openpreservation.org/buildStatus/icon?job=veraPDF-library-dev)](http://jenkins.openpreservation.org/job/veraPDF-library-dev/ "OPF Jenkins Development")
-[![Maven Central](https://img.shields.io/maven-central/v/org.verapdf/verapdf-library.svg)](http://repo1.maven.org/maven2/org/verapdf/verapdf-library/ "Maven central")
+[Build Status](https://jenkins.openpreservation.org/job/veraPDF/ "OPF Jenkins")
+[![Maven Central](https://img.shields.io/maven-central/v/org.verapdf/verapdf-library.svg)](https://repo1.maven.org/maven2/org/verapdf/verapdf-library/ "Maven central")
 [![CodeCov Coverage](https://img.shields.io/codecov/c/github/veraPDF/veraPDF-library.svg)](https://codecov.io/gh/veraPDF/veraPDF-library/ "CodeCov coverage")
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cfafc08b44eb49b6aa790d6aaff09cd3)](https://www.codacy.com/app/carlwilson/veraPDF-library?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=veraPDF/veraPDF-library&amp;utm_campaign=Badge_Grade "Codacy grade")
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cfafc08b44eb49b6aa790d6aaff09cd3)](https://app.codacy.com/gh/veraPDF/veraPDF-library/dashboard "Codacy grade")
 
-[![GitHub issues](https://img.shields.io/github/issues/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues "Open issues on GitHub")
-[![GitHub issues](https://img.shields.io/github/issues-closed/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues-closed "Open issues on GitHub")
-[![GitHub issues](https://img.shields.io/github/issues-pr/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues-pr "Open issues on GitHub")
-[![GitHub issues](https://img.shields.io/github/issues-pr-closed/veraPDF/veraPDF-library.svg)](https://github.com/veraPDF/veraPDF-library/issues-pr-closed "Open issues on GitHub")
+[![GitHub issues](https://img.shields.io/github/issues/veraPDF/veraPDF-apps.svg)](https://github.com/veraPDF/veraPDF-library/issues "Open issues on GitHub")
+[![GitHub issues](https://img.shields.io/github/issues-closed/veraPDF/veraPDF-apps.svg)](https://github.com/veraPDF/veraPDF-library/issues?q=is%3Aissue+is%3Aclosed "Closed issues on GitHub")
+[![GitHub issues](https://img.shields.io/github/issues-pr/veraPDF/veraPDF-apps.svg)](https://github.com/veraPDF/veraPDF-apps/issues-pr "Open pull requests on GitHub")
+[![GitHub issues](https://img.shields.io/github/issues-pr-closed/veraPDF/veraPDF-apps.svg)](https://github.com/veraPDF/veraPDF-apps/pulls?q=is%3Apr+is%3Aclosed "Closed pull requests on GitHub")
 
 Licensing
 ---------
@@ -23,7 +21,7 @@ The veraPDF PDF/A Validation Library is dual-licensed, see:
 
 Documentation
 -------------
-See the [veraPDF documentation site](http://docs.verapdf.org/).
+See the [veraPDF documentation site](https://docs.verapdf.org/).
 
 Quick Start
 -----------
@@ -31,7 +29,7 @@ Quick Start
 
 In order to build the library you'll need:
 
- * Java 8, which can be downloaded [from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html), or for Linux users [OpenJDK](http://openjdk.java.net/install/index.html).
+ * Java 8 - 17, which can be downloaded [from Oracle](https://www.oracle.com/technetwork/java/javase/downloads/index.html), or for Linux users [OpenJDK](https://openjdk.java.net/install/index.html).
  * [Maven v3+](https://maven.apache.org/)
 
 Life will be easier if you also use [Git](https://git-scm.com/) to obtain and manage the source.
