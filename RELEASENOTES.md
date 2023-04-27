@@ -2,12 +2,14 @@ Version 1.24 RC (April 27, 2023)
 ==================================
 
 ### Applications
-- added support for recurisive processing of PDF files in ZIP archives
+- added support for recursive processing of PDF files in ZIP archives
 - revised and upgraded plug-ins included into the installation bundle
+- added Cancel button in GUI to cancel the job
 - added new `--progress` parameter in CLI to report progress info
 - added new `--config` parameter in CLI to support config file as a new CLI argument 
 - enchanced validation error messages and their variable data
 - support feature report in json format
+- added warnings on incompatible CLI arguments
 - fixed saving GUI application settings
 - fixed getting log level from the config file
 - fixed handling of malformed config files
@@ -24,20 +26,23 @@ Version 1.24 RC (April 27, 2023)
 - updated predefined CMaps
 - fixed parsing hybrid PDFs
 - fixed decoding Flate filters with invalid checksum
-- added warning for Page obejcts with missing resources dictionary
-- added support for PDF 2.0 namesapce and PDF 2.0 standard structure elements   
+- fixed issue with duplicated short and long keys in inline image dictionaries
+- added warning for Page objects with missing resources dictionary
+- added support for PDF 2.0 namespace and PDF 2.0 standard structure elements  
 
 ### Validation
 - (PDF/UA-1) fixed validating TU entry in form fields with multiple Widget annotations
 - (PDF/UA-1) refactored Table validation rules
+- (PDF/UA-1) added a new rule to check for presence of StructTreeRoot entry in the document catalog
 - (PDF/A-2,3,4) fixed issue with false negative for CMYK-based JPEG2000 images in presence of DefaultCMYK color space
 - (PDF/A-1,2,3,4) refactored and enchanced metadata fixer functionality
 - (PDF/A-2,3,4) permit empty Name for the optional content configuration dictionary  
 - (PDF/A-2,3,4) fixed validation of circular role mapping
+- (PDF/A-1,2,3) updated rules ids to match the exact location of the corresponding "shall" clause in the specification
 
 ### Core library
 - added support for jakarta and Spring Boot 3 (Java 11+ only)
-- fixed output encoding of all logs and reports to be UTF8 independently of locale
+- fixed output encoding of all logs and reports to be UTF8 (independently of locale)
 
 
 Version 1.22 RC (August 3, 2022)
