@@ -777,7 +777,7 @@
                 then structure elements of type TH shall have a Scope attribute</description>
             <test>hasConnectedHeader != false || unknownHeaders != ''</test>
             <error>
-                <message>TD does not contain Headers attribute, and Headers for this table cell can not be determined
+                <message>TD does not contain Headers attribute, and Headers for this table cell cannot be determined
                     via algorithm from ISO32000-2, 14.8.4.8.3.</message>
             </error>
             <references>
@@ -790,7 +790,7 @@
                 then structure elements of type TH shall have a Scope attribute</description>
             <test>hasConnectedHeader != false || unknownHeaders == ''</test>
             <error>
-                <message>TD references undefined Header(s) %1, and Headers for this table cell can not be determined
+                <message>TD references undefined Header(s) %1, and Headers for this table cell cannot be determined
                     via algorithm from ISO32000-2, 14.8.4.8.3.</message>
                 <arguments>
                     <argument>unknownHeaders</argument>
