@@ -3,7 +3,7 @@ name: PR QA
 on:
   pull_request:
     branches:
-      - jakarta
+      - jakarta-rc/1.24
     types: [opened, synchronize, reopened]
 
 jobs:
