@@ -6,7 +6,8 @@ Version 1.24 RC (April 27, 2023)
 - revised and upgraded plug-ins included into the installation bundle
 - added Cancel button in GUI to cancel the job
 - added new `--progress` parameter in CLI to report progress info
-- added new `--config` parameter in CLI to support config file as a new CLI argument 
+- added new `--config` parameter in CLI to support config file as a new CLI argument
+- renamed `xml` report format option to `raw` in CLI (`xml` is now reserved for the default report format)
 - enchanced validation error messages and their variable data
 - support feature report in json format
 - added warnings on incompatible CLI arguments
