@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: master
+          ref: integration
       - name: JDK setup
         uses: actions/setup-java@v3
         with:
@@ -47,7 +47,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: master
+          ref: integration
       - name: Generate new branch name
         id: new-branch-name
         run: echo "branch_name=new-branch-$(date +%s)" >> "$GITHUB_OUTPUT"
