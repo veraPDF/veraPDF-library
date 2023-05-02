@@ -1,0 +1,90 @@
+name: Update jakarta branch
+
+on:
+  push:
+    branches:
+      - integration
+
+jobs:
+  checkout-and-build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java-version: [11, 16, 17]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: master
+      - name: JDK setup
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
+          cache: maven
+      - name: Fetch jakarta branch and checkout
+        run: |
+          git fetch origin jakarta:jakarta
+          git checkout -b test-branch jakarta
+      - name: Configure user name
+        run: |
+          git config user.name "Git User"
+          git config user.email "user@test.com"
+      - name: Add commit to the test branch
+        run: git cherry-pick -m 1 ${{ github.sha }}
+      - name: Build project with Maven
+        if: success()
+        run: mvn --batch-mode --update-snapshots verify
+
+  merge:
+    runs-on: ubuntu-latest
+    needs: checkout-and-build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: master
+      - name: Generate new branch name
+        id: new-branch-name
+        run: echo "branch_name=new-branch-$(date +%s)" >> "$GITHUB_OUTPUT"
+      - name: Fetch jakarta branch and checkout
+        run: |
+          git fetch origin jakarta:jakarta
+          git checkout -b ${{ steps.new-branch-name.outputs.branch_name }} jakarta
+      - name: Configure user name
+        run: |
+          git config user.name "Git User"
+          git config user.email "user@temp.com"
+      - name: Add commit to new branch
+        run: git cherry-pick -m 1 ${{ github.sha }}
+      - name: Merge branch into jakarta
+        if: success()
+        run: |
+          git push origin ${{ steps.new-branch-name.outputs.branch_name }}
+          git checkout jakarta
+          git merge ${{ steps.new-branch-name.outputs.branch_name }}
+          git push origin jakarta
+      - name: Delete new branch
+        run: git push origin --delete ${{ steps.new-branch-name.outputs.branch_name }}
+
+  send-notification:
+    runs-on: ubuntu-latest
+    needs: [checkout-and-build, merge]
+    if: |
+      always() &&
+      (contains(needs.*.result, 'failure') ||
+      contains(needs.*.result, 'skipped') ||
+      contains(needs.*.result, 'cancelled'))
+    steps:
+      - name: Send notification if build or merge failed
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel_id: C03E3JJGLQL
+          status: FAILED
+          color: danger
