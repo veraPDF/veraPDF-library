@@ -1992,7 +1992,7 @@
 		<rule object="AActionSound">
 			<id specification="ISO_32000_1_2" clause="14" testNumber="2366"/>
 			<description>Entry Volume with type Number in ActionSound shall satisfy possible value predicate: fn:Eval((@Volume &gt;= -1) &amp;&amp; (@Volume &lt;= 1))</description>
-			<test>VolumeHasTypeNumber != true || (VolumeNumberValue &gt;= - 1) &amp;&amp; (VolumeNumberValue &lt;= 1)</test>
+			<test>VolumeHasTypeNumber != true || (VolumeNumberValue &gt;= -1) &amp;&amp; (VolumeNumberValue &lt;= 1)</test>
 			<error>
 				<message>Entry Volume with type Number in ActionSound does not satisfy possible value predicate: fn:Eval((@Volume &gt;= -1) &amp;&amp; (@Volume &lt;= 1))</message>
 				<arguments>
@@ -2970,7 +2970,7 @@
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_2" clause="9" testNumber="5437"/>
 			<description>Entry F with type Bitmask in AnnotLink shall satisfy special case: fn:Eval(fn:BeforeVersion(1.3 , fn:BitsClear(4 , 32)) &amp;&amp; fn:BeforeVersion(1.4 , fn:BitsClear(8 , 32)) &amp;&amp; fn:BeforeVersion(1.5 , fn:BitsClear(9 , 32)) &amp;&amp; fn:BeforeVersion(1.6 , fn:BitsClear(10 , 32)) &amp;&amp; fn:SinceVersion(2.0 , fn:BitsClear(11 , 32)))</description>
-			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; true)</test>
+			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
 				<message>Entry F with type Bitmask in AnnotLink does not satisfy special case: fn:Eval(fn:BeforeVersion(1.3 , fn:BitsClear(4 , 32)) &amp;&amp; fn:BeforeVersion(1.4 , fn:BitsClear(8 , 32)) &amp;&amp; fn:BeforeVersion(1.5 , fn:BitsClear(9 , 32)) &amp;&amp; fn:BeforeVersion(1.6 , fn:BitsClear(10 , 32)) &amp;&amp; fn:SinceVersion(2.0 , fn:BitsClear(11 , 32)))</message>
 				<arguments>
@@ -3177,7 +3177,7 @@
 		<rule object="AAnnotMovie">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="5689"/>
 			<description>Entry AP in AnnotMovie is required, when fn:IsRequired(fn:SinceVersion(2.0 , (fn:RectWidth(Rect) &gt; 0) || (fn:RectHeight(Rect) &gt; 0)))</description>
-			<test>(containsAP == true || (false) == false)</test>
+			<test>true</test>
 			<error>
 				<message>Entry AP in AnnotMovie is missing</message>
 				<arguments>
@@ -3285,7 +3285,7 @@
 		<rule object="AAnnotMovie">
 			<id specification="ISO_32000_1_2" clause="9" testNumber="5698"/>
 			<description>Entry F with type Bitmask in AnnotMovie shall satisfy special case: fn:Eval(fn:BeforeVersion(1.3 , fn:BitsClear(4 , 32)) &amp;&amp; fn:BeforeVersion(1.4 , fn:BitsClear(8 , 32)) &amp;&amp; fn:BeforeVersion(1.5 , fn:BitsClear(9 , 32)) &amp;&amp; fn:BeforeVersion(1.6 , fn:BitsClear(10 , 32)) &amp;&amp; fn:SinceVersion(1.7 , fn:BitsClear(11 , 32)))</description>
-			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; true)</test>
+			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
 				<message>Entry F with type Bitmask in AnnotMovie does not satisfy special case: fn:Eval(fn:BeforeVersion(1.3 , fn:BitsClear(4 , 32)) &amp;&amp; fn:BeforeVersion(1.4 , fn:BitsClear(8 , 32)) &amp;&amp; fn:BeforeVersion(1.5 , fn:BitsClear(9 , 32)) &amp;&amp; fn:BeforeVersion(1.6 , fn:BitsClear(10 , 32)) &amp;&amp; fn:SinceVersion(1.7 , fn:BitsClear(11 , 32)))</message>
 				<arguments>
@@ -3491,7 +3491,7 @@
 		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="7240"/>
 			<description>Entry AP in AnnotSound is required, when fn:IsRequired(fn:SinceVersion(2.0 , (fn:RectWidth(Rect) &gt; 0) || (fn:RectHeight(Rect) &gt; 0)))</description>
-			<test>(containsAP == true || (false) == false)</test>
+			<test>true</test>
 			<error>
 				<message>Entry AP in AnnotSound is missing</message>
 				<arguments>
@@ -3599,7 +3599,7 @@
 		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_2" clause="9" testNumber="7249"/>
 			<description>Entry F with type Bitmask in AnnotSound shall satisfy special case: fn:Eval(fn:BeforeVersion(1.3 , fn:BitsClear(4 , 32)) &amp;&amp; fn:BeforeVersion(1.4 , fn:BitsClear(8 , 32)) &amp;&amp; fn:BeforeVersion(1.5 , fn:BitsClear(9 , 32)) &amp;&amp; fn:BeforeVersion(1.6 , fn:BitsClear(10 , 32)) &amp;&amp; fn:SinceVersion(1.7 , fn:BitsClear(11 , 32)))</description>
-			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; true)</test>
+			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
 				<message>Entry F with type Bitmask in AnnotSound does not satisfy special case: fn:Eval(fn:BeforeVersion(1.3 , fn:BitsClear(4 , 32)) &amp;&amp; fn:BeforeVersion(1.4 , fn:BitsClear(8 , 32)) &amp;&amp; fn:BeforeVersion(1.5 , fn:BitsClear(9 , 32)) &amp;&amp; fn:BeforeVersion(1.6 , fn:BitsClear(10 , 32)) &amp;&amp; fn:SinceVersion(1.7 , fn:BitsClear(11 , 32)))</message>
 				<arguments>
@@ -3829,7 +3829,7 @@
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="8658"/>
 			<description>Entry AP in AnnotText is required, when fn:IsRequired(fn:SinceVersion(2.0 , (fn:RectWidth(Rect) &gt; 0) || (fn:RectHeight(Rect) &gt; 0)))</description>
-			<test>(containsAP == true || (false) == false)</test>
+			<test>true</test>
 			<error>
 				<message>Entry AP in AnnotText is missing</message>
 				<arguments>
@@ -3937,7 +3937,7 @@
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_2" clause="9" testNumber="8667"/>
 			<description>Entry F with type Bitmask in AnnotText shall satisfy special case: fn:Eval(fn:BeforeVersion(1.3 , fn:BitsClear(4 , 32)) &amp;&amp; fn:BeforeVersion(1.4 , fn:BitsClear(8 , 32)) &amp;&amp; fn:BeforeVersion(1.5 , fn:BitsClear(9 , 32)) &amp;&amp; fn:BeforeVersion(1.6 , fn:BitsClear(10 , 32)) &amp;&amp; fn:SinceVersion(1.7 , fn:BitsClear(11 , 32)))</description>
-			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; true)</test>
+			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
 				<message>Entry F with type Bitmask in AnnotText does not satisfy special case: fn:Eval(fn:BeforeVersion(1.3 , fn:BitsClear(4 , 32)) &amp;&amp; fn:BeforeVersion(1.4 , fn:BitsClear(8 , 32)) &amp;&amp; fn:BeforeVersion(1.5 , fn:BitsClear(9 , 32)) &amp;&amp; fn:BeforeVersion(1.6 , fn:BitsClear(10 , 32)) &amp;&amp; fn:SinceVersion(1.7 , fn:BitsClear(11 , 32)))</message>
 				<arguments>
@@ -4192,7 +4192,7 @@
 		<rule object="AAnnotWidget">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="9602"/>
 			<description>Entry AP in AnnotWidget is required, when fn:IsRequired(fn:SinceVersion(2.0 , (fn:RectWidth(Rect) &gt; 0) || (fn:RectHeight(Rect) &gt; 0)))</description>
-			<test>(containsAP == true || (false) == false)</test>
+			<test>true</test>
 			<error>
 				<message>Entry AP in AnnotWidget is missing</message>
 				<arguments>
@@ -4324,7 +4324,7 @@
 		<rule object="AAnnotWidget">
 			<id specification="ISO_32000_1_2" clause="9" testNumber="9613"/>
 			<description>Entry F with type Bitmask in AnnotWidget shall satisfy special case: fn:Eval(fn:BeforeVersion(1.3 , fn:BitsClear(4 , 32)) &amp;&amp; fn:BeforeVersion(1.4 , fn:BitsClear(8 , 32)) &amp;&amp; fn:BeforeVersion(1.5 , fn:BitsClear(9 , 32)) &amp;&amp; fn:BeforeVersion(1.6 , fn:BitsClear(10 , 32)) &amp;&amp; fn:SinceVersion(1.7 , fn:BitsClear(11 , 32)))</description>
-			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; true)</test>
+			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
 				<message>Entry F with type Bitmask in AnnotWidget does not satisfy special case: fn:Eval(fn:BeforeVersion(1.3 , fn:BitsClear(4 , 32)) &amp;&amp; fn:BeforeVersion(1.4 , fn:BitsClear(8 , 32)) &amp;&amp; fn:BeforeVersion(1.5 , fn:BitsClear(9 , 32)) &amp;&amp; fn:BeforeVersion(1.6 , fn:BitsClear(10 , 32)) &amp;&amp; fn:SinceVersion(1.7 , fn:BitsClear(11 , 32)))</message>
 				<arguments>
@@ -8640,7 +8640,7 @@
 		<rule object="ACatalog">
 			<id specification="ISO_32000_1_2" clause="12" testNumber="14151"/>
 			<description>If entry Dests with type Dictionary in Catalog satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>DestsHasTypeDictionary != true || (isDestsIndirect == true || (true) == false)</test>
+			<test>DestsHasTypeDictionary != true || (isDestsIndirect == true)</test>
 			<error>
 				<message>Entry Dests with type Dictionary in Catalog is direct</message>
 				<arguments>
@@ -8748,7 +8748,7 @@
 		<rule object="ACatalog">
 			<id specification="ISO_32000_1_2" clause="12" testNumber="14160"/>
 			<description>If entry Outlines with type Dictionary in Catalog satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>OutlinesHasTypeDictionary != true || (isOutlinesIndirect == true || (true) == false)</test>
+			<test>OutlinesHasTypeDictionary != true || (isOutlinesIndirect == true)</test>
 			<error>
 				<message>Entry Outlines with type Dictionary in Catalog is direct</message>
 				<arguments>
@@ -8882,7 +8882,7 @@
 		<rule object="ACatalog">
 			<id specification="ISO_32000_1_2" clause="12" testNumber="14171"/>
 			<description>If entry Threads with type Array in Catalog satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>ThreadsHasTypeArray != true || (isThreadsIndirect == true || (true) == false)</test>
+			<test>ThreadsHasTypeArray != true || (isThreadsIndirect == true)</test>
 			<error>
 				<message>Entry Threads with type Array in Catalog is direct</message>
 				<arguments>
@@ -10033,7 +10033,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_2" clause="9" testNumber="16783"/>
 			<description>Entry P with type Bitmask in EncryptionStandard shall satisfy special case: fn:Eval(fn:BitsClear(1 , 2) &amp;&amp; fn:BitsSet(7 , 8) &amp;&amp; fn:SinceVersion(2.0 , fn:BitSet(10)) &amp;&amp; (fn:SinceVersion(2.0 , fn:Extension(ISO_TS_32004 , fn:BitsSet(14 , 32))) || fn:BitsSet(13 , 32)))</description>
-			<test>PHasTypeBitmask != true || (((PBitmaskValue &gt;&gt; 0 &amp; 1) == 0 &amp;&amp; (PBitmaskValue &gt;&gt; 1 &amp; 1) == 0) &amp;&amp; ((PBitmaskValue &gt;&gt; 6 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 7 &amp; 1) == 1) &amp;&amp; true &amp;&amp; (true || ((PBitmaskValue &gt;&gt; 12 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 13 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 14 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 15 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 16 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 17 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 18 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 19 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 20 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 21 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 22 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 23 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 24 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 25 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 26 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 27 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 28 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 29 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 30 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 31 &amp; 1) == 1)))</test>
+			<test>PHasTypeBitmask != true || (((PBitmaskValue &gt;&gt; 0 &amp; 1) == 0 &amp;&amp; (PBitmaskValue &gt;&gt; 1 &amp; 1) == 0) &amp;&amp; ((PBitmaskValue &gt;&gt; 6 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 7 &amp; 1) == 1))</test>
 			<error>
 				<message>Entry P with type Bitmask in EncryptionStandard does not satisfy special case: fn:Eval(fn:BitsClear(1 , 2) &amp;&amp; fn:BitsSet(7 , 8) &amp;&amp; fn:SinceVersion(2.0 , fn:BitSet(10)) &amp;&amp; (fn:SinceVersion(2.0 , fn:Extension(ISO_TS_32004 , fn:BitsSet(14 , 32))) || fn:BitsSet(13 , 32)))</message>
 				<arguments>
@@ -11858,7 +11858,7 @@
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_2" clause="12" testNumber="18607"/>
 			<description>If entry Info with type Dictionary in FileTrailer satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>InfoHasTypeDictionary != true || (isInfoIndirect == true || (true) == false)</test>
+			<test>InfoHasTypeDictionary != true || (isInfoIndirect == true)</test>
 			<error>
 				<message>Entry Info with type Dictionary in FileTrailer is direct</message>
 				<arguments>
@@ -12609,7 +12609,7 @@
 		<rule object="AFontCIDType0">
 			<id specification="ISO_32000_1_2" clause="12" testNumber="19205"/>
 			<description>If entry FontDescriptor with type Dictionary in FontCIDType0 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true || (true) == false)</test>
+			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontCIDType0 is direct</message>
 				<arguments>
@@ -12875,7 +12875,7 @@
 		<rule object="AFontCIDType2">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="19407"/>
 			<description>Entry CIDToGIDMap in FontCIDType2 is required, when fn:IsRequired(fn:SinceVersion(2.0) &amp;&amp; fn:IsPresent(FontDescriptor::FontFile2))</description>
-			<test>(containsCIDToGIDMap == true || (false &amp;&amp; (containsFontDescriptorFontFile2 == true)) == false)</test>
+			<test>true</test>
 			<error>
 				<message>Entry CIDToGIDMap in FontCIDType2 is missing</message>
 				<arguments>
@@ -12984,7 +12984,7 @@
 		<rule object="AFontCIDType2">
 			<id specification="ISO_32000_1_2" clause="12" testNumber="19416"/>
 			<description>If entry FontDescriptor with type Dictionary in FontCIDType2 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true || (true) == false)</test>
+			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontCIDType2 is direct</message>
 				<arguments>
@@ -16611,7 +16611,7 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22306"/>
 			<description>Entry FirstChar in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFirstChar == true || (notStandard14Font) == false)</test>
+			<test>(containsFirstChar == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry FirstChar in FontMultipleMaster is missing</message>
 				<arguments>
@@ -16647,7 +16647,7 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22309"/>
 			<description>Entry FontDescriptor in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFontDescriptor == true || (notStandard14Font) == false)</test>
+			<test>(containsFontDescriptor == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry FontDescriptor in FontMultipleMaster is missing</message>
 				<arguments>
@@ -16683,7 +16683,7 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22312"/>
 			<description>Entry LastChar in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsLastChar == true || (notStandard14Font) == false)</test>
+			<test>(containsLastChar == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry LastChar in FontMultipleMaster is missing</message>
 				<arguments>
@@ -16707,7 +16707,7 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22314"/>
 			<description>Entry Name in FontMultipleMaster is required, when fn:IsRequired(fn:IsPDFVersion(1.0))</description>
-			<test>(containsName == true || (false) == false)</test>
+			<test>true</test>
 			<error>
 				<message>Entry Name in FontMultipleMaster is missing</message>
 				<arguments>
@@ -16853,7 +16853,7 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22326"/>
 			<description>Entry Widths in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsWidths == true || (notStandard14Font) == false)</test>
+			<test>(containsWidths == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry Widths in FontMultipleMaster is missing</message>
 				<arguments>
@@ -16950,7 +16950,7 @@
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22554"/>
 			<description>Entry FirstChar in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFirstChar == true || (notStandard14Font) == false)</test>
+			<test>(containsFirstChar == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry FirstChar in FontTrueType is missing</message>
 				<arguments>
@@ -16986,7 +16986,7 @@
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22557"/>
 			<description>Entry FontDescriptor in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFontDescriptor == true || (notStandard14Font) == false)</test>
+			<test>(containsFontDescriptor == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry FontDescriptor in FontTrueType is missing</message>
 				<arguments>
@@ -17022,7 +17022,7 @@
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22560"/>
 			<description>Entry LastChar in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsLastChar == true || (notStandard14Font) == false)</test>
+			<test>(containsLastChar == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry LastChar in FontTrueType is missing</message>
 				<arguments>
@@ -17046,7 +17046,7 @@
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22562"/>
 			<description>Entry Name in FontTrueType is required, when fn:IsRequired(fn:IsPDFVersion(1.0))</description>
-			<test>(containsName == true || (false) == false)</test>
+			<test>true</test>
 			<error>
 				<message>Entry Name in FontTrueType is missing</message>
 				<arguments>
@@ -17192,7 +17192,7 @@
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22574"/>
 			<description>Entry Widths in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsWidths == true || (notStandard14Font) == false)</test>
+			<test>(containsWidths == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry Widths in FontTrueType is missing</message>
 				<arguments>
@@ -17532,7 +17532,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22944"/>
 			<description>Entry FirstChar in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFirstChar == true || (notStandard14Font) == false)</test>
+			<test>(containsFirstChar == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry FirstChar in FontType1 is missing</message>
 				<arguments>
@@ -17568,7 +17568,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22947"/>
 			<description>Entry FontDescriptor in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFontDescriptor == true || (notStandard14Font) == false)</test>
+			<test>(containsFontDescriptor == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry FontDescriptor in FontType1 is missing</message>
 				<arguments>
@@ -17580,7 +17580,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_2" clause="12" testNumber="22948"/>
 			<description>If entry FontDescriptor with type Dictionary in FontType1 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true || (true) == false)</test>
+			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontType1 is direct</message>
 				<arguments>
@@ -17604,7 +17604,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22950"/>
 			<description>Entry LastChar in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsLastChar == true || (notStandard14Font) == false)</test>
+			<test>(containsLastChar == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry LastChar in FontType1 is missing</message>
 				<arguments>
@@ -17628,7 +17628,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22952"/>
 			<description>Entry Name in FontType1 is required, when fn:IsRequired(fn:IsPDFVersion(1.0))</description>
-			<test>(containsName == true || (false) == false)</test>
+			<test>true</test>
 			<error>
 				<message>Entry Name in FontType1 is missing</message>
 				<arguments>
@@ -17774,7 +17774,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="22964"/>
 			<description>Entry Widths in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsWidths == true || (notStandard14Font) == false)</test>
+			<test>(containsWidths == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry Widths in FontType1 is missing</message>
 				<arguments>
@@ -17954,7 +17954,7 @@
 		<rule object="AFontType3">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="23217"/>
 			<description>Entry FontDescriptor in FontType3 is required, when fn:IsRequired(fn:IsPDFTagged())</description>
-			<test>(containsFontDescriptor == true || (isPDFTagged) == false)</test>
+			<test>(containsFontDescriptor == true || isPDFTagged == false)</test>
 			<error>
 				<message>Entry FontDescriptor in FontType3 is missing</message>
 				<arguments>
@@ -17966,7 +17966,7 @@
 		<rule object="AFontType3">
 			<id specification="ISO_32000_1_2" clause="12" testNumber="23218"/>
 			<description>If entry FontDescriptor with type Dictionary in FontType3 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true || (true) == false)</test>
+			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontType3 is direct</message>
 				<arguments>
@@ -18038,7 +18038,7 @@
 		<rule object="AFontType3">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="23224"/>
 			<description>Entry Name in FontType3 is required, when fn:IsRequired(fn:IsPDFVersion(1.0))</description>
-			<test>(containsName == true || (false) == false)</test>
+			<test>true</test>
 			<error>
 				<message>Entry Name in FontType3 is missing</message>
 				<arguments>
@@ -18750,10 +18750,10 @@
 		</rule>
 		<rule object="AGraphicsStateParameter">
 			<id specification="ISO_32000_1_2" clause="17" testNumber="24310"/>
-			<description>Entry HT with type Stream in GraphicsStateParameter shall be one of objects HalftoneType6, HalftoneType10</description>
-			<test>HTHasTypeStream != true || HT_size == 1</test>
+			<description>Entry HT with type Dictionary in GraphicsStateParameter shall be one of objects HalftoneType1, HalftoneType5</description>
+			<test>HTHasTypeDictionary != true || HT_size == 1</test>
 			<error>
-				<message>Entry HT with type Stream in GraphicsStateParameter is not one of objects HalftoneType6, HalftoneType10</message>
+				<message>Entry HT with type Dictionary in GraphicsStateParameter is not one of objects HalftoneType1, HalftoneType5</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -18762,10 +18762,10 @@
 		</rule>
 		<rule object="AGraphicsStateParameter">
 			<id specification="ISO_32000_1_2" clause="17" testNumber="24311"/>
-			<description>Entry HT with type Dictionary in GraphicsStateParameter shall be one of objects HalftoneType1, HalftoneType5</description>
-			<test>HTHasTypeDictionary != true || HT_size == 1</test>
+			<description>Entry HT with type Stream in GraphicsStateParameter shall be one of objects HalftoneType6, HalftoneType10</description>
+			<test>HTHasTypeStream != true || HT_size == 1</test>
 			<error>
-				<message>Entry HT with type Dictionary in GraphicsStateParameter is not one of objects HalftoneType1, HalftoneType5</message>
+				<message>Entry HT with type Stream in GraphicsStateParameter is not one of objects HalftoneType6, HalftoneType10</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -19502,10 +19502,10 @@
 		</rule>
 		<rule object="AHalftoneType5">
 			<id specification="ISO_32000_1_2" clause="17" testNumber="25559"/>
-			<description>Entry Default with type Stream in HalftoneType5 shall be one of objects HalftoneType6, HalftoneType10</description>
-			<test>DefaultHasTypeStream != true || Default_size == 1</test>
+			<description>Entry Default with type Dictionary in HalftoneType5 shall be object HalftoneType1</description>
+			<test>DefaultHasTypeDictionary != true || Default_size == 1</test>
 			<error>
-				<message>Entry Default with type Stream in HalftoneType5 is not one of objects HalftoneType6, HalftoneType10</message>
+				<message>Entry Default with type Dictionary in HalftoneType5 is not object HalftoneType1</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -19514,10 +19514,10 @@
 		</rule>
 		<rule object="AHalftoneType5">
 			<id specification="ISO_32000_1_2" clause="17" testNumber="25560"/>
-			<description>Entry Default with type Dictionary in HalftoneType5 shall be object HalftoneType1</description>
-			<test>DefaultHasTypeDictionary != true || Default_size == 1</test>
+			<description>Entry Default with type Stream in HalftoneType5 shall be one of objects HalftoneType6, HalftoneType10</description>
+			<test>DefaultHasTypeStream != true || Default_size == 1</test>
 			<error>
-				<message>Entry Default with type Dictionary in HalftoneType5 is not object HalftoneType1</message>
+				<message>Entry Default with type Stream in HalftoneType5 is not one of objects HalftoneType6, HalftoneType10</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -19636,10 +19636,10 @@
 		</rule>
 		<rule object="AHalftoneType5Entry">
 			<id specification="ISO_32000_1_2" clause="17" testNumber="25636"/>
-			<description>Entry with type Stream in HalftoneType5 shall be one of objects HalftoneType6, HalftoneType10</description>
-			<test>HasTypeStream != true || Entry_size == 1</test>
+			<description>Entry with type Dictionary in HalftoneType5 shall be object HalftoneType1</description>
+			<test>HasTypeDictionary != true || Entry_size == 1</test>
 			<error>
-				<message>Entry %1 with type Stream in HalftoneType5 is not one of objects HalftoneType6, HalftoneType10</message>
+				<message>Entry %1 with type Dictionary in HalftoneType5 is not object HalftoneType1</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -19648,10 +19648,10 @@
 		</rule>
 		<rule object="AHalftoneType5Entry">
 			<id specification="ISO_32000_1_2" clause="17" testNumber="25637"/>
-			<description>Entry with type Dictionary in HalftoneType5 shall be object HalftoneType1</description>
-			<test>HasTypeDictionary != true || Entry_size == 1</test>
+			<description>Entry with type Stream in HalftoneType5 shall be one of objects HalftoneType6, HalftoneType10</description>
+			<test>HasTypeStream != true || Entry_size == 1</test>
 			<error>
-				<message>Entry %1 with type Dictionary in HalftoneType5 is not object HalftoneType1</message>
+				<message>Entry %1 with type Stream in HalftoneType5 is not one of objects HalftoneType6, HalftoneType10</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -21291,7 +21291,7 @@
 		<rule object="AMovieActivation">
 			<id specification="ISO_32000_1_2" clause="14" testNumber="28336"/>
 			<description>Entry Volume with type Number in MovieActivation shall satisfy possible value predicate: fn:Eval((@Volume &gt;= -1) &amp;&amp; (@Volume &lt;= 1))</description>
-			<test>VolumeHasTypeNumber != true || (VolumeNumberValue &gt;= - 1) &amp;&amp; (VolumeNumberValue &lt;= 1)</test>
+			<test>VolumeHasTypeNumber != true || (VolumeNumberValue &gt;= -1) &amp;&amp; (VolumeNumberValue &lt;= 1)</test>
 			<error>
 				<message>Entry Volume with type Number in MovieActivation does not satisfy possible value predicate: fn:Eval((@Volume &gt;= -1) &amp;&amp; (@Volume &lt;= 1))</message>
 				<arguments>
@@ -24598,10 +24598,10 @@
 		</rule>
 		<rule object="ASoundObject">
 			<id specification="ISO_32000_1_2" clause="17" testNumber="35955"/>
-			<description>Entry CP with type Stream in SoundObject shall be object Stream</description>
-			<test>CPHasTypeStream != true || CP_size == 1</test>
+			<description>Entry CP with type Dictionary in SoundObject shall be object _UniversalDictionary</description>
+			<test>CPHasTypeDictionary != true || CP_size == 1</test>
 			<error>
-				<message>Entry CP with type Stream in SoundObject is not object Stream</message>
+				<message>Entry CP with type Dictionary in SoundObject is not object _UniversalDictionary</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -24610,10 +24610,10 @@
 		</rule>
 		<rule object="ASoundObject">
 			<id specification="ISO_32000_1_2" clause="17" testNumber="35956"/>
-			<description>Entry CP with type Dictionary in SoundObject shall be object _UniversalDictionary</description>
-			<test>CPHasTypeDictionary != true || CP_size == 1</test>
+			<description>Entry CP with type Stream in SoundObject shall be object Stream</description>
+			<test>CPHasTypeStream != true || CP_size == 1</test>
 			<error>
-				<message>Entry CP with type Dictionary in SoundObject is not object _UniversalDictionary</message>
+				<message>Entry CP with type Stream in SoundObject is not object Stream</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -25764,7 +25764,7 @@
 		<rule object="ATransition">
 			<id specification="ISO_32000_1_2" clause="9" testNumber="37971"/>
 			<description>Entry Di with type Name in Transition shall satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</description>
-			<test>DiHasTypeName != true || (((DiNameValue == "None") &amp;&amp; (SNameValue == "Fly") &amp;&amp; true))</test>
+			<test>DiHasTypeName != true || (((DiNameValue == "None") &amp;&amp; (SNameValue == "Fly")))</test>
 			<error>
 				<message>Entry Di with type Name in Transition does not satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</message>
 				<arguments>
@@ -27997,7 +27997,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_2" clause="11" testNumber="40931"/>
 			<description>Entry Name in XObjectImage is required, when fn:IsRequired(fn:IsPDFVersion(1.0))</description>
-			<test>(containsName == true || (false) == false)</test>
+			<test>true</test>
 			<error>
 				<message>Entry Name in XObjectImage is missing</message>
 				<arguments>
@@ -28166,10 +28166,10 @@
 		</rule>
 		<rule object="A_UniversalArrayEntry">
 			<id specification="ISO_32000_1_2" clause="17" testNumber="42313"/>
-			<description>Entry with type Stream in _UniversalArray shall be object Stream</description>
-			<test>HasTypeStream != true || Entry_size == 1</test>
+			<description>Entry with type Dictionary in _UniversalArray shall be object _UniversalDictionary</description>
+			<test>HasTypeDictionary != true || Entry_size == 1</test>
 			<error>
-				<message>Entry %1 with type Stream in _UniversalArray is not object Stream</message>
+				<message>Entry %1 with type Dictionary in _UniversalArray is not object _UniversalDictionary</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -28178,10 +28178,10 @@
 		</rule>
 		<rule object="A_UniversalArrayEntry">
 			<id specification="ISO_32000_1_2" clause="17" testNumber="42314"/>
-			<description>Entry with type Dictionary in _UniversalArray shall be object _UniversalDictionary</description>
-			<test>HasTypeDictionary != true || Entry_size == 1</test>
+			<description>Entry with type Stream in _UniversalArray shall be object Stream</description>
+			<test>HasTypeStream != true || Entry_size == 1</test>
 			<error>
-				<message>Entry %1 with type Dictionary in _UniversalArray is not object _UniversalDictionary</message>
+				<message>Entry %1 with type Stream in _UniversalArray is not object Stream</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -28226,10 +28226,10 @@
 		</rule>
 		<rule object="A_UniversalDictionaryEntry">
 			<id specification="ISO_32000_1_2" clause="17" testNumber="42348"/>
-			<description>Entry with type Stream in _UniversalDictionary shall be object Stream</description>
-			<test>HasTypeStream != true || Entry_size == 1</test>
+			<description>Entry with type Dictionary in _UniversalDictionary shall be object _UniversalDictionary</description>
+			<test>HasTypeDictionary != true || Entry_size == 1</test>
 			<error>
-				<message>Entry %1 with type Stream in _UniversalDictionary is not object Stream</message>
+				<message>Entry %1 with type Dictionary in _UniversalDictionary is not object _UniversalDictionary</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -28238,10 +28238,10 @@
 		</rule>
 		<rule object="A_UniversalDictionaryEntry">
 			<id specification="ISO_32000_1_2" clause="17" testNumber="42349"/>
-			<description>Entry with type Dictionary in _UniversalDictionary shall be object _UniversalDictionary</description>
-			<test>HasTypeDictionary != true || Entry_size == 1</test>
+			<description>Entry with type Stream in _UniversalDictionary shall be object Stream</description>
+			<test>HasTypeStream != true || Entry_size == 1</test>
 			<error>
-				<message>Entry %1 with type Dictionary in _UniversalDictionary is not object _UniversalDictionary</message>
+				<message>Entry %1 with type Stream in _UniversalDictionary is not object Stream</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>

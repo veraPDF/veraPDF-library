@@ -725,7 +725,7 @@
 		<rule object="ACatalog">
 			<id specification="ISO_32000_1_0" clause="12" testNumber="14105"/>
 			<description>If entry Outlines with type Dictionary in Catalog satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>OutlinesHasTypeDictionary != true || (isOutlinesIndirect == true || (true) == false)</test>
+			<test>OutlinesHasTypeDictionary != true || (isOutlinesIndirect == true)</test>
 			<error>
 				<message>Entry Outlines with type Dictionary in Catalog is direct</message>
 				<arguments>
@@ -1539,7 +1539,7 @@
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_0" clause="12" testNumber="18563"/>
 			<description>If entry Info with type Dictionary in FileTrailer satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>InfoHasTypeDictionary != true || (isInfoIndirect == true || (true) == false)</test>
+			<test>InfoHasTypeDictionary != true || (isInfoIndirect == true)</test>
 			<error>
 				<message>Entry Info with type Dictionary in FileTrailer is direct</message>
 				<arguments>
@@ -3287,7 +3287,7 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_0" clause="11" testNumber="22255"/>
 			<description>Entry FirstChar in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFirstChar == true || (notStandard14Font) == false)</test>
+			<test>(containsFirstChar == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry FirstChar in FontMultipleMaster is missing</message>
 				<arguments>
@@ -3323,7 +3323,7 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_0" clause="11" testNumber="22258"/>
 			<description>Entry FontDescriptor in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFontDescriptor == true || (notStandard14Font) == false)</test>
+			<test>(containsFontDescriptor == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry FontDescriptor in FontMultipleMaster is missing</message>
 				<arguments>
@@ -3359,7 +3359,7 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_0" clause="11" testNumber="22261"/>
 			<description>Entry LastChar in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsLastChar == true || (notStandard14Font) == false)</test>
+			<test>(containsLastChar == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry LastChar in FontMultipleMaster is missing</message>
 				<arguments>
@@ -3493,7 +3493,7 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_0" clause="11" testNumber="22272"/>
 			<description>Entry Widths in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsWidths == true || (notStandard14Font) == false)</test>
+			<test>(containsWidths == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry Widths in FontMultipleMaster is missing</message>
 				<arguments>
@@ -3602,7 +3602,7 @@
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_0" clause="11" testNumber="22503"/>
 			<description>Entry FirstChar in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFirstChar == true || (notStandard14Font) == false)</test>
+			<test>(containsFirstChar == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry FirstChar in FontTrueType is missing</message>
 				<arguments>
@@ -3638,7 +3638,7 @@
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_0" clause="11" testNumber="22506"/>
 			<description>Entry FontDescriptor in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFontDescriptor == true || (notStandard14Font) == false)</test>
+			<test>(containsFontDescriptor == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry FontDescriptor in FontTrueType is missing</message>
 				<arguments>
@@ -3674,7 +3674,7 @@
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_0" clause="11" testNumber="22509"/>
 			<description>Entry LastChar in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsLastChar == true || (notStandard14Font) == false)</test>
+			<test>(containsLastChar == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry LastChar in FontTrueType is missing</message>
 				<arguments>
@@ -3808,7 +3808,7 @@
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_0" clause="11" testNumber="22520"/>
 			<description>Entry Widths in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsWidths == true || (notStandard14Font) == false)</test>
+			<test>(containsWidths == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry Widths in FontTrueType is missing</message>
 				<arguments>
@@ -3917,7 +3917,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_0" clause="11" testNumber="22891"/>
 			<description>Entry FirstChar in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFirstChar == true || (notStandard14Font) == false)</test>
+			<test>(containsFirstChar == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry FirstChar in FontType1 is missing</message>
 				<arguments>
@@ -3953,7 +3953,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_0" clause="11" testNumber="22894"/>
 			<description>Entry FontDescriptor in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFontDescriptor == true || (notStandard14Font) == false)</test>
+			<test>(containsFontDescriptor == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry FontDescriptor in FontType1 is missing</message>
 				<arguments>
@@ -3965,7 +3965,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_0" clause="12" testNumber="22895"/>
 			<description>If entry FontDescriptor with type Dictionary in FontType1 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true || (true) == false)</test>
+			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontType1 is direct</message>
 				<arguments>
@@ -3989,7 +3989,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_0" clause="11" testNumber="22897"/>
 			<description>Entry LastChar in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsLastChar == true || (notStandard14Font) == false)</test>
+			<test>(containsLastChar == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry LastChar in FontType1 is missing</message>
 				<arguments>
@@ -4123,7 +4123,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_0" clause="11" testNumber="22908"/>
 			<description>Entry Widths in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsWidths == true || (notStandard14Font) == false)</test>
+			<test>(containsWidths == true || notStandard14Font == false)</test>
 			<error>
 				<message>Entry Widths in FontType1 is missing</message>
 				<arguments>
@@ -4315,7 +4315,7 @@
 		<rule object="AFontType3">
 			<id specification="ISO_32000_1_0" clause="11" testNumber="23154"/>
 			<description>Entry FontDescriptor in FontType3 is required, when fn:IsRequired(fn:IsPDFTagged())</description>
-			<test>(containsFontDescriptor == true || (isPDFTagged) == false)</test>
+			<test>(containsFontDescriptor == true || isPDFTagged == false)</test>
 			<error>
 				<message>Entry FontDescriptor in FontType3 is missing</message>
 				<arguments>
@@ -4327,7 +4327,7 @@
 		<rule object="AFontType3">
 			<id specification="ISO_32000_1_0" clause="12" testNumber="23155"/>
 			<description>If entry FontDescriptor with type Dictionary in FontType3 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true || (true) == false)</test>
+			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontType3 is direct</message>
 				<arguments>
