@@ -920,7 +920,7 @@
 		<rule object="AActionLaunch">
 			<id specification="ISO_32000_1_2" clause="ActionLaunch-F" testNumber="11"/>
 			<description>Entry F in ActionLaunch is required, when fn:IsRequired(fn:Not(fn:IsPresent(Win) || fn:IsPresent(Mac) || fn:IsPresent(Unix)))</description>
-			<test>(containsF == true || (((containsWin == true) || (containsMac == true) || (containsUnix == true)) != true) == false)</test>
+			<test>containsF == true || (((containsWin == true) || (containsMac == true) || (containsUnix == true)) != true) == false</test>
 			<error>
 				<message>Entry F in ActionLaunch is missing</message>
 				<arguments>
@@ -1530,7 +1530,7 @@
 		<rule object="AActionResetForm">
 			<id specification="ISO_32000_1_2" clause="ActionResetForm-Flags-Bitmask" testNumber="9"/>
 			<description>Entry Flags with type Bitmask in ActionResetForm shall satisfy special case: fn:Eval(fn:BitsClear(2 , 32))</description>
-			<test>FlagsHasTypeBitmask != true || (((FlagsBitmaskValue &gt;&gt; 1 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 2 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
+			<test>FlagsHasTypeBitmask != true || ((FlagsBitmaskValue &gt;&gt; 1 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 2 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FlagsBitmaskValue &gt;&gt; 31 &amp; 1) == 0)</test>
 			<error>
 				<message>Entry Flags with type Bitmask in ActionResetForm does not satisfy special case: fn:Eval(fn:BitsClear(2 , 32))</message>
 				<arguments>
@@ -2270,7 +2270,7 @@
 		<rule object="AActionThread">
 			<id specification="ISO_32000_1_2" clause="ActionThread-D-Integer" testNumber="14"/>
 			<description>Entry D with type Integer in ActionThread shall satisfy possible value predicate: fn:Eval((@D &gt;= 0) &amp;&amp; (@D &lt; fn:ArrayLength(trailer::Catalog::Threads)))</description>
-			<test>DHasTypeInteger != true || (DIntegerValue &gt;= 0) &amp;&amp; (DIntegerValue &lt; trailerCatalogThreadsArraySize)</test>
+			<test>DHasTypeInteger != true || (DIntegerValue &gt;= 0) &amp;&amp; (containstrailerCatalogThreads == false || (DIntegerValue &lt; trailerCatalogThreadsArraySize))</test>
 			<error>
 				<message>Entry D with type Integer in ActionThread does not satisfy possible value predicate: fn:Eval((@D &gt;= 0) &amp;&amp; (@D &lt; fn:ArrayLength(trailer::Catalog::Threads)))</message>
 				<arguments>
@@ -2862,7 +2862,7 @@
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_2" clause="AnnotLink-AS" testNumber="11"/>
 			<description>Entry AS in AnnotLink is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>(containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false)</test>
+			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
 			<error>
 				<message>Entry AS in AnnotLink is missing</message>
 				<arguments>
@@ -3175,18 +3175,6 @@
 			<references/>
 		</rule>
 		<rule object="AAnnotMovie">
-			<id specification="ISO_32000_1_2" clause="AnnotMovie-AP" testNumber="11"/>
-			<description>Entry AP in AnnotMovie is required, when fn:IsRequired(fn:SinceVersion(2.0 , (fn:RectWidth(Rect) &gt; 0) || (fn:RectHeight(Rect) &gt; 0)))</description>
-			<test>true</test>
-			<error>
-				<message>Entry AP in AnnotMovie is missing</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotMovie">
 			<id specification="ISO_32000_1_2" clause="AnnotMovie-AS" testNumber="8"/>
 			<description>Entry AS in AnnotMovie shall have type Name</description>
 			<test>containsAS == false || ASHasTypeName == true</test>
@@ -3201,7 +3189,7 @@
 		<rule object="AAnnotMovie">
 			<id specification="ISO_32000_1_2" clause="AnnotMovie-AS" testNumber="11"/>
 			<description>Entry AS in AnnotMovie is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>(containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false)</test>
+			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
 			<error>
 				<message>Entry AS in AnnotMovie is missing</message>
 				<arguments>
@@ -3489,18 +3477,6 @@
 			<references/>
 		</rule>
 		<rule object="AAnnotSound">
-			<id specification="ISO_32000_1_2" clause="AnnotSound-AP" testNumber="11"/>
-			<description>Entry AP in AnnotSound is required, when fn:IsRequired(fn:SinceVersion(2.0 , (fn:RectWidth(Rect) &gt; 0) || (fn:RectHeight(Rect) &gt; 0)))</description>
-			<test>true</test>
-			<error>
-				<message>Entry AP in AnnotSound is missing</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_2" clause="AnnotSound-AS" testNumber="8"/>
 			<description>Entry AS in AnnotSound shall have type Name</description>
 			<test>containsAS == false || ASHasTypeName == true</test>
@@ -3515,7 +3491,7 @@
 		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_2" clause="AnnotSound-AS" testNumber="11"/>
 			<description>Entry AS in AnnotSound is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>(containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false)</test>
+			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
 			<error>
 				<message>Entry AS in AnnotSound is missing</message>
 				<arguments>
@@ -3827,18 +3803,6 @@
 			<references/>
 		</rule>
 		<rule object="AAnnotText">
-			<id specification="ISO_32000_1_2" clause="AnnotText-AP" testNumber="11"/>
-			<description>Entry AP in AnnotText is required, when fn:IsRequired(fn:SinceVersion(2.0 , (fn:RectWidth(Rect) &gt; 0) || (fn:RectHeight(Rect) &gt; 0)))</description>
-			<test>true</test>
-			<error>
-				<message>Entry AP in AnnotText is missing</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_2" clause="AnnotText-AS" testNumber="8"/>
 			<description>Entry AS in AnnotText shall have type Name</description>
 			<test>containsAS == false || ASHasTypeName == true</test>
@@ -3853,7 +3817,7 @@
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_2" clause="AnnotText-AS" testNumber="11"/>
 			<description>Entry AS in AnnotText is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>(containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false)</test>
+			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
 			<error>
 				<message>Entry AS in AnnotText is missing</message>
 				<arguments>
@@ -4190,18 +4154,6 @@
 			<references/>
 		</rule>
 		<rule object="AAnnotWidget">
-			<id specification="ISO_32000_1_2" clause="AnnotWidget-AP" testNumber="11"/>
-			<description>Entry AP in AnnotWidget is required, when fn:IsRequired(fn:SinceVersion(2.0 , (fn:RectWidth(Rect) &gt; 0) || (fn:RectHeight(Rect) &gt; 0)))</description>
-			<test>true</test>
-			<error>
-				<message>Entry AP in AnnotWidget is missing</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotWidget">
 			<id specification="ISO_32000_1_2" clause="AnnotWidget-AS" testNumber="8"/>
 			<description>Entry AS in AnnotWidget shall have type Name</description>
 			<test>containsAS == false || ASHasTypeName == true</test>
@@ -4216,7 +4168,7 @@
 		<rule object="AAnnotWidget">
 			<id specification="ISO_32000_1_2" clause="AnnotWidget-AS" testNumber="11"/>
 			<description>Entry AS in AnnotWidget is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>(containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false)</test>
+			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
 			<error>
 				<message>Entry AS in AnnotWidget is missing</message>
 				<arguments>
@@ -6396,7 +6348,7 @@
 		<rule object="AArrayOf_4NumbersColorAnnotation">
 			<id specification="ISO_32000_1_2" clause="ArrayOf_4NumbersColorAnnotation-1-Number" testNumber="9"/>
 			<description>Entry 1 with type Number in ArrayOf_4NumbersColorAnnotation shall satisfy special case: fn:Eval(fn:IsPresent(2))</description>
-			<test>entry1HasTypeNumber != true || ((contains2 == true))</test>
+			<test>entry1HasTypeNumber != true || (contains2 == true)</test>
 			<error>
 				<message>Entry 1 with type Number in ArrayOf_4NumbersColorAnnotation does not satisfy special case: fn:Eval(fn:IsPresent(2))</message>
 				<arguments>
@@ -7913,7 +7865,7 @@
 		<rule object="ACMapStream">
 			<id specification="ISO_32000_1_2" clause="CMapStream-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in CMapStream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in CMapStream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -7985,7 +7937,7 @@
 		<rule object="ACMapStream">
 			<id specification="ISO_32000_1_2" clause="CMapStream-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in CMapStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in CMapStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -8021,7 +7973,7 @@
 		<rule object="ACMapStream">
 			<id specification="ISO_32000_1_2" clause="CMapStream-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in CMapStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in CMapStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -8070,7 +8022,7 @@
 		<rule object="ACMapStream">
 			<id specification="ISO_32000_1_2" clause="CMapStream-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in CMapStream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in CMapStream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -9997,7 +9949,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_2" clause="EncryptionStandard-OE" testNumber="11"/>
 			<description>Entry OE in EncryptionStandard is required, when fn:IsRequired((@R == 5) || (@R == 6))</description>
-			<test>(containsOE == true || ((RIntegerValue == 5) || (RIntegerValue == 6)) == false)</test>
+			<test>containsOE == true || ((RIntegerValue == 5) || (RIntegerValue == 6)) == false</test>
 			<error>
 				<message>Entry OE in EncryptionStandard is missing</message>
 				<arguments>
@@ -10057,7 +10009,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_2" clause="EncryptionStandard-Perms" testNumber="11"/>
 			<description>Entry Perms in EncryptionStandard is required, when fn:IsRequired((@R == 5) || (@R == 6))</description>
-			<test>(containsPerms == true || ((RIntegerValue == 5) || (RIntegerValue == 6)) == false)</test>
+			<test>containsPerms == true || ((RIntegerValue == 5) || (RIntegerValue == 6)) == false</test>
 			<error>
 				<message>Entry Perms in EncryptionStandard is missing</message>
 				<arguments>
@@ -10178,7 +10130,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_2" clause="EncryptionStandard-UE" testNumber="11"/>
 			<description>Entry UE in EncryptionStandard is required, when fn:IsRequired((@R == 5) || (@R == 6))</description>
-			<test>(containsUE == true || ((RIntegerValue == 5) || (RIntegerValue == 6)) == false)</test>
+			<test>containsUE == true || ((RIntegerValue == 5) || (RIntegerValue == 6)) == false</test>
 			<error>
 				<message>Entry UE in EncryptionStandard is missing</message>
 				<arguments>
@@ -10299,7 +10251,7 @@
 		<rule object="AField">
 			<id specification="ISO_32000_1_2" clause="Field-Ff-Bitmask" testNumber="9"/>
 			<description>Entry Ff with type Bitmask in Field shall satisfy special case: fn:Eval(fn:BitsClear(4 , 32))</description>
-			<test>FfHasTypeBitmask != true || (((FfBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
+			<test>FfHasTypeBitmask != true || ((FfBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 31 &amp; 1) == 0)</test>
 			<error>
 				<message>Entry Ff with type Bitmask in Field does not satisfy special case: fn:Eval(fn:BitsClear(4 , 32))</message>
 				<arguments>
@@ -11617,7 +11569,7 @@
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_2" clause="FileSpecification-F" testNumber="11"/>
 			<description>Entry F in FileSpecification is required, when fn:IsRequired(fn:Not(fn:IsPresent(DOS)) &amp;&amp; fn:Not(fn:IsPresent(Mac)) &amp;&amp; fn:Not(fn:IsPresent(Unix)))</description>
-			<test>(containsF == true || (((containsDOS == true)) != true &amp;&amp; ((containsMac == true)) != true &amp;&amp; ((containsUnix == true)) != true) == false)</test>
+			<test>containsF == true || ((containsDOS == true) != true &amp;&amp; (containsMac == true) != true &amp;&amp; (containsUnix == true) != true) == false</test>
 			<error>
 				<message>Entry F in FileSpecification is missing</message>
 				<arguments>
@@ -11689,7 +11641,7 @@
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_2" clause="FileSpecification-Type" testNumber="11"/>
 			<description>Entry Type in FileSpecification is required, when fn:IsRequired(fn:IsPresent(EF) || fn:IsPresent(EP) || fn:IsPresent(RF))</description>
-			<test>(containsType == true || ((containsEF == true) || (containsEP == true) || (containsRF == true)) == false)</test>
+			<test>containsType == true || ((containsEF == true) || (containsEP == true) || (containsRF == true)) == false</test>
 			<error>
 				<message>Entry Type in FileSpecification is missing</message>
 				<arguments>
@@ -11810,7 +11762,7 @@
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_2" clause="FileTrailer-ID" testNumber="11"/>
 			<description>Entry ID in FileTrailer is required, when fn:IsRequired(fn:IsPresent(Encrypt))</description>
-			<test>(containsID == true || ((containsEncrypt == true)) == false)</test>
+			<test>containsID == true || (containsEncrypt == true) == false</test>
 			<error>
 				<message>Entry ID in FileTrailer is missing</message>
 				<arguments>
@@ -11822,7 +11774,7 @@
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_2" clause="FileTrailer-ID-Array" testNumber="16"/>
 			<description>If entry ID with type Array in FileTrailer satisfies condition fn:MustBeDirect(fn:IsPresent(Encrypt)), it shall be direct</description>
-			<test>entryIDHasTypeArray != true || (isentryIDIndirect == false || ((containsEncrypt == true)) == false)</test>
+			<test>entryIDHasTypeArray != true || (isentryIDIndirect == false || (containsEncrypt == true) == false)</test>
 			<error>
 				<message>Entry ID with type Array in FileTrailer is indirect</message>
 				<arguments>
@@ -12873,18 +12825,6 @@
 			<references/>
 		</rule>
 		<rule object="AFontCIDType2">
-			<id specification="ISO_32000_1_2" clause="FontCIDType2-CIDToGIDMap" testNumber="11"/>
-			<description>Entry CIDToGIDMap in FontCIDType2 is required, when fn:IsRequired(fn:SinceVersion(2.0) &amp;&amp; fn:IsPresent(FontDescriptor::FontFile2))</description>
-			<test>true</test>
-			<error>
-				<message>Entry CIDToGIDMap in FontCIDType2 is missing</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontCIDType2">
 			<id specification="ISO_32000_1_2" clause="FontCIDType2-CIDToGIDMap-Name" testNumber="6"/>
 			<description>Entry CIDToGIDMap with type Name in FontCIDType2 shall have value Identity</description>
 			<test>CIDToGIDMapHasTypeName != true || CIDToGIDMapNameValue == "Identity"</test>
@@ -13418,7 +13358,7 @@
 		<rule object="AFontDescriptorCIDType0">
 			<id specification="ISO_32000_1_2" clause="FontDescriptorCIDType0-FontFile-Stream" testNumber="9"/>
 			<description>Entry FontFile with type Stream in FontDescriptorCIDType0 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile3)))</description>
-			<test>FontFileHasTypeStream != true || (((containsFontFile3 == true)) != true)</test>
+			<test>FontFileHasTypeStream != true || ((containsFontFile3 == true) != true)</test>
 			<error>
 				<message>Entry FontFile with type Stream in FontDescriptorCIDType0 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile3)))</message>
 				<arguments>
@@ -13466,7 +13406,7 @@
 		<rule object="AFontDescriptorCIDType0">
 			<id specification="ISO_32000_1_2" clause="FontDescriptorCIDType0-FontFile3-Stream" testNumber="9"/>
 			<description>Entry FontFile3 with type Stream in FontDescriptorCIDType0 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</description>
-			<test>FontFile3HasTypeStream != true || (((containsFontFile == true)) != true)</test>
+			<test>FontFile3HasTypeStream != true || ((containsFontFile == true) != true)</test>
 			<error>
 				<message>Entry FontFile3 with type Stream in FontDescriptorCIDType0 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</message>
 				<arguments>
@@ -13947,7 +13887,7 @@
 		<rule object="AFontDescriptorCIDType2">
 			<id specification="ISO_32000_1_2" clause="FontDescriptorCIDType2-FontFile-Stream" testNumber="9"/>
 			<description>Entry FontFile with type Stream in FontDescriptorCIDType2 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</description>
-			<test>FontFileHasTypeStream != true || (((containsFontFile2 == true)) != true)</test>
+			<test>FontFileHasTypeStream != true || ((containsFontFile2 == true) != true)</test>
 			<error>
 				<message>Entry FontFile with type Stream in FontDescriptorCIDType2 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</message>
 				<arguments>
@@ -13995,7 +13935,7 @@
 		<rule object="AFontDescriptorCIDType2">
 			<id specification="ISO_32000_1_2" clause="FontDescriptorCIDType2-FontFile2-Stream" testNumber="9"/>
 			<description>Entry FontFile2 with type Stream in FontDescriptorCIDType2 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</description>
-			<test>FontFile2HasTypeStream != true || (((containsFontFile == true)) != true)</test>
+			<test>FontFile2HasTypeStream != true || ((containsFontFile == true) != true)</test>
 			<error>
 				<message>Entry FontFile2 with type Stream in FontDescriptorCIDType2 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</message>
 				<arguments>
@@ -14416,7 +14356,7 @@
 		<rule object="AFontDescriptorTrueType">
 			<id specification="ISO_32000_1_2" clause="FontDescriptorTrueType-FontFile-Stream" testNumber="9"/>
 			<description>Entry FontFile with type Stream in FontDescriptorTrueType shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</description>
-			<test>FontFileHasTypeStream != true || (((containsFontFile2 == true)) != true)</test>
+			<test>FontFileHasTypeStream != true || ((containsFontFile2 == true) != true)</test>
 			<error>
 				<message>Entry FontFile with type Stream in FontDescriptorTrueType does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</message>
 				<arguments>
@@ -14464,7 +14404,7 @@
 		<rule object="AFontDescriptorTrueType">
 			<id specification="ISO_32000_1_2" clause="FontDescriptorTrueType-FontFile2-Stream" testNumber="9"/>
 			<description>Entry FontFile2 with type Stream in FontDescriptorTrueType shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</description>
-			<test>FontFile2HasTypeStream != true || (((containsFontFile == true)) != true)</test>
+			<test>FontFile2HasTypeStream != true || ((containsFontFile == true) != true)</test>
 			<error>
 				<message>Entry FontFile2 with type Stream in FontDescriptorTrueType does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</message>
 				<arguments>
@@ -15560,7 +15500,7 @@
 		<rule object="AFontFile2">
 			<id specification="ISO_32000_1_2" clause="FontFile2-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in FontFile2 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in FontFile2 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -15632,7 +15572,7 @@
 		<rule object="AFontFile2">
 			<id specification="ISO_32000_1_2" clause="FontFile2-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in FontFile2 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in FontFile2 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -15668,7 +15608,7 @@
 		<rule object="AFontFile2">
 			<id specification="ISO_32000_1_2" clause="FontFile2-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in FontFile2 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in FontFile2 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -15717,7 +15657,7 @@
 		<rule object="AFontFile2">
 			<id specification="ISO_32000_1_2" clause="FontFile2-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in FontFile2 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in FontFile2 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -15778,7 +15718,7 @@
 		<rule object="AFontFile2">
 			<id specification="ISO_32000_1_2" clause="FontFile2-Length1" testNumber="11"/>
 			<description>Entry Length1 in FontFile2 is required, when fn:IsRequired(parent::parent::@Subtype== TrueType)</description>
-			<test>(containsLength1 == true || (parentparentSubtypeNameValue == "TrueType") == false)</test>
+			<test>containsLength1 == true || (parentparentSubtypeNameValue == "TrueType") == false</test>
 			<error>
 				<message>Entry Length1 in FontFile2 is missing</message>
 				<arguments>
@@ -15922,7 +15862,7 @@
 		<rule object="AFontFile3CIDType0">
 			<id specification="ISO_32000_1_2" clause="FontFile3CIDType0-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in FontFile3CIDType0 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in FontFile3CIDType0 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -15994,7 +15934,7 @@
 		<rule object="AFontFile3CIDType0">
 			<id specification="ISO_32000_1_2" clause="FontFile3CIDType0-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in FontFile3CIDType0 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in FontFile3CIDType0 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -16030,7 +15970,7 @@
 		<rule object="AFontFile3CIDType0">
 			<id specification="ISO_32000_1_2" clause="FontFile3CIDType0-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in FontFile3CIDType0 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in FontFile3CIDType0 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -16079,7 +16019,7 @@
 		<rule object="AFontFile3CIDType0">
 			<id specification="ISO_32000_1_2" clause="FontFile3CIDType0-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in FontFile3CIDType0 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in FontFile3CIDType0 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -16611,7 +16551,7 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_2" clause="FontMultipleMaster-FirstChar" testNumber="11"/>
 			<description>Entry FirstChar in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFirstChar == true || notStandard14Font == false)</test>
+			<test>containsFirstChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FirstChar in FontMultipleMaster is missing</message>
 				<arguments>
@@ -16647,7 +16587,7 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_2" clause="FontMultipleMaster-FontDescriptor" testNumber="11"/>
 			<description>Entry FontDescriptor in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFontDescriptor == true || notStandard14Font == false)</test>
+			<test>containsFontDescriptor == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FontDescriptor in FontMultipleMaster is missing</message>
 				<arguments>
@@ -16683,7 +16623,7 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_2" clause="FontMultipleMaster-LastChar" testNumber="11"/>
 			<description>Entry LastChar in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsLastChar == true || notStandard14Font == false)</test>
+			<test>containsLastChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry LastChar in FontMultipleMaster is missing</message>
 				<arguments>
@@ -16698,18 +16638,6 @@
 			<test>containsName == false || NameHasTypeName == true</test>
 			<error>
 				<message>Entry Name in FontMultipleMaster is not of type Name</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontMultipleMaster">
-			<id specification="ISO_32000_1_2" clause="FontMultipleMaster-Name" testNumber="11"/>
-			<description>Entry Name in FontMultipleMaster is required, when fn:IsRequired(fn:IsPDFVersion(1.0))</description>
-			<test>true</test>
-			<error>
-				<message>Entry Name in FontMultipleMaster is missing</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -16853,7 +16781,7 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_2" clause="FontMultipleMaster-Widths" testNumber="11"/>
 			<description>Entry Widths in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsWidths == true || notStandard14Font == false)</test>
+			<test>containsWidths == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry Widths in FontMultipleMaster is missing</message>
 				<arguments>
@@ -16950,7 +16878,7 @@
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_2" clause="FontTrueType-FirstChar" testNumber="11"/>
 			<description>Entry FirstChar in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFirstChar == true || notStandard14Font == false)</test>
+			<test>containsFirstChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FirstChar in FontTrueType is missing</message>
 				<arguments>
@@ -16986,7 +16914,7 @@
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_2" clause="FontTrueType-FontDescriptor" testNumber="11"/>
 			<description>Entry FontDescriptor in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFontDescriptor == true || notStandard14Font == false)</test>
+			<test>containsFontDescriptor == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FontDescriptor in FontTrueType is missing</message>
 				<arguments>
@@ -17022,7 +16950,7 @@
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_2" clause="FontTrueType-LastChar" testNumber="11"/>
 			<description>Entry LastChar in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsLastChar == true || notStandard14Font == false)</test>
+			<test>containsLastChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry LastChar in FontTrueType is missing</message>
 				<arguments>
@@ -17037,18 +16965,6 @@
 			<test>containsName == false || NameHasTypeName == true</test>
 			<error>
 				<message>Entry Name in FontTrueType is not of type Name</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontTrueType">
-			<id specification="ISO_32000_1_2" clause="FontTrueType-Name" testNumber="11"/>
-			<description>Entry Name in FontTrueType is required, when fn:IsRequired(fn:IsPDFVersion(1.0))</description>
-			<test>true</test>
-			<error>
-				<message>Entry Name in FontTrueType is missing</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -17192,7 +17108,7 @@
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_2" clause="FontTrueType-Widths" testNumber="11"/>
 			<description>Entry Widths in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsWidths == true || notStandard14Font == false)</test>
+			<test>containsWidths == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry Widths in FontTrueType is missing</message>
 				<arguments>
@@ -17532,7 +17448,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_2" clause="FontType1-FirstChar" testNumber="11"/>
 			<description>Entry FirstChar in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFirstChar == true || notStandard14Font == false)</test>
+			<test>containsFirstChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FirstChar in FontType1 is missing</message>
 				<arguments>
@@ -17568,7 +17484,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_2" clause="FontType1-FontDescriptor" testNumber="11"/>
 			<description>Entry FontDescriptor in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsFontDescriptor == true || notStandard14Font == false)</test>
+			<test>containsFontDescriptor == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FontDescriptor in FontType1 is missing</message>
 				<arguments>
@@ -17604,7 +17520,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_2" clause="FontType1-LastChar" testNumber="11"/>
 			<description>Entry LastChar in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsLastChar == true || notStandard14Font == false)</test>
+			<test>containsLastChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry LastChar in FontType1 is missing</message>
 				<arguments>
@@ -17619,18 +17535,6 @@
 			<test>containsName == false || NameHasTypeName == true</test>
 			<error>
 				<message>Entry Name in FontType1 is not of type Name</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontType1">
-			<id specification="ISO_32000_1_2" clause="FontType1-Name" testNumber="11"/>
-			<description>Entry Name in FontType1 is required, when fn:IsRequired(fn:IsPDFVersion(1.0))</description>
-			<test>true</test>
-			<error>
-				<message>Entry Name in FontType1 is missing</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -17774,7 +17678,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_2" clause="FontType1-Widths" testNumber="11"/>
 			<description>Entry Widths in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
-			<test>(containsWidths == true || notStandard14Font == false)</test>
+			<test>containsWidths == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry Widths in FontType1 is missing</message>
 				<arguments>
@@ -17954,7 +17858,7 @@
 		<rule object="AFontType3">
 			<id specification="ISO_32000_1_2" clause="FontType3-FontDescriptor" testNumber="11"/>
 			<description>Entry FontDescriptor in FontType3 is required, when fn:IsRequired(fn:IsPDFTagged())</description>
-			<test>(containsFontDescriptor == true || isPDFTagged == false)</test>
+			<test>containsFontDescriptor == true || isPDFTagged == false</test>
 			<error>
 				<message>Entry FontDescriptor in FontType3 is missing</message>
 				<arguments>
@@ -18029,18 +17933,6 @@
 			<test>containsName == false || NameHasTypeName == true</test>
 			<error>
 				<message>Entry Name in FontType3 is not of type Name</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontType3">
-			<id specification="ISO_32000_1_2" clause="FontType3-Name" testNumber="11"/>
-			<description>Entry Name in FontType3 is required, when fn:IsRequired(fn:IsPDFVersion(1.0))</description>
-			<test>true</test>
-			<error>
-				<message>Entry Name in FontType3 is missing</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -18317,7 +18209,7 @@
 		<rule object="AFunctionType0">
 			<id specification="ISO_32000_1_2" clause="FunctionType0-Decode-Array" testNumber="9"/>
 			<description>Entry Decode with type Array in FunctionType0 shall satisfy special case: fn:Eval(fn:ArrayLength(Decode) == fn:ArrayLength(Range))</description>
-			<test>DecodeHasTypeArray != true || (DecodeArraySize == RangeArraySize)</test>
+			<test>DecodeHasTypeArray != true || (containsRange == false || DecodeArraySize == RangeArraySize)</test>
 			<error>
 				<message>Entry Decode with type Array in FunctionType0 does not satisfy special case: fn:Eval(fn:ArrayLength(Decode) == fn:ArrayLength(Range))</message>
 				<arguments>
@@ -18401,7 +18293,7 @@
 		<rule object="AFunctionType0">
 			<id specification="ISO_32000_1_2" clause="FunctionType0-Encode-Array" testNumber="9"/>
 			<description>Entry Encode with type Array in FunctionType0 shall satisfy special case: fn:Eval(fn:ArrayLength(Encode) == (2 * fn:ArrayLength(Size)))</description>
-			<test>EncodeHasTypeArray != true || (EncodeArraySize == (2 * SizeArraySize))</test>
+			<test>EncodeHasTypeArray != true || (containsSize == false || EncodeArraySize == (2 * SizeArraySize))</test>
 			<error>
 				<message>Entry Encode with type Array in FunctionType0 does not satisfy special case: fn:Eval(fn:ArrayLength(Encode) == (2 * fn:ArrayLength(Size)))</message>
 				<arguments>
@@ -18559,7 +18451,7 @@
 		<rule object="AFunctionType0">
 			<id specification="ISO_32000_1_2" clause="FunctionType0-Size-Array" testNumber="9"/>
 			<description>Entry Size with type Array in FunctionType0 shall satisfy special case: fn:Eval(fn:ArrayLength(Domain) == (2 * fn:ArrayLength(Size)))</description>
-			<test>SizeHasTypeArray != true || (DomainArraySize == (2 * SizeArraySize))</test>
+			<test>SizeHasTypeArray != true || (containsDomain == false || DomainArraySize == (2 * SizeArraySize))</test>
 			<error>
 				<message>Entry Size with type Array in FunctionType0 does not satisfy special case: fn:Eval(fn:ArrayLength(Domain) == (2 * fn:ArrayLength(Size)))</message>
 				<arguments>
@@ -19210,7 +19102,7 @@
 		<rule object="AHalftoneType1">
 			<id specification="ISO_32000_1_2" clause="HalftoneType1-TransferFunction" testNumber="11"/>
 			<description>Entry TransferFunction in HalftoneType1 is required, when fn:IsRequired(parent::@HalftoneType== 5)</description>
-			<test>(containsTransferFunction == true || (parentHalftoneTypeIntegerValue == 5) == false)</test>
+			<test>containsTransferFunction == true || (parentHalftoneTypeIntegerValue == 5) == false</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType1 is missing</message>
 				<arguments>
@@ -19369,7 +19261,7 @@
 		<rule object="AHalftoneType10">
 			<id specification="ISO_32000_1_2" clause="HalftoneType10-TransferFunction" testNumber="11"/>
 			<description>Entry TransferFunction in HalftoneType10 is required, when fn:IsRequired(parent::@HalftoneType== 5)</description>
-			<test>(containsTransferFunction == true || (parentHalftoneTypeIntegerValue == 5) == false)</test>
+			<test>containsTransferFunction == true || (parentHalftoneTypeIntegerValue == 5) == false</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType10 is missing</message>
 				<arguments>
@@ -21881,7 +21773,7 @@
 		<rule object="AOPIVersion20Dict">
 			<id specification="ISO_32000_1_2" clause="OPIVersion20Dict-CropRect" testNumber="11"/>
 			<description>Entry CropRect in OPIVersion20Dict is required, when fn:IsRequired(fn:IsPresent(Size))</description>
-			<test>(containsCropRect == true || ((containsSize == true)) == false)</test>
+			<test>containsCropRect == true || (containsSize == true) == false</test>
 			<error>
 				<message>Entry CropRect in OPIVersion20Dict is missing</message>
 				<arguments>
@@ -22075,7 +21967,7 @@
 		<rule object="AOPIVersion20Dict">
 			<id specification="ISO_32000_1_2" clause="OPIVersion20Dict-Size" testNumber="11"/>
 			<description>Entry Size in OPIVersion20Dict is required, when fn:IsRequired(fn:IsPresent(CropRect))</description>
-			<test>(containsSize == true || ((containsCropRect == true)) == false)</test>
+			<test>containsSize == true || (containsCropRect == true) == false</test>
 			<error>
 				<message>Entry Size in OPIVersion20Dict is missing</message>
 				<arguments>
@@ -22366,7 +22258,7 @@
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_2" clause="OutlineItem-A-Dictionary" testNumber="9"/>
 			<description>Entry A with type Dictionary in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(Dest))</description>
-			<test>AHasTypeDictionary != true || (((containsDest == true)) != true)</test>
+			<test>AHasTypeDictionary != true || ((containsDest == true) != true)</test>
 			<error>
 				<message>Entry A with type Dictionary in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(Dest))</message>
 				<arguments>
@@ -22414,7 +22306,7 @@
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_2" clause="OutlineItem-Dest-Array" testNumber="9"/>
 			<description>Entry Dest with type Array in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
-			<test>DestHasTypeArray != true || (((containsA == true)) != true)</test>
+			<test>DestHasTypeArray != true || ((containsA == true) != true)</test>
 			<error>
 				<message>Entry Dest with type Array in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
 				<arguments>
@@ -22426,7 +22318,7 @@
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_2" clause="OutlineItem-Dest-Name" testNumber="9"/>
 			<description>Entry Dest with type Name in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
-			<test>DestHasTypeName != true || (((containsA == true)) != true)</test>
+			<test>DestHasTypeName != true || ((containsA == true) != true)</test>
 			<error>
 				<message>Entry Dest with type Name in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
 				<arguments>
@@ -22438,7 +22330,7 @@
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_2" clause="OutlineItem-Dest-StringByte" testNumber="9"/>
 			<description>Entry Dest with type StringByte in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
-			<test>DestHasTypeStringByte != true || (((containsA == true)) != true)</test>
+			<test>DestHasTypeStringByte != true || ((containsA == true) != true)</test>
 			<error>
 				<message>Entry Dest with type StringByte in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
 				<arguments>
@@ -22762,7 +22654,7 @@
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_2" clause="PageObject-B-Array" testNumber="9"/>
 			<description>Entry B with type Array in PageObject shall satisfy special case: fn:Not(fn:IsPresent(@Type == Template))</description>
-			<test>BHasTypeArray != true || ((((TypeNameValue == "Template") == true &amp;&amp; containsB == true)) != true)</test>
+			<test>BHasTypeArray != true || (((TypeNameValue == "Template") &amp;&amp; containsB == true) != true)</test>
 			<error>
 				<message>Entry B with type Array in PageObject does not satisfy special case: fn:Not(fn:IsPresent(@Type == Template))</message>
 				<arguments>
@@ -22906,7 +22798,7 @@
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_2" clause="PageObject-Parent" testNumber="11"/>
 			<description>Entry Parent in PageObject is required, when fn:IsRequired(@Type != Template)</description>
-			<test>(containsParent == true || (TypeNameValue != "Template") == false)</test>
+			<test>containsParent == true || (TypeNameValue != "Template") == false</test>
 			<error>
 				<message>Entry Parent in PageObject is missing</message>
 				<arguments>
@@ -22930,7 +22822,7 @@
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_2" clause="PageObject-Parent-Dictionary" testNumber="9"/>
 			<description>Entry Parent with type Dictionary in PageObject shall satisfy special case: fn:Not(fn:IsPresent(@Type == Template))</description>
-			<test>ParentHasTypeDictionary != true || ((((TypeNameValue == "Template") == true &amp;&amp; containsParent == true)) != true)</test>
+			<test>ParentHasTypeDictionary != true || (((TypeNameValue == "Template") &amp;&amp; containsParent == true) != true)</test>
 			<error>
 				<message>Entry Parent with type Dictionary in PageObject does not satisfy special case: fn:Not(fn:IsPresent(@Type == Template))</message>
 				<arguments>
@@ -23727,7 +23619,7 @@
 		<rule object="APatternType1">
 			<id specification="ISO_32000_1_2" clause="PatternType1-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in PatternType1 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in PatternType1 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -23799,7 +23691,7 @@
 		<rule object="APatternType1">
 			<id specification="ISO_32000_1_2" clause="PatternType1-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in PatternType1 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in PatternType1 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -23835,7 +23727,7 @@
 		<rule object="APatternType1">
 			<id specification="ISO_32000_1_2" clause="PatternType1-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in PatternType1 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in PatternType1 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -23884,7 +23776,7 @@
 		<rule object="APatternType1">
 			<id specification="ISO_32000_1_2" clause="PatternType1-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in PatternType1 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in PatternType1 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -24683,7 +24575,7 @@
 		<rule object="ASoundObject">
 			<id specification="ISO_32000_1_2" clause="SoundObject-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in SoundObject shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in SoundObject does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -24780,7 +24672,7 @@
 		<rule object="ASoundObject">
 			<id specification="ISO_32000_1_2" clause="SoundObject-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in SoundObject shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in SoundObject does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -24816,7 +24708,7 @@
 		<rule object="ASoundObject">
 			<id specification="ISO_32000_1_2" clause="SoundObject-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in SoundObject shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in SoundObject does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -24865,7 +24757,7 @@
 		<rule object="ASoundObject">
 			<id specification="ISO_32000_1_2" clause="SoundObject-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in SoundObject shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in SoundObject does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -25011,7 +24903,7 @@
 		<rule object="AStream">
 			<id specification="ISO_32000_1_2" clause="Stream-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in Stream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in Stream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -25083,7 +24975,7 @@
 		<rule object="AStream">
 			<id specification="ISO_32000_1_2" clause="Stream-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in Stream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in Stream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -25119,7 +25011,7 @@
 		<rule object="AStream">
 			<id specification="ISO_32000_1_2" clause="Stream-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in Stream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in Stream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -25168,7 +25060,7 @@
 		<rule object="AStream">
 			<id specification="ISO_32000_1_2" clause="Stream-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in Stream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in Stream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -25630,7 +25522,7 @@
 		<rule object="ATrailerIDArray">
 			<id specification="ISO_32000_1_2" clause="TrailerIDArray-0-StringByte" testNumber="16"/>
 			<description>If entry 0 with type StringByte in TrailerIDArray satisfies condition fn:MustBeDirect(fn:IsPresent(trailer::Encrypt)), it shall be direct</description>
-			<test>entry0HasTypeStringByte != true || (isentry0Indirect == false || ((containstrailerEncrypt == true)) == false)</test>
+			<test>entry0HasTypeStringByte != true || (isentry0Indirect == false || (containstrailerEncrypt == true) == false)</test>
 			<error>
 				<message>Entry 0 with type StringByte in TrailerIDArray is indirect</message>
 				<arguments>
@@ -25654,7 +25546,7 @@
 		<rule object="ATrailerIDArray">
 			<id specification="ISO_32000_1_2" clause="TrailerIDArray-1-StringByte" testNumber="16"/>
 			<description>If entry 1 with type StringByte in TrailerIDArray satisfies condition fn:MustBeDirect(fn:IsPresent(trailer::Encrypt)), it shall be direct</description>
-			<test>entry1HasTypeStringByte != true || (isentry1Indirect == false || ((containstrailerEncrypt == true)) == false)</test>
+			<test>entry1HasTypeStringByte != true || (isentry1Indirect == false || (containstrailerEncrypt == true) == false)</test>
 			<error>
 				<message>Entry 1 with type StringByte in TrailerIDArray is indirect</message>
 				<arguments>
@@ -25764,7 +25656,7 @@
 		<rule object="ATransition">
 			<id specification="ISO_32000_1_2" clause="Transition-Di-Name" testNumber="9"/>
 			<description>Entry Di with type Name in Transition shall satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</description>
-			<test>DiHasTypeName != true || (((DiNameValue == "None") &amp;&amp; (SNameValue == "Fly")))</test>
+			<test>DiHasTypeName != true || ((DiNameValue == "None") &amp;&amp; (SNameValue == "Fly"))</test>
 			<error>
 				<message>Entry Di with type Name in Transition does not satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</message>
 				<arguments>
@@ -26142,7 +26034,7 @@
 		<rule object="AXObjectFormPS">
 			<id specification="ISO_32000_1_2" clause="XObjectFormPS-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XObjectFormPS shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XObjectFormPS does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -26214,7 +26106,7 @@
 		<rule object="AXObjectFormPS">
 			<id specification="ISO_32000_1_2" clause="XObjectFormPS-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectFormPS shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in XObjectFormPS does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -26250,7 +26142,7 @@
 		<rule object="AXObjectFormPS">
 			<id specification="ISO_32000_1_2" clause="XObjectFormPS-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in XObjectFormPS shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in XObjectFormPS does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -26299,7 +26191,7 @@
 		<rule object="AXObjectFormPS">
 			<id specification="ISO_32000_1_2" clause="XObjectFormPS-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XObjectFormPS shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in XObjectFormPS does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -26518,7 +26410,7 @@
 		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_2" clause="XObjectFormPSpassthrough-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XObjectFormPSpassthrough shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XObjectFormPSpassthrough does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -26590,7 +26482,7 @@
 		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_2" clause="XObjectFormPSpassthrough-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectFormPSpassthrough shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in XObjectFormPSpassthrough does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -26626,7 +26518,7 @@
 		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_2" clause="XObjectFormPSpassthrough-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in XObjectFormPSpassthrough shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in XObjectFormPSpassthrough does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -26675,7 +26567,7 @@
 		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_2" clause="XObjectFormPSpassthrough-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XObjectFormPSpassthrough shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in XObjectFormPSpassthrough does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -27052,7 +26944,7 @@
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_2" clause="XObjectFormType1-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XObjectFormType1 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XObjectFormType1 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -27124,7 +27016,7 @@
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_2" clause="XObjectFormType1-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectFormType1 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in XObjectFormType1 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -27160,7 +27052,7 @@
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_2" clause="XObjectFormType1-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in XObjectFormType1 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in XObjectFormType1 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -27209,7 +27101,7 @@
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_2" clause="XObjectFormType1-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XObjectFormType1 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in XObjectFormType1 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -27525,7 +27417,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_2" clause="XObjectImage-BitsPerComponent" testNumber="11"/>
 			<description>Entry BitsPerComponent in XObjectImage is required, when fn:IsRequired(fn:Not(fn:Contains(@Filter , JPXDecode) || (@ImageMask == true)))</description>
-			<test>(containsBitsPerComponent == true || (((FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "JPXDecode").length &gt; 0) || (ImageMaskBooleanValue == true)) != true) == false)</test>
+			<test>containsBitsPerComponent == true || (((FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "JPXDecode").length &gt; 0) || (ImageMaskBooleanValue == true)) != true) == false</test>
 			<error>
 				<message>Entry BitsPerComponent in XObjectImage is missing</message>
 				<arguments>
@@ -27598,7 +27490,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_2" clause="XObjectImage-ColorSpace" testNumber="11"/>
 			<description>Entry ColorSpace in XObjectImage is required, when fn:IsRequired(fn:Not(fn:Contains(@Filter , JPXDecode) || (@ImageMask == true)))</description>
-			<test>(containsColorSpace == true || (((FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "JPXDecode").length &gt; 0) || (ImageMaskBooleanValue == true)) != true) == false)</test>
+			<test>containsColorSpace == true || (((FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "JPXDecode").length &gt; 0) || (ImageMaskBooleanValue == true)) != true) == false</test>
 			<error>
 				<message>Entry ColorSpace in XObjectImage is missing</message>
 				<arguments>
@@ -27610,7 +27502,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_2" clause="XObjectImage-ColorSpace-Array" testNumber="9"/>
 			<description>Entry ColorSpace with type Array in XObjectImage shall satisfy special case: fn:Not(fn:IsPresent(@ImageMask == true))</description>
-			<test>ColorSpaceHasTypeArray != true || ((((ImageMaskBooleanValue == true) == true &amp;&amp; containsColorSpace == true)) != true)</test>
+			<test>ColorSpaceHasTypeArray != true || (((ImageMaskBooleanValue == true) &amp;&amp; containsColorSpace == true) != true)</test>
 			<error>
 				<message>Entry ColorSpace with type Array in XObjectImage does not satisfy special case: fn:Not(fn:IsPresent(@ImageMask == true))</message>
 				<arguments>
@@ -27635,7 +27527,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_2" clause="XObjectImage-ColorSpace-Name" testNumber="9"/>
 			<description>Entry ColorSpace with type Name in XObjectImage shall satisfy special case: fn:Not(fn:IsPresent(@ImageMask == true))</description>
-			<test>ColorSpaceHasTypeName != true || ((((ImageMaskBooleanValue == true) == true &amp;&amp; containsColorSpace == true)) != true)</test>
+			<test>ColorSpaceHasTypeName != true || (((ImageMaskBooleanValue == true) &amp;&amp; containsColorSpace == true) != true)</test>
 			<error>
 				<message>Entry ColorSpace with type Name in XObjectImage does not satisfy special case: fn:Not(fn:IsPresent(@ImageMask == true))</message>
 				<arguments>
@@ -27707,7 +27599,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_2" clause="XObjectImage-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XObjectImage shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XObjectImage does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -27779,7 +27671,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_2" clause="XObjectImage-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectImage shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in XObjectImage does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -27815,7 +27707,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_2" clause="XObjectImage-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in XObjectImage shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in XObjectImage does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -27864,7 +27756,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_2" clause="XObjectImage-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XObjectImage shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in XObjectImage does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -27925,7 +27817,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_2" clause="XObjectImage-ImageMask-Boolean" testNumber="9"/>
 			<description>Entry ImageMask with type Boolean in XObjectImage shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</description>
-			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentIntegerValue == 1) &amp;&amp; ((containsColorSpace == true)) != true &amp;&amp; ((containsMask == true)) != true) || (ImageMaskBooleanValue == false))</test>
+			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentIntegerValue == 1) &amp;&amp; (containsColorSpace == true) != true &amp;&amp; (containsMask == true) != true) || (ImageMaskBooleanValue == false))</test>
 			<error>
 				<message>Entry ImageMask with type Boolean in XObjectImage does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</message>
 				<arguments>
@@ -27988,18 +27880,6 @@
 			<test>containsName == false || NameHasTypeName == true</test>
 			<error>
 				<message>Entry Name in XObjectImage is not of type Name</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_2" clause="XObjectImage-Name" testNumber="11"/>
-			<description>Entry Name in XObjectImage is required, when fn:IsRequired(fn:IsPDFVersion(1.0))</description>
-			<test>true</test>
-			<error>
-				<message>Entry Name in XObjectImage is missing</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
