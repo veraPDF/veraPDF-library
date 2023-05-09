@@ -1078,7 +1078,7 @@
 		<rule object="AActionLaunch">
 			<id specification="ISO_32000_1_3" clause="ActionLaunch-F" testNumber="11"/>
 			<description>Entry F in ActionLaunch is required, when fn:IsRequired(fn:Not(fn:IsPresent(Win) || fn:IsPresent(Mac) || fn:IsPresent(Unix)))</description>
-			<test>containsF == true || (((containsWin == true) || (containsMac == true) || (containsUnix == true)) != true) == false</test>
+			<test>containsF == true || ((containsWin == true) || (containsMac == true) || (containsUnix == true))</test>
 			<error>
 				<message>Entry F in ActionLaunch is missing</message>
 				<arguments>
@@ -3260,7 +3260,7 @@
 		<rule object="AAnnotCircle">
 			<id specification="ISO_32000_1_3" clause="AnnotCircle-AS" testNumber="11"/>
 			<description>Entry AS in AnnotCircle is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotCircle is missing</message>
 				<arguments>
@@ -3634,7 +3634,7 @@
 		<rule object="AAnnotFileAttachment">
 			<id specification="ISO_32000_1_3" clause="AnnotFileAttachment-AS" testNumber="11"/>
 			<description>Entry AS in AnnotFileAttachment is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotFileAttachment is missing</message>
 				<arguments>
@@ -4032,7 +4032,7 @@
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_3" clause="AnnotFreeText-AS" testNumber="11"/>
 			<description>Entry AS in AnnotFreeText is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotFreeText is missing</message>
 				<arguments>
@@ -4406,7 +4406,7 @@
 		<rule object="AAnnotHighlight">
 			<id specification="ISO_32000_1_3" clause="AnnotHighlight-AS" testNumber="11"/>
 			<description>Entry AS in AnnotHighlight is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotHighlight is missing</message>
 				<arguments>
@@ -4792,7 +4792,7 @@
 		<rule object="AAnnotInk">
 			<id specification="ISO_32000_1_3" clause="AnnotInk-AS" testNumber="11"/>
 			<description>Entry AS in AnnotInk is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotInk is missing</message>
 				<arguments>
@@ -5202,7 +5202,7 @@
 		<rule object="AAnnotLine">
 			<id specification="ISO_32000_1_3" clause="AnnotLine-AS" testNumber="11"/>
 			<description>Entry AS in AnnotLine is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotLine is missing</message>
 				<arguments>
@@ -5636,7 +5636,7 @@
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_3" clause="AnnotLink-AS" testNumber="11"/>
 			<description>Entry AS in AnnotLink is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotLink is missing</message>
 				<arguments>
@@ -6035,7 +6035,7 @@
 		<rule object="AAnnotMovie">
 			<id specification="ISO_32000_1_3" clause="AnnotMovie-AS" testNumber="11"/>
 			<description>Entry AS in AnnotMovie is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotMovie is missing</message>
 				<arguments>
@@ -6385,7 +6385,7 @@
 		<rule object="AAnnotPopup">
 			<id specification="ISO_32000_1_3" clause="AnnotPopup-AS" testNumber="11"/>
 			<description>Entry AS in AnnotPopup is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotPopup is missing</message>
 				<arguments>
@@ -6723,7 +6723,7 @@
 		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_3" clause="AnnotSound-AS" testNumber="11"/>
 			<description>Entry AS in AnnotSound is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotSound is missing</message>
 				<arguments>
@@ -7133,7 +7133,7 @@
 		<rule object="AAnnotSquare">
 			<id specification="ISO_32000_1_3" clause="AnnotSquare-AS" testNumber="11"/>
 			<description>Entry AS in AnnotSquare is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotSquare is missing</message>
 				<arguments>
@@ -7507,7 +7507,7 @@
 		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_3" clause="AnnotStamp-AS" testNumber="11"/>
 			<description>Entry AS in AnnotStamp is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotStamp is missing</message>
 				<arguments>
@@ -7627,7 +7627,7 @@
 		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_3" clause="AnnotStamp-Name-Name" testNumber="9"/>
 			<description>Entry Name with type Name in AnnotStamp shall satisfy special case: fn:Not(fn:IsRequired(fn:IsPresent(IT) &amp;&amp; fn:SinceVersion(2.0 , (@IT != Stamp))))</description>
-			<test>NameHasTypeName != true || ((containsName == true || (containsIT == true) == false) != true)</test>
+			<test>NameHasTypeName != true || (containsName != true &amp;&amp; (containsIT == true))</test>
 			<error>
 				<message>Entry Name with type Name in AnnotStamp does not satisfy special case: fn:Not(fn:IsRequired(fn:IsPresent(IT) &amp;&amp; fn:SinceVersion(2.0 , (@IT != Stamp))))</message>
 				<arguments>
@@ -7881,7 +7881,7 @@
 		<rule object="AAnnotStrikeOut">
 			<id specification="ISO_32000_1_3" clause="AnnotStrikeOut-AS" testNumber="11"/>
 			<description>Entry AS in AnnotStrikeOut is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotStrikeOut is missing</message>
 				<arguments>
@@ -8267,7 +8267,7 @@
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_3" clause="AnnotText-AS" testNumber="11"/>
 			<description>Entry AS in AnnotText is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotText is missing</message>
 				<arguments>
@@ -8702,7 +8702,7 @@
 		<rule object="AAnnotTrapNetwork">
 			<id specification="ISO_32000_1_3" clause="AnnotTrapNetwork-AnnotStates" testNumber="11"/>
 			<description>Entry AnnotStates in AnnotTrapNetwork is required, when fn:IsRequired(fn:IsPresent(Version) &amp;&amp; fn:Not(fn:IsPresent(LastModified)))</description>
-			<test>containsAnnotStates == true || ((containsVersion == true) &amp;&amp; (containsLastModified == true) != true) == false</test>
+			<test>containsAnnotStates == true || ((containsVersion != true) || (containsLastModified == true))</test>
 			<error>
 				<message>Entry AnnotStates in AnnotTrapNetwork is missing</message>
 				<arguments>
@@ -9004,7 +9004,7 @@
 		<rule object="AAnnotTrapNetwork">
 			<id specification="ISO_32000_1_3" clause="AnnotTrapNetwork-Version" testNumber="11"/>
 			<description>Entry Version in AnnotTrapNetwork is required, when fn:IsRequired(fn:IsPresent(AnnotStates) &amp;&amp; fn:Not(fn:IsPresent(LastModified)))</description>
-			<test>containsVersion == true || ((containsAnnotStates == true) &amp;&amp; (containsLastModified == true) != true) == false</test>
+			<test>containsVersion == true || ((containsAnnotStates != true) || (containsLastModified == true))</test>
 			<error>
 				<message>Entry Version in AnnotTrapNetwork is missing</message>
 				<arguments>
@@ -9076,7 +9076,7 @@
 		<rule object="AAnnotUnderline">
 			<id specification="ISO_32000_1_3" clause="AnnotUnderline-AS" testNumber="11"/>
 			<description>Entry AS in AnnotUnderline is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotUnderline is missing</message>
 				<arguments>
@@ -9510,7 +9510,7 @@
 		<rule object="AAnnotWidget">
 			<id specification="ISO_32000_1_3" clause="AnnotWidget-AS" testNumber="11"/>
 			<description>Entry AS in AnnotWidget is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny == true) || (containsAPRAny == true) || (containsAPDAny == true)) == false</test>
+			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
 			<error>
 				<message>Entry AS in AnnotWidget is missing</message>
 				<arguments>
@@ -18021,7 +18021,7 @@
 		<rule object="AEncryptionPublicKey">
 			<id specification="ISO_32000_1_3" clause="EncryptionPublicKey-Recipients" testNumber="11"/>
 			<description>Entry Recipients in EncryptionPublicKey is required, when fn:IsRequired((@SubFilter == adbe.pkcs7.s3) || (@SubFilter == adbe.pkcs7.s4))</description>
-			<test>containsRecipients == true || ((SubFilterNameValue == "adbe.pkcs7.s3") || (SubFilterNameValue == "adbe.pkcs7.s4")) == false</test>
+			<test>containsRecipients == true || ((SubFilterNameValue != "adbe.pkcs7.s3") &amp;&amp; (SubFilterNameValue != "adbe.pkcs7.s4"))</test>
 			<error>
 				<message>Entry Recipients in EncryptionPublicKey is missing</message>
 				<arguments>
@@ -18216,7 +18216,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_3" clause="EncryptionStandard-OE" testNumber="11"/>
 			<description>Entry OE in EncryptionStandard is required, when fn:IsRequired((@R == 5) || (@R == 6))</description>
-			<test>containsOE == true || ((RIntegerValue == 5) || (RIntegerValue == 6)) == false</test>
+			<test>containsOE == true || ((RIntegerValue != 5) &amp;&amp; (RIntegerValue != 6))</test>
 			<error>
 				<message>Entry OE in EncryptionStandard is missing</message>
 				<arguments>
@@ -18276,7 +18276,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_3" clause="EncryptionStandard-Perms" testNumber="11"/>
 			<description>Entry Perms in EncryptionStandard is required, when fn:IsRequired((@R == 5) || (@R == 6))</description>
-			<test>containsPerms == true || ((RIntegerValue == 5) || (RIntegerValue == 6)) == false</test>
+			<test>containsPerms == true || ((RIntegerValue != 5) &amp;&amp; (RIntegerValue != 6))</test>
 			<error>
 				<message>Entry Perms in EncryptionStandard is missing</message>
 				<arguments>
@@ -18312,7 +18312,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_3" clause="EncryptionStandard-R-Integer" testNumber="15"/>
 			<description>Entry R in EncryptionStandard shall have Integer value 2, if this object satisfies condition @V &lt; 2</description>
-			<test>((VIntegerValue &lt; 2) == false || RIntegerValue == 2)</test>
+			<test>(VIntegerValue &gt;= 2) || RIntegerValue == 2</test>
 			<error>
 				<message>Entry R in EncryptionStandard does not have value 2</message>
 				<arguments>
@@ -18324,7 +18324,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_3" clause="EncryptionStandard-R-Integer" testNumber="15"/>
 			<description>Entry R in EncryptionStandard shall have Integer value 3, if this object satisfies condition (@V == 2) || (@V == 3)</description>
-			<test>(((VIntegerValue == 2) || (VIntegerValue == 3)) == false || RIntegerValue == 3)</test>
+			<test>((VIntegerValue != 2) &amp;&amp; (VIntegerValue != 3)) || RIntegerValue == 3</test>
 			<error>
 				<message>Entry R in EncryptionStandard does not have value 3</message>
 				<arguments>
@@ -18336,7 +18336,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_3" clause="EncryptionStandard-R-Integer" testNumber="15"/>
 			<description>Entry R in EncryptionStandard shall have Integer value 4, if this object satisfies condition @V == 4</description>
-			<test>((VIntegerValue == 4) == false || RIntegerValue == 4)</test>
+			<test>(VIntegerValue != 4) || RIntegerValue == 4</test>
 			<error>
 				<message>Entry R in EncryptionStandard does not have value 4</message>
 				<arguments>
@@ -18409,7 +18409,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_3" clause="EncryptionStandard-UE" testNumber="11"/>
 			<description>Entry UE in EncryptionStandard is required, when fn:IsRequired((@R == 5) || (@R == 6))</description>
-			<test>containsUE == true || ((RIntegerValue == 5) || (RIntegerValue == 6)) == false</test>
+			<test>containsUE == true || ((RIntegerValue != 5) &amp;&amp; (RIntegerValue != 6))</test>
 			<error>
 				<message>Entry UE in EncryptionStandard is missing</message>
 				<arguments>
@@ -20546,7 +20546,7 @@
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_3" clause="FileSpecification-EF" testNumber="11"/>
 			<description>Entry EF in FileSpecification is required, when fn:IsRequired(fn:IsPresent(RF))</description>
-			<test>containsEF == true || (containsRF == true) == false</test>
+			<test>containsEF == true || (containsRF != true)</test>
 			<error>
 				<message>Entry EF in FileSpecification is missing</message>
 				<arguments>
@@ -20570,7 +20570,7 @@
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_3" clause="FileSpecification-F" testNumber="11"/>
 			<description>Entry F in FileSpecification is required, when fn:IsRequired(fn:Not(fn:IsPresent(DOS)) &amp;&amp; fn:Not(fn:IsPresent(Mac)) &amp;&amp; fn:Not(fn:IsPresent(Unix)))</description>
-			<test>containsF == true || ((containsDOS == true) != true &amp;&amp; (containsMac == true) != true &amp;&amp; (containsUnix == true) != true) == false</test>
+			<test>containsF == true || ((containsDOS == true) || (containsMac == true) || (containsUnix == true))</test>
 			<error>
 				<message>Entry F in FileSpecification is missing</message>
 				<arguments>
@@ -20666,7 +20666,7 @@
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_3" clause="FileSpecification-Type" testNumber="11"/>
 			<description>Entry Type in FileSpecification is required, when fn:IsRequired(fn:IsPresent(EF) || fn:IsPresent(EP) || fn:IsPresent(RF))</description>
-			<test>containsType == true || ((containsEF == true) || (containsEP == true) || (containsRF == true)) == false</test>
+			<test>containsType == true || ((containsEF != true) &amp;&amp; (containsEP != true) &amp;&amp; (containsRF != true))</test>
 			<error>
 				<message>Entry Type in FileSpecification is missing</message>
 				<arguments>
@@ -20787,7 +20787,7 @@
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_3" clause="FileTrailer-ID" testNumber="11"/>
 			<description>Entry ID in FileTrailer is required, when fn:IsRequired(fn:IsPresent(Encrypt))</description>
-			<test>containsID == true || (containsEncrypt == true) == false</test>
+			<test>containsID == true || (containsEncrypt != true)</test>
 			<error>
 				<message>Entry ID in FileTrailer is missing</message>
 				<arguments>
@@ -20799,7 +20799,7 @@
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_3" clause="FileTrailer-ID-Array" testNumber="16"/>
 			<description>If entry ID with type Array in FileTrailer satisfies condition fn:MustBeDirect(fn:IsPresent(Encrypt)), it shall be direct</description>
-			<test>entryIDHasTypeArray != true || (isentryIDIndirect == false || (containsEncrypt == true) == false)</test>
+			<test>entryIDHasTypeArray != true || (isentryIDIndirect == false || (containsEncrypt != true))</test>
 			<error>
 				<message>Entry ID with type Array in FileTrailer is indirect</message>
 				<arguments>
@@ -22383,7 +22383,7 @@
 		<rule object="AFontDescriptorCIDType0">
 			<id specification="ISO_32000_1_3" clause="FontDescriptorCIDType0-FontFile-Stream" testNumber="9"/>
 			<description>Entry FontFile with type Stream in FontDescriptorCIDType0 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile3)))</description>
-			<test>FontFileHasTypeStream != true || ((containsFontFile3 == true) != true)</test>
+			<test>FontFileHasTypeStream != true || (containsFontFile3 != true)</test>
 			<error>
 				<message>Entry FontFile with type Stream in FontDescriptorCIDType0 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile3)))</message>
 				<arguments>
@@ -22431,7 +22431,7 @@
 		<rule object="AFontDescriptorCIDType0">
 			<id specification="ISO_32000_1_3" clause="FontDescriptorCIDType0-FontFile3-Stream" testNumber="9"/>
 			<description>Entry FontFile3 with type Stream in FontDescriptorCIDType0 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</description>
-			<test>FontFile3HasTypeStream != true || ((containsFontFile == true) != true)</test>
+			<test>FontFile3HasTypeStream != true || (containsFontFile != true)</test>
 			<error>
 				<message>Entry FontFile3 with type Stream in FontDescriptorCIDType0 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</message>
 				<arguments>
@@ -22912,7 +22912,7 @@
 		<rule object="AFontDescriptorCIDType2">
 			<id specification="ISO_32000_1_3" clause="FontDescriptorCIDType2-FontFile-Stream" testNumber="9"/>
 			<description>Entry FontFile with type Stream in FontDescriptorCIDType2 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</description>
-			<test>FontFileHasTypeStream != true || ((containsFontFile2 == true) != true)</test>
+			<test>FontFileHasTypeStream != true || (containsFontFile2 != true)</test>
 			<error>
 				<message>Entry FontFile with type Stream in FontDescriptorCIDType2 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</message>
 				<arguments>
@@ -22960,7 +22960,7 @@
 		<rule object="AFontDescriptorCIDType2">
 			<id specification="ISO_32000_1_3" clause="FontDescriptorCIDType2-FontFile2-Stream" testNumber="9"/>
 			<description>Entry FontFile2 with type Stream in FontDescriptorCIDType2 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</description>
-			<test>FontFile2HasTypeStream != true || ((containsFontFile == true) != true)</test>
+			<test>FontFile2HasTypeStream != true || (containsFontFile != true)</test>
 			<error>
 				<message>Entry FontFile2 with type Stream in FontDescriptorCIDType2 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</message>
 				<arguments>
@@ -23381,7 +23381,7 @@
 		<rule object="AFontDescriptorTrueType">
 			<id specification="ISO_32000_1_3" clause="FontDescriptorTrueType-FontFile-Stream" testNumber="9"/>
 			<description>Entry FontFile with type Stream in FontDescriptorTrueType shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</description>
-			<test>FontFileHasTypeStream != true || ((containsFontFile2 == true) != true)</test>
+			<test>FontFileHasTypeStream != true || (containsFontFile2 != true)</test>
 			<error>
 				<message>Entry FontFile with type Stream in FontDescriptorTrueType does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</message>
 				<arguments>
@@ -23429,7 +23429,7 @@
 		<rule object="AFontDescriptorTrueType">
 			<id specification="ISO_32000_1_3" clause="FontDescriptorTrueType-FontFile2-Stream" testNumber="9"/>
 			<description>Entry FontFile2 with type Stream in FontDescriptorTrueType shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</description>
-			<test>FontFile2HasTypeStream != true || ((containsFontFile == true) != true)</test>
+			<test>FontFile2HasTypeStream != true || (containsFontFile != true)</test>
 			<error>
 				<message>Entry FontFile2 with type Stream in FontDescriptorTrueType does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</message>
 				<arguments>
@@ -24985,7 +24985,7 @@
 		<rule object="AFontFile2">
 			<id specification="ISO_32000_1_3" clause="FontFile2-Length1" testNumber="11"/>
 			<description>Entry Length1 in FontFile2 is required, when fn:IsRequired(parent::parent::@Subtype== TrueType)</description>
-			<test>containsLength1 == true || (parentparentSubtypeNameValue == "TrueType") == false</test>
+			<test>containsLength1 == true || (parentparentSubtypeNameValue != "TrueType")</test>
 			<error>
 				<message>Entry Length1 in FontFile2 is missing</message>
 				<arguments>
@@ -30469,7 +30469,7 @@
 		<rule object="AHalftoneType1">
 			<id specification="ISO_32000_1_3" clause="HalftoneType1-TransferFunction" testNumber="11"/>
 			<description>Entry TransferFunction in HalftoneType1 is required, when fn:IsRequired(parent::@HalftoneType== 5)</description>
-			<test>containsTransferFunction == true || (parentHalftoneTypeIntegerValue == 5) == false</test>
+			<test>containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5)</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType1 is missing</message>
 				<arguments>
@@ -30882,7 +30882,7 @@
 		<rule object="AHalftoneType10">
 			<id specification="ISO_32000_1_3" clause="HalftoneType10-TransferFunction" testNumber="11"/>
 			<description>Entry TransferFunction in HalftoneType10 is required, when fn:IsRequired(parent::@HalftoneType== 5)</description>
-			<test>containsTransferFunction == true || (parentHalftoneTypeIntegerValue == 5) == false</test>
+			<test>containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5)</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType10 is missing</message>
 				<arguments>
@@ -31439,7 +31439,7 @@
 		<rule object="AHalftoneType16">
 			<id specification="ISO_32000_1_3" clause="HalftoneType16-TransferFunction" testNumber="11"/>
 			<description>Entry TransferFunction in HalftoneType16 is required, when fn:IsRequired(parent::@HalftoneType== 5)</description>
-			<test>containsTransferFunction == true || (parentHalftoneTypeIntegerValue == 5) == false</test>
+			<test>containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5)</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType16 is missing</message>
 				<arguments>
@@ -35425,7 +35425,7 @@
 		<rule object="AOPIVersion20Dict">
 			<id specification="ISO_32000_1_3" clause="OPIVersion20Dict-CropRect" testNumber="11"/>
 			<description>Entry CropRect in OPIVersion20Dict is required, when fn:IsRequired(fn:IsPresent(Size))</description>
-			<test>containsCropRect == true || (containsSize == true) == false</test>
+			<test>containsCropRect == true || (containsSize != true)</test>
 			<error>
 				<message>Entry CropRect in OPIVersion20Dict is missing</message>
 				<arguments>
@@ -35619,7 +35619,7 @@
 		<rule object="AOPIVersion20Dict">
 			<id specification="ISO_32000_1_3" clause="OPIVersion20Dict-Size" testNumber="11"/>
 			<description>Entry Size in OPIVersion20Dict is required, when fn:IsRequired(fn:IsPresent(CropRect))</description>
-			<test>containsSize == true || (containsCropRect == true) == false</test>
+			<test>containsSize == true || (containsCropRect != true)</test>
 			<error>
 				<message>Entry Size in OPIVersion20Dict is missing</message>
 				<arguments>
@@ -36091,7 +36091,7 @@
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_3" clause="OutlineItem-A-Dictionary" testNumber="9"/>
 			<description>Entry A with type Dictionary in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(Dest))</description>
-			<test>AHasTypeDictionary != true || ((containsDest == true) != true)</test>
+			<test>AHasTypeDictionary != true || (containsDest != true)</test>
 			<error>
 				<message>Entry A with type Dictionary in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(Dest))</message>
 				<arguments>
@@ -36139,7 +36139,7 @@
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_3" clause="OutlineItem-Dest-Array" testNumber="9"/>
 			<description>Entry Dest with type Array in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
-			<test>DestHasTypeArray != true || ((containsA == true) != true)</test>
+			<test>DestHasTypeArray != true || (containsA != true)</test>
 			<error>
 				<message>Entry Dest with type Array in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
 				<arguments>
@@ -36151,7 +36151,7 @@
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_3" clause="OutlineItem-Dest-Name" testNumber="9"/>
 			<description>Entry Dest with type Name in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
-			<test>DestHasTypeName != true || ((containsA == true) != true)</test>
+			<test>DestHasTypeName != true || (containsA != true)</test>
 			<error>
 				<message>Entry Dest with type Name in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
 				<arguments>
@@ -36163,7 +36163,7 @@
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_3" clause="OutlineItem-Dest-StringByte" testNumber="9"/>
 			<description>Entry Dest with type StringByte in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
-			<test>DestHasTypeStringByte != true || ((containsA == true) != true)</test>
+			<test>DestHasTypeStringByte != true || (containsA != true)</test>
 			<error>
 				<message>Entry Dest with type StringByte in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
 				<arguments>
@@ -36633,7 +36633,7 @@
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_3" clause="PageObject-B-Array" testNumber="9"/>
 			<description>Entry B with type Array in PageObject shall satisfy special case: fn:Not(fn:IsPresent(@Type == Template))</description>
-			<test>BHasTypeArray != true || (((TypeNameValue == "Template") &amp;&amp; containsB == true) != true)</test>
+			<test>BHasTypeArray != true || ((TypeNameValue != "Template") || containsB != true)</test>
 			<error>
 				<message>Entry B with type Array in PageObject does not satisfy special case: fn:Not(fn:IsPresent(@Type == Template))</message>
 				<arguments>
@@ -36765,7 +36765,7 @@
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_3" clause="PageObject-LastModified" testNumber="11"/>
 			<description>Entry LastModified in PageObject is required, when fn:IsRequired(fn:IsPresent(PieceInfo))</description>
-			<test>containsLastModified == true || (containsPieceInfo == true) == false</test>
+			<test>containsLastModified == true || (containsPieceInfo != true)</test>
 			<error>
 				<message>Entry LastModified in PageObject is missing</message>
 				<arguments>
@@ -36837,7 +36837,7 @@
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_3" clause="PageObject-Parent" testNumber="11"/>
 			<description>Entry Parent in PageObject is required, when fn:IsRequired(@Type != Template)</description>
-			<test>containsParent == true || (TypeNameValue != "Template") == false</test>
+			<test>containsParent == true || (TypeNameValue == "Template")</test>
 			<error>
 				<message>Entry Parent in PageObject is missing</message>
 				<arguments>
@@ -36861,7 +36861,7 @@
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_3" clause="PageObject-Parent-Dictionary" testNumber="9"/>
 			<description>Entry Parent with type Dictionary in PageObject shall satisfy special case: fn:Not(fn:IsPresent(@Type == Template))</description>
-			<test>ParentHasTypeDictionary != true || (((TypeNameValue == "Template") &amp;&amp; containsParent == true) != true)</test>
+			<test>ParentHasTypeDictionary != true || ((TypeNameValue != "Template") || containsParent != true)</test>
 			<error>
 				<message>Entry Parent with type Dictionary in PageObject does not satisfy special case: fn:Not(fn:IsPresent(@Type == Template))</message>
 				<arguments>
@@ -36993,7 +36993,7 @@
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_3" clause="PageObject-StructParents" testNumber="11"/>
 			<description>Entry StructParents in PageObject is required, when fn:IsRequired(fn:PageContainsStructContentItems())</description>
-			<test>containsStructParents == true || (pageContainsStructContentItems == true) == false</test>
+			<test>containsStructParents == true || (pageContainsStructContentItems != true)</test>
 			<error>
 				<message>Entry StructParents in PageObject is missing</message>
 				<arguments>
@@ -42259,7 +42259,7 @@
 		<rule object="ASignature">
 			<id specification="ISO_32000_1_3" clause="Signature-Cert" testNumber="11"/>
 			<description>Entry Cert in Signature is required, when fn:IsRequired(@SubFilter == adbe.x509.rsa_sha1)</description>
-			<test>containsCert == true || (SubFilterNameValue == "adbe.x509.rsa_sha1") == false</test>
+			<test>containsCert == true || (SubFilterNameValue != "adbe.x509.rsa_sha1")</test>
 			<error>
 				<message>Entry Cert in Signature is missing</message>
 				<arguments>
@@ -44666,7 +44666,7 @@
 		<rule object="ATrailerIDArray">
 			<id specification="ISO_32000_1_3" clause="TrailerIDArray-0-StringByte" testNumber="16"/>
 			<description>If entry 0 with type StringByte in TrailerIDArray satisfies condition fn:MustBeDirect(fn:IsPresent(trailer::Encrypt)), it shall be direct</description>
-			<test>entry0HasTypeStringByte != true || (isentry0Indirect == false || (containstrailerEncrypt == true) == false)</test>
+			<test>entry0HasTypeStringByte != true || (isentry0Indirect == false || (containstrailerEncrypt != true))</test>
 			<error>
 				<message>Entry 0 with type StringByte in TrailerIDArray is indirect</message>
 				<arguments>
@@ -44690,7 +44690,7 @@
 		<rule object="ATrailerIDArray">
 			<id specification="ISO_32000_1_3" clause="TrailerIDArray-1-StringByte" testNumber="16"/>
 			<description>If entry 1 with type StringByte in TrailerIDArray satisfies condition fn:MustBeDirect(fn:IsPresent(trailer::Encrypt)), it shall be direct</description>
-			<test>entry1HasTypeStringByte != true || (isentry1Indirect == false || (containstrailerEncrypt == true) == false)</test>
+			<test>entry1HasTypeStringByte != true || (isentry1Indirect == false || (containstrailerEncrypt != true))</test>
 			<error>
 				<message>Entry 1 with type StringByte in TrailerIDArray is indirect</message>
 				<arguments>
@@ -47237,7 +47237,7 @@
 		<rule object="AXObjectFormTrapNet">
 			<id specification="ISO_32000_1_3" clause="XObjectFormTrapNet-LastModified" testNumber="11"/>
 			<description>Entry LastModified in XObjectFormTrapNet is required, when fn:IsRequired(fn:IsPresent(PieceInfo))</description>
-			<test>containsLastModified == true || (containsPieceInfo == true) == false</test>
+			<test>containsLastModified == true || (containsPieceInfo != true)</test>
 			<error>
 				<message>Entry LastModified in XObjectFormTrapNet is missing</message>
 				<arguments>
@@ -47855,7 +47855,7 @@
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_3" clause="XObjectFormType1-LastModified" testNumber="11"/>
 			<description>Entry LastModified in XObjectFormType1 is required, when fn:IsRequired(fn:IsPresent(PieceInfo))</description>
-			<test>containsLastModified == true || (containsPieceInfo == true) == false</test>
+			<test>containsLastModified == true || (containsPieceInfo != true)</test>
 			<error>
 				<message>Entry LastModified in XObjectFormType1 is missing</message>
 				<arguments>
@@ -48011,7 +48011,7 @@
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_3" clause="XObjectFormType1-StructParent-Integer" testNumber="9"/>
 			<description>Entry StructParent with type Integer in XObjectFormType1 shall satisfy special case: fn:Not(fn:IsPresent(StructParents))</description>
-			<test>StructParentHasTypeInteger != true || ((containsStructParents == true) != true)</test>
+			<test>StructParentHasTypeInteger != true || (containsStructParents != true)</test>
 			<error>
 				<message>Entry StructParent with type Integer in XObjectFormType1 does not satisfy special case: fn:Not(fn:IsPresent(StructParents))</message>
 				<arguments>
@@ -48035,7 +48035,7 @@
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_3" clause="XObjectFormType1-StructParents-Integer" testNumber="9"/>
 			<description>Entry StructParents with type Integer in XObjectFormType1 shall satisfy special case: fn:Not(fn:IsPresent(StructParent))</description>
-			<test>StructParentsHasTypeInteger != true || ((containsStructParent == true) != true)</test>
+			<test>StructParentsHasTypeInteger != true || (containsStructParent != true)</test>
 			<error>
 				<message>Entry StructParents with type Integer in XObjectFormType1 does not satisfy special case: fn:Not(fn:IsPresent(StructParent))</message>
 				<arguments>
@@ -48205,7 +48205,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_3" clause="XObjectImage-BitsPerComponent-Integer" testNumber="15"/>
 			<description>Entry BitsPerComponent in XObjectImage shall have Integer value 1, if this object satisfies condition (@Filter == CCITTFaxDecode) || (@Filter == JBIG2Decode) || (@ImageMask == true)</description>
-			<test>(((FilterNameValue == "CCITTFaxDecode") || (FilterNameValue == "JBIG2Decode") || (ImageMaskBooleanValue == true)) == false || BitsPerComponentIntegerValue == 1)</test>
+			<test>((FilterNameValue != "CCITTFaxDecode") &amp;&amp; (FilterNameValue != "JBIG2Decode") &amp;&amp; (ImageMaskBooleanValue != true)) || BitsPerComponentIntegerValue == 1</test>
 			<error>
 				<message>Entry BitsPerComponent in XObjectImage does not have value 1</message>
 				<arguments>
@@ -48217,7 +48217,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_3" clause="XObjectImage-BitsPerComponent-Integer" testNumber="15"/>
 			<description>Entry BitsPerComponent in XObjectImage shall have Integer value 8, if this object satisfies condition (@Filter == RunLengthDecode) || (@Filter == DCTDecode)</description>
-			<test>(((FilterNameValue == "RunLengthDecode") || (FilterNameValue == "DCTDecode")) == false || BitsPerComponentIntegerValue == 8)</test>
+			<test>((FilterNameValue != "RunLengthDecode") &amp;&amp; (FilterNameValue != "DCTDecode")) || BitsPerComponentIntegerValue == 8</test>
 			<error>
 				<message>Entry BitsPerComponent in XObjectImage does not have value 8</message>
 				<arguments>
@@ -48278,7 +48278,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_3" clause="XObjectImage-ColorSpace-Array" testNumber="9"/>
 			<description>Entry ColorSpace with type Array in XObjectImage shall satisfy special case: fn:Not(fn:IsPresent(@ImageMask == true))</description>
-			<test>ColorSpaceHasTypeArray != true || (((ImageMaskBooleanValue == true) &amp;&amp; containsColorSpace == true) != true)</test>
+			<test>ColorSpaceHasTypeArray != true || ((ImageMaskBooleanValue != true) || containsColorSpace != true)</test>
 			<error>
 				<message>Entry ColorSpace with type Array in XObjectImage does not satisfy special case: fn:Not(fn:IsPresent(@ImageMask == true))</message>
 				<arguments>
@@ -48303,7 +48303,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_3" clause="XObjectImage-ColorSpace-Name" testNumber="9"/>
 			<description>Entry ColorSpace with type Name in XObjectImage shall satisfy special case: fn:Not(fn:IsPresent(@ImageMask == true))</description>
-			<test>ColorSpaceHasTypeName != true || (((ImageMaskBooleanValue == true) &amp;&amp; containsColorSpace == true) != true)</test>
+			<test>ColorSpaceHasTypeName != true || ((ImageMaskBooleanValue != true) || containsColorSpace != true)</test>
 			<error>
 				<message>Entry ColorSpace with type Name in XObjectImage does not satisfy special case: fn:Not(fn:IsPresent(@ImageMask == true))</message>
 				<arguments>
@@ -48605,7 +48605,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_3" clause="XObjectImage-ImageMask-Boolean" testNumber="9"/>
 			<description>Entry ImageMask with type Boolean in XObjectImage shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</description>
-			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentIntegerValue == 1) &amp;&amp; (containsColorSpace == true) != true &amp;&amp; (containsMask == true) != true) || (ImageMaskBooleanValue == false))</test>
+			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentIntegerValue == 1) &amp;&amp; (containsColorSpace != true) &amp;&amp; (containsMask != true)) || (ImageMaskBooleanValue == false))</test>
 			<error>
 				<message>Entry ImageMask with type Boolean in XObjectImage does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</message>
 				<arguments>
@@ -48701,7 +48701,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_3" clause="XObjectImage-Mask-Array" testNumber="9"/>
 			<description>Entry Mask with type Array in XObjectImage shall satisfy special case: fn:Not(fn:IsPresent(@ImageMask == true))</description>
-			<test>MaskHasTypeArray != true || (((ImageMaskBooleanValue == true) &amp;&amp; containsMask == true) != true)</test>
+			<test>MaskHasTypeArray != true || ((ImageMaskBooleanValue != true) || containsMask != true)</test>
 			<error>
 				<message>Entry Mask with type Array in XObjectImage does not satisfy special case: fn:Not(fn:IsPresent(@ImageMask == true))</message>
 				<arguments>
@@ -48725,7 +48725,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_3" clause="XObjectImage-Mask-Stream" testNumber="9"/>
 			<description>Entry Mask with type Stream in XObjectImage shall satisfy special case: fn:Not(fn:IsPresent(@ImageMask == true))</description>
-			<test>MaskHasTypeStream != true || (((ImageMaskBooleanValue == true) &amp;&amp; containsMask == true) != true)</test>
+			<test>MaskHasTypeStream != true || ((ImageMaskBooleanValue != true) || containsMask != true)</test>
 			<error>
 				<message>Entry Mask with type Stream in XObjectImage does not satisfy special case: fn:Not(fn:IsPresent(@ImageMask == true))</message>
 				<arguments>
@@ -48785,7 +48785,7 @@
 		<rule object="AXObjectImage" deferred="true">
 			<id specification="ISO_32000_1_3" clause="XObjectImage-StructParent" testNumber="11"/>
 			<description>Entry StructParent in XObjectImage is required, when fn:IsRequired(fn:ImageIsStructContentItem())</description>
-			<test>containsStructParent == true || (imageIsStructContentItem == true &amp;&amp; SubtypeNameValue == "Image") == false</test>
+			<test>containsStructParent == true || (imageIsStructContentItem != true || SubtypeNameValue != "Image")</test>
 			<error>
 				<message>Entry StructParent in XObjectImage is missing</message>
 				<arguments>
@@ -49270,7 +49270,7 @@
 		<rule object="AXObjectImageMask">
 			<id specification="ISO_32000_1_3" clause="XObjectImageMask-ImageMask-Boolean" testNumber="9"/>
 			<description>Entry ImageMask with type Boolean in XObjectImageMask shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</description>
-			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentIntegerValue == 1) &amp;&amp; (containsColorSpace == true) != true &amp;&amp; (containsMask == true) != true) || (ImageMaskBooleanValue == false))</test>
+			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentIntegerValue == 1) &amp;&amp; (containsColorSpace != true) &amp;&amp; (containsMask != true)) || (ImageMaskBooleanValue == false))</test>
 			<error>
 				<message>Entry ImageMask with type Boolean in XObjectImageMask does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</message>
 				<arguments>
@@ -49378,7 +49378,7 @@
 		<rule object="AXObjectImageMask" deferred="true">
 			<id specification="ISO_32000_1_3" clause="XObjectImageMask-StructParent" testNumber="11"/>
 			<description>Entry StructParent in XObjectImageMask is required, when fn:IsRequired(fn:ImageIsStructContentItem())</description>
-			<test>containsStructParent == true || (imageIsStructContentItem == true &amp;&amp; SubtypeNameValue == "Image") == false</test>
+			<test>containsStructParent == true || (imageIsStructContentItem != true || SubtypeNameValue != "Image")</test>
 			<error>
 				<message>Entry StructParent in XObjectImageMask is missing</message>
 				<arguments>
