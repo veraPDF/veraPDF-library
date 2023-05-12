@@ -1687,7 +1687,7 @@
 		<rule object="AActionRendition">
 			<id specification="ISO_32000_1_5" clause="ActionRendition-AN" testNumber="11"/>
 			<description>Entry AN in ActionRendition is required, when fn:IsRequired((@OP &gt;= 0) &amp;&amp; (@OP &lt;= 4))</description>
-			<test>containsAN == true || ((OPIntegerValue &lt; 0) || (OPIntegerValue &gt; 4))</test>
+			<test>OPHasTypeInteger == false || (containsAN == true || ((OPIntegerValue &lt; 0) || (OPIntegerValue &gt; 4)))</test>
 			<error>
 				<message>Entry AN in ActionRendition is missing</message>
 				<arguments>
@@ -1831,7 +1831,7 @@
 		<rule object="AActionRendition">
 			<id specification="ISO_32000_1_5" clause="ActionRendition-R" testNumber="11"/>
 			<description>Entry R in ActionRendition is required, when fn:IsRequired((@OP == 0) || (@OP == 4))</description>
-			<test>containsR == true || ((OPIntegerValue != 0) &amp;&amp; (OPIntegerValue != 4))</test>
+			<test>OPHasTypeInteger == false || (containsR == true || ((OPIntegerValue != 0) &amp;&amp; (OPIntegerValue != 4)))</test>
 			<error>
 				<message>Entry R in ActionRendition is missing</message>
 				<arguments>
@@ -2912,7 +2912,7 @@
 		<rule object="AActionThread">
 			<id specification="ISO_32000_1_5" clause="ActionThread-D-Integer" testNumber="14"/>
 			<description>Entry D with type Integer in ActionThread shall satisfy possible value predicate: fn:Eval((@D &gt;= 0) &amp;&amp; (@D &lt; fn:ArrayLength(trailer::Catalog::Threads)))</description>
-			<test>DHasTypeInteger != true || (DIntegerValue &gt;= 0) &amp;&amp; (containstrailerCatalogThreads == false || (DIntegerValue &lt; trailerCatalogThreadsArraySize))</test>
+			<test>DHasTypeInteger != true || (DIntegerValue &gt;= 0) &amp;&amp; (trailerCatalogThreadsHasTypeArray == false || (DIntegerValue &lt; trailerCatalogThreadsArraySize))</test>
 			<error>
 				<message>Entry D with type Integer in ActionThread does not satisfy possible value predicate: fn:Eval((@D &gt;= 0) &amp;&amp; (@D &lt; fn:ArrayLength(trailer::Catalog::Threads)))</message>
 				<arguments>
@@ -4586,7 +4586,7 @@
 		<rule object="AAnnotCaret">
 			<id specification="ISO_32000_1_5" clause="AnnotCaret-RD-Rectangle" testNumber="9"/>
 			<description>Entry RD with type Rectangle in AnnotCaret shall satisfy special case: fn:Eval((RD::@0&gt;= 0) &amp;&amp; (RD::@1&gt;= 0) &amp;&amp; (RD::@2&gt;= 0) &amp;&amp; (RD::@3&gt;= 0) &amp;&amp; ((RD::@1+ RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0+ RD::@2) &lt; fn:RectWidth(Rect)))</description>
-			<test>RDHasTypeRectangle != true || ((RD0NumberValue &gt;= 0) &amp;&amp; (RD1NumberValue &gt;= 0) &amp;&amp; (RD2NumberValue &gt;= 0) &amp;&amp; (RD3NumberValue &gt;= 0) &amp;&amp; ((RD1NumberValue + RD3NumberValue) &lt; RectRectHeight) &amp;&amp; ((RD0NumberValue + RD2NumberValue) &lt; RectRectWidth))</test>
+			<test>RDHasTypeRectangle != true || ((RD0NumberValue &gt;= 0) &amp;&amp; (RD1NumberValue &gt;= 0) &amp;&amp; (RD2NumberValue &gt;= 0) &amp;&amp; (RD3NumberValue &gt;= 0) &amp;&amp; (RectHasTypeRectangle == false || ((RD1NumberValue + RD3NumberValue) &lt; RectRectHeight)) &amp;&amp; (RectHasTypeRectangle == false || ((RD0NumberValue + RD2NumberValue) &lt; RectRectWidth)))</test>
 			<error>
 				<message>Entry RD with type Rectangle in AnnotCaret does not satisfy special case: fn:Eval((RD::@0&gt;= 0) &amp;&amp; (RD::@1&gt;= 0) &amp;&amp; (RD::@2&gt;= 0) &amp;&amp; (RD::@3&gt;= 0) &amp;&amp; ((RD::@1+ RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0+ RD::@2) &lt; fn:RectWidth(Rect)))</message>
 				<arguments>
@@ -5213,7 +5213,7 @@
 		<rule object="AAnnotCircle">
 			<id specification="ISO_32000_1_5" clause="AnnotCircle-RD-Rectangle" testNumber="9"/>
 			<description>Entry RD with type Rectangle in AnnotCircle shall satisfy special case: fn:Eval((RD::@0&gt;= 0) &amp;&amp; (RD::@1&gt;= 0) &amp;&amp; (RD::@2&gt;= 0) &amp;&amp; (RD::@3&gt;= 0) &amp;&amp; ((RD::@1+ RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0+ RD::@2) &lt; fn:RectWidth(Rect)))</description>
-			<test>RDHasTypeRectangle != true || ((RD0NumberValue &gt;= 0) &amp;&amp; (RD1NumberValue &gt;= 0) &amp;&amp; (RD2NumberValue &gt;= 0) &amp;&amp; (RD3NumberValue &gt;= 0) &amp;&amp; ((RD1NumberValue + RD3NumberValue) &lt; RectRectHeight) &amp;&amp; ((RD0NumberValue + RD2NumberValue) &lt; RectRectWidth))</test>
+			<test>RDHasTypeRectangle != true || ((RD0NumberValue &gt;= 0) &amp;&amp; (RD1NumberValue &gt;= 0) &amp;&amp; (RD2NumberValue &gt;= 0) &amp;&amp; (RD3NumberValue &gt;= 0) &amp;&amp; (RectHasTypeRectangle == false || ((RD1NumberValue + RD3NumberValue) &lt; RectRectHeight)) &amp;&amp; (RectHasTypeRectangle == false || ((RD0NumberValue + RD2NumberValue) &lt; RectRectWidth)))</test>
 			<error>
 				<message>Entry RD with type Rectangle in AnnotCircle does not satisfy special case: fn:Eval((RD::@0&gt;= 0) &amp;&amp; (RD::@1&gt;= 0) &amp;&amp; (RD::@2&gt;= 0) &amp;&amp; (RD::@3&gt;= 0) &amp;&amp; ((RD::@1+ RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0+ RD::@2) &lt; fn:RectWidth(Rect)))</message>
 				<arguments>
@@ -12479,7 +12479,7 @@
 		<rule object="AAnnotSquare">
 			<id specification="ISO_32000_1_5" clause="AnnotSquare-RD-Rectangle" testNumber="9"/>
 			<description>Entry RD with type Rectangle in AnnotSquare shall satisfy special case: fn:Eval((RD::@0&gt;= 0) &amp;&amp; (RD::@1&gt;= 0) &amp;&amp; (RD::@2&gt;= 0) &amp;&amp; (RD::@3&gt;= 0) &amp;&amp; ((RD::@1+ RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0+ RD::@2) &lt; fn:RectWidth(Rect)))</description>
-			<test>RDHasTypeRectangle != true || ((RD0NumberValue &gt;= 0) &amp;&amp; (RD1NumberValue &gt;= 0) &amp;&amp; (RD2NumberValue &gt;= 0) &amp;&amp; (RD3NumberValue &gt;= 0) &amp;&amp; ((RD1NumberValue + RD3NumberValue) &lt; RectRectHeight) &amp;&amp; ((RD0NumberValue + RD2NumberValue) &lt; RectRectWidth))</test>
+			<test>RDHasTypeRectangle != true || ((RD0NumberValue &gt;= 0) &amp;&amp; (RD1NumberValue &gt;= 0) &amp;&amp; (RD2NumberValue &gt;= 0) &amp;&amp; (RD3NumberValue &gt;= 0) &amp;&amp; (RectHasTypeRectangle == false || ((RD1NumberValue + RD3NumberValue) &lt; RectRectHeight)) &amp;&amp; (RectHasTypeRectangle == false || ((RD0NumberValue + RD2NumberValue) &lt; RectRectWidth)))</test>
 			<error>
 				<message>Entry RD with type Rectangle in AnnotSquare does not satisfy special case: fn:Eval((RD::@0&gt;= 0) &amp;&amp; (RD::@1&gt;= 0) &amp;&amp; (RD::@2&gt;= 0) &amp;&amp; (RD::@3&gt;= 0) &amp;&amp; ((RD::@1+ RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0+ RD::@2) &lt; fn:RectWidth(Rect)))</message>
 				<arguments>
@@ -23020,7 +23020,7 @@
 		<rule object="ACMapStream">
 			<id specification="ISO_32000_1_5" clause="CMapStream-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in CMapStream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in CMapStream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -23092,7 +23092,7 @@
 		<rule object="ACMapStream">
 			<id specification="ISO_32000_1_5" clause="CMapStream-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in CMapStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in CMapStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -23128,7 +23128,7 @@
 		<rule object="ACMapStream">
 			<id specification="ISO_32000_1_5" clause="CMapStream-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in CMapStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in CMapStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -23177,7 +23177,7 @@
 		<rule object="ACMapStream">
 			<id specification="ISO_32000_1_5" clause="CMapStream-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in CMapStream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in CMapStream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -26953,7 +26953,7 @@
 		<rule object="AEmbeddedFileStream">
 			<id specification="ISO_32000_1_5" clause="EmbeddedFileStream-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in EmbeddedFileStream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in EmbeddedFileStream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -27025,7 +27025,7 @@
 		<rule object="AEmbeddedFileStream">
 			<id specification="ISO_32000_1_5" clause="EmbeddedFileStream-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in EmbeddedFileStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in EmbeddedFileStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -27061,7 +27061,7 @@
 		<rule object="AEmbeddedFileStream">
 			<id specification="ISO_32000_1_5" clause="EmbeddedFileStream-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in EmbeddedFileStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in EmbeddedFileStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -27110,7 +27110,7 @@
 		<rule object="AEmbeddedFileStream">
 			<id specification="ISO_32000_1_5" clause="EmbeddedFileStream-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in EmbeddedFileStream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in EmbeddedFileStream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -27780,7 +27780,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_5" clause="EncryptionStandard-OE" testNumber="11"/>
 			<description>Entry OE in EncryptionStandard is required, when fn:IsRequired((@R == 5) || (@R == 6))</description>
-			<test>containsOE == true || ((RIntegerValue != 5) &amp;&amp; (RIntegerValue != 6))</test>
+			<test>RHasTypeInteger == false || (containsOE == true || ((RIntegerValue != 5) &amp;&amp; (RIntegerValue != 6)))</test>
 			<error>
 				<message>Entry OE in EncryptionStandard is missing</message>
 				<arguments>
@@ -27840,7 +27840,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_5" clause="EncryptionStandard-Perms" testNumber="11"/>
 			<description>Entry Perms in EncryptionStandard is required, when fn:IsRequired((@R == 5) || (@R == 6))</description>
-			<test>containsPerms == true || ((RIntegerValue != 5) &amp;&amp; (RIntegerValue != 6))</test>
+			<test>RHasTypeInteger == false || (containsPerms == true || ((RIntegerValue != 5) &amp;&amp; (RIntegerValue != 6)))</test>
 			<error>
 				<message>Entry Perms in EncryptionStandard is missing</message>
 				<arguments>
@@ -27876,7 +27876,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_5" clause="EncryptionStandard-R-Integer" testNumber="15"/>
 			<description>Entry R in EncryptionStandard shall have Integer value 2, if this object satisfies condition @V &lt; 2</description>
-			<test>(VIntegerValue &gt;= 2) || RIntegerValue == 2</test>
+			<test>VHasTypeInteger == false || ((VIntegerValue &gt;= 2) || RIntegerValue == 2)</test>
 			<error>
 				<message>Entry R in EncryptionStandard does not have value 2</message>
 				<arguments>
@@ -27888,7 +27888,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_5" clause="EncryptionStandard-R-Integer" testNumber="15"/>
 			<description>Entry R in EncryptionStandard shall have Integer value 3, if this object satisfies condition (@V == 2) || (@V == 3)</description>
-			<test>((VIntegerValue != 2) &amp;&amp; (VIntegerValue != 3)) || RIntegerValue == 3</test>
+			<test>VHasTypeInteger == false || (((VIntegerValue != 2) &amp;&amp; (VIntegerValue != 3)) || RIntegerValue == 3)</test>
 			<error>
 				<message>Entry R in EncryptionStandard does not have value 3</message>
 				<arguments>
@@ -27900,7 +27900,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_5" clause="EncryptionStandard-R-Integer" testNumber="15"/>
 			<description>Entry R in EncryptionStandard shall have Integer value 4, if this object satisfies condition @V == 4</description>
-			<test>(VIntegerValue != 4) || RIntegerValue == 4</test>
+			<test>VHasTypeInteger == false || ((VIntegerValue != 4) || RIntegerValue == 4)</test>
 			<error>
 				<message>Entry R in EncryptionStandard does not have value 4</message>
 				<arguments>
@@ -27997,7 +27997,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_5" clause="EncryptionStandard-UE" testNumber="11"/>
 			<description>Entry UE in EncryptionStandard is required, when fn:IsRequired((@R == 5) || (@R == 6))</description>
-			<test>containsUE == true || ((RIntegerValue != 5) &amp;&amp; (RIntegerValue != 6))</test>
+			<test>RHasTypeInteger == false || (containsUE == true || ((RIntegerValue != 5) &amp;&amp; (RIntegerValue != 6)))</test>
 			<error>
 				<message>Entry UE in EncryptionStandard is missing</message>
 				<arguments>
@@ -29530,7 +29530,7 @@
 		<rule object="AFieldChoice">
 			<id specification="ISO_32000_1_5" clause="FieldChoice-TI-Integer" testNumber="14"/>
 			<description>Entry TI with type Integer in FieldChoice shall satisfy possible value predicate: fn:Eval((@TI &gt;= 0) &amp;&amp; (@TI &lt; fn:ArrayLength(Opt)))</description>
-			<test>TIHasTypeInteger != true || (TIIntegerValue &gt;= 0) &amp;&amp; (containsOpt == false || (TIIntegerValue &lt; OptArraySize))</test>
+			<test>TIHasTypeInteger != true || (TIIntegerValue &gt;= 0) &amp;&amp; (OptHasTypeArray == false || (TIIntegerValue &lt; OptArraySize))</test>
 			<error>
 				<message>Entry TI with type Integer in FieldChoice does not satisfy possible value predicate: fn:Eval((@TI &gt;= 0) &amp;&amp; (@TI &lt; fn:ArrayLength(Opt)))</message>
 				<arguments>
@@ -31705,7 +31705,7 @@
 		<rule object="AFloatingWindowParameters">
 			<id specification="ISO_32000_1_5" clause="FloatingWindowParameters-D-Array" testNumber="9"/>
 			<description>Entry D with type Array in FloatingWindowParameters shall satisfy special case: fn:Eval((D::@0&gt;= 0) &amp;&amp; (D::@1&gt;= 0))</description>
-			<test>DHasTypeArray != true || ((D0IntegerValue &gt;= 0) &amp;&amp; (D1IntegerValue &gt;= 0))</test>
+			<test>DHasTypeArray != true || ((D0HasTypeInteger == false || (D0IntegerValue &gt;= 0)) &amp;&amp; (D1HasTypeInteger == false || (D1IntegerValue &gt;= 0)))</test>
 			<error>
 				<message>Entry D with type Array in FloatingWindowParameters does not satisfy special case: fn:Eval((D::@0&gt;= 0) &amp;&amp; (D::@1&gt;= 0))</message>
 				<arguments>
@@ -35187,7 +35187,7 @@
 		<rule object="AFontFile">
 			<id specification="ISO_32000_1_5" clause="FontFile-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in FontFile shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in FontFile does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -35259,7 +35259,7 @@
 		<rule object="AFontFile">
 			<id specification="ISO_32000_1_5" clause="FontFile-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in FontFile shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in FontFile does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -35295,7 +35295,7 @@
 		<rule object="AFontFile">
 			<id specification="ISO_32000_1_5" clause="FontFile-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in FontFile shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in FontFile does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -35344,7 +35344,7 @@
 		<rule object="AFontFile">
 			<id specification="ISO_32000_1_5" clause="FontFile-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in FontFile shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in FontFile does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -35562,7 +35562,7 @@
 		<rule object="AFontFile2">
 			<id specification="ISO_32000_1_5" clause="FontFile2-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in FontFile2 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in FontFile2 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -35634,7 +35634,7 @@
 		<rule object="AFontFile2">
 			<id specification="ISO_32000_1_5" clause="FontFile2-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in FontFile2 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in FontFile2 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -35670,7 +35670,7 @@
 		<rule object="AFontFile2">
 			<id specification="ISO_32000_1_5" clause="FontFile2-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in FontFile2 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in FontFile2 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -35719,7 +35719,7 @@
 		<rule object="AFontFile2">
 			<id specification="ISO_32000_1_5" clause="FontFile2-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in FontFile2 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in FontFile2 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -35936,7 +35936,7 @@
 		<rule object="AFontFile3CIDType0">
 			<id specification="ISO_32000_1_5" clause="FontFile3CIDType0-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in FontFile3CIDType0 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in FontFile3CIDType0 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -36008,7 +36008,7 @@
 		<rule object="AFontFile3CIDType0">
 			<id specification="ISO_32000_1_5" clause="FontFile3CIDType0-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in FontFile3CIDType0 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in FontFile3CIDType0 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -36044,7 +36044,7 @@
 		<rule object="AFontFile3CIDType0">
 			<id specification="ISO_32000_1_5" clause="FontFile3CIDType0-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in FontFile3CIDType0 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in FontFile3CIDType0 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -36093,7 +36093,7 @@
 		<rule object="AFontFile3CIDType0">
 			<id specification="ISO_32000_1_5" clause="FontFile3CIDType0-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in FontFile3CIDType0 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in FontFile3CIDType0 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -36311,7 +36311,7 @@
 		<rule object="AFontFile3Type1">
 			<id specification="ISO_32000_1_5" clause="FontFile3Type1-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in FontFile3Type1 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in FontFile3Type1 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -36383,7 +36383,7 @@
 		<rule object="AFontFile3Type1">
 			<id specification="ISO_32000_1_5" clause="FontFile3Type1-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in FontFile3Type1 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in FontFile3Type1 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -36419,7 +36419,7 @@
 		<rule object="AFontFile3Type1">
 			<id specification="ISO_32000_1_5" clause="FontFile3Type1-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in FontFile3Type1 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in FontFile3Type1 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -36468,7 +36468,7 @@
 		<rule object="AFontFile3Type1">
 			<id specification="ISO_32000_1_5" clause="FontFile3Type1-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in FontFile3Type1 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in FontFile3Type1 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -36698,7 +36698,7 @@
 		<rule object="AFontFileType1">
 			<id specification="ISO_32000_1_5" clause="FontFileType1-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in FontFileType1 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in FontFileType1 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -36770,7 +36770,7 @@
 		<rule object="AFontFileType1">
 			<id specification="ISO_32000_1_5" clause="FontFileType1-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in FontFileType1 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in FontFileType1 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -36806,7 +36806,7 @@
 		<rule object="AFontFileType1">
 			<id specification="ISO_32000_1_5" clause="FontFileType1-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in FontFileType1 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in FontFileType1 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -36855,7 +36855,7 @@
 		<rule object="AFontFileType1">
 			<id specification="ISO_32000_1_5" clause="FontFileType1-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in FontFileType1 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in FontFileType1 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -38272,7 +38272,7 @@
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_5" clause="FontType1-Widths-Array" testNumber="9"/>
 			<description>Entry Widths with type Array in FontType1 shall satisfy special case: fn:Eval(fn:ArrayLength(Widths) == (1 + (@LastChar - @FirstChar)))</description>
-			<test>WidthsHasTypeArray != true || (WidthsArraySize == (1 + (LastCharIntegerValue - FirstCharIntegerValue)))</test>
+			<test>WidthsHasTypeArray != true || (LastCharHasTypeInteger == false || FirstCharHasTypeInteger == false || WidthsArraySize == (1 + (LastCharIntegerValue - FirstCharIntegerValue)))</test>
 			<error>
 				<message>Entry Widths with type Array in FontType1 does not satisfy special case: fn:Eval(fn:ArrayLength(Widths) == (1 + (@LastChar - @FirstChar)))</message>
 				<arguments>
@@ -38694,7 +38694,7 @@
 		<rule object="AFontType3">
 			<id specification="ISO_32000_1_5" clause="FontType3-Widths-Array" testNumber="9"/>
 			<description>Entry Widths with type Array in FontType3 shall satisfy special case: fn:Eval(fn:ArrayLength(Widths) == (1 + (@LastChar - @FirstChar)))</description>
-			<test>WidthsHasTypeArray != true || (WidthsArraySize == (1 + (LastCharIntegerValue - FirstCharIntegerValue)))</test>
+			<test>WidthsHasTypeArray != true || (LastCharHasTypeInteger == false || FirstCharHasTypeInteger == false || WidthsArraySize == (1 + (LastCharIntegerValue - FirstCharIntegerValue)))</test>
 			<error>
 				<message>Entry Widths with type Array in FontType3 does not satisfy special case: fn:Eval(fn:ArrayLength(Widths) == (1 + (@LastChar - @FirstChar)))</message>
 				<arguments>
@@ -38803,7 +38803,7 @@
 		<rule object="AFunctionType0">
 			<id specification="ISO_32000_1_5" clause="FunctionType0-Decode-Array" testNumber="9"/>
 			<description>Entry Decode with type Array in FunctionType0 shall satisfy special case: fn:Eval(fn:ArrayLength(Decode) == fn:ArrayLength(Range))</description>
-			<test>DecodeHasTypeArray != true || (containsRange == false || DecodeArraySize == RangeArraySize)</test>
+			<test>DecodeHasTypeArray != true || (RangeHasTypeArray == false || DecodeArraySize == RangeArraySize)</test>
 			<error>
 				<message>Entry Decode with type Array in FunctionType0 does not satisfy special case: fn:Eval(fn:ArrayLength(Decode) == fn:ArrayLength(Range))</message>
 				<arguments>
@@ -38851,7 +38851,7 @@
 		<rule object="AFunctionType0">
 			<id specification="ISO_32000_1_5" clause="FunctionType0-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in FunctionType0 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in FunctionType0 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -38935,7 +38935,7 @@
 		<rule object="AFunctionType0">
 			<id specification="ISO_32000_1_5" clause="FunctionType0-Encode-Array" testNumber="9"/>
 			<description>Entry Encode with type Array in FunctionType0 shall satisfy special case: fn:Eval(fn:ArrayLength(Encode) == (2 * fn:ArrayLength(Size)))</description>
-			<test>EncodeHasTypeArray != true || (containsSize == false || EncodeArraySize == (2 * SizeArraySize))</test>
+			<test>EncodeHasTypeArray != true || (SizeHasTypeArray == false || EncodeArraySize == (2 * SizeArraySize))</test>
 			<error>
 				<message>Entry Encode with type Array in FunctionType0 does not satisfy special case: fn:Eval(fn:ArrayLength(Encode) == (2 * fn:ArrayLength(Size)))</message>
 				<arguments>
@@ -39007,7 +39007,7 @@
 		<rule object="AFunctionType0">
 			<id specification="ISO_32000_1_5" clause="FunctionType0-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in FunctionType0 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in FunctionType0 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -39043,7 +39043,7 @@
 		<rule object="AFunctionType0">
 			<id specification="ISO_32000_1_5" clause="FunctionType0-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in FunctionType0 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in FunctionType0 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -39092,7 +39092,7 @@
 		<rule object="AFunctionType0">
 			<id specification="ISO_32000_1_5" clause="FunctionType0-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in FunctionType0 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in FunctionType0 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -39287,7 +39287,7 @@
 		<rule object="AFunctionType0">
 			<id specification="ISO_32000_1_5" clause="FunctionType0-Size-Array" testNumber="9"/>
 			<description>Entry Size with type Array in FunctionType0 shall satisfy special case: fn:Eval(fn:ArrayLength(Domain) == (2 * fn:ArrayLength(Size)))</description>
-			<test>SizeHasTypeArray != true || (containsDomain == false || DomainArraySize == (2 * SizeArraySize))</test>
+			<test>SizeHasTypeArray != true || (DomainHasTypeArray == false || DomainArraySize == (2 * SizeArraySize))</test>
 			<error>
 				<message>Entry Size with type Array in FunctionType0 does not satisfy special case: fn:Eval(fn:ArrayLength(Domain) == (2 * fn:ArrayLength(Size)))</message>
 				<arguments>
@@ -39335,7 +39335,7 @@
 		<rule object="AFunctionType2">
 			<id specification="ISO_32000_1_5" clause="FunctionType2-C0-Array" testNumber="9"/>
 			<description>Entry C0 with type Array in FunctionType2 shall satisfy special case: fn:Eval(fn:ArrayLength(C0) == fn:ArrayLength(C1))</description>
-			<test>C0HasTypeArray != true || (containsC1 == false || C0ArraySize == C1ArraySize)</test>
+			<test>C0HasTypeArray != true || (C1HasTypeArray == false || C0ArraySize == C1ArraySize)</test>
 			<error>
 				<message>Entry C0 with type Array in FunctionType2 does not satisfy special case: fn:Eval(fn:ArrayLength(C0) == fn:ArrayLength(C1))</message>
 				<arguments>
@@ -39371,7 +39371,7 @@
 		<rule object="AFunctionType2">
 			<id specification="ISO_32000_1_5" clause="FunctionType2-C1-Array" testNumber="9"/>
 			<description>Entry C1 with type Array in FunctionType2 shall satisfy special case: fn:Eval(fn:ArrayLength(C1) == fn:ArrayLength(C0))</description>
-			<test>C1HasTypeArray != true || (containsC0 == false || C1ArraySize == C0ArraySize)</test>
+			<test>C1HasTypeArray != true || (C0HasTypeArray == false || C1ArraySize == C0ArraySize)</test>
 			<error>
 				<message>Entry C1 with type Array in FunctionType2 does not satisfy special case: fn:Eval(fn:ArrayLength(C1) == fn:ArrayLength(C0))</message>
 				<arguments>
@@ -39576,7 +39576,7 @@
 		<rule object="AFunctionType3">
 			<id specification="ISO_32000_1_5" clause="FunctionType3-Bounds-Array" testNumber="9"/>
 			<description>Entry Bounds with type Array in FunctionType3 shall satisfy special case: fn:Eval(fn:ArrayLength(Bounds) == (fn:ArrayLength(Functions) - 1))</description>
-			<test>BoundsHasTypeArray != true || (containsFunctions == false || BoundsArraySize == (FunctionsArraySize - 1))</test>
+			<test>BoundsHasTypeArray != true || (FunctionsHasTypeArray == false || BoundsArraySize == (FunctionsArraySize - 1))</test>
 			<error>
 				<message>Entry Bounds with type Array in FunctionType3 does not satisfy special case: fn:Eval(fn:ArrayLength(Bounds) == (fn:ArrayLength(Functions) - 1))</message>
 				<arguments>
@@ -39757,7 +39757,7 @@
 		<rule object="AFunctionType3">
 			<id specification="ISO_32000_1_5" clause="FunctionType3-Functions-Array" testNumber="9"/>
 			<description>Entry Functions with type Array in FunctionType3 shall satisfy special case: fn:Eval(fn:ArrayLength(Functions) == (fn:ArrayLength(Bounds) + 1))</description>
-			<test>FunctionsHasTypeArray != true || (containsBounds == false || FunctionsArraySize == (BoundsArraySize + 1))</test>
+			<test>FunctionsHasTypeArray != true || (BoundsHasTypeArray == false || FunctionsArraySize == (BoundsArraySize + 1))</test>
 			<error>
 				<message>Entry Functions with type Array in FunctionType3 does not satisfy special case: fn:Eval(fn:ArrayLength(Functions) == (fn:ArrayLength(Bounds) + 1))</message>
 				<arguments>
@@ -39877,7 +39877,7 @@
 		<rule object="AFunctionType4">
 			<id specification="ISO_32000_1_5" clause="FunctionType4-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in FunctionType4 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in FunctionType4 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -39997,7 +39997,7 @@
 		<rule object="AFunctionType4">
 			<id specification="ISO_32000_1_5" clause="FunctionType4-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in FunctionType4 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in FunctionType4 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -40033,7 +40033,7 @@
 		<rule object="AFunctionType4">
 			<id specification="ISO_32000_1_5" clause="FunctionType4-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in FunctionType4 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in FunctionType4 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -40082,7 +40082,7 @@
 		<rule object="AFunctionType4">
 			<id specification="ISO_32000_1_5" clause="FunctionType4-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in FunctionType4 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in FunctionType4 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -41629,7 +41629,7 @@
 		<rule object="AHalftoneType1">
 			<id specification="ISO_32000_1_5" clause="HalftoneType1-TransferFunction" testNumber="11"/>
 			<description>Entry TransferFunction in HalftoneType1 is required, when fn:IsRequired(parent::@HalftoneType== 5)</description>
-			<test>containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5)</test>
+			<test>parentHalftoneTypeHasTypeInteger == false || (containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5))</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType1 is missing</message>
 				<arguments>
@@ -41715,7 +41715,7 @@
 		<rule object="AHalftoneType10">
 			<id specification="ISO_32000_1_5" clause="HalftoneType10-DL-Integer" testNumber="9"/>
 			<description>Entry DL with type Integer in HalftoneType10 shall satisfy special case: fn:Eval(@DL == ((@Xsquare * @Xsquare) + (@Ysquare * @Ysquare)))</description>
-			<test>DLHasTypeInteger != true || (DLIntegerValue == ((XsquareIntegerValue * XsquareIntegerValue) + (YsquareIntegerValue * YsquareIntegerValue)))</test>
+			<test>DLHasTypeInteger != true || (YsquareHasTypeInteger == false || XsquareHasTypeInteger == false || DLIntegerValue == ((XsquareIntegerValue * XsquareIntegerValue) + (YsquareIntegerValue * YsquareIntegerValue)))</test>
 			<error>
 				<message>Entry DL with type Integer in HalftoneType10 does not satisfy special case: fn:Eval(@DL == ((@Xsquare * @Xsquare) + (@Ysquare * @Ysquare)))</message>
 				<arguments>
@@ -41763,7 +41763,7 @@
 		<rule object="AHalftoneType10">
 			<id specification="ISO_32000_1_5" clause="HalftoneType10-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in HalftoneType10 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in HalftoneType10 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -41835,7 +41835,7 @@
 		<rule object="AHalftoneType10">
 			<id specification="ISO_32000_1_5" clause="HalftoneType10-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in HalftoneType10 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in HalftoneType10 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -41871,7 +41871,7 @@
 		<rule object="AHalftoneType10">
 			<id specification="ISO_32000_1_5" clause="HalftoneType10-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in HalftoneType10 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in HalftoneType10 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -41920,7 +41920,7 @@
 		<rule object="AHalftoneType10">
 			<id specification="ISO_32000_1_5" clause="HalftoneType10-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in HalftoneType10 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in HalftoneType10 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -42054,7 +42054,7 @@
 		<rule object="AHalftoneType10">
 			<id specification="ISO_32000_1_5" clause="HalftoneType10-TransferFunction" testNumber="11"/>
 			<description>Entry TransferFunction in HalftoneType10 is required, when fn:IsRequired(parent::@HalftoneType== 5)</description>
-			<test>containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5)</test>
+			<test>parentHalftoneTypeHasTypeInteger == false || (containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5))</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType10 is missing</message>
 				<arguments>
@@ -42212,7 +42212,7 @@
 		<rule object="AHalftoneType16">
 			<id specification="ISO_32000_1_5" clause="HalftoneType16-DL-Integer" testNumber="9"/>
 			<description>Entry DL with type Integer in HalftoneType16 shall satisfy special case: fn:Eval(@DL == (2 * (@Width * @Height) + (@Width2 * @Height2)))</description>
-			<test>DLHasTypeInteger != true || (DLIntegerValue == (2 * (WidthIntegerValue * HeightIntegerValue) + (Width2IntegerValue * Height2IntegerValue)))</test>
+			<test>DLHasTypeInteger != true || (Width2HasTypeInteger == false || Height2HasTypeInteger == false || HeightHasTypeInteger == false || WidthHasTypeInteger == false || DLIntegerValue == (2 * (WidthIntegerValue * HeightIntegerValue) + (Width2IntegerValue * Height2IntegerValue)))</test>
 			<error>
 				<message>Entry DL with type Integer in HalftoneType16 does not satisfy special case: fn:Eval(@DL == (2 * (@Width * @Height) + (@Width2 * @Height2)))</message>
 				<arguments>
@@ -42260,7 +42260,7 @@
 		<rule object="AHalftoneType16">
 			<id specification="ISO_32000_1_5" clause="HalftoneType16-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in HalftoneType16 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in HalftoneType16 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -42332,7 +42332,7 @@
 		<rule object="AHalftoneType16">
 			<id specification="ISO_32000_1_5" clause="HalftoneType16-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in HalftoneType16 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in HalftoneType16 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -42368,7 +42368,7 @@
 		<rule object="AHalftoneType16">
 			<id specification="ISO_32000_1_5" clause="HalftoneType16-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in HalftoneType16 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in HalftoneType16 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -42417,7 +42417,7 @@
 		<rule object="AHalftoneType16">
 			<id specification="ISO_32000_1_5" clause="HalftoneType16-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in HalftoneType16 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in HalftoneType16 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -42623,7 +42623,7 @@
 		<rule object="AHalftoneType16">
 			<id specification="ISO_32000_1_5" clause="HalftoneType16-TransferFunction" testNumber="11"/>
 			<description>Entry TransferFunction in HalftoneType16 is required, when fn:IsRequired(parent::@HalftoneType== 5)</description>
-			<test>containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5)</test>
+			<test>parentHalftoneTypeHasTypeInteger == false || (containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5))</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType16 is missing</message>
 				<arguments>
@@ -42951,7 +42951,7 @@
 		<rule object="AHalftoneType6">
 			<id specification="ISO_32000_1_5" clause="HalftoneType6-DL-Integer" testNumber="9"/>
 			<description>Entry DL with type Integer in HalftoneType6 shall satisfy special case: fn:Eval(@DL == (@Width * @Height))</description>
-			<test>DLHasTypeInteger != true || (DLIntegerValue == (WidthIntegerValue * HeightIntegerValue))</test>
+			<test>DLHasTypeInteger != true || (WidthHasTypeInteger == false || HeightHasTypeInteger == false || DLIntegerValue == (WidthIntegerValue * HeightIntegerValue))</test>
 			<error>
 				<message>Entry DL with type Integer in HalftoneType6 does not satisfy special case: fn:Eval(@DL == (@Width * @Height))</message>
 				<arguments>
@@ -42999,7 +42999,7 @@
 		<rule object="AHalftoneType6">
 			<id specification="ISO_32000_1_5" clause="HalftoneType6-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in HalftoneType6 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in HalftoneType6 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -43071,7 +43071,7 @@
 		<rule object="AHalftoneType6">
 			<id specification="ISO_32000_1_5" clause="HalftoneType6-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in HalftoneType6 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in HalftoneType6 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -43107,7 +43107,7 @@
 		<rule object="AHalftoneType6">
 			<id specification="ISO_32000_1_5" clause="HalftoneType6-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in HalftoneType6 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in HalftoneType6 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -43156,7 +43156,7 @@
 		<rule object="AHalftoneType6">
 			<id specification="ISO_32000_1_5" clause="HalftoneType6-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in HalftoneType6 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in HalftoneType6 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -43594,7 +43594,7 @@
 		<rule object="AICCProfileStream">
 			<id specification="ISO_32000_1_5" clause="ICCProfileStream-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in ICCProfileStream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in ICCProfileStream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -43666,7 +43666,7 @@
 		<rule object="AICCProfileStream">
 			<id specification="ISO_32000_1_5" clause="ICCProfileStream-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in ICCProfileStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in ICCProfileStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -43702,7 +43702,7 @@
 		<rule object="AICCProfileStream">
 			<id specification="ISO_32000_1_5" clause="ICCProfileStream-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in ICCProfileStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in ICCProfileStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -43751,7 +43751,7 @@
 		<rule object="AICCProfileStream">
 			<id specification="ISO_32000_1_5" clause="ICCProfileStream-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in ICCProfileStream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in ICCProfileStream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -43897,7 +43897,7 @@
 		<rule object="AICCProfileStream">
 			<id specification="ISO_32000_1_5" clause="ICCProfileStream-Range-Array" testNumber="9"/>
 			<description>Entry Range with type Array in ICCProfileStream shall satisfy special case: fn:Eval(fn:ArrayLength(Range) == (2 * @N))</description>
-			<test>RangeHasTypeArray != true || (RangeArraySize == (2 * NIntegerValue))</test>
+			<test>RangeHasTypeArray != true || (NHasTypeInteger == false || RangeArraySize == (2 * NIntegerValue))</test>
 			<error>
 				<message>Entry Range with type Array in ICCProfileStream does not satisfy special case: fn:Eval(fn:ArrayLength(Range) == (2 * @N))</message>
 				<arguments>
@@ -43945,7 +43945,7 @@
 		<rule object="AIconFit">
 			<id specification="ISO_32000_1_5" clause="IconFit-A-Array" testNumber="9"/>
 			<description>Entry A with type Array in IconFit shall satisfy special case: fn:Eval((A::@0&gt;= 0) &amp;&amp; (A::@0&lt;= 1) &amp;&amp; (A::@1&gt;= 0) &amp;&amp; (A::@1&lt;= 1))</description>
-			<test>AHasTypeArray != true || ((A0NumberValue &gt;= 0) &amp;&amp; (A0NumberValue &lt;= 1) &amp;&amp; (A1NumberValue &gt;= 0) &amp;&amp; (A1NumberValue &lt;= 1))</test>
+			<test>AHasTypeArray != true || ((A0HasTypeNumber == false || (A0NumberValue &gt;= 0) &amp;&amp; (A0NumberValue &lt;= 1)) &amp;&amp; (A1HasTypeNumber == false || (A1NumberValue &gt;= 0)) &amp;&amp; (A1HasTypeNumber == false || (A1NumberValue &lt;= 1)))</test>
 			<error>
 				<message>Entry A with type Array in IconFit does not satisfy special case: fn:Eval((A::@0&gt;= 0) &amp;&amp; (A::@0&lt;= 1) &amp;&amp; (A::@1&gt;= 0) &amp;&amp; (A::@1&lt;= 1))</message>
 				<arguments>
@@ -44539,7 +44539,7 @@
 		<rule object="ALabRangeArray">
 			<id specification="ISO_32000_1_5" clause="LabRangeArray-0-Number" testNumber="14"/>
 			<description>Entry 0 with type Number in LabRangeArray shall satisfy possible value predicate: fn:Eval(@0 &lt;= @1)</description>
-			<test>entry0HasTypeNumber != true || entry0NumberValue &lt;= entry1NumberValue</test>
+			<test>entry0HasTypeNumber != true || (entry1HasTypeNumber == false || entry0NumberValue &lt;= entry1NumberValue)</test>
 			<error>
 				<message>Entry 0 with type Number in LabRangeArray does not satisfy possible value predicate: fn:Eval(@0 &lt;= @1)</message>
 				<arguments>
@@ -44563,7 +44563,7 @@
 		<rule object="ALabRangeArray">
 			<id specification="ISO_32000_1_5" clause="LabRangeArray-1-Number" testNumber="14"/>
 			<description>Entry 1 with type Number in LabRangeArray shall satisfy possible value predicate: fn:Eval(@1 &gt;= @0)</description>
-			<test>entry1HasTypeNumber != true || entry1NumberValue &gt;= entry0NumberValue</test>
+			<test>entry1HasTypeNumber != true || (entry0HasTypeNumber == false || entry1NumberValue &gt;= entry0NumberValue)</test>
 			<error>
 				<message>Entry 1 with type Number in LabRangeArray does not satisfy possible value predicate: fn:Eval(@1 &gt;= @0)</message>
 				<arguments>
@@ -44587,7 +44587,7 @@
 		<rule object="ALabRangeArray">
 			<id specification="ISO_32000_1_5" clause="LabRangeArray-2-Number" testNumber="14"/>
 			<description>Entry 2 with type Number in LabRangeArray shall satisfy possible value predicate: fn:Eval(@2 &lt;= @3)</description>
-			<test>entry2HasTypeNumber != true || entry2NumberValue &lt;= entry3NumberValue</test>
+			<test>entry2HasTypeNumber != true || (entry3HasTypeNumber == false || entry2NumberValue &lt;= entry3NumberValue)</test>
 			<error>
 				<message>Entry 2 with type Number in LabRangeArray does not satisfy possible value predicate: fn:Eval(@2 &lt;= @3)</message>
 				<arguments>
@@ -44611,7 +44611,7 @@
 		<rule object="ALabRangeArray">
 			<id specification="ISO_32000_1_5" clause="LabRangeArray-3-Number" testNumber="14"/>
 			<description>Entry 3 with type Number in LabRangeArray shall satisfy possible value predicate: fn:Eval(@3 &gt;= @2)</description>
-			<test>entry3HasTypeNumber != true || entry3NumberValue &gt;= entry2NumberValue</test>
+			<test>entry3HasTypeNumber != true || (entry2HasTypeNumber == false || entry3NumberValue &gt;= entry2NumberValue)</test>
 			<error>
 				<message>Entry 3 with type Number in LabRangeArray does not satisfy possible value predicate: fn:Eval(@3 &gt;= @2)</message>
 				<arguments>
@@ -45187,7 +45187,7 @@
 		<rule object="ALinearizationParameterDict">
 			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-E-Integer" testNumber="14"/>
 			<description>Entry E with type Integer in LinearizationParameterDict shall satisfy possible value predicate: fn:Eval((@E &gt; 0) &amp;&amp; (@E &lt;= @L))</description>
-			<test>EHasTypeInteger != true || (EIntegerValue &gt; 0) &amp;&amp; (EIntegerValue &lt;= LIntegerValue)</test>
+			<test>EHasTypeInteger != true || (EIntegerValue &gt; 0) &amp;&amp; (LHasTypeInteger == false || (EIntegerValue &lt;= LIntegerValue))</test>
 			<error>
 				<message>Entry E with type Integer in LinearizationParameterDict does not satisfy possible value predicate: fn:Eval((@E &gt; 0) &amp;&amp; (@E &lt;= @L))</message>
 				<arguments>
@@ -48020,7 +48020,7 @@
 		<rule object="AMetadata">
 			<id specification="ISO_32000_1_5" clause="Metadata-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in Metadata shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in Metadata does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -48092,7 +48092,7 @@
 		<rule object="AMetadata">
 			<id specification="ISO_32000_1_5" clause="Metadata-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in Metadata shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in Metadata does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -48128,7 +48128,7 @@
 		<rule object="AMetadata">
 			<id specification="ISO_32000_1_5" clause="Metadata-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in Metadata shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in Metadata does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -48177,7 +48177,7 @@
 		<rule object="AMetadata">
 			<id specification="ISO_32000_1_5" clause="Metadata-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in Metadata shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in Metadata does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -48797,7 +48797,7 @@
 		<rule object="AMovieActivation">
 			<id specification="ISO_32000_1_5" clause="MovieActivation-FWPosition-Array" testNumber="9"/>
 			<description>Entry FWPosition with type Array in MovieActivation shall satisfy special case: fn:Eval((FWPosition::@0&gt;= 0.0) &amp;&amp; (FWPosition::@0&lt;= 1.0) &amp;&amp; (FWPosition::@1&gt;= 0.0) &amp;&amp; (FWPosition::@1&lt;= 1.0))</description>
-			<test>FWPositionHasTypeArray != true || ((FWPosition0NumberValue &gt;= 0.0) &amp;&amp; (FWPosition0NumberValue &lt;= 1.0) &amp;&amp; (FWPosition1NumberValue &gt;= 0.0) &amp;&amp; (FWPosition1NumberValue &lt;= 1.0))</test>
+			<test>FWPositionHasTypeArray != true || ((FWPosition0HasTypeNumber == false || (FWPosition0NumberValue &gt;= 0.0) &amp;&amp; (FWPosition0NumberValue &lt;= 1.0)) &amp;&amp; (FWPosition1HasTypeNumber == false || (FWPosition1NumberValue &gt;= 0.0)) &amp;&amp; (FWPosition1HasTypeNumber == false || (FWPosition1NumberValue &lt;= 1.0)))</test>
 			<error>
 				<message>Entry FWPosition with type Array in MovieActivation does not satisfy special case: fn:Eval((FWPosition::@0&gt;= 0.0) &amp;&amp; (FWPosition::@0&lt;= 1.0) &amp;&amp; (FWPosition::@1&gt;= 0.0) &amp;&amp; (FWPosition::@1&lt;= 1.0))</message>
 				<arguments>
@@ -48833,7 +48833,7 @@
 		<rule object="AMovieActivation">
 			<id specification="ISO_32000_1_5" clause="MovieActivation-FWScale-Array" testNumber="9"/>
 			<description>Entry FWScale with type Array in MovieActivation shall satisfy special case: fn:Eval((FWScale::@0&gt; 0) &amp;&amp; (FWScale::@1&gt; 0))</description>
-			<test>FWScaleHasTypeArray != true || ((FWScale0IntegerValue &gt; 0) &amp;&amp; (FWScale1IntegerValue &gt; 0))</test>
+			<test>FWScaleHasTypeArray != true || ((FWScale0HasTypeInteger == false || (FWScale0IntegerValue &gt; 0)) &amp;&amp; (FWScale1HasTypeInteger == false || (FWScale1IntegerValue &gt; 0)))</test>
 			<error>
 				<message>Entry FWScale with type Array in MovieActivation does not satisfy special case: fn:Eval((FWScale::@0&gt; 0) &amp;&amp; (FWScale::@1&gt; 0))</message>
 				<arguments>
@@ -50265,7 +50265,7 @@
 		<rule object="AOPIVersion20Dict">
 			<id specification="ISO_32000_1_5" clause="OPIVersion20Dict-IncludedImageDimensions-Array" testNumber="9"/>
 			<description>Entry IncludedImageDimensions with type Array in OPIVersion20Dict shall satisfy special case: fn:Eval((IncludedImageDimensions::@0&gt; 0) &amp;&amp; (IncludedImageDimensions::@1&gt; 0))</description>
-			<test>IncludedImageDimensionsHasTypeArray != true || ((IncludedImageDimensions0IntegerValue &gt; 0) &amp;&amp; (IncludedImageDimensions1IntegerValue &gt; 0))</test>
+			<test>IncludedImageDimensionsHasTypeArray != true || ((IncludedImageDimensions0HasTypeInteger == false || (IncludedImageDimensions0IntegerValue &gt; 0)) &amp;&amp; (IncludedImageDimensions1HasTypeInteger == false || (IncludedImageDimensions1IntegerValue &gt; 0)))</test>
 			<error>
 				<message>Entry IncludedImageDimensions with type Array in OPIVersion20Dict does not satisfy special case: fn:Eval((IncludedImageDimensions::@0&gt; 0) &amp;&amp; (IncludedImageDimensions::@1&gt; 0))</message>
 				<arguments>
@@ -50399,7 +50399,7 @@
 		<rule object="AOPIVersion20Dict">
 			<id specification="ISO_32000_1_5" clause="OPIVersion20Dict-Size-Array" testNumber="9"/>
 			<description>Entry Size with type Array in OPIVersion20Dict shall satisfy special case: fn:Eval((Size::@0&gt; 0) &amp;&amp; (Size::@1&gt; 0))</description>
-			<test>SizeHasTypeArray != true || ((Size0NumberValue &gt; 0) &amp;&amp; (Size1NumberValue &gt; 0))</test>
+			<test>SizeHasTypeArray != true || ((Size0HasTypeNumber == false || (Size0NumberValue &gt; 0)) &amp;&amp; (Size1HasTypeNumber == false || (Size1NumberValue &gt; 0)))</test>
 			<error>
 				<message>Entry Size with type Array in OPIVersion20Dict does not satisfy special case: fn:Eval((Size::@0&gt; 0) &amp;&amp; (Size::@1&gt; 0))</message>
 				<arguments>
@@ -50762,7 +50762,7 @@
 		<rule object="AObjectStream">
 			<id specification="ISO_32000_1_5" clause="ObjectStream-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in ObjectStream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in ObjectStream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -50882,7 +50882,7 @@
 		<rule object="AObjectStream">
 			<id specification="ISO_32000_1_5" clause="ObjectStream-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in ObjectStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in ObjectStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -50918,7 +50918,7 @@
 		<rule object="AObjectStream">
 			<id specification="ISO_32000_1_5" clause="ObjectStream-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in ObjectStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in ObjectStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -50967,7 +50967,7 @@
 		<rule object="AObjectStream">
 			<id specification="ISO_32000_1_5" clause="ObjectStream-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in ObjectStream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in ObjectStream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -52470,7 +52470,7 @@
 		<rule object="AOptContentZoom">
 			<id specification="ISO_32000_1_5" clause="OptContentZoom-max-Number" testNumber="14"/>
 			<description>Entry max with type Number in OptContentZoom shall satisfy possible value predicate: fn:Eval((@max &gt;= 0.0) &amp;&amp; (@max &gt;= @min))</description>
-			<test>maxHasTypeNumber != true || (maxNumberValue &gt;= 0.0) &amp;&amp; (maxNumberValue &gt;= minNumberValue)</test>
+			<test>maxHasTypeNumber != true || (maxNumberValue &gt;= 0.0) &amp;&amp; (minHasTypeNumber == false || (maxNumberValue &gt;= minNumberValue))</test>
 			<error>
 				<message>Entry max with type Number in OptContentZoom does not satisfy possible value predicate: fn:Eval((@max &gt;= 0.0) &amp;&amp; (@max &gt;= @min))</message>
 				<arguments>
@@ -52506,7 +52506,7 @@
 		<rule object="AOptContentZoom">
 			<id specification="ISO_32000_1_5" clause="OptContentZoom-min-Number" testNumber="14"/>
 			<description>Entry min with type Number in OptContentZoom shall satisfy possible value predicate: fn:Eval((@min &gt;= 0.0) &amp;&amp; (@min &lt;= @max))</description>
-			<test>minHasTypeNumber != true || (minNumberValue &gt;= 0.0) &amp;&amp; (minNumberValue &lt;= maxNumberValue)</test>
+			<test>minHasTypeNumber != true || (minNumberValue &gt;= 0.0) &amp;&amp; (maxHasTypeNumber == false || (minNumberValue &lt;= maxNumberValue))</test>
 			<error>
 				<message>Entry min with type Number in OptContentZoom does not satisfy possible value predicate: fn:Eval((@min &gt;= 0.0) &amp;&amp; (@min &lt;= @max))</message>
 				<arguments>
@@ -54785,7 +54785,7 @@
 		<rule object="APatternType1">
 			<id specification="ISO_32000_1_5" clause="PatternType1-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in PatternType1 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in PatternType1 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -54857,7 +54857,7 @@
 		<rule object="APatternType1">
 			<id specification="ISO_32000_1_5" clause="PatternType1-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in PatternType1 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in PatternType1 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -54893,7 +54893,7 @@
 		<rule object="APatternType1">
 			<id specification="ISO_32000_1_5" clause="PatternType1-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in PatternType1 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in PatternType1 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -54942,7 +54942,7 @@
 		<rule object="APatternType1">
 			<id specification="ISO_32000_1_5" clause="PatternType1-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in PatternType1 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in PatternType1 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -55477,7 +55477,7 @@
 		<rule object="APermissions">
 			<id specification="ISO_32000_1_5" clause="Permissions-DocMDP-Dictionary" testNumber="9"/>
 			<description>Entry DocMDP with type Dictionary in Permissions shall satisfy special case: fn:Eval(fn:ArrayLength(DocMDP::Reference) &gt;= 1)</description>
-			<test>DocMDPHasTypeDictionary != true || (containsDocMDPReference == false || DocMDPReferenceArraySize &gt;= 1)</test>
+			<test>DocMDPHasTypeDictionary != true || (DocMDPReferenceHasTypeArray == false || DocMDPReferenceArraySize &gt;= 1)</test>
 			<error>
 				<message>Entry DocMDP with type Dictionary in Permissions does not satisfy special case: fn:Eval(fn:ArrayLength(DocMDP::Reference) &gt;= 1)</message>
 				<arguments>
@@ -57809,7 +57809,7 @@
 		<rule object="AShadingType4">
 			<id specification="ISO_32000_1_5" clause="ShadingType4-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in ShadingType4 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in ShadingType4 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -57881,7 +57881,7 @@
 		<rule object="AShadingType4">
 			<id specification="ISO_32000_1_5" clause="ShadingType4-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in ShadingType4 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in ShadingType4 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -57917,7 +57917,7 @@
 		<rule object="AShadingType4">
 			<id specification="ISO_32000_1_5" clause="ShadingType4-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in ShadingType4 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in ShadingType4 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -57966,7 +57966,7 @@
 		<rule object="AShadingType4">
 			<id specification="ISO_32000_1_5" clause="ShadingType4-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in ShadingType4 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in ShadingType4 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -58379,7 +58379,7 @@
 		<rule object="AShadingType5">
 			<id specification="ISO_32000_1_5" clause="ShadingType5-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in ShadingType5 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in ShadingType5 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -58451,7 +58451,7 @@
 		<rule object="AShadingType5">
 			<id specification="ISO_32000_1_5" clause="ShadingType5-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in ShadingType5 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in ShadingType5 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -58487,7 +58487,7 @@
 		<rule object="AShadingType5">
 			<id specification="ISO_32000_1_5" clause="ShadingType5-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in ShadingType5 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in ShadingType5 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -58536,7 +58536,7 @@
 		<rule object="AShadingType5">
 			<id specification="ISO_32000_1_5" clause="ShadingType5-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in ShadingType5 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in ShadingType5 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -59009,7 +59009,7 @@
 		<rule object="AShadingType6">
 			<id specification="ISO_32000_1_5" clause="ShadingType6-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in ShadingType6 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in ShadingType6 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -59081,7 +59081,7 @@
 		<rule object="AShadingType6">
 			<id specification="ISO_32000_1_5" clause="ShadingType6-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in ShadingType6 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in ShadingType6 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -59117,7 +59117,7 @@
 		<rule object="AShadingType6">
 			<id specification="ISO_32000_1_5" clause="ShadingType6-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in ShadingType6 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in ShadingType6 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -59166,7 +59166,7 @@
 		<rule object="AShadingType6">
 			<id specification="ISO_32000_1_5" clause="ShadingType6-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in ShadingType6 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in ShadingType6 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -59603,7 +59603,7 @@
 		<rule object="AShadingType7">
 			<id specification="ISO_32000_1_5" clause="ShadingType7-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in ShadingType7 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in ShadingType7 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -59675,7 +59675,7 @@
 		<rule object="AShadingType7">
 			<id specification="ISO_32000_1_5" clause="ShadingType7-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in ShadingType7 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in ShadingType7 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -59711,7 +59711,7 @@
 		<rule object="AShadingType7">
 			<id specification="ISO_32000_1_5" clause="ShadingType7-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in ShadingType7 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in ShadingType7 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -59760,7 +59760,7 @@
 		<rule object="AShadingType7">
 			<id specification="ISO_32000_1_5" clause="ShadingType7-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in ShadingType7 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in ShadingType7 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -62790,7 +62790,7 @@
 		<rule object="ASoundObject">
 			<id specification="ISO_32000_1_5" clause="SoundObject-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in SoundObject shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in SoundObject does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -62887,7 +62887,7 @@
 		<rule object="ASoundObject">
 			<id specification="ISO_32000_1_5" clause="SoundObject-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in SoundObject shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in SoundObject does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -62923,7 +62923,7 @@
 		<rule object="ASoundObject">
 			<id specification="ISO_32000_1_5" clause="SoundObject-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in SoundObject shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in SoundObject does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -62972,7 +62972,7 @@
 		<rule object="ASoundObject">
 			<id specification="ISO_32000_1_5" clause="SoundObject-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in SoundObject shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in SoundObject does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -63299,7 +63299,7 @@
 		<rule object="AStream">
 			<id specification="ISO_32000_1_5" clause="Stream-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in Stream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in Stream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -63371,7 +63371,7 @@
 		<rule object="AStream">
 			<id specification="ISO_32000_1_5" clause="Stream-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in Stream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in Stream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -63407,7 +63407,7 @@
 		<rule object="AStream">
 			<id specification="ISO_32000_1_5" clause="Stream-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in Stream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in Stream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -63456,7 +63456,7 @@
 		<rule object="AStream">
 			<id specification="ISO_32000_1_5" clause="Stream-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in Stream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in Stream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -65855,7 +65855,7 @@
 		<rule object="AThumbnail">
 			<id specification="ISO_32000_1_5" clause="Thumbnail-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in Thumbnail shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in Thumbnail does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -65927,7 +65927,7 @@
 		<rule object="AThumbnail">
 			<id specification="ISO_32000_1_5" clause="Thumbnail-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in Thumbnail shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in Thumbnail does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -65963,7 +65963,7 @@
 		<rule object="AThumbnail">
 			<id specification="ISO_32000_1_5" clause="Thumbnail-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in Thumbnail shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in Thumbnail does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -66012,7 +66012,7 @@
 		<rule object="AThumbnail">
 			<id specification="ISO_32000_1_5" clause="Thumbnail-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in Thumbnail shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in Thumbnail does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -66415,7 +66415,7 @@
 		<rule object="ATransition">
 			<id specification="ISO_32000_1_5" clause="Transition-Di-Name" testNumber="9"/>
 			<description>Entry Di with type Name in Transition shall satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</description>
-			<test>DiHasTypeName != true || ((DiNameValue == "None") &amp;&amp; (SNameValue == "Fly") &amp;&amp; (SSNumberValue != 1.0))</test>
+			<test>DiHasTypeName != true || ((DiNameValue == "None") &amp;&amp; (SNameValue == "Fly") &amp;&amp; (SSHasTypeNumber == false || (SSNumberValue != 1.0)))</test>
 			<error>
 				<message>Entry Di with type Name in Transition does not satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</message>
 				<arguments>
@@ -67558,7 +67558,7 @@
 		<rule object="AWebCaptureImageSet">
 			<id specification="ISO_32000_1_5" clause="WebCaptureImageSet-R-Array" testNumber="9"/>
 			<description>Entry R with type Array in WebCaptureImageSet shall satisfy special case: fn:Eval(fn:ArrayLength(O) == fn:ArrayLength(R))</description>
-			<test>RHasTypeArray != true || (containsO == false || OArraySize == RArraySize)</test>
+			<test>RHasTypeArray != true || (OHasTypeArray == false || OArraySize == RArraySize)</test>
 			<error>
 				<message>Entry R with type Array in WebCaptureImageSet does not satisfy special case: fn:Eval(fn:ArrayLength(O) == fn:ArrayLength(R))</message>
 				<arguments>
@@ -68152,7 +68152,7 @@
 		<rule object="AXObjectFormPS">
 			<id specification="ISO_32000_1_5" clause="XObjectFormPS-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XObjectFormPS shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XObjectFormPS does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -68248,7 +68248,7 @@
 		<rule object="AXObjectFormPS">
 			<id specification="ISO_32000_1_5" clause="XObjectFormPS-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectFormPS shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in XObjectFormPS does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -68296,7 +68296,7 @@
 		<rule object="AXObjectFormPS">
 			<id specification="ISO_32000_1_5" clause="XObjectFormPS-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in XObjectFormPS shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in XObjectFormPS does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -68357,7 +68357,7 @@
 		<rule object="AXObjectFormPS">
 			<id specification="ISO_32000_1_5" clause="XObjectFormPS-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XObjectFormPS shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in XObjectFormPS does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -68648,7 +68648,7 @@
 		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_5" clause="XObjectFormPSpassthrough-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XObjectFormPSpassthrough shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XObjectFormPSpassthrough does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -68744,7 +68744,7 @@
 		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_5" clause="XObjectFormPSpassthrough-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectFormPSpassthrough shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in XObjectFormPSpassthrough does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -68792,7 +68792,7 @@
 		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_5" clause="XObjectFormPSpassthrough-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in XObjectFormPSpassthrough shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in XObjectFormPSpassthrough does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -68853,7 +68853,7 @@
 		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_5" clause="XObjectFormPSpassthrough-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XObjectFormPSpassthrough shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in XObjectFormPSpassthrough does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -69350,7 +69350,7 @@
 		<rule object="AXObjectFormPrinterMark">
 			<id specification="ISO_32000_1_5" clause="XObjectFormPrinterMark-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XObjectFormPrinterMark shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XObjectFormPrinterMark does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -69422,7 +69422,7 @@
 		<rule object="AXObjectFormPrinterMark">
 			<id specification="ISO_32000_1_5" clause="XObjectFormPrinterMark-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectFormPrinterMark shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in XObjectFormPrinterMark does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -69458,7 +69458,7 @@
 		<rule object="AXObjectFormPrinterMark">
 			<id specification="ISO_32000_1_5" clause="XObjectFormPrinterMark-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in XObjectFormPrinterMark shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in XObjectFormPrinterMark does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -69507,7 +69507,7 @@
 		<rule object="AXObjectFormPrinterMark">
 			<id specification="ISO_32000_1_5" clause="XObjectFormPrinterMark-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XObjectFormPrinterMark shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in XObjectFormPrinterMark does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -70015,7 +70015,7 @@
 		<rule object="AXObjectFormTrapNet">
 			<id specification="ISO_32000_1_5" clause="XObjectFormTrapNet-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XObjectFormTrapNet shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XObjectFormTrapNet does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -70087,7 +70087,7 @@
 		<rule object="AXObjectFormTrapNet">
 			<id specification="ISO_32000_1_5" clause="XObjectFormTrapNet-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectFormTrapNet shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in XObjectFormTrapNet does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -70123,7 +70123,7 @@
 		<rule object="AXObjectFormTrapNet">
 			<id specification="ISO_32000_1_5" clause="XObjectFormTrapNet-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in XObjectFormTrapNet shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in XObjectFormTrapNet does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -70172,7 +70172,7 @@
 		<rule object="AXObjectFormTrapNet">
 			<id specification="ISO_32000_1_5" clause="XObjectFormTrapNet-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XObjectFormTrapNet shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in XObjectFormTrapNet does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -70765,7 +70765,7 @@
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_5" clause="XObjectFormType1-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XObjectFormType1 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XObjectFormType1 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -70837,7 +70837,7 @@
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_5" clause="XObjectFormType1-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectFormType1 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in XObjectFormType1 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -70873,7 +70873,7 @@
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_5" clause="XObjectFormType1-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in XObjectFormType1 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in XObjectFormType1 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -70922,7 +70922,7 @@
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_5" clause="XObjectFormType1-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XObjectFormType1 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in XObjectFormType1 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -71648,7 +71648,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_5" clause="XObjectImage-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XObjectImage shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XObjectImage does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -71720,7 +71720,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_5" clause="XObjectImage-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectImage shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in XObjectImage does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -71756,7 +71756,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_5" clause="XObjectImage-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in XObjectImage shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in XObjectImage does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -71805,7 +71805,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_5" clause="XObjectImage-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XObjectImage shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in XObjectImage does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -71878,7 +71878,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_5" clause="XObjectImage-ImageMask-Boolean" testNumber="9"/>
 			<description>Entry ImageMask with type Boolean in XObjectImage shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</description>
-			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentIntegerValue == 1) &amp;&amp; (containsColorSpace != true) &amp;&amp; (containsMask != true)) || (ImageMaskBooleanValue == false))</test>
+			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentHasTypeInteger == false || (BitsPerComponentIntegerValue == 1)) &amp;&amp; (containsColorSpace != true) &amp;&amp; (containsMask != true)) || (ImageMaskBooleanValue == false))</test>
 			<error>
 				<message>Entry ImageMask with type Boolean in XObjectImage does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</message>
 				<arguments>
@@ -72142,7 +72142,7 @@
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_5" clause="XObjectImage-SMask-Stream" testNumber="9"/>
 			<description>Entry SMask with type Stream in XObjectImage shall satisfy special case: fn:SinceVersion(1.5 , fn:Not(fn:IsPresent(@SMaskInData &gt; 0)))</description>
-			<test>SMaskHasTypeStream != true || ((SMaskInDataIntegerValue &lt;= 0) || containsSMask != true)</test>
+			<test>SMaskHasTypeStream != true || (SMaskInDataHasTypeInteger == false || ((SMaskInDataIntegerValue &lt;= 0) || containsSMask != true))</test>
 			<error>
 				<message>Entry SMask with type Stream in XObjectImage does not satisfy special case: fn:SinceVersion(1.5 , fn:Not(fn:IsPresent(@SMaskInData &gt; 0)))</message>
 				<arguments>
@@ -72458,7 +72458,7 @@
 		<rule object="AXObjectImageMask">
 			<id specification="ISO_32000_1_5" clause="XObjectImageMask-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XObjectImageMask shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XObjectImageMask does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -72530,7 +72530,7 @@
 		<rule object="AXObjectImageMask">
 			<id specification="ISO_32000_1_5" clause="XObjectImageMask-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectImageMask shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in XObjectImageMask does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -72566,7 +72566,7 @@
 		<rule object="AXObjectImageMask">
 			<id specification="ISO_32000_1_5" clause="XObjectImageMask-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in XObjectImageMask shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in XObjectImageMask does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -72615,7 +72615,7 @@
 		<rule object="AXObjectImageMask">
 			<id specification="ISO_32000_1_5" clause="XObjectImageMask-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XObjectImageMask shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in XObjectImageMask does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -72700,7 +72700,7 @@
 		<rule object="AXObjectImageMask">
 			<id specification="ISO_32000_1_5" clause="XObjectImageMask-ImageMask-Boolean" testNumber="9"/>
 			<description>Entry ImageMask with type Boolean in XObjectImageMask shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</description>
-			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentIntegerValue == 1) &amp;&amp; (containsColorSpace != true) &amp;&amp; (containsMask != true)) || (ImageMaskBooleanValue == false))</test>
+			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentHasTypeInteger == false || (BitsPerComponentIntegerValue == 1)) &amp;&amp; (containsColorSpace != true) &amp;&amp; (containsMask != true)) || (ImageMaskBooleanValue == false))</test>
 			<error>
 				<message>Entry ImageMask with type Boolean in XObjectImageMask does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</message>
 				<arguments>
@@ -73208,7 +73208,7 @@
 		<rule object="AXObjectImageSoftMask">
 			<id specification="ISO_32000_1_5" clause="XObjectImageSoftMask-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XObjectImageSoftMask shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XObjectImageSoftMask does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -73280,7 +73280,7 @@
 		<rule object="AXObjectImageSoftMask">
 			<id specification="ISO_32000_1_5" clause="XObjectImageSoftMask-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectImageSoftMask shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in XObjectImageSoftMask does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -73316,7 +73316,7 @@
 		<rule object="AXObjectImageSoftMask">
 			<id specification="ISO_32000_1_5" clause="XObjectImageSoftMask-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in XObjectImageSoftMask shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in XObjectImageSoftMask does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -73365,7 +73365,7 @@
 		<rule object="AXObjectImageSoftMask">
 			<id specification="ISO_32000_1_5" clause="XObjectImageSoftMask-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XObjectImageSoftMask shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>FilterHasTypeArray != true || (containsDecodeParms == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry Filter with type Array in XObjectImageSoftMask does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -73414,7 +73414,7 @@
 		<rule object="AXObjectImageSoftMask">
 			<id specification="ISO_32000_1_5" clause="XObjectImageSoftMask-Height-Integer" testNumber="9"/>
 			<description>Entry Height with type Integer in XObjectImageSoftMask shall satisfy special case: fn:Eval(fn:IsPresent(Matte , (@Height == parent::@Height)))</description>
-			<test>HeightHasTypeInteger != true || ((containsMatte == false) || (HeightIntegerValue == parentHeightIntegerValue))</test>
+			<test>HeightHasTypeInteger != true || (parentHeightHasTypeInteger == false || ((containsMatte == false) || (HeightIntegerValue == parentHeightIntegerValue)))</test>
 			<error>
 				<message>Entry Height with type Integer in XObjectImageSoftMask does not satisfy special case: fn:Eval(fn:IsPresent(Matte , (@Height == parent::@Height)))</message>
 				<arguments>
@@ -73668,7 +73668,7 @@
 		<rule object="AXObjectImageSoftMask">
 			<id specification="ISO_32000_1_5" clause="XObjectImageSoftMask-Width-Integer" testNumber="9"/>
 			<description>Entry Width with type Integer in XObjectImageSoftMask shall satisfy special case: fn:Eval(fn:IsPresent(Matte , (@Width == parent::@Width)))</description>
-			<test>WidthHasTypeInteger != true || ((containsMatte == false) || (WidthIntegerValue == parentWidthIntegerValue))</test>
+			<test>WidthHasTypeInteger != true || (parentWidthHasTypeInteger == false || ((containsMatte == false) || (WidthIntegerValue == parentWidthIntegerValue)))</test>
 			<error>
 				<message>Entry Width with type Integer in XObjectImageSoftMask does not satisfy special case: fn:Eval(fn:IsPresent(Matte , (@Width == parent::@Width)))</message>
 				<arguments>
@@ -73824,7 +73824,7 @@
 		<rule object="AXRefStream">
 			<id specification="ISO_32000_1_5" clause="XRefStream-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XRefStream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
-			<test>DecodeParmsHasTypeArray != true || (containsFilter == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XRefStream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
 				<arguments>
@@ -73932,7 +73932,7 @@
 		<rule object="AXRefStream">
 			<id specification="ISO_32000_1_5" clause="XRefStream-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XRefStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FDecodeParmsHasTypeArray != true || (containsFFilter == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FDecodeParms with type Array in XRefStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -73968,7 +73968,7 @@
 		<rule object="AXRefStream">
 			<id specification="ISO_32000_1_5" clause="XRefStream-FFilter-Array" testNumber="9"/>
 			<description>Entry FFilter with type Array in XRefStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
-			<test>FFilterHasTypeArray != true || (containsFDecodeParms == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
 			<error>
 				<message>Entry FFilter with type Array in XRefStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
 				<arguments>
@@ -74029,7 +74029,7 @@
 		<rule object="AXRefStream">
 			<id specification="ISO_32000_1_5" clause="XRefStream-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XRefStream shall satisfy special case: fn:Eval((fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter)) &amp;&amp; fn:Not(fn:Contains(@Filter , Crypt)))</description>
-			<test>FilterHasTypeArray != true || ((containsDecodeParms == false || (DecodeParmsArraySize == FilterArraySize)) &amp;&amp; (FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "Crypt").length &gt; 0) != true)</test>
+			<test>FilterHasTypeArray != true || ((DecodeParmsHasTypeArray == false || (DecodeParmsArraySize == FilterArraySize)) &amp;&amp; (FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "Crypt").length &gt; 0) != true)</test>
 			<error>
 				<message>Entry Filter with type Array in XRefStream does not satisfy special case: fn:Eval((fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter)) &amp;&amp; fn:Not(fn:Contains(@Filter , Crypt)))</message>
 				<arguments>
