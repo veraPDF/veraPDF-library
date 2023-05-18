@@ -1172,11 +1172,11 @@
         <rule object="CosInfo">
             <id specification="ISO_19005_1" clause="6.7.3" testNumber="2"/>
             <description>The value of Title entry from the document information dictionary, if present, and its
-                analogous XMP property dc:title shall be equivalent.</description>
+                analogous XMP property dc:title['x-default'] shall be equivalent.</description>
             <test>Title == null || Title == XMPTitle</test>
             <error>
                 <message>The value of Title entry from the document Info dictionary and its matching XMP property
-                    dc:title are not equivalent (Info /Title = %1, XMP dc:title = %2)</message>
+                    dc:title['x-default'] are not equivalent (Info /Title = %1, XMP dc:title['x-default'] = %2)</message>
                 <arguments>
                     <argument>Title</argument>
                     <argument>XMPTitle</argument>
@@ -1189,8 +1189,8 @@
         <rule object="CosInfo">
             <id specification="ISO_19005_1" clause="6.7.3" testNumber="3"/>
             <description>The value of Author entry from the document information dictionary, if present, and its
-                analogous XMP property dc:creator shall be equivalent.</description>
-            <test>Author == null || Author == XMPCreator</test>
+                analogous XMP property dc:creator shall be equivalent. dc:creator shall contain exactly one entry</description>
+            <test>Author == null || (Author == XMPCreator &amp;&amp; XMPCreatorSize == 1)</test>
             <error>
                 <message>The value of Author entry from the document Info dictionary and its matching XMP property
                     dc:creator are not equivalent (Info /Author = %1, XMP dc:creator = %2)</message>
@@ -1206,11 +1206,11 @@
         <rule object="CosInfo">
             <id specification="ISO_19005_1" clause="6.7.3" testNumber="4"/>
             <description>The value of Subject entry from the document information dictionary, if present, and its
-                analogous XMP property dc:subject shall be equivalent.</description>
+                analogous XMP property dc:description['x-default'] shall be equivalent.</description>
             <test>Subject == null || Subject == XMPDescription</test>
             <error>
                 <message>The value of Subject entry from the document Info dictionary and its matching XMP property
-                    dc:subject are not equivalent (Info /Subject = %1, XMP dc:subject = %2)</message>
+                    dc:description['x-default'] are not equivalent (Info /Subject = %1, XMP dc:description['x-default'] = %2)</message>
                 <arguments>
                     <argument>Subject</argument>
                     <argument>XMPDescription</argument>
