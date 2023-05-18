@@ -10,7 +10,7 @@
     </ruleDescription>
     <ruleDescription>
         <objectType>CosInfo</objectType>
-        <test>Author == null || Author == XMPCreator</test>
+        <test>Author == null || (Author == XMPCreator &amp;&amp; XMPCreatorSize == 1)</test>
     </ruleDescription>
     <ruleDescription>
         <objectType>CosInfo</objectType>
