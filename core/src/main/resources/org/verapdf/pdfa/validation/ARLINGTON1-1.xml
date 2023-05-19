@@ -4133,7 +4133,7 @@
 		</rule>
 		<rule object="AEncryptionPublicKey">
 			<id specification="ISO_32000_1_1" clause="EncryptionPublicKey-V-Integer" testNumber="19"/>
-			<description>Entry V with type Integer in EncryptionPublicKey shouldn't have deprecated value 0</description>
+			<description>Entry V with type Integer in EncryptionPublicKey should not have deprecated value 0</description>
 			<test>VIntegerValue != 0</test>
 			<error>
 				<message>Entry V with type Integer in EncryptionPublicKey has deprecated value 0</message>
@@ -4362,7 +4362,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
-			<id specification="ISO_32000_1_1" clause="EncryptionStandard-R-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_1" clause="EncryptionStandard-R-Integer-2" testNumber="15"/>
 			<description>Entry R in EncryptionStandard shall have Integer value 2, if this object satisfies condition @V &lt; 2</description>
 			<test>VHasTypeInteger == false || ((VIntegerValue &gt;= 2) || RIntegerValue == 2)</test>
 			<error>
@@ -4374,7 +4374,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
-			<id specification="ISO_32000_1_1" clause="EncryptionStandard-R-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_1" clause="EncryptionStandard-R-Integer-3" testNumber="15"/>
 			<description>Entry R in EncryptionStandard shall have Integer value 3, if this object satisfies condition (@V == 2) || (@V == 3)</description>
 			<test>VHasTypeInteger == false || (((VIntegerValue != 2) &amp;&amp; (VIntegerValue != 3)) || RIntegerValue == 3)</test>
 			<error>
@@ -4386,7 +4386,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
-			<id specification="ISO_32000_1_1" clause="EncryptionStandard-R-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_1" clause="EncryptionStandard-R-Integer-4" testNumber="15"/>
 			<description>Entry R in EncryptionStandard shall have Integer value 4, if this object satisfies condition @V == 4</description>
 			<test>VHasTypeInteger == false || ((VIntegerValue != 4) || RIntegerValue == 4)</test>
 			<error>
@@ -4484,7 +4484,7 @@
 		</rule>
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_1" clause="EncryptionStandard-V-Integer" testNumber="19"/>
-			<description>Entry V with type Integer in EncryptionStandard shouldn't have deprecated value 0</description>
+			<description>Entry V with type Integer in EncryptionStandard should not have deprecated value 0</description>
 			<test>VIntegerValue != 0</test>
 			<error>
 				<message>Entry V with type Integer in EncryptionStandard has deprecated value 0</message>
@@ -11748,7 +11748,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_1" clause="XObjectImage-BitsPerComponent-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_1" clause="XObjectImage-BitsPerComponent-Integer-1" testNumber="15"/>
 			<description>Entry BitsPerComponent in XObjectImage shall have Integer value 1, if this object satisfies condition (@Filter == CCITTFaxDecode) || (@Filter == JBIG2Decode) || (@ImageMask == true)</description>
 			<test>((FilterNameValue != "CCITTFaxDecode") &amp;&amp; (FilterNameValue != "JBIG2Decode") &amp;&amp; (ImageMaskBooleanValue != true)) || BitsPerComponentIntegerValue == 1</test>
 			<error>
@@ -11760,7 +11760,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_1" clause="XObjectImage-BitsPerComponent-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_1" clause="XObjectImage-BitsPerComponent-Integer-8" testNumber="15"/>
 			<description>Entry BitsPerComponent in XObjectImage shall have Integer value 8, if this object satisfies condition (@Filter == RunLengthDecode) || (@Filter == DCTDecode)</description>
 			<test>((FilterNameValue != "RunLengthDecode") &amp;&amp; (FilterNameValue != "DCTDecode")) || BitsPerComponentIntegerValue == 8</test>
 			<error>

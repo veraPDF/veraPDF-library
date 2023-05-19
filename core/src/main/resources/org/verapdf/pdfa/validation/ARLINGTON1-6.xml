@@ -21255,10 +21255,10 @@
 		</rule>
 		<rule object="AArrayOfBlendModesEntry">
 			<id specification="ISO_32000_1_6" clause="ArrayOfBlendModesEntry-Name" testNumber="19"/>
-			<description>Entry with type Name in ArrayOfBlendModes shouldn't have deprecated value "Compatible"</description>
+			<description>Entry with type Name in ArrayOfBlendModes should not have deprecated value Compatible</description>
 			<test>NameValue != "Compatible"</test>
 			<error>
-				<message>Entry %1 with type Name in ArrayOfBlendModes has deprecated value "Compatible"</message>
+				<message>Entry %1 with type Name in ArrayOfBlendModes has deprecated value Compatible</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -28633,7 +28633,7 @@
 			<references/>
 		</rule>
 		<rule object="ACryptFilter">
-			<id specification="ISO_32000_1_6" clause="CryptFilter-Length-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_6" clause="CryptFilter-Length-Integer-16" testNumber="15"/>
 			<description>Entry Length in CryptFilter shall have Integer value 16, if this object satisfies condition @CFM == AESV2</description>
 			<test>(CFMNameValue != "AESV2") || LengthIntegerValue == 16</test>
 			<error>
@@ -28645,7 +28645,7 @@
 			<references/>
 		</rule>
 		<rule object="ACryptFilter">
-			<id specification="ISO_32000_1_6" clause="CryptFilter-Length-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_6" clause="CryptFilter-Length-Integer-32" testNumber="15"/>
 			<description>Entry Length in CryptFilter shall have Integer value 32, if this object satisfies condition @CFM == AESV3</description>
 			<test>(CFMNameValue != "AESV3") || LengthIntegerValue == 32</test>
 			<error>
@@ -28889,7 +28889,7 @@
 			<references/>
 		</rule>
 		<rule object="ACryptFilterPublicKey">
-			<id specification="ISO_32000_1_6" clause="CryptFilterPublicKey-Length-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_6" clause="CryptFilterPublicKey-Length-Integer-128" testNumber="15"/>
 			<description>Entry Length in CryptFilterPublicKey shall have Integer value 128, if this object satisfies condition @CFM == AESV2</description>
 			<test>(CFMNameValue != "AESV2") || LengthIntegerValue == 128</test>
 			<error>
@@ -28901,7 +28901,7 @@
 			<references/>
 		</rule>
 		<rule object="ACryptFilterPublicKey">
-			<id specification="ISO_32000_1_6" clause="CryptFilterPublicKey-Length-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_6" clause="CryptFilterPublicKey-Length-Integer-256" testNumber="15"/>
 			<description>Entry Length in CryptFilterPublicKey shall have Integer value 256, if this object satisfies condition @CFM == AESV3</description>
 			<test>(CFMNameValue != "AESV3") || LengthIntegerValue == 256</test>
 			<error>
@@ -32218,7 +32218,7 @@
 		</rule>
 		<rule object="AEncryptionPublicKey">
 			<id specification="ISO_32000_1_6" clause="EncryptionPublicKey-V-Integer" testNumber="19"/>
-			<description>Entry V with type Integer in EncryptionPublicKey shouldn't have deprecated value 0</description>
+			<description>Entry V with type Integer in EncryptionPublicKey should not have deprecated value 0</description>
 			<test>VIntegerValue != 0</test>
 			<error>
 				<message>Entry V with type Integer in EncryptionPublicKey has deprecated value 0</message>
@@ -32507,7 +32507,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
-			<id specification="ISO_32000_1_6" clause="EncryptionStandard-R-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_6" clause="EncryptionStandard-R-Integer-2" testNumber="15"/>
 			<description>Entry R in EncryptionStandard shall have Integer value 2, if this object satisfies condition @V &lt; 2</description>
 			<test>VHasTypeInteger == false || ((VIntegerValue &gt;= 2) || RIntegerValue == 2)</test>
 			<error>
@@ -32519,7 +32519,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
-			<id specification="ISO_32000_1_6" clause="EncryptionStandard-R-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_6" clause="EncryptionStandard-R-Integer-3" testNumber="15"/>
 			<description>Entry R in EncryptionStandard shall have Integer value 3, if this object satisfies condition (@V == 2) || (@V == 3)</description>
 			<test>VHasTypeInteger == false || (((VIntegerValue != 2) &amp;&amp; (VIntegerValue != 3)) || RIntegerValue == 3)</test>
 			<error>
@@ -32531,7 +32531,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
-			<id specification="ISO_32000_1_6" clause="EncryptionStandard-R-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_6" clause="EncryptionStandard-R-Integer-4" testNumber="15"/>
 			<description>Entry R in EncryptionStandard shall have Integer value 4, if this object satisfies condition @V == 4</description>
 			<test>VHasTypeInteger == false || ((VIntegerValue != 4) || RIntegerValue == 4)</test>
 			<error>
@@ -32665,7 +32665,7 @@
 		</rule>
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_6" clause="EncryptionStandard-V-Integer" testNumber="19"/>
-			<description>Entry V with type Integer in EncryptionStandard shouldn't have deprecated value 0</description>
+			<description>Entry V with type Integer in EncryptionStandard should not have deprecated value 0</description>
 			<test>VIntegerValue != 0</test>
 			<error>
 				<message>Entry V with type Integer in EncryptionStandard has deprecated value 0</message>
@@ -45221,10 +45221,10 @@
 		</rule>
 		<rule object="AGraphicsStateParameter">
 			<id specification="ISO_32000_1_6" clause="GraphicsStateParameter-BM-Name" testNumber="19"/>
-			<description>Entry BM with type Name in GraphicsStateParameter shouldn't have deprecated value "Compatible"</description>
+			<description>Entry BM with type Name in GraphicsStateParameter should not have deprecated value Compatible</description>
 			<test>BMNameValue != "Compatible"</test>
 			<error>
-				<message>Entry BM with type Name in GraphicsStateParameter has deprecated value "Compatible"</message>
+				<message>Entry BM with type Name in GraphicsStateParameter has deprecated value Compatible</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -78069,7 +78069,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_6" clause="XObjectImage-BitsPerComponent-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_6" clause="XObjectImage-BitsPerComponent-Integer-1" testNumber="15"/>
 			<description>Entry BitsPerComponent in XObjectImage shall have Integer value 1, if this object satisfies condition (@Filter == CCITTFaxDecode) || (@Filter == JBIG2Decode) || (@ImageMask == true)</description>
 			<test>((FilterNameValue != "CCITTFaxDecode") &amp;&amp; (FilterNameValue != "JBIG2Decode") &amp;&amp; (ImageMaskBooleanValue != true)) || BitsPerComponentIntegerValue == 1</test>
 			<error>
@@ -78081,7 +78081,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_6" clause="XObjectImage-BitsPerComponent-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_6" clause="XObjectImage-BitsPerComponent-Integer-8" testNumber="15"/>
 			<description>Entry BitsPerComponent in XObjectImage shall have Integer value 8, if this object satisfies condition (@Filter == RunLengthDecode) || (@Filter == DCTDecode)</description>
 			<test>((FilterNameValue != "RunLengthDecode") &amp;&amp; (FilterNameValue != "DCTDecode")) || BitsPerComponentIntegerValue == 8</test>
 			<error>
@@ -79738,7 +79738,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImageSoftMask">
-			<id specification="ISO_32000_1_6" clause="XObjectImageSoftMask-BitsPerComponent-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_6" clause="XObjectImageSoftMask-BitsPerComponent-Integer-1" testNumber="15"/>
 			<description>Entry BitsPerComponent in XObjectImageSoftMask shall have Integer value 1, if this object satisfies condition (fn:Contains(@Filter , CCITTFaxDecode) || fn:Contains(@Filter , JBIG2Decode))</description>
 			<test>((FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "CCITTFaxDecode").length &gt; 0) || (FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "JBIG2Decode").length &gt; 0)) == false || BitsPerComponentIntegerValue == 1</test>
 			<error>
@@ -79750,7 +79750,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImageSoftMask">
-			<id specification="ISO_32000_1_6" clause="XObjectImageSoftMask-BitsPerComponent-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_6" clause="XObjectImageSoftMask-BitsPerComponent-Integer-8" testNumber="15"/>
 			<description>Entry BitsPerComponent in XObjectImageSoftMask shall have Integer value 8, if this object satisfies condition (fn:Contains(@Filter , RunLengthDecode) || fn:Contains(@Filter , DCTDecode))</description>
 			<test>((FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "RunLengthDecode").length &gt; 0) || (FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "DCTDecode").length &gt; 0)) == false || BitsPerComponentIntegerValue == 8</test>
 			<error>

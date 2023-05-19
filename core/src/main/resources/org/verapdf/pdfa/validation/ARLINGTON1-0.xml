@@ -6718,7 +6718,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_0" clause="XObjectImage-BitsPerComponent-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_0" clause="XObjectImage-BitsPerComponent-Integer-1" testNumber="15"/>
 			<description>Entry BitsPerComponent in XObjectImage shall have Integer value 1, if this object satisfies condition (@Filter == CCITTFaxDecode) || (@Filter == JBIG2Decode) || (@ImageMask == true)</description>
 			<test>((FilterNameValue != "CCITTFaxDecode") &amp;&amp; (FilterNameValue != "JBIG2Decode") &amp;&amp; (ImageMaskBooleanValue != true)) || BitsPerComponentIntegerValue == 1</test>
 			<error>
@@ -6730,7 +6730,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_0" clause="XObjectImage-BitsPerComponent-Integer" testNumber="15"/>
+			<id specification="ISO_32000_1_0" clause="XObjectImage-BitsPerComponent-Integer-8" testNumber="15"/>
 			<description>Entry BitsPerComponent in XObjectImage shall have Integer value 8, if this object satisfies condition (@Filter == RunLengthDecode) || (@Filter == DCTDecode)</description>
 			<test>((FilterNameValue != "RunLengthDecode") &amp;&amp; (FilterNameValue != "DCTDecode")) || BitsPerComponentIntegerValue == 8</test>
 			<error>
