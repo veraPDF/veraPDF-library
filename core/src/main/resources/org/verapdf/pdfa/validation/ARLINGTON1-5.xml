@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="ARLINGTON1_5">
 	<details creator="veraPDF Consortium" created="2022-05-23T21:45:28.872+03:00">
-		<name>Arlington PDF 1.5 validation profile</name>
-		<description>Validation rules against PDF 1.5 Specification</description>
+		<name>Arlington PDF 1.5 profile</name>
+		<description>Rules against PDF 1.5 Specification</description>
 	</details>
 	<hash></hash>
 	<rules>
