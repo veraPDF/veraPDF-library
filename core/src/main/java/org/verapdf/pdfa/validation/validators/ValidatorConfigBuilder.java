@@ -8,7 +8,7 @@ import java.util.logging.Level;
 public class ValidatorConfigBuilder {
 
 	private PDFAFlavour flavour = PDFAFlavour.NO_FLAVOUR;
-	private PDFAFlavour defaultFlavour = PDFAFlavour.PDFA_1_B;
+	private PDFAFlavour defaultFlavour = PDFAFlavour.ARLINGTON1_4;
 	private boolean recordPasses = false;
 	private int maxFails = -1;
 	private boolean debug = false;

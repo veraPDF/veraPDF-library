@@ -71,7 +71,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 
 	private ValidatorConfigImpl(final PDFAFlavour flavour, final boolean recordPasses, final int maxFails, boolean debug,
 								boolean isLogsEnabled, Level loggingLevel, String password, final boolean showProgress) {
-		this(flavour, PDFAFlavour.PDFA_1_B, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel,
+		this(flavour, PDFAFlavour.ARLINGTON1_4, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel,
 		     BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, !Foundries.defaultParserIsPDFBox(), password,
 		     showProgress);
 	}
