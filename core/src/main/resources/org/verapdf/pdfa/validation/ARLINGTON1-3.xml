@@ -7625,18 +7625,6 @@
 			<references/>
 		</rule>
 		<rule object="AAnnotStamp">
-			<id specification="ISO_32000_1_3" clause="AnnotStamp-Name-Name" testNumber="9"/>
-			<description>Entry Name with type Name in AnnotStamp shall satisfy special case: fn:Not(fn:IsRequired(fn:IsPresent(IT) &amp;&amp; fn:SinceVersion(2.0 , (@IT != Stamp))))</description>
-			<test>NameHasTypeName != true || (containsName != true &amp;&amp; (containsIT == true))</test>
-			<error>
-				<message>Entry Name with type Name in AnnotStamp does not satisfy special case: fn:Not(fn:IsRequired(fn:IsPresent(IT) &amp;&amp; fn:SinceVersion(2.0 , (@IT != Stamp))))</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_3" clause="AnnotStamp-P-Dictionary" testNumber="17"/>
 			<description>Entry P with type Dictionary in AnnotStamp shall be object PageObject</description>
 			<test>PHasTypeDictionary != true || P_size == 1</test>
@@ -44793,18 +44781,6 @@
 				<arguments>
 					<argument>keyName</argument>
 					<argument>DiNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ATransition">
-			<id specification="ISO_32000_1_3" clause="Transition-Di-Name" testNumber="9"/>
-			<description>Entry Di with type Name in Transition shall satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</description>
-			<test>DiHasTypeName != true || ((DiNameValue == "None") &amp;&amp; (SNameValue == "Fly"))</test>
-			<error>
-				<message>Entry Di with type Name in Transition does not satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</message>
-				<arguments>
-					<argument>keyName</argument>
 				</arguments>
 			</error>
 			<references/>

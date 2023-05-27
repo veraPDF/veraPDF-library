@@ -25654,18 +25654,6 @@
 			<references/>
 		</rule>
 		<rule object="ATransition">
-			<id specification="ISO_32000_1_2" clause="Transition-Di-Name" testNumber="9"/>
-			<description>Entry Di with type Name in Transition shall satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</description>
-			<test>DiHasTypeName != true || ((DiNameValue == "None") &amp;&amp; (SNameValue == "Fly"))</test>
-			<error>
-				<message>Entry Di with type Name in Transition does not satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ATransition">
 			<id specification="ISO_32000_1_2" clause="Transition-Dm" testNumber="8"/>
 			<description>Entry Dm in Transition shall have type Name</description>
 			<test>containsDm == false || DmHasTypeName == true</test>

@@ -8974,18 +8974,6 @@
 			<references/>
 		</rule>
 		<rule object="AAnnotStamp">
-			<id specification="ISO_32000_1_4" clause="AnnotStamp-Name-Name" testNumber="9"/>
-			<description>Entry Name with type Name in AnnotStamp shall satisfy special case: fn:Not(fn:IsRequired(fn:IsPresent(IT) &amp;&amp; fn:SinceVersion(2.0 , (@IT != Stamp))))</description>
-			<test>NameHasTypeName != true || (containsName != true &amp;&amp; (containsIT == true))</test>
-			<error>
-				<message>Entry Name with type Name in AnnotStamp does not satisfy special case: fn:Not(fn:IsRequired(fn:IsPresent(IT) &amp;&amp; fn:SinceVersion(2.0 , (@IT != Stamp))))</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_4" clause="AnnotStamp-P-Dictionary" testNumber="17"/>
 			<description>Entry P with type Dictionary in AnnotStamp shall be object PageObject</description>
 			<test>PHasTypeDictionary != true || P_size == 1</test>
@@ -48492,7 +48480,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-BBox-Rectangle" testNumber="9"/>
 			<description>Entry BBox with type Rectangle in StructureAttributesDict shall satisfy special case: fn:Eval(((@O == Layout) || (@O == Artifact)) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>BBoxHasTypeRectangle != true || (((ONameValue == "Layout") || (ONameValue == "Artifact")) || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsBBox != true || BBoxHasTypeRectangle != true || (((ONameValue == "Layout") || (ONameValue == "Artifact")) || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry BBox with type Rectangle in StructureAttributesDict does not satisfy special case: fn:Eval(((@O == Layout) || (@O == Artifact)) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -48516,7 +48504,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-BaselineShift-Number" testNumber="9"/>
 			<description>Entry BaselineShift with type Number in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>BaselineShiftHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsBaselineShift != true || BaselineShiftHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry BaselineShift with type Number in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -48553,7 +48541,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-BlockAlign-Name" testNumber="9"/>
 			<description>Entry BlockAlign with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>BlockAlignHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsBlockAlign != true || BlockAlignHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry BlockAlign with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -48577,7 +48565,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-ColSpan-Integer" testNumber="9"/>
 			<description>Entry ColSpan with type Integer in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Table) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Artifact)))</description>
-			<test>ColSpanHasTypeInteger != true || ((ONameValue == "Table") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Artifact")))</test>
+			<test>containsColSpan != true || ColSpanHasTypeInteger != true || ((ONameValue == "Table") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Artifact")))</test>
 			<error>
 				<message>Entry ColSpan with type Integer in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Table) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Artifact)))</message>
 				<arguments>
@@ -48601,7 +48589,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-EndIndent-Number" testNumber="9"/>
 			<description>Entry EndIndent with type Number in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>EndIndentHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsEndIndent != true || EndIndentHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry EndIndent with type Number in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -48637,7 +48625,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Headers-Array" testNumber="9"/>
 			<description>Entry Headers with type Array in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Table) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Artifact)))</description>
-			<test>HeadersHasTypeArray != true || ((ONameValue == "Table") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Artifact")))</test>
+			<test>containsHeaders != true || HeadersHasTypeArray != true || ((ONameValue == "Table") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Artifact")))</test>
 			<error>
 				<message>Entry Headers with type Array in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Table) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Artifact)))</message>
 				<arguments>
@@ -48661,7 +48649,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Height-Name" testNumber="9"/>
 			<description>Entry Height with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>HeightHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsHeight != true || HeightHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry Height with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -48673,7 +48661,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Height-Number" testNumber="9"/>
 			<description>Entry Height with type Number in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>HeightHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsHeight != true || HeightHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry Height with type Number in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -48710,7 +48698,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-InlineAlign-Name" testNumber="9"/>
 			<description>Entry InlineAlign with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>InlineAlignHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsInlineAlign != true || InlineAlignHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry InlineAlign with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -48747,7 +48735,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-LineHeight-Name" testNumber="9"/>
 			<description>Entry LineHeight with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>LineHeightHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsLineHeight != true || LineHeightHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry LineHeight with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -48759,7 +48747,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-LineHeight-Number" testNumber="9"/>
 			<description>Entry LineHeight with type Number in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>LineHeightHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsLineHeight != true || LineHeightHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry LineHeight with type Number in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -48796,7 +48784,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-ListNumbering-Name" testNumber="9"/>
 			<description>Entry ListNumbering with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == List) || ((@O != Layout) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>ListNumberingHasTypeName != true || ((ONameValue == "List") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsListNumbering != true || ListNumberingHasTypeName != true || ((ONameValue == "List") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry ListNumbering with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == List) || ((@O != Layout) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -48857,7 +48845,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Placement-Name" testNumber="9"/>
 			<description>Entry Placement with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>PlacementHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsPlacement != true || PlacementHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry Placement with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -48894,7 +48882,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Role-Name" testNumber="9"/>
 			<description>Entry Role with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == PrintField) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != Artifact)))</description>
-			<test>RoleHasTypeName != true || ((ONameValue == "PrintField") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "Artifact")))</test>
+			<test>containsRole != true || RoleHasTypeName != true || ((ONameValue == "PrintField") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "Artifact")))</test>
 			<error>
 				<message>Entry Role with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == PrintField) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != Artifact)))</message>
 				<arguments>
@@ -48918,7 +48906,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-RowSpan-Integer" testNumber="9"/>
 			<description>Entry RowSpan with type Integer in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Table) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Artifact)))</description>
-			<test>RowSpanHasTypeInteger != true || ((ONameValue == "Table") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Artifact")))</test>
+			<test>containsRowSpan != true || RowSpanHasTypeInteger != true || ((ONameValue == "Table") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Artifact")))</test>
 			<error>
 				<message>Entry RowSpan with type Integer in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Table) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Artifact)))</message>
 				<arguments>
@@ -48955,7 +48943,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Scope-Name" testNumber="9"/>
 			<description>Entry Scope with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Table) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Artifact)))</description>
-			<test>ScopeHasTypeName != true || ((ONameValue == "Table") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Artifact")))</test>
+			<test>containsScope != true || ScopeHasTypeName != true || ((ONameValue == "Table") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Artifact")))</test>
 			<error>
 				<message>Entry Scope with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Table) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Artifact)))</message>
 				<arguments>
@@ -48979,7 +48967,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-SpaceAfter-Number" testNumber="9"/>
 			<description>Entry SpaceAfter with type Number in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>SpaceAfterHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsSpaceAfter != true || SpaceAfterHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry SpaceAfter with type Number in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -49003,7 +48991,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-SpaceBefore-Number" testNumber="9"/>
 			<description>Entry SpaceBefore with type Number in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>SpaceBeforeHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsSpaceBefore != true || SpaceBeforeHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry SpaceBefore with type Number in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -49027,7 +49015,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-StartIndent-Number" testNumber="9"/>
 			<description>Entry StartIndent with type Number in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>StartIndentHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsStartIndent != true || StartIndentHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry StartIndent with type Number in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -49064,7 +49052,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-TextAlign-Name" testNumber="9"/>
 			<description>Entry TextAlign with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>TextAlignHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsTextAlign != true || TextAlignHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry TextAlign with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -49101,7 +49089,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-TextDecorationType-Name" testNumber="9"/>
 			<description>Entry TextDecorationType with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>TextDecorationTypeHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsTextDecorationType != true || TextDecorationTypeHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry TextDecorationType with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -49125,7 +49113,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-TextIndent-Number" testNumber="9"/>
 			<description>Entry TextIndent with type Number in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>TextIndentHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsTextIndent != true || TextIndentHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry TextIndent with type Number in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -49162,7 +49150,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Type-Name" testNumber="9"/>
 			<description>Entry Type with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Artifact) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>TypeHasTypeName != true || ((ONameValue == "Artifact") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsType != true || TypeHasTypeName != true || ((ONameValue == "Artifact") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry Type with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Artifact) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -49186,7 +49174,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Width-Name" testNumber="9"/>
 			<description>Entry Width with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>WidthHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsWidth != true || WidthHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry Width with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -49198,7 +49186,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Width-Number" testNumber="9"/>
 			<description>Entry Width with type Number in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>WidthHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsWidth != true || WidthHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry Width with type Number in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -49235,7 +49223,7 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-WritingMode-Name" testNumber="9"/>
 			<description>Entry WritingMode with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>WritingModeHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
+			<test>containsWritingMode != true || WritingModeHasTypeName != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry WritingMode with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
@@ -50029,18 +50017,6 @@
 				<arguments>
 					<argument>keyName</argument>
 					<argument>DiNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ATransition">
-			<id specification="ISO_32000_1_4" clause="Transition-Di-Name" testNumber="9"/>
-			<description>Entry Di with type Name in Transition shall satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</description>
-			<test>DiHasTypeName != true || ((DiNameValue == "None") &amp;&amp; (SNameValue == "Fly"))</test>
-			<error>
-				<message>Entry Di with type Name in Transition does not satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</message>
-				<arguments>
-					<argument>keyName</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -55281,18 +55257,6 @@
 			<test>SMaskHasTypeStream != true || isSMaskIndirect == true</test>
 			<error>
 				<message>Entry SMask with type Stream in XObjectImage is direct</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_4" clause="XObjectImage-SMask-Stream" testNumber="9"/>
-			<description>Entry SMask with type Stream in XObjectImage shall satisfy special case: fn:SinceVersion(1.5 , fn:Not(fn:IsPresent(@SMaskInData &gt; 0)))</description>
-			<test>SMaskHasTypeStream != true || true</test>
-			<error>
-				<message>Entry SMask with type Stream in XObjectImage does not satisfy special case: fn:SinceVersion(1.5 , fn:Not(fn:IsPresent(@SMaskInData &gt; 0)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
