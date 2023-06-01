@@ -1717,6 +1717,18 @@
 			<references/>
 		</rule>
 		<rule object="AFilterCCITTFaxDecode">
+			<id specification="ISO_32000_1_0" clause="FilterCCITTFaxDecode-Blackls1" testNumber="23"/>
+			<description>Entry Blackls1 in FilterCCITTFaxDecode can only be present, if satisfy predicate fn:Extension(Malforms)</description>
+			<test>containsBlackls1 == false || hasExtensionMalforms == true</test>
+			<error>
+				<message>Entry Blackls1 in FilterCCITTFaxDecode is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFilterCCITTFaxDecode">
 			<id specification="ISO_32000_1_0" clause="FilterCCITTFaxDecode-Columns" testNumber="8"/>
 			<description>Entry Columns in FilterCCITTFaxDecode shall have type Integer</description>
 			<test>containsColumns == false || ColumnsHasTypeInteger == true</test>

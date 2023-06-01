@@ -43,6 +43,18 @@
 			<references/>
 		</rule>
 		<rule object="AAAPL_ST">
+			<id specification="ISO_32000_1_3" clause="AAPL_ST-Color" testNumber="23"/>
+			<description>Entry Color in AAPL_ST can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsColor == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry Color in AAPL_ST is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAAPL_ST">
 			<id specification="ISO_32000_1_3" clause="AAPL_ST-ColorSpace-Array" testNumber="17"/>
 			<description>Entry ColorSpace with type Array in AAPL_ST shall be one of objects CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, ICCBasedColorSpace, IndexedColorSpace</description>
 			<test>ColorSpaceHasTypeArray != true || ColorSpace_size == 1</test>
@@ -60,6 +72,18 @@
 			<test>containsColorSpace == false || ColorSpaceHasTypeArray == true || ColorSpaceHasTypeName == true</test>
 			<error>
 				<message>Entry ColorSpace in AAPL_ST is not one of types: Array, Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAAPL_ST">
+			<id specification="ISO_32000_1_3" clause="AAPL_ST-ColorSpace" testNumber="23"/>
+			<description>Entry ColorSpace in AAPL_ST can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsColorSpace == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry ColorSpace in AAPL_ST is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -104,11 +128,35 @@
 			<references/>
 		</rule>
 		<rule object="AAAPL_ST">
+			<id specification="ISO_32000_1_3" clause="AAPL_ST-Offset" testNumber="23"/>
+			<description>Entry Offset in AAPL_ST can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsOffset == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry Offset in AAPL_ST is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAAPL_ST">
 			<id specification="ISO_32000_1_3" clause="AAPL_ST-Radius" testNumber="8"/>
 			<description>Entry Radius in AAPL_ST shall have type Number</description>
 			<test>containsRadius == false || RadiusHasTypeNumber == true</test>
 			<error>
 				<message>Entry Radius in AAPL_ST is not of type Number</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAAPL_ST">
+			<id specification="ISO_32000_1_3" clause="AAPL_ST-Radius" testNumber="23"/>
+			<description>Entry Radius in AAPL_ST can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsRadius == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry Radius in AAPL_ST is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -140,6 +188,18 @@
 			<references/>
 		</rule>
 		<rule object="AAAPL_ST">
+			<id specification="ISO_32000_1_3" clause="AAPL_ST-Subtype" testNumber="23"/>
+			<description>Entry Subtype in AAPL_ST can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsSubtype == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry Subtype in AAPL_ST is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAAPL_ST">
 			<id specification="ISO_32000_1_3" clause="AAPL_ST-Subtype-Name" testNumber="6"/>
 			<description>Entry Subtype with type Name in AAPL_ST shall have value Shadow</description>
 			<test>SubtypeHasTypeName != true || SubtypeNameValue == "Shadow"</test>
@@ -158,6 +218,18 @@
 			<test>containsType == false || TypeHasTypeName == true</test>
 			<error>
 				<message>Entry Type in AAPL_ST is not of type Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAAPL_ST">
+			<id specification="ISO_32000_1_3" clause="AAPL_ST-Type" testNumber="23"/>
+			<description>Entry Type in AAPL_ST can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsType == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry Type in AAPL_ST is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -3260,7 +3332,7 @@
 		<rule object="AAnnotCircle">
 			<id specification="ISO_32000_1_3" clause="AnnotCircle-AS" testNumber="11"/>
 			<description>Entry AS in AnnotCircle is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotCircle is missing</message>
 				<arguments>
@@ -3634,7 +3706,7 @@
 		<rule object="AAnnotFileAttachment">
 			<id specification="ISO_32000_1_3" clause="AnnotFileAttachment-AS" testNumber="11"/>
 			<description>Entry AS in AnnotFileAttachment is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotFileAttachment is missing</message>
 				<arguments>
@@ -4032,7 +4104,7 @@
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_3" clause="AnnotFreeText-AS" testNumber="11"/>
 			<description>Entry AS in AnnotFreeText is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotFreeText is missing</message>
 				<arguments>
@@ -4406,7 +4478,7 @@
 		<rule object="AAnnotHighlight">
 			<id specification="ISO_32000_1_3" clause="AnnotHighlight-AS" testNumber="11"/>
 			<description>Entry AS in AnnotHighlight is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotHighlight is missing</message>
 				<arguments>
@@ -4792,7 +4864,7 @@
 		<rule object="AAnnotInk">
 			<id specification="ISO_32000_1_3" clause="AnnotInk-AS" testNumber="11"/>
 			<description>Entry AS in AnnotInk is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotInk is missing</message>
 				<arguments>
@@ -5202,7 +5274,7 @@
 		<rule object="AAnnotLine">
 			<id specification="ISO_32000_1_3" clause="AnnotLine-AS" testNumber="11"/>
 			<description>Entry AS in AnnotLine is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotLine is missing</message>
 				<arguments>
@@ -5636,7 +5708,7 @@
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_3" clause="AnnotLink-AS" testNumber="11"/>
 			<description>Entry AS in AnnotLink is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotLink is missing</message>
 				<arguments>
@@ -6035,7 +6107,7 @@
 		<rule object="AAnnotMovie">
 			<id specification="ISO_32000_1_3" clause="AnnotMovie-AS" testNumber="11"/>
 			<description>Entry AS in AnnotMovie is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotMovie is missing</message>
 				<arguments>
@@ -6385,7 +6457,7 @@
 		<rule object="AAnnotPopup">
 			<id specification="ISO_32000_1_3" clause="AnnotPopup-AS" testNumber="11"/>
 			<description>Entry AS in AnnotPopup is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotPopup is missing</message>
 				<arguments>
@@ -6723,7 +6795,7 @@
 		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_3" clause="AnnotSound-AS" testNumber="11"/>
 			<description>Entry AS in AnnotSound is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotSound is missing</message>
 				<arguments>
@@ -7133,7 +7205,7 @@
 		<rule object="AAnnotSquare">
 			<id specification="ISO_32000_1_3" clause="AnnotSquare-AS" testNumber="11"/>
 			<description>Entry AS in AnnotSquare is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotSquare is missing</message>
 				<arguments>
@@ -7507,7 +7579,7 @@
 		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_3" clause="AnnotStamp-AS" testNumber="11"/>
 			<description>Entry AS in AnnotStamp is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotStamp is missing</message>
 				<arguments>
@@ -7869,7 +7941,7 @@
 		<rule object="AAnnotStrikeOut">
 			<id specification="ISO_32000_1_3" clause="AnnotStrikeOut-AS" testNumber="11"/>
 			<description>Entry AS in AnnotStrikeOut is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotStrikeOut is missing</message>
 				<arguments>
@@ -8255,7 +8327,7 @@
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_3" clause="AnnotText-AS" testNumber="11"/>
 			<description>Entry AS in AnnotText is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotText is missing</message>
 				<arguments>
@@ -9064,7 +9136,7 @@
 		<rule object="AAnnotUnderline">
 			<id specification="ISO_32000_1_3" clause="AnnotUnderline-AS" testNumber="11"/>
 			<description>Entry AS in AnnotUnderline is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotUnderline is missing</message>
 				<arguments>
@@ -9498,7 +9570,7 @@
 		<rule object="AAnnotWidget">
 			<id specification="ISO_32000_1_3" clause="AnnotWidget-AS" testNumber="11"/>
 			<description>Entry AS in AnnotWidget is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotWidget is missing</message>
 				<arguments>
@@ -21001,6 +21073,18 @@
 			<references/>
 		</rule>
 		<rule object="AFilterCCITTFaxDecode">
+			<id specification="ISO_32000_1_3" clause="FilterCCITTFaxDecode-Blackls1" testNumber="23"/>
+			<description>Entry Blackls1 in FilterCCITTFaxDecode can only be present, if satisfy predicate fn:Extension(Malforms)</description>
+			<test>containsBlackls1 == false || hasExtensionMalforms == true</test>
+			<error>
+				<message>Entry Blackls1 in FilterCCITTFaxDecode is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFilterCCITTFaxDecode">
 			<id specification="ISO_32000_1_3" clause="FilterCCITTFaxDecode-Columns" testNumber="8"/>
 			<description>Entry Columns in FilterCCITTFaxDecode shall have type Integer</description>
 			<test>containsColumns == false || ColumnsHasTypeInteger == true</test>
@@ -29467,6 +29551,18 @@
 			<references/>
 		</rule>
 		<rule object="AGraphicsStateParameter">
+			<id specification="ISO_32000_1_3" clause="GraphicsStateParameter-AAPL:AA" testNumber="23"/>
+			<description>Entry AAPL:AA in GraphicsStateParameter can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsAAPLAA == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry AAPL:AA in GraphicsStateParameter is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGraphicsStateParameter">
 			<id specification="ISO_32000_1_3" clause="GraphicsStateParameter-AAPL:ST-Dictionary" testNumber="17"/>
 			<description>Entry AAPL:ST with type Dictionary in GraphicsStateParameter shall be object AAPL_ST</description>
 			<test>AAPLSTHasTypeDictionary != true || AAPLST_size == 1</test>
@@ -29484,6 +29580,18 @@
 			<test>containsAAPLST == false || AAPLSTHasTypeDictionary == true || AAPLSTHasTypeName == true</test>
 			<error>
 				<message>Entry AAPL:ST in GraphicsStateParameter is not one of types: Dictionary, Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGraphicsStateParameter">
+			<id specification="ISO_32000_1_3" clause="GraphicsStateParameter-AAPL:ST" testNumber="23"/>
+			<description>Entry AAPL:ST in GraphicsStateParameter can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsAAPLST == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry AAPL:ST in GraphicsStateParameter is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>

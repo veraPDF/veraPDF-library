@@ -1174,6 +1174,18 @@
 			<references/>
 		</rule>
 		<rule object="AAAPL_ST">
+			<id specification="ISO_32000_1_6" clause="AAPL_ST-Color" testNumber="23"/>
+			<description>Entry Color in AAPL_ST can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsColor == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry Color in AAPL_ST is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAAPL_ST">
 			<id specification="ISO_32000_1_6" clause="AAPL_ST-ColorSpace-Array" testNumber="17"/>
 			<description>Entry ColorSpace with type Array in AAPL_ST shall be one of objects CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, ICCBasedColorSpace, IndexedColorSpace</description>
 			<test>ColorSpaceHasTypeArray != true || ColorSpace_size == 1</test>
@@ -1191,6 +1203,18 @@
 			<test>containsColorSpace == false || ColorSpaceHasTypeArray == true || ColorSpaceHasTypeName == true</test>
 			<error>
 				<message>Entry ColorSpace in AAPL_ST is not one of types: Array, Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAAPL_ST">
+			<id specification="ISO_32000_1_6" clause="AAPL_ST-ColorSpace" testNumber="23"/>
+			<description>Entry ColorSpace in AAPL_ST can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsColorSpace == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry ColorSpace in AAPL_ST is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1235,11 +1259,35 @@
 			<references/>
 		</rule>
 		<rule object="AAAPL_ST">
+			<id specification="ISO_32000_1_6" clause="AAPL_ST-Offset" testNumber="23"/>
+			<description>Entry Offset in AAPL_ST can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsOffset == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry Offset in AAPL_ST is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAAPL_ST">
 			<id specification="ISO_32000_1_6" clause="AAPL_ST-Radius" testNumber="8"/>
 			<description>Entry Radius in AAPL_ST shall have type Number</description>
 			<test>containsRadius == false || RadiusHasTypeNumber == true</test>
 			<error>
 				<message>Entry Radius in AAPL_ST is not of type Number</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAAPL_ST">
+			<id specification="ISO_32000_1_6" clause="AAPL_ST-Radius" testNumber="23"/>
+			<description>Entry Radius in AAPL_ST can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsRadius == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry Radius in AAPL_ST is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1271,6 +1319,18 @@
 			<references/>
 		</rule>
 		<rule object="AAAPL_ST">
+			<id specification="ISO_32000_1_6" clause="AAPL_ST-Subtype" testNumber="23"/>
+			<description>Entry Subtype in AAPL_ST can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsSubtype == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry Subtype in AAPL_ST is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAAPL_ST">
 			<id specification="ISO_32000_1_6" clause="AAPL_ST-Subtype-Name" testNumber="6"/>
 			<description>Entry Subtype with type Name in AAPL_ST shall have value Shadow</description>
 			<test>SubtypeHasTypeName != true || SubtypeNameValue == "Shadow"</test>
@@ -1289,6 +1349,18 @@
 			<test>containsType == false || TypeHasTypeName == true</test>
 			<error>
 				<message>Entry Type in AAPL_ST is not of type Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAAPL_ST">
+			<id specification="ISO_32000_1_6" clause="AAPL_ST-Type" testNumber="23"/>
+			<description>Entry Type in AAPL_ST can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsType == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry Type in AAPL_ST is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -5913,7 +5985,7 @@
 		<rule object="AAnnot3D">
 			<id specification="ISO_32000_1_6" clause="Annot3D-AS" testNumber="11"/>
 			<description>Entry AS in Annot3D is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in Annot3D is missing</message>
 				<arguments>
@@ -6251,7 +6323,7 @@
 		<rule object="AAnnotCaret">
 			<id specification="ISO_32000_1_6" clause="AnnotCaret-AS" testNumber="11"/>
 			<description>Entry AS in AnnotCaret is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotCaret is missing</message>
 				<arguments>
@@ -6843,7 +6915,7 @@
 		<rule object="AAnnotCircle">
 			<id specification="ISO_32000_1_6" clause="AnnotCircle-AS" testNumber="11"/>
 			<description>Entry AS in AnnotCircle is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotCircle is missing</message>
 				<arguments>
@@ -7482,7 +7554,7 @@
 		<rule object="AAnnotFileAttachment">
 			<id specification="ISO_32000_1_6" clause="AnnotFileAttachment-AS" testNumber="11"/>
 			<description>Entry AS in AnnotFileAttachment is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotFileAttachment is missing</message>
 				<arguments>
@@ -8073,7 +8145,7 @@
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_6" clause="AnnotFreeText-AS" testNumber="11"/>
 			<description>Entry AS in AnnotFreeText is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotFreeText is missing</message>
 				<arguments>
@@ -8811,7 +8883,7 @@
 		<rule object="AAnnotHighlight">
 			<id specification="ISO_32000_1_6" clause="AnnotHighlight-AS" testNumber="11"/>
 			<description>Entry AS in AnnotHighlight is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotHighlight is missing</message>
 				<arguments>
@@ -9390,7 +9462,7 @@
 		<rule object="AAnnotInk">
 			<id specification="ISO_32000_1_6" clause="AnnotInk-AS" testNumber="11"/>
 			<description>Entry AS in AnnotInk is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotInk is missing</message>
 				<arguments>
@@ -9993,7 +10065,7 @@
 		<rule object="AAnnotLine">
 			<id specification="ISO_32000_1_6" clause="AnnotLine-AS" testNumber="11"/>
 			<description>Entry AS in AnnotLine is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotLine is missing</message>
 				<arguments>
@@ -10741,7 +10813,7 @@
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_6" clause="AnnotLink-AS" testNumber="11"/>
 			<description>Entry AS in AnnotLink is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotLink is missing</message>
 				<arguments>
@@ -11224,7 +11296,7 @@
 		<rule object="AAnnotMovie">
 			<id specification="ISO_32000_1_6" clause="AnnotMovie-AS" testNumber="11"/>
 			<description>Entry AS in AnnotMovie is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotMovie is missing</message>
 				<arguments>
@@ -11610,7 +11682,7 @@
 		<rule object="AAnnotPolyLine">
 			<id specification="ISO_32000_1_6" clause="AnnotPolyLine-AS" testNumber="11"/>
 			<description>Entry AS in AnnotPolyLine is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotPolyLine is missing</message>
 				<arguments>
@@ -12298,7 +12370,7 @@
 		<rule object="AAnnotPolygon">
 			<id specification="ISO_32000_1_6" clause="AnnotPolygon-AS" testNumber="11"/>
 			<description>Entry AS in AnnotPolygon is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotPolygon is missing</message>
 				<arguments>
@@ -12986,7 +13058,7 @@
 		<rule object="AAnnotPopup">
 			<id specification="ISO_32000_1_6" clause="AnnotPopup-AS" testNumber="11"/>
 			<description>Entry AS in AnnotPopup is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotPopup is missing</message>
 				<arguments>
@@ -13360,7 +13432,7 @@
 		<rule object="AAnnotPrinterMark">
 			<id specification="ISO_32000_1_6" clause="AnnotPrinterMark-AS" testNumber="11"/>
 			<description>Entry AS in AnnotPrinterMark is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotPrinterMark is missing</message>
 				<arguments>
@@ -13770,7 +13842,7 @@
 		<rule object="AAnnotScreen">
 			<id specification="ISO_32000_1_6" clause="AnnotScreen-AS" testNumber="11"/>
 			<description>Entry AS in AnnotScreen is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotScreen is missing</message>
 				<arguments>
@@ -14144,7 +14216,7 @@
 		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_6" clause="AnnotSound-AS" testNumber="11"/>
 			<description>Entry AS in AnnotSound is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotSound is missing</message>
 				<arguments>
@@ -14747,7 +14819,7 @@
 		<rule object="AAnnotSquare">
 			<id specification="ISO_32000_1_6" clause="AnnotSquare-AS" testNumber="11"/>
 			<description>Entry AS in AnnotSquare is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotSquare is missing</message>
 				<arguments>
@@ -15362,7 +15434,7 @@
 		<rule object="AAnnotSquiggly">
 			<id specification="ISO_32000_1_6" clause="AnnotSquiggly-AS" testNumber="11"/>
 			<description>Entry AS in AnnotSquiggly is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotSquiggly is missing</message>
 				<arguments>
@@ -15941,7 +16013,7 @@
 		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_6" clause="AnnotStamp-AS" testNumber="11"/>
 			<description>Entry AS in AnnotStamp is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotStamp is missing</message>
 				<arguments>
@@ -16484,7 +16556,7 @@
 		<rule object="AAnnotStrikeOut">
 			<id specification="ISO_32000_1_6" clause="AnnotStrikeOut-AS" testNumber="11"/>
 			<description>Entry AS in AnnotStrikeOut is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotStrikeOut is missing</message>
 				<arguments>
@@ -17063,7 +17135,7 @@
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_6" clause="AnnotText-AS" testNumber="11"/>
 			<description>Entry AS in AnnotText is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotText is missing</message>
 				<arguments>
@@ -18187,7 +18259,7 @@
 		<rule object="AAnnotUnderline">
 			<id specification="ISO_32000_1_6" clause="AnnotUnderline-AS" testNumber="11"/>
 			<description>Entry AS in AnnotUnderline is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotUnderline is missing</message>
 				<arguments>
@@ -18766,7 +18838,7 @@
 		<rule object="AAnnotWatermark">
 			<id specification="ISO_32000_1_6" clause="AnnotWatermark-AS" testNumber="11"/>
 			<description>Entry AS in AnnotWatermark is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotWatermark is missing</message>
 				<arguments>
@@ -19176,7 +19248,7 @@
 		<rule object="AAnnotWidget">
 			<id specification="ISO_32000_1_6" clause="AnnotWidget-AS" testNumber="11"/>
 			<description>Entry AS in AnnotWidget is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
-			<test>containsAS == true || ((containsAPNAny != true) &amp;&amp; (containsAPRAny != true) &amp;&amp; (containsAPDAny != true))</test>
+			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotWidget is missing</message>
 				<arguments>
@@ -21423,6 +21495,18 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AArrayOfDPartArraysEntry">
+			<id specification="ISO_32000_1_6" clause="ArrayOfDPartArraysEntry" testNumber="23"/>
+			<description>Entry in ArrayOfDPartArrays can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>contains == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry %1 in ArrayOfDPartArrays is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AArrayOfDPartsEntry">
 			<id specification="ISO_32000_1_6" clause="ArrayOfDPartsEntry-Dictionary" testNumber="17"/>
 			<description>Entry with type Dictionary in ArrayOfDParts shall be object DPart</description>
@@ -21441,6 +21525,18 @@
 			<test>HasTypeDictionary == true</test>
 			<error>
 				<message>Entry %1 in ArrayOfDParts is not of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfDPartsEntry">
+			<id specification="ISO_32000_1_6" clause="ArrayOfDPartsEntry" testNumber="23"/>
+			<description>Entry in ArrayOfDParts can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>contains == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry %1 in ArrayOfDParts is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -27473,6 +27569,18 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
+			<id specification="ISO_32000_1_6" clause="Catalog-DPartRoot" testNumber="23"/>
+			<description>Entry DPartRoot in Catalog can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>containsDPartRoot == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry DPartRoot in Catalog is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ACatalog">
 			<id specification="ISO_32000_1_6" clause="Catalog-Dests-Dictionary" testNumber="17"/>
 			<description>Entry Dests with type Dictionary in Catalog shall be object DestsMap</description>
 			<test>DestsHasTypeDictionary != true || Dests_size == 1</test>
@@ -29095,6 +29203,18 @@
 			<references/>
 		</rule>
 		<rule object="ADPM">
+			<id specification="ISO_32000_1_6" clause="DPM-GTS_Managed" testNumber="23"/>
+			<description>Entry GTS_Managed in DPM can only be present, if satisfy predicate fn:Extension(PDF_VT2)</description>
+			<test>containsGTS_Managed == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry GTS_Managed in DPM is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADPM">
 			<id specification="ISO_32000_1_6" clause="DPM-GTS_Suspect-Dictionary" testNumber="17"/>
 			<description>Entry GTS_Suspect with type Dictionary in DPM shall be object _UniversalDictionary</description>
 			<test>GTS_SuspectHasTypeDictionary != true || GTS_Suspect_size == 1</test>
@@ -29112,6 +29232,18 @@
 			<test>containsGTS_Suspect == false || GTS_SuspectHasTypeDictionary == true</test>
 			<error>
 				<message>Entry GTS_Suspect in DPM is not of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADPM">
+			<id specification="ISO_32000_1_6" clause="DPM-GTS_Suspect" testNumber="23"/>
+			<description>Entry GTS_Suspect in DPM can only be present, if satisfy predicate fn:Extension(PDF_VT2)</description>
+			<test>containsGTS_Suspect == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry GTS_Suspect in DPM is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -29148,6 +29280,18 @@
 			<test>HasTypeArray == true || HasTypeBoolean == true || HasTypeDate == true || HasTypeDictionary == true || HasTypeInteger == true || HasTypeName == true || HasTypeNumber == true || HasTypeStringText == true</test>
 			<error>
 				<message>Entry %1 in DPM is not one of types: Array, Boolean, Date, Dictionary, Integer, Name, Number, StringText</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADPMEntry">
+			<id specification="ISO_32000_1_6" clause="DPMEntry" testNumber="23"/>
+			<description>Entry in DPM can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>contains == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry %1 in DPM is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -29203,6 +29347,18 @@
 			<references/>
 		</rule>
 		<rule object="ADPart">
+			<id specification="ISO_32000_1_6" clause="DPart-DPM" testNumber="23"/>
+			<description>Entry DPM in DPart can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>containsDPM == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry DPM in DPart is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADPart">
 			<id specification="ISO_32000_1_6" clause="DPart-DParts-Array" testNumber="17"/>
 			<description>Entry DParts with type Array in DPart shall be object ArrayOfDPartArrays</description>
 			<test>DPartsHasTypeArray != true || DParts_size == 1</test>
@@ -29239,6 +29395,18 @@
 			<references/>
 		</rule>
 		<rule object="ADPart">
+			<id specification="ISO_32000_1_6" clause="DPart-DParts" testNumber="23"/>
+			<description>Entry DParts in DPart can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>containsDParts == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry DParts in DPart is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADPart">
 			<id specification="ISO_32000_1_6" clause="DPart-DParts-Array" testNumber="9"/>
 			<description>Entry DParts with type Array in DPart shall satisfy special case: fn:Eval(fn:ArrayLength(DParts) &gt; 0)</description>
 			<test>DPartsHasTypeArray != true || (DPartsArraySize &gt; 0)</test>
@@ -29268,6 +29436,18 @@
 			<test>containsEnd == false || EndHasTypeDictionary == true</test>
 			<error>
 				<message>Entry End in DPart is not of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADPart">
+			<id specification="ISO_32000_1_6" clause="DPart-End" testNumber="23"/>
+			<description>Entry End in DPart can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>containsEnd == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry End in DPart is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -29323,6 +29503,18 @@
 			<references/>
 		</rule>
 		<rule object="ADPart">
+			<id specification="ISO_32000_1_6" clause="DPart-Parent" testNumber="23"/>
+			<description>Entry Parent in DPart can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>containsParent == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry Parent in DPart is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADPart">
 			<id specification="ISO_32000_1_6" clause="DPart-Parent-Dictionary" testNumber="10"/>
 			<description>Entry Parent with type Dictionary in DPart shall be indirect</description>
 			<test>ParentHasTypeDictionary != true || isParentIndirect == true</test>
@@ -29371,6 +29563,18 @@
 			<references/>
 		</rule>
 		<rule object="ADPart">
+			<id specification="ISO_32000_1_6" clause="DPart-Start" testNumber="23"/>
+			<description>Entry Start in DPart can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>containsStart == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry Start in DPart is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADPart">
 			<id specification="ISO_32000_1_6" clause="DPart-Start-Dictionary" testNumber="10"/>
 			<description>Entry Start with type Dictionary in DPart shall be indirect</description>
 			<test>StartHasTypeDictionary != true || isStartIndirect == true</test>
@@ -29388,6 +29592,18 @@
 			<test>containsType == false || TypeHasTypeName == true</test>
 			<error>
 				<message>Entry Type in DPart is not of type Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADPart">
+			<id specification="ISO_32000_1_6" clause="DPart-Type" testNumber="23"/>
+			<description>Entry Type in DPart can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>containsType == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry Type in DPart is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -29456,6 +29672,18 @@
 			<references/>
 		</rule>
 		<rule object="ADPartRoot">
+			<id specification="ISO_32000_1_6" clause="DPartRoot-DPartRootNode" testNumber="23"/>
+			<description>Entry DPartRootNode in DPartRoot can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>containsDPartRootNode == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry DPartRootNode in DPartRoot is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADPartRoot">
 			<id specification="ISO_32000_1_6" clause="DPartRoot-DPartRootNode-Dictionary" testNumber="10"/>
 			<description>Entry DPartRootNode with type Dictionary in DPartRoot shall be indirect</description>
 			<test>DPartRootNodeHasTypeDictionary != true || isDPartRootNodeIndirect == true</test>
@@ -29504,11 +29732,35 @@
 			<references/>
 		</rule>
 		<rule object="ADPartRoot">
+			<id specification="ISO_32000_1_6" clause="DPartRoot-NodeNameList" testNumber="23"/>
+			<description>Entry NodeNameList in DPartRoot can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>containsNodeNameList == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry NodeNameList in DPartRoot is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADPartRoot">
 			<id specification="ISO_32000_1_6" clause="DPartRoot-RecordLevel" testNumber="8"/>
 			<description>Entry RecordLevel in DPartRoot shall have type Integer</description>
 			<test>containsRecordLevel == false || RecordLevelHasTypeInteger == true</test>
 			<error>
 				<message>Entry RecordLevel in DPartRoot is not of type Integer</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADPartRoot">
+			<id specification="ISO_32000_1_6" clause="DPartRoot-RecordLevel" testNumber="23"/>
+			<description>Entry RecordLevel in DPartRoot can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>containsRecordLevel == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry RecordLevel in DPartRoot is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -29533,6 +29785,18 @@
 			<test>containsType == false || TypeHasTypeName == true</test>
 			<error>
 				<message>Entry Type in DPartRoot is not of type Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADPartRoot">
+			<id specification="ISO_32000_1_6" clause="DPartRoot-Type" testNumber="23"/>
+			<description>Entry Type in DPartRoot can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>containsType == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry Type in DPartRoot is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -35764,6 +36028,30 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_6" clause="FileTrailer-XRefStream-Stream" testNumber="17"/>
+			<description>Entry XRefStream with type Stream in FileTrailer shall be object XRefStream</description>
+			<test>XRefStreamHasTypeStream != true || XRefStream_size == 1</test>
+			<error>
+				<message>Entry XRefStream with type Stream in FileTrailer is not object XRefStream</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_6" clause="FileTrailer-XRefStream" testNumber="8"/>
+			<description>Entry XRefStream in FileTrailer shall have type Stream</description>
+			<test>containsXRefStream == false || XRefStreamHasTypeStream == true</test>
+			<error>
+				<message>Entry XRefStream in FileTrailer is not of type Stream</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AFilterCCITTFaxDecode">
 			<id specification="ISO_32000_1_6" clause="FilterCCITTFaxDecode" testNumber="1"/>
 			<description>FilterCCITTFaxDecode shall not contain entries except BlackIs1, Blackls1, EndOfBlock, EndOfLine, DamagedRowsBeforeError, Columns, K, EncodedByteAlign, Rows</description>
@@ -35794,6 +36082,18 @@
 			<test>containsBlackls1 == false || Blackls1HasTypeBoolean == true</test>
 			<error>
 				<message>Entry Blackls1 in FilterCCITTFaxDecode is not of type Boolean</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFilterCCITTFaxDecode">
+			<id specification="ISO_32000_1_6" clause="FilterCCITTFaxDecode-Blackls1" testNumber="23"/>
+			<description>Entry Blackls1 in FilterCCITTFaxDecode can only be present, if satisfy predicate fn:Extension(Malforms)</description>
+			<test>containsBlackls1 == false || hasExtensionMalforms == true</test>
+			<error>
+				<message>Entry Blackls1 in FilterCCITTFaxDecode is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -45052,6 +45352,18 @@
 			<references/>
 		</rule>
 		<rule object="AGraphicsStateParameter">
+			<id specification="ISO_32000_1_6" clause="GraphicsStateParameter-AAPL:AA" testNumber="23"/>
+			<description>Entry AAPL:AA in GraphicsStateParameter can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsAAPLAA == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry AAPL:AA in GraphicsStateParameter is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGraphicsStateParameter">
 			<id specification="ISO_32000_1_6" clause="GraphicsStateParameter-AAPL:ST-Dictionary" testNumber="17"/>
 			<description>Entry AAPL:ST with type Dictionary in GraphicsStateParameter shall be object AAPL_ST</description>
 			<test>AAPLSTHasTypeDictionary != true || AAPLST_size == 1</test>
@@ -45069,6 +45381,18 @@
 			<test>containsAAPLST == false || AAPLSTHasTypeDictionary == true || AAPLSTHasTypeName == true</test>
 			<error>
 				<message>Entry AAPL:ST in GraphicsStateParameter is not one of types: Dictionary, Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGraphicsStateParameter">
+			<id specification="ISO_32000_1_6" clause="GraphicsStateParameter-AAPL:ST" testNumber="23"/>
+			<description>Entry AAPL:ST in GraphicsStateParameter can only be present, if satisfy predicate fn:Extension(AAPL , 1.2)</description>
+			<test>containsAAPLST == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry AAPL:ST in GraphicsStateParameter is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -56750,6 +57074,18 @@
 			<references/>
 		</rule>
 		<rule object="AOptContentCreatorInfo">
+			<id specification="ISO_32000_1_6" clause="OptContentCreatorInfo-SubType" testNumber="23"/>
+			<description>Entry SubType in OptContentCreatorInfo can only be present, if satisfy predicate fn:Extension(Malforms , 1.5)</description>
+			<test>containsSubType == false || hasExtensionMalforms == true</test>
+			<error>
+				<message>Entry SubType in OptContentCreatorInfo is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOptContentCreatorInfo">
 			<id specification="ISO_32000_1_6" clause="OptContentCreatorInfo-Subtype" testNumber="8"/>
 			<description>Entry Subtype in OptContentCreatorInfo shall have type Name</description>
 			<test>containsSubtype == false || SubtypeHasTypeName == true</test>
@@ -58906,6 +59242,18 @@
 			<test>containsDPart == false || DPartHasTypeDictionary == true</test>
 			<error>
 				<message>Entry DPart in PageObject is not of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="APageObject">
+			<id specification="ISO_32000_1_6" clause="PageObject-DPart" testNumber="23"/>
+			<description>Entry DPart in PageObject can only be present, if satisfy predicate fn:Extension(PDF_VT2 , 1.6)</description>
+			<test>containsDPart == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry DPart in PageObject is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -77514,6 +77862,18 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormType1">
+			<id specification="ISO_32000_1_6" clause="XObjectFormType1-GTS_Encapsulated" testNumber="23"/>
+			<description>Entry GTS_Encapsulated in XObjectFormType1 can only be present, if satisfy predicate fn:Extension(PDF_VT2)</description>
+			<test>containsGTS_Encapsulated == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry GTS_Encapsulated in XObjectFormType1 is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_6" clause="XObjectFormType1-GTS_Env" testNumber="8"/>
 			<description>Entry GTS_Env in XObjectFormType1 shall have type StringText</description>
 			<test>containsGTS_Env == false || GTS_EnvHasTypeStringText == true</test>
@@ -77538,11 +77898,35 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormType1">
+			<id specification="ISO_32000_1_6" clause="XObjectFormType1-GTS_Env" testNumber="23"/>
+			<description>Entry GTS_Env in XObjectFormType1 can only be present, if satisfy predicate fn:Extension(PDF_VT2)</description>
+			<test>containsGTS_Env == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry GTS_Env in XObjectFormType1 is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_6" clause="XObjectFormType1-GTS_Scope" testNumber="8"/>
 			<description>Entry GTS_Scope in XObjectFormType1 shall have type Name</description>
 			<test>containsGTS_Scope == false || GTS_ScopeHasTypeName == true</test>
 			<error>
 				<message>Entry GTS_Scope in XObjectFormType1 is not of type Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormType1">
+			<id specification="ISO_32000_1_6" clause="XObjectFormType1-GTS_Scope" testNumber="23"/>
+			<description>Entry GTS_Scope in XObjectFormType1 can only be present, if satisfy predicate fn:Extension(PDF_VT2)</description>
+			<test>containsGTS_Scope == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry GTS_Scope in XObjectFormType1 is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -77568,6 +77952,18 @@
 			<test>containsGTS_XID == false || GTS_XIDHasTypeString == true</test>
 			<error>
 				<message>Entry GTS_XID in XObjectFormType1 is not of type String</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormType1">
+			<id specification="ISO_32000_1_6" clause="XObjectFormType1-GTS_XID" testNumber="23"/>
+			<description>Entry GTS_XID in XObjectFormType1 can only be present, if satisfy predicate fn:Extension(PDF_VT2)</description>
+			<test>containsGTS_XID == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry GTS_XID in XObjectFormType1 is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -78445,6 +78841,18 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
+			<id specification="ISO_32000_1_6" clause="XObjectImage-GTS_Encapsulated" testNumber="23"/>
+			<description>Entry GTS_Encapsulated in XObjectImage can only be present, if satisfy predicate fn:Extension(PDF_VT2)</description>
+			<test>containsGTS_Encapsulated == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry GTS_Encapsulated in XObjectImage is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_6" clause="XObjectImage-GTS_Env" testNumber="8"/>
 			<description>Entry GTS_Env in XObjectImage shall have type StringText</description>
 			<test>containsGTS_Env == false || GTS_EnvHasTypeStringText == true</test>
@@ -78469,11 +78877,35 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
+			<id specification="ISO_32000_1_6" clause="XObjectImage-GTS_Env" testNumber="23"/>
+			<description>Entry GTS_Env in XObjectImage can only be present, if satisfy predicate fn:Extension(PDF_VT2)</description>
+			<test>containsGTS_Env == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry GTS_Env in XObjectImage is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_6" clause="XObjectImage-GTS_Scope" testNumber="8"/>
 			<description>Entry GTS_Scope in XObjectImage shall have type Name</description>
 			<test>containsGTS_Scope == false || GTS_ScopeHasTypeName == true</test>
 			<error>
 				<message>Entry GTS_Scope in XObjectImage is not of type Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectImage">
+			<id specification="ISO_32000_1_6" clause="XObjectImage-GTS_Scope" testNumber="23"/>
+			<description>Entry GTS_Scope in XObjectImage can only be present, if satisfy predicate fn:Extension(PDF_VT2)</description>
+			<test>containsGTS_Scope == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry GTS_Scope in XObjectImage is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -78499,6 +78931,18 @@
 			<test>containsGTS_XID == false || GTS_XIDHasTypeString == true</test>
 			<error>
 				<message>Entry GTS_XID in XObjectImage is not of type String</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectImage">
+			<id specification="ISO_32000_1_6" clause="XObjectImage-GTS_XID" testNumber="23"/>
+			<description>Entry GTS_XID in XObjectImage can only be present, if satisfy predicate fn:Extension(PDF_VT2)</description>
+			<test>containsGTS_XID == false || hasExtensionPDF_VT2 == true</test>
+			<error>
+				<message>Entry GTS_XID in XObjectImage is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
