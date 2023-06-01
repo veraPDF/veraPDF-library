@@ -27646,7 +27646,7 @@
 		</rule>
 		<rule object="AFontFile2">
 			<id specification="ISO_32000_1_4" clause="FontFile2-Length1" testNumber="11"/>
-			<description>Entry Length1 in FontFile2 is required, when fn:IsRequired(parent::parent::@Subtype== TrueType)</description>
+			<description>Entry Length1 in FontFile2 is required, when fn:IsRequired(parent::parent::@Subtype == TrueType)</description>
 			<test>containsLength1 == true || (parentparentSubtypeNameValue != "TrueType")</test>
 			<error>
 				<message>Entry Length1 in FontFile2 is missing</message>
@@ -33459,7 +33459,7 @@
 		</rule>
 		<rule object="AHalftoneType1">
 			<id specification="ISO_32000_1_4" clause="HalftoneType1-TransferFunction" testNumber="11"/>
-			<description>Entry TransferFunction in HalftoneType1 is required, when fn:IsRequired(parent::@HalftoneType== 5)</description>
+			<description>Entry TransferFunction in HalftoneType1 is required, when fn:IsRequired(parent::@HalftoneType == 5)</description>
 			<test>parentHalftoneTypeHasTypeInteger == false || (containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5))</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType1 is missing</message>
@@ -33872,7 +33872,7 @@
 		</rule>
 		<rule object="AHalftoneType10">
 			<id specification="ISO_32000_1_4" clause="HalftoneType10-TransferFunction" testNumber="11"/>
-			<description>Entry TransferFunction in HalftoneType10 is required, when fn:IsRequired(parent::@HalftoneType== 5)</description>
+			<description>Entry TransferFunction in HalftoneType10 is required, when fn:IsRequired(parent::@HalftoneType == 5)</description>
 			<test>parentHalftoneTypeHasTypeInteger == false || (containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5))</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType10 is missing</message>
@@ -34429,7 +34429,7 @@
 		</rule>
 		<rule object="AHalftoneType16">
 			<id specification="ISO_32000_1_4" clause="HalftoneType16-TransferFunction" testNumber="11"/>
-			<description>Entry TransferFunction in HalftoneType16 is required, when fn:IsRequired(parent::@HalftoneType== 5)</description>
+			<description>Entry TransferFunction in HalftoneType16 is required, when fn:IsRequired(parent::@HalftoneType == 5)</description>
 			<test>parentHalftoneTypeHasTypeInteger == false || (containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5))</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType16 is missing</message>
@@ -35739,10 +35739,10 @@
 		</rule>
 		<rule object="AIconFit">
 			<id specification="ISO_32000_1_4" clause="IconFit-A-Array" testNumber="9"/>
-			<description>Entry A with type Array in IconFit shall satisfy special case: fn:Eval((A::@0&gt;= 0) &amp;&amp; (A::@0&lt;= 1) &amp;&amp; (A::@1&gt;= 0) &amp;&amp; (A::@1&lt;= 1))</description>
+			<description>Entry A with type Array in IconFit shall satisfy special case: fn:Eval((A::@0 &gt;= 0) &amp;&amp; (A::@0 &lt;= 1) &amp;&amp; (A::@1 &gt;= 0) &amp;&amp; (A::@1 &lt;= 1))</description>
 			<test>AHasTypeArray != true || ((A0HasTypeNumber == false || (A0NumberValue &gt;= 0) &amp;&amp; (A0NumberValue &lt;= 1)) &amp;&amp; (A1HasTypeNumber == false || (A1NumberValue &gt;= 0)) &amp;&amp; (A1HasTypeNumber == false || (A1NumberValue &lt;= 1)))</test>
 			<error>
-				<message>Entry A with type Array in IconFit does not satisfy special case: fn:Eval((A::@0&gt;= 0) &amp;&amp; (A::@0&lt;= 1) &amp;&amp; (A::@1&gt;= 0) &amp;&amp; (A::@1&lt;= 1))</message>
+				<message>Entry A with type Array in IconFit does not satisfy special case: fn:Eval((A::@0 &gt;= 0) &amp;&amp; (A::@0 &lt;= 1) &amp;&amp; (A::@1 &gt;= 0) &amp;&amp; (A::@1 &lt;= 1))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -37744,10 +37744,10 @@
 		</rule>
 		<rule object="AMovieActivation">
 			<id specification="ISO_32000_1_4" clause="MovieActivation-FWPosition-Array" testNumber="9"/>
-			<description>Entry FWPosition with type Array in MovieActivation shall satisfy special case: fn:Eval((FWPosition::@0&gt;= 0.0) &amp;&amp; (FWPosition::@0&lt;= 1.0) &amp;&amp; (FWPosition::@1&gt;= 0.0) &amp;&amp; (FWPosition::@1&lt;= 1.0))</description>
+			<description>Entry FWPosition with type Array in MovieActivation shall satisfy special case: fn:Eval((FWPosition::@0 &gt;= 0.0) &amp;&amp; (FWPosition::@0 &lt;= 1.0) &amp;&amp; (FWPosition::@1 &gt;= 0.0) &amp;&amp; (FWPosition::@1 &lt;= 1.0))</description>
 			<test>FWPositionHasTypeArray != true || ((FWPosition0HasTypeNumber == false || (FWPosition0NumberValue &gt;= 0.0) &amp;&amp; (FWPosition0NumberValue &lt;= 1.0)) &amp;&amp; (FWPosition1HasTypeNumber == false || (FWPosition1NumberValue &gt;= 0.0)) &amp;&amp; (FWPosition1HasTypeNumber == false || (FWPosition1NumberValue &lt;= 1.0)))</test>
 			<error>
-				<message>Entry FWPosition with type Array in MovieActivation does not satisfy special case: fn:Eval((FWPosition::@0&gt;= 0.0) &amp;&amp; (FWPosition::@0&lt;= 1.0) &amp;&amp; (FWPosition::@1&gt;= 0.0) &amp;&amp; (FWPosition::@1&lt;= 1.0))</message>
+				<message>Entry FWPosition with type Array in MovieActivation does not satisfy special case: fn:Eval((FWPosition::@0 &gt;= 0.0) &amp;&amp; (FWPosition::@0 &lt;= 1.0) &amp;&amp; (FWPosition::@1 &gt;= 0.0) &amp;&amp; (FWPosition::@1 &lt;= 1.0))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -37780,10 +37780,10 @@
 		</rule>
 		<rule object="AMovieActivation">
 			<id specification="ISO_32000_1_4" clause="MovieActivation-FWScale-Array" testNumber="9"/>
-			<description>Entry FWScale with type Array in MovieActivation shall satisfy special case: fn:Eval((FWScale::@0&gt; 0) &amp;&amp; (FWScale::@1&gt; 0))</description>
+			<description>Entry FWScale with type Array in MovieActivation shall satisfy special case: fn:Eval((FWScale::@0 &gt; 0) &amp;&amp; (FWScale::@1 &gt; 0))</description>
 			<test>FWScaleHasTypeArray != true || ((FWScale0HasTypeInteger == false || (FWScale0IntegerValue &gt; 0)) &amp;&amp; (FWScale1HasTypeInteger == false || (FWScale1IntegerValue &gt; 0)))</test>
 			<error>
-				<message>Entry FWScale with type Array in MovieActivation does not satisfy special case: fn:Eval((FWScale::@0&gt; 0) &amp;&amp; (FWScale::@1&gt; 0))</message>
+				<message>Entry FWScale with type Array in MovieActivation does not satisfy special case: fn:Eval((FWScale::@0 &gt; 0) &amp;&amp; (FWScale::@1 &gt; 0))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39019,10 +39019,10 @@
 		</rule>
 		<rule object="AOPIVersion20Dict">
 			<id specification="ISO_32000_1_4" clause="OPIVersion20Dict-IncludedImageDimensions-Array" testNumber="9"/>
-			<description>Entry IncludedImageDimensions with type Array in OPIVersion20Dict shall satisfy special case: fn:Eval((IncludedImageDimensions::@0&gt; 0) &amp;&amp; (IncludedImageDimensions::@1&gt; 0))</description>
+			<description>Entry IncludedImageDimensions with type Array in OPIVersion20Dict shall satisfy special case: fn:Eval((IncludedImageDimensions::@0 &gt; 0) &amp;&amp; (IncludedImageDimensions::@1 &gt; 0))</description>
 			<test>IncludedImageDimensionsHasTypeArray != true || ((IncludedImageDimensions0HasTypeInteger == false || (IncludedImageDimensions0IntegerValue &gt; 0)) &amp;&amp; (IncludedImageDimensions1HasTypeInteger == false || (IncludedImageDimensions1IntegerValue &gt; 0)))</test>
 			<error>
-				<message>Entry IncludedImageDimensions with type Array in OPIVersion20Dict does not satisfy special case: fn:Eval((IncludedImageDimensions::@0&gt; 0) &amp;&amp; (IncludedImageDimensions::@1&gt; 0))</message>
+				<message>Entry IncludedImageDimensions with type Array in OPIVersion20Dict does not satisfy special case: fn:Eval((IncludedImageDimensions::@0 &gt; 0) &amp;&amp; (IncludedImageDimensions::@1 &gt; 0))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39153,10 +39153,10 @@
 		</rule>
 		<rule object="AOPIVersion20Dict">
 			<id specification="ISO_32000_1_4" clause="OPIVersion20Dict-Size-Array" testNumber="9"/>
-			<description>Entry Size with type Array in OPIVersion20Dict shall satisfy special case: fn:Eval((Size::@0&gt; 0) &amp;&amp; (Size::@1&gt; 0))</description>
+			<description>Entry Size with type Array in OPIVersion20Dict shall satisfy special case: fn:Eval((Size::@0 &gt; 0) &amp;&amp; (Size::@1 &gt; 0))</description>
 			<test>SizeHasTypeArray != true || ((Size0HasTypeNumber == false || (Size0NumberValue &gt; 0)) &amp;&amp; (Size1HasTypeNumber == false || (Size1NumberValue &gt; 0)))</test>
 			<error>
-				<message>Entry Size with type Array in OPIVersion20Dict does not satisfy special case: fn:Eval((Size::@0&gt; 0) &amp;&amp; (Size::@1&gt; 0))</message>
+				<message>Entry Size with type Array in OPIVersion20Dict does not satisfy special case: fn:Eval((Size::@0 &gt; 0) &amp;&amp; (Size::@1 &gt; 0))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -46907,10 +46907,10 @@
 		</rule>
 		<rule object="ASoftMaskLuminosity">
 			<id specification="ISO_32000_1_4" clause="SoftMaskLuminosity-G-Stream" testNumber="9"/>
-			<description>Entry G with type Stream in SoftMaskLuminosity shall satisfy special case: fn:Eval((G::Group::@S== Transparency) &amp;&amp; fn:IsPresent(G::Group::CS))</description>
+			<description>Entry G with type Stream in SoftMaskLuminosity shall satisfy special case: fn:Eval((G::Group::@S == Transparency) &amp;&amp; fn:IsPresent(G::Group::CS))</description>
 			<test>GHasTypeStream != true || ((GGroupSNameValue == "Transparency") &amp;&amp; (containsGGroupCS == true))</test>
 			<error>
-				<message>Entry G with type Stream in SoftMaskLuminosity does not satisfy special case: fn:Eval((G::Group::@S== Transparency) &amp;&amp; fn:IsPresent(G::Group::CS))</message>
+				<message>Entry G with type Stream in SoftMaskLuminosity does not satisfy special case: fn:Eval((G::Group::@S == Transparency) &amp;&amp; fn:IsPresent(G::Group::CS))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -47598,10 +47598,10 @@
 		</rule>
 		<rule object="ASourceInformation">
 			<id specification="ISO_32000_1_4" clause="SourceInformation-C-Dictionary" testNumber="9"/>
-			<description>Entry C with type Dictionary in SourceInformation shall satisfy special case: fn:Eval(parent::@S== SPS)</description>
+			<description>Entry C with type Dictionary in SourceInformation shall satisfy special case: fn:Eval(parent::@S == SPS)</description>
 			<test>CHasTypeDictionary != true || (parentSNameValue == "SPS")</test>
 			<error>
-				<message>Entry C with type Dictionary in SourceInformation does not satisfy special case: fn:Eval(parent::@S== SPS)</message>
+				<message>Entry C with type Dictionary in SourceInformation does not satisfy special case: fn:Eval(parent::@S == SPS)</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -47647,10 +47647,10 @@
 		</rule>
 		<rule object="ASourceInformation">
 			<id specification="ISO_32000_1_4" clause="SourceInformation-S-Integer" testNumber="9"/>
-			<description>Entry S with type Integer in SourceInformation shall satisfy special case: fn:Eval(parent::@S== SPS)</description>
+			<description>Entry S with type Integer in SourceInformation shall satisfy special case: fn:Eval(parent::@S == SPS)</description>
 			<test>SHasTypeInteger != true || (parentSNameValue == "SPS")</test>
 			<error>
-				<message>Entry S with type Integer in SourceInformation does not satisfy special case: fn:Eval(parent::@S== SPS)</message>
+				<message>Entry S with type Integer in SourceInformation does not satisfy special case: fn:Eval(parent::@S == SPS)</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
