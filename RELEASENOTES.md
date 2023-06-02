@@ -1,3 +1,21 @@
+Version 1.24 RC2 (June 2, 2023)
+==================================
+
+### PDF model
+- added a new property XMPCreatorSize for the numbe rof creators
+
+### PDF Parser
+-  fixes of unhandled exceptions in malicious PDFs
+-  fix of the CIDSet parsing for embedded OpenType fonts
+-  updated regex for PDF Date to support border cases
+-  added warning in case of invalid Version entry in the catalog
+-  fixed an issue of accepting String value types where Name type is required
+
+### Validation
+-  (PDF/A-1) fixed comparison of Info dictionary Author and XMP dc:creator in case of multiple authors/creators
+-  (PDF/A-2,3,4) fixed handling of Default color spaces for DeviceN colorants
+-  (PDF/UA-1) reverted Table Scope determination algorithm from PDF 2.0 to PDF 1.7
+
 Version 1.24 RC (April 27, 2023)
 ==================================
 
