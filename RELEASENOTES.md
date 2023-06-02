@@ -2,14 +2,14 @@ Version 1.24 RC2 (June 2, 2023)
 ==================================
 
 ### PDF model
-- added a new property XMPCreatorSize for the numbe rof creators
+- added a new property XMPCreatorSize for the number of creators
 
 ### PDF Parser
 -  fixes of unhandled exceptions in malicious PDFs
 -  fix of the CIDSet parsing for embedded OpenType fonts
 -  updated regex for PDF Date to support border cases
 -  added warning in case of invalid Version entry in the catalog
--  fixed an issue of accepting String value types where Name type is required
+-  fixed an issue of accepting String value types where Name type is required and vice versa
 
 ### Validation
 -  (PDF/A-1) fixed comparison of Info dictionary Author and XMP dc:creator in case of multiple authors/creators
