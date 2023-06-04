@@ -217,7 +217,7 @@
                 <xsl:if test="/report/jobs/job/validationReport/details/@passedChecks">
                     <tr>
                         <td width="250">
-                            <b>Messages:</b>
+                            <b>Checks:</b>
                         </td>
                         <td>
                             <xsl:value-of
