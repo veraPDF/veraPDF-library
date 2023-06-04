@@ -21350,10 +21350,10 @@
 		</rule>
 		<rule object="ANameNameTreeDests">
 			<id specification="ISO_32000_1_2" clause="NameNameTreeDests-*" testNumber="18"/>
-			<description>Entry * in NameNameTreeDests shall be object NameNameTreeDestsEntry</description>
+			<description>Entry in NameNameTreeDests shall be object NameNameTreeDestsEntry</description>
 			<test>Entries_size == size</test>
 			<error>
-				<message>Entry * in NameNameTreeDests is not object NameNameTreeDestsEntry</message>
+				<message>Entry in NameNameTreeDests is not object NameNameTreeDestsEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>

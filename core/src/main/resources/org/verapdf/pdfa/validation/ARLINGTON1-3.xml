@@ -15940,10 +15940,10 @@
 		</rule>
 		<rule object="ACatalogNumberTreePageLabels">
 			<id specification="ISO_32000_1_3" clause="CatalogNumberTreePageLabels-*" testNumber="18"/>
-			<description>Entry * in CatalogNumberTreePageLabels shall be object CatalogNumberTreePageLabelsEntry</description>
+			<description>Entry in CatalogNumberTreePageLabels shall be object CatalogNumberTreePageLabelsEntry</description>
 			<test>Entries_size == size</test>
 			<error>
-				<message>Entry * in CatalogNumberTreePageLabels is not object CatalogNumberTreePageLabelsEntry</message>
+				<message>Entry in CatalogNumberTreePageLabels is not object CatalogNumberTreePageLabelsEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -34810,10 +34810,10 @@
 		</rule>
 		<rule object="ANameNameTreeAP">
 			<id specification="ISO_32000_1_3" clause="NameNameTreeAP-*" testNumber="18"/>
-			<description>Entry * in NameNameTreeAP shall be object NameNameTreeAPEntry</description>
+			<description>Entry in NameNameTreeAP shall be object NameNameTreeAPEntry</description>
 			<test>Entries_size == size</test>
 			<error>
-				<message>Entry * in NameNameTreeAP is not object NameNameTreeAPEntry</message>
+				<message>Entry in NameNameTreeAP is not object NameNameTreeAPEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -34834,10 +34834,10 @@
 		</rule>
 		<rule object="ANameNameTreeDests">
 			<id specification="ISO_32000_1_3" clause="NameNameTreeDests-*" testNumber="18"/>
-			<description>Entry * in NameNameTreeDests shall be object NameNameTreeDestsEntry</description>
+			<description>Entry in NameNameTreeDests shall be object NameNameTreeDestsEntry</description>
 			<test>Entries_size == size</test>
 			<error>
-				<message>Entry * in NameNameTreeDests is not object NameNameTreeDestsEntry</message>
+				<message>Entry in NameNameTreeDests is not object NameNameTreeDestsEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -34870,10 +34870,10 @@
 		</rule>
 		<rule object="ANameNameTreeIDS">
 			<id specification="ISO_32000_1_3" clause="NameNameTreeIDS-*" testNumber="18"/>
-			<description>Entry * in NameNameTreeIDS shall be object NameNameTreeIDSEntry</description>
+			<description>Entry in NameNameTreeIDS shall be object NameNameTreeIDSEntry</description>
 			<test>Entries_size == size</test>
 			<error>
-				<message>Entry * in NameNameTreeIDS is not object NameNameTreeIDSEntry</message>
+				<message>Entry in NameNameTreeIDS is not object NameNameTreeIDSEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -34894,10 +34894,10 @@
 		</rule>
 		<rule object="ANameNameTreeJavaScript">
 			<id specification="ISO_32000_1_3" clause="NameNameTreeJavaScript-*" testNumber="18"/>
-			<description>Entry * in NameNameTreeJavaScript shall be object NameNameTreeJavaScriptEntry</description>
+			<description>Entry in NameNameTreeJavaScript shall be object NameNameTreeJavaScriptEntry</description>
 			<test>Entries_size == size</test>
 			<error>
-				<message>Entry * in NameNameTreeJavaScript is not object NameNameTreeJavaScriptEntry</message>
+				<message>Entry in NameNameTreeJavaScript is not object NameNameTreeJavaScriptEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -34930,10 +34930,10 @@
 		</rule>
 		<rule object="ANameNameTreePages">
 			<id specification="ISO_32000_1_3" clause="NameNameTreePages-*" testNumber="18"/>
-			<description>Entry * in NameNameTreePages shall be object NameNameTreePagesEntry</description>
+			<description>Entry in NameNameTreePages shall be object NameNameTreePagesEntry</description>
 			<test>Entries_size == size</test>
 			<error>
-				<message>Entry * in NameNameTreePages is not object NameNameTreePagesEntry</message>
+				<message>Entry in NameNameTreePages is not object NameNameTreePagesEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -34966,10 +34966,10 @@
 		</rule>
 		<rule object="ANameNameTreeTemplates">
 			<id specification="ISO_32000_1_3" clause="NameNameTreeTemplates-*" testNumber="18"/>
-			<description>Entry * in NameNameTreeTemplates shall be object NameNameTreeTemplatesEntry</description>
+			<description>Entry in NameNameTreeTemplates shall be object NameNameTreeTemplatesEntry</description>
 			<test>Entries_size == size</test>
 			<error>
-				<message>Entry * in NameNameTreeTemplates is not object NameNameTreeTemplatesEntry</message>
+				<message>Entry in NameNameTreeTemplates is not object NameNameTreeTemplatesEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -35002,10 +35002,10 @@
 		</rule>
 		<rule object="ANameNameTreeURLS">
 			<id specification="ISO_32000_1_3" clause="NameNameTreeURLS-*" testNumber="18"/>
-			<description>Entry * in NameNameTreeURLS shall be object NameNameTreeURLSEntry</description>
+			<description>Entry in NameNameTreeURLS shall be object NameNameTreeURLSEntry</description>
 			<test>Entries_size == size</test>
 			<error>
-				<message>Entry * in NameNameTreeURLS is not object NameNameTreeURLSEntry</message>
+				<message>Entry in NameNameTreeURLS is not object NameNameTreeURLSEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -43998,10 +43998,10 @@
 		</rule>
 		<rule object="AStructTreeRootNameTreeIDTree">
 			<id specification="ISO_32000_1_3" clause="StructTreeRootNameTreeIDTree-*" testNumber="18"/>
-			<description>Entry * in StructTreeRootNameTreeIDTree shall be object StructTreeRootNameTreeIDTreeEntry</description>
+			<description>Entry in StructTreeRootNameTreeIDTree shall be object StructTreeRootNameTreeIDTreeEntry</description>
 			<test>Entries_size == size</test>
 			<error>
-				<message>Entry * in StructTreeRootNameTreeIDTree is not object StructTreeRootNameTreeIDTreeEntry</message>
+				<message>Entry in StructTreeRootNameTreeIDTree is not object StructTreeRootNameTreeIDTreeEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -44022,10 +44022,10 @@
 		</rule>
 		<rule object="AStructTreeRootNumberTreeParentTree">
 			<id specification="ISO_32000_1_3" clause="StructTreeRootNumberTreeParentTree-*" testNumber="18"/>
-			<description>Entry * in StructTreeRootNumberTreeParentTree shall be object StructTreeRootNumberTreeParentTreeEntry</description>
+			<description>Entry in StructTreeRootNumberTreeParentTree shall be object StructTreeRootNumberTreeParentTreeEntry</description>
 			<test>Entries_size == size</test>
 			<error>
-				<message>Entry * in StructTreeRootNumberTreeParentTree is not object StructTreeRootNumberTreeParentTreeEntry</message>
+				<message>Entry in StructTreeRootNumberTreeParentTree is not object StructTreeRootNumberTreeParentTreeEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
