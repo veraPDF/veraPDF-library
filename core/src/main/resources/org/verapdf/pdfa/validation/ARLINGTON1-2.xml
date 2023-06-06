@@ -9583,10 +9583,10 @@
 		</rule>
 		<rule object="ADestsMapEntry">
 			<id specification="ISO_32000_1_2" clause="DestsMapEntry-Dictionary" testNumber="17"/>
-			<description>Entry with type Dictionary in DestsMap shall be object DestDict</description>
+			<description>Entry with type Dictionary in DestsMap shall be one of objects ActionGoTo, ActionGoToR, DestDict</description>
 			<test>HasTypeDictionary != true || Entry_size == 1</test>
 			<error>
-				<message>Entry %1 with type Dictionary in DestsMap is not object DestDict</message>
+				<message>Entry %1 with type Dictionary in DestsMap is not one of objects ActionGoTo, ActionGoToR, DestDict</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -21242,10 +21242,10 @@
 		</rule>
 		<rule object="AMovieActivation">
 			<id specification="ISO_32000_1_2" clause="MovieActivation-Start-Integer" testNumber="9"/>
-			<description>Entry Start with type Integer in MovieActivation shall satisfy special case: fn:Eval(@Start &gt; 0)</description>
-			<test>StartHasTypeInteger != true || (StartIntegerValue &gt; 0)</test>
+			<description>Entry Start with type Integer in MovieActivation shall satisfy special case: fn:Eval(@Start &gt;= 0)</description>
+			<test>StartHasTypeInteger != true || (StartIntegerValue &gt;= 0)</test>
 			<error>
-				<message>Entry Start with type Integer in MovieActivation does not satisfy special case: fn:Eval(@Start &gt; 0)</message>
+				<message>Entry Start with type Integer in MovieActivation does not satisfy special case: fn:Eval(@Start &gt;= 0)</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -21374,10 +21374,10 @@
 		</rule>
 		<rule object="ANameNameTreeDestsEntry">
 			<id specification="ISO_32000_1_2" clause="NameNameTreeDestsEntry-Dictionary" testNumber="17"/>
-			<description>Entry with type Dictionary in NameNameTreeDests shall be object DestDict</description>
+			<description>Entry with type Dictionary in NameNameTreeDests shall be one of objects ActionGoTo, ActionGoToR, DestDict</description>
 			<test>HasTypeDictionary != true || Entry_size == 1</test>
 			<error>
-				<message>Entry %1 with type Dictionary in NameNameTreeDests is not object DestDict</message>
+				<message>Entry %1 with type Dictionary in NameNameTreeDests is not one of objects ActionGoTo, ActionGoToR, DestDict</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>

@@ -26008,10 +26008,10 @@
 		</rule>
 		<rule object="ADestsMapEntry">
 			<id specification="ISO_32000_1_5" clause="DestsMapEntry-Dictionary" testNumber="17"/>
-			<description>Entry with type Dictionary in DestsMap shall be object DestDict</description>
+			<description>Entry with type Dictionary in DestsMap shall be one of objects ActionGoTo, ActionGoToR, DestDict</description>
 			<test>HasTypeDictionary != true || Entry_size == 1</test>
 			<error>
-				<message>Entry %1 with type Dictionary in DestsMap is not object DestDict</message>
+				<message>Entry %1 with type Dictionary in DestsMap is not one of objects ActionGoTo, ActionGoToR, DestDict</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -31024,11 +31024,35 @@
 			<references/>
 		</rule>
 		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_5" clause="FileTrailer-Info" testNumber="11"/>
+			<description>Entry Info in FileTrailer is required, when fn:IsRequired(fn:SinceVersion(1.4 , fn:IsPresent(trailer::Catalog::PieceInfo)))</description>
+			<test>containsInfo == true || (containstrailerCatalogPieceInfo != true)</test>
+			<error>
+				<message>Entry Info in FileTrailer is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_5" clause="FileTrailer-Info-Dictionary" testNumber="12"/>
 			<description>If entry Info with type Dictionary in FileTrailer satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
 			<test>InfoHasTypeDictionary != true || (isInfoIndirect == true)</test>
 			<error>
 				<message>Entry Info with type Dictionary in FileTrailer is direct</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_5" clause="FileTrailer-Info-Dictionary" testNumber="9"/>
+			<description>Entry Info with type Dictionary in FileTrailer shall satisfy special case: fn:Eval(fn:SinceVersion(1.4 , fn:IsPresent(trailer::Catalog::PieceInfo, fn:IsPresent(trailer::Info::ModDate))))</description>
+			<test>InfoHasTypeDictionary != true || ((containstrailerCatalogPieceInfo == false) || (containstrailerInfoModDate == true))</test>
+			<error>
+				<message>Entry Info with type Dictionary in FileTrailer does not satisfy special case: fn:Eval(fn:SinceVersion(1.4 , fn:IsPresent(trailer::Catalog::PieceInfo, fn:IsPresent(trailer::Info::ModDate))))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -31409,10 +31433,10 @@
 		</rule>
 		<rule object="AFilterCrypt">
 			<id specification="ISO_32000_1_5" clause="FilterCrypt-Name-Name" testNumber="9"/>
-			<description>Entry Name with type Name in FilterCrypt shall satisfy special case: fn:InKeyMap(trailer::Encrypt::CF)</description>
-			<test>NameHasTypeName != true || (keysStringtrailerEncryptCF.split('&amp;').filter(elem =&gt; elem == NameNameValue).length &gt; 0)</test>
+			<description>Entry Name with type Name in FilterCrypt shall satisfy special case: fn:Eval(fn:InKeyMap(trailer::Encrypt::CF) || (@Name == Identity))</description>
+			<test>NameHasTypeName != true || ((keysStringtrailerEncryptCF.split('&amp;').filter(elem =&gt; elem == NameNameValue).length &gt; 0) || (NameNameValue == "Identity"))</test>
 			<error>
-				<message>Entry Name with type Name in FilterCrypt does not satisfy special case: fn:InKeyMap(trailer::Encrypt::CF)</message>
+				<message>Entry Name with type Name in FilterCrypt does not satisfy special case: fn:Eval(fn:InKeyMap(trailer::Encrypt::CF) || (@Name == Identity))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -49037,10 +49061,10 @@
 		</rule>
 		<rule object="AMovieActivation">
 			<id specification="ISO_32000_1_5" clause="MovieActivation-Start-Integer" testNumber="9"/>
-			<description>Entry Start with type Integer in MovieActivation shall satisfy special case: fn:Eval(@Start &gt; 0)</description>
-			<test>StartHasTypeInteger != true || (StartIntegerValue &gt; 0)</test>
+			<description>Entry Start with type Integer in MovieActivation shall satisfy special case: fn:Eval(@Start &gt;= 0)</description>
+			<test>StartHasTypeInteger != true || (StartIntegerValue &gt;= 0)</test>
 			<error>
-				<message>Entry Start with type Integer in MovieActivation does not satisfy special case: fn:Eval(@Start &gt; 0)</message>
+				<message>Entry Start with type Integer in MovieActivation does not satisfy special case: fn:Eval(@Start &gt;= 0)</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -49445,10 +49469,10 @@
 		</rule>
 		<rule object="ANameNameTreeDestsEntry">
 			<id specification="ISO_32000_1_5" clause="NameNameTreeDestsEntry-Dictionary" testNumber="17"/>
-			<description>Entry with type Dictionary in NameNameTreeDests shall be object DestDict</description>
+			<description>Entry with type Dictionary in NameNameTreeDests shall be one of objects ActionGoTo, ActionGoToR, DestDict</description>
 			<test>HasTypeDictionary != true || Entry_size == 1</test>
 			<error>
-				<message>Entry %1 with type Dictionary in NameNameTreeDests is not object DestDict</message>
+				<message>Entry %1 with type Dictionary in NameNameTreeDests is not one of objects ActionGoTo, ActionGoToR, DestDict</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -50652,10 +50676,10 @@
 		</rule>
 		<rule object="AObjectReference">
 			<id specification="ISO_32000_1_5" clause="ObjectReference-Obj-Stream" testNumber="17"/>
-			<description>Entry Obj with type Stream in ObjectReference shall be object XObjectFormType1</description>
+			<description>Entry Obj with type Stream in ObjectReference shall be one of objects XObjectFormType1, XObjectImage</description>
 			<test>ObjHasTypeStream != true || Obj_size == 1</test>
 			<error>
-				<message>Entry Obj with type Stream in ObjectReference is not object XObjectFormType1</message>
+				<message>Entry Obj with type Stream in ObjectReference is not one of objects XObjectFormType1, XObjectImage</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -65012,7 +65036,7 @@
 			<references/>
 		</rule>
 		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_5" clause="StructureAttributesDict-Placement-Name" testNumber="13"/>
+			<id specification="ISO_32000_1_5" clause="StructureAttributesDict-Placement-Name" testNumber="6"/>
 			<description>Entry Placement with type Name in StructureAttributesDict shall have one of values: Before, Start, Block, End, Inline</description>
 			<test>PlacementHasTypeName != true || PlacementNameValue == "Block" || PlacementNameValue == "Before" || PlacementNameValue == "Start" || PlacementNameValue == "End" || PlacementNameValue == "Inline"</test>
 			<error>
@@ -74328,11 +74352,35 @@
 			<references/>
 		</rule>
 		<rule object="AXRefStream">
+			<id specification="ISO_32000_1_5" clause="XRefStream-Info" testNumber="11"/>
+			<description>Entry Info in XRefStream is required, when fn:IsRequired(fn:IsPresent(trailer::Catalog::PieceInfo))</description>
+			<test>containsInfo == true || (containstrailerCatalogPieceInfo != true)</test>
+			<error>
+				<message>Entry Info in XRefStream is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXRefStream">
 			<id specification="ISO_32000_1_5" clause="XRefStream-Info-Dictionary" testNumber="12"/>
 			<description>If entry Info with type Dictionary in XRefStream satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
 			<test>InfoHasTypeDictionary != true || (isInfoIndirect == true)</test>
 			<error>
 				<message>Entry Info with type Dictionary in XRefStream is direct</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXRefStream">
+			<id specification="ISO_32000_1_5" clause="XRefStream-Info-Dictionary" testNumber="9"/>
+			<description>Entry Info with type Dictionary in XRefStream shall satisfy special case: fn:Eval(fn:IsPresent(trailer::Catalog::PieceInfo, fn:IsPresent(trailer::Info::ModDate)))</description>
+			<test>InfoHasTypeDictionary != true || ((containstrailerCatalogPieceInfo == false) || (containstrailerInfoModDate == true))</test>
+			<error>
+				<message>Entry Info with type Dictionary in XRefStream does not satisfy special case: fn:Eval(fn:IsPresent(trailer::Catalog::PieceInfo, fn:IsPresent(trailer::Info::ModDate)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>

@@ -3830,10 +3830,10 @@
 		</rule>
 		<rule object="ADestsMapEntry">
 			<id specification="ISO_32000_1_1" clause="DestsMapEntry-Dictionary" testNumber="17"/>
-			<description>Entry with type Dictionary in DestsMap shall be object DestDict</description>
+			<description>Entry with type Dictionary in DestsMap shall be one of objects ActionGoTo, ActionGoToR, DestDict</description>
 			<test>HasTypeDictionary != true || Entry_size == 1</test>
 			<error>
-				<message>Entry %1 with type Dictionary in DestsMap is not object DestDict</message>
+				<message>Entry %1 with type Dictionary in DestsMap is not one of objects ActionGoTo, ActionGoToR, DestDict</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
