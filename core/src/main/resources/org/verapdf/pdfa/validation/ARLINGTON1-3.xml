@@ -8760,18 +8760,6 @@
 			<references/>
 		</rule>
 		<rule object="AAnnotTrapNetwork">
-			<id specification="ISO_32000_1_3" clause="AnnotTrapNetwork-AnnotStates" testNumber="11"/>
-			<description>Entry AnnotStates in AnnotTrapNetwork is required, when fn:IsRequired(fn:IsPresent(Version) &amp;&amp; fn:Not(fn:IsPresent(LastModified)))</description>
-			<test>containsAnnotStates == true || ((containsVersion != true) || (containsLastModified == true))</test>
-			<error>
-				<message>Entry AnnotStates in AnnotTrapNetwork is missing</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotTrapNetwork">
 			<id specification="ISO_32000_1_3" clause="AnnotTrapNetwork-Border-Array" testNumber="17"/>
 			<description>Entry Border with type Array in AnnotTrapNetwork shall be object ArrayOf_4AnnotBorderCharacteristics</description>
 			<test>BorderHasTypeArray != true || Border_size == 1</test>
@@ -9055,18 +9043,6 @@
 			<test>containsVersion == false || VersionHasTypeArray == true</test>
 			<error>
 				<message>Entry Version in AnnotTrapNetwork is not of type Array</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotTrapNetwork">
-			<id specification="ISO_32000_1_3" clause="AnnotTrapNetwork-Version" testNumber="11"/>
-			<description>Entry Version in AnnotTrapNetwork is required, when fn:IsRequired(fn:IsPresent(AnnotStates) &amp;&amp; fn:Not(fn:IsPresent(LastModified)))</description>
-			<test>containsVersion == true || ((containsAnnotStates != true) || (containsLastModified == true))</test>
-			<error>
-				<message>Entry Version in AnnotTrapNetwork is missing</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -18262,6 +18238,18 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
+			<id specification="ISO_32000_1_3" clause="EncryptionStandard-O-StringByte" testNumber="9"/>
+			<description>Entry O with type StringByte in EncryptionStandard shall satisfy special case: fn:Eval(fn:AlwaysUnencrypted() &amp;&amp; (((@R &lt;= 4) &amp;&amp; (fn:StringLength(O) == 32)) || (((@R == 5) || (@R == 6)) &amp;&amp; (fn:StringLength(O) == 48))))</description>
+			<test>OHasTypeStringByte != true || (((RHasTypeInteger == false || (RIntegerValue &lt;= 4)) &amp;&amp; (OStringSize == 32)) || ((RHasTypeInteger == false || ((RIntegerValue == 5) || (RIntegerValue == 6))) &amp;&amp; (OStringSize == 48)))</test>
+			<error>
+				<message>Entry O with type StringByte in EncryptionStandard does not satisfy special case: fn:Eval(fn:AlwaysUnencrypted() &amp;&amp; (((@R &lt;= 4) &amp;&amp; (fn:StringLength(O) == 32)) || (((@R == 5) || (@R == 6)) &amp;&amp; (fn:StringLength(O) == 48))))</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_3" clause="EncryptionStandard-OE" testNumber="8"/>
 			<description>Entry OE in EncryptionStandard shall have type StringByte</description>
 			<test>containsOE == false || OEHasTypeStringByte == true</test>
@@ -18279,6 +18267,18 @@
 			<test>RHasTypeInteger == false || (containsOE == true || ((RIntegerValue != 5) &amp;&amp; (RIntegerValue != 6)))</test>
 			<error>
 				<message>Entry OE in EncryptionStandard is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AEncryptionStandard">
+			<id specification="ISO_32000_1_3" clause="EncryptionStandard-OE-StringByte" testNumber="9"/>
+			<description>Entry OE with type StringByte in EncryptionStandard shall satisfy special case: fn:Eval(fn:AlwaysUnencrypted() &amp;&amp; (fn:StringLength(OE) == 32))</description>
+			<test>OEHasTypeStringByte != true || (OEStringSize == 32)</test>
+			<error>
+				<message>Entry OE with type StringByte in EncryptionStandard does not satisfy special case: fn:Eval(fn:AlwaysUnencrypted() &amp;&amp; (fn:StringLength(OE) == 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -18448,6 +18448,18 @@
 			<test>containsU == true</test>
 			<error>
 				<message>Entry U in EncryptionStandard is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AEncryptionStandard">
+			<id specification="ISO_32000_1_3" clause="EncryptionStandard-U-StringByte" testNumber="9"/>
+			<description>Entry U with type StringByte in EncryptionStandard shall satisfy special case: fn:Eval(fn:AlwaysUnencrypted() &amp;&amp; (((@R &lt;= 4) &amp;&amp; (fn:StringLength(U) == 32)) || (((@R == 5) || (@R == 6)) &amp;&amp; (fn:StringLength(U) == 48))))</description>
+			<test>UHasTypeStringByte != true || (((RHasTypeInteger == false || (RIntegerValue &lt;= 4)) &amp;&amp; (UStringSize == 32)) || ((RHasTypeInteger == false || ((RIntegerValue == 5) || (RIntegerValue == 6))) &amp;&amp; (UStringSize == 48)))</test>
+			<error>
+				<message>Entry U with type StringByte in EncryptionStandard does not satisfy special case: fn:Eval(fn:AlwaysUnencrypted() &amp;&amp; (((@R &lt;= 4) &amp;&amp; (fn:StringLength(U) == 32)) || (((@R == 5) || (@R == 6)) &amp;&amp; (fn:StringLength(U) == 48))))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -42425,6 +42437,18 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
+			<id specification="ISO_32000_1_3" clause="Signature-Contents-StringByte" testNumber="9"/>
+			<description>Entry Contents with type StringByte in Signature shall satisfy special case: fn:Eval(fn:AlwaysUnencrypted() &amp;&amp; fn:IsHexString())</description>
+			<test>ContentsHasTypeStringByte != true || (isContentsHexString == true)</test>
+			<error>
+				<message>Entry Contents with type StringByte in Signature does not satisfy special case: fn:Eval(fn:AlwaysUnencrypted() &amp;&amp; fn:IsHexString())</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
 			<id specification="ISO_32000_1_3" clause="Signature-Filter" testNumber="8"/>
 			<description>Entry Filter in Signature shall have type Name</description>
 			<test>containsFilter == false || FilterHasTypeName == true</test>
@@ -44889,6 +44913,18 @@
 				<arguments>
 					<argument>keyName</argument>
 					<argument>DiNameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATransition">
+			<id specification="ISO_32000_1_3" clause="Transition-Di-Name" testNumber="9"/>
+			<description>Entry Di with type Name in Transition shall satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</description>
+			<test>DiHasTypeName != true || ((DiNameValue == "None") &amp;&amp; (SNameValue == "Fly"))</test>
+			<error>
+				<message>Entry Di with type Name in Transition does not satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5 , (@SS != 1.0))))</message>
+				<arguments>
+					<argument>keyName</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -48688,10 +48724,10 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_3" clause="XObjectImage-ImageMask-Boolean" testNumber="9"/>
-			<description>Entry ImageMask with type Boolean in XObjectImage shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</description>
+			<description>Entry ImageMask with type Boolean in XObjectImage shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:SinceVersion(1.3 , fn:Not(fn:IsPresent(Mask)))) || (@ImageMask == false))</description>
 			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentHasTypeInteger == false || (BitsPerComponentIntegerValue == 1)) &amp;&amp; (containsColorSpace != true) &amp;&amp; (containsMask != true)) || (ImageMaskBooleanValue == false))</test>
 			<error>
-				<message>Entry ImageMask with type Boolean in XObjectImage does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</message>
+				<message>Entry ImageMask with type Boolean in XObjectImage does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:SinceVersion(1.3 , fn:Not(fn:IsPresent(Mask)))) || (@ImageMask == false))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
