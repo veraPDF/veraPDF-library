@@ -35,26 +35,27 @@ In order to build the library you'll need:
 Life will be easier if you also use [Git](https://git-scm.com/) to obtain and manage the source.
 
 ### Building veraPDF
-First you'll need to obtain a version of the veraPDF-library source code. You can compile either the latest relase version or the latest development source.
+First you'll need to obtain a version of the veraPDF-library source code. You can compile either the latest release version or the latest development source.
 
 #### Downloading the latest release source
 Use Git to clone the repository and ensure that the `master` branch is checked out:
-```
-git clone https://github.com/veraPDF/veraPDF-library
-git checkout master
-```
+
+    git clone https://github.com/veraPDF/veraPDF-library
+    cd veraPDF-library
+    git checkout master
+
 or download the latest [tar archive](https://github.com/veraPDF/veraPDF-library/archive/master.tar.gz "veraPDF-library latest GitHub tar archive") or [zip archive](https://github.com/veraPDF/veraPDF-library/archive/master.zip "veraPDF-library latest GitHub zip archive") from GitHub.
 
 #### Downloading the latest development source
 Use Git to clone the repository and ensure that the `integration` branch is checked out:
 
     git clone https://github.com/veraPDF/veraPDF-library
+    cd veraPDF-library
     git checkout integration
 
 or download the latest [tar archive](https://github.com/veraPDF/veraPDF-library/archive/integration.tar.gz "veraPDF-library latest GitHub tar archive") or [zip archive](https://github.com/veraPDF/veraPDF-library/archive/integration.zip "veraPDF-library latest GitHub zip archive") from GitHub.
 
 #### Use Maven to compile the source
-Move to the downloaded project directory and call Maven install:
+Call Maven install:
 
-    cd veraPDF-library
     mvn clean install
