@@ -12889,7 +12889,7 @@
 			<references/>
 		</rule>
 		<rule object="AArrayOfBlendModesEntry">
-			<id specification="ISO_32000_1_4" clause="ArrayOfBlendModesEntry-Name" testNumber="13"/>
+			<id specification="ISO_32000_1_4" clause="ArrayOfBlendModesEntry-Name" testNumber="6"/>
 			<description>Entry with type Name in ArrayOfBlendModes shall have one of values: Screen, ColorDodge, Saturation, Color, Luminosity, Darken, Difference, Compatible, Normal, SoftLight, ColorBurn, Multiply, Exclusion, HardLight, Hue, Overlay, Lighten</description>
 			<test>HasTypeName != true || NameValue == "Compatible" || NameValue == "Normal" || NameValue == "Multiply" || NameValue == "Screen" || NameValue == "Difference" || NameValue == "Darken" || NameValue == "Lighten" || NameValue == "ColorDodge" || NameValue == "ColorBurn" || NameValue == "Exclusion" || NameValue == "HardLight" || NameValue == "Overlay" || NameValue == "SoftLight" || NameValue == "Luminosity" || NameValue == "Hue" || NameValue == "Saturation" || NameValue == "Color"</test>
 			<error>
@@ -20550,7 +20550,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionPublicKey">
-			<id specification="ISO_32000_1_4" clause="EncryptionPublicKey-V-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_4" clause="EncryptionPublicKey-V-Integer" testNumber="6"/>
 			<description>Entry V with type Integer in EncryptionPublicKey shall have one of values: 0, 1, 2, 3</description>
 			<test>VHasTypeInteger != true || VIntegerValue == 0 || VIntegerValue == 1 || VIntegerValue == 2 || VIntegerValue == 3</test>
 			<error>
@@ -20852,7 +20852,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
-			<id specification="ISO_32000_1_4" clause="EncryptionStandard-R-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_4" clause="EncryptionStandard-R-Integer" testNumber="6"/>
 			<description>Entry R with type Integer in EncryptionStandard shall have one of values: 2, 3, 4</description>
 			<test>RHasTypeInteger != true || RIntegerValue == 2 || RIntegerValue == 3 || RIntegerValue == 4</test>
 			<error>
@@ -20973,7 +20973,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
-			<id specification="ISO_32000_1_4" clause="EncryptionStandard-V-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_4" clause="EncryptionStandard-V-Integer" testNumber="6"/>
 			<description>Entry V with type Integer in EncryptionStandard shall have one of values: 0, 1, 2, 3</description>
 			<test>VHasTypeInteger != true || VIntegerValue == 0 || VIntegerValue == 1 || VIntegerValue == 2 || VIntegerValue == 3</test>
 			<error>
@@ -32393,7 +32393,7 @@
 			<references/>
 		</rule>
 		<rule object="AGraphicsStateParameter">
-			<id specification="ISO_32000_1_4" clause="GraphicsStateParameter-BM-Name" testNumber="13"/>
+			<id specification="ISO_32000_1_4" clause="GraphicsStateParameter-BM-Name" testNumber="6"/>
 			<description>Entry BM with type Name in GraphicsStateParameter shall have one of values: Screen, ColorDodge, Saturation, Color, Luminosity, Darken, Difference, Compatible, Normal, SoftLight, ColorBurn, Multiply, Exclusion, HardLight, Hue, Overlay, Lighten</description>
 			<test>BMHasTypeName != true || BMNameValue == "Compatible" || BMNameValue == "Normal" || BMNameValue == "Multiply" || BMNameValue == "Screen" || BMNameValue == "Difference" || BMNameValue == "Darken" || BMNameValue == "Lighten" || BMNameValue == "ColorDodge" || BMNameValue == "ColorBurn" || BMNameValue == "Exclusion" || BMNameValue == "HardLight" || BMNameValue == "Overlay" || BMNameValue == "SoftLight" || BMNameValue == "Luminosity" || BMNameValue == "Hue" || BMNameValue == "Saturation" || BMNameValue == "Color"</test>
 			<error>
@@ -46467,7 +46467,7 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
-			<id specification="ISO_32000_1_4" clause="Signature-SubFilter-Name" testNumber="13"/>
+			<id specification="ISO_32000_1_4" clause="Signature-SubFilter-Name" testNumber="6"/>
 			<description>Entry SubFilter with type Name in Signature shall have one of values: adbe.pkcs7.detached, adbe.x509.rsa_sha1, adbe.pkcs7.sha1</description>
 			<test>SubFilterHasTypeName != true || SubFilterNameValue == "adbe.pkcs7.detached" || SubFilterNameValue == "adbe.pkcs7.sha1" || SubFilterNameValue == "adbe.x509.rsa_sha1"</test>
 			<error>
@@ -54840,7 +54840,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_4" clause="XObjectImage-BitsPerComponent-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_4" clause="XObjectImage-BitsPerComponent-Integer" testNumber="6"/>
 			<description>Entry BitsPerComponent with type Integer in XObjectImage shall have one of values: 1, 2, 4, 8</description>
 			<test>BitsPerComponentHasTypeInteger != true || BitsPerComponentIntegerValue == 1 || BitsPerComponentIntegerValue == 2 || BitsPerComponentIntegerValue == 4 || BitsPerComponentIntegerValue == 8</test>
 			<error>
@@ -56303,7 +56303,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImageSoftMask">
-			<id specification="ISO_32000_1_4" clause="XObjectImageSoftMask-BitsPerComponent-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_4" clause="XObjectImageSoftMask-BitsPerComponent-Integer" testNumber="6"/>
 			<description>Entry BitsPerComponent with type Integer in XObjectImageSoftMask shall have one of values: 1, 2, 4, 8</description>
 			<test>BitsPerComponentHasTypeInteger != true || BitsPerComponentIntegerValue == 1 || BitsPerComponentIntegerValue == 2 || BitsPerComponentIntegerValue == 4 || BitsPerComponentIntegerValue == 8</test>
 			<error>

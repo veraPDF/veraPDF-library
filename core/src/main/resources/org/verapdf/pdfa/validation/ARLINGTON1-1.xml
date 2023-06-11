@@ -4144,7 +4144,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionPublicKey">
-			<id specification="ISO_32000_1_1" clause="EncryptionPublicKey-V-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_1" clause="EncryptionPublicKey-V-Integer" testNumber="6"/>
 			<description>Entry V with type Integer in EncryptionPublicKey shall have one of values: 0, 1</description>
 			<test>VHasTypeInteger != true || VIntegerValue == 0 || VIntegerValue == 1</test>
 			<error>
@@ -4422,7 +4422,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
-			<id specification="ISO_32000_1_1" clause="EncryptionStandard-R-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_1" clause="EncryptionStandard-R-Integer" testNumber="6"/>
 			<description>Entry R with type Integer in EncryptionStandard shall have one of values: 2, 3, 4</description>
 			<test>RHasTypeInteger != true || RIntegerValue == 2 || RIntegerValue == 3 || RIntegerValue == 4</test>
 			<error>
@@ -4531,7 +4531,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
-			<id specification="ISO_32000_1_1" clause="EncryptionStandard-V-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_1" clause="EncryptionStandard-V-Integer" testNumber="6"/>
 			<description>Entry V with type Integer in EncryptionStandard shall have one of values: 0, 1</description>
 			<test>VHasTypeInteger != true || VIntegerValue == 0 || VIntegerValue == 1</test>
 			<error>
@@ -11820,7 +11820,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_1" clause="XObjectImage-BitsPerComponent-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_1" clause="XObjectImage-BitsPerComponent-Integer" testNumber="6"/>
 			<description>Entry BitsPerComponent with type Integer in XObjectImage shall have one of values: 1, 2, 4, 8</description>
 			<test>BitsPerComponentHasTypeInteger != true || BitsPerComponentIntegerValue == 1 || BitsPerComponentIntegerValue == 2 || BitsPerComponentIntegerValue == 4 || BitsPerComponentIntegerValue == 8</test>
 			<error>

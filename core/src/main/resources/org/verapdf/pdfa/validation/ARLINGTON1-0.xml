@@ -6754,7 +6754,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_0" clause="XObjectImage-BitsPerComponent-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_0" clause="XObjectImage-BitsPerComponent-Integer" testNumber="6"/>
 			<description>Entry BitsPerComponent with type Integer in XObjectImage shall have one of values: 1, 2, 4, 8</description>
 			<test>BitsPerComponentHasTypeInteger != true || BitsPerComponentIntegerValue == 1 || BitsPerComponentIntegerValue == 2 || BitsPerComponentIntegerValue == 4 || BitsPerComponentIntegerValue == 8</test>
 			<error>

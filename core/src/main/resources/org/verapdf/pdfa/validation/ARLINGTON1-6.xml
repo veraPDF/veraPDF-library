@@ -21146,7 +21146,7 @@
 			<references/>
 		</rule>
 		<rule object="AArrayOfBlendModesEntry">
-			<id specification="ISO_32000_1_6" clause="ArrayOfBlendModesEntry-Name" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="ArrayOfBlendModesEntry-Name" testNumber="6"/>
 			<description>Entry with type Name in ArrayOfBlendModes shall have one of values: Screen, ColorDodge, Saturation, Color, Luminosity, Darken, Difference, Compatible, Normal, SoftLight, ColorBurn, Multiply, Exclusion, HardLight, Hue, Overlay, Lighten</description>
 			<test>HasTypeName != true || NameValue == "Compatible" || NameValue == "Normal" || NameValue == "Multiply" || NameValue == "Screen" || NameValue == "Difference" || NameValue == "Darken" || NameValue == "Lighten" || NameValue == "ColorDodge" || NameValue == "ColorBurn" || NameValue == "Exclusion" || NameValue == "HardLight" || NameValue == "Overlay" || NameValue == "SoftLight" || NameValue == "Luminosity" || NameValue == "Hue" || NameValue == "Saturation" || NameValue == "Color"</test>
 			<error>
@@ -28500,7 +28500,7 @@
 			<references/>
 		</rule>
 		<rule object="ACryptFilter">
-			<id specification="ISO_32000_1_6" clause="CryptFilter-CFM-Name" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="CryptFilter-CFM-Name" testNumber="6"/>
 			<description>Entry CFM with type Name in CryptFilter shall have one of values: V2, None, AESV2</description>
 			<test>CFMHasTypeName != true || CFMNameValue == "None" || CFMNameValue == "V2" || CFMNameValue == "AESV2"</test>
 			<error>
@@ -28573,7 +28573,7 @@
 			<references/>
 		</rule>
 		<rule object="ACryptFilter">
-			<id specification="ISO_32000_1_6" clause="CryptFilter-Length-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="CryptFilter-Length-Integer" testNumber="6"/>
 			<description>Entry Length with type Integer in CryptFilter shall have one of values: 16, 32</description>
 			<test>LengthHasTypeInteger != true || LengthIntegerValue == 16 || LengthIntegerValue == 32</test>
 			<error>
@@ -28744,7 +28744,7 @@
 			<references/>
 		</rule>
 		<rule object="ACryptFilterPublicKey">
-			<id specification="ISO_32000_1_6" clause="CryptFilterPublicKey-CFM-Name" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="CryptFilterPublicKey-CFM-Name" testNumber="6"/>
 			<description>Entry CFM with type Name in CryptFilterPublicKey shall have one of values: V2, None, AESV2</description>
 			<test>CFMHasTypeName != true || CFMNameValue == "None" || CFMNameValue == "V2" || CFMNameValue == "AESV2"</test>
 			<error>
@@ -28829,7 +28829,7 @@
 			<references/>
 		</rule>
 		<rule object="ACryptFilterPublicKey">
-			<id specification="ISO_32000_1_6" clause="CryptFilterPublicKey-Length-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="CryptFilterPublicKey-Length-Integer" testNumber="6"/>
 			<description>Entry Length with type Integer in CryptFilterPublicKey shall have one of values: 256, 128</description>
 			<test>LengthHasTypeInteger != true || LengthIntegerValue == 128 || LengthIntegerValue == 256</test>
 			<error>
@@ -32301,7 +32301,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionPublicKey">
-			<id specification="ISO_32000_1_6" clause="EncryptionPublicKey-V-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="EncryptionPublicKey-V-Integer" testNumber="6"/>
 			<description>Entry V with type Integer in EncryptionPublicKey shall have one of values: 0, 1, 2, 3, 4</description>
 			<test>VHasTypeInteger != true || VIntegerValue == 0 || VIntegerValue == 1 || VIntegerValue == 2 || VIntegerValue == 3 || VIntegerValue == 4</test>
 			<error>
@@ -32639,7 +32639,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
-			<id specification="ISO_32000_1_6" clause="EncryptionStandard-R-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="EncryptionStandard-R-Integer" testNumber="6"/>
 			<description>Entry R with type Integer in EncryptionStandard shall have one of values: 2, 3, 4</description>
 			<test>RHasTypeInteger != true || RIntegerValue == 2 || RIntegerValue == 3 || RIntegerValue == 4</test>
 			<error>
@@ -32784,7 +32784,7 @@
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
-			<id specification="ISO_32000_1_6" clause="EncryptionStandard-V-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="EncryptionStandard-V-Integer" testNumber="6"/>
 			<description>Entry V with type Integer in EncryptionStandard shall have one of values: 0, 1, 2, 3, 4</description>
 			<test>VHasTypeInteger != true || VIntegerValue == 0 || VIntegerValue == 1 || VIntegerValue == 2 || VIntegerValue == 3 || VIntegerValue == 4</test>
 			<error>
@@ -45424,7 +45424,7 @@
 			<references/>
 		</rule>
 		<rule object="AGraphicsStateParameter">
-			<id specification="ISO_32000_1_6" clause="GraphicsStateParameter-BM-Name" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="GraphicsStateParameter-BM-Name" testNumber="6"/>
 			<description>Entry BM with type Name in GraphicsStateParameter shall have one of values: Screen, ColorDodge, Saturation, Color, Luminosity, Darken, Difference, Compatible, Normal, SoftLight, ColorBurn, Multiply, Exclusion, HardLight, Hue, Overlay, Lighten</description>
 			<test>BMHasTypeName != true || BMNameValue == "Compatible" || BMNameValue == "Normal" || BMNameValue == "Multiply" || BMNameValue == "Screen" || BMNameValue == "Difference" || BMNameValue == "Darken" || BMNameValue == "Lighten" || BMNameValue == "ColorDodge" || BMNameValue == "ColorBurn" || BMNameValue == "Exclusion" || BMNameValue == "HardLight" || BMNameValue == "Overlay" || BMNameValue == "SoftLight" || BMNameValue == "Luminosity" || BMNameValue == "Hue" || BMNameValue == "Saturation" || BMNameValue == "Color"</test>
 			<error>
@@ -66423,7 +66423,7 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
-			<id specification="ISO_32000_1_6" clause="Signature-SubFilter-Name" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="Signature-SubFilter-Name" testNumber="6"/>
 			<description>Entry SubFilter with type Name in Signature shall have one of values: adbe.pkcs7.detached, adbe.x509.rsa_sha1, adbe.pkcs7.sha1</description>
 			<test>SubFilterHasTypeName != true || SubFilterNameValue == "adbe.pkcs7.detached" || SubFilterNameValue == "adbe.pkcs7.sha1" || SubFilterNameValue == "adbe.x509.rsa_sha1"</test>
 			<error>
@@ -67097,7 +67097,7 @@
 			<references/>
 		</rule>
 		<rule object="ASignatureReferenceDocMDP">
-			<id specification="ISO_32000_1_6" clause="SignatureReferenceDocMDP-DigestMethod-Name" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="SignatureReferenceDocMDP-DigestMethod-Name" testNumber="6"/>
 			<description>Entry DigestMethod with type Name in SignatureReferenceDocMDP shall have one of values: SHA3-512, SHA1, SHAKE256, SHA3-384, SHA3-256, MD5</description>
 			<test>DigestMethodHasTypeName != true || DigestMethodNameValue == "MD5" || DigestMethodNameValue == "SHA1" || DigestMethodNameValue == "SHA3-256" || DigestMethodNameValue == "SHA3-384" || DigestMethodNameValue == "SHA3-512" || DigestMethodNameValue == "SHAKE256"</test>
 			<error>
@@ -67292,7 +67292,7 @@
 			<references/>
 		</rule>
 		<rule object="ASignatureReferenceFieldMDP">
-			<id specification="ISO_32000_1_6" clause="SignatureReferenceFieldMDP-DigestMethod-Name" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="SignatureReferenceFieldMDP-DigestMethod-Name" testNumber="6"/>
 			<description>Entry DigestMethod with type Name in SignatureReferenceFieldMDP shall have one of values: SHA3-512, SHA1, SHAKE256, SHA3-384, SHA3-256, MD5</description>
 			<test>DigestMethodHasTypeName != true || DigestMethodNameValue == "MD5" || DigestMethodNameValue == "SHA1" || DigestMethodNameValue == "SHA3-256" || DigestMethodNameValue == "SHA3-384" || DigestMethodNameValue == "SHA3-512" || DigestMethodNameValue == "SHAKE256"</test>
 			<error>
@@ -67487,7 +67487,7 @@
 			<references/>
 		</rule>
 		<rule object="ASignatureReferenceIdentity">
-			<id specification="ISO_32000_1_6" clause="SignatureReferenceIdentity-DigestMethod-Name" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="SignatureReferenceIdentity-DigestMethod-Name" testNumber="6"/>
 			<description>Entry DigestMethod with type Name in SignatureReferenceIdentity shall have one of values: SHA3-512, SHA1, SHAKE256, SHA3-384, SHA3-256, MD5</description>
 			<test>DigestMethodHasTypeName != true || DigestMethodNameValue == "MD5" || DigestMethodNameValue == "SHA1" || DigestMethodNameValue == "SHA3-256" || DigestMethodNameValue == "SHA3-384" || DigestMethodNameValue == "SHA3-512" || DigestMethodNameValue == "SHAKE256"</test>
 			<error>
@@ -67646,7 +67646,7 @@
 			<references/>
 		</rule>
 		<rule object="ASignatureReferenceUR">
-			<id specification="ISO_32000_1_6" clause="SignatureReferenceUR-DigestMethod-Name" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="SignatureReferenceUR-DigestMethod-Name" testNumber="6"/>
 			<description>Entry DigestMethod with type Name in SignatureReferenceUR shall have one of values: SHA3-512, SHA1, SHAKE256, SHA3-384, SHA3-256, MD5</description>
 			<test>DigestMethodHasTypeName != true || DigestMethodNameValue == "MD5" || DigestMethodNameValue == "SHA1" || DigestMethodNameValue == "SHA3-256" || DigestMethodNameValue == "SHA3-384" || DigestMethodNameValue == "SHA3-512" || DigestMethodNameValue == "SHAKE256"</test>
 			<error>
@@ -71764,7 +71764,7 @@
 			<references/>
 		</rule>
 		<rule object="ATarget">
-			<id specification="ISO_32000_1_6" clause="Target-P-StringByte" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="Target-P-StringByte" testNumber="6"/>
 			<description>Entry P with type StringByte in Target shall have value (nameTreetrailerCatalogNamesDestsContainsPString == true)</description>
 			<test>PHasTypeStringByte != true || PStringByteValue == (nameTreetrailerCatalogNamesDestsContainsPString == true)</test>
 			<error>
@@ -78381,7 +78381,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_6" clause="XObjectImage-BitsPerComponent-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="XObjectImage-BitsPerComponent-Integer" testNumber="6"/>
 			<description>Entry BitsPerComponent with type Integer in XObjectImage shall have one of values: 1, 2, 4, 16, 8</description>
 			<test>BitsPerComponentHasTypeInteger != true || BitsPerComponentIntegerValue == 1 || BitsPerComponentIntegerValue == 2 || BitsPerComponentIntegerValue == 4 || BitsPerComponentIntegerValue == 8 || BitsPerComponentIntegerValue == 16</test>
 			<error>
@@ -80098,7 +80098,7 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImageSoftMask">
-			<id specification="ISO_32000_1_6" clause="XObjectImageSoftMask-BitsPerComponent-Integer" testNumber="13"/>
+			<id specification="ISO_32000_1_6" clause="XObjectImageSoftMask-BitsPerComponent-Integer" testNumber="6"/>
 			<description>Entry BitsPerComponent with type Integer in XObjectImageSoftMask shall have one of values: 1, 2, 4, 16, 8</description>
 			<test>BitsPerComponentHasTypeInteger != true || BitsPerComponentIntegerValue == 1 || BitsPerComponentIntegerValue == 2 || BitsPerComponentIntegerValue == 4 || BitsPerComponentIntegerValue == 8 || BitsPerComponentIntegerValue == 16</test>
 			<error>
