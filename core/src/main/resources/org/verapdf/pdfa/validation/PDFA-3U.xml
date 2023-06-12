@@ -1572,12 +1572,12 @@
         </rule>
         <rule object="ExtensionSchemaDefinition">
             <id specification="ISO_19005_3" clause="6.6.2.3.3" testNumber="5"/>
-            <description>Field 'property' of the PDF/A Schema value type in the PDF/A extension schema shall be present
-                and shall have type Seq Property and namespace prefix 'pdfaSchema'.</description>
-            <test>isPropertyValidSeq == true &amp;&amp; propertyPrefix == &quot;pdfaSchema&quot;</test>
+            <description>Field 'property' of the PDF/A Schema value type in the PDF/A extension schema shall have type
+                Seq Property and namespace prefix 'pdfaSchema'.</description>
+            <test>isPropertyValidSeq == true &amp;&amp; (propertyPrefix == null || propertyPrefix == &quot;pdfaSchema&quot;)</test>
             <error>
-                <message>Field 'property' of the PDF/A Schema value type is not present, or doesn't have prefix
-                    'pdfaSchema' (property prefix = %1) or doesn't have type Seq Property (isPropertyValidSeq = %2)</message>
+                <message>Field 'property' of the PDF/A Schema value type doesn't have prefix 'pdfaSchema'
+                    (property prefix = %1) or doesn't have type Seq Property (isPropertyValidSeq = %2)</message>
                 <arguments>
                     <argument>propertyPrefix</argument>
                     <argument>isPropertyValidSeq</argument>
