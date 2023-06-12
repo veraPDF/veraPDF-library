@@ -20,7 +20,7 @@
 		</rule>
 		<rule object="A3DActivation">
 			<id specification="ISO_32000_1_6" clause="3DActivation" testNumber="22"/>
-			<description>3DActivation shall not contain entries Window, NP, Transparent, Style, TB in PDF1.6. These entries appear in later pdf versions</description>
+			<description>3DActivation shall not contain entries Window, NP, Transparent, Style, TB in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Window' || elem == 'NP' || elem == 'Transparent' || elem == 'Style' || elem == 'TB').length == 0</test>
 			<error>
 				<message>3DActivation contains entry(ies) %1</message>
@@ -352,7 +352,7 @@
 		</rule>
 		<rule object="A3DStream">
 			<id specification="ISO_32000_1_6" clause="3DStream" testNumber="22"/>
-			<description>3DStream shall not contain entries ColorSpace, AN in PDF1.6. These entries appear in later pdf versions</description>
+			<description>3DStream shall not contain entries ColorSpace, AN in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ColorSpace' || elem == 'AN').length == 0</test>
 			<error>
 				<message>3DStream contains entry(ies) %1</message>
@@ -873,7 +873,7 @@
 		</rule>
 		<rule object="A3DView">
 			<id specification="ISO_32000_1_6" clause="3DView" testNumber="22"/>
-			<description>3DView shall not contain entries NR, LS, SA, NA, MA, RM in PDF1.6. These entries appear in later pdf versions</description>
+			<description>3DView shall not contain entries NR, LS, SA, NA, MA, RM in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'NR' || elem == 'LS' || elem == 'SA' || elem == 'NA' || elem == 'MA' || elem == 'RM').length == 0</test>
 			<error>
 				<message>3DView contains entry(ies) %1</message>
@@ -1552,7 +1552,7 @@
 		</rule>
 		<rule object="AActionGoTo">
 			<id specification="ISO_32000_1_6" clause="ActionGoTo" testNumber="22"/>
-			<description>ActionGoTo shall not contain entries SD in PDF1.6. These entries appear in later pdf versions</description>
+			<description>ActionGoTo shall not contain entries SD in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
 			<error>
 				<message>ActionGoTo contains entry(ies) %1</message>
@@ -2110,7 +2110,7 @@
 		</rule>
 		<rule object="AActionGoToR">
 			<id specification="ISO_32000_1_6" clause="ActionGoToR" testNumber="22"/>
-			<description>ActionGoToR shall not contain entries SD in PDF1.6. These entries appear in later pdf versions</description>
+			<description>ActionGoToR shall not contain entries SD in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
 			<error>
 				<message>ActionGoToR contains entry(ies) %1</message>
@@ -5804,7 +5804,7 @@
 		</rule>
 		<rule object="AAnnot3D">
 			<id specification="ISO_32000_1_6" clause="Annot3D" testNumber="22"/>
-			<description>Annot3D shall not contain entries 3DU, BM, CA, ca, AF, Lang, GEO in PDF1.6. These entries appear in later pdf versions</description>
+			<description>Annot3D shall not contain entries 3DU, BM, CA, ca, AF, Lang, GEO in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == '3DU' || elem == 'BM' || elem == 'CA' || elem == 'ca' || elem == 'AF' || elem == 'Lang' || elem == 'GEO').length == 0</test>
 			<error>
 				<message>Annot3D contains entry(ies) %1</message>
@@ -6274,7 +6274,7 @@
 		</rule>
 		<rule object="AAnnotCaret">
 			<id specification="ISO_32000_1_6" clause="AnnotCaret" testNumber="22"/>
-			<description>AnnotCaret shall not contain entries BM, ca, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotCaret shall not contain entries BM, ca, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotCaret contains entry(ies) %1</message>
@@ -6866,7 +6866,7 @@
 		</rule>
 		<rule object="AAnnotCircle">
 			<id specification="ISO_32000_1_6" clause="AnnotCircle" testNumber="22"/>
-			<description>AnnotCircle shall not contain entries BM, ca, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotCircle shall not contain entries BM, ca, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotCircle contains entry(ies) %1</message>
@@ -7493,7 +7493,7 @@
 		</rule>
 		<rule object="AAnnotFileAttachment">
 			<id specification="ISO_32000_1_6" clause="AnnotFileAttachment" testNumber="22"/>
-			<description>AnnotFileAttachment shall not contain entries BM, ca, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotFileAttachment shall not contain entries BM, ca, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotFileAttachment contains entry(ies) %1</message>
@@ -8072,7 +8072,7 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_6" clause="AnnotFreeText" testNumber="22"/>
-			<description>AnnotFreeText shall not contain entries BM, ca, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotFreeText shall not contain entries BM, ca, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotFreeText contains entry(ies) %1</message>
@@ -8798,7 +8798,7 @@
 		</rule>
 		<rule object="AAnnotHighlight">
 			<id specification="ISO_32000_1_6" clause="AnnotHighlight" testNumber="22"/>
-			<description>AnnotHighlight shall not contain entries BM, ca, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotHighlight shall not contain entries BM, ca, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotHighlight contains entry(ies) %1</message>
@@ -9365,7 +9365,7 @@
 		</rule>
 		<rule object="AAnnotInk">
 			<id specification="ISO_32000_1_6" clause="AnnotInk" testNumber="22"/>
-			<description>AnnotInk shall not contain entries BM, ca, Path, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotInk shall not contain entries BM, ca, Path, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotInk contains entry(ies) %1</message>
@@ -9956,7 +9956,7 @@
 		</rule>
 		<rule object="AAnnotLine">
 			<id specification="ISO_32000_1_6" clause="AnnotLine" testNumber="22"/>
-			<description>AnnotLine shall not contain entries BM, LLO, Measure, ca, ExData, AF, Lang, CO, CP in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotLine shall not contain entries BM, LLO, Measure, ca, ExData, AF, Lang, CO, CP in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'LLO' || elem == 'Measure' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'CO' || elem == 'CP').length == 0</test>
 			<error>
 				<message>AnnotLine contains entry(ies) %1</message>
@@ -10668,7 +10668,7 @@
 		</rule>
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_6" clause="AnnotLink" testNumber="22"/>
-			<description>AnnotLink shall not contain entries BM, CA, ca, Path, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotLink shall not contain entries BM, CA, ca, Path, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'ca' || elem == 'Path' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotLink contains entry(ies) %1</message>
@@ -11139,7 +11139,7 @@
 		</rule>
 		<rule object="AAnnotMovie">
 			<id specification="ISO_32000_1_6" clause="AnnotMovie" testNumber="22"/>
-			<description>AnnotMovie shall not contain entries AF, Lang, BM, CA, ca in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotMovie shall not contain entries AF, Lang, BM, CA, ca in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'Lang' || elem == 'BM' || elem == 'CA' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotMovie contains entry(ies) %1</message>
@@ -11537,7 +11537,7 @@
 		</rule>
 		<rule object="AAnnotPolyLine">
 			<id specification="ISO_32000_1_6" clause="AnnotPolyLine" testNumber="22"/>
-			<description>AnnotPolyLine shall not contain entries BM, Measure, ca, Path, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotPolyLine shall not contain entries BM, Measure, ca, Path, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Measure' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotPolyLine contains entry(ies) %1</message>
@@ -12225,7 +12225,7 @@
 		</rule>
 		<rule object="AAnnotPolygon">
 			<id specification="ISO_32000_1_6" clause="AnnotPolygon" testNumber="22"/>
-			<description>AnnotPolygon shall not contain entries BM, Measure, ca, Path, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotPolygon shall not contain entries BM, Measure, ca, Path, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Measure' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotPolygon contains entry(ies) %1</message>
@@ -12913,7 +12913,7 @@
 		</rule>
 		<rule object="AAnnotPopup">
 			<id specification="ISO_32000_1_6" clause="AnnotPopup" testNumber="22"/>
-			<description>AnnotPopup shall not contain entries AF, Lang, BM, CA, ca in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotPopup shall not contain entries AF, Lang, BM, CA, ca in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'Lang' || elem == 'BM' || elem == 'CA' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotPopup contains entry(ies) %1</message>
@@ -13275,7 +13275,7 @@
 		</rule>
 		<rule object="AAnnotPrinterMark">
 			<id specification="ISO_32000_1_6" clause="AnnotPrinterMark" testNumber="22"/>
-			<description>AnnotPrinterMark shall not contain entries AF, Lang, BM, CA, ca in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotPrinterMark shall not contain entries AF, Lang, BM, CA, ca in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'Lang' || elem == 'BM' || elem == 'CA' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotPrinterMark contains entry(ies) %1</message>
@@ -13625,7 +13625,7 @@
 		</rule>
 		<rule object="AAnnotScreen">
 			<id specification="ISO_32000_1_6" clause="AnnotScreen" testNumber="22"/>
-			<description>AnnotScreen shall not contain entries AF, Lang, BM, CA, ca in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotScreen shall not contain entries AF, Lang, BM, CA, ca in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'Lang' || elem == 'BM' || elem == 'CA' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotScreen contains entry(ies) %1</message>
@@ -14047,7 +14047,7 @@
 		</rule>
 		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_6" clause="AnnotSound" testNumber="22"/>
-			<description>AnnotSound shall not contain entries BM, ca, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotSound shall not contain entries BM, ca, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotSound contains entry(ies) %1</message>
@@ -14638,7 +14638,7 @@
 		</rule>
 		<rule object="AAnnotSquare">
 			<id specification="ISO_32000_1_6" clause="AnnotSquare" testNumber="22"/>
-			<description>AnnotSquare shall not contain entries BM, CA, ca, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotSquare shall not contain entries BM, CA, ca, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotSquare contains entry(ies) %1</message>
@@ -15241,7 +15241,7 @@
 		</rule>
 		<rule object="AAnnotSquiggly">
 			<id specification="ISO_32000_1_6" clause="AnnotSquiggly" testNumber="22"/>
-			<description>AnnotSquiggly shall not contain entries BM, ca, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotSquiggly shall not contain entries BM, ca, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotSquiggly contains entry(ies) %1</message>
@@ -15808,7 +15808,7 @@
 		</rule>
 		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_6" clause="AnnotStamp" testNumber="22"/>
-			<description>AnnotStamp shall not contain entries BM, ca, ExData, AF, Lang, IT in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotStamp shall not contain entries BM, ca, ExData, AF, Lang, IT in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotStamp contains entry(ies) %1</message>
@@ -16339,7 +16339,7 @@
 		</rule>
 		<rule object="AAnnotStrikeOut">
 			<id specification="ISO_32000_1_6" clause="AnnotStrikeOut" testNumber="22"/>
-			<description>AnnotStrikeOut shall not contain entries BM, ca, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotStrikeOut shall not contain entries BM, ca, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotStrikeOut contains entry(ies) %1</message>
@@ -16906,7 +16906,7 @@
 		</rule>
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_6" clause="AnnotText" testNumber="22"/>
-			<description>AnnotText shall not contain entries BM, ca, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotText shall not contain entries BM, ca, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotText contains entry(ies) %1</message>
@@ -17536,7 +17536,7 @@
 		</rule>
 		<rule object="AAnnotTrapNetwork">
 			<id specification="ISO_32000_1_6" clause="AnnotTrapNetwork" testNumber="22"/>
-			<description>AnnotTrapNetwork shall not contain entries AF, Lang, BM, CA, ca in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotTrapNetwork shall not contain entries AF, Lang, BM, CA, ca in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'Lang' || elem == 'BM' || elem == 'CA' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotTrapNetwork contains entry(ies) %1</message>
@@ -18018,7 +18018,7 @@
 		</rule>
 		<rule object="AAnnotUnderline">
 			<id specification="ISO_32000_1_6" clause="AnnotUnderline" testNumber="22"/>
-			<description>AnnotUnderline shall not contain entries BM, ca, ExData, AF, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotUnderline shall not contain entries BM, ca, ExData, AF, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotUnderline contains entry(ies) %1</message>
@@ -18585,7 +18585,7 @@
 		</rule>
 		<rule object="AAnnotWatermark">
 			<id specification="ISO_32000_1_6" clause="AnnotWatermark" testNumber="22"/>
-			<description>AnnotWatermark shall not contain entries AF, Lang, BM, CA, ca in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotWatermark shall not contain entries AF, Lang, BM, CA, ca in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'Lang' || elem == 'BM' || elem == 'CA' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotWatermark contains entry(ies) %1</message>
@@ -18947,7 +18947,7 @@
 		</rule>
 		<rule object="AAnnotWidget">
 			<id specification="ISO_32000_1_6" clause="AnnotWidget" testNumber="22"/>
-			<description>AnnotWidget shall not contain entries BM, CA, ca, AF, PMD, Lang in PDF1.6. These entries appear in later pdf versions</description>
+			<description>AnnotWidget shall not contain entries BM, CA, ca, AF, PMD, Lang in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'ca' || elem == 'AF' || elem == 'PMD' || elem == 'Lang').length == 0</test>
 			<error>
 				<message>AnnotWidget contains entry(ies) %1</message>
@@ -21002,9 +21002,9 @@
 			<references/>
 		</rule>
 		<rule object="AArrayOfAttributeRevisionsSubArray">
-			<id specification="ISO_32000_1_6" clause="ArrayOfAttributeRevisionsSubArray" testNumber="4"/>
-			<description>ArrayOfAttributeRevisionsSubArray shall contain at least 1 element</description>
-			<test>size &gt;= 1</test>
+			<id specification="ISO_32000_1_6" clause="ArrayOfAttributeRevisionsSubArray" testNumber="24"/>
+			<description>ArrayOfAttributeRevisionsSubArray shall contain 1 to 2 elements</description>
+			<test>size &gt;= 1 &amp;&amp; size &lt;= 2</test>
 			<error>
 				<message>ArrayOfAttributeRevisionsSubArray contains %1 element(s)</message>
 				<arguments>
@@ -21219,9 +21219,9 @@
 			<references/>
 		</rule>
 		<rule object="AArrayOfClassNamesRevisionsSubArray">
-			<id specification="ISO_32000_1_6" clause="ArrayOfClassNamesRevisionsSubArray" testNumber="4"/>
-			<description>ArrayOfClassNamesRevisionsSubArray shall contain at least 1 element</description>
-			<test>size &gt;= 1</test>
+			<id specification="ISO_32000_1_6" clause="ArrayOfClassNamesRevisionsSubArray" testNumber="24"/>
+			<description>ArrayOfClassNamesRevisionsSubArray shall contain 1 to 2 elements</description>
+			<test>size &gt;= 1 &amp;&amp; size &lt;= 2</test>
 			<error>
 				<message>ArrayOfClassNamesRevisionsSubArray contains %1 element(s)</message>
 				<arguments>
@@ -22268,7 +22268,7 @@
 		</rule>
 		<rule object="AArrayOfOPI2Inks">
 			<id specification="ISO_32000_1_6" clause="ArrayOfOPI2Inks" testNumber="3"/>
-			<description>ArrayOfOPI2Inks shall contain 1 + 2*n elements</description>
+			<description>ArrayOfOPI2Inks shall contain 2 * n + 1 elements</description>
 			<test>size &gt; 0 &amp;&amp; size % 2 == 1</test>
 			<error>
 				<message>ArrayOfOPI2Inks contains %1 element(s)</message>
@@ -22569,7 +22569,7 @@
 		</rule>
 		<rule object="AArrayOfQuadPoints">
 			<id specification="ISO_32000_1_6" clause="ArrayOfQuadPoints" testNumber="3"/>
-			<description>ArrayOfQuadPoints shall contain 8*n elements</description>
+			<description>ArrayOfQuadPoints shall contain 8 * n elements</description>
 			<test>size &gt; 0 &amp;&amp; size % 8 == 0</test>
 			<error>
 				<message>ArrayOfQuadPoints contains %1 element(s)</message>
@@ -22954,7 +22954,7 @@
 		</rule>
 		<rule object="AArrayOfTags">
 			<id specification="ISO_32000_1_6" clause="ArrayOfTags" testNumber="3"/>
-			<description>ArrayOfTags shall contain 2*n elements</description>
+			<description>ArrayOfTags shall contain 2 * n elements</description>
 			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
 			<error>
 				<message>ArrayOfTags contains %1 element(s)</message>
@@ -23314,7 +23314,7 @@
 		</rule>
 		<rule object="AArrayOfXFA">
 			<id specification="ISO_32000_1_6" clause="ArrayOfXFA" testNumber="3"/>
-			<description>ArrayOfXFA shall contain 2*n elements</description>
+			<description>ArrayOfXFA shall contain 2 * n elements</description>
 			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
 			<error>
 				<message>ArrayOfXFA contains %1 element(s)</message>
@@ -23386,7 +23386,7 @@
 		</rule>
 		<rule object="AArrayOfXRefIndexIntegers">
 			<id specification="ISO_32000_1_6" clause="ArrayOfXRefIndexIntegers" testNumber="3"/>
-			<description>ArrayOfXRefIndexIntegers shall contain 2*n elements</description>
+			<description>ArrayOfXRefIndexIntegers shall contain 2 * n elements</description>
 			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
 			<error>
 				<message>ArrayOfXRefIndexIntegers contains %1 element(s)</message>
@@ -24047,9 +24047,9 @@
 			<references/>
 		</rule>
 		<rule object="AArrayOf_3or4CalloutLineNumbers">
-			<id specification="ISO_32000_1_6" clause="ArrayOf_3or4CalloutLineNumbers" testNumber="4"/>
-			<description>ArrayOf_3or4CalloutLineNumbers shall contain at least 4 elements</description>
-			<test>size &gt;= 4</test>
+			<id specification="ISO_32000_1_6" clause="ArrayOf_3or4CalloutLineNumbers" testNumber="24"/>
+			<description>ArrayOf_3or4CalloutLineNumbers shall contain 4 to 6 elements</description>
+			<test>size &gt;= 4 &amp;&amp; size &lt;= 6</test>
 			<error>
 				<message>ArrayOf_3or4CalloutLineNumbers contains %1 element(s)</message>
 				<arguments>
@@ -24131,9 +24131,9 @@
 			<references/>
 		</rule>
 		<rule object="AArrayOf_4AnnotBorderCharacteristics">
-			<id specification="ISO_32000_1_6" clause="ArrayOf_4AnnotBorderCharacteristics" testNumber="4"/>
-			<description>ArrayOf_4AnnotBorderCharacteristics shall contain at least 3 elements</description>
-			<test>size &gt;= 3</test>
+			<id specification="ISO_32000_1_6" clause="ArrayOf_4AnnotBorderCharacteristics" testNumber="24"/>
+			<description>ArrayOf_4AnnotBorderCharacteristics shall contain 3 to 4 elements</description>
+			<test>size &gt;= 3 &amp;&amp; size &lt;= 4</test>
 			<error>
 				<message>ArrayOf_4AnnotBorderCharacteristics contains %1 element(s)</message>
 				<arguments>
@@ -24682,6 +24682,18 @@
 				<message>Entry 3 in ArrayOf_4Numbers is not of type Number</message>
 				<arguments>
 					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOf_4NumbersColorAnnotation">
+			<id specification="ISO_32000_1_6" clause="ArrayOf_4NumbersColorAnnotation" testNumber="24"/>
+			<description>ArrayOf_4NumbersColorAnnotation shall contain 0 to 4 elements</description>
+			<test>size &gt;= 0 &amp;&amp; size &lt;= 4</test>
+			<error>
+				<message>ArrayOf_4NumbersColorAnnotation contains %1 element(s)</message>
+				<arguments>
+					<argument>size</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -27306,7 +27318,7 @@
 		</rule>
 		<rule object="ACatalog">
 			<id specification="ISO_32000_1_6" clause="Catalog" testNumber="22"/>
-			<description>Catalog shall not contain entries Extensions, Requirements, AF, DSS, Collection in PDF1.6. These entries appear in later pdf versions</description>
+			<description>Catalog shall not contain entries Extensions, Requirements, AF, DSS, Collection in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Extensions' || elem == 'Requirements' || elem == 'AF' || elem == 'DSS' || elem == 'Collection').length == 0</test>
 			<error>
 				<message>Catalog contains entry(ies) %1</message>
@@ -28102,7 +28114,7 @@
 		</rule>
 		<rule object="ACertSeedValue">
 			<id specification="ISO_32000_1_6" clause="CertSeedValue" testNumber="22"/>
-			<description>CertSeedValue shall not contain entries KeyUsage, SignaturePolicyCommitmentType, SubjectDN, SignaturePolicyHashAlgorithm, SignaturePolicyHashValue, SignaturePolicyOID, URLType in PDF1.6. These entries appear in later pdf versions</description>
+			<description>CertSeedValue shall not contain entries KeyUsage, SignaturePolicyCommitmentType, SubjectDN, SignaturePolicyHashAlgorithm, SignaturePolicyHashValue, SignaturePolicyOID, URLType in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'KeyUsage' || elem == 'SignaturePolicyCommitmentType' || elem == 'SubjectDN' || elem == 'SignaturePolicyHashAlgorithm' || elem == 'SignaturePolicyHashValue' || elem == 'SignaturePolicyOID' || elem == 'URLType').length == 0</test>
 			<error>
 				<message>CertSeedValue contains entry(ies) %1</message>
@@ -29132,7 +29144,7 @@
 		</rule>
 		<rule object="ADPart">
 			<id specification="ISO_32000_1_6" clause="DPart" testNumber="22"/>
-			<description>DPart shall not contain entries AF, Metadata in PDF1.6. These entries appear in later pdf versions</description>
+			<description>DPart shall not contain entries AF, Metadata in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'Metadata').length == 0</test>
 			<error>
 				<message>DPart contains entry(ies) %1</message>
@@ -30073,7 +30085,7 @@
 		</rule>
 		<rule object="ADestDict">
 			<id specification="ISO_32000_1_6" clause="DestDict" testNumber="22"/>
-			<description>DestDict shall not contain entries SD in PDF1.6. These entries appear in later pdf versions</description>
+			<description>DestDict shall not contain entries SD in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
 			<error>
 				<message>DestDict contains entry(ies) %1</message>
@@ -30265,9 +30277,9 @@
 			<references/>
 		</rule>
 		<rule object="ADeviceNColorSpace">
-			<id specification="ISO_32000_1_6" clause="DeviceNColorSpace" testNumber="4"/>
-			<description>DeviceNColorSpace shall contain at least 4 elements</description>
-			<test>size &gt;= 4</test>
+			<id specification="ISO_32000_1_6" clause="DeviceNColorSpace" testNumber="24"/>
+			<description>DeviceNColorSpace shall contain 4 to 5 elements</description>
+			<test>size &gt;= 4 &amp;&amp; size &lt;= 5</test>
 			<error>
 				<message>DeviceNColorSpace contains %1 element(s)</message>
 				<arguments>
@@ -31997,7 +32009,7 @@
 		</rule>
 		<rule object="AEncryptionPublicKey">
 			<id specification="ISO_32000_1_6" clause="EncryptionPublicKey" testNumber="22"/>
-			<description>EncryptionPublicKey shall not contain entries KDFSalt in PDF1.6. These entries appear in later pdf versions</description>
+			<description>EncryptionPublicKey shall not contain entries KDFSalt in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'KDFSalt').length == 0</test>
 			<error>
 				<message>EncryptionPublicKey contains entry(ies) %1</message>
@@ -32327,7 +32339,7 @@
 		</rule>
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_6" clause="EncryptionStandard" testNumber="22"/>
-			<description>EncryptionStandard shall not contain entries KDFSalt in PDF1.6. These entries appear in later pdf versions</description>
+			<description>EncryptionStandard shall not contain entries KDFSalt in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'KDFSalt').length == 0</test>
 			<error>
 				<message>EncryptionStandard contains entry(ies) %1</message>
@@ -35237,7 +35249,7 @@
 		</rule>
 		<rule object="AFileSpecEF">
 			<id specification="ISO_32000_1_6" clause="FileSpecEF" testNumber="22"/>
-			<description>FileSpecEF shall not contain entries UF in PDF1.6. These entries appear in later pdf versions</description>
+			<description>FileSpecEF shall not contain entries UF in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'UF').length == 0</test>
 			<error>
 				<message>FileSpecEF contains entry(ies) %1</message>
@@ -35297,7 +35309,7 @@
 		</rule>
 		<rule object="AFileSpecRF">
 			<id specification="ISO_32000_1_6" clause="FileSpecRF" testNumber="22"/>
-			<description>FileSpecRF shall not contain entries UF in PDF1.6. These entries appear in later pdf versions</description>
+			<description>FileSpecRF shall not contain entries UF in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'UF').length == 0</test>
 			<error>
 				<message>FileSpecRF contains entry(ies) %1</message>
@@ -35369,7 +35381,7 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_6" clause="FileSpecification" testNumber="22"/>
-			<description>FileSpecification shall not contain entries CI, Thumb, EP, AFRelationship, UF in PDF1.6. These entries appear in later pdf versions</description>
+			<description>FileSpecification shall not contain entries CI, Thumb, EP, AFRelationship, UF in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'CI' || elem == 'Thumb' || elem == 'EP' || elem == 'AFRelationship' || elem == 'UF').length == 0</test>
 			<error>
 				<message>FileSpecification contains entry(ies) %1</message>
@@ -35610,7 +35622,7 @@
 		</rule>
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_6" clause="FileTrailer" testNumber="22"/>
-			<description>FileTrailer shall not contain entries AuthCode in PDF1.6. These entries appear in later pdf versions</description>
+			<description>FileTrailer shall not contain entries AuthCode in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AuthCode').length == 0</test>
 			<error>
 				<message>FileTrailer contains entry(ies) %1</message>
@@ -45209,7 +45221,7 @@
 		</rule>
 		<rule object="AGraphicsStateParameter">
 			<id specification="ISO_32000_1_6" clause="GraphicsStateParameter" testNumber="22"/>
-			<description>GraphicsStateParameter shall not contain entries HTO, UseBlackPtComp in PDF1.6. These entries appear in later pdf versions</description>
+			<description>GraphicsStateParameter shall not contain entries HTO, UseBlackPtComp in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'HTO' || elem == 'UseBlackPtComp').length == 0</test>
 			<error>
 				<message>GraphicsStateParameter contains entry(ies) %1</message>
@@ -54274,7 +54286,7 @@
 		</rule>
 		<rule object="AName">
 			<id specification="ISO_32000_1_6" clause="Name" testNumber="22"/>
-			<description>Name shall not contain entries XFAResources in PDF1.6. These entries appear in later pdf versions</description>
+			<description>Name shall not contain entries XFAResources in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'XFAResources').length == 0</test>
 			<error>
 				<message>Name contains entry(ies) %1</message>
@@ -58622,7 +58634,7 @@
 		</rule>
 		<rule object="AOutputIntents">
 			<id specification="ISO_32000_1_6" clause="OutputIntents" testNumber="22"/>
-			<description>OutputIntents shall not contain entries SpectralData, DestOutputProfileRef, MixingHints in PDF1.6. These entries appear in later pdf versions</description>
+			<description>OutputIntents shall not contain entries SpectralData, DestOutputProfileRef, MixingHints in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SpectralData' || elem == 'DestOutputProfileRef' || elem == 'MixingHints').length == 0</test>
 			<error>
 				<message>OutputIntents contains entry(ies) %1</message>
@@ -58902,7 +58914,7 @@
 		</rule>
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_6" clause="PageObject" testNumber="22"/>
-			<description>PageObject shall not contain entries AF, OutputIntents in PDF1.6. These entries appear in later pdf versions</description>
+			<description>PageObject shall not contain entries AF, OutputIntents in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'OutputIntents').length == 0</test>
 			<error>
 				<message>PageObject contains entry(ies) %1</message>
@@ -61148,7 +61160,7 @@
 		</rule>
 		<rule object="AProjection">
 			<id specification="ISO_32000_1_6" clause="Projection" testNumber="22"/>
-			<description>Projection shall not contain entries OB in PDF1.6. These entries appear in later pdf versions</description>
+			<description>Projection shall not contain entries OB in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'OB').length == 0</test>
 			<error>
 				<message>Projection contains entry(ies) %1</message>
@@ -61450,7 +61462,7 @@
 		</rule>
 		<rule object="ARelatedFilesArray">
 			<id specification="ISO_32000_1_6" clause="RelatedFilesArray" testNumber="3"/>
-			<description>RelatedFilesArray shall contain 2*n elements</description>
+			<description>RelatedFilesArray shall contain 2 * n elements</description>
 			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
 			<error>
 				<message>RelatedFilesArray contains %1 element(s)</message>
@@ -65747,7 +65759,7 @@
 		</rule>
 		<rule object="ASigFieldLock">
 			<id specification="ISO_32000_1_6" clause="SigFieldLock" testNumber="22"/>
-			<description>SigFieldLock shall not contain entries P in PDF1.6. These entries appear in later pdf versions</description>
+			<description>SigFieldLock shall not contain entries P in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'P').length == 0</test>
 			<error>
 				<message>SigFieldLock contains entry(ies) %1</message>
@@ -65869,7 +65881,7 @@
 		</rule>
 		<rule object="ASigFieldSeedValue">
 			<id specification="ISO_32000_1_6" clause="SigFieldSeedValue" testNumber="22"/>
-			<description>SigFieldSeedValue shall not contain entries AddRevInfo, Ff, AppearanceFilter, DigestMethod, LockDocument in PDF1.6. These entries appear in later pdf versions</description>
+			<description>SigFieldSeedValue shall not contain entries AddRevInfo, Ff, AppearanceFilter, DigestMethod, LockDocument in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AddRevInfo' || elem == 'Ff' || elem == 'AppearanceFilter' || elem == 'DigestMethod' || elem == 'LockDocument').length == 0</test>
 			<error>
 				<message>SigFieldSeedValue contains entry(ies) %1</message>
@@ -66738,7 +66750,7 @@
 		</rule>
 		<rule object="ASignatureBuildDataSigQDict">
 			<id specification="ISO_32000_1_6" clause="SignatureBuildDataSigQDict" testNumber="22"/>
-			<description>SignatureBuildDataSigQDict shall not contain entries Preview in PDF1.6. These entries appear in later pdf versions</description>
+			<description>SignatureBuildDataSigQDict shall not contain entries Preview in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Preview').length == 0</test>
 			<error>
 				<message>SignatureBuildDataSigQDict contains entry(ies) %1</message>
@@ -69478,7 +69490,7 @@
 		</rule>
 		<rule object="AStructElem">
 			<id specification="ISO_32000_1_6" clause="StructElem" testNumber="22"/>
-			<description>StructElem shall not contain entries PhoneticAlphabet, AF, NS, Ref, Phoneme in PDF1.6. These entries appear in later pdf versions</description>
+			<description>StructElem shall not contain entries PhoneticAlphabet, AF, NS, Ref, Phoneme in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'PhoneticAlphabet' || elem == 'AF' || elem == 'NS' || elem == 'Ref' || elem == 'Phoneme').length == 0</test>
 			<error>
 				<message>StructElem contains entry(ies) %1</message>
@@ -69863,7 +69875,7 @@
 		</rule>
 		<rule object="AStructTreeRoot">
 			<id specification="ISO_32000_1_6" clause="StructTreeRoot" testNumber="22"/>
-			<description>StructTreeRoot shall not contain entries Namespaces, PronunciationLexicon, AF in PDF1.6. These entries appear in later pdf versions</description>
+			<description>StructTreeRoot shall not contain entries Namespaces, PronunciationLexicon, AF in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Namespaces' || elem == 'PronunciationLexicon' || elem == 'AF').length == 0</test>
 			<error>
 				<message>StructTreeRoot contains entry(ies) %1</message>
@@ -70128,7 +70140,7 @@
 		</rule>
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_6" clause="StructureAttributesDict" testNumber="22"/>
-			<description>StructureAttributesDict shall not contain entries ContinuedForm, Desc, checked, Short, Contents, Subtype, NS, ContinuedList, Checked, TextPosition, Summary in PDF1.6. These entries appear in later pdf versions</description>
+			<description>StructureAttributesDict shall not contain entries ContinuedForm, Desc, checked, Short, Contents, Subtype, NS, ContinuedList, Checked, TextPosition, Summary in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ContinuedForm' || elem == 'Desc' || elem == 'checked' || elem == 'Short' || elem == 'Contents' || elem == 'Subtype' || elem == 'NS' || elem == 'ContinuedList' || elem == 'Checked' || elem == 'TextPosition' || elem == 'Summary').length == 0</test>
 			<error>
 				<message>StructureAttributesDict contains entry(ies) %1</message>
@@ -71851,7 +71863,7 @@
 		</rule>
 		<rule object="AThread">
 			<id specification="ISO_32000_1_6" clause="Thread" testNumber="22"/>
-			<description>Thread shall not contain entries Metadata in PDF1.6. These entries appear in later pdf versions</description>
+			<description>Thread shall not contain entries Metadata in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Metadata').length == 0</test>
 			<error>
 				<message>Thread contains entry(ies) %1</message>
@@ -73529,7 +73541,7 @@
 		</rule>
 		<rule object="AViewerPreferences">
 			<id specification="ISO_32000_1_6" clause="ViewerPreferences" testNumber="22"/>
-			<description>ViewerPreferences shall not contain entries Duplex, PrintPageRange, Enforce, NumCopies, PickTrayByPDFSize in PDF1.6. These entries appear in later pdf versions</description>
+			<description>ViewerPreferences shall not contain entries Duplex, PrintPageRange, Enforce, NumCopies, PickTrayByPDFSize in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Duplex' || elem == 'PrintPageRange' || elem == 'Enforce' || elem == 'NumCopies' || elem == 'PickTrayByPDFSize').length == 0</test>
 			<error>
 				<message>ViewerPreferences contains entry(ies) %1</message>
@@ -73787,7 +73799,7 @@
 		</rule>
 		<rule object="AViewport">
 			<id specification="ISO_32000_1_6" clause="Viewport" testNumber="22"/>
-			<description>Viewport shall not contain entries PtData in PDF1.6. These entries appear in later pdf versions</description>
+			<description>Viewport shall not contain entries PtData in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'PtData').length == 0</test>
 			<error>
 				<message>Viewport contains entry(ies) %1</message>
@@ -76013,7 +76025,7 @@
 		</rule>
 		<rule object="AXObjectFormPrinterMark">
 			<id specification="ISO_32000_1_6" clause="XObjectFormPrinterMark" testNumber="22"/>
-			<description>XObjectFormPrinterMark shall not contain entries Measure, AF, PtData in PDF1.6. These entries appear in later pdf versions</description>
+			<description>XObjectFormPrinterMark shall not contain entries Measure, AF, PtData in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Measure' || elem == 'AF' || elem == 'PtData').length == 0</test>
 			<error>
 				<message>XObjectFormPrinterMark contains entry(ies) %1</message>
@@ -76702,7 +76714,7 @@
 		</rule>
 		<rule object="AXObjectFormTrapNet">
 			<id specification="ISO_32000_1_6" clause="XObjectFormTrapNet" testNumber="22"/>
-			<description>XObjectFormTrapNet shall not contain entries Measure, AF, PtData in PDF1.6. These entries appear in later pdf versions</description>
+			<description>XObjectFormTrapNet shall not contain entries Measure, AF, PtData in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Measure' || elem == 'AF' || elem == 'PtData').length == 0</test>
 			<error>
 				<message>XObjectFormTrapNet contains entry(ies) %1</message>
@@ -77452,7 +77464,7 @@
 		</rule>
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_6" clause="XObjectFormType1" testNumber="22"/>
-			<description>XObjectFormType1 shall not contain entries Measure, AF, PtData in PDF1.6. These entries appear in later pdf versions</description>
+			<description>XObjectFormType1 shall not contain entries Measure, AF, PtData in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Measure' || elem == 'AF' || elem == 'PtData').length == 0</test>
 			<error>
 				<message>XObjectFormType1 contains entry(ies) %1</message>
@@ -78298,7 +78310,7 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_6" clause="XObjectImage" testNumber="22"/>
-			<description>XObjectImage shall not contain entries Measure, AF, PtData in PDF1.6. These entries appear in later pdf versions</description>
+			<description>XObjectImage shall not contain entries Measure, AF, PtData in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Measure' || elem == 'AF' || elem == 'PtData').length == 0</test>
 			<error>
 				<message>XObjectImage contains entry(ies) %1</message>
@@ -79326,7 +79338,7 @@
 		</rule>
 		<rule object="AXObjectImageMask">
 			<id specification="ISO_32000_1_6" clause="XObjectImageMask" testNumber="22"/>
-			<description>XObjectImageMask shall not contain entries Measure, AF, PtData in PDF1.6. These entries appear in later pdf versions</description>
+			<description>XObjectImageMask shall not contain entries Measure, AF, PtData in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Measure' || elem == 'AF' || elem == 'PtData').length == 0</test>
 			<error>
 				<message>XObjectImageMask contains entry(ies) %1</message>
@@ -80753,7 +80765,7 @@
 		</rule>
 		<rule object="AXRefStream">
 			<id specification="ISO_32000_1_6" clause="XRefStream" testNumber="22"/>
-			<description>XRefStream shall not contain entries AuthCode in PDF1.6. These entries appear in later pdf versions</description>
+			<description>XRefStream shall not contain entries AuthCode in PDF 1.6. These entries appear in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AuthCode').length == 0</test>
 			<error>
 				<message>XRefStream contains entry(ies) %1</message>
