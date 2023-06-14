@@ -26260,6 +26260,18 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="ADeviceNDict">
+			<id specification="ISO_32000_1_5" clause="DeviceNDict-Colorants" testNumber="11"/>
+			<description>Entry Colorants in DeviceNDict is required, when fn:IsRequired(fn:SinceVersion(1.6 , (@Subtype == NChannel)) &amp;&amp; fn:HasSpotColorants(parent::1))</description>
+			<test>containsColorants == true || (parent1EntriesString != null &amp;&amp; parent1EntriesString.split('&amp;').filter(elem =&gt; elem != "Cyan" &amp;&amp; elem != "Magenta" &amp;&amp; elem != "Yellow" &amp;&amp; elem != "Black").length &gt; 0) == false</test>
+			<error>
+				<message>Entry Colorants in DeviceNDict is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="ADocInfo">
 			<id specification="ISO_32000_1_5" clause="DocInfo-Author" testNumber="8"/>
 			<description>Entry Author in DocInfo shall have type StringText</description>
@@ -27912,7 +27924,7 @@
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_5" clause="EncryptionStandard-P-Bitmask" testNumber="9"/>
 			<description>Entry P with type Bitmask in EncryptionStandard shall satisfy special case: fn:Eval(fn:BitsClear(1 , 2) &amp;&amp; fn:BitsSet(7 , 8) &amp;&amp; fn:SinceVersion(2.0 , fn:BitSet(10)) &amp;&amp; (fn:SinceVersion(2.0 , fn:Extension(ISO_TS_32004 , fn:BitsSet(14 , 32))) || fn:BitsSet(13 , 32)))</description>
-			<test>PHasTypeBitmask != true || (((PBitmaskValue &gt;&gt; 0 &amp; 1) == 0 &amp;&amp; (PBitmaskValue &gt;&gt; 1 &amp; 1) == 0) &amp;&amp; ((PBitmaskValue &gt;&gt; 6 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 7 &amp; 1) == 1))</test>
+			<test>PHasTypeBitmask != true || (((PBitmaskValue &gt;&gt; 0 &amp; 1) == 0 &amp;&amp; (PBitmaskValue &gt;&gt; 1 &amp; 1) == 0) &amp;&amp; ((PBitmaskValue &gt;&gt; 6 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 7 &amp; 1) == 1) &amp;&amp; ((PBitmaskValue &gt;&gt; 12 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 13 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 14 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 15 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 16 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 17 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 18 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 19 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 20 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 21 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 22 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 23 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 24 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 25 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 26 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 27 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 28 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 29 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 30 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 31 &amp; 1) == 1))</test>
 			<error>
 				<message>Entry P with type Bitmask in EncryptionStandard does not satisfy special case: fn:Eval(fn:BitsClear(1 , 2) &amp;&amp; fn:BitsSet(7 , 8) &amp;&amp; fn:SinceVersion(2.0 , fn:BitSet(10)) &amp;&amp; (fn:SinceVersion(2.0 , fn:Extension(ISO_TS_32004 , fn:BitsSet(14 , 32))) || fn:BitsSet(13 , 32)))</message>
 				<arguments>
