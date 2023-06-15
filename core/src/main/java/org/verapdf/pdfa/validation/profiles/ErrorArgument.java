@@ -32,7 +32,5 @@ public interface ErrorArgument {
 
     public String getName();
 
-    public void setArgumentValue(String argumentValue);
-
     public String getArgumentValue();
 }
