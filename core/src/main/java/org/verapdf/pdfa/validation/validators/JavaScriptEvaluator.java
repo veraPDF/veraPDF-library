@@ -6,10 +6,12 @@ import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.validation.profiles.ErrorArgument;
+import org.verapdf.pdfa.validation.profiles.ErrorArgumentImpl;
 import org.verapdf.pdfa.validation.profiles.Rule;
 import org.verapdf.pdfa.validation.profiles.Variable;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -148,10 +150,14 @@ public class JavaScriptEvaluator {
 
 	}
 
-	public static synchronized void setErrorArgumentsResult(Object obj, List<ErrorArgument> arguments, ScriptableObject scope) {
+	public static synchronized List<ErrorArgument> getErrorArgumentsResult(Object obj, List<ErrorArgument> arguments,
+																		   ScriptableObject scope) {
+		List<ErrorArgument> result = new LinkedList<>();
 		for (ErrorArgument argument : arguments) {
-			argument.setArgumentValue(getErrorArgumentResult(argument.getArgument(), obj, scope));
+			result.add(ErrorArgumentImpl.fromValues(argument.getArgument(), argument.getName(),
+					getErrorArgumentResult(argument.getArgument(), obj, scope)));
 		}
+		return result;
 	}
 
 	public static void exitContext() {
