@@ -8761,8 +8761,8 @@
 		</rule>
 		<rule object="AAnnotTrapNetwork">
 			<id specification="ISO_32000_1_3" clause="AnnotTrapNetwork-AnnotStates" testNumber="11"/>
-			<description>Entry AnnotStates in AnnotTrapNetwork is required, when fn:IsRequired(fn:IsPresent(Version) &amp;&amp; fn:SinceVersion(1.4 , fn:Not(fn:IsPresent(LastModified))))</description>
-			<test>containsAnnotStates == true || (containsVersion != true)</test>
+			<description>Entry AnnotStates in AnnotTrapNetwork is required, when fn:IsRequired(fn:IsPDFVersion(1.3) || fn:SinceVersion(1.4 , fn:IsPresent(Version) &amp;&amp; fn:Not(fn:IsPresent(LastModified))))</description>
+			<test>containsAnnotStates == true</test>
 			<error>
 				<message>Entry AnnotStates in AnnotTrapNetwork is missing</message>
 				<arguments>
@@ -9063,8 +9063,8 @@
 		</rule>
 		<rule object="AAnnotTrapNetwork">
 			<id specification="ISO_32000_1_3" clause="AnnotTrapNetwork-Version" testNumber="11"/>
-			<description>Entry Version in AnnotTrapNetwork is required, when fn:IsRequired(fn:IsPresent(AnnotStates) &amp;&amp; fn:SinceVersion(1.4 , fn:Not(fn:IsPresent(LastModified))))</description>
-			<test>containsVersion == true || (containsAnnotStates != true)</test>
+			<description>Entry Version in AnnotTrapNetwork is required, when fn:IsRequired(fn:IsPDFVersion(1.3) || fn:SinceVersion(1.4 , fn:IsPresent(AnnotStates) &amp;&amp; fn:Not(fn:IsPresent(LastModified))))</description>
+			<test>containsVersion == true</test>
 			<error>
 				<message>Entry Version in AnnotTrapNetwork is missing</message>
 				<arguments>
@@ -11438,6 +11438,30 @@
 			<test>entry1HasTypeInteger != true || entry1IntegerValue &gt; 0</test>
 			<error>
 				<message>Entry 1 with type Integer in ArrayOfDuration does not satisfy possible value predicate: fn:Eval(@1 &gt; 0)</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfFieldChoiceOptEntry">
+			<id specification="ISO_32000_1_3" clause="ArrayOfFieldChoiceOptEntry-Array" testNumber="17"/>
+			<description>Entry with type Array in ArrayOfFieldChoiceOpt shall be object ArrayOf_2StringsText</description>
+			<test>HasTypeArray != true || Entry_size == 1</test>
+			<error>
+				<message>Entry %1 with type Array in ArrayOfFieldChoiceOpt is not object ArrayOf_2StringsText</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfFieldChoiceOptEntry">
+			<id specification="ISO_32000_1_3" clause="ArrayOfFieldChoiceOptEntry" testNumber="8"/>
+			<description>Entry in ArrayOfFieldChoiceOpt shall have one of types: Array, StringText</description>
+			<test>HasTypeArray == true || HasTypeStringText == true</test>
+			<error>
+				<message>Entry %1 in ArrayOfFieldChoiceOpt is not one of types: Array, StringText</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -19555,7 +19579,7 @@
 		</rule>
 		<rule object="AFieldChoice">
 			<id specification="ISO_32000_1_3" clause="FieldChoice" testNumber="1"/>
-			<description>FieldChoice shall not contain entries except AA, Ff, TU, Parent, FT, Kids, Q, DV, T, TI, V, TM, DA</description>
+			<description>FieldChoice shall not contain entries except AA, Ff, TU, Parent, FT, Kids, Q, DV, Opt, T, TI, V, TM, DA</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'I' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'T' &amp;&amp; elem != 'TI' &amp;&amp; elem != 'V' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'DA').length == 0</test>
 			<error>
 				<message>FieldChoice contains entry(ies) %1</message>
@@ -19567,12 +19591,12 @@
 		</rule>
 		<rule object="AFieldChoice">
 			<id specification="ISO_32000_1_3" clause="FieldChoice" testNumber="22"/>
-			<description>FieldChoice shall not contain entries RV, I, DS, Opt in PDF 1.3. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RV' || elem == 'I' || elem == 'DS' || elem == 'Opt').length == 0</test>
+			<description>FieldChoice shall not contain entries RV, I, DS in PDF 1.3. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RV' || elem == 'I' || elem == 'DS').length == 0</test>
 			<error>
 				<message>FieldChoice contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RV' || elem == 'I' || elem == 'DS' || elem == 'Opt').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RV' || elem == 'I' || elem == 'DS').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -19735,6 +19759,30 @@
 			<references/>
 		</rule>
 		<rule object="AFieldChoice">
+			<id specification="ISO_32000_1_3" clause="FieldChoice-Opt-Array" testNumber="17"/>
+			<description>Entry Opt with type Array in FieldChoice shall be object ArrayOfFieldChoiceOpt</description>
+			<test>OptHasTypeArray != true || Opt_size == 1</test>
+			<error>
+				<message>Entry Opt with type Array in FieldChoice is not object ArrayOfFieldChoiceOpt</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFieldChoice">
+			<id specification="ISO_32000_1_3" clause="FieldChoice-Opt" testNumber="8"/>
+			<description>Entry Opt in FieldChoice shall have type Array</description>
+			<test>containsOpt == false || OptHasTypeArray == true</test>
+			<error>
+				<message>Entry Opt in FieldChoice is not of type Array</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFieldChoice">
 			<id specification="ISO_32000_1_3" clause="FieldChoice-Parent-Dictionary" testNumber="17"/>
 			<description>Entry Parent with type Dictionary in FieldChoice shall be one of objects FieldTx, FieldBtnPush, FieldBtnCheckbox, FieldBtnRadio, FieldChoice, FieldSig, Field</description>
 			<test>ParentHasTypeDictionary != true || Parent_size == 1</test>
@@ -19801,6 +19849,18 @@
 			<test>containsTI == false || TIHasTypeInteger == true</test>
 			<error>
 				<message>Entry TI in FieldChoice is not of type Integer</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFieldChoice">
+			<id specification="ISO_32000_1_3" clause="FieldChoice-TI-Integer" testNumber="14"/>
+			<description>Entry TI with type Integer in FieldChoice shall satisfy possible value predicate: fn:Eval((@TI &gt;= 0) &amp;&amp; (@TI &lt; fn:ArrayLength(Opt)))</description>
+			<test>TIHasTypeInteger != true || (TIIntegerValue &gt;= 0) &amp;&amp; (OptHasTypeArray == false || (TIIntegerValue &lt; OptArraySize))</test>
+			<error>
+				<message>Entry TI with type Integer in FieldChoice does not satisfy possible value predicate: fn:Eval((@TI &gt;= 0) &amp;&amp; (@TI &lt; fn:ArrayLength(Opt)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -20785,8 +20845,8 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_3" clause="FileSpecification-Type" testNumber="11"/>
-			<description>Entry Type in FileSpecification is required, when fn:IsRequired(fn:IsPresent(EF) || fn:IsPresent(EP) || fn:IsPresent(RF))</description>
-			<test>containsType == true || ((containsEF != true) &amp;&amp; (containsEP != true) &amp;&amp; (containsRF != true))</test>
+			<description>Entry Type in FileSpecification is required, when fn:IsRequired(fn:SinceVersion(1.3 , fn:IsPresent(EF)) || fn:SinceVersion(2.0 , fn:IsPresent(EP)) || fn:SinceVersion(1.3 , fn:IsPresent(RF)))</description>
+			<test>containsType == true || ((containsEF != true) &amp;&amp; (containsRF != true))</test>
 			<error>
 				<message>Entry Type in FileSpecification is missing</message>
 				<arguments>
@@ -44928,6 +44988,42 @@
 			<references/>
 		</rule>
 		<rule object="ATransition">
+			<id specification="ISO_32000_1_3" clause="Transition-Di-Integer-90" testNumber="13"/>
+			<description>Entry Di in Transition may have Integer value 90, only if this object satisfies condition (@S == Wipe</description>
+			<test>(SNameValue == "Wipe") || DiIntegerValue != 90</test>
+			<error>
+				<message>Entry Di in Transition has value 90, but not satisfy condition (@S == Wipe</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATransition">
+			<id specification="ISO_32000_1_3" clause="Transition-Di-Integer-180" testNumber="13"/>
+			<description>Entry Di in Transition may have Integer value 180, only if this object satisfies condition (@S == Wipe</description>
+			<test>(SNameValue == "Wipe") || DiIntegerValue != 180</test>
+			<error>
+				<message>Entry Di in Transition has value 180, but not satisfy condition (@S == Wipe</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATransition">
+			<id specification="ISO_32000_1_3" clause="Transition-Di-Integer-315" testNumber="13"/>
+			<description>Entry Di in Transition may have Integer value 315, only if this object satisfies condition (@S == Glitter</description>
+			<test>(SNameValue == "Glitter") || DiIntegerValue != 315</test>
+			<error>
+				<message>Entry Di in Transition has value 315, but not satisfy condition (@S == Glitter</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATransition">
 			<id specification="ISO_32000_1_3" clause="Transition-Di-Integer" testNumber="6"/>
 			<description>Entry Di with type Integer in Transition shall have one of values: 0, 90, 315, 180, 270</description>
 			<test>DiHasTypeInteger != true || DiIntegerValue == 0 || DiIntegerValue == 90 || DiIntegerValue == 180 || DiIntegerValue == 270 || DiIntegerValue == 315</test>
@@ -44936,18 +45032,6 @@
 				<arguments>
 					<argument>keyName</argument>
 					<argument>DiIntegerValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ATransition">
-			<id specification="ISO_32000_1_3" clause="Transition-Di-Integer" testNumber="9"/>
-			<description>Entry Di with type Integer in Transition shall satisfy special case: fn:Eval((((@Di == 90) || (@Di == 180)) &amp;&amp; (@S == Wipe)) || ((@Di == 315) &amp;&amp; (@S == Glitter)))</description>
-			<test>DiHasTypeInteger != true || ((((DiIntegerValue == 90) || (DiIntegerValue == 180)) &amp;&amp; (SNameValue == "Wipe")) || ((DiIntegerValue == 315) &amp;&amp; (SNameValue == "Glitter")))</test>
-			<error>
-				<message>Entry Di with type Integer in Transition does not satisfy special case: fn:Eval((((@Di == 90) || (@Di == 180)) &amp;&amp; (@S == Wipe)) || ((@Di == 315) &amp;&amp; (@S == Glitter)))</message>
-				<arguments>
-					<argument>keyName</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -48772,10 +48856,10 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_3" clause="XObjectImage-ImageMask-Boolean" testNumber="9"/>
-			<description>Entry ImageMask with type Boolean in XObjectImage shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:SinceVersion(1.3 , fn:Not(fn:IsPresent(Mask)))) || (@ImageMask == false))</description>
-			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentHasTypeInteger == false || (BitsPerComponentIntegerValue == 1)) &amp;&amp; (containsColorSpace != true) &amp;&amp; (containsMask != true)) || (ImageMaskBooleanValue == false))</test>
+			<description>Entry ImageMask with type Boolean in XObjectImage shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:SinceVersion(1.4 , fn:Not(fn:IsPresent(Mask)))) || (@ImageMask == false))</description>
+			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentHasTypeInteger == false || (BitsPerComponentIntegerValue == 1)) &amp;&amp; (containsColorSpace != true)) || (ImageMaskBooleanValue == false))</test>
 			<error>
-				<message>Entry ImageMask with type Boolean in XObjectImage does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:SinceVersion(1.3 , fn:Not(fn:IsPresent(Mask)))) || (@ImageMask == false))</message>
+				<message>Entry ImageMask with type Boolean in XObjectImage does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:SinceVersion(1.4 , fn:Not(fn:IsPresent(Mask)))) || (@ImageMask == false))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -49429,18 +49513,6 @@
 			<test>containsImageMask == true</test>
 			<error>
 				<message>Entry ImageMask in XObjectImageMask is missing</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AXObjectImageMask">
-			<id specification="ISO_32000_1_3" clause="XObjectImageMask-ImageMask-Boolean" testNumber="9"/>
-			<description>Entry ImageMask with type Boolean in XObjectImageMask shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</description>
-			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentHasTypeInteger == false || (BitsPerComponentIntegerValue == 1)) &amp;&amp; (containsColorSpace != true) &amp;&amp; (containsMask != true)) || (ImageMaskBooleanValue == false))</test>
-			<error>
-				<message>Entry ImageMask with type Boolean in XObjectImageMask does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
