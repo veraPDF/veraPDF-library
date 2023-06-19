@@ -4043,7 +4043,7 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_3" clause="AnnotFreeText" testNumber="1"/>
-			<description>AnnotFreeText shall not contain entries except C, F, M, P, StructParent, T, Popup, Rect, AP, AS, Type, Contents, Border, DA, Subtype</description>
+			<description>AnnotFreeText shall not contain entries except C, F, M, P, BS, StructParent, T, Popup, Rect, AP, AS, Type, Contents, Border, DA, Subtype</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'BE' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'CL' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'RD' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'LE' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM').length == 0</test>
 			<error>
 				<message>AnnotFreeText contains entry(ies) %1</message>
@@ -4055,12 +4055,12 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_3" clause="AnnotFreeText" testNumber="22"/>
-			<description>AnnotFreeText shall not contain entries CreationDate, RT, BE, IRT, BM, DS, BS, Q, OC, CA, ca, ExData, AF, CL, Lang, IT, Subj, RC, RD, LE, NM in PDF 1.3. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'CreationDate' || elem == 'RT' || elem == 'BE' || elem == 'IRT' || elem == 'BM' || elem == 'DS' || elem == 'BS' || elem == 'Q' || elem == 'OC' || elem == 'CA' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'CL' || elem == 'Lang' || elem == 'IT' || elem == 'Subj' || elem == 'RC' || elem == 'RD' || elem == 'LE' || elem == 'NM').length == 0</test>
+			<description>AnnotFreeText shall not contain entries CreationDate, RT, BE, IRT, BM, DS, Q, OC, CA, ca, ExData, AF, CL, Lang, IT, Subj, RC, RD, LE, NM in PDF 1.3. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'CreationDate' || elem == 'RT' || elem == 'BE' || elem == 'IRT' || elem == 'BM' || elem == 'DS' || elem == 'Q' || elem == 'OC' || elem == 'CA' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'CL' || elem == 'Lang' || elem == 'IT' || elem == 'Subj' || elem == 'RC' || elem == 'RD' || elem == 'LE' || elem == 'NM').length == 0</test>
 			<error>
 				<message>AnnotFreeText contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'CreationDate' || elem == 'RT' || elem == 'BE' || elem == 'IRT' || elem == 'BM' || elem == 'DS' || elem == 'BS' || elem == 'Q' || elem == 'OC' || elem == 'CA' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'CL' || elem == 'Lang' || elem == 'IT' || elem == 'Subj' || elem == 'RC' || elem == 'RD' || elem == 'LE' || elem == 'NM').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'CreationDate' || elem == 'RT' || elem == 'BE' || elem == 'IRT' || elem == 'BM' || elem == 'DS' || elem == 'Q' || elem == 'OC' || elem == 'CA' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'CL' || elem == 'Lang' || elem == 'IT' || elem == 'Subj' || elem == 'RC' || elem == 'RD' || elem == 'LE' || elem == 'NM').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4107,6 +4107,30 @@
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotFreeText is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotFreeText">
+			<id specification="ISO_32000_1_3" clause="AnnotFreeText-BS-Dictionary" testNumber="17"/>
+			<description>Entry BS with type Dictionary in AnnotFreeText shall be object BorderStyle</description>
+			<test>BSHasTypeDictionary != true || BS_size == 1</test>
+			<error>
+				<message>Entry BS with type Dictionary in AnnotFreeText is not object BorderStyle</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotFreeText">
+			<id specification="ISO_32000_1_3" clause="AnnotFreeText-BS" testNumber="8"/>
+			<description>Entry BS in AnnotFreeText shall have type Dictionary</description>
+			<test>containsBS == false || BSHasTypeDictionary == true</test>
+			<error>
+				<message>Entry BS in AnnotFreeText is not of type Dictionary</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -5623,7 +5647,7 @@
 		</rule>
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_3" clause="AnnotLink" testNumber="1"/>
-			<description>AnnotLink shall not contain entries except A, C, F, H, M, P, StructParent, Dest, Rect, AP, PA, AS, Type, Contents, Border, Subtype</description>
+			<description>AnnotLink shall not contain entries except A, C, F, H, M, P, BS, StructParent, Dest, Rect, AP, PA, AS, Type, Contents, Border, Subtype</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Path' &amp;&amp; elem != 'Dest' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'PA' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'QuadPoints').length == 0</test>
 			<error>
 				<message>AnnotLink contains entry(ies) %1</message>
@@ -5635,12 +5659,12 @@
 		</rule>
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_3" clause="AnnotLink" testNumber="22"/>
-			<description>AnnotLink shall not contain entries BM, BS, OC, CA, ca, Path, AF, Lang, NM, QuadPoints in PDF 1.3. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'BS' || elem == 'OC' || elem == 'CA' || elem == 'ca' || elem == 'Path' || elem == 'AF' || elem == 'Lang' || elem == 'NM' || elem == 'QuadPoints').length == 0</test>
+			<description>AnnotLink shall not contain entries BM, OC, CA, ca, Path, AF, Lang, NM, QuadPoints in PDF 1.3. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'OC' || elem == 'CA' || elem == 'ca' || elem == 'Path' || elem == 'AF' || elem == 'Lang' || elem == 'NM' || elem == 'QuadPoints').length == 0</test>
 			<error>
 				<message>AnnotLink contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'BS' || elem == 'OC' || elem == 'CA' || elem == 'ca' || elem == 'Path' || elem == 'AF' || elem == 'Lang' || elem == 'NM' || elem == 'QuadPoints').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'OC' || elem == 'CA' || elem == 'ca' || elem == 'Path' || elem == 'AF' || elem == 'Lang' || elem == 'NM' || elem == 'QuadPoints').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5711,6 +5735,30 @@
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotLink is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotLink">
+			<id specification="ISO_32000_1_3" clause="AnnotLink-BS-Dictionary" testNumber="17"/>
+			<description>Entry BS with type Dictionary in AnnotLink shall be object BorderStyle</description>
+			<test>BSHasTypeDictionary != true || BS_size == 1</test>
+			<error>
+				<message>Entry BS with type Dictionary in AnnotLink is not object BorderStyle</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotLink">
+			<id specification="ISO_32000_1_3" clause="AnnotLink-BS" testNumber="8"/>
+			<description>Entry BS in AnnotLink shall have type Dictionary</description>
+			<test>containsBS == false || BSHasTypeDictionary == true</test>
+			<error>
+				<message>Entry BS in AnnotLink is not of type Dictionary</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -20845,7 +20893,7 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_3" clause="FileSpecification-Type" testNumber="11"/>
-			<description>Entry Type in FileSpecification is required, when fn:IsRequired(fn:SinceVersion(1.3 , fn:IsPresent(EF)) || fn:SinceVersion(2.0 , fn:IsPresent(EP)) || fn:SinceVersion(1.3 , fn:IsPresent(RF)))</description>
+			<description>Entry Type in FileSpecification is required, when fn:IsRequired(fn:IsPresent(EF) || fn:SinceVersion(2.0 , fn:IsPresent(EP)) || fn:IsPresent(RF))</description>
 			<test>containsType == true || ((containsEF != true) &amp;&amp; (containsRF != true))</test>
 			<error>
 				<message>Entry Type in FileSpecification is missing</message>
@@ -36354,10 +36402,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_3" clause="OutlineItem-Dest-Array" testNumber="9"/>
-			<description>Entry Dest with type Array in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
+			<description>Entry Dest with type Array in OutlineItem shall satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</description>
 			<test>DestHasTypeArray != true || (containsA != true)</test>
 			<error>
-				<message>Entry Dest with type Array in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
+				<message>Entry Dest with type Array in OutlineItem does not satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -36366,10 +36414,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_3" clause="OutlineItem-Dest-Name" testNumber="9"/>
-			<description>Entry Dest with type Name in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
+			<description>Entry Dest with type Name in OutlineItem shall satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</description>
 			<test>DestHasTypeName != true || (containsA != true)</test>
 			<error>
-				<message>Entry Dest with type Name in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
+				<message>Entry Dest with type Name in OutlineItem does not satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -36378,10 +36426,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_3" clause="OutlineItem-Dest-StringByte" testNumber="9"/>
-			<description>Entry Dest with type StringByte in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
+			<description>Entry Dest with type StringByte in OutlineItem shall satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</description>
 			<test>DestHasTypeStringByte != true || (containsA != true)</test>
 			<error>
-				<message>Entry Dest with type StringByte in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
+				<message>Entry Dest with type StringByte in OutlineItem does not satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -49513,6 +49561,18 @@
 			<test>containsImageMask == true</test>
 			<error>
 				<message>Entry ImageMask in XObjectImageMask is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectImageMask">
+			<id specification="ISO_32000_1_3" clause="XObjectImageMask-ImageMask-Boolean" testNumber="9"/>
+			<description>Entry ImageMask with type Boolean in XObjectImageMask shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1)) || (@ImageMask == false))</description>
+			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentHasTypeInteger == false || (BitsPerComponentIntegerValue == 1))) || (ImageMaskBooleanValue == false))</test>
+			<error>
+				<message>Entry ImageMask with type Boolean in XObjectImageMask does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1)) || (@ImageMask == false))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>

@@ -4557,7 +4557,7 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_1" clause="FileSpecification" testNumber="1"/>
-			<description>FileSpecification shall not contain entries except Unix, F, DOS, FS, Mac, Type, ID</description>
+			<description>FileSpecification shall not contain entries except Unix, F, DOS, FS, Mac, ID</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Unix' &amp;&amp; elem != 'EF' &amp;&amp; elem != 'CI' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Thumb' &amp;&amp; elem != 'DOS' &amp;&amp; elem != 'EP' &amp;&amp; elem != 'FS' &amp;&amp; elem != 'AFRelationship' &amp;&amp; elem != 'Mac' &amp;&amp; elem != 'Desc' &amp;&amp; elem != 'UF' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'RF' &amp;&amp; elem != 'V' &amp;&amp; elem != 'ID').length == 0</test>
 			<error>
 				<message>FileSpecification contains entry(ies) %1</message>
@@ -4569,12 +4569,12 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_1" clause="FileSpecification" testNumber="22"/>
-			<description>FileSpecification shall not contain entries EF, CI, Thumb, EP, AFRelationship, Desc, UF, RF, V in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'EF' || elem == 'CI' || elem == 'Thumb' || elem == 'EP' || elem == 'AFRelationship' || elem == 'Desc' || elem == 'UF' || elem == 'RF' || elem == 'V').length == 0</test>
+			<description>FileSpecification shall not contain entries EF, CI, Thumb, EP, AFRelationship, Desc, UF, Type, RF, V in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'EF' || elem == 'CI' || elem == 'Thumb' || elem == 'EP' || elem == 'AFRelationship' || elem == 'Desc' || elem == 'UF' || elem == 'Type' || elem == 'RF' || elem == 'V').length == 0</test>
 			<error>
 				<message>FileSpecification contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'EF' || elem == 'CI' || elem == 'Thumb' || elem == 'EP' || elem == 'AFRelationship' || elem == 'Desc' || elem == 'UF' || elem == 'RF' || elem == 'V').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'EF' || elem == 'CI' || elem == 'Thumb' || elem == 'EP' || elem == 'AFRelationship' || elem == 'Desc' || elem == 'UF' || elem == 'Type' || elem == 'RF' || elem == 'V').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4659,31 +4659,6 @@
 				<message>Entry Mac in FileSpecification is not of type StringByte</message>
 				<arguments>
 					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFileSpecification">
-			<id specification="ISO_32000_1_1" clause="FileSpecification-Type" testNumber="8"/>
-			<description>Entry Type in FileSpecification shall have type Name</description>
-			<test>containsType == false || TypeHasTypeName == true</test>
-			<error>
-				<message>Entry Type in FileSpecification is not of type Name</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFileSpecification">
-			<id specification="ISO_32000_1_1" clause="FileSpecification-Type-Name" testNumber="6"/>
-			<description>Entry Type with type Name in FileSpecification shall have value Filespec</description>
-			<test>TypeHasTypeName != true || TypeNameValue == "Filespec"</test>
-			<error>
-				<message>Entry Type with type Name in FileSpecification has incorrect value %2 instead of Filespec</message>
-				<arguments>
-					<argument>keyName</argument>
-					<argument>TypeNameValue</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5294,7 +5269,7 @@
 		</rule>
 		<rule object="AFontDescriptorTrueType">
 			<id specification="ISO_32000_1_1" clause="FontDescriptorTrueType" testNumber="1"/>
-			<description>FontDescriptorTrueType shall not contain entries except FontBBox, StemV, CapHeight, Flags, Type, ItalicAngle, Ascent, FontFile, MaxWidth, FontName, StemH, AvgWidth, Descent, XHeight, Leading, MissingWidth</description>
+			<description>FontDescriptorTrueType shall not contain entries except FontFile2, FontBBox, StemV, CapHeight, Flags, Type, ItalicAngle, Ascent, FontFile, MaxWidth, FontName, StemH, AvgWidth, Descent, XHeight, Leading, MissingWidth</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'FontFamily' &amp;&amp; elem != 'FontFile2' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Ascent' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'XHeight' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MissingWidth').length == 0</test>
 			<error>
 				<message>FontDescriptorTrueType contains entry(ies) %1</message>
@@ -5306,12 +5281,12 @@
 		</rule>
 		<rule object="AFontDescriptorTrueType">
 			<id specification="ISO_32000_1_1" clause="FontDescriptorTrueType" testNumber="22"/>
-			<description>FontDescriptorTrueType shall not contain entries FontFamily, FontFile2, FontStretch, FontWeight in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'FontFamily' || elem == 'FontFile2' || elem == 'FontStretch' || elem == 'FontWeight').length == 0</test>
+			<description>FontDescriptorTrueType shall not contain entries FontFamily, FontStretch, FontWeight in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'FontFamily' || elem == 'FontStretch' || elem == 'FontWeight').length == 0</test>
 			<error>
 				<message>FontDescriptorTrueType contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'FontFamily' || elem == 'FontFile2' || elem == 'FontStretch' || elem == 'FontWeight').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'FontFamily' || elem == 'FontStretch' || elem == 'FontWeight').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5490,6 +5465,66 @@
 			<test>FontFileHasTypeStream != true || isFontFileIndirect == true</test>
 			<error>
 				<message>Entry FontFile with type Stream in FontDescriptorTrueType is direct</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontDescriptorTrueType">
+			<id specification="ISO_32000_1_1" clause="FontDescriptorTrueType-FontFile-Stream" testNumber="9"/>
+			<description>Entry FontFile with type Stream in FontDescriptorTrueType shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</description>
+			<test>FontFileHasTypeStream != true || (containsFontFile2 != true)</test>
+			<error>
+				<message>Entry FontFile with type Stream in FontDescriptorTrueType does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontDescriptorTrueType">
+			<id specification="ISO_32000_1_1" clause="FontDescriptorTrueType-FontFile2-Stream" testNumber="17"/>
+			<description>Entry FontFile2 with type Stream in FontDescriptorTrueType shall be object FontFile2</description>
+			<test>FontFile2HasTypeStream != true || FontFile2_size == 1</test>
+			<error>
+				<message>Entry FontFile2 with type Stream in FontDescriptorTrueType is not object FontFile2</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontDescriptorTrueType">
+			<id specification="ISO_32000_1_1" clause="FontDescriptorTrueType-FontFile2" testNumber="8"/>
+			<description>Entry FontFile2 in FontDescriptorTrueType shall have type Stream</description>
+			<test>containsFontFile2 == false || FontFile2HasTypeStream == true</test>
+			<error>
+				<message>Entry FontFile2 in FontDescriptorTrueType is not of type Stream</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontDescriptorTrueType">
+			<id specification="ISO_32000_1_1" clause="FontDescriptorTrueType-FontFile2-Stream" testNumber="10"/>
+			<description>Entry FontFile2 with type Stream in FontDescriptorTrueType shall be indirect</description>
+			<test>FontFile2HasTypeStream != true || isFontFile2Indirect == true</test>
+			<error>
+				<message>Entry FontFile2 with type Stream in FontDescriptorTrueType is direct</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontDescriptorTrueType">
+			<id specification="ISO_32000_1_1" clause="FontDescriptorTrueType-FontFile2-Stream" testNumber="9"/>
+			<description>Entry FontFile2 with type Stream in FontDescriptorTrueType shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</description>
+			<test>FontFile2HasTypeStream != true || (containsFontFile != true)</test>
+			<error>
+				<message>Entry FontFile2 with type Stream in FontDescriptorTrueType does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -8625,10 +8660,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_1" clause="OutlineItem-Dest-Array" testNumber="9"/>
-			<description>Entry Dest with type Array in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
+			<description>Entry Dest with type Array in OutlineItem shall satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</description>
 			<test>DestHasTypeArray != true || (containsA != true)</test>
 			<error>
-				<message>Entry Dest with type Array in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
+				<message>Entry Dest with type Array in OutlineItem does not satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -8637,10 +8672,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_1" clause="OutlineItem-Dest-Name" testNumber="9"/>
-			<description>Entry Dest with type Name in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
+			<description>Entry Dest with type Name in OutlineItem shall satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</description>
 			<test>DestHasTypeName != true || (containsA != true)</test>
 			<error>
-				<message>Entry Dest with type Name in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
+				<message>Entry Dest with type Name in OutlineItem does not satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -8649,10 +8684,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_1" clause="OutlineItem-Dest-StringByte" testNumber="9"/>
-			<description>Entry Dest with type StringByte in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
+			<description>Entry Dest with type StringByte in OutlineItem shall satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</description>
 			<test>DestHasTypeStringByte != true || (containsA != true)</test>
 			<error>
-				<message>Entry Dest with type StringByte in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
+				<message>Entry Dest with type StringByte in OutlineItem does not satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>

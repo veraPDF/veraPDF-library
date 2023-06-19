@@ -35537,7 +35537,7 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_6" clause="FileSpecification-Type" testNumber="11"/>
-			<description>Entry Type in FileSpecification is required, when fn:IsRequired(fn:SinceVersion(1.3 , fn:IsPresent(EF)) || fn:SinceVersion(2.0 , fn:IsPresent(EP)) || fn:SinceVersion(1.3 , fn:IsPresent(RF)))</description>
+			<description>Entry Type in FileSpecification is required, when fn:IsRequired(fn:IsPresent(EF) || fn:SinceVersion(2.0 , fn:IsPresent(EP)) || fn:IsPresent(RF))</description>
 			<test>containsType == true || ((containsEF != true) &amp;&amp; (containsRF != true))</test>
 			<error>
 				<message>Entry Type in FileSpecification is missing</message>
@@ -58286,10 +58286,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_6" clause="OutlineItem-Dest-Array" testNumber="9"/>
-			<description>Entry Dest with type Array in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
+			<description>Entry Dest with type Array in OutlineItem shall satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</description>
 			<test>DestHasTypeArray != true || (containsA != true)</test>
 			<error>
-				<message>Entry Dest with type Array in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
+				<message>Entry Dest with type Array in OutlineItem does not satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -58298,10 +58298,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_6" clause="OutlineItem-Dest-Name" testNumber="9"/>
-			<description>Entry Dest with type Name in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
+			<description>Entry Dest with type Name in OutlineItem shall satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</description>
 			<test>DestHasTypeName != true || (containsA != true)</test>
 			<error>
-				<message>Entry Dest with type Name in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
+				<message>Entry Dest with type Name in OutlineItem does not satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -58310,10 +58310,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_6" clause="OutlineItem-Dest-StringByte" testNumber="9"/>
-			<description>Entry Dest with type StringByte in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
+			<description>Entry Dest with type StringByte in OutlineItem shall satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</description>
 			<test>DestHasTypeStringByte != true || (containsA != true)</test>
 			<error>
-				<message>Entry Dest with type StringByte in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
+				<message>Entry Dest with type StringByte in OutlineItem does not satisfy special case: fn:SinceVersion(1.1 , fn:Not(fn:IsPresent(A)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -79729,6 +79729,18 @@
 			<test>containsImageMask == true</test>
 			<error>
 				<message>Entry ImageMask in XObjectImageMask is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectImageMask">
+			<id specification="ISO_32000_1_6" clause="XObjectImageMask-ImageMask-Boolean" testNumber="9"/>
+			<description>Entry ImageMask with type Boolean in XObjectImageMask shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1)) || (@ImageMask == false))</description>
+			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentHasTypeInteger == false || (BitsPerComponentIntegerValue == 1))) || (ImageMaskBooleanValue == false))</test>
+			<error>
+				<message>Entry ImageMask with type Boolean in XObjectImageMask does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1)) || (@ImageMask == false))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
