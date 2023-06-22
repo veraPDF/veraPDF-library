@@ -2,7 +2,7 @@ veraPDF-library
 ===============
 *Industry Supported PDF/A and PDF/UA Validation*
 
-[![Build Status](https://jenkins.openpreservation.org/job/veraPDF/job/1.24rc/job/library-jakarta/badge/icon)](https://jenkins.openpreservation.org/job/veraPDF/job/1.24rc/job/library-jakarta/ "OPF Jenkins")
+[![Build Status](https://jenkins.openpreservation.org/job/veraPDF/job/1.24/job/library-jakarta/badge/icon)](https://jenkins.openpreservation.org/job/veraPDF/job/1.24/job/library-jakarta/ "OPF Jenkins")
 [![Maven Central](https://img.shields.io/maven-central/v/org.verapdf/verapdf-library.svg)](https://repo1.maven.org/maven2/org/verapdf/verapdf-library/ "Maven central")
 [![CodeCov Coverage](https://img.shields.io/codecov/c/github/veraPDF/veraPDF-library.svg)](https://codecov.io/gh/veraPDF/veraPDF-library/ "CodeCov coverage")
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/79a5ff15e77444d79d6e97cc40bb458c)](https://app.codacy.com/gh/veraPDF/veraPDF-library/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade "Codacy grade")
