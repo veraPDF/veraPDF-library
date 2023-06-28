@@ -198,10 +198,20 @@ final class RuleImpl implements Rule {
                 toConvert.getReferences());
     }
 
+    public static String getStringWithoutProfilesTabulation(String string) {
+        if (string == null || string.isEmpty()) {
+            return string;
+        }
+        return string.replaceAll("[\\s\u00A0\u2007\u202F]+", " ");
+    }
+
     static class Adapter extends XmlAdapter<RuleImpl, Rule> {
         @Override
         public Rule unmarshal(RuleImpl ruleImpl) {
-            return ruleImpl;
+            return new RuleImpl(ruleImpl.getRuleId(), ruleImpl.getObject(), ruleImpl.getDeferred(),
+                    RuleImpl.getStringWithoutProfilesTabulation(ruleImpl.getDescription()),
+                    RuleImpl.getStringWithoutProfilesTabulation(ruleImpl.getTest()),
+                    ruleImpl.getError(), ruleImpl.getReferences());
         }
 
         @Override

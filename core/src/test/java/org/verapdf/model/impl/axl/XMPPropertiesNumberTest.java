@@ -22,12 +22,9 @@ package org.verapdf.model.impl.axl;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -36,8 +33,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
-import com.adobe.xmp.XMPException;
-import com.adobe.xmp.impl.VeraPDFMeta;
+import org.verapdf.xmp.XMPException;
+import org.verapdf.xmp.impl.VeraPDFMeta;
 
 /**
  * @author Maksim Bezrukov
@@ -50,16 +47,16 @@ public class XMPPropertiesNumberTest {
         return Arrays
                 .asList(new Object[][] {
                         {
-                                "/org/verapdf/model/impl/axl/xmp-properties-number-check-1.xml",
+                                "org/verapdf/model/impl/axl/xmp-properties-number-check-1.xml",
                                 Integer.valueOf(4), Integer.valueOf(4) },
                         {
-                                "/org/verapdf/model/impl/axl/xmp-properties-number-check-2.xml",
+                                "org/verapdf/model/impl/axl/xmp-properties-number-check-2.xml",
                                 Integer.valueOf(3), Integer.valueOf(3) },
                         {
-                                "/org/verapdf/model/impl/axl/xmp-properties-number-check-3.xml",
+                                "org/verapdf/model/impl/axl/xmp-properties-number-check-3.xml",
                                 Integer.valueOf(3), Integer.valueOf(3) },
                         {
-                                "/org/verapdf/model/impl/axl/xmp-properties-number-check-4.xml",
+                                "org/verapdf/model/impl/axl/xmp-properties-number-check-4.xml",
                                 Integer.valueOf(2), Integer.valueOf(2) } });
     }
 
@@ -74,8 +71,7 @@ public class XMPPropertiesNumberTest {
 
     @Test
     public void test() throws URISyntaxException, XMPException, IOException {
-        try (FileInputStream in = new FileInputStream(
-                getSystemIndependentPath(this.filePath))) {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream(this.filePath)) {
             VeraPDFMeta meta = VeraPDFMeta.parse(in);
             AXLXMPPackage pack = new AXLXMPPackage(meta, true, null,
                     PDFAFlavour.PDFA_1_B);
@@ -90,12 +86,5 @@ public class XMPPropertiesNumberTest {
             assertEquals(this.mainMetadataPropertiesNumber,
                     Integer.valueOf(mainPackSize));
         }
-    }
-
-    private static String getSystemIndependentPath(String path)
-            throws URISyntaxException {
-        URL resourceUrl = ClassLoader.class.getResource(path);
-        Path resourcePath = Paths.get(resourceUrl.toURI());
-        return resourcePath.toString();
     }
 }

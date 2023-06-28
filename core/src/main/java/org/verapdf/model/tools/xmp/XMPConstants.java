@@ -20,7 +20,7 @@
  */
 package org.verapdf.model.tools.xmp;
 
-import com.adobe.xmp.XMPConst;
+import org.verapdf.xmp.XMPConst;
 
 import java.util.Arrays;
 
@@ -43,6 +43,7 @@ public class XMPConstants {
     public static final String MIME_TYPE = "mimetype";
     public static final String PROPER_NAME = "propername";
     public static final String TEXT = "text";
+    public static final String ANY = "any";
     public static final String AGENT_NAME = "agentname";
     public static final String RATIONAL = "rational";
     public static final String GPS_COORDINATE = "gpscoordinate";
@@ -166,8 +167,8 @@ public class XMPConstants {
     };
 
     private static final String[] MARKER_WITHOUT_RESTRICTED_FIELD_STRUCTURE = {XMPConst.NS_DM,
-            "startTime", TIME,
-            "duration", TIME,
+            "startTime", ANY,
+            "duration", ANY,
             "comment", TEXT,
             "name", TEXT,
             "location", URI,
@@ -515,7 +516,7 @@ public class XMPConstants {
 
     private static final String[] XMP_BASIC_SPECIFIED_2_3 = {XMPConst.NS_XMP,
             "Label", TEXT,
-            "Rating", INTEGER   // closed Choice of Integer (A number that indicates a document’s status relative to
+            "Rating", REAL   // closed Choice of Integer (A number that indicates a document’s status relative to
             // Integer other documents, used to organize documents in a file browser.
             // Values are user-defined within an application- defined range.)
     };

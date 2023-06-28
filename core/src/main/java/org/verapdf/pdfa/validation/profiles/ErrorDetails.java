@@ -44,5 +44,5 @@ public interface ErrorDetails {
      * @return a List of String arguments for the error, or an empty List if
      *         there are no args.
      */
-    public List<String> getArguments();
+    public List<ErrorArgument> getArguments();
 }

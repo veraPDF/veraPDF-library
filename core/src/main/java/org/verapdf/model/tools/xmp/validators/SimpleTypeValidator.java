@@ -20,7 +20,7 @@
  */
 package org.verapdf.model.tools.xmp.validators;
 
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.tools.xmp.XMPConstants;
 
 import java.util.regex.Pattern;

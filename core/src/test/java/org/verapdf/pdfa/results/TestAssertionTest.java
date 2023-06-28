@@ -23,13 +23,13 @@
  */
 package org.verapdf.pdfa.results;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.junit.Test;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.profiles.Profiles;
+
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -44,7 +44,12 @@ public class TestAssertionTest {
             + ", message=" //$NON-NLS-1$
             + "message" //$NON-NLS-1$
             + ", location=" //$NON-NLS-1$
-            + ValidationResults.defaultLocation() + "]"; //$NON-NLS-1$
+            + ValidationResults.defaultLocation() //$NON-NLS-1$
+            + ", locationContext=" //$NON-NLS-1$
+            + "null" //$NON-NLS-1$
+            + ", errorMessage=" //$NON-NLS-1$
+            + "null" //$NON-NLS-1$
+            + "]"; //$NON-NLS-1$
 
     /**
      * Test method for
@@ -52,7 +57,7 @@ public class TestAssertionTest {
      */
     @Test
     public final void testHashCodeAndEquals() {
-        EqualsVerifier.forClass(TestAssertionImpl.class).verify();
+        EqualsVerifier.forClass(TestAssertionImpl.class).withIgnoredFields("ordinal", "errorArguments").verify();
     }
 
     /**
@@ -61,8 +66,7 @@ public class TestAssertionTest {
      */
     @Test
     public final void testToString() {
-        assertTrue(ValidationResults.defaultAssertion().toString()
-                .equals(DEFAULT_ASSERTION_STRING));
+        assertEquals(DEFAULT_ASSERTION_STRING, ValidationResults.defaultAssertion().toString());
     }
 
     /**
@@ -72,9 +76,8 @@ public class TestAssertionTest {
     @Test
     public final void testDefaultInstance() {
         TestAssertion defaultAssertion = ValidationResults.defaultAssertion();
-        assertTrue(defaultAssertion
-                .equals(ValidationResults.defaultAssertion()));
-        assertTrue(defaultAssertion == ValidationResults.defaultAssertion());
+        assertEquals(defaultAssertion, ValidationResults.defaultAssertion());
+        assertSame(defaultAssertion, ValidationResults.defaultAssertion());
     }
 
     /**
@@ -87,10 +90,10 @@ public class TestAssertionTest {
         TestAssertion assertionFromVals = ValidationResults
                 .assertionFromValues(0, Profiles.defaultRuleId(),
                         Status.FAILED, "message", //$NON-NLS-1$
-                        ValidationResults.defaultLocation());
-        assertTrue(assertionFromVals.equals(ValidationResults
-                .defaultAssertion()));
-        assertFalse(assertionFromVals == ValidationResults.defaultAssertion());
+                        ValidationResults.defaultLocation(), null, null, null);
+        assertEquals(assertionFromVals, ValidationResults
+                .defaultAssertion());
+        assertNotSame(assertionFromVals, ValidationResults.defaultAssertion());
     }
 
 }

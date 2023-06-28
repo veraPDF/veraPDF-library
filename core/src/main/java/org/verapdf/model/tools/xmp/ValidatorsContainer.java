@@ -20,7 +20,7 @@
  */
 package org.verapdf.model.tools.xmp;
 
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.tools.xmp.validators.*;
 
 import java.util.HashMap;
@@ -79,9 +79,6 @@ public class ValidatorsContainer {
         }
 
         String type = getSimplifiedType(typeName);
-        if (this.validators.containsKey(type)) {
-            return false;
-        }
 
         this.validators.put(type, simpleTypeValidator);
         return true;
@@ -99,9 +96,6 @@ public class ValidatorsContainer {
         }
 
         String type = getSimplifiedType(typeName);
-        if (this.validators.containsKey(type)) {
-            return false;
-        }
 
         this.validators.put(type, StructuredTypeValidator.fromValues(typeNamespaceURI, childrenTypes, this));
         return true;
@@ -121,9 +115,6 @@ public class ValidatorsContainer {
             throw new IllegalArgumentException("Argument childrenClosedTypes can not be null or empty");
         }
         String type = getSimplifiedType(typeName);
-        if (this.validators.containsKey(type)) {
-            return false;
-        }
 
         this.validators.put(type, StructuredTypeWithRestrictedFieldsValidator.fromValues(typeNamespaceURI, childrenTypes, childrenRestrictedTypes, this));
         return true;
@@ -138,6 +129,9 @@ public class ValidatorsContainer {
      */
     public boolean validate(VeraPDFXMPNode node, String typeName) {
         String type = getSimplifiedType(typeName);
+        if (XMPConstants.ANY.equals(type)) {
+            return true;
+        }
         for (ArrayTypeValidator.ArrayTypeEnum entr : ArrayTypeValidator.ArrayTypeEnum.values()) {
             String prefix = entr.getType() + " ";
             if (type.startsWith(prefix)) {

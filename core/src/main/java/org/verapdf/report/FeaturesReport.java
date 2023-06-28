@@ -141,4 +141,68 @@ public class FeaturesReport {
 		}
 		return FeaturesNode.fromValues(collection.getFeatureTreesForType(type).get(0), collection);
 	}
+
+	public FeaturesNode getPages() {
+		return pages;
+	}
+
+	public FeaturesNode getAnnotations() {
+		return annotations;
+	}
+
+	public FeaturesNode getOutlines() {
+		return outlines;
+	}
+
+	public FeaturesNode getOutputIntents() {
+		return outputIntents;
+	}
+
+	public FeaturesNode getIccProfiles() {
+		return iccProfiles;
+	}
+
+	public FeaturesNode getEmbeddedFiles() {
+		return embeddedFiles;
+	}
+
+	public FeaturesNode getInteractiveFormFields() {
+		return interactiveFormFields;
+	}
+
+	public FeaturesNode getActions() {
+		return actions;
+	}
+
+	public FeaturesNode getErrors() {
+		return errors;
+	}
+
+	public DocumentResourcesFeatures getDocumentResources() {
+		return documentResources;
+	}
+
+	public FeaturesNode getLowLevelInfo() {
+		return lowLevelInfo;
+	}
+
+	public FeaturesNode getSignatures() {
+		return signatures;
+	}
+
+	public FeaturesNode getDocumentSecurity() {
+		return documentSecurity;
+	}
+
+	public FeaturesNode getMetadata() {
+		return metadata;
+	}
+
+	public FeaturesNode getInformationDict() {
+		return informationDict;
+	}
+
+	public String getStatus() {
+		return status;
+	}
 }

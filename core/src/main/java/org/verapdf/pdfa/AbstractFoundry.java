@@ -34,27 +34,37 @@ import org.verapdf.pdfa.validation.validators.ValidatorFactory;
  * @version 0.1 Created 26 Oct 2016:21:25:17
  */
 
-abstract class AbstractFoundry implements VeraPDFFoundry {
+public abstract class AbstractFoundry implements VeraPDFFoundry {
 	static PDFAFlavour defaultFlavour = PDFAFlavour.PDFA_1_B;
+
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config) {
-		if (config.getMaxFails() > 0)
-			return createFailFastValidator(config.getFlavour(), config.getMaxFails());
-		return createValidator(config.getFlavour(), config.isRecordPasses());
+		if (config.getMaxFails() > 0) {
+			return createFailFastValidator(config.getFlavour(), config.getMaxFails(), config.getMaxNumberOfDisplayedFailedChecks(),
+					config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
+		}
+		return createValidator(config.getFlavour(), config.getMaxNumberOfDisplayedFailedChecks(),
+				config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
 	}
 
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config, PDFAFlavour flavour) {
-		if (config.getMaxFails() > 0)
-			return createFailFastValidator(flavour, config.getMaxFails());
-		return createValidator(flavour, config.isRecordPasses());
+		if (config.getMaxFails() > 0) {
+			return createFailFastValidator(flavour, config.getMaxFails(), config.getMaxNumberOfDisplayedFailedChecks(),
+					config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
+		}
+		return createValidator(flavour, config.getMaxNumberOfDisplayedFailedChecks(),
+				config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
 	}
 
 	@Override
 	public PDFAValidator createValidator(ValidatorConfig config, ValidationProfile profile) {
-		if (config.getMaxFails() > 0)
-			return createFailFastValidator(profile, config.getMaxFails());
-		return createValidator(profile, config.isRecordPasses());
+		if (config.getMaxFails() > 0) {
+			return createFailFastValidator(profile, config.getMaxFails(), config.getMaxNumberOfDisplayedFailedChecks(),
+					config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
+		}
+		return createValidator(profile, config.getMaxNumberOfDisplayedFailedChecks(),
+				config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
 	}
 
 	@Override
@@ -68,13 +78,31 @@ abstract class AbstractFoundry implements VeraPDFFoundry {
 	}
 
 	@Override
-	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures) {
-		return ValidatorFactory.createValidator(flavour, maxFailures);
+	public PDFAValidator createValidator(PDFAFlavour flavour, int maxNumberOfDisplayedFailedChecks,
+										 boolean logSuccess, boolean showErrorMessages, boolean showProgress) {
+		return ValidatorFactory.createValidator(flavour, maxNumberOfDisplayedFailedChecks, logSuccess, showErrorMessages,
+		                                        showProgress);
 	}
 
 	@Override
-	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures) {
-		return ValidatorFactory.createValidator(profile, maxFailures);
+	public PDFAValidator createValidator(ValidationProfile profile, int maxNumberOfDisplayedFailedChecks,
+										 boolean logSuccess, boolean showErrorMessages, boolean showProgress) {
+		return ValidatorFactory.createValidator(profile, maxNumberOfDisplayedFailedChecks, logSuccess, showErrorMessages,
+		                                        showProgress);
+	}
+
+	@Override
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures, int maxNumberOfDisplayedFailedChecks,
+												 boolean logSuccess, boolean showErrorMessages, boolean showProgress) {
+		return ValidatorFactory.createValidator(flavour, logSuccess, maxFailures, maxNumberOfDisplayedFailedChecks,
+				showErrorMessages, showProgress);
+	}
+
+	@Override
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures, int maxNumberOfDisplayedFailedChecks,
+												 boolean logSuccess, boolean showErrorMessages, boolean showProgress) {
+		return ValidatorFactory.createValidator(profile,logSuccess, maxFailures, maxNumberOfDisplayedFailedChecks,
+				showErrorMessages, showProgress);
 	}
 
 	@Override

@@ -21,22 +21,22 @@ import java.util.Map;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.XMPDateTime;
-import com.adobe.xmp.XMPDateTimeFactory;
-import com.adobe.xmp.XMPException;
-import com.adobe.xmp.XMPIterator;
-import com.adobe.xmp.XMPMeta;
-import com.adobe.xmp.XMPMetaFactory;
-import com.adobe.xmp.XMPPathFactory;
-import com.adobe.xmp.XMPSchemaRegistry;
-import com.adobe.xmp.options.IteratorOptions;
-import com.adobe.xmp.options.ParseOptions;
-import com.adobe.xmp.options.PropertyOptions;
-import com.adobe.xmp.options.SerializeOptions;
-import com.adobe.xmp.properties.XMPAliasInfo;
-import com.adobe.xmp.properties.XMPProperty;
-import com.adobe.xmp.properties.XMPPropertyInfo;
+import org.verapdf.xmp.XMPConst;
+import org.verapdf.xmp.XMPDateTime;
+import org.verapdf.xmp.XMPDateTimeFactory;
+import org.verapdf.xmp.XMPException;
+import org.verapdf.xmp.XMPIterator;
+import org.verapdf.xmp.XMPMeta;
+import org.verapdf.xmp.XMPMetaFactory;
+import org.verapdf.xmp.XMPPathFactory;
+import org.verapdf.xmp.XMPSchemaRegistry;
+import org.verapdf.xmp.options.IteratorOptions;
+import org.verapdf.xmp.options.ParseOptions;
+import org.verapdf.xmp.options.PropertyOptions;
+import org.verapdf.xmp.options.SerializeOptions;
+import org.verapdf.xmp.properties.XMPAliasInfo;
+import org.verapdf.xmp.properties.XMPProperty;
+import org.verapdf.xmp.properties.XMPPropertyInfo;
 
 
 /**

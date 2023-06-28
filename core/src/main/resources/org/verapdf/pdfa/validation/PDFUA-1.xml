@@ -1,0 +1,1370 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFUA_1">
+    <details creator="veraPDF Consortium" created="2020-04-07T14:37:52.486+03:00">
+        <name>PDF/UA-1 validation profile</name>
+        <description>Validation rules against ISO 14289-1:2014</description>
+    </details>
+    <hash></hash>
+    <rules>
+        <rule object="MainXMPPackage">
+            <id specification="ISO_14289_1" clause="5" testNumber="1"/>
+            <description>The PDF/UA version and conformance level of a file shall be specified using the PDF/UA Identification extension schema.</description>
+            <test>UAIdentification_size == 1</test>
+            <error>
+                <message>The document metadata stream doesn't contains PDF/UA Identification Schema.</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDFUAIdentification">
+            <id specification="ISO_14289_1" clause="5" testNumber="2"/>
+            <description>The value of pdfuaid:part shall be the part number of the International Standard to which the file conforms.</description>
+            <test>part == 1</test>
+            <error>
+                <message>The "part" property of the PDF/UA Identification Schema is %1 instead of 1 for PDF/UA-1 conforming file.</message>
+                <arguments>
+                    <argument>part</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEMarkedContent">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="1"/>
+            <description>Content marked as Artifact should not present inside tagged content</description>
+            <test>tag != 'Artifact' || parentStructureTag == null</test>
+            <error>
+                <message>Content marked as Artifact is present inside tagged content (tag %1)</message>
+                <arguments>
+                    <argument>parentStructureTag</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEMarkedContent">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="2"/>
+            <description>Tagged content should not present inside content marked as Artifact</description>
+            <test>structureTag == null || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length == 0</test>
+            <error>
+                <message>Tagged content (tag %1) is present inside content marked as Artifact</message>
+                <arguments>
+                    <argument>structureTag</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SESimpleContentItem">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="3"/>
+            <description>Content shall be marked as Artifact or tagged as real content</description>
+            <test>parentStructureTag != null || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length &gt; 0</test>
+            <error>
+                <message>Content is neither marked as Artifact nor tagged as real content</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="CosDocument">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="4"/>
+            <description>Files shall have a Suspects value of false(ISO 32000-1:2008, Table 321)</description>
+            <test>Suspects != true</test>
+            <error>
+                <message>Suspects entry has a value of true</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="14.7.1"/>
+            </references>
+        </rule>
+        <rule object="SENonStandard">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="5"/>
+            <description>All non-standard structure types shall be mapped to the nearest functionally equivalent standard type,
+                as defined in ISO 32000-1:2008, 14.8.4, in the role map dictionary of the structure tree root.
+                This mapping may be indirect; within the role map a non-standard type can map directly to another
+                non-standard type, but eventually the mapping shall terminate at a standard type.</description>
+            <test>circularMappingExist == true</test>
+            <error>
+                <message>Non-standard structure type %1 is not mapped to a standard type</message>
+                <arguments>
+                    <argument>valueS</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4"/>
+            </references>
+        </rule>
+        <rule object="PDStructElem">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="6"/>
+            <description>A circular mapping shall not exist</description>
+            <test>circularMappingExist != true</test>
+            <error>
+                <message>A circular mapping exists for %1 structure type</message>
+                <arguments>
+                    <argument>valueS</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDStructElem">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="7"/>
+            <description>Standard tags defined in ISO 32000-1:2008, 14.8.4, shall not be remapped.</description>
+            <test>isRemappedStandardType == false</test>
+            <error>
+                <message>Standard type %1 is remapped</message>
+                <arguments>
+                    <argument>valueS</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4"/>
+            </references>
+        </rule>
+        <rule object="PDDocument">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="8"/>
+            <description>The Catalog dictionary of a conforming file shall contain the Metadata key whose value is a metadata stream as defined in ISO 32000-1:2008, 14.3.2.</description>
+            <test>metadata_size == 1</test>
+            <error>
+                <message>The document catalog dictionary doesn't contain metadata key.</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.3.2"/>
+            </references>
+        </rule>
+        <rule object="MainXMPPackage">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="9"/>
+            <description>The Metadata stream in the document's catalog dictionary shall contain a dc:title entry, where dc is the
+                recommended prefix for the Dublin Core metadata schema as defined in the XMP specification, which
+                clearly identifies the document.</description>
+            <test>dc_title != null</test>
+            <error>
+                <message>Metadata stream does not contain dc:title</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="CosDocument">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="10"/>
+            <description>The document catalog dictionary shall include a ViewerPreferences dictionary containing a
+                DisplayDocTitle key, whose value shall be true.</description>
+            <test>DisplayDocTitle == true</test>
+            <error>
+                <message>ViewerPreferences dictionary is not present in the document Catalog, or DisplayDocTitle key is
+                    set to false or is not present in the ViewerPreferences dictionary (ViewerPreferences = %1,
+                    DisplayDocTitle = %2)</message>
+                <arguments>
+                    <argument>ViewerPreferences</argument>
+                    <argument>DisplayDocTitle</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDDocument">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="11"/>
+            <description>The logical structure of the conforming file shall be described by a structure hierarchy
+                rooted in the StructTreeRoot entry of the document catalog dictionary,
+                as described in ISO 32000-1:2008, 14.7.</description>
+            <test>StructTreeRoot_size == 1</test>
+            <error>
+                <message>StructTreeRoot entry is not present in the document catalog</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="14.7"/>
+            </references>
+        </rule>
+        <rule object="PDOutline">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="2"/>
+            <description>Natural language in the Outline entries shall be determined</description>
+            <test>gSizeCatalogLang != 0</test>
+            <error>
+                <message>Natural language in the Outline entries cannot be determined</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="3"/>
+            <description>Table element may contain only TR, THead, TBody, TFoot and Caption elements</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR' &amp;&amp; elem != 'THead'
+                &amp;&amp; elem != 'TBody' &amp;&amp; elem != 'TFoot' &amp;&amp; elem != 'Caption').length == 0 || kidsStandardTypes == ''</test>
+            <error>
+                <message>Table element contains %1 element(s) instead of TR, THead, TBode, TFoot or Caption</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR' &amp;&amp; elem != 'THead'
+                        &amp;&amp; elem != 'TBody' &amp;&amp; elem != 'TFoot' &amp;&amp; elem != 'Caption').toString()</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETR">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="4"/>
+            <description>TR element should be contained in Table, THead, TBody or TFoot element</description>
+            <test>/^(Table|THead|TBody|TFoot)$/.test(parentStandardType)</test>
+            <error>
+                <message>TR element contained in %1 instead of Table, THead, TBody or TFoot element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETHead">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="5"/>
+            <description>THead element should be contained in Table element</description>
+            <test>parentStandardType == 'Table'</test>
+            <error>
+                <message>THead element contained in %1 instead of Table element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETBody">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="6"/>
+            <description>TBody element should be contained in Table element</description>
+            <test>parentStandardType == 'Table'</test>
+            <error>
+                <message>TBody element contained in %1 instead of Table element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETFoot">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="7"/>
+            <description>TFoot element should be contained in Table element</description>
+            <test>parentStandardType == 'Table'</test>
+            <error>
+                <message>TFoot element contained in %1 instead of Table element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETH">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="8"/>
+            <description>TH element should be contained in TR element</description>
+            <test>parentStandardType == 'TR'</test>
+            <error>
+                <message>TH element contained in %1 instead of TR element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETD">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="9"/>
+            <description>TD element should be contained in TR element</description>
+            <test>parentStandardType == 'TR'</test>
+            <error>
+                <message>TD element contained in %1 instead of TR element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETR">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="10"/>
+            <description>TR element may contain only TH and TD elements</description>
+            <test>/^(TH|TD)(&amp;(TH|TD))*$/.test(kidsStandardTypes) || kidsStandardTypes == ''</test>
+            <error>
+                <message>TR element contains %1 element(s) instead of TH or TD</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TD' &amp;&amp; elem != 'TH').toString()</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="11"/>
+            <description>Table element should contain zero or one THead kid</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'THead').length &lt;= 1</test>
+            <error>
+                <message>Table element contains more than one THead kid</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="12"/>
+            <description>Table element should contain zero or one TFoot kid</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'TFoot').length &lt;= 1</test>
+            <error>
+                <message>Table element contains more than one TFoot kid</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="13"/>
+            <description>If Table element contains TFoot kid, Table element should contain one or more TBody kids</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'TFoot').length == 0 ||
+                kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'TBody').length &gt; 0</test>
+            <error>
+                <message>Table element contains TFoot kid, but not contains TBody kids</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="14"/>
+            <description>If Table element contains THead kid, Table element should contain one or more TBody kids</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'THead').length == 0 ||
+                kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'TBody').length &gt; 0</test>
+            <error>
+                <message>Table element contains THead kid, but not contains TBody kids</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETableCell">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="15"/>
+            <description>Table cell shall not have intersection with other cells</description>
+            <test>hasIntersection != true</test>
+            <error>
+                <message>Table cell has intersection with other cells</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="16"/>
+            <description>Table element may contain a Caption element as its first or last kid</description>
+            <test>kidsStandardTypes.indexOf('&amp;Caption&amp;') &lt; 0</test>
+            <error>
+                <message>Table element contains Caption as its %1 child instead of first or last one</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').slice(1).findIndex(elem =&gt; elem == 'Caption') + 2</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SELI">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="17"/>
+            <description>LI element should be contained in L element</description>
+            <test>parentStandardType == 'L'</test>
+            <error>
+                <message>LI element contained in %1 instead of L element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.3"/>
+            </references>
+        </rule>
+        <rule object="SELBody">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="18"/>
+            <description>LBody element should be contained in LI element</description>
+            <test>parentStandardType == 'LI'</test>
+            <error>
+                <message>LBody element contained in %1 instead of LI element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.3"/>
+            </references>
+        </rule>
+        <rule object="SEL">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="19"/>
+            <description>L element may contain only L, LI and Caption elements</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'L' &amp;&amp; elem != 'LI'
+                &amp;&amp; elem != 'Caption').length == 0 || kidsStandardTypes == ''</test>
+            <error>
+                <message>L element contains %1 element(s) instead of L, LI or Caption</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'L' &amp;&amp; elem != 'LI'
+                        &amp;&amp; elem != 'Caption').toString()</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.3"/>
+            </references>
+        </rule>
+        <rule object="SELI">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="20"/>
+            <description>LI element may contain only Lbl and LBody elements</description>
+            <test>/^(Lbl|LBody)(&amp;(Lbl|LBody))*$/.test(kidsStandardTypes) || kidsStandardTypes == ''</test>
+            <error>
+                <message>LI element contains %1 element(s) instead of Lbl or LBody</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'LBody' &amp;&amp; elem != 'Lbl').toString()</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.3"/>
+            </references>
+        </rule>
+        <rule object="PDStructElem">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="21"/>
+            <description>Natural language for text in ActualText attribute shall be determined</description>
+            <test>ActualText == null || Lang_size != 0 || parentLang != null || gSizeCatalogLang != 0</test>
+            <error>
+                <message>Natural language for text in ActualText attribute cannot be determined</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDStructElem">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="22"/>
+            <description>Natural language for text in Alt attribute shall be determined</description>
+            <test>Alt == null || Lang_size != 0 || parentLang != null || gSizeCatalogLang != 0</test>
+            <error>
+                <message>Natural language for text in Alt attribute cannot be determined</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDStructElem">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="23"/>
+            <description>Natural language for text in E attribute shall be determined</description>
+            <test>E == null || Lang_size != 0 || parentLang != null || gSizeCatalogLang != 0</test>
+            <error>
+                <message>Natural language for text in E attribute cannot be determined</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDAnnot">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="24"/>
+            <description>Natural language in the Contents entry for annotations shall be
+                determined</description>
+            <test>Contents == null || Lang_size != 0 || gSizeCatalogLang != 0</test>
+            <error>
+                <message>Natural language in the Contents entry for annotations cannot be
+                    determined</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDFormField">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="25"/>
+            <description>Natural language in the TU key for form fields shall be determined</description>
+            <test>TU == null || Lang_size != 0 || gSizeCatalogLang != 0</test>
+            <error>
+                <message>Natural language in the TU key for form fields cannot be determined</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SETOCI">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="26"/>
+            <description>TOCI element should be contained in TOC element</description>
+            <test>parentStandardType == 'TOC'</test>
+            <error>
+                <message>TOCI element contained in %1 instead of TOC element</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.2"/>
+            </references>
+        </rule>
+        <rule object="SETOC">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="27"/>
+            <description>TOC element may contain only TOC, TOCI and Caption elements</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TOC' &amp;&amp; elem != 'TOCI'
+                &amp;&amp; elem != 'Caption').length == 0 || kidsStandardTypes == ''</test>
+            <error>
+                <message>TOC element contains %1 element(s) instead of TOC, TOCI or Caption</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TOC' &amp;&amp; elem != 'TOCI'
+                        &amp;&amp; elem != 'Caption').toString()</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.2"/>
+            </references>
+        </rule>
+        <rule object="SETOC">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="28"/>
+            <description>TOC element may contain a Caption element only as its first kid</description>
+            <test>kidsStandardTypes == '' || kidsStandardTypes.split('&amp;').slice(1).findIndex(elem =&gt; elem == 'Caption') &lt; 0</test>
+            <error>
+                <message>TOC element contains Caption as its %1 child instead of first one</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').slice(1).findIndex(elem =&gt; elem == 'Caption') + 2</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.2"/>
+            </references>
+        </rule>
+        <rule object="CosLang">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="29"/>
+            <description>If the Lang entry is present in the document's Catalog dictionary or in a structure element dictionary or
+			property list, its value shall be a language identifier as described in ISO 32000-1:2008, 14.9.2.
+			A language identifier shall be a Language-Tag as defined in RFC 3066, Tags for the Identification of Languages.</description>
+            <test>/^[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*$/.test(unicodeValue)</test>
+            <error>
+                <message>Value %1 of the Lang entry is not Language-Tag</message>
+                <arguments>
+                    <argument>unicodeValue</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="14.9.2"/>
+                <reference specification="RFC 3066" clause="2.1"/>
+            </references>
+        </rule>
+        <rule object="SEMarkedContent">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="30"/>
+            <description>Natural language for text in ActualText attribute in Span Marked Content shall be determined</description>
+            <test>tag != 'Span' || ActualText == null || Lang_size != 0 || inheritedLang != null || gSizeCatalogLang != 0</test>
+            <error>
+                <message>Natural language for text in ActualText attribute in Span Marked Content cannot be determined</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEMarkedContent">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="31"/>
+            <description>Natural language for text in Alt attribute in Span Marked Content shall be determined</description>
+            <test>tag != 'Span' || Alt == null || Lang_size != 0 || inheritedLang != null || gSizeCatalogLang != 0</test>
+            <error>
+                <message>Natural language for text in Alt attribute in Span Marked Content cannot be determined</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEMarkedContent">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="32"/>
+            <description>Natural language for text in E attribute in Span Marked Content shall be determined</description>
+            <test>tag != 'Span' || E == null || Lang_size != 0 || inheritedLang != null || gSizeCatalogLang != 0</test>
+            <error>
+                <message>Natural language for text in E attribute in Span Marked Content cannot be determined</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="XMPLangAlt" deferred="true">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="33"/>
+            <description>Natural language for document metadata shall be determined</description>
+            <test>xDefault == false || gSizeCatalogLang != 0</test>
+            <error>
+                <message>Natural language for document metadata cannot be determined</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SETextItem">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="34"/>
+            <description>Natural language for text in page content shall be determined</description>
+            <test>gSizeCatalogLang != 0 || Lang != null</test>
+            <error>
+                <message>Natural language for text in page content cannot be determined</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SETHead">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="36"/>
+            <description>THead element may contain only TR elements</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0 || kidsStandardTypes == ''</test>
+            <error>
+                <message>THead element contains %1 element(s) instead of TR</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').toString()</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETBody">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="37"/>
+            <description>TBody element may contain only TR elements</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0 || kidsStandardTypes == ''</test>
+            <error>
+                <message>TBody element contains %1 element(s) instead of TR</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').toString()</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETFoot">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="38"/>
+            <description>TFoot element may contain only TR elements</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').length == 0 || kidsStandardTypes == ''</test>
+            <error>
+                <message>TFoot element contains %1 element(s) instead of TR</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR').toString()</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="39"/>
+            <description>Table element may contain only one Caption element</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt; 2</test>
+            <error>
+                <message>Table element contains %1 Caption elements instead of one</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SEL">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="40"/>
+            <description>L element may contain a Caption element only as its first kid</description>
+            <test>kidsStandardTypes == '' || kidsStandardTypes.split('&amp;').slice(1).findIndex(elem =&gt; elem == 'Caption') &lt; 0</test>
+            <error>
+                <message>L element contains Caption as its %1 child instead of first one</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').slice(1).findIndex(elem =&gt; elem == 'Caption') + 2</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.2"/>
+            </references>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="41"/>
+            <description>Table columns shall have the same number of rows (taking into account row spans)</description>
+            <test>numberOfColumnWithWrongRowSpan == null</test>
+            <error>
+                <message>Table columns 1 and %1 span different number of rows</message>
+                <arguments>
+                    <argument>numberOfColumnWithWrongRowSpan + 1</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="42"/>
+            <description>Table rows shall have the same number of columns (taking into account column spans)</description>
+            <test>numberOfRowWithWrongColumnSpan == null || wrongColumnSpan != null</test>
+            <error>
+                <message>Table rows 1 and %1 span different number of columns</message>
+                <arguments>
+                    <argument>numberOfRowWithWrongColumnSpan + 1</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SETable">
+            <id specification="ISO_14289_1" clause="7.2" testNumber="43"/>
+            <description>Table rows shall have the same number of columns (taking into account column spans)</description>
+            <test>numberOfRowWithWrongColumnSpan == null || wrongColumnSpan == null</test>
+            <error>
+                <message>Table rows 1 and %1 span different number of columns (%2 and %3 respectively)</message>
+                <arguments>
+                    <argument>numberOfRowWithWrongColumnSpan + 1</argument>
+                    <argument>columnSpan</argument>
+                    <argument>wrongColumnSpan</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+            </references>
+        </rule>
+        <rule object="SEFigure">
+            <id specification="ISO_14289_1" clause="7.3" testNumber="1"/>
+            <description>Figure tags shall include an alternative representation or replacement text that represents the contents
+                marked with the Figure tag as noted in ISO 32000-1:2008, 14.7.2, Table 323</description>
+            <test>(Alt != null &amp;&amp; Alt != '') || ActualText != null</test>
+            <error>
+                <message>Figure structure element neither has an alternate description nor a replacement text</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.7.2"/>
+            </references>
+        </rule>
+        <rule object="SEHn">
+            <id specification="ISO_14289_1" clause="7.4.2" testNumber="1"/>
+            <description>For documents that are not strongly structured, as described in ISO 32000-1:2008, 14.8.4.3.5,
+                heading tags shall be used as follows:
+                (*) If any heading tags are used, H1 shall be the first.
+                (*) A document may use more than one instance of any specific tag level. For example, a tag level may
+                be repeated if document content requires it.
+                (*) If document semantics require a descending sequence of headers, such a sequence shall proceed
+                in strict numerical order and shall not skip an intervening heading level.
+                (*) A document may increment its heading sequence without restarting at H1 if document semantics
+                require it.</description>
+            <test>hasCorrectNestingLevel == true</test>
+            <error>
+                <message>Heading level %1 is skipped in a descending sequence of header levels</message>
+                <arguments>
+                    <argument>nestingLevel - 1</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.3.5"/>
+            </references>
+        </rule>
+        <rule object="PDStructElem">
+            <id specification="ISO_14289_1" clause="7.4.4" testNumber="1"/>
+            <description>Each node in the tag tree shall contain at most one child H tag.</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'H').length &lt;= 1</test>
+            <error>
+                <message>A node contains more than one H tag</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEH">
+            <id specification="ISO_14289_1" clause="7.4.4" testNumber="2"/>
+            <description>All documents shall be either strongly or weakly structured, but not both.</description>
+            <test>usesHn == false</test>
+            <error>
+                <message>Document uses both H and H# tags</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEHn">
+            <id specification="ISO_14289_1" clause="7.4.4" testNumber="3"/>
+            <description>All documents shall be either strongly or weakly structured, but not both.</description>
+            <test>usesH == false</test>
+            <error>
+                <message>Document uses both H and H# tags</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SETD">
+            <id specification="ISO_14289_1" clause="7.5" testNumber="1"/>
+            <description>If the table's structure is not determinable via Headers and IDs,
+                then structure elements of type TH shall have a Scope attribute</description>
+            <test>hasConnectedHeader != false || unknownHeaders != ''</test>
+            <error>
+                <message>TD does not contain Headers attribute, and Headers for this table cell cannot be determined
+                    via algorithm from ISO32000-2, 14.8.4.8.3.</message>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2" clause="14.8.4.8.3"/>
+            </references>
+        </rule>
+        <rule object="SETD">
+            <id specification="ISO_14289_1" clause="7.5" testNumber="2"/>
+            <description>If the table's structure is not determinable via Headers and IDs,
+                then structure elements of type TH shall have a Scope attribute</description>
+            <test>hasConnectedHeader != false || unknownHeaders == ''</test>
+            <error>
+                <message>TD references undefined Header(s) %1, and Headers for this table cell cannot be determined
+                    via algorithm from ISO32000-2, 14.8.4.8.3.</message>
+                <arguments>
+                    <argument>unknownHeaders</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2" clause="14.8.4.8.3"/>
+            </references>
+        </rule>
+        <rule object="SEFormula">
+            <id specification="ISO_14289_1" clause="7.7" testNumber="1"/>
+            <description>All mathematical expressions shall be enclosed within a Formula tag as detailed in ISO 32000-1:2008,
+                14.8.4.5 and shall have Alt or ActualText attributes</description>
+            <test>(Alt != null &amp;&amp; Alt != '') || ActualText != null</test>
+            <error>
+                <message>Formula structure element neither has an alternate description nor a replacement text</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.5"/>
+            </references>
+        </rule>
+        <rule object="SENote">
+            <id specification="ISO_14289_1" clause="7.9" testNumber="1"/>
+            <description>Note tag shall have ID entry</description>
+            <test>noteID != null &amp;&amp; noteID != ''</test>
+            <error>
+                <message>ID key of the Note tag is not present</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SENote">
+            <id specification="ISO_14289_1" clause="7.9" testNumber="2"/>
+            <description>Each Note tag shall have unique ID key</description>
+            <test>hasDuplicateNoteID == false</test>
+            <error>
+                <message>ID key %1 of the Note tag is non-unique</message>
+                <arguments>
+                    <argument>noteID</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDOCConfig">
+            <id specification="ISO_14289_1" clause="7.10" testNumber="1"/>
+            <description>Each optional content configuration dictionary that forms the value of the D key, or that is an element in the array that forms the 
+		value of the Configs key in the OCProperties dictionary, shall contain the Name key.</description>
+            <test>Name != null &amp;&amp; Name.length() &gt; 0</test>
+            <error>
+                <message>Missing or empty Name entry of the optional content configuration dictionary</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDOCConfig">
+            <id specification="ISO_14289_1" clause="7.10" testNumber="2"/>
+            <description>The AS key shall not appear in any optional content configuration dictionary.</description>
+            <test>AS == null</test>
+            <error>
+                <message>AS key is present in the optional content configuration dictionary</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="CosFileSpecification">
+            <id specification="ISO_14289_1" clause="7.11" testNumber="1"/>
+            <description>The file specification dictionary for an embedded file shall contain the non-empty F and UF keys</description>
+            <test>containsEF == false || (F != null &amp;&amp; F != '' &amp;&amp; UF != null &amp;&amp; UF != '')</test>
+            <error>
+                <message>The file specification dictionary for an embedded file does not contain either F or UF key or
+                    at least one of the keys is empty (F = %1, UF = %2)</message>
+                <arguments>
+                    <argument>F</argument>
+                    <argument>UF</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDAcroForm">
+            <id specification="ISO_14289_1" clause="7.15" testNumber="1"/>
+            <description>Dynamic XFA forms shall not be used</description>
+            <test>dynamicRender != 'required'</test>
+            <error>
+                <message>Dynamic XFA forms is present</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDEncryption">
+            <id specification="ISO_14289_1" clause="7.16" testNumber="1"/>
+            <description>An encrypted conforming file shall contain a P key in its encryption dictionary (ISO 32000-1:2008,
+                7.6.3.2, Table 21). The 10th bit position of the P key shall be true.</description>
+            <test>P != null &amp;&amp; (P &amp; 512) == 512</test>
+            <error>
+                <message>The file is encrypted but does not contain a P entry in its encryption dictionary or
+                    the file is encrypted and does contain a P entry, but the 10th bit position of the P entry is false
+                    (P = %1, 10th bit = %2)
+                </message>
+                <arguments>
+                    <argument>P</argument>
+                    <argument>P != null ? (P &amp; 512) >> 9 : null</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="7.6.3.2"/>
+            </references>
+        </rule>
+        <rule object="PDAnnot">
+            <id specification="ISO_14289_1" clause="7.18.1" testNumber="1"/>
+            <description>An annotation, excluding annotations of subtype Widget, Popup or Link, shall be nested within an Annot tag</description>
+            <test>Subtype == 'Widget' || Subtype == 'Popup' || Subtype == 'Link' || isOutsideCropBox == true ||
+                (F &amp; 2) == 2 || structParentType == 'Annot'</test>
+            <error>
+                <message>%1 annotation is nested within %2 tag instead of Annot</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                    <argument>structParentType</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDAnnot">
+            <id specification="ISO_14289_1" clause="7.18.1" testNumber="2"/>
+            <description>An annotation (except annotations of type Link, Widget or Popup, or hidden annotations,
+                or those having rectangle outside the crop-box) shall have either Contents key or an Alt entry
+                in the enclosing structure element</description>
+            <test>Subtype == 'Widget' || Subtype == 'Popup' || Subtype == 'Link'
+                || isOutsideCropBox == true || (F &amp; 2) == 2 || (Contents != null &amp;&amp; Contents != '') ||
+                (Alt != null &amp;&amp; Alt != '')</test>
+            <error>
+                <message>%1 annotation whose hidden flag is not set and whose rectangle is not outside the crop-box
+                    has neither Contents key nor an Alt entry in the enclosing structure element</message>
+                <arguments>
+                    <argument>Subtype</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDWidgetAnnot">
+            <id specification="ISO_14289_1" clause="7.18.1" testNumber="3"/>
+            <description>A form field whose hidden flag is not set and whose rectangle is not outside the crop-box
+                shall have a TU key present or all its Widget annotations shall have alternative descriptions
+                (in the form of an Alt entry in the enclosing structure elements)</description>
+            <test>isOutsideCropBox == true || (F &amp; 2) == 2 || (TU != null &amp;&amp; TU != '') || (Alt != null &amp;&amp; Alt != '')</test>
+            <error>
+                <message>A form field whose hidden flag is not set and whose rectangle is not outside the crop-box
+                    neither has TU key nor its Widget annotations have alternative descriptions (in the form of an Alt
+                    entry in the enclosing structure element)</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDTrapNetAnnot">
+            <id specification="ISO_14289_1" clause="7.18.2" testNumber="1"/>
+            <description>Annotations of subtype TrapNet shall not be permitted.</description>
+            <test>isOutsideCropBox == true || (F &amp; 2) == 2</test>
+            <error>
+                <message>An annotation of subtype TrapNet exists</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDPage">
+            <id specification="ISO_14289_1" clause="7.18.3" testNumber="1"/>
+            <description>Every page on which there is an annotation shall contain in its page dictionary the key Tabs, and its value shall be S.</description>
+            <test>annots_size == 0 || Tabs == 'S'</test>
+            <error>
+                <message>A page containing an annotation contains a Tabs key with value %1 instead of S.</message>
+                <arguments>
+                    <argument>Tabs</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDWidgetAnnot">
+            <id specification="ISO_14289_1" clause="7.18.4" testNumber="1"/>
+            <description>A Widget annotation shall be nested within a Form tag per ISO 32000-1:2008, 14.8.4.5, Table 340.</description>
+            <test>structParentType == 'Form' || isOutsideCropBox == true || (F &amp; 2) == 2</test>
+            <error>
+                <message>A Widget annotation is nested within %1 tag instead of Form</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.5"/>
+            </references>
+        </rule>
+        <rule object="SEForm">
+            <id specification="ISO_14289_1" clause="7.18.4" testNumber="2"/>
+            <description>If the Form element omits a Role attribute (Table 348), it shall have
+                only one child: an object reference (14.7.4.3) identifying the widget annotation
+                per ISO 32000-1:2008, 14.8.4.5, Table 340.</description>
+            <test>roleAttribute != null || hasOneInteractiveChild == true</test>
+            <error>
+                <message>The Form element omits a Role attribute and doesn't have only one child identifying
+                    the widget annotation</message>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.5"/>
+            </references>
+        </rule>
+        <rule object="PDLinkAnnot">
+            <id specification="ISO_14289_1" clause="7.18.5" testNumber="1"/>
+            <description>Links shall be tagged according to ISO 32000-1:2008, 14.8.4.4.2, Link Element.</description>
+            <test>structParentType == 'Link' || isOutsideCropBox == true || (F &amp; 2) == 2</test>
+            <error>
+                <message>A Link annotation is nested within %1 tag instead of Link</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.4.4.2"/>
+            </references>
+        </rule>
+        <rule object="PDLinkAnnot">
+            <id specification="ISO_14289_1" clause="7.18.5" testNumber="2"/>
+            <description>Links shall contain an alternate description via their Contents key as described in ISO 32000-1:2008, 14.9.3.</description>
+            <test>(Contents != null &amp;&amp; Contents != '') || isOutsideCropBox == true || (F &amp; 2) == 2</test>
+            <error>
+                <message>A link annotation does not include an alternate description in the Contents Key</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.9.3"/>
+            </references>
+        </rule>
+        <rule object="PDMediaClip">
+            <id specification="ISO_14289_1" clause="7.18.6.2" testNumber="1"/>
+            <description>In the media clip data dictionary, the optional CT key (ISO 32000-1:2008, 13.2.4.2, Table 274)
+                is required.</description>
+            <test>CT != null</test>
+            <error>
+                <message>CT key is missing from the media clip data dictionary</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="13.2.4.2"/>
+            </references>
+        </rule>
+        <rule object="PDMediaClip">
+            <id specification="ISO_14289_1" clause="7.18.6.2" testNumber="2"/>
+            <description>In the media clip data dictionary, the optional Alt key (ISO 32000-1:2008, 13.2.4.2, Table 274)
+                is required.</description>
+            <test>hasCorrectAlt == true</test>
+            <error>
+                <message>Alt key (value %1) is missing from the media clip data dictionary or has incorrect value</message>
+                <arguments>
+                    <argument>Alt</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="13.2.4.2"/>
+            </references>
+        </rule>
+        <rule object="PDPrinterMarkAnnot">
+            <id specification="ISO_14289_1" clause="7.18.8" testNumber="1"/>
+            <description>PrinterMark annotations, if present, shall be considered Incidental Artifacts, as if they are hidden page
+                elements as defined in ISO 32000-1:2008, 14.8.2.2.3.</description>
+            <test>structParentType == null || isOutsideCropBox == true || (F &amp; 2) == 2</test>
+            <error>
+                <message>A PrinterMark annotation is included in logical structure</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.8.2.2.3"/>
+            </references>
+        </rule>
+        <rule object="PDXForm">
+            <id specification="ISO_14289_1" clause="7.20" testNumber="1"/>
+            <description>A conforming file shall not contain any reference XObjects</description>
+            <test>containsRef == false</test>
+            <error>
+                <message>The document contains a reference XObject (Ref key in the form XObject dictionary)</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDXForm">
+            <id specification="ISO_14289_1" clause="7.20" testNumber="2"/>
+            <description>The content of Form XObjects shall be incorporated into structure elements according to
+                ISO 32000-1:2008, 14.7.2.</description>
+            <test>isUniqueSemanticParent == true</test>
+            <error>
+                <message>Form XObject contains MCIDs and is referenced more than once</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1" clause="14.7.2"/>
+            </references>
+        </rule>
+        <rule object="PDType0Font">
+            <id specification="ISO_14289_1" clause="7.21.3.1" testNumber="1"/>
+            <description>For any given composite (Type 0) font within a conforming file, the CIDSystemInfo entry in its CIDFont dictionary and its Encoding dictionary 
+			shall have the following relationship: 
+			- If the Encoding key in the Type 0 font dictionary is Identity-H or Identity-V, any values of Registry, Ordering, 
+			and Supplement may be used in the CIDSystemInfo entry of the CIDFont. 
+			- Otherwise, the corresponding Registry and Ordering strings in both CIDSystemInfo dictionaries shall be identical, and the value of the Supplement key in 
+			the CIDSystemInfo dictionary of the CIDFont shall be less than or equal to the Supplement key in the CIDSystemInfo dictionary of the CMap.</description>
+            <test>cmapName == &quot;Identity-H&quot; || cmapName == &quot;Identity-V&quot; || (CIDFontOrdering != null &amp;&amp;
+                CIDFontOrdering == CMapOrdering &amp;&amp; CIDFontRegistry != null &amp;&amp; CIDFontRegistry == CMapRegistry &amp;&amp;
+                CIDFontSupplement != null &amp;&amp; CMapSupplement != null &amp;&amp; CIDFontSupplement &lt;= CMapSupplement)</test>
+            <error>
+                <message>CIDSystemInfo entries the CIDFont and CMap dictionaries of a Type 0 font are not compatible
+                    (CIDSystemInfo Ordering = %1, CMap Ordering = %2, CIDSystemInfo Registry = %3,
+                    CMap Registry = %4, CIDSystemInfo Supplement = %5, CMap Supplement = %6)</message>
+                <arguments>
+                    <argument>CIDFontOrdering</argument>
+                    <argument>CMapOrdering</argument>
+                    <argument>CIDFontRegistry</argument>
+                    <argument>CMapRegistry</argument>
+                    <argument>CIDFontSupplement</argument>
+                    <argument>CMapSupplement</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDCIDFont">
+            <id specification="ISO_14289_1" clause="7.21.3.2" testNumber="1"/>
+            <description>ISO 32000-1:2008, 9.7.4, Table 117 requires that all embedded Type 2 CIDFonts in the CIDFont dictionary shall contain a 
+			CIDToGIDMap entry that shall be a stream mapping from CIDs to glyph indices or the name Identity, as described in ISO 32000-1:2008, 9.7.4, Table 117.</description>
+            <test>Subtype != "CIDFontType2" || CIDToGIDMap != null || fontFile_size == 0</test>
+            <error>
+                <message>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO32000-1:2008" clause="9.7.4, Table 117"/>
+            </references>
+        </rule>
+        <rule object="PDCMap">
+            <id specification="ISO_14289_1" clause="7.21.3.3" testNumber="1"/>
+            <description>All CMaps used within a PDF/UA file, except those listed in ISO 32000-1:2008, 9.7.5.2, Table 118, shall be embedded in that file as described
+			in ISO 32000-1:2008, 9.7.5.</description>
+            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || CMapName == "GB-EUC-H" || CMapName == "GB-EUC-V" ||
+			CMapName == "GBpc-EUC-H" || CMapName == "GBpc-EUC-V" || CMapName == "GBK-EUC-H" || CMapName == "GBK-EUC-V" ||
+			CMapName == "GBKp-EUC-H" || CMapName == "GBKp-EUC-V" || CMapName == "GBK2K-H" || CMapName == "GBK2K-V" ||
+			CMapName == "UniGB-UCS2-H" || CMapName == "UniGB-UCS2-V" || CMapName == "UniGB-UFT16-H" || CMapName == "UniGB-UFT16-V" ||
+			CMapName == "B5pc-H" || CMapName == "B5pc-V" || CMapName == "HKscs-B5-H" || CMapName == "HKscs-B5-V" ||
+			CMapName == "ETen-B5-H" || CMapName == "ETen-B5-V" || CMapName == "ETenms-B5-H" || CMapName == "ETenms-B5-V" ||
+			CMapName == "CNS-EUC-H" || CMapName == "CNS-EUC-V" || CMapName == "UniCNS-UCS2-H" || CMapName == "UniCNS-UCS2-V" ||
+			CMapName == "UniCNS-UFT16-H" || CMapName == "UniCNS-UTF16-V" || CMapName == "83pv-RKSJ-H" || CMapName == "90ms-RKSJ-H" ||
+			CMapName == "90ms-RKSJ-V" || CMapName == "90msp-RKSJ-H" || CMapName == "90msp-RKSJ-V" || CMapName == "90pv-RKSJ-H" ||
+			CMapName == "Add-RKSJ-H" || CMapName == "Add-RKSJ-V" || CMapName == "EUC-H" || CMapName == "EUC-V" ||
+			CMapName == "Ext-RKSJ-H" || CMapName == "Ext-RKSJ-V" || CMapName == "H" || CMapName == "V" ||
+			CMapName == "UniJIS-UCS2-H" || CMapName == "UniJIS-UCS2-V" || CMapName == "UniJIS-UCS2-HW-H" || CMapName == "UniJIS-UCS2-HW-V" ||
+			CMapName == "UniJIS-UTF16-H" || CMapName == "UniJIS-UTF16-V" || CMapName == "KSC-EUC-H" || CMapName == "KSC-EUC-V" ||
+			CMapName == "KSCms-UHC-H" || CMapName == "KSCms-UHC-V" || CMapName == "KSCms-UHC-HW-H" || CMapName == "KSCms-UHC-HW-V" ||
+			CMapName == "KSCpc-EUC-H" || CMapName == "UniKS-UCS2-H" || CMapName == "UniKS-UCS2-V" || CMapName == "UniKS-UTF16-H" || CMapName == "UniKS-UTF16-V" ||
+			embeddedFile_size == 1</test>
+            <error>
+                <message>A non-standard CMap %1 is not embedded</message>
+                <arguments>
+                    <argument>CMapName</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO32000-1:2008" clause="9.7.5.2, Table 118"/>
+            </references>
+        </rule>
+        <rule object="CMapFile">
+            <id specification="ISO_14289_1" clause="7.21.3.3" testNumber="2"/>
+            <description>For those CMaps that are embedded, the integer value of the WMode entry in the CMap dictionary shall be identical to the WMode value
+			in the embedded CMap stream.</description>
+            <test>WMode == dictWMode</test>
+            <error>
+                <message>WMode entry (value %1) in the embedded CMap and in the CMap dictionary (value %2) are not identical</message>
+                <arguments>
+                    <argument>WMode</argument>
+                    <argument>dictWMode</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDReferencedCMap">
+            <id specification="ISO_14289_1" clause="7.21.3.3" testNumber="3"/>
+            <description>A CMap shall not reference any other CMap except those listed in ISO 32000-1:2008, 9.7.5.2, Table 118.</description>
+            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || CMapName == "GB-EUC-H" || CMapName == "GB-EUC-V" ||
+			CMapName == "GBpc-EUC-H" || CMapName == "GBpc-EUC-V" || CMapName == "GBK-EUC-H" || CMapName == "GBK-EUC-V" ||
+			CMapName == "GBKp-EUC-H" || CMapName == "GBKp-EUC-V" || CMapName == "GBK2K-H" || CMapName == "GBK2K-V" ||
+			CMapName == "UniGB-UCS2-H" || CMapName == "UniGB-UCS2-V" || CMapName == "UniGB-UFT16-H" || CMapName == "UniGB-UFT16-V" ||
+			CMapName == "B5pc-H" || CMapName == "B5pc-V" || CMapName == "HKscs-B5-H" || CMapName == "HKscs-B5-V" ||
+			CMapName == "ETen-B5-H" || CMapName == "ETen-B5-V" || CMapName == "ETenms-B5-H" || CMapName == "ETenms-B5-V" ||
+			CMapName == "CNS-EUC-H" || CMapName == "CNS-EUC-V" || CMapName == "UniCNS-UCS2-H" || CMapName == "UniCNS-UCS2-V" ||
+			CMapName == "UniCNS-UFT16-H" || CMapName == "UniCNS-UTF16-V" || CMapName == "83pv-RKSJ-H" || CMapName == "90ms-RKSJ-H" ||
+			CMapName == "90ms-RKSJ-V" || CMapName == "90msp-RKSJ-H" || CMapName == "90msp-RKSJ-V" || CMapName == "90pv-RKSJ-H" ||
+			CMapName == "Add-RKSJ-H" || CMapName == "Add-RKSJ-V" || CMapName == "EUC-H" || CMapName == "EUC-V" ||
+			CMapName == "Ext-RKSJ-H" || CMapName == "Ext-RKSJ-V" || CMapName == "H" || CMapName == "V" ||
+			CMapName == "UniJIS-UCS2-H" || CMapName == "UniJIS-UCS2-V" || CMapName == "UniJIS-UCS2-HW-H" || CMapName == "UniJIS-UCS2-HW-V" ||
+			CMapName == "UniJIS-UTF16-H" || CMapName == "UniJIS-UTF16-V" || CMapName == "KSC-EUC-H" || CMapName == "KSC-EUC-V" ||
+			CMapName == "KSCms-UHC-H" || CMapName == "KSCms-UHC-V" || CMapName == "KSCms-UHC-HW-H" || CMapName == "KSCms-UHC-HW-V" ||
+			CMapName == "KSCpc-EUC-H" || CMapName == "UniKS-UCS2-H" || CMapName == "UniKS-UCS2-V" || CMapName == "UniKS-UTF16-H" || 
+			CMapName == "UniKS-UTF16-V"</test>
+            <error>
+                <message>A CMap references another non-standard CMap %1</message>
+                <arguments>
+                    <argument>CMapName</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO32000-1:2008" clause="9.7.5.2, Table 118"/>
+            </references>
+        </rule>
+        <rule object="PDFont">
+            <id specification="ISO_14289_1" clause="7.21.4.1" testNumber="1"/>
+            <description>The font programs for all fonts used for rendering within a conforming file shall be embedded within that file, as defined in ISO 32000-1:2008, 9.9.</description>
+            <test>Subtype == "Type3" || Subtype == "Type0" || renderingMode == 3 || fontFile_size == 1</test>
+            <error>
+                <message>The font program is not embedded</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO32000-1:2008" clause="9.9"/>
+            </references>
+        </rule>
+        <rule object="Glyph">
+            <id specification="ISO_14289_1" clause="7.21.4.1" testNumber="2"/>
+            <description>Embedded fonts shall define all glyphs referenced for rendering within the conforming file.
+                A font referenced for use solely in rendering mode 3 is therefore not rendered and is thus exempt
+                from the embedding requirement. In all cases for TrueType fonts that are to be rendered, character codes
+                shall be able to be mapped to glyphs according to ISO 32000-1:2008, 9.6.6.4 without the use of
+                a non-standard mapping chosen by the conforming processor.</description>
+            <test>renderingMode == 3 || isGlyphPresent == null || isGlyphPresent == true</test>
+            <error>
+                <message>Not all glyphs referenced for rendering are present in the embedded font program</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="9.6.6.4"/>
+            </references>
+        </rule>
+        <rule object="PDType1Font">
+            <id specification="ISO_14289_1" clause="7.21.4.2" testNumber="1"/>
+            <description>If the FontDescriptor dictionary of an embedded Type 1 font contains a CharSet string, then it shall list the character names of all glyphs
+			present in the font program, regardless of whether a glyph in the font is referenced or used by the PDF or not.</description>
+            <test>fontFile_size == 0 || fontName.search(/[A-Z]{6}\+/) != 0 || CharSet == null || charSetListsAllGlyphs == true</test>
+            <error>
+                <message>A CharSet entry in the Descriptor dictionary of a Type1 font incorrectly lists glyphs present in the font program</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDCIDFont">
+            <id specification="ISO_14289_1" clause="7.21.4.2" testNumber="2"/>
+            <description>If the FontDescriptor dictionary of an embedded CID font contains a CIDSet stream, then it shall identify all CIDs which are present in the font program,
+			regardless of whether a CID in the font is referenced or used by the PDF or not.</description>
+            <test>fontFile_size == 0 || fontName.search(/[A-Z]{6}\+/) != 0 || CIDSet_size == 0 || cidSetListsAllGlyphs == true</test>
+            <error>
+                <message>A CIDSet entry in the Font descriptor does not correctly identify all glyphs present in the embedded font subset</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="Glyph">
+            <id specification="ISO_14289_1" clause="7.21.5" testNumber="1"/>
+            <description>For every font embedded in a conforming file and used for rendering, the glyph width information in the font dictionary and in the embedded 
+			font program shall be consistent.</description>
+            <test>renderingMode == 3 || widthFromFontProgram == null || widthFromDictionary == null ||
+                Math.abs(widthFromFontProgram - widthFromDictionary) &lt;= 1</test>
+            <error>
+                <message>Glyph width %1 in the embedded font program is not consistent with the Widths entry of the font dictionary (value %2)</message>
+                <arguments>
+                    <argument>widthFromFontProgram</argument>
+                    <argument>widthFromDictionary</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="TrueTypeFontProgram">
+            <id specification="ISO_14289_1" clause="7.21.6" testNumber="1"/>
+            <description>For all non-symbolic TrueType fonts used for rendering, the embedded TrueType font program shall contain one or several non-symbolic
+                    cmap entries such that all necessary glyph lookups can be carried out.</description>
+            <test>isSymbolic == true || (cmap30Present == true ? nrCmaps &gt; 1 : nrCmaps &gt; 0)</test>
+            <error>
+                <message>The embedded font program for a non-symbolic TrueType font does not contain non-symbolic cmap entries</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDTrueTypeFont">
+            <id specification="ISO_14289_1" clause="7.21.6" testNumber="2"/>
+            <description>All non-symbolic TrueType fonts shall have either MacRomanEncoding or WinAnsiEncoding as the
+                value for the Encoding key in the Font dictionary or as the value for the BaseEncoding key in the
+                dictionary which is the value of the Encoding key in the Font dictionary. In addition, no non-symbolic
+                TrueType font shall define a Differences array unless all of the glyph names in the Differences array
+                are listed in the Adobe Glyph List and the embedded font program contains at least the Microsoft
+                Unicode (3,1 – Platform ID=3, Encoding ID=1) encoding in the 'cmap' table.</description>
+            <test>isSymbolic == true || ((Encoding == "MacRomanEncoding" || Encoding == "WinAnsiEncoding") &amp;&amp;
+                (containsDifferences == false || differencesAreUnicodeCompliant == true))</test>
+            <error>
+                <message>A non-symbolic TrueType font encoding does not define a correct mapping to the Adobe Glyph List
+                    (Encoding = %1, Encoding entry contains a Differences = %2, Differences are Unicode compliant = %3)</message>
+                <arguments>
+                    <argument>Encoding</argument>
+                    <argument>containsDifferences</argument>
+                    <argument>differencesAreUnicodeCompliant</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDTrueTypeFont">
+            <id specification="ISO_14289_1" clause="7.21.6" testNumber="3"/>
+            <description>Symbolic TrueType fonts shall not contain an Encoding entry in the font dictionary</description>
+            <test>isSymbolic == false || Encoding == null</test>
+            <error>
+                <message>A symbolic TrueType font specifies an Encoding entry in its dictionary</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="TrueTypeFontProgram">
+            <id specification="ISO_14289_1" clause="7.21.6" testNumber="4"/>
+            <description>The 'cmap' table in the embedded font program for a symbolic TrueType font shall contain either
+                exactly one encoding or it shall contain, at least, the Microsoft Symbol (3,0 - Platform ID=3,
+                Encoding ID=0) encoding.</description>
+            <test>isSymbolic == false || nrCmaps == 1 || cmap30Present == true</test>
+            <error>
+                <message>The embedded font program for a symbolic TrueType font contains %1 cmap subtables and
+                    does not contain Microsoft Symbol (3,0 – Platform ID=3, Encoding ID=0)</message>
+                <arguments>
+                    <argument>nrCmaps</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="Glyph">
+            <id specification="ISO_14289_1" clause="7.21.7" testNumber="1"/>
+            <description>The Font dictionary of all fonts shall define the map of all used character codes to Unicode values, either via a ToUnicode entry,
+			or other mechanisms as defined in ISO 14289-1, 7.21.7.</description>
+            <test>toUnicode != null</test>
+            <error>
+                <message>The glyph can not be mapped to Unicode</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 14289-1:2014" clause="7.21.7"/>
+            </references>
+        </rule>
+        <rule object="Glyph">
+            <id specification="ISO_14289_1" clause="7.21.7" testNumber="2"/>
+            <description>The Unicode values specified in the ToUnicode CMap shall all be greater than zero (0), but not equal to either U+FEFF or U+FFFE.</description>
+            <test>toUnicode == null || (toUnicode.indexOf("\u0000") == -1 &amp;&amp; toUnicode.indexOf("\uFFFE") == -1 &amp;&amp; toUnicode.indexOf("\uFEFF")  == -1)</test>
+            <error>
+                <message>The glyph has an invalid Unicode value, which is either 0, or is equal to U+FEFF or U+FFFE</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="Glyph">
+            <id specification="ISO_14289_1" clause="7.21.8" testNumber="1"/>
+            <description>A PDF/UA compliant document shall not contain a reference to the .notdef glyph from any of the text showing
+			operators, regardless of text rendering mode, in any content stream.</description>
+            <test>name != ".notdef"</test>
+            <error>
+                <message>The document contains a reference to the .notdef glyph</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+    </rules>
+    <variables>
+        <variable name="usesHn" object="SEHn">
+            <defaultValue>false</defaultValue>
+            <value>true</value>
+        </variable>
+        <variable name="usesH" object="SEH">
+            <defaultValue>false</defaultValue>
+            <value>true</value>
+        </variable>
+        <variable name="gSizeCatalogLang" object="PDDocument">
+            <defaultValue>0</defaultValue>
+            <value>Lang_size</value>
+        </variable>
+    </variables>
+</profile>

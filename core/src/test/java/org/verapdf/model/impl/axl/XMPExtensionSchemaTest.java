@@ -20,24 +20,26 @@
  */
 package org.verapdf.model.impl.axl;
 
-import com.adobe.xmp.XMPException;
-import com.adobe.xmp.impl.VeraPDFMeta;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
-import static org.junit.Assert.*;
+import org.verapdf.xmp.XMPException;
+import org.verapdf.xmp.impl.VeraPDFMeta;
 
 /**
  * @author Maksim Bezrukov
@@ -50,16 +52,16 @@ public class XMPExtensionSchemaTest {
         return Arrays
                 .asList(new Object[][] {
                         {
-                                "/org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-1.xml",
+                                "org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-1.xml",
                                 Boolean.TRUE, "pdfaExtension", Integer.valueOf(1)},
                         {
-                                "/org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-2.xml",
+                                "org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-2.xml",
                                 Boolean.FALSE, "ext" ,  Integer.valueOf(1)},
                         {
-                                "/org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-3.xml",
+                                "org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-3.xml",
                                 Boolean.FALSE, "pdfaExtension" ,  Integer.valueOf(1)},
                         {
-                                "/org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-4.xml",
+                                "org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-4.xml",
                                 Boolean.FALSE, "smth" ,  Integer.valueOf(0)} });
     }
 
@@ -77,8 +79,7 @@ public class XMPExtensionSchemaTest {
 
     @Test
     public void test() throws URISyntaxException, XMPException, IOException {
-        try (FileInputStream in = new FileInputStream(
-                getSystemIndependentPath(this.filePath))) {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream(this.filePath)) {
             VeraPDFMeta meta = VeraPDFMeta.parse(in);
             AXLXMPPackage pack = new AXLXMPPackage(meta, true, null,
                     PDFAFlavour.PDFA_1_B);
@@ -133,12 +134,5 @@ public class XMPExtensionSchemaTest {
                 }
             }
         }
-    }
-
-    private static String getSystemIndependentPath(String path)
-            throws URISyntaxException {
-        URL resourceUrl = ClassLoader.class.getResource(path);
-        Path resourcePath = Paths.get(resourceUrl.toURI());
-        return resourcePath.toString();
     }
 }

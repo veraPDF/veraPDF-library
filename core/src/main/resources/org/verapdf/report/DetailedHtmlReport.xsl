@@ -122,7 +122,7 @@
                 <xsl:if test="/report/jobs/job/validationReport/@isCompliant">
                     <tr>
                         <td width="200" class="{$validClass}">
-                            PDF/A compliance:
+                            Compliance:
                         </td>
                         <td class="{$validClass}">
                             <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'true'">
@@ -249,6 +249,8 @@
                         select="/report/jobs/job/metadataRepairReport/@status"/>
                 <xsl:apply-templates
                         select="/report/jobs/job/metadataRepairReport/@fixCount"/>
+                <xsl:apply-templates
+                        select="/report/jobs/job/logs/@logsCount"/>
             </table>
             <xsl:if test="/report/jobs/job/metadataRepairReport/fixes/fix">
                 <h2>Metadata fixes information</h2>
@@ -320,6 +322,28 @@
             </xsl:if>
 
         </div>
+
+        <xsl:if test="/report/jobs/job/logs">
+            <h2>Logs information</h2>
+
+            <table border="0" id="table5">
+                <tr style="BACKGROUND: #bcbad6">
+                    <td width="100">
+                        <b>Type</b>
+                    </td>
+                    <td width="650">
+                        <b>Log message</b>
+                    </td>
+                    <td width="100">
+                        <b>Occurrences</b>
+                    </td>
+                </tr>
+
+                <xsl:apply-templates
+                        select="/report/jobs/job/logs/*"/>
+            </table>
+        </xsl:if>
+
         <xsl:if test="/report/jobs/job/featuresReport">
             <h2>Features information</h2>
 
@@ -360,13 +384,25 @@
         </tr>
     </xsl:template>
 
+    <xsl:template match="/report/jobs/job/logs/@logsCount">
+        <tr>
+            <td width="250">
+                <b>Number of logs:</b>
+            </td>
+            <td>
+                <xsl:value-of
+                        select="/report/jobs/job/logs/@logsCount"/>
+            </td>
+        </tr>
+    </xsl:template>
+
     <!-- Validation Information -->
     <xsl:template match="/report/jobs/job/validationReport/details/rule">
 
         <xsl:param name="idWithDots" select="concat(@clause,'t',@testNumber)"/>
         <xsl:param name="id" select="translate($idWithDots, '.', '_')"/>
 
-        <xsl:variable name="part-1-rules">
+        <xsl:variable name="part-a1-rules">
             <xsl:choose>
                 <xsl:when
                         test="'/' = substring($wikiPath, string-length($wikiPath))">
@@ -380,7 +416,7 @@
             </xsl:choose>
         </xsl:variable>
 
-        <xsl:variable name="part-2-rules">
+        <xsl:variable name="part-a2-rules">
             <xsl:choose>
                 <xsl:when
                         test="'/' = substring($wikiPath, string-length($wikiPath))">
@@ -394,14 +430,51 @@
             </xsl:choose>
         </xsl:variable>
 
+        <xsl:variable name="part-a4-rules">
+            <xsl:choose>
+                <xsl:when
+                        test="'/' = substring($wikiPath, string-length($wikiPath))">
+                    <xsl:value-of
+                            select="concat($wikiPath, 'PDFA-Part-4-rules')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of
+                            select="concat($wikiPath, '/PDFA-Part-4-rules')"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:variable name="part-ua1-rules">
+            <xsl:choose>
+                <xsl:when
+                        test="'/' = substring($wikiPath, string-length($wikiPath))">
+                    <xsl:value-of
+                            select="concat($wikiPath, 'PDFUA-Part-1-rules')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of
+                            select="concat($wikiPath, '/PDFUA-Part-1-rules')"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
         <xsl:variable name="tempWikiLink">
             <xsl:choose>
                 <xsl:when test="starts-with(@specification, 'ISO 19005-1')">
-                    <xsl:value-of select="$part-1-rules"/>
+                    <xsl:value-of select="$part-a1-rules"/>
                 </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$part-2-rules"/>
-                </xsl:otherwise>
+                <xsl:when test="starts-with(@specification, 'ISO 19005-2')">
+                    <xsl:value-of select="$part-a2-rules"/>
+                </xsl:when>
+                <xsl:when test="starts-with(@specification, 'ISO 19005-3')">
+                    <xsl:value-of select="$part-a2-rules"/>
+                </xsl:when>
+                <xsl:when test="starts-with(@specification, 'ISO 19005-4')">
+                    <xsl:value-of select="$part-a4-rules"/>
+                </xsl:when>
+                <xsl:when test="starts-with(@specification, 'ISO 14289-1')">
+                    <xsl:value-of select="$part-ua1-rules"/>
+                </xsl:when>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="wikiLink">
@@ -416,17 +489,33 @@
         </xsl:variable>
         <xsl:variable name="ruleLink"
                       select="concat($wikiLink, '#rule-', translate(@clause, '.', ''), '-', @testNumber)"/>
+        <xsl:variable name="hasLink"
+                      select="starts-with(@specification, 'ISO 19005-1') or
+                            starts-with(@specification, 'ISO 19005-2') or starts-with(@specification, 'ISO 19005-3') or
+                            starts-with(@specification, 'ISO 19005-4') or starts-with(@specification, 'ISO 14289-1')"/>
+        <xsl:variable name="ruleInformation">
+            Specification:
+            <xsl:value-of select="@specification"/>,
+            Clause:
+            <xsl:value-of select="@clause"/>,
+            Test number:
+            <xsl:value-of select="@testNumber"/>
+        </xsl:variable>
 
         <tr style="BACKGROUND: #dcdaf6">
             <td width="800">
-                <a href="{$ruleLink}">
-                    Specification:
-                    <xsl:value-of select="@specification"/>,
-                    Clause:
-                    <xsl:value-of select="@clause"/>,
-                    Test number:
-                    <xsl:value-of select="@testNumber"/>
-                </a>
+                <xsl:choose>
+                    <xsl:when test="$hasLink">
+                        <a href="{$ruleLink}">
+                            <xsl:copy-of select="$ruleInformation" />
+                        </a>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <b>
+                            <xsl:copy-of select="$ruleInformation" />
+                        </b>
+                    </xsl:otherwise>
+                </xsl:choose>
             </td>
             <td/>
         </tr>
@@ -481,6 +570,11 @@
                 <tr class="hideable hide{$id}">
                     <td width="800" style="word-break: break-all">
                         <xsl:value-of select="context"/>
+                    </td>
+                </tr>
+                <tr class="hideable hide{$id}">
+                    <td width="800" style="word-break: break-all">
+                        <xsl:value-of select="errorMessage"/>
                     </td>
                 </tr>
             </xsl:for-each>
@@ -545,6 +639,39 @@
         </tr>
 
     </xsl:template>
+
+    <xsl:template match="/report/jobs/job/logs/*">
+        <tr style="BACKGROUND: #dcdaf6">
+            <td width="100" style="word-break: break-all">
+            <b>
+                <xsl:choose>
+                    <xsl:when test="@level = 'SEVERE'">
+                        <font color="red">
+                            <b>SEVERE</b>
+                        </font>
+                    </xsl:when>
+                    <xsl:when test="@level = 'WARNING'">
+                        <font color="orange">
+                            <b>WARNING</b>
+                        </font>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <font color="green">
+                            <b><xsl:value-of select="@level"/></b>
+                        </font>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </b>
+            </td>
+            <td width="650" style="word-break: break-all">
+                <xsl:value-of select="."/>
+            </td>
+            <td width="100" style="word-break: break-all">
+                <xsl:value-of select="@occurrences"/>
+            </td>
+        </tr>
+    </xsl:template>
+
     <!-- Metadata fixes information -->
     <xsl:template match="/report/jobs/job/metadataRepairReport/fixes/fix">
         <tr class="hideable hide{fixesId}">

@@ -40,16 +40,12 @@ final class RawResultHandler extends AbstractXmlHandler {
 	private static final String rawEleName = "rawResults"; //$NON-NLS-1$
 	private static final String configEleName = "config"; //$NON-NLS-1$
 	private static final String itemEleName = "item"; //$NON-NLS-1$
-	private static final String validResultEleName = "validationResult"; //$NON-NLS-1$
-	private static final String featuresRepEleName = "featuresReport"; //$NON-NLS-1$
-	private static final String fixerResultName = "fixerResult"; //$NON-NLS-1$
 	private static final String summaryName = "summary"; //$NON-NLS-1$
 	private static final String taskResultName = "taskResult"; //$NON-NLS-1$
 	private final boolean format;
 	private final boolean fragment;
 
 	/**
-	 * @param indentSize
 	 * @param dest
 	 * @throws VeraPDFException
 	 */
@@ -58,7 +54,6 @@ final class RawResultHandler extends AbstractXmlHandler {
 	}
 
 	/**
-	 * @param indentSize
 	 * @param dest
 	 * @throws VeraPDFException
 	 */
@@ -76,7 +71,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 		try {
 			startDoc(this.writer);
 			this.writer.writeStartElement(rawEleName);
-			this.serialseElement(procConfig, configEleName, this.format, this.fragment);
+			this.serializeElement(procConfig, configEleName, this.format, this.fragment);
 		} catch (XMLStreamException excep) {
 			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, writingMessage), excep);
 			throw wrapStreamException(excep, rawEleName);
@@ -85,7 +80,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 
 	@Override
 	void resultStart(ProcessorResult result) throws VeraPDFException {
-		this.serialseElement(result.getProcessedItem(), itemEleName, this.format, this.fragment);
+		this.serializeElement(result.getProcessedItem(), itemEleName, this.format, this.fragment);
 	}
 
 	@Override
@@ -95,46 +90,46 @@ final class RawResultHandler extends AbstractXmlHandler {
 
 	@Override
 	void parsingFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serialseElement(taskResult, taskResultName, this.format, this.fragment);
+		this.serializeElement(taskResult, taskResultName, this.format, this.fragment);
 	}
 
 	@Override
 	void pdfEncrypted(TaskResult taskResult) throws VeraPDFException {
-		this.serialseElement(taskResult, taskResultName, this.format, this.fragment);
+		this.serializeElement(taskResult, taskResultName, this.format, this.fragment);
 	}
 
 	@Override
 	void validationSuccess(TaskResult taskResult, ValidationResult validationResult) throws VeraPDFException {
-		this.serialseElement(validationResult, validResultEleName, this.format, this.fragment);
+		this.serializeElement(validationResult, VALIDATION_RESULT, this.format, this.fragment);
 	}
 
 	@Override
 	void validationFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serialseElement(taskResult, taskResultName, this.format, this.fragment);
+		this.serializeElement(taskResult, taskResultName, this.format, this.fragment);
 	}
 
 	@Override
 	void featureSuccess(TaskResult taskResult, FeaturesReport featuresReport) throws VeraPDFException {
-		this.serialseElement(featuresReport, featuresRepEleName, this.format, this.fragment);
+		this.serializeElement(featuresReport, FEATURES_REPORT, this.format, this.fragment);
 	}
 
 	@Override
 	void featureFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serialseElement(taskResult, taskResultName, this.format, this.fragment);
+		this.serializeElement(taskResult, taskResultName, this.format, this.fragment);
 	}
 
 	@Override
 	void fixerSuccess(TaskResult taskResult, MetadataFixerResult fixerResult) throws VeraPDFException {
-		this.serialseElement(fixerResult, fixerResultName, this.format, this.fragment);
+		this.serializeElement(fixerResult, FIXER_RESULT, this.format, this.fragment);
 	}
 
 	@Override
 	void fixerFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serialseElement(taskResult, taskResultName, this.format, this.fragment);
+		this.serializeElement(taskResult, taskResultName, this.format, this.fragment);
 	}
 
 	@Override
-	void resultEnd(ProcessorResult result) {
+	void resultEnd(ProcessorResult result, Boolean isLogsEnabled) {
 		// Nothing to do here
 	}
 
@@ -143,7 +138,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 	 */
 	@Override
 	public void handleBatchEnd(BatchSummary summary) throws VeraPDFException {
-		this.serialseElement(summary, summaryName, this.format, this.fragment);
+		this.serializeElement(summary, summaryName, this.format, this.fragment);
 		try {
 			this.writer.writeEndElement();
 			this.writer.flush();

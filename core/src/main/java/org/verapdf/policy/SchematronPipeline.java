@@ -54,7 +54,9 @@ final class SchematronPipeline {
 				"IsoDsd"); //$NON-NLS-1$
 		File isoExpResult = createTempFileResult(cachedExpXsl.newTransformer(), new StreamSource(isoDsdResult),
 				"ExpXsl"); //$NON-NLS-1$
-		cachedIsoSvrlXsl.newTransformer().transform(new StreamSource(isoExpResult), new StreamResult(xslDest));
+		Transformer transformer = cachedIsoSvrlXsl.newTransformer();
+		transformer.setOutputProperty(OutputKeys.INDENT, "no");
+		transformer.transform(new StreamSource(isoExpResult), new StreamResult(xslDest));
 		if (!isoDsdResult.delete()) {
 			isoDsdResult.deleteOnExit();
 		}

@@ -23,6 +23,8 @@
  */
 package org.verapdf.processor.reports;
 
+import org.verapdf.processor.reports.enums.JobEndStatus;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -39,6 +41,8 @@ final class ValidationReportImpl implements ValidationReport {
 	@XmlElement
 	private final ValidationDetails details;
 	@XmlAttribute
+	private final String jobEndStatus;
+	@XmlAttribute
 	private final String profileName;
 	@XmlAttribute
 	private final String statement;
@@ -46,16 +50,18 @@ final class ValidationReportImpl implements ValidationReport {
 	private final boolean isCompliant;
 
 	private ValidationReportImpl() {
-		this(ValidationDetailsImpl.defaultInstance(), "Unknown Profile", "Statement", false); //$NON-NLS-1$ //$NON-NLS-2$
+		this(ValidationDetailsImpl.defaultInstance(), "Unknown Profile", "Statement", //$NON-NLS-1$ //$NON-NLS-2$
+		     false, JobEndStatus.NORMAL.getValue());
 	}
 
 	private ValidationReportImpl(final ValidationDetails details, final String profileName, final String statement,
-			final boolean isCompliant) {
+	                             final boolean isCompliant, final String jobEndStatus) {
 		super();
 		this.details = details;
 		this.profileName = profileName;
 		this.statement = statement;
 		this.isCompliant = isCompliant;
+		this.jobEndStatus = jobEndStatus;
 	}
 
 	/**
@@ -90,6 +96,11 @@ final class ValidationReportImpl implements ValidationReport {
 		return this.isCompliant;
 	}
 
+	@Override
+	public String getJobEndStatus() {
+		return this.jobEndStatus;
+	}
+
 	static class Adapter extends XmlAdapter<ValidationReportImpl, ValidationReport> {
 		@Override
 		public ValidationReport unmarshal(ValidationReportImpl report) {
@@ -107,7 +118,7 @@ final class ValidationReportImpl implements ValidationReport {
 	}
 
 	static final ValidationReport fromValues(final ValidationDetails details, final String profileName,
-			final String statement, final boolean isCompliant) {
-		return new ValidationReportImpl(details, profileName, statement, isCompliant);
+	                                         final String statement, final boolean isCompliant, final String jobEndStatus) {
+		return new ValidationReportImpl(details, profileName, statement, isCompliant, jobEndStatus);
 	}
 }

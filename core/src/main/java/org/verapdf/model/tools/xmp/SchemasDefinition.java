@@ -20,7 +20,7 @@
  */
 package org.verapdf.model.tools.xmp;
 
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.xmp.impl.VeraPDFXMPNode;
 
 import javax.xml.namespace.QName;
 
@@ -65,6 +65,13 @@ public class SchemasDefinition {
         }
         String type = getType(node);
         return type == null ? null : Boolean.valueOf(this.validator.validate(node, type));
+    }
+
+    public String getDefinedType(VeraPDFXMPNode node) {
+        if (this.validator == null) {
+            return null;
+        }
+        return getType(node);
     }
 
     public ValidatorsContainer getValidatorsContainer() {

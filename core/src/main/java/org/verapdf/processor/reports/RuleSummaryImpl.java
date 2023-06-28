@@ -32,9 +32,7 @@ import org.verapdf.pdfa.validation.profiles.RuleId;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -62,10 +60,10 @@ final class RuleSummaryImpl implements RuleSummary {
 	@XmlElement
 	private final String test;
 	@XmlElement(name = "check")
-	private final Set<Check> checks;
+	private final List<Check> checks;
 
 	private RuleSummaryImpl(final RuleId ruleId, final Status status, final int passedChecks, final int failedChecks,
-			final String description, final String object, final String test, final Set<Check> checks) {
+			final String description, final String object, final String test, final List<Check> checks) {
 		PDFAFlavour.Specification specification = ruleId.getSpecification();
 		this.specification = specification == null ? null : specification.getId();
 		this.clause = ruleId.getClause();
@@ -77,12 +75,12 @@ final class RuleSummaryImpl implements RuleSummary {
 		this.description = description;
 		this.object = object;
 		this.test = test;
-		this.checks = ((checks != null) && !checks.isEmpty()) ? new HashSet<>(checks) : null;
+		this.checks = ((checks != null) && !checks.isEmpty()) ? new ArrayList<>(checks) : null;
 	}
 
 	private RuleSummaryImpl(final RuleId ruleId, final Status status, final String description, final String object,
 			final String test) {
-		this(ruleId, status, 0, 0, description, object, test, Collections.<Check>emptySet());
+		this(ruleId, status, 0, 0, description, object, test, Collections.<Check>emptyList());
 	}
 
 	private RuleSummaryImpl() {
@@ -174,7 +172,7 @@ final class RuleSummaryImpl implements RuleSummary {
 	 * @return the checks
 	 */
 	@Override
-	public Set<Check> getChecks() {
+	public List<Check> getChecks() {
 		return this.checks;
 	}
 
@@ -191,7 +189,7 @@ final class RuleSummaryImpl implements RuleSummary {
 	}
 
 	static final RuleSummary fromValues(final RuleId id, final String description, final String object, final String test,
-			Set<TestAssertion> assertions, boolean logPassedChecks, int maxNumberOfDisplayedFailedChecks) {
+										List<TestAssertion> assertions, boolean logPassedChecks, Integer failedChecks) {
 		if (id == null) {
 			throw new NullPointerException("Argument id can not be null");
 		}
@@ -201,24 +199,21 @@ final class RuleSummaryImpl implements RuleSummary {
 		if (assertions == null) {
 			throw new NullPointerException("Argument assertions can not be null");
 		}
-		Set<Check> checks = new HashSet<>();
+		List<Check> checks = new ArrayList<>();
 		Status status = Status.PASSED;
 		int passedChecks = 0;
-		int failedChecks = 0;
 		for (TestAssertion assertion : assertions) {
 			if (assertion.getStatus() == Status.PASSED) {
 				passedChecks++;
-				if (logPassedChecks)
-					checks.add(CheckImpl.fromValue(assertion));
-			} else {
-				status = assertion.getStatus();
-				failedChecks++;
-				if ((maxNumberOfDisplayedFailedChecks == -1) || (failedChecks <= maxNumberOfDisplayedFailedChecks)) {
+				if (logPassedChecks) {
 					checks.add(CheckImpl.fromValue(assertion));
 				}
+			} else {
+				status = assertion.getStatus();
+				checks.add(CheckImpl.fromValue(assertion));
 			}
 		}
-		return new RuleSummaryImpl(id, status, passedChecks, failedChecks, description, object, test, checks);
+		return new RuleSummaryImpl(id, status, passedChecks, failedChecks != null ? failedChecks : 0, description, object, test, checks);
 	}
 
 	static final RuleSummary uncheckedInstance(final RuleId id, final String description, final String object,

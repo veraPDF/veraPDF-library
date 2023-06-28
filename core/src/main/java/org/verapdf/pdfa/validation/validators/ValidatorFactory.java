@@ -25,6 +25,7 @@ package org.verapdf.pdfa.validation.validators;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.logging.Level;
 
 import javax.xml.bind.JAXBException;
 
@@ -48,7 +49,7 @@ public final class ValidatorFactory {
 	 * Creates a new {@link PDFAValidator} instance that uses one of the
 	 * {@link ValidationProfile}s packaged as a core library resource. While
 	 * these profiles are not guaranteed to be up to date, they are available
-	 * when offline. A {@link ProfileDirectory} populated with the pre-loaded
+	 * when offline. A {@link org.verapdf.pdfa.validation.profiles.ProfileDirectory} populated with the pre-loaded
 	 * profiles can be obtained by calling
 	 * {@link Profiles#getVeraProfileDirectory()}.
 	 * 
@@ -64,10 +65,21 @@ public final class ValidatorFactory {
 	 *         parameters
 	 */
 	public static PDFAValidator createValidator(final PDFAFlavour flavour, final boolean logPassedChecks) {
-		if (flavour == null)
+		if (flavour == null) {
 			throw new IllegalArgumentException("Parameter (PDFAFlavour flavour) cannot be null.");
+		}
 		return createValidator(Profiles.getVeraProfileDirectory().getValidationProfileByFlavour(flavour),
 				logPassedChecks);
+	}
+
+	public static PDFAValidator createValidator(final PDFAFlavour flavour, final int maxNumberOfDisplayedFailedChecks,
+												final boolean logPassedChecks, final boolean showErrorMessages,
+												boolean showProgress) {
+		if (flavour == null) {
+			throw new IllegalArgumentException("Parameter (PDFAFlavour flavour) cannot be null.");
+		}
+		return createValidator(Profiles.getVeraProfileDirectory().getValidationProfileByFlavour(flavour),
+			maxNumberOfDisplayedFailedChecks, logPassedChecks, showErrorMessages, showProgress);
 	}
 
 	/**
@@ -93,11 +105,20 @@ public final class ValidatorFactory {
 	 *         parameters
 	 */
 	public static PDFAValidator createValidator(final PDFAFlavour flavour, final boolean logPassedChecks,
-			final int maxFailures) {
+												final int maxFailures) {
 		if (flavour == null)
 			throw new IllegalArgumentException("Parameter (PDFAFlavour flavour) cannot be null.");
 		return createValidator(Profiles.getVeraProfileDirectory().getValidationProfileByFlavour(flavour),
 				logPassedChecks, maxFailures);
+	}
+
+	public static PDFAValidator createValidator(final PDFAFlavour flavour, final boolean logPassedChecks,
+												final int maxFailures, final int maxNumberOfDisplayedFailedChecks,
+												final boolean showErrorMessages, boolean showProgress) {
+		if (flavour == null)
+			throw new IllegalArgumentException("Parameter (PDFAFlavour flavour) cannot be null.");
+		return createValidator(Profiles.getVeraProfileDirectory().getValidationProfileByFlavour(flavour),
+				logPassedChecks, maxFailures, maxNumberOfDisplayedFailedChecks, showErrorMessages, showProgress);
 	}
 
 	/**
@@ -129,9 +150,19 @@ public final class ValidatorFactory {
 	 *         parameters
 	 */
 	public static PDFAValidator createValidator(final ValidationProfile profile, final boolean logPassedChecks) {
-		if (profile == null)
+		if (profile == null) {
 			throw new IllegalArgumentException("Parameter (ValidationProfile profile) cannot be null.");
+		}
 		return new BaseValidator(profile, logPassedChecks);
+	}
+
+	public static PDFAValidator createValidator(final ValidationProfile profile, final int maxNumberOfDisplayedFailedChecks,
+												final boolean logPassedChecks, final boolean showErrorMessages,
+												boolean showProgress) {
+		if (profile == null) {
+			throw new IllegalArgumentException("Parameter (ValidationProfile profile) cannot be null.");
+		}
+		return new BaseValidator(profile, maxNumberOfDisplayedFailedChecks, logPassedChecks, showErrorMessages, showProgress);
 	}
 
 	/**
@@ -150,8 +181,9 @@ public final class ValidatorFactory {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public static PDFAValidator createValidator(final ValidationProfile profile, final int maxFailures) {
-		return createValidator(profile, false, maxFailures);
+	public static PDFAValidator createValidator(final ValidationProfile profile, final int maxFailures, final boolean showProgress) {
+		return createValidator(profile, false, maxFailures,
+				BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, false, showProgress);
 	}
 
 	/**
@@ -171,8 +203,9 @@ public final class ValidatorFactory {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public static PDFAValidator createValidator(final PDFAFlavour flavour, final int maxFailures) {
-		return createValidator(flavour, false, maxFailures);
+	public static PDFAValidator createValidator(final PDFAFlavour flavour, final int maxFailures, final boolean showProgress) {
+		return createValidator(flavour, false, maxFailures,
+				BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, false, showProgress);
 	}
 
 	/**
@@ -196,12 +229,22 @@ public final class ValidatorFactory {
 	 *         parameters
 	 */
 	public static PDFAValidator createValidator(final ValidationProfile profile, final boolean logPassedChecks,
-			final int maxFailures) {
-		if (profile == null)
+												final int maxFailures) {
+		return createValidator(profile, logPassedChecks, maxFailures,
+				BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, false, false);
+	}
+
+	public static PDFAValidator createValidator(final ValidationProfile profile, final boolean logPassedChecks,
+												final int maxFailures, final int maxNumberOfDisplayedFailedChecks,
+												boolean showErrorMessages, boolean showProgress) {
+		if (profile == null) {
 			throw new IllegalArgumentException("Parameter (ValidationProfile profile) cannot be null.");
-		if (maxFailures > 0)
-			return new FastFailValidator(profile, logPassedChecks, maxFailures);
-		return createValidator(profile, logPassedChecks);
+		}
+		if (maxFailures > 0) {
+			return new FastFailValidator(profile, logPassedChecks, maxFailures, showErrorMessages, showProgress,
+					maxNumberOfDisplayedFailedChecks);
+		}
+		return createValidator(profile, maxNumberOfDisplayedFailedChecks, logPassedChecks, showErrorMessages, showProgress);
 	}
 
 	/**
@@ -226,8 +269,24 @@ public final class ValidatorFactory {
 	 *         values.
 	 */
 	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final boolean recordPasses,
-			final int maxFails) {
-		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails);
+											   final int maxFails, final boolean debug) {
+		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails, debug, false, Level.WARNING, "", false);
+	}
+
+	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final boolean recordPasses,
+			final int maxFails, final boolean debug, final boolean isLogsEnabled, final Level loggingLevel, String password,
+	                                           final boolean showProgress) {
+		return ValidatorConfigImpl.fromValues(flavour, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel, password,
+		                                      showProgress);
+	}
+
+	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour,
+	                                           final boolean recordPasses, final int maxFails, final boolean debug,
+											   final boolean isLogsEnabled, final Level loggingLevel,
+											   final int maxNumberOfDisplayedFailedChecks, final boolean showErrorMessages,
+	                                           final String password, final boolean showProgress, final boolean nonPDFExtension) {
+		return ValidatorConfigImpl.fromValues(flavour, defaultFlavour, recordPasses, maxFails, debug, isLogsEnabled,
+				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password, showProgress, nonPDFExtension);
 	}
 
 	/**

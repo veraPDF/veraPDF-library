@@ -25,11 +25,14 @@ package org.verapdf.pdfa.results;
 
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.results.TestAssertion.Status;
+import org.verapdf.pdfa.validation.profiles.ErrorArgument;
 import org.verapdf.pdfa.validation.profiles.RuleId;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
+import org.verapdf.processor.reports.enums.JobEndStatus;
 
 import javax.xml.bind.JAXBException;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -54,13 +57,13 @@ public class ValidationResults {
 	 *            compliant with the indicated flavour
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions,
-													final boolean isCompliant) {
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
+													final boolean isCompliant, final JobEndStatus endStatus) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		if (assertions == null)
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
-		return ValidationResultImpl.fromValues(validationProfile, assertions, isCompliant, assertions.size());
+		return ValidationResultImpl.fromValues(validationProfile, assertions, isCompliant, assertions.size(), endStatus);
 	}
 
 	/**
@@ -75,13 +78,15 @@ public class ValidationResults {
 	 * @param totalAssertions
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions,
-			final boolean isCompliant, final int totalAssertions) {
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
+	        final HashMap<RuleId, Integer> failedChecks, final boolean isCompliant, final int totalAssertions,
+	                                                final JobEndStatus endStatus) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		if (assertions == null)
 			throw new NullPointerException(ASSERTIONS_NOT_NULL_MESSAGE);
-		return ValidationResultImpl.fromValues(validationProfile, assertions, isCompliant, totalAssertions);
+		return ValidationResultImpl.fromValues(validationProfile, assertions, failedChecks, isCompliant, totalAssertions,
+		                                       endStatus);
 	}
 
 	/**
@@ -92,7 +97,8 @@ public class ValidationResults {
 	 *            the Set of TestAssertions reported by during validation
 	 * @return a new ValidationResult instance populated from the values
 	 */
-	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final Set<TestAssertion> assertions) {
+	public static ValidationResult resultFromValues(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
+	                                                final JobEndStatus endStatus) {
 		if (validationProfile == null)
 			throw new NullPointerException(VALIDATION_PROFILE_NOT_NULL_MESSAGE);
 		if (assertions == null)
@@ -104,7 +110,7 @@ public class ValidationResults {
 				break;
 			}
 		}
-		return resultFromValues(validationProfile, assertions, isCompliant);
+		return resultFromValues(validationProfile, assertions, isCompliant, endStatus);
 	}
 
 	/**
@@ -149,8 +155,9 @@ public class ValidationResults {
 	 *         values
 	 */
 	public static TestAssertion assertionFromValues(final int ordinal, final RuleId ruleId, final Status status,
-			final String message, final Location location) {
-		return TestAssertionImpl.fromValues(ordinal, ruleId, status, message, location);
+			final String message, final Location location, final String context, final String errorMessage,
+			final List<ErrorArgument> errorArguments) {
+		return TestAssertionImpl.fromValues(ordinal, ruleId, status, message, location, context, errorMessage, errorArguments);
 	}
 
 	/**

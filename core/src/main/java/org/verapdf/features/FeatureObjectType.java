@@ -88,4 +88,9 @@ public enum FeatureObjectType {
 	public String getIdPrefix() {
 		return idPrefix;
 	}
+
+	@Override
+	public String toString() {
+		return this.getNodeName();
+	}
 }

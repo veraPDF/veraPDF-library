@@ -23,8 +23,6 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
@@ -35,10 +33,8 @@ import javax.xml.bind.JAXBException;
 
 import org.junit.Test;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
-import org.verapdf.pdfa.validation.profiles.ProfileDirectory;
-import org.verapdf.pdfa.validation.profiles.Profiles;
-import org.verapdf.pdfa.validation.profiles.ValidationProfile;
-import org.verapdf.pdfa.validation.profiles.ValidationProfileImpl;
+
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -54,18 +50,18 @@ public class ProfileDirectoryImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.ProfileDirectoryImpl#getValidationProfileIds()}
+     * {@link org.verapdf.pdfa.validation.profiles.ProfileDirectoryImpl#getValidationProfileIds()}
      * .
      */
     @Test
     public final void testGetValidationProfileIds() {
         ProfileDirectory dir = Profiles
                 .directoryFromProfiles(DEFAULT_ALONE);
-        assertTrue(dir.getValidationProfileIds().size() == 1);
+        assertEquals(1, dir.getValidationProfileIds().size());
         dir = Profiles.directoryFromProfiles(PDFA_1B_ALONE);
-        assertTrue(dir.getValidationProfileIds().size() == 1);
+        assertEquals(1, dir.getValidationProfileIds().size());
         dir = Profiles.directoryFromProfiles(DUAL_PROFILE);
-        assertTrue(dir.getValidationProfileIds().size() == 2);
+        assertEquals(2, dir.getValidationProfileIds().size());
         assertTrue(dir.getValidationProfileIds().contains(
                 DEFAULT.getPDFAFlavour().getId()));
         assertTrue(dir.getValidationProfileIds().contains(
@@ -80,11 +76,11 @@ public class ProfileDirectoryImplTest {
     @Test
     public final void testGetPDFAFlavours() {
         ProfileDirectory dir = Profiles.directoryFromProfiles(DEFAULT_ALONE);
-        assertTrue(dir.getPDFAFlavours().size() == 1);
+        assertEquals(1, dir.getPDFAFlavours().size());
         dir = Profiles.directoryFromProfiles(PDFA_1B_ALONE);
-        assertTrue(dir.getPDFAFlavours().size() == 1);
+        assertEquals(1, dir.getPDFAFlavours().size());
         dir = Profiles.directoryFromProfiles(DUAL_PROFILE);
-        assertTrue(dir.getPDFAFlavours().size() == 2);
+        assertEquals(2, dir.getPDFAFlavours().size());
         assertTrue(dir.getPDFAFlavours().contains(DEFAULT.getPDFAFlavour()));
         assertTrue(dir.getPDFAFlavours().contains(PDFA_1B.getPDFAFlavour()));
     }
@@ -97,16 +93,16 @@ public class ProfileDirectoryImplTest {
     @Test
     public final void testGetValidationProfileById() {
         ProfileDirectory dir = Profiles.directoryFromProfiles(DEFAULT_ALONE);
-        assertTrue(dir.getValidationProfileById(
-                DEFAULT.getPDFAFlavour().getId()).getPDFAFlavour() == PDFAFlavour.NO_FLAVOUR);
+        assertSame(dir.getValidationProfileById(
+                DEFAULT.getPDFAFlavour().getId()).getPDFAFlavour(), PDFAFlavour.NO_FLAVOUR);
         dir = Profiles.directoryFromProfiles(PDFA_1B_ALONE);
-        assertTrue(dir.getValidationProfileById(
-                PDFA_1B.getPDFAFlavour().getId()).getPDFAFlavour() == PDFAFlavour.PDFA_1_B);
+        assertSame(dir.getValidationProfileById(
+                PDFA_1B.getPDFAFlavour().getId()).getPDFAFlavour(), PDFAFlavour.PDFA_1_B);
         dir = Profiles.directoryFromProfiles(DUAL_PROFILE);
-        assertTrue(dir.getValidationProfileById(
-                DEFAULT.getPDFAFlavour().getId()).getPDFAFlavour() == PDFAFlavour.NO_FLAVOUR);
-        assertTrue(dir.getValidationProfileById(
-                PDFA_1B.getPDFAFlavour().getId()).getPDFAFlavour() == PDFAFlavour.PDFA_1_B);
+        assertSame(dir.getValidationProfileById(
+                DEFAULT.getPDFAFlavour().getId()).getPDFAFlavour(), PDFAFlavour.NO_FLAVOUR);
+        assertSame(dir.getValidationProfileById(
+                PDFA_1B.getPDFAFlavour().getId()).getPDFAFlavour(), PDFAFlavour.PDFA_1_B);
     }
 
     /**
@@ -128,21 +124,21 @@ public class ProfileDirectoryImplTest {
     @Test
     public final void testGetValidationProfileByFlavour() {
         ProfileDirectory dir = Profiles.directoryFromProfiles(DEFAULT_ALONE);
-        assertTrue(dir.getValidationProfileByFlavour(DEFAULT.getPDFAFlavour())
-                .getPDFAFlavour() == PDFAFlavour.NO_FLAVOUR);
+        assertSame(dir.getValidationProfileByFlavour(DEFAULT.getPDFAFlavour())
+                .getPDFAFlavour(), PDFAFlavour.NO_FLAVOUR);
         dir = Profiles.directoryFromProfiles(PDFA_1B_ALONE);
-        assertTrue(dir.getValidationProfileByFlavour(PDFA_1B.getPDFAFlavour())
-                .getPDFAFlavour() == PDFAFlavour.PDFA_1_B);
+        assertSame(dir.getValidationProfileByFlavour(PDFA_1B.getPDFAFlavour())
+                .getPDFAFlavour(), PDFAFlavour.PDFA_1_B);
         dir = Profiles.directoryFromProfiles(DUAL_PROFILE);
-        assertTrue(dir.getValidationProfileByFlavour(DEFAULT.getPDFAFlavour())
-                .getPDFAFlavour() == PDFAFlavour.NO_FLAVOUR);
-        assertTrue(dir.getValidationProfileByFlavour(PDFA_1B.getPDFAFlavour())
-                .getPDFAFlavour() == PDFAFlavour.PDFA_1_B);
+        assertSame(dir.getValidationProfileByFlavour(DEFAULT.getPDFAFlavour())
+                .getPDFAFlavour(), PDFAFlavour.NO_FLAVOUR);
+        assertSame(dir.getValidationProfileByFlavour(PDFA_1B.getPDFAFlavour())
+                .getPDFAFlavour(), PDFAFlavour.PDFA_1_B);
     }
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.ProfileDirectoryImpl#getValidationProfileByFlavour(org.verapdf.pdfa.flavours.PDFAFlavour)}
+     * {@link org.verapdf.pdfa.validation.profiles.ProfileDirectoryImpl#getValidationProfileByFlavour(org.verapdf.pdfa.flavours.PDFAFlavour)}
      * .
      */
     @Test(expected = NoSuchElementException.class)
@@ -153,7 +149,7 @@ public class ProfileDirectoryImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.ProfileDirectoryImpl#getValidationProfiles()}
+     * {@link org.verapdf.pdfa.validation.profiles.ProfileDirectoryImpl#getValidationProfiles()}
      * .
      */
     @Test

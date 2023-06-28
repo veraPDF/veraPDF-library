@@ -123,22 +123,19 @@ final class ValidationDetailsImpl implements ValidationDetails {
 		return defaultInstance;
 	}
 
-	static ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks,
-			final int maxFailedChecks) {
+	static ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks) {
 		ValidationProfile profile = result.getValidationProfile();
-		Map<RuleId, Set<TestAssertion>> assertionMap = mapAssertionsByRule(result.getTestAssertions());
+		Map<RuleId, List<TestAssertion>> assertionMap = mapAssertionsByRule(result.getTestAssertions());
 		Set<RuleSummary> ruleSummaries = new HashSet<>();
+		Map<RuleId, Integer> failedChecksMap = result.getFailedChecks();
 		int passedRules = 0;
 		int failedRules = 0;
 		int failedChecks = 0;
 		for (Rule rule : profile.getRules()) {
-			RuleSummary summary = RuleSummaryImpl.uncheckedInstance(rule.getRuleId(), rule.getDescription(),
-					rule.getObject(), rule.getTest());
-			if (assertionMap.containsKey(rule.getRuleId())) {
-				summary = RuleSummaryImpl.fromValues(rule.getRuleId(), rule.getDescription(), rule.getObject(),
-						rule.getTest(), assertionMap.get(rule.getRuleId()), logPassedChecks,
-						maxFailedChecks);
-			}
+			RuleSummary summary = assertionMap.containsKey(rule.getRuleId()) ?
+				RuleSummaryImpl.fromValues(rule.getRuleId(), rule.getDescription(), rule.getObject(), rule.getTest(),
+					assertionMap.get(rule.getRuleId()), logPassedChecks, failedChecksMap.get(rule.getRuleId())) :
+				RuleSummaryImpl.uncheckedInstance(rule.getRuleId(), rule.getDescription(), rule.getObject(), rule.getTest());
 			failedChecks += summary.getFailedChecks();
 			if (summary.getRuleStatus() == Status.PASSED) {
 				passedRules++;
@@ -155,13 +152,13 @@ final class ValidationDetailsImpl implements ValidationDetails {
 		return new ValidationDetailsImpl(passedRules, failedRules, passedChecks, failedChecks, ruleSummaries);
 	}
 
-	private static Map<RuleId, Set<TestAssertion>> mapAssertionsByRule(final Set<TestAssertion> assertions) {
-		Map<RuleId, Set<TestAssertion>> assertionMap = new HashMap<>();
+	private static Map<RuleId, List<TestAssertion>> mapAssertionsByRule(final List<TestAssertion> assertions) {
+		Map<RuleId, List<TestAssertion>> assertionMap = new HashMap<>();
 		for (TestAssertion assertion : assertions) {
 			if (assertionMap.containsKey(assertion.getRuleId())) {
 				assertionMap.get(assertion.getRuleId()).add(assertion);
 			} else {
-				Set<TestAssertion> assertionSet = new HashSet<>();
+				List<TestAssertion> assertionSet = new ArrayList<>();
 				assertionSet.add(assertion);
 				assertionMap.put(assertion.getRuleId(), assertionSet);
 			}

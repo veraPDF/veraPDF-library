@@ -25,7 +25,10 @@ package org.verapdf.pdfa.results;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.verapdf.pdfa.validation.profiles.ErrorArgument;
 import org.verapdf.pdfa.validation.profiles.RuleId;
+
+import java.util.List;
 
 /**
  * A TestAssertion records the result of performing a validation test on a
@@ -51,16 +54,30 @@ public interface TestAssertion {
     public Status getStatus();
 
     /**
-     * @return any message that accompanies this assertion, usually an error
-     *         message. Returns an empty string if there is no message.
+     * @return any message that accompanies this assertion.
      */
     public String getMessage();
+
+    /**
+     * @return location context.
+     */
+    public String getLocationContext();
+
+    /**
+     * @return error message.
+     */
+    public String getErrorMessage();
 
     /**
      * @return the {@link Location} within the PDF document where this test was
      *         asserted.
      */
     public Location getLocation();
+
+    /**
+     * @return the list of error arguments
+     */
+    public List<ErrorArgument> getErrorArguments();
 
     /**
      * Enum that indicates the result of a particular test assertion, i.e.

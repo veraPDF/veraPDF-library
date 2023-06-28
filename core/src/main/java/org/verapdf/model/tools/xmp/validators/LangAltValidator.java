@@ -20,7 +20,7 @@
  */
 package org.verapdf.model.tools.xmp.validators;
 
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.xmp.impl.VeraPDFXMPNode;
 
 /**
  * @author Maksim Bezrukov
@@ -31,7 +31,7 @@ public class LangAltValidator implements TypeValidator {
         if (node == null) {
             throw new IllegalArgumentException("Argument node can not be null");
         }
-
-        return node.getOptions().isArrayAltText();
+        //allow empty lang alt array
+        return node.getOptions().isArrayAltText() || (node.getChildren().isEmpty() && node.getOptions().isArrayAlternate());
     }
 }

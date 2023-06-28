@@ -257,8 +257,7 @@ public class FileOutputMappers {
 		if (suffix == null)
 			throw new NullPointerException("Arg suffix can not be null");
 		File outputDir = new File(path);
-		if (!outputDir.exists()) {
-			if (!outputDir.mkdirs())
+		if (!outputDir.exists() && !outputDir.mkdirs()) {
 				throw new IllegalArgumentException("Can't create writeable output directory:" + path);
 		}
 		if (!outputDir.isDirectory() || !outputDir.canWrite()) {

@@ -28,6 +28,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.verapdf.pdfa.results.TestAssertion;
+import org.verapdf.pdfa.validation.profiles.ErrorArgument;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author  <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -42,15 +48,24 @@ final class CheckImpl implements Check {
 	@XmlAttribute
 	private final String status;
 	@XmlElement
+	private final String location;
+	@XmlElement
 	private final String context;
+	@XmlElement
+	private final String errorMessage;
+	private final List<String> errorArguments;
 
-	private CheckImpl(final TestAssertion.Status status, final String context) {
+	private CheckImpl(final TestAssertion.Status status, final String context, final String location,
+	                  final String errorMessage, final List<String> errorArguments) {
 		this.status = status.toString();
 		this.context = context;
+		this.location = location;
+		this.errorMessage = errorMessage;
+		this.errorArguments = Collections.unmodifiableList(errorArguments);
 	}
 
 	private CheckImpl() {
-		this(TestAssertion.Status.PASSED, "");
+		this(TestAssertion.Status.PASSED, "", null, null, null);
 	}
 	
 	/**
@@ -62,11 +77,34 @@ final class CheckImpl implements Check {
 	}
 
 	/**
+	 * @return the location
+	 */
+	@Override
+	public String getLocation() {
+		return this.location;
+	}
+
+	/**
 	 * @return the context
 	 */
 	@Override
 	public String getContext() {
 		return this.context;
+	}
+
+	/**
+	 * @return the error message
+	 */
+	@Override
+	public String getErrorMessage() {
+		return this.errorMessage;
+	}
+
+	/**
+	 * @return the error arguments
+	 */
+	public List<String> getErrorArguments() {
+		return this.errorArguments;
 	}
 
 	static class Adapter extends XmlAdapter<CheckImpl, Check> {
@@ -86,6 +124,16 @@ final class CheckImpl implements Check {
 		if (assertion == null) {
 			throw new IllegalArgumentException("Argument assertion con not be null");
 		}
-		return new CheckImpl(assertion.getStatus(), assertion.getLocation().getContext());
+		return new CheckImpl(assertion.getStatus(), getStringWithoutInvalidXmlChars(assertion.getLocation().getContext()),
+				assertion.getLocationContext(), getStringWithoutInvalidXmlChars(assertion.getErrorMessage()),
+				assertion.getErrorArguments().stream().map(ErrorArgument::getArgumentValue).collect(Collectors.toList()));
+	}
+
+	private static String getStringWithoutInvalidXmlChars(String string) {
+		if (string == null || string.isEmpty()) {
+			return string;
+		}
+		Pattern xmlInvalidChars = Pattern.compile("[^\\u0009\\u000A\\u000D\\u0020-\\uD7FF\\uE000-\\uFFFD\\x{10000}-\\x{10FFFF}]");
+		return xmlInvalidChars.matcher(string).replaceAll("");
 	}
 }

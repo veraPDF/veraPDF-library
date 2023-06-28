@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <appliedObjects>
     <ruleDescription>
-        <objectType>CosDocument</objectType>
-        <test>doesInfoMatchXMP</test>
+        <objectType>CosInfo</objectType>
+        <test>doCreationDatesMatch != false</test>
+    </ruleDescription>
+    <ruleDescription>
+        <objectType>CosInfo</objectType>
+        <test>Title == null || Title == XMPTitle</test>
+    </ruleDescription>
+    <ruleDescription>
+        <objectType>CosInfo</objectType>
+        <test>Author == null || (Author == XMPCreator &amp;&amp; XMPCreatorSize == 1)</test>
+    </ruleDescription>
+    <ruleDescription>
+        <objectType>CosInfo</objectType>
+        <test>Subject == null || Subject == XMPDescription</test>
+    </ruleDescription>
+    <ruleDescription>
+        <objectType>CosInfo</objectType>
+        <test>Keywords == null || Keywords == XMPKeywords</test>
+    </ruleDescription>
+    <ruleDescription>
+        <objectType>CosInfo</objectType>
+        <test>Creator == null || Creator == XMPCreatorTool</test>
+    </ruleDescription>
+    <ruleDescription>
+        <objectType>CosInfo</objectType>
+        <test>Producer == null || Producer == XMPProducer</test>
+    </ruleDescription>
+    <ruleDescription>
+        <objectType>CosInfo</objectType>
+        <test>doModDatesMatch != false</test>
     </ruleDescription>
     <ruleDescription>
         <objectType>PDMetadata</objectType>

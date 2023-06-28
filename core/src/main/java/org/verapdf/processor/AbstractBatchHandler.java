@@ -23,10 +23,16 @@
  */
 package org.verapdf.processor;
 
+import org.verapdf.component.AuditDuration;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.report.FeaturesReport;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumMap;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -34,6 +40,21 @@ import org.verapdf.report.FeaturesReport;
  * @version 0.1 Created 10 Nov 2016:20:54:24
  */
 public abstract class AbstractBatchHandler implements BatchProcessingHandler {
+
+	public static final String VALIDATION_RESULT = "validationResult"; //$NON-NLS-1$
+	public static final String FEATURES_REPORT = "featuresReport"; //$NON-NLS-1$
+	public final static String FIXER_REPORT = "fixerReport"; //$NON-NLS-1$
+	public static final String FIXER_RESULT = "fixerResult"; //$NON-NLS-1$
+	public final static String REPORT = "report"; //$NON-NLS-1$
+	public final static String JOB = "job"; //$NON-NLS-1$
+	public final static String JOBS = JOB + "s"; //$NON-NLS-1$
+	public final static String PROCESSING_TIME = "processingTime"; //$NON-NLS-1$
+	public final static String BUILD_INFORMATION = "buildInformation"; //$NON-NLS-1$
+	public final static String ITEM_DETAILS = "itemDetails"; //$NON-NLS-1$
+	public final static String RELEASE_DETAILS = "releaseDetails"; //$NON-NLS-1$
+	public final static String TASK_RESULT = "taskResult"; //$NON-NLS-1$
+	public final static String BATCH_SUMMARY = "batchSummary"; //$NON-NLS-1$
+	public final static String LOGS = "logs"; //$NON-NLS-1$
 
 	/**
 	 * 
@@ -43,13 +64,13 @@ public abstract class AbstractBatchHandler implements BatchProcessingHandler {
 	}
 
 	@Override
-	public void handleResult(ProcessorResult result) throws VeraPDFException {
+	public void handleResult(ProcessorResult result, Boolean isLogsEnabled) throws VeraPDFException {
 		if (result == null) {
 			throw new VeraPDFException("Arg result is null and can not be handled."); //$NON-NLS-1$
 		}
 		resultStart(result);
 		processTasks(result);
-		resultEnd(result);
+		resultEnd(result, isLogsEnabled);
 	}
 
 	private void processTasks(ProcessorResult result) throws VeraPDFException {
@@ -117,5 +138,19 @@ public abstract class AbstractBatchHandler implements BatchProcessingHandler {
 
 	abstract void fixerFailure(final TaskResult taskResult) throws VeraPDFException;
 
-	abstract void resultEnd(final ProcessorResult result) throws VeraPDFException;
+	abstract void resultEnd(final ProcessorResult result, Boolean isLogsEnabled) throws VeraPDFException;
+
+	public static Collection<AuditDuration> getDurations(ProcessorResult result) {
+		EnumMap<TaskType, TaskResult> results = result.getResults();
+		if(results != null) {
+			Collection<AuditDuration> res = new ArrayList<>();
+			for (TaskType type : results.keySet()) {
+				if (results.get(type).getDuration() != null) {
+					res.add(results.get(type).getDuration());
+				}
+			}
+			return res;
+		}
+		return Collections.emptyList();
+	}
 }

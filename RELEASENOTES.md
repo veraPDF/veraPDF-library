@@ -1,17 +1,210 @@
-Version 1.14-RC (June 10, 2019)
+Version 1.24 RC2 (June 2, 2023)
+==================================
+
+### PDF model
+- added a new property XMPCreatorSize for the number of creators
+
+### PDF Parser
+-  fixes of unhandled exceptions in malicious PDFs
+-  fix of the CIDSet parsing for embedded OpenType fonts
+-  updated regex for PDF Date to support border cases
+-  added warning in case of invalid Version entry in the catalog
+-  fixed an issue of accepting String value types where Name type is required and vice versa
+
+### Validation
+-  (PDF/A-1) fixed comparison of Info dictionary Author and XMP dc:creator in case of multiple authors/creators
+-  (PDF/A-2,3,4) fixed handling of Default color spaces for DeviceN colorants
+-  (PDF/UA-1) reverted Table Scope determination algorithm from PDF 2.0 to PDF 1.7
+
+Version 1.24 RC (April 27, 2023)
+==================================
+
+### Applications
+- added support for recursive processing of PDF files in ZIP archives
+- revised and upgraded plug-ins included into the installation bundle
+- added Cancel button in GUI to cancel the job
+- added new `--progress` parameter in CLI to report progress info
+- added new `--config` parameter in CLI to support config file as a new CLI argument
+- renamed `xml` report format option to `raw` in CLI (`xml` is now reserved for the default report format)
+- enchanced validation error messages and their variable data
+- support feature report in json format
+- added warnings on incompatible CLI arguments
+- fixed saving GUI application settings
+- fixed getting log level from the config file
+- fixed handling of malformed config files
+
+### PDF model
+
+- added new property `nestingLevel` to Hn structure element
+- added new properties `firstPageIDValue` and `lastIDValue` to `COSDocument`
+- refactored the properties of XMP and Info dictionary metadata
+- refactored the properties for Table structure elements
+
+### PDF Parser
+- added method to check for an ascii-string
+- updated predefined CMaps
+- fixed parsing hybrid PDFs
+- fixed decoding Flate filters with invalid checksum
+- fixed issue with duplicated short and long keys in inline image dictionaries
+- added warning for Page objects with missing resources dictionary
+- added support for PDF 2.0 namespace and PDF 2.0 standard structure elements  
+
+### Validation
+- (PDF/UA-1) fixed validating TU entry in form fields with multiple Widget annotations
+- (PDF/UA-1) refactored Table validation rules
+- (PDF/UA-1) added a new rule to check for presence of StructTreeRoot entry in the document catalog
+- (PDF/A-2,3,4) fixed issue with false negative for CMYK-based JPEG2000 images in presence of DefaultCMYK color space
+- (PDF/A-1,2,3,4) refactored and enchanced metadata fixer functionality
+- (PDF/A-2,3,4) permit empty Name for the optional content configuration dictionary  
+- (PDF/A-2,3,4) fixed validation of circular role mapping
+- (PDF/A-1,2,3) updated rules ids to match the exact location of the corresponding "shall" clause in the specification
+
+### Core library
+- added support for jakarta and Spring Boot 3 (Java 11+ only)
+- fixed output encoding of all logs and reports to be UTF8 (independently of locale)
+
+
+Version 1.22 RC (August 3, 2022)
+==================================
+
+### Applications
+- added HTML and JSON report formats in the CLI app
+- fixed CLI scripts for Windows to support arbitrary characters in the veraPDF installation folder
+- fixed file drag&drop functionality for the GUI app on MacOS
+- force mrr report format if policy checks are enabled
+- added support for user specific config directory
+- added option to include all warnings into the validation report (both GUI and CLI)
+- added verbosity level to CLI app to control the level of visible warnings
+- exit after displaying help message if CLI is invoked without parameters
+- fixed check for veraPDF updates from the GUI app
+
+### PDF Model
+- added support for evaluating PDF functions
+- added support for PDF 2.0 namespace mechanism
+- added support for standard structure types in PDF 2.0 namespace
+
+### PDF Parser
+- improved CFF font parsing: trim the CharSet range by the number of glyphs specified in the other font data
+- implemented greenfield parser for PKCS #7 files
+- added support for custom font matrices in CFF fonts
+- implemented more tolerant Flate decode with broken checksum
+- added warning for UTF16-LE encoded text string
+
+### Validation
+- (PDF/UA-1) added a new rule that the Form structure element without Role attribute shall have only one child: an object
+reference identifying the widget (ISO 32000-1, Table 348)
+- (PDF/A-4) updated supplement numbers for predefined character collections and CMaps 
+- (PDF/A-2,3,4) added a check if a character in a symbolic TrueType font cannot be mapped to a font glyph via the specified algorithms
+- (PDF/A-2,3,4) do not require the presence of CIDtoGID map for CIDType2 fonts without embedded font program, which are used solely in rendering mode 3
+- revised error messages with additional context parameters 
+
+### Corpus
+- automated regression tests 
+
+### Core library
+- added support for Java 17
+- added support for Java Platform Module System (JPMS)
+
+**CAUTION**: the JPMS support required moving several classes into different packages:
+
+- `org.verapdf.pdfa.PdfBoxFoundry` -> `org.verapdf.pdfbox.foundry.PdfBoxFoundry`
+- `org.verapdf.pdfa.PdfBoxFoundryProvider` -> `org.verapdf.pdfbox.foundry.PdfBoxFoundryProvider`
+- `org.verapdf.pdfa.VeraFoundry` -> `org.verapdf.gf.foundry.VeraFoundry`
+- `org.verapdf.pdfa.VeraGreenfieldFoundryProvider` -> `org.verapdf.gf.foundry/VeraGreenfieldFoundryProvider`
+
+These changes need to be applied to any Java source code that integrates veraPDF API as a Java library. 
+
+Version 1.20 RC (December 2, 2021)
+==================================
+
+### Applications
+- added support for PDF/A-4 including Level F (file attachments) and Level E (engineering)
+- added more informative logs in batch processing
+- added new parameter to specify the default validation profile in case of missing standard identification in XMP Metadata
+
+### PDF Model
+- extended the model to support PDF/A-4 rules
+
+### PDF Parser
+- more robust handling of malicious PDF documents
+- improved parsing of PostScript and CFF fonts
+
+### Validation
+- allow empty Lang Alt arrays in XMP metadata
+- excluded All and None colorants from the PDF/A-2 and PDF/A-3 requirement to have the same tintTransform and alternateSpace
+- disabled JPEG2000 `colr` box checks in case of explicitly defined ColorSpace in the Image dictionary
+- fixed validation of predefined XMP value types if they are redefined in the extension schema
+- validate XMP URL type as Text
+- fixed CIDSet and CharSet validation for PDF/A-1
+- fixed validation of the permissions dictionary in PDF/A-2 and PDF/A-3
+- added validation of Lang against RFC 1766 regular expression
+- fixed validation of permitted transfer functions in Halftone dictionaries
+
+### Corpus
+- added test corpus of ~600 new atomic documents covering PDF/A-4 specification
+- extended PDF/A-2u tests on ToUnicode mapping and character encodings in simple fonts
+
+### Core library
+- added support of Java versions from 11 to 16
+- fixed validation of documents with non-PDF extension in multi-process mode
+
+Version 1.18 (February 23, 2021)
+=================================
+
+### Applications
+- added support for PDF/UA-1 (Machine) validation
+- fixed issues with STDIN support
+- added support for input files with non-pdf extension
+
+### PDF Model
+- extended the model to support PDF/UA-1 rules
+
+### PDF Parser
+- fixed parsing of inline images
+- fixed token parsing on non-ASCII systems
+- fixed TrueType font parsing in case of different number of glyphs specified in maxp and post tables
+- fixed infinite loop in circular dependency of CMaps
+- added support for documents with zero pages
+- improved parsing of Type1 font private data
+- improved glyph width calculation for CFF fonts
+- fixed null pointer exceptions on invalid PDF documents (multiple places)
+
+### Core library
+- adjusted validation reports to support PDF/UA-1 profile 
+
+
+Version 1.16 (February 19, 2020)
+=================================
+### Applications
+- added drag&drop support for input files in the GUI
+
+### PDF Model
+- added PDFunction type to support validation of Type4 functions
+- added types corresponding to the PDF 1.7 standard structure tagset
+- added actualEncoding property of XMP Metadata
+
+### PDF Parser
+- fixed null pointer exception on empty trailer
+- improved the logic of parsing page content consisting of multiple streams
+
+### Core library
+- improved memory management in case of large number of validation errors
+
+
+Version 1.14 (June 10, 2019)
 ==============================
 
 ### Applications
 - fixed installer CLI args not forwarded [[#apps-253][]], [[#iss-1021][]]
 - fixed Java 11 XML bind dependencies [[#apps-254][]], [[#iss-986][]]
-- command line application terminsation codes [[#apps-255][]], [[#apps-256][]], [[#iss-841][]]
+- command line application termination codes [[#apps-255][]], [[#apps-256][]], [[#iss-841][]]
 
 ## PDF Model:
 - added processColor link for PDDeviceN [[#mod-168][]], [[#iss-902][]]
 
 ## PDF Parser:
 - fixed XRefStream handling for trailers [[#par-359][]]
-- fixed space skipping afer RD for type1 [[#par-360][]], [[#par-361][]]
+- fixed space skipping after RD for type1 [[#par-360][]], [[#par-361][]]
 - fixed various issues with AES decryption [[#par-362][]], [[#par-364][]], [[#par-365][]]
 - fixed font encoding issue [[#par-363][]]
 - fixed buffered in filter and COSStream problems [[#par-366][]]
@@ -33,8 +226,8 @@ Version 1.14-RC (June 10, 2019)
 - fix metadata creation [[#val-270][]]
 - fix null pointer exception when processing glyphs [[#val-271][]]
 - fix null pointer exception when validating embedded files [[#val-273][]], [[#iss-976][]]
-- fxed graphic state initial colorspace creation and font inheritance  [[#val-274][]], [[#iss-975][]], [[#iss-978][]]
-- deny operstors q, Q, cm inside Text object [[#val-276][]], [[#iss-985][]]
+- fixed graphic state initial colorspace creation and font inheritance  [[#val-274][]], [[#iss-975][]], [[#iss-978][]]
+- deny operators q, Q, cm inside Text object [[#val-276][]], [[#iss-985][]]
 - preflight passes, veraPDF shows clause="6.2.11.4" error [[#val-277][]], [[#iss-1019][]]
 - fix Ignore trailing zero for info dictionary values during metadata info match xmp check [[#val-278][]], [[#iss-1017][]]
 - fixed Java 11 XML bind dependencies  [[#val-279][]], [[#iss-986][]]
@@ -89,6 +282,7 @@ Version 1.14-RC (June 10, 2019)
 [#par-370]: https://github.com/veraPDF/veraPDF-parser/pull/370
 [#par-371]: https://github.com/veraPDF/veraPDF-parser/pull/371
 [#par-372]: https://github.com/veraPDF/veraPDF-parser/pull/372
+[#par-373]: https://github.com/veraPDF/veraPDF-parser/pull/373
 
 [#pdf-195]: https://github.com/veraPDF/veraPDF-pdfbox-validation/pull/195
 [#pdf-197]: https://github.com/veraPDF/veraPDF-pdfbox-validation/pull/197
@@ -100,8 +294,8 @@ Version 1.14-RC (June 10, 2019)
 [#val-274]: https://github.com/veraPDF/veraPDF-validation/pull/274
 [#val-276]: https://github.com/veraPDF/veraPDF-validation/pull/276
 [#val-277]: https://github.com/veraPDF/veraPDF-validation/pull/277
-[#val-277]: https://github.com/veraPDF/veraPDF-validation/pull/278
-[#val-277]: https://github.com/veraPDF/veraPDF-validation/pull/279
+[#val-278]: https://github.com/veraPDF/veraPDF-validation/pull/278
+[#val-279]: https://github.com/veraPDF/veraPDF-validation/pull/279
 [#val-280]: https://github.com/veraPDF/veraPDF-validation/pull/280
 [#val-281]: https://github.com/veraPDF/veraPDF-validation/pull/281
 [#val-282]: https://github.com/veraPDF/veraPDF-validation/pull/282
@@ -124,14 +318,14 @@ Version 1.12 (May 9, 2018)
 - add Identifier to validator type for reporting, added details to HTML report [[#val-261][]], [[#lib-940][]]
 - fixed issue parsing digital signatures for files below 1024 bytes [[#val-265][]]
 - exclude process colors from spot color validation in DeviceN / NChannel color spaces for PDF/A-2 and 3 [[#val-267][]] [[#pdf-191][]]
-- fixed metadata extensions support across different PDF/A levels [[#lib-947]]
+- fixed metadata extensions support across different PDF/A levels [[#lib-947][]]
 - fixed bug with automatic selection and processing of PDF/A flavour  [[#pdf-190][]]
 - fixed validation of smooth shading color spaces and inline images in presence of default color space [[#val-263][]]
 - fixed bug in embedded file features data extraction [[#lib-951][]]
 - fixed bug with validation rule caching [[#lib-963][]]
 
 ## Application enhancements:
-- added fixes for thread saftey and multithreading support [[#apps-246][]], [[#apps-248][]], [[#par-342][]], [[#lib-941][]], [[#lib-960][]], [[#val-262][]],  [[#pdf-189][]], [[#lib-950][]] [[#apps-244][]]
+- added fixes for thread safety and multithreading support [[#apps-246][]], [[#apps-248][]], [[#par-342][]], [[#lib-941][]], [[#lib-960][]], [[#val-262][]],  [[#pdf-189][]], [[#lib-950][]] [[#apps-244][]]
 - added multi-process parallelization in the CLI [[#apps-242][]]
 - improved formatting of XML reports [[#apps-243][]]
 - fixed plug-ins loading mechanism [[#apps-244][]]
@@ -193,7 +387,7 @@ Version 1.10 (November 30, 2017)
 - optimized parsing of text-related data in PDF documents (up to 3 times faster for PDF documents with primarily text content).
 
 ## Conformance Checker:
-- fixed checks on the presence of SMask, NeedApperane keys in case of invalid value types;
+- fixed checks on the presence of SMask, NeedAppearances keys in case of invalid value types;
 - fixed ByteRange check of digital signatures in case of incrementally updated files;
 - fixed Unicode checks in PDF/A-1A validation for Type1 and Type3 fonts;
 - fixed inheritance of /FT entry in Widget annotations; and
@@ -359,7 +553,7 @@ Last pre-version 1.0 release. PDFBox version downloadable from http://downloads.
 - fixed Unicode character maps support for PDF/A-1 Level A.
 
 # Version 0.26 (November 16, 2016)
-We've made two downloads available for out 0.26 release. There's the ususal version, based on Apache PDFBox and downloadable from: http://downloads.verapdf.org/rel/verapdf-installer.zip. For 0.26 we've also prepared the first beta release of our purpose built PDF parser and validation model, also known as the greenfield validator. This is downloadable from: http://downloads.verapdf.org/gf/verapdf-gf-installer.zip. It's not functionally complete yet as it only supports PDF/A validation. Full details of the release features are listed below.
+We've made two downloads available for out 0.26 release. There's the usual version, based on Apache PDFBox and downloadable from: http://downloads.verapdf.org/rel/verapdf-installer.zip. For 0.26 we've also prepared the first beta release of our purpose built PDF parser and validation model, also known as the greenfield validator. This is downloadable from: http://downloads.verapdf.org/gf/verapdf-gf-installer.zip. It's not functionally complete yet as it only supports PDF/A validation. Full details of the release features are listed below.
 
 ## Conformance checker
 - added the new rule for embedded files to be associated with the document or its parts (PDF/A-3 only).
@@ -464,9 +658,9 @@ This beta release provides fixes for PDF/A Validation, enhanced functionality & 
 - added 180 new test files for parts 2 and 3
 
 ## Infrastructure
-- test coverage now monitered by Codecov online service
+- test coverage now monitored by Codecov online service
 - integration tests for 2u and 3b validation profiles added
-- using codacy and covertiy online code QA services
+- using codacy and coverity online code QA services
 
 # Version 0.16 (June 3, 2016)
 
@@ -477,7 +671,7 @@ This beta release features the full support of all PDF/A-2 and PDF/A-3 requireme
   - added validation of digital signature requirements
   - added extraction of color space info from JPEG2000 images
   - added validation of permissions dictionary (Parts 2 and 3)
-  - PDF/A-2B fix: correct implementation of CIDSystemInfo entry requrements
+  - PDF/A-2B fix: correct implementation of CIDSystemInfo entry requirements
   - command line support for plugin execution to extend feature extraction
 
 ## veraPDF characterisation plugins
@@ -528,7 +722,7 @@ This beta release features improved PDF/A-2b and PDF/A-3b validation and the ful
   - full coverage of all predefined XMP properties
 
 - Documentation
-  - first version of wiki on all validation rules availabe at: https://github.com/veraPDF/veraPDF-validation-profiles/wiki
+  - first version of wiki on all validation rules available at: https://github.com/veraPDF/veraPDF-validation-profiles/wiki
 
 - Command line:
   - CLI now supports metadata fixing
@@ -659,7 +853,7 @@ The release includes a fully functional prototype for the PDF/A-1b validation an
   - 6.7 Metadata
   - 6.9 Interactive Forms
 - Initial implementation of the PDF Feature Report generation
-- Minor imporvements in the GUI and the Human-readable Report in HTML format
+- Minor improvements in the GUI and the Human-readable Report in HTML format
 
 ## Infrastructure
 

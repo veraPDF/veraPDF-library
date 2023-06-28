@@ -17,10 +17,8 @@
  */
 package org.verapdf.processor;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.Writer;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.EnumSet;
 
 import javax.xml.bind.JAXBException;
@@ -105,24 +103,34 @@ public final class ProcessorFactory {
 	}
 
 	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose,
-			int maxFailedChecksPerRule, boolean logPassed) throws VeraPDFException {
-		return getHandler(option, isVerbose, System.out, maxFailedChecksPerRule, logPassed);
+			boolean logPassed) throws VeraPDFException {
+		return getHandler(option, isVerbose, System.out, logPassed);
 	}
 
 	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose,
-			OutputStream reportStream, int maxFailedChecksPerRule, boolean logPassed) throws VeraPDFException {
+			OutputStream reportStream, boolean logPassed) throws VeraPDFException {
+		return getHandler(option, isVerbose, reportStream, logPassed, "");
+	}
+
+	public static final BatchProcessingHandler getHandler(FormatOption option, boolean isVerbose,
+			OutputStream reportStream, boolean logPassed, String wikiPath) throws VeraPDFException {
 		if (option == null)
 			throw new IllegalArgumentException("Arg option can not be null"); //$NON-NLS-1$
 		if (reportStream == null)
 			throw new IllegalArgumentException("Arg reportStream can not be null"); //$NON-NLS-1$
-
+		PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(reportStream, StandardCharsets.UTF_8));
 		switch (option) {
 		case TEXT:
-			return SingleLineResultHandler.newInstance(reportStream, isVerbose);
-		case XML:
-			return rawResultHandler(new PrintWriter(reportStream));
+			return SingleLineResultHandler.newInstance(printWriter, isVerbose, logPassed);
+		case RAW:
+			return rawResultHandler(printWriter);
 		case MRR:
-			return MrrHandler.newInstance(new PrintWriter(reportStream), logPassed, maxFailedChecksPerRule);
+		case XML:
+			return MrrHandler.newInstance(printWriter, logPassed);
+		case HTML:
+			return HTMLHandler.newInstance(printWriter, wikiPath);
+		case JSON:
+			return new JsonHandler(printWriter, logPassed);
 		default: // should not be reached
 			throw new VeraPDFException("Unknown report format option: " + option); //$NON-NLS-1$
 		}
@@ -135,7 +143,7 @@ public final class ProcessorFactory {
 
 	public static void writeSingleResultReport(final ProcessorResult toConvert,final BatchProcessingHandler tmpHandler, ProcessorConfig config) throws VeraPDFException {
 		tmpHandler.handleBatchStart(config);
-		tmpHandler.handleResult(toConvert);
+		tmpHandler.handleResult(toConvert, config.getValidatorConfig().isLogsEnabled());
 		BatchSummariser tmpSummariser = new BatchSummariser(config);
 		tmpSummariser.addProcessingResult(toConvert);
 		tmpHandler.handleBatchEnd(tmpSummariser.summarise());
@@ -159,6 +167,8 @@ public final class ProcessorFactory {
 		private int totalJobs = 0;
 		private int failedToParse = 0;
 		private int encrypted = 0;
+		private int outOfMemory = 0;
+		private int veraExceptions = 0;
 		private Components.Timer timer = Components.Timer.start();
 		private Summarisers.ValidationSummaryBuilder validationBuilder = new Summarisers.ValidationSummaryBuilder();
 		private Summarisers.FeatureSummaryBuilder featureBuilder = new Summarisers.FeatureSummaryBuilder();
@@ -174,6 +184,8 @@ public final class ProcessorFactory {
 			this.totalJobs++;
 			if (!result.isPdf()) this.failedToParse++;
 			if (result.isEncryptedPdf()) this.encrypted++;
+			if (result.isOutOfMemory()) this.outOfMemory++;
+			if (result.hasException()) this.veraExceptions++;
 			if (this.config.hasTask(TaskType.VALIDATE))
 				this.validationBuilder.addResult(result);
 			if (this.config.hasTask(TaskType.EXTRACT_FEATURES))
@@ -184,7 +196,7 @@ public final class ProcessorFactory {
 
 		public BatchSummary summarise() {
 			return Reports.createBatchSummary(this.timer, this.validationBuilder.build(), this.featureBuilder.build(),
-					this.repairBuilder.build(), this.totalJobs, this.failedToParse, this.encrypted);
+					this.repairBuilder.build(), this.totalJobs, this.failedToParse, this.encrypted, this.outOfMemory, this.veraExceptions);
 		}
 	}
 }

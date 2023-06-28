@@ -25,10 +25,10 @@ import java.util.logging.Logger;
 
 import org.verapdf.model.xmplayer.PDFAIdentification;
 
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.XMPException;
-import com.adobe.xmp.impl.VeraPDFMeta;
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.xmp.XMPConst;
+import org.verapdf.xmp.XMPException;
+import org.verapdf.xmp.impl.VeraPDFMeta;
+import org.verapdf.xmp.impl.VeraPDFXMPNode;
 
 /**
  * @author Maksim Bezrukov
@@ -90,5 +90,21 @@ public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentific
     public String getcorrPrefix() {
         VeraPDFXMPNode property = this.metadata.getProperty(XMPConst.NS_PDFA_ID, "corr");
         return property == null ? null : property.getPrefix();
+    }
+
+    @Override
+    public String getrevPrefix() {
+        VeraPDFXMPNode property = this.metadata.getProperty(XMPConst.NS_PDFA_ID, "rev");
+        return property == null ? null : property.getPrefix();
+    }
+
+    @Override
+    public String getrev() {
+        try {
+            return this.metadata.getRevisionYear();
+        } catch (XMPException e) {
+            LOGGER.log(Level.FINE, "Can not get revision year", e);
+            return null;
+        }
     }
 }

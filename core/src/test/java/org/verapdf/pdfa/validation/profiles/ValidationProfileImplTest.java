@@ -35,8 +35,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -54,7 +53,7 @@ public class ValidationProfileImplTest {
 	 */
 	@Test
 	public final void testEqualsObject() {
-		EqualsVerifier.forClass(ValidationProfileImpl.class).suppress(Warning.NULL_FIELDS).verify();
+		EqualsVerifier.forClass(ValidationProfileImpl.class).withIgnoredFields("ruleLookup", "objectVariableMap", "objectRuleMap").suppress(Warning.NULL_FIELDS).verify();
 	}
 
 	/**
@@ -63,7 +62,7 @@ public class ValidationProfileImplTest {
 	 */
 	@Test
 	public final void testToString() {
-		assertTrue(ValidationProfileImpl.defaultInstance().toString().equals(DEFAULT_PROFILE_STRING));
+		assertEquals(ValidationProfileImpl.defaultInstance().toString(), DEFAULT_PROFILE_STRING);
 	}
 
 	/**
@@ -79,9 +78,9 @@ public class ValidationProfileImplTest {
 				Collections.<Variable>emptySet());
 		ValidationProfile defaultInstance = Profiles.defaultProfile();
 		// Equivalent is NOT the same object as default instance
-		assertFalse(rule == defaultInstance);
+		assertNotSame(rule, defaultInstance);
 		// But it is equal
-		assertTrue(rule.equals(defaultInstance));
+		assertEquals(rule, defaultInstance);
 	}
 
 	/**
@@ -97,9 +96,9 @@ public class ValidationProfileImplTest {
 				defaultInstance.getDetails(), defaultInstance.getHexSha1Digest(), defaultInstance.getRules(),
 				defaultInstance.getVariables());
 		// Equivalent is NOT the same object as default instance
-		assertFalse(profile == defaultInstance);
+		assertNotSame(profile, defaultInstance);
 		// But it is equal
-		assertTrue(profile.equals(defaultInstance));
+		assertEquals(profile, defaultInstance);
 	}
 
 
@@ -125,8 +124,8 @@ public class ValidationProfileImplTest {
 		}
 		try (InputStream readXml = new FileInputStream(temp)) {
 			ValidationProfile unmarshalledDefault = Profiles.profileFromXml(readXml);
-			assertFalse(profile == unmarshalledDefault);
-			assertTrue(profile.equals(unmarshalledDefault));
+			assertNotSame(profile, unmarshalledDefault);
+			assertEquals(profile, unmarshalledDefault);
 		}
 		temp.delete();
 	}

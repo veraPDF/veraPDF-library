@@ -272,7 +272,7 @@ public final class Profiles {
 	 * @throws IllegalArgumentException
 	 *             if any of the parameters are null or message is empty
 	 */
-	public static ErrorDetails errorFromValues(final String message, final List<String> arguments) {
+	public static ErrorDetails errorFromValues(final String message, final List<ErrorArgument> arguments) {
 		if (message == null)
 			throw new IllegalArgumentException("Parameter message can not be null.");
 		if (message.isEmpty())

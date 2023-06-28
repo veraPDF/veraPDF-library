@@ -29,6 +29,7 @@ import org.verapdf.component.ComponentDetails;
 import org.verapdf.component.Components;
 import org.verapdf.core.ModelParsingException;
 import org.verapdf.core.ValidationException;
+import org.verapdf.core.utils.ValidationProgress;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.PDFAParser;
 import org.verapdf.pdfa.PDFAValidator;
@@ -37,9 +38,8 @@ import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.results.ValidationResults;
-import org.verapdf.pdfa.validation.profiles.Rule;
-import org.verapdf.pdfa.validation.profiles.ValidationProfile;
-import org.verapdf.pdfa.validation.profiles.Variable;
+import org.verapdf.pdfa.validation.profiles.*;
+import org.verapdf.processor.reports.enums.JobEndStatus;
 
 import java.net.URI;
 import java.util.*;
@@ -47,7 +47,9 @@ import java.util.*;
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
-class BaseValidator implements PDFAValidator {
+public class BaseValidator implements PDFAValidator {
+	public static final int DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS = 100;
+	private static final int MAX_CHECKS_NUMBER = 10_000;
 	private static final URI componentId = URI.create("http://pdfa.verapdf.org/validators#default");
 	private static final String componentName = "veraPDF PDF/A Validator";
 	private static final ComponentDetails componentDetails = Components.libraryDetails(componentId, componentName);
@@ -57,11 +59,16 @@ class BaseValidator implements PDFAValidator {
 	private final Deque<Object> objectsStack = new ArrayDeque<>();
 	private final Deque<String> objectsContext = new ArrayDeque<>();
 	private final Map<Rule, List<ObjectWithContext>> deferredRules = new HashMap<>();
-	protected final Set<TestAssertion> results = new HashSet<>();
+	protected final List<TestAssertion> results = new ArrayList<>();
+	private final HashMap<RuleId, Integer> failedChecks = new HashMap<>();
 	protected int testCounter = 0;
-	protected boolean abortProcessing = false;
-	protected final boolean logPassedTests;
+	protected volatile boolean abortProcessing = false;
+	protected final boolean logPassedChecks;
+	protected final int maxNumberOfDisplayedFailedChecks;
 	protected boolean isCompliant = true;
+	private boolean showErrorMessages = false;
+	protected ValidationProgress validationProgress;
+	protected volatile JobEndStatus jobEndStatus = JobEndStatus.NORMAL;
 
 	private Set<String> idSet = new HashSet<>();
 
@@ -71,10 +78,18 @@ class BaseValidator implements PDFAValidator {
 		this(profile, false);
 	}
 
-	protected BaseValidator(final ValidationProfile profile, final boolean logPassedTests) {
+	protected BaseValidator(final ValidationProfile profile, final boolean logPassedChecks) {
+		this(profile, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, logPassedChecks, false, false);
+	}
+
+	protected BaseValidator(final ValidationProfile profile, final int maxNumberOfDisplayedFailedChecks,
+							final boolean logPassedChecks, final boolean showErrorMessages, boolean showProgress) {
 		super();
 		this.profile = profile;
-		this.logPassedTests = logPassedTests;
+		this.maxNumberOfDisplayedFailedChecks = maxNumberOfDisplayedFailedChecks;
+		this.logPassedChecks = logPassedChecks;
+		this.showErrorMessages = showErrorMessages;
+		this.validationProgress = new ValidationProgress(showProgress);
 	}
 
 	/*
@@ -103,8 +118,20 @@ class BaseValidator implements PDFAValidator {
 		return componentDetails;
 	}
 
+	@Override
+	public String getValidationProgressString() {
+		return validationProgress.getCurrentValidationJobProgressWithCommas();
+	}
+
+	@Override
+	public void cancelValidation(JobEndStatus endStatus) {
+		this.jobEndStatus = endStatus;
+		this.abortProcessing = true;
+	}
+
 	protected ValidationResult validate(Object root) throws ValidationException {
 		initialise();
+		this.validationProgress.updateVariables();
 		this.rootType = root.getObjectType();
 		this.objectsStack.push(root);
 		this.objectsContext.push("root");
@@ -115,6 +142,8 @@ class BaseValidator implements PDFAValidator {
 
 		while (!this.objectsStack.isEmpty() && !this.abortProcessing) {
 			checkNext();
+			this.validationProgress.incrementNumberOfProcessedObjects();
+			this.validationProgress.updateNumberOfObjectsToBeProcessed(objectsStack.size());
 		}
 
 		for (Map.Entry<Rule, List<ObjectWithContext>> entry : this.deferredRules.entrySet()) {
@@ -123,14 +152,17 @@ class BaseValidator implements PDFAValidator {
 			}
 		}
 
+		this.validationProgress.showProgressAfterValidation();
+
 		JavaScriptEvaluator.exitContext();
 
-		return ValidationResults.resultFromValues(this.profile, this.results,
-				this.isCompliant, this.testCounter);
+		return ValidationResults.resultFromValues(this.profile, this.results, this.failedChecks, this.isCompliant,
+		                                          this.testCounter, this.jobEndStatus);
 	}
 
 	protected void initialise() {
 		this.scope = JavaScriptEvaluator.initialise();
+		this.failedChecks.clear();
 		this.objectsStack.clear();
 		this.objectsContext.clear();
 		this.deferredRules.clear();
@@ -143,8 +175,9 @@ class BaseValidator implements PDFAValidator {
 
 	private void initializeAllVariables() {
 		for (Variable var : this.profile.getVariables()) {
-			if (var == null)
+			if (var == null) {
 				continue;
+			}
 
 			java.lang.Object res = JavaScriptEvaluator.evaluateString(var.getDefaultValue(), this.scope);
 
@@ -201,7 +234,7 @@ class BaseValidator implements PDFAValidator {
 				throw new ValidationException("There is a null link in an object. Context: " + checkContext);
 			}
 
-			for (int i = 0; i < objects.size(); ++i) {
+			for (int i = objects.size() - 1; i >= 0; --i) {
 				Object obj = objects.get(i);
 
 				StringBuilder path = new StringBuilder(checkContext);
@@ -224,6 +257,12 @@ class BaseValidator implements PDFAValidator {
 						path.append(")");
 
 						this.idSet.add(obj.getID());
+					}
+
+					if (obj.getExtraContext() != null) {
+						path.append("{");
+						path.append(obj.getExtraContext());
+						path.append("}");
 					}
 
 					this.objectsContext.push(path.toString());
@@ -270,26 +309,56 @@ class BaseValidator implements PDFAValidator {
 		return checkObjWithRule(checkObject, checkContext, rule);
 	}
 
-	private boolean checkObjWithRule(Object obj, String cntxtForRule, Rule rule) {
+	private boolean checkObjWithRule(Object obj, String contextForRule, Rule rule) {
 		boolean testEvalResult = JavaScriptEvaluator.getTestEvalResult(obj, rule, this.scope);
 
-		this.processAssertionResult(testEvalResult, cntxtForRule, rule);
+		this.processAssertionResult(testEvalResult, contextForRule, rule, obj);
+
+		this.validationProgress.updateNumberOfFailedChecks(this.failedChecks.size());
+		this.validationProgress.incrementNumberOfChecks();
 
 		return testEvalResult;
 	}
 
 	protected void processAssertionResult(final boolean assertionResult, final String locationContext,
-										  final Rule rule) {
+										  final Rule rule, final Object obj) {
 		if (!this.abortProcessing) {
 			this.testCounter++;
-			Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
-			TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
-					assertionResult ? Status.PASSED : Status.FAILED, rule.getDescription(), location);
-			if (this.isCompliant)
+			if (this.isCompliant) {
 				this.isCompliant = assertionResult;
-			if (!assertionResult || this.logPassedTests)
+			}
+			if (!assertionResult) {
+				int failedChecksNumberOfRule = failedChecks.getOrDefault(rule.getRuleId(), 0);
+				failedChecks.put(rule.getRuleId(), ++failedChecksNumberOfRule);
+				if ((failedChecksNumberOfRule <= maxNumberOfDisplayedFailedChecks || maxNumberOfDisplayedFailedChecks == -1) &&
+						(this.results.size() <= MAX_CHECKS_NUMBER || failedChecksNumberOfRule <= 1)) {
+					Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
+					if (showErrorMessages) {
+						JavaScriptEvaluator.setErrorArgumentsResult(obj, rule.getError().getArguments(), this.scope);
+					}
+					String errorMessage = showErrorMessages ? createErrorMessage(rule.getError().getMessage(), rule.getError().getArguments()) : null;
+					TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
+							Status.FAILED, rule.getDescription(), location, obj.getContext(), errorMessage, rule.getError().getArguments());
+					this.results.add(assertion);
+				}
+			} else if (this.logPassedChecks && this.results.size() <= MAX_CHECKS_NUMBER) {
+				Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
+				TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
+						Status.PASSED, rule.getDescription(), location, obj.getContext(), null, Collections.emptyList());
 				this.results.add(assertion);
+			}
 		}
+	}
+
+	private String createErrorMessage(String errorMessage, List<ErrorArgument> arguments) {
+		String result = errorMessage;
+		for (int i = arguments.size(); i > 0 ; --i) {
+			ErrorArgument argument = arguments.get(i - 1);
+			String value = argument.getArgumentValue() != null ? argument.getArgumentValue() : "null";
+			result = result.replace("%" + argument.getName() + "%", value);
+			result = result.replace("%" + i, value);
+		}
+		return result;
 	}
 
 	@Override

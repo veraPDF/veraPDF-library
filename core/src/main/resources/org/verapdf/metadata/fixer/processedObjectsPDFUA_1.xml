@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<appliedObjects>
+    <ruleDescription>
+        <objectType>MainXMPPackage</objectType>
+        <test>UAIdentification_size == 1</test>
+    </ruleDescription>
+    <ruleDescription>
+        <objectType>PDFUAIdentification</objectType>
+    </ruleDescription>
+</appliedObjects>

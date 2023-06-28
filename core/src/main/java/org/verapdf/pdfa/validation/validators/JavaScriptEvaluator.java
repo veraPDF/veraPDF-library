@@ -5,10 +5,12 @@ import org.mozilla.javascript.NativeJavaObject;
 import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
 import org.verapdf.model.baselayer.Object;
+import org.verapdf.pdfa.validation.profiles.ErrorArgument;
 import org.verapdf.pdfa.validation.profiles.Rule;
 import org.verapdf.pdfa.validation.profiles.Variable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class JavaScriptEvaluator {
@@ -18,6 +20,7 @@ public class JavaScriptEvaluator {
 
 	private static Map<String, Script> ruleScripts = new HashMap<>();
 	private static Map<String, Script> variableScripts = new HashMap<>();
+	private static Map<String, Script> argumentScripts = new HashMap<>();
 
 	public static synchronized ScriptableObject initialise() {
 		context = Context.enter();
@@ -117,6 +120,38 @@ public class JavaScriptEvaluator {
 		boolean testEvalResult = ((Boolean) scr.exec(context, scope)).booleanValue();
 
 		return testEvalResult;
+	}
+
+	private static synchronized String getErrorArgumentResult(String argument, Object obj, ScriptableObject scope) {
+		Script scr;
+
+		if (!argumentScripts.containsKey(argument)) {
+			scr = JavaScriptEvaluator.compileString(getStringScript(obj, argument));
+			argumentScripts.put(argument, scr);
+		} else {
+			scr = argumentScripts.get(argument);
+		}
+		java.lang.Object res = scr.exec(context, scope);
+		if (res instanceof NativeJavaObject) {
+			res = ((NativeJavaObject) res).unwrap();
+		}
+		if (res instanceof Double && Math.abs((Double) res - Math.floor((Double) res)) < 1.0E-7){
+			return Integer.toString(((Double) res).intValue());
+		}
+		if (res instanceof String) {
+			String resultString = res.toString();
+			if (resultString.isEmpty() || "null".equals(resultString)) {
+				return "\"" + resultString + "\"";
+			}
+		}
+		return res != null ? res.toString() : null;
+
+	}
+
+	public static synchronized void setErrorArgumentsResult(Object obj, List<ErrorArgument> arguments, ScriptableObject scope) {
+		for (ErrorArgument argument : arguments) {
+			argument.setArgumentValue(getErrorArgumentResult(argument.getArgument(), obj, scope));
+		}
 	}
 
 	public static void exitContext() {

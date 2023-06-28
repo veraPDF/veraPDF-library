@@ -20,21 +20,22 @@
  */
 package org.verapdf.model.impl.axl;
 
-import com.adobe.xmp.XMPException;
-import com.adobe.xmp.impl.VeraPDFMeta;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.util.List;
+
 import org.junit.Test;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-
-import static org.junit.Assert.*;
+import org.verapdf.xmp.XMPException;
+import org.verapdf.xmp.impl.VeraPDFMeta;
 
 /**
  * @author Maksim Bezrukov
@@ -43,8 +44,7 @@ public class XMPMMHistoryTest {
 
 	@Test
 	public void test() throws URISyntaxException, XMPException, IOException {
-		try (FileInputStream in = new FileInputStream(
-				getSystemIndependentPath("/org/verapdf/model/impl/axl/xmpMM-History.xml"))) {
+		try (InputStream in = getClass().getClassLoader().getResourceAsStream(("org/verapdf/model/impl/axl/xmpMM-History.xml"))) {
 			VeraPDFMeta meta = VeraPDFMeta.parse(in);
 			AXLMainXMPPackage pack = new AXLMainXMPPackage(meta, true,
 					PDFAFlavour.PDFA_1_B);
@@ -64,7 +64,7 @@ public class XMPMMHistoryTest {
 				List<? extends Object> resList = historyProperty
 						.getLinkedObjects(AXLXMPMMHistoryProperty.RESOURCE_EVENTS);
 				assertEquals(1, resList.size());
-				if (resList.size() != 0) {
+				if (!resList.isEmpty()) {
 					Object object = resList.get(0);
 					assertTrue(object instanceof AXLXMPMMHistoryResourceEvent);
 					AXLXMPMMHistoryResourceEvent event = (AXLXMPMMHistoryResourceEvent) object;
@@ -74,12 +74,5 @@ public class XMPMMHistoryTest {
 				}
 			}
 		}
-	}
-
-	private static String getSystemIndependentPath(String path)
-			throws URISyntaxException {
-		URL resourceUrl = ClassLoader.class.getResource(path);
-		Path resourcePath = Paths.get(resourceUrl.toURI());
-		return resourcePath.toString();
 	}
 }

@@ -21,7 +21,6 @@
 package org.verapdf.features.objects;
 
 import static org.verapdf.policy.SchematronOperation.CONTAINS;
-//import static org.verapdf.policy.SchematronOperation.ENDS_WITH;
 import static org.verapdf.policy.SchematronOperation.IS_EQUAL;
 import static org.verapdf.policy.SchematronOperation.IS_FALSE;
 import static org.verapdf.policy.SchematronOperation.IS_GREATER;

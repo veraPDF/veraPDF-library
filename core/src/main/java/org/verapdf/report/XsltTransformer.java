@@ -21,7 +21,7 @@
 package org.verapdf.report;
 
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.xml.transform.Transformer;
@@ -46,14 +46,14 @@ public final class XsltTransformer {
 	 *            an {@link InputStream} instance that is the source Machine
 	 *            Readable Report.
 	 * @param destination
-	 *            an {@link OutputStream} to write the HTML report to.
+	 *            an {@link PrintWriter} to write the HTML report to.
 	 * @throws TransformerException
 	 *             if an unrecoverable error occurs during the course of the
 	 *             transformation
-	 * @throws IOException
+	 * @throws TransformerException
 	 *             file system exceptions
 	 */
-	public static void transform(InputStream source, InputStream xslt, OutputStream destination,
+	public static void transform(InputStream source, InputStream xslt, PrintWriter destination,
 			Map<String, String> arguments) throws TransformerException {
 
 		Transformer transformer = factory.newTransformer(new StreamSource(xslt));

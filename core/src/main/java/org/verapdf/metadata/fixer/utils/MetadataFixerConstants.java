@@ -47,7 +47,7 @@ public class MetadataFixerConstants {
 	public static final String OBJECT_TYPE_TAG = "objectType";
 	public static final String TEST_TAG = "test";
 
-	public static final String PDF_DATE_FORMAT_REGEX = "(D:)?(\\d\\d){2,7}((([+-](\\d\\d[']))(\\d\\d['])?)?|[Z])";
+	public static final String PDF_DATE_FORMAT_REGEX = "(D:)?(\\d\\d){2,7}(([Z+-]\\d\\d'(\\d\\d'?)?)?|Z)";
 	public static final String UTC_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSX";
 	public static final String DEFAULT_PREFIX = "veraPDF_";
 }

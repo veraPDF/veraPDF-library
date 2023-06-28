@@ -20,8 +20,8 @@
  */
 package org.verapdf.model.impl.axl;
 
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.xmp.XMPConst;
+import org.verapdf.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.tools.xmp.ValidatorsContainer;
 import org.verapdf.model.tools.xmp.validators.SimpleTypeValidator;
@@ -29,9 +29,7 @@ import org.verapdf.model.tools.xmp.validators.URITypeValidator;
 import org.verapdf.model.xmplayer.ExtensionSchemaDefinition;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Maksim Bezrukov
@@ -47,6 +45,7 @@ public class AXLExtensionSchemaDefinition extends AXLExtensionSchemaObject imple
 	private static final String PROPERTY = "property";
 	private static final String SCHEMA = "schema";
 	private static final String VALUE_TYPE = "valueType";
+	private static final Set<String> validChildNames = new HashSet<>();
 
 	public AXLExtensionSchemaDefinition(VeraPDFXMPNode xmpNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3, PDFAFlavour flavour) {
 		super(EXTENSION_SCHEMA_DEFINITION, xmpNode, containerForPDFA_1, containerForPDFA_2_3, flavour);
@@ -102,29 +101,6 @@ public class AXLExtensionSchemaDefinition extends AXLExtensionSchemaObject imple
 			return Collections.unmodifiableList(res);
 		}
 		return Collections.emptyList();
-	}
-
-	@Override
-	public Boolean getcontainsUndefinedFields() {
-		boolean undef = false;
-		for (VeraPDFXMPNode child : this.xmpNode.getChildren()) {
-			if (!undef && XMPConst.NS_PDFA_SCHEMA.equals(child.getNamespaceURI())) {
-				switch (child.getName()) {
-					case NAMESPACE_URI:
-					case PREFIX:
-					case PROPERTY:
-					case SCHEMA:
-					case VALUE_TYPE:
-						break;
-					default:
-						undef = true;
-				}
-			} else {
-				undef = true;
-				break;
-			}
-		}
-		return Boolean.valueOf(undef);
 	}
 
 	@Override
@@ -226,4 +202,21 @@ public class AXLExtensionSchemaDefinition extends AXLExtensionSchemaObject imple
 		}
 		return null;
 	}
+
+	protected String getValidNamespaceURI() {
+		return XMPConst.NS_PDFA_SCHEMA;
+	}
+
+	protected Set<String> getValidChildNames() {
+		return validChildNames;
+	}
+
+	static {
+		validChildNames.add(NAMESPACE_URI);
+		validChildNames.add(PREFIX);
+		validChildNames.add(PROPERTY);
+		validChildNames.add(SCHEMA);
+		validChildNames.add(VALUE_TYPE);
+	}
+
 }

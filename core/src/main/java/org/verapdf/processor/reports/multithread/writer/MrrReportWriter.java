@@ -7,7 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,8 +18,8 @@ public class MrrReportWriter extends AbstractXmlReportWriter {
 	private final String JOBS_TAG = "jobs";
 	private final String JOB_TAG = "job";
 
-	MrrReportWriter(OutputStream os, OutputStream errorStream) throws XMLStreamException, ParserConfigurationException, SAXException {
-		super(os, errorStream);
+	MrrReportWriter(PrintWriter outputStreamWriter, PrintWriter errorStreamWriter) throws XMLStreamException, ParserConfigurationException, SAXException {
+		super(outputStreamWriter, errorStreamWriter);
 	}
 
 	@Override

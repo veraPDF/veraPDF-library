@@ -23,27 +23,20 @@
  */
 package org.verapdf.processor;
 
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumMap;
-
-import javax.xml.bind.JAXBException;
-import javax.xml.stream.XMLStreamException;
-
 import org.verapdf.ReleaseDetails;
 import org.verapdf.component.AuditDuration;
 import org.verapdf.component.AuditDurationImpl;
+import org.verapdf.component.LogsSummary;
+import org.verapdf.component.LogsSummaryImpl;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
-import org.verapdf.processor.reports.BatchSummary;
-import org.verapdf.processor.reports.MetadataFixerReport;
-import org.verapdf.processor.reports.Reports;
-import org.verapdf.processor.reports.ValidationDetails;
-import org.verapdf.processor.reports.ValidationReport;
+import org.verapdf.processor.reports.*;
 import org.verapdf.report.FeaturesReport;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLStreamException;
+import java.io.Writer;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -51,58 +44,37 @@ import org.verapdf.report.FeaturesReport;
  * @version 0.1 Created 9 Nov 2016:06:43:57
  */
 
-final class MrrHandler extends AbstractXmlHandler {
-    private final static String STATEMENT_PREFIX = "PDF file is ";
-    private final static String NOT_INSERT = "not ";
-    private final static String STATEMENT_SUFFIX = "compliant with Validation Profile requirements.";
-    private final static String COMPLIANT_STATEMENT = STATEMENT_PREFIX
-            + STATEMENT_SUFFIX;
-    private final static String NONCOMPLIANT_STATEMENT = STATEMENT_PREFIX
-            + NOT_INSERT + STATEMENT_SUFFIX;
-	private final static String report = "report"; //$NON-NLS-1$
-	private final static String jobEleName = "job"; //$NON-NLS-1$
-	private final static String jobsEleName = jobEleName + "s"; //$NON-NLS-1$
-	private final static String procTimeEleName = "processingTime"; //$NON-NLS-1$
-	private final static String buildInfoEleName = "buildInformation"; //$NON-NLS-1$
-	private final static String itemDetailsEleName = "itemDetails"; //$NON-NLS-1$
-	private final static String releaseDetailsEleName = "releaseDetails"; //$NON-NLS-1$
-	private final static String taskResultEleName = "taskResult"; //$NON-NLS-1$
-	private final static String batchSummaryEleName = "batchSummary"; //$NON-NLS-1$
-	private final static String fixerRepEleName = "fixerReport"; //$NON-NLS-1$
-	private final static String featuresRepEleName = "featuresReport"; //$NON-NLS-1$
-	private final static String validationRepEleName = "validationReport"; //$NON-NLS-1$
-	private final int maxFailedChecks;
+class MrrHandler extends AbstractXmlHandler {
 	private final boolean logPassed;
 
 	/**
-	 * @param indentSize
 	 * @param dest
 	 * @throws VeraPDFException
 	 */
 	private MrrHandler(Writer dest) throws VeraPDFException {
-		this(dest, 100, false);
+		this(dest, false);
 	}
 
 	/**
 	 * @param dest
+	 * @param logPassed
 	 * @throws VeraPDFException
 	 */
-	private MrrHandler(Writer dest, int maxFailedChecks, boolean logPassed) throws VeraPDFException {
+	protected MrrHandler(Writer dest, boolean logPassed) throws VeraPDFException {
 		super(dest);
-		this.maxFailedChecks = maxFailedChecks;
 		this.logPassed = logPassed;
 	}
 
 	/**
-	 * @see org.verapdf.processor.BatchProcessingHandler#handleBatchStart()
+	 * @see org.verapdf.processor.BatchProcessingHandler#handleBatchStart(ProcessorConfig)
 	 */
 	@Override
 	public void handleBatchStart(ProcessorConfig config) throws VeraPDFException {
 		try {
 			startDoc(this.writer);
-			this.writer.writeStartElement(report);
+			this.writer.writeStartElement(REPORT);
 			addReleaseDetails();
-			this.writer.writeStartElement(jobsEleName);
+			this.writer.writeStartElement(JOBS);
 			this.writer.flush();
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
@@ -110,9 +82,9 @@ final class MrrHandler extends AbstractXmlHandler {
 	}
 
 	private void addReleaseDetails() throws XMLStreamException, VeraPDFException {
-		this.writer.writeStartElement(buildInfoEleName);
+		this.writer.writeStartElement(BUILD_INFORMATION);
 		for (ReleaseDetails details : ReleaseDetails.getDetails()) {
-			this.serialseElement(details, releaseDetailsEleName, true, true);
+			this.serializeElement(details, RELEASE_DETAILS, true, true);
 		}
 		this.writer.writeEndElement();
 	}
@@ -120,8 +92,8 @@ final class MrrHandler extends AbstractXmlHandler {
 	@Override
 	void resultStart(ProcessorResult result) throws VeraPDFException {
 		try {
-			this.writer.writeStartElement(jobEleName);
-			this.serialseElement(result.getProcessedItem(), itemDetailsEleName, true, true);
+			this.writer.writeStartElement(JOB);
+			this.serializeElement(result.getProcessedItem(), ITEM_DETAILS, true, true);
 			this.writer.flush();
 		} catch (XMLStreamException excep) {
 			throw wrapStreamException(excep);
@@ -135,51 +107,55 @@ final class MrrHandler extends AbstractXmlHandler {
 
 	@Override
 	void parsingFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serialseElement(taskResult, taskResultEleName, true, true);
+		this.serializeElement(taskResult, TASK_RESULT, true, true);
 	}
 
 	@Override
 	void pdfEncrypted(TaskResult taskResult) throws VeraPDFException {
-		this.serialseElement(taskResult, taskResultEleName, true, true);
+		this.serializeElement(taskResult, TASK_RESULT, true, true);
 	}
 
 	@Override
-	void validationSuccess(TaskResult taskResult, ValidationResult result) throws VeraPDFException {
-		ValidationDetails details = Reports.fromValues(result, this.logPassed, this.maxFailedChecks);
-		ValidationReport valRep = Reports.createValidationReport(details, result.getProfileDetails().getName(), getStatement(result.isCompliant()), result.isCompliant());
-		this.serialseElement(valRep, validationRepEleName, true, true);
+	void validationSuccess(TaskResult taskResult, ValidationResult validationResult) throws VeraPDFException {
+		this.serializeElement(Reports.createValidationReport(validationResult, this.logPassed), VALIDATION_RESULT, true, true);
 	}
 
 	@Override
 	void validationFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serialseElement(taskResult, taskResultEleName, true, true);
+		this.serializeElement(taskResult, TASK_RESULT, true, true);
 	}
 
 	@Override
 	void featureSuccess(TaskResult taskResult, FeaturesReport featRep) throws VeraPDFException {
-		this.serialseElement(featRep, featuresRepEleName, true, true);
+		this.serializeElement(featRep, FEATURES_REPORT, true, true);
 	}
 
 	@Override
 	void featureFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serialseElement(taskResult, taskResultEleName, true, true);
+		this.serializeElement(taskResult, TASK_RESULT, true, true);
 	}
 
 	@Override
 	void fixerSuccess(TaskResult taskResult, MetadataFixerResult fixerResult) throws VeraPDFException {
 		MetadataFixerReport mfRep = Reports.fromValues(fixerResult);
-		this.serialseElement(mfRep, fixerRepEleName, true, true);
+		this.serializeElement(mfRep, FIXER_REPORT, true, true);
 	}
 
 	@Override
 	void fixerFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serialseElement(taskResult, taskResultEleName, true, true);
+		this.serializeElement(taskResult, TASK_RESULT, true, true);
 	}
 
 	@Override
-	void resultEnd(ProcessorResult result) throws VeraPDFException {
+	void resultEnd(ProcessorResult result, Boolean isLogsEnabled) throws VeraPDFException {
 		AuditDuration duration = AuditDurationImpl.sumDuration(getDurations(result));
-		this.serialseElement(duration, procTimeEleName, true, true);
+		this.serializeElement(duration, PROCESSING_TIME, true, true);
+		if (isLogsEnabled) {
+			LogsSummary logsSummary = LogsSummaryImpl.getSummary();
+			if (logsSummary.getLogsCount() != 0) {
+				this.serializeElement(logsSummary, LOGS, true, true);
+			}
+		}
 		try {
 			// End job element
 			this.writer.writeEndElement();
@@ -190,14 +166,14 @@ final class MrrHandler extends AbstractXmlHandler {
 	}
 
 	/**
-	 * @see org.verapdf.processor.BatchProcessingHandler#handleBatchEnd(org.verapdf.processor.BatchSummary)
+	 * @see org.verapdf.processor.BatchProcessingHandler#handleBatchEnd(org.verapdf.processor.reports.BatchSummary)
 	 */
 	@Override
 	public void handleBatchEnd(BatchSummary summary) throws VeraPDFException {
 		try {
 			// closes jobs element
 			this.writer.writeEndElement();
-			this.serialseElement(summary, batchSummaryEleName, true, true);
+			this.serializeElement(summary, BATCH_SUMMARY, true, true);
 			newLine(this.writer);
 			// closes report element
 			this.writer.writeEndElement();
@@ -209,30 +185,12 @@ final class MrrHandler extends AbstractXmlHandler {
 		this.close();
 	}
 
-	private static Collection<AuditDuration> getDurations(ProcessorResult result) {
-		EnumMap<TaskType, TaskResult> results = result.getResults();
-		if(results != null) {
-			Collection<AuditDuration> res = new ArrayList<>();
-			for (TaskType type : results.keySet()) {
-				if (results.get(type).getDuration() != null) {
-					res.add(results.get(type).getDuration());
-				}
-			}
-			return res;
-		}
-		return Collections.emptyList();
-	}
-
 	protected static VeraPDFException wrapStreamException(final JAXBException excep, final String typePart) {
 		return new VeraPDFException(String.format(unmarshalErrMessage, typePart), excep);
 	}
 
-	static BatchProcessingHandler newInstance(final Writer dest, final boolean logPassed, final int maxFailedChecks) throws VeraPDFException {
-		return new MrrHandler(dest, maxFailedChecks, logPassed);
+	static BatchProcessingHandler newInstance(final Writer dest, final boolean logPassed) throws VeraPDFException {
+		return new MrrHandler(dest, logPassed);
 	}
-	
-    private static String getStatement(boolean status) {
-        return status ? COMPLIANT_STATEMENT : NONCOMPLIANT_STATEMENT;
-    }
 
 }

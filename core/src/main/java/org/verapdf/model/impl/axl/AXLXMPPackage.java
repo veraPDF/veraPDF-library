@@ -20,9 +20,9 @@
  */
 package org.verapdf.model.impl.axl;
 
-import com.adobe.xmp.XMPConst;
-import com.adobe.xmp.impl.VeraPDFMeta;
-import com.adobe.xmp.impl.VeraPDFXMPNode;
+import org.verapdf.xmp.XMPConst;
+import org.verapdf.xmp.impl.VeraPDFMeta;
+import org.verapdf.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.tools.xmp.SchemasDefinition;
 import org.verapdf.model.tools.xmp.SchemasDefinitionCreator;
@@ -54,6 +54,8 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
 
     private final VeraPDFMeta xmpMetadata;
     private final boolean isSerializationValid;
+    //------------------------------------------------------------------------------ veraPDF: additional field for actual encoding
+    private final String actualEncoding;
     private final boolean isMainMetadata;
     private final PDFAFlavour flavour;
     private final boolean isClosedChoiceCheck;
@@ -82,6 +84,8 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
         super(type);
         this.xmpMetadata = xmpMetadata;
         this.isSerializationValid = isSerializationValid;
+        //------------------------------------------------------------------------------ veraPDF: added actual encoding into constructor
+        this.actualEncoding = this.xmpMetadata != null ? this.xmpMetadata.getActualEncoding() : null;
         this.isMainMetadata = isMainMetadata;
         this.isClosedChoiceCheck = isClosedChoiceCheck;
         this.mainPackageSchemasDefinition = SchemasDefinitionCreator
@@ -145,6 +149,14 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
                     this.getCurrentSchemasDefinitionPDFA_2_3ForNS(namespaceURI),
                     this.flavour);
         }
+        if (node.isLanguageAlternative()) {
+            return new AXLXMPLangAlt(node, this.isMainMetadata,
+                    this.isClosedChoiceCheck,
+                    this.getMainPackageSchemasDefinitionForNS(namespaceURI),
+                    this.getCurrentSchemasDefinitionPDFA_1ForNS(namespaceURI),
+                    this.getCurrentSchemasDefinitionPDFA_2_3ForNS(namespaceURI),
+                    this.flavour);
+        }
         return new AXLXMPProperty(node, this.isMainMetadata,
                 this.isClosedChoiceCheck,
                 this.getMainPackageSchemasDefinitionForNS(namespaceURI),
@@ -160,6 +172,12 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     @Override
     public Boolean getisSerializationValid() {
         return Boolean.valueOf(this.isSerializationValid);
+    }
+
+    //------------------------------------------------------------------------------ veraPDF: getter method for actual encoding
+    @Override
+    public String getactualEncoding() {
+        return this.actualEncoding;
     }
 
     @Override

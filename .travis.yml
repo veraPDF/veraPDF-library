@@ -1,10 +1,10 @@
 language: java
 sudo: required
-dist: trusty
+dist: bionic
 
 jdk:
   - openjdk8
-  - oraclejdk8
+  - openjdk11
 
 branches:
   except:

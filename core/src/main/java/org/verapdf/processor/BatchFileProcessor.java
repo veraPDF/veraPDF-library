@@ -23,12 +23,20 @@
  */
 package org.verapdf.processor;
 
+import org.verapdf.core.VeraPDFException;
+import org.verapdf.core.utils.FileUtils;
+import org.verapdf.core.utils.LogsFileHandler;
+import org.verapdf.processor.reports.ItemDetails;
+
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.verapdf.core.VeraPDFException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -67,12 +75,33 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 	 */
 	@Override
 	protected void processList(List<? extends File> toProcess) throws VeraPDFException {
+		configLogs();
 		for (File item : toProcess) {
 			if (item == null || !item.isFile() || !item.canRead()) {
 				logger.log(Level.SEVERE, badItemMessage(item, false));
+			} else if (FileUtils.hasExtNoCase(item.getName(), "zip")) {
+				processArchive(item);
 			} else {
 				processItem(item);
 			}
+		}
+	}
+
+	private void processArchive(final File toProcess) throws VeraPDFException {
+		try (ZipFile zipFile = new ZipFile(toProcess)) {
+			Enumeration<? extends ZipEntry> entries = zipFile.entries();
+			while (entries.hasMoreElements()) {
+				ZipEntry entry = entries.nextElement();
+				if (entry.isDirectory() || (!processor.getConfig().getValidatorConfig().getNonPDFExtension() &&
+						!isPdf(entry.getName()))) {
+					continue;
+				}
+				ItemDetails itemDetails = ItemDetails.fromValues(toProcess.getAbsolutePath() + File.separator +
+						entry.getName().replace("/", File.separator).replace("\\", File.separator), entry.getSize());
+				processItem(itemDetails, zipFile.getInputStream(entry));
+			}
+		} catch (IOException exp) {
+			throw new VeraPDFException(exp.getMessage(), exp);
 		}
 	}
 
@@ -89,14 +118,39 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 	}
 
 	private static boolean isPdf(final String name) {
-		if (!name.endsWith(".pdf")) //$NON-NLS-1$
-			return name.endsWith(".PDF"); //$NON-NLS-1$
-		return true;
+		return FileUtils.hasExtNoCase(name, "pdf");//$NON-NLS-1$
+	}
+
+	private void configLogs() {
+		if (this.processor.getConfig().getValidatorConfig().isLogsEnabled()) {
+			LogsFileHandler.configLogs();
+			LogsFileHandler.setLoggingLevel(this.processor.getConfig().getValidatorConfig().getLoggingLevel());
+		}
+	}
+
+	private void debugAndLog(String fileName) {
+		if (this.processor.getConfig().getValidatorConfig().isDebug()) {
+			logger.log(Level.WARNING, fileName);
+		}
+		if (this.processor.getConfig().getValidatorConfig().isLogsEnabled()) {
+			try {
+				LogsFileHandler.createNewLogFile();
+			} catch (IOException e) {
+				logger.log(Level.WARNING, "Error while creating log file");
+			}
+		}
+	}
+
+	private void processItem(ItemDetails fileDetails, final InputStream item) throws VeraPDFException {
+		debugAndLog(fileDetails.getName());
+		ProcessorResult result = this.processor.process(fileDetails, item);
+		this.processResult(result, this.processor.getConfig().getValidatorConfig().isLogsEnabled());
 	}
 
 	private void processItem(final File item) throws VeraPDFException {
+		debugAndLog(item.getAbsolutePath());
 		ProcessorResult result = this.processor.process(item);
-		this.processResult(result);
+		this.processResult(result, this.processor.getConfig().getValidatorConfig().isLogsEnabled());
 	}
 
 	private static String badItemMessage(final File item, final boolean isDir) {

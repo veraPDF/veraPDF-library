@@ -15,7 +15,7 @@
 package org.verapdf.processor;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,22 +41,22 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 	private static final String parseExcepMessTmpl = "%s does not appear to be a valid PDF file and could not be parsed.";
 	private static final String pdfEncryptMessTmpl = "%s appears to be an encrypted PDF file and could not be processed.";
 	private static final String ruleMessTmpl = "  %s%s-%d\n"; //$NON-NLS-1$
-	private OutputStream outputStream;
+	private PrintWriter outputStreamWriter;
 	private final boolean isVerbose;
 	private final boolean logSuccess;
 	private ItemDetails item;
 
-	private SingleLineResultHandler(OutputStream outputStream) {
-		this(outputStream, false);
+	private SingleLineResultHandler(PrintWriter outputStreamWriter) {
+		this(outputStreamWriter, false);
 	}
 
-	private SingleLineResultHandler(OutputStream outputStream, boolean isVerbose) {
-		this(outputStream, isVerbose, false);
+	private SingleLineResultHandler(PrintWriter outputStreamWriter, boolean isVerbose) {
+		this(outputStreamWriter, isVerbose, false);
 	}
 
-	private SingleLineResultHandler(OutputStream outputStream, boolean isVerbose, boolean logSuccess) {
+	private SingleLineResultHandler(PrintWriter outputStreamWriter, boolean isVerbose, boolean logSuccess) {
 		super();
-		this.outputStream = outputStream;
+		this.outputStreamWriter = outputStreamWriter;
 		this.isVerbose = isVerbose;
 		this.logSuccess = logSuccess;
 	}
@@ -77,21 +77,13 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 	}
 
 	@Override
-	void parsingFailure(final TaskResult taskResult) throws VeraPDFException {
-		try {
-			this.outputStream.write(String.format(parseExcepMessTmpl, this.item.getName()).getBytes());
-		} catch (IOException excep) {
-			throw new VeraPDFException(ioExcepMess, excep);
-		}
+	void parsingFailure(final TaskResult taskResult) {
+		this.outputStreamWriter.write(String.format(parseExcepMessTmpl, this.item.getName()));
 	}
 
 	@Override
-	void pdfEncrypted(final TaskResult taskResult) throws VeraPDFException {
-		try {
-			this.outputStream.write(String.format(pdfEncryptMessTmpl, this.item.getName()).getBytes());
-		} catch (IOException excep) {
-			throw new VeraPDFException(ioExcepMess, excep);
-		}
+	void pdfEncrypted(final TaskResult taskResult) {
+		this.outputStreamWriter.write(String.format(pdfEncryptMessTmpl, this.item.getName()));
 	}
 
 	@Override
@@ -99,8 +91,8 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 			throws VeraPDFException {
 		String reportSummary = (validationResult.isCompliant() ? pass : fail) + this.item.getName() + "\n"; //$NON-NLS-1$
 		try {
-			this.outputStream.write(reportSummary.getBytes());
-			if (this.isVerbose) {
+			this.outputStreamWriter.write(reportSummary);
+			if (this.isVerbose || this.logSuccess) {
 				processRules(validationResult);
 			}
 		} catch (IOException excep) {
@@ -109,13 +101,9 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 	}
 
 	@Override
-	void validationFailure(final TaskResult taskResult) throws VeraPDFException {
+	void validationFailure(final TaskResult taskResult) {
 		String reportSummary = "ERROR " + this.item.getName() + " " + taskResult.getType().fullName() + "\n"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		try {
-			this.outputStream.write(reportSummary.getBytes());
-		} catch (IOException excep) {
-			throw new VeraPDFException(ioExcepMess, excep);
-		}
+		this.outputStreamWriter.write(reportSummary);
 	}
 
 	@Override
@@ -139,20 +127,19 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 	}
 
 	@Override
-	void resultEnd(ProcessorResult result) {
+	void resultEnd(ProcessorResult result, Boolean isLogsEnabled) {
 		// Do nothing here
 	}
 
 	@Override
 	public void handleBatchEnd(BatchSummary summary) {
-		// Do nothing here
+		this.close();
 	}
 
 	@Override
-	public void close() throws IOException {
-		if (this.outputStream != System.out) {
-			this.outputStream.close();
-		}
+	public void close() {
+		this.outputStreamWriter.flush();
+		this.outputStreamWriter.close();
 	}
 
 	private void processRules(final ValidationResult validationResult) throws IOException {
@@ -160,29 +147,36 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 		Set<RuleId> failedRules = new HashSet<>();
 		for (TestAssertion assertion : validationResult.getTestAssertions()) {
 			if (assertion.getStatus() == TestAssertion.Status.FAILED) {
-				failedRules.add(assertion.getRuleId());
+				if (this.isVerbose) {
+					failedRules.add(assertion.getRuleId());
+				}
 			} else if (this.logSuccess) {
 				passedRules.add(assertion.getRuleId());
 			}
 		}
-		this.outputRules(failedRules, fail);
 		if (this.isVerbose) {
+			this.outputRules(failedRules, fail);
+		}
+		if (this.logSuccess) {
 			this.outputRules(passedRules, pass);
 		}
 	}
 
 	private void outputRules(final Set<RuleId> rules, final String messStart) throws IOException {
 		for (RuleId id : rules) {
-			this.outputStream.write(String
-					.format(ruleMessTmpl, messStart, id.getClause(), Integer.valueOf(id.getTestNumber())).getBytes());
+			this.outputStreamWriter.write(String.format(ruleMessTmpl, messStart, id.getClause(), Integer.valueOf(id.getTestNumber())));
 		}
 	}
 
-	static BatchProcessingHandler newInstance(final OutputStream outputStream) {
-		return new SingleLineResultHandler(outputStream);
+	static BatchProcessingHandler newInstance(final PrintWriter outputStreamWriter) {
+		return new SingleLineResultHandler(outputStreamWriter);
 	}
 
-	static BatchProcessingHandler newInstance(OutputStream outputStream, final boolean verbose) {
-		return new SingleLineResultHandler(outputStream, verbose);
+	static BatchProcessingHandler newInstance(PrintWriter outputStreamWriter, final boolean verbose) {
+		return new SingleLineResultHandler(outputStreamWriter, verbose);
+	}
+
+	static BatchProcessingHandler newInstance(PrintWriter outputStreamWriter, final boolean verbose, final boolean logSuccess) {
+		return new SingleLineResultHandler(outputStreamWriter, verbose, logSuccess);
 	}
 }

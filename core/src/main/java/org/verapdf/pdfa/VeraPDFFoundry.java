@@ -79,6 +79,15 @@ public interface VeraPDFFoundry extends Component {
 	public PDFAParser createParser(InputStream pdfStream, PDFAFlavour flavour)
 			throws ModelParsingException, EncryptedPdfException;
 
+	public PDFAParser createParser(InputStream pdfStream, PDFAFlavour flavour, PDFAFlavour defaultFlavour)
+			throws ModelParsingException, EncryptedPdfException;
+
+	public PDFAParser createParser(InputStream pdfStream, PDFAFlavour flavour, String password)
+			throws ModelParsingException, EncryptedPdfException;
+
+	public PDFAParser createParser(InputStream pdfStream, PDFAFlavour flavour, PDFAFlavour defaultFlavour, String password)
+			throws ModelParsingException, EncryptedPdfException;
+
 	/**
 	 * Method that returns a PDFParser instance, parsing file passed as
 	 * {@link pdfFile} parameter. The caller must explicitly state the flavour
@@ -96,9 +105,18 @@ public interface VeraPDFFoundry extends Component {
 	public PDFAParser createParser(File pdfFile, PDFAFlavour flavour)
 			throws ModelParsingException, EncryptedPdfException;
 
+	public PDFAParser createParser(File pdfFile, PDFAFlavour flavour, PDFAFlavour defaultFlavour)
+			throws ModelParsingException, EncryptedPdfException;
+
+	public PDFAParser createParser(File pdfFile, PDFAFlavour flavour, String password)
+			throws ModelParsingException, EncryptedPdfException;
+
+	public PDFAParser createParser(File pdfFile, PDFAFlavour flavour, PDFAFlavour defaultFlavour, String password)
+			throws ModelParsingException, EncryptedPdfException;
+
 	/**
 	 * Method that returns a PDFParser instance, parsing file passed as
-	 * {@link pdfStream} parameter. The parser or parser provider will detect
+	 * {@link pdfFile} parameter. The parser or parser provider will detect
 	 * the flavour of the PDF document stream and provide an appropriate parser.
 	 *
 	 * @param pdfFile
@@ -186,6 +204,12 @@ public interface VeraPDFFoundry extends Component {
 	 */
 	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess);
 
+	public PDFAValidator createValidator(PDFAFlavour flavour, int maxNumberOfDisplayedFailedChecks,
+										 boolean logSuccess, boolean showErrorMessages, boolean showProgress);
+
+	public PDFAValidator createValidator(ValidationProfile profile, int maxNumberOfDisplayedFailedChecks,
+										 boolean logSuccess, boolean showErrorMessages, boolean showProgress);
+
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
 	 * requested fast failing behaviour and configured NOT to log passed checks.
@@ -203,7 +227,8 @@ public interface VeraPDFFoundry extends Component {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures);
+	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures, int maxNumberOfDisplayedFailedChecks,
+												 boolean logSuccess, boolean showErrorMessages, boolean showProgress);
 
 	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile,
@@ -221,7 +246,8 @@ public interface VeraPDFFoundry extends Component {
 	 * @return a {@link PDFAValidator} instance initialised from the passed
 	 *         parameters
 	 */
-	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures);
+	public PDFAValidator createFailFastValidator(ValidationProfile profile, int maxFailures, int maxNumberOfDisplayedFailedChecks,
+												 boolean logSuccess, boolean showErrorMessages, boolean showProgress);
 
 	/**
 	 * Obtain a new {@link MetadataFixer} instance.

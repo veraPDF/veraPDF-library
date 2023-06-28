@@ -26,19 +26,39 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>verapdf-parent</artifactId>
     <groupId>org.verapdf</groupId>
-    <version>1.14.3</version>
-    <relativePath>parent/pom.xml</relativePath>
+    <artifactId>verapdf-parent</artifactId>
+    <version>1.24.1</version>
   </parent>
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-library</artifactId>
-  <version>1.14.0</version>
+  <version>1.24.0</version>
   <packaging>pom</packaging>
 
   <name>veraPDF PDF/A Validation Library</name>
   <description>veraPDF PDF/A Validation API and core types.</description>
+
+  <repositories>
+    <repository>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>vera-dev</id>
+      <name>Vera development</name>
+      <url>https://artifactory.openpreservation.org/artifactory/vera-dev</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>vera-dev</id>
+      <name>Vera development</name>
+      <url>https://artifactory.openpreservation.org/artifactory/vera-dev</url>
+    </pluginRepository>
+  </pluginRepositories>
 
   <modules>
     <module>xmp-core</module>
@@ -52,7 +72,7 @@
   </scm>
 
   <properties>
-    <verapdf.model.version>[1.14.0,1.15.0)</verapdf.model.version>
+    <verapdf.model.version>[1.24.0,1.25.0)</verapdf.model.version>
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
   </properties>
@@ -88,14 +108,14 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.13-beta-3</version>
+        <version>4.13.2</version>
         <scope>test</scope>
       </dependency>
 
       <dependency>
         <groupId>nl.jqno.equalsverifier</groupId>
         <artifactId>equalsverifier</artifactId>
-        <version>1.7.8</version>
+        <version>3.7.1</version>
         <scope>test</scope>
       </dependency>
 
@@ -103,7 +123,7 @@
       <dependency>
         <groupId>org.mozilla</groupId>
         <artifactId>rhino</artifactId>
-        <version>1.7.11</version>
+        <version>1.7.13</version>
       </dependency>
 
       <dependency>
@@ -115,7 +135,7 @@
       <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
-        <version>2.6</version>
+        <version>2.11.0</version>
         <scope>test</scope>
       </dependency>
 

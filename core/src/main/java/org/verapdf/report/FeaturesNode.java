@@ -220,4 +220,11 @@ public class FeaturesNode {
 		return new FeaturesNode(atts, children);
 	}
 
+	public Map<QName, Object> getAttributes() {
+		return attributes;
+	}
+
+	public List<Object> getChildren() {
+		return children;
+	}
 }

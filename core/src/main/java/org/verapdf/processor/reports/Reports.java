@@ -17,15 +17,15 @@
  */
 package org.verapdf.processor.reports;
 
-import org.verapdf.component.AuditDuration;
+import java.util.List;
+
+import javax.xml.bind.JAXBException;
+
 import org.verapdf.component.Components;
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
-
-import java.util.List;
-
-import javax.xml.bind.JAXBException;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -33,6 +33,15 @@ import javax.xml.bind.JAXBException;
  * @version 0.1 Created 10 Nov 2016:08:12:36
  */
 public final class Reports {
+
+	private static final String STATEMENT_PREFIX = "PDF file is ";
+	private static final String NOT_INSERT = "not ";
+	private static final String STATEMENT_SUFFIX = "compliant with Validation Profile requirements.";
+	private static final String COMPLIANT_STATEMENT = STATEMENT_PREFIX
+			+ STATEMENT_SUFFIX;
+	private static final String NONCOMPLIANT_STATEMENT = STATEMENT_PREFIX
+			+ NOT_INSERT + STATEMENT_SUFFIX;
+
 	private Reports() {
 		throw new AssertionError("Should never enter Reports()."); //$NON-NLS-1$
 	}
@@ -57,12 +66,15 @@ public final class Reports {
 	 *         values
 	 */
 	public static final BatchSummary createBatchSummary(final Components.Timer timer, final ValidationBatchSummary validationSummary,
-			final FeaturesBatchSummary featureSummary, final MetadataRepairBatchSummary repairSummary, final int totalJobs, final int failedToParse, final int encrypted) {
+			final FeaturesBatchSummary featureSummary, final MetadataRepairBatchSummary repairSummary, final int totalJobs,
+														final int failedToParse, final int encrypted, final int outOfMemory, final int veraExceptions) {
 		if (totalJobs < 0)  throw new IllegalArgumentException("Argument totalJobs must be >= 0"); //$NON-NLS-1$
 		if (failedToParse < 0)  throw new IllegalArgumentException("Argument failedToParse must be >= 0"); //$NON-NLS-1$
 		if (encrypted < 0)  throw new IllegalArgumentException("Argument encrypted must be >= 0"); //$NON-NLS-1$
+		if (outOfMemory < 0)  throw new IllegalArgumentException("Argument outOfMemory must be >= 0"); //$NON-NLS-1$
+		if (veraExceptions < 0)  throw new IllegalArgumentException("Argument veraExceptions must be >= 0"); //$NON-NLS-1$
 		if ((failedToParse + encrypted) > totalJobs) throw new IllegalArgumentException("Argument totalJobs must be >= arguments (failedJobs + encrypted)"); //$NON-NLS-1$
-		return BatchSummaryImpl.fromValues(timer.stop(), validationSummary, featureSummary, repairSummary, totalJobs, failedToParse, encrypted);
+		return BatchSummaryImpl.fromValues(timer.stop(), validationSummary, featureSummary, repairSummary, totalJobs, failedToParse, encrypted, outOfMemory, veraExceptions);
 	}
 
 	/**
@@ -83,8 +95,21 @@ public final class Reports {
 	 * @return a new {@link ValidationReport} instance
 	 */
 	public static final ValidationReport createValidationReport(final ValidationDetails details,
-			final String profileName, final String statement, final boolean isCompliant) {
-		return ValidationReportImpl.fromValues(details, profileName, statement, isCompliant);
+	                                                            final String profileName, final String statement,
+	                                                            final boolean isCompliant, final String jobEndStatus) {
+		return ValidationReportImpl.fromValues(details, profileName, statement, isCompliant, jobEndStatus);
+	}
+
+	public static final ValidationReport createValidationReport(final ValidationResult validationResult,
+																final boolean logPassed) {
+		ValidationDetails details = Reports.fromValues(validationResult, logPassed);
+		return Reports.createValidationReport(details, validationResult.getProfileDetails().getName(),
+		                                      getStatement(validationResult.isCompliant()), validationResult.isCompliant(),
+		                                      validationResult.getJobEndStatus().getValue());
+	}
+
+	private static String getStatement(boolean status) {
+		return status ? COMPLIANT_STATEMENT : NONCOMPLIANT_STATEMENT;
 	}
 
 	/**
@@ -111,18 +136,20 @@ public final class Reports {
 	 *            the {@link ValidationResult} produced by the validation task
 	 * @param logPassedChecks
 	 *            boolean indicating whether passed checks were logged
-	 * @param maxFailedChecks
-	 *            in that records the max failed checks limit applied
 	 * @return a new {@link ValidationDetails} instance
 	 */
-	public static final ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks,
-			final int maxFailedChecks) {
-		return ValidationDetailsImpl.fromValues(result, logPassedChecks, maxFailedChecks);
+	public static final ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks) {
+		return ValidationDetailsImpl.fromValues(result, logPassedChecks);
 	}
 
 	public static final MetadataFixerReport fromValues(final String status, final int fixCount,
 			final List<String> fixes, final List<String> errors) {
 		return FixerReportImpl.fromValues(status, fixCount, fixes, errors);
+	}
+
+	public static final ValidationDetails fromValues(final ValidationResult result, boolean logPassedChecks,
+													 final int maxFailedChecks) {
+		return Reports.fromValues(result, logPassedChecks);
 	}
 
 	public static final MetadataFixerReport fromValues(final MetadataFixerResult fixerResult) {

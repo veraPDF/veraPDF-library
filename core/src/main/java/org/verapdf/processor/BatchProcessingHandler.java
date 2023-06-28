@@ -62,7 +62,7 @@ public interface BatchProcessingHandler extends Closeable {
 	 * @throws VeraPDFException
 	 *             if there's a problem with the particular result.
 	 */
-	public void handleResult(ProcessorResult result) throws VeraPDFException;
+	public void handleResult(ProcessorResult result, Boolean isLogsEnabled) throws VeraPDFException;
 
 	/**
 	 * This method is called by the {@link BatchProcessor} at the end of the

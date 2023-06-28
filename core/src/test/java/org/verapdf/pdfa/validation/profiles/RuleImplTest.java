@@ -35,8 +35,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -79,9 +78,9 @@ public class RuleImplTest {
                         "description", "test", ErrorDetailsImpl.defaultInstance(), Collections.<Reference> emptyList());
         Rule defaultInstance = RuleImpl.defaultInstance();
         // Equivalent is NOT the same object as default instance
-        assertFalse(rule == defaultInstance);
+        assertNotSame(rule, defaultInstance);
         // But it is equal
-        assertTrue(rule.equals(defaultInstance));
+        assertEquals(rule, defaultInstance);
     }
 
     /**
@@ -95,9 +94,9 @@ public class RuleImplTest {
         Rule rule = RuleImpl.fromRule(RuleImpl.defaultInstance());
         Rule defaultInstance = RuleImpl.defaultInstance();
         // Equivalent is NOT the same object as default instance
-        assertFalse(rule == defaultInstance);
+        assertNotSame(rule, defaultInstance);
         // But it is equal
-        assertTrue(rule.equals(defaultInstance));
+        assertEquals(rule, defaultInstance);
     }
 
     /**
@@ -116,8 +115,8 @@ public class RuleImplTest {
                 "description", "test", ErrorDetailsImpl.defaultInstance(), refs);
         String xmlDefault = XmlSerialiser.toXml(rule, true, true);
         Rule unmarshalledDefault = XmlSerialiser.typeFromXml(RuleImpl.class, xmlDefault);
-        assertFalse(rule == unmarshalledDefault);
-        assertTrue(rule.equals(unmarshalledDefault));
+        assertNotSame(rule, unmarshalledDefault);
+        assertEquals(rule, unmarshalledDefault);
     }
 
     /**
@@ -137,8 +136,8 @@ public class RuleImplTest {
         }
         try (InputStream readXml = new FileInputStream(temp)) {
             Rule unmarshalledDefault = XmlSerialiser.typeFromXml(RuleImpl.class, readXml);
-            assertFalse(rule == unmarshalledDefault);
-            assertTrue(rule.equals(unmarshalledDefault));
+            assertNotSame(rule, unmarshalledDefault);
+            assertEquals(rule, unmarshalledDefault);
         }
         temp.delete();
     }

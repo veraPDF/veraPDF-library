@@ -47,4 +47,6 @@ public interface ValidationReport {
 	 * @return true if the PDF was compliant with the profile
 	 */
 	public boolean isCompliant();
+
+	public String getJobEndStatus();
 }

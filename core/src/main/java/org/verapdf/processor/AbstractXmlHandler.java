@@ -58,7 +58,7 @@ public abstract class AbstractXmlHandler extends AbstractBatchHandler {
 		}
 	}
 
-	protected <T> void serialseElement(T obj, String eleName, boolean format, boolean fragment)
+	protected <T> void serializeElement(T obj, String eleName, boolean format, boolean fragment)
 			throws VeraPDFException {
 		try {
 			XmlSerialiser.toXml(obj, this.writer, format, fragment);
@@ -75,6 +75,7 @@ public abstract class AbstractXmlHandler extends AbstractBatchHandler {
 	@Override
 	public void close() {
 		try {
+			this.writer.flush();
 			this.writer.close();
 		} catch (XMLStreamException excep) {
 			logger.log(Level.INFO, String.format(strmExcpMessTmpl, "closing"), excep); //$NON-NLS-1$

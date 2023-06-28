@@ -20,8 +20,6 @@
  */
 package org.verapdf.core.utils;
 
-import static org.junit.Assert.assertTrue;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -31,7 +29,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.verapdf.core.VeraPDFException;
 
-import nl.jqno.equalsverifier.EqualsVerifier;
+import static org.junit.Assert.*;
 
 @SuppressWarnings("static-method")
 public class RelativeDirectoryMapperTest {
@@ -48,18 +46,10 @@ public class RelativeDirectoryMapperTest {
 		tmpRoot = Files.createTempDirectory("veraTest"); //$NON-NLS-1$
 	}
 
-	/**
-	 * Test method for {@link org.verapdf.ReleaseDetails#hashCode()}.
-	 */
-	@Test
-	public final void testHashCodeAndEquals() {
-		EqualsVerifier.forClass(RelativeDirectoryMapper.class).withRedefinedSuperclass().verify();
-	}
-
 	@Test
 	public void testGetdefaultInstance() {
 		FileOutputMapper defaultInstance = RelativeDirectoryMapper.defaultInstance();
-		assertTrue(defaultInstance == RelativeDirectoryMapper.defaultInstance());
+		assertSame(defaultInstance, RelativeDirectoryMapper.defaultInstance());
 	}
 
 	@Test(expected=NullPointerException.class)
@@ -238,24 +228,22 @@ public class RelativeDirectoryMapperTest {
 		String origParent = orig.toPath().getParent().normalize().toString();
 		File mapped = toTest.mapFile(orig);
 		String mappedParent = mapped.toPath().getParent().normalize().toString();
-		assertTrue(origParent + " != " + mappedParent, origParent.equals(mappedParent)); //$NON-NLS-1$
+		assertEquals(origParent + " != " + mappedParent, origParent, mappedParent); //$NON-NLS-1$
 		assertTrue(mapped.getName() + " does not start with " + toTest.getPrefix(), //$NON-NLS-1$
 				mapped.getName().startsWith(toTest.getPrefix()));
-		assertTrue(mapped.getName() + " != " + toTest.getPrefix() + sfxName(orig, toTest.getSuffix()), //$NON-NLS-1$
-				mapped.getName().equals(toTest.getPrefix() + sfxName(orig, toTest.getSuffix())));
+		assertEquals(mapped.getName() + " != " + toTest.getPrefix() + sfxName(orig, toTest.getSuffix()), mapped.getName(), toTest.getPrefix() + sfxName(orig, toTest.getSuffix()));
 	}
 
 	static void testSubFoldMapper(File orig, FileOutputMapper toTest) throws VeraPDFException {
 		String mapTrgt = new File(orig.getParentFile(), custSubFld).toPath().normalize().toString();
 		File mapped = toTest.mapFile(orig);
 		String mappedParent = mapped.toPath().getParent().normalize().toString();
-		assertTrue(mapTrgt + " != " + mappedParent, mapTrgt.equals(mappedParent)); //$NON-NLS-1$
+		assertEquals(mapTrgt + " != " + mappedParent, mapTrgt, mappedParent); //$NON-NLS-1$
 		assertTrue(mapped.getName() + " does not start with " + toTest.getPrefix(), //$NON-NLS-1$
 				mapped.getName().startsWith(toTest.getPrefix()));
-		assertTrue(mapped.getName() + " != " + toTest.getPrefix() + sfxName(orig, toTest.getSuffix()), //$NON-NLS-1$
-				mapped.getName().equals(toTest.getPrefix() + sfxName(orig, toTest.getSuffix())));
+		assertEquals(mapped.getName() + " != " + toTest.getPrefix() + sfxName(orig, toTest.getSuffix()), mapped.getName(), toTest.getPrefix() + sfxName(orig, toTest.getSuffix()));
 	}
-	
+
 	static String sfxName(File orig, final String sfx) {
 		if (orig.getName().lastIndexOf(".") > 0 && !sfx.startsWith(".")) {
 			return orig.getName().substring(0, orig.getName().lastIndexOf(".")) + sfx + orig.getName().substring(orig.getName().lastIndexOf("."));
