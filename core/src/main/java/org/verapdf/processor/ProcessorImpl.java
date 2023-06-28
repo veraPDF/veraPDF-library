@@ -153,7 +153,7 @@ final class ProcessorImpl implements ItemProcessor {
 		} catch (Exception e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
 			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
-			return ProcessorResultImpl.invalidPdfResult(fileDetails,
+			return ProcessorResultImpl.veraExceptionResult(fileDetails,
 			       TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(),
 			       new VeraPDFException("Caught unexpected exception during parsing", e))); //$NON-NLS-1$
 		}
@@ -210,7 +210,7 @@ final class ProcessorImpl implements ItemProcessor {
 		}  catch (Exception e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
 			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
-			return ProcessorResultImpl.invalidPdfResult(fileDetails,
+			return ProcessorResultImpl.veraExceptionResult(fileDetails,
 			       TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(),
 			       new VeraPDFException("Caught unexpected exception during parsing", e))); //$NON-NLS-1$
 		}
