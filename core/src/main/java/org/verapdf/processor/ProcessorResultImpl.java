@@ -99,7 +99,8 @@ class ProcessorResultImpl implements ProcessorResult {
 		this.isEncryptedPdf = isEncrypted;
 		this.isOutOfMemory = isOutOfMemory;
 		this.taskResults = results;
-		this.hasException = this.taskResults.values().stream().anyMatch(res -> res.getException() != null);
+		this.hasException = !isEncryptedPdf && !this.isOutOfMemory && this.isPdf &&
+				this.taskResults.values().stream().anyMatch(res -> res.getException() != null);
 		this.validationResult = validationResult;
 		this.featuresResult = featuresResult;
 		this.fixerResult = fixerResult;
@@ -150,6 +151,10 @@ class ProcessorResultImpl implements ProcessorResult {
 
 	static ProcessorResult outOfMemoryResult(final ItemDetails details, final TaskResult res) {
 		return new ProcessorResultImpl(details, false, true, res);
+	}
+
+	static ProcessorResult veraExceptionResult(final ItemDetails details, final TaskResult res) {
+		return new ProcessorResultImpl(details, false, false, res);
 	}
 
 	@Override
