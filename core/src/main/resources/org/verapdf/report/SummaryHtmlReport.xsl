@@ -168,7 +168,7 @@
                   <xsl:value-of select="@totalJobs"/>
               </td>
               <td>
-                  <xsl:value-of select="@failedToParse"/>
+                  <xsl:value-of select="number(@outOfMemory)+number(@veraExceptions)+number(@failedToParse)"/>
               </td>
               <td>
                   <xsl:value-of select="@encrypted"/>
@@ -227,11 +227,25 @@
             <xsl:choose>
               <xsl:when test="validationReport/@isCompliant = 'true'">
                 <xsl:value-of select="'Passed'" />
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="'Failed'" />
-                </xsl:otherwise>
-              </xsl:choose>
+              </xsl:when>
+              <xsl:otherwise>
+                  <xsl:choose>
+                      <xsl:when test="validationReport/@isCompliant = 'false'">
+                          <xsl:value-of select="'Failed'" />
+                      </xsl:when>
+                      <xsl:otherwise>
+                          <xsl:choose>
+                              <xsl:when test="contains(taskResult/exceptionMessage, 'encrypted PDF with unknown or wrong password')">
+                                  <xsl:value-of select="'Encrypted'" />
+                              </xsl:when>
+                              <xsl:otherwise>
+                                  <xsl:value-of select="'Failed to Parse'" />
+                              </xsl:otherwise>
+                          </xsl:choose>
+                      </xsl:otherwise>
+                  </xsl:choose>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:variable>
           <tr>
             <td class="lefted">
