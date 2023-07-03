@@ -2969,9 +2969,9 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
-			<id specification="ISO_32000_1_1" clause="Catalog-Dests-Dictionary" testNumber="12"/>
-			<description>If entry Dests with type Dictionary in Catalog satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>DestsHasTypeDictionary != true || (isDestsIndirect == true)</test>
+			<id specification="ISO_32000_1_1" clause="Catalog-Dests-Dictionary" testNumber="10"/>
+			<description>Entry Dests with type Dictionary in Catalog shall be indirect</description>
+			<test>DestsHasTypeDictionary != true || isDestsIndirect == true</test>
 			<error>
 				<message>Entry Dests with type Dictionary in Catalog is direct</message>
 				<arguments>
@@ -3053,9 +3053,9 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
-			<id specification="ISO_32000_1_1" clause="Catalog-Outlines-Dictionary" testNumber="12"/>
-			<description>If entry Outlines with type Dictionary in Catalog satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>OutlinesHasTypeDictionary != true || (isOutlinesIndirect == true)</test>
+			<id specification="ISO_32000_1_1" clause="Catalog-Outlines-Dictionary" testNumber="10"/>
+			<description>Entry Outlines with type Dictionary in Catalog shall be indirect</description>
+			<test>OutlinesHasTypeDictionary != true || isOutlinesIndirect == true</test>
 			<error>
 				<message>Entry Outlines with type Dictionary in Catalog is direct</message>
 				<arguments>
@@ -3187,9 +3187,9 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
-			<id specification="ISO_32000_1_1" clause="Catalog-Threads-Array" testNumber="12"/>
-			<description>If entry Threads with type Array in Catalog satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>ThreadsHasTypeArray != true || (isThreadsIndirect == true)</test>
+			<id specification="ISO_32000_1_1" clause="Catalog-Threads-Array" testNumber="10"/>
+			<description>Entry Threads with type Array in Catalog shall be indirect</description>
+			<test>ThreadsHasTypeArray != true || isThreadsIndirect == true</test>
 			<error>
 				<message>Entry Threads with type Array in Catalog is direct</message>
 				<arguments>
@@ -4761,7 +4761,7 @@
 		</rule>
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_1" clause="FileTrailer-ID-Array" testNumber="16"/>
-			<description>If entry ID with type Array in FileTrailer satisfies condition fn:MustBeDirect(fn:IsPresent(Encrypt)), it shall be direct</description>
+			<description>If entry ID with type Array in FileTrailer satisfies condition fn:IsPresent(Encrypt), it shall be direct</description>
 			<test>entryIDHasTypeArray != true || (isentryIDIndirect == false || (containsEncrypt != true))</test>
 			<error>
 				<message>Entry ID with type Array in FileTrailer is indirect</message>
@@ -4796,9 +4796,9 @@
 			<references/>
 		</rule>
 		<rule object="AFileTrailer">
-			<id specification="ISO_32000_1_1" clause="FileTrailer-Info-Dictionary" testNumber="12"/>
-			<description>If entry Info with type Dictionary in FileTrailer satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>InfoHasTypeDictionary != true || (isInfoIndirect == true)</test>
+			<id specification="ISO_32000_1_1" clause="FileTrailer-Info-Dictionary" testNumber="10"/>
+			<description>Entry Info with type Dictionary in FileTrailer shall be indirect</description>
+			<test>InfoHasTypeDictionary != true || isInfoIndirect == true</test>
 			<error>
 				<message>Entry Info with type Dictionary in FileTrailer is direct</message>
 				<arguments>
@@ -4820,9 +4820,9 @@
 			<references/>
 		</rule>
 		<rule object="AFileTrailer">
-			<id specification="ISO_32000_1_1" clause="FileTrailer-Prev-Integer" testNumber="16"/>
-			<description>If entry Prev with type Integer in FileTrailer satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>PrevHasTypeInteger != true || (isPrevIndirect == false)</test>
+			<id specification="ISO_32000_1_1" clause="FileTrailer-Prev-Integer" testNumber="10"/>
+			<description>Entry Prev with type Integer in FileTrailer shall be direct</description>
+			<test>PrevHasTypeInteger != true || isPrevIndirect == false</test>
 			<error>
 				<message>Entry Prev with type Integer in FileTrailer is indirect</message>
 				<arguments>
@@ -4916,9 +4916,9 @@
 			<references/>
 		</rule>
 		<rule object="AFileTrailer">
-			<id specification="ISO_32000_1_1" clause="FileTrailer-Size-Integer" testNumber="16"/>
-			<description>If entry Size with type Integer in FileTrailer satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>SizeHasTypeInteger != true || (isSizeIndirect == false)</test>
+			<id specification="ISO_32000_1_1" clause="FileTrailer-Size-Integer" testNumber="10"/>
+			<description>Entry Size with type Integer in FileTrailer shall be direct</description>
+			<test>SizeHasTypeInteger != true || isSizeIndirect == false</test>
 			<error>
 				<message>Entry Size with type Integer in FileTrailer is indirect</message>
 				<arguments>
@@ -7318,9 +7318,9 @@
 			<references/>
 		</rule>
 		<rule object="AFontType1">
-			<id specification="ISO_32000_1_1" clause="FontType1-FontDescriptor-Dictionary" testNumber="12"/>
-			<description>If entry FontDescriptor with type Dictionary in FontType1 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
+			<id specification="ISO_32000_1_1" clause="FontType1-FontDescriptor-Dictionary" testNumber="10"/>
+			<description>Entry FontDescriptor with type Dictionary in FontType1 shall be indirect</description>
+			<test>FontDescriptorHasTypeDictionary != true || isFontDescriptorIndirect == true</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontType1 is direct</message>
 				<arguments>
@@ -7668,9 +7668,9 @@
 			<references/>
 		</rule>
 		<rule object="AFontType3">
-			<id specification="ISO_32000_1_1" clause="FontType3-FontDescriptor-Dictionary" testNumber="12"/>
-			<description>If entry FontDescriptor with type Dictionary in FontType3 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
+			<id specification="ISO_32000_1_1" clause="FontType3-FontDescriptor-Dictionary" testNumber="10"/>
+			<description>Entry FontDescriptor with type Dictionary in FontType3 shall be indirect</description>
+			<test>FontDescriptorHasTypeDictionary != true || isFontDescriptorIndirect == true</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontType3 is direct</message>
 				<arguments>
@@ -10373,7 +10373,7 @@
 		</rule>
 		<rule object="ATrailerIDArray">
 			<id specification="ISO_32000_1_1" clause="TrailerIDArray-0-StringByte" testNumber="16"/>
-			<description>If entry 0 with type StringByte in TrailerIDArray satisfies condition fn:MustBeDirect(fn:IsPresent(trailer::Encrypt)), it shall be direct</description>
+			<description>If entry 0 with type StringByte in TrailerIDArray satisfies condition fn:IsPresent(trailer::Encrypt), it shall be direct</description>
 			<test>entry0HasTypeStringByte != true || (isentry0Indirect == false || (containstrailerEncrypt != true))</test>
 			<error>
 				<message>Entry 0 with type StringByte in TrailerIDArray is indirect</message>
@@ -10397,7 +10397,7 @@
 		</rule>
 		<rule object="ATrailerIDArray">
 			<id specification="ISO_32000_1_1" clause="TrailerIDArray-1-StringByte" testNumber="16"/>
-			<description>If entry 1 with type StringByte in TrailerIDArray satisfies condition fn:MustBeDirect(fn:IsPresent(trailer::Encrypt)), it shall be direct</description>
+			<description>If entry 1 with type StringByte in TrailerIDArray satisfies condition fn:IsPresent(trailer::Encrypt), it shall be direct</description>
 			<test>entry1HasTypeStringByte != true || (isentry1Indirect == false || (containstrailerEncrypt != true))</test>
 			<error>
 				<message>Entry 1 with type StringByte in TrailerIDArray is indirect</message>

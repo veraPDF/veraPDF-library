@@ -19453,9 +19453,9 @@
 			<references/>
 		</rule>
 		<rule object="AArrayOfXRefIndexIntegersSubArray">
-			<id specification="ISO_32000_1_5" clause="ArrayOfXRefIndexIntegersSubArray-0-Integer" testNumber="16"/>
-			<description>If entry 0 with type Integer in ArrayOfXRefIndexIntegersSubArray satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>entry0HasTypeInteger != true || (isentry0Indirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="ArrayOfXRefIndexIntegersSubArray-0-Integer" testNumber="10"/>
+			<description>Entry 0 with type Integer in ArrayOfXRefIndexIntegersSubArray shall be direct</description>
+			<test>entry0HasTypeInteger != true || isentry0Indirect == false</test>
 			<error>
 				<message>Entry 0 with type Integer in ArrayOfXRefIndexIntegersSubArray is indirect</message>
 				<arguments>
@@ -19489,9 +19489,9 @@
 			<references/>
 		</rule>
 		<rule object="AArrayOfXRefIndexIntegersSubArray">
-			<id specification="ISO_32000_1_5" clause="ArrayOfXRefIndexIntegersSubArray-1-Integer" testNumber="16"/>
-			<description>If entry 1 with type Integer in ArrayOfXRefIndexIntegersSubArray satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>entry1HasTypeInteger != true || (isentry1Indirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="ArrayOfXRefIndexIntegersSubArray-1-Integer" testNumber="10"/>
+			<description>Entry 1 with type Integer in ArrayOfXRefIndexIntegersSubArray shall be direct</description>
+			<test>entry1HasTypeInteger != true || isentry1Indirect == false</test>
 			<error>
 				<message>Entry 1 with type Integer in ArrayOfXRefIndexIntegersSubArray is indirect</message>
 				<arguments>
@@ -19537,9 +19537,9 @@
 			<references/>
 		</rule>
 		<rule object="AArrayOfXRefWIntegers">
-			<id specification="ISO_32000_1_5" clause="ArrayOfXRefWIntegers-0-Integer" testNumber="16"/>
-			<description>If entry 0 with type Integer in ArrayOfXRefWIntegers satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>entry0HasTypeInteger != true || (isentry0Indirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="ArrayOfXRefWIntegers-0-Integer" testNumber="10"/>
+			<description>Entry 0 with type Integer in ArrayOfXRefWIntegers shall be direct</description>
+			<test>entry0HasTypeInteger != true || isentry0Indirect == false</test>
 			<error>
 				<message>Entry 0 with type Integer in ArrayOfXRefWIntegers is indirect</message>
 				<arguments>
@@ -19573,9 +19573,9 @@
 			<references/>
 		</rule>
 		<rule object="AArrayOfXRefWIntegers">
-			<id specification="ISO_32000_1_5" clause="ArrayOfXRefWIntegers-1-Integer" testNumber="16"/>
-			<description>If entry 1 with type Integer in ArrayOfXRefWIntegers satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>entry1HasTypeInteger != true || (isentry1Indirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="ArrayOfXRefWIntegers-1-Integer" testNumber="10"/>
+			<description>Entry 1 with type Integer in ArrayOfXRefWIntegers shall be direct</description>
+			<test>entry1HasTypeInteger != true || isentry1Indirect == false</test>
 			<error>
 				<message>Entry 1 with type Integer in ArrayOfXRefWIntegers is indirect</message>
 				<arguments>
@@ -19609,9 +19609,9 @@
 			<references/>
 		</rule>
 		<rule object="AArrayOfXRefWIntegers">
-			<id specification="ISO_32000_1_5" clause="ArrayOfXRefWIntegers-2-Integer" testNumber="16"/>
-			<description>If entry 2 with type Integer in ArrayOfXRefWIntegers satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>entry2HasTypeInteger != true || (isentry2Indirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="ArrayOfXRefWIntegers-2-Integer" testNumber="10"/>
+			<description>Entry 2 with type Integer in ArrayOfXRefWIntegers shall be direct</description>
+			<test>entry2HasTypeInteger != true || isentry2Indirect == false</test>
 			<error>
 				<message>Entry 2 with type Integer in ArrayOfXRefWIntegers is indirect</message>
 				<arguments>
@@ -23349,9 +23349,9 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
-			<id specification="ISO_32000_1_5" clause="Catalog-Dests-Dictionary" testNumber="12"/>
-			<description>If entry Dests with type Dictionary in Catalog satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>DestsHasTypeDictionary != true || (isDestsIndirect == true)</test>
+			<id specification="ISO_32000_1_5" clause="Catalog-Dests-Dictionary" testNumber="10"/>
+			<description>Entry Dests with type Dictionary in Catalog shall be indirect</description>
+			<test>DestsHasTypeDictionary != true || isDestsIndirect == true</test>
 			<error>
 				<message>Entry Dests with type Dictionary in Catalog is direct</message>
 				<arguments>
@@ -23577,9 +23577,9 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
-			<id specification="ISO_32000_1_5" clause="Catalog-Outlines-Dictionary" testNumber="12"/>
-			<description>If entry Outlines with type Dictionary in Catalog satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>OutlinesHasTypeDictionary != true || (isOutlinesIndirect == true)</test>
+			<id specification="ISO_32000_1_5" clause="Catalog-Outlines-Dictionary" testNumber="10"/>
+			<description>Entry Outlines with type Dictionary in Catalog shall be indirect</description>
+			<test>OutlinesHasTypeDictionary != true || isOutlinesIndirect == true</test>
 			<error>
 				<message>Entry Outlines with type Dictionary in Catalog is direct</message>
 				<arguments>
@@ -23855,9 +23855,9 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
-			<id specification="ISO_32000_1_5" clause="Catalog-Threads-Array" testNumber="12"/>
-			<description>If entry Threads with type Array in Catalog satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>ThreadsHasTypeArray != true || (isThreadsIndirect == true)</test>
+			<id specification="ISO_32000_1_5" clause="Catalog-Threads-Array" testNumber="10"/>
+			<description>Entry Threads with type Array in Catalog shall be indirect</description>
+			<test>ThreadsHasTypeArray != true || isThreadsIndirect == true</test>
 			<error>
 				<message>Entry Threads with type Array in Catalog is direct</message>
 				<arguments>
@@ -30533,7 +30533,7 @@
 		</rule>
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_5" clause="FileTrailer-ID-Array" testNumber="16"/>
-			<description>If entry ID with type Array in FileTrailer satisfies condition fn:MustBeDirect(fn:IsPresent(Encrypt)), it shall be direct</description>
+			<description>If entry ID with type Array in FileTrailer satisfies condition fn:IsPresent(Encrypt), it shall be direct</description>
 			<test>entryIDHasTypeArray != true || (isentryIDIndirect == false || (containsEncrypt != true))</test>
 			<error>
 				<message>Entry ID with type Array in FileTrailer is indirect</message>
@@ -30580,9 +30580,9 @@
 			<references/>
 		</rule>
 		<rule object="AFileTrailer">
-			<id specification="ISO_32000_1_5" clause="FileTrailer-Info-Dictionary" testNumber="12"/>
-			<description>If entry Info with type Dictionary in FileTrailer satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>InfoHasTypeDictionary != true || (isInfoIndirect == true)</test>
+			<id specification="ISO_32000_1_5" clause="FileTrailer-Info-Dictionary" testNumber="10"/>
+			<description>Entry Info with type Dictionary in FileTrailer shall be indirect</description>
+			<test>InfoHasTypeDictionary != true || isInfoIndirect == true</test>
 			<error>
 				<message>Entry Info with type Dictionary in FileTrailer is direct</message>
 				<arguments>
@@ -30616,9 +30616,9 @@
 			<references/>
 		</rule>
 		<rule object="AFileTrailer">
-			<id specification="ISO_32000_1_5" clause="FileTrailer-Prev-Integer" testNumber="16"/>
-			<description>If entry Prev with type Integer in FileTrailer satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>PrevHasTypeInteger != true || (isPrevIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="FileTrailer-Prev-Integer" testNumber="10"/>
+			<description>Entry Prev with type Integer in FileTrailer shall be direct</description>
+			<test>PrevHasTypeInteger != true || isPrevIndirect == false</test>
 			<error>
 				<message>Entry Prev with type Integer in FileTrailer is indirect</message>
 				<arguments>
@@ -30712,9 +30712,9 @@
 			<references/>
 		</rule>
 		<rule object="AFileTrailer">
-			<id specification="ISO_32000_1_5" clause="FileTrailer-Size-Integer" testNumber="16"/>
-			<description>If entry Size with type Integer in FileTrailer satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>SizeHasTypeInteger != true || (isSizeIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="FileTrailer-Size-Integer" testNumber="10"/>
+			<description>Entry Size with type Integer in FileTrailer shall be direct</description>
+			<test>SizeHasTypeInteger != true || isSizeIndirect == false</test>
 			<error>
 				<message>Entry Size with type Integer in FileTrailer is indirect</message>
 				<arguments>
@@ -31745,9 +31745,9 @@
 			<references/>
 		</rule>
 		<rule object="AFontCIDType0">
-			<id specification="ISO_32000_1_5" clause="FontCIDType0-FontDescriptor-Dictionary" testNumber="12"/>
-			<description>If entry FontDescriptor with type Dictionary in FontCIDType0 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
+			<id specification="ISO_32000_1_5" clause="FontCIDType0-FontDescriptor-Dictionary" testNumber="10"/>
+			<description>Entry FontDescriptor with type Dictionary in FontCIDType0 shall be indirect</description>
+			<test>FontDescriptorHasTypeDictionary != true || isFontDescriptorIndirect == true</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontCIDType0 is direct</message>
 				<arguments>
@@ -32108,9 +32108,9 @@
 			<references/>
 		</rule>
 		<rule object="AFontCIDType2">
-			<id specification="ISO_32000_1_5" clause="FontCIDType2-FontDescriptor-Dictionary" testNumber="12"/>
-			<description>If entry FontDescriptor with type Dictionary in FontCIDType2 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
+			<id specification="ISO_32000_1_5" clause="FontCIDType2-FontDescriptor-Dictionary" testNumber="10"/>
+			<description>Entry FontDescriptor with type Dictionary in FontCIDType2 shall be indirect</description>
+			<test>FontDescriptorHasTypeDictionary != true || isFontDescriptorIndirect == true</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontCIDType2 is direct</message>
 				<arguments>
@@ -37740,9 +37740,9 @@
 			<references/>
 		</rule>
 		<rule object="AFontType1">
-			<id specification="ISO_32000_1_5" clause="FontType1-FontDescriptor-Dictionary" testNumber="12"/>
-			<description>If entry FontDescriptor with type Dictionary in FontType1 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
+			<id specification="ISO_32000_1_5" clause="FontType1-FontDescriptor-Dictionary" testNumber="10"/>
+			<description>Entry FontDescriptor with type Dictionary in FontType1 shall be indirect</description>
+			<test>FontDescriptorHasTypeDictionary != true || isFontDescriptorIndirect == true</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontType1 is direct</message>
 				<arguments>
@@ -38114,9 +38114,9 @@
 			<references/>
 		</rule>
 		<rule object="AFontType3">
-			<id specification="ISO_32000_1_5" clause="FontType3-FontDescriptor-Dictionary" testNumber="12"/>
-			<description>If entry FontDescriptor with type Dictionary in FontType3 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
+			<id specification="ISO_32000_1_5" clause="FontType3-FontDescriptor-Dictionary" testNumber="10"/>
+			<description>Entry FontDescriptor with type Dictionary in FontType3 shall be indirect</description>
+			<test>FontDescriptorHasTypeDictionary != true || isFontDescriptorIndirect == true</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontType3 is direct</message>
 				<arguments>
@@ -44861,9 +44861,9 @@
 			<references/>
 		</rule>
 		<rule object="ALinearizationParameterDict">
-			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-E-Integer" testNumber="16"/>
-			<description>If entry E with type Integer in LinearizationParameterDict satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>EHasTypeInteger != true || (isEIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-E-Integer" testNumber="10"/>
+			<description>Entry E with type Integer in LinearizationParameterDict shall be direct</description>
+			<test>EHasTypeInteger != true || isEIndirect == false</test>
 			<error>
 				<message>Entry E with type Integer in LinearizationParameterDict is indirect</message>
 				<arguments>
@@ -44921,9 +44921,9 @@
 			<references/>
 		</rule>
 		<rule object="ALinearizationParameterDict">
-			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-H-Array" testNumber="16"/>
-			<description>If entry H with type Array in LinearizationParameterDict satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>HHasTypeArray != true || (isHIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-H-Array" testNumber="10"/>
+			<description>Entry H with type Array in LinearizationParameterDict shall be direct</description>
+			<test>HHasTypeArray != true || isHIndirect == false</test>
 			<error>
 				<message>Entry H with type Array in LinearizationParameterDict is indirect</message>
 				<arguments>
@@ -44957,9 +44957,9 @@
 			<references/>
 		</rule>
 		<rule object="ALinearizationParameterDict">
-			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-L-Integer" testNumber="16"/>
-			<description>If entry L with type Integer in LinearizationParameterDict satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>LHasTypeInteger != true || (isLIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-L-Integer" testNumber="10"/>
+			<description>Entry L with type Integer in LinearizationParameterDict shall be direct</description>
+			<test>LHasTypeInteger != true || isLIndirect == false</test>
 			<error>
 				<message>Entry L with type Integer in LinearizationParameterDict is indirect</message>
 				<arguments>
@@ -45005,9 +45005,9 @@
 			<references/>
 		</rule>
 		<rule object="ALinearizationParameterDict">
-			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-Linearized-Number" testNumber="16"/>
-			<description>If entry Linearized with type Number in LinearizationParameterDict satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>LinearizedHasTypeNumber != true || (isLinearizedIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-Linearized-Number" testNumber="10"/>
+			<description>Entry Linearized with type Number in LinearizationParameterDict shall be direct</description>
+			<test>LinearizedHasTypeNumber != true || isLinearizedIndirect == false</test>
 			<error>
 				<message>Entry Linearized with type Number in LinearizationParameterDict is indirect</message>
 				<arguments>
@@ -45054,9 +45054,9 @@
 			<references/>
 		</rule>
 		<rule object="ALinearizationParameterDict">
-			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-N-Integer" testNumber="16"/>
-			<description>If entry N with type Integer in LinearizationParameterDict satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>NHasTypeInteger != true || (isNIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-N-Integer" testNumber="10"/>
+			<description>Entry N with type Integer in LinearizationParameterDict shall be direct</description>
+			<test>NHasTypeInteger != true || isNIndirect == false</test>
 			<error>
 				<message>Entry N with type Integer in LinearizationParameterDict is indirect</message>
 				<arguments>
@@ -45102,9 +45102,9 @@
 			<references/>
 		</rule>
 		<rule object="ALinearizationParameterDict">
-			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-O-Integer" testNumber="16"/>
-			<description>If entry O with type Integer in LinearizationParameterDict satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>OHasTypeInteger != true || (isOIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-O-Integer" testNumber="10"/>
+			<description>Entry O with type Integer in LinearizationParameterDict shall be direct</description>
+			<test>OHasTypeInteger != true || isOIndirect == false</test>
 			<error>
 				<message>Entry O with type Integer in LinearizationParameterDict is indirect</message>
 				<arguments>
@@ -45138,9 +45138,9 @@
 			<references/>
 		</rule>
 		<rule object="ALinearizationParameterDict">
-			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-P-Integer" testNumber="16"/>
-			<description>If entry P with type Integer in LinearizationParameterDict satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>PHasTypeInteger != true || (isPIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-P-Integer" testNumber="10"/>
+			<description>Entry P with type Integer in LinearizationParameterDict shall be direct</description>
+			<test>PHasTypeInteger != true || isPIndirect == false</test>
 			<error>
 				<message>Entry P with type Integer in LinearizationParameterDict is indirect</message>
 				<arguments>
@@ -45186,9 +45186,9 @@
 			<references/>
 		</rule>
 		<rule object="ALinearizationParameterDict">
-			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-T-Integer" testNumber="16"/>
-			<description>If entry T with type Integer in LinearizationParameterDict satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>THasTypeInteger != true || (isTIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="LinearizationParameterDict-T-Integer" testNumber="10"/>
+			<description>Entry T with type Integer in LinearizationParameterDict shall be direct</description>
+			<test>THasTypeInteger != true || isTIndirect == false</test>
 			<error>
 				<message>Entry T with type Integer in LinearizationParameterDict is indirect</message>
 				<arguments>
@@ -60703,9 +60703,9 @@
 			<references/>
 		</rule>
 		<rule object="ASignatureBuildPropDict">
-			<id specification="ISO_32000_1_5" clause="SignatureBuildPropDict-App-Dictionary" testNumber="16"/>
-			<description>If entry App with type Dictionary in SignatureBuildPropDict satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>AppHasTypeDictionary != true || (isAppIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="SignatureBuildPropDict-App-Dictionary" testNumber="10"/>
+			<description>Entry App with type Dictionary in SignatureBuildPropDict shall be direct</description>
+			<test>AppHasTypeDictionary != true || isAppIndirect == false</test>
 			<error>
 				<message>Entry App with type Dictionary in SignatureBuildPropDict is indirect</message>
 				<arguments>
@@ -60739,9 +60739,9 @@
 			<references/>
 		</rule>
 		<rule object="ASignatureBuildPropDict">
-			<id specification="ISO_32000_1_5" clause="SignatureBuildPropDict-Filter-Dictionary" testNumber="16"/>
-			<description>If entry Filter with type Dictionary in SignatureBuildPropDict satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>FilterHasTypeDictionary != true || (isFilterIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="SignatureBuildPropDict-Filter-Dictionary" testNumber="10"/>
+			<description>Entry Filter with type Dictionary in SignatureBuildPropDict shall be direct</description>
+			<test>FilterHasTypeDictionary != true || isFilterIndirect == false</test>
 			<error>
 				<message>Entry Filter with type Dictionary in SignatureBuildPropDict is indirect</message>
 				<arguments>
@@ -60775,9 +60775,9 @@
 			<references/>
 		</rule>
 		<rule object="ASignatureBuildPropDict">
-			<id specification="ISO_32000_1_5" clause="SignatureBuildPropDict-PubSec-Dictionary" testNumber="16"/>
-			<description>If entry PubSec with type Dictionary in SignatureBuildPropDict satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>PubSecHasTypeDictionary != true || (isPubSecIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="SignatureBuildPropDict-PubSec-Dictionary" testNumber="10"/>
+			<description>Entry PubSec with type Dictionary in SignatureBuildPropDict shall be direct</description>
+			<test>PubSecHasTypeDictionary != true || isPubSecIndirect == false</test>
 			<error>
 				<message>Entry PubSec with type Dictionary in SignatureBuildPropDict is indirect</message>
 				<arguments>
@@ -60811,9 +60811,9 @@
 			<references/>
 		</rule>
 		<rule object="ASignatureBuildPropDict">
-			<id specification="ISO_32000_1_5" clause="SignatureBuildPropDict-SigQ-Dictionary" testNumber="16"/>
-			<description>If entry SigQ with type Dictionary in SignatureBuildPropDict satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>SigQHasTypeDictionary != true || (isSigQIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="SignatureBuildPropDict-SigQ-Dictionary" testNumber="10"/>
+			<description>Entry SigQ with type Dictionary in SignatureBuildPropDict shall be direct</description>
+			<test>SigQHasTypeDictionary != true || isSigQIndirect == false</test>
 			<error>
 				<message>Entry SigQ with type Dictionary in SignatureBuildPropDict is indirect</message>
 				<arguments>
@@ -66004,7 +66004,7 @@
 		</rule>
 		<rule object="ATrailerIDArray">
 			<id specification="ISO_32000_1_5" clause="TrailerIDArray-0-StringByte" testNumber="16"/>
-			<description>If entry 0 with type StringByte in TrailerIDArray satisfies condition fn:MustBeDirect(fn:IsPresent(trailer::Encrypt)), it shall be direct</description>
+			<description>If entry 0 with type StringByte in TrailerIDArray satisfies condition fn:IsPresent(trailer::Encrypt), it shall be direct</description>
 			<test>entry0HasTypeStringByte != true || (isentry0Indirect == false || (containstrailerEncrypt != true))</test>
 			<error>
 				<message>Entry 0 with type StringByte in TrailerIDArray is indirect</message>
@@ -66028,7 +66028,7 @@
 		</rule>
 		<rule object="ATrailerIDArray">
 			<id specification="ISO_32000_1_5" clause="TrailerIDArray-1-StringByte" testNumber="16"/>
-			<description>If entry 1 with type StringByte in TrailerIDArray satisfies condition fn:MustBeDirect(fn:IsPresent(trailer::Encrypt)), it shall be direct</description>
+			<description>If entry 1 with type StringByte in TrailerIDArray satisfies condition fn:IsPresent(trailer::Encrypt), it shall be direct</description>
 			<test>entry1HasTypeStringByte != true || (isentry1Indirect == false || (containstrailerEncrypt != true))</test>
 			<error>
 				<message>Entry 1 with type StringByte in TrailerIDArray is indirect</message>
@@ -73558,9 +73558,9 @@
 			<references/>
 		</rule>
 		<rule object="AXRefStream">
-			<id specification="ISO_32000_1_5" clause="XRefStream-DecodeParms-Array" testNumber="16"/>
-			<description>If entry DecodeParms with type Array in XRefStream satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>DecodeParmsHasTypeArray != true || (isDecodeParmsIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="XRefStream-DecodeParms-Array" testNumber="10"/>
+			<description>Entry DecodeParms with type Array in XRefStream shall be direct</description>
+			<test>DecodeParmsHasTypeArray != true || isDecodeParmsIndirect == false</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XRefStream is indirect</message>
 				<arguments>
@@ -73582,9 +73582,9 @@
 			<references/>
 		</rule>
 		<rule object="AXRefStream">
-			<id specification="ISO_32000_1_5" clause="XRefStream-DecodeParms-Dictionary" testNumber="16"/>
-			<description>If entry DecodeParms with type Dictionary in XRefStream satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>DecodeParmsHasTypeDictionary != true || (isDecodeParmsIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="XRefStream-DecodeParms-Dictionary" testNumber="10"/>
+			<description>Entry DecodeParms with type Dictionary in XRefStream shall be direct</description>
+			<test>DecodeParmsHasTypeDictionary != true || isDecodeParmsIndirect == false</test>
 			<error>
 				<message>Entry DecodeParms with type Dictionary in XRefStream is indirect</message>
 				<arguments>
@@ -73763,9 +73763,9 @@
 			<references/>
 		</rule>
 		<rule object="AXRefStream">
-			<id specification="ISO_32000_1_5" clause="XRefStream-Filter-Array" testNumber="16"/>
-			<description>If entry Filter with type Array in XRefStream satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>FilterHasTypeArray != true || (isFilterIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="XRefStream-Filter-Array" testNumber="10"/>
+			<description>Entry Filter with type Array in XRefStream shall be direct</description>
+			<test>FilterHasTypeArray != true || isFilterIndirect == false</test>
 			<error>
 				<message>Entry Filter with type Array in XRefStream is indirect</message>
 				<arguments>
@@ -73787,9 +73787,9 @@
 			<references/>
 		</rule>
 		<rule object="AXRefStream">
-			<id specification="ISO_32000_1_5" clause="XRefStream-Filter-Name" testNumber="16"/>
-			<description>If entry Filter with type Name in XRefStream satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>FilterHasTypeName != true || (isFilterIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="XRefStream-Filter-Name" testNumber="10"/>
+			<description>Entry Filter with type Name in XRefStream shall be direct</description>
+			<test>FilterHasTypeName != true || isFilterIndirect == false</test>
 			<error>
 				<message>Entry Filter with type Name in XRefStream is indirect</message>
 				<arguments>
@@ -73849,7 +73849,7 @@
 		</rule>
 		<rule object="AXRefStream">
 			<id specification="ISO_32000_1_5" clause="XRefStream-ID-Array" testNumber="16"/>
-			<description>If entry ID with type Array in XRefStream satisfies condition fn:MustBeDirect(fn:IsPresent(Encrypt)), it shall be direct</description>
+			<description>If entry ID with type Array in XRefStream satisfies condition fn:IsPresent(Encrypt), it shall be direct</description>
 			<test>entryIDHasTypeArray != true || (isentryIDIndirect == false || (containsEncrypt != true))</test>
 			<error>
 				<message>Entry ID with type Array in XRefStream is indirect</message>
@@ -73884,9 +73884,9 @@
 			<references/>
 		</rule>
 		<rule object="AXRefStream">
-			<id specification="ISO_32000_1_5" clause="XRefStream-Index-Array" testNumber="16"/>
-			<description>If entry Index with type Array in XRefStream satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>IndexHasTypeArray != true || (isIndexIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="XRefStream-Index-Array" testNumber="10"/>
+			<description>Entry Index with type Array in XRefStream shall be direct</description>
+			<test>IndexHasTypeArray != true || isIndexIndirect == false</test>
 			<error>
 				<message>Entry Index with type Array in XRefStream is indirect</message>
 				<arguments>
@@ -73944,9 +73944,9 @@
 			<references/>
 		</rule>
 		<rule object="AXRefStream">
-			<id specification="ISO_32000_1_5" clause="XRefStream-Info-Dictionary" testNumber="12"/>
-			<description>If entry Info with type Dictionary in XRefStream satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>InfoHasTypeDictionary != true || (isInfoIndirect == true)</test>
+			<id specification="ISO_32000_1_5" clause="XRefStream-Info-Dictionary" testNumber="10"/>
+			<description>Entry Info with type Dictionary in XRefStream shall be indirect</description>
+			<test>InfoHasTypeDictionary != true || isInfoIndirect == true</test>
 			<error>
 				<message>Entry Info with type Dictionary in XRefStream is direct</message>
 				<arguments>
@@ -74016,9 +74016,9 @@
 			<references/>
 		</rule>
 		<rule object="AXRefStream">
-			<id specification="ISO_32000_1_5" clause="XRefStream-Prev-Integer" testNumber="16"/>
-			<description>If entry Prev with type Integer in XRefStream satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>PrevHasTypeInteger != true || (isPrevIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="XRefStream-Prev-Integer" testNumber="10"/>
+			<description>Entry Prev with type Integer in XRefStream shall be direct</description>
+			<test>PrevHasTypeInteger != true || isPrevIndirect == false</test>
 			<error>
 				<message>Entry Prev with type Integer in XRefStream is indirect</message>
 				<arguments>
@@ -74112,9 +74112,9 @@
 			<references/>
 		</rule>
 		<rule object="AXRefStream">
-			<id specification="ISO_32000_1_5" clause="XRefStream-Size-Integer" testNumber="16"/>
-			<description>If entry Size with type Integer in XRefStream satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>SizeHasTypeInteger != true || (isSizeIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="XRefStream-Size-Integer" testNumber="10"/>
+			<description>Entry Size with type Integer in XRefStream shall be direct</description>
+			<test>SizeHasTypeInteger != true || isSizeIndirect == false</test>
 			<error>
 				<message>Entry Size with type Integer in XRefStream is indirect</message>
 				<arguments>
@@ -74160,9 +74160,9 @@
 			<references/>
 		</rule>
 		<rule object="AXRefStream">
-			<id specification="ISO_32000_1_5" clause="XRefStream-Type-Name" testNumber="16"/>
-			<description>If entry Type with type Name in XRefStream satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>TypeHasTypeName != true || (isTypeIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="XRefStream-Type-Name" testNumber="10"/>
+			<description>Entry Type with type Name in XRefStream shall be direct</description>
+			<test>TypeHasTypeName != true || isTypeIndirect == false</test>
 			<error>
 				<message>Entry Type with type Name in XRefStream is indirect</message>
 				<arguments>
@@ -74221,9 +74221,9 @@
 			<references/>
 		</rule>
 		<rule object="AXRefStream">
-			<id specification="ISO_32000_1_5" clause="XRefStream-W-Array" testNumber="16"/>
-			<description>If entry W with type Array in XRefStream satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>WHasTypeArray != true || (isWIndirect == false)</test>
+			<id specification="ISO_32000_1_5" clause="XRefStream-W-Array" testNumber="10"/>
+			<description>Entry W with type Array in XRefStream shall be direct</description>
+			<test>WHasTypeArray != true || isWIndirect == false</test>
 			<error>
 				<message>Entry W with type Array in XRefStream is indirect</message>
 				<arguments>

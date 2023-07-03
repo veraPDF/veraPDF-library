@@ -723,9 +723,9 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
-			<id specification="ISO_32000_1_0" clause="Catalog-Outlines-Dictionary" testNumber="12"/>
-			<description>If entry Outlines with type Dictionary in Catalog satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>OutlinesHasTypeDictionary != true || (isOutlinesIndirect == true)</test>
+			<id specification="ISO_32000_1_0" clause="Catalog-Outlines-Dictionary" testNumber="10"/>
+			<description>Entry Outlines with type Dictionary in Catalog shall be indirect</description>
+			<test>OutlinesHasTypeDictionary != true || isOutlinesIndirect == true</test>
 			<error>
 				<message>Entry Outlines with type Dictionary in Catalog is direct</message>
 				<arguments>
@@ -1537,9 +1537,9 @@
 			<references/>
 		</rule>
 		<rule object="AFileTrailer">
-			<id specification="ISO_32000_1_0" clause="FileTrailer-Info-Dictionary" testNumber="12"/>
-			<description>If entry Info with type Dictionary in FileTrailer satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>InfoHasTypeDictionary != true || (isInfoIndirect == true)</test>
+			<id specification="ISO_32000_1_0" clause="FileTrailer-Info-Dictionary" testNumber="10"/>
+			<description>Entry Info with type Dictionary in FileTrailer shall be indirect</description>
+			<test>InfoHasTypeDictionary != true || isInfoIndirect == true</test>
 			<error>
 				<message>Entry Info with type Dictionary in FileTrailer is direct</message>
 				<arguments>
@@ -1561,9 +1561,9 @@
 			<references/>
 		</rule>
 		<rule object="AFileTrailer">
-			<id specification="ISO_32000_1_0" clause="FileTrailer-Prev-Integer" testNumber="16"/>
-			<description>If entry Prev with type Integer in FileTrailer satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>PrevHasTypeInteger != true || (isPrevIndirect == false)</test>
+			<id specification="ISO_32000_1_0" clause="FileTrailer-Prev-Integer" testNumber="10"/>
+			<description>Entry Prev with type Integer in FileTrailer shall be direct</description>
+			<test>PrevHasTypeInteger != true || isPrevIndirect == false</test>
 			<error>
 				<message>Entry Prev with type Integer in FileTrailer is indirect</message>
 				<arguments>
@@ -1657,9 +1657,9 @@
 			<references/>
 		</rule>
 		<rule object="AFileTrailer">
-			<id specification="ISO_32000_1_0" clause="FileTrailer-Size-Integer" testNumber="16"/>
-			<description>If entry Size with type Integer in FileTrailer satisfies condition fn:MustBeDirect(), it shall be direct</description>
-			<test>SizeHasTypeInteger != true || (isSizeIndirect == false)</test>
+			<id specification="ISO_32000_1_0" clause="FileTrailer-Size-Integer" testNumber="10"/>
+			<description>Entry Size with type Integer in FileTrailer shall be direct</description>
+			<test>SizeHasTypeInteger != true || isSizeIndirect == false</test>
 			<error>
 				<message>Entry Size with type Integer in FileTrailer is indirect</message>
 				<arguments>
@@ -3975,9 +3975,9 @@
 			<references/>
 		</rule>
 		<rule object="AFontType1">
-			<id specification="ISO_32000_1_0" clause="FontType1-FontDescriptor-Dictionary" testNumber="12"/>
-			<description>If entry FontDescriptor with type Dictionary in FontType1 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
+			<id specification="ISO_32000_1_0" clause="FontType1-FontDescriptor-Dictionary" testNumber="10"/>
+			<description>Entry FontDescriptor with type Dictionary in FontType1 shall be indirect</description>
+			<test>FontDescriptorHasTypeDictionary != true || isFontDescriptorIndirect == true</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontType1 is direct</message>
 				<arguments>
@@ -4337,9 +4337,9 @@
 			<references/>
 		</rule>
 		<rule object="AFontType3">
-			<id specification="ISO_32000_1_0" clause="FontType3-FontDescriptor-Dictionary" testNumber="12"/>
-			<description>If entry FontDescriptor with type Dictionary in FontType3 satisfies condition fn:MustBeIndirect(fn:BeforeVersion(2.0)), it shall be indirect</description>
-			<test>FontDescriptorHasTypeDictionary != true || (isFontDescriptorIndirect == true)</test>
+			<id specification="ISO_32000_1_0" clause="FontType3-FontDescriptor-Dictionary" testNumber="10"/>
+			<description>Entry FontDescriptor with type Dictionary in FontType3 shall be indirect</description>
+			<test>FontDescriptorHasTypeDictionary != true || isFontDescriptorIndirect == true</test>
 			<error>
 				<message>Entry FontDescriptor with type Dictionary in FontType3 is direct</message>
 				<arguments>
