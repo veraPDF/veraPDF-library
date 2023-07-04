@@ -49280,7 +49280,7 @@
 		<rule object="AXObjectImageMask">
 			<id specification="ISO_32000_1_3" clause="Decode" testNumber="20"/>
 			<description>Entry Decode with type Array in XObjectImageMask shall have one of values: [1,0], [0,1]</description>
-			<test>(DecodeArraySize == 2 &amp;&amp; Decode0IntegerValue == 0 &amp;&amp; Decode1IntegerValue == 1) || (DecodeArraySize == 2 &amp;&amp; Decode0IntegerValue == 1 &amp;&amp; Decode1IntegerValue == 0)</test>
+			<test>DecodeHasTypeArray != true || (DecodeArraySize == 2 &amp;&amp; Decode0IntegerValue == 0 &amp;&amp; Decode1IntegerValue == 1) || (DecodeArraySize == 2 &amp;&amp; Decode0IntegerValue == 1 &amp;&amp; Decode1IntegerValue == 0)</test>
 			<error>
 				<message>Entry Decode with type Array in XObjectImageMask has incorrect value instead of [1,0], [0,1]</message>
 				<arguments>
