@@ -115,8 +115,8 @@ class ProcessorResultImpl implements ProcessorResult {
 	}
 
 	@Override
-	@XmlElementWrapper(name = "taskResult")
-	@XmlElement(name = "taskResult")
+	@XmlElementWrapper(name = "taskException")
+	@XmlElement(name = "taskException")
 	public Collection<TaskResult> getResultSet() {
 		return this.taskResults.values();
 	}

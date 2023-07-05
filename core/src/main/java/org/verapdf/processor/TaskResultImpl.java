@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
  * @version 0.1 Created 30 Oct 2016:14:21:22
  */
-@XmlRootElement(name = "taskResult")
+@XmlRootElement(name = "taskException")
 class TaskResultImpl implements TaskResult {
 	private static final VeraPDFException notExecutedExcept = new VeraPDFException("Not Executed");
 	private static final TaskResult defaultInstance = new TaskResultImpl();

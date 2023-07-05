@@ -52,7 +52,7 @@ public abstract class AbstractBatchHandler implements BatchProcessingHandler {
 	public final static String BUILD_INFORMATION = "buildInformation"; //$NON-NLS-1$
 	public final static String ITEM_DETAILS = "itemDetails"; //$NON-NLS-1$
 	public final static String RELEASE_DETAILS = "releaseDetails"; //$NON-NLS-1$
-	public final static String TASK_RESULT = "taskResult"; //$NON-NLS-1$
+	public final static String TASK_EXCEPTION = "taskException"; //$NON-NLS-1$
 	public final static String BATCH_SUMMARY = "batchSummary"; //$NON-NLS-1$
 	public final static String LOGS = "logs"; //$NON-NLS-1$
 
