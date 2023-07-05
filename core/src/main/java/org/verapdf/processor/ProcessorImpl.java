@@ -112,11 +112,10 @@ final class ProcessorImpl implements ItemProcessor {
 		Components.Timer parseTimer = Components.Timer.start();
 		TaskType task = null;
 		String password = this.processorConfig.getValidatorConfig().getPassword();
-		try (PDFAParser parser = this.hasCustomProfile()
-				? foundry.createParser(toProcess, this.processorConfig.getCustomProfile().getPDFAFlavour(), password)
-				: this.isAuto()
-				  ? foundry.createParser(toProcess, this.valConf().getFlavour() == PDFAFlavour.NO_ARLINGTON_FLAVOUR ? PDFAFlavour.NO_ARLINGTON_FLAVOUR : PDFAFlavour.NO_FLAVOUR, this.valConf().getDefaultFlavour(), password)
-				  : foundry.createParser(toProcess, this.valConf().getFlavour(), this.valConf().getDefaultFlavour(), password)) {
+		PDFAFlavour flavour = this.hasCustomProfile() ? this.processorConfig.getCustomProfile().getPDFAFlavour() :
+				(this.isAuto() ? (this.valConf().getFlavour() == PDFAFlavour.NO_ARLINGTON_FLAVOUR ?
+						PDFAFlavour.NO_ARLINGTON_FLAVOUR : PDFAFlavour.NO_FLAVOUR) : this.valConf().getFlavour());
+		try (PDFAParser parser = foundry.createParser(toProcess, flavour, this.valConf().getDefaultFlavour(), password)) {
 			for (TaskType t : this.getConfig().getTasks()) {
 				task = t;
 				switch (task) {
@@ -168,11 +167,10 @@ final class ProcessorImpl implements ItemProcessor {
 		Components.Timer parseTimer = Components.Timer.start();
 		String password = this.processorConfig.getValidatorConfig().getPassword();
 		TaskType task = null;
-		try (PDFAParser parser = this.hasCustomProfile()
-				? foundry.createParser(pdfFileStream, this.processorConfig.getCustomProfile().getPDFAFlavour(), password)
-				: this.isAuto()
-				? foundry.createParser(pdfFileStream, PDFAFlavour.NO_FLAVOUR, this.valConf().getDefaultFlavour(), password)
-				: foundry.createParser(pdfFileStream, this.valConf().getFlavour(), this.valConf().getDefaultFlavour(), password)) {
+		PDFAFlavour flavour = this.hasCustomProfile() ? this.processorConfig.getCustomProfile().getPDFAFlavour() :
+				(this.isAuto() ? (this.valConf().getFlavour() == PDFAFlavour.NO_ARLINGTON_FLAVOUR ?
+						PDFAFlavour.NO_ARLINGTON_FLAVOUR : PDFAFlavour.NO_FLAVOUR) : this.valConf().getFlavour());
+		try (PDFAParser parser = foundry.createParser(pdfFileStream, flavour, this.valConf().getDefaultFlavour(), password)) {
 			for (TaskType t : this.getConfig().getTasks()) {
 				task = t;
 				switch (task) {
