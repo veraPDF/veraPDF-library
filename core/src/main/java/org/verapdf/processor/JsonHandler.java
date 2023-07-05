@@ -116,12 +116,12 @@ public class JsonHandler extends AbstractBatchHandler {
 
 	@Override
 	void parsingFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT);
+		this.serializeElement(taskResult, TASK_EXCEPTION);
 	}
 
 	@Override
 	void pdfEncrypted(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT);
+		this.serializeElement(taskResult, TASK_EXCEPTION);
 	}
 
 	@Override
@@ -131,7 +131,7 @@ public class JsonHandler extends AbstractBatchHandler {
 
 	@Override
 	void validationFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT);
+		this.serializeElement(taskResult, TASK_EXCEPTION);
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class JsonHandler extends AbstractBatchHandler {
 
 	@Override
 	void featureFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT);
+		this.serializeElement(taskResult, TASK_EXCEPTION);
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public class JsonHandler extends AbstractBatchHandler {
 
 	@Override
 	void fixerFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT);
+		this.serializeElement(taskResult, TASK_EXCEPTION);
 	}
 
 	@Override

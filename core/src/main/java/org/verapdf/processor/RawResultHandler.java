@@ -41,7 +41,6 @@ final class RawResultHandler extends AbstractXmlHandler {
 	private static final String configEleName = "config"; //$NON-NLS-1$
 	private static final String itemEleName = "item"; //$NON-NLS-1$
 	private static final String summaryName = "summary"; //$NON-NLS-1$
-	private static final String taskResultName = "taskResult"; //$NON-NLS-1$
 	private final boolean format;
 	private final boolean fragment;
 
@@ -90,12 +89,12 @@ final class RawResultHandler extends AbstractXmlHandler {
 
 	@Override
 	void parsingFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, taskResultName, this.format, this.fragment);
+		this.serializeElement(taskResult, TASK_EXCEPTION, this.format, this.fragment);
 	}
 
 	@Override
 	void pdfEncrypted(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, taskResultName, this.format, this.fragment);
+		this.serializeElement(taskResult, TASK_EXCEPTION, this.format, this.fragment);
 	}
 
 	@Override
@@ -105,7 +104,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 
 	@Override
 	void validationFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, taskResultName, this.format, this.fragment);
+		this.serializeElement(taskResult, TASK_EXCEPTION, this.format, this.fragment);
 	}
 
 	@Override
@@ -115,7 +114,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 
 	@Override
 	void featureFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, taskResultName, this.format, this.fragment);
+		this.serializeElement(taskResult, TASK_EXCEPTION, this.format, this.fragment);
 	}
 
 	@Override
@@ -125,7 +124,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 
 	@Override
 	void fixerFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, taskResultName, this.format, this.fragment);
+		this.serializeElement(taskResult, TASK_EXCEPTION, this.format, this.fragment);
 	}
 
 	@Override
