@@ -234,7 +234,7 @@
                       </xsl:when>
                       <xsl:otherwise>
                           <xsl:choose>
-                              <xsl:when test="contains(taskResult/exceptionMessage, 'encrypted PDF with unknown or wrong password')">
+                              <xsl:when test="contains(taskException/exceptionMessage, 'encrypted PDF with unknown or wrong password')">
                                   <xsl:value-of select="'Encrypted'" />
                               </xsl:when>
                               <xsl:otherwise>
