@@ -134,14 +134,14 @@
 <!--                        </td>-->
 <!--                    </tr>-->
 <!--                </xsl:if>-->
-                <xsl:if test="/report/jobs/job/taskResult/exceptionMessage">
+                <xsl:if test="/report/jobs/job/taskException/exceptionMessage">
                     <tr>
                         <td width="200" class="invalid">
                             Error:
                         </td>
                         <td class="invalid">
                             <xsl:value-of
-                                    select="/report/jobs/job/taskResult/exceptionMessage"/>
+                                    select="/report/jobs/job/taskException/exceptionMessage"/>
                         </td>
                     </tr>
                 </xsl:if>
