@@ -10469,10 +10469,10 @@
 		</rule>
 		<rule object="ATransition">
 			<id specification="ISO_32000_1_1" clause="Transition-Di-Integer-90" testNumber="13"/>
-			<description>Entry Di in Transition may have Integer value 90, only if this object satisfies condition (@S == Wipe</description>
+			<description>Entry Di in Transition may have Integer value 90, only if this object satisfies condition (@S == Wipe)</description>
 			<test>(SNameValue == "Wipe") || DiIntegerValue != 90</test>
 			<error>
-				<message>Entry Di in Transition has value 90, but not satisfy condition (@S == Wipe</message>
+				<message>Entry Di in Transition has value 90, but not satisfy condition (@S == Wipe)</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -10481,10 +10481,10 @@
 		</rule>
 		<rule object="ATransition">
 			<id specification="ISO_32000_1_1" clause="Transition-Di-Integer-180" testNumber="13"/>
-			<description>Entry Di in Transition may have Integer value 180, only if this object satisfies condition (@S == Wipe</description>
+			<description>Entry Di in Transition may have Integer value 180, only if this object satisfies condition (@S == Wipe)</description>
 			<test>(SNameValue == "Wipe") || DiIntegerValue != 180</test>
 			<error>
-				<message>Entry Di in Transition has value 180, but not satisfy condition (@S == Wipe</message>
+				<message>Entry Di in Transition has value 180, but not satisfy condition (@S == Wipe)</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -10493,10 +10493,10 @@
 		</rule>
 		<rule object="ATransition">
 			<id specification="ISO_32000_1_1" clause="Transition-Di-Integer-315" testNumber="13"/>
-			<description>Entry Di in Transition may have Integer value 315, only if this object satisfies condition (@S == Glitter</description>
+			<description>Entry Di in Transition may have Integer value 315, only if this object satisfies condition (@S == Glitter)</description>
 			<test>(SNameValue == "Glitter") || DiIntegerValue != 315</test>
 			<error>
-				<message>Entry Di in Transition has value 315, but not satisfy condition (@S == Glitter</message>
+				<message>Entry Di in Transition has value 315, but not satisfy condition (@S == Glitter)</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
