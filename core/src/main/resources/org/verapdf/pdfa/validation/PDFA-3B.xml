@@ -639,6 +639,21 @@
             </error>
             <references/>
         </rule>
+        <rule object="PDXImage">
+            <id specification="ISO_19005_3" clause="6.2.8" testNumber="4"/>
+            <description>If an Image dictionary contains the BitsPerComponent key, its value shall be 1, 2, 4, 8 or 16</description>
+            <test>BitsPerComponent == null || BitsPerComponent == 1 || BitsPerComponent == 2 || BitsPerComponent == 4 ||
+                BitsPerComponent == 8 || BitsPerComponent == 16</test>
+            <error>
+                <message>The value of the BitsPerComponent key in the Image dictionary is %1</message>
+                <arguments>
+                    <argument>BitsPerComponent</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="8.9.5.1, Table 89"/>
+            </references>
+        </rule>
         <rule object="JPEG2000">
             <id specification="ISO_19005_3" clause="6.2.8.3" testNumber="1"/>
             <description>The number of colour channels in the JPEG2000 data shall be 1, 3 or 4.</description>
