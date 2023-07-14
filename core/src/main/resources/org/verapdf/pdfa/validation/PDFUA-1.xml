@@ -1120,7 +1120,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.7.4, Table 117"/>
+                <reference specification="ISO 32000-1:2008" clause="9.7.4, Table 117"/>
             </references>
         </rule>
         <rule object="PDCMap">
@@ -1150,7 +1150,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.7.5.2, Table 118"/>
+                <reference specification="ISO 32000-1:2008" clause="9.7.5.2, Table 118"/>
             </references>
         </rule>
         <rule object="CMapFile">
@@ -1193,7 +1193,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.7.5.2, Table 118"/>
+                <reference specification="ISO 32000-1:2008" clause="9.7.5.2, Table 118"/>
             </references>
         </rule>
         <rule object="PDFont">
@@ -1205,7 +1205,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.9"/>
+                <reference specification="ISO 32000-1:2008" clause="9.9"/>
             </references>
         </rule>
         <rule object="Glyph">
