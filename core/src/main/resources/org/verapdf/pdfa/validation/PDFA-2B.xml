@@ -520,7 +520,7 @@
 			same name shall have the same tintTransform and alternateSpace. In evaluating equivalence, the PDF
 			objects shall be compared, rather than the computational result of the use of those PDF objects. Compression
 			and whether or not an object is direct or indirect shall be ignored.</description>
-            <test>name == 'All' || name == 'None' || areTintAndAlternateConsistent == true</test>
+            <test>areTintAndAlternateConsistent == true</test>
             <error>
                 <message>Several occurrences of a Separation colour space with the same name are not consistent</message>
                 <arguments/>
