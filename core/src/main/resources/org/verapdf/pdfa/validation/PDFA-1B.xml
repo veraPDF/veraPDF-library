@@ -497,6 +497,21 @@
             </error>
             <references/>
         </rule>
+        <rule object="PDXImage">
+            <id specification="ISO_19005_1" clause="6.2.4" testNumber="4"/>
+            <description>If an Image dictionary contains the BitsPerComponent key, its value shall be 1, 2, 4 or 8</description>
+            <test>BitsPerComponent == null || BitsPerComponent == 1 || BitsPerComponent == 2 || BitsPerComponent == 4 ||
+                BitsPerComponent == 8</test>
+            <error>
+                <message>The value of the BitsPerComponent key in the Image dictionary is %1</message>
+                <arguments>
+                    <argument>BitsPerComponent</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="PDF 1.4 Reference" clause="4.8.4, Table 4.35"/>
+            </references>
+        </rule>
         <rule object="PDXForm">
             <id specification="ISO_19005_1" clause="6.2.5" testNumber="1"/>
             <description>A form XObject dictionary shall not contain the Subtype2 key with a value of PS or the PS key</description>
