@@ -47,7 +47,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="14.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.4"/>
             </references>
         </rule>
         <rule object="CosTrailer">
@@ -71,7 +71,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="7.5.5"/>
+                <reference specification="ISO 32000-1:2008" clause="7.5.5"/>
             </references>
         </rule>
         <rule object="CosXRef">
@@ -176,7 +176,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="7.3.5"/>
+                <reference specification="ISO 32000-1:2008" clause="7.3.5"/>
             </references>
         </rule>
         <rule object="CosIndirect">
@@ -406,7 +406,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="14.11.5"/>
+                <reference specification="ISO 32000-1:2008" clause="14.11.5"/>
             </references>
         </rule>
         <rule object="OutputIntents">
@@ -511,7 +511,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="8.6.6.5, Table 71"/>
+                <reference specification="ISO 32000-1:2008" clause="8.6.6.5, Table 71"/>
             </references>
         </rule>
         <rule object="PDSeparation">
@@ -765,7 +765,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="11.3.5, Tables 136-137"/>
+                <reference specification="ISO 32000-1:2008" clause="11.3.5, Tables 136-137"/>
             </references>
         </rule>
         <rule object="PDPage">
@@ -779,7 +779,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="11.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="11.3.4"/>
             </references>
         </rule>
         <rule object="PDFont">
@@ -795,10 +795,10 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.6.2.1, Table 111"/>
-                <reference specification="ISO32000-1:2008" clause="9.6.5, Table 112"/>
-                <reference specification="ISO32000-1:2008" clause="9.7.4.1, Table 117"/>
-                <reference specification="ISO32000-1:2008" clause="9.7.6.1, Table 121"/>
+                <reference specification="ISO 32000-1:2008" clause="9.6.2.1, Table 111"/>
+                <reference specification="ISO 32000-1:2008" clause="9.6.5, Table 112"/>
+                <reference specification="ISO 32000-1:2008" clause="9.7.4.1, Table 117"/>
+                <reference specification="ISO 32000-1:2008" clause="9.7.6.1, Table 121"/>
             </references>
         </rule>
         <rule object="PDFont">
@@ -816,12 +816,12 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.6.2.1, Table 111"/>
-                <reference specification="ISO32000-1:2008" clause="9.6.2.3"/>
-                <reference specification="ISO32000-1:2008" clause="9.6.3"/>
-                <reference specification="ISO32000-1:2008" clause="9.6.5, Table 112"/>
-                <reference specification="ISO32000-1:2008" clause="9.7.4.1, Table 117"/>
-                <reference specification="ISO32000-1:2008" clause="9.7.6.1, Table 121"/>
+                <reference specification="ISO 32000-1:2008" clause="9.6.2.1, Table 111"/>
+                <reference specification="ISO 32000-1:2008" clause="9.6.2.3"/>
+                <reference specification="ISO 32000-1:2008" clause="9.6.3"/>
+                <reference specification="ISO 32000-1:2008" clause="9.6.5, Table 112"/>
+                <reference specification="ISO 32000-1:2008" clause="9.7.4.1, Table 117"/>
+                <reference specification="ISO 32000-1:2008" clause="9.7.6.1, Table 121"/>
             </references>
         </rule>
         <rule object="PDFont">
@@ -835,9 +835,9 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.6.2.1, Table 111"/>
-                <reference specification="ISO32000-1:2008" clause="9.7.4.1, Table 117"/>
-                <reference specification="ISO32000-1:2008" clause="9.7.6.1, Table 121"/>
+                <reference specification="ISO 32000-1:2008" clause="9.6.2.1, Table 111"/>
+                <reference specification="ISO 32000-1:2008" clause="9.7.4.1, Table 117"/>
+                <reference specification="ISO 32000-1:2008" clause="9.7.6.1, Table 121"/>
             </references>
         </rule>
         <rule object="PDSimpleFont">
@@ -851,8 +851,8 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.6.2.1, Table 111"/>
-                <reference specification="ISO32000-1:2008" clause="9.6.5, Table 112"/>
+                <reference specification="ISO 32000-1:2008" clause="9.6.2.1, Table 111"/>
+                <reference specification="ISO 32000-1:2008" clause="9.6.5, Table 112"/>
             </references>
         </rule>
         <rule object="PDSimpleFont">
@@ -866,8 +866,8 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.6.2.1, Table 111"/>
-                <reference specification="ISO32000-1:2008" clause="9.6.5, Table 112"/>
+                <reference specification="ISO 32000-1:2008" clause="9.6.2.1, Table 111"/>
+                <reference specification="ISO 32000-1:2008" clause="9.6.5, Table 112"/>
             </references>
         </rule>
         <rule object="PDSimpleFont">
@@ -884,8 +884,8 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.6.2.1, Table 111"/>
-                <reference specification="ISO32000-1:2008" clause="9.6.5, Table 112"/>
+                <reference specification="ISO 32000-1:2008" clause="9.6.2.1, Table 111"/>
+                <reference specification="ISO 32000-1:2008" clause="9.6.5, Table 112"/>
             </references>
         </rule>
         <rule object="PDFont">
@@ -902,7 +902,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.9, Table 126"/>
+                <reference specification="ISO 32000-1:2008" clause="9.9, Table 126"/>
                 <reference specification="Adobe Technical Note #5176, The Compact Font Format Specification" clause=""/>
                 <reference specification="OpenType Font Specification 1.4, December 2004, Microsoft" clause=""/>
             </references>
@@ -943,7 +943,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.7.4, Table 117"/>
+                <reference specification="ISO 32000-1:2008" clause="9.7.4, Table 117"/>
             </references>
         </rule>
         <rule object="PDCMap">
@@ -973,7 +973,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.7.5.2, Table 118"/>
+                <reference specification="ISO 32000-1:2008" clause="9.7.5.2, Table 118"/>
             </references>
         </rule>
         <rule object="CMapFile">
@@ -1016,7 +1016,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.7.5.2, Table 118"/>
+                <reference specification="ISO 32000-1:2008" clause="9.7.5.2, Table 118"/>
             </references>
         </rule>
         <rule object="PDFont">
@@ -1028,7 +1028,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="9.9"/>
+                <reference specification="ISO 32000-1:2008" clause="9.9"/>
             </references>
         </rule>
         <rule object="Glyph">
@@ -1391,7 +1391,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="12.6.4.1, Table 198"/>
+                <reference specification="ISO 32000-1:2008" clause="12.6.4.1, Table 198"/>
             </references>
         </rule>
         <rule object="PDNamedAction">
@@ -1405,7 +1405,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO32000-1:2008" clause="12.6.4.11, Table 211"/>
+                <reference specification="ISO 32000-1:2008" clause="12.6.4.11, Table 211"/>
             </references>
         </rule>
         <rule object="PDDocument">
