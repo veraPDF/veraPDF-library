@@ -9200,7 +9200,7 @@
 		</rule>
 		<rule object="AAnnotPolyLine">
 			<id specification="ISO_32000_1_5" clause="AnnotPolyLine-Vertices" testNumber="11"/>
-			<description>Entry Vertices in AnnotPolyLine is required, when fn:IsRequired(fn:BeforeVersion(2.0) || fn:SinceVersion(2.0, fn:Not(fn:IsPresent(Path))))</description>
+			<description>Entry Vertices in AnnotPolyLine is required</description>
 			<test>containsVertices == true</test>
 			<error>
 				<message>Entry Vertices in AnnotPolyLine is missing</message>
@@ -9802,7 +9802,7 @@
 		</rule>
 		<rule object="AAnnotPolygon">
 			<id specification="ISO_32000_1_5" clause="AnnotPolygon-Vertices" testNumber="11"/>
-			<description>Entry Vertices in AnnotPolygon is required, when fn:IsRequired(fn:BeforeVersion(2.0) || fn:SinceVersion(2.0, fn:Not(fn:IsPresent(Path))))</description>
+			<description>Entry Vertices in AnnotPolygon is required</description>
 			<test>containsVertices == true</test>
 			<error>
 				<message>Entry Vertices in AnnotPolygon is missing</message>
