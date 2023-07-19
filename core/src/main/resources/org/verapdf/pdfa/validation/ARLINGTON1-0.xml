@@ -3298,7 +3298,7 @@
 		</rule>
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_0" clause="FontMultipleMaster-FirstChar" testNumber="11"/>
-			<description>Entry FirstChar in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry FirstChar in FontMultipleMaster is required, when fn:NotStandard14Font()</description>
 			<test>containsFirstChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FirstChar in FontMultipleMaster is missing</message>
@@ -3334,7 +3334,7 @@
 		</rule>
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_0" clause="FontMultipleMaster-FontDescriptor" testNumber="11"/>
-			<description>Entry FontDescriptor in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry FontDescriptor in FontMultipleMaster is required, when fn:NotStandard14Font()</description>
 			<test>containsFontDescriptor == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FontDescriptor in FontMultipleMaster is missing</message>
@@ -3370,7 +3370,7 @@
 		</rule>
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_0" clause="FontMultipleMaster-LastChar" testNumber="11"/>
-			<description>Entry LastChar in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry LastChar in FontMultipleMaster is required, when fn:NotStandard14Font()</description>
 			<test>containsLastChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry LastChar in FontMultipleMaster is missing</message>
@@ -3504,7 +3504,7 @@
 		</rule>
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_0" clause="FontMultipleMaster-Widths" testNumber="11"/>
-			<description>Entry Widths in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry Widths in FontMultipleMaster is required, when fn:NotStandard14Font()</description>
 			<test>containsWidths == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry Widths in FontMultipleMaster is missing</message>
@@ -3613,7 +3613,7 @@
 		</rule>
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_0" clause="FontTrueType-FirstChar" testNumber="11"/>
-			<description>Entry FirstChar in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry FirstChar in FontTrueType is required, when fn:NotStandard14Font()</description>
 			<test>containsFirstChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FirstChar in FontTrueType is missing</message>
@@ -3649,7 +3649,7 @@
 		</rule>
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_0" clause="FontTrueType-FontDescriptor" testNumber="11"/>
-			<description>Entry FontDescriptor in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry FontDescriptor in FontTrueType is required, when fn:NotStandard14Font()</description>
 			<test>containsFontDescriptor == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FontDescriptor in FontTrueType is missing</message>
@@ -3685,7 +3685,7 @@
 		</rule>
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_0" clause="FontTrueType-LastChar" testNumber="11"/>
-			<description>Entry LastChar in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry LastChar in FontTrueType is required, when fn:NotStandard14Font()</description>
 			<test>containsLastChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry LastChar in FontTrueType is missing</message>
@@ -3819,7 +3819,7 @@
 		</rule>
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_0" clause="FontTrueType-Widths" testNumber="11"/>
-			<description>Entry Widths in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry Widths in FontTrueType is required, when fn:NotStandard14Font()</description>
 			<test>containsWidths == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry Widths in FontTrueType is missing</message>
@@ -3928,7 +3928,7 @@
 		</rule>
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_0" clause="FontType1-FirstChar" testNumber="11"/>
-			<description>Entry FirstChar in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry FirstChar in FontType1 is required, when fn:NotStandard14Font()</description>
 			<test>containsFirstChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FirstChar in FontType1 is missing</message>
@@ -3964,7 +3964,7 @@
 		</rule>
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_0" clause="FontType1-FontDescriptor" testNumber="11"/>
-			<description>Entry FontDescriptor in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry FontDescriptor in FontType1 is required, when fn:NotStandard14Font()</description>
 			<test>containsFontDescriptor == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FontDescriptor in FontType1 is missing</message>
@@ -4000,7 +4000,7 @@
 		</rule>
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_0" clause="FontType1-LastChar" testNumber="11"/>
-			<description>Entry LastChar in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry LastChar in FontType1 is required, when fn:NotStandard14Font()</description>
 			<test>containsLastChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry LastChar in FontType1 is missing</message>
@@ -4134,7 +4134,7 @@
 		</rule>
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_0" clause="FontType1-Widths" testNumber="11"/>
-			<description>Entry Widths in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry Widths in FontType1 is required, when fn:NotStandard14Font()</description>
 			<test>containsWidths == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry Widths in FontType1 is missing</message>
@@ -4326,7 +4326,7 @@
 		</rule>
 		<rule object="AFontType3">
 			<id specification="ISO_32000_1_0" clause="FontType3-FontDescriptor" testNumber="11"/>
-			<description>Entry FontDescriptor in FontType3 is required, when fn:IsRequired(fn:IsPDFTagged())</description>
+			<description>Entry FontDescriptor in FontType3 is required, when fn:IsPDFTagged()</description>
 			<test>containsFontDescriptor == true || isPDFTagged == false</test>
 			<error>
 				<message>Entry FontDescriptor in FontType3 is missing</message>
@@ -5231,7 +5231,7 @@
 		</rule>
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_0" clause="PageObject-Parent" testNumber="11"/>
-			<description>Entry Parent in PageObject is required, when fn:IsRequired(@Type != Template)</description>
+			<description>Entry Parent in PageObject is required, when @Type != Template</description>
 			<test>containsParent == true || (TypeNameValue == "Template")</test>
 			<error>
 				<message>Entry Parent in PageObject is missing</message>
@@ -6683,7 +6683,7 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_0" clause="XObjectImage-BitsPerComponent" testNumber="11"/>
-			<description>Entry BitsPerComponent in XObjectImage is required, when fn:IsRequired(fn:Not(fn:Contains(@Filter, JPXDecode) || (@ImageMask == true)))</description>
+			<description>Entry BitsPerComponent in XObjectImage is required, when fn:Not(fn:Contains(@Filter, JPXDecode) || (@ImageMask == true))</description>
 			<test>containsBitsPerComponent == true || (((FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "JPXDecode").length &gt; 0) || (ImageMaskBooleanValue == true)) != true) == false</test>
 			<error>
 				<message>Entry BitsPerComponent in XObjectImage is missing</message>
@@ -6756,7 +6756,7 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_0" clause="XObjectImage-ColorSpace" testNumber="11"/>
-			<description>Entry ColorSpace in XObjectImage is required, when fn:IsRequired(fn:Not(fn:Contains(@Filter, JPXDecode) || (@ImageMask == true)))</description>
+			<description>Entry ColorSpace in XObjectImage is required, when fn:Not(fn:Contains(@Filter, JPXDecode) || (@ImageMask == true))</description>
 			<test>containsColorSpace == true || (((FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "JPXDecode").length &gt; 0) || (ImageMaskBooleanValue == true)) != true) == false</test>
 			<error>
 				<message>Entry ColorSpace in XObjectImage is missing</message>

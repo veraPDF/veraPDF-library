@@ -933,7 +933,7 @@
 		</rule>
 		<rule object="A3DView">
 			<id specification="ISO_32000_1_6" clause="3DView-C2W" testNumber="11"/>
-			<description>Entry C2W in 3DView is required, when fn:IsRequired(@MS == M)</description>
+			<description>Entry C2W in 3DView is required, when @MS == M</description>
 			<test>containsC2W == true || (MSNameValue != "M")</test>
 			<error>
 				<message>Entry C2W in 3DView is missing</message>
@@ -1103,7 +1103,7 @@
 		</rule>
 		<rule object="A3DView">
 			<id specification="ISO_32000_1_6" clause="3DView-U3DPath" testNumber="11"/>
-			<description>Entry U3DPath in 3DView is required, when fn:IsRequired(@MS == U3D)</description>
+			<description>Entry U3DPath in 3DView is required, when @MS == U3D</description>
 			<test>containsU3DPath == true || (MSNameValue != "U3D")</test>
 			<error>
 				<message>Entry U3DPath in 3DView is missing</message>
@@ -2061,7 +2061,7 @@
 		</rule>
 		<rule object="AActionGoToE">
 			<id specification="ISO_32000_1_6" clause="ActionGoToE-T" testNumber="11"/>
-			<description>Entry T in ActionGoToE is required, when fn:IsRequired(fn:Not(fn:IsPresent(F)))</description>
+			<description>Entry T in ActionGoToE is required, when fn:Not(fn:IsPresent(F))</description>
 			<test>containsT == true || (containsF == true)</test>
 			<error>
 				<message>Entry T in ActionGoToE is missing</message>
@@ -2680,7 +2680,7 @@
 		</rule>
 		<rule object="AActionLaunch">
 			<id specification="ISO_32000_1_6" clause="ActionLaunch-F" testNumber="11"/>
-			<description>Entry F in ActionLaunch is required, when fn:IsRequired(fn:Not(fn:IsPresent(Win) || fn:IsPresent(Mac) || fn:IsPresent(Unix)))</description>
+			<description>Entry F in ActionLaunch is required, when fn:Not(fn:IsPresent(Win) || fn:IsPresent(Mac) || fn:IsPresent(Unix))</description>
 			<test>containsF == true || ((containsWin == true) || (containsMac == true) || (containsUnix == true))</test>
 			<error>
 				<message>Entry F in ActionLaunch is missing</message>
@@ -3191,7 +3191,7 @@
 		</rule>
 		<rule object="AActionRendition">
 			<id specification="ISO_32000_1_6" clause="ActionRendition-AN" testNumber="11"/>
-			<description>Entry AN in ActionRendition is required, when fn:IsRequired((@OP &gt;= 0) &amp;&amp; (@OP &lt;= 4))</description>
+			<description>Entry AN in ActionRendition is required, when (@OP &gt;= 0) &amp;&amp; (@OP &lt;= 4)</description>
 			<test>OPHasTypeInteger == false || (containsAN == true || ((OPIntegerValue &lt; 0) || (OPIntegerValue &gt; 4)))</test>
 			<error>
 				<message>Entry AN in ActionRendition is missing</message>
@@ -3335,7 +3335,7 @@
 		</rule>
 		<rule object="AActionRendition">
 			<id specification="ISO_32000_1_6" clause="ActionRendition-R" testNumber="11"/>
-			<description>Entry R in ActionRendition is required, when fn:IsRequired((@OP == 0) || (@OP == 4))</description>
+			<description>Entry R in ActionRendition is required, when (@OP == 0) || (@OP == 4)</description>
 			<test>OPHasTypeInteger == false || (containsR == true || ((OPIntegerValue != 0) &amp;&amp; (OPIntegerValue != 4)))</test>
 			<error>
 				<message>Entry R in ActionRendition is missing</message>
@@ -5692,7 +5692,7 @@
 		</rule>
 		<rule object="AAnnot3D">
 			<id specification="ISO_32000_1_6" clause="Annot3D-AS" testNumber="11"/>
-			<description>Entry AS in Annot3D is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in Annot3D is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in Annot3D is missing</message>
@@ -6030,7 +6030,7 @@
 		</rule>
 		<rule object="AAnnotCaret">
 			<id specification="ISO_32000_1_6" clause="AnnotCaret-AS" testNumber="11"/>
-			<description>Entry AS in AnnotCaret is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotCaret is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotCaret is missing</message>
@@ -6186,7 +6186,7 @@
 		</rule>
 		<rule object="AAnnotCaret">
 			<id specification="ISO_32000_1_6" clause="AnnotCaret-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotCaret is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotCaret is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotCaret is missing</message>
@@ -6622,7 +6622,7 @@
 		</rule>
 		<rule object="AAnnotCircle">
 			<id specification="ISO_32000_1_6" clause="AnnotCircle-AS" testNumber="11"/>
-			<description>Entry AS in AnnotCircle is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotCircle is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotCircle is missing</message>
@@ -6838,7 +6838,7 @@
 		</rule>
 		<rule object="AAnnotCircle">
 			<id specification="ISO_32000_1_6" clause="AnnotCircle-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotCircle is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotCircle is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotCircle is missing</message>
@@ -7249,7 +7249,7 @@
 		</rule>
 		<rule object="AAnnotFileAttachment">
 			<id specification="ISO_32000_1_6" clause="AnnotFileAttachment-AS" testNumber="11"/>
-			<description>Entry AS in AnnotFileAttachment is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotFileAttachment is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotFileAttachment is missing</message>
@@ -7429,7 +7429,7 @@
 		</rule>
 		<rule object="AAnnotFileAttachment">
 			<id specification="ISO_32000_1_6" clause="AnnotFileAttachment-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotFileAttachment is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotFileAttachment is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotFileAttachment is missing</message>
@@ -7828,7 +7828,7 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_6" clause="AnnotFreeText-AS" testNumber="11"/>
-			<description>Entry AS in AnnotFreeText is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotFreeText is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotFreeText is missing</message>
@@ -8080,7 +8080,7 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_6" clause="AnnotFreeText-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotFreeText is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotFreeText is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotFreeText is missing</message>
@@ -8554,7 +8554,7 @@
 		</rule>
 		<rule object="AAnnotHighlight">
 			<id specification="ISO_32000_1_6" clause="AnnotHighlight-AS" testNumber="11"/>
-			<description>Entry AS in AnnotHighlight is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotHighlight is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotHighlight is missing</message>
@@ -8698,7 +8698,7 @@
 		</rule>
 		<rule object="AAnnotHighlight">
 			<id specification="ISO_32000_1_6" clause="AnnotHighlight-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotHighlight is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotHighlight is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotHighlight is missing</message>
@@ -9121,7 +9121,7 @@
 		</rule>
 		<rule object="AAnnotInk">
 			<id specification="ISO_32000_1_6" clause="AnnotInk-AS" testNumber="11"/>
-			<description>Entry AS in AnnotInk is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotInk is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotInk is missing</message>
@@ -9289,7 +9289,7 @@
 		</rule>
 		<rule object="AAnnotInk">
 			<id specification="ISO_32000_1_6" clause="AnnotInk-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotInk is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotInk is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotInk is missing</message>
@@ -9712,7 +9712,7 @@
 		</rule>
 		<rule object="AAnnotLine">
 			<id specification="ISO_32000_1_6" clause="AnnotLine-AS" testNumber="11"/>
-			<description>Entry AS in AnnotLine is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotLine is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotLine is missing</message>
@@ -9916,7 +9916,7 @@
 		</rule>
 		<rule object="AAnnotLine">
 			<id specification="ISO_32000_1_6" clause="AnnotLine-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotLine is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotLine is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotLine is missing</message>
@@ -10025,7 +10025,7 @@
 		</rule>
 		<rule object="AAnnotLine">
 			<id specification="ISO_32000_1_6" clause="AnnotLine-LL" testNumber="11"/>
-			<description>Entry LL in AnnotLine is required, when fn:IsRequired(fn:IsPresent(LLE))</description>
+			<description>Entry LL in AnnotLine is required, when fn:IsPresent(LLE)</description>
 			<test>containsLL == true || (containsLLE != true)</test>
 			<error>
 				<message>Entry LL in AnnotLine is missing</message>
@@ -10448,7 +10448,7 @@
 		</rule>
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_6" clause="AnnotLink-AS" testNumber="11"/>
-			<description>Entry AS in AnnotLink is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotLink is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotLink is missing</message>
@@ -10919,7 +10919,7 @@
 		</rule>
 		<rule object="AAnnotMovie">
 			<id specification="ISO_32000_1_6" clause="AnnotMovie-AS" testNumber="11"/>
-			<description>Entry AS in AnnotMovie is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotMovie is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotMovie is missing</message>
@@ -11293,7 +11293,7 @@
 		</rule>
 		<rule object="AAnnotPolyLine">
 			<id specification="ISO_32000_1_6" clause="AnnotPolyLine-AS" testNumber="11"/>
-			<description>Entry AS in AnnotPolyLine is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotPolyLine is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotPolyLine is missing</message>
@@ -11521,7 +11521,7 @@
 		</rule>
 		<rule object="AAnnotPolyLine">
 			<id specification="ISO_32000_1_6" clause="AnnotPolyLine-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotPolyLine is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotPolyLine is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotPolyLine is missing</message>
@@ -11981,7 +11981,7 @@
 		</rule>
 		<rule object="AAnnotPolygon">
 			<id specification="ISO_32000_1_6" clause="AnnotPolygon-AS" testNumber="11"/>
-			<description>Entry AS in AnnotPolygon is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotPolygon is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotPolygon is missing</message>
@@ -12209,7 +12209,7 @@
 		</rule>
 		<rule object="AAnnotPolygon">
 			<id specification="ISO_32000_1_6" clause="AnnotPolygon-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotPolygon is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotPolygon is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotPolygon is missing</message>
@@ -12669,7 +12669,7 @@
 		</rule>
 		<rule object="AAnnotPopup">
 			<id specification="ISO_32000_1_6" clause="AnnotPopup-AS" testNumber="11"/>
-			<description>Entry AS in AnnotPopup is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotPopup is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotPopup is missing</message>
@@ -13031,7 +13031,7 @@
 		</rule>
 		<rule object="AAnnotPrinterMark">
 			<id specification="ISO_32000_1_6" clause="AnnotPrinterMark-AS" testNumber="11"/>
-			<description>Entry AS in AnnotPrinterMark is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotPrinterMark is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotPrinterMark is missing</message>
@@ -13429,7 +13429,7 @@
 		</rule>
 		<rule object="AAnnotScreen">
 			<id specification="ISO_32000_1_6" clause="AnnotScreen-AS" testNumber="11"/>
-			<description>Entry AS in AnnotScreen is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotScreen is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotScreen is missing</message>
@@ -13803,7 +13803,7 @@
 		</rule>
 		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_6" clause="AnnotSound-AS" testNumber="11"/>
-			<description>Entry AS in AnnotSound is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotSound is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotSound is missing</message>
@@ -13947,7 +13947,7 @@
 		</rule>
 		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_6" clause="AnnotSound-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotSound is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotSound is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotSound is missing</message>
@@ -14394,7 +14394,7 @@
 		</rule>
 		<rule object="AAnnotSquare">
 			<id specification="ISO_32000_1_6" clause="AnnotSquare-AS" testNumber="11"/>
-			<description>Entry AS in AnnotSquare is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotSquare is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotSquare is missing</message>
@@ -14586,7 +14586,7 @@
 		</rule>
 		<rule object="AAnnotSquare">
 			<id specification="ISO_32000_1_6" clause="AnnotSquare-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotSquare is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotSquare is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotSquare is missing</message>
@@ -14997,7 +14997,7 @@
 		</rule>
 		<rule object="AAnnotSquiggly">
 			<id specification="ISO_32000_1_6" clause="AnnotSquiggly-AS" testNumber="11"/>
-			<description>Entry AS in AnnotSquiggly is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotSquiggly is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotSquiggly is missing</message>
@@ -15141,7 +15141,7 @@
 		</rule>
 		<rule object="AAnnotSquiggly">
 			<id specification="ISO_32000_1_6" clause="AnnotSquiggly-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotSquiggly is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotSquiggly is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotSquiggly is missing</message>
@@ -15564,7 +15564,7 @@
 		</rule>
 		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_6" clause="AnnotStamp-AS" testNumber="11"/>
-			<description>Entry AS in AnnotStamp is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotStamp is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotStamp is missing</message>
@@ -15708,7 +15708,7 @@
 		</rule>
 		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_6" clause="AnnotStamp-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotStamp is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotStamp is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotStamp is missing</message>
@@ -16095,7 +16095,7 @@
 		</rule>
 		<rule object="AAnnotStrikeOut">
 			<id specification="ISO_32000_1_6" clause="AnnotStrikeOut-AS" testNumber="11"/>
-			<description>Entry AS in AnnotStrikeOut is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotStrikeOut is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotStrikeOut is missing</message>
@@ -16239,7 +16239,7 @@
 		</rule>
 		<rule object="AAnnotStrikeOut">
 			<id specification="ISO_32000_1_6" clause="AnnotStrikeOut-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotStrikeOut is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotStrikeOut is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotStrikeOut is missing</message>
@@ -16662,7 +16662,7 @@
 		</rule>
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_6" clause="AnnotText-AS" testNumber="11"/>
-			<description>Entry AS in AnnotText is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotText is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotText is missing</message>
@@ -16806,7 +16806,7 @@
 		</rule>
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_6" clause="AnnotText-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotText is required, when fn:IsRequired(fn:IsPDFVersion(1.5, fn:IsPresent(State)) || fn:SinceVersion(1.6, fn:IsPresent(RT)))</description>
+			<description>Entry IRT in AnnotText is required, when fn:IsPDFVersion(1.5, fn:IsPresent(State)) || fn:SinceVersion(1.6, fn:IsPresent(RT))</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotText is missing</message>
@@ -17109,7 +17109,7 @@
 		</rule>
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_6" clause="AnnotText-StateModel" testNumber="11"/>
-			<description>Entry StateModel in AnnotText is required, when fn:IsRequired(fn:IsPresent(State))</description>
+			<description>Entry StateModel in AnnotText is required, when fn:IsPresent(State)</description>
 			<test>containsStateModel == true || (containsState != true)</test>
 			<error>
 				<message>Entry StateModel in AnnotText is missing</message>
@@ -17340,7 +17340,7 @@
 		</rule>
 		<rule object="AAnnotTrapNetwork">
 			<id specification="ISO_32000_1_6" clause="AnnotTrapNetwork-AnnotStates" testNumber="11"/>
-			<description>Entry AnnotStates in AnnotTrapNetwork is required, when fn:IsRequired(fn:IsPDFVersion(1.3) || fn:SinceVersion(1.4, (fn:IsPresent(Version) &amp;&amp; fn:Not(fn:IsPresent(LastModified)))))</description>
+			<description>Entry AnnotStates in AnnotTrapNetwork is required, when fn:IsPDFVersion(1.3) || fn:SinceVersion(1.4, (fn:IsPresent(Version) &amp;&amp; fn:Not(fn:IsPresent(LastModified))))</description>
 			<test>containsAnnotStates == true || ((containsVersion != true) || (containsLastModified == true))</test>
 			<error>
 				<message>Entry AnnotStates in AnnotTrapNetwork is missing</message>
@@ -17484,7 +17484,7 @@
 		</rule>
 		<rule object="AAnnotTrapNetwork">
 			<id specification="ISO_32000_1_6" clause="AnnotTrapNetwork-LastModified" testNumber="11"/>
-			<description>Entry LastModified in AnnotTrapNetwork is required, when fn:IsRequired(fn:Not(fn:IsPresent(Version)) &amp;&amp; fn:Not(fn:IsPresent(AnnotStates)))</description>
+			<description>Entry LastModified in AnnotTrapNetwork is required, when fn:Not(fn:IsPresent(Version)) &amp;&amp; fn:Not(fn:IsPresent(AnnotStates))</description>
 			<test>containsLastModified == true || ((containsVersion == true) || (containsAnnotStates == true))</test>
 			<error>
 				<message>Entry LastModified in AnnotTrapNetwork is missing</message>
@@ -17702,7 +17702,7 @@
 		</rule>
 		<rule object="AAnnotTrapNetwork">
 			<id specification="ISO_32000_1_6" clause="AnnotTrapNetwork-Version" testNumber="11"/>
-			<description>Entry Version in AnnotTrapNetwork is required, when fn:IsRequired(fn:IsPDFVersion(1.3) || fn:SinceVersion(1.4, (fn:IsPresent(AnnotStates) &amp;&amp; fn:Not(fn:IsPresent(LastModified)))))</description>
+			<description>Entry Version in AnnotTrapNetwork is required, when fn:IsPDFVersion(1.3) || fn:SinceVersion(1.4, (fn:IsPresent(AnnotStates) &amp;&amp; fn:Not(fn:IsPresent(LastModified))))</description>
 			<test>containsVersion == true || ((containsAnnotStates != true) || (containsLastModified == true))</test>
 			<error>
 				<message>Entry Version in AnnotTrapNetwork is missing</message>
@@ -17774,7 +17774,7 @@
 		</rule>
 		<rule object="AAnnotUnderline">
 			<id specification="ISO_32000_1_6" clause="AnnotUnderline-AS" testNumber="11"/>
-			<description>Entry AS in AnnotUnderline is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotUnderline is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotUnderline is missing</message>
@@ -17918,7 +17918,7 @@
 		</rule>
 		<rule object="AAnnotUnderline">
 			<id specification="ISO_32000_1_6" clause="AnnotUnderline-IRT" testNumber="11"/>
-			<description>Entry IRT in AnnotUnderline is required, when fn:IsRequired(fn:IsPresent(RT))</description>
+			<description>Entry IRT in AnnotUnderline is required, when fn:IsPresent(RT)</description>
 			<test>containsIRT == true || (containsRT != true)</test>
 			<error>
 				<message>Entry IRT in AnnotUnderline is missing</message>
@@ -18341,7 +18341,7 @@
 		</rule>
 		<rule object="AAnnotWatermark">
 			<id specification="ISO_32000_1_6" clause="AnnotWatermark-AS" testNumber="11"/>
-			<description>Entry AS in AnnotWatermark is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotWatermark is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotWatermark is missing</message>
@@ -18751,7 +18751,7 @@
 		</rule>
 		<rule object="AAnnotWidget">
 			<id specification="ISO_32000_1_6" clause="AnnotWidget-AS" testNumber="11"/>
-			<description>Entry AS in AnnotWidget is required, when fn:IsRequired(fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*))</description>
+			<description>Entry AS in AnnotWidget is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotWidget is missing</message>
@@ -28864,7 +28864,7 @@
 		</rule>
 		<rule object="ADPart">
 			<id specification="ISO_32000_1_6" clause="DPart-DParts" testNumber="11"/>
-			<description>Entry DParts in DPart is required, when fn:IsRequired(fn:Not(fn:IsPresent(Start)))</description>
+			<description>Entry DParts in DPart is required, when fn:Not(fn:IsPresent(Start))</description>
 			<test>containsDParts == true || (containsStart == true)</test>
 			<error>
 				<message>Entry DParts in DPart is missing</message>
@@ -29032,7 +29032,7 @@
 		</rule>
 		<rule object="ADPart">
 			<id specification="ISO_32000_1_6" clause="DPart-Start" testNumber="11"/>
-			<description>Entry Start in DPart is required, when fn:IsRequired(fn:Not(fn:IsPresent(DParts)))</description>
+			<description>Entry Start in DPart is required, when fn:Not(fn:IsPresent(DParts))</description>
 			<test>containsStart == true || (containsDParts == true)</test>
 			<error>
 				<message>Entry Start in DPart is missing</message>
@@ -29201,7 +29201,7 @@
 		</rule>
 		<rule object="ADPartRoot">
 			<id specification="ISO_32000_1_6" clause="DPartRoot-NodeNameList" testNumber="11"/>
-			<description>Entry NodeNameList in DPartRoot is required, when fn:IsRequired(fn:Extension(PDF_VT2))</description>
+			<description>Entry NodeNameList in DPartRoot is required, when fn:Extension(PDF_VT2)</description>
 			<test>containsNodeNameList == true || (hasExtensionPDF_VT2 != true)</test>
 			<error>
 				<message>Entry NodeNameList in DPartRoot is missing</message>
@@ -30132,7 +30132,7 @@
 		</rule>
 		<rule object="ADeviceNDict">
 			<id specification="ISO_32000_1_6" clause="DeviceNDict-Colorants" testNumber="11"/>
-			<description>Entry Colorants in DeviceNDict is required, when fn:IsRequired(fn:SinceVersion(1.6, (@Subtype == NChannel)) &amp;&amp; fn:HasSpotColorants(parent::1))</description>
+			<description>Entry Colorants in DeviceNDict is required, when fn:SinceVersion(1.6, (@Subtype == NChannel)) &amp;&amp; fn:HasSpotColorants(parent::1)</description>
 			<test>containsColorants == true || ((SubtypeNameValue == "NChannel") &amp;&amp; (parent1EntriesString != null &amp;&amp; parent1EntriesString.split('&amp;').filter(elem =&gt; elem != "Cyan" &amp;&amp; elem != "Magenta" &amp;&amp; elem != "Yellow" &amp;&amp; elem != "Black").length &gt; 0)) == false</test>
 			<error>
 				<message>Entry Colorants in DeviceNDict is missing</message>
@@ -30192,7 +30192,7 @@
 		</rule>
 		<rule object="ADeviceNDict">
 			<id specification="ISO_32000_1_6" clause="DeviceNDict-Process" testNumber="11"/>
-			<description>Entry Process in DeviceNDict is required, when fn:IsRequired((@Subtype == NChannel) &amp;&amp; fn:HasProcessColorants(parent::1))</description>
+			<description>Entry Process in DeviceNDict is required, when (@Subtype == NChannel) &amp;&amp; fn:HasProcessColorants(parent::1)</description>
 			<test>containsProcess == true || ((SubtypeNameValue == "NChannel") &amp;&amp; (parent1EntriesString != null &amp;&amp; parent1EntriesString.split('&amp;').filter(elem =&gt; elem == "Cyan" || elem == "Magenta" || elem == "Yellow" || elem == "Black").length &gt; 0)) == false</test>
 			<error>
 				<message>Entry Process in DeviceNDict is missing</message>
@@ -30289,7 +30289,7 @@
 		</rule>
 		<rule object="ADeviceNMixingHints">
 			<id specification="ISO_32000_1_6" clause="DeviceNMixingHints-PrintingOrder" testNumber="11"/>
-			<description>Entry PrintingOrder in DeviceNMixingHints is required, when fn:IsRequired(fn:IsPresent(Solidities))</description>
+			<description>Entry PrintingOrder in DeviceNMixingHints is required, when fn:IsPresent(Solidities)</description>
 			<test>containsPrintingOrder == true || (containsSolidities != true)</test>
 			<error>
 				<message>Entry PrintingOrder in DeviceNMixingHints is missing</message>
@@ -31839,7 +31839,7 @@
 		</rule>
 		<rule object="AEncryptionPublicKey">
 			<id specification="ISO_32000_1_6" clause="EncryptionPublicKey-Recipients" testNumber="11"/>
-			<description>Entry Recipients in EncryptionPublicKey is required, when fn:IsRequired((@SubFilter == adbe.pkcs7.s3) || (@SubFilter == adbe.pkcs7.s4))</description>
+			<description>Entry Recipients in EncryptionPublicKey is required, when (@SubFilter == adbe.pkcs7.s3) || (@SubFilter == adbe.pkcs7.s4)</description>
 			<test>containsRecipients == true || ((SubFilterNameValue != "adbe.pkcs7.s3") &amp;&amp; (SubFilterNameValue != "adbe.pkcs7.s4"))</test>
 			<error>
 				<message>Entry Recipients in EncryptionPublicKey is missing</message>
@@ -32156,7 +32156,7 @@
 		</rule>
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_6" clause="EncryptionStandard-OE" testNumber="11"/>
-			<description>Entry OE in EncryptionStandard is required, when fn:IsRequired((@R == 5) || (@R == 6))</description>
+			<description>Entry OE in EncryptionStandard is required, when (@R == 5) || (@R == 6)</description>
 			<test>RHasTypeInteger == false || (containsOE == true || ((RIntegerValue != 5) &amp;&amp; (RIntegerValue != 6)))</test>
 			<error>
 				<message>Entry OE in EncryptionStandard is missing</message>
@@ -32228,7 +32228,7 @@
 		</rule>
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_6" clause="EncryptionStandard-Perms" testNumber="11"/>
-			<description>Entry Perms in EncryptionStandard is required, when fn:IsRequired((@R == 5) || (@R == 6))</description>
+			<description>Entry Perms in EncryptionStandard is required, when (@R == 5) || (@R == 6)</description>
 			<test>RHasTypeInteger == false || (containsPerms == true || ((RIntegerValue != 5) &amp;&amp; (RIntegerValue != 6)))</test>
 			<error>
 				<message>Entry Perms in EncryptionStandard is missing</message>
@@ -32397,7 +32397,7 @@
 		</rule>
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_6" clause="EncryptionStandard-UE" testNumber="11"/>
-			<description>Entry UE in EncryptionStandard is required, when fn:IsRequired((@R == 5) || (@R == 6))</description>
+			<description>Entry UE in EncryptionStandard is required, when (@R == 5) || (@R == 6)</description>
 			<test>RHasTypeInteger == false || (containsUE == true || ((RIntegerValue != 5) &amp;&amp; (RIntegerValue != 6)))</test>
 			<error>
 				<message>Entry UE in EncryptionStandard is missing</message>
@@ -34051,7 +34051,7 @@
 		</rule>
 		<rule object="AFieldMDPTransformParameters">
 			<id specification="ISO_32000_1_6" clause="FieldMDPTransformParameters-Fields" testNumber="11"/>
-			<description>Entry Fields in FieldMDPTransformParameters is required, when fn:IsRequired((@Action == Include) || (@Action == Exclude))</description>
+			<description>Entry Fields in FieldMDPTransformParameters is required, when (@Action == Include) || (@Action == Exclude)</description>
 			<test>containsFields == true || ((ActionNameValue != "Include") &amp;&amp; (ActionNameValue != "Exclude"))</test>
 			<error>
 				<message>Entry Fields in FieldMDPTransformParameters is missing</message>
@@ -35089,7 +35089,7 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_6" clause="FileSpecification-EF" testNumber="11"/>
-			<description>Entry EF in FileSpecification is required, when fn:IsRequired(fn:IsPresent(RF))</description>
+			<description>Entry EF in FileSpecification is required, when fn:IsPresent(RF)</description>
 			<test>containsEF == true || (containsRF != true)</test>
 			<error>
 				<message>Entry EF in FileSpecification is missing</message>
@@ -35113,7 +35113,7 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_6" clause="FileSpecification-F" testNumber="11"/>
-			<description>Entry F in FileSpecification is required, when fn:IsRequired(fn:Not(fn:IsPresent(DOS)) &amp;&amp; fn:Not(fn:IsPresent(Mac)) &amp;&amp; fn:Not(fn:IsPresent(Unix)))</description>
+			<description>Entry F in FileSpecification is required, when fn:Not(fn:IsPresent(DOS)) &amp;&amp; fn:Not(fn:IsPresent(Mac)) &amp;&amp; fn:Not(fn:IsPresent(Unix))</description>
 			<test>containsF == true || ((containsDOS == true) || (containsMac == true) || (containsUnix == true))</test>
 			<error>
 				<message>Entry F in FileSpecification is missing</message>
@@ -35209,7 +35209,7 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_6" clause="FileSpecification-Type" testNumber="11"/>
-			<description>Entry Type in FileSpecification is required, when fn:IsRequired(fn:IsPresent(EF) || fn:SinceVersion(2.0, fn:IsPresent(EP)) || fn:IsPresent(RF))</description>
+			<description>Entry Type in FileSpecification is required, when fn:IsPresent(EF) || fn:SinceVersion(2.0, fn:IsPresent(EP)) || fn:IsPresent(RF)</description>
 			<test>containsType == true || ((containsEF != true) &amp;&amp; (containsRF != true))</test>
 			<error>
 				<message>Entry Type in FileSpecification is missing</message>
@@ -35330,7 +35330,7 @@
 		</rule>
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_6" clause="FileTrailer-ID" testNumber="11"/>
-			<description>Entry ID in FileTrailer is required, when fn:IsRequired(fn:IsPresent(Encrypt))</description>
+			<description>Entry ID in FileTrailer is required, when fn:IsPresent(Encrypt)</description>
 			<test>containsID == true || (containsEncrypt != true)</test>
 			<error>
 				<message>Entry ID in FileTrailer is missing</message>
@@ -35378,7 +35378,7 @@
 		</rule>
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_6" clause="FileTrailer-Info" testNumber="11"/>
-			<description>Entry Info in FileTrailer is required, when fn:IsRequired(fn:SinceVersion(1.4, fn:IsPresent(trailer::Catalog::PieceInfo)))</description>
+			<description>Entry Info in FileTrailer is required, when fn:SinceVersion(1.4, fn:IsPresent(trailer::Catalog::PieceInfo))</description>
 			<test>containsInfo == true || (containstrailerCatalogPieceInfo != true)</test>
 			<error>
 				<message>Entry Info in FileTrailer is missing</message>
@@ -40337,7 +40337,7 @@
 		</rule>
 		<rule object="AFontFile2">
 			<id specification="ISO_32000_1_6" clause="FontFile2-Length1" testNumber="11"/>
-			<description>Entry Length1 in FontFile2 is required, when fn:IsRequired(parent::parent::@Subtype == TrueType)</description>
+			<description>Entry Length1 in FontFile2 is required, when parent::parent::@Subtype == TrueType</description>
 			<test>containsLength1 == true || (parentparentSubtypeNameValue != "TrueType")</test>
 			<error>
 				<message>Entry Length1 in FontFile2 is missing</message>
@@ -41690,7 +41690,7 @@
 		</rule>
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_6" clause="FontMultipleMaster-FirstChar" testNumber="11"/>
-			<description>Entry FirstChar in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry FirstChar in FontMultipleMaster is required, when fn:NotStandard14Font()</description>
 			<test>containsFirstChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FirstChar in FontMultipleMaster is missing</message>
@@ -41726,7 +41726,7 @@
 		</rule>
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_6" clause="FontMultipleMaster-FontDescriptor" testNumber="11"/>
-			<description>Entry FontDescriptor in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry FontDescriptor in FontMultipleMaster is required, when fn:NotStandard14Font()</description>
 			<test>containsFontDescriptor == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FontDescriptor in FontMultipleMaster is missing</message>
@@ -41762,7 +41762,7 @@
 		</rule>
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_6" clause="FontMultipleMaster-LastChar" testNumber="11"/>
-			<description>Entry LastChar in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry LastChar in FontMultipleMaster is required, when fn:NotStandard14Font()</description>
 			<test>containsLastChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry LastChar in FontMultipleMaster is missing</message>
@@ -41920,7 +41920,7 @@
 		</rule>
 		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_6" clause="FontMultipleMaster-Widths" testNumber="11"/>
-			<description>Entry Widths in FontMultipleMaster is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry Widths in FontMultipleMaster is required, when fn:NotStandard14Font()</description>
 			<test>containsWidths == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry Widths in FontMultipleMaster is missing</message>
@@ -42017,7 +42017,7 @@
 		</rule>
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_6" clause="FontTrueType-FirstChar" testNumber="11"/>
-			<description>Entry FirstChar in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry FirstChar in FontTrueType is required, when fn:NotStandard14Font()</description>
 			<test>containsFirstChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FirstChar in FontTrueType is missing</message>
@@ -42053,7 +42053,7 @@
 		</rule>
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_6" clause="FontTrueType-FontDescriptor" testNumber="11"/>
-			<description>Entry FontDescriptor in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry FontDescriptor in FontTrueType is required, when fn:NotStandard14Font()</description>
 			<test>containsFontDescriptor == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FontDescriptor in FontTrueType is missing</message>
@@ -42089,7 +42089,7 @@
 		</rule>
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_6" clause="FontTrueType-LastChar" testNumber="11"/>
-			<description>Entry LastChar in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry LastChar in FontTrueType is required, when fn:NotStandard14Font()</description>
 			<test>containsLastChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry LastChar in FontTrueType is missing</message>
@@ -42247,7 +42247,7 @@
 		</rule>
 		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_6" clause="FontTrueType-Widths" testNumber="11"/>
-			<description>Entry Widths in FontTrueType is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry Widths in FontTrueType is required, when fn:NotStandard14Font()</description>
 			<test>containsWidths == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry Widths in FontTrueType is missing</message>
@@ -42587,7 +42587,7 @@
 		</rule>
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_6" clause="FontType1-FirstChar" testNumber="11"/>
-			<description>Entry FirstChar in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry FirstChar in FontType1 is required, when fn:NotStandard14Font()</description>
 			<test>containsFirstChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FirstChar in FontType1 is missing</message>
@@ -42623,7 +42623,7 @@
 		</rule>
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_6" clause="FontType1-FontDescriptor" testNumber="11"/>
-			<description>Entry FontDescriptor in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry FontDescriptor in FontType1 is required, when fn:NotStandard14Font()</description>
 			<test>containsFontDescriptor == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FontDescriptor in FontType1 is missing</message>
@@ -42659,7 +42659,7 @@
 		</rule>
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_6" clause="FontType1-LastChar" testNumber="11"/>
-			<description>Entry LastChar in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry LastChar in FontType1 is required, when fn:NotStandard14Font()</description>
 			<test>containsLastChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry LastChar in FontType1 is missing</message>
@@ -42817,7 +42817,7 @@
 		</rule>
 		<rule object="AFontType1">
 			<id specification="ISO_32000_1_6" clause="FontType1-Widths" testNumber="11"/>
-			<description>Entry Widths in FontType1 is required, when fn:IsRequired(fn:NotStandard14Font())</description>
+			<description>Entry Widths in FontType1 is required, when fn:NotStandard14Font()</description>
 			<test>containsWidths == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry Widths in FontType1 is missing</message>
@@ -42997,7 +42997,7 @@
 		</rule>
 		<rule object="AFontType3">
 			<id specification="ISO_32000_1_6" clause="FontType3-FontDescriptor" testNumber="11"/>
-			<description>Entry FontDescriptor in FontType3 is required, when fn:IsRequired(fn:IsPDFTagged())</description>
+			<description>Entry FontDescriptor in FontType3 is required, when fn:IsPDFTagged()</description>
 			<test>containsFontDescriptor == true || isPDFTagged == false</test>
 			<error>
 				<message>Entry FontDescriptor in FontType3 is missing</message>
@@ -46210,7 +46210,7 @@
 		</rule>
 		<rule object="AHalftoneType1">
 			<id specification="ISO_32000_1_6" clause="HalftoneType1-TransferFunction" testNumber="11"/>
-			<description>Entry TransferFunction in HalftoneType1 is required, when fn:IsRequired(parent::@HalftoneType == 5)</description>
+			<description>Entry TransferFunction in HalftoneType1 is required, when parent::@HalftoneType == 5</description>
 			<test>parentHalftoneTypeHasTypeInteger == false || (containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5))</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType1 is missing</message>
@@ -46635,7 +46635,7 @@
 		</rule>
 		<rule object="AHalftoneType10">
 			<id specification="ISO_32000_1_6" clause="HalftoneType10-TransferFunction" testNumber="11"/>
-			<description>Entry TransferFunction in HalftoneType10 is required, when fn:IsRequired(parent::@HalftoneType == 5)</description>
+			<description>Entry TransferFunction in HalftoneType10 is required, when parent::@HalftoneType == 5</description>
 			<test>parentHalftoneTypeHasTypeInteger == false || (containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5))</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType10 is missing</message>
@@ -47204,7 +47204,7 @@
 		</rule>
 		<rule object="AHalftoneType16">
 			<id specification="ISO_32000_1_6" clause="HalftoneType16-TransferFunction" testNumber="11"/>
-			<description>Entry TransferFunction in HalftoneType16 is required, when fn:IsRequired(parent::@HalftoneType == 5)</description>
+			<description>Entry TransferFunction in HalftoneType16 is required, when parent::@HalftoneType == 5</description>
 			<test>parentHalftoneTypeHasTypeInteger == false || (containsTransferFunction == true || (parentHalftoneTypeIntegerValue != 5))</test>
 			<error>
 				<message>Entry TransferFunction in HalftoneType16 is missing</message>
@@ -51663,7 +51663,7 @@
 		</rule>
 		<rule object="AMediaDuration">
 			<id specification="ISO_32000_1_6" clause="MediaDuration-T" testNumber="11"/>
-			<description>Entry T in MediaDuration is required, when fn:IsRequired(@S == T)</description>
+			<description>Entry T in MediaDuration is required, when @S == T</description>
 			<test>containsT == true || (SNameValue != "T")</test>
 			<error>
 				<message>Entry T in MediaDuration is missing</message>
@@ -55356,7 +55356,7 @@
 		</rule>
 		<rule object="AOPIVersion20Dict">
 			<id specification="ISO_32000_1_6" clause="OPIVersion20Dict-CropRect" testNumber="11"/>
-			<description>Entry CropRect in OPIVersion20Dict is required, when fn:IsRequired(fn:IsPresent(Size))</description>
+			<description>Entry CropRect in OPIVersion20Dict is required, when fn:IsPresent(Size)</description>
 			<test>containsCropRect == true || (containsSize != true)</test>
 			<error>
 				<message>Entry CropRect in OPIVersion20Dict is missing</message>
@@ -55550,7 +55550,7 @@
 		</rule>
 		<rule object="AOPIVersion20Dict">
 			<id specification="ISO_32000_1_6" clause="OPIVersion20Dict-Size" testNumber="11"/>
-			<description>Entry Size in OPIVersion20Dict is required, when fn:IsRequired(fn:IsPresent(CropRect))</description>
+			<description>Entry Size in OPIVersion20Dict is required, when fn:IsPresent(CropRect)</description>
 			<test>containsSize == true || (containsCropRect != true)</test>
 			<error>
 				<message>Entry Size in OPIVersion20Dict is missing</message>
@@ -57657,7 +57657,7 @@
 		</rule>
 		<rule object="AOptContentZoom">
 			<id specification="ISO_32000_1_6" clause="OptContentZoom-max" testNumber="11"/>
-			<description>Entry max in OptContentZoom is required, when fn:IsRequired(fn:Not(fn:IsPresent(min)))</description>
+			<description>Entry max in OptContentZoom is required, when fn:Not(fn:IsPresent(min))</description>
 			<test>containsmax == true || (containsmin == true)</test>
 			<error>
 				<message>Entry max in OptContentZoom is missing</message>
@@ -57693,7 +57693,7 @@
 		</rule>
 		<rule object="AOptContentZoom">
 			<id specification="ISO_32000_1_6" clause="OptContentZoom-min" testNumber="11"/>
-			<description>Entry min in OptContentZoom is required, when fn:IsRequired(fn:Not(fn:IsPresent(max)))</description>
+			<description>Entry min in OptContentZoom is required, when fn:Not(fn:IsPresent(max))</description>
 			<test>containsmin == true || (containsmax == true)</test>
 			<error>
 				<message>Entry min in OptContentZoom is missing</message>
@@ -58886,7 +58886,7 @@
 		</rule>
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_6" clause="PageObject-LastModified" testNumber="11"/>
-			<description>Entry LastModified in PageObject is required, when fn:IsRequired(fn:IsPresent(PieceInfo))</description>
+			<description>Entry LastModified in PageObject is required, when fn:IsPresent(PieceInfo)</description>
 			<test>containsLastModified == true || (containsPieceInfo != true)</test>
 			<error>
 				<message>Entry LastModified in PageObject is missing</message>
@@ -58994,7 +58994,7 @@
 		</rule>
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_6" clause="PageObject-Parent" testNumber="11"/>
-			<description>Entry Parent in PageObject is required, when fn:IsRequired(@Type != Template)</description>
+			<description>Entry Parent in PageObject is required, when @Type != Template</description>
 			<test>containsParent == true || (TypeNameValue == "Template")</test>
 			<error>
 				<message>Entry Parent in PageObject is missing</message>
@@ -59174,7 +59174,7 @@
 		</rule>
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_6" clause="PageObject-StructParents" testNumber="11"/>
-			<description>Entry StructParents in PageObject is required, when fn:IsRequired(fn:PageContainsStructContentItems())</description>
+			<description>Entry StructParents in PageObject is required, when fn:PageContainsStructContentItems()</description>
 			<test>containsStructParents == true || (pageContainsStructContentItems != true)</test>
 			<error>
 				<message>Entry StructParents in PageObject is missing</message>
@@ -59223,7 +59223,7 @@
 		</rule>
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_6" clause="PageObject-TemplateInstantiated" testNumber="11"/>
-			<description>Entry TemplateInstantiated in PageObject is required, when fn:IsRequired(fn:InNameTree(trailer::Catalog::Names::Pages) || fn:InNameTree(trailer::Catalog::Names::Templates))</description>
+			<description>Entry TemplateInstantiated in PageObject is required, when fn:InNameTree(trailer::Catalog::Names::Pages) || fn:InNameTree(trailer::Catalog::Names::Templates)</description>
 			<test>containsTemplateInstantiated == true || ((nameTreetrailerCatalogNamesPagesContainsTemplateInstantiatedString != true) &amp;&amp; (nameTreetrailerCatalogNamesTemplatesContainsTemplateInstantiatedString != true))</test>
 			<error>
 				<message>Entry TemplateInstantiated in PageObject is missing</message>
@@ -60893,7 +60893,7 @@
 		</rule>
 		<rule object="AProjection">
 			<id specification="ISO_32000_1_6" clause="Projection-N" testNumber="11"/>
-			<description>Entry N in Projection is required, when fn:IsRequired(@Subtype == P)</description>
+			<description>Entry N in Projection is required, when @Subtype == P</description>
 			<test>containsN == true || (SubtypeNameValue != "P")</test>
 			<error>
 				<message>Entry N in Projection is missing</message>
@@ -61374,7 +61374,7 @@
 		</rule>
 		<rule object="ARenditionMedia">
 			<id specification="ISO_32000_1_6" clause="RenditionMedia-P" testNumber="11"/>
-			<description>Entry P in RenditionMedia is required, when fn:IsRequired(fn:Not(fn:IsPresent(C)))</description>
+			<description>Entry P in RenditionMedia is required, when fn:Not(fn:IsPresent(C))</description>
 			<test>containsP == true || (containsC == true)</test>
 			<error>
 				<message>Entry P in RenditionMedia is missing</message>
@@ -65480,7 +65480,7 @@
 		</rule>
 		<rule object="ASigFieldLock">
 			<id specification="ISO_32000_1_6" clause="SigFieldLock-Fields" testNumber="11"/>
-			<description>Entry Fields in SigFieldLock is required, when fn:IsRequired((@Action == Include) || (@Action == Exclude))</description>
+			<description>Entry Fields in SigFieldLock is required, when (@Action == Include) || (@Action == Exclude)</description>
 			<test>containsFields == true || ((ActionNameValue != "Include") &amp;&amp; (ActionNameValue != "Exclude"))</test>
 			<error>
 				<message>Entry Fields in SigFieldLock is missing</message>
@@ -65807,7 +65807,7 @@
 		</rule>
 		<rule object="ASignature">
 			<id specification="ISO_32000_1_6" clause="Signature-Cert" testNumber="11"/>
-			<description>Entry Cert in Signature is required, when fn:IsRequired(@SubFilter == adbe.x509.rsa_sha1)</description>
+			<description>Entry Cert in Signature is required, when @SubFilter == adbe.x509.rsa_sha1</description>
 			<test>containsCert == true || (SubFilterNameValue != "adbe.x509.rsa_sha1")</test>
 			<error>
 				<message>Entry Cert in Signature is missing</message>
@@ -70575,7 +70575,7 @@
 		</rule>
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_6" clause="StructureAttributesDict-P" testNumber="11"/>
-			<description>Entry P in StructureAttributesDict is required, when fn:IsRequired(@O == UserProperties)</description>
+			<description>Entry P in StructureAttributesDict is required, when @O == UserProperties</description>
 			<test>containsP == true || (ONameValue != "UserProperties")</test>
 			<error>
 				<message>Entry P in StructureAttributesDict is missing</message>
@@ -71377,7 +71377,7 @@
 		</rule>
 		<rule object="ATarget">
 			<id specification="ISO_32000_1_6" clause="Target-N" testNumber="11"/>
-			<description>Entry N in Target is required, when fn:IsRequired((@R == C) &amp;&amp; fn:InNameTree(trailer::Catalog::Names::EmbeddedFiles))</description>
+			<description>Entry N in Target is required, when (@R == C) &amp;&amp; fn:InNameTree(trailer::Catalog::Names::EmbeddedFiles)</description>
 			<test>containsN == true || ((RNameValue != "C") || (nameTreetrailerCatalogNamesEmbeddedFilesContainsNString != true))</test>
 			<error>
 				<message>Entry N in Target is missing</message>
@@ -76059,7 +76059,7 @@
 		</rule>
 		<rule object="AXObjectFormPrinterMark">
 			<id specification="ISO_32000_1_6" clause="XObjectFormPrinterMark-LastModified" testNumber="11"/>
-			<description>Entry LastModified in XObjectFormPrinterMark is required, when fn:IsRequired(fn:IsPresent(PieceInfo))</description>
+			<description>Entry LastModified in XObjectFormPrinterMark is required, when fn:IsPresent(PieceInfo)</description>
 			<test>containsLastModified == true || (containsPieceInfo != true)</test>
 			<error>
 				<message>Entry LastModified in XObjectFormPrinterMark is missing</message>
@@ -76724,7 +76724,7 @@
 		</rule>
 		<rule object="AXObjectFormTrapNet">
 			<id specification="ISO_32000_1_6" clause="XObjectFormTrapNet-LastModified" testNumber="11"/>
-			<description>Entry LastModified in XObjectFormTrapNet is required, when fn:IsRequired(fn:IsPresent(PieceInfo))</description>
+			<description>Entry LastModified in XObjectFormTrapNet is required, when fn:IsPresent(PieceInfo)</description>
 			<test>containsLastModified == true || (containsPieceInfo != true)</test>
 			<error>
 				<message>Entry LastModified in XObjectFormTrapNet is missing</message>
@@ -77474,7 +77474,7 @@
 		</rule>
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_6" clause="XObjectFormType1-GTS_Env" testNumber="11"/>
-			<description>Entry GTS_Env in XObjectFormType1 is required, when fn:IsRequired((@GTS_Scope == Stream) || (@GTS_Scope == Global))</description>
+			<description>Entry GTS_Env in XObjectFormType1 is required, when (@GTS_Scope == Stream) || (@GTS_Scope == Global)</description>
 			<test>containsGTS_Env == true || ((GTS_ScopeNameValue != "Stream") &amp;&amp; (GTS_ScopeNameValue != "Global"))</test>
 			<error>
 				<message>Entry GTS_Env in XObjectFormType1 is missing</message>
@@ -77595,7 +77595,7 @@
 		</rule>
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_6" clause="XObjectFormType1-LastModified" testNumber="11"/>
-			<description>Entry LastModified in XObjectFormType1 is required, when fn:IsRequired(fn:IsPresent(PieceInfo))</description>
+			<description>Entry LastModified in XObjectFormType1 is required, when fn:IsPresent(PieceInfo)</description>
 			<test>containsLastModified == true || (containsPieceInfo != true)</test>
 			<error>
 				<message>Entry LastModified in XObjectFormType1 is missing</message>
@@ -78029,7 +78029,7 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_6" clause="XObjectImage-BitsPerComponent" testNumber="11"/>
-			<description>Entry BitsPerComponent in XObjectImage is required, when fn:IsRequired(fn:Not(fn:Contains(@Filter, JPXDecode) || (@ImageMask == true)))</description>
+			<description>Entry BitsPerComponent in XObjectImage is required, when fn:Not(fn:Contains(@Filter, JPXDecode) || (@ImageMask == true))</description>
 			<test>containsBitsPerComponent == true || (((FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "JPXDecode").length &gt; 0) || (ImageMaskBooleanValue == true)) != true) == false</test>
 			<error>
 				<message>Entry BitsPerComponent in XObjectImage is missing</message>
@@ -78102,7 +78102,7 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_6" clause="XObjectImage-ColorSpace" testNumber="11"/>
-			<description>Entry ColorSpace in XObjectImage is required, when fn:IsRequired(fn:Not(fn:Contains(@Filter, JPXDecode) || (@ImageMask == true)))</description>
+			<description>Entry ColorSpace in XObjectImage is required, when fn:Not(fn:Contains(@Filter, JPXDecode) || (@ImageMask == true))</description>
 			<test>containsColorSpace == true || (((FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "JPXDecode").length &gt; 0) || (ImageMaskBooleanValue == true)) != true) == false</test>
 			<error>
 				<message>Entry ColorSpace in XObjectImage is missing</message>
@@ -78453,7 +78453,7 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_6" clause="XObjectImage-GTS_Env" testNumber="11"/>
-			<description>Entry GTS_Env in XObjectImage is required, when fn:IsRequired((@GTS_Scope == Stream) || (@GTS_Scope == Global))</description>
+			<description>Entry GTS_Env in XObjectImage is required, when (@GTS_Scope == Stream) || (@GTS_Scope == Global)</description>
 			<test>containsGTS_Env == true || ((GTS_ScopeNameValue != "Stream") &amp;&amp; (GTS_ScopeNameValue != "Global"))</test>
 			<error>
 				<message>Entry GTS_Env in XObjectImage is missing</message>
@@ -78899,7 +78899,7 @@
 		</rule>
 		<rule object="AXObjectImage" deferred="true">
 			<id specification="ISO_32000_1_6" clause="XObjectImage-StructParent" testNumber="11"/>
-			<description>Entry StructParent in XObjectImage is required, when fn:IsRequired(fn:ImageIsStructContentItem())</description>
+			<description>Entry StructParent in XObjectImage is required, when fn:ImageIsStructContentItem()</description>
 			<test>containsStructParent == true || (imageIsStructContentItem != true || SubtypeNameValue != "Image")</test>
 			<error>
 				<message>Entry StructParent in XObjectImage is missing</message>
@@ -79624,7 +79624,7 @@
 		</rule>
 		<rule object="AXObjectImageMask" deferred="true">
 			<id specification="ISO_32000_1_6" clause="XObjectImageMask-StructParent" testNumber="11"/>
-			<description>Entry StructParent in XObjectImageMask is required, when fn:IsRequired(fn:ImageIsStructContentItem())</description>
+			<description>Entry StructParent in XObjectImageMask is required, when fn:ImageIsStructContentItem()</description>
 			<test>containsStructParent == true || (imageIsStructContentItem != true || SubtypeNameValue != "Image")</test>
 			<error>
 				<message>Entry StructParent in XObjectImageMask is missing</message>
@@ -79746,7 +79746,7 @@
 		</rule>
 		<rule object="AXObjectImageSoftMask">
 			<id specification="ISO_32000_1_6" clause="XObjectImageSoftMask-BitsPerComponent" testNumber="11"/>
-			<description>Entry BitsPerComponent in XObjectImageSoftMask is required, when fn:IsRequired(fn:Not(fn:Contains(@Filter, JPXDecode) || (@ImageMask == true)))</description>
+			<description>Entry BitsPerComponent in XObjectImageSoftMask is required, when fn:Not(fn:Contains(@Filter, JPXDecode) || (@ImageMask == true))</description>
 			<test>containsBitsPerComponent == true || (((FilterEntriesString != null &amp;&amp; FilterEntriesString.split('&amp;').filter(elem =&gt; elem == "JPXDecode").length &gt; 0) || (ImageMaskBooleanValue == true)) != true) == false</test>
 			<error>
 				<message>Entry BitsPerComponent in XObjectImageSoftMask is missing</message>
@@ -80798,7 +80798,7 @@
 		</rule>
 		<rule object="AXRefStream">
 			<id specification="ISO_32000_1_6" clause="XRefStream-ID" testNumber="11"/>
-			<description>Entry ID in XRefStream is required, when fn:IsRequired(fn:IsPresent(Encrypt))</description>
+			<description>Entry ID in XRefStream is required, when fn:IsPresent(Encrypt)</description>
 			<test>containsID == true || (containsEncrypt != true)</test>
 			<error>
 				<message>Entry ID in XRefStream is missing</message>
@@ -80894,7 +80894,7 @@
 		</rule>
 		<rule object="AXRefStream">
 			<id specification="ISO_32000_1_6" clause="XRefStream-Info" testNumber="11"/>
-			<description>Entry Info in XRefStream is required, when fn:IsRequired(fn:IsPresent(trailer::Catalog::PieceInfo))</description>
+			<description>Entry Info in XRefStream is required, when fn:IsPresent(trailer::Catalog::PieceInfo)</description>
 			<test>containsInfo == true || (containstrailerCatalogPieceInfo != true)</test>
 			<error>
 				<message>Entry Info in XRefStream is missing</message>
