@@ -13,6 +13,8 @@
     <xsl:param name="isFullHTML" select="'true'"/>
     <!-- Parameter to show parser type -->
     <xsl:param name="parserType"/>
+    <!-- Parameter to show release details -->
+    <xsl:param name="appName"/>
     <!-- Prameter to set the base path to the Wiki instance -->
     <xsl:param name="wikiPath"
                select="'https://github.com/veraPDF/veraPDF-validation-profiles/wiki/'"/>
@@ -169,8 +171,7 @@
                         <b>Version:</b>
                     </td>
                     <td>
-                        <xsl:value-of
-                                select="/report/buildInformation/releaseDetails[@id='gui']/@version"/>
+                        <xsl:value-of select="/report/buildInformation/releaseDetails[@id=$appName]/@version"/>
                     </td>
                 </tr>
                 <xsl:if test="$parserType">
@@ -189,8 +190,7 @@
                         <b>Build Date:</b>
                     </td>
                     <td>
-                        <xsl:value-of
-                                select="/report/buildInformation/releaseDetails[@id='gui']/@buildDate"/>
+                        <xsl:value-of select="/report/buildInformation/releaseDetails[@id=$appName]/@buildDate"/>
                     </td>
                 </tr>
                 <tr>
