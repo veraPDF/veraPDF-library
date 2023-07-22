@@ -20781,6 +20781,30 @@
 			<references/>
 		</rule>
 		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_3" clause="FileTrailer-LinearizationParameterDict-Dictionary" testNumber="17"/>
+			<description>Entry LinearizationParameterDict with type Dictionary in FileTrailer shall be object LinearizationParameterDict</description>
+			<test>LinearizationParameterDictHasTypeDictionary != true || LinearizationParameterDict_size == 1</test>
+			<error>
+				<message>Entry LinearizationParameterDict with type Dictionary in FileTrailer is not object LinearizationParameterDict</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_3" clause="FileTrailer-LinearizationParameterDict" testNumber="8"/>
+			<description>Entry LinearizationParameterDict in FileTrailer shall have type Dictionary</description>
+			<test>containsLinearizationParameterDict == false || LinearizationParameterDictHasTypeDictionary == true</test>
+			<error>
+				<message>Entry LinearizationParameterDict in FileTrailer is not of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_3" clause="FileTrailer-Prev" testNumber="8"/>
 			<description>Entry Prev in FileTrailer shall have type Integer</description>
 			<test>containsPrev == false || PrevHasTypeInteger == true</test>
