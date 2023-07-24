@@ -22023,6 +22023,30 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AArrayOfObjectStreamsEntry">
+			<id specification="ISO_32000_1_6" clause="ArrayOfObjectStreamsEntry-Stream" testNumber="17"/>
+			<description>Entry with type Stream in ArrayOfObjectStreams shall be object ObjectStream</description>
+			<test>HasTypeStream != true || Entry_size == 1</test>
+			<error>
+				<message>Entry %1 with type Stream in ArrayOfObjectStreams is not object ObjectStream</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfObjectStreamsEntry">
+			<id specification="ISO_32000_1_6" clause="ArrayOfObjectStreamsEntry" testNumber="8"/>
+			<description>Entry in ArrayOfObjectStreams shall have type Stream</description>
+			<test>HasTypeStream == true</test>
+			<error>
+				<message>Entry %1 in ArrayOfObjectStreams is not of type Stream</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AArrayOfOptContentGroupsEntry">
 			<id specification="ISO_32000_1_6" clause="ArrayOfOptContentGroupsEntry-Dictionary" testNumber="17"/>
 			<description>Entry with type Dictionary in ArrayOfOptContentGroups shall be object OptContentGroup</description>
@@ -35430,6 +35454,30 @@
 			<test>containsLinearizationParameterDict == false || LinearizationParameterDictHasTypeDictionary == true</test>
 			<error>
 				<message>Entry LinearizationParameterDict in FileTrailer is not of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_6" clause="FileTrailer-ObjectStreams-Array" testNumber="17"/>
+			<description>Entry ObjectStreams with type Array in FileTrailer shall be object ArrayOfObjectStreams</description>
+			<test>ObjectStreamsHasTypeArray != true || ObjectStreams_size == 1</test>
+			<error>
+				<message>Entry ObjectStreams with type Array in FileTrailer is not object ArrayOfObjectStreams</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_6" clause="FileTrailer-ObjectStreams" testNumber="8"/>
+			<description>Entry ObjectStreams in FileTrailer shall have type Array</description>
+			<test>containsObjectStreams == false || ObjectStreamsHasTypeArray == true</test>
+			<error>
+				<message>Entry ObjectStreams in FileTrailer is not of type Array</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
