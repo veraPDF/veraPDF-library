@@ -21581,6 +21581,18 @@
 			<references/>
 		</rule>
 		<rule object="ADocTimeStamp">
+			<id specification="ISO_32000_1_5" clause="DocTimeStamp-ADBE_Build" testNumber="5"/>
+			<description>Entry ADBE_Build in DocTimeStamp is deprecated since PDF 1.5</description>
+			<test>containsADBE_Build == false</test>
+			<error>
+				<message>Entry ADBE_Build in DocTimeStamp is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADocTimeStamp">
 			<id specification="ISO_32000_1_5" clause="DocTimeStamp-ByteRange" testNumber="8"/>
 			<description>Entry ByteRange in DocTimeStamp shall have type Array</description>
 			<test>containsByteRange == false || ByteRangeHasTypeArray == true</test>

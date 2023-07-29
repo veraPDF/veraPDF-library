@@ -25335,6 +25335,18 @@
 			<references/>
 		</rule>
 		<rule object="AGraphicsStateParameter">
+			<id specification="ISO_32000_1_3" clause="GraphicsStateParameter-HTP" testNumber="5"/>
+			<description>Entry HTP in GraphicsStateParameter is deprecated since PDF 1.3</description>
+			<test>containsHTP == false</test>
+			<error>
+				<message>Entry HTP in GraphicsStateParameter is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGraphicsStateParameter">
 			<id specification="ISO_32000_1_3" clause="GraphicsStateParameter-LC" testNumber="8"/>
 			<description>Entry LC in GraphicsStateParameter shall have type Integer</description>
 			<test>containsLC == false || LCHasTypeInteger == true</test>
@@ -31239,6 +31251,18 @@
 			<references/>
 		</rule>
 		<rule object="APageObject">
+			<id specification="ISO_32000_1_3" clause="PageObject-Hid" testNumber="5"/>
+			<description>Entry Hid in PageObject is deprecated since PDF 1.3</description>
+			<test>containsHid == false</test>
+			<error>
+				<message>Entry Hid in PageObject is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="APageObject">
 			<id specification="ISO_32000_1_3" clause="PageObject-ID" testNumber="8"/>
 			<description>Entry ID in PageObject shall have type StringByte</description>
 			<test>containsID == false || entryIDHasTypeStringByte == true</test>
@@ -32479,6 +32503,18 @@
 			<test>containsXUID == false || XUIDHasTypeArray == true</test>
 			<error>
 				<message>Entry XUID in PatternType1 is not of type Array</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="APatternType1">
+			<id specification="ISO_32000_1_3" clause="PatternType1-XUID" testNumber="5"/>
+			<description>Entry XUID in PatternType1 is deprecated since PDF 1.3</description>
+			<test>containsXUID == false</test>
+			<error>
+				<message>Entry XUID in PatternType1 is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39106,6 +39142,18 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormPS">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPS-DecodeParms" testNumber="5"/>
+			<description>Entry DecodeParms in XObjectFormPS is deprecated since PDF 1.3</description>
+			<test>containsDecodeParms == false</test>
+			<error>
+				<message>Entry DecodeParms in XObjectFormPS is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPS">
 			<id specification="ISO_32000_1_3" clause="XObjectFormPS-DecodeParms-Array" testNumber="9"/>
 			<description>Entry DecodeParms with type Array in XObjectFormPS shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
 			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
@@ -39123,6 +39171,18 @@
 			<test>containsF == false || FHasTypeDictionary == true || FHasTypeString == true</test>
 			<error>
 				<message>Entry F in XObjectFormPS is not one of types: Dictionary, String</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPS">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPS-F" testNumber="5"/>
+			<description>Entry F in XObjectFormPS is deprecated since PDF 1.3</description>
+			<test>containsF == false</test>
+			<error>
+				<message>Entry F in XObjectFormPS is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39154,6 +39214,18 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormPS">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPS-FDecodeParms" testNumber="5"/>
+			<description>Entry FDecodeParms in XObjectFormPS is deprecated since PDF 1.3</description>
+			<test>containsFDecodeParms == false</test>
+			<error>
+				<message>Entry FDecodeParms in XObjectFormPS is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPS">
 			<id specification="ISO_32000_1_3" clause="XObjectFormPS-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectFormPS shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
 			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
@@ -39171,6 +39243,18 @@
 			<test>containsFFilter == false || FFilterHasTypeArray == true || FFilterHasTypeName == true</test>
 			<error>
 				<message>Entry FFilter in XObjectFormPS is not one of types: Array, Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPS">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPS-FFilter" testNumber="5"/>
+			<description>Entry FFilter in XObjectFormPS is deprecated since PDF 1.3</description>
+			<test>containsFFilter == false</test>
+			<error>
+				<message>Entry FFilter in XObjectFormPS is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39208,6 +39292,18 @@
 			<test>containsFilter == false || FilterHasTypeArray == true || FilterHasTypeName == true</test>
 			<error>
 				<message>Entry Filter in XObjectFormPS is not one of types: Array, Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPS">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPS-Filter" testNumber="5"/>
+			<description>Entry Filter in XObjectFormPS is deprecated since PDF 1.3</description>
+			<test>containsFilter == false</test>
+			<error>
+				<message>Entry Filter in XObjectFormPS is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39264,11 +39360,35 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormPS">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPS-Length" testNumber="5"/>
+			<description>Entry Length in XObjectFormPS is deprecated since PDF 1.3</description>
+			<test>containsLength == false</test>
+			<error>
+				<message>Entry Length in XObjectFormPS is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPS">
 			<id specification="ISO_32000_1_3" clause="XObjectFormPS-Level1" testNumber="8"/>
 			<description>Entry Level1 in XObjectFormPS shall have type Stream</description>
 			<test>containsLevel1 == false || Level1HasTypeStream == true</test>
 			<error>
 				<message>Entry Level1 in XObjectFormPS is not of type Stream</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPS">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPS-Level1" testNumber="5"/>
+			<description>Entry Level1 in XObjectFormPS is deprecated since PDF 1.3</description>
+			<test>containsLevel1 == false</test>
+			<error>
+				<message>Entry Level1 in XObjectFormPS is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39312,6 +39432,18 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormPS">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPS-Subtype" testNumber="5"/>
+			<description>Entry Subtype in XObjectFormPS is deprecated since PDF 1.3</description>
+			<test>containsSubtype == false</test>
+			<error>
+				<message>Entry Subtype in XObjectFormPS is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPS">
 			<id specification="ISO_32000_1_3" clause="XObjectFormPS-Subtype-Name" testNumber="6"/>
 			<description>Entry Subtype with type Name in XObjectFormPS shall have value PS</description>
 			<test>SubtypeHasTypeName != true || SubtypeNameValue == "PS"</test>
@@ -39330,6 +39462,18 @@
 			<test>containsType == false || TypeHasTypeName == true</test>
 			<error>
 				<message>Entry Type in XObjectFormPS is not of type Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPS">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPS-Type" testNumber="5"/>
+			<description>Entry Type in XObjectFormPS is deprecated since PDF 1.3</description>
+			<test>containsType == false</test>
+			<error>
+				<message>Entry Type in XObjectFormPS is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39386,6 +39530,18 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-BBox" testNumber="5"/>
+			<description>Entry BBox in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsBBox == false</test>
+			<error>
+				<message>Entry BBox in XObjectFormPSpassthrough is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-DecodeParms-Dictionary" testNumber="17"/>
 			<description>Entry DecodeParms with type Dictionary in XObjectFormPSpassthrough shall be one of objects FilterLZWDecode, FilterFlateDecode</description>
 			<test>DecodeParmsHasTypeDictionary != true || DecodeParms_size == 1</test>
@@ -39403,6 +39559,18 @@
 			<test>containsDecodeParms == false || DecodeParmsHasTypeArray == true || DecodeParmsHasTypeDictionary == true</test>
 			<error>
 				<message>Entry DecodeParms in XObjectFormPSpassthrough is not one of types: Array, Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-DecodeParms" testNumber="5"/>
+			<description>Entry DecodeParms in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsDecodeParms == false</test>
+			<error>
+				<message>Entry DecodeParms in XObjectFormPSpassthrough is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39434,6 +39602,18 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-F" testNumber="5"/>
+			<description>Entry F in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsF == false</test>
+			<error>
+				<message>Entry F in XObjectFormPSpassthrough is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-FDecodeParms-Dictionary" testNumber="17"/>
 			<description>Entry FDecodeParms with type Dictionary in XObjectFormPSpassthrough shall be one of objects FilterLZWDecode, FilterFlateDecode</description>
 			<test>FDecodeParmsHasTypeDictionary != true || FDecodeParms_size == 1</test>
@@ -39458,6 +39638,18 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-FDecodeParms" testNumber="5"/>
+			<description>Entry FDecodeParms in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsFDecodeParms == false</test>
+			<error>
+				<message>Entry FDecodeParms in XObjectFormPSpassthrough is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-FDecodeParms-Array" testNumber="9"/>
 			<description>Entry FDecodeParms with type Array in XObjectFormPSpassthrough shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
 			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
@@ -39475,6 +39667,18 @@
 			<test>containsFFilter == false || FFilterHasTypeArray == true || FFilterHasTypeName == true</test>
 			<error>
 				<message>Entry FFilter in XObjectFormPSpassthrough is not one of types: Array, Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-FFilter" testNumber="5"/>
+			<description>Entry FFilter in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsFFilter == false</test>
+			<error>
+				<message>Entry FFilter in XObjectFormPSpassthrough is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39519,6 +39723,18 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-Filter" testNumber="5"/>
+			<description>Entry Filter in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsFilter == false</test>
+			<error>
+				<message>Entry Filter in XObjectFormPSpassthrough is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-Filter-Array" testNumber="9"/>
 			<description>Entry Filter with type Array in XObjectFormPSpassthrough shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
 			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
@@ -39549,6 +39765,18 @@
 			<test>containsFormType == false || FormTypeHasTypeInteger == true</test>
 			<error>
 				<message>Entry FormType in XObjectFormPSpassthrough is not of type Integer</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-FormType" testNumber="5"/>
+			<description>Entry FormType in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsFormType == false</test>
+			<error>
+				<message>Entry FormType in XObjectFormPSpassthrough is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39593,11 +39821,35 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-Length" testNumber="5"/>
+			<description>Entry Length in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsLength == false</test>
+			<error>
+				<message>Entry Length in XObjectFormPSpassthrough is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-Level1" testNumber="8"/>
 			<description>Entry Level1 in XObjectFormPSpassthrough shall have type Stream</description>
 			<test>containsLevel1 == false || Level1HasTypeStream == true</test>
 			<error>
 				<message>Entry Level1 in XObjectFormPSpassthrough is not of type Stream</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-Level1" testNumber="5"/>
+			<description>Entry Level1 in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsLevel1 == false</test>
+			<error>
+				<message>Entry Level1 in XObjectFormPSpassthrough is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39629,6 +39881,18 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-Matrix" testNumber="5"/>
+			<description>Entry Matrix in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsMatrix == false</test>
+			<error>
+				<message>Entry Matrix in XObjectFormPSpassthrough is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-PS" testNumber="8"/>
 			<description>Entry PS in XObjectFormPSpassthrough shall have type Stream</description>
 			<test>containsPS == false || PSHasTypeStream == true</test>
@@ -39646,6 +39910,18 @@
 			<test>containsPS == true</test>
 			<error>
 				<message>Entry PS in XObjectFormPSpassthrough is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-PS" testNumber="5"/>
+			<description>Entry PS in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsPS == false</test>
+			<error>
+				<message>Entry PS in XObjectFormPSpassthrough is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39682,6 +39958,18 @@
 			<test>containsSubtype == true</test>
 			<error>
 				<message>Entry Subtype in XObjectFormPSpassthrough is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-Subtype" testNumber="5"/>
+			<description>Entry Subtype in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsSubtype == false</test>
+			<error>
+				<message>Entry Subtype in XObjectFormPSpassthrough is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -39726,6 +40014,18 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-Subtype2" testNumber="5"/>
+			<description>Entry Subtype2 in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsSubtype2 == false</test>
+			<error>
+				<message>Entry Subtype2 in XObjectFormPSpassthrough is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
 			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-Subtype2-Name" testNumber="6"/>
 			<description>Entry Subtype2 with type Name in XObjectFormPSpassthrough shall have value PS</description>
 			<test>Subtype2HasTypeName != true || Subtype2NameValue == "PS"</test>
@@ -39744,6 +40044,18 @@
 			<test>containsType == false || TypeHasTypeName == true</test>
 			<error>
 				<message>Entry Type in XObjectFormPSpassthrough is not of type Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPSpassthrough">
+			<id specification="ISO_32000_1_3" clause="XObjectFormPSpassthrough-Type" testNumber="5"/>
+			<description>Entry Type in XObjectFormPSpassthrough is deprecated since PDF 1.3</description>
+			<test>containsType == false</test>
+			<error>
+				<message>Entry Type in XObjectFormPSpassthrough is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -40752,6 +41064,18 @@
 			<test>containsXUID == false || XUIDHasTypeArray == true</test>
 			<error>
 				<message>Entry XUID in XObjectFormType1 is not of type Array</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormType1">
+			<id specification="ISO_32000_1_3" clause="XObjectFormType1-XUID" testNumber="5"/>
+			<description>Entry XUID in XObjectFormType1 is deprecated since PDF 1.3</description>
+			<test>containsXUID == false</test>
+			<error>
+				<message>Entry XUID in XObjectFormType1 is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>

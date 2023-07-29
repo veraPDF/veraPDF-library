@@ -1199,6 +1199,18 @@
 			<references/>
 		</rule>
 		<rule object="AActionNOP">
+			<id specification="ISO_32000_1_2" clause="ActionNOP-S" testNumber="5"/>
+			<description>Entry S in ActionNOP is deprecated since PDF 1.2</description>
+			<test>containsS == false</test>
+			<error>
+				<message>Entry S in ActionNOP is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionNOP">
 			<id specification="ISO_32000_1_2" clause="ActionNOP-S-Name" testNumber="6"/>
 			<description>Entry S with type Name in ActionNOP shall have value NOP</description>
 			<test>SHasTypeName != true || SNameValue == "NOP"</test>
@@ -1217,6 +1229,18 @@
 			<test>containsType == false || TypeHasTypeName == true</test>
 			<error>
 				<message>Entry Type in ActionNOP is not of type Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionNOP">
+			<id specification="ISO_32000_1_2" clause="ActionNOP-Type" testNumber="5"/>
+			<description>Entry Type in ActionNOP is deprecated since PDF 1.2</description>
+			<test>containsType == false</test>
+			<error>
+				<message>Entry Type in ActionNOP is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1530,6 +1554,18 @@
 			<references/>
 		</rule>
 		<rule object="AActionSetState">
+			<id specification="ISO_32000_1_2" clause="ActionSetState-AS" testNumber="5"/>
+			<description>Entry AS in ActionSetState is deprecated since PDF 1.2</description>
+			<test>containsAS == false</test>
+			<error>
+				<message>Entry AS in ActionSetState is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionSetState">
 			<id specification="ISO_32000_1_2" clause="ActionSetState-S" testNumber="8"/>
 			<description>Entry S in ActionSetState shall have type Name</description>
 			<test>containsS == false || SHasTypeName == true</test>
@@ -1547,6 +1583,18 @@
 			<test>containsS == true</test>
 			<error>
 				<message>Entry S in ActionSetState is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionSetState">
+			<id specification="ISO_32000_1_2" clause="ActionSetState-S" testNumber="5"/>
+			<description>Entry S in ActionSetState is deprecated since PDF 1.2</description>
+			<test>containsS == false</test>
+			<error>
+				<message>Entry S in ActionSetState is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -1603,6 +1651,18 @@
 			<references/>
 		</rule>
 		<rule object="AActionSetState">
+			<id specification="ISO_32000_1_2" clause="ActionSetState-T" testNumber="5"/>
+			<description>Entry T in ActionSetState is deprecated since PDF 1.2</description>
+			<test>containsT == false</test>
+			<error>
+				<message>Entry T in ActionSetState is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionSetState">
 			<id specification="ISO_32000_1_2" clause="ActionSetState-T-Dictionary" testNumber="10"/>
 			<description>Entry T with type Dictionary in ActionSetState shall be indirect</description>
 			<test>THasTypeDictionary != true || isTIndirect == true</test>
@@ -1620,6 +1680,18 @@
 			<test>containsType == false || TypeHasTypeName == true</test>
 			<error>
 				<message>Entry Type in ActionSetState is not of type Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionSetState">
+			<id specification="ISO_32000_1_2" clause="ActionSetState-Type" testNumber="5"/>
+			<description>Entry Type in ActionSetState is deprecated since PDF 1.2</description>
+			<test>containsType == false</test>
+			<error>
+				<message>Entry Type in ActionSetState is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>

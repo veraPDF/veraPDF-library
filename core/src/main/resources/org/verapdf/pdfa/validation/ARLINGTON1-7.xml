@@ -61808,6 +61808,18 @@
 			<references/>
 		</rule>
 		<rule object="APaperMetaData">
+			<id specification="ISO_32000_1_7" clause="PaperMetaData-nCodeWordCol" testNumber="5"/>
+			<description>Entry nCodeWordCol in PaperMetaData is deprecated since PDF 1.7</description>
+			<test>containsnCodeWordCol == false</test>
+			<error>
+				<message>Entry nCodeWordCol in PaperMetaData is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="APaperMetaData">
 			<id specification="ISO_32000_1_7" clause="PaperMetaData-nCodeWordRow" testNumber="8"/>
 			<description>Entry nCodeWordRow in PaperMetaData shall have type Number</description>
 			<test>containsnCodeWordRow == false || nCodeWordRowHasTypeNumber == true</test>
@@ -61823,6 +61835,18 @@
 			<id specification="ISO_32000_1_7" clause="PaperMetaData-nCodeWordRow" testNumber="23"/>
 			<description>Entry nCodeWordRow in PaperMetaData can only be present, if satisfy predicate fn:Extension(ADBE_Extn3)</description>
 			<test>containsnCodeWordRow == false || hasExtensionADBE_Extn3 == true</test>
+			<error>
+				<message>Entry nCodeWordRow in PaperMetaData is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="APaperMetaData">
+			<id specification="ISO_32000_1_7" clause="PaperMetaData-nCodeWordRow" testNumber="5"/>
+			<description>Entry nCodeWordRow in PaperMetaData is deprecated since PDF 1.7</description>
+			<test>containsnCodeWordRow == false</test>
 			<error>
 				<message>Entry nCodeWordRow in PaperMetaData is present</message>
 				<arguments>
@@ -70152,6 +70176,18 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="ASignatureBuildDataAppDict">
+			<id specification="ISO_32000_1_7" clause="SignatureBuildDataAppDict-V" testNumber="5"/>
+			<description>Entry V in SignatureBuildDataAppDict is deprecated since PDF 1.7</description>
+			<test>containsV == false</test>
+			<error>
+				<message>Entry V in SignatureBuildDataAppDict is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="ASignatureBuildDataDict">
 			<id specification="ISO_32000_1_7" clause="SignatureBuildDataDict" testNumber="1"/>
 			<description>SignatureBuildDataDict shall not contain entries except R, OS, TrustedMode, V, PreRelease, Date, NonEFontNoWarn, Name</description>
@@ -70254,6 +70290,18 @@
 			<test>containsV == false || VHasTypeNumber == true</test>
 			<error>
 				<message>Entry V in SignatureBuildDataDict is not of type Number</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureBuildDataDict">
+			<id specification="ISO_32000_1_7" clause="SignatureBuildDataDict-V" testNumber="5"/>
+			<description>Entry V in SignatureBuildDataDict is deprecated since PDF 1.7</description>
+			<test>containsV == false</test>
+			<error>
+				<message>Entry V in SignatureBuildDataDict is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -70374,6 +70422,18 @@
 			<test>containsV == false || VHasTypeNumber == true</test>
 			<error>
 				<message>Entry V in SignatureBuildDataSigQDict is not of type Number</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureBuildDataSigQDict">
+			<id specification="ISO_32000_1_7" clause="SignatureBuildDataSigQDict-V" testNumber="5"/>
+			<description>Entry V in SignatureBuildDataSigQDict is deprecated since PDF 1.7</description>
+			<test>containsV == false</test>
+			<error>
+				<message>Entry V in SignatureBuildDataSigQDict is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -70807,6 +70867,18 @@
 			<references/>
 		</rule>
 		<rule object="ASignatureReferenceIdentity">
+			<id specification="ISO_32000_1_7" clause="SignatureReferenceIdentity-Data" testNumber="5"/>
+			<description>Entry Data in SignatureReferenceIdentity is deprecated since PDF 1.7</description>
+			<test>containsData == false</test>
+			<error>
+				<message>Entry Data in SignatureReferenceIdentity is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceIdentity">
 			<id specification="ISO_32000_1_7" clause="SignatureReferenceIdentity-Data-Stream" testNumber="10"/>
 			<description>Entry Data with type Stream in SignatureReferenceIdentity shall be indirect</description>
 			<test>DataHasTypeStream != true || isDataIndirect == true</test>
@@ -70824,6 +70896,18 @@
 			<test>containsDigestMethod == false || DigestMethodHasTypeName == true</test>
 			<error>
 				<message>Entry DigestMethod in SignatureReferenceIdentity is not of type Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceIdentity">
+			<id specification="ISO_32000_1_7" clause="SignatureReferenceIdentity-DigestMethod" testNumber="5"/>
+			<description>Entry DigestMethod in SignatureReferenceIdentity is deprecated since PDF 1.7</description>
+			<test>containsDigestMethod == false</test>
+			<error>
+				<message>Entry DigestMethod in SignatureReferenceIdentity is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -70868,6 +70952,18 @@
 			<references/>
 		</rule>
 		<rule object="ASignatureReferenceIdentity">
+			<id specification="ISO_32000_1_7" clause="SignatureReferenceIdentity-TransformMethod" testNumber="5"/>
+			<description>Entry TransformMethod in SignatureReferenceIdentity is deprecated since PDF 1.7</description>
+			<test>containsTransformMethod == false</test>
+			<error>
+				<message>Entry TransformMethod in SignatureReferenceIdentity is present</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceIdentity">
 			<id specification="ISO_32000_1_7" clause="SignatureReferenceIdentity-TransformMethod-Name" testNumber="6"/>
 			<description>Entry TransformMethod with type Name in SignatureReferenceIdentity shall have value Identity</description>
 			<test>TransformMethodHasTypeName != true || TransformMethodNameValue == "Identity"</test>
@@ -70886,6 +70982,18 @@
 			<test>containsType == false || TypeHasTypeName == true</test>
 			<error>
 				<message>Entry Type in SignatureReferenceIdentity is not of type Name</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceIdentity">
+			<id specification="ISO_32000_1_7" clause="SignatureReferenceIdentity-Type" testNumber="5"/>
+			<description>Entry Type in SignatureReferenceIdentity is deprecated since PDF 1.7</description>
+			<test>containsType == false</test>
+			<error>
+				<message>Entry Type in SignatureReferenceIdentity is present</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
