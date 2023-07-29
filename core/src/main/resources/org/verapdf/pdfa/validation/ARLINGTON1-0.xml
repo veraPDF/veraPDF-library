@@ -31,18 +31,6 @@
 			<references/>
 		</rule>
 		<rule object="AAnnotLink">
-			<id specification="ISO_32000_1_0" clause="AnnotLink-Border-Array" testNumber="17"/>
-			<description>Entry Border with type Array in AnnotLink shall be object ArrayOf_4AnnotBorderCharacteristics</description>
-			<test>BorderHasTypeArray != true || Border_size == 1</test>
-			<error>
-				<message>Entry Border with type Array in AnnotLink is not object ArrayOf_4AnnotBorderCharacteristics</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_0" clause="AnnotLink-Border" testNumber="8"/>
 			<description>Entry Border in AnnotLink shall have type Array</description>
 			<test>containsBorder == false || BorderHasTypeArray == true</test>
@@ -196,18 +184,6 @@
 				<message>AnnotText contains entry(ies) %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'CreationDate' || elem == 'RT' || elem == 'C' || elem == 'F' || elem == 'IRT' || elem == 'BM' || elem == 'M' || elem == 'P' || elem == 'OC' || elem == 'StructParent' || elem == 'T' || elem == 'Popup' || elem == 'CA' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT' || elem == 'Subj' || elem == 'AP' || elem == 'RC' || elem == 'AS' || elem == 'State' || elem == 'StateModel' || elem == 'NM').toString()</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotText">
-			<id specification="ISO_32000_1_0" clause="AnnotText-Border-Array" testNumber="17"/>
-			<description>Entry Border with type Array in AnnotText shall be object ArrayOf_4AnnotBorderCharacteristics</description>
-			<test>BorderHasTypeArray != true || Border_size == 1</test>
-			<error>
-				<message>Entry Border with type Array in AnnotText is not object ArrayOf_4AnnotBorderCharacteristics</message>
-				<arguments>
-					<argument>keyName</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -543,18 +519,6 @@
 			<references/>
 		</rule>
 		<rule object="AArrayOfStreamsGeneralEntry">
-			<id specification="ISO_32000_1_0" clause="ArrayOfStreamsGeneralEntry-Stream" testNumber="17"/>
-			<description>Entry with type Stream in ArrayOfStreamsGeneral shall be object Stream</description>
-			<test>HasTypeStream != true || Entry_size == 1</test>
-			<error>
-				<message>Entry %1 with type Stream in ArrayOfStreamsGeneral is not object Stream</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AArrayOfStreamsGeneralEntry">
 			<id specification="ISO_32000_1_0" clause="ArrayOfStreamsGeneralEntry" testNumber="8"/>
 			<description>Entry in ArrayOfStreamsGeneral shall have type Stream</description>
 			<test>HasTypeStream == true</test>
@@ -699,18 +663,6 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
-			<id specification="ISO_32000_1_0" clause="Catalog-Outlines-Dictionary" testNumber="17"/>
-			<description>Entry Outlines with type Dictionary in Catalog shall be object Outline</description>
-			<test>OutlinesHasTypeDictionary != true || Outlines_size == 1</test>
-			<error>
-				<message>Entry Outlines with type Dictionary in Catalog is not object Outline</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ACatalog">
 			<id specification="ISO_32000_1_0" clause="Catalog-Outlines" testNumber="8"/>
 			<description>Entry Outlines in Catalog shall have type Dictionary</description>
 			<test>containsOutlines == false || OutlinesHasTypeDictionary == true</test>
@@ -780,18 +732,6 @@
 				<arguments>
 					<argument>keyName</argument>
 					<argument>PageModeNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ACatalog">
-			<id specification="ISO_32000_1_0" clause="Catalog-Pages-Dictionary" testNumber="17"/>
-			<description>Entry Pages with type Dictionary in Catalog shall be object PageTreeNodeRoot</description>
-			<test>PagesHasTypeDictionary != true || Pages_size == 1</test>
-			<error>
-				<message>Entry Pages with type Dictionary in Catalog is not object PageTreeNodeRoot</message>
-				<arguments>
-					<argument>keyName</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -870,18 +810,6 @@
 			<references/>
 		</rule>
 		<rule object="ACharProcMapEntry">
-			<id specification="ISO_32000_1_0" clause="CharProcMapEntry-Stream" testNumber="17"/>
-			<description>Entry with type Stream in CharProcMap shall be object Stream</description>
-			<test>HasTypeStream != true || Entry_size == 1</test>
-			<error>
-				<message>Entry %1 with type Stream in CharProcMap is not object Stream</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ACharProcMapEntry">
 			<id specification="ISO_32000_1_0" clause="CharProcMapEntry" testNumber="8"/>
 			<description>Entry in CharProcMap shall have type Stream</description>
 			<test>HasTypeStream == true</test>
@@ -899,18 +827,6 @@
 			<test>HasTypeStream != true || isIndirect == true</test>
 			<error>
 				<message>Entry %1 with type Stream in CharProcMap is direct</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AColorSpaceMapEntry">
-			<id specification="ISO_32000_1_0" clause="ColorSpaceMapEntry-Array" testNumber="17"/>
-			<description>Entry with type Array in ColorSpaceMap shall be object IndexedColorSpace</description>
-			<test>HasTypeArray != true || Entry_size == 1</test>
-			<error>
-				<message>Entry %1 with type Array in ColorSpaceMap is not object IndexedColorSpace</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -950,18 +866,6 @@
 				<message>Dest0Array contains %1 element(s) instead of 2</message>
 				<arguments>
 					<argument>size</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADest0Array">
-			<id specification="ISO_32000_1_0" clause="Dest0Array-0-Dictionary" testNumber="17"/>
-			<description>Entry 0 with type Dictionary in Dest0Array shall be object PageObject</description>
-			<test>entry0HasTypeDictionary != true || entry0_size == 1</test>
-			<error>
-				<message>Entry 0 with type Dictionary in Dest0Array is not object PageObject</message>
-				<arguments>
-					<argument>keyName</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1023,18 +927,6 @@
 				<message>Dest1Array contains %1 element(s) instead of 3</message>
 				<arguments>
 					<argument>size</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADest1Array">
-			<id specification="ISO_32000_1_0" clause="Dest1Array-0-Dictionary" testNumber="17"/>
-			<description>Entry 0 with type Dictionary in Dest1Array shall be object PageObject</description>
-			<test>entry0HasTypeDictionary != true || entry0_size == 1</test>
-			<error>
-				<message>Entry 0 with type Dictionary in Dest1Array is not object PageObject</message>
-				<arguments>
-					<argument>keyName</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1108,18 +1000,6 @@
 				<message>Dest4Array contains %1 element(s) instead of 6</message>
 				<arguments>
 					<argument>size</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADest4Array">
-			<id specification="ISO_32000_1_0" clause="Dest4Array-0-Dictionary" testNumber="17"/>
-			<description>Entry 0 with type Dictionary in Dest4Array shall be object PageObject</description>
-			<test>entry0HasTypeDictionary != true || entry0_size == 1</test>
-			<error>
-				<message>Entry 0 with type Dictionary in Dest4Array is not object PageObject</message>
-				<arguments>
-					<argument>keyName</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1229,18 +1109,6 @@
 				<message>DestXYZArray contains %1 element(s) instead of 5</message>
 				<arguments>
 					<argument>size</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADestXYZArray">
-			<id specification="ISO_32000_1_0" clause="DestXYZArray-0-Dictionary" testNumber="17"/>
-			<description>Entry 0 with type Dictionary in DestXYZArray shall be object PageObject</description>
-			<test>entry0HasTypeDictionary != true || entry0_size == 1</test>
-			<error>
-				<message>Entry 0 with type Dictionary in DestXYZArray is not object PageObject</message>
-				<arguments>
-					<argument>keyName</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1440,18 +1308,6 @@
 			<references/>
 		</rule>
 		<rule object="AEncoding">
-			<id specification="ISO_32000_1_0" clause="Encoding-Differences-Array" testNumber="17"/>
-			<description>Entry Differences with type Array in Encoding shall be object ArrayOfDifferences</description>
-			<test>DifferencesHasTypeArray != true || Differences_size == 1</test>
-			<error>
-				<message>Entry Differences with type Array in Encoding is not object ArrayOfDifferences</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AEncoding">
 			<id specification="ISO_32000_1_0" clause="Encoding-Differences" testNumber="8"/>
 			<description>Entry Differences in Encoding shall have type Array</description>
 			<test>containsDifferences == false || DifferencesHasTypeArray == true</test>
@@ -1513,18 +1369,6 @@
 			<references/>
 		</rule>
 		<rule object="AFileTrailer">
-			<id specification="ISO_32000_1_0" clause="FileTrailer-Info-Dictionary" testNumber="17"/>
-			<description>Entry Info with type Dictionary in FileTrailer shall be object DocInfo</description>
-			<test>InfoHasTypeDictionary != true || Info_size == 1</test>
-			<error>
-				<message>Entry Info with type Dictionary in FileTrailer is not object DocInfo</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_0" clause="FileTrailer-Info" testNumber="8"/>
 			<description>Entry Info in FileTrailer shall have type Dictionary</description>
 			<test>containsInfo == false || InfoHasTypeDictionary == true</test>
@@ -1578,18 +1422,6 @@
 			<test>PrevHasTypeInteger != true || (PrevIntegerValue &gt;= 0) &amp;&amp; (PrevIntegerValue &lt;= fileSize)</test>
 			<error>
 				<message>Entry Prev with type Integer in FileTrailer does not satisfy possible value predicate: fn:Eval((@Prev &gt;= 0) &amp;&amp; (@Prev &lt;= fn:FileSize()))</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFileTrailer">
-			<id specification="ISO_32000_1_0" clause="FileTrailer-Root-Dictionary" testNumber="17"/>
-			<description>Entry Root with type Dictionary in FileTrailer shall be object Catalog</description>
-			<test>RootHasTypeDictionary != true || Root_size == 1</test>
-			<error>
-				<message>Entry Root with type Dictionary in FileTrailer is not object Catalog</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -2526,18 +2358,6 @@
 			<references/>
 		</rule>
 		<rule object="AFontDescriptorType1">
-			<id specification="ISO_32000_1_0" clause="FontDescriptorType1-FontFile-Stream" testNumber="17"/>
-			<description>Entry FontFile with type Stream in FontDescriptorType1 shall be object FontFileType1</description>
-			<test>FontFileHasTypeStream != true || FontFile_size == 1</test>
-			<error>
-				<message>Entry FontFile with type Stream in FontDescriptorType1 is not object FontFileType1</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontDescriptorType1">
 			<id specification="ISO_32000_1_0" clause="FontDescriptorType1-FontFile" testNumber="8"/>
 			<description>Entry FontFile in FontDescriptorType1 shall have type Stream</description>
 			<test>containsFontFile == false || FontFileHasTypeStream == true</test>
@@ -3248,18 +3068,6 @@
 			<references/>
 		</rule>
 		<rule object="AFontMultipleMaster">
-			<id specification="ISO_32000_1_0" clause="FontMultipleMaster-Encoding-Dictionary" testNumber="17"/>
-			<description>Entry Encoding with type Dictionary in FontMultipleMaster shall be object Encoding</description>
-			<test>EncodingHasTypeDictionary != true || Encoding_size == 1</test>
-			<error>
-				<message>Entry Encoding with type Dictionary in FontMultipleMaster is not object Encoding</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_0" clause="FontMultipleMaster-Encoding" testNumber="8"/>
 			<description>Entry Encoding in FontMultipleMaster shall have one of types: Dictionary, Name</description>
 			<test>containsEncoding == false || EncodingHasTypeDictionary == true || EncodingHasTypeName == true</test>
@@ -3302,18 +3110,6 @@
 			<test>containsFirstChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FirstChar in FontMultipleMaster is missing</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontMultipleMaster">
-			<id specification="ISO_32000_1_0" clause="FontMultipleMaster-FontDescriptor-Dictionary" testNumber="17"/>
-			<description>Entry FontDescriptor with type Dictionary in FontMultipleMaster shall be object FontDescriptorType1</description>
-			<test>FontDescriptorHasTypeDictionary != true || FontDescriptor_size == 1</test>
-			<error>
-				<message>Entry FontDescriptor with type Dictionary in FontMultipleMaster is not object FontDescriptorType1</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -3479,18 +3275,6 @@
 			<references/>
 		</rule>
 		<rule object="AFontMultipleMaster">
-			<id specification="ISO_32000_1_0" clause="FontMultipleMaster-Widths-Array" testNumber="17"/>
-			<description>Entry Widths with type Array in FontMultipleMaster shall be object ArrayOfNumbersGeneral</description>
-			<test>WidthsHasTypeArray != true || Widths_size == 1</test>
-			<error>
-				<message>Entry Widths with type Array in FontMultipleMaster is not object ArrayOfNumbersGeneral</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontMultipleMaster">
 			<id specification="ISO_32000_1_0" clause="FontMultipleMaster-Widths" testNumber="8"/>
 			<description>Entry Widths in FontMultipleMaster shall have type Array</description>
 			<test>containsWidths == false || WidthsHasTypeArray == true</test>
@@ -3563,18 +3347,6 @@
 			<references/>
 		</rule>
 		<rule object="AFontTrueType">
-			<id specification="ISO_32000_1_0" clause="FontTrueType-Encoding-Dictionary" testNumber="17"/>
-			<description>Entry Encoding with type Dictionary in FontTrueType shall be object Encoding</description>
-			<test>EncodingHasTypeDictionary != true || Encoding_size == 1</test>
-			<error>
-				<message>Entry Encoding with type Dictionary in FontTrueType is not object Encoding</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_0" clause="FontTrueType-Encoding" testNumber="8"/>
 			<description>Entry Encoding in FontTrueType shall have one of types: Dictionary, Name</description>
 			<test>containsEncoding == false || EncodingHasTypeDictionary == true || EncodingHasTypeName == true</test>
@@ -3617,18 +3389,6 @@
 			<test>containsFirstChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FirstChar in FontTrueType is missing</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontTrueType">
-			<id specification="ISO_32000_1_0" clause="FontTrueType-FontDescriptor-Dictionary" testNumber="17"/>
-			<description>Entry FontDescriptor with type Dictionary in FontTrueType shall be object FontDescriptorTrueType</description>
-			<test>FontDescriptorHasTypeDictionary != true || FontDescriptor_size == 1</test>
-			<error>
-				<message>Entry FontDescriptor with type Dictionary in FontTrueType is not object FontDescriptorTrueType</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -3794,18 +3554,6 @@
 			<references/>
 		</rule>
 		<rule object="AFontTrueType">
-			<id specification="ISO_32000_1_0" clause="FontTrueType-Widths-Array" testNumber="17"/>
-			<description>Entry Widths with type Array in FontTrueType shall be object ArrayOfNumbersGeneral</description>
-			<test>WidthsHasTypeArray != true || Widths_size == 1</test>
-			<error>
-				<message>Entry Widths with type Array in FontTrueType is not object ArrayOfNumbersGeneral</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontTrueType">
 			<id specification="ISO_32000_1_0" clause="FontTrueType-Widths" testNumber="8"/>
 			<description>Entry Widths in FontTrueType shall have type Array</description>
 			<test>containsWidths == false || WidthsHasTypeArray == true</test>
@@ -3878,18 +3626,6 @@
 			<references/>
 		</rule>
 		<rule object="AFontType1">
-			<id specification="ISO_32000_1_0" clause="FontType1-Encoding-Dictionary" testNumber="17"/>
-			<description>Entry Encoding with type Dictionary in FontType1 shall be object Encoding</description>
-			<test>EncodingHasTypeDictionary != true || Encoding_size == 1</test>
-			<error>
-				<message>Entry Encoding with type Dictionary in FontType1 is not object Encoding</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontType1">
 			<id specification="ISO_32000_1_0" clause="FontType1-Encoding" testNumber="8"/>
 			<description>Entry Encoding in FontType1 shall have one of types: Dictionary, Name</description>
 			<test>containsEncoding == false || EncodingHasTypeDictionary == true || EncodingHasTypeName == true</test>
@@ -3932,18 +3668,6 @@
 			<test>containsFirstChar == true || notStandard14Font == false</test>
 			<error>
 				<message>Entry FirstChar in FontType1 is missing</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontType1">
-			<id specification="ISO_32000_1_0" clause="FontType1-FontDescriptor-Dictionary" testNumber="17"/>
-			<description>Entry FontDescriptor with type Dictionary in FontType1 shall be object FontDescriptorType1</description>
-			<test>FontDescriptorHasTypeDictionary != true || FontDescriptor_size == 1</test>
-			<error>
-				<message>Entry FontDescriptor with type Dictionary in FontType1 is not object FontDescriptorType1</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -4109,18 +3833,6 @@
 			<references/>
 		</rule>
 		<rule object="AFontType1">
-			<id specification="ISO_32000_1_0" clause="FontType1-Widths-Array" testNumber="17"/>
-			<description>Entry Widths with type Array in FontType1 shall be object ArrayOfNumbersGeneral</description>
-			<test>WidthsHasTypeArray != true || Widths_size == 1</test>
-			<error>
-				<message>Entry Widths with type Array in FontType1 is not object ArrayOfNumbersGeneral</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontType1">
 			<id specification="ISO_32000_1_0" clause="FontType1-Widths" testNumber="8"/>
 			<description>Entry Widths in FontType1 shall have type Array</description>
 			<test>containsWidths == false || WidthsHasTypeArray == true</test>
@@ -4181,18 +3893,6 @@
 			<references/>
 		</rule>
 		<rule object="AFontType3">
-			<id specification="ISO_32000_1_0" clause="FontType3-CharProcs-Dictionary" testNumber="17"/>
-			<description>Entry CharProcs with type Dictionary in FontType3 shall be object CharProcMap</description>
-			<test>CharProcsHasTypeDictionary != true || CharProcs_size == 1</test>
-			<error>
-				<message>Entry CharProcs with type Dictionary in FontType3 is not object CharProcMap</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontType3">
 			<id specification="ISO_32000_1_0" clause="FontType3-CharProcs" testNumber="8"/>
 			<description>Entry CharProcs in FontType3 shall have type Dictionary</description>
 			<test>containsCharProcs == false || CharProcsHasTypeDictionary == true</test>
@@ -4210,18 +3910,6 @@
 			<test>containsCharProcs == true</test>
 			<error>
 				<message>Entry CharProcs in FontType3 is missing</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontType3">
-			<id specification="ISO_32000_1_0" clause="FontType3-Encoding-Dictionary" testNumber="17"/>
-			<description>Entry Encoding with type Dictionary in FontType3 shall be object Encoding</description>
-			<test>EncodingHasTypeDictionary != true || Encoding_size == 1</test>
-			<error>
-				<message>Entry Encoding with type Dictionary in FontType3 is not object Encoding</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -4294,18 +3982,6 @@
 			<test>containsFontBBox == true</test>
 			<error>
 				<message>Entry FontBBox in FontType3 is missing</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontType3">
-			<id specification="ISO_32000_1_0" clause="FontType3-FontDescriptor-Dictionary" testNumber="17"/>
-			<description>Entry FontDescriptor with type Dictionary in FontType3 shall be object FontDescriptorType3</description>
-			<test>FontDescriptorHasTypeDictionary != true || FontDescriptor_size == 1</test>
-			<error>
-				<message>Entry FontDescriptor with type Dictionary in FontType3 is not object FontDescriptorType3</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -4495,18 +4171,6 @@
 			<references/>
 		</rule>
 		<rule object="AFontType3">
-			<id specification="ISO_32000_1_0" clause="FontType3-Widths-Array" testNumber="17"/>
-			<description>Entry Widths with type Array in FontType3 shall be object ArrayOfNumbersGeneral</description>
-			<test>WidthsHasTypeArray != true || Widths_size == 1</test>
-			<error>
-				<message>Entry Widths with type Array in FontType3 is not object ArrayOfNumbersGeneral</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontType3">
 			<id specification="ISO_32000_1_0" clause="FontType3-Widths" testNumber="8"/>
 			<description>Entry Widths in FontType3 shall have type Array</description>
 			<test>containsWidths == false || WidthsHasTypeArray == true</test>
@@ -4629,18 +4293,6 @@
 			<references/>
 		</rule>
 		<rule object="AIndexedColorSpace">
-			<id specification="ISO_32000_1_0" clause="IndexedColorSpace-3-Stream" testNumber="17"/>
-			<description>Entry 3 with type Stream in IndexedColorSpace shall be object Stream</description>
-			<test>entry3HasTypeStream != true || entry3_size == 1</test>
-			<error>
-				<message>Entry 3 with type Stream in IndexedColorSpace is not object Stream</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AIndexedColorSpace">
 			<id specification="ISO_32000_1_0" clause="IndexedColorSpace-3" testNumber="8"/>
 			<description>Entry 3 in IndexedColorSpace shall have one of types: Stream, String</description>
 			<test>size &lt;= 3 || entry3HasTypeStream == true || entry3HasTypeString == true</test>
@@ -4701,18 +4353,6 @@
 			<references/>
 		</rule>
 		<rule object="AOutline">
-			<id specification="ISO_32000_1_0" clause="Outline-First-Dictionary" testNumber="17"/>
-			<description>Entry First with type Dictionary in Outline shall be object OutlineItem</description>
-			<test>FirstHasTypeDictionary != true || First_size == 1</test>
-			<error>
-				<message>Entry First with type Dictionary in Outline is not object OutlineItem</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AOutline">
 			<id specification="ISO_32000_1_0" clause="Outline-First" testNumber="8"/>
 			<description>Entry First in Outline shall have type Dictionary</description>
 			<test>containsFirst == false || FirstHasTypeDictionary == true</test>
@@ -4730,18 +4370,6 @@
 			<test>FirstHasTypeDictionary != true || isFirstIndirect == true</test>
 			<error>
 				<message>Entry First with type Dictionary in Outline is direct</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AOutline">
-			<id specification="ISO_32000_1_0" clause="Outline-Last-Dictionary" testNumber="17"/>
-			<description>Entry Last with type Dictionary in Outline shall be object OutlineItem</description>
-			<test>LastHasTypeDictionary != true || Last_size == 1</test>
-			<error>
-				<message>Entry Last with type Dictionary in Outline is not object OutlineItem</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -4858,18 +4486,6 @@
 			<references/>
 		</rule>
 		<rule object="AOutlineItem">
-			<id specification="ISO_32000_1_0" clause="OutlineItem-First-Dictionary" testNumber="17"/>
-			<description>Entry First with type Dictionary in OutlineItem shall be object OutlineItem</description>
-			<test>FirstHasTypeDictionary != true || First_size == 1</test>
-			<error>
-				<message>Entry First with type Dictionary in OutlineItem is not object OutlineItem</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_0" clause="OutlineItem-First" testNumber="8"/>
 			<description>Entry First in OutlineItem shall have type Dictionary</description>
 			<test>containsFirst == false || FirstHasTypeDictionary == true</test>
@@ -4894,18 +4510,6 @@
 			<references/>
 		</rule>
 		<rule object="AOutlineItem">
-			<id specification="ISO_32000_1_0" clause="OutlineItem-Last-Dictionary" testNumber="17"/>
-			<description>Entry Last with type Dictionary in OutlineItem shall be object OutlineItem</description>
-			<test>LastHasTypeDictionary != true || Last_size == 1</test>
-			<error>
-				<message>Entry Last with type Dictionary in OutlineItem is not object OutlineItem</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_0" clause="OutlineItem-Last" testNumber="8"/>
 			<description>Entry Last in OutlineItem shall have type Dictionary</description>
 			<test>containsLast == false || LastHasTypeDictionary == true</test>
@@ -4923,18 +4527,6 @@
 			<test>LastHasTypeDictionary != true || isLastIndirect == true</test>
 			<error>
 				<message>Entry Last with type Dictionary in OutlineItem is direct</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AOutlineItem">
-			<id specification="ISO_32000_1_0" clause="OutlineItem-Next-Dictionary" testNumber="17"/>
-			<description>Entry Next with type Dictionary in OutlineItem shall be object OutlineItem</description>
-			<test>NextHasTypeDictionary != true || Next_size == 1</test>
-			<error>
-				<message>Entry Next with type Dictionary in OutlineItem is not object OutlineItem</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -5014,18 +4606,6 @@
 			<references/>
 		</rule>
 		<rule object="AOutlineItem">
-			<id specification="ISO_32000_1_0" clause="OutlineItem-Prev-Dictionary" testNumber="17"/>
-			<description>Entry Prev with type Dictionary in OutlineItem shall be object OutlineItem</description>
-			<test>PrevHasTypeDictionary != true || Prev_size == 1</test>
-			<error>
-				<message>Entry Prev with type Dictionary in OutlineItem is not object OutlineItem</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_0" clause="OutlineItem-Prev" testNumber="8"/>
 			<description>Entry Prev in OutlineItem shall have type Dictionary</description>
 			<test>containsPrev == false || PrevHasTypeDictionary == true</test>
@@ -5098,47 +4678,11 @@
 			<references/>
 		</rule>
 		<rule object="APageObject">
-			<id specification="ISO_32000_1_0" clause="PageObject-Annots-Array" testNumber="17"/>
-			<description>Entry Annots with type Array in PageObject shall be object ArrayOfAnnots</description>
-			<test>AnnotsHasTypeArray != true || Annots_size == 1</test>
-			<error>
-				<message>Entry Annots with type Array in PageObject is not object ArrayOfAnnots</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="APageObject">
 			<id specification="ISO_32000_1_0" clause="PageObject-Annots" testNumber="8"/>
 			<description>Entry Annots in PageObject shall have type Array</description>
 			<test>containsAnnots == false || AnnotsHasTypeArray == true</test>
 			<error>
 				<message>Entry Annots in PageObject is not of type Array</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="APageObject">
-			<id specification="ISO_32000_1_0" clause="PageObject-Contents-Array" testNumber="17"/>
-			<description>Entry Contents with type Array in PageObject shall be object ArrayOfStreamsGeneral</description>
-			<test>ContentsHasTypeArray != true || Contents_size == 1</test>
-			<error>
-				<message>Entry Contents with type Array in PageObject is not object ArrayOfStreamsGeneral</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="APageObject">
-			<id specification="ISO_32000_1_0" clause="PageObject-Contents-Stream" testNumber="17"/>
-			<description>Entry Contents with type Stream in PageObject shall be object Stream</description>
-			<test>ContentsHasTypeStream != true || Contents_size == 1</test>
-			<error>
-				<message>Entry Contents with type Stream in PageObject is not object Stream</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -5266,18 +4810,6 @@
 			<references/>
 		</rule>
 		<rule object="APageObject">
-			<id specification="ISO_32000_1_0" clause="PageObject-Resources-Dictionary" testNumber="17"/>
-			<description>Entry Resources with type Dictionary in PageObject shall be object Resource</description>
-			<test>ResourcesHasTypeDictionary != true || Resources_size == 1</test>
-			<error>
-				<message>Entry Resources with type Dictionary in PageObject is not object Resource</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="APageObject">
 			<id specification="ISO_32000_1_0" clause="PageObject-Resources" testNumber="8"/>
 			<description>Entry Resources in PageObject shall have type Dictionary</description>
 			<test>containsResources == false || ResourcesHasTypeDictionary == true</test>
@@ -5319,18 +4851,6 @@
 			<test>RotateHasTypeInteger != true || (RotateIntegerValue % 90) == 0</test>
 			<error>
 				<message>Entry Rotate with type Integer in PageObject does not satisfy possible value predicate: fn:Eval((@Rotate mod 90) == 0)</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="APageObject">
-			<id specification="ISO_32000_1_0" clause="PageObject-Thumb-Stream" testNumber="17"/>
-			<description>Entry Thumb with type Stream in PageObject shall be object Thumbnail</description>
-			<test>ThumbHasTypeStream != true || Thumb_size == 1</test>
-			<error>
-				<message>Entry Thumb with type Stream in PageObject is not object Thumbnail</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -5459,18 +4979,6 @@
 			<references/>
 		</rule>
 		<rule object="APageTreeNode">
-			<id specification="ISO_32000_1_0" clause="PageTreeNode-Kids-Array" testNumber="17"/>
-			<description>Entry Kids with type Array in PageTreeNode shall be object ArrayOfPageTreeNodeKids</description>
-			<test>KidsHasTypeArray != true || Kids_size == 1</test>
-			<error>
-				<message>Entry Kids with type Array in PageTreeNode is not object ArrayOfPageTreeNodeKids</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="APageTreeNode">
 			<id specification="ISO_32000_1_0" clause="PageTreeNode-Kids" testNumber="8"/>
 			<description>Entry Kids in PageTreeNode shall have type Array</description>
 			<test>containsKids == false || KidsHasTypeArray == true</test>
@@ -5548,18 +5056,6 @@
 			<test>ParentHasTypeDictionary != true || isParentIndirect == true</test>
 			<error>
 				<message>Entry Parent with type Dictionary in PageTreeNode is direct</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="APageTreeNode">
-			<id specification="ISO_32000_1_0" clause="PageTreeNode-Resources-Dictionary" testNumber="17"/>
-			<description>Entry Resources with type Dictionary in PageTreeNode shall be object Resource</description>
-			<test>ResourcesHasTypeDictionary != true || Resources_size == 1</test>
-			<error>
-				<message>Entry Resources with type Dictionary in PageTreeNode is not object Resource</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -5700,18 +5196,6 @@
 			<references/>
 		</rule>
 		<rule object="APageTreeNodeRoot">
-			<id specification="ISO_32000_1_0" clause="PageTreeNodeRoot-Kids-Array" testNumber="17"/>
-			<description>Entry Kids with type Array in PageTreeNodeRoot shall be object ArrayOfPageTreeNodeKids</description>
-			<test>KidsHasTypeArray != true || Kids_size == 1</test>
-			<error>
-				<message>Entry Kids with type Array in PageTreeNodeRoot is not object ArrayOfPageTreeNodeKids</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="APageTreeNodeRoot">
 			<id specification="ISO_32000_1_0" clause="PageTreeNodeRoot-Kids" testNumber="8"/>
 			<description>Entry Kids in PageTreeNodeRoot shall have type Array</description>
 			<test>containsKids == false || KidsHasTypeArray == true</test>
@@ -5741,18 +5225,6 @@
 			<test>containsMediaBox == false || MediaBoxHasTypeRectangle == true</test>
 			<error>
 				<message>Entry MediaBox in PageTreeNodeRoot is not of type Rectangle</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="APageTreeNodeRoot">
-			<id specification="ISO_32000_1_0" clause="PageTreeNodeRoot-Resources-Dictionary" testNumber="17"/>
-			<description>Entry Resources with type Dictionary in PageTreeNodeRoot shall be object Resource</description>
-			<test>ResourcesHasTypeDictionary != true || Resources_size == 1</test>
-			<error>
-				<message>Entry Resources with type Dictionary in PageTreeNodeRoot is not object Resource</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -5857,35 +5329,11 @@
 			<references/>
 		</rule>
 		<rule object="AResource">
-			<id specification="ISO_32000_1_0" clause="Resource-ColorSpace-Dictionary" testNumber="17"/>
-			<description>Entry ColorSpace with type Dictionary in Resource shall be object ColorSpaceMap</description>
-			<test>ColorSpaceHasTypeDictionary != true || ColorSpace_size == 1</test>
-			<error>
-				<message>Entry ColorSpace with type Dictionary in Resource is not object ColorSpaceMap</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AResource">
 			<id specification="ISO_32000_1_0" clause="Resource-ColorSpace" testNumber="8"/>
 			<description>Entry ColorSpace in Resource shall have type Dictionary</description>
 			<test>containsColorSpace == false || ColorSpaceHasTypeDictionary == true</test>
 			<error>
 				<message>Entry ColorSpace in Resource is not of type Dictionary</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AResource">
-			<id specification="ISO_32000_1_0" clause="Resource-Font-Dictionary" testNumber="17"/>
-			<description>Entry Font with type Dictionary in Resource shall be object FontMap</description>
-			<test>FontHasTypeDictionary != true || Font_size == 1</test>
-			<error>
-				<message>Entry Font with type Dictionary in Resource is not object FontMap</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -5905,18 +5353,6 @@
 			<references/>
 		</rule>
 		<rule object="AResource">
-			<id specification="ISO_32000_1_0" clause="Resource-ProcSet-Array" testNumber="17"/>
-			<description>Entry ProcSet with type Array in Resource shall be object ArrayOfNamesForProcSet</description>
-			<test>ProcSetHasTypeArray != true || ProcSet_size == 1</test>
-			<error>
-				<message>Entry ProcSet with type Array in Resource is not object ArrayOfNamesForProcSet</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AResource">
 			<id specification="ISO_32000_1_0" clause="Resource-ProcSet" testNumber="8"/>
 			<description>Entry ProcSet in Resource shall have type Array</description>
 			<test>containsProcSet == false || ProcSetHasTypeArray == true</test>
@@ -5929,35 +5365,11 @@
 			<references/>
 		</rule>
 		<rule object="AResource">
-			<id specification="ISO_32000_1_0" clause="Resource-XObject-Dictionary" testNumber="17"/>
-			<description>Entry XObject with type Dictionary in Resource shall be object XObjectMap</description>
-			<test>XObjectHasTypeDictionary != true || XObject_size == 1</test>
-			<error>
-				<message>Entry XObject with type Dictionary in Resource is not object XObjectMap</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AResource">
 			<id specification="ISO_32000_1_0" clause="Resource-XObject" testNumber="8"/>
 			<description>Entry XObject in Resource shall have type Dictionary</description>
 			<test>containsXObject == false || XObjectHasTypeDictionary == true</test>
 			<error>
 				<message>Entry XObject in Resource is not of type Dictionary</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStream">
-			<id specification="ISO_32000_1_0" clause="Stream-DecodeParms-Array" testNumber="17"/>
-			<description>Entry DecodeParms with type Array in Stream shall be object ArrayOfDecodeParams</description>
-			<test>DecodeParmsHasTypeArray != true || DecodeParms_size == 1</test>
-			<error>
-				<message>Entry DecodeParms with type Array in Stream is not object ArrayOfDecodeParams</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -5994,18 +5406,6 @@
 			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in Stream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStream">
-			<id specification="ISO_32000_1_0" clause="Stream-Filter-Array" testNumber="17"/>
-			<description>Entry Filter with type Array in Stream shall be object ArrayOfFilterNames</description>
-			<test>FilterHasTypeArray != true || Filter_size == 1</test>
-			<error>
-				<message>Entry Filter with type Array in Stream is not object ArrayOfFilterNames</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -6135,18 +5535,6 @@
 			<references/>
 		</rule>
 		<rule object="AThumbnail">
-			<id specification="ISO_32000_1_0" clause="Thumbnail-ColorSpace-Array" testNumber="17"/>
-			<description>Entry ColorSpace with type Array in Thumbnail shall be object IndexedColorSpace</description>
-			<test>ColorSpaceHasTypeArray != true || ColorSpace_size == 1</test>
-			<error>
-				<message>Entry ColorSpace with type Array in Thumbnail is not object IndexedColorSpace</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AThumbnail">
 			<id specification="ISO_32000_1_0" clause="Thumbnail-ColorSpace" testNumber="8"/>
 			<description>Entry ColorSpace in Thumbnail shall have one of types: Array, Name</description>
 			<test>containsColorSpace == false || ColorSpaceHasTypeArray == true || ColorSpaceHasTypeName == true</test>
@@ -6179,18 +5567,6 @@
 				<arguments>
 					<argument>keyName</argument>
 					<argument>ColorSpaceNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AThumbnail">
-			<id specification="ISO_32000_1_0" clause="Thumbnail-Decode-Array" testNumber="17"/>
-			<description>Entry Decode with type Array in Thumbnail shall be object ArrayOfNumbersGeneral</description>
-			<test>DecodeHasTypeArray != true || Decode_size == 1</test>
-			<error>
-				<message>Entry Decode with type Array in Thumbnail is not object ArrayOfNumbersGeneral</message>
-				<arguments>
-					<argument>keyName</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -6354,30 +5730,6 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormType1">
-			<id specification="ISO_32000_1_0" clause="XObjectFormType1-DecodeParms-Array" testNumber="17"/>
-			<description>Entry DecodeParms with type Array in XObjectFormType1 shall be object ArrayOfDecodeParams</description>
-			<test>DecodeParmsHasTypeArray != true || DecodeParms_size == 1</test>
-			<error>
-				<message>Entry DecodeParms with type Array in XObjectFormType1 is not object ArrayOfDecodeParams</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AXObjectFormType1">
-			<id specification="ISO_32000_1_0" clause="XObjectFormType1-DecodeParms-Dictionary" testNumber="17"/>
-			<description>Entry DecodeParms with type Dictionary in XObjectFormType1 shall be object FilterLZWDecode</description>
-			<test>DecodeParmsHasTypeDictionary != true || DecodeParms_size == 1</test>
-			<error>
-				<message>Entry DecodeParms with type Dictionary in XObjectFormType1 is not object FilterLZWDecode</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_0" clause="XObjectFormType1-DecodeParms" testNumber="8"/>
 			<description>Entry DecodeParms in XObjectFormType1 shall have one of types: Array, Dictionary</description>
 			<test>containsDecodeParms == false || DecodeParmsHasTypeArray == true || DecodeParmsHasTypeDictionary == true</test>
@@ -6395,18 +5747,6 @@
 			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
 			<error>
 				<message>Entry DecodeParms with type Array in XObjectFormType1 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AXObjectFormType1">
-			<id specification="ISO_32000_1_0" clause="XObjectFormType1-Filter-Array" testNumber="17"/>
-			<description>Entry Filter with type Array in XObjectFormType1 shall be object ArrayOfCompressionFilterNames</description>
-			<test>FilterHasTypeArray != true || Filter_size == 1</test>
-			<error>
-				<message>Entry Filter with type Array in XObjectFormType1 is not object ArrayOfCompressionFilterNames</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -6622,18 +5962,6 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormType1">
-			<id specification="ISO_32000_1_0" clause="XObjectFormType1-XUID-Array" testNumber="17"/>
-			<description>Entry XUID with type Array in XObjectFormType1 shall be object ArrayOfIntegersGeneral</description>
-			<test>XUIDHasTypeArray != true || XUID_size == 1</test>
-			<error>
-				<message>Entry XUID with type Array in XObjectFormType1 is not object ArrayOfIntegersGeneral</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_0" clause="XObjectFormType1-XUID" testNumber="8"/>
 			<description>Entry XUID in XObjectFormType1 shall have type Array</description>
 			<test>containsXUID == false || XUIDHasTypeArray == true</test>
@@ -6731,18 +6059,6 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_0" clause="XObjectImage-ColorSpace-Array" testNumber="17"/>
-			<description>Entry ColorSpace with type Array in XObjectImage shall be object IndexedColorSpace</description>
-			<test>ColorSpaceHasTypeArray != true || ColorSpace_size == 1</test>
-			<error>
-				<message>Entry ColorSpace with type Array in XObjectImage is not object IndexedColorSpace</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_0" clause="XObjectImage-ColorSpace" testNumber="8"/>
 			<description>Entry ColorSpace in XObjectImage shall have one of types: Array, Name</description>
 			<test>containsColorSpace == false || ColorSpaceHasTypeArray == true || ColorSpaceHasTypeName == true</test>
@@ -6804,35 +6120,11 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_0" clause="XObjectImage-Decode-Array" testNumber="17"/>
-			<description>Entry Decode with type Array in XObjectImage shall be object ArrayOfNumbersGeneral</description>
-			<test>DecodeHasTypeArray != true || Decode_size == 1</test>
-			<error>
-				<message>Entry Decode with type Array in XObjectImage is not object ArrayOfNumbersGeneral</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_0" clause="XObjectImage-Decode" testNumber="8"/>
 			<description>Entry Decode in XObjectImage shall have type Array</description>
 			<test>containsDecode == false || DecodeHasTypeArray == true</test>
 			<error>
 				<message>Entry Decode in XObjectImage is not of type Array</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_0" clause="XObjectImage-DecodeParms-Array" testNumber="17"/>
-			<description>Entry DecodeParms with type Array in XObjectImage shall be object ArrayOfDecodeParams</description>
-			<test>DecodeParmsHasTypeArray != true || DecodeParms_size == 1</test>
-			<error>
-				<message>Entry DecodeParms with type Array in XObjectImage is not object ArrayOfDecodeParams</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -6881,18 +6173,6 @@
 			<test>containsF == false || FHasTypeString == true</test>
 			<error>
 				<message>Entry F in XObjectImage is not of type String</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_0" clause="XObjectImage-Filter-Array" testNumber="17"/>
-			<description>Entry Filter with type Array in XObjectImage shall be object ArrayOfFilterNames</description>
-			<test>FilterHasTypeArray != true || Filter_size == 1</test>
-			<error>
-				<message>Entry Filter with type Array in XObjectImage is not object ArrayOfFilterNames</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
