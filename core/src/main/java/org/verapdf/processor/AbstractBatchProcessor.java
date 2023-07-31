@@ -47,7 +47,7 @@ public abstract class AbstractBatchProcessor implements BatchProcessor {
 
 	/**
 	 * @see org.verapdf.processor.BatchProcessor#process(java.io.File, boolean,
-	 *      org.verapdf.processor.ProcessorResultHandler)
+	 *      org.verapdf.processor.BatchProcessingHandler)
 	 */
 	protected AbstractBatchProcessor(final ItemProcessor processor) {
 		this.processor = processor;
