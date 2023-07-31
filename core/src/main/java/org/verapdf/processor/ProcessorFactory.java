@@ -158,7 +158,7 @@ public final class ProcessorFactory {
 		XmlSerialiser.toXml(toConvert, dest, prettyXml, true);
 	}
 
-	public static TaskResult taskResultfromXml(final InputStream source) throws JAXBException {
+	public static TaskResult taskResultFromXml(final InputStream source) throws JAXBException {
 		return XmlSerialiser.typeFromXml(TaskResultImpl.class, source);
 	}
 
