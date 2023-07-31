@@ -174,7 +174,6 @@ class MrrHandler extends AbstractXmlHandler {
 			// closes jobs element
 			this.writer.writeEndElement();
 			this.serializeElement(summary, BATCH_SUMMARY, true, true);
-			newLine(this.writer);
 			// closes report element
 			this.writer.writeEndElement();
 			this.writer.flush();
