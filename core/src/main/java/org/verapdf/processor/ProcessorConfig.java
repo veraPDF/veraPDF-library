@@ -39,7 +39,7 @@ public interface ProcessorConfig {
 
 	/**
 	 * @return the custom {@link ValidationProfile} or a
-	 *         {@link Profiles#defaultProfile()} instance if no custom profile
+	 *         {@link org.verapdf.pdfa.validation.profiles.Profiles#defaultProfile()} instance if no custom profile
 	 *         is assigned.
 	 */
 	public ValidationProfile getCustomProfile();
@@ -52,14 +52,14 @@ public interface ProcessorConfig {
 
 	/**
 	 * @return the {@link ValidatorConfig} assigned to this configuration, or
-	 *         {@link ValidatorFactory#defaultConfig()} if no validation task
+	 *         {@link org.verapdf.pdfa.validation.validators.ValidatorFactory#defaultConfig()} if no validation task
 	 *         has been assigned.
 	 */
 	public ValidatorConfig getValidatorConfig();
 
 	/**
 	 * @return the {@link FeatureExtractorConfig} assigned to this configuration
-	 *         or {@link FeatureFactory#defaultConfig()} if no feature
+	 *         or {@link org.verapdf.features.FeatureFactory#defaultConfig()} if no feature
 	 *         extraction task has been assigned.
 	 */
 	public FeatureExtractorConfig getFeatureConfig();
@@ -68,7 +68,7 @@ public interface ProcessorConfig {
 
 	/**
 	 * @return the {@link MetadataFixerConfig} assigned to this configuration or
-	 *         {@link FixerFactory#defaultConfig()} if no MetadataFixer task has
+	 *         {@link org.verapdf.metadata.fixer.FixerFactory#defaultConfig()} if no MetadataFixer task has
 	 *         been assigned.
 	 */
 	public MetadataFixerConfig getFixerConfig();
