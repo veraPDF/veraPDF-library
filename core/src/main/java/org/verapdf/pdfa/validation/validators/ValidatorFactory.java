@@ -85,7 +85,7 @@ public final class ValidatorFactory {
 	/**
 	 * Creates a new {@link PDFAValidator} instance that uses one of the
 	 * {@link ValidationProfile}s packaged as a core library resource, see
-	 * {@link Validators#createValidator(PDFAFlavour, boolean)}.
+	 * {@link org.verapdf.pdfa.AbstractFoundry#createValidator(PDFAFlavour, boolean)}.
 	 * 
 	 * @param flavour
 	 *            the {@link PDFAFlavour} that's associated with the

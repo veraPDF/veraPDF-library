@@ -141,6 +141,14 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 		}
 	}
 
+	@Override
+	protected void process(ItemDetails fileDetails, final InputStream item) throws VeraPDFException {
+		configLogs();
+		debugAndLog(fileDetails.getName());
+		ProcessorResult result = this.processor.process(fileDetails, item);
+		this.processResult(result, this.processor.getConfig().getValidatorConfig().isLogsEnabled());
+	}
+
 	private void processItem(ItemDetails fileDetails, final InputStream item) throws VeraPDFException {
 		debugAndLog(fileDetails.getName());
 		ProcessorResult result = this.processor.process(fileDetails, item);
