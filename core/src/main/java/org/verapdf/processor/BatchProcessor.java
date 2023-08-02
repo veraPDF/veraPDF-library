@@ -24,10 +24,12 @@
 package org.verapdf.processor;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.processor.reports.BatchSummary;
+import org.verapdf.processor.reports.ItemDetails;
 
 /**
  * The veraPDF batch processor, used to process multiple files.
@@ -51,6 +53,9 @@ public interface BatchProcessor extends Processor {
 	 *             when an error occurs during processing.
 	 */
 	public BatchSummary process(List<? extends File> toProcess, BatchProcessingHandler resultHandler)
+			throws VeraPDFException;
+
+	public BatchSummary process(ItemDetails itemDetails, InputStream stream, BatchProcessingHandler resultHandler)
 			throws VeraPDFException;
 
 	/**
