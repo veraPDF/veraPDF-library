@@ -20,6 +20,7 @@
  */
 package org.verapdf.report;
 
+import org.verapdf.ReleaseDetails;
 import org.verapdf.pdfa.Foundries;
 
 import javax.xml.transform.TransformerException;
@@ -38,6 +39,8 @@ public final class HTMLReport {
 	private static final String xslExt = ".xsl"; //$NON-NLS-1$
 	private static final String detailedReport = resourceRoot + "DetailedHtmlReport" + xslExt; //$NON-NLS-1$
 	private static final String summaryReport = resourceRoot + "SummaryHtmlReport" + xslExt; //$NON-NLS-1$
+	private static final String GUI = "gui"; //$NON-NLS-1$
+	private static final String VERAPDF_REST = "verapdf-rest"; //$NON-NLS-1$
 
 	private HTMLReport() {
 	}
@@ -88,8 +91,18 @@ public final class HTMLReport {
 		arguments.put("wikiPath", wikiPath); //$NON-NLS-1$
 		arguments.put("isFullHTML", Boolean.toString(isFullHTML)); //$NON-NLS-1$
 		arguments.put("parserType", parserType); //$NON-NLS-1$
+		arguments.put("appName", getAppName()); //$NON-NLS-1$
 		XsltTransformer.transform(source, HTMLReport.class.getClassLoader().getResourceAsStream(reportPath),
 				destination, arguments);
+	}
+
+	private static String getAppName() {
+		for (ReleaseDetails details : ReleaseDetails.getDetails()) {
+			if (VERAPDF_REST.equals(details.getId())) {
+				return VERAPDF_REST;
+			}
+		}
+		return GUI;
 	}
 
 }
