@@ -41557,6 +41557,18 @@
 			<references/>
 		</rule>
 		<rule object="AInteractiveForm">
+			<id specification="ISO_32000_1_6" clause="InteractiveForm-DR-Dictionary" testNumber="9"/>
+			<description>Entry DR with type Dictionary in InteractiveForm shall satisfy special case: fn:Eval(fn:IsPresent(DR::Font::*))</description>
+			<test>DRHasTypeDictionary != true || (containsDRFontAny == true)</test>
+			<error>
+				<message>Entry DR with type Dictionary in InteractiveForm does not satisfy special case: fn:Eval(fn:IsPresent(DR::Font::*))</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AInteractiveForm">
 			<id specification="ISO_32000_1_6" clause="InteractiveForm-Fields" testNumber="8"/>
 			<description>Entry Fields in InteractiveForm shall have type Array</description>
 			<test>containsFields == false || FieldsHasTypeArray == true</test>
