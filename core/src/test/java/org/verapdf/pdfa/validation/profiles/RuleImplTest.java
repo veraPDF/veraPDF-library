@@ -45,11 +45,11 @@ import static org.junit.Assert.*;
 public class RuleImplTest {
     private static final String DEFAULT_RULE_STRING = "Rule [id="
             + Profiles.defaultRuleId()
-            + ", object=object, deferred=null, description=description, test=test, error=" + ErrorDetailsImpl.defaultInstance() + ", references=[]]";
+            + ", object=object, deferred=null, tags=null, description=description, test=test, error=" + ErrorDetailsImpl.defaultInstance() + ", references=[]]";
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.RuleImpl#equals(java.lang.Object)}.
+     * {@link org.verapdf.pdfa.validation.profiles.RuleImpl#equals(java.lang.Object)}.
      */
     @Test
     public final void testEqualsObject() {
@@ -57,24 +57,23 @@ public class RuleImplTest {
     }
 
     /**
-     * Test method for {@link org.verapdf.pdfa.validation.RuleImpl#toString()}.
+     * Test method for {@link org.verapdf.pdfa.validation.profiles.RuleImpl#toString()}.
      */
     @Test
     public final void testToString() {
-        assertTrue(Profiles.defaultRule().toString()
-                .equals(DEFAULT_RULE_STRING));
+        assertEquals(DEFAULT_RULE_STRING, Profiles.defaultRule().toString());
     }
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.RuleImpl#fromValues(RuleId, String, String, String, ErrorDetails, List)}
+     * {@link org.verapdf.pdfa.validation.profiles.RuleImpl#fromValues(RuleId, String, String, String, ErrorDetails, List)}
      * .
      */
     @Test
     public final void testFromValues() {
         // Get an equivalent to the default instance
         RuleImpl rule = RuleImpl
-                .fromValues(Profiles.defaultRuleId(), "object", null,
+                .fromValues(Profiles.defaultRuleId(), "object", null, null,
                         "description", "test", ErrorDetailsImpl.defaultInstance(), Collections.<Reference> emptyList());
         Rule defaultInstance = RuleImpl.defaultInstance();
         // Equivalent is NOT the same object as default instance
@@ -85,7 +84,7 @@ public class RuleImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.RuleImpl#fromRule(org.verapdf.pdfa.validation.Rule)}
+     * {@link org.verapdf.pdfa.validation.profiles.RuleImpl#fromRule(org.verapdf.pdfa.validation.profiles.Rule)}
      * .
      */
     @Test
@@ -101,7 +100,7 @@ public class RuleImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.RuleImpl#toXml(org.verapdf.pdfa.validation.Rule, Boolean)}
+     * {@link org.verapdf.pdfa.validation.profiles.RuleImpl#toXml(org.verapdf.pdfa.validation.profiles.Rule, Boolean)}
      * .
      *
      * @throws JAXBException
@@ -111,7 +110,7 @@ public class RuleImplTest {
     public final void testToXmlString() throws JAXBException {
         List<Reference> refs = new ArrayList<>();
         refs.add(ReferenceImpl.defaultInstance());
-        Rule rule = RuleImpl.fromValues(RuleIdImpl.defaultInstance(), "object", null,
+        Rule rule = RuleImpl.fromValues(RuleIdImpl.defaultInstance(), "object", null, null,
                 "description", "test", ErrorDetailsImpl.defaultInstance(), refs);
         String xmlDefault = XmlSerialiser.toXml(rule, true, true);
         Rule unmarshalledDefault = XmlSerialiser.typeFromXml(RuleImpl.class, xmlDefault);
@@ -121,7 +120,7 @@ public class RuleImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.RuleImpl#toXml(Rule, java.io.OutputStream, Boolean)}
+     * {@link org.verapdf.pdfa.validation.profiles.RuleImpl#toXml(Rule, java.io.OutputStream, Boolean)}
      * .
      *
      * @throws JAXBException

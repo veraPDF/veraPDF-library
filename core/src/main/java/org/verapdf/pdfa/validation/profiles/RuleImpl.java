@@ -33,7 +33,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * JAXB serialisable implementation of {@link Reference} with safe methods for
+ * JAXB serializable implementation of {@link Reference} with safe methods for
  * equals and hashCode plus useful conversion methods.
  *
  * Not meant for public consumption, hidden behind the {@link Reference}
@@ -50,6 +50,8 @@ final class RuleImpl implements Rule {
     private final String object;
     @XmlAttribute
     private final Boolean deferred;
+    @XmlAttribute
+    private final String tags;
     @XmlElement
     private final String description;
     @XmlElement
@@ -61,17 +63,17 @@ final class RuleImpl implements Rule {
     private final List<Reference> references = new ArrayList<>();
 
     private RuleImpl() {
-        this(RuleIdImpl.defaultInstance(), "object", null, "description", "test",
+        this(RuleIdImpl.defaultInstance(), "object", null, null, "description", "test",
                 ErrorDetailsImpl.defaultInstance(), Collections.<Reference> emptyList());
     }
 
-    private RuleImpl(final RuleId id, final String object, final Boolean deferred,
-            final String description, final String test,
-            final ErrorDetails error, final List<Reference> references) {
+    private RuleImpl(final RuleId id, final String object, final Boolean deferred, final String tags,
+            final String description, final String test, final ErrorDetails error, final List<Reference> references) {
         super();
         this.id = id;
         this.object = object;
         this.deferred = deferred;
+        this.tags = tags;
         this.description = description;
         this.test = test;
         this.error = error;
@@ -100,6 +102,19 @@ final class RuleImpl implements Rule {
     @Override
     public Boolean getDeferred() {
         return this.deferred;
+    }
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    public String getTags() {
+        return tags;
+    }
+
+    @Override
+    public Set<String> getTagsSet() {
+        return tags != null ? new HashSet<>(Arrays.asList(tags.split(","))) : Collections.emptySet();
     }
 
     /**
@@ -144,13 +159,14 @@ final class RuleImpl implements Rule {
 
         RuleImpl rule = (RuleImpl) o;
 
-        if (id != null ? !id.equals(rule.id) : rule.id != null) return false;
-        if (object != null ? !object.equals(rule.object) : rule.object != null) return false;
-        if (deferred != null ? !deferred.equals(rule.deferred) : rule.deferred != null) return false;
-        if (description != null ? !description.equals(rule.description) : rule.description != null) return false;
-        if (test != null ? !test.equals(rule.test) : rule.test != null) return false;
-        if (error != null ? !error.equals(rule.error) : rule.error != null) return false;
-        return references != null ? references.equals(rule.references) : rule.references == null;
+        if (!Objects.equals(id, rule.id)) return false;
+        if (!Objects.equals(object, rule.object)) return false;
+        if (!Objects.equals(deferred, rule.deferred)) return false;
+        if (!Objects.equals(tags, rule.tags)) return false;
+        if (!Objects.equals(description, rule.description)) return false;
+        if (!Objects.equals(test, rule.test)) return false;
+        if (!Objects.equals(error, rule.error)) return false;
+        return Objects.equals(references, rule.references);
 
     }
 
@@ -162,6 +178,7 @@ final class RuleImpl implements Rule {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (object != null ? object.hashCode() : 0);
         result = 31 * result + (deferred != null ? deferred.hashCode() : 0);
+        result = 31 * result + (tags != null ? tags.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (test != null ? test.hashCode() : 0);
         result = 31 * result + (error != null ? error.hashCode() : 0);
@@ -175,7 +192,7 @@ final class RuleImpl implements Rule {
     @Override
     public String toString() {
         return "Rule [id=" + this.id + ", object=" + this.object + ", deferred=" + this.deferred
-                + ", description=" + this.description + ", test=" + this.test
+                + ", tags=" + this.tags + ", description=" + this.description + ", test=" + this.test
                 + ", error=" + this.error + ", references=" + this.references
                 + "]";
     }

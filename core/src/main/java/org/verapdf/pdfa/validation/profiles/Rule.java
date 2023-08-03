@@ -25,6 +25,7 @@ package org.verapdf.pdfa.validation.profiles;
 
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Encapsulates a PDF/A Validation Rule including the String property
@@ -52,6 +53,10 @@ public interface Rule {
      * if the rule has to be checked after other rules
      */
     public Boolean getDeferred();
+
+    public String getTags();
+
+    public Set<String> getTagsSet();
 
     /**
      * @return a textual description of the Rule

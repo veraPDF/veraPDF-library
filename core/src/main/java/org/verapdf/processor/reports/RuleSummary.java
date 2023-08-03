@@ -46,6 +46,7 @@ public interface RuleSummary {
     public Status getRuleStatus();
     public int getPassedChecks();
     public int getFailedChecks();
+    public String getTags();
     public String getDescription();
     public String getObject();
     public String getTest();
