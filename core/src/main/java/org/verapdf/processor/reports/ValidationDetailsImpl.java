@@ -134,8 +134,8 @@ final class ValidationDetailsImpl implements ValidationDetails {
 		for (Rule rule : profile.getRules()) {
 			RuleSummary summary = assertionMap.containsKey(rule.getRuleId()) ?
 				RuleSummaryImpl.fromValues(rule.getRuleId(), rule.getDescription(), rule.getObject(), rule.getTest(),
-					assertionMap.get(rule.getRuleId()), logPassedChecks, failedChecksMap.get(rule.getRuleId())) :
-				RuleSummaryImpl.uncheckedInstance(rule.getRuleId(), rule.getDescription(), rule.getObject(), rule.getTest());
+					assertionMap.get(rule.getRuleId()), logPassedChecks, failedChecksMap.get(rule.getRuleId()), rule.getTags()) :
+				RuleSummaryImpl.uncheckedInstance(rule.getRuleId(), rule.getDescription(), rule.getObject(), rule.getTest(), rule.getTags());
 			failedChecks += summary.getFailedChecks();
 			if (summary.getRuleStatus() == Status.PASSED) {
 				passedRules++;
