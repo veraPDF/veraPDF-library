@@ -53,6 +53,8 @@ final class RuleSummaryImpl implements RuleSummary {
 	private final int passedChecks;
 	@XmlAttribute
 	private final int failedChecks;
+	@XmlAttribute
+	private final String tags;
 	@XmlElement
 	private final String description;
 	@XmlElement
@@ -63,7 +65,7 @@ final class RuleSummaryImpl implements RuleSummary {
 	private final List<Check> checks;
 
 	private RuleSummaryImpl(final RuleId ruleId, final Status status, final int passedChecks, final int failedChecks,
-			final String description, final String object, final String test, final List<Check> checks) {
+			final String tags, final String description, final String object, final String test, final List<Check> checks) {
 		PDFAFlavour.Specification specification = ruleId.getSpecification();
 		this.specification = specification == null ? null : specification.getId();
 		this.clause = ruleId.getClause();
@@ -72,6 +74,7 @@ final class RuleSummaryImpl implements RuleSummary {
 		this.status = status.toString();
 		this.passedChecks = passedChecks;
 		this.failedChecks = failedChecks;
+		this.tags = tags;
 		this.description = description;
 		this.object = object;
 		this.test = test;
@@ -79,12 +82,12 @@ final class RuleSummaryImpl implements RuleSummary {
 	}
 
 	private RuleSummaryImpl(final RuleId ruleId, final Status status, final String description, final String object,
-			final String test) {
-		this(ruleId, status, 0, 0, description, object, test, Collections.<Check>emptyList());
+			final String test, String tags) {
+		this(ruleId, status, 0, 0, tags, description, object, test, Collections.<Check>emptyList());
 	}
 
 	private RuleSummaryImpl() {
-		this(Profiles.defaultRuleId(), Status.UNKNOWN, "", "", "");
+		this(Profiles.defaultRuleId(), Status.UNKNOWN, "", "", "", null);
 	}
 
 	/**
@@ -144,6 +147,11 @@ final class RuleSummaryImpl implements RuleSummary {
 		return this.failedChecks;
 	}
 
+	@Override
+	public String getTags() {
+		return this.tags;
+	}
+
 	/**
 	 * @return the description
 	 */
@@ -189,7 +197,7 @@ final class RuleSummaryImpl implements RuleSummary {
 	}
 
 	static final RuleSummary fromValues(final RuleId id, final String description, final String object, final String test,
-										List<TestAssertion> assertions, boolean logPassedChecks, Integer failedChecks) {
+										List<TestAssertion> assertions, boolean logPassedChecks, Integer failedChecks, String tags) {
 		if (id == null) {
 			throw new NullPointerException("Argument id can not be null");
 		}
@@ -213,18 +221,18 @@ final class RuleSummaryImpl implements RuleSummary {
 				checks.add(CheckImpl.fromValue(assertion));
 			}
 		}
-		return new RuleSummaryImpl(id, status, passedChecks, failedChecks != null ? failedChecks : 0, description, object, test, checks);
+		return new RuleSummaryImpl(id, status, passedChecks, failedChecks != null ? failedChecks : 0, tags, description, object, test, checks);
 	}
 
 	static final RuleSummary uncheckedInstance(final RuleId id, final String description, final String object,
-			final String test) {
+			final String test, String tags) {
 		if (id == null) {
 			throw new NullPointerException("Argument id can not be null");
 		}
 		if (description == null) {
 			throw new NullPointerException("Argument description can not be null");
 		}
-		return new RuleSummaryImpl(id, Status.PASSED, description, object, test);
+		return new RuleSummaryImpl(id, Status.PASSED, description, object, test, tags);
 	}
 
 }

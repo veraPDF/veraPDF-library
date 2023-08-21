@@ -23,12 +23,7 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -163,6 +158,15 @@ final class ValidationProfileImpl implements ValidationProfile {
             this.objectRuleMap = createObjectRuleMap(this.rules);
         }
         return this.ruleLookup.get(id);
+    }
+
+    @Override
+    public SortedSet<String> getTags() {
+        SortedSet<String> tags = new TreeSet<>();
+        for (Rule rule : rules) {
+            tags.addAll(rule.getTagsSet());
+        }
+        return tags;
     }
 
     /**
