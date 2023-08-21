@@ -66,7 +66,7 @@ final class RuleImpl implements Rule {
     }
 
     private RuleImpl(final RuleId id, final String object, final Boolean deferred, final String tags,
-            final String description, final String test, final ErrorDetails error, final List<Reference> references) {
+                     final String description, final String test, final ErrorDetails error, final List<Reference> references) {
         super();
         this.id = id;
         this.object = object;
@@ -199,16 +199,16 @@ final class RuleImpl implements Rule {
         return RuleImpl.DEFAULT;
     }
 
-    static RuleImpl fromValues(final RuleId id, final String object, final Boolean deferred,
-            final String description, final String test,
-            final ErrorDetails error, final List<Reference> references) {
-        return new RuleImpl(RuleIdImpl.fromRuleId(id), object, deferred, description, test, error, references);
+    static RuleImpl fromValues(final RuleId id, final String object, final Boolean deferred, final String tags,
+                               final String description, final String test,
+                               final ErrorDetails error, final List<Reference> references) {
+        return new RuleImpl(RuleIdImpl.fromRuleId(id), object, deferred, tags, description, test, error, references);
     }
 
     static RuleImpl fromRule(final Rule toConvert) {
         return RuleImpl.fromValues(
                 RuleIdImpl.fromRuleId(toConvert.getRuleId()),
-                toConvert.getObject(), toConvert.getDeferred(), toConvert.getDescription(),
+                toConvert.getObject(), toConvert.getDeferred(), toConvert.getTags(), toConvert.getDescription(),
                 toConvert.getTest(), toConvert.getError(),
                 toConvert.getReferences());
     }
@@ -223,7 +223,7 @@ final class RuleImpl implements Rule {
     static class Adapter extends XmlAdapter<RuleImpl, Rule> {
         @Override
         public Rule unmarshal(RuleImpl ruleImpl) {
-            return new RuleImpl(ruleImpl.getRuleId(), ruleImpl.getObject(), ruleImpl.getDeferred(),
+            return new RuleImpl(ruleImpl.getRuleId(), ruleImpl.getObject(), ruleImpl.getDeferred(), ruleImpl.getTags(),
                     RuleImpl.getStringWithoutProfilesTabulation(ruleImpl.getDescription()),
                     RuleImpl.getStringWithoutProfilesTabulation(ruleImpl.getTest()),
                     ruleImpl.getError(), ruleImpl.getReferences());
