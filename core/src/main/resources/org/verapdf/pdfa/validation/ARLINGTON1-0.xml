@@ -1768,10 +1768,10 @@
 		</rule>
 		<rule object="AFilterLZWDecode">
 			<id specification="ISO_32000_1_0" clause="FilterLZWDecode-Colors-Integer" testNumber="14"/>
-			<description>Entry Colors with type Integer in FilterLZWDecode shall satisfy possible value predicate: fn:Eval((@Colors &gt;= 1) &amp;&amp; fn:BeforeVersion(1.3, fn:Eval(@Colors &lt;= 4)))</description>
+			<description>Entry Colors with type Integer in FilterLZWDecode shall satisfy possible value predicate: fn:Eval((@Colors &gt;= 1) &amp;&amp; fn:Eval(@Colors &lt;= 4))</description>
 			<test>ColorsHasTypeInteger != true || (ColorsIntegerValue &gt;= 1) &amp;&amp; ColorsIntegerValue &lt;= 4</test>
 			<error>
-				<message>Entry Colors with type Integer in FilterLZWDecode does not satisfy possible value predicate: fn:Eval((@Colors &gt;= 1) &amp;&amp; fn:BeforeVersion(1.3, fn:Eval(@Colors &lt;= 4)))</message>
+				<message>Entry Colors with type Integer in FilterLZWDecode does not satisfy possible value predicate: fn:Eval((@Colors &gt;= 1) &amp;&amp; fn:Eval(@Colors &lt;= 4))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -6254,10 +6254,10 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_0" clause="XObjectImage-ImageMask-Boolean" testNumber="9"/>
-			<description>Entry ImageMask with type Boolean in XObjectImage shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:SinceVersion(1.4, fn:Not(fn:IsPresent(Mask)))) || (@ImageMask == false))</description>
+			<description>Entry ImageMask with type Boolean in XObjectImage shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace))) || (@ImageMask == false))</description>
 			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentHasTypeInteger == false || (BitsPerComponentIntegerValue == 1)) &amp;&amp; (containsColorSpace != true)) || (ImageMaskBooleanValue == false))</test>
 			<error>
-				<message>Entry ImageMask with type Boolean in XObjectImage does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:SinceVersion(1.4, fn:Not(fn:IsPresent(Mask)))) || (@ImageMask == false))</message>
+				<message>Entry ImageMask with type Boolean in XObjectImage does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace))) || (@ImageMask == false))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>

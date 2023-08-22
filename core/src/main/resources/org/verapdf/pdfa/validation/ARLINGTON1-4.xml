@@ -2703,7 +2703,7 @@
 		</rule>
 		<rule object="AAnnotCircle">
 			<id specification="ISO_32000_1_4" clause="AnnotCircle-AS" testNumber="11"/>
-			<description>Entry AS in AnnotCircle is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotCircle is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotCircle is missing</message>
@@ -2799,10 +2799,10 @@
 		</rule>
 		<rule object="AAnnotCircle">
 			<id specification="ISO_32000_1_4" clause="AnnotCircle-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotCircle shall satisfy special case: fn:Eval(fn:IsPDFVersion(1.3, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotCircle shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotCircle does not satisfy special case: fn:Eval(fn:IsPDFVersion(1.3, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotCircle does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -3053,7 +3053,7 @@
 		</rule>
 		<rule object="AAnnotFileAttachment">
 			<id specification="ISO_32000_1_4" clause="AnnotFileAttachment-AS" testNumber="11"/>
-			<description>Entry AS in AnnotFileAttachment is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotFileAttachment is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotFileAttachment is missing</message>
@@ -3137,10 +3137,10 @@
 		</rule>
 		<rule object="AAnnotFileAttachment">
 			<id specification="ISO_32000_1_4" clause="AnnotFileAttachment-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotFileAttachment shall satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotFileAttachment shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotFileAttachment does not satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotFileAttachment does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -3415,7 +3415,7 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_4" clause="AnnotFreeText-AS" testNumber="11"/>
-			<description>Entry AS in AnnotFreeText is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotFreeText is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotFreeText is missing</message>
@@ -3535,10 +3535,10 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_4" clause="AnnotFreeText-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotFreeText shall satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotFreeText shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotFreeText does not satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotFreeText does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -3802,7 +3802,7 @@
 		</rule>
 		<rule object="AAnnotHighlight">
 			<id specification="ISO_32000_1_4" clause="AnnotHighlight-AS" testNumber="11"/>
-			<description>Entry AS in AnnotHighlight is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotHighlight is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotHighlight is missing</message>
@@ -3886,10 +3886,10 @@
 		</rule>
 		<rule object="AAnnotHighlight">
 			<id specification="ISO_32000_1_4" clause="AnnotHighlight-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotHighlight shall satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotHighlight shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotHighlight does not satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotHighlight does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -4152,7 +4152,7 @@
 		</rule>
 		<rule object="AAnnotInk">
 			<id specification="ISO_32000_1_4" clause="AnnotInk-AS" testNumber="11"/>
-			<description>Entry AS in AnnotInk is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotInk is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotInk is missing</message>
@@ -4248,10 +4248,10 @@
 		</rule>
 		<rule object="AAnnotInk">
 			<id specification="ISO_32000_1_4" clause="AnnotInk-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotInk shall satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotInk shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotInk does not satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotInk does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -4514,7 +4514,7 @@
 		</rule>
 		<rule object="AAnnotLine">
 			<id specification="ISO_32000_1_4" clause="AnnotLine-AS" testNumber="11"/>
-			<description>Entry AS in AnnotLine is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotLine is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotLine is missing</message>
@@ -4610,10 +4610,10 @@
 		</rule>
 		<rule object="AAnnotLine">
 			<id specification="ISO_32000_1_4" clause="AnnotLine-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotLine shall satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotLine shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotLine does not satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotLine does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -4924,7 +4924,7 @@
 		</rule>
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_4" clause="AnnotLink-AS" testNumber="11"/>
-			<description>Entry AS in AnnotLink is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotLink is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotLink is missing</message>
@@ -5020,10 +5020,10 @@
 		</rule>
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_4" clause="AnnotLink-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotLink shall satisfy special case: fn:Eval(fn:BeforeVersion(1.3, fn:BitsClear(4, 32)) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(2.0, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotLink shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotLink does not satisfy special case: fn:Eval(fn:BeforeVersion(1.3, fn:BitsClear(4, 32)) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(2.0, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotLink does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -5275,7 +5275,7 @@
 		</rule>
 		<rule object="AAnnotMovie">
 			<id specification="ISO_32000_1_4" clause="AnnotMovie-AS" testNumber="11"/>
-			<description>Entry AS in AnnotMovie is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotMovie is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotMovie is missing</message>
@@ -5335,10 +5335,10 @@
 		</rule>
 		<rule object="AAnnotMovie">
 			<id specification="ISO_32000_1_4" clause="AnnotMovie-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotMovie shall satisfy special case: fn:Eval(fn:BeforeVersion(1.3, fn:BitsClear(4, 32)) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotMovie shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotMovie does not satisfy special case: fn:Eval(fn:BeforeVersion(1.3, fn:BitsClear(4, 32)) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotMovie does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -5577,7 +5577,7 @@
 		</rule>
 		<rule object="AAnnotPopup">
 			<id specification="ISO_32000_1_4" clause="AnnotPopup-AS" testNumber="11"/>
-			<description>Entry AS in AnnotPopup is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotPopup is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotPopup is missing</message>
@@ -5637,10 +5637,10 @@
 		</rule>
 		<rule object="AAnnotPopup">
 			<id specification="ISO_32000_1_4" clause="AnnotPopup-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotPopup shall satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotPopup shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotPopup does not satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotPopup does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -5879,7 +5879,7 @@
 		</rule>
 		<rule object="AAnnotPrinterMark">
 			<id specification="ISO_32000_1_4" clause="AnnotPrinterMark-AS" testNumber="11"/>
-			<description>Entry AS in AnnotPrinterMark is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotPrinterMark is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotPrinterMark is missing</message>
@@ -5951,10 +5951,10 @@
 		</rule>
 		<rule object="AAnnotPrinterMark">
 			<id specification="ISO_32000_1_4" clause="AnnotPrinterMark-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotPrinterMark shall satisfy special case: fn:Eval(fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotPrinterMark shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotPrinterMark does not satisfy special case: fn:Eval(fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotPrinterMark does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -6169,7 +6169,7 @@
 		</rule>
 		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_4" clause="AnnotSound-AS" testNumber="11"/>
-			<description>Entry AS in AnnotSound is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotSound is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotSound is missing</message>
@@ -6253,10 +6253,10 @@
 		</rule>
 		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_4" clause="AnnotSound-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotSound shall satisfy special case: fn:Eval(fn:BeforeVersion(1.3, fn:BitsClear(4, 32)) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotSound shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotSound does not satisfy special case: fn:Eval(fn:BeforeVersion(1.3, fn:BitsClear(4, 32)) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotSound does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -6543,7 +6543,7 @@
 		</rule>
 		<rule object="AAnnotSquare">
 			<id specification="ISO_32000_1_4" clause="AnnotSquare-AS" testNumber="11"/>
-			<description>Entry AS in AnnotSquare is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotSquare is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotSquare is missing</message>
@@ -6615,10 +6615,10 @@
 		</rule>
 		<rule object="AAnnotSquare">
 			<id specification="ISO_32000_1_4" clause="AnnotSquare-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotSquare shall satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotSquare shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotSquare does not satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotSquare does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -6869,7 +6869,7 @@
 		</rule>
 		<rule object="AAnnotSquiggly">
 			<id specification="ISO_32000_1_4" clause="AnnotSquiggly-AS" testNumber="11"/>
-			<description>Entry AS in AnnotSquiggly is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotSquiggly is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotSquiggly is missing</message>
@@ -6953,10 +6953,10 @@
 		</rule>
 		<rule object="AAnnotSquiggly">
 			<id specification="ISO_32000_1_4" clause="AnnotSquiggly-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotSquiggly shall satisfy special case: fn:Eval(fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotSquiggly shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotSquiggly does not satisfy special case: fn:Eval(fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotSquiggly does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -7219,7 +7219,7 @@
 		</rule>
 		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_4" clause="AnnotStamp-AS" testNumber="11"/>
-			<description>Entry AS in AnnotStamp is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotStamp is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotStamp is missing</message>
@@ -7303,10 +7303,10 @@
 		</rule>
 		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_4" clause="AnnotStamp-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotStamp shall satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotStamp shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotStamp does not satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotStamp does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -7557,7 +7557,7 @@
 		</rule>
 		<rule object="AAnnotStrikeOut">
 			<id specification="ISO_32000_1_4" clause="AnnotStrikeOut-AS" testNumber="11"/>
-			<description>Entry AS in AnnotStrikeOut is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotStrikeOut is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotStrikeOut is missing</message>
@@ -7641,10 +7641,10 @@
 		</rule>
 		<rule object="AAnnotStrikeOut">
 			<id specification="ISO_32000_1_4" clause="AnnotStrikeOut-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotStrikeOut shall satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotStrikeOut shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotStrikeOut does not satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotStrikeOut does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -7907,7 +7907,7 @@
 		</rule>
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_4" clause="AnnotText-AS" testNumber="11"/>
-			<description>Entry AS in AnnotText is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotText is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotText is missing</message>
@@ -7991,10 +7991,10 @@
 		</rule>
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_4" clause="AnnotText-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotText shall satisfy special case: fn:Eval(fn:BeforeVersion(1.3, fn:BitsClear(4, 32)) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotText shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotText does not satisfy special case: fn:Eval(fn:BeforeVersion(1.3, fn:BitsClear(4, 32)) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotText does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -8306,7 +8306,7 @@
 		</rule>
 		<rule object="AAnnotTrapNetwork">
 			<id specification="ISO_32000_1_4" clause="AnnotTrapNetwork-AnnotStates" testNumber="11"/>
-			<description>Entry AnnotStates in AnnotTrapNetwork is required, when fn:IsPDFVersion(1.3) || fn:SinceVersion(1.4, (fn:IsPresent(Version) &amp;&amp; fn:Not(fn:IsPresent(LastModified))))</description>
+			<description>Entry AnnotStates in AnnotTrapNetwork is required, when (fn:IsPresent(Version) &amp;&amp; fn:Not(fn:IsPresent(LastModified)))</description>
 			<test>containsAnnotStates == true || ((containsVersion != true) || (containsLastModified == true))</test>
 			<error>
 				<message>Entry AnnotStates in AnnotTrapNetwork is missing</message>
@@ -8584,7 +8584,7 @@
 		</rule>
 		<rule object="AAnnotTrapNetwork">
 			<id specification="ISO_32000_1_4" clause="AnnotTrapNetwork-Version" testNumber="11"/>
-			<description>Entry Version in AnnotTrapNetwork is required, when fn:IsPDFVersion(1.3) || fn:SinceVersion(1.4, (fn:IsPresent(AnnotStates) &amp;&amp; fn:Not(fn:IsPresent(LastModified))))</description>
+			<description>Entry Version in AnnotTrapNetwork is required, when (fn:IsPresent(AnnotStates) &amp;&amp; fn:Not(fn:IsPresent(LastModified)))</description>
 			<test>containsVersion == true || ((containsAnnotStates != true) || (containsLastModified == true))</test>
 			<error>
 				<message>Entry Version in AnnotTrapNetwork is missing</message>
@@ -8644,7 +8644,7 @@
 		</rule>
 		<rule object="AAnnotUnderline">
 			<id specification="ISO_32000_1_4" clause="AnnotUnderline-AS" testNumber="11"/>
-			<description>Entry AS in AnnotUnderline is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotUnderline is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotUnderline is missing</message>
@@ -8728,10 +8728,10 @@
 		</rule>
 		<rule object="AAnnotUnderline">
 			<id specification="ISO_32000_1_4" clause="AnnotUnderline-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotUnderline shall satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotUnderline shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotUnderline does not satisfy special case: fn:Eval(fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotUnderline does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -9030,7 +9030,7 @@
 		</rule>
 		<rule object="AAnnotWidget">
 			<id specification="ISO_32000_1_4" clause="AnnotWidget-AS" testNumber="11"/>
-			<description>Entry AS in AnnotWidget is required, when fn:IsPresent(AP::N::*) || fn:IsPresent(AP::R::*) || fn:IsPresent(AP::D::*)</description>
+			<description>Entry AS in AnnotWidget is required, when fn:IsDictionary(AP::N) || fn:IsDictionary(AP::R) || fn:IsDictionary(AP::D)</description>
 			<test>containsAS == true || (APNHasTypeDictionary != true &amp;&amp; APRHasTypeDictionary != true &amp;&amp; APDHasTypeDictionary != true)</test>
 			<error>
 				<message>Entry AS in AnnotWidget is missing</message>
@@ -9102,10 +9102,10 @@
 		</rule>
 		<rule object="AAnnotWidget">
 			<id specification="ISO_32000_1_4" clause="AnnotWidget-F-Bitmask" testNumber="9"/>
-			<description>Entry F with type Bitmask in AnnotWidget shall satisfy special case: fn:Eval(fn:BeforeVersion(1.3, fn:BitsClear(4, 32)) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</description>
+			<description>Entry F with type Bitmask in AnnotWidget shall satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</description>
 			<test>FHasTypeBitmask != true || (((FBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0) &amp;&amp; ((FBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry F with type Bitmask in AnnotWidget does not satisfy special case: fn:Eval(fn:BeforeVersion(1.3, fn:BitsClear(4, 32)) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(8, 32)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(9, 32)) &amp;&amp; fn:BeforeVersion(1.6, fn:BitsClear(10, 32)) &amp;&amp; fn:SinceVersion(1.7, fn:BitsClear(11, 32)))</message>
+				<message>Entry F with type Bitmask in AnnotWidget does not satisfy special case: fn:Eval(fn:BitsClear(9, 32) &amp;&amp; fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -16073,7 +16073,7 @@
 		</rule>
 		<rule object="ADeviceNDict">
 			<id specification="ISO_32000_1_4" clause="DeviceNDict-Colorants" testNumber="11"/>
-			<description>Entry Colorants in DeviceNDict is required, when fn:SinceVersion(1.6, (@Subtype == NChannel)) &amp;&amp; fn:HasSpotColorants(parent::1)</description>
+			<description>Entry Colorants in DeviceNDict is required, when fn:HasSpotColorants(parent::1)</description>
 			<test>containsColorants == true || (parent1EntriesString != null &amp;&amp; parent1EntriesString.split('&amp;').filter(elem =&gt; elem != "Cyan" &amp;&amp; elem != "Magenta" &amp;&amp; elem != "Yellow" &amp;&amp; elem != "Black").length &gt; 0) == false</test>
 			<error>
 				<message>Entry Colorants in DeviceNDict is missing</message>
@@ -17297,10 +17297,10 @@
 		</rule>
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_4" clause="EncryptionStandard-P-Bitmask" testNumber="9"/>
-			<description>Entry P with type Bitmask in EncryptionStandard shall satisfy special case: fn:Eval(fn:BitsClear(1, 2) &amp;&amp; fn:BitsSet(7, 8) &amp;&amp; fn:SinceVersion(2.0, fn:BitSet(10)) &amp;&amp; (fn:SinceVersion(2.0, fn:Extension(ISO_TS_32004, fn:BitsSet(14, 32))) || fn:BitsSet(13, 32)))</description>
+			<description>Entry P with type Bitmask in EncryptionStandard shall satisfy special case: fn:Eval(fn:BitsClear(1, 2) &amp;&amp; fn:BitsSet(7, 8) &amp;&amp; (fn:BitsSet(13, 32)))</description>
 			<test>PHasTypeBitmask != true || (((PBitmaskValue &gt;&gt; 0 &amp; 1) == 0 &amp;&amp; (PBitmaskValue &gt;&gt; 1 &amp; 1) == 0) &amp;&amp; ((PBitmaskValue &gt;&gt; 6 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 7 &amp; 1) == 1) &amp;&amp; ((PBitmaskValue &gt;&gt; 12 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 13 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 14 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 15 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 16 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 17 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 18 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 19 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 20 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 21 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 22 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 23 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 24 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 25 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 26 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 27 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 28 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 29 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 30 &amp; 1) == 1 &amp;&amp; (PBitmaskValue &gt;&gt; 31 &amp; 1) == 1))</test>
 			<error>
-				<message>Entry P with type Bitmask in EncryptionStandard does not satisfy special case: fn:Eval(fn:BitsClear(1, 2) &amp;&amp; fn:BitsSet(7, 8) &amp;&amp; fn:SinceVersion(2.0, fn:BitSet(10)) &amp;&amp; (fn:SinceVersion(2.0, fn:Extension(ISO_TS_32004, fn:BitsSet(14, 32))) || fn:BitsSet(13, 32)))</message>
+				<message>Entry P with type Bitmask in EncryptionStandard does not satisfy special case: fn:Eval(fn:BitsClear(1, 2) &amp;&amp; fn:BitsSet(7, 8) &amp;&amp; (fn:BitsSet(13, 32)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -18530,10 +18530,10 @@
 		</rule>
 		<rule object="AFieldChoice">
 			<id specification="ISO_32000_1_4" clause="FieldChoice-Ff-Bitmask" testNumber="9"/>
-			<description>Entry Ff with type Bitmask in FieldChoice shall satisfy special case: fn:Eval(fn:BitsClear(4, 14) &amp;&amp; fn:BitClear(21) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(22, 23)) &amp;&amp; fn:BitsClear(24, 26) &amp;&amp; fn:BeforeVersion(1.5, fn:BitClear(27)) &amp;&amp; fn:BitsClear(28, 32))</description>
+			<description>Entry Ff with type Bitmask in FieldChoice shall satisfy special case: fn:Eval(fn:BitsClear(4, 14) &amp;&amp; fn:BitClear(21) &amp;&amp; fn:BitsClear(24, 26) &amp;&amp; fn:BitClear(27) &amp;&amp; fn:BitsClear(28, 32))</description>
 			<test>FfHasTypeBitmask != true || (((FfBitmaskValue &gt;&gt; 3 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 4 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 5 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 6 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 7 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 8 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 9 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 13 &amp; 1) == 0) &amp;&amp; (FfBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; ((FfBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 25 &amp; 1) == 0) &amp;&amp; (FfBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; ((FfBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry Ff with type Bitmask in FieldChoice does not satisfy special case: fn:Eval(fn:BitsClear(4, 14) &amp;&amp; fn:BitClear(21) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(22, 23)) &amp;&amp; fn:BitsClear(24, 26) &amp;&amp; fn:BeforeVersion(1.5, fn:BitClear(27)) &amp;&amp; fn:BitsClear(28, 32))</message>
+				<message>Entry Ff with type Bitmask in FieldChoice does not satisfy special case: fn:Eval(fn:BitsClear(4, 14) &amp;&amp; fn:BitClear(21) &amp;&amp; fn:BitsClear(24, 26) &amp;&amp; fn:BitClear(27) &amp;&amp; fn:BitsClear(28, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -19098,10 +19098,10 @@
 		</rule>
 		<rule object="AFieldTx">
 			<id specification="ISO_32000_1_4" clause="FieldTx-Ff-Bitmask" testNumber="9"/>
-			<description>Entry Ff with type Bitmask in FieldTx shall satisfy special case: fn:Eval(fn:BitsClear(15, 20) &amp;&amp; fn:BeforeVersion(1.4, fn:BitClear(21)) &amp;&amp; fn:BitClear(22) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(23, 24)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(25, 26)) &amp;&amp; fn:BitsClear(27, 32))</description>
+			<description>Entry Ff with type Bitmask in FieldTx shall satisfy special case: fn:Eval(fn:BitsClear(15, 20) &amp;&amp; fn:BitClear(22) &amp;&amp; fn:BitsClear(25, 26) &amp;&amp; fn:BitsClear(27, 32))</description>
 			<test>FfHasTypeBitmask != true || (((FfBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 19 &amp; 1) == 0) &amp;&amp; (FfBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; ((FfBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 25 &amp; 1) == 0) &amp;&amp; ((FfBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FfBitmaskValue &gt;&gt; 31 &amp; 1) == 0))</test>
 			<error>
-				<message>Entry Ff with type Bitmask in FieldTx does not satisfy special case: fn:Eval(fn:BitsClear(15, 20) &amp;&amp; fn:BeforeVersion(1.4, fn:BitClear(21)) &amp;&amp; fn:BitClear(22) &amp;&amp; fn:BeforeVersion(1.4, fn:BitsClear(23, 24)) &amp;&amp; fn:BeforeVersion(1.5, fn:BitsClear(25, 26)) &amp;&amp; fn:BitsClear(27, 32))</message>
+				<message>Entry Ff with type Bitmask in FieldTx does not satisfy special case: fn:Eval(fn:BitsClear(15, 20) &amp;&amp; fn:BitClear(22) &amp;&amp; fn:BitsClear(25, 26) &amp;&amp; fn:BitsClear(27, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -19507,7 +19507,7 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_4" clause="FileSpecification-Type" testNumber="11"/>
-			<description>Entry Type in FileSpecification is required, when fn:IsPresent(EF) || fn:SinceVersion(2.0, fn:IsPresent(EP)) || fn:IsPresent(RF)</description>
+			<description>Entry Type in FileSpecification is required, when fn:IsPresent(EF) || fn:IsPresent(RF)</description>
 			<test>containsType == true || ((containsEF != true) &amp;&amp; (containsRF != true))</test>
 			<error>
 				<message>Entry Type in FileSpecification is missing</message>
@@ -19652,7 +19652,7 @@
 		</rule>
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_4" clause="FileTrailer-Info" testNumber="11"/>
-			<description>Entry Info in FileTrailer is required, when fn:SinceVersion(1.4, fn:IsPresent(trailer::Catalog::PieceInfo))</description>
+			<description>Entry Info in FileTrailer is required, when fn:IsPresent(trailer::Catalog::PieceInfo)</description>
 			<test>containsInfo == true || (containstrailerCatalogPieceInfo != true)</test>
 			<error>
 				<message>Entry Info in FileTrailer is missing</message>
@@ -19676,10 +19676,10 @@
 		</rule>
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_4" clause="FileTrailer-Info-Dictionary" testNumber="9"/>
-			<description>Entry Info with type Dictionary in FileTrailer shall satisfy special case: fn:Eval(fn:SinceVersion(1.4, fn:IsPresent(trailer::Catalog::PieceInfo, fn:IsPresent(trailer::Info::ModDate))))</description>
+			<description>Entry Info with type Dictionary in FileTrailer shall satisfy special case: fn:Eval(fn:IsPresent(trailer::Catalog::PieceInfo, fn:IsPresent(trailer::Info::ModDate)))</description>
 			<test>InfoHasTypeDictionary != true || ((containstrailerCatalogPieceInfo == false) || (containstrailerInfoModDate == true))</test>
 			<error>
-				<message>Entry Info with type Dictionary in FileTrailer does not satisfy special case: fn:Eval(fn:SinceVersion(1.4, fn:IsPresent(trailer::Catalog::PieceInfo, fn:IsPresent(trailer::Info::ModDate))))</message>
+				<message>Entry Info with type Dictionary in FileTrailer does not satisfy special case: fn:Eval(fn:IsPresent(trailer::Catalog::PieceInfo, fn:IsPresent(trailer::Info::ModDate)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -20062,10 +20062,10 @@
 		</rule>
 		<rule object="AFilterFlateDecode">
 			<id specification="ISO_32000_1_4" clause="FilterFlateDecode-Colors-Integer" testNumber="14"/>
-			<description>Entry Colors with type Integer in FilterFlateDecode shall satisfy possible value predicate: fn:Eval((@Colors &gt;= 1) &amp;&amp; fn:BeforeVersion(1.3, fn:Eval(@Colors &lt;= 4)))</description>
+			<description>Entry Colors with type Integer in FilterFlateDecode shall satisfy possible value predicate: fn:Eval((@Colors &gt;= 1))</description>
 			<test>ColorsHasTypeInteger != true || (ColorsIntegerValue &gt;= 1)</test>
 			<error>
-				<message>Entry Colors with type Integer in FilterFlateDecode does not satisfy possible value predicate: fn:Eval((@Colors &gt;= 1) &amp;&amp; fn:BeforeVersion(1.3, fn:Eval(@Colors &lt;= 4)))</message>
+				<message>Entry Colors with type Integer in FilterFlateDecode does not satisfy possible value predicate: fn:Eval((@Colors &gt;= 1))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -20196,10 +20196,10 @@
 		</rule>
 		<rule object="AFilterLZWDecode">
 			<id specification="ISO_32000_1_4" clause="FilterLZWDecode-Colors-Integer" testNumber="14"/>
-			<description>Entry Colors with type Integer in FilterLZWDecode shall satisfy possible value predicate: fn:Eval((@Colors &gt;= 1) &amp;&amp; fn:BeforeVersion(1.3, fn:Eval(@Colors &lt;= 4)))</description>
+			<description>Entry Colors with type Integer in FilterLZWDecode shall satisfy possible value predicate: fn:Eval((@Colors &gt;= 1))</description>
 			<test>ColorsHasTypeInteger != true || (ColorsIntegerValue &gt;= 1)</test>
 			<error>
-				<message>Entry Colors with type Integer in FilterLZWDecode does not satisfy possible value predicate: fn:Eval((@Colors &gt;= 1) &amp;&amp; fn:BeforeVersion(1.3, fn:Eval(@Colors &lt;= 4)))</message>
+				<message>Entry Colors with type Integer in FilterLZWDecode does not satisfy possible value predicate: fn:Eval((@Colors &gt;= 1))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -33537,10 +33537,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_4" clause="OutlineItem-Dest-Array" testNumber="9"/>
-			<description>Entry Dest with type Array in OutlineItem shall satisfy special case: fn:SinceVersion(1.1, fn:Not(fn:IsPresent(A)))</description>
+			<description>Entry Dest with type Array in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
 			<test>DestHasTypeArray != true || (containsA != true)</test>
 			<error>
-				<message>Entry Dest with type Array in OutlineItem does not satisfy special case: fn:SinceVersion(1.1, fn:Not(fn:IsPresent(A)))</message>
+				<message>Entry Dest with type Array in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -33549,10 +33549,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_4" clause="OutlineItem-Dest-Name" testNumber="9"/>
-			<description>Entry Dest with type Name in OutlineItem shall satisfy special case: fn:SinceVersion(1.1, fn:Not(fn:IsPresent(A)))</description>
+			<description>Entry Dest with type Name in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
 			<test>DestHasTypeName != true || (containsA != true)</test>
 			<error>
-				<message>Entry Dest with type Name in OutlineItem does not satisfy special case: fn:SinceVersion(1.1, fn:Not(fn:IsPresent(A)))</message>
+				<message>Entry Dest with type Name in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -33561,10 +33561,10 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="ISO_32000_1_4" clause="OutlineItem-Dest-StringByte" testNumber="9"/>
-			<description>Entry Dest with type StringByte in OutlineItem shall satisfy special case: fn:SinceVersion(1.1, fn:Not(fn:IsPresent(A)))</description>
+			<description>Entry Dest with type StringByte in OutlineItem shall satisfy special case: fn:Not(fn:IsPresent(A))</description>
 			<test>DestHasTypeStringByte != true || (containsA != true)</test>
 			<error>
-				<message>Entry Dest with type StringByte in OutlineItem does not satisfy special case: fn:SinceVersion(1.1, fn:Not(fn:IsPresent(A)))</message>
+				<message>Entry Dest with type StringByte in OutlineItem does not satisfy special case: fn:Not(fn:IsPresent(A))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -42387,10 +42387,10 @@
 		</rule>
 		<rule object="ATransition">
 			<id specification="ISO_32000_1_4" clause="Transition-Di-Name" testNumber="9"/>
-			<description>Entry Di with type Name in Transition shall satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5, (@SS != 1.0))))</description>
+			<description>Entry Di with type Name in Transition shall satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly)))</description>
 			<test>DiHasTypeName != true || ((DiNameValue == "None") &amp;&amp; (SNameValue == "Fly"))</test>
 			<error>
-				<message>Entry Di with type Name in Transition does not satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly) &amp;&amp; fn:SinceVersion(1.5, (@SS != 1.0))))</message>
+				<message>Entry Di with type Name in Transition does not satisfy special case: fn:Eval(((@Di == None) &amp;&amp; (@S == Fly)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -46585,10 +46585,10 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_4" clause="XObjectImage-ImageMask-Boolean" testNumber="9"/>
-			<description>Entry ImageMask with type Boolean in XObjectImage shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:SinceVersion(1.4, fn:Not(fn:IsPresent(Mask)))) || (@ImageMask == false))</description>
+			<description>Entry ImageMask with type Boolean in XObjectImage shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</description>
 			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentHasTypeInteger == false || (BitsPerComponentIntegerValue == 1)) &amp;&amp; (containsColorSpace != true) &amp;&amp; (containsMask != true)) || (ImageMaskBooleanValue == false))</test>
 			<error>
-				<message>Entry ImageMask with type Boolean in XObjectImage does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:SinceVersion(1.4, fn:Not(fn:IsPresent(Mask)))) || (@ImageMask == false))</message>
+				<message>Entry ImageMask with type Boolean in XObjectImage does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
