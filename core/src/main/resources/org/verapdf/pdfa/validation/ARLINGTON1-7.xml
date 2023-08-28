@@ -13530,6 +13530,18 @@
 			<references/>
 		</rule>
 		<rule object="AAnnotLink">
+			<id specification="ISO_32000_1_7" clause="AnnotLink-F-Bitmask" testNumber="9"/>
+			<description>Entry F with type Bitmask in AnnotLink shall satisfy special case: fn:Eval(fn:BitsClear(11, 32))</description>
+			<test>FHasTypeBitmask != true || ((FBitmaskValue &gt;&gt; 10 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 11 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 12 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 13 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 14 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 15 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 16 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 17 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 18 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 19 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 20 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 21 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 22 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 23 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 24 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 25 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 26 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 27 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 28 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 29 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 30 &amp; 1) == 0 &amp;&amp; (FBitmaskValue &gt;&gt; 31 &amp; 1) == 0)</test>
+			<error>
+				<message>Entry F with type Bitmask in AnnotLink does not satisfy special case: fn:Eval(fn:BitsClear(11, 32))</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_7" clause="AnnotLink-H" testNumber="8"/>
 			<description>Entry H in AnnotLink shall have type Name</description>
 			<test>containsH == false || HHasTypeName == true</test>
