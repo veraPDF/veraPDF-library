@@ -19031,18 +19031,6 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="ANameNameTreeDests">
-			<id specification="ISO_32000_1_2" clause="NameNameTreeDests-*" testNumber="18"/>
-			<description>Entry in NameNameTreeDests shall be object NameNameTreeDestsEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in NameNameTreeDests is not object NameNameTreeDestsEntry</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="ANameNameTreeDestsEntry">
 			<id specification="ISO_32000_1_2" clause="NameNameTreeDestsEntry-Array" testNumber="17"/>
 			<description>Entry with type Array in NameNameTreeDests shall be one of objects DestXYZArray, Dest0Array, Dest1Array, Dest4Array</description>

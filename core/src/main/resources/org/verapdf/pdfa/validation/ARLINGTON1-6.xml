@@ -691,18 +691,6 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="A3DStreamNameTreeResources">
-			<id specification="ISO_32000_1_6" clause="3DStreamNameTreeResources-*" testNumber="18"/>
-			<description>Entry in 3DStreamNameTreeResources shall be object 3DStreamNameTreeResourcesEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in 3DStreamNameTreeResources is not object 3DStreamNameTreeResourcesEntry</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="A3DStreamNameTreeResourcesEntry">
 			<id specification="ISO_32000_1_6" clause="3DStreamNameTreeResourcesEntry" testNumber="8"/>
 			<description>Entry in 3DStreamNameTreeResources shall have type Dictionary</description>
@@ -23596,18 +23584,6 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="ACatalogNumberTreePageLabels">
-			<id specification="ISO_32000_1_6" clause="CatalogNumberTreePageLabels-*" testNumber="18"/>
-			<description>Entry in CatalogNumberTreePageLabels shall be object CatalogNumberTreePageLabelsEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in CatalogNumberTreePageLabels is not object CatalogNumberTreePageLabelsEntry</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="ACatalogNumberTreePageLabelsEntry">
 			<id specification="ISO_32000_1_6" clause="CatalogNumberTreePageLabelsEntry" testNumber="8"/>
 			<description>Entry in CatalogNumberTreePageLabels shall have type Dictionary</description>
@@ -46264,18 +46240,6 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="ANameNameTreeAP">
-			<id specification="ISO_32000_1_6" clause="NameNameTreeAP-*" testNumber="18"/>
-			<description>Entry in NameNameTreeAP shall be object NameNameTreeAPEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in NameNameTreeAP is not object NameNameTreeAPEntry</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="ANameNameTreeAPEntry">
 			<id specification="ISO_32000_1_6" clause="NameNameTreeAPEntry-Stream" testNumber="17"/>
 			<description>Entry with type Stream in NameNameTreeAP shall be one of objects XObjectFormType1, XObjectFormPS, XObjectFormPSpassthrough</description>
@@ -46288,36 +46252,12 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="ANameNameTreeAlternatePresentations">
-			<id specification="ISO_32000_1_6" clause="NameNameTreeAlternatePresentations-*" testNumber="18"/>
-			<description>Entry in NameNameTreeAlternatePresentations shall be object NameNameTreeAlternatePresentationsEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in NameNameTreeAlternatePresentations is not object NameNameTreeAlternatePresentationsEntry</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="ANameNameTreeAlternatePresentationsEntry">
 			<id specification="ISO_32000_1_6" clause="NameNameTreeAlternatePresentationsEntry" testNumber="8"/>
 			<description>Entry in NameNameTreeAlternatePresentations shall have type Dictionary</description>
 			<test>HasTypeDictionary == true</test>
 			<error>
 				<message>Entry %1 in NameNameTreeAlternatePresentations is not of type Dictionary</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ANameNameTreeDests">
-			<id specification="ISO_32000_1_6" clause="NameNameTreeDests-*" testNumber="18"/>
-			<description>Entry in NameNameTreeDests shall be object NameNameTreeDestsEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in NameNameTreeDests is not object NameNameTreeDestsEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -46348,36 +46288,12 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="ANameNameTreeEmbeddedFiles">
-			<id specification="ISO_32000_1_6" clause="NameNameTreeEmbeddedFiles-*" testNumber="18"/>
-			<description>Entry in NameNameTreeEmbeddedFiles shall be object NameNameTreeEmbeddedFilesEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in NameNameTreeEmbeddedFiles is not object NameNameTreeEmbeddedFilesEntry</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="ANameNameTreeEmbeddedFilesEntry">
 			<id specification="ISO_32000_1_6" clause="NameNameTreeEmbeddedFilesEntry" testNumber="8"/>
 			<description>Entry in NameNameTreeEmbeddedFiles shall have type Dictionary</description>
 			<test>HasTypeDictionary == true</test>
 			<error>
 				<message>Entry %1 in NameNameTreeEmbeddedFiles is not of type Dictionary</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ANameNameTreeIDS">
-			<id specification="ISO_32000_1_6" clause="NameNameTreeIDS-*" testNumber="18"/>
-			<description>Entry in NameNameTreeIDS shall be object NameNameTreeIDSEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in NameNameTreeIDS is not object NameNameTreeIDSEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -46396,36 +46312,12 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="ANameNameTreeJavaScript">
-			<id specification="ISO_32000_1_6" clause="NameNameTreeJavaScript-*" testNumber="18"/>
-			<description>Entry in NameNameTreeJavaScript shall be object NameNameTreeJavaScriptEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in NameNameTreeJavaScript is not object NameNameTreeJavaScriptEntry</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="ANameNameTreeJavaScriptEntry">
 			<id specification="ISO_32000_1_6" clause="NameNameTreeJavaScriptEntry" testNumber="8"/>
 			<description>Entry in NameNameTreeJavaScript shall have type Dictionary</description>
 			<test>HasTypeDictionary == true</test>
 			<error>
 				<message>Entry %1 in NameNameTreeJavaScript is not of type Dictionary</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ANameNameTreePages">
-			<id specification="ISO_32000_1_6" clause="NameNameTreePages-*" testNumber="18"/>
-			<description>Entry in NameNameTreePages shall be object NameNameTreePagesEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in NameNameTreePages is not object NameNameTreePagesEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -46444,18 +46336,6 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="ANameNameTreeRenditions">
-			<id specification="ISO_32000_1_6" clause="NameNameTreeRenditions-*" testNumber="18"/>
-			<description>Entry in NameNameTreeRenditions shall be object NameNameTreeRenditionsEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in NameNameTreeRenditions is not object NameNameTreeRenditionsEntry</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="ANameNameTreeRenditionsEntry">
 			<id specification="ISO_32000_1_6" clause="NameNameTreeRenditionsEntry-Dictionary" testNumber="17"/>
 			<description>Entry with type Dictionary in NameNameTreeRenditions shall be one of objects RenditionMedia, RenditionSelector</description>
@@ -46468,36 +46348,12 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="ANameNameTreeTemplates">
-			<id specification="ISO_32000_1_6" clause="NameNameTreeTemplates-*" testNumber="18"/>
-			<description>Entry in NameNameTreeTemplates shall be object NameNameTreeTemplatesEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in NameNameTreeTemplates is not object NameNameTreeTemplatesEntry</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="ANameNameTreeTemplatesEntry">
 			<id specification="ISO_32000_1_6" clause="NameNameTreeTemplatesEntry" testNumber="8"/>
 			<description>Entry in NameNameTreeTemplates shall have type Dictionary</description>
 			<test>HasTypeDictionary == true</test>
 			<error>
 				<message>Entry %1 in NameNameTreeTemplates is not of type Dictionary</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ANameNameTreeURLS">
-			<id specification="ISO_32000_1_6" clause="NameNameTreeURLS-*" testNumber="18"/>
-			<description>Entry in NameNameTreeURLS shall be object NameNameTreeURLSEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in NameNameTreeURLS is not object NameNameTreeURLSEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -57230,18 +57086,6 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="ASlideShowNameTreeResources">
-			<id specification="ISO_32000_1_6" clause="SlideShowNameTreeResources-*" testNumber="18"/>
-			<description>Entry in SlideShowNameTreeResources shall be object SlideShowNameTreeResourcesEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in SlideShowNameTreeResources is not object SlideShowNameTreeResourcesEntry</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="ASlideShowNameTreeResourcesEntry">
 			<id specification="ISO_32000_1_6" clause="SlideShowNameTreeResourcesEntry-Stream" testNumber="17"/>
 			<description>Entry with type Stream in SlideShowNameTreeResources shall be one of objects XObjectImage, EmbeddedFileStream</description>
@@ -58974,36 +58818,12 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="AStructTreeRootNameTreeIDTree">
-			<id specification="ISO_32000_1_6" clause="StructTreeRootNameTreeIDTree-*" testNumber="18"/>
-			<description>Entry in StructTreeRootNameTreeIDTree shall be object StructTreeRootNameTreeIDTreeEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in StructTreeRootNameTreeIDTree is not object StructTreeRootNameTreeIDTreeEntry</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="AStructTreeRootNameTreeIDTreeEntry">
 			<id specification="ISO_32000_1_6" clause="StructTreeRootNameTreeIDTreeEntry-Dictionary" testNumber="17"/>
 			<description>Entry with type Dictionary in StructTreeRootNameTreeIDTree shall be one of objects StructElem, MarkedContentReference, ObjectReference</description>
 			<test>HasTypeDictionary != true || Entry_size == 1</test>
 			<error>
 				<message>Entry %1 with type Dictionary in StructTreeRootNameTreeIDTree is not one of objects StructElem, MarkedContentReference, ObjectReference</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructTreeRootNumberTreeParentTree">
-			<id specification="ISO_32000_1_6" clause="StructTreeRootNumberTreeParentTree-*" testNumber="18"/>
-			<description>Entry in StructTreeRootNumberTreeParentTree shall be object StructTreeRootNumberTreeParentTreeEntry</description>
-			<test>Entries_size == size</test>
-			<error>
-				<message>Entry in StructTreeRootNumberTreeParentTree is not object StructTreeRootNumberTreeParentTreeEntry</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
