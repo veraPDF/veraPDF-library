@@ -54,6 +54,7 @@ public class JsonHandler extends AbstractBatchHandler {
 		SimpleModule module = new SimpleModule("FeaturesNodeSerializer", new Version(2, 1,
 				3, null, null, null));
 		module.addSerializer(FeaturesNode.class, new FeaturesNodeSerializer(FeaturesNode.class));
+		module.addSerializer(VeraPDFException.class, new VeraPDFExceptionSerializer(VeraPDFException.class));
 		objectMapper.registerModule(module);
 		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 	}
