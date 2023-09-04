@@ -148,8 +148,8 @@ final class RuleSummaryImpl implements RuleSummary {
 	}
 
 	@Override
-	public String getTags() {
-		return this.tags;
+	public Set<String> getTags() {
+		return tags != null ? new HashSet<>(Arrays.asList(tags.split(","))) : Collections.emptySet();
 	}
 
 	/**
