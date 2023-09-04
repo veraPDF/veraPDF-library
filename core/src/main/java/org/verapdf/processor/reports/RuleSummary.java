@@ -24,6 +24,7 @@
 package org.verapdf.processor.reports;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -46,7 +47,7 @@ public interface RuleSummary {
     public Status getRuleStatus();
     public int getPassedChecks();
     public int getFailedChecks();
-    public String getTags();
+    public Set<String> getTags();
     public String getDescription();
     public String getObject();
     public String getTest();
