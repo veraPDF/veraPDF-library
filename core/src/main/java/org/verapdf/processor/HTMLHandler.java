@@ -40,17 +40,17 @@ final class HTMLHandler extends MrrHandler {
 	private final PrintWriter reportStreamWriter;
 	private final String wikiPath;
 
-	private HTMLHandler(PrintWriter reportStreamWriter, File file, String wikiPath) throws VeraPDFException, IOException {
-		super(new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)), false);
+	private HTMLHandler(PrintWriter reportStreamWriter, File file, String wikiPath, boolean logPassed) throws VeraPDFException, IOException {
+		super(new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)), logPassed);
 		this.reportStreamWriter = reportStreamWriter;
 		this.file = file;
 		this.wikiPath = wikiPath;
 	}
 
-	static BatchProcessingHandler newInstance(final PrintWriter reportStreamWriter, final String wikiPath) throws VeraPDFException {
+	static BatchProcessingHandler newInstance(final PrintWriter reportStreamWriter, final String wikiPath, final boolean logPassed) throws VeraPDFException {
 		try {
 			File file = File.createTempFile("veraPDF","xmlReport");
-			return new HTMLHandler(reportStreamWriter, file, wikiPath);
+			return new HTMLHandler(reportStreamWriter, file, wikiPath, logPassed);
 		} catch (IOException exception) {
 			throw new VeraPDFException(exception.getMessage(), exception);
 		}

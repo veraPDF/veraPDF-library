@@ -128,7 +128,7 @@ public final class ProcessorFactory {
 		case XML:
 			return MrrHandler.newInstance(printWriter, logPassed);
 		case HTML:
-			return HTMLHandler.newInstance(printWriter, wikiPath);
+			return HTMLHandler.newInstance(printWriter, wikiPath, logPassed);
 		case JSON:
 			return new JsonHandler(printWriter, logPassed);
 		default: // should not be reached
