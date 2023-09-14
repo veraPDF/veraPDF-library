@@ -1437,7 +1437,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.3.2"/>
+                <reference specification="ISO 32000-1:2008" clause="14.3.2"/>
             </references>
         </rule>
         <rule object="XMPPackage">
