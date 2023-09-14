@@ -60,4 +60,6 @@ public interface ValidationDetails {
 	 *         validation
 	 */
 	public Set<RuleSummary> getRuleSummaries();
+
+	public Set<String> getTags();
 }
