@@ -24,10 +24,20 @@ public class AXLPDFUAIdentification extends AXLXMPObject implements PDFUAIdentif
     @Override
     public Long getpart() {
         try {
-            Integer part = this.metadata.getUAIdentificationPart();
+            Integer part = this.metadata.getPDFUAIdentificationPart();
             return part == null ? null : Long.valueOf(part.longValue());
         } catch (XMPException e) {
-            LOGGER.log(Level.FINE, "Can not get identification part", e);
+            LOGGER.log(Level.FINE, "Can not get PDF/UA identification part", e);
+            return null;
+        }
+    }
+
+    @Override
+    public String getrev() {
+        try {
+            return this.metadata.getPDFUARevisionYear();
+        } catch (XMPException e) {
+            LOGGER.log(Level.FINE, "Can not get PDF/UA identification revision year", e);
             return null;
         }
     }
