@@ -50,20 +50,24 @@ final class ValidationDetailsImpl implements ValidationDetails {
 	private final int passedChecks;
 	@XmlAttribute
 	private final int failedChecks;
+
+	private final Set<String> tags;
+
 	@XmlElement(name = "rule")
 	private final Set<RuleSummary> ruleSummaries;
 
 	private ValidationDetailsImpl() {
-		this(0, 0, 0, 0, Collections.<RuleSummary>emptySet());
+		this(0, 0, 0, 0, Collections.<RuleSummary>emptySet(), null);
 	}
 	
 	private ValidationDetailsImpl(final int passedRules, final int failedRules, final int passedChecks,
-			final int failedChecks, final Set<RuleSummary> ruleSummaries) {
+			final int failedChecks, final Set<RuleSummary> ruleSummaries, final Set<String> tags) {
 		this.passedRules = passedRules;
 		this.failedRules = failedRules;
 		this.passedChecks = passedChecks;
 		this.failedChecks = failedChecks;
 		this.ruleSummaries = new HashSet<>(ruleSummaries);
+		this.tags = tags != null && !tags.isEmpty() ? tags : null;
 	}
 
 	/**
@@ -106,6 +110,10 @@ final class ValidationDetailsImpl implements ValidationDetails {
 		return this.ruleSummaries;
 	}
 
+	@Override
+	public Set<String> getTags() {
+		return this.tags;
+	}
 
 	static class Adapter extends XmlAdapter<ValidationDetailsImpl, ValidationDetails> {
 		@Override
@@ -128,6 +136,7 @@ final class ValidationDetailsImpl implements ValidationDetails {
 		Map<RuleId, List<TestAssertion>> assertionMap = mapAssertionsByRule(result.getTestAssertions());
 		Set<RuleSummary> ruleSummaries = new HashSet<>();
 		Map<RuleId, Integer> failedChecksMap = result.getFailedChecks();
+		Set<String> tags = new HashSet<>();
 		int passedRules = 0;
 		int failedRules = 0;
 		int failedChecks = 0;
@@ -141,15 +150,16 @@ final class ValidationDetailsImpl implements ValidationDetails {
 				passedRules++;
 				if (logPassedChecks) {
 					ruleSummaries.add(summary);
+					tags.addAll(summary.getTags());
 				}
 			} else {
 				failedRules++;
 				ruleSummaries.add(summary);
+				tags.addAll(summary.getTags());
 			}
 		}
 		int passedChecks = result.getTotalAssertions() - failedChecks;
-
-		return new ValidationDetailsImpl(passedRules, failedRules, passedChecks, failedChecks, ruleSummaries);
+		return new ValidationDetailsImpl(passedRules, failedRules, passedChecks, failedChecks, ruleSummaries, tags);
 	}
 
 	private static Map<RuleId, List<TestAssertion>> mapAssertionsByRule(final List<TestAssertion> assertions) {
