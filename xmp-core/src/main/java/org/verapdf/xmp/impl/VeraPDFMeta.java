@@ -115,11 +115,11 @@ public class VeraPDFMeta {
         return null;
     }
 
-    public boolean deleteIdentificationSchema() {
+    public boolean deletePDFAIdentificationSchema() {
         return deleteSchema(XMPSchemaRegistryImpl.NS_PDFA_ID);
     }
 
-    public boolean deleteUAIdentificationSchema() {
+    public boolean deletePDFUAIdentificationSchema() {
         return deleteSchema(XMPSchemaRegistryImpl.NS_PDFUA_ID);
     }
 
@@ -281,48 +281,56 @@ public class VeraPDFMeta {
         return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_XMP, "ModifyDate", date.getISO8601String());
     }
 
-    public Integer getIdentificationPart() throws XMPException {
+    public Integer getPDFAIdentificationPart() throws XMPException {
         String stringValue = getSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, PART);
         try {
             return stringValue == null ? null : Integer.parseInt(stringValue);
         } catch (NumberFormatException e) {
-            throw new XMPException("Property part of PDFA Identification schema contains not integer value", XMPError.BADVALUE, e);
+            throw new XMPException("Property part of PDF/A Identification schema contains not integer value", XMPError.BADVALUE, e);
         }
     }
 
-    public Integer getUAIdentificationPart() throws XMPException {
+    public Integer getPDFUAIdentificationPart() throws XMPException {
         String stringValue = getSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFUA_ID, PART);
         try {
             return stringValue == null ? null : Integer.parseInt(stringValue);
         } catch (NumberFormatException e) {
-            throw new XMPException("Property part of PDFUA Identification schema contains not integer value", XMPError.BADVALUE, e);
+            throw new XMPException("Property part of PDF/UA Identification schema contains not integer value", XMPError.BADVALUE, e);
         }
     }
 
-    public VeraPDFMeta setIdentificationPart(Integer identificationPart) throws XMPException {
+    public VeraPDFMeta setPDFAIdentificationPart(Integer identificationPart) throws XMPException {
         String value = identificationPart == null ? null : identificationPart.toString();
         return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, PART, value);
     }
 
-    public VeraPDFMeta setUAIdentificationPart(Integer identificationPart) throws XMPException {
+    public VeraPDFMeta setPDFUAIdentificationPart(Integer identificationPart) throws XMPException {
         String value = identificationPart == null ? null : identificationPart.toString();
         return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFUA_ID, PART, value);
     }
 
-    public String getIdentificationConformance() throws XMPException {
+    public String getPDFAIdentificationConformance() throws XMPException {
         return getSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, CONFORMANCE);
     }
 
-    public  String getRevisionYear() throws XMPException {
+    public String getPDFARevisionYear() throws XMPException {
         return getSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, REVISION_YEAR);
     }
 
-    public VeraPDFMeta setIdentificationConformance(String identificationConformance) throws XMPException {
+    public String getPDFUARevisionYear() throws XMPException {
+        return getSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFUA_ID, REVISION_YEAR);
+    }
+
+    public VeraPDFMeta setPDFAIdentificationConformance(String identificationConformance) throws XMPException {
         return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID,  CONFORMANCE, identificationConformance);
     }
 
-    public VeraPDFMeta setIdentificationRevisionYear(String identificationConformance) throws XMPException {
+    public VeraPDFMeta setPDFAIdentificationRevisionYear(String identificationConformance) throws XMPException {
         return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID,  REVISION_YEAR, identificationConformance);
+    }
+
+    public VeraPDFMeta setPDFUAIdentificationRevisionYear(String identificationConformance) throws XMPException {
+        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFUA_ID,  REVISION_YEAR, identificationConformance);
     }
 
     public XMPMeta getCloneOfInitialMeta() {
