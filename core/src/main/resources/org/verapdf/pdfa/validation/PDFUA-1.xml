@@ -114,7 +114,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4"/>
             </references>
         </rule>
         <rule object="PDDocument">
@@ -126,7 +126,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.3.2"/>
+                <reference specification="ISO 32000-1:2008" clause="14.3.2"/>
             </references>
         </rule>
         <rule object="MainXMPPackage">
@@ -194,7 +194,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETR">
@@ -208,7 +208,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETHead">
@@ -222,7 +222,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETBody">
@@ -236,7 +236,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETFoot">
@@ -250,7 +250,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETH">
@@ -264,7 +264,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETD">
@@ -278,7 +278,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETR">
@@ -292,7 +292,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETable">
@@ -304,7 +304,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETable">
@@ -316,7 +316,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETable">
@@ -329,7 +329,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETable">
@@ -342,7 +342,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETableCell">
@@ -354,7 +354,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETable">
@@ -368,7 +368,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SELI">
@@ -382,7 +382,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.3"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.3"/>
             </references>
         </rule>
         <rule object="SELBody">
@@ -396,7 +396,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.3"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.3"/>
             </references>
         </rule>
         <rule object="SEL">
@@ -412,7 +412,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.3"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.3"/>
             </references>
         </rule>
         <rule object="SELI">
@@ -426,7 +426,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.3"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.3"/>
             </references>
         </rule>
         <rule object="PDStructElem">
@@ -492,7 +492,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.2"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.2"/>
             </references>
         </rule>
         <rule object="SETOC">
@@ -508,7 +508,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.2"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.2"/>
             </references>
         </rule>
         <rule object="SETOC">
@@ -522,7 +522,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.2"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.2"/>
             </references>
         </rule>
         <rule object="CosLang">
@@ -603,7 +603,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETBody">
@@ -617,7 +617,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETFoot">
@@ -631,7 +631,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETable">
@@ -645,7 +645,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SEL">
@@ -659,7 +659,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.2"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.2"/>
             </references>
         </rule>
         <rule object="SETable">
@@ -673,7 +673,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETable">
@@ -687,7 +687,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SETable">
@@ -703,7 +703,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.4"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
         <rule object="SEFigure">
@@ -716,7 +716,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.7.2"/>
+                <reference specification="ISO 32000-1:2008" clause="14.7.2"/>
             </references>
         </rule>
         <rule object="SEHn">
@@ -738,7 +738,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.3.5"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.3.5"/>
             </references>
         </rule>
         <rule object="PDStructElem">
@@ -781,7 +781,7 @@
                     via algorithm from ISO32000-2, 14.8.4.8.3.</message>
             </error>
             <references>
-                <reference specification="ISO 32000-2" clause="14.8.4.8.3"/>
+                <reference specification="ISO 32000-2:2020" clause="14.8.4.8.3"/>
             </references>
         </rule>
         <rule object="SETD">
@@ -797,7 +797,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-2" clause="14.8.4.8.3"/>
+                <reference specification="ISO 32000-2:2020" clause="14.8.4.8.3"/>
             </references>
         </rule>
         <rule object="SEFormula">
@@ -810,7 +810,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.5"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.5"/>
             </references>
         </rule>
         <rule object="SENote">
@@ -896,7 +896,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="7.6.3.2"/>
+                <reference specification="ISO 32000-1:2008" clause="7.6.3.2"/>
             </references>
         </rule>
         <rule object="PDAnnot">
@@ -977,7 +977,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.5"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.5"/>
             </references>
         </rule>
         <rule object="SEForm">
@@ -991,7 +991,7 @@
                     the widget annotation</message>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.5"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.5"/>
             </references>
         </rule>
         <rule object="PDLinkAnnot">
@@ -1005,7 +1005,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.4.4.2"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4.4.2"/>
             </references>
         </rule>
         <rule object="PDLinkAnnot">
@@ -1017,7 +1017,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.9.3"/>
+                <reference specification="ISO 32000-1:2008" clause="14.9.3"/>
             </references>
         </rule>
         <rule object="PDMediaClip">
@@ -1030,7 +1030,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="13.2.4.2"/>
+                <reference specification="ISO 32000-1:2008" clause="13.2.4.2"/>
             </references>
         </rule>
         <rule object="PDMediaClip">
@@ -1045,7 +1045,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="13.2.4.2"/>
+                <reference specification="ISO 32000-1:2008" clause="13.2.4.2"/>
             </references>
         </rule>
         <rule object="PDPrinterMarkAnnot">
@@ -1058,7 +1058,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.8.2.2.3"/>
+                <reference specification="ISO 32000-1:2008" clause="14.8.2.2.3"/>
             </references>
         </rule>
         <rule object="PDXForm">
@@ -1081,7 +1081,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 32000-1" clause="14.7.2"/>
+                <reference specification="ISO 32000-1:2008" clause="14.7.2"/>
             </references>
         </rule>
         <rule object="PDType0Font">
