@@ -96,6 +96,8 @@ public enum PDFAFlavour {
     PDFA_4_E(Specification.ISO_19005_4, Level.E),
     /** ua1 PDF Version 1 */
     PDFUA_1(Specification.ISO_14289_1, Level.NO_LEVEL),
+    /** ua2 PDF Version 2 */
+    PDFUA_2(Specification.ISO_14289_2, Level.NO_LEVEL),
     /** Special ID for the arlington none case */
     NO_ARLINGTON_FLAVOUR(Specification.NO_STANDARD, Level.A),
     ARLINGTON1_0(Specification.ISO_32000_1_0, Level.NO_LEVEL),
@@ -182,6 +184,9 @@ public enum PDFAFlavour {
         ISO_14289_1(IsoStandardSeries.ISO_14289, PDFAFlavours.PDFUA, PDFAFlavours.ISO_14289_1_PART,
                 PDFAFlavours.ISO_14289_1_YEAR,
                 PDFAFlavours.ISO_14289_1_DESCRIPTION),
+        ISO_14289_2(IsoStandardSeries.ISO_14289, PDFAFlavours.PDFUA, PDFAFlavours.ISO_14289_2_PART,
+                PDFAFlavours.ISO_14289_2_YEAR,
+                PDFAFlavours.ISO_14289_2_DESCRIPTION),
         /** PDF/A Version 1 */
         ISO_19005_1(IsoStandardSeries.ISO_19005, PDFAFlavours.PDFA, PDFAFlavours.ISO_19005_1_PART,
                 PDFAFlavours.ISO_19005_1_YEAR,
