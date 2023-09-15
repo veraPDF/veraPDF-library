@@ -72872,7 +72872,7 @@
 		</rule>
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_7" clause="StructureAttributesDict" testNumber="1"/>
-			<description>StructureAttributesDict shall not contain entries except WritingMode, ColumnGap, BorderColor, RubyPosition, BaselineShift, ColSpan, Desc, RubyAlign, Placement, TPadding, checked, TextIndent, ColumnCount, BorderStyle, TextDecorationColor, Color, ColumnWidths, SpaceAfter, Role, Contents, BBox, EndIndent, GlyphOrientationVertical, Subtype, InlineAlign, BorderThickness, Headers, LineHeight, ListNumbering, StartIndent, BlockAlign, O, P, TextAlign, Padding, Height, TBorderStyle, Width, TextDecorationType, Checked, Type, Scope, RowSpan, Summary, SpaceBefore, BackgroundColor, TextDecorationThickness</description>
+			<description>StructureAttributesDict shall not contain entries except WritingMode, ColumnGap, BorderColor, RubyPosition, BaselineShift, ColSpan, Desc, RubyAlign, Placement, TPadding, checked, TextIndent, ColumnCount, BorderStyle, TextDecorationColor, Color, ColumnWidths, SpaceAfter, Role, Contents, BBox, EndIndent, GlyphOrientationVertical, InlineAlign, BorderThickness, Headers, LineHeight, ListNumbering, StartIndent, BlockAlign, O, P, TextAlign, Padding, Height, TBorderStyle, Width, TextDecorationType, Checked, Scope, RowSpan, Summary, SpaceBefore, BackgroundColor, TextDecorationThickness</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ContinuedForm' &amp;&amp; elem != 'WritingMode' &amp;&amp; elem != 'ColumnGap' &amp;&amp; elem != 'BorderColor' &amp;&amp; elem != 'RubyPosition' &amp;&amp; elem != 'BaselineShift' &amp;&amp; elem != 'ColSpan' &amp;&amp; elem != 'Desc' &amp;&amp; elem != 'RubyAlign' &amp;&amp; elem != 'Placement' &amp;&amp; elem != 'TPadding' &amp;&amp; elem != 'checked' &amp;&amp; elem != 'Short' &amp;&amp; elem != 'TextIndent' &amp;&amp; elem != 'ColumnCount' &amp;&amp; elem != 'BorderStyle' &amp;&amp; elem != 'TextDecorationColor' &amp;&amp; elem != 'Color' &amp;&amp; elem != 'ColumnWidths' &amp;&amp; elem != 'SpaceAfter' &amp;&amp; elem != 'Role' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'BBox' &amp;&amp; elem != 'EndIndent' &amp;&amp; elem != 'GlyphOrientationVertical' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'InlineAlign' &amp;&amp; elem != 'BorderThickness' &amp;&amp; elem != 'NS' &amp;&amp; elem != 'Headers' &amp;&amp; elem != 'LineHeight' &amp;&amp; elem != 'ListNumbering' &amp;&amp; elem != 'StartIndent' &amp;&amp; elem != 'BlockAlign' &amp;&amp; elem != 'O' &amp;&amp; elem != 'P' &amp;&amp; elem != 'ContinuedList' &amp;&amp; elem != 'TextAlign' &amp;&amp; elem != 'Padding' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'TBorderStyle' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'TextDecorationType' &amp;&amp; elem != 'Checked' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Scope' &amp;&amp; elem != 'TextPosition' &amp;&amp; elem != 'RowSpan' &amp;&amp; elem != 'Summary' &amp;&amp; elem != 'SpaceBefore' &amp;&amp; elem != 'BackgroundColor' &amp;&amp; elem != 'TextDecorationThickness' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>StructureAttributesDict contains entry(ies) %1</message>
@@ -72884,12 +72884,12 @@
 		</rule>
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_7" clause="StructureAttributesDict" testNumber="22"/>
-			<description>StructureAttributesDict shall not contain entries ContinuedForm, Short, NS, ContinuedList, TextPosition in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ContinuedForm' || elem == 'Short' || elem == 'NS' || elem == 'ContinuedList' || elem == 'TextPosition').length == 0</test>
+			<description>StructureAttributesDict shall not contain entries ContinuedForm, Short, Subtype, NS, ContinuedList, Type, TextPosition in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ContinuedForm' || elem == 'Short' || elem == 'Subtype' || elem == 'NS' || elem == 'ContinuedList' || elem == 'Type' || elem == 'TextPosition').length == 0</test>
 			<error>
 				<message>StructureAttributesDict contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ContinuedForm' || elem == 'Short' || elem == 'NS' || elem == 'ContinuedList' || elem == 'TextPosition').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ContinuedForm' || elem == 'Short' || elem == 'Subtype' || elem == 'NS' || elem == 'ContinuedList' || elem == 'Type' || elem == 'TextPosition').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -74012,43 +74012,6 @@
 			<references/>
 		</rule>
 		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_7" clause="StructureAttributesDict-Subtype" testNumber="8"/>
-			<description>Entry Subtype in StructureAttributesDict shall have type Name</description>
-			<test>containsSubtype == false || SubtypeHasTypeName == true</test>
-			<error>
-				<message>Entry Subtype in StructureAttributesDict is not of type Name</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_7" clause="StructureAttributesDict-Subtype-Name" testNumber="6"/>
-			<description>Entry Subtype with type Name in StructureAttributesDict shall have one of values: Header, Footer, Watermark</description>
-			<test>SubtypeHasTypeName != true || SubtypeNameValue == "Header" || SubtypeNameValue == "Footer" || SubtypeNameValue == "Watermark"</test>
-			<error>
-				<message>Entry Subtype with type Name in StructureAttributesDict has incorrect value %2 instead of Header, Footer, Watermark</message>
-				<arguments>
-					<argument>keyName</argument>
-					<argument>SubtypeNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_7" clause="StructureAttributesDict-Subtype-Name" testNumber="9"/>
-			<description>Entry Subtype with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Artifact) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>containsSubtype != true || SubtypeHasTypeName != true || ((ONameValue == "Artifact") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
-			<error>
-				<message>Entry Subtype with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Artifact) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_7" clause="StructureAttributesDict-Summary" testNumber="8"/>
 			<description>Entry Summary in StructureAttributesDict shall have type StringText</description>
 			<test>containsSummary == false || SummaryHasTypeStringText == true</test>
@@ -74297,43 +74260,6 @@
 			<test>containsTextIndent != true || TextIndentHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry TextIndent with type Number in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_7" clause="StructureAttributesDict-Type" testNumber="8"/>
-			<description>Entry Type in StructureAttributesDict shall have type Name</description>
-			<test>containsType == false || TypeHasTypeName == true</test>
-			<error>
-				<message>Entry Type in StructureAttributesDict is not of type Name</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_7" clause="StructureAttributesDict-Type-Name" testNumber="6"/>
-			<description>Entry Type with type Name in StructureAttributesDict shall have one of values: Pagination, Layout, BatesN, Page</description>
-			<test>TypeHasTypeName != true || TypeNameValue == "Pagination" || TypeNameValue == "Layout" || TypeNameValue == "Page" || TypeNameValue == "BatesN"</test>
-			<error>
-				<message>Entry Type with type Name in StructureAttributesDict has incorrect value %2 instead of Pagination, Layout, BatesN, Page</message>
-				<arguments>
-					<argument>keyName</argument>
-					<argument>TypeNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_7" clause="StructureAttributesDict-Type-Name" testNumber="9"/>
-			<description>Entry Type with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Artifact) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>containsType != true || TypeHasTypeName != true || ((ONameValue == "Artifact") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
-			<error>
-				<message>Entry Type with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Artifact) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>

@@ -10440,22 +10440,10 @@
 		</rule>
 		<rule object="AFieldTx">
 			<id specification="ISO_32000_1_2" clause="FieldTx-V" testNumber="8"/>
-			<description>Entry V in FieldTx shall have one of types: Stream, StringText</description>
-			<test>containsV == false || VHasTypeStream == true || VHasTypeStringText == true</test>
+			<description>Entry V in FieldTx shall have type StringText</description>
+			<test>containsV == false || VHasTypeStringText == true</test>
 			<error>
-				<message>Entry V in FieldTx is not one of types: Stream, StringText</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFieldTx">
-			<id specification="ISO_32000_1_2" clause="FieldTx-V-Stream" testNumber="10"/>
-			<description>Entry V with type Stream in FieldTx shall be indirect</description>
-			<test>VHasTypeStream != true || isVIndirect == true</test>
-			<error>
-				<message>Entry V with type Stream in FieldTx is direct</message>
+				<message>Entry V in FieldTx is not of type StringText</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>

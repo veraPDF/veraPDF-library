@@ -19219,22 +19219,10 @@
 		</rule>
 		<rule object="AFieldTx">
 			<id specification="ISO_32000_1_4" clause="FieldTx-V" testNumber="8"/>
-			<description>Entry V in FieldTx shall have one of types: Stream, StringText</description>
-			<test>containsV == false || VHasTypeStream == true || VHasTypeStringText == true</test>
+			<description>Entry V in FieldTx shall have type StringText</description>
+			<test>containsV == false || VHasTypeStringText == true</test>
 			<error>
-				<message>Entry V in FieldTx is not one of types: Stream, StringText</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFieldTx">
-			<id specification="ISO_32000_1_4" clause="FieldTx-V-Stream" testNumber="10"/>
-			<description>Entry V with type Stream in FieldTx shall be indirect</description>
-			<test>VHasTypeStream != true || isVIndirect == true</test>
-			<error>
-				<message>Entry V with type Stream in FieldTx is direct</message>
+				<message>Entry V in FieldTx is not of type StringText</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -40747,7 +40735,7 @@
 		</rule>
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict" testNumber="1"/>
-			<description>StructureAttributesDict shall not contain entries except WritingMode, BaselineShift, ColSpan, Placement, TextIndent, SpaceAfter, Role, BBox, EndIndent, InlineAlign, Headers, LineHeight, ListNumbering, StartIndent, BlockAlign, O, TextAlign, Height, Width, TextDecorationType, Type, Scope, RowSpan, SpaceBefore</description>
+			<description>StructureAttributesDict shall not contain entries except WritingMode, BaselineShift, ColSpan, Placement, TextIndent, SpaceAfter, BBox, EndIndent, InlineAlign, Headers, LineHeight, ListNumbering, StartIndent, BlockAlign, O, TextAlign, Height, Width, TextDecorationType, RowSpan, SpaceBefore</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ContinuedForm' &amp;&amp; elem != 'WritingMode' &amp;&amp; elem != 'ColumnGap' &amp;&amp; elem != 'BorderColor' &amp;&amp; elem != 'RubyPosition' &amp;&amp; elem != 'BaselineShift' &amp;&amp; elem != 'ColSpan' &amp;&amp; elem != 'Desc' &amp;&amp; elem != 'RubyAlign' &amp;&amp; elem != 'Placement' &amp;&amp; elem != 'TPadding' &amp;&amp; elem != 'checked' &amp;&amp; elem != 'Short' &amp;&amp; elem != 'TextIndent' &amp;&amp; elem != 'ColumnCount' &amp;&amp; elem != 'BorderStyle' &amp;&amp; elem != 'TextDecorationColor' &amp;&amp; elem != 'Color' &amp;&amp; elem != 'ColumnWidths' &amp;&amp; elem != 'SpaceAfter' &amp;&amp; elem != 'Role' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'BBox' &amp;&amp; elem != 'EndIndent' &amp;&amp; elem != 'GlyphOrientationVertical' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'InlineAlign' &amp;&amp; elem != 'BorderThickness' &amp;&amp; elem != 'NS' &amp;&amp; elem != 'Headers' &amp;&amp; elem != 'LineHeight' &amp;&amp; elem != 'ListNumbering' &amp;&amp; elem != 'StartIndent' &amp;&amp; elem != 'BlockAlign' &amp;&amp; elem != 'O' &amp;&amp; elem != 'P' &amp;&amp; elem != 'ContinuedList' &amp;&amp; elem != 'TextAlign' &amp;&amp; elem != 'Padding' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'TBorderStyle' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'TextDecorationType' &amp;&amp; elem != 'Checked' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Scope' &amp;&amp; elem != 'TextPosition' &amp;&amp; elem != 'RowSpan' &amp;&amp; elem != 'Summary' &amp;&amp; elem != 'SpaceBefore' &amp;&amp; elem != 'BackgroundColor' &amp;&amp; elem != 'TextDecorationThickness' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>StructureAttributesDict contains entry(ies) %1</message>
@@ -40759,12 +40747,12 @@
 		</rule>
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict" testNumber="22"/>
-			<description>StructureAttributesDict shall not contain entries ContinuedForm, ColumnGap, BorderColor, RubyPosition, Desc, RubyAlign, TPadding, checked, Short, ColumnCount, BorderStyle, TextDecorationColor, Color, ColumnWidths, Contents, GlyphOrientationVertical, Subtype, BorderThickness, NS, P, ContinuedList, Padding, TBorderStyle, Checked, TextPosition, Summary, BackgroundColor, TextDecorationThickness in PDF 1.4. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ContinuedForm' || elem == 'ColumnGap' || elem == 'BorderColor' || elem == 'RubyPosition' || elem == 'Desc' || elem == 'RubyAlign' || elem == 'TPadding' || elem == 'checked' || elem == 'Short' || elem == 'ColumnCount' || elem == 'BorderStyle' || elem == 'TextDecorationColor' || elem == 'Color' || elem == 'ColumnWidths' || elem == 'Contents' || elem == 'GlyphOrientationVertical' || elem == 'Subtype' || elem == 'BorderThickness' || elem == 'NS' || elem == 'P' || elem == 'ContinuedList' || elem == 'Padding' || elem == 'TBorderStyle' || elem == 'Checked' || elem == 'TextPosition' || elem == 'Summary' || elem == 'BackgroundColor' || elem == 'TextDecorationThickness').length == 0</test>
+			<description>StructureAttributesDict shall not contain entries ContinuedForm, ColumnGap, BorderColor, RubyPosition, Desc, RubyAlign, TPadding, checked, Short, ColumnCount, BorderStyle, TextDecorationColor, Color, ColumnWidths, Role, Contents, GlyphOrientationVertical, Subtype, BorderThickness, NS, P, ContinuedList, Padding, TBorderStyle, Checked, Type, Scope, TextPosition, Summary, BackgroundColor, TextDecorationThickness in PDF 1.4. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ContinuedForm' || elem == 'ColumnGap' || elem == 'BorderColor' || elem == 'RubyPosition' || elem == 'Desc' || elem == 'RubyAlign' || elem == 'TPadding' || elem == 'checked' || elem == 'Short' || elem == 'ColumnCount' || elem == 'BorderStyle' || elem == 'TextDecorationColor' || elem == 'Color' || elem == 'ColumnWidths' || elem == 'Role' || elem == 'Contents' || elem == 'GlyphOrientationVertical' || elem == 'Subtype' || elem == 'BorderThickness' || elem == 'NS' || elem == 'P' || elem == 'ContinuedList' || elem == 'Padding' || elem == 'TBorderStyle' || elem == 'Checked' || elem == 'Type' || elem == 'Scope' || elem == 'TextPosition' || elem == 'Summary' || elem == 'BackgroundColor' || elem == 'TextDecorationThickness').length == 0</test>
 			<error>
 				<message>StructureAttributesDict contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ContinuedForm' || elem == 'ColumnGap' || elem == 'BorderColor' || elem == 'RubyPosition' || elem == 'Desc' || elem == 'RubyAlign' || elem == 'TPadding' || elem == 'checked' || elem == 'Short' || elem == 'ColumnCount' || elem == 'BorderStyle' || elem == 'TextDecorationColor' || elem == 'Color' || elem == 'ColumnWidths' || elem == 'Contents' || elem == 'GlyphOrientationVertical' || elem == 'Subtype' || elem == 'BorderThickness' || elem == 'NS' || elem == 'P' || elem == 'ContinuedList' || elem == 'Padding' || elem == 'TBorderStyle' || elem == 'Checked' || elem == 'TextPosition' || elem == 'Summary' || elem == 'BackgroundColor' || elem == 'TextDecorationThickness').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ContinuedForm' || elem == 'ColumnGap' || elem == 'BorderColor' || elem == 'RubyPosition' || elem == 'Desc' || elem == 'RubyAlign' || elem == 'TPadding' || elem == 'checked' || elem == 'Short' || elem == 'ColumnCount' || elem == 'BorderStyle' || elem == 'TextDecorationColor' || elem == 'Color' || elem == 'ColumnWidths' || elem == 'Role' || elem == 'Contents' || elem == 'GlyphOrientationVertical' || elem == 'Subtype' || elem == 'BorderThickness' || elem == 'NS' || elem == 'P' || elem == 'ContinuedList' || elem == 'Padding' || elem == 'TBorderStyle' || elem == 'Checked' || elem == 'Type' || elem == 'Scope' || elem == 'TextPosition' || elem == 'Summary' || elem == 'BackgroundColor' || elem == 'TextDecorationThickness').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -41147,43 +41135,6 @@
 			<references/>
 		</rule>
 		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Role" testNumber="8"/>
-			<description>Entry Role in StructureAttributesDict shall have type Name</description>
-			<test>containsRole == false || RoleHasTypeName == true</test>
-			<error>
-				<message>Entry Role in StructureAttributesDict is not of type Name</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Role-Name" testNumber="6"/>
-			<description>Entry Role with type Name in StructureAttributesDict shall have one of values: rb, pb, tv, lb, cb</description>
-			<test>RoleHasTypeName != true || RoleNameValue == "rb" || RoleNameValue == "cb" || RoleNameValue == "pb" || RoleNameValue == "tv" || RoleNameValue == "lb"</test>
-			<error>
-				<message>Entry Role with type Name in StructureAttributesDict has incorrect value %2 instead of rb, pb, tv, lb, cb</message>
-				<arguments>
-					<argument>keyName</argument>
-					<argument>RoleNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Role-Name" testNumber="9"/>
-			<description>Entry Role with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == PrintField) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != Artifact)))</description>
-			<test>containsRole != true || RoleHasTypeName != true || ((ONameValue == "PrintField") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "Artifact")))</test>
-			<error>
-				<message>Entry Role with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == PrintField) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != Artifact)))</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-RowSpan" testNumber="8"/>
 			<description>Entry RowSpan in StructureAttributesDict shall have type Integer</description>
 			<test>containsRowSpan == false || RowSpanHasTypeInteger == true</test>
@@ -41201,43 +41152,6 @@
 			<test>containsRowSpan != true || RowSpanHasTypeInteger != true || ((ONameValue == "Table") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Artifact")))</test>
 			<error>
 				<message>Entry RowSpan with type Integer in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Table) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Artifact)))</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Scope" testNumber="8"/>
-			<description>Entry Scope in StructureAttributesDict shall have type Name</description>
-			<test>containsScope == false || ScopeHasTypeName == true</test>
-			<error>
-				<message>Entry Scope in StructureAttributesDict is not of type Name</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Scope-Name" testNumber="6"/>
-			<description>Entry Scope with type Name in StructureAttributesDict shall have one of values: Column, Row, Both</description>
-			<test>ScopeHasTypeName != true || ScopeNameValue == "Row" || ScopeNameValue == "Column" || ScopeNameValue == "Both"</test>
-			<error>
-				<message>Entry Scope with type Name in StructureAttributesDict has incorrect value %2 instead of Column, Row, Both</message>
-				<arguments>
-					<argument>keyName</argument>
-					<argument>ScopeNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Scope-Name" testNumber="9"/>
-			<description>Entry Scope with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Table) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Artifact)))</description>
-			<test>containsScope != true || ScopeHasTypeName != true || ((ONameValue == "Table") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Artifact")))</test>
-			<error>
-				<message>Entry Scope with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Table) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Artifact)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -41408,43 +41322,6 @@
 			<test>containsTextIndent != true || TextIndentHasTypeNumber != true || ((ONameValue == "Layout") || ((ONameValue != "List") &amp;&amp; (ONameValue != "Table") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
 			<error>
 				<message>Entry TextIndent with type Number in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Layout) || ((@O != List) &amp;&amp; (@O != Table) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Type" testNumber="8"/>
-			<description>Entry Type in StructureAttributesDict shall have type Name</description>
-			<test>containsType == false || TypeHasTypeName == true</test>
-			<error>
-				<message>Entry Type in StructureAttributesDict is not of type Name</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Type-Name" testNumber="6"/>
-			<description>Entry Type with type Name in StructureAttributesDict shall have one of values: Pagination, Layout, Page</description>
-			<test>TypeHasTypeName != true || TypeNameValue == "Pagination" || TypeNameValue == "Layout" || TypeNameValue == "Page"</test>
-			<error>
-				<message>Entry Type with type Name in StructureAttributesDict has incorrect value %2 instead of Pagination, Layout, Page</message>
-				<arguments>
-					<argument>keyName</argument>
-					<argument>TypeNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructureAttributesDict">
-			<id specification="ISO_32000_1_4" clause="StructureAttributesDict-Type-Name" testNumber="9"/>
-			<description>Entry Type with type Name in StructureAttributesDict shall satisfy special case: fn:Eval((@O == Artifact) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</description>
-			<test>containsType != true || TypeHasTypeName != true || ((ONameValue == "Artifact") || ((ONameValue != "Layout") &amp;&amp; (ONameValue != "List") &amp;&amp; (ONameValue != "PrintField") &amp;&amp; (ONameValue != "Table")))</test>
-			<error>
-				<message>Entry Type with type Name in StructureAttributesDict does not satisfy special case: fn:Eval((@O == Artifact) || ((@O != Layout) &amp;&amp; (@O != List) &amp;&amp; (@O != PrintField) &amp;&amp; (@O != Table)))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
