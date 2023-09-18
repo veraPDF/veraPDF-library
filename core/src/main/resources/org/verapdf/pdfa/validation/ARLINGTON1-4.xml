@@ -15766,6 +15766,18 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
+			<id specification="ISO_32000_1_4" clause="Catalog-StructTreeRoot-Dictionary" testNumber="10"/>
+			<description>Entry StructTreeRoot with type Dictionary in Catalog shall be indirect</description>
+			<test>StructTreeRootHasTypeDictionary != true || isStructTreeRootIndirect == true</test>
+			<error>
+				<message>Entry StructTreeRoot with type Dictionary in Catalog is direct</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ACatalog">
 			<id specification="ISO_32000_1_4" clause="Catalog-Threads" testNumber="8"/>
 			<description>Entry Threads in Catalog shall have type Array</description>
 			<test>containsThreads == false || ThreadsHasTypeArray == true</test>
