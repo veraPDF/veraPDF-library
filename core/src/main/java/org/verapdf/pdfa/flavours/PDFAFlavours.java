@@ -49,6 +49,7 @@ final class PDFAFlavours {
     static final int ISO_32005_ID = 32005;
     static final String ISO_14289_DESCRIPTION = "Document management applications — Electronic document file format enhancement for accessibility"; //$NON-NLS-1$
     static final String ISO_14289_1_DESCRIPTION = "Use of ISO 32000-1 (PDF/UA-1)"; //$NON-NLS-1$
+    static final String ISO_14289_2_DESCRIPTION = "Use of ISO 32000-2 (PDF/UA-2)"; //$NON-NLS-1$
     static final String ISO_19005_DESCRIPTION = "Document management -- Electronic document file format for long-term preservation"; //$NON-NLS-1$
     static final String ISO_19005_1_DESCRIPTION = "Use of PDF 1.4"; //$NON-NLS-1$
     static final String ISO_19005_2_DESCRIPTION = "Use of ISO 32000-1"; //$NON-NLS-1$
@@ -62,6 +63,7 @@ final class PDFAFlavours {
     static final int ISO_19005_3_PART = 3;
     static final int ISO_19005_4_PART = 4;
     static final int ISO_14289_1_PART = 1;
+    static final int ISO_14289_2_PART = 2;
     static final int WCAG_2_1_PART = 2;
     static final String LEVEL_A_CODE = "a"; //$NON-NLS-1$
     static final String LEVEL_B_CODE = "b"; //$NON-NLS-1$
@@ -74,6 +76,7 @@ final class PDFAFlavours {
     static final String LEVEL_E_NAME = "engineering"; //$NON-NLS-1$
     static final String LEVEL_F_NAME = "embedded files"; //$NON-NLS-1$
     static final String ISO_14289_1_YEAR = "2014"; //$NON-NLS-1$
+    static final String ISO_14289_2_YEAR = "202x"; //$NON-NLS-1$
     static final String ISO_19005_1_YEAR = "2005"; //$NON-NLS-1$
     static final String ISO_19005_2_YEAR = "2011"; //$NON-NLS-1$
     static final String ISO_19005_3_YEAR = "2012"; //$NON-NLS-1$
