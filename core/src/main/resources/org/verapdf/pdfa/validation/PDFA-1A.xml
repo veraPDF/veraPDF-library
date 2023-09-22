@@ -1009,8 +1009,8 @@
                 <arguments>
                     <argument>F</argument>
                     <argument>F != null ? (F &amp; 4) >> 2 : null</argument>
-                    <argument>F != null ? (F &amp; 1) : null</argument>
                     <argument>F != null ? (F &amp; 2) >> 1 : null</argument>
+                    <argument>F != null ? (F &amp; 1) : null</argument>
                     <argument>F != null ? (F &amp; 32) >> 5 : null</argument>
                 </arguments>
             </error>
