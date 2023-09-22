@@ -1193,8 +1193,8 @@
                 <arguments>
                     <argument>F</argument>
                     <argument>(F &amp; 4) >> 2</argument>
-                    <argument>(F &amp; 1)</argument>
                     <argument>(F &amp; 2) >> 1</argument>
+                    <argument>(F &amp; 1)</argument>
                     <argument>(F &amp; 32) >> 5</argument>
                     <argument>(F &amp; 256) >> 8</argument>
                 </arguments>
