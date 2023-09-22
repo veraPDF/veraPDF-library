@@ -903,12 +903,13 @@
             <id specification="ISO_14289_1" clause="7.18.1" testNumber="1"/>
             <description>An annotation, excluding annotations of subtype Widget, Popup or Link, shall be nested within an Annot tag</description>
             <test>Subtype == 'Widget' || Subtype == 'Popup' || Subtype == 'Link' || isOutsideCropBox == true ||
-                (F &amp; 2) == 2 || structParentType == 'Annot'</test>
+                (F &amp; 2) == 2 || structParentStandardType == 'Annot'</test>
             <error>
-                <message>%1 annotation is nested within %2 tag instead of Annot</message>
+                <message>%1 annotation is artifact or is nested within %2 tag (standard type = %3) instead of Annot</message>
                 <arguments>
                     <argument>Subtype</argument>
                     <argument>structParentType</argument>
+                    <argument>structParentStandardType</argument>
                 </arguments>
             </error>
             <references/>
@@ -969,11 +970,12 @@
         <rule object="PDWidgetAnnot">
             <id specification="ISO_14289_1" clause="7.18.4" testNumber="1"/>
             <description>A Widget annotation shall be nested within a Form tag per ISO 32000-1:2008, 14.8.4.5, Table 340.</description>
-            <test>structParentType == 'Form' || isOutsideCropBox == true || (F &amp; 2) == 2</test>
+            <test>structParentStandardType == 'Form' || isOutsideCropBox == true || (F &amp; 2) == 2</test>
             <error>
-                <message>A Widget annotation is nested within %1 tag instead of Form</message>
+                <message>A Widget annotation is artifact or is nested within %1 tag (standard type = %2) instead of Form</message>
                 <arguments>
                     <argument>structParentType</argument>
+                    <argument>structParentStandardType</argument>
                 </arguments>
             </error>
             <references>
@@ -997,11 +999,12 @@
         <rule object="PDLinkAnnot">
             <id specification="ISO_14289_1" clause="7.18.5" testNumber="1"/>
             <description>Links shall be tagged according to ISO 32000-1:2008, 14.8.4.4.2, Link Element.</description>
-            <test>structParentType == 'Link' || isOutsideCropBox == true || (F &amp; 2) == 2</test>
+            <test>structParentStandardType == 'Link' || isOutsideCropBox == true || (F &amp; 2) == 2</test>
             <error>
-                <message>A Link annotation is nested within %1 tag instead of Link</message>
+                <message>A Link annotation is artifact or is nested within %1 tag (standard type = %2) instead of Link</message>
                 <arguments>
                     <argument>structParentType</argument>
+                    <argument>structParentStandardType</argument>
                 </arguments>
             </error>
             <references>
@@ -1211,16 +1214,17 @@
         <rule object="Glyph">
             <id specification="ISO_14289_1" clause="7.21.4.1" testNumber="2"/>
             <description>Embedded fonts shall define all glyphs referenced for rendering within the conforming file.
-                A font referenced for use solely in rendering mode 3 is therefore not rendered and is thus exempt
-                from the embedding requirement. In all cases for TrueType fonts that are to be rendered, character codes
-                shall be able to be mapped to glyphs according to ISO 32000-1:2008, 9.6.6.4 without the use of
-                a non-standard mapping chosen by the conforming processor.</description>
+                A font referenced solely in text rendering mode 3 is not rendered and is thus exempt from the requirements
+                that impact the visual representation of the glyphs of a font. In all cases for TrueType fonts that are to
+                be rendered, character codes shall be able to be mapped to glyphs according to ISO 32000-1:2008, 9.6.6.4
+                without the use of a non-standard mapping chosen by the conforming processor.</description>
             <test>renderingMode == 3 || isGlyphPresent == null || isGlyphPresent == true</test>
             <error>
                 <message>Not all glyphs referenced for rendering are present in the embedded font program</message>
                 <arguments/>
             </error>
             <references>
+                <reference specification="ISO 32000-1:2008" clause="9.3.6"/>
                 <reference specification="ISO 32000-1:2008" clause="9.6.6.4"/>
             </references>
         </rule>
