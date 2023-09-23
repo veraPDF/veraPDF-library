@@ -322,15 +322,11 @@ public class VeraPDFMeta {
     }
 
     public VeraPDFMeta setPDFAIdentificationConformance(String identificationConformance) throws XMPException {
-        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID,  CONFORMANCE, identificationConformance);
+        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, CONFORMANCE, identificationConformance);
     }
 
-    public VeraPDFMeta setPDFAIdentificationRevisionYear(String identificationConformance) throws XMPException {
-        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID,  REVISION_YEAR, identificationConformance);
-    }
-
-    public VeraPDFMeta setPDFUAIdentificationRevisionYear(String identificationConformance) throws XMPException {
-        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFUA_ID,  REVISION_YEAR, identificationConformance);
+    public VeraPDFMeta setIdentificationRevisionYear(String namespaceURI, String identificationConformance) throws XMPException {
+        return setSimpleTextProperty(namespaceURI, REVISION_YEAR, identificationConformance);
     }
 
     public XMPMeta getCloneOfInitialMeta() {

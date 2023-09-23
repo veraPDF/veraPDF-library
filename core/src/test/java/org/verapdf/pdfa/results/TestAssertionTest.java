@@ -28,6 +28,9 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.Test;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.RuleId;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -82,8 +85,7 @@ public class TestAssertionTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.results.TestAssertionImpl#fromValues(int, org.verapdf.pdfa.validation.RuleId, org.verapdf.pdfa.results.TestAssertion.Status, java.lang.String, org.verapdf.pdfa.results.Location)}
-     * .
+     * {@link org.verapdf.pdfa.results.ValidationResults#assertionFromValues(int, RuleId, Status, String, Location, String, String, List)}
      */
     @Test
     public final void testFromValues() {
