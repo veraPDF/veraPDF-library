@@ -42,7 +42,7 @@ public class VariableImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.VariableImpl#equals(java.lang.Object)}
+     * {@link org.verapdf.pdfa.validation.profiles.VariableImpl#equals(java.lang.Object)}
      * .
      */
     @Test
@@ -99,8 +99,8 @@ public class VariableImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.VariableImpl#toXml(Variable)} and
-     * {@link org.verapdf.pdfa.validation.VariableImpl#fromXml(String)}.
+     * {@link org.verapdf.pdfa.validation.profiles.VariableImpl#toXml(Variable)} and
+     * {@link org.verapdf.pdfa.validation.profiles.VariableImpl#fromXml(String)}.
      * 
      * @throws JAXBException
      */
